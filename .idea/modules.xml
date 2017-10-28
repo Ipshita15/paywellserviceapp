@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/PayWellServices.iml" filepath="$PROJECT_DIR$/PayWellServices.iml" />
+      <module fileurl="file://$PROJECT_DIR$/custom-calendar/custom-calendar.iml" filepath="$PROJECT_DIR$/custom-calendar/custom-calendar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/paywellservices/paywellservices.iml" filepath="$PROJECT_DIR$/paywellservices/paywellservices.iml" />
+      <module fileurl="file://$PROJECT_DIR$/slidingtabs/slidingtabs.iml" filepath="$PROJECT_DIR$/slidingtabs/slidingtabs.iml" />
+    </modules>
+  </component>
+</project>

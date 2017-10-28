@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="icMenuTopup" type="drawable">@drawable/ic_home_topup</item>
+    <item name="icMenuUtility" type="drawable">@drawable/ic_home_utility</item>
+    <item name="icMenuPayments" type="drawable">@drawable/ic_home_payments</item>
+    <item name="icETicket" type="drawable">@drawable/ic_home_eticket</item>
+    <item name="icMenuMobileBanking" type="drawable">@drawable/ic_home_mfs</item>
+    <item name="icMenuProduct" type="drawable">@drawable/ic_product_category</item>
+    <item name="icMenuCheckBalance" type="drawable">@drawable/ic_home_pw_balance</item>
+    <item name="icMenuAbout" type="drawable">@drawable/ic_about</item>
+    <item name="icMenuTerms" type="drawable">@drawable/ic_terms</item>
+</resources>

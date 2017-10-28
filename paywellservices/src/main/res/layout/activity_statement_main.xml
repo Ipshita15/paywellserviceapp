@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.statements.StatementMainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/mini_statement_btn"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="@dimen/activity_vertical_margin"
+                android:background="#028554"
+                android:gravity="center"
+                android:text="@string/home_statement_mini"
+                android:textSize="16sp"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/balance_statement_btn"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="@dimen/activity_vertical_margin"
+                android:background="#1B9F49"
+                android:gravity="center"
+                android:text="@string/home_statement_balance"
+                android:textSize="16sp"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/sales_statement_btn"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="@dimen/activity_vertical_margin"
+                android:background="#2FB778"
+                android:gravity="center"
+                android:text="@string/home_statement_sales"
+                android:textSize="16sp"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/trx_statement_btn"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="@dimen/activity_vertical_margin"
+                android:background="#18AA9C"
+                android:gravity="center"
+                android:text="@string/home_statement_transaction"
+                android:textSize="16sp"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

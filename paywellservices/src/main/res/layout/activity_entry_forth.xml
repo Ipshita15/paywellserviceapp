@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true">
+
+        <TextView
+            android:id="@+id/textView_mobileRecharge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="23dp"
+            android:text="আপনি কি বর্তমানে রিচার্জের ব্যবসা করছেন?"
+            android:textColor="#41882b"
+            android:textSize="18sp"
+            android:textStyle="normal|bold" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_mobileRecharge"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="23dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rechargeYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="হাঁ" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:text="না" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutOne"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroup_one"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="23dp"
+                android:text="অপারেটর"
+                android:textColor="#41882b"
+                android:textSize="18sp"
+                android:textStyle="normal|bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/item_check_gp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:onClick="itemClickedOne"
+                    android:text="গ্রামীনফোন" />
+
+                <CheckBox
+                    android:id="@+id/item_check_bl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:onClick="itemClickedTwo"
+                    android:text="বাংলালিংক" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/item_check_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:onClick="itemClickedThree"
+                    android:text="রবি" />
+
+                <CheckBox
+                    android:id="@+id/item_check_at"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:onClick="itemClickedFour"
+                    android:text="এয়ারটেল" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/item_check_tt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:onClick="itemClickedFive"
+                    android:text="টেলিটক" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView_bkashagent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linearLayoutOne"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="23dp"
+            android:text="আপনি কি কোন মোবাইল ব্যাংকিং এজেন্ট?"
+            android:textColor="#41882b"
+            android:textSize="18sp"
+            android:textStyle="normal|bold" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_bkashagent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="23dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/agentYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="হাঁ" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:text="না" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutTwo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroup_two"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="23dp"
+                android:text="সার্ভিস"
+                android:textColor="#41882b"
+                android:textSize="18sp"
+                android:textStyle="normal|bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/item_check_bkash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:onClick="itemClickedSix"
+                    android:text="বিকাশ" />
+
+                <CheckBox
+                    android:id="@+id/item_check_rocket"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:onClick="itemClickedSeven"
+                    android:text="রকেট" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/item_check_mcash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:onClick="itemClickedEight"
+                    android:text="এমক্যাশ" />
+
+                <CheckBox
+                    android:id="@+id/item_check_mobile_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:onClick="itemClickedNine"
+                    android:text="মোবাইল মানি" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/item_check_mycash"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:onClick="itemClickedTen"
+                    android:text="মাইক্যাশ" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView_downloadOption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linearLayoutTwo"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="23dp"
+            android:text="আপনি কি প্লে স্টোর থেকে অ্যাপটি নিয়েছেন?"
+            android:textColor="#41882b"
+            android:textSize="18sp"
+            android:textStyle="normal|bold" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_downloadOption"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="23dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/downloadYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="হাঁ" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:text="না" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroup_three"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="50dp"
+            android:weightSum="2">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_green"
+                android:onClick="previousOnClick"
+                android:shadowColor="#000000"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                android:text="পূর্ববর্তী"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_green"
+                android:onClick="submitOnClick"
+                android:shadowColor="#000000"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                android:text="পরবর্তী"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>

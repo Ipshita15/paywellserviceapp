@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activity.utility.electricity.wasa.WASAMainActivity">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/homeBtnBillPay"
+                    style="@style/HomeButton"
+                    android:layout_marginTop="15dp"
+                    android:drawableTop="@drawable/ic_wasa_bill_pay"
+                    android:onClick="onButtonClicker"
+                    android:paddingBottom="5dp"
+                    android:text="@string/home_utility_pb_billpay"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"></LinearLayout>
+
+                <Button
+                    android:id="@+id/homeBtnInquiry"
+                    style="@style/HomeButton"
+                    android:layout_marginTop="15dp"
+                    android:drawableTop="@drawable/ic_wasa_bill_inquery"
+                    android:onClick="onButtonClicker"
+                    android:paddingBottom="5dp"
+                    android:text="@string/home_inquiry"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

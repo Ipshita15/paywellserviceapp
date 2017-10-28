@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_horizontal_margin"
+    tools:context=".activity.AppLoadingActivity">
+
+    <ProgressBar
+        android:id="@+id/pbAppLoading"
+        style="@android:style/Widget.ProgressBar.Small.Inverse"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_centerInParent="true"
+        android:indeterminateBehavior="cycle"
+        android:indeterminateDrawable="@drawable/rotar" />
+
+    <TextView
+        android:id="@+id/connErrorMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:typeface="sans"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="দুঃখিত, কোন ইন্টারনেট সংযোগ পাওয়া যায়নি। পুনঃসংযোগ করে আবার চেষ্টা করুন।"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/btnRetry"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/connErrorMsg"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:onClick="onClickRetry"
+        android:visibility="gone"
+        android:text="পুনরায় চেষ্টা করুন"
+        android:textAllCaps="false" />
+</RelativeLayout>

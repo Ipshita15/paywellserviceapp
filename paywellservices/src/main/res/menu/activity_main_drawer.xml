@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_topup"
+            android:icon="@drawable/icMenuTopup"
+            android:title="@string/home_topup" />
+        <item
+            android:id="@+id/nav_utility"
+            android:icon="@drawable/icMenuUtility"
+            android:title="@string/home_utility" />
+        <item
+            android:id="@+id/nav_payments"
+            android:icon="@drawable/icMenuPayments"
+            android:title="@string/home_payments" />
+        <item
+            android:id="@+id/nav_eticket"
+            android:icon="@drawable/icETicket"
+            android:title="@string/home_eticket" />
+        <item
+            android:id="@+id/nav_mfs"
+            android:icon="@drawable/icMenuMobileBanking"
+            android:title="@string/nav_mfs" />
+        <item
+            android:id="@+id/nav_product"
+            android:icon="@drawable/icMenuProduct"
+            android:title="@string/nav_product_catalog" />
+    </group>
+
+    <item
+        android:id="@+id/nav_more"
+        android:title="@string/nav_more_title">
+        <menu>
+            <item
+                android:id="@+id/nav_check_balance"
+                android:icon="@drawable/icMenuCheckBalance"
+                android:title="@string/nav_check_balance" />
+            <item
+                android:id="@+id/nav_terms"
+                android:icon="@drawable/icMenuTerms"
+                android:title="@string/nav_terms_and_conditions" />
+            <item
+                android:id="@+id/nav_policy"
+                android:icon="@drawable/ic_policy"
+                android:title="@string/nav_policy_statement" />
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/icMenuAbout"
+                android:title="@string/nav_about" />
+        </menu>
+    </item>
+
+</menu>

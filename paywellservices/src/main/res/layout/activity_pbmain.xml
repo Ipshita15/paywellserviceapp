@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activity.utility.pallibidyut.PBMainActivity">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/homeBtnRegistration"
+                    style="@style/HomeButton"
+                    android:drawableTop="@drawable/ic_home_pb_reg"
+                    android:onClick="onButtonClicker"
+                    android:text="@string/home_utility_pb_reg"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"></LinearLayout>
+
+                <Button
+                    android:id="@+id/homeBtnBillPay"
+                    style="@style/HomeButton"
+                    android:drawableTop="@drawable/ic_home_pb_billpay"
+                    android:onClick="onButtonClicker"
+                    android:text="@string/home_utility_pb_billpay"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/homeBtnInquiryReg"
+                    style="@style/HomeButton"
+                    android:drawableTop="@drawable/ic_home_pb_inquiry_reg"
+                    android:onClick="onButtonClicker"
+                    android:text="@string/home_utility_pb_reg_inq"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"></LinearLayout>
+
+                <Button
+                    android:id="@+id/homeBtnInquiryBillPay"
+                    style="@style/HomeButton"
+                    android:drawableTop="@drawable/ic_home_pb_inquiry_billpay"
+                    android:onClick="onButtonClicker"
+                    android:text="@string/home_utility_pb_bill_ing"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#5aac40</color>
+    <color name="colorPrimaryDark">#2E7D32</color>
+    <color name="colorAccent">#5aac40</color>
+    <color name="primary_transparent">#223F51B5</color>
+    <drawable name="layout_background">#0c000000</drawable>
+    <color name="tab_background">@color/colorPrimary</color>
+    <color name="colorText">#ffffff</color>
+    <color name="card_background">@color/colorText</color>
+    <color name="layout_background">#eeeeee</color>
+
+    <!--
+    <color name="list_divider">#272727</color>
+-->
+    <color name="black">#1b1b1b</color>
+    <!-- Paywell services color -->
+    <color name="green">@color/colorPrimary</color>
+    <color name="ivory_black">#292421</color>
+    <color name="bg_color">#ffffff</color>
+    <color name="white">#ffffff</color>
+
+    <!-- bluetooth api -->
+
+    <!-- Paywell topup color -->
+    <color name="greenShadeLight">#71bf49</color>
+    <color name="blackShade">#363b34</color>
+    <color name="blackShade_trans70">#70363b34</color>
+    <!-- Paywell utility color -->
+
+    <!-- Paywell dialg color -->
+    <color name="foreground1">#ff355689</color>
+    <color name="blue">#03A7E9</color>
+    <color name="grey">#757575</color>
+    <color name="off_white">#FAFAFA</color>
+
+</resources>

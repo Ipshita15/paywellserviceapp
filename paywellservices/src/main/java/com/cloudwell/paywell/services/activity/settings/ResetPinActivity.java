@@ -1,0 +1,111 @@
+package com.cloudwell.paywell.services.activity.settings;
+
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.app.AppController;
+import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.JSONParser;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+/**
+ * Created by android on 7/21/2016.
+ */
+public class ResetPinActivity extends AppCompatActivity {
+
+    private static final String TAG_RESPONSE_STATUS = "status";
+    private static final String TAG_MESSAGE = "message";
+    private RelativeLayout mRelativeLayout;
+    private ConnectionDetector mCd;
+    private AppHandler mAppHandler;
+    private ProgressBar mProgressbar;
+    private TextView mTextView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.acitvity_reset_pin);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(R.string.home_settings_reset_pin);
+        mRelativeLayout = (RelativeLayout) findViewById(R.id.linearLayout);
+        mProgressbar = (ProgressBar) findViewById(R.id.progressBar);
+        mTextView = (TextView) findViewById(R.id.tvMessage);
+        mTextView.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        mCd = new ConnectionDetector(getApplicationContext());
+        mAppHandler = new AppHandler(this);
+
+        if (!mCd.isConnectingToInternet()) {
+            mAppHandler.showDialog(getSupportFragmentManager());
+        } else {
+            new ResetPinAsync().execute(getString(R.string.reset_pin),
+                    "username=" + mAppHandler.getImeiNo(),
+                    "&mode=" + "json");
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            this.onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ResetPinActivity.this, SettingsActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private class ResetPinAsync extends AsyncTask<String, String, JSONObject> {
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected JSONObject doInBackground(String... params) {
+            JSONParser jParser = new JSONParser();
+            // Getting JSON from URL
+            String url = params[0] + params[1] + params[2];
+            return jParser.getJSONFromUrl(url);
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            mProgressbar.setVisibility(View.GONE);
+            try {
+                String status = jsonObject.getString(TAG_RESPONSE_STATUS);
+                if (status.equalsIgnoreCase("200")) {
+                    mTextView.setText(jsonObject.getString(TAG_MESSAGE));
+                    mTextView.setVisibility(View.VISIBLE);
+                } else {
+                    Snackbar snackbar = Snackbar.make(mRelativeLayout, jsonObject.getString(TAG_MESSAGE), Snackbar.LENGTH_LONG);
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                    View snackBarView = snackbar.getView();
+                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                    snackbar.show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+}

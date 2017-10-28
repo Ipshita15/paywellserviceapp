@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activity.MainActivity"
+    tools:showIn="@layout/app_bar_main">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:orientation="horizontal"
+                android:weightSum="5">
+
+                <Button
+                    android:id="@+id/homeBtnTopup"
+                    style="@style/HomeButton"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_home_topup"
+                    android:onClick="onButtonClicker"
+                    android:text="@string/home_topup"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"></LinearLayout>
+
+                <Button
+                    android:id="@+id/homeBtnUtility"
+                    style="@style/HomeButton"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_home_utility"
+                    android:onClick="onButtonClicker"
+                    android:text="@string/home_utility"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"></LinearLayout>
+
+                <Button
+                    android:id="@+id/homeBtnPayments"
+                    style="@style/HomeButton"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_home_payments"
+                    android:onClick="onButtonClicker"
+                    android:text="@string/home_payments"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="5">
+
+                <Button
+                    android:id="@+id/homeBtnEticket"
+                    style="@style/HomeButton"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_home_eticket"
+                    android:onClick="onButtonClicker"
+                    android:text="@string/home_eticket"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"></LinearLayout>
+
+                <Button
+                    android:id="@+id/homeBtnMFS"
+                    style="@style/HomeButton"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_home_mfs"
+                    android:onClick="onButtonClicker"
+                    android:text="@string/home_mfs"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"></LinearLayout>
+
+                <Button
+                    android:id="@+id/homeBtnProductCategory"
+                    style="@style/HomeButton"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_product_category"
+                    android:onClick="onButtonClicker"
+                    android:text="@string/home_product_catalog"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp"
+                android:orientation="horizontal"
+                android:weightSum="5">
+
+                <Button
+                    android:id="@+id/homeBtnMiniStatement"
+                    style="@style/HomeButton"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_home_mini_statement"
+                    android:onClick="onButtonClicker"
+                    android:text="@string/home_statement"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"></LinearLayout>
+
+                <Button
+                    android:id="@+id/homeBtnRefillBalance"
+                    style="@style/HomeButton"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_home_refill"
+                    android:onClick="onButtonClicker"
+                    android:text="@string/home_refill_balance"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"></LinearLayout>
+
+                <Button
+                    android:id="@+id/homeBtnSettings"
+                    style="@style/HomeButton"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_home_settings"
+                    android:onClick="onButtonClicker"
+                    android:text="@string/home_settings"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <ImageView
+        android:id="@+id/homeBtnMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_home_chat_bn"
+        android:layout_marginLeft="-5dp"
+        android:onClick="onButtonClicker" />
+</RelativeLayout>
