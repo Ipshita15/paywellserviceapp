@@ -30,10 +30,6 @@ public class LaunchScreenActivity extends Activity {
         Window window = getWindow();
         window.setFormat(PixelFormat.RGBA_8888);
     }
-
-    /**
-     * Called when the activity is first created.
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +40,7 @@ public class LaunchScreenActivity extends Activity {
             Log.e("amiakhane","here I am 1");
         }else{
             //do that you normally do
+            //edit
         }
 
         StartAnimations();
