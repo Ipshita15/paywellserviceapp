@@ -1,4 +1,4 @@
-package com.gnas.customcalendarview;
+package com.cloudwell.paywell.customcalendarview;
 
 import android.content.Context;
 import android.os.Build;
@@ -9,9 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Nilanchala on 9/11/15.
- */
 public class DayView extends TextView {
     private Date date;
     private List<DayDecorator> decorators;

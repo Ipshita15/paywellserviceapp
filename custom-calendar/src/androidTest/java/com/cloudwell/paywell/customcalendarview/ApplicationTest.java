@@ -1,4 +1,4 @@
-package com.gnas.customcalendarview;
+package com.cloudwell.paywell.customcalendarview;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

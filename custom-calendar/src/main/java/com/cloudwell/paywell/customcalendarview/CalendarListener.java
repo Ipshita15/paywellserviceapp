@@ -1,10 +1,7 @@
-package com.gnas.customcalendarview;
+package com.cloudwell.paywell.customcalendarview;
 
 import java.util.Date;
 
-/**
- * Created by Nilanchala on 9/14/15.
- */
 public interface CalendarListener {
     void onDateSelected(Date date);
 
