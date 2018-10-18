@@ -24,7 +24,6 @@ import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -32,10 +31,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,8 +62,8 @@ public class BalanceTransferRequestActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_balance_transfer);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        _linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
-        cd = new ConnectionDetector(getApplicationContext());
+        _linearLayout = findViewById(R.id.linearLayout);
+        cd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
 
         Bundle delivered = getIntent().getExtras();
@@ -82,14 +79,14 @@ public class BalanceTransferRequestActivity extends AppCompatActivity implements
     }
 
     private void initializeView() {
-        etAmount = (EditText) findViewById(R.id.etAmount);
-        etAgentOTP = (EditText) findViewById(R.id.etAgentOTP);
-        mBtnSubmit = (Button) findViewById(R.id.mycash_confirm);
+        etAmount = findViewById(R.id.etAmount);
+        etAgentOTP = findViewById(R.id.etAgentOTP);
+        mBtnSubmit = findViewById(R.id.mycash_confirm);
 
-        ((TextView) _linearLayout.findViewById(R.id.tvAmount)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        etAmount.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        etAgentOTP.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mBtnSubmit.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        ((TextView) _linearLayout.findViewById(R.id.tvAmount)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        etAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+        etAgentOTP.setTypeface(AppController.getInstance().getOxygenLightFont());
+        mBtnSubmit.setTypeface(AppController.getInstance().getOxygenLightFont());
         mBtnSubmit.setOnClickListener(this);
 
         if (!mAppHandler.getMYCashOTP().equals("unknown") && !mAppHandler.getMYCashOTP().equals("null")) {
@@ -103,17 +100,14 @@ public class BalanceTransferRequestActivity extends AppCompatActivity implements
             if (etAmount.getText().toString().trim().length() == 0) {
                 // Not allowed
                 etAmount.setError(Html.fromHtml("<font color='red'>" + getString(R.string.amount_error_msg) + "</font>"));
-                return;
             } else if (etAgentOTP.getText().toString().trim().length() == 0) {
                 // Not allowed
                 etAgentOTP.setError(Html.fromHtml("<font color='red'>" + getString(R.string.otp_error_msg) + "</font>"));
-                return;
             }
             else {
                 mAmount = etAmount.getText().toString().trim();
                 mAgentOTP = etAgentOTP.getText().toString().trim();
                 ResponsePrompt();
-
             }
         }
     }
@@ -150,7 +144,7 @@ public class BalanceTransferRequestActivity extends AppCompatActivity implements
 
             try {
                 //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(6);
                 nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("password", mAppHandler.getPin()));
                 nameValuePairs.add(new BasicNameValuePair("amount", mAmount));
@@ -160,11 +154,12 @@ public class BalanceTransferRequestActivity extends AppCompatActivity implements
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
                 responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (ClientProtocolException e) {
-
-            } catch (IOException e) {
+            } catch (Exception e) {
+                Snackbar snackbar = Snackbar.make(_linearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
-
             return responseTxt;
         }
 
@@ -218,8 +213,13 @@ public class BalanceTransferRequestActivity extends AppCompatActivity implements
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(_linearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
         }
     }
@@ -232,7 +232,6 @@ public class BalanceTransferRequestActivity extends AppCompatActivity implements
             }
             return true;
         }
-        ;
         return super.onOptionsItemSelected(item);
     }
 

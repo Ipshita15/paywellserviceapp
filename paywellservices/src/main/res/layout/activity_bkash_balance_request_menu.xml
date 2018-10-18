@@ -5,6 +5,7 @@
     android:id="@+id/coordinateLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_background_card"
     android:fitsSystemWindows="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activity.payments.bkash.BKashBalanceRequestMenuActivity">
@@ -25,27 +26,48 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="5">
 
                 <Button
-                    android:id="@+id/homeBtnBkashPWBalance"
-                    style="@style/HomeButton"
-                    android:layout_marginBottom="5dp"
-                    android:drawableTop="@drawable/ic_home_pw_balance"
+                    android:id="@+id/homeBtnBkashForCash"
+                    style="@style/HomeButtonNew"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_cash_request"
                     android:onClick="onButtonClicker"
-                    android:text="@string/home_bkash_paywell_balance_req"
+                    android:text="@string/home_bkash_cash_req"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/homeBtnBkashBankTransfer"
-                    style="@style/HomeButton"
-                    android:layout_marginBottom="5dp"
-                    android:drawableTop="@drawable/ic_home_bank_transfer"
+                    style="@style/HomeButtonNew"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_bank_deposit"
                     android:onClick="onButtonClicker"
                     android:text="@string/home_bkash_bank_trns_req"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/homeBtnBkashPWBalance"
+                    style="@style/HomeButtonNew"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_balance"
+                    android:onClick="onButtonClicker"
+                    android:text="@string/home_bkash_paywell_balance_req"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
             </LinearLayout>
 
@@ -53,18 +75,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <Button
-                    android:id="@+id/homeBtnBkashForCash"
-                    style="@style/HomeButton"
-                    android:layout_marginBottom="5dp"
-                    android:drawableTop="@drawable/ic_home_cash_request"
+                    android:id="@+id/homeBtnBkashPWBalanceReverse"
+                    style="@style/HomeButtonNew"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_pw_to_bkash"
                     android:onClick="onButtonClicker"
-                    android:text="@string/home_bkash_cash_req"
+                    android:text="@string/home_bkash_paywell_balance_return"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

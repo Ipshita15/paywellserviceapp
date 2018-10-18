@@ -13,9 +13,6 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 
-/**
- * Created by Android on 12/6/2015.
- */
 @SuppressWarnings("ALL")
 public class BKashBalanceActivity extends AppCompatActivity {
 
@@ -29,14 +26,17 @@ public class BKashBalanceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bkash_balance);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.home_bkash_balance);
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.home_bkash_balance);
+        }
 
         mRelativeLayout = (RelativeLayout) findViewById(R.id.linearLayout);
         tvMainBalance = (TextView) findViewById(R.id.bKashBalance);
-        tvMainBalance.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        tvMainBalance.setTypeface(AppController.getInstance().getOxygenLightFont());
         mButtonPurposeDeclare = (Button) findViewById(R.id.btnPurposeDeclare);
-        mButtonPurposeDeclare.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        mButtonPurposeDeclare.setTypeface(AppController.getInstance().getOxygenLightFont());
 
         String response = null;
         Bundle bundle = getIntent().getExtras();
@@ -47,7 +47,8 @@ public class BKashBalanceActivity extends AppCompatActivity {
         String[] splittedArray = response.split("@");
         tvMainBalance.setText(getString(R.string.balance_des) + " " + String.valueOf(splittedArray[1]) + getString(R.string.tk)
                 + "\n" + getString(R.string.bkash_frozen_balance_des) + " " + String.valueOf(splittedArray[2]) + getString(R.string.tk)
-                + "\n" + getString(R.string.bkash_declare_balance_des) + " " + String.valueOf(splittedArray[3] + getString(R.string.tk)));
+                + "\n" + getString(R.string.bkash_declare_balance_des) + " " + String.valueOf(splittedArray[3] + getString(R.string.tk))
+                + "\n" + getString(R.string.bkash_verification_balance_des) + " " + String.valueOf(splittedArray[4] + getString(R.string.tk)));
 
         if (!String.valueOf(splittedArray[3]).equalsIgnoreCase("0.00")) {
             mButtonPurposeDeclare.setVisibility(View.VISIBLE);
@@ -70,7 +71,6 @@ public class BKashBalanceActivity extends AppCompatActivity {
             }
             return true;
         }
-        ;
         return super.onOptionsItemSelected(item);
     }
 

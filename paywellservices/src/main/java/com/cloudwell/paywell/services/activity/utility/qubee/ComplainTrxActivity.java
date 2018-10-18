@@ -10,7 +10,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -23,30 +22,26 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
-import org.apache.http.client.ClientProtocolException;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
-import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by Android on 12/8/2015.
- */
-@SuppressWarnings("ALL")
 public class ComplainTrxActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ConnectionDetector cd;
     private AppHandler mAppHandler;
-    private EditText mPin;
-    private EditText mTrxId;
+    private EditText mPin, mTrxId;
     private Button mConfirmTrx;
-    private static String _returnMessage;
-    private static String _trxId;
-    private static String _accountNO;
-    private static String _amount;
+    private static String _returnMessage, _trxId, _accountNo, _amount;
     private LinearLayout mLinearLayout;
 
     @SuppressWarnings("ConstantConditions")
@@ -54,29 +49,30 @@ public class ComplainTrxActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qubee_complain_trx);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.home_utility_qubee_payment_title);
-
-        cd = new ConnectionDetector(getApplicationContext());
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.home_utility_qubee_payment_title);
+        }
+        cd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
         initView();
     }
 
     private void initView() {
-        mLinearLayout = (LinearLayout) findViewById(R.id.linearLayout);
-        TextView _pin = (TextView) findViewById(R.id.tvQbeePin5);
-        _pin.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mPin = (EditText) findViewById(R.id.etQubeePin5);
-        mPin.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        mLinearLayout = findViewById(R.id.linearLayout);
+        TextView _pin = findViewById(R.id.tvQbeePin5);
+        _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
+        mPin = findViewById(R.id.etQubeePin5);
+        mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
 
-        TextView _trxId = (TextView) findViewById(R.id.tvTrxId);
-        _trxId.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mTrxId = (EditText) findViewById(R.id.etTrxId);
-        mTrxId.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        TextView _trxId = findViewById(R.id.tvTrxId);
+        _trxId.setTypeface(AppController.getInstance().getOxygenLightFont());
+        mTrxId = findViewById(R.id.etTrxId);
+        mTrxId.setTypeface(AppController.getInstance().getOxygenLightFont());
 
-        mConfirmTrx = (Button) findViewById(R.id.btnComplainTrxId);
-        mConfirmTrx.setTypeface(AppController.getInstance().getRobotoRegularFont());
-
+        mConfirmTrx = findViewById(R.id.btnComplainTrxId);
+        mConfirmTrx.setTypeface(AppController.getInstance().getOxygenLightFont());
         mConfirmTrx.setOnClickListener(this);
     }
 
@@ -97,14 +93,14 @@ public class ComplainTrxActivity extends AppCompatActivity implements View.OnCli
                     return;
                 }
                 try {
-                    new SubmitAsync().execute(getResources().getString(R.string.qb_com),
-                            "iemi_no=" + mAppHandler.getImeiNo(),
-                            "&pin_code=" + _pin,
-                            "&wimax=" + AppHandler.KEY_WIMAX,
-                            "&type=" + AppHandler.TRX_TYPE,
-                            "&trx_id=" + URLEncoder.encode(_trxId, "UTF-8"));
+                    new SubmitAsync().execute(getResources().getString(R.string.qb_com), _pin, URLEncoder.encode(_trxId, "UTF-8"));
                 } catch (Exception ex) {
                     ex.printStackTrace();
+                    Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                    View snackBarView = snackbar.getView();
+                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                    snackbar.show();
                 }
             }
         }
@@ -122,17 +118,26 @@ public class ComplainTrxActivity extends AppCompatActivity implements View.OnCli
 
         @Override
         protected String doInBackground(String... params) {
-
-            HttpGet request = new HttpGet(params[0] + params[1] + params[2] + params[3] + params[4] + params[5]);
-            ResponseHandler<String> responseHandler = new BasicResponseHandler();
             String responseTxt = null;
-            HttpClient client = AppController.getInstance().getTrustedHttpClient();
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(params[0]);
             try {
-                responseTxt = client.execute(request, responseHandler);
-            } catch (ClientProtocolException ex) {
-                ex.printStackTrace();
-            } catch (IOException ex) {
-                ex.printStackTrace();
+                List<NameValuePair> nameValuePairs = new ArrayList<>(5);
+                nameValuePairs.add(new BasicNameValuePair("iemi_no", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("pin_code", params[1]));
+                nameValuePairs.add(new BasicNameValuePair("wimax", AppHandler.KEY_WIMAX));
+                nameValuePairs.add(new BasicNameValuePair("type", AppHandler.TRX_TYPE));
+                nameValuePairs.add(new BasicNameValuePair("trx_id", params[2]));
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                responseTxt = httpclient.execute(httppost, responseHandler);
+            } catch (Exception e) {
+                e.fillInStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
             return responseTxt;
         }
@@ -147,7 +152,7 @@ public class ComplainTrxActivity extends AppCompatActivity implements View.OnCli
                         if (splitArray[0].equalsIgnoreCase("200")) {
                             _returnMessage = splitArray[1];
                             _trxId = splitArray[2];
-                            _accountNO = splitArray[3];
+                            _accountNo = splitArray[3];
                             _amount = splitArray[4];
                             showStatusDialog();
                         } else {
@@ -165,8 +170,13 @@ public class ComplainTrxActivity extends AppCompatActivity implements View.OnCli
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } catch (ArrayIndexOutOfBoundsException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
         }
     }
@@ -174,7 +184,7 @@ public class ComplainTrxActivity extends AppCompatActivity implements View.OnCli
     private void showStatusDialog() {
         StringBuilder reqStrBuilder = new StringBuilder();
         reqStrBuilder.append(getString(R.string.message_des) + " " + _returnMessage
-                + " \n" + getString(R.string.acc_no_des) + " " + _accountNO
+                + " \n" + getString(R.string.acc_no_des) + " " + _accountNo
                 + "\n" + getString(R.string.amount_des) + " " + _amount
                 + "\n" + getString(R.string.trx_id_des) + " " + _trxId);
         AlertDialog.Builder builder = new AlertDialog.Builder(ComplainTrxActivity.this);

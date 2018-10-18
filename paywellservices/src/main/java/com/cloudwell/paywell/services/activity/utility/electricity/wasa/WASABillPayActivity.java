@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
@@ -41,16 +42,10 @@ public class WASABillPayActivity extends AppCompatActivity implements View.OnCli
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
     private LinearLayout mLinearLayout;
-    private EditText etBill;
-    private EditText etPhn;
-    private EditText etPin;
+    private EditText etBill, etPhn, etPin;
     private ImageView imageView;
     private Button btnConfirm;
-    private String mBill;
-    private String mPhn;
-    private String mPin;
-    private String mTrxId;
-    private String mTotalAmount;
+    private String mBill, mPhn, mPin, mTrxId, mTotalAmount;
     private static final String TAG_STATUS = "status";
     private static final String TAG_MESSAGE = "message";
     private static final String TAG_MESSAGE_TEXT = "msg_text";
@@ -61,20 +56,23 @@ public class WASABillPayActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wasa_bill_pay);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.home_utility_pb_billpay);
-        mCd = new ConnectionDetector(this);
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.home_utility_pb_billpay);
+        }
+        mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
         initializeView();
     }
 
     private void initializeView() {
-        mLinearLayout = (LinearLayout) findViewById(R.id.wasaLinearLayout);
-        etBill = (EditText) findViewById(R.id.wasa_bill);
-        etPhn = (EditText) findViewById(R.id.wasa_phn);
-        etPin = (EditText) findViewById(R.id.wasa_pin_no);
-        imageView = (ImageView) findViewById(R.id.imageView_info);
-        btnConfirm = (Button) findViewById(R.id.btn_confirm);
+        mLinearLayout = findViewById(R.id.wasaLinearLayout);
+        etBill = findViewById(R.id.wasa_bill);
+        etPhn = findViewById(R.id.wasa_phn);
+        etPin = findViewById(R.id.wasa_pin_no);
+        imageView = findViewById(R.id.imageView_info);
+        btnConfirm = findViewById(R.id.btn_confirm);
 
         btnConfirm.setOnClickListener(this);
         imageView.setOnClickListener(this);
@@ -144,10 +142,9 @@ public class WASABillPayActivity extends AppCompatActivity implements View.OnCli
             // Create a new HttpClient and Post Header
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(data[0]);
-
             try {
                 //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(6);
                 nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("password", mPin));
                 nameValuePairs.add(new BasicNameValuePair("billNo", mBill));
@@ -158,15 +155,17 @@ public class WASABillPayActivity extends AppCompatActivity implements View.OnCli
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
                 responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (IOException e) {
+            } catch (Exception e) {
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
-
             return responseTxt;
         }
 
         @Override
         protected void onPostExecute(String result) {
-
             progressDialog.cancel();
             try {
                 if (result != null) {
@@ -178,7 +177,7 @@ public class WASABillPayActivity extends AppCompatActivity implements View.OnCli
                         mTrxId = jsonObject.getString(TAG_TRANSACTION_ID);
                         String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
                         String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
-                        if(!mTotalAmount.equals("0")) {
+                        if (!mTotalAmount.equals("0")) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(WASABillPayActivity.this);
                             builder.setTitle("Result");
                             builder.setMessage(msg_text + "\n\n" + getString(R.string.phone_no_des) + " " + mPhn + "\n\nPayWell Trx ID: " + trx_id);
@@ -238,8 +237,13 @@ public class WASABillPayActivity extends AppCompatActivity implements View.OnCli
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
         }
     }
@@ -260,7 +264,6 @@ public class WASABillPayActivity extends AppCompatActivity implements View.OnCli
             progressDialog = ProgressDialog.show(WASABillPayActivity.this, "", getString(R.string.loading_msg), true);
             if (!isFinishing())
                 progressDialog.show();
-
         }
 
         @SuppressWarnings("deprecation")
@@ -270,10 +273,9 @@ public class WASABillPayActivity extends AppCompatActivity implements View.OnCli
             // Create a new HttpClient and Post Header
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(data[0]);
-
             try {
                 //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(7);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(8);
                 nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("password", mPin));
                 nameValuePairs.add(new BasicNameValuePair("billNo", mBill));
@@ -286,10 +288,13 @@ public class WASABillPayActivity extends AppCompatActivity implements View.OnCli
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
                 responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
-
             return responseTxt;
         }
 
@@ -342,8 +347,13 @@ public class WASABillPayActivity extends AppCompatActivity implements View.OnCli
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
         }
     }

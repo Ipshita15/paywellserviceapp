@@ -12,12 +12,15 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.mfs.mycash.manage.BalanceTransferRequestActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.manage.MYCashToPayWellActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.manage.PayWellToMYCashActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.manage.PaymentConfirmationActivity;
+import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
@@ -38,10 +41,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Ipshita on 2/18/2017.
- */
-
 public class ManageMenuActivity extends AppCompatActivity {
 
     private ConnectionDetector mCd;
@@ -57,12 +56,40 @@ public class ManageMenuActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.home_fund_management_title);
         mAppHandler = new AppHandler(this);
-        mCoordinateLayout = (CoordinatorLayout) findViewById(R.id.coordinateLayout);
-        mCd = new ConnectionDetector(this);
+        mCoordinateLayout = findViewById(R.id.coordinateLayout);
+        mCd = new ConnectionDetector(AppController.getContext());
+
+        Button btnFromPw = findViewById(R.id.homeBtnFromPayWell);
+        Button btnFromMycash = findViewById(R.id.homeBtnFromMYCash);
+        Button btnForBank = findViewById(R.id.homeBtnMYCashBankTransfer);
+        Button btnForCash = findViewById(R.id.homeBtnMYCashCashTransfer);
+        Button btnConfirm = findViewById(R.id.homeBtnConfirmation);
+
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            setMargins(btnForCash, 0, -15, 0, 0);
+            btnFromPw.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnFromMycash.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnForBank.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnForCash.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            btnFromPw.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnFromMycash.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnForBank.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnForCash.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnConfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
+    }
+
+    private void setMargins(View view, int left, int top, int right, int bottom) {
+        if (view.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+            p.setMargins(left, top, right, bottom);
+            view.requestLayout();
+        }
     }
 
     public void onButtonClicker(View v) {
-
         switch (v.getId()) {
             case R.id.homeBtnFromPayWell:
                 Intent intent_from_paywell = new Intent(ManageMenuActivity.this, PayWellToMYCashActivity.class);
@@ -117,8 +144,7 @@ public class ManageMenuActivity extends AppCompatActivity {
             HttpPost httppost = new HttpPost(data[0]);
 
             try {
-                //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
                 nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("password", mAppHandler.getPin()));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
@@ -126,10 +152,19 @@ public class ManageMenuActivity extends AppCompatActivity {
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
                 responseTxt = httpclient.execute(httppost, responseHandler);
             } catch (ClientProtocolException e) {
+                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
 
             } catch (IOException e) {
+                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
-
             return responseTxt;
         }
 
@@ -168,8 +203,13 @@ public class ManageMenuActivity extends AppCompatActivity {
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
         }
     }

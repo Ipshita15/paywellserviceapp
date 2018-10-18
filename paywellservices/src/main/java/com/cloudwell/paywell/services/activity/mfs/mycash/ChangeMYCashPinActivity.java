@@ -54,31 +54,33 @@ public class ChangeMYCashPinActivity extends AppCompatActivity implements View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_mycash_pin);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.home_settings_change_pin);
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.home_mycash_change_pin_title);
+        }
         initializeView();
     }
 
     private void initializeView() {
-        mLinearLayout = (LinearLayout) findViewById(R.id.changePinLinearLayout);
-        mOldPin = (EditText) findViewById(R.id.oldPin);
-        mNewPin = (EditText) findViewById(R.id.newPin);
-        mConfirm = (Button) findViewById(R.id.mycash_confirm);
+        mLinearLayout = findViewById(R.id.changePinLinearLayout);
+        mOldPin = findViewById(R.id.oldPin);
+        mNewPin = findViewById(R.id.newPin);
+        mConfirm = findViewById(R.id.mycash_confirm);
 
-        ((TextView) mLinearLayout.findViewById(R.id.tvOldPin)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mOldPin.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((TextView) mLinearLayout.findViewById(R.id.tvNewPin)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mNewPin.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((Button) mLinearLayout.findViewById(R.id.mycash_confirm)).setTypeface(AppController.getInstance().getRobotoRegularFont());
+        ((TextView) mLinearLayout.findViewById(R.id.tvOldPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        mOldPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+        ((TextView) mLinearLayout.findViewById(R.id.tvNewPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        mNewPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+        ((Button) mLinearLayout.findViewById(R.id.mycash_confirm)).setTypeface(AppController.getInstance().getOxygenLightFont());
 
         mConfirm.setOnClickListener(this);
 
-        mCd = new ConnectionDetector(getApplicationContext());
+        mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
     }
 
     public void resetPin(View v) {
-
 
     }
 
@@ -122,7 +124,7 @@ public class ChangeMYCashPinActivity extends AppCompatActivity implements View.O
 
             try {
                 //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(6);
                 nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("password", mAppHandler.getPin()));
                 nameValuePairs.add(new BasicNameValuePair("pin", data[1]));
@@ -133,11 +135,12 @@ public class ChangeMYCashPinActivity extends AppCompatActivity implements View.O
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
                 responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (ClientProtocolException e) {
-
-            } catch (IOException e) {
+            } catch (Exception e) {
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
-
             return responseTxt;
         }
 
@@ -189,8 +192,13 @@ public class ChangeMYCashPinActivity extends AppCompatActivity implements View.O
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
         }
 

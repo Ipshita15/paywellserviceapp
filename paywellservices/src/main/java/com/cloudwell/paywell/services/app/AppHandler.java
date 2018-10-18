@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -103,23 +102,6 @@ public class AppHandler {
     private static final String UNKNOWN_PASSENGER_AGE = "unknownPassengerAge";
     private static final String UNKNOWN_SOURCE_STATION_CODE = "unknownSourceStationCode";
 
-    private static final String REG_OUTLET_NAME = "outlet_name";
-    private static final String REG_OUTLET_ADDRESS = "outlet_address";
-    private static final String REG_OWNER_NAME = "owner_name";
-    private static final String REG_MOBILE_NO = "mobile_number";
-    private static final String REG_POST_CODE = "post_code";
-    private static final String REG_THANA = "thana";
-    private static final String REG_DISTRICT = "district";
-    private static final String REG_BUSINESS_TYPE = "business_type";
-    private static final String REG_EMAIL_ADDRESS = "email";
-    private static final String REG_LANDMARK = "landmark";
-    private static final String REG_SALES_CODE = "sales_code";
-    private static final String REG_COLLECTION_CODE = "collection_code";
-    private static final String REG_OUTLET_IMG = "outlet_img";
-    private static final String REG_NID_IMG = "nid_img";
-    private static final String REG_NID_BACK_IMG = "nid_back_img";
-    private static final String REG_OWNER_IMG = "owner_img";
-    private static final String REG_TRADE_LICENSE_IMG = "trade_license_img";
     private static final String REG_DISTRICT_ARRAY = "district_array";
     public static Boolean REG_FLAG_ONE = false;
     public static Boolean REG_FLAG_TWO = false;
@@ -134,7 +116,29 @@ public class AppHandler {
     private static final String USERNAME = "username";
     private static final String PHONE_NUMBER = "phone";
 
-    private static final String QRCODE_BITMAP = "bitmap";
+    private static final String QR_CODE_BITMAP = "bitmap";
+
+    private static final String PHN_NUMBER_VERIFICATION_STATUS = "phn_num_status";
+    private static final String MERCHANT_TYPE_VERIFICATION_STATUS = "merchant_type_status";
+    private static final String PHN_NUMBER = "phn_num";
+    private static final String PHN_UPDATE_CHECK = "phn_num_check_last_update";
+    private static final String DAY_COUNT = "day_count";
+
+    private static final String FIREBASE_ID = "firebase_id";
+    private static final String FIREBASE_TOKEN_STATUS = "firebase_token_status";
+
+    private static String INITIAL_CHANGE_PIN_STATUS = "initial_change_pin";
+
+    private static final String LOCATION_UPDATE_CHECK = "last_location_update_check";
+    private static final String LONGITUDE = "longitude";
+    private static final String LATITUDE = "latitude";
+
+    private static final String GATEWAY_ID = "gateway_id";
+    private static final String AGENT_PHN_NUM = "agent_phn_num";
+
+    private static final String IMAGE_CACHE_CLEAN = "img_cache_clean";
+
+    private static String DISPLAY_PICTURE_COUNT = "display_picture_count";
 
     public AppHandler() {
 
@@ -145,10 +149,8 @@ public class AppHandler {
         editor = mPref.edit();
     }
 
-
-
     public ArrayList<String> getSources() {
-        int size = mPref.getInt(SOURCE_SIZE_, 0);
+        int size = mPref.getInt(SOURCE_SIZE_, PRIVATE_MODE);
         ArrayList<String> sources = new ArrayList<>(size);
         for (int i = 0; i < size; i++)
             sources.add(mPref.getString(SOURCE_ + i, UNKNOWN_SOURCE));
@@ -156,7 +158,7 @@ public class AppHandler {
     }
 
     public void setSources(ArrayList<String> sources) {
-        int size = mPref.getInt(SOURCE_SIZE_, 0);
+        int size = mPref.getInt(SOURCE_SIZE_, PRIVATE_MODE);
         // clear the previous data if exists
         for (int i = 0; i < size; i++)
             editor.remove(SOURCE_ + i);
@@ -167,7 +169,7 @@ public class AppHandler {
         editor.commit();
     }
     public ArrayList<String> getSourceCodes() {
-        int size = mPref.getInt(SOURCE_CODES_SIZE_, 0);
+        int size = mPref.getInt(SOURCE_CODES_SIZE_, PRIVATE_MODE);
         ArrayList<String> sourceCodes = new ArrayList<>(size);
         for (int i = 0; i < size; i++)
             sourceCodes.add(mPref.getString(SOURCE_CODES_ + i, UNKNOWN_SOURCE));
@@ -175,7 +177,7 @@ public class AppHandler {
     }
 
     public void setSourceCodes(ArrayList<String> sourceCodes) {
-        int size = mPref.getInt(SOURCE_CODES_SIZE_, 0);
+        int size = mPref.getInt(SOURCE_CODES_SIZE_, PRIVATE_MODE);
         // clear the previous data if exists
         for (int i = 0; i < size; i++)
             editor.remove(SOURCE_CODES_ + i);
@@ -223,7 +225,7 @@ public class AppHandler {
     }
 
     public long getUpdateCheck() {
-        return mPref.getLong(UPDATE_CHECK, 0);
+        return mPref.getLong(UPDATE_CHECK, PRIVATE_MODE);
     }
 
     public void setUpdateCheck(long times) {
@@ -425,7 +427,7 @@ public class AppHandler {
         return mPref.getString(DESTINATION_NAME, UNKNOWN_DESTINATION);
     }
     public void setDestinationStations(ArrayList<String> destinationStations) {
-        int size = mPref.getInt(DESTINATION_STATION_SIZE_, 0);
+        int size = mPref.getInt(DESTINATION_STATION_SIZE_, PRIVATE_MODE);
         // clear the previous data if exists
         for (int i = 0; i < size; i++)
             editor.remove(DESTINATION_STATION_ + i);
@@ -436,7 +438,7 @@ public class AppHandler {
         editor.commit();
     }
     public ArrayList<String> getDestinationStations() {
-        int size = mPref.getInt(DESTINATION_STATION_SIZE_, 0);
+        int size = mPref.getInt(DESTINATION_STATION_SIZE_, PRIVATE_MODE);
         ArrayList<String> stations = new ArrayList<>(size);
         for (int i = 0; i < size; i++)
             stations.add(mPref.getString(DESTINATION_STATION_ + i, UNKNOWN_DESTINATION_STATION));
@@ -444,7 +446,7 @@ public class AppHandler {
     }
 
     public void setDestinationStationCodes(ArrayList<String> destinationStationCodes) {
-        int size = mPref.getInt(DESTINATION_STATION_CODE_SIZE_, 0);
+        int size = mPref.getInt(DESTINATION_STATION_CODE_SIZE_, PRIVATE_MODE);
         // clear the previous data if exists
         for (int i = 0; i < size; i++)
             editor.remove(DESTINATION_STATION_CODES_ + i);
@@ -455,7 +457,7 @@ public class AppHandler {
         editor.commit();
     }
     public ArrayList<String> getDestinationStationCodes() {
-        int size = mPref.getInt(DESTINATION_STATION_CODE_SIZE_, 0);
+        int size = mPref.getInt(DESTINATION_STATION_CODE_SIZE_, PRIVATE_MODE);
         ArrayList<String> stationCodes = new ArrayList<>(size);
         for (int i = 0; i < size; i++)
             stationCodes.add(mPref.getString(DESTINATION_STATION_CODES_ + i, UNKNOWN_DESTINATION_STATION_CODES));
@@ -463,7 +465,7 @@ public class AppHandler {
     }
 
     public void setPassengers(ArrayList<String> passengers) {
-        int size = mPref.getInt(PASSENGER_SIZE_, 0);
+        int size = mPref.getInt(PASSENGER_SIZE_, PRIVATE_MODE);
         // clear the previous data if exists
         for (int i = 0; i < size; i++)
             editor.remove(PASSENGER_ + i);
@@ -474,7 +476,7 @@ public class AppHandler {
         editor.commit();
     }
     public ArrayList<String> getPassengers() {
-        int size = mPref.getInt(PASSENGER_SIZE_, 0);
+        int size = mPref.getInt(PASSENGER_SIZE_, PRIVATE_MODE);
         ArrayList<String> passengers = new ArrayList<>(size);
         for (int i = 0; i < size; i++)
             passengers.add(mPref.getString(PASSENGER_ + i, UNKNOWN_PASSENGER));
@@ -482,7 +484,7 @@ public class AppHandler {
     }
 
     public void setPassengerCodes(ArrayList<String> passengerCodes) {
-        int size = mPref.getInt(PASSENGER_CODE_SIZE_, 0);
+        int size = mPref.getInt(PASSENGER_CODE_SIZE_, PRIVATE_MODE);
         // clear the previous data if exists
         for (int i = 0; i < size; i++)
             editor.remove(PASSENGER_CODE + i);
@@ -493,7 +495,7 @@ public class AppHandler {
         editor.commit();
     }
     public ArrayList<String> getPassengerCodes() {
-        int size = mPref.getInt(PASSENGER_CODE_SIZE_, 0);
+        int size = mPref.getInt(PASSENGER_CODE_SIZE_, PRIVATE_MODE);
         ArrayList<String> passengerCodes = new ArrayList<>(size);
         for (int i = 0; i < size; i++)
             passengerCodes.add(mPref.getString(PASSENGER_CODE + i, UNKNOWN_PASSENGER_CODE));
@@ -501,7 +503,7 @@ public class AppHandler {
     }
 
     public void setPassengerTypes(ArrayList<String> passengerTypes) {
-        int size = mPref.getInt(PASSENGER_TYPE_SIZE_, 0);
+        int size = mPref.getInt(PASSENGER_TYPE_SIZE_, PRIVATE_MODE);
         // clear the previous data if exists
         for (int i = 0; i < size; i++)
             editor.remove(PASSENGER_TYPE_ + i);
@@ -512,7 +514,7 @@ public class AppHandler {
         editor.commit();
     }
     public ArrayList<String> getPassengerTypes () {
-        int size = mPref.getInt(PASSENGER_TYPE_SIZE_, 0);
+        int size = mPref.getInt(PASSENGER_TYPE_SIZE_, PRIVATE_MODE);
         ArrayList<String> passengerCodes = new ArrayList<>(size);
         for (int i = 0; i < size; i++)
             passengerCodes.add(mPref.getString(PASSENGER_TYPE_ + i, UNKNOWN_PASSENGER_TYPE));
@@ -536,7 +538,7 @@ public class AppHandler {
     }
 
     public void setTrainNames (ArrayList<String> trainNames) {
-        int size = mPref.getInt(TRAIN_NAME_SIZE_, 0);
+        int size = mPref.getInt(TRAIN_NAME_SIZE_, PRIVATE_MODE);
         // clear the previous data if exists
         for (int i = 0; i < size; i++)
             editor.remove(TRAIN_NAME_ + i);
@@ -547,7 +549,7 @@ public class AppHandler {
         editor.commit();
     }
     public ArrayList<String> getTrainNames () {
-        int size = mPref.getInt(TRAIN_NAME_SIZE_, 0);
+        int size = mPref.getInt(TRAIN_NAME_SIZE_, PRIVATE_MODE);
         ArrayList<String> passengerCodes = new ArrayList<>(size);
         for (int i = 0; i < size; i++)
             passengerCodes.add(mPref.getString(TRAIN_NAME_ + i, UNKNOWN_TRAIN_NAME));
@@ -555,7 +557,7 @@ public class AppHandler {
     }
 
     public void setTrainCodes(ArrayList<String> trainCodes) {
-        int size = mPref.getInt(TRAIN_CODE_SIZE_, 0);
+        int size = mPref.getInt(TRAIN_CODE_SIZE_, PRIVATE_MODE);
         // clear the previous data if exists
         for (int i = 0; i < size; i++)
             editor.remove(TRAIN_CODE_ + i);
@@ -567,7 +569,7 @@ public class AppHandler {
     }
 
     public ArrayList<String> getTrainCodes () {
-        int size = mPref.getInt(TRAIN_CODE_SIZE_, 0);
+        int size = mPref.getInt(TRAIN_CODE_SIZE_, PRIVATE_MODE);
         ArrayList<String> passengerCodes = new ArrayList<>(size);
         for (int i = 0; i < size; i++)
             passengerCodes.add(mPref.getString(TRAIN_CODE_ + i, UNKNOWN_TRAIN_CODE));
@@ -575,7 +577,7 @@ public class AppHandler {
     }
 
     public void setClassTypes(ArrayList<String> classTypes) {
-        int size = mPref.getInt(CLASS_TYPE_SIZE_, 0);
+        int size = mPref.getInt(CLASS_TYPE_SIZE_, PRIVATE_MODE);
         // clear the previous data if exists
         for (int i = 0; i < size; i++)
             editor.remove(CLASS_TYPE_ + i);
@@ -586,7 +588,7 @@ public class AppHandler {
         editor.commit();
     }
     public ArrayList<String> getClassTypes () {
-        int size = mPref.getInt(CLASS_TYPE_SIZE_, 0);
+        int size = mPref.getInt(CLASS_TYPE_SIZE_, PRIVATE_MODE);
         ArrayList<String> passengerCodes = new ArrayList<>(size);
         for (int i = 0; i < size; i++)
             passengerCodes.add(mPref.getString(CLASS_TYPE_ + i, UNKNOWN_CLASS_TYPE));
@@ -594,7 +596,7 @@ public class AppHandler {
     }
 
     public void setClassTypeCodes(ArrayList<String> classCode) {
-        int size = mPref.getInt(CLASS_TYPE_CODE_SIZE_, 0);
+        int size = mPref.getInt(CLASS_TYPE_CODE_SIZE_, PRIVATE_MODE);
         // clear the previous data if exists
         for (int i = 0; i < size; i++)
             editor.remove(CLASS_TYPE_CODE_ + i);
@@ -605,7 +607,7 @@ public class AppHandler {
         editor.commit();
     }
     public ArrayList<String> getClassTypeCodes () {
-        int size = mPref.getInt(CLASS_TYPE_CODE_SIZE_, 0);
+        int size = mPref.getInt(CLASS_TYPE_CODE_SIZE_, PRIVATE_MODE);
         ArrayList<String> passengerCodes = new ArrayList<>(size);
         for (int i = 0; i < size; i++)
             passengerCodes.add(mPref.getString(CLASS_TYPE_CODE_ + i, UNKNOWN_CLASS_TYPE_CODE));
@@ -647,7 +649,7 @@ public class AppHandler {
             builder.setMessage(R.string.connection_error_msg)
                     .setPositiveButton(R.string.retry_btn, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            cd = new ConnectionDetector(getActivity());
+                            cd = new ConnectionDetector(AppController.getContext());
                             if (cd.isConnectingToInternet()) {
                                 dismiss();
                             } else {
@@ -662,134 +664,12 @@ public class AppHandler {
         }
     }
 
-    public void setOutletName(String outletName) {
-        editor.putString(REG_OUTLET_NAME, outletName);
-        editor.commit();
-    }
-    public String getOutletName() { return mPref.getString(REG_OUTLET_NAME, "unknown"); }
-
-    public void setOutletAddress(String outletAddress) {
-        editor.putString(REG_OUTLET_ADDRESS, outletAddress);
-        editor.commit();
-    }
-    public String getOutletAddress() { return mPref.getString(REG_OUTLET_ADDRESS, "unknown"); }
-
-    public void setOwnerName(String ownerName) {
-        editor.putString(REG_OWNER_NAME, ownerName);
-        editor.commit();
-    }
-    public String getOwnerName() { return mPref.getString(REG_OWNER_NAME, "unknown"); }
-
-    public void setMobileNo(String mobileNo) {
-        editor.putString(REG_MOBILE_NO, mobileNo);
-        editor.commit();
-    }
-    public String getMobileNo() { return mPref.getString(REG_MOBILE_NO, "unknown"); }
-
-    public void setPostCode(String postCode) {
-        editor.putString(REG_POST_CODE, postCode);
-        editor.commit();
-    }
-    public String getPostCode() { return mPref.getString(REG_POST_CODE, "unknown"); }
-
-    public void setThana(String thana) {
-        editor.putString(REG_THANA, thana);
-        editor.commit();
-    }
-    public String getThana() { return mPref.getString(REG_THANA, "unknown"); }
-
-    public void setDistrict(String district) {
-        editor.putString(REG_DISTRICT, district);
-        editor.commit();
-    }
-    public String getDistrict() { return mPref.getString(REG_DISTRICT, "unknown"); }
-
-    public void setBusinessType(String businessType) {
-        editor.putString(REG_BUSINESS_TYPE, businessType);
-        editor.commit();
-    }
-    public String getBusinessType() { return mPref.getString(REG_BUSINESS_TYPE, "unknown"); }
-
-    public void setEmailAddress(String emailAddress) {
-        editor.putString(REG_EMAIL_ADDRESS, emailAddress);
-        editor.commit();
-    }
-    public String getEmailAddress() { return mPref.getString(REG_EMAIL_ADDRESS, "unknown"); }
-
-    public void setLandmark(String landmark) {
-        editor.putString(REG_LANDMARK, landmark);
-        editor.commit();
-    }
-    public String getLandmark() { return mPref.getString(REG_LANDMARK, "unknown"); }
-
-    public void setSalesCode(String salesCode) {
-        editor.putString(REG_SALES_CODE, salesCode);
-        editor.commit();
-    }
-    public String getSalesCode() { return mPref.getString(REG_SALES_CODE, "unknown"); }
-
-    public void setCollectionCode(String collectionCode) {
-        editor.putString(REG_COLLECTION_CODE, collectionCode);
-        editor.commit();
-    }
-    public String getCollectionCode() { return mPref.getString(REG_COLLECTION_CODE, "unknown"); }
-
-    public void setOutletImg(String outletImg) {
-        editor.putString(REG_OUTLET_IMG, outletImg);
-        editor.commit();
-    }
-    public String getOutletImg() { return mPref.getString(REG_OUTLET_IMG, "unknown"); }
-
-    public void setNIDImg(String nidImg) {
-        editor.putString(REG_NID_IMG, nidImg);
-        editor.commit();
-    }
-    public String getNIDImg() { return mPref.getString(REG_NID_IMG, "unknown"); }
-
-    public void setNIDBackImg(String nidBackImg) {
-        editor.putString(REG_NID_BACK_IMG, nidBackImg);
-        editor.commit();
-    }
-    public String getNIDBackImg() { return mPref.getString(REG_NID_BACK_IMG, "unknown"); }
-
-    public void setOwnerImg(String ownerImg) {
-        editor.putString(REG_OWNER_IMG, ownerImg);
-        editor.commit();
-    }
-    public String getOwnerImg() { return mPref.getString(REG_OWNER_IMG, "unknown"); }
-
-    public void setTradeLicenseImg(String tradeLicenseImg) {
-        editor.putString(REG_TRADE_LICENSE_IMG, tradeLicenseImg);
-        editor.commit();
-    }
-    public String getTradeLicenseImg() { return mPref.getString(REG_TRADE_LICENSE_IMG, "unknown"); }
-
     public void setDistrictArray(String districtArray) {
         editor.putString(REG_DISTRICT_ARRAY, districtArray);
         editor.commit();
     }
-    public String getDistrictArray() { return mPref.getString(REG_DISTRICT_ARRAY, "unknown"); }
 
-    public void deleteRegistrationData() {
-        editor.remove(REG_OUTLET_NAME).commit();
-        editor.remove(REG_OUTLET_ADDRESS).commit();
-        editor.remove(REG_OWNER_NAME).commit();
-        editor.remove(REG_MOBILE_NO).commit();
-        editor.remove(REG_POST_CODE).commit();
-        editor.remove(REG_THANA).commit();
-        editor.remove(REG_DISTRICT).commit();
-        editor.remove(REG_BUSINESS_TYPE).commit();
-        editor.remove(REG_EMAIL_ADDRESS).commit();
-        editor.remove(REG_LANDMARK).commit();
-        editor.remove(REG_SALES_CODE).commit();
-        editor.remove(REG_COLLECTION_CODE).commit();
-        editor.remove(REG_OUTLET_IMG).commit();
-        editor.remove(REG_NID_IMG).commit();
-        editor.remove(REG_NID_BACK_IMG).commit();
-        editor.remove(REG_OWNER_IMG).commit();
-        editor.remove(REG_TRADE_LICENSE_IMG).commit();
-        editor.remove(REG_DISTRICT_ARRAY).commit();
-    }
+    public String getDistrictArray() { return mPref.getString(REG_DISTRICT_ARRAY, "unknown"); }
 
     public void setAppLanguage(String mLanguage) {
         editor.putString(APP_LANGUAGE, mLanguage);
@@ -824,11 +704,141 @@ public class AppHandler {
     }
 
     public void setQrCodeImagePath(String mPath) {
-        editor.putString(QRCODE_BITMAP, mPath);
+        editor.putString(QR_CODE_BITMAP, mPath);
         editor.commit();
     }
     public String getQrCodeImagePath() {
-        return mPref.getString(QRCODE_BITMAP, "unknown");
+        return mPref.getString(QR_CODE_BITMAP, "unknown");
     }
 
+    public void setPhnNumberVerificationStatus(String mPhnNoStatus) {
+        editor.putString(PHN_NUMBER_VERIFICATION_STATUS, mPhnNoStatus);
+        editor.commit();
+    }
+    public String getPhnNumberVerificationStatus() {
+        return mPref.getString(PHN_NUMBER_VERIFICATION_STATUS, "unknown");
+    }
+
+    public void setMerchantTypeVerificationStatus(String mMerchantType) {
+        editor.putString(MERCHANT_TYPE_VERIFICATION_STATUS, mMerchantType);
+        editor.commit();
+    }
+    public String getMerchantTypeVerificationStatus() {
+        return mPref.getString(MERCHANT_TYPE_VERIFICATION_STATUS, "unknown");
+    }
+
+    public void setPhnNumber(String mPhnNo) {
+        editor.putString(PHN_NUMBER, mPhnNo);
+        editor.commit();
+    }
+    public String getPhnNumber() {
+        return mPref.getString(PHN_NUMBER, "unknown");
+    }
+
+    public long getPhnUpdateCheck() {
+        return mPref.getLong(PHN_UPDATE_CHECK, PRIVATE_MODE);
+    }
+
+    public void setPhnUpdateCheck(long phnTimes) {
+        editor.putLong(PHN_UPDATE_CHECK, phnTimes);
+        editor.commit();
+    }
+
+    public void setDayCount(int mCount) {
+        editor.putInt(DAY_COUNT, mCount);
+        editor.commit();
+    }
+    public int getDayCount() {
+        return mPref.getInt(DAY_COUNT, PRIVATE_MODE);
+    }
+
+    public String getFirebaseId() {
+        return mPref.getString(FIREBASE_ID, "unknown");
+    }
+
+    public void setFirebaseId(String firebaseId) {
+        editor.putString(FIREBASE_ID, firebaseId);
+        editor.commit();
+    }
+
+    public String getFirebaseTokenStatus() {
+        return mPref.getString(FIREBASE_TOKEN_STATUS, "false");
+    }
+
+    public void setFirebaseTokenStatus(String firebaseId) {
+        editor.putString(FIREBASE_TOKEN_STATUS, firebaseId);
+        editor.commit();
+    }
+
+    public String getInitialChangePinStatus() {
+        return mPref.getString(INITIAL_CHANGE_PIN_STATUS, "unknown");
+    }
+
+    public void setInitialChangePinStatus(String initialChangePinStatus) {
+        editor.putString(INITIAL_CHANGE_PIN_STATUS, initialChangePinStatus);
+        editor.commit();
+    }
+
+    public long getLocationUpdateCheck() {
+        return mPref.getLong(LOCATION_UPDATE_CHECK, PRIVATE_MODE);
+    }
+
+    public void setLocationUpdateCheck(long times) {
+        editor.putLong(LOCATION_UPDATE_CHECK, times);
+        editor.commit();
+    }
+
+    public String getLongitude() {
+        return mPref.getString(LONGITUDE, "unknown");
+    }
+
+    public void setLongitude(String longitude) {
+        editor.putString(LONGITUDE, longitude);
+        editor.commit();
+    }
+
+    public String getLatitude() {
+        return mPref.getString(LATITUDE, "unknown");
+    }
+
+    public void setLatitude(String latitude) {
+        editor.putString(LATITUDE, latitude);
+        editor.commit();
+    }
+
+    public String getAgentPhnNum() {
+        return mPref.getString(AGENT_PHN_NUM, "unknown");
+    }
+
+    public void setAgentPhnNum(String agentPhnNum) {
+        editor.putString(AGENT_PHN_NUM, agentPhnNum);
+        editor.commit();
+    }
+
+    public String getGatewayId() {
+        return mPref.getString(GATEWAY_ID, "unknown");
+    }
+
+    public void setGatewayId(String gatewayId) {
+        editor.putString(GATEWAY_ID, gatewayId);
+        editor.commit();
+    }
+
+    public long getImgCacheCleanUpdateCheck() {
+        return mPref.getLong(IMAGE_CACHE_CLEAN, PRIVATE_MODE);
+    }
+
+    public void setImgCacheCleanUpdateCheck(long times) {
+        editor.putLong(IMAGE_CACHE_CLEAN, times);
+        editor.commit();
+    }
+
+    public int getDisplayPictureCount() {
+        return mPref.getInt(DISPLAY_PICTURE_COUNT, 0);
+    }
+
+    public void setDisplayPictureCount(int displayPictureCount) {
+        editor.putInt(DISPLAY_PICTURE_COUNT, displayPictureCount);
+        editor.commit();
+    }
 }

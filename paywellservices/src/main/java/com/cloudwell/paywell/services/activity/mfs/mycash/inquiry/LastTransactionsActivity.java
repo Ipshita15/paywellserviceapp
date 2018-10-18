@@ -3,7 +3,9 @@ package com.cloudwell.paywell.services.activity.mfs.mycash.inquiry;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -18,22 +20,17 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.mfs.mycash.InquiryMenuActivity;
-import com.cloudwell.paywell.services.app.AppHandler;
-import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LastTransactionsActivity extends AppCompatActivity {
 
-    private AppHandler mAppHandler;
-    private RelativeLayout mRelativeLayout;
-    private ConnectionDetector mCd;
-    ListView listView;
-    TrxAdapter mAdapter;
-    String array;
-    int trx_length;
+    private RelativeLayout relativeLayout;
+    private ListView listView;
+    private TrxAdapter mAdapter;
+    private String array;
+    private int trx_length;
     public static String[] mServiceType = null;
     public static String[] mTrx = null;
     public static String[] mCustomerMobileNo = null;
@@ -42,7 +39,7 @@ public class LastTransactionsActivity extends AppCompatActivity {
     public static String[] mAmount = null;
     public static String[] mMessage = null;
     public static String[] mDate = null;
-    String data;
+    private String data;
 
 
     @Override
@@ -51,10 +48,9 @@ public class LastTransactionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_last_transactions);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.home_activity_log);
-        mAppHandler = new AppHandler(this);
-        mRelativeLayout = (RelativeLayout) findViewById(R.id.trxRelativeLayout);
-        mCd = new ConnectionDetector(this);
-        listView = (ListView) findViewById(R.id.trxListView);
+
+        relativeLayout = findViewById(R.id.trxRelativeLayout);
+        listView = findViewById(R.id.trxListView);
         mAdapter = new TrxAdapter(this);
 
         Bundle bundle = getIntent().getExtras();
@@ -64,7 +60,7 @@ public class LastTransactionsActivity extends AppCompatActivity {
         initializeAdapter();
     }
 
-    public void initializeAdapter(){
+    public void initializeAdapter() {
         try {
             JSONArray jsonArray = new JSONArray(array);
             mServiceType = new String[jsonArray.length()];
@@ -103,21 +99,28 @@ public class LastTransactionsActivity extends AppCompatActivity {
                     String request_datetime = mDate[position];
 
                     data = "";
-                    if(service_type.length() !=0 && !service_type.equals("") && !service_type.equals("null")){
+                    if (service_type.length() != 0 && !service_type.equals("") && !service_type.equals("null")) {
                         data += "Service Type: " + service_type;
-                    } if(trx_id.length() != 0 && !trx_id.equals("") && !trx_id.equals("null")){
+                    }
+                    if (trx_id.length() != 0 && !trx_id.equals("") && !trx_id.equals("null")) {
                         data += "\nTrx ID: " + trx_id;
-                    } if(customer_mobile_no.length() != 0 && !customer_mobile_no.equals("") && !customer_mobile_no.equals("null")){
+                    }
+                    if (customer_mobile_no.length() != 0 && !customer_mobile_no.equals("") && !customer_mobile_no.equals("null")) {
                         data += "\nCust. Phone No: " + customer_mobile_no;
-                    } if(bill_number.length() != 0 && !bill_number.equals("") && !bill_number.equals("null")){
+                    }
+                    if (bill_number.length() != 0 && !bill_number.equals("") && !bill_number.equals("null")) {
                         data += "\nBill Number: " + bill_number;
-                    } if(bill_customer_phone.length() != 0 && !bill_customer_phone.equals("") && !bill_customer_phone.equals("null")){
+                    }
+                    if (bill_customer_phone.length() != 0 && !bill_customer_phone.equals("") && !bill_customer_phone.equals("null")) {
                         data += "\nProvider Phone No: " + bill_customer_phone;
-                    } if(total_amount.length() != 0 && !total_amount.equals("") && !total_amount.equals("null")){
+                    }
+                    if (total_amount.length() != 0 && !total_amount.equals("") && !total_amount.equals("null")) {
                         data += "\nAmount: " + total_amount;
-                    } if(response_msg.length() != 0 && !response_msg.equals("") && !response_msg.equals("null")){
+                    }
+                    if (response_msg.length() != 0 && !response_msg.equals("") && !response_msg.equals("null")) {
                         data += "\nMessage: " + response_msg;
-                    } if(request_datetime.length() != 0 && !request_datetime.equals("") && !request_datetime.equals("null")){
+                    }
+                    if (request_datetime.length() != 0 && !request_datetime.equals("") && !request_datetime.equals("null")) {
                         data += "\nDate: " + request_datetime;
                     }
                     AlertDialog.Builder builder = new AlertDialog.Builder(LastTransactionsActivity.this);
@@ -137,8 +140,13 @@ public class LastTransactionsActivity extends AppCompatActivity {
                 }
             });
 
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            Snackbar snackbar = Snackbar.make(relativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+            View snackBarView = snackbar.getView();
+            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+            snackbar.show();
         }
     }
 
@@ -163,12 +171,13 @@ public class LastTransactionsActivity extends AppCompatActivity {
         private final Context mContext;
 
         public TrxAdapter(Context context) {
-            mAppHandler = new AppHandler(context);
             mContext = context;
         }
 
         @Override
-        public int getCount() { return trx_length; }
+        public int getCount() {
+            return trx_length;
+        }
 
         @Override
         public Object getItem(int position) {
@@ -186,16 +195,16 @@ public class LastTransactionsActivity extends AppCompatActivity {
             if (convertView == null) {
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.dialog_mycash_trx_log, parent, false);
                 viewHolder = new TrxAdapter.ViewHolder();
-                viewHolder.serviceType = (TextView) convertView.findViewById(R.id.serviceType);
-                viewHolder.amount = (TextView) convertView.findViewById(R.id.amount);
-                viewHolder.trxID = (TextView) convertView.findViewById(R.id.trxID);
+                viewHolder.serviceType = convertView.findViewById(R.id.serviceType);
+                viewHolder.amount = convertView.findViewById(R.id.amount);
+                viewHolder.trxID = convertView.findViewById(R.id.trxID);
                 convertView.setTag(viewHolder);
             } else {
                 viewHolder = (TrxAdapter.ViewHolder) convertView.getTag();
             }
 
             viewHolder.serviceType.setText(mServiceType[position]);
-            if(mServiceType[position].equals("Cash In")
+            if (mServiceType[position].equals("Cash In")
                     || mServiceType[position].equals("Cash Out")
                     || mServiceType[position].equals("P2M")
                     || mServiceType[position].equals("M2P")
@@ -214,9 +223,7 @@ public class LastTransactionsActivity extends AppCompatActivity {
 
 
         private class ViewHolder {
-            TextView serviceType;
-            TextView amount;
-            TextView trxID;
+            TextView serviceType, amount, trxID;
         }
     }
 }

@@ -10,7 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -23,12 +23,17 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChangePinActivity extends AppCompatActivity {
 
@@ -41,25 +46,27 @@ public class ChangePinActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_pin);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.home_settings_change_pin);
-
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.home_settings_change_pin);
+        }
         initView();
     }
 
     private void initView() {
-        mLinearLayout = (LinearLayout) findViewById(R.id.linearLayout);
+        mLinearLayout = findViewById(R.id.linearLayout);
 
-        mOldPin = (EditText) findViewById(R.id.oldPin);
-        mNewPin = (EditText) findViewById(R.id.newPin);
+        mOldPin = findViewById(R.id.oldPin);
+        mNewPin = findViewById(R.id.newPin);
 
-        ((TextView) mLinearLayout.findViewById(R.id.tvOldPin)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mOldPin.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((TextView) mLinearLayout.findViewById(R.id.tvNewPin)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mNewPin.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((Button) mLinearLayout.findViewById(R.id.btnChangePin)).setTypeface(AppController.getInstance().getRobotoRegularFont());
+        ((TextView) mLinearLayout.findViewById(R.id.tvOldPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        mOldPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+        ((TextView) mLinearLayout.findViewById(R.id.tvNewPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        mNewPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+        ((Button) mLinearLayout.findViewById(R.id.btnChangePin)).setTypeface(AppController.getInstance().getOxygenLightFont());
 
-        mCd = new ConnectionDetector(getApplicationContext());
+        mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
     }
 
@@ -71,17 +78,14 @@ public class ChangePinActivity extends AppCompatActivity {
             mOldPin.setError(Html.fromHtml("<font color='red'>" + getString(R.string.old_pin_error_msg) + "</font>"));
             return;
         }
-        if (_newPin.length() == 0) {
+        if (_newPin.length() == 0 || (_oldPin.equalsIgnoreCase(_newPin))) {
             mNewPin.setError(Html.fromHtml("<font color='red'>" + getString(R.string.new_pin_error_msg) + "</font>"));
             return;
         }
         if (!mCd.isConnectingToInternet()) {
             AppHandler.showDialog(getSupportFragmentManager());
         } else {
-            new ChangePinAsync().execute(getResources().getString(R.string.pin),
-                    "iemi_no=" + mAppHandler.getImeiNo(),
-                    "&old_pin=" + _oldPin,
-                    "&new_pin=" + _newPin);
+            new ChangePinAsync().execute(getString(R.string.pin), _oldPin, _newPin);
         }
     }
 
@@ -95,28 +99,41 @@ public class ChangePinActivity extends AppCompatActivity {
                 progressDialog.show();
         }
 
-        @SuppressWarnings("deprecation")
         @Override
         protected String doInBackground(String... params) {
             String responseTxt = null;
-            HttpGet request = new HttpGet(params[0] + params[1] + params[2] + params[3]);
-            ResponseHandler<String> responseHandler = new BasicResponseHandler();
-            HttpClient client = AppController.getInstance().getTrustedHttpClient();
+            // Create a new HttpClient and Post Header
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(params[0]);
             try {
-                responseTxt = client.execute(request, responseHandler);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
+                nameValuePairs.add(new BasicNameValuePair("iemi_no", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("old_pin", params[1]));
+                nameValuePairs.add(new BasicNameValuePair("new_pin", params[2]));
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                responseTxt = httpclient.execute(httppost, responseHandler);
+            } catch (Exception e) {
+                e.fillInStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+            }
             return responseTxt;
         }
 
         @Override
         protected void onPostExecute(String result) {
+            Log.e("logTag", result);
             progressDialog.dismiss();
             if (result != null) {
                 String splitStr[] = result.split("@");
                 if (result.startsWith("200")) {
+
+                    mAppHandler.setInitialChangePinStatus("true");
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(ChangePinActivity.this);
                     builder.setTitle("Result");
                     builder.setMessage(R.string.change_pin_status_msg);
@@ -124,20 +141,25 @@ public class ChangePinActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int id) {
                             dialogInterface.dismiss();
+                            onBackPressed();
                         }
                     });
                     AlertDialog alert = builder.create();
                     alert.show();
-                    TextView messageText = (TextView) alert.findViewById(android.R.id.message);
-                    messageText.setGravity(Gravity.CENTER);
                 } else {
-                    Snackbar snackbar = Snackbar.make(mLinearLayout, splitStr[1], Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ChangePinActivity.this);
+                    builder.setTitle("Result");
+                    builder.setMessage(splitStr[1]);
+                    builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int id) {
+                            dialogInterface.dismiss();
+                            onBackPressed();
+                        }
+                    });
+                    AlertDialog alert = builder.create();
+                    alert.show();
                 }
-
             } else {
                 Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -146,7 +168,6 @@ public class ChangePinActivity extends AppCompatActivity {
                 snackbar.show();
             }
         }
-
     }
 
     @Override

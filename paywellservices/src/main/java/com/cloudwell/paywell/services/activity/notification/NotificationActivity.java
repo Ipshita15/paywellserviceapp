@@ -1,33 +1,26 @@
 package com.cloudwell.paywell.services.activity.notification;
 
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.util.SparseBooleanArray;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
 import com.cloudwell.paywell.services.app.AppHandler;
-import com.squareup.picasso.Picasso;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -42,14 +35,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by android on 2/11/2016.
- */
 public class NotificationActivity extends AppCompatActivity {
 
     public static final String IS_NOTIFICATION_SHOWN = "isNotificationShown";
+    private LinearLayout mLinearLayout;
     private ListView listView;
     private AppHandler mAppHandler;
+    private int position;
 
     public static int length;
     public static String[] mId = null;
@@ -58,51 +50,33 @@ public class NotificationActivity extends AppCompatActivity {
     public static String[] mTitle = null;
     public static String[] mImage = null;
     public static String[] mStatus = null;
-    int flag = 0;
-    int position_status;
+    public static String[] mType = null;
+    public static String[] mData = null;
+    private int flag = 0;
+    private MsgAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification_view);
-        getSupportActionBar().setTitle(R.string.home_notification);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        listView = (ListView) findViewById(R.id.ListView);
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.home_notification);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        mLinearLayout = findViewById(R.id.linearLayout);
+        listView = findViewById(R.id.listViewNotification);
         mAppHandler = new AppHandler(this);
 
-        final MsgAdapter adapter = new MsgAdapter(this);
+        adapter = new MsgAdapter(this);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                position_status = position;
-                AlertDialog.Builder builder = new AlertDialog.Builder(NotificationActivity.this);
-                builder.setTitle(mTitle[position]);
-                builder.setMessage(mMsg[position]);
-
-                if(!mImage[position].equals("empty")) {
-                    final ImageView imageView = new ImageView(NotificationActivity.this);
-                    Picasso.with(NotificationActivity.this).load(mImage[position]).into(imageView);
-                    builder.setView(imageView);
-                }
-
-                builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int id) {
-                        dialogInterface.cancel();
-                        mStatus[position] = "Read";
-                        adapter.notifyDataSetChanged();
-                        flag = 1;
-                    }
-                });
-                AlertDialog alert = builder.create();
-                if (!isFinishing()) {
-                    new NotificationAsync().execute(getResources().getString(R.string.notif_url), mId[position]);
-                    alert.show();
-                }
-                TextView messageText = (TextView) alert.findViewById(android.R.id.message);
-                messageText.setGravity(Gravity.CENTER);
+            public void onItemClick(AdapterView<?> parent, View view, final int msgPosition, long id) {
+                position = msgPosition;
+                flag = 1;
+                new NotificationAsync().execute(getResources().getString(R.string.notif_url), mId[msgPosition]);
             }
         });
     }
@@ -118,7 +92,7 @@ public class NotificationActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(flag == 1) {
+        if (flag == 1) {
             Intent intent = new Intent(NotificationActivity.this, MainActivity.class);
             intent.putExtra(IS_NOTIFICATION_SHOWN, true);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -134,6 +108,14 @@ public class NotificationActivity extends AppCompatActivity {
 
     @SuppressWarnings("deprecation")
     private class NotificationAsync extends AsyncTask<String, Intent, String> {
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(NotificationActivity.this, "", getString(R.string.loading_msg), true);
+            if (!isFinishing())
+                progressDialog.show();
+        }
 
         @Override
         protected String doInBackground(String... params) {
@@ -143,7 +125,7 @@ public class NotificationActivity extends AppCompatActivity {
                 HttpClient httpClients = new DefaultHttpClient();
                 HttpPost httpPost = new HttpPost(params[0]);
 
-                List<NameValuePair> nameValuePairs = new ArrayList<>(2);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
                 nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("message_id", params[1]));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
@@ -154,18 +136,33 @@ public class NotificationActivity extends AppCompatActivity {
                 notifications = httpClients.execute(httpPost, responseHandler);
             } catch (Exception ex) {
                 ex.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#8cc63f"));
+                snackbar.show();
             }
             return notifications;
         }
 
         @Override
         protected void onPostExecute(String result) {
-
             if (result != null) {
-
                 try {
+                    mStatus[position] = "Read";
+                    adapter.notifyDataSetChanged();
+                    progressDialog.dismiss();
                     JSONObject jsonObject = new JSONObject(result);
+                    NotificationFullViewActivity.TAG_NOTIFICATION_SOURCE = 1;
+                    NotificationFullViewActivity.TAG_NOTIFICATION_POSITION = position;
+                    startActivity(new Intent(NotificationActivity.this, NotificationFullViewActivity.class));
                 } catch (Exception ex) {
+                    ex.printStackTrace();
+                    Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                    View snackBarView = snackbar.getView();
+                    snackBarView.setBackgroundColor(Color.parseColor("#8cc63f"));
+                    snackbar.show();
                 }
             }
         }
@@ -181,7 +178,9 @@ public class NotificationActivity extends AppCompatActivity {
         }
 
         @Override
-        public int getCount() { return NotificationActivity.length; }
+        public int getCount() {
+            return NotificationActivity.length;
+        }
 
         @Override
         public Object getItem(int position) {
@@ -199,8 +198,9 @@ public class NotificationActivity extends AppCompatActivity {
             if (convertView == null) {
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.dialog_notification, parent, false);
                 viewHolder = new ViewHolder();
-                viewHolder.title = (TextView) convertView.findViewById(R.id.title);
-                viewHolder.date = (TextView) convertView.findViewById(R.id.date);
+                viewHolder.title = convertView.findViewById(R.id.title);
+                viewHolder.date = convertView.findViewById(R.id.date);
+                viewHolder.msg = convertView.findViewById(R.id.message);
                 convertView.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
@@ -210,18 +210,17 @@ public class NotificationActivity extends AppCompatActivity {
             if (NotificationActivity.mStatus[position].equals("Unread")) {
                 viewHolder.title.setTextColor(Color.parseColor("#ff0000"));
             } else {
-                viewHolder.title.setTextColor(Color.parseColor("#0d0d0d"));
+                viewHolder.title.setTextColor(Color.parseColor("#355689"));
             }
             viewHolder.title.setText(NotificationActivity.mTitle[position]);
             viewHolder.date.setText(NotificationActivity.mDate[position]);
+            viewHolder.msg.setText(NotificationActivity.mMsg[position]);
 
             return convertView;
         }
 
-
         private class ViewHolder {
-            TextView title;
-            TextView date;
+            TextView title, date, msg;
         }
     }
 }

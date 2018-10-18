@@ -4,12 +4,18 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
+
+import com.cloudwell.paywell.services.BuildConfig;
+import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.AppLoadingActivity;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -20,6 +26,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+
+import static android.content.Context.DOWNLOAD_SERVICE;
 
 public class DownloadManager extends AsyncTask<String, Integer, String> {
     private ProgressDialog progressDialog;
@@ -61,13 +69,13 @@ public class DownloadManager extends AsyncTask<String, Integer, String> {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
             // As MODE_WORLD_READABLE is deprecated from API 17
             try {
-                output = mContext.openFileOutput("app-release.apk", Context.MODE_WORLD_READABLE);
+                output = mContext.openFileOutput("app_release_" + mContext.getString(R.string.app_next_version_no) + ".apk", Context.MODE_WORLD_READABLE);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         } else {
             if (Environment.getExternalStorageState().equalsIgnoreCase(Environment.MEDIA_MOUNTED)) {
-                downloadPath = Environment.getExternalStorageDirectory().getPath() + "/app-release.apk";
+                downloadPath = Environment.getExternalStorageDirectory().getPath() + "/app_release_" + mContext.getString(R.string.app_next_version_no) + ".apk";
                 try {
                     output = new FileOutputStream(downloadPath);
                 } catch (FileNotFoundException e) {
@@ -155,7 +163,7 @@ public class DownloadManager extends AsyncTask<String, Integer, String> {
         progressDialog.setMessage("Downloading ...");
         progressDialog.setCancelable(false);
         //if (progressDialog == null) {
-            progressDialog.show();
+        progressDialog.show();
         //}
     }
 
@@ -186,16 +194,60 @@ public class DownloadManager extends AsyncTask<String, Integer, String> {
             String filepath = null;
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
                 // As MODE_WORLD_READABLE is deprecated from API 17
-                filepath = "/data/data/" + mContext.getPackageName() + "/files/app-release.apk";
+                //filepath = "/data/data/" + mContext.getPackageName() + "/files/app_release_" + mContext.getString(R.string.app_next_version_no) + ".apk";
+                filepath = "/data/data/" + mContext.getPackageName() + "/files";
             } else {
                 if (Environment.getExternalStorageState().equalsIgnoreCase(Environment.MEDIA_MOUNTED)) {
-                    filepath = Environment.getExternalStorageDirectory().getPath() + "/app-release.apk";
+                    //filepath = Environment.getExternalStorageDirectory().getPath() + "/app_release_" + mContext.getString(R.string.app_next_version_no) + ".apk";
+                    filepath = Environment.getExternalStorageDirectory().getPath();
                 }
             }
-            Uri fileLoc = Uri.fromFile(new File(filepath));
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(fileLoc, "application/vnd.android.package-archive");
-            mContext.startActivity(intent);
+            File toInstall = new File(filepath, "/app_release_" + mContext.getString(R.string.app_next_version_no) + ".apk");
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Intent intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
+                File file = new File(mContext.getFilesDir(), "/app_release_" + mContext.getString(R.string.app_next_version_no) + ".apk");
+                Uri uri = FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".fileprovider", file);
+                intent.setData(uri);
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                mContext.startActivity(intent);
+            } else {
+                Uri apkUri = Uri.fromFile(toInstall);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                mContext.startActivity(intent);
+            }
+
+        }
+    }
+
+    public void installNew() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            try {
+                Intent intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
+                File file = new File(mContext.getFilesDir(), "app_release_" + mContext.getString(R.string.app_next_version_no) + ".apk");
+                Uri uri = FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".fileprovider", file);
+
+                intent.setDataAndType(uri, "application/vnd.android.package-archive");
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                mContext.startActivity(intent);
+                //finish();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else{
+            try {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                File file = new File(Environment.getExternalStorageDirectory() + "/app_release_" + mContext.getString(R.string.app_next_version_no) + ".apk");
+
+                intent.setAction(android.content.Intent.ACTION_VIEW);
+                intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                mContext.startActivity(intent);
+                //finish();
+            } catch (Exception e) {
+                e.getMessage();
+            }
         }
     }
 }

@@ -5,8 +5,9 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_background_card"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activity.utility.UtilityMainActivity">
+    tools:context=".activity.product.ProductMenuActivity">
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -15,43 +16,52 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:orientation="horizontal"
+                android:weightSum="5">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/homeBtnAjkerDeal"
-                    style="@style/HomeButton"
+                    style="@style/HomeButtonNew"
                     android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_home_ajker_deal"
+                    android:drawableTop="@drawable/ic_ajker_deal"
                     android:onClick="onButtonClicker"
                     android:text="@string/home_product_ajker_deal"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"></LinearLayout>
+                    android:layout_weight="1" />
 
                 <Button
-                    android:id="@+id/homeBtnB2B"
-                    style="@style/HomeButton"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="15dp"
+                    android:id="@+id/homeBtnWholesale"
+                    style="@style/HomeButtonNew"
                     android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_paywell_b_two_b"
+                    android:drawableTop="@drawable/ic_wholesale"
                     android:onClick="onButtonClicker"
-                    android:text="@string/home_product_pw_b_two_b"
+                    android:paddingTop="10dp"
+                    android:text="@string/home_product_pw_wholesale"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

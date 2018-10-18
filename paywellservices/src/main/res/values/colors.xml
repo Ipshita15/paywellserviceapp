@@ -3,7 +3,6 @@
     <color name="colorPrimary">#5aac40</color>
     <color name="colorPrimaryDark">#2E7D32</color>
     <color name="colorAccent">#5aac40</color>
-    <color name="primary_transparent">#223F51B5</color>
     <drawable name="layout_background">#0c000000</drawable>
     <color name="tab_background">@color/colorPrimary</color>
     <color name="colorText">#ffffff</color>
@@ -29,7 +28,7 @@
     <!-- Paywell utility color -->
 
     <!-- Paywell dialg color -->
-    <color name="foreground1">#ff355689</color>
+    <color name="foreground">#ff355689</color>
     <color name="blue">#03A7E9</color>
     <color name="grey">#757575</color>
     <color name="off_white">#FAFAFA</color>

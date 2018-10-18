@@ -5,25 +5,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.webkit.WebView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
-import com.cloudwell.paywell.services.app.AppController;
 
-import java.io.IOException;
 import java.io.InputStream;
-
-/**
- * Created by Naima Gani on 12/21/2016.
- */
 
 public class TermsActivity extends AppCompatActivity {
 
     private WebView mWebView;
-    private TextView mTvErrorMsg;
-    private ProgressBar mPbLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,19 +22,14 @@ public class TermsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.nav_terms_and_conditions_title);
 
-        mWebView = (WebView) findViewById(R.id.wvStatementView);
+        mWebView = findViewById(R.id.wvStatementView);
         mWebView.getSettings().setBuiltInZoomControls(true);
-
-        mTvErrorMsg = (TextView) findViewById(R.id.tvErrorMessage);
-        mTvErrorMsg.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mPbLoading = (ProgressBar) findViewById(R.id.pbLoading);
 
         displayTermsAndConditions();
     }
 
     private void displayTermsAndConditions() {
         InputStream is;
-        String str;
         try {
             is = getAssets().open("terms_and_conditions_format.html");
             int size = is.available();
@@ -52,7 +37,7 @@ public class TermsActivity extends AppCompatActivity {
             is.read(buffer);
             is.close();
             mWebView.loadUrl("file:///android_asset/terms_and_conditions_format.html");
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

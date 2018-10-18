@@ -15,7 +15,6 @@ import com.cloudwell.paywell.services.activity.eticket.busticket.fragment.ACFrag
 import com.cloudwell.paywell.services.activity.eticket.busticket.fragment.AllFragment;
 import com.cloudwell.paywell.services.activity.eticket.busticket.fragment.NonACFragment;
 import com.cloudwell.paywell.services.app.AppHandler;
-import com.moktar.slidingtabs.SlidingTabLayout;
 
 @SuppressLint("NewApi")
 public class SearchBusActivity extends AppCompatActivity {
@@ -46,12 +45,12 @@ public class SearchBusActivity extends AppCompatActivity {
             mViewPager.setCurrentItem(_tabPosition);
         }
 
-        SlidingTabLayout mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
-        mSlidingTabLayout.setCustomTabView(R.layout.tab_indicator, android.R.id.text1);
-
-        mSlidingTabLayout.setSelectedIndicatorColors(Color.parseColor("#ffffff"));
-        mSlidingTabLayout.setDistributeEvenly(true);
-        mSlidingTabLayout.setViewPager(mViewPager);
+//        SlidingTabLayout mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+//        mSlidingTabLayout.setCustomTabView(R.layout.tab_indicator, android.R.id.text1);
+//
+//        mSlidingTabLayout.setSelectedIndicatorColors(Color.parseColor("#ffffff"));
+//        mSlidingTabLayout.setDistributeEvenly(true);
+//        mSlidingTabLayout.setViewPager(mViewPager);
     }
 
     private class SampleViewPagerAdapter extends FragmentPagerAdapter {

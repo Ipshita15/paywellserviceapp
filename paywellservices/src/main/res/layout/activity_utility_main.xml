@@ -5,6 +5,7 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_background_card"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activity.utility.UtilityMainActivity">
 
@@ -23,128 +24,48 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/homeBtnPassport"
-                    style="@style/HomeButton"
-                    android:drawableTop="@drawable/ic_home_passport"
-                    android:onClick="onButtonClicker"
-                    android:text="@string/home_utility_passport"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"></LinearLayout>
-
-                <Button
-                    android:id="@+id/homeBtnNID"
-                    style="@style/HomeButton"
-                    android:drawableTop="@drawable/ic_home_nid"
-                    android:onClick="onButtonClicker"
-                    android:text="@string/home_utility_nid"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="5">
 
                 <Button
                     android:id="@+id/homeBtnDESCO"
-                    style="@style/HomeButton"
-                    android:drawableTop="@drawable/ic_home_desco"
+                    style="@style/HomeButtonNew"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_desco"
                     android:onClick="onButtonClicker"
-                    android:text="@string/home_mfs_desco"
+                    android:text="@string/home_utility_desco"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"></LinearLayout>
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/homeBtnDPDC"
-                    style="@style/HomeButton"
-                    android:drawableTop="@drawable/ic_home_dpdc"
+                    style="@style/HomeButtonNew"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_dpdc"
                     android:onClick="onButtonClicker"
-                    android:text="@string/home_mfs_dpdc"
+                    android:text="@string/home_utility_dpdc"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/homeBtnWasa"
-                    style="@style/HomeButton"
-                    android:drawableTop="@drawable/ic_home_wasa"
-                    android:onClick="onButtonClicker"
-                    android:text="@string/home_utility_wasa"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"></LinearLayout>
-
-                <Button
-                    android:id="@+id/homeBtnWestZone"
-                    style="@style/HomeButton"
-                    android:drawableTop="@drawable/ic_home_west_zone"
-                    android:onClick="onButtonClicker"
-                    android:text="@string/home_utility_west_zone"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:orientation="horizontal">
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/homeBtnPolliBiddut"
-                    style="@style/HomeButton"
-                    android:drawableTop="@drawable/ic_home_pollibiddut"
+                    style="@style/HomeButtonNew"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_polli_biddut"
                     android:onClick="onButtonClicker"
                     android:text="@string/home_utility_pollibiddut"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"></LinearLayout>
-
-                <Button
-                    android:id="@+id/homeBtnQubee"
-                    style="@style/HomeButton"
-                    android:drawableTop="@drawable/ic_home_qubee"
-                    android:onClick="onButtonClicker"
-                    android:text="@string/home_utility_qubee"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
 
             <LinearLayout
@@ -152,31 +73,95 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:orientation="horizontal"
-                android:weightSum="3">
+                android:weightSum="5">
+
+                <Button
+                    android:id="@+id/homeBtnWasa"
+                    style="@style/HomeButtonNew"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_wasa"
+                    android:onClick="onButtonClicker"
+                    android:text="@string/home_utility_wasa"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/homeBtnWestZone"
+                    style="@style/HomeButtonNew"
                     android:layout_weight="1"
-                    android:gravity="center"></LinearLayout>
+                    android:drawableTop="@drawable/ic_west_zone"
+                    android:onClick="onButtonClicker"
+                    android:text="@string/home_utility_west_zone"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/homeBtnQubee"
+                    style="@style/HomeButtonNew"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_qubee"
+                    android:onClick="onButtonClicker"
+                    android:text="@string/home_utility_qubee"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:orientation="horizontal"
+                android:weightSum="5">
 
                 <Button
                     android:id="@+id/homeBtnRealVU"
-                    style="@style/HomeButton"
+                    style="@style/HomeButtonNew"
                     android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_home_real_vu"
+                    android:drawableTop="@drawable/ic_realvu"
                     android:onClick="onButtonClicker"
                     android:text="@string/home_utility_beximco"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/homeBtnIvac"
+                    style="@style/HomeButtonNew"
                     android:layout_weight="1"
-                    android:gravity="center"></LinearLayout>
+                    android:drawableTop="@drawable/ic_ivac"
+                    android:onClick="onButtonClicker"
+                    android:text="@string/home_utility_ivac"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/homeBtnBanglalion"
+                    style="@style/HomeButtonNew"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_banglalion"
+                    android:onClick="onButtonClicker"
+                    android:text="@string/home_utility_banglalion"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

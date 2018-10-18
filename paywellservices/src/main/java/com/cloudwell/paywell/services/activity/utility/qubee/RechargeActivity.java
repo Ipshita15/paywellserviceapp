@@ -10,48 +10,36 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.adapter.CustomAdapter;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
-import org.apache.http.client.ClientProtocolException;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by Android on 12/8/2015.
- */
-@SuppressWarnings("ALL")
 public class RechargeActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static final String POSTPAID = "postpaid";
-    private static EditText mPin;
-    private static EditText mAccountNo;
+    private EditText mPin, mAccountNo, mAmount;
     private Button mConfirm;
     private ConnectionDetector cd;
-    private static EditText mAmount;
-    private static String status;
-    private static String trxId;
-    private static String accountNo;
-    private static String hotline;
-    private static String amount;
+    private String status, trxId, accountNo, hotline, amount;
     private AppHandler mAppHandler;
     private LinearLayout mLinearLayout;
 
@@ -59,33 +47,35 @@ public class RechargeActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qubee_recharge);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.home_utility_qubee_recharge);
-
-        cd = new ConnectionDetector(getApplicationContext());
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.home_utility_qubee_recharge_title);
+        }
+        cd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
         initView();
     }
 
     private void initView() {
-        mLinearLayout = (LinearLayout) findViewById(R.id.linearLayout);
-        TextView _pin = (TextView) findViewById(R.id.tvQbeePin);
-        _pin.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mPin = (EditText) findViewById(R.id.etQubeePin);
-        mPin.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        mLinearLayout = findViewById(R.id.linearLayout);
+        TextView _pin = findViewById(R.id.tvQbeePin);
+        _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
+        mPin = findViewById(R.id.etQubeePin);
+        mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
 
-        TextView _qubeeAccNo = (TextView) findViewById(R.id.tvQbeeAccount);
-        _qubeeAccNo.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mAccountNo = (EditText) findViewById(R.id.etQubeeAccount);
-        mAccountNo.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        TextView _qubeeAccNo = findViewById(R.id.tvQbeeAccount);
+        _qubeeAccNo.setTypeface(AppController.getInstance().getOxygenLightFont());
+        mAccountNo = findViewById(R.id.etQubeeAccount);
+        mAccountNo.setTypeface(AppController.getInstance().getOxygenLightFont());
 
-        TextView _amount = (TextView) findViewById(R.id.tvQbeeAmount);
-        _amount.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mAmount = (EditText) findViewById(R.id.etQbeeAmount);
-        mAmount.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        TextView _amount = findViewById(R.id.tvQbeeAmount);
+        _amount.setTypeface(AppController.getInstance().getOxygenLightFont());
+        mAmount = findViewById(R.id.etQbeeAmount);
+        mAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
 
-        mConfirm = (Button) findViewById(R.id.btnQubeeConfirm);
-        mConfirm.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        mConfirm = findViewById(R.id.btnQubeeConfirm);
+        mConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
         mConfirm.setOnClickListener(this);
     }
 
@@ -96,24 +86,15 @@ public class RechargeActivity extends AppCompatActivity implements View.OnClickL
             amount = mAmount.getText().toString().trim();
             if (_pin.length() == 0) {
                 mPin.setError(Html.fromHtml("<font color='red'>" + getString(R.string.pin_no_error_msg) + "</font>"));
-                return;
             } else if (accountNo.length() < 4) {
                 mAccountNo.setError(Html.fromHtml("<font color='red'>" + getString(R.string.qubee_acc_error_msg) + "</font></font>"));
-                return;
             } else if (amount.length() == 0) {
                 mAmount.setError(Html.fromHtml("<font color='red'>" + getString(R.string.amount_error_msg) + "</font></font>"));
-                return;
             } else {
                 if (!cd.isConnectingToInternet()) {
                     AppHandler.showDialog(getSupportFragmentManager());
                 } else {
-                    new SubmitAsync().execute(getResources().getString(R.string.qb_bill_pay),
-                            "iemi_no=" + mAppHandler.getImeiNo(),
-                            "&account_no=" + accountNo,
-                            "&amount=" + amount,
-                            "&con_type=" + POSTPAID,
-                            "&pin_code=" + _pin,
-                            "&wimax=" + AppHandler.KEY_WIMAX);
+                    new SubmitAsync().execute(getString(R.string.qb_bill_pay), _pin);
                 }
             }
         }
@@ -131,17 +112,27 @@ public class RechargeActivity extends AppCompatActivity implements View.OnClickL
 
         @Override
         protected String doInBackground(String... params) {
-
-            HttpGet request = new HttpGet(params[0] + params[1] + params[2] + params[3] + params[4] + params[5] + params[6]);
-            ResponseHandler<String> responseHandler = new BasicResponseHandler();
             String responseTxt = null;
-            HttpClient client = AppController.getInstance().getTrustedHttpClient();
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(params[0]);
             try {
-                responseTxt = client.execute(request, responseHandler);
-            } catch (ClientProtocolException ex) {
-                ex.printStackTrace();
-            } catch (IOException ex) {
-                ex.printStackTrace();
+                List<NameValuePair> nameValuePairs = new ArrayList<>(6);
+                nameValuePairs.add(new BasicNameValuePair("iemi_no", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("account_no", accountNo));
+                nameValuePairs.add(new BasicNameValuePair("amount", amount));
+                nameValuePairs.add(new BasicNameValuePair("con_type", "postpaid"));
+                nameValuePairs.add(new BasicNameValuePair("pin_code", params[1]));
+                nameValuePairs.add(new BasicNameValuePair("wimax", AppHandler.KEY_WIMAX));
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                responseTxt = httpclient.execute(httppost, responseHandler);
+            } catch (Exception e) {
+                e.fillInStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
             return responseTxt;
         }
@@ -174,11 +165,15 @@ public class RechargeActivity extends AppCompatActivity implements View.OnClickL
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } catch (ArrayIndexOutOfBoundsException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
         }
-
     }
 
     private void showStatusDialog() {
@@ -200,19 +195,6 @@ public class RechargeActivity extends AppCompatActivity implements View.OnClickL
         });
         AlertDialog alert = builder.create();
         alert.show();
-        TextView messageText = (TextView) alert.findViewById(android.R.id.message);
-        messageText.setGravity(Gravity.CENTER);
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
     @Override

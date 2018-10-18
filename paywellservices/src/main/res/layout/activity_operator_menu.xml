@@ -5,6 +5,7 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_background_card"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activity.topup.OperatorMenuActivity">
 
@@ -18,7 +19,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -27,69 +28,47 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:orientation="horizontal"
-                android:weightSum="3">
+                android:weightSum="5">
 
                 <Button
                     android:id="@+id/homeBtnGp"
-                    style="@style/HomeButton"
+                    style="@style/HomeButtonNew"
                     android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_home_gp"
+                    android:drawableTop="@drawable/ic_grammenphone"
                     android:onClick="onButtonClicker"
                     android:text="@string/home_gp"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"></LinearLayout>
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/homeBtnRb"
-                    style="@style/HomeButton"
+                    style="@style/HomeButtonNew"
                     android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_home_rb"
+                    android:drawableTop="@drawable/ic_robi"
                     android:onClick="onButtonClicker"
                     android:text="@string/home_rb"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-            </LinearLayout>
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:orientation="horizontal"
-                android:weightSum="3">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/homeBtnBl"
-                    style="@style/HomeButton"
+                    style="@style/HomeButtonNew"
                     android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_home_bl"
+                    android:drawableTop="@drawable/ic_banglalink"
                     android:onClick="onButtonClicker"
                     android:text="@string/home_bl"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"></LinearLayout>
-
-                <Button
-                    android:id="@+id/homeBtnTt"
-                    style="@style/HomeButton"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_home_tt"
-                    android:onClick="onButtonClicker"
-                    android:text="@string/home_tt"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
 
             <LinearLayout
@@ -97,31 +76,42 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:orientation="horizontal"
-                android:weightSum="3">
+                android:weightSum="5">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/homeBtnTt"
+                    style="@style/HomeButtonNew"
                     android:layout_weight="1"
-                    android:gravity="center"></LinearLayout>
+                    android:drawableTop="@drawable/ic_teletalk"
+                    android:onClick="onButtonClicker"
+                    android:text="@string/home_tt"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/homeBtnAt"
-                    style="@style/HomeButton"
+                    style="@style/HomeButtonNew"
                     android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_home_at"
+                    android:drawableTop="@drawable/ic_airtel"
                     android:onClick="onButtonClicker"
                     android:text="@string/home_at"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"></LinearLayout>
+                    android:layout_weight="1" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

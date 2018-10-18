@@ -2,7 +2,9 @@ package com.cloudwell.paywell.services.activity.topup.offer;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -11,13 +13,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.topup.OperatorMenuActivity;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -25,17 +27,17 @@ import java.util.ArrayList;
 
 public class OfferMainActivity extends AppCompatActivity {
 
+    private RelativeLayout mRelativeLayout;
     public static String length;
-    ListView listView;
-    TrxAdapter mAdapter;
-    String array;
+    private ListView listView;
+    private TrxAdapter mAdapter;
+    private String array;
     public static String[] mAmount = null;
     public static String[] mRetCom = null;
     public static String[] mDetails = null;
     public static String[] mType = null;
     public static String operatorName;
-    int itemNo = 0;
-    String type = "";
+    private String type = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,8 @@ public class OfferMainActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(operatorName);
         }
-        listView = (ListView) findViewById(R.id.trxListView);
+        mRelativeLayout = findViewById(R.id.relativeLayoutOfferMain);
+        listView = findViewById(R.id.trxListView);
         mAdapter = new TrxAdapter(this);
 
         Bundle bundle = getIntent().getExtras();
@@ -84,11 +87,14 @@ public class OfferMainActivity extends AppCompatActivity {
                     mAdapter.notifyDataSetChanged();
                 }
             }
-
             listView.setAdapter(mAdapter);
-
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+            View snackBarView = snackbar.getView();
+            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+            snackbar.show();
         }
     }
 
@@ -115,7 +121,6 @@ public class OfferMainActivity extends AppCompatActivity {
     }
 
     private class TrxAdapter extends BaseAdapter {
-
         int selectedPosition = 0;
         RadioButton selected = null;
 
@@ -155,7 +160,6 @@ public class OfferMainActivity extends AppCompatActivity {
             }
         }
 
-
         @Override
         public int getViewTypeCount() {
             return 2;
@@ -180,14 +184,13 @@ public class OfferMainActivity extends AppCompatActivity {
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-
             int rowType = getItemViewType(position);
             if (convertView == null) {
                 holder = new ViewHolder();
                 switch (rowType) {
                     case TYPE_SEPARATOR:
                         convertView = mInflater.inflate(R.layout.dialog_offer_header, parent, false);
-                        holder.textViewHeader = (TextView) convertView.findViewById(R.id.header);
+                        holder.textViewHeader = convertView.findViewById(R.id.header);
                         convertView.setTag(holder);
 
                         holder.textViewHeader.clearComposingText();
@@ -204,8 +207,8 @@ public class OfferMainActivity extends AppCompatActivity {
                     case TYPE_ITEM:
                         convertView = mInflater.inflate(R.layout.dialog_offer_gp, parent, false);
 
-                        holder.textViewDescription = (TextView) convertView.findViewById(R.id.description);
-                        holder.radioButton = (RadioButton) convertView.findViewById(R.id.radioButton);
+                        holder.textViewDescription = convertView.findViewById(R.id.description);
+                        holder.radioButton = convertView.findViewById(R.id.radioButton);
 
                         splitArray_row_first = mData.get(position).split(",");
 
@@ -218,10 +221,8 @@ public class OfferMainActivity extends AppCompatActivity {
                                 if (selected != null) {
                                     selected.setChecked(false);
                                 }
-
                                 selected = holder.radioButton;
                                 selectedPosition = (Integer) view.getTag();
-                                itemNo = selectedPosition;
 
                                 String[] splitArray_trx = mData.get(position).split(",");
                                 ConfirmOfferActivity.amount = splitArray_trx[1];
@@ -239,7 +240,7 @@ public class OfferMainActivity extends AppCompatActivity {
                 switch (rowType) {
                     case TYPE_SEPARATOR:
                         convertView = mInflater.inflate(R.layout.dialog_offer_header, parent, false);
-                        holder.textViewHeader = (TextView) convertView.findViewById(R.id.header);
+                        holder.textViewHeader = convertView.findViewById(R.id.header);
                         convertView.setTag(holder);
 
                         holder.textViewHeader.clearComposingText();
@@ -256,8 +257,8 @@ public class OfferMainActivity extends AppCompatActivity {
                     case TYPE_ITEM:
                         convertView = mInflater.inflate(R.layout.dialog_offer_gp, parent, false);
 
-                        holder.textViewDescription = (TextView) convertView.findViewById(R.id.description);
-                        holder.radioButton = (RadioButton) convertView.findViewById(R.id.radioButton);
+                        holder.textViewDescription = convertView.findViewById(R.id.description);
+                        holder.radioButton = convertView.findViewById(R.id.radioButton);
 
                         splitArray_row_second = mData.get(position).split(",");
 
@@ -273,7 +274,6 @@ public class OfferMainActivity extends AppCompatActivity {
 
                                 selected = holder.radioButton;
                                 selectedPosition = (Integer) view.getTag();
-                                itemNo = selectedPosition;
 
                                 String[] splitArray_trx = mData.get(position).split(",");
                                 ConfirmOfferActivity.amount = splitArray_trx[1];

@@ -25,7 +25,7 @@ public class TransactionStatusActivity extends AppCompatActivity {
 
     public static String RESPONSE = "response";
     RelativeLayout relativeLayout;
-    ListView listView ;
+    private ListView listView ;
     public static String[] mPhn = null;
     public static String[] mAmount = null;
     public static String[] mDate = null;
@@ -52,12 +52,10 @@ public class TransactionStatusActivity extends AppCompatActivity {
 
         displayResponsePrompt(RESPONSE);
 
-        //BKashListAdapter adapter = new BKashListAdapter(this);
         listView.setAdapter(adapter);
     }
 
     private void displayResponsePrompt(String response) {
-
         StringBuilder reqStrBuilder = new StringBuilder();
         if (response != null && response.length() > 0) {
             String[] splitArray = response.split("@");
@@ -69,12 +67,9 @@ public class TransactionStatusActivity extends AppCompatActivity {
             for (int i = 0; i < Integer.parseInt(splitArray[1].toString()); i++) {
                 String result;
 
-                //mPhn[i] = "Received From " + splitArray[2 + 6 * i];
                 mPhn[i] = splitArray[2 + 6 * i];
-                //mAmount[i] = "Tk. " + splitArray[7 + 6 * i];
                 mAmount[i] = splitArray[7 + 6 * i];
                 mDate[i] = splitArray[4 + 6 * i];
-                //mTrx[i] = "Trx. ID: " + splitArray[5 + 6 * i];
                 mTrx[i] = splitArray[5 + 6 * i];
 
                 String sub_date_comp = mDate[i].substring(0, 10);
@@ -103,7 +98,6 @@ public class TransactionStatusActivity extends AppCompatActivity {
             }
             return true;
         }
-        ;
         return super.onOptionsItemSelected(item);
     }
 

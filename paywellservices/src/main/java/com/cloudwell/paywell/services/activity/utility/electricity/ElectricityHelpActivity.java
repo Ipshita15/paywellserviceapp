@@ -53,15 +53,14 @@ public class ElectricityHelpActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_help);
 
-        viewPager = (ViewPager) findViewById(R.id.view_pager);
-        dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
-        btnSkip = (Button) findViewById(R.id.btn_skip);
-        btnNext = (Button) findViewById(R.id.btn_next);
-
+        viewPager = findViewById(R.id.view_pager);
+        dotsLayout = findViewById(R.id.layoutDots);
+        btnSkip = findViewById(R.id.btn_skip);
+        btnNext = findViewById(R.id.btn_next);
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
-            if(extras == null) {
+            if (extras == null) {
                 serviceName = null;
             } else {
                 serviceName = extras.getString("serviceName");
@@ -72,7 +71,7 @@ public class ElectricityHelpActivity extends AppCompatActivity {
 
         // layouts of all welcome sliders
         // add few more layouts if you want
-        if(serviceName != null) {
+        if (serviceName != null) {
             if (serviceName.equalsIgnoreCase(TAG_DESCO_SERVICE)) {
                 layouts = new int[]{
                         R.drawable.ic_help_desco_one,
@@ -180,7 +179,6 @@ public class ElectricityHelpActivity extends AppCompatActivity {
         @Override
         public void onPageSelected(int position) {
             addBottomDots(position);
-
             // changing the next button text 'NEXT' / 'GOT IT'
             if (position == layouts.length - 1) {
                 // last page. make button text to GOT IT
@@ -230,7 +228,7 @@ public class ElectricityHelpActivity extends AppCompatActivity {
 
             View view = layoutInflater.inflate(R.layout.help_pager_item, container, false);
 
-            ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
+            ImageView imageView = view.findViewById(R.id.imageView);
             imageView.setImageResource(layouts[position]);
             container.addView(view);
 
@@ -257,13 +255,13 @@ public class ElectricityHelpActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(serviceName.equalsIgnoreCase(TAG_DESCO_SERVICE)) {
+        if (serviceName.equalsIgnoreCase(TAG_DESCO_SERVICE)) {
             startActivity(new Intent(ElectricityHelpActivity.this, DESCOMainActivity.class));
-        } else if(serviceName.equalsIgnoreCase(TAG_DPDC_SERVICE)) {
+        } else if (serviceName.equalsIgnoreCase(TAG_DPDC_SERVICE)) {
             startActivity(new Intent(ElectricityHelpActivity.this, DPDCMainActivity.class));
-        } else if(serviceName.equalsIgnoreCase(TAG_WASA_SERVICE)) {
+        } else if (serviceName.equalsIgnoreCase(TAG_WASA_SERVICE)) {
             startActivity(new Intent(ElectricityHelpActivity.this, WASAMainActivity.class));
-        } else if(serviceName.equalsIgnoreCase(TAG_WZPDCL_SERVICE)) {
+        } else if (serviceName.equalsIgnoreCase(TAG_WZPDCL_SERVICE)) {
             startActivity(new Intent(ElectricityHelpActivity.this, WZPDCLMainActivity.class));
         }
         finish();

@@ -25,7 +25,7 @@
         android:typeface="sans"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:text="দুঃখিত, কোন ইন্টারনেট সংযোগ পাওয়া যায়নি। পুনঃসংযোগ করে আবার চেষ্টা করুন।"
+        android:text="@string/internet_connection_error_msg"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:visibility="gone" />
 
@@ -39,6 +39,19 @@
         android:layout_marginTop="10dp"
         android:onClick="onClickRetry"
         android:visibility="gone"
-        android:text="পুনরায় চেষ্টা করুন"
+        android:text="@string/try_again_msg"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btnClose"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/connErrorMsg"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:onClick="onClickClose"
+        android:visibility="gone"
+        android:text="Ok"
         android:textAllCaps="false" />
 </RelativeLayout>

@@ -16,13 +16,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -56,10 +54,13 @@ public class TrainTicketActivity extends AppCompatActivity implements AdapterVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_train_ticket);
-        getSupportActionBar().setTitle(R.string.home_eticket_train);
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.home_eticket_train);
+        }
 
         // Creating adapter for spinner
-        mCd = new ConnectionDetector(getApplicationContext());
+        mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
 
         mACTVDestination = (AutoCompleteTextView) findViewById(R.id.etDestination);
@@ -72,33 +73,33 @@ public class TrainTicketActivity extends AppCompatActivity implements AdapterVie
     }
 
     private void initView() {
-        mrelativeLayout = (RelativeLayout) findViewById(R.id.linearLayout);
-        Spinner mSpinnerSources = (Spinner) findViewById(R.id.spinnerSources);
-        //mEtDestination = (EditText) findViewById(R.id.etDestination);
-        mBtnSource = (Button) findViewById(R.id.btnSource);
+        mrelativeLayout = findViewById(R.id.linearLayout);
+        Spinner mSpinnerSources = findViewById(R.id.spinnerSources);
+        //mEtDestination = findViewById(R.id.etDestination);
+        mBtnSource = findViewById(R.id.btnSource);
         // Spinner click listener
         assert mSpinnerSources != null;
         mSpinnerSources.setOnItemSelectedListener(this);
         // Button click listener
         mBtnSource.setOnClickListener(this);
 
-        ((TextView) mrelativeLayout.findViewById(R.id.tvStationFrom)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((TextView) mrelativeLayout.findViewById(R.id.tvSourceStation)).setTypeface(AppController.getInstance().getRobotoRegularFont());
+        ((TextView) mrelativeLayout.findViewById(R.id.tvStationFrom)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        ((TextView) mrelativeLayout.findViewById(R.id.tvSourceStation)).setTypeface(AppController.getInstance().getOxygenLightFont());
         //mEtDestination.setTypeface(AppController.getInstance().getRobotoRegularFont());
 
-        mACTVDestination.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        mACTVDestination.setTypeface(AppController.getInstance().getOxygenLightFont());
         destination_suggession = getResources().getStringArray(R.array.train_destination_array);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, destination_suggession);
         mACTVDestination.setAdapter(adapter);
 
-        mBtnSource.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        mBtnSource.setTypeface(AppController.getInstance().getOxygenLightFont());
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mAppHandler.getSources()) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
                 if (view instanceof TextView) {
-                    ((TextView) view).setTypeface(AppController.getInstance().getRobotoRegularFont());
+                    ((TextView) view).setTypeface(AppController.getInstance().getOxygenLightFont());
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                         ((TextView) view).setAllCaps(false);
                     }
@@ -109,10 +110,10 @@ public class TrainTicketActivity extends AppCompatActivity implements AdapterVie
             @Override
             public View getDropDownView(int position, View convertView, ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
-                ((TextView) view).setTypeface(AppController.getInstance().getRobotoRegularFont());
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-                    ((TextView) view).setAllCaps(false);
-                }
+                ((TextView) view).setTypeface(AppController.getInstance().getOxygenLightFont());
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                ((TextView) view).setAllCaps(false);
+//                }
                 return view;
             }
         };
@@ -172,7 +173,6 @@ public class TrainTicketActivity extends AppCompatActivity implements AdapterVie
                 }
             }
         }
-
     }
 
     private class DestinationAsync extends AsyncTask<String, Void, String> {

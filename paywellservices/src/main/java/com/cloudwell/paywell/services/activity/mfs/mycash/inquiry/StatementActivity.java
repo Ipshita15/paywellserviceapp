@@ -24,7 +24,6 @@ import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -32,10 +31,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,21 +52,25 @@ public class StatementActivity extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statement);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.home_statement);
-        mCd = new ConnectionDetector(this);
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.home_statement);
+        }
+
+        mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
         initializeView();
     }
 
     private void initializeView() {
-        mLinearLayout = (LinearLayout) findViewById(R.id.statementLinearLayout);
-        mPin = (EditText) findViewById(R.id.mycash_pin);
-        mConfirm = (Button) findViewById(R.id.mycash_confirm);
+        mLinearLayout = findViewById(R.id.statementLinearLayout);
+        mPin = findViewById(R.id.mycash_pin);
+        mConfirm = findViewById(R.id.mycash_confirm);
 
-        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashPin)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mPin.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mConfirm.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+        mConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
 
         mConfirm.setOnClickListener(this);
     }
@@ -79,8 +80,7 @@ public class StatementActivity extends AppCompatActivity implements View.OnClick
         if (v == mConfirm) {
             _pin = mPin.getText().toString().trim();
             if (_pin.length() == 0) {
-                mPin.setError(Html.fromHtml("<font color='red'>" +getString(R.string.mycash_pin_error_msg) + "</font>"));
-                return;
+                mPin.setError(Html.fromHtml("<font color='red'>" + getString(R.string.mycash_pin_error_msg) + "</font>"));
             } else {
                 submitConfirm();
             }
@@ -112,10 +112,9 @@ public class StatementActivity extends AppCompatActivity implements View.OnClick
             // Create a new HttpClient and Post Header
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(data[0]);
-
             try {
                 //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(4);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(5);
                 nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("password", mAppHandler.getPin()));
                 nameValuePairs.add(new BasicNameValuePair("pin", _pin));
@@ -125,9 +124,11 @@ public class StatementActivity extends AppCompatActivity implements View.OnClick
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
                 responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (ClientProtocolException e) {
-
-            } catch (IOException e) {
+            } catch (Exception e) {
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
 
             return responseTxt;
@@ -178,8 +179,13 @@ public class StatementActivity extends AppCompatActivity implements View.OnClick
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
         }
     }

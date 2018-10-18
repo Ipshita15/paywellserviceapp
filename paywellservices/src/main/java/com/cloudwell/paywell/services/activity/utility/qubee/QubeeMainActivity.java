@@ -1,43 +1,51 @@
 package com.cloudwell.paywell.services.activity.utility.qubee;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.widget.Button;
 
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.AppLoadingActivity;
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
-
-import java.util.List;
+import com.cloudwell.paywell.services.app.AppController;
+import com.cloudwell.paywell.services.app.AppHandler;
 
 public class QubeeMainActivity extends AppCompatActivity {
 
-    private static final String QUBEE = "Qubee";
-    boolean hasQubeeService = false;
-    private RelativeLayout mRelativeLayout;
+    private AppHandler mAppHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qubee_main);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.home_utility_qubee);
-        mRelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
-        initView();
-    }
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.home_utility_qubee);
+        }
 
-    private void initView() {
-        List<String> serviceList = AppLoadingActivity.getUtilityService();
-        for (int i = 0; i < serviceList.size(); i++) {
-            if (QUBEE.equalsIgnoreCase(serviceList.get(i))) {
-                hasQubeeService = true;
-                break;
-            }
+        mAppHandler = new AppHandler(this);
+
+        Button btnRecharge = findViewById(R.id.homeBtnRecharge);
+        Button btnInquiry = findViewById(R.id.homeBtnInquiry);
+        Button btnAcc = findViewById(R.id.homeBtnWrongAccount);
+        Button btnAmount = findViewById(R.id.homeBtnWrongAmount);
+        Button btnPayment = findViewById(R.id.homeBtnPayment);
+
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            btnRecharge.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnInquiry.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnAcc.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnPayment.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            btnRecharge.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnInquiry.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnAcc.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnAmount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnPayment.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
     }
 
@@ -57,73 +65,27 @@ public class QubeeMainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Button click handler on Main activity
-     *
-     * @param v
-     */
     public void onButtonClicker(View v) {
-
         switch (v.getId()) {
             case R.id.homeBtnRecharge:
-                if (hasQubeeService) {
-                    startActivity(new Intent(this, RechargeActivity.class));
-                    finish();
-                } else {
-                    Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.services_off_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
+                startActivity(new Intent(this, RechargeActivity.class));
+                finish();
                 break;
             case R.id.homeBtnInquiry:
-                if (hasQubeeService) {
-                    startActivity(new Intent(this, InquiryActivity.class));
-                    finish();
-                } else {
-                    Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.services_off_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
+                startActivity(new Intent(this, InquiryActivity.class));
+                finish();
                 break;
             case R.id.homeBtnWrongAccount:
-                if (hasQubeeService) {
-                    startActivity(new Intent(this, ComplainAccountActivity.class));
-                    finish();
-                } else {
-                    Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.services_off_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
+                startActivity(new Intent(this, ComplainAccountActivity.class));
+                finish();
                 break;
             case R.id.homeBtnWrongAmount:
-                if (hasQubeeService) {
-                    startActivity(new Intent(this, ComplainAmountActivity.class));
-                    finish();
-                } else {
-                    Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.services_off_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
+                startActivity(new Intent(this, ComplainAmountActivity.class));
+                finish();
                 break;
             case R.id.homeBtnPayment:
-                if (hasQubeeService) {
-                    startActivity(new Intent(this, ComplainTrxActivity.class));
-                    finish();
-                } else {
-                    Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.services_off_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
+                startActivity(new Intent(this, ComplainTrxActivity.class));
+                finish();
                 break;
             default:
                 break;

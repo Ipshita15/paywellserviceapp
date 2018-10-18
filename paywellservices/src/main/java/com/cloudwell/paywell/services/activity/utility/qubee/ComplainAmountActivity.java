@@ -10,8 +10,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -24,70 +22,66 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
-import org.apache.http.client.ClientProtocolException;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by Android on 12/8/2015.
- */
-@SuppressWarnings("ALL")
 public class ComplainAmountActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ConnectionDetector cd;
     private AppHandler mAppHandler;
-    private EditText mPin;
-    private EditText mAccount;
-    private EditText mIncorrectAmount;
-    private EditText mCorrectAmount;
+    private EditText mPin, mAccount, mIncorrectAmount, mCorrectAmount;
     private Button mConfirmAmount;
-    private static String _returnMessage;
-    private static String _trxId;
+    private String _returnMessage, _trxId;
     private LinearLayout mLinearLayout;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qubee_complain_amount);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.home_utility_qubee_wrong_amount_title);
-
-        cd = new ConnectionDetector(getApplicationContext());
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.home_utility_qubee_wrong_amount_title);
+        }
+        cd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
         initView();
     }
 
     private void initView() {
-        mLinearLayout = (LinearLayout) findViewById(R.id.linearLayout);
-        TextView _pin = (TextView) findViewById(R.id.tvQbeePin4);
-        _pin.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mPin = (EditText) findViewById(R.id.etQubeePin4);
-        mPin.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        mLinearLayout = findViewById(R.id.linearLayout);
+        TextView _pin = findViewById(R.id.tvQbeePin4);
+        _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
+        mPin = findViewById(R.id.etQubeePin4);
+        mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
 
-        TextView _account = (TextView) findViewById(R.id.tvAccount);
-        _account.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mAccount = (EditText) findViewById(R.id.etAccount);
-        mAccount.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        TextView _account = findViewById(R.id.tvAccount);
+        _account.setTypeface(AppController.getInstance().getOxygenLightFont());
+        mAccount = findViewById(R.id.etAccount);
+        mAccount.setTypeface(AppController.getInstance().getOxygenLightFont());
 
-        TextView _incorrectAmount = (TextView) findViewById(R.id.tvIncorrectAmount);
-        _incorrectAmount.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mIncorrectAmount = (EditText) findViewById(R.id.etIncorrectAmount);
-        mIncorrectAmount.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        TextView _incorrectAmount = findViewById(R.id.tvIncorrectAmount);
+        _incorrectAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+        mIncorrectAmount = findViewById(R.id.etIncorrectAmount);
+        mIncorrectAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
 
-        TextView _correctAmount = (TextView) findViewById(R.id.tvCorrectAmount);
-        _correctAmount.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mCorrectAmount = (EditText) findViewById(R.id.etCorrectAmount);
-        mCorrectAmount.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        TextView _correctAmount = findViewById(R.id.tvCorrectAmount);
+        _correctAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+        mCorrectAmount = findViewById(R.id.etCorrectAmount);
+        mCorrectAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
 
-        mConfirmAmount = (Button) findViewById(R.id.btnComplainConfirm2);
-        mConfirmAmount.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        mConfirmAmount = findViewById(R.id.btnComplainConfirm2);
+        mConfirmAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
         mConfirmAmount.setOnClickListener(this);
-
     }
 
     @Override
@@ -116,15 +110,7 @@ public class ComplainAmountActivity extends AppCompatActivity implements View.On
                     mCorrectAmount.setError(Html.fromHtml("<font color='red'>" + getString(R.string.amount_error_msg) + "</font>"));
                     return;
                 }
-
-                new SubmitAsync().execute(getResources().getString(R.string.qb_com),
-                        "iemi_no=" + mAppHandler.getImeiNo(),
-                        "&pin_code=" + _pin,
-                        "&wimax=" + AppHandler.KEY_WIMAX,
-                        "&type=" + AppHandler.KEY_TYPE2,
-                        "&account_no=" + _account,
-                        "&correct_amount=" + _correctAmount,
-                        "&wrong_amount=" + _incorrectAmount);
+                new SubmitAsync().execute(getString(R.string.qb_com), _pin, _account, _correctAmount, _incorrectAmount);
             }
         }
     }
@@ -141,16 +127,28 @@ public class ComplainAmountActivity extends AppCompatActivity implements View.On
 
         @Override
         protected String doInBackground(String... params) {
-            HttpGet request = new HttpGet(params[0] + params[1] + params[2] + params[3] + params[4] + params[5] + params[6] + params[7]);
-            ResponseHandler<String> responseHandler = new BasicResponseHandler();
             String responseTxt = null;
-            HttpClient client = AppController.getInstance().getTrustedHttpClient();
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(params[0]);
             try {
-                responseTxt = client.execute(request, responseHandler);
-            } catch (ClientProtocolException ex) {
-                ex.printStackTrace();
-            } catch (IOException ex) {
-                ex.printStackTrace();
+                List<NameValuePair> nameValuePairs = new ArrayList<>(7);
+                nameValuePairs.add(new BasicNameValuePair("iemi_no", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("pin_code", params[1]));
+                nameValuePairs.add(new BasicNameValuePair("wimax", AppHandler.KEY_WIMAX));
+                nameValuePairs.add(new BasicNameValuePair("type", AppHandler.KEY_TYPE2));
+                nameValuePairs.add(new BasicNameValuePair("account_no", params[2]));
+                nameValuePairs.add(new BasicNameValuePair("correct_amount", params[3]));
+                nameValuePairs.add(new BasicNameValuePair("wrong_amount", params[4]));
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                responseTxt = httpclient.execute(httppost, responseHandler);
+            } catch (Exception e) {
+                e.fillInStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
             return responseTxt;
         }
@@ -181,11 +179,15 @@ public class ComplainAmountActivity extends AppCompatActivity implements View.On
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } catch (ArrayIndexOutOfBoundsException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
         }
-
     }
 
 
@@ -205,8 +207,6 @@ public class ComplainAmountActivity extends AppCompatActivity implements View.On
         });
         AlertDialog alert = builder.create();
         alert.show();
-        TextView messageText = (TextView) alert.findViewById(android.R.id.message);
-        messageText.setGravity(Gravity.CENTER);
     }
 
     @Override

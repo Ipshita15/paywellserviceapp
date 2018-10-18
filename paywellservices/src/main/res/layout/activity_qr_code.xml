@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/relativeLayout"
-    tools:context=".activity.scan.QRCodeActivity">
+    tools:context=".activity.scan.DisplayQRCodeActivity">
 
     <ImageView
         android:id="@+id/imageViewQRCode"

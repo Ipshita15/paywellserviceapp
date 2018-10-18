@@ -3,12 +3,14 @@ package com.cloudwell.paywell.services.activity.topup;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
@@ -17,7 +19,8 @@ import java.util.ArrayList;
 
 public class TransLogActivity extends AppCompatActivity {
 
-    ListView listView;
+    private RelativeLayout relativeLayout;
+    private ListView listView;
     public static String[] mPhn = null;
     public static String[] mAmount = null;
     public static String[] mDate = null;
@@ -25,8 +28,8 @@ public class TransLogActivity extends AppCompatActivity {
     public static String[] mTrx = null;
     public static String length;
     public static String TRANSLOG_TAG = "TRANSLOGTXT";
-    String date = "";
-    CustomAdapter adapter;
+    private String date = "";
+    private CustomAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class TransLogActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(R.string.home_topup_trx_log);
         }
 
+        relativeLayout = findViewById(R.id.relativeLayout);
         adapter = new CustomAdapter(this);
 
         String response = TRANSLOG_TAG;
@@ -78,20 +82,24 @@ public class TransLogActivity extends AppCompatActivity {
                         String time = mDate[i].substring(11);
                         result = mPhn[i] + "@" + mAmount[i] + "@" + time + "@" + mStatus[i];
                         adapter.addItem(result);
-                    } catch (ArrayIndexOutOfBoundsException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
+                        Snackbar snackbar = Snackbar.make(relativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                        View snackBarView = snackbar.getView();
+                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                        snackbar.show();
                     }
                     i++;
                 }
                 length = String.valueOf(i);
-                listView = (ListView) findViewById(R.id.listView);
+                listView = findViewById(R.id.listView);
                 listView.setAdapter(adapter);
             }
         }
     }
 
     public class CustomAdapter extends BaseAdapter {
-
         private static final int TYPE_ITEM = 0;
         private static final int TYPE_SEPARATOR = 1;
 
@@ -161,17 +169,17 @@ public class TransLogActivity extends AppCompatActivity {
                 switch (rowType) {
                     case TYPE_SEPARATOR:
                         convertView = mInflater.inflate(R.layout.dialog_both_header, parent, false);
-                        holder.textView = (TextView) convertView.findViewById(R.id.header);
+                        holder.textView = convertView.findViewById(R.id.header);
                         convertView.setTag(holder);
                         holder.textView.clearComposingText();
                         holder.textView.setText(mData.get(position));
                         break;
                     case TYPE_ITEM:
                         convertView = mInflater.inflate(R.layout.dialog_topup_trx_log, parent, false);
-                        holder.phnNo = (TextView) convertView.findViewById(R.id.phnNo);
-                        holder.amount = (TextView) convertView.findViewById(R.id.amount);
-                        holder.date = (TextView) convertView.findViewById(R.id.date);
-                        holder.status = (TextView) convertView.findViewById(R.id.status);
+                        holder.phnNo = convertView.findViewById(R.id.phnNo);
+                        holder.amount = convertView.findViewById(R.id.amount);
+                        holder.date = convertView.findViewById(R.id.date);
+                        holder.status = convertView.findViewById(R.id.status);
                         convertView.setTag(holder);
 
                         splitArray_row_first = mData.get(position).split("@");
@@ -194,17 +202,17 @@ public class TransLogActivity extends AppCompatActivity {
                 switch (rowType) {
                     case TYPE_SEPARATOR:
                         convertView = mInflater.inflate(R.layout.dialog_both_header, parent, false);
-                        holder.textView = (TextView) convertView.findViewById(R.id.header);
+                        holder.textView = convertView.findViewById(R.id.header);
                         convertView.setTag(holder);
                         holder.textView.clearComposingText();
                         holder.textView.setText(mData.get(position));
                         break;
                     case TYPE_ITEM:
                         convertView = mInflater.inflate(R.layout.dialog_topup_trx_log, parent, false);
-                        holder.phnNo = (TextView) convertView.findViewById(R.id.phnNo);
-                        holder.amount = (TextView) convertView.findViewById(R.id.amount);
-                        holder.date = (TextView) convertView.findViewById(R.id.date);
-                        holder.status = (TextView) convertView.findViewById(R.id.status);
+                        holder.phnNo = convertView.findViewById(R.id.phnNo);
+                        holder.amount = convertView.findViewById(R.id.amount);
+                        holder.date = convertView.findViewById(R.id.date);
+                        holder.status = convertView.findViewById(R.id.status);
                         convertView.setTag(holder);
 
                         splitArray_row_second = mData.get(position).split("@");

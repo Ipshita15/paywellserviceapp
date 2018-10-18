@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="140dp"
     android:background="@drawable/apps_banner"
@@ -22,32 +20,5 @@
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/card_background" />
-
-    <!--<RadioGroup-->
-        <!--android:id="@+id/languageRadioGroup"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:gravity="center"-->
-        <!--android:checkedButton="@+id/englishRadioButton"-->
-        <!--android:orientation="horizontal">-->
-
-        <!--<android.support.v7.widget.AppCompatRadioButton-->
-            <!--android:id="@+id/banglaRadioButton"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="বাংলা"-->
-            <!--android:textColor="@color/card_background"-->
-            <!--android:textStyle="bold"-->
-            <!--app:buttonTint="@color/white"/>-->
-
-        <!--<android.support.v7.widget.AppCompatRadioButton-->
-            <!--android:id="@+id/englishRadioButton"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="English"-->
-            <!--android:textColor="@color/card_background"-->
-            <!--android:textStyle="bold"-->
-            <!--app:buttonTint="@color/white"/>-->
-    <!--</RadioGroup>-->
 
 </LinearLayout>

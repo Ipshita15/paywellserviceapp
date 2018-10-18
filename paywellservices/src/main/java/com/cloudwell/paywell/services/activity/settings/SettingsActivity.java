@@ -13,39 +13,29 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
+import com.cloudwell.paywell.services.activity.location.LocationActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
-import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.UpdateChecker;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by android on 7/19/2016.
- */
 public class SettingsActivity extends AppCompatActivity {
     private AppHandler mAppHandler;
-    private ConnectionDetector mCd;
     private RelativeLayout mRelativeLayout;
     private UpdateChecker mUpdateChecker;
-    private Button home_change_pin, home_upgrade, home_password_reset, home_change_language;
+    private Button home_change_pin, home_upgrade, home_password_reset, home_change_language, home_help;
     String selectedOption = "";
     int flag = 0;
     private static final int PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 101;
-
-
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 102;
 
 
     @Override
@@ -53,28 +43,18 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setTitle(R.string.home_settings);
-        mRelativeLayout = (RelativeLayout) findViewById(R.id.linearLayout);
-        mCd = new ConnectionDetector(getApplicationContext());
+
+        mRelativeLayout = findViewById(R.id.linearLayout);
         mAppHandler = new AppHandler(this);
         /*Buttons Initialization*/
-        home_change_pin = (Button) findViewById(R.id.homeBtnChangPin);
-        home_upgrade = (Button) findViewById(R.id.homeBtnUpgrade);
-        home_password_reset = (Button) findViewById(R.id.homeBtnPasswordReset);
-        home_change_language = (Button) findViewById(R.id.homeBtnChangeLanguage);
-
-        if (mAppHandler.getAppLanguage().equalsIgnoreCase("bn")) {
-            home_upgrade.setPadding(0, 35, 0, 0);
-        }
-
-        ((Button) mRelativeLayout.findViewById(R.id.homeBtnChangPin)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((Button) mRelativeLayout.findViewById(R.id.homeBtnUpgrade)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((Button) mRelativeLayout.findViewById(R.id.homeBtnPasswordReset)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((Button) mRelativeLayout.findViewById(R.id.homeBtnChangeLanguage)).setTypeface(AppController.getInstance().getRobotoRegularFont());
+        home_change_pin = findViewById(R.id.homeBtnChangPin);
+        home_upgrade = findViewById(R.id.homeBtnUpgrade);
+        home_password_reset = findViewById(R.id.homeBtnPasswordReset);
+        home_change_language = findViewById(R.id.homeBtnChangeLanguage);
+        home_help = findViewById(R.id.homeBtnHelp);
 
         RefreshStringsOfButton();
     }
-
 
     public void onSettingsButtonClicker(View v) {
         switch (v.getId()) {
@@ -103,15 +83,24 @@ public class SettingsActivity extends AppCompatActivity {
                 });
                 AlertDialog alert = builder.create();
                 alert.show();
-                TextView messageText = (TextView) alert.findViewById(android.R.id.message);
-                messageText.setGravity(Gravity.CENTER);
                 break;
             case R.id.homeBtnChangeLanguage:
                 ShowLanguagePrompt();
                 break;
+            case R.id.homeBtnHelp:
+                startHelpMenu();
+                break;
+//            case R.id.homeBtnLocation:
+//                checkLocationPermission();
+//                break;
             default:
                 break;
         }
+    }
+
+    private void startHelpMenu() {
+        startActivity(new Intent(SettingsActivity.this, HelpMainActivity.class));
+        finish();
     }
 
     private void checkForUpgrade() {
@@ -152,10 +141,17 @@ public class SettingsActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
         builder.setTitle(R.string.version_upgrade);
         builder.setMessage(R.string.upgrade_msg);
-        builder.setPositiveButton(R.string.upgrade_btn, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.play_btn, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int id) {
                 dialogInterface.dismiss();
+                mUpdateChecker.launchMarketDetails();
+            }
+        });
+        builder.setNeutralButton(R.string.pw_btn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
                 mUpdateChecker.downloadAndInstall(getResources().getString(R.string.update_check));
             }
         });
@@ -167,8 +163,6 @@ public class SettingsActivity extends AppCompatActivity {
         });
         AlertDialog alert = builder.create();
         alert.show();
-        TextView messageText = (TextView) alert.findViewById(android.R.id.message);
-        messageText.setGravity(Gravity.CENTER);
     }
 
     private void checkPermission() {
@@ -176,10 +170,21 @@ public class SettingsActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
-            return;
         } else {
             // Android version is lesser than 6.0 or the permission is already granted.
             checkForUpgrade();
+        }
+    }
+
+    private void checkLocationPermission() {
+        // Check the SDK version and whether the permission is already granted or not.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        } else {
+            // Android version is lesser than 6.0 or the permission is already granted.
+            startActivity(new Intent(SettingsActivity.this, LocationActivity.class));
+            finish();
         }
     }
 
@@ -187,7 +192,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
-            case PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
+            case PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was grantedTask
                     checkForUpgrade();
@@ -200,8 +205,22 @@ public class SettingsActivity extends AppCompatActivity {
                     snackbar.show();
                     checkPermission();
                 }
-                return;
-            }
+                break;
+            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was grantedTask
+                    startActivity(new Intent(SettingsActivity.this, LocationActivity.class));
+                    finish();
+                } else {
+                    // permission denied
+                    Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.access_denied_msg, Snackbar.LENGTH_LONG);
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                    View snackBarView = snackbar.getView();
+                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                    snackbar.show();
+                    checkLocationPermission();
+                }
+                break;
         }
     }
 
@@ -216,7 +235,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(flag == 1) {
+        if (flag == 1) {
             Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
@@ -242,7 +261,7 @@ public class SettingsActivity extends AppCompatActivity {
         builder.setSingleChoiceItems(languageTypes, option, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int position) {
-                selectedOption = languageTypes[position].toString();
+                selectedOption = languageTypes[position];
             }
 
         });
@@ -253,7 +272,7 @@ public class SettingsActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         if (selectedOption.isEmpty()) {
-                            selectedOption = languageTypes[option].toString();
+                            selectedOption = languageTypes[option];
                         }
                         if (selectedOption.equalsIgnoreCase("English")) {
                             mAppHandler.setAppLanguage("en");
@@ -287,8 +306,20 @@ public class SettingsActivity extends AppCompatActivity {
         home_upgrade.setText(R.string.home_settings_upgrade);
         home_password_reset.setText(R.string.home_settings_reset_pin);
         home_change_language.setText(R.string.home_settings_change_language);
-        if (mAppHandler.getAppLanguage().equalsIgnoreCase("bn")) {
-            home_upgrade.setPadding(0, 35, 0, 0);
+        home_help.setText(R.string.home_settings_help);
+
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            home_change_pin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            home_upgrade.setTypeface(AppController.getInstance().getOxygenLightFont());
+            home_password_reset.setTypeface(AppController.getInstance().getOxygenLightFont());
+            home_change_language.setTypeface(AppController.getInstance().getOxygenLightFont());
+            home_help.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            home_change_pin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            home_upgrade.setTypeface(AppController.getInstance().getAponaLohitFont());
+            home_password_reset.setTypeface(AppController.getInstance().getAponaLohitFont());
+            home_change_language.setTypeface(AppController.getInstance().getAponaLohitFont());
+            home_help.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
     }
 }

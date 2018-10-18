@@ -66,9 +66,9 @@ public class BusMainActivity extends AppCompatActivity {
         llCityTo = (LinearLayout) findViewById(R.id.llTo);
         llCalendar = (LinearLayout) findViewById(R.id.llCalendar);
 
-        ((TextView) findViewById(R.id.tvFrom)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((TextView) findViewById(R.id.tvTo)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((TextView) findViewById(R.id.tvJourneyDate)).setTypeface(AppController.getInstance().getRobotoRegularFont());
+        ((TextView) findViewById(R.id.tvFrom)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        ((TextView) findViewById(R.id.tvTo)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        ((TextView) findViewById(R.id.tvJourneyDate)).setTypeface(AppController.getInstance().getOxygenLightFont());
 
         _tvCityFrom = (TextView) findViewById(R.id.tvCityFrom);
         _tvCityTo = (TextView) findViewById(R.id.tvCityTo);
@@ -89,14 +89,14 @@ public class BusMainActivity extends AppCompatActivity {
         _tvHiddenDate = (TextView) findViewById(R.id.tvHiddenDate);
         _btnSearch = (Button) findViewById(R.id.btnSearch);
 
-        _tvCityFrom.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        _tvCityTo.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        _tvDate.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        _tvToday.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        _tvHiddenDate.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        _btnSearch.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        _tvCityFrom.setTypeface(AppController.getInstance().getOxygenLightFont());
+        _tvCityTo.setTypeface(AppController.getInstance().getOxygenLightFont());
+        _tvDate.setTypeface(AppController.getInstance().getOxygenLightFont());
+        _tvToday.setTypeface(AppController.getInstance().getOxygenLightFont());
+        _tvHiddenDate.setTypeface(AppController.getInstance().getOxygenLightFont());
+        _btnSearch.setTypeface(AppController.getInstance().getOxygenLightFont());
 
-        cd = new ConnectionDetector(BusMainActivity.this.getApplicationContext());
+        cd = new ConnectionDetector(AppController.getContext());
         llCityFrom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

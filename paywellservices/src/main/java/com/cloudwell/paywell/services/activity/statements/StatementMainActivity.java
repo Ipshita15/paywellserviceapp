@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
+import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 
 public class StatementMainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -20,16 +21,30 @@ public class StatementMainActivity extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statement_main);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.home_statement);
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.home_statement);
+        }
 
         mAppHandler = new AppHandler(this);
 
-        btnMiniStatement = (TextView) findViewById(R.id.mini_statement_btn);
-        btnBalanceStatement = (TextView) findViewById(R.id.balance_statement_btn);
-        btnSalesStatement = (TextView) findViewById(R.id.sales_statement_btn);
-        btnTransactionStatement = (TextView) findViewById(R.id.trx_statement_btn);
+        btnMiniStatement = findViewById(R.id.mini_statement_btn);
+        btnBalanceStatement = findViewById(R.id.balance_statement_btn);
+        btnSalesStatement = findViewById(R.id.sales_statement_btn);
+        btnTransactionStatement = findViewById(R.id.trx_statement_btn);
+
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            btnMiniStatement.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnBalanceStatement.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnSalesStatement.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnTransactionStatement.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            btnMiniStatement.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnBalanceStatement.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnSalesStatement.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnTransactionStatement.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
 
         btnMiniStatement.setOnClickListener(this);
         btnBalanceStatement.setOnClickListener(this);

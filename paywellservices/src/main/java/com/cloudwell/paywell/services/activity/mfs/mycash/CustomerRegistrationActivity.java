@@ -23,7 +23,6 @@ import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -31,10 +30,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,27 +56,30 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_registration);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.home_customer_registration_title);
-        mCd = new ConnectionDetector(this);
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.home_customer_registration_title);
+        }
+        mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
         initializeView();
     }
 
     private void initializeView() {
-        mLinearLayout = (LinearLayout) findViewById(R.id.registrationLinearLayout);
-        etPhn = (EditText) findViewById(R.id.mycash_phone);
-        etSerial = (EditText) findViewById(R.id.mycash_serial);
-        etPin = (EditText) findViewById(R.id.mycash_pin);
-        btnConfirm = (Button) findViewById(R.id.mycash_confirm);
+        mLinearLayout = findViewById(R.id.registrationLinearLayout);
+        etPhn = findViewById(R.id.mycash_phone);
+        etSerial = findViewById(R.id.mycash_serial);
+        etPin = findViewById(R.id.mycash_pin);
+        btnConfirm = findViewById(R.id.mycash_confirm);
 
-        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashPhone)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashSerial)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashPin)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        etPhn.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        etSerial.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        etPin.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        btnConfirm.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashPhone)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashSerial)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        etPhn.setTypeface(AppController.getInstance().getOxygenLightFont());
+        etSerial.setTypeface(AppController.getInstance().getOxygenLightFont());
+        etPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+        btnConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
 
         btnConfirm.setOnClickListener(this);
     }
@@ -92,13 +92,10 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
             mPin = etPin.getText().toString().trim();
             if (mPhone.length() != 11) {
                 etPhn.setError(Html.fromHtml("<font color='red'>" + getString(R.string.phone_no_error_msg) + "</font>"));
-                return;
             } else if (mSerial.length() == 0) {
                 etSerial.setError(Html.fromHtml("<font color='red'>" + getString(R.string.serial_no_error_msg) + "</font>"));
-                return;
             } else if (mPin.length() == 0) {
                 etPin.setError(Html.fromHtml("<font color='red'>" + getString(R.string.mycash_pin_error_msg) + "</font>"));
-                return;
             } else {
                 submitConfirm();
             }
@@ -115,14 +112,12 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
 
     private class SubmitAsync extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
-        private String txt;
 
         @Override
         protected void onPreExecute() {
             progressDialog = ProgressDialog.show(CustomerRegistrationActivity.this, "", getString(R.string.loading_msg), true);
             if (!isFinishing())
                 progressDialog.show();
-
         }
 
         @Override
@@ -134,7 +129,7 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
 
             try {
                 //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(6);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(7);
                 nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("password", mAppHandler.getPin()));
                 nameValuePairs.add(new BasicNameValuePair("Frmserial", mSerial));
@@ -146,11 +141,12 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
                 responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (ClientProtocolException e) {
-
-            } catch (IOException e) {
+            } catch (Exception e) {
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
-
             return responseTxt;
         }
 
@@ -203,8 +199,13 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
         }
     }

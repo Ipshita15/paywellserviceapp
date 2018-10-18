@@ -34,7 +34,7 @@ public class AboutActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        ListView mListView = (ListView) findViewById(R.id.listView);
+        ListView mListView = findViewById(R.id.listView);
         SampleTextListAdapter adapter = new SampleTextListAdapter(this);
         mListView.setAdapter(adapter);
     }
@@ -88,27 +88,33 @@ public class AboutActivity extends AppCompatActivity {
             if (convertView == null) {
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.dialog_about_text_view, parent, false);
                 viewHolder = new ViewHolder();
-                viewHolder.titleView = (TextView) convertView.findViewById(R.id.title);
-                viewHolder.textView = (TextView) convertView.findViewById(R.id.about_textView);
-                viewHolder.titleView.setTypeface(AppController.getInstance().getRobotoRegularFont());
+                viewHolder.titleView = convertView.findViewById(R.id.title);
+                viewHolder.textView = convertView.findViewById(R.id.about_textView);
+                if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                    viewHolder.titleView.setTypeface(AppController.getInstance().getOxygenLightFont());
+                    viewHolder.textView.setTypeface(AppController.getInstance().getOxygenLightFont());
+                } else {
+                    viewHolder.titleView.setTypeface(AppController.getInstance().getAponaLohitFont());
+                    viewHolder.textView.setTypeface(AppController.getInstance().getAponaLohitFont());
+                }
                 convertView.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
             if (mAppHandler.getAppLanguage().equalsIgnoreCase("bn")) {
-                viewHolder.titleView.setText("পেওয়েল সার্ভিস" + " v" + AppLoadingActivity.versionName);
+                String title = "পেওয়েল সার্ভিস" + " v" + AppLoadingActivity.versionName;
+                viewHolder.titleView.setText(title);
             } else {
-                viewHolder.titleView.setText("PayWell Services" + " v" + AppLoadingActivity.versionName);
+                String title = "PayWell Services" + " v" + AppLoadingActivity.versionName;
+                viewHolder.titleView.setText(title);
             }
             viewHolder.textView.setText(sampleStrings[position]);
 
             return convertView;
         }
 
-
         private class ViewHolder {
-            TextView titleView;
-            TextView textView;
+            TextView titleView, textView;
         }
     }
 }

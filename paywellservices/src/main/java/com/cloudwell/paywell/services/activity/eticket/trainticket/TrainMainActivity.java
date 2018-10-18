@@ -14,13 +14,13 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.applandeo.materialcalendarview.CalendarView;
+import com.applandeo.materialcalendarview.EventDay;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
-import com.gnas.customcalendarview.CalendarListener;
-import com.gnas.customcalendarview.CustomCalendarView;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
@@ -32,18 +32,20 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
-public class TrainMainActivity extends AppCompatActivity implements View.OnClickListener, CalendarListener {
+public class TrainMainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ConnectionDetector mCd;
     private RelativeLayout mRelativeLayout;
     private Button mBtnConfirmDate;
-    private String mSelectedDate;
+    private String mSelectedDate = "14";
     private AppHandler mAppHandler;
     private boolean flag = false;
     private static final DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
     String date_full, selected_date_full;
+    List<EventDay> events = new ArrayList<>();
 
 
     @Override
@@ -53,7 +55,7 @@ public class TrainMainActivity extends AppCompatActivity implements View.OnClick
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.home_eticket_train);
 
-        mCd = new ConnectionDetector(TrainMainActivity.this);
+        mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(TrainMainActivity.this);
 
         initViews();
@@ -65,8 +67,8 @@ public class TrainMainActivity extends AppCompatActivity implements View.OnClick
         mBtnConfirmDate = (Button) findViewById(R.id.btnConfirmCalendarDate);
         mBtnConfirmDate.setOnClickListener(this);
 
-        ((TextView) findViewById(R.id.tvJourneyDate)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mBtnConfirmDate.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        ((TextView) findViewById(R.id.tvJourneyDate)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        mBtnConfirmDate.setTypeface(AppController.getInstance().getOxygenLightFont());
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("bn") || mAppHandler.getAppLanguage().equalsIgnoreCase("unknown")) {
             Configuration config = new Configuration();
@@ -75,26 +77,22 @@ public class TrainMainActivity extends AppCompatActivity implements View.OnClick
             flag = true;
         }
         //Initialize CustomCalendarView from layout
-        CustomCalendarView calendarView = (CustomCalendarView) findViewById(R.id.calendar_view);
+        CalendarView calendarView = (CalendarView) findViewById(R.id.calendar_view);
 
         //Initialize calendar with date
         Calendar currentCalendar = Calendar.getInstance(Locale.getDefault());
 
         //Show monday as first date of week
-        calendarView.setFirstDayOfWeek(Calendar.MONDAY);
+//        calendarView.setFirstDayOfWeek(Calendar.MONDAY);
 
         //Show/hide overflow days of a month
-        calendarView.setShowOverflowDate(false);
+//        calendarView.setShowOverflowDate(false);
 
         //call refreshCalendar to update calendar the terms_and_conditions_format
-        calendarView.refreshCalendar(currentCalendar);
+//        calendarView.refreshCalendar(currentCalendar);
 
         //Handling custom calendar events
-        calendarView.setCalendarListener(this);
-
-//        today = currentCalendar.get(Calendar.DATE);
-//        month = currentCalendar.get(Calendar.MONTH);
-//        month++;
+//        calendarView.setCalendarListener(this);
 
         try {
             Date date_today = new Date();
@@ -105,21 +103,17 @@ public class TrainMainActivity extends AppCompatActivity implements View.OnClick
 
     }
 
-    @Override
-    public void onDateSelected(Date date) {
-        selected_date_full = dateFormat.format(date);
-        DateFormat df = new SimpleDateFormat("dd", Locale.ENGLISH);
-        mSelectedDate = df.format(date);
-
-        //DateFormat df_for_validate = new SimpleDateFormat(getResources().getString(R.string.time_format), Locale.ENGLISH);
-        //String validate_month = df_for_validate.format(date);
-        //mSelectedMonth = validate_month.substring(5, 7);
-    }
-
-    @Override
-    public void onMonthChanged(Date time) {
-
-    }
+//    @Override
+//    public void onDateSelected(Date date) {
+//        selected_date_full = dateFormat.format(date);
+//        DateFormat df = new SimpleDateFormat("dd", Locale.ENGLISH);
+//        mSelectedDate = df.format(date);
+//    }
+//
+//    @Override
+//    public void onMonthChanged(Date time) {
+//
+//    }
 
     @SuppressWarnings("deprecation")
     @Override
@@ -130,20 +124,22 @@ public class TrainMainActivity extends AppCompatActivity implements View.OnClick
                     Configuration config = new Configuration();
                     config.locale = Locale.FRANCE;
                     getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+//                    mSelectedDate = "14";
                     if (mSelectedDate == null) {
                         Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.journey_date_select_error_msg, Snackbar.LENGTH_LONG);
                         snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                         View snackBarView = snackbar.getView();
                         snackBarView.setBackgroundColor(Color.parseColor("#4CAF50")); // snackbar background color
                         snackbar.show();
-                    } else if (dateFormat.parse(selected_date_full).before(dateFormat.parse(date_full))) {
-                        //if((Integer.parseInt(mSelectedDate) < today) && (Integer.parseInt(mSelectedMonth) < month)) {
-                        Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.previous_journey_date_select_error_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50")); // snackbar background color
-                        snackbar.show();
-                    } else {
+                    }
+//                    else if (dateFormat.parse(selected_date_full).before(dateFormat.parse(date_full))) {
+//                        Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.previous_journey_date_select_error_msg, Snackbar.LENGTH_LONG);
+//                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+//                        View snackBarView = snackbar.getView();
+//                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50")); // snackbar background color
+//                        snackbar.show();
+//                    }
+                    else {
                         if (!mCd.isConnectingToInternet()) {
                             AppHandler.showDialog(TrainMainActivity.this.getSupportFragmentManager());
                         } else {
@@ -161,14 +157,16 @@ public class TrainMainActivity extends AppCompatActivity implements View.OnClick
                         View snackBarView = snackbar.getView();
                         snackBarView.setBackgroundColor(Color.parseColor("#4CAF50")); // snackbar background color
                         snackbar.show();
-                    } else if (dateFormat.parse(selected_date_full).before(dateFormat.parse(date_full))) {
-                        //if ((Integer.parseInt(mSelectedDate) < today) && (Integer.parseInt(mSelectedMonth) < month)) {
-                        Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.previous_journey_date_select_error_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50")); // snackbar background color
-                        snackbar.show();
-                    } else {
+                    }
+//                    else if (dateFormat.parse(selected_date_full).before(dateFormat.parse(date_full))) {
+//                        //if ((Integer.parseInt(mSelectedDate) < today) && (Integer.parseInt(mSelectedMonth) < month)) {
+//                        Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.previous_journey_date_select_error_msg, Snackbar.LENGTH_LONG);
+//                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+//                        View snackBarView = snackbar.getView();
+//                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50")); // snackbar background color
+//                        snackbar.show();
+//                    }
+                    else {
                         if (!mCd.isConnectingToInternet()) {
                             AppHandler.showDialog(TrainMainActivity.this.getSupportFragmentManager());
                         } else {

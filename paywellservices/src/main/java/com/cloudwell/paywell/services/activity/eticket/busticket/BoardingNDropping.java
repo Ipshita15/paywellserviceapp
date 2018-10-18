@@ -86,7 +86,7 @@ public class BoardingNDropping extends AppCompatActivity {
         setContentView(R.layout.activity_boarding_droping);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.purchase_ticket_msg);
-        cd = new ConnectionDetector(getApplicationContext());
+        cd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
 
         Bundle bundle = getIntent().getExtras();
@@ -176,17 +176,17 @@ public class BoardingNDropping extends AppCompatActivity {
         _progressBar = (ProgressBar) findViewById(R.id.progressbar);
         mCardView = (CardView) findViewById(R.id.cardView);
         mCardfView2 = (CardView) findViewById(R.id.cardView2);
-        txtCompany.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        txtDate.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        txtCoachType.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((TextView) _relativeLayout.findViewById(R.id.tvHeaderInfo)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((TextView) _relativeLayout.findViewById(R.id.tvName)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        edtName.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((TextView) _relativeLayout.findViewById(R.id.tvMobile)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        edtMobile.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((TextView) _relativeLayout.findViewById(R.id.tvBoardingType)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((TextView) _relativeLayout.findViewById(R.id.termsAndConditions)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mBtnDone.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        txtCompany.setTypeface(AppController.getInstance().getOxygenLightFont());
+        txtDate.setTypeface(AppController.getInstance().getOxygenLightFont());
+        txtCoachType.setTypeface(AppController.getInstance().getOxygenLightFont());
+        ((TextView) _relativeLayout.findViewById(R.id.tvHeaderInfo)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        ((TextView) _relativeLayout.findViewById(R.id.tvName)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        edtName.setTypeface(AppController.getInstance().getOxygenLightFont());
+        ((TextView) _relativeLayout.findViewById(R.id.tvMobile)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        edtMobile.setTypeface(AppController.getInstance().getOxygenLightFont());
+        ((TextView) _relativeLayout.findViewById(R.id.tvBoardingType)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        ((TextView) _relativeLayout.findViewById(R.id.termsAndConditions)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        mBtnDone.setTypeface(AppController.getInstance().getOxygenLightFont());
 
         _progressBar.setVisibility(View.VISIBLE);
         mCardView.setVisibility(View.GONE);
@@ -277,7 +277,7 @@ public class BoardingNDropping extends AppCompatActivity {
                             public View getView(int position, View convertView, ViewGroup parent) {
                                 View view = super.getView(position, convertView, parent);
                                 if (view instanceof TextView) {
-                                    ((TextView) view).setTypeface(AppController.getInstance().getRobotoRegularFont());
+                                    ((TextView) view).setTypeface(AppController.getInstance().getOxygenLightFont());
                                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                                         ((TextView) view).setAllCaps(false);
                                     }
@@ -287,7 +287,7 @@ public class BoardingNDropping extends AppCompatActivity {
                             @Override
                             public View getDropDownView(int position, View convertView, ViewGroup parent) {
                                 View view = super.getDropDownView(position, convertView, parent);
-                                ((TextView) view).setTypeface(AppController.getInstance().getRobotoRegularFont());
+                                ((TextView) view).setTypeface(AppController.getInstance().getOxygenLightFont());
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                                     ((TextView) view).setAllCaps(false);
                                 }

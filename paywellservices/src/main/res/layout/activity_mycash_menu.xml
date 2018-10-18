@@ -5,13 +5,14 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/layout_background"
+    android:background="@drawable/ic_background_card"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
         android:id="@+id/fbCardView"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
+        android:minHeight="70dp"
         card_view:cardBackgroundColor="@color/card_background"
         card_view:cardCornerRadius="4dp"
         card_view:cardUseCompatPadding="true">
@@ -44,51 +45,98 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
                     android:orientation="horizontal"
-                    android:weightSum="3">
+                    android:weightSum="5">
 
                     <Button
                         android:id="@+id/homeBtnCashInOut"
-                        style="@style/HomeButton"
+                        style="@style/HomeButtonNew"
                         android:layout_weight="1"
-                        android:drawableTop="@drawable/ic_mycash_cash_in_out"
+                        android:drawableTop="@drawable/ic_cash_in_cash_out"
                         android:onClick="onButtonClicker"
                         android:text="@string/home_cash_in_out"
                         android:textAllCaps="false"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <!--<Button-->
-                        <!--android:id="@+id/homeBtnUtilityBillPay"-->
-                        <!--style="@style/HomeButton"-->
-                        <!--android:layout_weight="1"-->
-                        <!--android:drawableTop="@drawable/ic_mycash_bill_pay"-->
-                        <!--android:onClick="onButtonClicker"-->
-                        <!--android:paddingLeft="8dp"-->
-                        <!--android:text="@string/home_utility_pb_billpay"-->
-                        <!--android:textAllCaps="false"-->
-                        <!--android:textAppearance="?android:attr/textAppearanceMedium" />-->
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center"></LinearLayout>
+                        android:layout_weight="1" />
 
                     <Button
                         android:id="@+id/homeBtnFundManagement"
-                        style="@style/HomeButton"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginTop="15dp"
+                        style="@style/HomeButtonNew"
                         android:layout_weight="1"
-                        android:drawableTop="@drawable/ic_mycash_fund_management"
+                        android:drawableTop="@drawable/ic_fund_management"
                         android:onClick="onButtonClicker"
-                        android:paddingLeft="8dp"
                         android:text="@string/home_fund_management"
                         android:textAllCaps="false"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
 
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <Button
+                        android:id="@+id/homeBtnBalance"
+                        style="@style/HomeButtonNew"
+                        android:layout_weight="1"
+                        android:drawableTop="@drawable/ic_balance"
+                        android:onClick="onButtonClicker"
+                        android:text="@string/home_mycash_balance"
+                        android:textAllCaps="false"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:orientation="horizontal"
+                    android:weightSum="5">
+
+                    <Button
+                        android:id="@+id/homeBtnCustomerRegistration"
+                        style="@style/HomeButtonNew"
+                        android:layout_weight="1"
+                        android:drawableTop="@drawable/ic_customer_registration"
+                        android:onClick="onButtonClicker"
+                        android:text="@string/home_customer_registration"
+                        android:textAllCaps="false"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <Button
+                        android:id="@+id/homeBtnGenerateOTP"
+                        style="@style/HomeButtonNew"
+                        android:layout_weight="1"
+                        android:drawableTop="@drawable/ic_generate_otp"
+                        android:onClick="onButtonClicker"
+                        android:text="@string/home_generate_otp"
+                        android:textAllCaps="false"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <Button
+                        android:id="@+id/homeBtnPinChange"
+                        style="@style/HomeButtonNew"
+                        android:layout_weight="1"
+                        android:drawableTop="@drawable/ic_change_pin"
+                        android:onClick="onButtonClicker"
+                        android:text="@string/home_mycash_change_pin"
+                        android:textAllCaps="false"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -98,104 +146,25 @@
                     android:orientation="horizontal"
                     android:weightSum="3">
 
-                    <Button
-                        android:id="@+id/homeBtnBalance"
-                        style="@style/HomeButton"
-                        android:layout_marginBottom="5dp"
-                        android:layout_weight="1"
-                        android:drawableTop="@drawable/ic_mycash_balance"
-                        android:onClick="onButtonClicker"
-                        android:text="@string/home_mycash_balance"
-                        android:textAllCaps="false"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center"></LinearLayout>
-
-                    <Button
-                        android:id="@+id/homeBtnCustomerRegistration"
-                        style="@style/HomeButton"
-                        android:layout_marginBottom="5dp"
-                        android:layout_weight="1"
-                        android:drawableTop="@drawable/ic_mycash_customer_registration"
-                        android:onClick="onButtonClicker"
-                        android:text="@string/home_customer_registration"
-                        android:textAllCaps="false"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
-
-                    <Button
-                        android:id="@+id/homeBtnGenerateOTP"
-                        style="@style/HomeButton"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_weight="1"
-                        android:drawableTop="@drawable/ic_mycash_generate_otp"
-                        android:onClick="onButtonClicker"
-                        android:text="@string/home_generate_otp"
-                        android:textAllCaps="false"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center"></LinearLayout>
-
-                    <Button
-                        android:id="@+id/homeBtnPinChange"
-                        style="@style/HomeButton"
-                        android:layout_marginBottom="5dp"
-                        android:layout_weight="1"
-                        android:drawableTop="@drawable/ic_home_change_pin"
-                        android:onClick="onButtonClicker"
-                        android:text="@string/home_settings_change_pin"
-                        android:textAllCaps="false"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center"></LinearLayout>
+                        android:layout_weight="1" />
 
                     <Button
                         android:id="@+id/homeBtnInquiry"
-                        style="@style/HomeButton"
+                        style="@style/HomeButtonNew"
                         android:layout_weight="1"
-                        android:drawableTop="@drawable/ic_mycash_enquiry"
+                        android:drawableTop="@drawable/ic_enquiry"
                         android:onClick="onButtonClicker"
-                        android:paddingLeft="3dp"
                         android:text="@string/home_inquiry"
                         android:textAllCaps="false"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center"></LinearLayout>
+                        android:layout_weight="1" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

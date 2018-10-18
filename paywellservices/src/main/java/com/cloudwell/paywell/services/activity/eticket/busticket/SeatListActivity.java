@@ -84,21 +84,21 @@ public class SeatListActivity extends AppCompatActivity {
         _progressBar = (ProgressBar) findViewById(R.id.progressbar);
 
         _date = (TextView) findViewById(R.id.tvJourneyDate);
-        _date.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        _date.setTypeface(AppController.getInstance().getOxygenLightFont());
 
         _busName = (TextView) findViewById(R.id.tvBusName);
-        _busName.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        _busName.setTypeface(AppController.getInstance().getOxygenLightFont());
 
-        ((TextView) _relativeLayout.findViewById(R.id.tvSeat)).setTypeface(AppController.getInstance().getRobotoRegularFont());
+        ((TextView) _relativeLayout.findViewById(R.id.tvSeat)).setTypeface(AppController.getInstance().getOxygenLightFont());
         _totalSeatSelect = (TextView) findViewById(R.id.tvTotalSeatSelect);
-        _totalSeatSelect.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        _totalSeatSelect.setTypeface(AppController.getInstance().getOxygenLightFont());
 
-        ((TextView) _relativeLayout.findViewById(R.id.tvPrice)).setTypeface(AppController.getInstance().getRobotoRegularFont());
+        ((TextView) _relativeLayout.findViewById(R.id.tvPrice)).setTypeface(AppController.getInstance().getOxygenLightFont());
         _totalPrice = (TextView) findViewById(R.id.tvTotalPrice);
-        _totalPrice.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        _totalPrice.setTypeface(AppController.getInstance().getOxygenLightFont());
 
         _btnResult = (Button) findViewById(R.id.btnResult);
-        _btnResult.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        _btnResult.setTypeface(AppController.getInstance().getOxygenLightFont());
 
         gridView = (GridView) findViewById(R.id.gridSeat);
         gridView.setTextFilterEnabled(true);

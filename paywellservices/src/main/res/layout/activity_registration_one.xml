@@ -5,7 +5,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:descendantFocusability="beforeDescendants"
         android:focusableInTouchMode="true">
 
@@ -133,12 +133,48 @@
 
 
         <TextView
-            android:id="@+id/textView_businessType"
+            android:id="@+id/textView_merchantType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/editText_ownerName"
             android:layout_alignStart="@+id/editText_ownerName"
             android:layout_below="@+id/editText_ownerName"
+            android:layout_marginTop="15dp"
+            android:text="মার্চেন্টের ধরন"
+            android:textColor="#41882b"
+            android:textSize="18sp"
+            android:textStyle="normal|bold" />
+
+        <Spinner
+            android:id="@+id/spinner_merchantType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editText_ownerName"
+            android:layout_marginLeft="56dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/textView_merchantType"
+            android:layout_toRightOf="@+id/textView_merchantType"
+            android:spinnerMode="dropdown" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_merchantType"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/star_sign"
+            android:textColor="#FF4719" />
+
+
+        <TextView
+            android:id="@+id/textView_businessType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/editText_ownerName"
+            android:layout_alignStart="@+id/editText_ownerName"
+            android:layout_below="@+id/textView_merchantType"
             android:layout_marginTop="15dp"
             android:text="ব্যবসার ধরন"
             android:textColor="#41882b"
@@ -149,7 +185,7 @@
             android:id="@+id/spinner_businessType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/editText_ownerName"
+            android:layout_below="@+id/spinner_merchantType"
             android:layout_marginLeft="56dp"
             android:layout_marginStart="56dp"
             android:layout_marginTop="5dp"

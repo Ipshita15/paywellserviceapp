@@ -1,12 +1,15 @@
 package com.cloudwell.paywell.services.activity.topup;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -33,20 +36,22 @@ import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
+import com.cloudwell.paywell.services.activity.utility.ivac.DrawableClickListener;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
-import com.cloudwell.paywell.services.utils.MyHttpClient;
 
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TopupMainActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
@@ -63,17 +68,17 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
     private static AppHandler mAppHandler;
     private LayoutInflater inflater;
 
-    TranslateAnimation slideInAnim = new TranslateAnimation(
+    private TranslateAnimation slideInAnim = new TranslateAnimation(
             Animation.RELATIVE_TO_PARENT, -1, Animation.RELATIVE_TO_PARENT, 0,
             Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 0);
-    TranslateAnimation slideOutAnim = new TranslateAnimation(
+    private TranslateAnimation slideOutAnim = new TranslateAnimation(
             Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 1,
             Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 0);
 
     private RelativeLayout mRelativeLayout;
 
-    RadioButton radioButton_five, radioButton_ten, radioButton_twenty, radioButton_fifty, radioButton_hundred, radioButton_twoHundred;
-    String selectedLimit = "";
+    private RadioButton radioButton_five, radioButton_ten, radioButton_twenty, radioButton_fifty, radioButton_hundred, radioButton_twoHundred;
+    private String selectedLimit = "";
 
 
     @Override
@@ -91,19 +96,19 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void initView() {
-        mRelativeLayout = (RelativeLayout) findViewById(R.id.linearLayout);
+        mRelativeLayout = findViewById(R.id.linearLayout);
 
-        topUpLayout = (LinearLayout) findViewById(R.id.topUpAddLayout);
-        Button buttonSubmit = (Button) findViewById(R.id.btnSubmit);
+        topUpLayout = findViewById(R.id.topUpAddLayout);
+        Button buttonSubmit = findViewById(R.id.btnSubmit);
 
-        ((Button) mRelativeLayout.findViewById(R.id.btnSubmit)).setTypeface(AppController.getInstance().getRobotoRegularFont());
+        ((Button) mRelativeLayout.findViewById(R.id.btnSubmit)).setTypeface(AppController.getInstance().getOxygenLightFont());
 
         slideInAnim.setDuration(50);
         slideOutAnim.setDuration(50);
         assert buttonSubmit != null;
         buttonSubmit.setOnClickListener(this);
 
-        ImageView imageViewAdd = (ImageView) findViewById(R.id.imageAdd);
+        ImageView imageViewAdd = findViewById(R.id.imageAdd);
         imageViewAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,17 +123,17 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                 }
             }
         });
-        ImageView imageViewTrxLog = (ImageView) findViewById(R.id.transLogBtn);
+        ImageView imageViewTrxLog = findViewById(R.id.transLogBtn);
         imageViewTrxLog.setOnClickListener(this);
 
-        ImageView imageViewInq = (ImageView) findViewById(R.id.enquiryBtn);
+        ImageView imageViewInq = findViewById(R.id.enquiryBtn);
         imageViewInq.setOnClickListener(this);
 
-        ImageView imageViewOffer = (ImageView) findViewById(R.id.imageOffer);
+        ImageView imageViewOffer = findViewById(R.id.imageOffer);
         imageViewOffer.setOnClickListener(this);
 
         inflater = getLayoutInflater();
-        cd = new ConnectionDetector(getApplicationContext());
+        cd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
         addAnotherNo();
     }
@@ -165,12 +170,30 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
     private void addAnotherNo() {
         ++addNoFlag;
         final View topUpView = inflater.inflate(R.layout.activity_topup_layout, null);
-        Button removeBtn = (Button) topUpView.findViewById(R.id.removeLayoutImgBtn);
+        EditText phoneNoET = topUpView.findViewById(R.id.phoneNo);
+        Button removeBtn = topUpView.findViewById(R.id.removeLayoutImgBtn);
 
-        ((EditText) topUpView.findViewById(R.id.phoneNo1)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((EditText) topUpView.findViewById(R.id.amount1)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((RadioButton) topUpView.findViewById(R.id.preRadioButton1)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((RadioButton) topUpView.findViewById(R.id.postRadioButton1)).setTypeface(AppController.getInstance().getRobotoRegularFont());
+        topUpView.setTag(addNoFlag);
+
+        if (addNoFlag == 1) {
+            removeBtn.setVisibility(View.GONE);
+        }
+
+        phoneNoET.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(phoneNoET) {
+            @Override
+            public boolean onDrawableClick() {
+                Intent intent = new Intent(Intent.ACTION_PICK,
+                        ContactsContract.Contacts.CONTENT_URI);
+                intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
+                startActivityForResult(intent, (Integer) topUpView.getTag());
+                return true;
+            }
+        });
+
+        ((EditText) topUpView.findViewById(R.id.phoneNo)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        ((EditText) topUpView.findViewById(R.id.amount)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        ((RadioButton) topUpView.findViewById(R.id.preRadioButton)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        ((RadioButton) topUpView.findViewById(R.id.postRadioButton)).setTypeface(AppController.getInstance().getOxygenLightFont());
 
         removeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,11 +223,202 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                             }
                         });
                 topUpView.startAnimation(slideOutAnim);
-
             }
         });
         topUpLayout.addView(topUpView);
         topUpView.startAnimation(slideInAnim);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 1:
+                if (resultCode == Activity.RESULT_OK) {
+                    String phoneNumOne = null;
+                    View singleTopUpViewOne = topUpLayout.getChildAt(0);
+                    if (singleTopUpViewOne != null) {
+                        EditText phoneNoETOne = singleTopUpViewOne.findViewById(R.id.phoneNo);
+                        Cursor phones = getContentResolver()
+                                .query(data.getData(),
+                                        null,
+                                        null,
+                                        null,
+                                        null);
+                        while (phones.moveToNext()) {
+                            phoneNumOne = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        }
+                        phones.close();
+                        if (!phoneNumOne.isEmpty() && !phoneNumOne.contains("+") && !phoneNumOne.contains("-")
+                                && !phoneNumOne.contains(" ") && !phoneNumOne.startsWith("88")) {
+                            phoneNoETOne.setText(phoneNumOne);
+                        } else {
+                            if (phoneNumOne.contains("+")) {
+                                phoneNumOne = phoneNumOne.replace("+", "");
+                            }
+                            if (phoneNumOne.contains("-")) {
+                                phoneNumOne = phoneNumOne.replace("-", "");
+                            }
+                            if (phoneNumOne.contains(" ")) {
+                                phoneNumOne = phoneNumOne.replace(" ", "");
+                            }
+                            if (phoneNumOne.startsWith("88")) {
+                                phoneNumOne = phoneNumOne.replace("88", "");
+                            }
+                            phoneNoETOne.setText(phoneNumOne);
+                        }
+                    }
+                }
+                break;
+            case 2:
+                if (resultCode == Activity.RESULT_OK) {
+                    String phoneNumTwo = null;
+                    View singleTopUpViewTwo = topUpLayout.getChildAt(1);
+                    if (singleTopUpViewTwo != null) {
+                        EditText phoneNoETTwo = singleTopUpViewTwo.findViewById(R.id.phoneNo);
+                        Cursor phones = getContentResolver()
+                                .query(data.getData(),
+                                        null,
+                                        null,
+                                        null,
+                                        null);
+                        while (phones.moveToNext()) {
+                            phoneNumTwo = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        }
+                        phones.close();
+                        if (!phoneNumTwo.isEmpty() && !phoneNumTwo.contains("+") && !phoneNumTwo.contains("-")
+                                && !phoneNumTwo.contains(" ") && !phoneNumTwo.startsWith("88")) {
+                            phoneNoETTwo.setText(phoneNumTwo);
+                        } else {
+                            if (phoneNumTwo.contains("+")) {
+                                phoneNumTwo = phoneNumTwo.replace("+", "");
+                            }
+                            if (phoneNumTwo.contains("-")) {
+                                phoneNumTwo = phoneNumTwo.replace("-", "");
+                            }
+                            if (phoneNumTwo.contains(" ")) {
+                                phoneNumTwo = phoneNumTwo.replace(" ", "");
+                            }
+                            if (phoneNumTwo.startsWith("88")) {
+                                phoneNumTwo = phoneNumTwo.replace("88", "");
+                            }
+                            phoneNoETTwo.setText(phoneNumTwo);
+                        }
+                    }
+                }
+                break;
+            case 3:
+                if (resultCode == Activity.RESULT_OK) {
+                    String phoneNumThree = null;
+                    View singleTopUpViewThree = topUpLayout.getChildAt(2);
+                    if (singleTopUpViewThree != null) {
+                        EditText phoneNoETThree = singleTopUpViewThree.findViewById(R.id.phoneNo);
+                        Cursor phones = getContentResolver()
+                                .query(data.getData(),
+                                        null,
+                                        null,
+                                        null,
+                                        null);
+                        while (phones.moveToNext()) {
+                            phoneNumThree = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        }
+                        phones.close();
+                        if (!phoneNumThree.isEmpty() && !phoneNumThree.contains("+") && !phoneNumThree.contains("-")
+                                && !phoneNumThree.contains(" ") && !phoneNumThree.startsWith("88")) {
+                            phoneNoETThree.setText(phoneNumThree);
+                        } else {
+                            if (phoneNumThree.contains("+")) {
+                                phoneNumThree = phoneNumThree.replace("+", "");
+                            }
+                            if (phoneNumThree.contains("-")) {
+                                phoneNumThree = phoneNumThree.replace("-", "");
+                            }
+                            if (phoneNumThree.contains(" ")) {
+                                phoneNumThree = phoneNumThree.replace(" ", "");
+                            }
+                            if (phoneNumThree.startsWith("88")) {
+                                phoneNumThree = phoneNumThree.replace("88", "");
+                            }
+                            phoneNoETThree.setText(phoneNumThree);
+                        }
+                    }
+                }
+                break;
+            case 4:
+                if (resultCode == Activity.RESULT_OK) {
+                    String phoneNumFour = null;
+                    View singleTopUpViewFour = topUpLayout.getChildAt(3);
+                    if (singleTopUpViewFour != null) {
+                        EditText phoneNoETFour = singleTopUpViewFour.findViewById(R.id.phoneNo);
+                        Cursor phones = getContentResolver()
+                                .query(data.getData(),
+                                        null,
+                                        null,
+                                        null,
+                                        null);
+                        while (phones.moveToNext()) {
+                            phoneNumFour = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        }
+                        phones.close();
+                        if (!phoneNumFour.isEmpty() && !phoneNumFour.contains("+") && !phoneNumFour.contains("-")
+                                && !phoneNumFour.contains(" ") && !phoneNumFour.startsWith("88")) {
+                            phoneNoETFour.setText(phoneNumFour);
+                        } else {
+                            if (phoneNumFour.contains("+")) {
+                                phoneNumFour = phoneNumFour.replace("+", "");
+                            }
+                            if (phoneNumFour.contains("-")) {
+                                phoneNumFour = phoneNumFour.replace("-", "");
+                            }
+                            if (phoneNumFour.contains(" ")) {
+                                phoneNumFour = phoneNumFour.replace(" ", "");
+                            }
+                            if (phoneNumFour.startsWith("88")) {
+                                phoneNumFour = phoneNumFour.replace("88", "");
+                            }
+                            phoneNoETFour.setText(phoneNumFour);
+                        }
+                    }
+                }
+                break;
+            case 5:
+                if (resultCode == Activity.RESULT_OK) {
+                    String phoneNumFive = null;
+                    View singleTopUpViewFive = topUpLayout.getChildAt(4);
+                    if (singleTopUpViewFive != null) {
+                        EditText phoneNoETFive = singleTopUpViewFive.findViewById(R.id.phoneNo);
+                        Cursor phones = getContentResolver()
+                                .query(data.getData(),
+                                        null,
+                                        null,
+                                        null,
+                                        null);
+                        while (phones.moveToNext()) {
+                            phoneNumFive = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        }
+                        phones.close();
+                        if (!phoneNumFive.isEmpty() && !phoneNumFive.contains("+") && !phoneNumFive.contains("-")
+                                && !phoneNumFive.contains(" ") && !phoneNumFive.startsWith("88")) {
+                            phoneNoETFive.setText(phoneNumFive);
+                        } else {
+                            if (phoneNumFive.contains("+")) {
+                                phoneNumFive = phoneNumFive.replace("+", "");
+                            }
+                            if (phoneNumFive.contains("-")) {
+                                phoneNumFive = phoneNumFive.replace("-", "");
+                            }
+                            if (phoneNumFive.contains(" ")) {
+                                phoneNumFive = phoneNumFive.replace(" ", "");
+                            }
+                            if (phoneNumFive.startsWith("88")) {
+                                phoneNumFive = phoneNumFive.replace("88", "");
+                            }
+                            phoneNoETFive.setText(phoneNumFive);
+                        }
+                    }
+                }
+                break;
+        }
     }
 
     // Transaction Inquiry
@@ -238,9 +452,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                     if (!cd.isConnectingToInternet()) {
                         AppHandler.showDialog(getSupportFragmentManager());
                     } else {
-                        new TransEnquiryAsync().execute(getResources().getString(R.string.inq_top),
-                                "iemi_no=" + mAppHandler.getImeiNo(),
-                                "&msisdn=" + enqNoET.getText().toString());
+                        new TransEnquiryAsync().execute(getResources().getString(R.string.inq_top), enqNoET.getText().toString());
                     }
                     dialogInterface.dismiss();
                 }
@@ -260,25 +472,28 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
             progressDialog = ProgressDialog.show(TopupMainActivity.this, "", getString(R.string.loading_msg), true);
             if (!isFinishing())
                 progressDialog.show();
-
         }
 
         @Override
         protected String doInBackground(String... params) {
             String responseTxt = null;
-            HttpParams httpParameters = new BasicHttpParams();
-            int timeoutConnection = 10000;
-            HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
-            int timeoutSocket = 10000;
-            HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
-            HttpClient client = new MyHttpClient(httpParameters, getApplicationContext());
-            HttpGet request = new HttpGet(params[0] + params[1] + params[2]);
-
-            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            // Create a new HttpClient and Post Header
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(params[0]);
             try {
-                responseTxt = client.execute(request, responseHandler);
-            } catch (IOException e) {
-                e.printStackTrace();
+                List<NameValuePair> nameValuePairs = new ArrayList<>(2);
+                nameValuePairs.add(new BasicNameValuePair("iemi_no", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("msisdn", params[1]));
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                responseTxt = httpclient.execute(httppost, responseHandler);
+            } catch (Exception e) {
+                e.fillInStackTrace();
+                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
             return responseTxt;
         }
@@ -289,8 +504,6 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
             if (result != null) {
                 try {
                     String splitSingleAt[] = result.split("@");
-//                    if (splitSingleAt[0].equalsIgnoreCase("362") ||
-//                            splitSingleAt[0].equalsIgnoreCase("313") || splitSingleAt[0].equalsIgnoreCase("360")) {
                     if (splitSingleAt[0].equalsIgnoreCase("362") || splitSingleAt[0].equalsIgnoreCase("360")) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(TopupMainActivity.this);
                         builder.setTitle(Html.fromHtml("<font color='#ff0000'>Result Failed</font>"));
@@ -313,8 +526,13 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                         String hotline = splitSingleAt[9];
                         showEnquiryResult(phnNo, amount, packageType, trxID, message, dateTime, hotline);
                     }
-                } catch (ArrayIndexOutOfBoundsException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
+                    Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                    View snackBarView = snackbar.getView();
+                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                    snackbar.show();
                 }
             } else {
                 Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
@@ -327,8 +545,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
 
         private void showEnquiryResult(String phone, String amount, String packageType, String trxId, String status, String datetime, String hotline) {
             if (status.equalsIgnoreCase("Successful")) {
-                inquiryReceipt = getString(R.string.date_and_time_des) + AppHandler.getCurrentDate() + "," + AppHandler.getCurrentTime()
-                        + "\n" + getString(R.string.phone_no_des) + " " + phone
+                inquiryReceipt = getString(R.string.phone_no_des) + " " + phone
                         + "\n" + getString(R.string.package_type_des) + " " + packageType
                         + "\n" + getString(R.string.amount_des) + " " + amount + getString(R.string.tk)
                         + "\n" + getString(R.string.trx_id_des) + " " + trxId
@@ -336,8 +553,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                         + "\n\n" + getString(R.string.using_paywell_des)
                         + "\n" + getString(R.string.hotline_des) + " " + hotline;
             } else {
-                inquiryReceipt = getString(R.string.date_and_time_des) + AppHandler.getCurrentDate() + "," + AppHandler.getCurrentTime()
-                        + "\n" + getString(R.string.phone_no_des) + " " + phone
+                inquiryReceipt = getString(R.string.phone_no_des) + " " + phone
                         + "\n" + getString(R.string.package_type_des) + " " + packageType
                         + "\n" + getString(R.string.amount_des) + " " + amount + getString(R.string.tk)
                         + "\n\n" + getString(R.string.status_des) + " " + status
@@ -372,14 +588,14 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
         dialog.setTitle(R.string.log_limit_title_msg);
         dialog.setContentView(R.layout.dialog_trx_limit);
 
-        Button btn_okay = (Button) dialog.findViewById(R.id.buttonOk);
+        Button btn_okay = dialog.findViewById(R.id.buttonOk);
 
-        radioButton_five = (RadioButton) dialog.findViewById(R.id.radio_five);
-        radioButton_ten = (RadioButton) dialog.findViewById(R.id.radio_ten);
-        radioButton_twenty = (RadioButton) dialog.findViewById(R.id.radio_twenty);
-        radioButton_fifty = (RadioButton) dialog.findViewById(R.id.radio_fifty);
-        radioButton_hundred = (RadioButton) dialog.findViewById(R.id.radio_hundred);
-        radioButton_twoHundred = (RadioButton) dialog.findViewById(R.id.radio_twoHundred);
+        radioButton_five = dialog.findViewById(R.id.radio_five);
+        radioButton_ten = dialog.findViewById(R.id.radio_ten);
+        radioButton_twenty = dialog.findViewById(R.id.radio_twenty);
+        radioButton_fifty = dialog.findViewById(R.id.radio_fifty);
+        radioButton_hundred = dialog.findViewById(R.id.radio_hundred);
+        radioButton_twoHundred = dialog.findViewById(R.id.radio_twoHundred);
 
         radioButton_five.setOnCheckedChangeListener(this);
         radioButton_ten.setOnCheckedChangeListener(this);
@@ -390,27 +606,24 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
 
         assert btn_okay != null;
         btn_okay.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                    if (selectedLimit.isEmpty()) {
-                        selectedLimit = "5";
-                    }
-                    int limit = Integer.parseInt(selectedLimit);
-                    if (cd.isConnectingToInternet()) {
-                        new TransactionLogAsync().execute(getResources().getString(R.string.trx_log),
-                                "iemi_no=" + mAppHandler.getImeiNo(),
-                                "&pin_code=1234",
-                                "&limit=" + limit);
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mRelativeLayout, getResources().getString(R.string.connection_error_msg), Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                if (selectedLimit.isEmpty()) {
+                    selectedLimit = "5";
                 }
-            });
+                int limit = Integer.parseInt(selectedLimit);
+                if (cd.isConnectingToInternet()) {
+                    new TransactionLogAsync().execute(getString(R.string.trx_log), "" + limit);
+                } else {
+                    Snackbar snackbar = Snackbar.make(mRelativeLayout, getResources().getString(R.string.connection_error_msg), Snackbar.LENGTH_LONG);
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                    View snackBarView = snackbar.getView();
+                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                    snackbar.show();
+                }
+            }
+        });
         dialog.setCancelable(true);
         dialog.show();
     }
@@ -484,20 +697,25 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
         @Override
         protected String doInBackground(String... params) {
             String responseTxt = null;
-            HttpGet request = new HttpGet(params[0] + params[1] + params[2] + params[3]);
-            HttpParams httpParameters = new BasicHttpParams();
-            int timeoutConnection = 1000000;
-            HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
-            int timeoutSocket = 1000000;
-            HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
-            HttpClient httpClient = new MyHttpClient(httpParameters, getApplicationContext());
-            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            // Create a new HttpClient and Post Header
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(params[0]);
             try {
-                responseTxt = httpClient.execute(request, responseHandler);
-            }  catch (IOException e) {
-                e.printStackTrace();
-            }
+                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
+                nameValuePairs.add(new BasicNameValuePair("iemi_no", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("pin_code", "1234"));
+                nameValuePairs.add(new BasicNameValuePair("limit", params[1]));
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                responseTxt = httpclient.execute(httppost, responseHandler);
+            } catch (Exception e) {
+                e.fillInStackTrace();
+                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+            }
             return responseTxt;
         }
 
@@ -533,20 +751,19 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                 View singleTopUpView = topUpLayout.getChildAt(i);
                 if (singleTopUpView != null) {
 
-                    EditText phoneNoET = (EditText) singleTopUpView.findViewById(R.id.phoneNo1);
-                    EditText amountET = (EditText) singleTopUpView.findViewById(R.id.amount1);
-                    RadioGroup prePostSelector = (RadioGroup) singleTopUpView.findViewById(R.id.prePostRadioGroup1);
+                    EditText phoneNoET = singleTopUpView.findViewById(R.id.phoneNo);
+                    EditText amountET = singleTopUpView.findViewById(R.id.amount);
+                    RadioGroup prePostSelector = singleTopUpView.findViewById(R.id.prePostRadioGroup);
 
                     String phoneStr = phoneNoET.getText().toString();
                     String amountStr = amountET.getText().toString();
                     String planStr = "prepaid";
 
-                    if (prePostSelector.getCheckedRadioButtonId() == R.id.preRadioButton1) {
+                    if (prePostSelector.getCheckedRadioButtonId() == R.id.preRadioButton) {
                         planStr = getResources().getString(R.string.pre_paid_str);
-                    } else if (prePostSelector.getCheckedRadioButtonId() == R.id.postRadioButton1) {
+                    } else if (prePostSelector.getCheckedRadioButtonId() == R.id.postRadioButton) {
                         planStr = getResources().getString(R.string.post_paid_str);
                     }
-
                     if (phoneStr.length() < 11) {
                         phoneNoET.setError(Html.fromHtml("<font color='red'>" + getString(R.string.phone_no_error_msg) + "</font>"));
                         return;
@@ -580,7 +797,6 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
             snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             snackbar.show();
         }
-
     }
 
     private void askForPin() {
@@ -630,7 +846,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
     }
 
     private class TopUpAsync extends AsyncTask<Object, String, String> {
-        ProgressDialog progressDialog;
+        private ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
@@ -641,7 +857,6 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
 
         @Override
         protected String doInBackground(Object... params) {
-
             return generateRequestURL();
         }
 
@@ -682,16 +897,16 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
 
                     View singleTopUpView = topUpLayout.getChildAt(i);
                     if (singleTopUpView != null) {
-                        mPhoneNoET = (EditText) singleTopUpView.findViewById(R.id.phoneNo1);
-                        mAmountET = (EditText) singleTopUpView.findViewById(R.id.amount1);
-                        prePostSelector = (RadioGroup) singleTopUpView.findViewById(R.id.prePostRadioGroup1);
+                        mPhoneNoET = singleTopUpView.findViewById(R.id.phoneNo);
+                        mAmountET = singleTopUpView.findViewById(R.id.amount);
+                        prePostSelector = singleTopUpView.findViewById(R.id.prePostRadioGroup);
 
                         String phoneStr = mPhoneNoET.getText().toString();
                         String amountStr = mAmountET.getText().toString();
                         String planStr = null;
-                        if (prePostSelector.getCheckedRadioButtonId() == R.id.preRadioButton1) {
+                        if (prePostSelector.getCheckedRadioButtonId() == R.id.preRadioButton) {
                             planStr = getResources().getString(R.string.pre_paid_str);
-                        } else if (prePostSelector.getCheckedRadioButtonId() == R.id.postRadioButton1) {
+                        } else if (prePostSelector.getCheckedRadioButtonId() == R.id.postRadioButton) {
                             planStr = getResources().getString(R.string.post_paid_str);
                         }
                         reqStrBuilder.append("&msisdn" + (i + 1) + "="
@@ -701,7 +916,6 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                     }
                 }
                 requestString = reqStrBuilder.toString();
-
             } else {
                 // Single
                 EditText phoneNoET, amountET;
@@ -709,17 +923,17 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
 
                 View singleTopUpView = topUpLayout.getChildAt(0);
                 if (singleTopUpView != null) {
-                    phoneNoET = (EditText) singleTopUpView.findViewById(R.id.phoneNo1);
-                    amountET = (EditText) singleTopUpView.findViewById(R.id.amount1);
-                    prePostSelector = (RadioGroup) singleTopUpView.findViewById(R.id.prePostRadioGroup1);
+                    phoneNoET = singleTopUpView.findViewById(R.id.phoneNo);
+                    amountET = singleTopUpView.findViewById(R.id.amount);
+                    prePostSelector = singleTopUpView.findViewById(R.id.prePostRadioGroup);
 
                     String phoneStr = phoneNoET.getText().toString();
                     String amountStr = amountET.getText().toString();
                     String planStr = null;
 
-                    if (prePostSelector.getCheckedRadioButtonId() == R.id.preRadioButton1) {
+                    if (prePostSelector.getCheckedRadioButtonId() == R.id.preRadioButton) {
                         planStr = getResources().getString(R.string.pre_paid_str);
-                    } else if (prePostSelector.getCheckedRadioButtonId() == R.id.postRadioButton1) {
+                    } else if (prePostSelector.getCheckedRadioButtonId() == R.id.postRadioButton) {
                         planStr = getResources().getString(R.string.post_paid_str);
                     }
                     requestString = getResources().getString(R.string.single_top)
@@ -737,25 +951,17 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
     @SuppressWarnings("deprecation")
     private String sendingHTTPSTopupRequest(String requestString) {
         String responseTxt = null;
-        HttpParams httpParameters = new BasicHttpParams();
-        // Set the timeout in milliseconds until a connection is
-        // established.
-        int timeoutConnection = 1000000;
-        HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
-        // Set the default socket timeout (SO_TIMEOUT)
-        // in milliseconds which is the timeout for waiting for data.
-        int timeoutSocket = 1000000;
-        HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
-
-        // Instantiate the custom HttpClient
-        HttpClient httpClient = new MyHttpClient(httpParameters, getApplicationContext());
-        // HttpClient client = AppController.getInstance().getTrustedHttpClient();
-        HttpGet request = new HttpGet(requestString);
-        ResponseHandler<String> responseHandler = new BasicResponseHandler();
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpPost httppost = new HttpPost(requestString);
         try {
-            responseTxt = httpClient.execute(request, responseHandler);
-        } catch (IOException e) {
-            e.printStackTrace();
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            responseTxt = httpclient.execute(httppost, responseHandler);
+        } catch (Exception e) {
+            e.fillInStackTrace();
+            Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+            View snackBarView = snackbar.getView();
+            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
         }
         return responseTxt;
 
@@ -780,8 +986,8 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                     } else {
                         View multipleTopupView = topUpLayout.getChildAt(i);
                         if (multipleTopupView != null) {
-                            multiplePhoneNoET = (EditText) multipleTopupView.findViewById(R.id.phoneNo1);
-                            multipleAmountET = (EditText) multipleTopupView.findViewById(R.id.amount1);
+                            multiplePhoneNoET = multipleTopupView.findViewById(R.id.phoneNo);
+                            multipleAmountET = multipleTopupView.findViewById(R.id.amount);
                             mPhnNo = multiplePhoneNoET.getText().toString();
                             mAmount = multipleAmountET.getText().toString();
                         }
@@ -795,7 +1001,6 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                                 + "\n\n");
                     }
                 }
-
                 receiptBuilder.append(topupBuilder
                         + "\n\n" + getString(R.string.using_paywell_des)
                         + "\n" + getString(R.string.hotline_des) + mHotLine);
@@ -805,8 +1010,8 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                 // code for single topup
                 View singleTopupView = topUpLayout.getChildAt(0);
                 if (singleTopupView != null) {
-                    singlePhoneNoET = (EditText) singleTopupView.findViewById(R.id.phoneNo1);
-                    singleAmountET = (EditText) singleTopupView.findViewById(R.id.amount1);
+                    singlePhoneNoET = singleTopupView.findViewById(R.id.phoneNo);
+                    singleAmountET = singleTopupView.findViewById(R.id.amount);
                     mPhnNo = singlePhoneNoET.getText().toString();
                     mAmount = singleAmountET.getText().toString();
 
@@ -875,8 +1080,6 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(TopupMainActivity.this, MainActivity.class);
-        startActivity(intent);
         finish();
     }
 

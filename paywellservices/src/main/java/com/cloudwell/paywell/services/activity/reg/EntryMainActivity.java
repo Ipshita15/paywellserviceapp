@@ -7,26 +7,22 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.app.AppHandler;
-import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.activity.reg.model.RegistrationModel;
 
 import java.util.Locale;
 
 public class EntryMainActivity extends AppCompatActivity{
 
-    CheckBox checkBox;
+    private CheckBox checkBox;
     private LinearLayout mLinearLayout;
-    private ConnectionDetector mCd;
-    private boolean isInternetPresent = false;
-    private AppHandler mAppHandler;
-    TextView textViewTerms;
+    private TextView textViewTerms;
+    public static RegistrationModel regModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +33,10 @@ public class EntryMainActivity extends AppCompatActivity{
         config.locale = Locale.FRANCE;
         getResources().updateConfiguration(config, getResources().getDisplayMetrics());
 
-        mLinearLayout = (LinearLayout) findViewById(R.id.layout);
-        checkBox = (CheckBox) findViewById(R.id.item_check);
-        mAppHandler = new AppHandler(this);
-        mCd = new ConnectionDetector(EntryMainActivity.this);
+        mLinearLayout = findViewById(R.id.layout);
+        checkBox = findViewById(R.id.item_check);
 
-        textViewTerms = (TextView) findViewById(R.id.textViewTerms);
+        textViewTerms = findViewById(R.id.textViewTerms);
         textViewTerms.setPaintFlags(textViewTerms.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
         textViewTerms.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +49,7 @@ public class EntryMainActivity extends AppCompatActivity{
 
     public void nextOnClick(View view) {
         if (checkBox.isChecked()) {
+            regModel = new RegistrationModel();
             startActivity(new Intent(EntryMainActivity.this, EntryFirstActivity.class));
             finish();
         } else {
@@ -64,21 +59,6 @@ public class EntryMainActivity extends AppCompatActivity{
             snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             snackbar.show();
         }
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            this.onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public void itemClicked(View view) {

@@ -57,8 +57,8 @@ public class NonACFragment extends Fragment {
         mRecyclerView.setLayoutManager(mGridLayoutManager);
         _errorMsg = (TextView) rootView.findViewById(R.id.errorMsg);
 
-        _dateView.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        _errorMsg.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        _dateView.setTypeface(AppController.getInstance().getOxygenLightFont());
+        _errorMsg.setTypeface(AppController.getInstance().getOxygenLightFont());
 
         mAppHandler = new AppHandler(getActivity());
         mBusList = new ArrayList<>();
@@ -201,11 +201,11 @@ public class NonACFragment extends Fragment {
             this.availableSeat = (TextView) view.findViewById(R.id.availableSeat);
             this.coachType = (TextView) view.findViewById(R.id.coachType);
 
-            this.busName.setTypeface(AppController.getInstance().getRobotoRegularFont());
-            this.seatType.setTypeface(AppController.getInstance().getRobotoRegularFont());
-            this.arrivalTime.setTypeface(AppController.getInstance().getRobotoRegularFont());
-            this.availableSeat.setTypeface(AppController.getInstance().getRobotoRegularFont());
-            this.coachType.setTypeface(AppController.getInstance().getRobotoRegularFont());
+            this.busName.setTypeface(AppController.getInstance().getOxygenLightFont());
+            this.seatType.setTypeface(AppController.getInstance().getOxygenLightFont());
+            this.arrivalTime.setTypeface(AppController.getInstance().getOxygenLightFont());
+            this.availableSeat.setTypeface(AppController.getInstance().getOxygenLightFont());
+            this.coachType.setTypeface(AppController.getInstance().getOxygenLightFont());
         }
     }
 

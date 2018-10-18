@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.app.AppController;
@@ -67,18 +66,18 @@ public class DESCOBillPayActivity extends AppCompatActivity implements View.OnCl
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_utility_pb_billpay);
         }
-        mCd = new ConnectionDetector(this);
+        mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
         initializeView();
     }
 
     private void initializeView() {
-        mLinearLayout = (LinearLayout) findViewById(R.id.utilityLinearLayout);
-        etBill = (EditText) findViewById(R.id.mycash_bill);
-        etPhn = (EditText) findViewById(R.id.mycash_phn);
-        etPin = (EditText) findViewById(R.id.pin_no);
-        imageView = (ImageView) findViewById(R.id.imageView_info);
-        btnConfirm = (Button) findViewById(R.id.mycash_confirm);
+        mLinearLayout = findViewById(R.id.utilityLinearLayout);
+        etBill = findViewById(R.id.mycash_bill);
+        etPhn = findViewById(R.id.mycash_phn);
+        etPin = findViewById(R.id.pin_no);
+        imageView = findViewById(R.id.imageView_info);
+        btnConfirm = findViewById(R.id.mycash_confirm);
 
         btnConfirm.setOnClickListener(this);
         imageView.setOnClickListener(this);
@@ -150,7 +149,7 @@ public class DESCOBillPayActivity extends AppCompatActivity implements View.OnCl
 
             try {
                 //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<>(5);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(6);
                 nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("password", mPin));
                 nameValuePairs.add(new BasicNameValuePair("billNo", mBill));
@@ -163,13 +162,16 @@ public class DESCOBillPayActivity extends AppCompatActivity implements View.OnCl
                 responseTxt = httpclient.execute(httppost, responseHandler);
             } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
             return responseTxt;
         }
 
         @Override
         protected void onPostExecute(String result) {
-
             progressDialog.cancel();
             try {
                 if (result != null) {
@@ -241,8 +243,13 @@ public class DESCOBillPayActivity extends AppCompatActivity implements View.OnCl
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
         }
     }
@@ -263,7 +270,6 @@ public class DESCOBillPayActivity extends AppCompatActivity implements View.OnCl
             progressDialog = ProgressDialog.show(DESCOBillPayActivity.this, "", getString(R.string.loading_msg), true);
             if (!isFinishing())
                 progressDialog.show();
-
         }
 
         @SuppressWarnings("deprecation")
@@ -276,7 +282,7 @@ public class DESCOBillPayActivity extends AppCompatActivity implements View.OnCl
 
             try {
                 //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<>(7);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(8);
                 nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("password", mPin));
                 nameValuePairs.add(new BasicNameValuePair("billNo", mBill));
@@ -291,6 +297,10 @@ public class DESCOBillPayActivity extends AppCompatActivity implements View.OnCl
                 responseTxt = httpclient.execute(httppost, responseHandler);
             } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
 
             return responseTxt;
@@ -345,8 +355,13 @@ public class DESCOBillPayActivity extends AppCompatActivity implements View.OnCl
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
         }
     }

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinateLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_background_card"
     android:fitsSystemWindows="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activity.refill.banktransfer.BankTransferMainActivity">
@@ -33,125 +33,128 @@
                     android:id="@+id/cardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
                     card_view:cardBackgroundColor="@color/card_background"
                     card_view:cardCornerRadius="4dp"
                     card_view:cardUseCompatPadding="true">
 
                     <TextView
+                        android:id="@+id/detailsText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/activity_horizontal_margin"
                         android:text="@string/bank_transfer_header_msg"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/foreground"
+                        android:textStyle="bold" />
                 </android.support.v7.widget.CardView>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:orientation="horizontal"
+                android:weightSum="5">
 
                 <Button
                     android:id="@+id/homeBtnBrac"
-                    style="@style/HomeButton"
-                    android:drawableTop="@drawable/ic_home_brac"
+                    style="@style/HomeButtonNew"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_brac_bank"
                     android:onClick="onButtonClicker"
+                    android:paddingBottom="5dp"
                     android:text="@string/home_bank_brac"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"></LinearLayout>
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/homeBtnDbbl"
-                    style="@style/HomeButton"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="15dp"
-                    android:drawableTop="@drawable/ic_home_dbbl"
+                    style="@style/HomeButtonNew"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_dbbl"
                     android:onClick="onButtonClicker"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="10dp"
                     android:text="@string/home_bank_dbbl"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-            </LinearLayout>
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/homeBtnIbbl"
-                    style="@style/HomeButton"
-                    android:layout_marginBottom="5dp"
-                    android:drawableTop="@drawable/ic_home_ibbl"
+                    style="@style/HomeButtonNew"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_islami_bank"
                     android:onClick="onButtonClicker"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="10dp"
                     android:text="@string/home_bank_ibbl"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"></LinearLayout>
-
-                <Button
-                    android:id="@+id/homeBtnPbl"
-                    style="@style/HomeButton"
-                    android:layout_marginBottom="5dp"
-                    android:drawableTop="@drawable/ic_home_pbl"
-                    android:onClick="onButtonClicker"
-                    android:text="@string/home_bank_pbl"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:orientation="horizontal"
-                android:weightSum="3">
+                android:weightSum="5">
+
+                <Button
+                    android:id="@+id/homeBtnPbl"
+                    style="@style/HomeButtonNew"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_pubali_bank"
+                    android:onClick="onButtonClicker"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="10dp"
+                    android:text="@string/home_bank_pbl"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"></LinearLayout>
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/homeBtnScb"
-                    style="@style/HomeButton"
+                    style="@style/HomeButtonNew"
                     android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_home_scb"
+                    android:drawableTop="@drawable/ic_scb"
                     android:onClick="onButtonClicker"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="10dp"
                     android:text="@string/home_bank_scb"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"></LinearLayout>
-            </LinearLayout>
+                    android:layout_weight="1" />
 
+                <Button
+                    android:id="@+id/homeBtnCity"
+                    style="@style/HomeButtonNew"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_city"
+                    android:onClick="onButtonClicker"
+                    android:paddingBottom="5dp"
+                    android:text="@string/home_bank_city"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

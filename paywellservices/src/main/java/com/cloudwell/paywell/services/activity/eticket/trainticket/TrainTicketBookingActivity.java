@@ -13,7 +13,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.InputType;
-import android.text.method.DigitsKeyListener;
 import android.text.method.PasswordTransformationMethod;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -73,17 +72,17 @@ public class TrainTicketBookingActivity extends AppCompatActivity implements Ada
     }
 
     private void initView() {
-        mRelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
-        Spinner mSpinnerTrainName = (Spinner) findViewById(R.id.spinnerTrainName);
-        Spinner mSpinnerClassType = (Spinner) findViewById(R.id.spinnerClassType);
-        mEtMobileNo = (EditText) findViewById(R.id.etMobileNo);
-        mBtnSearchSeat = (Button) findViewById(R.id.btnSearchSeat);
+        mRelativeLayout = findViewById(R.id.relativeLayout);
+        Spinner mSpinnerTrainName = findViewById(R.id.spinnerTrainName);
+        Spinner mSpinnerClassType = findViewById(R.id.spinnerClassType);
+        mEtMobileNo = findViewById(R.id.etMobileNo);
+        mBtnSearchSeat = findViewById(R.id.btnSearchSeat);
 
-        ((TextView) mRelativeLayout.findViewById(R.id.tvSelectTrain)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((TextView) mRelativeLayout.findViewById(R.id.tvSelectClass)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((TextView) mRelativeLayout.findViewById(R.id.tvMobileNo)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mEtMobileNo.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mBtnSearchSeat.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        ((TextView) mRelativeLayout.findViewById(R.id.tvSelectTrain)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        ((TextView) mRelativeLayout.findViewById(R.id.tvSelectClass)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        ((TextView) mRelativeLayout.findViewById(R.id.tvMobileNo)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        mEtMobileNo.setTypeface(AppController.getInstance().getOxygenLightFont());
+        mBtnSearchSeat.setTypeface(AppController.getInstance().getOxygenLightFont());
 
         // Spinner click listener
         assert mSpinnerTrainName != null;
@@ -102,7 +101,7 @@ public class TrainTicketBookingActivity extends AppCompatActivity implements Ada
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
                 if (view instanceof TextView) {
-                    ((TextView) view).setTypeface(AppController.getInstance().getRobotoRegularFont());
+                    ((TextView) view).setTypeface(AppController.getInstance().getOxygenLightFont());
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                         ((TextView) view).setAllCaps(false);
                     }
@@ -113,7 +112,7 @@ public class TrainTicketBookingActivity extends AppCompatActivity implements Ada
             @Override
             public View getDropDownView(int position, View convertView, ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
-                ((TextView) view).setTypeface(AppController.getInstance().getRobotoRegularFont());
+                ((TextView) view).setTypeface(AppController.getInstance().getOxygenLightFont());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                     ((TextView) view).setAllCaps(false);
                 }
@@ -131,10 +130,10 @@ public class TrainTicketBookingActivity extends AppCompatActivity implements Ada
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
                 if (view instanceof TextView) {
-                    ((TextView) view).setTypeface(AppController.getInstance().getRobotoRegularFont());
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-                        ((TextView) view).setAllCaps(false);
-                    }
+                    ((TextView) view).setTypeface(AppController.getInstance().getOxygenLightFont());
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                    ((TextView) view).setAllCaps(false);
+//                    }
                 }
                 return view;
             }
@@ -142,10 +141,10 @@ public class TrainTicketBookingActivity extends AppCompatActivity implements Ada
             @Override
             public View getDropDownView(int position, View convertView, ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
-                ((TextView) view).setTypeface(AppController.getInstance().getRobotoRegularFont());
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-                    ((TextView) view).setAllCaps(false);
-                }
+                ((TextView) view).setTypeface(AppController.getInstance().getOxygenLightFont());
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                ((TextView) view).setAllCaps(false);
+//                }
                 return view;
             }
         };
@@ -154,7 +153,7 @@ public class TrainTicketBookingActivity extends AppCompatActivity implements Ada
         // attaching data adapter to spinner
         mSpinnerClassType.setAdapter(passengerTypeAdapter);
 
-        mCd = new ConnectionDetector(getApplicationContext());
+        mCd = new ConnectionDetector(AppController.getContext());
 
     }
 
@@ -418,7 +417,7 @@ public class TrainTicketBookingActivity extends AppCompatActivity implements Ada
                     });
                     AlertDialog alert = builder.create();
                     alert.show();
-                    TextView messageText = (TextView) alert.findViewById(android.R.id.message);
+                    TextView messageText = alert.findViewById(android.R.id.message);
                     messageText.setGravity(Gravity.CENTER);
                 }
 

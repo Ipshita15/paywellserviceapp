@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
@@ -43,21 +44,12 @@ public class WZPDCLBillPayActivity extends AppCompatActivity implements View.OnC
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
     private LinearLayout mLinearLayout;
-    private EditText etBill;
-    private EditText etPhn;
-    private EditText etPin;
+    private EditText etBill, etPhn, etPin;
     private ImageView imageView;
-    Spinner spnr_month, spnr_year;
+    private Spinner spnr_month, spnr_year;
     private Button btnConfirm;
-    private String mBill;
-    private String mPhn;
-    private String mPin;
-    int month = 0;
-    int year = 0;
-    String mMonth;
-    String mYear;
-    String mTotalAmount;
-    private String mTrxId;
+    private String mBill, mPhn, mPin, mMonth, mYear, mTotalAmount, mTrxId;
+    private int month = 0, year = 0;
     private static final String TAG_STATUS = "status";
     private static final String TAG_MESSAGE = "message";
     private static final String TAG_MESSAGE_TEXT = "msg_text";
@@ -73,22 +65,22 @@ public class WZPDCLBillPayActivity extends AppCompatActivity implements View.OnC
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_utility_pb_billpay);
         }
-        mCd = new ConnectionDetector(this);
+        mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
 
         initializeView();
     }
 
     private void initializeView() {
-        mLinearLayout = (LinearLayout) findViewById(R.id.utilityLinearLayout);
-        etBill = (EditText) findViewById(R.id.west_zone_bill);
-        etPhn = (EditText) findViewById(R.id.west_zone_phn);
-        etPin = (EditText) findViewById(R.id.west_zone_pin_no);
-        imageView = (ImageView) findViewById(R.id.imageView_info);
-        btnConfirm = (Button) findViewById(R.id.west_zone_confirm);
+        mLinearLayout = findViewById(R.id.utilityLinearLayout);
+        etBill = findViewById(R.id.west_zone_bill);
+        etPhn = findViewById(R.id.west_zone_phn);
+        etPin = findViewById(R.id.west_zone_pin_no);
+        imageView = findViewById(R.id.imageView_info);
+        btnConfirm = findViewById(R.id.west_zone_confirm);
 
-        spnr_month = (Spinner) findViewById(R.id.monthSpinner);
-        spnr_year = (Spinner) findViewById(R.id.yearSpinner);
+        spnr_month = findViewById(R.id.monthSpinner);
+        spnr_year = findViewById(R.id.yearSpinner);
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> month_adapter = ArrayAdapter.createFromResource(this,
@@ -119,13 +111,14 @@ public class WZPDCLBillPayActivity extends AppCompatActivity implements View.OnC
         spnr_year.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position == 0){
+                if (position == 0) {
                     year = 0;
-                } else{
+                } else {
                     String year_str = String.valueOf(spnr_year.getSelectedItem());
                     year = Integer.parseInt(year_str);
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 year = 0;
@@ -150,13 +143,13 @@ public class WZPDCLBillPayActivity extends AppCompatActivity implements View.OnC
             } else if (mPhn.length() != 11) {
                 etPhn.setError(Html.fromHtml("<font color='red'>" + getString(R.string.phone_no_error_msg) + "</font>"));
             } else if (month == 0 || year == 0) {
-                if(month == 0) {
+                if (month == 0) {
                     Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.select_month_msg, Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
-                } else{
+                } else {
                     Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.select_year_msg, Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
@@ -218,7 +211,6 @@ public class WZPDCLBillPayActivity extends AppCompatActivity implements View.OnC
             // Create a new HttpClient and Post Header
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(data[0]);
-
             try {
                 //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(8);
@@ -236,8 +228,11 @@ public class WZPDCLBillPayActivity extends AppCompatActivity implements View.OnC
                 responseTxt = httpclient.execute(httppost, responseHandler);
             } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
-
             return responseTxt;
         }
 
@@ -313,8 +308,13 @@ public class WZPDCLBillPayActivity extends AppCompatActivity implements View.OnC
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
         }
     }
@@ -344,7 +344,6 @@ public class WZPDCLBillPayActivity extends AppCompatActivity implements View.OnC
             // Create a new HttpClient and Post Header
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(data[0]);
-
             try {
                 //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(10);
@@ -364,8 +363,11 @@ public class WZPDCLBillPayActivity extends AppCompatActivity implements View.OnC
                 responseTxt = httpclient.execute(httppost, responseHandler);
             } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
-
             return responseTxt;
         }
 
@@ -418,8 +420,13 @@ public class WZPDCLBillPayActivity extends AppCompatActivity implements View.OnC
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
         }
     }

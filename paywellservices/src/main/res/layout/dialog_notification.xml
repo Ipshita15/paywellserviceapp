@@ -1,53 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <LinearLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginLeft="@dimen/activity_horizontal_margin_notification"
+        android:layout_marginRight="@dimen/activity_horizontal_margin_notification"
+        android:layout_marginTop="@dimen/activity_horizontal_margin_notification"
+        card_view:cardBackgroundColor="@color/card_background"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:weightSum="3">
+            android:minHeight="50dp"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:gravity="left|center_vertical"
-                android:padding="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:text="fcrubfvurbfvur"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#000033"
+                android:textColor="#355689"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/date"
+                android:id="@+id/message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:layout_weight="1"
-                android:gravity="right|center_vertical"
-                android:padding="2dp" />
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="hvbudbvudbvudv"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#666666" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/ic_clock" />
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="20 Jul"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#7e848c" />
+
+            </LinearLayout>
+
+            <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:weightSum="3">-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/title"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:layout_weight="2"-->
+            <!--android:gravity="left|center_vertical"-->
+            <!--android:padding="5dp"-->
+            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--android:textColor="#000033"-->
+            <!--android:textStyle="bold" />-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/date"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginEnd="5dp"-->
+            <!--android:layout_marginRight="5dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="right|center_vertical"-->
+            <!--android:padding="2dp" />-->
+            <!--</LinearLayout>-->
         </LinearLayout>
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+    </android.support.v7.widget.CardView>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#404040" />
-    </LinearLayout>
+    <!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_weight="1">-->
+
+    <!--<View-->
+    <!--android:id="@+id/footerNotification"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:background="#404040" />-->
+    <!--</LinearLayout>-->
 </LinearLayout>

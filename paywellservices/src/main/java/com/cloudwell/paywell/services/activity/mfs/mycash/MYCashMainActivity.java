@@ -2,13 +2,11 @@ package com.cloudwell.paywell.services.activity.mfs.mycash;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.MenuItem;
@@ -26,19 +24,15 @@ import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,21 +49,24 @@ public class MYCashMainActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mycash_main);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.home_mfs_mycash);
-        mCd = new ConnectionDetector(this);
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.home_mfs_mycash);
+        }
+        mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
         initView();
     }
 
     private void initView() {
-        mLinearLayout = (LinearLayout) findViewById(R.id.mycashLinearLayout);
-        mPin = (EditText) findViewById(R.id.mycash_pin);
-        mConfirm = (Button) findViewById(R.id.mycash_confirm);
+        mLinearLayout = findViewById(R.id.mycashLinearLayout);
+        mPin = findViewById(R.id.mycash_pin);
+        mConfirm = findViewById(R.id.mycash_confirm);
 
-        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashPin)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mPin.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mConfirm.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+        mConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
 
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(mPin, InputMethodManager.SHOW_IMPLICIT);
@@ -93,9 +90,7 @@ public class MYCashMainActivity extends AppCompatActivity implements View.OnClic
         if (!mCd.isConnectingToInternet()) {
             AppHandler.showDialog(this.getSupportFragmentManager());
         } else {
-            new MYCashMainActivity.SubmitAsync().execute(getResources().getString(R.string.bkash_balance_check),
-                    "imei=" + mAppHandler.getImeiNo(),
-                    "&pin=" + _pin);
+            new SubmitAsync().execute(getString(R.string.bkash_balance_check));
         }
     }
 
@@ -111,27 +106,32 @@ public class MYCashMainActivity extends AppCompatActivity implements View.OnClic
 
         }
 
-        @SuppressWarnings("deprecation")
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(String... data) {
             String responseTxt = null;
-            HttpGet request = new HttpGet(params[0] + params[1] + params[2]);
-            HttpClient client = AppController.getInstance().getTrustedHttpClient();
-            ResponseHandler<String> responseHandler = new BasicResponseHandler();
-            try {
-                responseTxt = client.execute(request, responseHandler);
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            // Create a new HttpClient and Post Header
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(data[0]);
 
+            try {
+                List<NameValuePair> nameValuePairs = new ArrayList<>(2);
+                nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("pin", mAppHandler.getPin()));
+
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                responseTxt = httpclient.execute(httppost, responseHandler);
+            } catch (Exception e) {
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+            }
             return responseTxt;
         }
 
         @Override
         protected void onPostExecute(String result) {
-            //progressDialog.cancel();
             if (result != null) {
                 if (result.startsWith("200")) {
                     BalanceInquiry();
@@ -161,7 +161,7 @@ public class MYCashMainActivity extends AppCompatActivity implements View.OnClic
         if (!mCd.isConnectingToInternet()) {
             AppHandler.showDialog(this.getSupportFragmentManager());
         } else {
-            new BalanceAsync().execute(getResources().getString(R.string.mycash_balance_check));
+            new BalanceAsync().execute(getString(R.string.mycash_balance_check));
         }
     }
 
@@ -177,7 +177,7 @@ public class MYCashMainActivity extends AppCompatActivity implements View.OnClic
 
             try {
                 //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
                 nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("password", mAppHandler.getPin()));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
@@ -185,11 +185,12 @@ public class MYCashMainActivity extends AppCompatActivity implements View.OnClic
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
                 responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (ClientProtocolException e) {
-
-            } catch (IOException e) {
+            } catch (Exception e) {
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
-
             return responseTxt;
         }
 
@@ -217,8 +218,13 @@ public class MYCashMainActivity extends AppCompatActivity implements View.OnClic
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
         }
     }

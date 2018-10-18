@@ -22,11 +22,11 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.mfs.mycash.ManageMenuActivity;
+import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -35,10 +35,8 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,10 +46,10 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
     private AppHandler mAppHandler;
     private RelativeLayout mRelativeLayout;
     private ConnectionDetector mCd;
-    ListView listView;
-    TrxAdapter mAdapter;
-    String array;
-    int trx_length;
+    private ListView listView;
+    private TrxAdapter mAdapter;
+    private String array;
+    private int trx_length;
     public static String[] mStatus = null;
     public static String[] mDateTime = null;
     public static String[] mId = null;
@@ -63,12 +61,15 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_confirmation);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.home_bkash_payment_confirm_title);
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.home_bkash_payment_confirm_title);
+        }
         mAppHandler = new AppHandler(this);
-        mRelativeLayout = (RelativeLayout) findViewById(R.id.trxRelativeLayout);
-        mCd = new ConnectionDetector(this);
-        listView = (ListView) findViewById(R.id.trxListView);
+        mRelativeLayout = findViewById(R.id.trxRelativeLayout);
+        mCd = new ConnectionDetector(AppController.getContext());
+        listView = findViewById(R.id.trxListView);
         mAdapter = new TrxAdapter(this);
 
         Bundle bundle = getIntent().getExtras();
@@ -124,12 +125,15 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
                     AlertDialog alert = builder.create();
                     alert.setCanceledOnTouchOutside(true);
                     alert.show();
-
                 }
             });
-
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+            View snackBarView = snackbar.getView();
+            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+            snackbar.show();
         }
     }
 
@@ -141,7 +145,6 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
             progressDialog = ProgressDialog.show(PaymentConfirmationActivity.this, "", getString(R.string.loading_msg), true);
             if (!isFinishing())
                 progressDialog.show();
-
         }
 
         @Override
@@ -153,7 +156,7 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
 
             try {
                 //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(4);
                 nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("password", mAppHandler.getPin()));
                 nameValuePairs.add(new BasicNameValuePair("pendingId", data[1]));
@@ -161,11 +164,13 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
                 responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (ClientProtocolException e) {
-
-            } catch (IOException e) {
+            } catch (Exception e) {
+                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
-
             return responseTxt;
         }
 
@@ -197,8 +202,13 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
         }
     }
@@ -223,7 +233,7 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
 
         private final Context mContext;
 
-        public TrxAdapter(Context context) {
+        private TrxAdapter(Context context) {
             mAppHandler = new AppHandler(context);
             mContext = context;
         }
@@ -249,9 +259,9 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
             if (convertView == null) {
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.dialog_mycash_trx_log, parent, false);
                 viewHolder = new TrxAdapter.ViewHolder();
-                viewHolder.status = (TextView) convertView.findViewById(R.id.serviceType);
-                viewHolder.amount = (TextView) convertView.findViewById(R.id.amount);
-                viewHolder.datetime = (TextView) convertView.findViewById(R.id.trxID);
+                viewHolder.status = convertView.findViewById(R.id.serviceType);
+                viewHolder.amount = convertView.findViewById(R.id.amount);
+                viewHolder.datetime = convertView.findViewById(R.id.trxID);
                 convertView.setTag(viewHolder);
             } else {
                 viewHolder = (TrxAdapter.ViewHolder) convertView.getTag();
@@ -270,9 +280,7 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
 
 
         private class ViewHolder {
-            TextView status;
-            TextView amount;
-            TextView datetime;
+            TextView status, amount, datetime;
         }
     }
 }

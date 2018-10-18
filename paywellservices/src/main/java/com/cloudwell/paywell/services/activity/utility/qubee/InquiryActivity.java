@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.utility.qubee;
 
 import android.app.ProgressDialog;
-import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -11,7 +10,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -24,61 +22,56 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
-import org.apache.http.client.ClientProtocolException;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by Android on 12/8/2015.
- */
-@SuppressWarnings("ALL")
 public class InquiryActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static EditText mPin;
-    private static EditText mAccountNO;
+    private EditText mPin, mAccountNO;
     private Button mSubmitInquiry;
     private ConnectionDetector cd;
-    private static AppHandler mAppHandler;
-    private static String status;
-    private static String trxId;
-    private static String accountNo;
-    private static String amount;
-    private static String hotline;
+    private AppHandler mAppHandler;
+    private String status, trxId, accountNo, amount, hotline;
     private LinearLayout mLinearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qubee_inquiry);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.home_utility_qubee_inq_title);
-
-        cd = new ConnectionDetector(getApplicationContext());
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.home_utility_qubee_inq_title);
+        }
+        cd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
         initView();
     }
 
     private void initView() {
-        mLinearLayout = (LinearLayout) findViewById(R.id.linearLayout);
-        TextView _pin = (TextView) findViewById(R.id.tvQubeePin2);
-        _pin.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mPin = (EditText) findViewById(R.id.etQubeePin2);
-        mPin.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        mLinearLayout = findViewById(R.id.linearLayout);
+        TextView _pin = findViewById(R.id.tvQubeePin2);
+        _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
+        mPin = findViewById(R.id.etQubeePin2);
+        mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
 
-        TextView _inq_acc = (TextView) findViewById(R.id.tvQubeeccount2);
-        _inq_acc.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mAccountNO = (EditText) findViewById(R.id.etQubeeccount2);
-        mAccountNO.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        TextView _inq_acc = findViewById(R.id.tvQubeeccount2);
+        _inq_acc.setTypeface(AppController.getInstance().getOxygenLightFont());
+        mAccountNO = findViewById(R.id.etQubeeccount2);
+        mAccountNO.setTypeface(AppController.getInstance().getOxygenLightFont());
 
-        mSubmitInquiry = (Button) findViewById(R.id.btnQubeeConfirm2);
-        mSubmitInquiry.setTypeface(AppController.getInstance().getRobotoRegularFont());
-
+        mSubmitInquiry = findViewById(R.id.btnQubeeConfirm2);
+        mSubmitInquiry.setTypeface(AppController.getInstance().getOxygenLightFont());
         mSubmitInquiry.setOnClickListener(this);
-
     }
 
     @Override
@@ -97,13 +90,8 @@ public class InquiryActivity extends AppCompatActivity implements View.OnClickLi
                     mAccountNO.setError(Html.fromHtml("<font color='red'>" + getString(R.string.qubee_acc_error_msg) + "</font></font>"));
                     return;
                 }
-                new SubmitAsync().execute(getResources().getString(R.string.qb_inq),
-                        "iemi_no=" + mAppHandler.getImeiNo(),
-                        "&account_no=" + _account,
-                        "&pin_code=" + _pin,
-                        "&wimax=" + AppHandler.KEY_WIMAX);
+                new SubmitAsync().execute(getString(R.string.qb_inq), _account, _pin);
             }
-
         }
     }
 
@@ -119,17 +107,25 @@ public class InquiryActivity extends AppCompatActivity implements View.OnClickLi
 
         @Override
         protected String doInBackground(String... params) {
-
-            HttpGet request = new HttpGet(params[0] + params[1] + params[2] + params[3] + params[4]);
-            ResponseHandler<String> responseHandler = new BasicResponseHandler();
             String responseTxt = null;
-            HttpClient client = AppController.getInstance().getTrustedHttpClient();
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(params[0]);
             try {
-                responseTxt = client.execute(request, responseHandler);
-            } catch (ClientProtocolException ex) {
-                ex.printStackTrace();
-            } catch (IOException ex) {
-                ex.printStackTrace();
+                List<NameValuePair> nameValuePairs = new ArrayList<>(4);
+                nameValuePairs.add(new BasicNameValuePair("iemi_no", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("account_no", params[1]));
+                nameValuePairs.add(new BasicNameValuePair("pin_code", params[2]));
+                nameValuePairs.add(new BasicNameValuePair("wimax", AppHandler.KEY_WIMAX));
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                responseTxt = httpclient.execute(httppost, responseHandler);
+            } catch (Exception e) {
+                e.fillInStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
             return responseTxt;
         }
@@ -149,7 +145,7 @@ public class InquiryActivity extends AppCompatActivity implements View.OnClickLi
                             hotline = splitedArray[7];
                             showStatusDialog();
                         } else {
-                            Snackbar snackbar = Snackbar.make(mLinearLayout, splitedArray[1].toString(), Snackbar.LENGTH_LONG);
+                            Snackbar snackbar = Snackbar.make(mLinearLayout, splitedArray[1], Snackbar.LENGTH_LONG);
                             snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                             View snackBarView = snackbar.getView();
                             snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
@@ -163,11 +159,15 @@ public class InquiryActivity extends AppCompatActivity implements View.OnClickLi
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } catch (ArrayIndexOutOfBoundsException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
         }
-
     }
 
     private void showStatusDialog() {
@@ -189,19 +189,6 @@ public class InquiryActivity extends AppCompatActivity implements View.OnClickLi
         });
         AlertDialog alert = builder.create();
         alert.show();
-        TextView messageText = (TextView) alert.findViewById(android.R.id.message);
-        messageText.setGravity(Gravity.CENTER);
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
     @Override

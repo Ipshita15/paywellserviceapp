@@ -19,13 +19,11 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.mfs.mycash.CashInOutActivity;
-import com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMenuActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -33,10 +31,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,25 +59,25 @@ public class CashInActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_cash_in);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.home_cash_in);
-        mCd = new ConnectionDetector(this);
-        mAppHandler = new AppHandler(this);
+        mCd = new ConnectionDetector(AppController.getContext());
+        mAppHandler = new AppHandler(AppController.getContext());
         initializeView();
     }
 
     private void initializeView() {
-        mLinearLayout = (LinearLayout) findViewById(R.id.cashInLinearLayout);
-        etAccount = (EditText) findViewById(R.id.mycash_account);
-        etAmount = (EditText) findViewById(R.id.mycash_amount);
-        etOTP = (EditText) findViewById(R.id.mycash_otp);
-        btnConfirm = (Button) findViewById(R.id.mycash_confirm);
+        mLinearLayout = findViewById(R.id.cashInLinearLayout);
+        etAccount = findViewById(R.id.mycash_account);
+        etAmount = findViewById(R.id.mycash_amount);
+        etOTP = findViewById(R.id.mycash_otp);
+        btnConfirm = findViewById(R.id.mycash_confirm);
 
-        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashAccount)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashAmount)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashOTP)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        etAccount.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        etAmount.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        etOTP.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        btnConfirm.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashAccount)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashAmount)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashOTP)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        etAccount.setTypeface(AppController.getInstance().getOxygenLightFont());
+        etAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+        etOTP.setTypeface(AppController.getInstance().getOxygenLightFont());
+        btnConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
 
         if(!mAppHandler.getMYCashOTP().equals("unknown") && !mAppHandler.getMYCashOTP().equals("null")) {
             etOTP.setText(mAppHandler.getMYCashOTP());
@@ -98,13 +94,10 @@ public class CashInActivity extends AppCompatActivity implements View.OnClickLis
             mAgentOTP = etOTP.getText().toString().trim();
             if (mAccount.length() != 12) {
                 etAccount.setError(Html.fromHtml("<font color='red'>" + getString(R.string.mycash_acc_error_msg) + "</font>"));
-                return;
             } else if (mAmount.length() == 0) {
                 etAmount.setError(Html.fromHtml("<font color='red'>" + getString(R.string.amount_error_msg) + "</font>"));
-                return;
             } else if (mAgentOTP.length() == 0) {
                 etOTP.setError(Html.fromHtml("<font color='red'>" + getString(R.string.otp_error_msg) + "</font>"));
-                return;
             } else {
                 submitConfirm();
             }
@@ -127,7 +120,6 @@ public class CashInActivity extends AppCompatActivity implements View.OnClickLis
             progressDialog = ProgressDialog.show(CashInActivity.this, "", getString(R.string.loading_msg), true);
             if (!isFinishing())
                 progressDialog.show();
-
         }
 
         @Override
@@ -136,10 +128,9 @@ public class CashInActivity extends AppCompatActivity implements View.OnClickLis
             // Create a new HttpClient and Post Header
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(data[0]);
-
             try {
                 //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(6);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(7);
                 nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("AgentOTP", mAgentOTP));
                 nameValuePairs.add(new BasicNameValuePair("CustomerWallet", mAccount));
@@ -151,11 +142,12 @@ public class CashInActivity extends AppCompatActivity implements View.OnClickLis
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
                 responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (ClientProtocolException e) {
-
-            } catch (IOException e) {
+            } catch (Exception e) {
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
-
             return responseTxt;
         }
 
@@ -208,8 +200,13 @@ public class CashInActivity extends AppCompatActivity implements View.OnClickLis
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
         }
     }

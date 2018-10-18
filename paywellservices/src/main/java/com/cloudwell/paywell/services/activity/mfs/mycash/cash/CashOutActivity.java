@@ -3,7 +3,9 @@ package com.cloudwell.paywell.services.activity.mfs.mycash.cash;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -18,17 +20,14 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.mfs.mycash.CashInOutActivity;
-import com.cloudwell.paywell.services.activity.mfs.mycash.InquiryMenuActivity;
-import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class CashOutActivity extends AppCompatActivity {
 
-    private AppHandler mAppHandler;
     private RelativeLayout mRelativeLayout;
     private ConnectionDetector mCd;
     ListView listView;
@@ -49,12 +48,14 @@ public class CashOutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cash_out);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.home_cash_out);
-        mAppHandler = new AppHandler(this);
-        mRelativeLayout = (RelativeLayout) findViewById(R.id.trxRelativeLayout);
-        mCd = new ConnectionDetector(this);
-        listView = (ListView) findViewById(R.id.trxListView);
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.home_cash_out);
+        }
+        mRelativeLayout = findViewById(R.id.relativeLayoutCashOut);
+        mCd = new ConnectionDetector(AppController.getContext());
+        listView = findViewById(R.id.trxListView);
         mAdapter = new TrxAdapter(this);
 
         Bundle bundle = getIntent().getExtras();
@@ -64,7 +65,7 @@ public class CashOutActivity extends AppCompatActivity {
         initializeAdapter();
     }
 
-    public void initializeAdapter(){
+    public void initializeAdapter() {
         try {
             JSONArray jsonArray = new JSONArray(array);
             mServiceType = new String[jsonArray.length()];
@@ -127,8 +128,13 @@ public class CashOutActivity extends AppCompatActivity {
                 }
             });
 
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+            View snackBarView = snackbar.getView();
+            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+            snackbar.show();
         }
     }
 
@@ -153,12 +159,13 @@ public class CashOutActivity extends AppCompatActivity {
         private final Context mContext;
 
         public TrxAdapter(Context context) {
-            mAppHandler = new AppHandler(context);
             mContext = context;
         }
 
         @Override
-        public int getCount() { return trx_length; }
+        public int getCount() {
+            return trx_length;
+        }
 
         @Override
         public Object getItem(int position) {
@@ -176,29 +183,26 @@ public class CashOutActivity extends AppCompatActivity {
             if (convertView == null) {
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.dialog_mycash_cashout, parent, false);
                 viewHolder = new ViewHolder();
-                viewHolder.serviceType = (TextView) convertView.findViewById(R.id.serviceType);
-                viewHolder.amount = (TextView) convertView.findViewById(R.id.amount);
-                viewHolder.trxID = (TextView) convertView.findViewById(R.id.trxID);
-                viewHolder.dateTime = (TextView) convertView.findViewById(R.id.dateTime);
+                viewHolder.serviceType = convertView.findViewById(R.id.serviceType);
+                viewHolder.amount = convertView.findViewById(R.id.amount);
+                viewHolder.trxID = convertView.findViewById(R.id.trxID);
+                viewHolder.dateTime = convertView.findViewById(R.id.dateTime);
                 convertView.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
 
+            String amount = "Tk. " + mAmount[position];
             viewHolder.serviceType.setText(mServiceType[position]);
-            viewHolder.amount.setText("Tk. " + mAmount[position]);
+            viewHolder.amount.setText(amount);
             viewHolder.trxID.setText(mCustomerMobileNo[position]);
             viewHolder.dateTime.setText(mDate[position]);
 
             return convertView;
         }
 
-
         private class ViewHolder {
-            TextView serviceType;
-            TextView amount;
-            TextView trxID;
-            TextView dateTime;
+            TextView serviceType, amount, trxID, dateTime;
         }
     }
 }

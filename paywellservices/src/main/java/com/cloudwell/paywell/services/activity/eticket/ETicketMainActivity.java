@@ -7,46 +7,45 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.AppLoadingActivity;
 import com.cloudwell.paywell.services.activity.MainActivity;
-import com.cloudwell.paywell.services.activity.eticket.busticket.BusMainActivity;
 import com.cloudwell.paywell.services.activity.eticket.trainticket.TrainMainActivity;
+import com.cloudwell.paywell.services.app.AppController;
+import com.cloudwell.paywell.services.app.AppHandler;
 
-import java.util.List;
-
-/**
- * Created by android on 1/26/2016.
- */
 public class ETicketMainActivity extends AppCompatActivity {
 
-    private static final String BUS_TICKET = "Bus Ticket";
-    private static final String TRAIN_TICKET = "Train Ticket";
+    private AppHandler mAppHandler;
     private RelativeLayout relativeLayout;
-    boolean hasBusService = false;
-    boolean hasTrainService = false;
+    private Button home_bus, home_train;
 
     @SuppressWarnings("ConstantConditions")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_eticket_main);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.home_eticket);
-        relativeLayout = (RelativeLayout) findViewById(R.id.eticketRelativeLayout);
-        initView();
-    }
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.home_eticket);
+        }
 
-    private void initView() {
-        List<String> serviceList = AppLoadingActivity.getETicketService();
-        for (int i = 0; i < serviceList.size(); i++) {
-            if (BUS_TICKET.equalsIgnoreCase(serviceList.get(i))) {
-                hasBusService = true;
-            } else if (TRAIN_TICKET.equalsIgnoreCase(serviceList.get(i))) {
-                hasTrainService = true;
-            }
+        mAppHandler = new AppHandler(this);
+
+        relativeLayout = findViewById(R.id.eticketRelativeLayout);
+
+        home_bus = findViewById(R.id.homeBtnBusTicket);
+        home_train = findViewById(R.id.homeBtnTrainTicket);
+
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            home_bus.setTypeface(AppController.getInstance().getOxygenLightFont());
+            home_train.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            home_bus.setTypeface(AppController.getInstance().getAponaLohitFont());
+            home_train.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
     }
 
@@ -66,37 +65,26 @@ public class ETicketMainActivity extends AppCompatActivity {
         finish();
     }
 
-    /**
-     * Button click handler on Main activity
-     *
-     * @param v
-     */
     public void onButtonClicker(View v) {
 
         switch (v.getId()) {
             case R.id.homeBtnBusTicket:
-                if (hasBusService) {
-                    startActivity(new Intent(this, BusMainActivity.class));
-                    finish();
-                } else {
-                    Snackbar snackbar = Snackbar.make(relativeLayout, R.string.services_off_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
+//                startActivity(new Intent(this, BusMainActivity.class));
+//                finish();
+                Snackbar snackbar = Snackbar.make(relativeLayout, R.string.coming_soon_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
                 break;
             case R.id.homeBtnTrainTicket:
-                if (hasTrainService) {
-                    startActivity(new Intent(this, TrainMainActivity.class));
-                    finish();
-                } else {
-                    Snackbar snackbar = Snackbar.make(relativeLayout, R.string.services_off_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
+//                startActivity(new Intent(this, TrainMainActivity.class));
+//                finish();
+                Snackbar snackbarTrain = Snackbar.make(relativeLayout, R.string.coming_soon_msg, Snackbar.LENGTH_LONG);
+                snackbarTrain.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarViewTrain = snackbarTrain.getView();
+                snackBarViewTrain.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbarTrain.show();
                 break;
             default:
                 break;

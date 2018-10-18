@@ -1,23 +1,13 @@
 package com.cloudwell.paywell.services.activity.reg;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
-import android.text.TextUtils;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -26,11 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -39,69 +29,77 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
+import static com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regModel;
 
 public class EntryFirstActivity extends AppCompatActivity {
 
-    TextView textView_email;
-    EditText et_outletName, et_address, et_ownerName, et_phnNo, et_email;
-    Spinner spnr_businessType;
-    ArrayAdapter<CharSequence> arrayAdapter_spinner;
-    static String str_businessType = "";
+    private TextView textView_email;
+    private EditText et_outletName, et_address, et_ownerName, et_phnNo, et_email;
+    private Spinner spnr_merchatnType, spnr_businessType;
+    private ArrayAdapter<CharSequence> arrayAdapter_business_type_spinner;
+    private ArrayAdapter<CharSequence> arrayAdapter_merchant_type_spinner;
+    private static String str_businessId = "";
+    private static String str_businessType = "";
+    private static String str_merchantType = "";
     private ConnectionDetector mCd;
-    private boolean isInternetPresent = false;
     private AppHandler mAppHandler;
-    Bundle bundle;
-    ArrayList<String> business_type_array;
-    private static String PREF_KEY_STRINGS_BUSINESS_TYPE = "business_type";
-    private static String PREF_KEY_STRINGS_BUSINESS_TYPE_NAME = "business_type_array";
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
-
+    private Bundle bundle;
+    private ArrayList<String> business_type_id_array;
+    private List business_type_name_array;
+    private ArrayList<String> merchant_type_array;
+    private HashMap<String, String> hashMap = new HashMap<>();
+    private String merchantId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_one);
 
-        getSupportActionBar().setTitle("১ম ধাপ");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("১ম ধাপ");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         mAppHandler = new AppHandler(this);
-        mCd = new ConnectionDetector(EntryFirstActivity.this);
-        sharedPreferences = getSharedPreferences(PREF_KEY_STRINGS_BUSINESS_TYPE, Context.MODE_PRIVATE);
+        mCd = new ConnectionDetector(AppController.getContext());
 
-        et_outletName = (EditText) findViewById(R.id.editText_outletName);
-        et_address = (EditText) findViewById(R.id.editText_address);
-        et_ownerName = (EditText) findViewById(R.id.editText_ownerName);
-        et_phnNo = (EditText) findViewById(R.id.editText_mobileNumber);
-        et_email = (EditText) findViewById(R.id.editText_emailAddress);
-        spnr_businessType = (Spinner) findViewById(R.id.spinner_businessType);
-        textView_email = (TextView) findViewById(R.id.textView_emailAddress);
+        et_outletName = findViewById(R.id.editText_outletName);
+        et_address = findViewById(R.id.editText_address);
+        et_ownerName = findViewById(R.id.editText_ownerName);
+        et_phnNo = findViewById(R.id.editText_mobileNumber);
+        et_email = findViewById(R.id.editText_emailAddress);
+        spnr_merchatnType = findViewById(R.id.spinner_merchantType);
+        spnr_businessType = findViewById(R.id.spinner_businessType);
+        textView_email = findViewById(R.id.textView_emailAddress);
 
-        if(mAppHandler.REG_FLAG_ONE) {
-            et_outletName.setText(mAppHandler.getOutletName());
-            et_address.setText(mAppHandler.getOutletAddress());
-            et_ownerName.setText(mAppHandler.getOwnerName());
-            et_phnNo.setText(mAppHandler.getMobileNo());
-            et_email.setText(mAppHandler.getEmailAddress());
+        if (mAppHandler.REG_FLAG_ONE) {
+            et_outletName.setText(regModel.getOutletName());
+            et_address.setText(regModel.getOutletAddress());
+            et_ownerName.setText(regModel.getOwnerName());
+            et_phnNo.setText(regModel.getPhnNumber());
+            et_email.setText(regModel.getEmailAddress());
         }
-        initializationBusinessType();
-    }
 
+        hashMap.put("Retail Merchant", "1");
+        merchant_type_array = new ArrayList<>();
+        merchant_type_array.add("Select One");
+        merchant_type_array.add("Retail Merchant");
+
+        initializationOther();
+    }
 
     public void initializationBusinessType() {
         if (!mCd.isConnectingToInternet()) {
             AppHandler.showDialog(getSupportFragmentManager());
         } else {
-            new EntryFirstActivity.BusinessTypeAsync().execute(
+            new BusinessTypeAsync().execute(
                     getResources().getString(R.string.business_type_url));
         }
     }
@@ -123,13 +121,17 @@ public class EntryFirstActivity extends AppCompatActivity {
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(params[0]);
             try {
+                //add data
+                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
+                nameValuePairs.add(new BasicNameValuePair("serviceId", str_merchantType));
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
                 responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (ClientProtocolException e) {
-
-            } catch (IOException e) {
+            } catch (Exception e) {
+                e.fillInStackTrace();
+                Toast.makeText(EntryFirstActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT);
             }
-
             return responseTxt;
         }
 
@@ -138,52 +140,88 @@ public class EntryFirstActivity extends AppCompatActivity {
             progressDialog.cancel();
             if (result != null) {
                 try {
-                    business_type_array = new ArrayList<>();
+                    business_type_id_array = new ArrayList<>();
+                    business_type_name_array = new ArrayList<>();
+
                     JSONObject jsonObject = new JSONObject(result);
-                    JSONArray jsonArray = jsonObject.getJSONArray("type_of_business");
-                    business_type_array.add("Select One");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        String object = jsonArray.getString(i);
-                        business_type_array.add(object);
+                    String status = jsonObject.getString("status");
+                    if (status.equalsIgnoreCase("200")) {
+                        JSONArray jsonArray = jsonObject.getJSONArray("type_of_business");
+
+                        business_type_id_array.add("ipshita");
+                        business_type_name_array.add("Select One");
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            String id = object.getString("id");
+                            String name = object.getString("name");
+
+                            business_type_id_array.add(id);
+                            business_type_name_array.add(name);
+                        }
+
+                        arrayAdapter_business_type_spinner = new ArrayAdapter(EntryFirstActivity.this, android.R.layout.simple_spinner_dropdown_item, business_type_name_array);
+
+                        spnr_businessType.setAdapter(arrayAdapter_business_type_spinner);
+                        spnr_businessType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                                try {
+                                    str_businessType = "";
+                                    str_businessId = business_type_id_array.get(position);
+                                    str_businessType = spnr_businessType.getSelectedItem().toString().trim();
+                                } catch (Exception ex) {
+                                    ex.printStackTrace();
+                                    Toast.makeText(EntryFirstActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> adapterView) {
+
+                            }
+                        });
+                    } else {
+                        Toast.makeText(EntryFirstActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
                     }
-                    editor = sharedPreferences.edit();
-                    editor.putString(PREF_KEY_STRINGS_BUSINESS_TYPE_NAME, TextUtils.join(",", business_type_array));
-                    editor.apply();
-                    editor.commit();
-                    initializationOther();
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
+                    Toast.makeText(EntryFirstActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
                 }
             }
         }
     }
 
     public void initializationOther() {
-        String custom_text = "<font color=#41882b>ইমেইল </font> <font color=#b3b3b3>(ঐচ্ছিক)</font>";
+        String custom_text = "<font color=#41882b> ইমেইল </font> <font color=#b3b3b3> (ঐচ্ছিক)</font>";
         textView_email.setText(Html.fromHtml(custom_text));
 
-        arrayAdapter_spinner = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, business_type_array);
-        spnr_businessType.setAdapter(arrayAdapter_spinner);
-        spnr_businessType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        /****Merchant Type ***/
+        arrayAdapter_merchant_type_spinner = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, merchant_type_array);
+
+        spnr_merchatnType.setAdapter(arrayAdapter_merchant_type_spinner);
+        spnr_merchatnType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 try {
-                    str_businessType = "";
-                    str_businessType = spnr_businessType.getSelectedItem().toString().trim();
+                    merchantId = spnr_merchatnType.getSelectedItem().toString();
+                    if (merchantId.equals("Select One")) {
+                        str_merchantType = "";
+                    } else {
+                        str_merchantType = hashMap.get(merchantId);
+                        initializationBusinessType();
+                    }
                 } catch (Exception ex) {
                     ex.printStackTrace();
+                    Toast.makeText(EntryFirstActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
                 }
-
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
-
         });
     }
-
 
     public void nextOnClick(View view) {
         if (et_outletName.getText().toString().trim().isEmpty()) {
@@ -194,19 +232,19 @@ public class EntryFirstActivity extends AppCompatActivity {
             Toast.makeText(EntryFirstActivity.this, "মালিকের নাম দিন", Toast.LENGTH_LONG).show();
         } else if (et_phnNo.getText().toString().trim().isEmpty() || et_phnNo.getText().toString().trim().length() != 11) {
             Toast.makeText(EntryFirstActivity.this, "ফোন নম্বর দিন", Toast.LENGTH_LONG).show();
+        } else if (spnr_merchatnType.getSelectedItem().toString().trim().equals("Select One")) {
+            Toast.makeText(EntryFirstActivity.this, "মার্চেন্টের ধরন সিলেক্ট করুন", Toast.LENGTH_LONG).show();
         } else if (spnr_businessType.getSelectedItem().toString().trim().equals("Select One")) {
             Toast.makeText(EntryFirstActivity.this, "ব্যবসার ধরন সিলেক্ট করুন", Toast.LENGTH_LONG).show();
         } else {
-            mCd = new ConnectionDetector(this);
-            isInternetPresent = mCd.isConnectingToInternet();
-
-            if (isInternetPresent) {
-                mAppHandler.setOutletName(et_outletName.getText().toString().trim());
-                mAppHandler.setOutletAddress(et_address.getText().toString().trim());
-                mAppHandler.setOwnerName(et_ownerName.getText().toString().trim());
-                mAppHandler.setBusinessType(str_businessType.trim());
-                mAppHandler.setMobileNo(et_phnNo.getText().toString().trim());
-                mAppHandler.setEmailAddress(et_email.getText().toString().trim());
+            if (mCd.isConnectingToInternet()) {
+                regModel.setOutletName(et_outletName.getText().toString().trim());
+                regModel.setOutletAddress(et_address.getText().toString().trim());
+                regModel.setOwnerName(et_ownerName.getText().toString().trim());
+                regModel.setBusinessId(str_businessId);
+                regModel.setBusinessType(str_businessType);
+                regModel.setPhnNumber(et_phnNo.getText().toString().trim());
+                regModel.setEmailAddress(et_email.getText().toString().trim());
 
                 mAppHandler.REG_FLAG_ONE = true;
 
@@ -219,6 +257,7 @@ public class EntryFirstActivity extends AppCompatActivity {
 
     private class GetDistrictResponseAsync extends AsyncTask<String, Integer, String> {
         ProgressDialog progressDialog;
+
         @Override
         protected void onPreExecute() {
             progressDialog = ProgressDialog.show(EntryFirstActivity.this, "", getString(R.string.loading_msg), true);
@@ -235,23 +274,20 @@ public class EntryFirstActivity extends AppCompatActivity {
 
             try {
                 //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
                 nameValuePairs.add(new BasicNameValuePair("mode", "district"));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
                 responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (ClientProtocolException e) {
-
-            } catch (IOException e) {
+            } catch (Exception e) {
+                Toast.makeText(EntryFirstActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT);
             }
-
             return responseTxt;
         }
 
         @Override
         protected void onPostExecute(String result) {
-
             if (progressDialog.isShowing())
                 progressDialog.dismiss();
             if (result != null) {
@@ -268,21 +304,18 @@ public class EntryFirstActivity extends AppCompatActivity {
                         intent.putExtras(bundle);
                         startActivity(intent);
                         finish();
-
                     } else {
                         Toast.makeText(EntryFirstActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
                     }
-
                 } catch (Exception e) {
                     e.printStackTrace();
+                    Toast.makeText(EntryFirstActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
                 }
             } else {
                 Toast.makeText(EntryFirstActivity.this, R.string.services_off_msg, Toast.LENGTH_SHORT).show();
             }
         }
-
     }
-
 
     @Override
     public void onBackPressed() {

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.moktar.slidingtabs">
+    package="com.cloudwell.paywell.slidingtabs">
 
     <application
         android:allowBackup="true"

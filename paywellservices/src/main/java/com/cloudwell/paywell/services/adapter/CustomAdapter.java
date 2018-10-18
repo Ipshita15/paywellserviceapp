@@ -22,10 +22,10 @@ public class CustomAdapter<T> extends ArrayAdapter<T> {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = super.getView(position, convertView, parent);
         if (view instanceof TextView) {
-            ((TextView) view).setTypeface(AppController.getInstance().getRobotoRegularFont());
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-                ((TextView) view).setAllCaps(false);
-            }
+            ((TextView) view).setTypeface(AppController.getInstance().getOxygenLightFont());
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            ((TextView) view).setAllCaps(false);
+//            }
         }
         return view;
     }
@@ -33,10 +33,10 @@ public class CustomAdapter<T> extends ArrayAdapter<T> {
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
         View view = super.getDropDownView(position, convertView, parent);
-        ((TextView) view).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            ((TextView) view).setAllCaps(false);
-        }
+        ((TextView) view).setTypeface(AppController.getInstance().getOxygenLightFont());
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+        ((TextView) view).setAllCaps(false);
+//        }
         return view;
     }
 }

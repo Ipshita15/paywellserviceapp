@@ -8,14 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <!-- For Lollipop only -->
     <style name="ActionBarThemeOverlay" parent="">
@@ -28,47 +28,7 @@
         <item name="android:theme">@style/ActionBarThemeOverlay</item>
     </style>
 
-    <style name="CustomDialogTheme" parent="android:style/Theme.Dialog">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@color/bg_color</item>
-    </style>
-
-    <style name="SearchResultTitle" parent="@style/TextAppearance.AppCompat.SearchResult.Title">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="SearchResultSubtitle" parent="@style/TextAppearance.AppCompat.SearchResult.Subtitle">
-        <item name="android:textColor">@color/white</item>
-    </style>
     <!-- Search Activity theme. -->
-    <style name="AppTheme.SearchView" parent="@style/AppTheme.NoActionBar">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-        <item name="textAppearanceSearchResultTitle">@style/SearchResultTitle</item>
-        <item name="textAppearanceSearchResultSubtitle">@style/SearchResultSubtitle</item>
-    </style>
-
-    <style name="SearchDropDownTheme" parent="@style/RtlOverlay.Widget.AppCompat.Search.DropDown">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/white</item>
-        <!-- <item name="colorAccent">@color/primary</item> -->
-        <!-- <item name="android:textColorPrimary">@color/primary_dark</item> -->
-    </style>
-
-    <style name="SearchViewStyle" parent="@style/Widget.AppCompat.Light.SearchView">
-        <item name="suggestionRowLayout">@layout/search_dropdown_item_icons_2line</item>
-    </style>
-
-    <style name="DropDownItemStyle" parent="@style/Widget.AppCompat.DropDownItem.Spinner">
-        <item name="android:background">@drawable/dropdown_item_background</item>
-    </style>
-
-    <style name="ToolbarTheme" parent="@style/AppTheme.AppBarOverlay">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:background">@color/colorPrimary</item>
-        <item name="android:dropDownItemStyle">@style/DropDownItemStyle</item>
-        <item name="searchViewStyle">@style/SearchViewStyle</item>
-    </style>
 
     <style name="HomeButton">
         <item name="android:layout_gravity">center_vertical</item>
@@ -78,7 +38,7 @@
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@color/foreground1</item>
+        <item name="android:textColor">@color/foreground</item>
         <item name="android:background">@null</item>
     </style>
 
@@ -87,6 +47,45 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">16sp</item>
         <item name="android:padding">5dp</item>
+    </style>
+
+    <style name="HomeButtonNew">
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">@dimen/text_size_button</item>
+        <item name="android:lineSpacingExtra">-3dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/foreground</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="AppCompatAlertDialogStyle" parent="AppBaseTheme">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowSoftInputMode">stateAlwaysHidden</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <!--<style name="Theme_Transparent_Pre" parent="android:Theme">-->
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <!--<item name="android:windowBackground">@android:color/transparent</item>-->
+        <!--<item name="android:windowContentOverlay">@null</item>-->
+        <!--<item name="windowActionBar">false</item>-->
+        <!--<item name="android:windowNoTitle">true</item>-->
+        <!--<item name="android:windowIsFloating">true</item>-->
+        <!--<item name="android:backgroundDimEnabled">false</item>-->
+    <!--</style>-->
+
+    <style name="Theme.Transparent" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
     </style>
 
 </resources>

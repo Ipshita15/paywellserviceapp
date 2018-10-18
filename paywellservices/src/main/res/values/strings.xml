@@ -37,16 +37,17 @@
     <string name="home_utility_pollibiddut">Polli Biddut</string>
     <string name="home_utility_qubee">Qubee</string>
     <string name="home_utility_passport">Passport</string>
-    <string name="home_utility_nid">National ID</string>
     <string name="home_utility_nid_title">National ID</string>
     <string name="home_utility_beximco">Real VU</string>
+    <string name="home_utility_ivac">IVAC</string>
+    <string name="home_utility_banglalion">Banglalion</string>
     <string name="home_utility_pb_reg">Registration</string>
     <string name="home_utility_pb_billpay">Bill Pay</string>
     <string name="home_utility_pb_reg_inq">Registration\nInquiry</string>
-    <string name="home_utility_pb_reg_inq_tilte">Registration Inquiry</string>
+    <string name="home_utility_pb_reg_inq_log">Registration Log</string>
     <string name="home_utility_pb_bill_ing">Bill Pay\nInquiry</string>
-    <string name="home_utility_pb_bill_ing_title">Bill Pay Inquiry</string>
-    <string name="home_utility_qubee_recharge">Recharge</string>
+    <string name="home_utility_qubee_recharge">Qubee\nRecharge</string>
+    <string name="home_utility_qubee_recharge_title">Qubee Recharge</string>
     <string name="home_utility_qubee_inq">Recharge\nInquiry</string>
     <string name="home_utility_qubee_inq_title">Recharge Inquiry</string>
     <string name="home_utility_qubee_wrong_acc">Wrong\nAccount</string>
@@ -61,18 +62,19 @@
     <string name="home_utility_passport_status_inquiry_title">Payment Status Inquiry</string>
     <string name="home_utility_nid_correction">Pay Correction\nFee</string>
     <string name="home_utility_nid_correction_title">Pay Correction Fee</string>
+    <string name="home_utility_ivac_fee_pay">Fee Pay</string>
     <string name="home_payment_bkash">Payments\nFrom bKash</string>
     <string name="home_payment_bkash_title">Payments From bKash</string>
     <string name="home_payment_pay_to_rocket">Pay To Rocket</string>
-    <string name="home_payment_transactions">Transactions</string>
+    <string name="home_payment_transactions">Payment\nTransactions</string>
+    <string name="home_payment_transactions_title">Transactions</string>
     <string name="home_bkash_last_trx">Successful\nTransaction</string>
     <string name="home_bkash_last_trx_title">Successful Transaction</string>
     <string name="home_bkash_balance">Balance</string>
-    <string name="home_bkash_declare_purpose">Declare\nPurpose</string>
     <string name="home_bkash_declare_purpose_title">Declare Purpose</string>
-    <string name="home_bkash_balance_req">Request For\nBalance</string>
+    <string name="home_bkash_balance_req">Request\nBalance</string>
     <string name="home_bkash_balance_req_title">Request For Balance</string>
-    <string name="home_bkash_payment_confirm">Payment\nConfirmation</string>
+    <string name="home_bkash_payment_confirm">Payment\nConfirm</string>
     <string name="home_bkash_payment_confirm_title">Payment Confirmation</string>
     <string name="home_bkash_trx_claim">Claim\nPayment</string>
     <string name="home_bkash_trx_claim_title">Claim Payment</string>
@@ -82,38 +84,45 @@
     <string name="home_bkash_bank_trns_req_title">Bank Transfer</string>
     <string name="home_bkash_cash_req">For Cash</string>
     <string name="home_bkash_cash_req_title">For Cash</string>
+    <string name="home_bkash_paywell_balance_return">PW Balance\nReturn</string>
     <string name="home_rocket_pay_to">Pay To</string>
     <string name="home_rocket_pay_inquiry">Payment\nInquiry</string>
     <string name="home_rocket_pay_inquiry_title">Payment Inquiry</string>
     <string name="home_eticket_bus">Bus Ticket</string>
     <string name="home_eticket_train">Train Ticket</string>
     <string name="home_product_ajker_deal">Ajker Deal</string>
-    <string name="home_product_pw_b_two_b">PayWell\nBToB</string>
+    <string name="home_product_pw_wholesale">PayWell\nWholesale</string>
+    <string name="home_product_pw_wholesale_title">PayWell Wholesale</string>
     <string name="home_settings_reset_pin">Reset PIN</string>
     <string name="home_settings_change_pin">Change PIN</string>
     <string name="home_settings_upgrade">Upgrade</string>
     <string name="home_settings_change_language">Change\nLanguage</string>
+    <string name="home_refill_bkash">bKash</string>
+    <string name="home_refill_rocket">Rocket</string>
+    <string name="home_refill_mcash">MCash</string>
     <string name="home_refill_sda_info">SDA\nInformation</string>
     <string name="home_refill_bank">Bank Deposit</string>
-    <string name="home_mfs_bkash">bKash</string>
-    <string name="home_mfs_rocket">Rocket</string>
-    <string name="home_mfs_mcash">MCash</string>
+    <string name="home_refill_card">Card</string>
     <string name="home_bank_brac">BRAC Bank</string>
     <string name="home_bank_dbbl">Dutch Bangla\nBank</string>
     <string name="home_bank_ibbl">Islami Bank\nBangladesh Ltd</string>
     <string name="home_bank_pbl">Pubali Bank\nLimited</string>
-    <string name="home_bank_scb">Standard Chartered Bank</string>
+    <string name="home_bank_scb">Standard\nChartered Bank</string>
+    <string name="home_bank_city">City Bank</string>
     <string name="home_mfs_mycash">MYCash</string>
-    <string name="home_mfs_desco">DESCO</string>
-    <string name="home_mfs_dpdc">DPDC</string>
-    <string name="home_fund_management">Fund\nManagement</string>
-    <string name="home_fund_management_title">Fund Management</string>
-    <string name="home_cash_in_out">Cash In/Out</string>
+    <string name="home_mfs_trust_bank">Trust Bank</string>
+    <string name="home_fund_management">Fund\nManage</string>
+    <string name="home_fund_management_title">Fund Manage</string>
+    <string name="home_cash_in_out">Cash In\nOut</string>
+    <string name="home_cash_in_out_title">Cash In/Out</string>
     <string name="home_mycash_balance">MYCash\nBalance</string>
+    <string name="home_mycash_balance_title">MYCash Balance</string>
     <string name="home_customer_registration">Customer\nRegistration</string>
     <string name="home_customer_registration_title">Customer Registration</string>
     <string name="home_generate_otp">Generate\nOTP</string>
     <string name="home_generate_otp_title">Generate OTP</string>
+    <string name="home_mycash_change_pin">Change\nMYCash PIN</string>
+    <string name="home_mycash_change_pin_title">Change MYCash PIN</string>
     <string name="home_inquiry">Inquiry</string>
     <string name="home_paywell_to_mycash">PayWell To\nMYCash</string>
     <string name="home_paywell_to_mycash_title">PayWell To MYCash</string>
@@ -123,11 +132,24 @@
     <string name="home_cash_out">Cash Out</string>
     <string name="home_activity_log">Activity Log</string>
     <string name="home_notification">Notification</string>
+    <string name="home_notification_details">Details</string>
+    <string name="home_notification_img_view">Image View</string>
     <string name="home_scan">Scan</string>
-    <string name="home_help">Help</string>
+    <string name="home_utility_desco">DESCO</string>
+    <string name="home_utility_dpdc">DPDC</string>
     <string name="home_utility_wasa">WASA</string>
     <string name="home_utility_west_zone">West Zone</string>
     <string name="home_scan_qr_code">PayWell RID</string>
+    <string name="home_settings_help">Help</string>
+    <string name="home_utility_polli_biddut_bill_pay">Polli Biddut\nBill Pay</string>
+    <string name="home_utility_dpdc_bill_pay">DPDC\nBill Pay</string>
+    <string name="home_all_service">All\nServices</string>
+    <string name="home_utility_postpaid_bill_pay">Postpaid\nBill Pay</string>
+    <string name="home_utility_postpaid_bill_inq">Postpaid\nBill Inquiry</string>
+    <string name="home_utility_prepaid_bill_inq">Prepaid\nBill Inquiry</string>
+    <string name="home_utility_banglalion_recharge">Banglalion\nRecharge</string>
+    <string name="home_utility_banglalion_recharge_title">Banglalion Recharge</string>
+    <string name="banglalion_acc_no">Customer ID/Customer Number/MSISDN</string>
 
     <string name="home_gp">GP</string>
     <string name="home_bl">Banglalink</string>
@@ -137,11 +159,11 @@
 
     <!-- Messages -->
     <string name="exit">Press again to exit PayWell Services</string>
-    <!--<string name="msg_server_response">No response from server or Connection Error. Please try again.</string>-->
-    <string name="no_update_msg">No New Upgrade Available</string>
+    <string name="no_update_msg">No update available</string>
     <string name="no_notification_msg">No new notification</string>
     <string name="version_upgrade">Version Upgrade</string>
-    <string name="upgrade_msg">There is a new upgrade available, Please upgrade immediately.</string>
+    <string name="upgrade_msg">There is a new version available.
+        Please upgrade immediately.</string>
     <string name="conn_timeout_msg">Connection time out, please try again!</string>
     <string name="try_again_msg">Please try again!</string>
     <string name="try_again_correct_msg">Please try again correctly!</string>
@@ -150,7 +172,7 @@
     <string name="phone_no_error_msg">Enter valid phone number</string>
     <string name="amount_error_msg">Enter at least 1 digit</string>
     <string name="amount_limit_error_msg">Enter amount 20 to 10000</string>
-    <string name="pin_no_error_msg">Enter pin number</string>
+    <string name="pin_no_error_msg">Enter PIN number</string>
     <string name="pb_acc_error_msg">Enter at least 8 digits</string>
     <string name="pb_acc_mismatch_error_msg">Account number do not match</string>
     <string name="pb_full_name_error_msg">Enter full name</string>
@@ -170,21 +192,20 @@
     <string name="ticket_name_error_msg">Enter name</string>
     <string name="ticket_destination_error_msg">Enter 1st 3 characters</string>
     <string name="old_pin_error_msg">Enter old pin</string>
-    <string name="new_pin_error_msg">Enter new pin</string>
+    <string name="new_pin_error_msg">Enter correct new pin</string>
     <string name="bill_no_error_msg">Enter bill number</string>
-    <string name="bill_or_phn_no_error_msg">Enter bill/phone number</string>
     <string name="consumer_no_error_msg">Enter consumer number</string>
-    <string name="customer_or_phn_no_error_msg">Enter customer/phone number</string>
-    <string name="consumer_or_phn_no_error_msg">Enter consumer/phone number</string>
     <string name="mycash_pin_error_msg">Enter MYCash pin number</string>
     <string name="location_error_msg">Enter location</string>
     <string name="otp_error_msg">Enter OTP</string>
+    <string name="cust_pin_msg">Enter Customer Pin</string>
     <string name="select_month_msg">Select Month</string>
     <string name="select_year_msg">Select Year</string>
     <string name="mycash_acc_error_msg">Enter at least 12 digits</string>
     <string name="serial_no_error_msg">Enter serial number</string>
     <string name="loading_msg">Loading. Please wait&#8230;</string>
-    <string name="log_limit_title_msg">Transactions Log Limit</string>
+    <string name="log_limit_title_msg">Transaction Log Limit</string>
+    <string name="reg_log_limit_title_msg">Registration Log Limit</string>
     <string name="activity_log_limit_title_msg">Activity Log Limit</string>
     <string name="add_number_amount_msg">Please add number and amount first</string>
     <string name="pin_no_title_msg">PIN Number</string>
@@ -204,6 +225,7 @@
     <string name="purpose_type_msg">Purpose Type</string>
     <string name="fund_transfer_title_msg">Fund Transfer</string>
     <string name="alert_transfer_msg">Are you sure, you want to transfer fund?</string>
+    <string name="alert_reverse_msg">Are you sure, you want to reverse</string>
     <string name="confirm_title_msg">Confirmation</string>
     <string name="alert_confirm_msg">Did you receive cash?</string>
     <string name="employee_payment_msg">Employee Payment</string>
@@ -225,19 +247,16 @@
     <string name="agree_statement_msg">I agree with the terms and conditions</string>
     <string name="three_char_msg">1st three characters</string>
     <string name="hint_source_msg">**Type 1st 3 characters for destination</string>
-    <string name="coming_soon_msg">Coming Soon</string>
     <string name="reset_pin_msg">Are you sure, you want to reset PIN?</string>
     <string name="today_msg">Today</string>
     <string name="change_pin_status_msg">Your PIN changed successfully</string>
     <string name="choose_image_for_upload_msg">Choose Image For Upload</string>
-    <string name="bank_transfer_header_msg">Please press any of the logos below to find out our bank account details and also upload deposit slip</string>
+    <string name="bank_transfer_header_msg">Please press any of the logos below to find out our bank account details and
+        also upload deposit slip</string>
     <string name="unread_first_msg">You have</string>
     <string name="unread_second_msg">new notification(s)</string>
     <string name="language_title_msg">Select Language</string>
     <string name="wait_msg">Please wait for a moment</string>
-    <string name="chat_info_title_msg">Information</string>
-    <string name="chat_info_username_msg">Username</string>
-    <string name="otp_missmatch_error_msg">OTP mismatch</string>
     <string name="bell_msg">bell</string>
     <string name="internet_connection_title_msg">Internet Connection</string>
     <string name="no_data_msg">No data found</string>
@@ -245,11 +264,29 @@
     <string name="offer_talk_time_msg">Talk Time</string>
     <string name="offer_internet_msg">Internet</string>
     <string name="offer_other_msg">Other</string>
-    <string name="trx_title_bkash">bKash</string>
-    <string name="trx_title_rocket">Rocket</string>
+    <string name="trx_title_bkash_msg">bKash</string>
+    <string name="trx_title_rocket_msg">Rocket</string>
+    <string name="merchant_type_error_msg">Select merchant type</string>
+    <string name="business_type_error_msg">Select business type</string>
+    <string name="center_error_msg">Select center</string>
+    <string name="input_error_msg">Enter properly</string>
+    <string name="nid_input_error_msg">Enter correct NID number</string>
+    <string name="please_type_in_english">Please type in English</string>
+    <string name="info_collect_title">Important Information Collection</string>
+    <string name="phn_num_hint">Please enter your current phone number</string>
+    <string name="verify_quote">You will receive a PIN in the above phone number and your phone number will verify
+        automatically.</string>
+    <string name="allow_error_msg">Not allowed. Change the Pin first</string>
+    <string name="select_phn_title_msg">Choose a number</string>
+    <string name="amount_transfer_msg">Amount transfer successful</string>
+    <string name="success_msg">Successful</string>
+    <string name="request_failed_msg">Failed</string>
+    <string name="coming_soon_msg">Coming Soon</string>
+    <string name="data_error_msg">Unable to get data properly</string>
+    <string name="permission_error_msg">You need to click on the allow buttons in order to let PayWell app function properly</string>
+    <string name="internet_connection_error_msg">Sorry, no internet connection is available. Please reconnect and try again.</string>
 
     <!-- Button Description -->
-    <string name="upgrade_btn">Upgrade</string>
     <string name="auto_date_time_btn">Automatic date &amp; time</string>
     <string name="okay_btn">OK</string>
     <string name="confirm_btn">Confirm</string>
@@ -260,6 +297,8 @@
     <string name="skip_btn">Skip</string>
     <string name="got_it_btn">Got It</string>
     <string name="retry_btn">Retry</string>
+    <string name="play_btn">Play Store</string>
+    <string name="pw_btn">PayWell</string>
 
     <!-- Content Description -->
     <string name="pin_no_des">PIN Number:</string>
@@ -293,6 +332,7 @@
     <string name="nid_or_phone_des">NID or Phone Number:</string>
     <string name="bkash_frozen_balance_des">Frozen Balance:</string>
     <string name="bkash_declare_balance_des">Purpose to be Declared:</string>
+    <string name="bkash_verification_balance_des">Unverified Balance:</string>
     <string name="balance_des">Balance:</string>
     <string name="tk_des">Tk</string>
     <string name="phone_or_id_des">Phone/Id Number:</string>
@@ -325,8 +365,6 @@
     <string name="mycash_balance_des">MYCash Balance:</string>
     <string name="mycash_pin_des">MYCash PIN Number:</string>
     <string name="payer_phone_number_des">Payer Phone Number:</string>
-    <string name="payer_phone_number_or_bill_no_des">Bill Number/Payer Phone Number:</string>
-    <string name="payer_phone_number_or_cust_no_des">Customer Number/Payer Phone Number:</string>
     <string name="location_des">Location:</string>
     <string name="otp_des">MYCash OTP:</string>
     <string name="mycash_wallet_des">Customer Wallet:</string>
@@ -337,7 +375,15 @@
     <string name="ret_com_des">OTF Commission:</string>
     <string name="offer_details_des">Offer Details:</string>
     <string name="consumer_no_des">Consumer Number:</string>
-    <string name="payer_phone_number_or_consumer_no_des">Consumer Number/Payer Phone Number:</string>
+    <string name="merchant_type_retail">Retail Merchant</string>
+    <string name="merchant_type_des">Merchant Type:</string>
+    <string name="business_type_des">Business Type:</string>
+    <string name="center_des">Center:</string>
+    <string name="web_file_des">Web File No:</string>
+    <string name="passport_des">Passport No:</string>
+    <string name="agent_phn_des">Merchant No:</string>
+    <string name="banglalion_trx_id_des">Banglalion TRX ID :</string>
+    <string name="retail_commission">Retailer Commission:</string>
 
     <string name="pre_paid_str">prepaid</string>
     <string name="post_paid_str">postpaid</string>
@@ -350,7 +396,8 @@
 
 
     <!-- Paywell Services string level -->
-    <string name="paywell_reg">PayWell Registration</string>
+    <string name="paywell_reg">পেওয়েল নিবন্ধন</string>
+    <string name="paywell_reg_missing">অনুপস্থিত তথ্য</string>
     <string name="search_hint">Search hint</string>
     <string name="search_label">search label</string>
     <string name="search_global_description">search global description</string>
@@ -361,9 +408,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="select_to_date">Select To Date</string>
     <string name="select_from_date">Select From Date</string>
-
-    <!--welcome screen-->
-
 
     <!--paywell string arrays-->
     <string-array name="month_array">
@@ -394,7 +438,7 @@
     </string-array>
 
     <string-array name="sampleStrings" formatted="false">
-        <item>"PayWell is an organized retail approach by CloudWell Limited, focusing on providing convenient payments and value added services to major consumer service organizations in the utility, telecoms, healthcare, financial services, transport, retail, e-commerce, gaming and public sectors in Bangladesh.\nPayWell intends to deliver payments and services through a uniquely strong combination of local shops, internet and mobile distribution channels. The company follows standard distribution architecture, where layers of channel partners are involved i.e distributor &amp; retailers in its value chain.\n\nWe are located in:\nSkill House (L-7), KA-53/2, Shahajadpur, Gulshan, Dhaka-1212.\nPhone: 029860070, 09666773333\nemail: contact@cloudwell.co"</item>
+        <item>"PayWell is an organized retail approach by CloudWell Limited, focusing on providing convenient payments and value added services to major consumer service organizations in the utility, telecoms, healthcare, financial services, transport, retail, e-commerce, gaming and public sectors in Bangladesh.\nPayWell intends to deliver payments and services through a uniquely strong combination of local shops, internet and mobile distribution channels. The company follows standard distribution architecture, where layers of channel partners are involved i.e distributor &amp; retailers in its value chain.\n\nWe are located in:\nSkill House (L-7), KA-53/2, Shahajadpur, Gulshan, Dhaka-1212.\nPhone: 09666773333\nemail: contact@cloudwell.co"</item>
     </string-array>
     <string-array name="train_destination_array">
         <item>ABDULPUR</item>
@@ -492,42 +536,85 @@
         <item>ULLAH PARA</item>
     </string-array>
 
-
     <!-- paywell apis -->
-    <!--<string name="pw_auth">https://www.paywellonline.com/crs3291/android/paywell_app_api/tab_user_service_profiling.php?</string>-->
-    <string name="pw_auth">https://www.paywellonline.com/crs3291/android/paywell_app_api/tab_user_service_profiling_test.php?</string>
-
+    <!--<string name="pw_auth">https://www.paywellonline.com/crs3291/android/paywell_app_api/tab_user_service_profiling_test.php?</string>-->
+    <!--<string name="pw_auth">https://www.paywellonline.com/crs3291/android/paywell_app_api/tab_user_service_profiling_new.php?</string>-->
+    <string name="pw_auth">https://api.paywellonline.com/PaywelltransactionRetailer/TabUserServiceProfiling?</string>
     <string name="pw_bal">https://www.paywellonline.com/crs3291/android/paywell_app_api/paywell_balance_check.php?</string>
-    <!--<string name="pw_bal">https://www.paywellonline.com/crs3291/android/paywell_app_api/paywell_balance_check_test.php?</string>-->
-
-    <string name="single_top">https://www.paywellonline.com/crs3291/live/topup.php?</string>
-    <string name="multi_top">https://www.paywellonline.com/crs3291/live/multiple_topup.php?</string>
-
-    <!--<string name="single_top">https://www.paywellonline.com/demo/project_otf/topup.php?</string>-->
-    <!--<string name="multi_top">https://www.paywellonline.com/demo/project_otf/multiple_topup.php?</string>-->
-
-    <string name="inq_top">https://www.paywellonline.com/default/api/enquiry.php?</string>
-    <string name="trx_log">https://www.paywellonline.com/crs3291/live/view_log.php?</string>
-
     <string name="notif_url">https://www.paywellonline.com/default/api/notification_check_android.php?</string>
-    <string name="pb_otp_check">http://api.cloudwell.co/PaywellSetting/GetPollyRegistrationOTP</string>
-    <string name="pb_reg">https://www.paywellonline.com/default/api/polli/polli_regs.php?</string>
-    <string name="pb_bill_pay">https://www.paywellonline.com/default/api/polli/polli.php?</string>
-    <string name="pb_inq_reg">https://www.paywellonline.com/default/api/polli/polli_regs_inquire.php?</string>
-    <string name="pb_inq">https://www.paywellonline.com/default/api/polli/polli_inquire.php?</string>
-    <string name="qb_bill_pay">https://www.paywellonline.com/default/api/qubee/wimax_topup.php?</string>
-    <string name="qb_inq">https://www.paywellonline.com/default/api/qubee/wimax_enquery.php?</string>
-    <string name="qb_com">https://www.paywellonline.com/default/api/qubee/wimax_reversal.php?</string>
-    <string name="pin">https://www.paywellonline.com/crs3291/live/change_password.php?</string>
+    <string name="notification_token_url">https://www.paywellonline.com/paywellapi/setUserFCMToken.php</string>
 
     <!--<string name="update_check">https://app.paywellonline.com/apk_test/app-release.apk</string>-->
     <!--<string name="check_version">https://app.paywellonline.com/apk_update_test/version/paywellservice_update.txt</string>-->
-
-    <string name="update_check">https://app.paywellonline.com/apk/PaywellServices_v10_12.apk</string>
+    <string name="app_next_version_no">vten_seventeen</string>
+    <string name="update_check">https://app.paywellonline.com/apk/PaywellServices_v10_18.apk</string>
     <string name="check_version">https://app.paywellonline.com/version_update_info/paywellservice_update.txt</string>
 
-    <string name="bkash_rocket_combo_trx">https://api.paywellonline.com/Android/AndiroidStatement?</string>
+    <string name="update_location">https://api.paywellonline.com/PaywellRetailerInformation/doUpdateRetailersCurrentLocation</string>
 
+    <!-- Registration -->
+    <!--<string name="business_type_url">https://api.paywellonline.com/Android/business_type</string>-->
+    <string name="business_type_url">https://api.paywellonline.com/Android/userSubBusinessType</string>
+    <string name="district_info_url">https://www.paywellonline.com/crs3291/android/sales_manager/district_info_bangladesh.php</string>
+    <!--<string name="final_reg_url">https://www.paywellonline.com/crs3291/android/sales_manager/Retailer_Add_Request_Info.php</string>-->
+    <string name="final_reg_url">https://www.paywellonline.com/crs3291/android/sales_manager/getRetailerInformationForRegistration.php</string>
+    <string name="missing_reg_url">https://www.paywellonline.com/crs3291/android/sales_manager/getUnverifiedData.php</string>
+
+    <!-- Topup -->
+    <string name="single_top">https://www.paywellonline.com/crs3291/live/topup.php?</string>
+    <string name="multi_top">https://www.paywellonline.com/crs3291/live/multiple_topup.php?</string>
+    <string name="inq_top">https://www.paywellonline.com/default/api/enquiry.php?</string>
+    <string name="trx_log">https://www.paywellonline.com/crs3291/live/view_log.php?</string>
+    <string name="topup_offer">https://api.paywellonline.com/Android/GetRechargeOffer?</string>
+
+    <string name="mobileOperator">Mobile Operators</string>
+    <string name="brilliant">Brilliant</string>
+    <string name="home_utility_dpdc_prepaid">Prepaid</string>
+    <string name="brilliant_topup">Brilliant Topup</string>
+    <string name="paywell_trx_id">PayWell TRX ID :</string>
+    <string name="brilliant_trx_id">Brilliant TRX ID:</string>
+    <string name="brilliant_num">Brilliant Number:</string>
+    <string name="brilliant_trx_log">Brilliant Trx Log</string>
+
+    <!-- Utility -->
+    <string name="pb_reg">https://www.paywellonline.com/default/api/polli/polli_regs.php?</string>
+    <string name="pb_reg_with_otp">https://www.paywellonline.com/default/api/polli/polli_reg_otp.php</string>
+    <string name="pb_bill_pay">https://www.paywellonline.com/default/api/polli/polli.php?</string>
+
+    <string name="qb_bill_pay">https://www.paywellonline.com/default/api/qubee/wimax_topup.php?</string>
+    <string name="qb_inq">https://www.paywellonline.com/default/api/qubee/wimax_enquery.php?</string>
+    <string name="qb_com">https://www.paywellonline.com/default/api/qubee/wimax_reversal.php?</string>
+
+    <string name="nid_or_passport_billpay">https://api.paywellonline.com/paywelltransactionDIPNID/dipNidBillPay?</string>
+    <string name="nid_or_passport_query">https://api.paywellonline.com/paywelltransactionDIPNID/dipnidStatusQuery?</string>
+
+    <string name="desco_bill_enq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
+    <string name="desco_bill_pay">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
+
+    <string name="dpdc_postpaid_bill_inq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DPDC</string>
+    <string name="dpdc_postpaid_bill_pay">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DPDC</string>
+    <string name="dpdc_prepaid_bill_inq">https://api.paywellonline.com/PaywelltransactionDPDCPrepaid/getDPDCTransactionReport?</string>
+
+    <string name="wasa_bill">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_WASA</string>
+
+    <string name="west_zone_bill">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_WZPDCL</string>
+
+    <string name="utility_multi_trx_inq">https://api.paywellonline.com/PaywellTransactionReport/TransactionReport?</string>
+
+    <string name="beximco_url">https://www.paywellonline.com/Beximco/beximco.php</string>
+
+    <string name="utility_ivac_get_center">https://api.paywellonline.com/PaywelltransactionIVAC/getIvacCenter</string>
+    <string name="utility_ivac_fee_pay">https://api.paywellonline.com/PaywelltransactionIVAC/IVACRequest</string>
+    <string name="utility_ivac_fee_pay_inq">https://api.paywellonline.com/PaywelltransactionIVAC/getIvacTrxList</string>
+
+    <string name="banglalion_bill_pay">https://api.paywellonline.com/PayWellInternateBillPay/banglalionBillPay</string>
+    <string name="banglalion_bill_inquiry">https://api.paywellonline.com/PayWellInternateBillPay/banglalionEnquiry</string>
+
+    <!-- Eticket -->
+    <string name="bus_ticket_url">https://www.paywellonline.com/final/BdTickets/BdBusTicket.php?</string>
+    <string name="train_source_url">https://www.paywellonline.com/banglalink_services/train.php?</string>
+
+    <!-- Payment -->
     <string name="bkash_trx_check">https://bkapi.paywellonline.com/retailer/lastSuccessfulTrx.php?</string>
     <string name="bkash_balance_check">https://bkapi.paywellonline.com/retailer/userBalanceCheck.php?</string>
     <string name="bkash_paymnt_req_paywell">https://bkapi.paywellonline.com/retailer/payment_request_for_pwl_balance.php?</string>
@@ -535,9 +622,18 @@
     <string name="bkash_req_for_cash">https://bkapi.paywellonline.com/retailer/payment_request_for_cash.php?</string>
     <string name="bkash_paymnt_pending_check">https://bkapi.paywellonline.com/retailer/paymentRequestFromCo.php?</string>
     <string name="bkash_pending_req_conf">https://bkapi.paywellonline.com/retailer/ConfirmPaymentRequestFromCoOrSda.php?</string>
+    <!--<string name="bkash_pending_req_conf">https://bkapi.paywellonline.com/retailer/ConfirmPaymentRequestFromCoOrSda_test.php?</string>-->
     <string name="bkash_pd_url">https://bkapi.paywellonline.com/retailer/bkash_purpose_declaration.php?</string>
     <string name="bkash_inq_url">https://bkapi.paywellonline.com/retailer/transactionInquiry.php?</string>
+    <string name="bkash_reverse_inq_url">https://api.paywellonline.com/PaywelltransactionRetailer/GetGateWayPaymentRequestList</string>
+    <string name="bkash_reverse_url">https://api.paywellonline.com/PaywelltransactionRetailer/CancelPaywellBalanceRequestAndRevesresBalnceInBkashwallet</string>
 
+    <string name="rocket_cash_in">https://api.paywellonline.com/PaywelltransactionDBBLAgent/DbblAgentSystem?</string>
+    <string name="rocket_inquiry">https://api.paywellonline.com/PaywelltransactionDBBLAgent/DBBLAgentStatusQuery?</string>
+
+    <string name="bkash_rocket_combo_trx">https://api.paywellonline.com/Android/AndiroidStatement?</string>
+
+    <!-- MFS -->
     <string name="mycash_generate_otp">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/GenerateOTP?</string>
     <string name="mycash_balance_check">https://api.paywellonline.com/PaywelltransactionMYCash/GetMYCashRetailerPayWellBalance?</string>
     <string name="mycash_cash_in">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/CashIn?</string>
@@ -552,43 +648,37 @@
     <string name="mycash_balance_transfer_confirm_pending">https://api.paywellonline.com/PaywelltransactionMYCash/CheckMyCashPendingCashRequest?</string>
     <string name="mycash_balance_transfer_confirm">https://api.paywellonline.com/PaywelltransactionMYCash/MyCashPendingCashRequestConfirmation?</string>
 
-    <string name="desco_bill_enq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
-    <string name="desco_bill_pay">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
-    <string name="desco_enq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCODPDC_Enquiry</string>
+    <string name="tbl_req">https://api.paywellonline.com/PaywelltransactionTBL/DOTBLLiftingToRetailerAllocation</string>
+    <string name="tbl_trx_inq">https://api.paywellonline.com/PaywelltransactionTBL/RetailerLiftingInquiry</string>
 
-    <string name="dpdc_bill_enq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DPDC</string>
-    <string name="dpdc_bill_pay">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DPDC</string>
-    <string name="dpdc_enq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCODPDC_Enquiry</string>
-
-    <string name="bus_ticket_url">https://www.paywellonline.com/final/BdTickets/BdBusTicket.php?</string>
-    <string name="beximco_url">https://www.paywellonline.com/Beximco/beximco.php</string>
-    <string name="train_source_url">https://www.paywellonline.com/banglalink_services/train.php?</string>
-
-    <string name="nid_or_passport_billpay">https://api.paywellonline.com/paywelltransactionDIPNID/dipNidBillPay?</string>
-    <string name="nid_or_passport_query">https://api.paywellonline.com/paywelltransactionDIPNID/dipnidStatusQuery?</string>
-    <string name="reset_pin">https://api.paywellonline.com/paywellSetting/passwordChange?</string>
-
+    <!-- Refill -->
     <string name="refill_sda_info">https://api.paywellonline.com/Android/SDAinformation?</string>
     <string name="refill_mfs_info">https://api.paywellonline.com/Android/paymentInfo?</string>
     <string name="refill_bank_info">https://api.paywellonline.com/Android/bankinformations?</string>
     <string name="refill_bank_deposit">https://www.paywellonline.com/crs3291/android/deposit_slip.php</string>
 
-    <!-- Registration -->
-    <string name="business_type_url">https://api.paywellonline.com/Android/business_type</string>
-    <string name="district_info_url">https://www.paywellonline.com/crs3291/android/sales_manager/district_info_bangladesh.php</string>
-    <string name="final_reg_url">https://www.paywellonline.com/crs3291/android/sales_manager/Retailer_Add_Request_Info.php</string>
-
-    <string name="rocket_cash_in">https://api.paywellonline.com/PaywelltransactionDBBLAgent/DbblAgentSystem?</string>
-    <string name="rocket_inquiry">https://api.paywellonline.com/PaywelltransactionDBBLAgent/DBBLAgentStatusQuery?</string>
-
+    <!-- Product -->
     <string name="ajd_token">http://ajkerdeal.paywellonline.com/api/Paywell/CreateToken?</string>
     <string name="ajd_login">http://ajkerdeal.paywellonline.com/Home/CheckLoginByToken?</string>
     <string name="ajd_refresh_token">http://ajkerdeal.paywellonline.com/MetaData/PingServer</string>
     <string name="ajd_share">http://ajkerdeal.paywellonline.com</string>
 
-    <string name="topup_offer">https://api.paywellonline.com/Android/GetRechargeOffer?</string>
+    <string name="b2b_token">https://wholesale.paywellonline.com/Retailer/Home/CreateToken?</string>
+    <string name="b2b_login">https://wholesale.paywellonline.com/Retailer/Home/CheckLoginByToken?</string>
+    <string name="b2b_refresh_token">https://wholesale.paywellonline.com/Retailer/MetaData/PingServer</string>
+    <string name="b2b_share">https://wholesale.paywellonline.com</string>
 
-    <string name="wasa_bill">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_WASA</string>
-    <string name="west_zone_bill">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_WZPDCL</string>
+    <!-- Settings -->
+    <string name="pin">https://www.paywellonline.com/crs3291/live/change_password.php?</string>
+    <string name="reset_pin">https://api.paywellonline.com/paywellSetting/passwordChange?</string>
 
+    <!-- Verification -->
+    <string name="otp_for_phn_num">https://api.paywellonline.com/PaywelltransactionRetailer/GetRetailerPhoneNumberVerificationOTP</string>
+    <string name="conf_phn_num">https://api.paywellonline.com/PaywelltransactionRetailer/ConfirmRetaileOTPForPhoneNumberVerification</string>
+    <string name="conf_merchant_type">https://api.paywellonline.com/PaywelltransactionRetailer/UpdateMarchentAndBusinessType</string>
+
+    <!-- Chat -->
+    <string name="chat">https://www.paywellonline.com/chatting-retailer/?</string>
+
+    <string name="merchant_balance_return_url">https://api.paywellonline.com/PaywelltransactionSDA/SDAToMerchentBalanceReturn</string>
 </resources>

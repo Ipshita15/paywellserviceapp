@@ -19,13 +19,13 @@ import org.apache.http.params.HttpParams;
 @SuppressWarnings("ALL")
 public class AppController extends Application {
 
-    private static final String ROBOTO_REGULAR = "fonts/Roboto-Regular.ttf";
-    private static final String ASSETS_FONT = "Roboto-Regular.ttf";
+    private static final String APONA_LOHIT = "fonts/AponaLohit.ttf";
+    private static final String OXYGEN_LIGHT = "fonts/Oxygen-Light.ttf";
     private static AppController mInstance;
-    //    private static String imei;
     private static SharedPreferences preference;
     public static HttpClient client;
     private static SharedPreferences sPref;
+    private static AppController mContext;
 
     public static synchronized AppController getInstance() {
         return mInstance;
@@ -35,15 +35,18 @@ public class AppController extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+        mContext = this;
         client = createTrustedHttpsClient();
-//        imei = setIMEINumber();
-//        sPref = createSPref();
     }
 
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
+    }
+
+    public static AppController getContext() {
+        return mContext;
     }
 
     public HttpClient getTrustedHttpClient() {
@@ -59,34 +62,23 @@ public class AppController extends Application {
         // Set the default socket timeout (SO_TIMEOUT)
         // in milliseconds which is the timeout for waiting for
         // data.
-        int timeoutSocket = 10000;
+        int timeoutSocket = 1000000;
         HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
 
         // Instantiate the custom HttpClient
         HttpClient client = new MyHttpClient(httpParameters, getApplicationContext());
         return client;
     }
-    public Typeface getRobotoRegularFont() {
-       return Typeface.createFromAsset(getAssets(), ROBOTO_REGULAR);
-    }
+
     public String getAssestFont() {
-        return ASSETS_FONT;
+        return OXYGEN_LIGHT;
     }
-   /* public static String getIMEINumber() {
-        return "";
-    }*/
-   /* private String setIMEINumber() {
-        TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(this);
-        //anisul.islam//351867061582307//karib_vai:353180066967533/moktar:359254058225400
-        String imeiNoSIM1 = telephonyInfo.getImeiSIM1();
-//	     String imeiNoSIM2 = telephonyInfo.getImeiSIM2();
-        return imeiNoSIM1; // imei no : a10000289bbb5d for Hisense set
-    }*/
-//    private SharedPreferences createSPref() {
-//        return getSharedPreferences("appPref", Context.MODE_PRIVATE);
-//    }
-//
-//    public static SharedPreferences getSharedPreference() {
-//        return sPref;
-//    }
+
+    public Typeface getAponaLohitFont() {
+        return Typeface.createFromAsset(getAssets(), APONA_LOHIT);
+    }
+
+    public Typeface getOxygenLightFont() {
+        return Typeface.createFromAsset(getAssets(), OXYGEN_LIGHT);
+    }
 }

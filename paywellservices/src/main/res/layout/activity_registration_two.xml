@@ -5,7 +5,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:descendantFocusability="beforeDescendants"
         android:focusableInTouchMode="true">
 
@@ -129,6 +129,7 @@
             android:layout_alignStart="@+id/textView_landmarke"
             android:layout_below="@+id/textView_landmarke"
             android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginTop="5dp"
             android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 "
             android:ems="10"

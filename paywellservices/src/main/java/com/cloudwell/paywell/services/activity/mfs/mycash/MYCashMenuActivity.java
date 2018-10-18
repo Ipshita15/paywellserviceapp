@@ -2,55 +2,75 @@ package com.cloudwell.paywell.services.activity.mfs.mycash;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.mfs.MFSMainActivity;
+import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
-import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
 public class MYCashMenuActivity extends AppCompatActivity {
 
-    private ConnectionDetector mCd;
     private AppHandler mAppHandler;
-    private LinearLayout mLinearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mycash_menu);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.home_mfs_mycash);
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.home_mfs_mycash);
+        }
         mAppHandler = new AppHandler(this);
-        mLinearLayout = (LinearLayout) findViewById(R.id.linearLayout);
-        mCd = new ConnectionDetector(this);
-        CardView mCardView = (CardView) findViewById(R.id.fbCardView);
-        if(!mAppHandler.getMYCashBalance().equals("unknown") && !mAppHandler.getMYCashBalance().equals("null") && !mAppHandler.getMYCashBalance().equals("")) {
-            TextView mBalance = (TextView) findViewById(R.id.mycashBalance);
+
+        CardView mCardView = findViewById(R.id.fbCardView);
+        if (!mAppHandler.getMYCashBalance().equals("unknown") && !mAppHandler.getMYCashBalance().equals("null") && !mAppHandler.getMYCashBalance().equals("")) {
+            TextView mBalance = findViewById(R.id.mycashBalance);
             mBalance.setText(getString(R.string.mycash_balance_des) + " " + mAppHandler.getMYCashBalance());
+            if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                mBalance.setTypeface(AppController.getInstance().getOxygenLightFont());
+            } else {
+                mBalance.setTypeface(AppController.getInstance().getAponaLohitFont());
+            }
         } else {
             mCardView.setVisibility(View.GONE);
         }
+
+        Button btnCashInOut = findViewById(R.id.homeBtnCashInOut);
+        Button btnFundManagement = findViewById(R.id.homeBtnFundManagement);
+        Button btnBalance = findViewById(R.id.homeBtnBalance);
+        Button btnRegistration = findViewById(R.id.homeBtnCustomerRegistration);
+        Button btnGenerateOtp = findViewById(R.id.homeBtnGenerateOTP);
+        Button btnChangePin = findViewById(R.id.homeBtnPinChange);
+        Button btnInquiry = findViewById(R.id.homeBtnInquiry);
+
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            btnCashInOut.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnFundManagement.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnBalance.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnRegistration.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnGenerateOtp.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnChangePin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnInquiry.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            btnCashInOut.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnFundManagement.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnBalance.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnRegistration.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnGenerateOtp.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnChangePin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnInquiry.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
     }
 
-    /**
-     * Button click handler on Main activity
-     *
-     * @param v
-     */
     public void onButtonClicker(View v) {
-
         switch (v.getId()) {
-//            case R.id.homeBtnUtilityBillPay:
-//                startActivity(new Intent(this, UtilityMenuActivity.class));
-//                finish();
-//                break;
             case R.id.homeBtnCashInOut:
                 startActivity(new Intent(this, CashInOutActivity.class));
                 finish();

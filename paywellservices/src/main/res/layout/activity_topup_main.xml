@@ -52,13 +52,6 @@
                 android:layout_marginTop="15dp"
                 android:weightSum="3">
 
-                <!--<Button-->
-                <!--android:id="@+id/btnOffer"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_weight="1.2"-->
-                <!--android:background="@drawable/ic_offer"-->
-                <!--android:gravity="left" />-->
                 <ImageView
                     android:id="@+id/imageOffer"
                     android:layout_width="0dp"

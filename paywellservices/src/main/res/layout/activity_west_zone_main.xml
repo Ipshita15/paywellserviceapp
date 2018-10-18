@@ -5,16 +5,14 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_background_card"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activity.utility.electricity.westzone.WZPDCLMainActivity">
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,37 +23,44 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                android:orientation="horizontal">
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:orientation="horizontal"
+                android:weightSum="5">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/homeBtnBillPay"
-                    style="@style/HomeButton"
-                    android:layout_marginTop="15dp"
-                    android:drawableTop="@drawable/ic_west_zone_bill_pay"
+                    style="@style/HomeButtonNew"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_bill_pay"
                     android:onClick="onButtonClicker"
-                    android:paddingBottom="5dp"
                     android:text="@string/home_utility_pb_billpay"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"></LinearLayout>
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/homeBtnInquiry"
-                    style="@style/HomeButton"
-                    android:layout_marginTop="15dp"
-                    android:drawableTop="@drawable/ic_west_zone_bill_inquery"
+                    style="@style/HomeButtonNew"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_enquiry"
                     android:onClick="onButtonClicker"
-                    android:paddingBottom="5dp"
                     android:text="@string/home_inquiry"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

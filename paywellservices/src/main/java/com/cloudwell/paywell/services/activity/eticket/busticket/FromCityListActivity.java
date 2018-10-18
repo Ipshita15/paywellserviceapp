@@ -89,7 +89,7 @@ public class FromCityListActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mGridLayoutManager);
 
-        ConnectionDetector cd = new ConnectionDetector(getApplicationContext());
+        ConnectionDetector cd = new ConnectionDetector(AppController.getContext());
         if (cd.isConnectingToInternet()) {
             new GetCityFromAsync().execute(getResources().getString(R.string.bus_ticket_url),
                     "imei=" + mAppHandler.getImeiNo(),
@@ -306,7 +306,7 @@ public class FromCityListActivity extends AppCompatActivity {
             super(view);
             this.cardView = (CardView) view.findViewById(R.id.cardView);
             this.mCityName = (TextView) view.findViewById(R.id.grid_city_name);
-            this.mCityName.setTypeface(AppController.getInstance().getRobotoRegularFont());
+            this.mCityName.setTypeface(AppController.getInstance().getOxygenLightFont());
         }
 
     }

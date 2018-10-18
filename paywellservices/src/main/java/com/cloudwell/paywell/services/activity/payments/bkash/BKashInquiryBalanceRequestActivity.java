@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.payments.bkash;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,18 +7,14 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,18 +23,18 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
-import org.apache.http.client.ClientProtocolException;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by Android on 12/6/2015.
- */
-@SuppressWarnings("ALL")
 public class BKashInquiryBalanceRequestActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String REQUEST_TYPE = "requestType";
@@ -61,8 +56,8 @@ public class BKashInquiryBalanceRequestActivity extends AppCompatActivity implem
         setContentView(R.layout.activity_bkash_req_balance);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        _linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
-        cd = new ConnectionDetector(getApplicationContext());
+        _linearLayout = findViewById(R.id.linearLayout);
+        cd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
 
         Bundle delivered = getIntent().getExtras();
@@ -80,25 +75,23 @@ public class BKashInquiryBalanceRequestActivity extends AppCompatActivity implem
     }
 
     private void initView() {
-        mBkashAmount = (EditText) findViewById(R.id.etReqBalance);
-        mBtnSubmit = (Button) findViewById(R.id.bKashReqConfirm);
-        ((TextView) _linearLayout.findViewById(R.id.tvSelectAmount)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mBkashAmount.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mBtnSubmit.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        mBkashAmount = findViewById(R.id.etReqBalance);
+        mBtnSubmit = findViewById(R.id.bKashReqConfirm);
+        ((TextView) _linearLayout.findViewById(R.id.tvSelectAmount)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        mBkashAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+        mBtnSubmit.setTypeface(AppController.getInstance().getOxygenLightFont());
         mBtnSubmit.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         if (v == mBtnSubmit) {
-            if (mBkashAmount.getText().toString().matches("^0") || mBkashAmount.getText().toString().matches("^00") || mBkashAmount.getText().toString().length() < 2) {
+            if (mBkashAmount.getText().toString().matches("^0") || mBkashAmount.getText().toString().matches("^00") || mBkashAmount.getText().toString().length() == 0) {
                 // Not allowed
                 mBkashAmount.setError(Html.fromHtml("<font color='red'>" + getString(R.string.amount_error_msg) + "</font>"));
-                return;
             } else {
                 bAmount = mBkashAmount.getText().toString().trim();
                 ResponsePrompt();
-
             }
         }
     }
@@ -111,7 +104,8 @@ public class BKashInquiryBalanceRequestActivity extends AppCompatActivity implem
                 new ResponseAsync().execute(getResources().getString(R.string.bkash_paymnt_req_paywell),
                         "imei=" + mAppHandler.getImeiNo(),
                         "&pin=" + mAppHandler.getPin(),
-                        "&amount=" + bAmount);
+                        "&amount=" + bAmount,
+                        "&gateway_id=" + mAppHandler.getGatewayId());
             } else if (requestType.equalsIgnoreCase(BANK_BALANCE)) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(BKashInquiryBalanceRequestActivity.this);
                 builder.setTitle(R.string.fund_transfer_title_msg);
@@ -123,7 +117,8 @@ public class BKashInquiryBalanceRequestActivity extends AppCompatActivity implem
                         new ResponseAsync().execute(getResources().getString(R.string.bkash_bank_trns),
                                 "imei=" + mAppHandler.getImeiNo(),
                                 "&pin=" + mAppHandler.getPin(),
-                                "&amount=" + bAmount);
+                                "&amount=" + bAmount,
+                                "&gateway_id=" + mAppHandler.getGatewayId());
                     }
                 });
                 builder.setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
@@ -134,11 +129,12 @@ public class BKashInquiryBalanceRequestActivity extends AppCompatActivity implem
                 });
                 AlertDialog alert = builder.create();
                 alert.show();
-            } else {
+            } else if (requestType.equalsIgnoreCase(CASH_BALANCE)) {
                 new ResponseAsync().execute(getResources().getString(R.string.bkash_req_for_cash),
                         "imei=" + mAppHandler.getImeiNo(),
                         "&pin=" + mAppHandler.getPin(),
-                        "&amount=" + bAmount);
+                        "&amount=" + bAmount,
+                        "&gateway_id=" + mAppHandler.getGatewayId());
             }
         }
     }
@@ -156,27 +152,35 @@ public class BKashInquiryBalanceRequestActivity extends AppCompatActivity implem
         @Override
         protected String doInBackground(String... params) {
             String responseTxt = null;
-            HttpClient client = AppController.getInstance().getTrustedHttpClient();
-            HttpGet request = new HttpGet(params[0] + params[1] + params[2] + params[3]);
-            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(params[0]);
             try {
-                responseTxt = client.execute(request, responseHandler);
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                List<NameValuePair> nameValuePairs = new ArrayList<>(4);
+                nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("pin", mAppHandler.getPin()));
+                nameValuePairs.add(new BasicNameValuePair("amount", bAmount));
+                nameValuePairs.add(new BasicNameValuePair("gateway_id", mAppHandler.getGatewayId()));
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                responseTxt = httpclient.execute(httppost, responseHandler);
+            } catch (Exception e) {
+                e.fillInStackTrace();
+                Snackbar snackbar = Snackbar.make(_linearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+            }
             return responseTxt;
         }
 
         @Override
         protected void onPostExecute(String result) {
+            Log.e("logTag", result);
             progressDialog.cancel();
             if (result != null) {
                 String[] splitArray = result.split("@");
                 txt = String.valueOf(splitArray[1]);
-                //displayResponsePrompt();
                 AlertDialog.Builder builder = new AlertDialog.Builder(BKashInquiryBalanceRequestActivity.this);
                 builder.setTitle("Result");
                 builder.setMessage(txt);
@@ -186,11 +190,11 @@ public class BKashInquiryBalanceRequestActivity extends AppCompatActivity implem
                         dialogInterface.dismiss();
                         Intent intent = new Intent(BKashInquiryBalanceRequestActivity.this, BKashBalanceRequestMenuActivity.class);
                         startActivity(intent);
+                        finish();
                     }
                 });
                 AlertDialog alert = builder.create();
                 alert.show();
-                mBkashAmount.setText("");
             } else {
                 Snackbar snackbar = Snackbar.make(_linearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -209,14 +213,12 @@ public class BKashInquiryBalanceRequestActivity extends AppCompatActivity implem
             }
             return true;
         }
-        ;
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(BKashInquiryBalanceRequestActivity.this, BKashBalanceRequestMenuActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
     }

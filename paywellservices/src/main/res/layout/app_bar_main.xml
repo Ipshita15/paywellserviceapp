@@ -17,14 +17,15 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay">
+
             <TextView
                 android:id="@+id/txtHeading"
                 style="@style/heading_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center|center_vertical"
+                android:gravity="center"
                 android:text="PayWell Services"
                 android:textColor="@android:color/white" />
 
@@ -32,6 +33,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main" />
+    <include layout="@layout/content_main_new" />
 
 </android.support.design.widget.CoordinatorLayout>

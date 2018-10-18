@@ -17,11 +17,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -29,10 +29,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,17 +56,17 @@ public class BKashTrxClaimActivity extends AppCompatActivity implements View.OnC
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_bkash_trx_claim_title);
         }
-        mCd = new ConnectionDetector(this.getApplicationContext());
+        mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
         initView();
     }
 
     private void initView() {
-        mLinearLayout = (LinearLayout) findViewById(R.id.linearLayout);
-        mEtPhoneNo = (EditText) findViewById(R.id.etPhoneNoOrId);
-        mEtAmount = (EditText) findViewById(R.id.etAmount);
+        mLinearLayout = findViewById(R.id.linearLayout);
+        mEtPhoneNo = findViewById(R.id.etPhoneNoOrId);
+        mEtAmount = findViewById(R.id.etAmount);
 
-        mConfirm = (Button) findViewById(R.id.btnBkashInqConfirm);
+        mConfirm = findViewById(R.id.btnBkashInqConfirm);
         mConfirm.setOnClickListener(this);
     }
 
@@ -122,7 +120,7 @@ public class BKashTrxClaimActivity extends AppCompatActivity implements View.OnC
         } else {
             mPhone = mEtPhoneNo.getText().toString().trim();
             mAmount = mEtAmount.getText().toString().trim();
-            new TransactionInquiryAsync().execute(getResources().getString(R.string.bkash_inq_url));//chairman sir imei=867271028962230&pin=1217&format=json
+            new TransactionInquiryAsync().execute(getResources().getString(R.string.bkash_inq_url));
         }
     }
 
@@ -146,11 +144,12 @@ public class BKashTrxClaimActivity extends AppCompatActivity implements View.OnC
 
             try {
                 //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(6);
                 nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("pin", mAppHandler.getPin()));
                 nameValuePairs.add(new BasicNameValuePair("trxOrPhoneNo", mPhone));
                 nameValuePairs.add(new BasicNameValuePair("amount", mAmount));
+                nameValuePairs.add(new BasicNameValuePair("gateway_id", mAppHandler.getGatewayId()));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -158,8 +157,11 @@ public class BKashTrxClaimActivity extends AppCompatActivity implements View.OnC
                 responseTxt = httpclient.execute(httppost, responseHandler);
             } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
-
             return responseTxt;
         }
 
@@ -192,8 +194,13 @@ public class BKashTrxClaimActivity extends AppCompatActivity implements View.OnC
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
         }
     }

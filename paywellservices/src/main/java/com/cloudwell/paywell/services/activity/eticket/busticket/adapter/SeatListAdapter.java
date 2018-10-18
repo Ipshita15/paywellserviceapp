@@ -57,7 +57,7 @@ public class SeatListAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         final View view = inflater.inflate(R.layout.seat_list_items, parent, false);
-        final CheckBox _checkSeat = (CheckBox) view.findViewById(R.id.checkSeat);
+        final CheckBox _checkSeat = view.findViewById(R.id.checkSeat);
         _checkSeat.setText(_seatList.get(position).getSeatName());
 
         if (!_seatList.get(position).getStatus().equalsIgnoreCase("Available")) {

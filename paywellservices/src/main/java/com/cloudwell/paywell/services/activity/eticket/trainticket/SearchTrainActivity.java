@@ -59,21 +59,21 @@ public class SearchTrainActivity extends AppCompatActivity implements AdapterVie
     }
 
     private void initView() {
-        mRelativeLayout = (RelativeLayout) findViewById(R.id.linearLayout);
-        Spinner mSpinnerDestination = (Spinner) findViewById(R.id.spinnerDestination);
-        Spinner mSpinnerPassengerType = (Spinner) findViewById(R.id.spinnerPassengerType);
-        mTvNoOfPassenger = (TextView) findViewById(R.id.tvNoOfPassenger);
-        mLLAgeOfPassenger = (LinearLayout) findViewById(R.id.llPassengerAge);
-        mEtPassengerAge = (EditText) findViewById(R.id.etPassengerAge);
-        mBtnSearchTrain = (Button) findViewById(R.id.btnSearchTrain);
+        mRelativeLayout = findViewById(R.id.linearLayout);
+        Spinner mSpinnerDestination = findViewById(R.id.spinnerDestination);
+        Spinner mSpinnerPassengerType = findViewById(R.id.spinnerPassengerType);
+        mTvNoOfPassenger = findViewById(R.id.tvNoOfPassenger);
+        mLLAgeOfPassenger = findViewById(R.id.llPassengerAge);
+        mEtPassengerAge = findViewById(R.id.etPassengerAge);
+        mBtnSearchTrain = findViewById(R.id.btnSearchTrain);
 
-        ((TextView) mRelativeLayout.findViewById(R.id.tvStationTo)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((TextView) mRelativeLayout.findViewById(R.id.tvPassengerType)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((TextView) mRelativeLayout.findViewById(R.id.tvPassenger)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mTvNoOfPassenger.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        ((TextView) mRelativeLayout.findViewById(R.id.tvPassengerAge)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mEtPassengerAge.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mBtnSearchTrain.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        ((TextView) mRelativeLayout.findViewById(R.id.tvStationTo)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        ((TextView) mRelativeLayout.findViewById(R.id.tvPassengerType)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        ((TextView) mRelativeLayout.findViewById(R.id.tvPassenger)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        mTvNoOfPassenger.setTypeface(AppController.getInstance().getOxygenLightFont());
+        ((TextView) mRelativeLayout.findViewById(R.id.tvPassengerAge)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        mEtPassengerAge.setTypeface(AppController.getInstance().getOxygenLightFont());
+        mBtnSearchTrain.setTypeface(AppController.getInstance().getOxygenLightFont());
         // Spinner click listener
         assert mSpinnerDestination != null;
         mSpinnerDestination.setOnItemSelectedListener(this);
@@ -90,7 +90,7 @@ public class SearchTrainActivity extends AppCompatActivity implements AdapterVie
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
                 if (view instanceof TextView) {
-                    ((TextView) view).setTypeface(AppController.getInstance().getRobotoRegularFont());
+                    ((TextView) view).setTypeface(AppController.getInstance().getOxygenLightFont());
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                         ((TextView) view).setAllCaps(false);
                     }
@@ -101,7 +101,7 @@ public class SearchTrainActivity extends AppCompatActivity implements AdapterVie
             @Override
             public View getDropDownView(int position, View convertView, ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
-                ((TextView) view).setTypeface(AppController.getInstance().getRobotoRegularFont());
+                ((TextView) view).setTypeface(AppController.getInstance().getOxygenLightFont());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                     ((TextView) view).setAllCaps(false);
                 }
@@ -119,7 +119,7 @@ public class SearchTrainActivity extends AppCompatActivity implements AdapterVie
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
                 if (view instanceof TextView) {
-                    ((TextView) view).setTypeface(AppController.getInstance().getRobotoRegularFont());
+                    ((TextView) view).setTypeface(AppController.getInstance().getOxygenLightFont());
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                         ((TextView) view).setAllCaps(false);
                     }
@@ -130,7 +130,7 @@ public class SearchTrainActivity extends AppCompatActivity implements AdapterVie
             @Override
             public View getDropDownView(int position, View convertView, ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
-                ((TextView) view).setTypeface(AppController.getInstance().getRobotoRegularFont());
+                ((TextView) view).setTypeface(AppController.getInstance().getOxygenLightFont());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                     ((TextView) view).setAllCaps(false);
                 }
@@ -142,7 +142,7 @@ public class SearchTrainActivity extends AppCompatActivity implements AdapterVie
         // attaching data adapter to spinner
         mSpinnerPassengerType.setAdapter(passengerTypeAdapter);
 
-        mCd = new ConnectionDetector(getApplicationContext());
+        mCd = new ConnectionDetector(AppController.getContext());
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -278,7 +278,6 @@ public class SearchTrainActivity extends AppCompatActivity implements AdapterVie
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-
             } else {
                 Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));

@@ -1,52 +1,66 @@
 package com.cloudwell.paywell.services.activity.product;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.app.AppController;
+import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class AjkerDealActivity extends AppCompatActivity {
 
     public static String token;
-    WebView webView = null;
-    LinearLayout linearLayout;
+    private WebView webView = null;
+    private LinearLayout linearLayout;
     final long period = 300000;
+    private ConnectionDetector mCd;
+    private AppHandler mAppHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajker_deal);
+
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        mAppHandler = new AppHandler(this);
+        mCd = new ConnectionDetector(AppController.getContext());
 
         new Timer().schedule(new TimerTask() {
             @Override
@@ -60,17 +74,21 @@ public class AjkerDealActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.home_product_ajker_deal);
 
-        linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
+        linearLayout = findViewById(R.id.linearLayout);
 
         //Get webview
-        webView = (WebView) findViewById(R.id.webView);
+        webView = findViewById(R.id.webView);
 
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         try {
             if (token.length() == 36) {
-                startWebView(getString(R.string.ajd_login) + "token=" + token);
+                if (!mCd.isConnectingToInternet()) {
+                    connectionError();
+                } else {
+                    startWebView(getString(R.string.ajd_login) + "token=" + token);
+                }
             } else {
                 onBackPressed();
             }
@@ -87,10 +105,8 @@ public class AjkerDealActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-
     @SuppressWarnings("deprecation")
     private void startWebView(String url) {
-
         //Create new webview Client to show progress dialog
         //When opening a url or click on link
         webView.setWebViewClient(new WebViewClient() {
@@ -110,10 +126,11 @@ public class AjkerDealActivity extends AppCompatActivity {
                     progressDialog = new ProgressDialog(AjkerDealActivity.this);
                     progressDialog.setMessage(getString(R.string.loading_msg));
                     progressDialog.setCanceledOnTouchOutside(false);
-                    progressDialog.show();
+                    if (!isFinishing()) {
+                        progressDialog.show();
+                    }
                 }
             }
-
             public void onPageFinished(WebView view, String url) {
                 try {
                     if (progressDialog.isShowing()) {
@@ -121,18 +138,19 @@ public class AjkerDealActivity extends AppCompatActivity {
                     }
                 } catch (Exception exception) {
                     exception.printStackTrace();
+                    Snackbar snackbar = Snackbar.make(linearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                    View snackBarView = snackbar.getView();
+                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                    snackbar.show();
                 }
             }
         });
-
         // Javascript inabled on webview
         webView.getSettings().setJavaScriptEnabled(true);
         //Load url in webview
         webView.loadUrl(url);
     }
-
-    // Open previous opened link from history on webview when back button pressed
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -162,13 +180,23 @@ public class AjkerDealActivity extends AppCompatActivity {
     }
 
     @Override
-    // Detect when the back button is pressed
     public void onBackPressed() {
         if (webView.canGoBack()) {
             webView.goBack();
         } else {
-            //super.onBackPressed();
-            startActivity(new Intent(AjkerDealActivity.this, ProductMenuActivity.class));
+            if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                Configuration config = new Configuration();
+                config.locale = Locale.ENGLISH;
+                getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+            } else {
+                Configuration config = new Configuration();
+                config.locale = Locale.FRANCE;
+                getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+            }
+            invalidateOptionsMenu();
+            Intent intent = new Intent(AjkerDealActivity.this, ProductMenuActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
             finish();
         }
     }
@@ -181,15 +209,19 @@ public class AjkerDealActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-
-            HttpGet request = new HttpGet(params[0]);
-            ResponseHandler<String> responseHandler = new BasicResponseHandler();
             String responseTxt = null;
-            HttpClient client = AppController.getInstance().getTrustedHttpClient();
+            // Create a new HttpClient and Post Header
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(params[0]);
             try {
-                responseTxt = client.execute(request, responseHandler);
-            } catch (Exception ex) {
-                ex.printStackTrace();
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                responseTxt = httpclient.execute(httppost, responseHandler);
+            } catch (Exception e) {
+                e.fillInStackTrace();
+                Snackbar snackbar = Snackbar.make(linearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
             return responseTxt;
         }
@@ -209,5 +241,24 @@ public class AjkerDealActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         new RefreshTokenAsync().execute(getString(R.string.ajd_refresh_token));
+    }
+
+    private void connectionError() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(AjkerDealActivity.this);
+        builder.setTitle(R.string.internet_connection_title_msg);
+        builder.setMessage(R.string.connection_error_msg)
+                .setPositiveButton(R.string.retry_btn, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        mCd = new ConnectionDetector(AppController.getContext());
+                        if (mCd.isConnectingToInternet()) {
+                            dialog.dismiss();
+                            startWebView(getString(R.string.ajd_login) + "token=" + token);
+                        } else {
+                            connectionError();
+                        }
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

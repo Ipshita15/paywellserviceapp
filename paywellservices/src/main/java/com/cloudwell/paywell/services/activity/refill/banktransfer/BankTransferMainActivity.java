@@ -3,7 +3,6 @@ package com.cloudwell.paywell.services.activity.refill.banktransfer;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentUris;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,27 +11,27 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v13.app.ActivityCompat;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.refill.RefillBalanceMainActivity;
+import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -44,7 +43,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,18 +52,18 @@ public class BankTransferMainActivity extends AppCompatActivity {
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
     private CoordinatorLayout mCoordinateLayout;
-    String bank_name = null;
+    private String bank_name = null;
     private static final String TAG_RESPONSE_STATUS = "status";
     private static final String TAG_BANK_NAME = "Bank_Name";
     private static final String TAG_ACCOUNT_NAME = "Account_Name";
     private static final String TAG_ACCOUNT_NO = "accountno";
     private static final String TAG_BRANCH = "branch";
     private static final String TAG_MESSAGE = "message";
-    Cursor mCursor;
-    String strImage = "";
-    String bankName;
-    String bankAccount;
-    String bankNo;
+    private Cursor mCursor;
+    private String strImage = "";
+    private String bankName;
+    private String bankAccount;
+    private String bankNo;
     private static final int PERMISSION_FOR_GALLERY = 321;
 
     @Override
@@ -76,10 +74,37 @@ public class BankTransferMainActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle(R.string.home_refill_bank);
         mAppHandler = new AppHandler(this);
-        mCoordinateLayout = (CoordinatorLayout) findViewById(R.id.coordinateLayout);
-        mCd = new ConnectionDetector(BankTransferMainActivity.this);
-    }
+        mCoordinateLayout = findViewById(R.id.coordinateLayout);
+        mCd = new ConnectionDetector(AppController.getContext());
 
+        TextView textView = findViewById(R.id.detailsText);
+        Button btnBrac = findViewById(R.id.homeBtnBrac);
+        Button btnDbbl = findViewById(R.id.homeBtnDbbl);
+        Button btnIbbl = findViewById(R.id.homeBtnIbbl);
+        Button btnPbl = findViewById(R.id.homeBtnPbl);
+        Button btnScb = findViewById(R.id.homeBtnScb);
+        Button btnCity = findViewById(R.id.homeBtnCity);
+
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            textView.setTypeface(AppController.getInstance().getOxygenLightFont());
+
+            btnBrac.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnDbbl.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnIbbl.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnPbl.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnScb.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnCity.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            textView.setTypeface(AppController.getInstance().getAponaLohitFont());
+
+            btnBrac.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnDbbl.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnIbbl.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnPbl.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnScb.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnCity.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -97,13 +122,7 @@ public class BankTransferMainActivity extends AppCompatActivity {
         finish();
     }
 
-    /**
-     * Button click handler on Main activity
-     *
-     * @param v
-     */
     public void onButtonClicker(View v) {
-
         switch (v.getId()) {
             case R.id.homeBtnBrac:
                 bank_name = "BRAC";
@@ -123,6 +142,10 @@ public class BankTransferMainActivity extends AppCompatActivity {
                 break;
             case R.id.homeBtnScb:
                 bank_name = "SCB";
+                showInformation(bank_name);
+                break;
+            case R.id.homeBtnCity:
+                bank_name = "City";
                 showInformation(bank_name);
                 break;
             default:
@@ -155,20 +178,20 @@ public class BankTransferMainActivity extends AppCompatActivity {
             // Create a new HttpClient and Post Header
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(params[0]);
-
             try {
                 //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
                 nameValuePairs.add(new BasicNameValuePair("Bank_Name", params[1]));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
                 responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (ClientProtocolException e) {
-
-            } catch (IOException e) {
+            } catch (Exception e) {
+                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
-
             return responseTxt;
         }
 
@@ -204,9 +227,8 @@ public class BankTransferMainActivity extends AppCompatActivity {
                     });
                     AlertDialog alert = builder.create();
                     alert.show();
-                    TextView messageText = (TextView) alert.findViewById(android.R.id.message);
+                    TextView messageText = alert.findViewById(android.R.id.message);
                     messageText.setGravity(Gravity.CENTER);
-
                 } else {
                     String message = jsonObject.getString(TAG_MESSAGE);
                     Snackbar snackbar = Snackbar.make(mCoordinateLayout, message, Snackbar.LENGTH_LONG);
@@ -215,53 +237,20 @@ public class BankTransferMainActivity extends AppCompatActivity {
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
         }
     }
-
-
-    public static boolean hasPermissions(Context context, String... permissions) {
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
 
     public void uploadImg() {
         AlertDialog.Builder builder = new AlertDialog.Builder(BankTransferMainActivity.this);
         builder.setMessage(R.string.choose_image_for_upload_msg);
-//        builder.setPositiveButton("ক্যামেরা থেকে", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int id) {
-//
-//                int PERMISSION_ALL = 1;
-//                String[] PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.UPDATE_DEVICE_STATS, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.PACKAGE_USAGE_STATS};
-//
-//                if(!hasPermissions(BankTransferMainActivity.this, PERMISSIONS)){
-//                    ActivityCompat.requestPermissions(BankTransferMainActivity.this, PERMISSIONS, PERMISSION_FOR_CAMERA);
-//                } else{
-//                    startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE), 00002);
-//                }
-//                dialogInterface.cancel();
-//                /////////////
-////                int permissionCheck = ContextCompat.checkSelfPermission(BankTransferMainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
-////                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-////                    ActivityCompat.requestPermissions(
-////                            BankTransferMainActivity.this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY);
-////                } else {
-////                    startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE), 00002);
-////
-////                }
-////                dialogInterface.cancel();
-//            }
-//        });
         builder.setNegativeButton(R.string.form_galary_btn, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int id) {
@@ -278,18 +267,6 @@ public class BankTransferMainActivity extends AppCompatActivity {
                                     android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI),
                             00001);
                 }
-//                String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.UPDATE_DEVICE_STATS, android.Manifest.permission.READ_EXTERNAL_STORAGE};
-//
-//                if(!hasPermissions(BankTransferMainActivity.this, PERMISSIONS)){
-//                    ActivityCompat.requestPermissions(BankTransferMainActivity.this, PERMISSIONS, PERMISSION_FOR_GALLERY);
-//                } else{
-//                    startActivityForResult(
-//                            new Intent(
-//                                    Intent.ACTION_PICK,
-//                                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI),
-//                            00001);
-//                }
-//                dialogInterface.cancel();
             }
         });
         AlertDialog alert = builder.create();
@@ -307,19 +284,9 @@ public class BankTransferMainActivity extends AppCompatActivity {
                                 new String[]{android.provider.MediaStore.Images.ImageColumns._ID},
                                 null, null, null);
             }
-//            if (requestCode == 00002) {
-//                mCursor = getContentResolver().query(
-//                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-//                        new String[]{MediaStore.Images.ImageColumns._ID,
-//                                MediaStore.Images.ImageColumns.DATE_TAKEN},
-//                        null, null,
-//                        MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC");
-//
-//            }
             processImage(false, mCursor);
             mCursor.close();
-        }
-        else {
+        } else {
             Snackbar snackbar = Snackbar.make(mCoordinateLayout, "error", Snackbar.LENGTH_LONG);
             snackbar.setActionTextColor(Color.parseColor("#ffffff"));
             View snackBarView = snackbar.getView();
@@ -327,7 +294,6 @@ public class BankTransferMainActivity extends AppCompatActivity {
             snackbar.show();
         }
     }
-
 
     private void processImage(boolean fromGallery, Cursor cursor) {
         Uri newuri = null;
@@ -344,8 +310,6 @@ public class BankTransferMainActivity extends AppCompatActivity {
                 MediaStore.Images.Thumbnails.MINI_KIND, null);
 
         Bitmap bm = Bitmap.createScaledBitmap(bm1, 600, 600, true);
-        //Bitmap bm = Bitmap.createScaledBitmap(bm1, (int) (bm1.getWidth() * 0.8), (int) (bm1.getHeight() * 0.8), true);
-
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         bm.compress(Bitmap.CompressFormat.PNG, 0, bos);
@@ -361,7 +325,7 @@ public class BankTransferMainActivity extends AppCompatActivity {
         if (!mCd.isConnectingToInternet()) {
             AppHandler.showDialog(getSupportFragmentManager());
         } else {
-            new BankTransferMainActivity.DepositInformationAsync().execute(
+            new DepositInformationAsync().execute(
                     getResources().getString(R.string.refill_bank_deposit), mAppHandler.getImeiNo(), bankName, bankAccountNo, strImage);
         }
     }
@@ -382,10 +346,9 @@ public class BankTransferMainActivity extends AppCompatActivity {
             // Create a new HttpClient and Post Header
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(params[0]);
-
             try {
                 //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(4);
                 nameValuePairs.add(new BasicNameValuePair("imei", params[1]));
                 nameValuePairs.add(new BasicNameValuePair("bank", params[2]));
                 nameValuePairs.add(new BasicNameValuePair("account", params[3]));
@@ -394,11 +357,13 @@ public class BankTransferMainActivity extends AppCompatActivity {
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
                 responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (ClientProtocolException e) {
-
-            } catch (IOException e) {
+            } catch (Exception e) {
+                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
-
             return responseTxt;
         }
 
@@ -422,11 +387,13 @@ public class BankTransferMainActivity extends AppCompatActivity {
                 });
                 AlertDialog alert = builder.create();
                 alert.show();
-                TextView messageText = (TextView) alert.findViewById(android.R.id.message);
-                messageText.setGravity(Gravity.CENTER);
-
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
         }
     }
@@ -450,24 +417,7 @@ public class BankTransferMainActivity extends AppCompatActivity {
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-                return;
             }
-//            case PERMISSION_FOR_CAMERA: {
-//
-//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    // permission was granted
-//                    startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE), 00002);
-//                } else {
-//                    // permission denied
-//                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, "Permission denied", Snackbar.LENGTH_LONG);
-//                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-//                    View snackBarView = snackbar.getView();
-//                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-//                    snackbar.show();
-//                }
-//                return;
-//            }
         }
     }
-
 }

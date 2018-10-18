@@ -23,7 +23,6 @@ import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -31,10 +30,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,21 +50,25 @@ public class BalanceActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_balance);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.home_bkash_balance);
-        mCd = new ConnectionDetector(this);
-        mAppHandler = new AppHandler(this);
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.home_mycash_balance_title);
+        }
+
+        mCd = new ConnectionDetector(AppController.getContext());
+        mAppHandler = new AppHandler();
         initializeView();
     }
 
     private void initializeView() {
-        mLinearLayout = (LinearLayout) findViewById(R.id.balanceLinearLayout);
-        mPin = (EditText) findViewById(R.id.mycash_pin);
-        mConfirm = (Button) findViewById(R.id.mycash_confirm);
+        mLinearLayout = findViewById(R.id.balanceLinearLayout);
+        mPin = findViewById(R.id.mycash_pin);
+        mConfirm = findViewById(R.id.mycash_confirm);
 
-        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashPin)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mPin.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mConfirm.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+        mConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
 
         mConfirm.setOnClickListener(this);
     }
@@ -78,7 +79,6 @@ public class BalanceActivity extends AppCompatActivity implements View.OnClickLi
             _pin = mPin.getText().toString().trim();
             if (_pin.length() == 0) {
                 mPin.setError(Html.fromHtml("<font color='red'>" + getString(R.string.pin_no_error_msg) + "</font>"));
-                return;
             } else {
                 submitConfirm();
             }
@@ -101,7 +101,6 @@ public class BalanceActivity extends AppCompatActivity implements View.OnClickLi
             progressDialog = ProgressDialog.show(BalanceActivity.this, "", getString(R.string.loading_msg), true);
             if (!isFinishing())
                 progressDialog.show();
-
         }
 
         @Override
@@ -113,7 +112,7 @@ public class BalanceActivity extends AppCompatActivity implements View.OnClickLi
 
             try {
                 //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(4);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(5);
                 nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("password", mAppHandler.getPin()));
                 nameValuePairs.add(new BasicNameValuePair("pin", _pin));
@@ -123,11 +122,12 @@ public class BalanceActivity extends AppCompatActivity implements View.OnClickLi
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
                 responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (ClientProtocolException e) {
-
-            } catch (IOException e) {
+            } catch (Exception e) {
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
-
             return responseTxt;
         }
 
@@ -176,8 +176,13 @@ public class BalanceActivity extends AppCompatActivity implements View.OnClickLi
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
         }
     }

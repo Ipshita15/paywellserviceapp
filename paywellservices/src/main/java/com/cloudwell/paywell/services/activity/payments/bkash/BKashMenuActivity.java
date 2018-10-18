@@ -22,17 +22,19 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.JSONParser;
-import com.cloudwell.paywell.services.utils.MyHttpClient;
 
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-import org.json.JSONException;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class BKashMenuActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
@@ -44,7 +46,8 @@ public class BKashMenuActivity extends AppCompatActivity implements CompoundButt
     private LinearLayout mLinearLayout;
     String selectedLimit = "";
     RadioButton radioButton_five, radioButton_ten, radioButton_twenty, radioButton_fifty, radioButton_hundred, radioButton_twoHundred;
-
+    Button requestBtn;
+    boolean root = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +59,47 @@ public class BKashMenuActivity extends AppCompatActivity implements CompoundButt
             getSupportActionBar().setTitle(R.string.home_payment_bkash_title);
         }
         mAppHandler = new AppHandler(this);
-        mCd = new ConnectionDetector(this);
+        mCd = new ConnectionDetector(AppController.getContext());
 
-        mLinearLayout = (LinearLayout) findViewById(R.id.linearLayout);
-        TextView mRID = (TextView) findViewById(R.id.bkashRID);
-        mRID.setText(getString(R.string.rid) + " " + mAppHandler.getRID().substring(mAppHandler.getRID().length() - 5, mAppHandler.getRID().length()));
+        mLinearLayout = findViewById(R.id.linearLayout);
+        requestBtn = findViewById(R.id.homeBtnBkashRequest);
+
+        TextView mAgent = findViewById(R.id.bkashAgentNo);
+        TextView mRID = findViewById(R.id.bkashRID);
+        String agentNo = getString(R.string.agent_phn_des) + " " + mAppHandler.getAgentPhnNum();
+        String rid = getString(R.string.rid) + " " + mAppHandler.getRID().substring(mAppHandler.getRID().length() - 5, mAppHandler.getRID().length());
+
+        mAgent.setText(agentNo);
+        mRID.setText(rid);
+
+        Button btnTrx = findViewById(R.id.homeBtnBkashTrx);
+        Button btnBalance = findViewById(R.id.homeBtnBkashBalance);
+        Button btnRequest = findViewById(R.id.homeBtnBkashRequest);
+        Button btnConfirm = findViewById(R.id.homeBtnBkashPaymentConf);
+        Button btnInquiry = findViewById(R.id.homeBtnBkashInquiry);
+
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            mAgent.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mRID.setTypeface(AppController.getInstance().getOxygenLightFont());
+
+            btnTrx.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnBalance.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnRequest.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnInquiry.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            mAgent.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mRID.setTypeface(AppController.getInstance().getAponaLohitFont());
+
+            btnTrx.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnBalance.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnRequest.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnConfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnInquiry.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
     }
 
     public void onButtonClicker(View v) {
-
         switch (v.getId()) {
             case R.id.homeBtnBkashTrx:
                 if (!mCd.isConnectingToInternet()) {
@@ -77,16 +112,8 @@ public class BKashMenuActivity extends AppCompatActivity implements CompoundButt
                 if (!mCd.isConnectingToInternet()) {
                     AppHandler.showDialog(getSupportFragmentManager());
                 } else {
-                    new BkashBalanceAsync().execute(getResources().getString(R.string.bkash_balance_check),
-                            "imei=" + mAppHandler.getImeiNo(),
-                            "&pin=" + mAppHandler.getPin());
+                    new BkashBalanceAsync().execute(getString(R.string.bkash_balance_check));
                 }
-                break;
-            case R.id.homeBtnBkashPurpose:
-                new PDAsyncTask().execute(getResources().getString(R.string.bkash_pd_url),
-                        "imei=" + mAppHandler.getImeiNo(),
-                        "&pin=" + mAppHandler.getPin(),
-                        "&format=json");
                 break;
             case R.id.homeBtnBkashRequest:
                 startActivity(new Intent(BKashMenuActivity.this, BKashBalanceRequestMenuActivity.class));
@@ -99,7 +126,9 @@ public class BKashMenuActivity extends AppCompatActivity implements CompoundButt
                     new PaymentConfirmAsync().execute(getResources().getString(R.string.bkash_paymnt_pending_check),
                             "imei=" + mAppHandler.getImeiNo(),
                             "&pin=" + mAppHandler.getPin(),
-                            "&format=" + "json");
+                            "&format=" + "json",
+                            "&version=" + "new",
+                            "&gateway_id=" + mAppHandler.getGatewayId());
                 }
                 break;
             case R.id.homeBtnBkashInquiry:
@@ -120,14 +149,14 @@ public class BKashMenuActivity extends AppCompatActivity implements CompoundButt
         dialog.setTitle(R.string.log_limit_title_msg);
         dialog.setContentView(R.layout.dialog_trx_limit);
 
-        Button btn_okay = (Button) dialog.findViewById(R.id.buttonOk);
+        Button btn_okay = dialog.findViewById(R.id.buttonOk);
 
-        radioButton_five = (RadioButton) dialog.findViewById(R.id.radio_five);
-        radioButton_ten = (RadioButton) dialog.findViewById(R.id.radio_ten);
-        radioButton_twenty = (RadioButton) dialog.findViewById(R.id.radio_twenty);
-        radioButton_fifty = (RadioButton) dialog.findViewById(R.id.radio_fifty);
-        radioButton_hundred = (RadioButton) dialog.findViewById(R.id.radio_hundred);
-        radioButton_twoHundred = (RadioButton) dialog.findViewById(R.id.radio_twoHundred);
+        radioButton_five = dialog.findViewById(R.id.radio_five);
+        radioButton_ten = dialog.findViewById(R.id.radio_ten);
+        radioButton_twenty = dialog.findViewById(R.id.radio_twenty);
+        radioButton_fifty = dialog.findViewById(R.id.radio_fifty);
+        radioButton_hundred = dialog.findViewById(R.id.radio_hundred);
+        radioButton_twoHundred = dialog.findViewById(R.id.radio_twoHundred);
 
         radioButton_five.setOnCheckedChangeListener(this);
         radioButton_ten.setOnCheckedChangeListener(this);
@@ -146,10 +175,7 @@ public class BKashMenuActivity extends AppCompatActivity implements CompoundButt
                 }
                 int limit = Integer.parseInt(selectedLimit);
                 if (mCd.isConnectingToInternet()) {
-                    new TransactionLogAsync().execute(getResources().getString(R.string.bkash_trx_check),
-                            "imei=" + mAppHandler.getImeiNo(),
-                            "&pin=" + mAppHandler.getPin(),
-                            "&limit=" + limit);
+                    new TransactionLogAsync().execute(getString(R.string.bkash_trx_check), "" + limit);
                 } else {
                     Snackbar snackbar = Snackbar.make(mLinearLayout, getResources().getString(R.string.connection_error_msg), Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -217,7 +243,6 @@ public class BKashMenuActivity extends AppCompatActivity implements CompoundButt
         }
     }
 
-
     private class PaymentConfirmAsync extends AsyncTask<String, String, JSONObject> {
         ProgressDialog progressDialog;
 
@@ -232,7 +257,7 @@ public class BKashMenuActivity extends AppCompatActivity implements CompoundButt
         protected JSONObject doInBackground(String... params) {
             JSONParser jParser = new JSONParser();
             // Getting JSON from URL
-            String url = params[0] + params[1] + params[2] + params[3];
+            String url = params[0] + params[1] + params[2] + params[3] + params[4] + params[5];
             return jParser.getJSONFromUrl(url);
         }
 
@@ -253,48 +278,13 @@ public class BKashMenuActivity extends AppCompatActivity implements CompoundButt
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
-            }
-        }
-    }
-
-    private class PDAsyncTask extends AsyncTask<String, String, JSONObject> {
-        ProgressDialog progressDialog;
-
-        @Override
-        protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(BKashMenuActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
-        }
-
-        @Override
-        protected JSONObject doInBackground(String... params) {
-            JSONParser jParser = new JSONParser();
-            // Getting JSON from URL
-            String url = params[0] + params[1] + params[2] + params[3];
-            return jParser.getJSONFromUrl(url);
-        }
-
-        @Override
-        protected void onPostExecute(JSONObject jsonObject) {
-            progressDialog.cancel();
-            try {
-                String status = jsonObject.getString(TAG_RESPONSE_STATUS);
-                if (status.equalsIgnoreCase("200")) {
-                    Intent intent = new Intent(BKashMenuActivity.this, DeclarePurposeActivity.class);
-                    intent.putExtra(DeclarePurposeActivity.JSON_RESPONSE, jsonObject.toString());
-                    startActivity(intent);
-                } else {
-                    Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
         }
     }
@@ -313,15 +303,25 @@ public class BKashMenuActivity extends AppCompatActivity implements CompoundButt
         @Override
         protected String doInBackground(String... params) {
             String responseTxt = null;
-            HttpClient client = AppController.getInstance().getTrustedHttpClient();
-            HttpGet request = new HttpGet(params[0] + params[1] + params[2]);
-            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            // Create a new HttpClient and Post Header
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(params[0]);
             try {
-                responseTxt = client.execute(request, responseHandler);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
+                nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("pin", mAppHandler.getPin()));
+                nameValuePairs.add(new BasicNameValuePair("gateway_id", mAppHandler.getGatewayId()));
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                responseTxt = httpclient.execute(httppost, responseHandler);
+            } catch (Exception e) {
+                e.fillInStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+            }
             return responseTxt;
         }
 
@@ -366,20 +366,26 @@ public class BKashMenuActivity extends AppCompatActivity implements CompoundButt
         @Override
         protected String doInBackground(String... params) {
             String responseTxt = null;
-            HttpGet request = new HttpGet(params[0] + params[1] + params[2] + params[3]);
-            HttpParams httpParameters = new BasicHttpParams();
-            int timeoutConnection = 1000000;
-            HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
-            int timeoutSocket = 1000000;
-            HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
-            HttpClient httpClient = new MyHttpClient(httpParameters, getApplicationContext());
-            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            // Create a new HttpClient and Post Header
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(params[0]);
             try {
-                responseTxt = httpClient.execute(request, responseHandler);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                List<NameValuePair> nameValuePairs = new ArrayList<>(4);
+                nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("pin", mAppHandler.getPin()));
+                nameValuePairs.add(new BasicNameValuePair("gateway_id", mAppHandler.getGatewayId()));
+                nameValuePairs.add(new BasicNameValuePair("limit", params[1]));
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                responseTxt = httpclient.execute(httppost, responseHandler);
+            } catch (Exception e) {
+                e.fillInStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+            }
             return responseTxt;
         }
 

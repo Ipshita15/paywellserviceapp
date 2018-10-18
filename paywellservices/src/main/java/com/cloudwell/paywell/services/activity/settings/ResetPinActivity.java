@@ -18,12 +18,8 @@ import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.JSONParser;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- * Created by android on 7/21/2016.
- */
 public class ResetPinActivity extends AppCompatActivity {
 
     private static final String TAG_RESPONSE_STATUS = "status";
@@ -38,13 +34,16 @@ public class ResetPinActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitvity_reset_pin);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.home_settings_reset_pin);
-        mRelativeLayout = (RelativeLayout) findViewById(R.id.linearLayout);
-        mProgressbar = (ProgressBar) findViewById(R.id.progressBar);
-        mTextView = (TextView) findViewById(R.id.tvMessage);
-        mTextView.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mCd = new ConnectionDetector(getApplicationContext());
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.home_settings_reset_pin);
+        }
+        mRelativeLayout = findViewById(R.id.linearLayout);
+        mProgressbar = findViewById(R.id.progressBar);
+        mTextView = findViewById(R.id.tvMessage);
+        mTextView.setTypeface(AppController.getInstance().getOxygenLightFont());
+        mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
 
         if (!mCd.isConnectingToInternet()) {
@@ -102,8 +101,13 @@ public class ResetPinActivity extends AppCompatActivity {
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
 
         }

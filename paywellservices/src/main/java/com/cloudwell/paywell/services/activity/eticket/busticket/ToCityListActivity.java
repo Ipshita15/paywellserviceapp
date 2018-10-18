@@ -92,7 +92,7 @@ public class ToCityListActivity extends AppCompatActivity {
             cityIdFrom = extras.getString(CITY_ID_FROM);
         }
 
-        ConnectionDetector cd = new ConnectionDetector(getApplicationContext());
+        ConnectionDetector cd = new ConnectionDetector(AppController.getContext());
         if (cd.isConnectingToInternet()) {
             new GetCityTo().execute(getResources().getString(R.string.bus_ticket_url),
                     "imei=" + mAppHandler.getImeiNo(),
@@ -328,7 +328,7 @@ public class ToCityListActivity extends AppCompatActivity {
             super(view);
             this.cardView = (CardView) view.findViewById(R.id.cardView);
             this.mCityName = (TextView) view.findViewById(R.id.grid_city_name);
-            this.mCityName.setTypeface(AppController.getInstance().getRobotoRegularFont());
+            this.mCityName.setTypeface(AppController.getInstance().getOxygenLightFont());
         }
 
     }

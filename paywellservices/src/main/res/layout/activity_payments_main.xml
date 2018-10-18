@@ -5,6 +5,7 @@
     android:id="@+id/coordinateLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_background_card"
     android:fitsSystemWindows="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activity.payments.PaymentsMainActivity">
@@ -24,76 +25,46 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                android:orientation="horizontal"
-                android:weightSum="3">
-
-                <Button
-                    android:id="@+id/homeBtnBkash"
-                    style="@style/HomeButton"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_home_bkash"
-                    android:onClick="onButtonClicker"
-                    android:text="@string/home_payment_bkash"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"></LinearLayout>
-
-                <Button
-                    android:id="@+id/homeBtnRocket"
-                    style="@style/HomeButton"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_home_rocket"
-                    android:onClick="onButtonClicker"
-                    android:text="@string/home_payment_pay_to_rocket"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:orientation="horizontal"
                 android:weightSum="3">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"></LinearLayout>
+                    android:layout_weight="1" />
 
                 <Button
-                    android:id="@+id/homeBtnTrx"
-                    style="@style/HomeButton"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="10dp"
+                    android:id="@+id/homeBtnBkash"
+                    style="@style/HomeButtonNew"
                     android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_home_pb_inquiry_reg"
+                    android:drawableTop="@drawable/ic_bkash"
                     android:onClick="onButtonClicker"
-                    android:text="@string/home_payment_transactions"
+                    android:text="@string/home_payment_bkash"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"></LinearLayout>
+                    android:layout_weight="1" />
 
+                <!--<Button-->
+                    <!--android:id="@+id/homeBtnTrx"-->
+                    <!--style="@style/HomeButtonNew"-->
+                    <!--android:layout_marginBottom="5dp"-->
+                    <!--android:layout_marginTop="15dp"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:drawableTop="@drawable/ic_enquiry"-->
+                    <!--android:onClick="onButtonClicker"-->
+                    <!--android:text="@string/home_payment_transactions"-->
+                    <!--android:textAllCaps="false"-->
+                    <!--android:textAppearance="?android:attr/textAppearanceSmall" />-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1" />-->
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

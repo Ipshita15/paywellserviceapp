@@ -7,13 +7,14 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.topup.offer.OfferMainActivity;
+import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
@@ -51,9 +52,29 @@ public class OperatorMenuActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_topup_offer_title);
         }
-        mRelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
+        mRelativeLayout = findViewById(R.id.relativeLayout);
         mAppHandler = new AppHandler(this);
-        mCd = new ConnectionDetector(this);
+        mCd = new ConnectionDetector(AppController.getContext());
+
+        Button btnGp = findViewById(R.id.homeBtnGp);
+        Button btnRobi = findViewById(R.id.homeBtnRb);
+        Button btnBanglalink = findViewById(R.id.homeBtnBl);
+        Button btnTeletalk = findViewById(R.id.homeBtnTt);
+        Button btnAirtel = findViewById(R.id.homeBtnAt);
+
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            btnGp.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnRobi.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnBanglalink.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnTeletalk.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnAirtel.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            btnGp.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnRobi.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnBanglalink.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnTeletalk.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnAirtel.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
     }
 
     @Override
@@ -73,7 +94,6 @@ public class OperatorMenuActivity extends AppCompatActivity {
     }
 
     public void onButtonClicker(View v) {
-
         switch (v.getId()) {
             case R.id.homeBtnGp:
                 if (mCd.isConnectingToInternet()) {
@@ -141,14 +161,13 @@ public class OperatorMenuActivity extends AppCompatActivity {
     }
 
     private class InquiryAsync extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
+        private ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
             progressDialog = ProgressDialog.show(OperatorMenuActivity.this, "", getString(R.string.loading_msg), true);
             if (!isFinishing())
                 progressDialog.show();
-
         }
 
         @SuppressWarnings("deprecation")
@@ -158,10 +177,9 @@ public class OperatorMenuActivity extends AppCompatActivity {
             // Create a new HttpClient and Post Header
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(data[0]);
-
             try {
                 //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<>(2);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
                 nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("subServiceId", data[1]));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
@@ -171,15 +189,17 @@ public class OperatorMenuActivity extends AppCompatActivity {
                 responseTxt = httpclient.execute(httppost, responseHandler);
             } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
-
             return responseTxt;
         }
 
         @Override
         protected void onPostExecute(String result) {
             progressDialog.cancel();
-            Log.e("logresult", result);
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
@@ -217,8 +237,13 @@ public class OperatorMenuActivity extends AppCompatActivity {
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
         }
     }

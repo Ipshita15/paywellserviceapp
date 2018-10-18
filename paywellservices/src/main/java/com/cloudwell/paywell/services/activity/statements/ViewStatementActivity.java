@@ -13,17 +13,13 @@ import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.MainActivity;
 import com.cloudwell.paywell.services.app.AppHandler;
 
-/**
- * Created by android on 4/26/2016.
- */
 public class ViewStatementActivity extends AppCompatActivity {
 
     private RelativeLayout mRelativeLayout;
     private AppHandler mAppHandler;
-    WebView mWebview;
+    private WebView mWebview;
     public static String url;
     public static String title;
 
@@ -31,20 +27,32 @@ public class ViewStatementActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mini_statement);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        if(title.equalsIgnoreCase("mini")) {
-            getSupportActionBar().setTitle(R.string.home_statement_mini);
-        } else if(title.equalsIgnoreCase("balance")) {
-            getSupportActionBar().setTitle(R.string.home_statement_balance);
-        } else if(title.equalsIgnoreCase("sales")) {
-            getSupportActionBar().setTitle(R.string.home_statement_sales);
-        } else if(title.equalsIgnoreCase("trx")) {
-            getSupportActionBar().setTitle(R.string.home_statement_transaction);
-        }
 
         mAppHandler = new AppHandler(this);
-        mRelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
-        mWebview = (WebView) findViewById(R.id.webView);
+
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            if(!title.isEmpty()) {
+                if (title.equalsIgnoreCase("mini")) {
+                    getSupportActionBar().setTitle(R.string.home_statement_mini);
+                } else if (title.equalsIgnoreCase("balance")) {
+                    getSupportActionBar().setTitle(R.string.home_statement_balance);
+                } else if (title.equalsIgnoreCase("sales")) {
+                    getSupportActionBar().setTitle(R.string.home_statement_sales);
+                } else if (title.equalsIgnoreCase("trx")) {
+                    getSupportActionBar().setTitle(R.string.home_statement_transaction);
+                }
+            } else {
+                title = "mini";
+                url = "https://api.paywellonline.com/AndroidWebViewController/StatementInquiry?username="
+                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
+                getSupportActionBar().setTitle(R.string.home_statement_mini);
+            }
+        }
+
+        mRelativeLayout = findViewById(R.id.relativeLayout);
+        mWebview = findViewById(R.id.webView);
 
         mWebview.setWebViewClient(new WebViewClient() {
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
@@ -59,8 +67,6 @@ public class ViewStatementActivity extends AppCompatActivity {
         mWebview.getSettings().setLoadsImagesAutomatically(true);
         mWebview.getSettings().setJavaScriptEnabled(true);
         mWebview.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-//        startWebView("https://api.paywellonline.com/AndroidWebViewController/StatementInquiry?username=" +
-//                mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
         startWebView(url);
     }
 
@@ -95,6 +101,11 @@ public class ViewStatementActivity extends AppCompatActivity {
                     }
                 } catch (Exception exception) {
                     exception.printStackTrace();
+                    Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                    View snackBarView = snackbar.getView();
+                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                    snackbar.show();
                 }
             }
         });

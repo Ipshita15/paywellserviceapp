@@ -3,11 +3,13 @@ package com.cloudwell.paywell.services.activity.payments.bkash;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -20,18 +22,21 @@ import com.cloudwell.paywell.services.activity.payments.PaymentsMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.JSONParser;
 
-import org.apache.http.client.ClientProtocolException;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.io.IOException;
-
-/**
- * Created by Naima Gani on 11/28/2016.
- */
+import java.util.ArrayList;
+import java.util.List;
 
 public class BKashMainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -42,25 +47,30 @@ public class BKashMainActivity extends AppCompatActivity implements View.OnClick
     private Button mConfirm;
     private String _pin;
 
+    private static final String TAG_RESPONSE_STATUS = "Status";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bkash_main);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.home_payment_bkash_title);
-        mCd = new ConnectionDetector(this);
-        mAppHandler = new AppHandler(this);
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.home_payment_bkash_title);
+        }
+        mCd = new ConnectionDetector(AppController.getContext());
+        mAppHandler = new AppHandler(AppController.getContext());
         initView();
     }
 
     private void initView() {
-        mLinearLayout = (LinearLayout) findViewById(R.id.linearLayout);
-        mPin = (EditText) findViewById(R.id.bkash_pin);
-        mConfirm = (Button) findViewById(R.id.bkash_confirm);
+        mLinearLayout = findViewById(R.id.linearLayout);
+        mPin = findViewById(R.id.bkash_pin);
+        mConfirm = findViewById(R.id.bkash_confirm);
 
-        ((TextView) mLinearLayout.findViewById(R.id.tvBkashPin)).setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mPin.setTypeface(AppController.getInstance().getRobotoRegularFont());
-        mConfirm.setTypeface(AppController.getInstance().getRobotoRegularFont());
+        ((TextView) mLinearLayout.findViewById(R.id.tvBkashPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+        mConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
 
         mConfirm.setOnClickListener(this);
     }
@@ -81,9 +91,7 @@ public class BKashMainActivity extends AppCompatActivity implements View.OnClick
         if (!mCd.isConnectingToInternet()) {
             AppHandler.showDialog(this.getSupportFragmentManager());
         } else {
-            new BKashMainActivity.SubmitAsync().execute(getResources().getString(R.string.bkash_balance_check),
-                    "imei=" + mAppHandler.getImeiNo(),
-                    "&pin=" + _pin);
+            new BKashMainActivity.SubmitAsync().execute(getString(R.string.bkash_balance_check));
         }
     }
 
@@ -99,21 +107,28 @@ public class BKashMainActivity extends AppCompatActivity implements View.OnClick
 
         }
 
-        @SuppressWarnings("deprecation")
         @Override
         protected String doInBackground(String... params) {
             String responseTxt = null;
-            HttpGet request = new HttpGet(params[0] + params[1] + params[2]);
-            HttpClient client = AppController.getInstance().getTrustedHttpClient();
-            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            // Create a new HttpClient and Post Header
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(params[0]);
             try {
-                responseTxt = client.execute(request, responseHandler);
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
+                nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("pin", _pin));
+                nameValuePairs.add(new BasicNameValuePair("gateway_id", mAppHandler.getGatewayId()));
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                responseTxt = httpclient.execute(httppost, responseHandler);
+            } catch (Exception e) {
+                e.fillInStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+            }
             return responseTxt;
         }
 
@@ -123,8 +138,19 @@ public class BKashMainActivity extends AppCompatActivity implements View.OnClick
             if (result != null) {
                 if (result.startsWith("200")) {
                     mAppHandler.setPin(_pin);
-                    Intent intent = new Intent(BKashMainActivity.this, BKashMenuActivity.class);
-                    startActivity(intent);
+                    String[] splittedArray = result.split("@");
+                    if(mAppHandler.getGatewayId().equalsIgnoreCase("1")) {
+                        mAppHandler.setAgentPhnNum(splittedArray[5]);
+                    } else if(mAppHandler.getGatewayId().equalsIgnoreCase("4")) {
+                        mAppHandler.setAgentPhnNum(splittedArray[6]);
+                    }
+                    if(splittedArray[3].equals("0.00")) {
+                        Intent intent = new Intent(BKashMainActivity.this, BKashMenuActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        checkPurpose();
+                    }
                     mPin.setText("");
                 } else {
                     String[] splitArray = result.split("@");
@@ -146,11 +172,74 @@ public class BKashMainActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
+    public void checkPurpose() {
+        new PDAsyncTask().execute(getResources().getString(R.string.bkash_pd_url),
+                "imei=" + mAppHandler.getImeiNo(),
+                "&pin=" + mAppHandler.getPin(),
+                "&gateway_id=" + mAppHandler.getGatewayId(),
+                "&format=json");
+    }
+
+    private class PDAsyncTask extends AsyncTask<String, String, JSONObject> {
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(BKashMainActivity.this, "", getString(R.string.loading_msg), true);
+            if (!isFinishing())
+                progressDialog.show();
+        }
+
+        @Override
+        protected JSONObject doInBackground(String... params) {
+            JSONParser jParser = new JSONParser();
+            // Getting JSON from URL
+            String url = params[0] + params[1] + params[2] + params[3] + params[4];
+            return jParser.getJSONFromUrl(url);
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            progressDialog.cancel();
+            try {
+                String status = jsonObject.getString(TAG_RESPONSE_STATUS);
+                if (status.equalsIgnoreCase("200")) {
+                    Intent intent = new Intent(BKashMainActivity.this, DeclarePurposeActivity.class);
+                    intent.putExtra(DeclarePurposeActivity.JSON_RESPONSE, jsonObject.toString());
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Intent intent = new Intent(BKashMainActivity.this, BKashMenuActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
+            }
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.video_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             this.onBackPressed();
             return true;
+        } else if (item.getItemId() == R.id.action_video) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=wOlYSchfWPo"));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setPackage("com.google.android.youtube");
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

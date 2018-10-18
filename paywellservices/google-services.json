@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "375248464756",
-    "firebase_url": "https://paywell-services-89d42.firebaseio.com",
-    "project_id": "paywell-services-89d42",
-    "storage_bucket": "paywell-services-89d42.appspot.com"
+    "project_number": "712565615849",
+    "firebase_url": "https://paywell-service.firebaseio.com",
+    "project_id": "paywell-service",
+    "storage_bucket": "paywell-service.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:375248464756:android:ce30cb7039417d77",
+        "mobilesdk_app_id": "1:712565615849:android:ce30cb7039417d77",
         "android_client_info": {
           "package_name": "com.cloudwell.paywell.services"
         }
       },
       "oauth_client": [
         {
-          "client_id": "375248464756-fii5ar5sv97uume2mavr4avjrao8j9te.apps.googleusercontent.com",
+          "client_id": "712565615849-3ku8g1jnklp72k924b28nmjouelknd4r.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDEyiFlxToITu-N-MR5nWJw9rtBmiHZsUk"
+          "current_key": "AIzaSyDdrnX1MjgJ6kLcCWxrAbBeORjeIeoQA8E"
         }
       ],
       "services": {

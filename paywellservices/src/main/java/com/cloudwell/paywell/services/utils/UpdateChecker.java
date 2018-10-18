@@ -79,14 +79,21 @@ public class UpdateChecker {
                 float readName = 0;
                 if (versionName >= 0) {
                     try {
-                        readName = Float.parseFloat(readFile(url));
+                        String fileValue = readFile(url);
+                        if (fileValue != null) {
+                            readName = Float.parseFloat(fileValue);
+                        } else {
+                            readName = versionName;
+                        }
                         // Check if update is available.
                         if (readName > versionName) {
                             updateAvailable = true; // We have an update available
                             latestVersionName = "" + readName;
                         }
                     } catch (NumberFormatException e) {
-                        Log.e(TAG, "Invalid number online"); // Something wrong with the file content
+                        Log.e(TAG, "Invalid number"); // Something wrong with the file content
+                    } catch (NullPointerException ex) {
+                        Log.e(TAG, "Invalid number"); // Something wrong with the file content
                     }
                 } else {
                     Log.e(TAG, "Invalid version code in app"); // Invalid version code
@@ -277,7 +284,7 @@ public class UpdateChecker {
      * @since API 2
      */
     public boolean hasGooglePlayInstalled() {
-        Intent market = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=dummy"));
+        Intent market = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.cloudwell.paywell.services&hl=en"));
         PackageManager manager = mContext.getPackageManager();
         List<ResolveInfo> list = manager.queryIntentActivities(market, 0);
 
