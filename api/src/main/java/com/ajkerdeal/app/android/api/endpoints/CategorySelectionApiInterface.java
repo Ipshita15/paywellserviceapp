@@ -1,9 +1,10 @@
 package com.ajkerdeal.app.android.api.endpoints;
 
-import java.util.List;
-
 import com.ajkerdeal.app.android.api.models.CategoryModel;
 import com.ajkerdeal.app.android.api.models.SubcategoriesViewModel;
+
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
