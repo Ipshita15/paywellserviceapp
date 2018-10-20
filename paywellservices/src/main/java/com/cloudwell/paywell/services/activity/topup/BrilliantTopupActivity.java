@@ -151,6 +151,7 @@ public class BrilliantTopupActivity extends AppCompatActivity implements Compoun
         dialog.setContentView(R.layout.dialog_trx_limit);
 
         Button btn_okay = (Button) dialog.findViewById(R.id.buttonOk);
+        Button btn_cancel = (Button) dialog.findViewById(R.id.cancelBtn);
 
         radioButton_five = (RadioButton) dialog.findViewById(R.id.radio_five);
         radioButton_ten = (RadioButton) dialog.findViewById(R.id.radio_ten);
@@ -183,6 +184,12 @@ public class BrilliantTopupActivity extends AppCompatActivity implements Compoun
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
+            }
+        });
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
             }
         });
         dialog.setCancelable(true);
@@ -324,6 +331,12 @@ public class BrilliantTopupActivity extends AppCompatActivity implements Compoun
                     askForPin();
                 }
             });
+            builder.setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
             AlertDialog alert = builder.create();
             alert.show();
 
@@ -383,6 +396,12 @@ public class BrilliantTopupActivity extends AppCompatActivity implements Compoun
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
+            }
+        });
+        builder.setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
             }
         });
         AlertDialog alert = builder.create();
@@ -483,7 +502,9 @@ public class BrilliantTopupActivity extends AppCompatActivity implements Compoun
                     @Override
                     public void onClick(DialogInterface dialogInterface, int id) {
                         dialogInterface.dismiss();
-                        startActivity(new Intent(BrilliantTopupActivity.this,TopupMainActivity.class));
+//                        startActivity(new Intent(BrilliantTopupActivity.this,TopupMainActivity.class));
+                        phoneNoET.setText("");
+                        amountET.setText("");
 
                     }
                 });
@@ -682,6 +703,13 @@ public class BrilliantTopupActivity extends AppCompatActivity implements Compoun
                     }
                     dialogInterface.dismiss();
                 }
+            }
+        });
+        builder.setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+
             }
         });
         AlertDialog alert = builder.create();
