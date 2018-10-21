@@ -63,7 +63,10 @@ import java.io.IOException;
 
 public class BrilliantTopupActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
+
     private static final int CONTACT_REQ_CODE = 333;
+    private static final String BRILLIANT_PREFIX = "09638";
+    private static final String COUNTRY_CODE = "88";
     public static final String LIMIT_STRING ="limit" ;
     private static final int CONTACT_PERMISSION_CODE = 444;
     public boolean statusCode = false;
@@ -103,7 +106,7 @@ public class BrilliantTopupActivity extends AppCompatActivity implements Compoun
         brilliantTopUpInquiry=findViewById(R.id.brilliantInquiryBtn);
         brilliantTrxLog=findViewById(R.id.brilliantTransLogBtn);
         phoneNoET.setText("");
-        phoneNoET.append("88");
+        phoneNoET.append(BRILLIANT_PREFIX);
 
 
         btnConfirmBrilliant.setOnClickListener(new View.OnClickListener() {
@@ -271,8 +274,17 @@ public class BrilliantTopupActivity extends AppCompatActivity implements Compoun
                         phones.close();
                         if (!phoneNumOne.isEmpty() && !phoneNumOne.contains("+") && !phoneNumOne.contains("-")
                                 && !phoneNumOne.contains(" ") && !phoneNumOne.startsWith("88")) {
-                            phoneNoET.setText("88");
-                            phoneNoET.append(phoneNumOne);
+                            if (phoneNumOne.startsWith(BRILLIANT_PREFIX)){
+                                phoneNoET.setText(phoneNumOne);
+                            }else {
+                                Log.d("TEST","NUMBER-"+phoneNumOne);
+                                phoneNoET.setText("");
+                                Snackbar snackbar = Snackbar.make(topUpLayout, "Please, Select Brilliant number only", Snackbar.LENGTH_LONG);
+                                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                                View snackBarView = snackbar.getView();
+                                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                                snackbar.show();
+                            }
                         } else {
                             if (phoneNumOne.contains("+")) {
                                 phoneNumOne = phoneNumOne.replace("+", "");
@@ -283,11 +295,21 @@ public class BrilliantTopupActivity extends AppCompatActivity implements Compoun
                             if (phoneNumOne.contains(" ")) {
                                 phoneNumOne = phoneNumOne.replace(" ", "");
                             }
-                            if (phoneNumOne.startsWith("88")) {
-                                phoneNumOne = phoneNumOne.replace("88", "");
+                            if (phoneNumOne.startsWith(COUNTRY_CODE)){
+                               phoneNumOne.replace(COUNTRY_CODE,"");
                             }
-                            phoneNoET.setText("88");
-                            phoneNoET.append(phoneNumOne);
+                            if (phoneNumOne.startsWith(BRILLIANT_PREFIX)){
+                                phoneNoET.setText(phoneNumOne);
+                            }else {
+                                Log.d("TEST","NUMBER-"+phoneNumOne);
+                                phoneNoET.setText("");
+                                Snackbar snackbar = Snackbar.make(topUpLayout, "Please, Select Brilliant number only", Snackbar.LENGTH_LONG);
+                                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                                View snackBarView = snackbar.getView();
+                                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                                snackbar.show();
+                            }
+
                         }
                     }
                 }
@@ -306,9 +328,7 @@ public class BrilliantTopupActivity extends AppCompatActivity implements Compoun
         String phoneStr = phoneNoET.getText().toString();
         String amountStr = amountET.getText().toString();
 
-        if (phoneStr.startsWith("88")){
-
-
+        if (phoneStr.startsWith(BRILLIANT_PREFIX)){
             if (phoneStr.length() < 11) {
                 phoneNoET.setError(Html.fromHtml("<font color='red'>" + getString(R.string.phone_no_error_msg) + "</font>"));
                 return;
@@ -343,13 +363,11 @@ public class BrilliantTopupActivity extends AppCompatActivity implements Compoun
 
 
         }else{
-
-            Snackbar snackbar = Snackbar.make(topUpLayout, "it seems you are missing the prefix '88'", Snackbar.LENGTH_LONG);
+            Snackbar snackbar = Snackbar.make(topUpLayout, "It's not a 'Brilliant' number, Enter a valid number", Snackbar.LENGTH_LONG);
             snackbar.setActionTextColor(Color.parseColor("#ffffff"));
             View snackBarView = snackbar.getView();
             snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             snackbar.show();
-
         }
 
 
@@ -465,7 +483,7 @@ public class BrilliantTopupActivity extends AppCompatActivity implements Compoun
                     + "username=" + mAppHandler.getImeiNo()
                     + "&password=" + PIN_NO
                     + "&amount=" + amountStr
-                    + "&brilliantNumber=" + phoneStr;
+                    + "&brilliantNumber=" +COUNTRY_CODE+phoneStr;
 
             Log.d("Brilliant_test","username=" + mAppHandler.getImeiNo()
                     + "&password=" + PIN_NO
