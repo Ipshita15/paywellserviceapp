@@ -25,8 +25,8 @@ android {
         minSdkVersion 16
         //for push notification its 20 otherwise it was 25
         targetSdkVersion 27
-        versionCode 32
-        versionName '10.15'
+        versionCode 33
+        versionName '10.16'
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
     }
@@ -101,6 +101,9 @@ dependencies {
     //image zoom
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
+
+    implementation 'com.facebook.fresco:fresco:1.11.0'
+
 }
 // Add to the bottom of the file
 apply plugin: 'com.google.gms.google-services'

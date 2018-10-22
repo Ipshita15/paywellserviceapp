@@ -21,7 +21,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.app.AppHandler;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.client.HttpClient;
@@ -29,18 +34,26 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class NotificationFullViewActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static int TAG_NOTIFICATION_SOURCE;
     public static int TAG_NOTIFICATION_POSITION;
+    private static final String TAG_RESPONSE_STATUS = "status";
+
 
     private LinearLayout mLinearLayout;
     private TextView mTextViewTitle, mTextViewMsg;
     private ImageView mImageView;
     private EditText mEditText;
     private Button mBtn;
+
+    private AppHandler mAppHandler;
+
+    boolean isNotificationFlow;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,45 +64,59 @@ public class NotificationFullViewActivity extends AppCompatActivity implements V
             getSupportActionBar().setTitle(R.string.home_notification_details);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        mAppHandler = new AppHandler(this);
         initializer();
+
+        isNotificationFlow = getIntent().getBooleanExtra("isNotificationFlow", false);
+
+        if (isNotificationFlow) {
+
+            handleNotificationClickFlow(getIntent().getStringExtra("Notification_Details"));
+        } else {
+            handleNormalFlow();
+        }
+
     }
 
-    public void initializer() {
-        mLinearLayout = findViewById(R.id.linearLayoutNotiFullView);
-        mTextViewTitle = findViewById(R.id.notiTitle);
-        mTextViewMsg = findViewById(R.id.notiMessage);
-        mImageView = findViewById(R.id.notiImg);
-        mEditText = findViewById(R.id.notiEditText);
-        mBtn = findViewById(R.id.notiButton);
-        mBtn.setOnClickListener(NotificationFullViewActivity.this);
+    private void handleNotificationClickFlow(String notifcation_details) {
 
-        if (TAG_NOTIFICATION_SOURCE == 1) {
-            final SpannableString spannableString =
-                    new SpannableString(NotificationActivity.mMsg[TAG_NOTIFICATION_POSITION]);
-            Linkify.addLinks(spannableString, Linkify.WEB_URLS);
+        try {
+            JSONObject jsonObject = new JSONObject(notifcation_details);
+            int message_id = jsonObject.getInt("message_id");
+            String title = jsonObject.getString("title");
+            String message = jsonObject.getString("message");
+            final String image = jsonObject.getString("image");
 
-            mTextViewTitle.setText(NotificationActivity.mTitle[TAG_NOTIFICATION_POSITION]);
-            mTextViewMsg.setText(spannableString);
-            if (!NotificationActivity.mImage[TAG_NOTIFICATION_POSITION].equalsIgnoreCase("empty")) {
-                Picasso.get().load(NotificationActivity.mImage[TAG_NOTIFICATION_POSITION]).into(mImageView);
+
+            mTextViewTitle.setText(title);
+            mTextViewMsg.setText(message);
+
+            if (image != null) {
                 mImageView.setVisibility(View.VISIBLE);
+                Picasso.get().load(image).into(mImageView);
+
                 mImageView.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
-                        ImageViewActivity.TAG_IMAGE_URL = NotificationActivity.mImage[TAG_NOTIFICATION_POSITION];
+                        ImageViewActivity.TAG_IMAGE_URL = image;
                         startActivity(new Intent(NotificationFullViewActivity.this, ImageViewActivity.class));
                         return false;
                     }
                 });
             }
 
-            if (NotificationActivity.mType[TAG_NOTIFICATION_POSITION].equalsIgnoreCase("BalanceReturnPwl")) {
-                mEditText.setVisibility(View.VISIBLE);
-                mBtn.setVisibility(View.VISIBLE);
-            }
-        } else {
-            final SpannableString spannableString =
-                    new SpannableString(NotificationAllActivity.mMsg[TAG_NOTIFICATION_POSITION]);
+
+            callNotificationReadAPI("" + message_id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    private void handleNormalFlow() {
+        if (TAG_NOTIFICATION_SOURCE == 1) {
+            final SpannableString spannableString = new SpannableString(NotificationAllActivity.mMsg[TAG_NOTIFICATION_POSITION]);
             Linkify.addLinks(spannableString, Linkify.WEB_URLS);
 
             mTextViewTitle.setText(NotificationAllActivity.mTitle[TAG_NOTIFICATION_POSITION]);
@@ -114,15 +141,27 @@ public class NotificationFullViewActivity extends AppCompatActivity implements V
         }
     }
 
+    public void initializer() {
+        mLinearLayout = findViewById(R.id.linearLayoutNotiFullView);
+        mTextViewTitle = findViewById(R.id.notiTitle);
+        mTextViewMsg = findViewById(R.id.notiMessage);
+        mImageView = findViewById(R.id.notiImg);
+        mEditText = findViewById(R.id.notiEditText);
+        mBtn = findViewById(R.id.notiButton);
+        mBtn.setOnClickListener(NotificationFullViewActivity.this);
+
+
+    }
+
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.notiButton) {
             if (!mEditText.getText().toString().isEmpty()) {
                 if (TAG_NOTIFICATION_SOURCE == 1) {
-                    String param = NotificationActivity.mData[TAG_NOTIFICATION_POSITION];
+                    String param = NotificationAllActivity.mData[TAG_NOTIFICATION_POSITION];
                     new PinRequestAsync().execute(
                             getResources().getString(R.string.merchant_balance_return_url)
-                                    + "?messageId=" + NotificationActivity.mId[TAG_NOTIFICATION_POSITION]
+                                    + "?messageId=" + NotificationAllActivity.mId[TAG_NOTIFICATION_POSITION]
                                     + "&merchentPassword=" + mEditText.getText().toString()
                                     + "&" + param.replace("@", "&"));
                 } else {
@@ -230,9 +269,69 @@ public class NotificationFullViewActivity extends AppCompatActivity implements V
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if (isNotificationFlow) {
+            Intent intent = new Intent(getApplicationContext(), NotificationAllActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            finish();
+        }
+
+
+    }
+
+    public void callNotificationReadAPI(String messageId) {
+        progressDialog = ProgressDialog.show(NotificationFullViewActivity.this, "", getString(R.string.loading_msg), true);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        AndroidNetworking.post(getResources().getString(R.string.notif_url))
+                .addBodyParameter("username", mAppHandler.getImeiNo())
+                .addBodyParameter("message_id", messageId)
+                .addBodyParameter("format", "json")
+                .setPriority(Priority.HIGH)
+                .build().getAsString(new StringRequestListener() {
+            @Override
+            public void onResponse(String response) {
+                progressDialog.dismiss();
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(response);
+                    String status = jsonObject.getString(TAG_RESPONSE_STATUS);
+                    if (status.equalsIgnoreCase("200")) {
+
+                    } else {
+                        Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.no_notification_msg, Snackbar.LENGTH_LONG);
+                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                        View snackBarView = snackbar.getView();
+                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                        snackbar.show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                    View snackBarView = snackbar.getView();
+                    snackBarView.setBackgroundColor(Color.parseColor("#8cc63f"));
+                    snackbar.show();
+                }
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                progressDialog.dismiss();
+            }
+        });
+
     }
 }
