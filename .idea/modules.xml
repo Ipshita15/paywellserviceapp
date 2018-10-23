@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PayWellServices.iml" filepath="$PROJECT_DIR$/PayWellServices.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/paywellserviceapp.iml" filepath="$PROJECT_DIR$/.idea/paywellserviceapp.iml" />
       <module fileurl="file://$PROJECT_DIR$/paywellservices/paywellservices.iml" filepath="$PROJECT_DIR$/paywellservices/paywellservices.iml" />
     </modules>
   </component>
