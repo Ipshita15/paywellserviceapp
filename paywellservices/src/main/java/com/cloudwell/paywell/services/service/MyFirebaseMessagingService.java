@@ -1,5 +1,6 @@
 package com.cloudwell.paywell.services.service;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -8,48 +9,46 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.MainActivity;
+import com.cloudwell.paywell.services.activity.notification.NotificationFullViewActivity;
 import com.cloudwell.paywell.services.app.AppHandler;
-import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.facebook.common.executors.UiThreadImmediateExecutorService;
+import com.facebook.common.references.CloseableReference;
+import com.facebook.datasource.DataSource;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.core.ImagePipeline;
+import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
+import com.facebook.imagepipeline.image.CloseableImage;
+import com.facebook.imagepipeline.request.ImageRequest;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "FirebaseMessageService";
-    private Bitmap bitmap;
-    private ConnectionDetector mCd;
     private AppHandler mAppHandler;
-    private static final String TAG_RESPONSE_STATUS = "status";
-    private String token;
-    private String title, message, trueOrFlase;
 
-    /**
-     * Called when message is received.
-     *
-     * @param remoteMessage Object representing the message received from Firebase Cloud Messaging.
-     */
+    private String title;
+    private String message;
+    private String notifcationDetails;
+
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        // There are two types of messages data messages and notification messages. Data messages are handled
-        // here in onMessageReceived whether the app is in the foreground or background. Data messages are the type
-        // traditionally used with GCM. Notification messages are only received here in onMessageReceived when the app
-        // is in the foreground. When the app is in the background an automatically generated notification is displayed.
-        // When the user taps on the notification they are returned to the app. Messages containing both notification
-        // and data payloads are treated as notification messages. The Firebase console always sends notification
-        // messages. For more see: https://firebase.google.com/docs/cloud-messaging/concept-options
-        //
+
+        String imageUri = "";
         Log.d(TAG, "From: " + remoteMessage.getFrom());
 
-        // Check if message contains a data payload.
+
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
         }
@@ -59,37 +58,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         }
 
-        //The message which i send will have keys named [message, image, AnotherActivity] and corresponding values.
-        //You can change as per the requirement.
+        // parsing data from remote message
+        title = remoteMessage.getData().get("title");
+        message = remoteMessage.getData().get("message");
+        imageUri = remoteMessage.getData().get("image");
+        notifcationDetails = remoteMessage.getData().get("Notification_Details");
 
-        if (remoteMessage.getData().size() > 0) {
-            //title will contain the Push Message
-            title = remoteMessage.getData().get("title");
-            //message will contain the Push Message
-            message = remoteMessage.getData().get("message");
-            //imageUri will contain URL of the image to be displayed with Notification
-            String imageUri = remoteMessage.getData().get("image");
-            //If the key AnotherActivity has  value as True then when the user taps on notification, in the app AnotherActivity will be opened.
-            //If the key AnotherActivity has  value as False then when the user taps on notification, in the app MainActivity will be opened.
-            trueOrFlase = remoteMessage.getData().get("Notification");
-
-            //To get a Bitmap image from the URL received
-            bitmap = getBitmapfromUrl(imageUri);
-        } else {
-            //title will contain the Push Message
-            title = remoteMessage.getNotification().getTitle();
-            //message will contain the Push Message
-            message = remoteMessage.getNotification().getBody();
-            //imageUri will contain URL of the image to be displayed with Notification
-//            String imageUri = remoteMessage.getNotification().
-            //If the key AnotherActivity has  value as True then when the user taps on notification, in the app AnotherActivity will be opened.
-            //If the key AnotherActivity has  value as False then when the user taps on notification, in the app MainActivity will be opened.
-            trueOrFlase = remoteMessage.getData().get("Notification");
-
-            //To get a Bitmap image from the URL received
-//            bitmap = getBitmapfromUrl(imageUri);
+        //To get a Bitmap image from the URL received
+        if (imageUri == null) {
+            imageUri = "";
         }
-        sendNotification(title, message, bitmap, trueOrFlase);
+
+        sendNotification(title, message, imageUri);
+
+
     }
 
 
@@ -97,43 +79,46 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      * Create and show a simple notification containing the received FCM message.
      */
 
-    private void sendNotification(String title, String messageBody, Bitmap image, String TrueOrFalse) {
-        NotificationCompat.Builder notificationBuilder;
+    private void sendNotification(final String title, final String messageBody, String image) {
 
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("Notification", TrueOrFalse);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+        final Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        if (!image.equals("")) {
+            Fresco.initialize(this);
+            ImageRequest imageRequest = ImageRequest.fromUri(image);
+            ImagePipeline imagePipeline = Fresco.getImagePipeline();
+            DataSource<CloseableReference<CloseableImage>> dataSource = imagePipeline.fetchDecodedImage(imageRequest, null);
+            dataSource.subscribe(
+                    new BaseBitmapDataSubscriber() {
 
-        if(image != null) {
-            notificationBuilder = new NotificationCompat.Builder(this)
-                    .setLargeIcon(image)/*Notification icon image*/
-                    .setSmallIcon(R.mipmap.paywell_icon)
-                    .setContentTitle(title)
-                    .setContentText(messageBody)
-                    .setStyle(new NotificationCompat.BigPictureStyle()
-                            .bigPicture(image))/*Notification with Image*/
-                    .setAutoCancel(true)
-                    .setSound(defaultSoundUri)
-                    .setContentIntent(pendingIntent);
+                        @Override
+                        protected void onNewResultImpl(Bitmap bitmap) {
+                            displayNotification(bitmap, title, messageBody, defaultSoundUri, notifcationDetails);
+                        }
+
+                        @Override
+                        protected void onFailureImpl(DataSource<CloseableReference<CloseableImage>> dataSource) {
+                            // notification. We proceed without the bitmap. when notification image not found in server
+                            handleTextNotification(title, messageBody, defaultSoundUri, notifcationDetails);
+                        }
+                    },
+                    UiThreadImmediateExecutorService.getInstance());
+
+
         } else {
-            notificationBuilder = new NotificationCompat.Builder(this)
-                    .setSmallIcon(R.mipmap.paywell_icon)
-                    .setContentTitle(title)
-                    .setContentText(messageBody)
-                    .setStyle(new NotificationCompat.InboxStyle())/*Notification with Image*/
-                    .setAutoCancel(true)
-                    .setSound(defaultSoundUri)
-                    .setContentIntent(pendingIntent);
+            handleTextNotification(title, messageBody, defaultSoundUri, notifcationDetails);
         }
 
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+    }
+
+
+    public static class NotificationID {
+        private final static AtomicInteger c = new AtomicInteger(0);
+
+        public static int getID() {
+            return c.incrementAndGet();
+        }
     }
 
     /*
@@ -164,5 +149,65 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         mAppHandler = new AppHandler(this);
         mAppHandler.setFirebaseId(token);
         mAppHandler.setFirebaseTokenStatus("true");
+    }
+
+    private void displayNotification(@Nullable Bitmap bitmap, String title, String messageBody, Uri defaultSoundUri, String notificationDetails) {
+
+
+        int requestID = (int) System.currentTimeMillis();
+
+        final Intent intent = new Intent(this, NotificationFullViewActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("isNotificationFlow", true);
+        intent.putExtra("Notification_Details", notificationDetails);
+        final PendingIntent pendingIntent = PendingIntent.getActivity(this, requestID /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
+
+
+        Notification.Builder builder = new Notification.Builder(this);
+        builder.setSmallIcon(R.drawable.pw_notification_bar);
+        builder.setContentTitle(title);
+        builder.setContentText(messageBody);
+        builder.setLargeIcon(bitmap);
+        builder.setAutoCancel(true);
+        builder.setPriority(Notification.PRIORITY_MAX);
+
+
+        Notification.BigPictureStyle bigPicutureStyle = new Notification.BigPictureStyle(builder);
+        bigPicutureStyle.bigPicture(bitmap);
+        bigPicutureStyle.setBigContentTitle(title);
+        bigPicutureStyle.setSummaryText("Click on the image for full screen preview");
+        builder.setSound(defaultSoundUri);
+        builder.setContentIntent(pendingIntent);
+
+
+        ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).notify(requestID, bigPicutureStyle.build());
+    }
+
+    private void handleTextNotification(String title, String messageBody, Uri defaultSoundUri, String notificationDetails) {
+        int requestID = (int) System.currentTimeMillis();
+
+        final Intent intent = new Intent(this, NotificationFullViewActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("isNotificationFlow", true);
+        intent.putExtra("Notification_Details", notificationDetails);
+
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, requestID /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
+
+
+        NotificationCompat.Builder notificationBuilder;
+        notificationBuilder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.pw_notification_bar)
+                .setContentTitle(title)
+                .setContentText(messageBody)
+                .setStyle(new NotificationCompat.InboxStyle())/*Notification with Image*/
+                .setAutoCancel(true)
+                .setSound(defaultSoundUri)
+                .setContentIntent(pendingIntent);
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+
+        notificationManager.notify(requestID, notificationBuilder.build());
     }
 }

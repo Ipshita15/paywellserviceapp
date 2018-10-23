@@ -507,10 +507,14 @@
             android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="com.cloudwell.paywell.services.MESSAGE" />
-                <!-- <action android:name="android.intent.action.VIEW"/> -->
+                <action android:name="OPEN_ACTIVITY_1"/>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+            <!--<intent-filter>-->
+            <!--<action android:name="com.cloudwell.paywell.services.MESSAGE" />-->
+            <!--&lt;!&ndash; <action android:name="android.intent.action.VIEW"/> &ndash;&gt;-->
+            <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--</intent-filter>-->
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -1156,7 +1160,15 @@
 
         <activity
             android:name=".activity.notification.NotificationFullViewActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+
+            <intent-filter>
+                <action android:name="OPEN_ACTIVITY_DETAILS"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+
+        </activity>
+
 
         <activity
             android:name=".activity.notification.ImageViewActivity"
@@ -1195,7 +1207,7 @@
         -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/ic_paywell_pw" />
+            android:resource="@drawable/pw_notification_bar"/>
         <!--
              Set color used with incoming notification messages. This is used when no color is set for the incoming
              notification message. See README(https://goo.gl/6BKBk7) for more.
