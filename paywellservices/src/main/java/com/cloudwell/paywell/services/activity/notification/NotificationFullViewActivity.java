@@ -91,7 +91,7 @@ public class NotificationFullViewActivity extends AppCompatActivity implements V
             mTextViewTitle.setText(title);
             mTextViewMsg.setText(message);
 
-            if (image != null) {
+            if (!image.equals("")) {
                 mImageView.setVisibility(View.VISIBLE);
                 Picasso.get().load(image).into(mImageView);
 
