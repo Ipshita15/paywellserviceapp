@@ -139,6 +139,7 @@ public class AppHandler {
     private static final String IMAGE_CACHE_CLEAN = "img_cache_clean";
 
     private static String DISPLAY_PICTURE_COUNT = "display_picture_count";
+    private static String CENTER_AREA_DROP_DOWN_POSITION = "CENTER_AREA_DROP_DOWN_POSITION";
 
     public AppHandler() {
 
@@ -637,6 +638,8 @@ public class AppHandler {
     public String getPassengerCode () {
         return mPref.getString(PASSENGER_CODE, UNKNOWN_PASSENGER_CODE);
     }
+
+
     public static class MyDialogFragment extends DialogFragment {
         private ConnectionDetector cd;
 
@@ -840,5 +843,14 @@ public class AppHandler {
     public void setDisplayPictureCount(int displayPictureCount) {
         editor.putInt(DISPLAY_PICTURE_COUNT, displayPictureCount);
         editor.commit();
+    }
+
+    public void setCenterDropDownPogistion(int position) {
+        editor.putInt(CENTER_AREA_DROP_DOWN_POSITION, position);
+        editor.commit();
+    }
+
+    public int getCenterDropDownPogistion() {
+        return mPref.getInt(CENTER_AREA_DROP_DOWN_POSITION, 0);
     }
 }

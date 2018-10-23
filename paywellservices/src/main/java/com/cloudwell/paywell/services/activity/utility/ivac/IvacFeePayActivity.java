@@ -79,7 +79,9 @@ public class IvacFeePayActivity extends AppCompatActivity {
         mAppHandler = new AppHandler(this);
 
         initializeData();
+        autoSelectedCenterPosition();
     }
+
 
     private void initializeData() {
         mConstraintLayout = findViewById(R.id.constrainLayout);
@@ -152,6 +154,10 @@ public class IvacFeePayActivity extends AppCompatActivity {
                         str_centerId = center_id_array.get(position);
                         str_amount = center_amount_array.get(position);
                         String amountText = getString(R.string.tk_des) + " " + str_amount;
+
+                        // store selected position
+                        mAppHandler.setCenterDropDownPogistion(position);
+
                         textViewAmount.setText(amountText);
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -176,6 +182,12 @@ public class IvacFeePayActivity extends AppCompatActivity {
             snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             snackbar.show();
         }
+    }
+
+    private void autoSelectedCenterPosition() {
+        int centerDropDownPogistion = mAppHandler.getCenterDropDownPogistion();
+        spnr_center.setSelection(centerDropDownPogistion);
+
     }
 
     @Override
