@@ -153,7 +153,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private void displayNotification(@Nullable Bitmap bitmap, String title, String messageBody, Uri defaultSoundUri, String notificationDetails) {
 
-        // TODO: 10/22/18
 
         int requestID = (int) System.currentTimeMillis();
 
@@ -165,7 +164,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
         Notification.Builder builder = new Notification.Builder(this);
-        builder.setSmallIcon(R.mipmap.paywell_icon);
+        builder.setSmallIcon(R.drawable.pw_notification_bar);
         builder.setContentTitle(title);
         builder.setContentText(messageBody);
         builder.setLargeIcon(bitmap);
@@ -198,7 +197,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationCompat.Builder notificationBuilder;
         notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.paywell_icon)
+                .setSmallIcon(R.drawable.pw_notification_bar)
                 .setContentTitle(title)
                 .setContentText(messageBody)
                 .setStyle(new NotificationCompat.InboxStyle())/*Notification with Image*/
