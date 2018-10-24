@@ -1,16 +1,17 @@
 package com.cloudwell.paywell.services.service;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 import com.cloudwell.paywell.services.R;
@@ -26,11 +27,6 @@ import com.facebook.imagepipeline.image.CloseableImage;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -113,36 +109,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
 
-    public static class NotificationID {
-        private final static AtomicInteger c = new AtomicInteger(0);
-
-        public static int getID() {
-            return c.incrementAndGet();
-        }
-    }
-
-    /*
-     * To get a Bitmap image from the URL received
-     */
-    public Bitmap getBitmapfromUrl(String imageUrl) {
-        try {
-            URL url = new URL(imageUrl);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            return BitmapFactory.decodeStream(input);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
-     * Called if InstanceID token is updated. This may occur if the security of
-     * the previous token had been compromised. Note that this is called when the InstanceID token
-     * is initially generated so this is where you would retrieve the token.
-     */
     @Override
     public void onNewToken(String token) {
         super.onNewToken(token);
@@ -153,8 +119,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private void displayNotification(@Nullable Bitmap bitmap, String title, String messageBody, Uri defaultSoundUri, String notificationDetails) {
 
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        String channelId = "PayWell-01";
+        String channelName = "PayWell";
 
         int requestID = (int) System.currentTimeMillis();
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel mChannel = new NotificationChannel(channelId, channelName, importance);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(mChannel);
+            }
+        }
 
         final Intent intent = new Intent(this, NotificationFullViewActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -162,8 +140,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         intent.putExtra("Notification_Details", notificationDetails);
         final PendingIntent pendingIntent = PendingIntent.getActivity(this, requestID /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
 
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addNextIntent(intent);
 
-        Notification.Builder builder = new Notification.Builder(this);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(
+                requestID,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId);
         builder.setSmallIcon(R.drawable.pw_notification_bar);
         builder.setContentTitle(title);
         builder.setContentText(messageBody);
@@ -172,42 +158,54 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         builder.setPriority(Notification.PRIORITY_MAX);
 
 
-        Notification.BigPictureStyle bigPicutureStyle = new Notification.BigPictureStyle(builder);
+        NotificationCompat.BigPictureStyle bigPicutureStyle = new NotificationCompat.BigPictureStyle(builder);
         bigPicutureStyle.bigPicture(bitmap);
         bigPicutureStyle.setBigContentTitle(title);
         bigPicutureStyle.setSummaryText("Click on the image for full screen preview");
         builder.setSound(defaultSoundUri);
-        builder.setContentIntent(pendingIntent);
+        builder.setContentIntent(resultPendingIntent);
 
+        if (notificationManager != null) {
+            notificationManager.notify(requestID, bigPicutureStyle.build());
+        }
 
-        ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).notify(requestID, bigPicutureStyle.build());
     }
 
     private void handleTextNotification(String title, String messageBody, Uri defaultSoundUri, String notificationDetails) {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        String channelId = "PayWell-01";
+        String channelName = "PayWell";
+
         int requestID = (int) System.currentTimeMillis();
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel mChannel = new NotificationChannel(channelId, channelName, importance);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(mChannel);
+            }
+        }
 
         final Intent intent = new Intent(this, NotificationFullViewActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("isNotificationFlow", true);
         intent.putExtra("Notification_Details", notificationDetails);
+        final PendingIntent pendingIntent = PendingIntent.getActivity(this, requestID /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
 
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, requestID /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
-
-
-        NotificationCompat.Builder notificationBuilder;
-        notificationBuilder = new NotificationCompat.Builder(this)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.pw_notification_bar)
                 .setContentTitle(title)
                 .setContentText(messageBody)
                 .setStyle(new NotificationCompat.InboxStyle())/*Notification with Image*/
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                .setContentIntent(pendingIntent)
+                .setPriority(Notification.PRIORITY_MAX);
 
-
-        notificationManager.notify(requestID, notificationBuilder.build());
+        if (notificationManager != null) {
+            notificationManager.notify(requestID, builder.build());
+        }
     }
 }
