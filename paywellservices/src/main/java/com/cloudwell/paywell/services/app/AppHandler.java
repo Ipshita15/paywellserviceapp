@@ -140,6 +140,10 @@ public class AppHandler {
 
     private static String DISPLAY_PICTURE_COUNT = "display_picture_count";
 
+    private static final String DISPLAY_PICTURE_SIZE_ = "displayPictureSize";
+    private static final String DISPLAY_PICTURE_ = "displaypicture_";
+    private static final String UNKNOWN_DISPLAY_PICTURE = "unknownDisplayPicture";
+
     public AppHandler() {
 
     }
@@ -168,6 +172,7 @@ public class AppHandler {
         editor.putInt(SOURCE_SIZE_, sources.size());
         editor.commit();
     }
+
     public ArrayList<String> getSourceCodes() {
         int size = mPref.getInt(SOURCE_CODES_SIZE_, PRIVATE_MODE);
         ArrayList<String> sourceCodes = new ArrayList<>(size);
@@ -416,16 +421,20 @@ public class AppHandler {
         editor.putString(SOURCE_STATION_CODE, mSourceCode);
         editor.commit();
     }
+
     public String getSourceStationCode() {
         return mPref.getString(SOURCE_STATION_CODE, UNKNOWN_SOURCE_STATION_CODE);
     }
+
     public void setDestinationName(String mDestination) {
         editor.putString(DESTINATION_NAME, mDestination);
         editor.commit();
     }
+
     public String getDestinationName() {
         return mPref.getString(DESTINATION_NAME, UNKNOWN_DESTINATION);
     }
+
     public void setDestinationStations(ArrayList<String> destinationStations) {
         int size = mPref.getInt(DESTINATION_STATION_SIZE_, PRIVATE_MODE);
         // clear the previous data if exists
@@ -437,6 +446,7 @@ public class AppHandler {
         editor.putInt(DESTINATION_STATION_SIZE_, destinationStations.size());
         editor.commit();
     }
+
     public ArrayList<String> getDestinationStations() {
         int size = mPref.getInt(DESTINATION_STATION_SIZE_, PRIVATE_MODE);
         ArrayList<String> stations = new ArrayList<>(size);
@@ -456,6 +466,7 @@ public class AppHandler {
         editor.putInt(DESTINATION_STATION_CODE_SIZE_, destinationStationCodes.size());
         editor.commit();
     }
+
     public ArrayList<String> getDestinationStationCodes() {
         int size = mPref.getInt(DESTINATION_STATION_CODE_SIZE_, PRIVATE_MODE);
         ArrayList<String> stationCodes = new ArrayList<>(size);
@@ -475,6 +486,7 @@ public class AppHandler {
         editor.putInt(PASSENGER_SIZE_, passengers.size());
         editor.commit();
     }
+
     public ArrayList<String> getPassengers() {
         int size = mPref.getInt(PASSENGER_SIZE_, PRIVATE_MODE);
         ArrayList<String> passengers = new ArrayList<>(size);
@@ -494,6 +506,7 @@ public class AppHandler {
         editor.putInt(PASSENGER_CODE_SIZE_, passengerCodes.size());
         editor.commit();
     }
+
     public ArrayList<String> getPassengerCodes() {
         int size = mPref.getInt(PASSENGER_CODE_SIZE_, PRIVATE_MODE);
         ArrayList<String> passengerCodes = new ArrayList<>(size);
@@ -513,7 +526,8 @@ public class AppHandler {
         editor.putInt(PASSENGER_TYPE_SIZE_, passengerTypes.size());
         editor.commit();
     }
-    public ArrayList<String> getPassengerTypes () {
+
+    public ArrayList<String> getPassengerTypes() {
         int size = mPref.getInt(PASSENGER_TYPE_SIZE_, PRIVATE_MODE);
         ArrayList<String> passengerCodes = new ArrayList<>(size);
         for (int i = 0; i < size; i++)
@@ -525,7 +539,8 @@ public class AppHandler {
         editor.putString(DESTINATION_STATION, mDestinationName);
         editor.commit();
     }
-    public String getDestinationStation () {
+
+    public String getDestinationStation() {
         return mPref.getString(DESTINATION_STATION, UNKNOWN_DESTINATION_STATION);
     }
 
@@ -533,11 +548,12 @@ public class AppHandler {
         editor.putString(DESTINATION_STATION_CODE, destCode);
         editor.commit();
     }
-    public String getDestinationStationCode () {
+
+    public String getDestinationStationCode() {
         return mPref.getString(DESTINATION_STATION_CODE, UNKNOWN_DESTINATION_STATION_CODE);
     }
 
-    public void setTrainNames (ArrayList<String> trainNames) {
+    public void setTrainNames(ArrayList<String> trainNames) {
         int size = mPref.getInt(TRAIN_NAME_SIZE_, PRIVATE_MODE);
         // clear the previous data if exists
         for (int i = 0; i < size; i++)
@@ -548,7 +564,8 @@ public class AppHandler {
         editor.putInt(TRAIN_NAME_SIZE_, trainNames.size());
         editor.commit();
     }
-    public ArrayList<String> getTrainNames () {
+
+    public ArrayList<String> getTrainNames() {
         int size = mPref.getInt(TRAIN_NAME_SIZE_, PRIVATE_MODE);
         ArrayList<String> passengerCodes = new ArrayList<>(size);
         for (int i = 0; i < size; i++)
@@ -568,7 +585,7 @@ public class AppHandler {
         editor.commit();
     }
 
-    public ArrayList<String> getTrainCodes () {
+    public ArrayList<String> getTrainCodes() {
         int size = mPref.getInt(TRAIN_CODE_SIZE_, PRIVATE_MODE);
         ArrayList<String> passengerCodes = new ArrayList<>(size);
         for (int i = 0; i < size; i++)
@@ -587,7 +604,8 @@ public class AppHandler {
         editor.putInt(CLASS_TYPE_SIZE_, classTypes.size());
         editor.commit();
     }
-    public ArrayList<String> getClassTypes () {
+
+    public ArrayList<String> getClassTypes() {
         int size = mPref.getInt(CLASS_TYPE_SIZE_, PRIVATE_MODE);
         ArrayList<String> passengerCodes = new ArrayList<>(size);
         for (int i = 0; i < size; i++)
@@ -606,7 +624,8 @@ public class AppHandler {
         editor.putInt(CLASS_TYPE_CODE_SIZE_, classCode.size());
         editor.commit();
     }
-    public ArrayList<String> getClassTypeCodes () {
+
+    public ArrayList<String> getClassTypeCodes() {
         int size = mPref.getInt(CLASS_TYPE_CODE_SIZE_, PRIVATE_MODE);
         ArrayList<String> passengerCodes = new ArrayList<>(size);
         for (int i = 0; i < size; i++)
@@ -618,7 +637,8 @@ public class AppHandler {
         editor.putString(NUMBER_OF_PASSENGER, noOfPassenger);
         editor.commit();
     }
-    public String getNumberOfPassenger () {
+
+    public String getNumberOfPassenger() {
         return mPref.getString(NUMBER_OF_PASSENGER, UNKNOWN_NUMBER_OF_PASSENGER);
     }
 
@@ -626,7 +646,8 @@ public class AppHandler {
         editor.putString(AGE_OF_PASSENGER, passengerAge);
         editor.commit();
     }
-    public String getAgeOfPassenger () {
+
+    public String getAgeOfPassenger() {
         return mPref.getString(AGE_OF_PASSENGER, UNKNOWN_PASSENGER_AGE);
     }
 
@@ -634,9 +655,11 @@ public class AppHandler {
         editor.putString(PASSENGER_CODE, passengerCode);
         editor.commit();
     }
-    public String getPassengerCode () {
+
+    public String getPassengerCode() {
         return mPref.getString(PASSENGER_CODE, UNKNOWN_PASSENGER_CODE);
     }
+
     public static class MyDialogFragment extends DialogFragment {
         private ConnectionDetector cd;
 
@@ -669,12 +692,15 @@ public class AppHandler {
         editor.commit();
     }
 
-    public String getDistrictArray() { return mPref.getString(REG_DISTRICT_ARRAY, "unknown"); }
+    public String getDistrictArray() {
+        return mPref.getString(REG_DISTRICT_ARRAY, "unknown");
+    }
 
     public void setAppLanguage(String mLanguage) {
         editor.putString(APP_LANGUAGE, mLanguage);
         editor.commit();
     }
+
     public String getAppLanguage() {
         return mPref.getString(APP_LANGUAGE, "unknown");
     }
@@ -683,6 +709,7 @@ public class AppHandler {
         editor.putString(APP_STATUS, mStatus);
         editor.commit();
     }
+
     public String getAppStatus() {
         return mPref.getString(APP_STATUS, "unknown");
     }
@@ -691,6 +718,7 @@ public class AppHandler {
         editor.putString(USERNAME, mUserName);
         editor.commit();
     }
+
     public String getUserName() {
         return mPref.getString(USERNAME, "unknown");
     }
@@ -699,6 +727,7 @@ public class AppHandler {
         editor.putString(PHONE_NUMBER, mPhone);
         editor.commit();
     }
+
     public String getPhoneNumber() {
         return mPref.getString(PHONE_NUMBER, "unknown");
     }
@@ -707,6 +736,7 @@ public class AppHandler {
         editor.putString(QR_CODE_BITMAP, mPath);
         editor.commit();
     }
+
     public String getQrCodeImagePath() {
         return mPref.getString(QR_CODE_BITMAP, "unknown");
     }
@@ -715,6 +745,7 @@ public class AppHandler {
         editor.putString(PHN_NUMBER_VERIFICATION_STATUS, mPhnNoStatus);
         editor.commit();
     }
+
     public String getPhnNumberVerificationStatus() {
         return mPref.getString(PHN_NUMBER_VERIFICATION_STATUS, "unknown");
     }
@@ -723,6 +754,7 @@ public class AppHandler {
         editor.putString(MERCHANT_TYPE_VERIFICATION_STATUS, mMerchantType);
         editor.commit();
     }
+
     public String getMerchantTypeVerificationStatus() {
         return mPref.getString(MERCHANT_TYPE_VERIFICATION_STATUS, "unknown");
     }
@@ -731,6 +763,7 @@ public class AppHandler {
         editor.putString(PHN_NUMBER, mPhnNo);
         editor.commit();
     }
+
     public String getPhnNumber() {
         return mPref.getString(PHN_NUMBER, "unknown");
     }
@@ -748,6 +781,7 @@ public class AppHandler {
         editor.putInt(DAY_COUNT, mCount);
         editor.commit();
     }
+
     public int getDayCount() {
         return mPref.getInt(DAY_COUNT, PRIVATE_MODE);
     }
@@ -839,6 +873,28 @@ public class AppHandler {
 
     public void setDisplayPictureCount(int displayPictureCount) {
         editor.putInt(DISPLAY_PICTURE_COUNT, displayPictureCount);
+        editor.commit();
+    }
+
+    public static String displayPictureArray[];
+
+    public ArrayList<String> getDisplayPictureArrayList() {
+        int size = mPref.getInt(DISPLAY_PICTURE_SIZE_, PRIVATE_MODE);
+        ArrayList<String> displayPictureArrayList = new ArrayList<>(size);
+        for (int i = 0; i < size; i++)
+            displayPictureArrayList.add(mPref.getString(DISPLAY_PICTURE_ + i, UNKNOWN_DISPLAY_PICTURE));
+        return displayPictureArrayList;
+    }
+
+    public void setDisplayPictureArrayList(ArrayList<String> displayPictureArrayList) {
+        int size = mPref.getInt(DISPLAY_PICTURE_SIZE_, PRIVATE_MODE);
+        // clear the previous data if exists
+        for (int i = 0; i < size; i++)
+            editor.remove(DISPLAY_PICTURE_ + i);
+        // write the current list
+        for (int i = 0; i < displayPictureArrayList.size(); i++)
+            editor.putString(DISPLAY_PICTURE_ + i, displayPictureArrayList.get(i));
+        editor.putInt(DISPLAY_PICTURE_SIZE_, displayPictureArrayList.size());
         editor.commit();
     }
 }

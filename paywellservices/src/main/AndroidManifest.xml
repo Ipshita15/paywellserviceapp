@@ -1172,6 +1172,9 @@
         <activity
             android:name=".activity.topup.BrilliantTransactionLogActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.WebViewActivity"
+            android:screenOrientation="portrait"></activity>
 
 
         <!-- SMS Receiver -->
