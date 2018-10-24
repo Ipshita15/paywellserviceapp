@@ -5,8 +5,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.multidex.MultiDex;
+import android.util.Log;
 
+import com.cloudwell.paywell.services.BuildConfig;
 import com.cloudwell.paywell.services.utils.MyHttpClient;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.params.BasicHttpParams;
@@ -37,6 +40,11 @@ public class AppController extends Application {
         mInstance = this;
         mContext = this;
         client = createTrustedHttpsClient();
+
+        if (BuildConfig.DEBUG) {
+            String id = FirebaseInstanceId.getInstance().getToken();
+            Log.e("device_token", "" + id);
+        }
     }
 
     @Override

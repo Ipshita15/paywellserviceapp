@@ -441,7 +441,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View arg0) {
                 if (mNumOfNotification != 0) {
-                    Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
+                    Intent intent = new Intent(MainActivity.this, NotificationAllActivity.class);
                     startActivity(intent);
                     mNumOfNotification = 0;
                     finish();
@@ -660,16 +660,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         protected void onPostExecute(String result) {
             if (result != null) {
-                NotificationActivity.mId = new String[result.length()];
-                NotificationActivity.mTitle = new String[result.length()];
-                NotificationActivity.mMsg = new String[result.length()];
-                NotificationActivity.mDate = new String[result.length()];
-                NotificationActivity.mImage = new String[result.length()];
-                NotificationActivity.mStatus = new String[result.length()];
-                NotificationActivity.mType = new String[result.length()];
-                NotificationActivity.mData = new String[result.length()];
-                NotificationActivity.length = 0;
-
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String status = jsonObject.getString(TAG_RESPONSE_STATUS);
@@ -678,7 +668,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                         String totalUnreadMsg = jsonObject.getString(TAG_RESPONSE_TOTAL_UREAD_MSG);
                         String totalMsg = jsonObject.getString("total_message");
-                        NotificationActivity.length = Integer.parseInt(totalMsg);
+//                        NotificationActivity.length = Integer.parseInt(totalMsg);
                         mNumOfNotification = Integer.parseInt(totalUnreadMsg);
 
                         JSONArray jsonArray = jsonObject.getJSONArray(TAG_RESPONSE_MSG_ARRAY);
@@ -697,19 +687,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             } else {
                                 image = "empty";
                             }
-                            NotificationActivity.mId[i] = msg_id;
-                            NotificationActivity.mTitle[i] = msg_title;
-                            NotificationActivity.mMsg[i] = msg;
-                            NotificationActivity.mDate[i] = date;
-                            NotificationActivity.mImage[i] = image;
-                            NotificationActivity.mStatus[i] = msg_status;
-                            NotificationActivity.mType[i] = type;
-                            NotificationActivity.mData[i] = data;
 
                             if (checkNotificationFlag) {
                                 checkNotificationFlag = false;
                                 mNumOfNotification = 0;
-                                startActivity(new Intent(MainActivity.this, NotificationActivity.class));
+                                startActivity(new Intent(MainActivity.this, NotificationAllActivity.class));
                                 finish();
                             }
                         }

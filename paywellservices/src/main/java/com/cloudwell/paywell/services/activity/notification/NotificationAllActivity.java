@@ -63,6 +63,10 @@ public class NotificationAllActivity extends AppCompatActivity {
     public static String[] mType = null;
     public static String[] mData = null;
 
+    private int flag = 0;
+    private int position;
+    MsgAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -195,14 +199,19 @@ public class NotificationAllActivity extends AppCompatActivity {
     }
 
     public void createList() {
-        MsgAdapter adapter = new MsgAdapter(this);
+        adapter = new MsgAdapter(this);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                NotificationFullViewActivity.TAG_NOTIFICATION_SOURCE = 2;
-                NotificationFullViewActivity.TAG_NOTIFICATION_POSITION = position;
-                startActivity(new Intent(NotificationAllActivity.this, NotificationFullViewActivity.class));
+            public void onItemClick(AdapterView<?> parent, View view, int msgPosition, long id) {
+                position = msgPosition;
+                flag = 1;
+
+                new NotificationAsync().execute(getResources().getString(R.string.notif_url), mId[msgPosition]);
+
+//                NotificationFullViewActivity.TAG_NOTIFICATION_SOURCE = 2;
+//                NotificationFullViewActivity.TAG_NOTIFICATION_POSITION = position;
+//                startActivity(new Intent(NotificationAllActivity.this, NotificationFullViewActivity.class));
             }
         });
     }
@@ -261,6 +270,14 @@ public class NotificationAllActivity extends AppCompatActivity {
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
+
+            // Set the color here
+            if (NotificationAllActivity.mStatus[position].equals("Unread")) {
+                viewHolder.title.setTextColor(Color.parseColor("#ff0000"));
+            } else {
+                viewHolder.title.setTextColor(Color.parseColor("#355689"));
+            }
+
             viewHolder.title.setText(NotificationAllActivity.mTitle[position]);
             viewHolder.date.setText(NotificationAllActivity.mDate[position]);
             viewHolder.msg.setText(NotificationAllActivity.mMsg[position]);
@@ -273,4 +290,68 @@ public class NotificationAllActivity extends AppCompatActivity {
             TextView title, date, msg;
         }
     }
+
+    @SuppressWarnings("deprecation")
+    private class NotificationAsync extends AsyncTask<String, Intent, String> {
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(NotificationAllActivity.this, "", getString(R.string.loading_msg), true);
+            if (!isFinishing())
+                progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String notifications = null;
+
+            try {
+                HttpClient httpClients = new DefaultHttpClient();
+                HttpPost httpPost = new HttpPost(params[0]);
+
+                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("message_id", params[1]));
+                nameValuePairs.add(new BasicNameValuePair("format", "json"));
+
+                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                notifications = httpClients.execute(httpPost, responseHandler);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#8cc63f"));
+                snackbar.show();
+            }
+            return notifications;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (result != null) {
+                try {
+                    mStatus[position] = "Read";
+                    adapter.notifyDataSetChanged();
+                    progressDialog.dismiss();
+                    JSONObject jsonObject = new JSONObject(result);
+                    NotificationFullViewActivity.TAG_NOTIFICATION_SOURCE = 1;
+                    NotificationFullViewActivity.TAG_NOTIFICATION_POSITION = position;
+                    startActivity(new Intent(NotificationAllActivity.this, NotificationFullViewActivity.class));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                    View snackBarView = snackbar.getView();
+                    snackBarView.setBackgroundColor(Color.parseColor("#8cc63f"));
+                    snackbar.show();
+                }
+            }
+        }
+    }
+
+
 }
