@@ -36,6 +36,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.lang.reflect.Field;
@@ -252,6 +253,8 @@ public class AppLoadingActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             try {
                 if (result != null) {
+                    ArrayList<String> imgLink = new ArrayList<>();
+
                     JSONObject jsonObject = new JSONObject(result);
                     String status = jsonObject.getString("status");
                     if (status.equalsIgnoreCase("200")) {
@@ -266,6 +269,19 @@ public class AppLoadingActivity extends AppCompatActivity {
                         String changeBTypeStatus = jsonObject.getString("businessTypeStatus");
                         String displayPictureCount = jsonObject.getString("displayPictureCount");
                         mAppHandler.setDisplayPictureCount(Integer.parseInt(displayPictureCount));
+
+                        JSONArray pictureArrayJson = jsonObject.getJSONArray("imageLink");
+                        for(int i = 0; i < pictureArrayJson.length(); i++) {
+                            String disImglink =  pictureArrayJson.getString(i);
+                            if(disImglink.isEmpty()) {
+                                mAppHandler.displayPictureArray[i] = "";
+                                imgLink.add("");
+                            } else {
+                                mAppHandler.displayPictureArray[i] = disImglink;
+                                imgLink.add(disImglink);
+                            }
+                        }
+                        mAppHandler.setDisplayPictureArrayList(imgLink);
 
                         if (sme.equalsIgnoreCase("0")) {
                             mAppHandler.setGatewayId("1");
@@ -370,6 +386,8 @@ public class AppLoadingActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             try {
                 if (result != null) {
+                    ArrayList<String> imgLink = new ArrayList<>();
+
                     JSONObject jsonObject = new JSONObject(result);
                     String status = jsonObject.getString("status");
                     if (status.equalsIgnoreCase("200")) {
@@ -384,6 +402,20 @@ public class AppLoadingActivity extends AppCompatActivity {
                         String changeBTypeStatus = jsonObject.getString("businessTypeStatus");
                         String displayPictureCount = jsonObject.getString("displayPictureCount");
                         mAppHandler.setDisplayPictureCount(Integer.parseInt(displayPictureCount));
+
+                        mAppHandler.displayPictureArray = new String[Integer.parseInt(displayPictureCount)];
+                        JSONArray pictureArrayJson = jsonObject.getJSONArray("imageLink");
+                        for(int i = 0; i < pictureArrayJson.length(); i++) {
+                            String disImglink =  pictureArrayJson.getString(i);
+                            if(disImglink.isEmpty()) {
+                                mAppHandler.displayPictureArray[i] = "";
+                                imgLink.add("");
+                            } else {
+                                mAppHandler.displayPictureArray[i] = disImglink;
+                                imgLink.add(disImglink);
+                            }
+                        }
+                        mAppHandler.setDisplayPictureArrayList(imgLink);
 
                         if (sme.equalsIgnoreCase("0")) {
                             mAppHandler.setGatewayId("1");

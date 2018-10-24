@@ -4,6 +4,7 @@ import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -12,6 +13,7 @@ import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -33,21 +35,29 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.util.Patterns;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -143,6 +153,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private PayWellBalanceAsync pwBalanceCheck;
     AlertDialog.Builder builderNotification;
     private AlertDialog alertNotification;
+    private AutoScrollViewPager viewPager;
+    private int currentSlideNo;
+    private int currentPage;
 
     private Button home_topup, home_utility, home_payments, home_eticket, home_mfs, home_product_catalog, home_statement, home_refill_balance, home_settings;
 
@@ -183,6 +196,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         builderNotification = new AlertDialog.Builder(this);
         alertNotification = builderNotification.create();
+
+        viewPager = findViewById(R.id.view_pager_auto);
 
         InitializeData();
     }
@@ -1303,12 +1318,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        // stop auto scroll when onPause
+        viewPager.stopAutoScroll();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         RefreshStringsOfButton();
         if (alertNotification.isShowing()) {
             alertNotification.dismiss();
         }
+        // start auto scroll when onResume
+        viewPager.startAutoScroll();
         checkPayWellBalance();
     }
 
@@ -1884,14 +1908,115 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         for (int len = 0; len < mAppHandler.getDisplayPictureCount(); len++) {
             imageUrl[len] = "https://api.paywellonline.com/retailerPromotionImage/retailer_pic_" + len + ".jpg";
         }
-        AutoScrollViewPager viewPager = findViewById(R.id.view_pager);
+//        AutoScrollViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.startAutoScroll();
         viewPager.setInterval(2000);
-        viewPager.setCycle(false);
+        viewPager.setCycle(true);
+        viewPager.setDirection(AutoScrollViewPager.RIGHT);
         viewPager.setStopScrollWhenTouch(true);
+        viewPager.setSlideBorderMode(AutoScrollViewPager.SLIDE_BORDER_MODE_CYCLE);
+        viewPager.setScrollDurationFactor(0);
+        viewPager.setBorderAnimation(false);
+
+        final GestureDetector tapGestureDetector = new GestureDetector(this, new TapGestureListener());
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(this, imageUrl);
         viewPager.setAdapter(adapter);
+        viewPager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                tapGestureDetector.onTouchEvent(event);
+                return false;
+            }
+        });
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                currentPage = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+
+        });
+    }
+
+    class TapGestureListener extends GestureDetector.SimpleOnGestureListener {
+
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+            String link = mAppHandler.getDisplayPictureArrayList().get(currentPage);
+
+            if(link.isEmpty()) {
+                
+            } else if (link.contains("facebook.com")) {
+                if (!mCd.isConnectingToInternet()) {
+                    AppHandler.showDialog(getSupportFragmentManager());
+                } else {
+                    goToFacebook();
+                }
+            } else if (link.contains("youtube.com")) {
+                if (!mCd.isConnectingToInternet()) {
+                    AppHandler.showDialog(getSupportFragmentManager());
+                } else {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=mRg-yT20Iyc"));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setPackage("com.google.android.youtube");
+                    startActivity(intent);
+                }
+            } else {
+                WebViewActivity.TAG_LINK = link;
+                startActivity(new Intent(MainActivity.this, WebViewActivity.class));
+            }
+            return true;
+        }
+    }
+
+    private void goToFacebook() {
+        try {
+            String facebookUrl = getFacebookPageURL();
+            Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
+            facebookIntent.setData(Uri.parse(facebookUrl));
+            startActivity(facebookIntent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String getFacebookPageURL() {
+        String FACEBOOK_URL = "https://www.facebook.com/PayWellOnline/";
+        String facebookurl = null;
+
+        try {
+            PackageManager packageManager = getPackageManager();
+
+            if (packageManager != null) {
+                Intent activated = packageManager.getLaunchIntentForPackage("com.facebook.katana");
+
+                if (activated != null) {
+                    int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
+
+                    if (versionCode >= 3002850) {
+                        facebookurl = "fb://page/1548219792xxxxxx";
+                    }
+                } else {
+                    facebookurl = FACEBOOK_URL;
+                }
+            } else {
+                facebookurl = FACEBOOK_URL;
+            }
+        } catch (Exception e) {
+            facebookurl = FACEBOOK_URL;
+        }
+        return facebookurl;
     }
 
     @Override

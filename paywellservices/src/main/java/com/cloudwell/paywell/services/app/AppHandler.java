@@ -141,6 +141,10 @@ public class AppHandler {
     private static String DISPLAY_PICTURE_COUNT = "display_picture_count";
     private static String CENTER_AREA_DROP_DOWN_POSITION = "CENTER_AREA_DROP_DOWN_POSITION";
 
+    private static final String DISPLAY_PICTURE_SIZE_ = "displayPictureSize";
+    private static final String DISPLAY_PICTURE_ = "displaypicture_";
+    private static final String UNKNOWN_DISPLAY_PICTURE = "unknownDisplayPicture";
+
     public AppHandler() {
 
     }
@@ -638,8 +642,6 @@ public class AppHandler {
     public String getPassengerCode () {
         return mPref.getString(PASSENGER_CODE, UNKNOWN_PASSENGER_CODE);
     }
-
-
     public static class MyDialogFragment extends DialogFragment {
         private ConnectionDetector cd;
 
@@ -852,5 +854,27 @@ public class AppHandler {
 
     public int getCenterDropDownPogistion() {
         return mPref.getInt(CENTER_AREA_DROP_DOWN_POSITION, 0);
+    }
+
+    public static String displayPictureArray[];
+
+    public ArrayList<String> getDisplayPictureArrayList() {
+        int size = mPref.getInt(DISPLAY_PICTURE_SIZE_, PRIVATE_MODE);
+        ArrayList<String> displayPictureArrayList = new ArrayList<>(size);
+        for (int i = 0; i < size; i++)
+            displayPictureArrayList.add(mPref.getString(DISPLAY_PICTURE_ + i, UNKNOWN_DISPLAY_PICTURE));
+        return displayPictureArrayList;
+    }
+
+    public void setDisplayPictureArrayList(ArrayList<String> displayPictureArrayList) {
+        int size = mPref.getInt(DISPLAY_PICTURE_SIZE_, PRIVATE_MODE);
+        // clear the previous data if exists
+        for (int i = 0; i < size; i++)
+            editor.remove(DISPLAY_PICTURE_ + i);
+        // write the current list
+        for (int i = 0; i < displayPictureArrayList.size(); i++)
+            editor.putString(DISPLAY_PICTURE_ + i, displayPictureArrayList.get(i));
+        editor.putInt(DISPLAY_PICTURE_SIZE_, displayPictureArrayList.size());
+        editor.commit();
     }
 }
