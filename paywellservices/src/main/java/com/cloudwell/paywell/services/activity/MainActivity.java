@@ -4,7 +4,6 @@ import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -13,7 +12,6 @@ import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -42,7 +40,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.GestureDetector;
 import android.view.Gravity;
@@ -52,12 +49,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -1915,7 +1908,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         viewPager.setDirection(AutoScrollViewPager.RIGHT);
         viewPager.setStopScrollWhenTouch(true);
         viewPager.setSlideBorderMode(AutoScrollViewPager.SLIDE_BORDER_MODE_CYCLE);
-        viewPager.setScrollDurationFactor(0);
+//        viewPager.setScrollDurationFactor(0);
         viewPager.setBorderAnimation(false);
 
         final GestureDetector tapGestureDetector = new GestureDetector(this, new TapGestureListener());
@@ -2005,7 +1998,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
 
                     if (versionCode >= 3002850) {
-                        facebookurl = "fb://page/1548219792xxxxxx";
+                        facebookurl = "fb://page/1889526334650062";
                     }
                 } else {
                     facebookurl = FACEBOOK_URL;
