@@ -1908,7 +1908,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         viewPager.setDirection(AutoScrollViewPager.RIGHT);
         viewPager.setStopScrollWhenTouch(true);
         viewPager.setSlideBorderMode(AutoScrollViewPager.SLIDE_BORDER_MODE_CYCLE);
-        viewPager.setScrollDurationFactor(0);
+//        viewPager.setScrollDurationFactor(0);
         viewPager.setBorderAnimation(false);
 
         final GestureDetector tapGestureDetector = new GestureDetector(this, new TapGestureListener());
