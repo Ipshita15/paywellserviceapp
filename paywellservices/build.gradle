@@ -86,17 +86,10 @@ dependencies {
     //Calender
     implementation 'com.applandeo:material-calendar-view:1.4.0'
 
-    //slider
-    implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation('cn.trinea.android.view.autoscrollviewpager:android-auto-scroll-view-pager:1.1.2') {
-        exclude module: 'support-v4'
-    }
-
     //Tutorial
     implementation 'com.github.deano2390:MaterialShowcaseView:1.2.0'
 
     implementation 'com.amitshekhar.android:android-networking:1.0.2'
-
 
     //image zoom
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
@@ -106,6 +99,12 @@ dependencies {
 
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
+
+    //slider
+    implementation 'com.ss.bannerslider:bannerslider:2.0.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+
 }
 // Add to the bottom of the file
 apply plugin: 'com.google.gms.google-services'
