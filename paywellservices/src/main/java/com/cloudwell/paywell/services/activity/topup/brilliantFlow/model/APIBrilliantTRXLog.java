@@ -1,13 +1,15 @@
 
-package com.cloudwell.paywell.services.activity.topup.brilliant.model;
+package com.cloudwell.paywell.services.activity.topup.brilliantFlow.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 @SuppressWarnings("unused")
-public class BrilliantTopUpInquiry {
+public class APIBrilliantTRXLog {
 
     @SerializedName("data")
-    private Data mData;
+    private List<Datum> mData;
     @SerializedName("message")
     private String mMessage;
     @SerializedName("pwContact")
@@ -15,11 +17,11 @@ public class BrilliantTopUpInquiry {
     @SerializedName("status_code")
     private Long mStatusCode;
 
-    public Data getData() {
+    public List<Datum> getData() {
         return mData;
     }
 
-    public void setData(Data data) {
+    public void setData(List<Datum> data) {
         mData = data;
     }
 

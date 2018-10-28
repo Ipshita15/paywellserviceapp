@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.topup;
+package com.cloudwell.paywell.services.activity.topup.brilliantFlow;
 
 import android.Manifest;
 import android.app.Activity;
@@ -43,7 +43,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.topup.brilliant.model.BrilliantTopUpInquiry;
+import com.cloudwell.paywell.services.activity.topup.brilliantFlow.model.BrilliantTopUpInquiry;
 import com.cloudwell.paywell.services.activity.utility.ivac.DrawableClickListener;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
