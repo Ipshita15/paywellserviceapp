@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.topup;
+package com.cloudwell.paywell.services.activity.topup.brilliant;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -24,7 +24,6 @@ import com.cloudwell.paywell.services.activity.topup.brilliant.model.APIBrillian
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.BrilliantTRXLogModel;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.Datum;
 import com.cloudwell.paywell.services.app.AppHandler;
-
 
 import java.util.ArrayList;
 

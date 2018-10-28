@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.topup;
+package com.cloudwell.paywell.services.activity.topup.brilliant;
 
 import android.Manifest;
 import android.app.Activity;

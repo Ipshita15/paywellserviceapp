@@ -11,7 +11,7 @@
     tools:context=".activity.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager
+    <ss.com.bannerslider.Slider
         android:id="@+id/view_pager_auto"
         android:layout_width="match_parent"
         android:layout_height="0dp"

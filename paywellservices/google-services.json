@@ -36,6 +36,37 @@
           "status": 2
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:712565615849:android:298026d904f87543",
+        "android_client_info": {
+          "package_name": "com.cloudwell.paywell.services.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "712565615849-3ku8g1jnklp72k924b28nmjouelknd4r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdrnX1MjgJ6kLcCWxrAbBeORjeIeoQA8E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
     }
   ],
   "configuration_version": "1"

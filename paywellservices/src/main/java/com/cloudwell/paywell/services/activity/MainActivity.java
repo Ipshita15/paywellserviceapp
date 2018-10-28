@@ -33,7 +33,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -41,12 +40,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Patterns;
-import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -72,7 +69,8 @@ import com.cloudwell.paywell.services.activity.terms.TermsActivity;
 import com.cloudwell.paywell.services.activity.topup.MainTopUpActivity;
 import com.cloudwell.paywell.services.activity.topup.TopupMainActivity;
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
-import com.cloudwell.paywell.services.adapter.ViewPagerAdapter;
+import com.cloudwell.paywell.services.adapter.MainSliderAdapter;
+import com.cloudwell.paywell.services.adapter.PicassoImageLoadingService;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.endpoints.SmsListener;
@@ -112,7 +110,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
-import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
+import ss.com.bannerslider.Slider;
+import ss.com.bannerslider.event.OnSlideClickListener;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener {
@@ -146,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private PayWellBalanceAsync pwBalanceCheck;
     AlertDialog.Builder builderNotification;
     private AlertDialog alertNotification;
-    private AutoScrollViewPager viewPager;
+    private Slider viewPager;
     private int currentSlideNo;
     private int currentPage;
 
@@ -1314,7 +1313,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onPause() {
         super.onPause();
         // stop auto scroll when onPause
-        viewPager.stopAutoScroll();
+        // viewPager.stopNestedScroll();
     }
 
     @Override
@@ -1325,7 +1324,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             alertNotification.dismiss();
         }
         // start auto scroll when onResume
-        viewPager.startAutoScroll();
+        // viewPager.startAutoScroll();
         checkPayWellBalance();
     }
 
@@ -1897,81 +1896,55 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initializePreview() {
+
         String[] imageUrl = new String[mAppHandler.getDisplayPictureCount()];
         for (int len = 0; len < mAppHandler.getDisplayPictureCount(); len++) {
             imageUrl[len] = "https://api.paywellonline.com/retailerPromotionImage/retailer_pic_" + len + ".jpg";
         }
-//        AutoScrollViewPager viewPager = findViewById(R.id.view_pager);
-        viewPager.startAutoScroll();
+
+        Slider.init(new PicassoImageLoadingService(this));
+
+        viewPager.setAdapter(new MainSliderAdapter(getApplicationContext(), imageUrl));
         viewPager.setInterval(2000);
-        viewPager.setCycle(true);
-        viewPager.setDirection(AutoScrollViewPager.RIGHT);
-        viewPager.setStopScrollWhenTouch(true);
-        viewPager.setSlideBorderMode(AutoScrollViewPager.SLIDE_BORDER_MODE_CYCLE);
-//        viewPager.setScrollDurationFactor(0);
-        viewPager.setBorderAnimation(false);
+        viewPager.hideIndicators();
+        viewPager.setLoopSlides(true);
 
-        final GestureDetector tapGestureDetector = new GestureDetector(this, new TapGestureListener());
 
-        ViewPagerAdapter adapter = new ViewPagerAdapter(this, imageUrl);
-        viewPager.setAdapter(adapter);
-        viewPager.setOnTouchListener(new View.OnTouchListener() {
+        viewPager.setOnSlideClickListener(new OnSlideClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                tapGestureDetector.onTouchEvent(event);
-                return false;
-            }
-        });
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
+            public void onSlideClick(int position) {
                 currentPage = position;
+
+                String link = mAppHandler.getDisplayPictureArrayList().get(currentPage);
+                // link = "facebook.com";
+
+                if (link.isEmpty()) {
+
+                } else if (link.contains("facebook.com")) {
+                    if (!mCd.isConnectingToInternet()) {
+                        AppHandler.showDialog(getSupportFragmentManager());
+                    } else {
+                        goToFacebook();
+                    }
+                } else if (link.contains("youtube.com")) {
+                    if (!mCd.isConnectingToInternet()) {
+                        AppHandler.showDialog(getSupportFragmentManager());
+                    } else {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=mRg-yT20Iyc"));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.setPackage("com.google.android.youtube");
+                        startActivity(intent);
+                    }
+                } else {
+                    WebViewActivity.TAG_LINK = link;
+                    startActivity(new Intent(MainActivity.this, WebViewActivity.class));
+                }
             }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-
         });
+
+
     }
 
-    class TapGestureListener extends GestureDetector.SimpleOnGestureListener {
-
-        @Override
-        public boolean onSingleTapConfirmed(MotionEvent e) {
-            String link = mAppHandler.getDisplayPictureArrayList().get(currentPage);
-
-            if(link.isEmpty()) {
-                
-            } else if (link.contains("facebook.com")) {
-                if (!mCd.isConnectingToInternet()) {
-                    AppHandler.showDialog(getSupportFragmentManager());
-                } else {
-                    goToFacebook();
-                }
-            } else if (link.contains("youtube.com")) {
-                if (!mCd.isConnectingToInternet()) {
-                    AppHandler.showDialog(getSupportFragmentManager());
-                } else {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=mRg-yT20Iyc"));
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.setPackage("com.google.android.youtube");
-                    startActivity(intent);
-                }
-            } else {
-                WebViewActivity.TAG_LINK = link;
-                startActivity(new Intent(MainActivity.this, WebViewActivity.class));
-            }
-            return true;
-        }
-    }
 
     private void goToFacebook() {
         try {
