@@ -9,7 +9,7 @@ import android.widget.Button;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
-import com.cloudwell.paywell.services.activity.topup.brilliantFlow.BrilliantTopupActivity;
+import com.cloudwell.paywell.services.activity.topup.brilliant.BrilliantTopupActivity;
 
 public class MainTopUpActivity extends AppCompatActivity {
 

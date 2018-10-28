@@ -1,10 +1,10 @@
 
-package com.cloudwell.paywell.services.activity.topup.brilliantFlow.model;
+package com.cloudwell.paywell.services.activity.topup.brilliant.model;
 
 import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("unused")
-public class Datum {
+public class Data {
 
     @SerializedName("add_datetime")
     private String mAddDatetime;

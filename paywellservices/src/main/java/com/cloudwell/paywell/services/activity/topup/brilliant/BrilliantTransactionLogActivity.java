@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.topup.brilliantFlow;
+package com.cloudwell.paywell.services.activity.topup.brilliant;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -20,9 +20,9 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.topup.brilliantFlow.model.APIBrilliantTRXLog;
-import com.cloudwell.paywell.services.activity.topup.brilliantFlow.model.BrilliantTRXLogModel;
-import com.cloudwell.paywell.services.activity.topup.brilliantFlow.model.Datum;
+import com.cloudwell.paywell.services.activity.topup.brilliant.model.APIBrilliantTRXLog;
+import com.cloudwell.paywell.services.activity.topup.brilliant.model.BrilliantTRXLogModel;
+import com.cloudwell.paywell.services.activity.topup.brilliant.model.Datum;
 import com.cloudwell.paywell.services.app.AppHandler;
 
 import java.util.ArrayList;

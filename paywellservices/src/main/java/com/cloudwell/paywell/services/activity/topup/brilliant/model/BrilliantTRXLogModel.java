@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.topup.brilliantFlow.model;
+package com.cloudwell.paywell.services.activity.topup.brilliant.model;
 
 public class BrilliantTRXLogModel {
 

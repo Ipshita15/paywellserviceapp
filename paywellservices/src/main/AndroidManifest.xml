@@ -1179,10 +1179,10 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.topup.brilliantFlow.BrilliantTopupActivity"
+            android:name=".activity.topup.brilliant.BrilliantTopupActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.topup.brilliantFlow.BrilliantTransactionLogActivity"
+            android:name=".activity.topup.brilliant.BrilliantTransactionLogActivity"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.WebViewActivity"

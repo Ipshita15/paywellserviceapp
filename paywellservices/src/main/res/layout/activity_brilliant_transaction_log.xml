@@ -6,7 +6,7 @@
               android:layout_height="match_parent"
               android:id="@+id/brilliantTrxLogLL"
               android:layout_margin="8dp"
-              tools:context=".activity.topup.brilliantFlow.BrilliantTransactionLogActivity">
+              tools:context=".activity.topup.brilliant.BrilliantTransactionLogActivity">
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.topup.brilliantFlow.BrilliantTopupActivity"
+    tools:context=".activity.topup.brilliant.BrilliantTopupActivity"
     android:background="@color/bg_color"
     android:orientation="vertical"
     android:id="@+id/brilliantLL">
