@@ -18,6 +18,7 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -35,7 +36,6 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.MainActivity;
 import com.cloudwell.paywell.services.activity.utility.ivac.DrawableClickListener;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
@@ -86,6 +86,9 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_topup_main);
+
+        String key = getIntent().getStringExtra("key");
+        Log.d("Key", key);
 
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
