@@ -1168,11 +1168,13 @@
             </intent-filter>
 
         </activity>
-
-
         <activity
             android:name=".activity.notification.ImageViewActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.topup.TopUpOperatorMenuActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".activity.topup.MainTopUpActivity"

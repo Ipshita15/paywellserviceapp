@@ -33,7 +33,7 @@ public class MainTopUpActivity extends AppCompatActivity {
         mobileOperatorBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainTopUpActivity.this, TopupMainActivity.class));
+                startActivity(new Intent(MainTopUpActivity.this, TopUpOperatorMenuActivity.class));
             }
         });
 
