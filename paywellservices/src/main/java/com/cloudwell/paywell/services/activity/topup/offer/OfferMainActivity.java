@@ -17,7 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.topup.OperatorMenuActivity;
+import com.cloudwell.paywell.services.activity.topup.TopupMainActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -115,8 +115,8 @@ public class OfferMainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(OfferMainActivity.this, OperatorMenuActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(OfferMainActivity.this, OperatorMenuActivity.class);
+//        startActivity(new Intent(OfferMainActivity.this, TopupMainActivity.class));
         finish();
     }
 
