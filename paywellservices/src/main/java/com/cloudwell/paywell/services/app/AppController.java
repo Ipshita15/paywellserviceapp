@@ -30,6 +30,8 @@ public class AppController extends Application {
     private static SharedPreferences sPref;
     private static AppController mContext;
 
+    AppHandler mAppHandler;
+
     public static synchronized AppController getInstance() {
         return mInstance;
     }
@@ -45,7 +47,10 @@ public class AppController extends Application {
             String id = FirebaseInstanceId.getInstance().getToken();
             Log.e("device_token", "" + id);
         }
+
+
     }
+
 
     @Override
     protected void attachBaseContext(Context base) {
