@@ -1314,6 +1314,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onPause();
         // stop auto scroll when onPause
         // viewPager.stopNestedScroll();
+        viewPager.setInterval(0);
     }
 
     @Override
@@ -1326,6 +1327,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // start auto scroll when onResume
         // viewPager.startAutoScroll();
         checkPayWellBalance();
+
+        viewPager.setInterval(2000);
     }
 
     private boolean getMailAddress() {
