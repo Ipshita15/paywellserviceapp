@@ -40,6 +40,7 @@ import com.cloudwell.paywell.services.activity.topup.offer.OfferMainActivity;
 import com.cloudwell.paywell.services.activity.utility.ivac.DrawableClickListener;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
 import org.apache.http.NameValuePair;
@@ -837,7 +838,8 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                     dialogInterface.dismiss();
                     PIN_NO = pinNoET.getText().toString();
                     if (cd.isConnectingToInternet()) {
-                        new TopUpAsync().execute();
+//                        new TopUpAsync().execute();
+                        handleTopupAPIValidation();
                     } else {
                         Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
                         snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -856,6 +858,82 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
         });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    private void handleTopupAPIValidation() {
+        ProgressDialog progressDialog;
+        progressDialog = ProgressDialog.show(TopupMainActivity.this, "", getString(R.string.loading_msg), true);
+        // progressDialog.show();
+
+        String requestString = null;
+        if (topUpLayout.getChildCount() > 1) {
+            // Multiple
+            StringBuilder reqStrBuilder = new StringBuilder();
+            reqStrBuilder.append(getResources().getString(R.string.multi_top)
+                    + "iemi_no=" + mAppHandler.getImeiNo()
+                    + "&pin_code=" + PIN_NO
+                    + "&no_of_req=" + topUpLayout.getChildCount());
+
+            for (int i = 0; i < topUpLayout.getChildCount(); i++) {
+                EditText mPhoneNoET, mAmountET;
+                RadioGroup prePostSelector;
+
+                View singleTopUpView = topUpLayout.getChildAt(i);
+                if (singleTopUpView != null) {
+                    mPhoneNoET = singleTopUpView.findViewById(R.id.phoneNo);
+                    mAmountET = singleTopUpView.findViewById(R.id.amount);
+                    prePostSelector = singleTopUpView.findViewById(R.id.prePostRadioGroup);
+
+                    String phoneStr = mPhoneNoET.getText().toString();
+                    String amountStr = mAmountET.getText().toString();
+                    String planStr = null;
+                    if (prePostSelector.getCheckedRadioButtonId() == R.id.preRadioButton) {
+                        planStr = getResources().getString(R.string.pre_paid_str);
+                    } else if (prePostSelector.getCheckedRadioButtonId() == R.id.postRadioButton) {
+                        planStr = getResources().getString(R.string.post_paid_str);
+                    }
+                    reqStrBuilder.append("&msisdn" + (i + 1) + "="
+                            + phoneStr + "&amount" + (i + 1) + "="
+                            + amountStr + "&con_type" + (i + 1) + "="
+                            + planStr);
+                }
+            }
+            requestString = reqStrBuilder.toString();
+        } else {
+            // Single
+            EditText phoneNoET, amountET;
+            RadioGroup prePostSelector;
+
+            View singleTopUpView = topUpLayout.getChildAt(0);
+            if (singleTopUpView != null) {
+                phoneNoET = singleTopUpView.findViewById(R.id.phoneNo);
+                amountET = singleTopUpView.findViewById(R.id.amount);
+                prePostSelector = singleTopUpView.findViewById(R.id.prePostRadioGroup);
+
+                String phoneStr = phoneNoET.getText().toString();
+                String amountStr = amountET.getText().toString();
+                String planStr = null;
+
+                if (prePostSelector.getCheckedRadioButtonId() == R.id.preRadioButton) {
+                    planStr = getResources().getString(R.string.pre_paid_str);
+                } else if (prePostSelector.getCheckedRadioButtonId() == R.id.postRadioButton) {
+                    planStr = getResources().getString(R.string.post_paid_str);
+                }
+                requestString = getResources().getString(R.string.single_top)
+                        + "iemi_no=" + mAppHandler.getImeiNo()
+                        + "&msisdn=" + phoneStr
+                        + "&amount=" + amountStr
+                        + "&con_type=" + planStr
+                        + "&pin_code=" + PIN_NO;
+            }
+        }
+
+        Log.e("", "");
+
+
+        ApiUtils.getAPIService().callTopAPI();
+
+
     }
 
     private class TopUpAsync extends AsyncTask<Object, String, String> {

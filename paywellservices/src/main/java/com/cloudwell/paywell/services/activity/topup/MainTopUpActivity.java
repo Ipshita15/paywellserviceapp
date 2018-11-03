@@ -8,17 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
 import com.cloudwell.paywell.services.activity.topup.brilliant.BrilliantTopupActivity;
-import com.cloudwell.paywell.services.app.authentication.AuthenticationManager;
-import com.cloudwell.paywell.services.app.model.APIResposeGenerateToken;
-import com.cloudwell.paywell.services.app.storage.AppStorageBox;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
-
-import java.text.SimpleDateFormat;
 
 public class MainTopUpActivity extends AppCompatActivity {
 
@@ -55,43 +49,43 @@ public class MainTopUpActivity extends AppCompatActivity {
         });
 
 
-        try {
-            APIResposeGenerateToken apiResposeGenerateToken = (APIResposeGenerateToken) AppStorageBox.get(getApplicationContext(), AppStorageBox.Key.AUTHORIZATION_DATA);
-            if (apiResposeGenerateToken == null) {
-
-                mCd = new ConnectionDetector(this);
-
-                if (mCd.isConnectingToInternet()) {
-                    AuthenticationManager.basicAuthentication(getApplicationContext());
-                } else {
-                    showErrorMessage();
-                }
-
-
-            } else {
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String ackTimestamp = apiResposeGenerateToken.getAckTimestamp();
-                long currentTimeMillis = System.currentTimeMillis();
-                long parse = formatter.parse(ackTimestamp).getTime();
-
-                if (parse < currentTimeMillis) {
-                    mCd = new ConnectionDetector(this);
-
-                    if (mCd.isConnectingToInternet()) {
-                        Toast.makeText(getApplicationContext(), "Call", Toast.LENGTH_LONG).show();
-
-                        AuthenticationManager.basicAuthentication(getApplicationContext());
-                    } else {
-                        showErrorMessage();
-                    }
-                } else {
-                    Toast.makeText(getApplicationContext(), "Already update", Toast.LENGTH_LONG).show();
-                }
-            }
-
-        } catch (Exception e) {
-            showErrorMessage();
-        }
+//        try {
+//            APIResposeGenerateToken apiResposeGenerateToken = (APIResposeGenerateToken) AppStorageBox.get(getApplicationContext(), AppStorageBox.Key.AUTHORIZATION_DATA);
+//            if (apiResposeGenerateToken == null) {
+//
+//                mCd = new ConnectionDetector(this);
+//
+//                if (mCd.isConnectingToInternet()) {
+//                    AuthenticationManager.basicAuthentication(getApplicationContext());
+//                } else {
+//                    showErrorMessage();
+//                }
+//
+//
+//            } else {
+//                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//                String ackTimestamp = apiResposeGenerateToken.getAckTimestamp();
+//                long currentTimeMillis = System.currentTimeMillis();
+//                long parse = formatter.parse(ackTimestamp).getTime();
+//
+//                if (parse < currentTimeMillis) {
+//                    mCd = new ConnectionDetector(this);
+//
+//                    if (mCd.isConnectingToInternet()) {
+//                        Toast.makeText(getApplicationContext(), "Call", Toast.LENGTH_LONG).show();
+//
+//                        AuthenticationManager.basicAuthentication(getApplicationContext());
+//                    } else {
+//                        showErrorMessage();
+//                    }
+//                } else {
+//                    Toast.makeText(getApplicationContext(), "Already update", Toast.LENGTH_LONG).show();
+//                }
+//            }
+//
+//        } catch (Exception e) {
+//            showErrorMessage();
+//        }
 
 
     }

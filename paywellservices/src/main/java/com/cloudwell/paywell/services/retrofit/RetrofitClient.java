@@ -27,6 +27,7 @@ public class RetrofitClient {
                     .connectTimeout(60, TimeUnit.SECONDS)
                     .readTimeout(60, TimeUnit.SECONDS)
                     .writeTimeout(60, TimeUnit.SECONDS)
+                    .authenticator(new TokenAuthenticator())
                     .build();
 
 
@@ -35,6 +36,7 @@ public class RetrofitClient {
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .client(okHttpClient)
+
                     .build();
         }
         return retrofit;

@@ -94,4 +94,8 @@ public class AppController extends Application {
     public Typeface getOxygenLightFont() {
         return Typeface.createFromAsset(getAssets(), OXYGEN_LIGHT);
     }
+
+    public static AppController getmContext() {
+        return mContext;
+    }
 }
