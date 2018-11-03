@@ -25,6 +25,11 @@ public class TopUpOperatorMenuActivity extends BaseActivity {
                 operatorType = OperatorType.GP;
                 startTopUpMianactivity(operatorType);
                 break;
+
+            case R.id.homeBtnSkitto:
+                operatorType = OperatorType.Skitto;
+                startTopUpMianactivity(operatorType);
+                break;
             case R.id.homeBtnRb:
 
                 operatorType = OperatorType.ROBI;

@@ -40,20 +40,22 @@
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
 
+                <Button
+                    android:id="@+id/homeBtnSkitto"
+                    style="@style/HomeButtonNew"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/skitto"
+                    android:onClick="onButtonClicker"
+                    android:text="@string/home_skitto"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
 
-                <Button
-                    android:id="@+id/homeBtnRb"
-                    style="@style/HomeButtonNew"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_robi"
-                    android:onClick="onButtonClicker"
-                    android:text="@string/home_rb"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -82,6 +84,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
+
+                <Button
+                    android:id="@+id/homeBtnRb"
+                    style="@style/HomeButtonNew"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_robi"
+                    android:onClick="onButtonClicker"
+                    android:text="@string/home_rb"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
 
                 <Button
                     android:id="@+id/homeBtnTt"

@@ -152,6 +152,7 @@
     <string name="banglalion_acc_no">Customer ID/Customer Number/MSISDN</string>
 
     <string name="home_gp">GP</string>
+    <string name="home_skitto">Skitto</string>
     <string name="home_bl">Banglalink</string>
     <string name="home_at">Airtel</string>
     <string name="home_rb">Robi</string>

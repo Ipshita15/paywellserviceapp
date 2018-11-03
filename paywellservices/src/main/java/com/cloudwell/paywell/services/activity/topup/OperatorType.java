@@ -5,10 +5,11 @@ package com.cloudwell.paywell.services.activity.topup;
  */
 public enum OperatorType {
     GP("GP"),
-    ROBI("ROBI"),
-    BANGLALINK("BANGLALINK"),
-    TELETALK("TELETALK"),
-    AIRTEL("AIRTEL");
+    ROBI("RB"),
+    BANGLALINK("BL"),
+    TELETALK("TT"),
+    AIRTEL("AT"),
+    Skitto("GP ST");
 
     private String text;
 

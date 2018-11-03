@@ -11,7 +11,8 @@ public class AllUrl {
 
 
     // Base url
-    private static final String BASE_URL = HOST_URL + "";
+    public static final String BASE_URL = HOST_URL + "";
     private static final String GET_RECHARGEABLE_URL = HOST_URL + "Android/GetRechargeOffer?";
+
 
 }
