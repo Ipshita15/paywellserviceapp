@@ -1,56 +1,58 @@
+
 package com.cloudwell.paywell.services.activity.topup.model;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 11/3/18.
- */
+
+@SuppressWarnings("unused")
 public class TopupData {
 
-    @SerializedName("msisdn")
-    @Expose
-    private String msisdn;
     @SerializedName("amount")
-    @Expose
-    private String amount;
+    private String mAmount;
     @SerializedName("con_type")
-    @Expose
-    private String conType;
+    private String mConType;
+    @SerializedName("msisdn")
+    private String mMsisdn;
     @SerializedName("operator")
-    @Expose
-    private String operator;
+    private String mOperator;
 
-    public String getMsisdn() {
-        return msisdn;
-    }
-
-    public void setMsisdn(String msisdn) {
-        this.msisdn = msisdn;
+    public TopupData(String amount, String conType, String msisdn, String operator) {
+        mAmount = amount;
+        mConType = conType;
+        mMsisdn = msisdn;
+        mOperator = operator;
     }
 
     public String getAmount() {
-        return amount;
+        return mAmount;
     }
 
     public void setAmount(String amount) {
-        this.amount = amount;
+        mAmount = amount;
     }
 
     public String getConType() {
-        return conType;
+        return mConType;
     }
 
     public void setConType(String conType) {
-        this.conType = conType;
+        mConType = conType;
+    }
+
+    public String getMsisdn() {
+        return mMsisdn;
+    }
+
+    public void setMsisdn(String msisdn) {
+        mMsisdn = msisdn;
     }
 
     public String getOperator() {
-        return operator;
+        return mOperator;
     }
 
     public void setOperator(String operator) {
-        this.operator = operator;
+        mOperator = operator;
     }
 
 }

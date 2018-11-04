@@ -39,14 +39,13 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.topup.model.RequestTopup;
 import com.cloudwell.paywell.services.activity.topup.model.TopupData;
 import com.cloudwell.paywell.services.activity.topup.model.TopupDatum;
-import com.cloudwell.paywell.services.activity.topup.model.TopupResposeDatum;
+import com.cloudwell.paywell.services.activity.topup.model.TopupReposeData;
 import com.cloudwell.paywell.services.activity.topup.offer.OfferMainActivity;
 import com.cloudwell.paywell.services.activity.utility.ivac.DrawableClickListener;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
-import com.google.gson.Gson;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -186,8 +185,8 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
         } else if (v.getId() == R.id.enquiryBtn) {
             showEnquiryPrompt();
         } else if (v.getId() == R.id.imageOffer) {
-//            startActivity(new Intent(TopupMainActivity.this, OperatorMenuActivity.class));
-            onClickBundleOffer(key);
+            startActivity(new Intent(TopupMainActivity.this, OperatorMenuActivity.class));
+            // onClickBundleOffer(key);
         }
     }
 
@@ -879,7 +878,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
         requestTopup.setPassword("" + pinNo);
         requestTopup.setUserName("" + mAppHandler.getImeiNo());
 
-        List<TopupDatum> topupDatumList = new ArrayList<>();
+        List<TopupData> topupDatumList = new ArrayList<>();
 
 //        String requestString = null;
         if (topUpLayout.getChildCount() > 1) {
@@ -904,7 +903,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
-                    TopupDatum topupDatum = new TopupDatum(amountStr, planStr, phoneStr, key);
+                    TopupData topupDatum = new TopupData(amountStr, planStr, phoneStr, key);
                     topupDatumList.add(topupDatum);
 
                 }
@@ -931,7 +930,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                     planStr = getResources().getString(R.string.post_paid_str);
                 }
 
-                TopupDatum topupDatum = new TopupDatum(amountStr, planStr, phoneStr, key);
+                TopupData topupDatum = new TopupData(amountStr, planStr, phoneStr, key);
                 topupDatumList.add(topupDatum);
 
 
@@ -940,14 +939,14 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
 
 
         requestTopup.setTopupData(topupDatumList);
-        String json = new Gson().toJson(requestTopup);
-
-        Call<TopupResposeDatum[]> responseBodyCall = ApiUtils.getAPIService().callTopAPI(requestTopup);
 
 
-        responseBodyCall.enqueue(new Callback<TopupResposeDatum[]>() {
+        Call<TopupReposeData> responseBodyCall = ApiUtils.getAPIService().callTopAPI(requestTopup);
+
+
+        responseBodyCall.enqueue(new Callback<TopupReposeData>() {
             @Override
-            public void onResponse(Call<TopupResposeDatum[]> call, Response<TopupResposeDatum[]> response) {
+            public void onResponse(Call<TopupReposeData> call, Response<TopupReposeData> response) {
                 progressDialog.dismiss();
                 Log.d(KEY_TAG, "onResponse:" + response.body());
 
@@ -956,7 +955,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
             }
 
             @Override
-            public void onFailure(Call<TopupResposeDatum[]> call, Throwable t) {
+            public void onFailure(Call<TopupReposeData> call, Throwable t) {
                 progressDialog.dismiss();
                 Log.d(KEY_TAG, "onFailure:");
                 Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
@@ -971,47 +970,47 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
 
     }
 
-    private void showReposeUI(TopupResposeDatum[] response) {
+    private void showReposeUI(TopupReposeData response) {
         StringBuilder receiptBuilder = new StringBuilder();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(TopupMainActivity.this);
 
         // check authentication
-        TopupData topupData = response[0].getTopupData();
+        TopupData topupData = response.getTopupData().get(0).getTopupData();
         if (topupData == null) {
             showAuthticationError();
         } else {
-            showDialog(response, receiptBuilder, builder);
+            showDialog(response.getTopupData(), receiptBuilder, builder);
         }
 
 
     }
 
-    private void showDialog(TopupResposeDatum[] response, StringBuilder receiptBuilder, AlertDialog.Builder builder) {
+    private void showDialog(List<TopupDatum> response, StringBuilder receiptBuilder, AlertDialog.Builder builder) {
 
         boolean isTotalRequestSuccess = false;
-        for (int i = 0; i < response.length; i++) {
+        for (int i = 0; i < response.size(); i++) {
 
-            TopupResposeDatum topupResposeDatum = response[i];
-            if (topupResposeDatum != null) {
+            TopupDatum topupData = response.get(i);
+            if (topupData != null) {
                 int number = i + 1;
                 receiptBuilder.append(number + ".");
 
 
-                receiptBuilder.append(getString(R.string.phone_no_des) + " " + topupResposeDatum.getTopupData().getMsisdn());
-                receiptBuilder.append("\n" + getString(R.string.amount_des) + " " + topupResposeDatum.getTopupData().getAmount() + " " + getString(R.string.tk_des));
+                receiptBuilder.append(getString(R.string.phone_no_des) + " " + topupData.getTopupData().getMsisdn());
+                receiptBuilder.append("\n" + getString(R.string.amount_des) + " " + topupData.getTopupData().getAmount() + " " + getString(R.string.tk_des));
 
-                if (topupResposeDatum.getStatus().toString().startsWith("3")) {
+                if (topupData.getStatus().toString().startsWith("3")) {
 
-                    receiptBuilder.append("\n" + Html.fromHtml("<font color='#ff0000'>" + getString(R.string.status_des) + "</font>") + " " + topupResposeDatum.getMessage());
+                    receiptBuilder.append("\n" + Html.fromHtml("<font color='#ff0000'>" + getString(R.string.status_des) + "</font>") + " " + topupData.getMessage());
 
                     isTotalRequestSuccess = false;
                 } else {
-                    receiptBuilder.append("\n" + Html.fromHtml("<font color='#008000>" + getString(R.string.status_des) + "</font>") + " " + topupResposeDatum.getMessage());
+                    receiptBuilder.append("\n" + Html.fromHtml("<font color='#008000>" + getString(R.string.status_des) + "</font>") + " " + topupData.getMessage());
 
                     isTotalRequestSuccess = true;
                 }
-                receiptBuilder.append("\n" + getString(R.string.trx_id_des) + " " + topupResposeDatum.getTransId());
+                receiptBuilder.append("\n" + getString(R.string.trx_id_des) + " " + topupData.getTransId());
 
                 receiptBuilder.append("\n\n");
 

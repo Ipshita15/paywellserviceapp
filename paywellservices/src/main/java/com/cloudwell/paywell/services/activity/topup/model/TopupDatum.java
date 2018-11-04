@@ -3,57 +3,48 @@ package com.cloudwell.paywell.services.activity.topup.model;
 
 import com.google.gson.annotations.SerializedName;
 
-
 @SuppressWarnings("unused")
 public class TopupDatum {
 
-    @SerializedName("amount")
-    private String mAmount;
-    @SerializedName("con_type")
-    private String mConType;
-    @SerializedName("msisdn")
-    private String mMsisdn;
-    @SerializedName("operator")
-    private String mOperator;
+    @SerializedName("message")
+    private String mMessage;
+    @SerializedName("status")
+    private Long mStatus;
+    @SerializedName("topupData")
+    private TopupData mTopupData;
+    @SerializedName("trans_id")
+    private String mTransId;
 
-
-    public TopupDatum(String amount, String conType, String msisdn, String operator) {
-        mAmount = amount;
-        mConType = conType;
-        mMsisdn = msisdn;
-        mOperator = operator;
+    public String getMessage() {
+        return mMessage;
     }
 
-    public String getAmount() {
-        return mAmount;
+    public void setMessage(String message) {
+        mMessage = message;
     }
 
-    public void setAmount(String amount) {
-        mAmount = amount;
+    public Long getStatus() {
+        return mStatus;
     }
 
-    public String getConType() {
-        return mConType;
+    public void setStatus(Long status) {
+        mStatus = status;
     }
 
-    public void setConType(String conType) {
-        mConType = conType;
+    public TopupData getTopupData() {
+        return mTopupData;
     }
 
-    public String getMsisdn() {
-        return mMsisdn;
+    public void setTopupData(TopupData topupData) {
+        mTopupData = topupData;
     }
 
-    public void setMsisdn(String msisdn) {
-        mMsisdn = msisdn;
+    public String getTransId() {
+        return mTransId;
     }
 
-    public String getOperator() {
-        return mOperator;
-    }
-
-    public void setOperator(String operator) {
-        mOperator = operator;
+    public void setTransId(String transId) {
+        mTransId = transId;
     }
 
 }

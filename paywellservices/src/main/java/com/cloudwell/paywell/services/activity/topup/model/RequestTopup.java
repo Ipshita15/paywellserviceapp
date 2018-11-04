@@ -10,7 +10,7 @@ public class RequestTopup {
     @SerializedName("password")
     private String mPassword;
     @SerializedName("topupData")
-    private List<TopupDatum> mTopupData;
+    private List<TopupData> mTopupData;
     @SerializedName("userName")
     private String mUserName;
 
@@ -22,11 +22,11 @@ public class RequestTopup {
         mPassword = password;
     }
 
-    public List<TopupDatum> getTopupData() {
+    public List<TopupData> getTopupData() {
         return mTopupData;
     }
 
-    public void setTopupData(List<TopupDatum> topupData) {
+    public void setTopupData(List<TopupData> topupData) {
         mTopupData = topupData;
     }
 

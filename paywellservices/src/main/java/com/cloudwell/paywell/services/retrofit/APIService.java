@@ -2,7 +2,7 @@ package com.cloudwell.paywell.services.retrofit;
 
 
 import com.cloudwell.paywell.services.activity.topup.model.RequestTopup;
-import com.cloudwell.paywell.services.activity.topup.model.TopupResposeDatum;
+import com.cloudwell.paywell.services.activity.topup.model.TopupReposeData;
 import com.cloudwell.paywell.services.app.model.APIResposeGenerateToken;
 
 import java.util.Map;
@@ -28,7 +28,7 @@ public interface APIService {
 
     @POST("PaywellTopUpService/PaywellTopup")
     @Multipart
-    Call<TopupResposeDatum[]> callTopAPI(@Part("requestData") RequestTopup requestTopup);
+    Call<TopupReposeData> callTopAPI(@Part("requestData") RequestTopup requestTopup);
 
 }
 
