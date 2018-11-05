@@ -682,4 +682,5 @@
     <string name="chat">https://www.paywellonline.com/chatting-retailer/?</string>
 
     <string name="merchant_balance_return_url">https://api.paywellonline.com/PaywelltransactionSDA/SDAToMerchentBalanceReturn</string>
+
 </resources>

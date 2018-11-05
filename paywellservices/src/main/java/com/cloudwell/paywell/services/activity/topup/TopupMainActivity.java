@@ -105,13 +105,6 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topup_main);
 
-//        try {
-//            key = getIntent().getStringExtra("key");
-//            Log.d("Key", key);
-//        }catch (Exception e){
-//
-//        }
-
 
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
