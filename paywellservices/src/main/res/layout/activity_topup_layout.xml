@@ -25,14 +25,22 @@
                 android:layout_marginTop="5dp"
                 android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/tvError"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:text="TextView"
+                    android:visibility="gone"/>
+
                 <com.cloudwell.paywell.services.customView.MultiLineRadioGroup
-                    android:layout_marginTop="16dp"
-                    android:id="@+id/linearLayout2"
+                    android:id="@+id/rgOperator"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginRight="4dp"
-                    multi_line_radio_group:max_in_row="3"
+                    multi_line_radio_group:max_in_row="0"
                     >
 
 

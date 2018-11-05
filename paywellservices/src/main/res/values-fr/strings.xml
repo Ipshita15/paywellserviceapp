@@ -33,6 +33,7 @@
     <string name="home_statement_balance">ব্যালেন্স স্টেটমেন্ট</string>
     <string name="home_statement_sales">সেল্‌স স্টেটমেন্ট</string>
     <string name="home_statement_transaction">ট্রানজেকশন স্টেটমেন্ট</string>
+    <string name="error_correct_operator">সঠিক অপারেটর নির্বাচন করুন</string>
 
 
     <!-- Sub Menu Names -->
@@ -571,6 +572,7 @@
     <string name="topup_offer">https://api.paywellonline.com/Android/GetRechargeOffer?</string>
 
     <string name="mobileOperator">সকল অপারেটর</string>
+    <string name="operator"> অপারেটর</string>
     <string name="brilliant">ব্রিলিয়ান্ট</string>
     <string name="home_utility_dpdc_prepaid">প্রিপেইড</string>
     <string name="brilliant_topup">ব্রিলিয়ান্ট টপআপ</string>

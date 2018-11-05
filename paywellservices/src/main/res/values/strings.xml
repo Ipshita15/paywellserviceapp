@@ -567,7 +567,7 @@
     <string name="inq_top">https://www.paywellonline.com/default/api/enquiry.php?</string>
     <string name="trx_log">https://www.paywellonline.com/crs3291/live/view_log.php?</string>
     <string name="topup_offer">https://api.paywellonline.com/Android/GetRechargeOffer?</string>
-
+    <string name="operator"> অপারেটর</string>
     <string name="mobileOperator">Mobile Operators</string>
     <string name="brilliant">Brilliant</string>
     <string name="home_utility_dpdc_prepaid">Prepaid</string>
@@ -682,5 +682,6 @@
     <string name="chat">https://www.paywellonline.com/chatting-retailer/?</string>
 
     <string name="merchant_balance_return_url">https://api.paywellonline.com/PaywelltransactionSDA/SDAToMerchentBalanceReturn</string>
+    <string name="error_correct_operator">Please select correct operator</string>
 
 </resources>

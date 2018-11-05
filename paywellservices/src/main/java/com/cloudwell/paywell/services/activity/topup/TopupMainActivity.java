@@ -23,6 +23,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
@@ -34,6 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.topup.model.RequestTopup;
@@ -44,6 +46,7 @@ import com.cloudwell.paywell.services.activity.topup.offer.OfferMainActivity;
 import com.cloudwell.paywell.services.activity.utility.ivac.DrawableClickListener;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.customView.MultiLineRadioGroup;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
@@ -98,6 +101,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
     private static final String TAG_STATUS = "status";
     private static final String TAG_RECHARGE_OFFER = "RechargeOffer";
     private static final String TAG_MESSAGE = "message";
+    private TextView tvError;
 
 
     @Override
@@ -119,6 +123,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
 
         topUpLayout = findViewById(R.id.topUpAddLayout);
         Button buttonSubmit = findViewById(R.id.btnSubmit);
+
 
         ((Button) mRelativeLayout.findViewById(R.id.btnSubmit)).setTypeface(AppController.getInstance().getOxygenLightFont());
 
@@ -192,6 +197,8 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
         final View topUpView = inflater.inflate(R.layout.activity_topup_layout, null);
         EditText phoneNoET = topUpView.findViewById(R.id.phoneNo);
         Button removeBtn = topUpView.findViewById(R.id.removeLayoutImgBtn);
+        MultiLineRadioGroup viewById = topUpView.findViewById(R.id.rgOperator);
+        tvError = topUpView.findViewById(R.id.tvError);
 
         topUpView.setTag(addNoFlag);
 
@@ -245,6 +252,16 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                 topUpView.startAnimation(slideOutAnim);
             }
         });
+
+        viewById.setOnCheckedChangeListener(new MultiLineRadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(ViewGroup group, RadioButton button) {
+                tvError.setVisibility(View.GONE);
+
+            }
+        });
+
+
         topUpLayout.addView(topUpView);
         topUpView.startAnimation(slideInAnim);
     }
@@ -791,10 +808,27 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                         amountET.setError(Html.fromHtml("<font color='red'>" + getString(R.string.amount_error_msg) + "</font>"));
                         return;
                     }
+
+
+                    MultiLineRadioGroup multiLineRadioGroup = singleTopUpView.findViewById(R.id.rgOperator);
+                    int checkedRadioButtonId = multiLineRadioGroup.getCheckedRadioButtonId();
+                    CharSequence checkedRadioButtonText = multiLineRadioGroup.getCheckedRadioButtonText();
+                    if (checkedRadioButtonId == -1) {
+                        // No item selected
+                        TextView tvError = singleTopUpView.findViewById(R.id.tvError);
+                        tvError.setVisibility(View.VISIBLE);
+                        tvError.setText(Html.fromHtml("<font color='red'>" + getString(R.string.error_correct_operator)));
+                        return;
+
+                    }
+
+
                     reqStrBuilder.append((i + 1) + ". " + getString(R.string.phone_no_des) + " " + phoneStr
                             + "\n " + getString(R.string.amount_des) + " " + amountStr + getString(R.string.tk)
-                            + "\n " + getString(R.string.package_type_des) + " " + planStr.substring(0, 1).toUpperCase()
-                            + planStr.substring(1).toLowerCase() + "\n\n");
+                            + "\n " + getString(R.string.package_type_des) + " : " + planStr.substring(0, 1).toUpperCase()
+                            + planStr.substring(1).toLowerCase() + "\n"
+                            + "" + getString(R.string.operator) + " : " + checkedRadioButtonText.toString() + "\n\n");
+
                 }
             }
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -900,7 +934,15 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
-                    TopupData topupDatum = new TopupData(amountStr, planStr, phoneStr, key);
+                    MultiLineRadioGroup multiLineRadioGroup = singleTopUpView.findViewById(R.id.rgOperator);
+                    int checkedRadioButtonId = multiLineRadioGroup.getCheckedRadioButtonId();
+                    CharSequence checkedRadioButtonText = multiLineRadioGroup.getCheckedRadioButtonText();
+
+                    String operator = "";
+                    operator = getOperatorTextForServer(checkedRadioButtonText, operator);
+
+
+                    TopupData topupDatum = new TopupData(amountStr, planStr, phoneStr, operator);
                     topupDatumList.add(topupDatum);
 
                 }
@@ -927,7 +969,15 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                     planStr = getResources().getString(R.string.post_paid_str);
                 }
 
-                TopupData topupDatum = new TopupData(amountStr, planStr, phoneStr, key);
+                MultiLineRadioGroup multiLineRadioGroup = singleTopUpView.findViewById(R.id.rgOperator);
+                int checkedRadioButtonId = multiLineRadioGroup.getCheckedRadioButtonId();
+                CharSequence checkedRadioButtonText = multiLineRadioGroup.getCheckedRadioButtonText();
+
+                String operator = "";
+                operator = getOperatorTextForServer(checkedRadioButtonText, operator);
+
+
+                TopupData topupDatum = new TopupData(amountStr, planStr, phoneStr, operator);
                 topupDatumList.add(topupDatum);
 
 
@@ -965,6 +1015,33 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
             }
         });
 
+    }
+
+    private String getOperatorTextForServer(CharSequence checkedRadioButtonText, String operator) {
+        switch (checkedRadioButtonText.toString()) {
+            case "GP":
+                operator = OperatorType.GP.getText();
+                break;
+
+            case "SKITTO":
+                operator = OperatorType.Skitto.getText();
+                break;
+            case "BL":
+                operator = OperatorType.BANGLALINK.getText();
+                break;
+            case "ROBI":
+                operator = OperatorType.ROBI.getText();
+                break;
+            case "AIRTEL":
+                operator = OperatorType.AIRTEL.getText();
+                break;
+
+            case "TALETALK":
+                operator = OperatorType.TELETALK.getText();
+                break;
+
+        }
+        return operator;
     }
 
     private void showReposeUI(TopupReposeData response) {
