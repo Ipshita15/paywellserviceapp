@@ -103,11 +103,15 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_topup_main);
 
-        key = getIntent().getStringExtra("key");
-        Log.d("Key", key);
+//        try {
+//            key = getIntent().getStringExtra("key");
+//            Log.d("Key", key);
+//        }catch (Exception e){
+//
+//        }
+
 
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
@@ -980,18 +984,18 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
         if (topupData == null) {
             showAuthticationError();
         } else {
-            showDialog(response.getTopupData(), receiptBuilder, builder);
+            showDialog(response, receiptBuilder, builder);
         }
 
 
     }
 
-    private void showDialog(List<TopupDatum> response, StringBuilder receiptBuilder, AlertDialog.Builder builder) {
+    private void showDialog(TopupReposeData response, StringBuilder receiptBuilder, AlertDialog.Builder builder) {
 
         boolean isTotalRequestSuccess = false;
-        for (int i = 0; i < response.size(); i++) {
+        for (int i = 0; i < response.getTopupData().size(); i++) {
 
-            TopupDatum topupData = response.get(i);
+            TopupDatum topupData = response.getTopupData().get(i);
             if (topupData != null) {
                 int number = i + 1;
                 receiptBuilder.append(number + ".");
@@ -1017,7 +1021,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
             }
 
         }
-
+        mHotLine = response.getHotlineNumber();
         receiptBuilder.append("\n\n" + getString(R.string.using_paywell_des) + "\n" + getString(R.string.hotline_des) + " " + mHotLine);
 
         if (isTotalRequestSuccess == false) {

@@ -28,7 +28,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:orientation="horizontal"
-                android:weightSum="5">
+                android:weightSum="3">
 
                 <Button
                     android:id="@+id/homeBtnGp"
@@ -51,17 +51,6 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
 
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
-
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
-
                 <Button
                     android:id="@+id/homeBtnBl"
                     style="@style/HomeButtonNew"
@@ -78,12 +67,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:orientation="horizontal"
-                android:weightSum="5">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                android:weightSum="3">
 
                 <Button
                     android:id="@+id/homeBtnRb"
@@ -104,11 +88,6 @@
                     android:text="@string/home_tt"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
 
                 <Button
                     android:id="@+id/homeBtnAt"

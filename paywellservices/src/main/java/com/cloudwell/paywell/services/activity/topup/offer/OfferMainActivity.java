@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +18,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.topup.TopupMainActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -38,6 +38,7 @@ public class OfferMainActivity extends AppCompatActivity {
     public static String[] mType = null;
     public static String operatorName;
     private String type = "";
+    private String key;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,14 @@ public class OfferMainActivity extends AppCompatActivity {
         if (bundle != null) {
             array = bundle.getString("array");
         }
+
+        try {
+            key = getIntent().getStringExtra("key");
+            Log.d("Key", key);
+        } catch (Exception e) {
+
+        }
+
         initializeAdapter();
     }
 
@@ -280,7 +289,11 @@ public class OfferMainActivity extends AppCompatActivity {
                                 ConfirmOfferActivity.retCom = splitArray_trx[2];
                                 ConfirmOfferActivity.details = splitArray_trx[0];
                                 ConfirmOfferActivity.operatorName = operatorName;
-                                startActivity(new Intent(OfferMainActivity.this, ConfirmOfferActivity.class));
+
+
+                                Intent intent = new Intent(OfferMainActivity.this, ConfirmOfferActivity.class);
+                                intent.putExtra("key", key);
+                                startActivity(intent);
                             }
                         });
                         convertView.setTag(holder);

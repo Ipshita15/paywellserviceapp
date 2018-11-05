@@ -66,7 +66,7 @@ import com.cloudwell.paywell.services.activity.settings.SettingsActivity;
 import com.cloudwell.paywell.services.activity.sms.SmsReceiver;
 import com.cloudwell.paywell.services.activity.statements.StatementMainActivity;
 import com.cloudwell.paywell.services.activity.terms.TermsActivity;
-import com.cloudwell.paywell.services.activity.topup.MainTopUpActivity;
+import com.cloudwell.paywell.services.activity.topup.TopupMenuActivity;
 import com.cloudwell.paywell.services.activity.topup.TopupMainActivity;
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.adapter.MainSliderAdapter;
@@ -1065,7 +1065,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.homeBtnTopup:
                 if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
                     if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
-                        startActivity(new Intent(this, MainTopUpActivity.class));
+                        startActivity(new Intent(this, TopupMenuActivity.class));
                     } else {
                         Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.allow_error_msg, Snackbar.LENGTH_LONG);
                         snackbar.setActionTextColor(Color.parseColor("#ffffff"));
