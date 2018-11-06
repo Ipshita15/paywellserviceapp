@@ -11,7 +11,7 @@ public class TopupReposeData {
 
     @SerializedName("hotlineNumber")
     private String mHotlineNumber;
-    @SerializedName("topupData")
+    @SerializedName("data")
     private List<TopupDatum> mTopupData;
 
     public String getHotlineNumber() {
