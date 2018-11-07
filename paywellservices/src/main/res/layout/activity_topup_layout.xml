@@ -20,191 +20,212 @@
             android:weightSum="2">
 
             <LinearLayout
+                android:id="@+id/linerLayoutRoot"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tvError"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="8dp"
-                    android:text="TextView"
-                    android:visibility="gone"/>
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/operator_backgroud"
+                    android:orientation="vertical">
 
-                <com.cloudwell.paywell.services.customView.MultiLineRadioGroup
-                    android:id="@+id/rgOperator"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginRight="4dp"
-                    multi_line_radio_group:max_in_row="0"
-                    >
-
-
-                    <RadioButton
-                        android:id="@+id/rbGP"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/checkbox_background"
-                        android:button="@null"
-                        android:padding="4dp"
-                        android:text="GP"
-
-                        android:textColor="@color/radiobuttonstate"
-                        />
-
-                    <RadioButton
-                        android:id="@+id/rbBanglalink"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="16dp"
-                        android:background="@drawable/checkbox_background"
-                        android:button="@null"
-                        android:padding="4dp"
-                        android:text="BL"
-                        android:textColor="@color/radiobuttonstate"
-                        />
-
-                    <RadioButton
-                        android:id="@+id/rbRobi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="16dp"
-                        android:background="@drawable/checkbox_background"
-                        android:button="@null"
-                        android:padding="4dp"
-                        android:text="ROBI"
-                        android:textColor="@color/radiobuttonstate"
-                        />
-
-                    <RadioButton
-                        android:id="@+id/rbAirtel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="16dp"
-                        android:background="@drawable/checkbox_background"
-                        android:button="@null"
-                        android:padding="4dp"
-                        android:text="AIRTEL"
-                        android:textColor="@color/radiobuttonstate"
-                        />
-
-                    <RadioButton
-                        android:id="@+id/rbTaletalk"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="16dp"
-                        android:background="@drawable/checkbox_background"
-                        android:button="@null"
-                        android:padding="4dp"
-                        android:text="TAlETALK"
-                        android:textColor="@color/radiobuttonstate"
-                        />
-
-                    <RadioButton
-                        android:id="@+id/rbSkitto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/checkbox_background"
-                        android:button="@null"
-                        android:padding="4dp"
-                        android:text="SKITTO"
-                        android:textColor="@color/radiobuttonstate"
-                        card_view:layout_constraintBottom_toBottomOf="parent"
-                        card_view:layout_constraintTop_toTopOf="parent"
-                        tools:layout_editor_absoluteX="77dp"/>
-
-
-                </com.cloudwell.paywell.services.customView.MultiLineRadioGroup
-                    >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="3dp"
-                    android:weightSum="3">
-
-                    <EditText
-                        android:id="@+id/phoneNo"
-                        android:layout_width="121dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="2"
-                        android:digits="0123456789"
-                        android:drawableRight="@drawable/ic_phone_book"
-                        android:hint="@string/phone_no_msg"
-                        android:imeOptions="actionNext"
-                        android:inputType="phone"
-                        android:maxLength="11"
-                        android:textColor="@color/blackShade"
-                        android:textColorHint="@color/blackShade_trans70"/>
-
-                    <EditText
-                        android:id="@+id/amount"
-                        android:layout_width="100dp"
-                        android:layout_height="50dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="1"
-                        android:digits="0123456789"
-                        android:hint="@string/amount_msg"
-                        android:inputType="number"
-                        android:maxLength="5"
-                        android:textColor="@color/blackShade"
-                        android:textColorHint="@color/blackShade_trans70"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="3dp">
-
-                    <RadioGroup
-                        android:id="@+id/prePostRadioGroup"
+                    <TextView
+                        android:id="@+id/tvError"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:checkedButton="@+id/preRadioButton"
-                        android:orientation="horizontal"
-                        android:weightSum="2"
-                        tools:ignore="UselessParent">
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="TextView"
+                        android:visibility="gone"/>
+
+                    <com.cloudwell.paywell.services.customView.MultiLineRadioGroup
+                        android:id="@+id/rgOperator"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginRight="4dp"
+                        multi_line_radio_group:max_in_row="0"
+                        >
+
 
                         <RadioButton
-                            android:layout_marginTop="8dp"
-                            android:id="@+id/preRadioButton"
+                            android:id="@+id/rbGP"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginBottom="8dp"
-                            android:layout_weight="1"
+                            android:background="@drawable/checkbox_background"
+                            android:button="@null"
+                            android:padding="4dp"
+                            android:text="GP"
 
-                            android:gravity="center_vertical"
-                            android:paddingLeft="@dimen/radioButtonPadding"
-                            android:paddingRight="@dimen/radioButtonPadding"
-                            android:text="@string/prepaid_msg"
-                            android:textColor="@color/blackShade_trans70"
-                            android:textSize="@dimen/menuTextSize"/>
+                            android:textColor="@color/radiobuttonstate"
+                            />
 
                         <RadioButton
-                            android:id="@+id/postRadioButton"
+                            android:id="@+id/rbBanglalink"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginRight="16dp"
+                            android:background="@drawable/checkbox_background"
+                            android:button="@null"
+                            android:padding="4dp"
+                            android:text="BL"
+                            android:textColor="@color/radiobuttonstate"
+                            />
 
-                            android:layout_marginTop="8dp"
-                            android:layout_weight="1"
-                            android:layout_marginBottom="8dp"
-                            android:layout_gravity="center"
-                            android:gravity="center_vertical"
-                            android:paddingLeft="@dimen/radioButtonPadding"
-                            android:paddingRight="@dimen/radioButtonPadding"
-                            android:text="@string/postpaid_msg"
-                            android:textColor="@color/blackShade_trans70"
-                            android:textSize="@dimen/menuTextSize"/>
-                    </RadioGroup>
+                        <RadioButton
+                            android:id="@+id/rbRobi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="16dp"
+                            android:background="@drawable/checkbox_background"
+                            android:button="@null"
+                            android:padding="4dp"
+                            android:text="ROBI"
+                            android:textColor="@color/radiobuttonstate"
+                            />
+
+                        <RadioButton
+                            android:id="@+id/rbAirtel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="16dp"
+                            android:background="@drawable/checkbox_background"
+                            android:button="@null"
+                            android:padding="4dp"
+                            android:text="AIRTEL"
+                            android:textColor="@color/radiobuttonstate"
+                            />
+
+                        <RadioButton
+                            android:id="@+id/rbTaletalk"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="16dp"
+                            android:background="@drawable/checkbox_background"
+                            android:button="@null"
+                            android:padding="4dp"
+                            android:text="TAlETALK"
+                            android:textColor="@color/radiobuttonstate"
+                            />
+
+                        <RadioButton
+                            android:id="@+id/rbSkitto"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/checkbox_background"
+                            android:button="@null"
+                            android:padding="4dp"
+                            android:text="SKITTO"
+                            android:textColor="@color/radiobuttonstate"
+                            card_view:layout_constraintBottom_toBottomOf="parent"
+                            card_view:layout_constraintTop_toTopOf="parent"
+                            tools:layout_editor_absoluteX="77dp"/>
+
+
+                    </com.cloudwell.paywell.services.customView.MultiLineRadioGroup
+                        >
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/operator_backgroud"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="3dp"
+                        android:weightSum="3">
+
+                        <EditText
+                            android:id="@+id/phoneNo"
+                            android:layout_width="121dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="2"
+                            android:digits="0123456789"
+                            android:drawableRight="@drawable/ic_phone_book"
+                            android:hint="@string/phone_no_msg"
+                            android:imeOptions="actionNext"
+                            android:inputType="phone"
+                            android:maxLength="11"
+                            android:textColor="@color/blackShade"
+                            android:textColorHint="@color/blackShade_trans70"/>
+
+                        <EditText
+                            android:id="@+id/amount"
+                            android:layout_width="100dp"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="1"
+                            android:digits="0123456789"
+                            android:hint="@string/amount_msg"
+                            android:inputType="number"
+                            android:maxLength="5"
+                            android:textColor="@color/blackShade"
+                            android:textColorHint="@color/blackShade_trans70"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="3dp">
+
+                        <RadioGroup
+                            android:id="@+id/prePostRadioGroup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:checkedButton="@+id/preRadioButton"
+                            android:orientation="horizontal"
+                            android:weightSum="2"
+                            tools:ignore="UselessParent">
+
+                            <RadioButton
+                                android:id="@+id/preRadioButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:layout_weight="1"
+
+                                android:gravity="center_vertical"
+                                android:paddingLeft="@dimen/radioButtonPadding"
+                                android:paddingRight="@dimen/radioButtonPadding"
+                                android:text="@string/prepaid_msg"
+                                android:textColor="@color/blackShade_trans70"
+                                android:textSize="@dimen/menuTextSize"/>
+
+                            <RadioButton
+                                android:id="@+id/postRadioButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:layout_gravity="center"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="@dimen/radioButtonPadding"
+                                android:paddingRight="@dimen/radioButtonPadding"
+                                android:text="@string/postpaid_msg"
+                                android:textColor="@color/blackShade_trans70"
+                                android:textSize="@dimen/menuTextSize"/>
+                        </RadioGroup>
+                    </LinearLayout>
+                </LinearLayout>
+
             </LinearLayout>
 
             <Button

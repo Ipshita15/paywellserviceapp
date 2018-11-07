@@ -30,6 +30,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -108,7 +109,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topup_main);
-
+        mAppHandler = new AppHandler(this);
 
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
@@ -204,6 +205,11 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
 
         if (addNoFlag == 1) {
             removeBtn.setVisibility(View.GONE);
+        } else {
+            LinearLayout layout = (LinearLayout) topUpView.findViewById(R.id.linerLayoutRoot);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(4, 18, 4, 4);
+            layout.setLayoutParams(params);
         }
 
         phoneNoET.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(phoneNoET) {
@@ -217,10 +223,8 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
             }
         });
 
-        ((EditText) topUpView.findViewById(R.id.phoneNo)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        ((EditText) topUpView.findViewById(R.id.amount)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        ((RadioButton) topUpView.findViewById(R.id.preRadioButton)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        ((RadioButton) topUpView.findViewById(R.id.postRadioButton)).setTypeface(AppController.getInstance().getOxygenLightFont());
+
+        refrashLanguage(topUpView);
 
         removeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -253,10 +257,20 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
             }
         });
 
+        tvError.setVisibility(View.VISIBLE);
+        tvError.setText(Html.fromHtml(getString(R.string.error_correct_operator)));
+
         viewById.setOnCheckedChangeListener(new MultiLineRadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(ViewGroup group, RadioButton button) {
-                tvError.setVisibility(View.GONE);
+                if (button.isChecked()) {
+                    tvError = topUpView.findViewById(R.id.tvError);
+                    tvError.setVisibility(View.GONE);
+                } else {
+                    tvError = topUpView.findViewById(R.id.tvError);
+                    tvError.setVisibility(View.VISIBLE);
+                    tvError.setText(Html.fromHtml(getString(R.string.error_correct_operator)));
+                }
 
             }
         });
@@ -264,6 +278,25 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
 
         topUpLayout.addView(topUpView);
         topUpView.startAnimation(slideInAnim);
+    }
+
+    private void refrashLanguage(View topUpView) {
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+
+            ((EditText) topUpView.findViewById(R.id.phoneNo)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((EditText) topUpView.findViewById(R.id.amount)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((RadioButton) topUpView.findViewById(R.id.preRadioButton)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((RadioButton) topUpView.findViewById(R.id.postRadioButton)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((TextView) topUpView.findViewById(R.id.tvError)).setTypeface(AppController.getInstance().getOxygenLightFont());
+
+
+        } else {
+            ((EditText) topUpView.findViewById(R.id.phoneNo)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((EditText) topUpView.findViewById(R.id.amount)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((RadioButton) topUpView.findViewById(R.id.preRadioButton)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((RadioButton) topUpView.findViewById(R.id.postRadioButton)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((TextView) topUpView.findViewById(R.id.tvError)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
     }
 
     @Override
