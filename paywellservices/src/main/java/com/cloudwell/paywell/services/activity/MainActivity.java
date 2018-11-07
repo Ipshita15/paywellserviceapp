@@ -228,16 +228,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             home_settings.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
 
-//        home_utility.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                home_utility.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.polli_favourite,0,0);
-//                return true;
-//            }
-//        });
 
-//        home_topup.setOnTouchListener(new ChoiceTouchListenre());
-//        home_topup.setOnDragListener(new ChoiceDragListener());
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
