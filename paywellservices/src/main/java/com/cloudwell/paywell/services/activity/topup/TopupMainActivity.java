@@ -14,7 +14,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDialog;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.InputFilter;
@@ -302,9 +302,12 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
         final RecyclerView recyclerView = topUpView.findViewById(R.id.rvOperatorList);
         int numberOfColumns = 6;
 
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(horizontalLayoutManager);
 
-        recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
+//        recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
         MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(this, mobileOperatorArrayList);
+
         adapter.setClickListener(new MyRecyclerViewAdapter.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
