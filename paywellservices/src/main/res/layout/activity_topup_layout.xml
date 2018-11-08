@@ -26,23 +26,32 @@
                 android:layout_marginTop="8dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tvResult"
+                <LinearLayout
+                    android:id="@+id/llHeader"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="TextView"
-                    android:visibility="gone"/>
+                    android:layout_height="40dp"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tvError"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="TextView"
-                    android:visibility="gone"/>
+                    <TextView
+                        android:id="@+id/tvResult"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="TextView"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:gravity="center"
+                        android:id="@+id/tvError"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="TextView"
+                        android:visibility="visible"
+                        tools:text="@string/error_correct_operator"/>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -54,12 +63,11 @@
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rvOperatorList"
-                        android:layout_gravity="center"
-
-                        android:gravity="center"
+                        android:layout_gravity="start"
+                        android:gravity="start"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"/>
+                        />
                 </LinearLayout>
 
                 <LinearLayout

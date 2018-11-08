@@ -75,8 +75,8 @@ import retrofit2.Response;
 public class TopupMainActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     public final static String KEY_GP = "GP";
-    public final static String KEY_ROBI = "ROBI";
-    public final static String KEY_BL = "BL";
+    public final static String KEY_ROBI = "Robi";
+    public final static String KEY_BL = "Banglalink";
     public final static String KEY_AIRTEL = "Airtel";
     public final static String KEY_TELETALK = "Teletalk";
     public final static String KEY_SKITTO = "Skitto";
@@ -129,7 +129,10 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         initView();
+        refreshLanguage();
+
     }
+
 
     private void initView() {
         mRelativeLayout = findViewById(R.id.linearLayout);
@@ -138,7 +141,6 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
         Button buttonSubmit = findViewById(R.id.btnSubmit);
 
 
-        ((Button) mRelativeLayout.findViewById(R.id.btnSubmit)).setTypeface(AppController.getInstance().getOxygenLightFont());
 
         slideInAnim.setDuration(50);
         slideOutAnim.setDuration(50);
@@ -174,6 +176,17 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
         mAppHandler = new AppHandler(this);
         addAnotherNo();
     }
+
+    private void refreshLanguage() {
+
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            ((Button) findViewById(R.id.btnSubmit)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            ((Button) findViewById(R.id.btnSubmit)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
+
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -237,7 +250,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
         });
 
 
-        refrashLanguage(topUpView);
+        refrashLanguageDynamicView(topUpView);
 
         removeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -274,20 +287,6 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
         tvError.setText(Html.fromHtml(getString(R.string.error_correct_operator)));
         tvResult.setText("");
 
-//        viewById.setOnCheckedChangeListener(new MultiLineRadioGroup.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(ViewGroup group, RadioButton button) {
-//                if (button.isChecked()) {
-//                    tvError = topUpView.findViewById(R.id.tvError);
-//                    tvError.setVisibility(View.GONE);
-//                } else {
-//                    tvError = topUpView.findViewById(R.id.tvError);
-//                    tvError.setVisibility(View.VISIBLE);
-//                    tvError.setText(Html.fromHtml(getString(R.string.error_correct_operator)));
-//                }
-//
-//            }
-//        });
 
         final ArrayList<MobileOperator> mobileOperatorArrayList = new ArrayList<>();
         mobileOperatorArrayList.add(new MobileOperator(KEY_GP, R.drawable.gp_logo, R.drawable.gp_selected, false));
@@ -300,12 +299,9 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
 
         // new recycle view
         final RecyclerView recyclerView = topUpView.findViewById(R.id.rvOperatorList);
-        int numberOfColumns = 6;
 
         LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(horizontalLayoutManager);
-
-//        recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
         MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(this, mobileOperatorArrayList);
 
         adapter.setClickListener(new MyRecyclerViewAdapter.ItemClickListener() {
@@ -370,18 +366,36 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
             tvResult = topUpView.findViewById(R.id.tvResult);
             tvResult.setText("" + seletedresult);
 
+
+            tvError.setText(getString(R.string.error_correct_operator));
+            tvError.setTextColor(Color.BLACK);
+            LinearLayout linearLayout = topUpView.findViewById(R.id.llHeader);
+            linearLayout.setBackgroundColor(Color.WHITE);
+            linearLayout.setVisibility(View.GONE);
+
+
         } else {
             tvError = topUpView.findViewById(R.id.tvError);
             tvError.setVisibility(View.VISIBLE);
             tvError.setText(Html.fromHtml(getString(R.string.error_correct_operator)));
             tvResult.setText("" + seletedresult);
+
+
+            tvError.setText(getString(R.string.error_correct_operator));
+            tvError.setTextColor(Color.BLACK);
+
+            LinearLayout linearLayout = topUpView.findViewById(R.id.llHeader);
+            linearLayout.setVisibility(View.VISIBLE);
+            linearLayout.setBackgroundColor(Color.WHITE);
+
+
         }
 
 
         recyclerView.getAdapter().notifyDataSetChanged();
     }
 
-    private void refrashLanguage(View topUpView) {
+    private void refrashLanguageDynamicView(View topUpView) {
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
 
             ((EditText) topUpView.findViewById(R.id.phoneNo)).setTypeface(AppController.getInstance().getOxygenLightFont());
@@ -952,7 +966,10 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                         // No item selected
                         TextView tvError = singleTopUpView.findViewById(R.id.tvError);
                         tvError.setVisibility(View.VISIBLE);
-                        tvError.setText(Html.fromHtml("<font color='red'>" + getString(R.string.error_correct_operator)));
+                        tvError.setText(getString(R.string.error_correct_operator));
+                        tvError.setTextColor(Color.WHITE);
+                        LinearLayout linearLayout = singleTopUpView.findViewById(R.id.llHeader);
+                        linearLayout.setBackgroundColor(Color.RED);
                         return;
 
                     }
@@ -1076,7 +1093,8 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                         // No item selected
                         TextView tvError = singleTopUpView.findViewById(R.id.tvError);
                         tvError.setVisibility(View.VISIBLE);
-                        tvError.setText(Html.fromHtml("<font color='red'>" + getString(R.string.error_correct_operator)));
+                        tvError.setText(Html.fromHtml("<font color='white'>" + getString(R.string.error_correct_operator)));
+
                         return;
 
                     }
@@ -1118,7 +1136,8 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                     // No item selected
                     TextView tvError = singleTopUpView.findViewById(R.id.tvError);
                     tvError.setVisibility(View.VISIBLE);
-                    tvError.setText(Html.fromHtml("<font color='red'>" + getString(R.string.error_correct_operator)));
+                    tvError.setText(Html.fromHtml("<font color='white'>" + getString(R.string.error_correct_operator)));
+
                     return;
 
                 }
