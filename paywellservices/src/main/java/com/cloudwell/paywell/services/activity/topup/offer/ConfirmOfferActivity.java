@@ -106,21 +106,6 @@ public class ConfirmOfferActivity extends AppCompatActivity implements View.OnCl
             if (mPhn.length() != 11) {
                 editTextPhn.setError(getString(R.string.phone_no_error_msg));
             }
-//            if (operatorName.equals(getString(R.string.home_gp)) && !mPhn.startsWith("017")) {
-//                editTextPhn.setError(getString(R.string.phone_no_error_msg));
-//            }
-//            if (operatorName.equals(getString(R.string.home_bl)) && !mPhn.startsWith("019")) {
-//                editTextPhn.setError(getString(R.string.phone_no_error_msg));
-//            }
-//            if (operatorName.equals(getString(R.string.home_rb)) && !mPhn.startsWith("018")) {
-//                editTextPhn.setError(getString(R.string.phone_no_error_msg));
-//            }
-//            if (operatorName.equals(getString(R.string.home_at)) && !mPhn.startsWith("016")) {
-//                editTextPhn.setError(getString(R.string.phone_no_error_msg));
-//            }
-//            if (operatorName.equals(getString(R.string.home_tt)) && !mPhn.startsWith("015")) {
-//                editTextPhn.setError(getString(R.string.phone_no_error_msg));
-//            }
             if (mPin.isEmpty()) {
                 editTextPin.setError(getString(R.string.pin_no_error_msg));
             } else {

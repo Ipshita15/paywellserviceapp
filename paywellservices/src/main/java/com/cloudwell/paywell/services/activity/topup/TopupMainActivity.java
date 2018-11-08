@@ -780,6 +780,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
         dialog.setContentView(R.layout.dialog_trx_limit);
 
         Button btn_okay = dialog.findViewById(R.id.buttonOk);
+        Button btn_cancel = dialog.findViewById(R.id.cancelBtn);
 
         radioButton_five = dialog.findViewById(R.id.radio_five);
         radioButton_ten = dialog.findViewById(R.id.radio_ten);
@@ -813,6 +814,13 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
+            }
+        });
+        assert btn_cancel != null;
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
             }
         });
         dialog.setCancelable(true);
@@ -1688,7 +1696,6 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                         Intent intent = new Intent(TopupMainActivity.this, OfferMainActivity.class);
                         intent.putExtras(bundle);
                         startActivity(intent);
-//                        finish();
                     } else {
                         Snackbar snackbar = Snackbar.make(mRelativeLayout, jsonObject.getString(TAG_MESSAGE), Snackbar.LENGTH_LONG);
                         snackbar.setActionTextColor(Color.parseColor("#ffffff"));

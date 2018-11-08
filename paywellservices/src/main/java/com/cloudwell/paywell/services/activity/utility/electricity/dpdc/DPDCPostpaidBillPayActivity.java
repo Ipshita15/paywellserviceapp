@@ -24,6 +24,7 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.github.chrisbanes.photoview.PhotoView;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -181,11 +182,12 @@ public class DPDCPostpaidBillPayActivity extends AppCompatActivity implements Vi
 
 
     private void showBillImage(int number) {
-        ImageView image = new ImageView(this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_custom_image_layout, null);
+        PhotoView photoView = mView.findViewById(R.id.imageView);
         if (number == 1) {
-            image.setImageResource(R.drawable.ic_help_dpdc_bill_one);
+            photoView.setImageResource(R.drawable.ic_help_dpdc_bill_one);
         } else {
-            image.setImageResource(R.drawable.ic_help_dpdc_bill_two);
+            photoView.setImageResource(R.drawable.ic_help_dpdc_bill_two);
         }
 
         AlertDialog.Builder builder =
@@ -196,7 +198,7 @@ public class DPDCPostpaidBillPayActivity extends AppCompatActivity implements Vi
                                 dialog.dismiss();
                             }
                         }).
-                        setView(image);
+                        setView(mView);
         builder.create().show();
     }
 

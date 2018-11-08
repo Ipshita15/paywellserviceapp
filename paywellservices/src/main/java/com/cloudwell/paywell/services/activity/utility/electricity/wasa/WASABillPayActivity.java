@@ -21,6 +21,7 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.github.chrisbanes.photoview.PhotoView;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -100,8 +101,9 @@ public class WASABillPayActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void showBillImage() {
-        ImageView image = new ImageView(this);
-        image.setImageResource(R.drawable.ic_help_wasa_bill);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_custom_image_layout, null);
+        PhotoView photoView = mView.findViewById(R.id.imageView);
+        photoView.setImageResource(R.drawable.ic_help_wasa_bill);
 
         AlertDialog.Builder builder =
                 new AlertDialog.Builder(this).
@@ -111,7 +113,7 @@ public class WASABillPayActivity extends AppCompatActivity implements View.OnCli
                                 dialog.dismiss();
                             }
                         }).
-                        setView(image);
+                        setView(mView);
         builder.create().show();
     }
 

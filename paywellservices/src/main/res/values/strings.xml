@@ -607,6 +607,7 @@
     <string name="utility_ivac_get_center">https://api.paywellonline.com/PaywelltransactionIVAC/getIvacCenter</string>
     <string name="utility_ivac_fee_pay">https://api.paywellonline.com/PaywelltransactionIVAC/IVACRequest</string>
     <string name="utility_ivac_fee_pay_inq">https://api.paywellonline.com/PaywelltransactionIVAC/getIvacTrxList</string>
+    <string name="utility_ivac_fee_pay_inq_with_web_file_no">https://api.paywellonline.com/PaywelltransactionIVAC/getIvacTrxByWebFileNo</string>
 
     <string name="banglalion_bill_pay">https://api.paywellonline.com/PayWellInternateBillPay/banglalionBillPay</string>
     <string name="banglalion_bill_inquiry">https://api.paywellonline.com/PayWellInternateBillPay/banglalionEnquiry</string>
