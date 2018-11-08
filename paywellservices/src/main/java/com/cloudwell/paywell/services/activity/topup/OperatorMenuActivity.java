@@ -27,7 +27,6 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -57,6 +56,7 @@ public class OperatorMenuActivity extends AppCompatActivity {
         mCd = new ConnectionDetector(AppController.getContext());
 
         Button btnGp = findViewById(R.id.homeBtnGp);
+        Button btnSkitto = findViewById(R.id.homeBtnSkitto);
         Button btnRobi = findViewById(R.id.homeBtnRb);
         Button btnBanglalink = findViewById(R.id.homeBtnBl);
         Button btnTeletalk = findViewById(R.id.homeBtnTt);
@@ -64,12 +64,14 @@ public class OperatorMenuActivity extends AppCompatActivity {
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             btnGp.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnSkitto.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnRobi.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnBanglalink.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnTeletalk.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnAirtel.setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
             btnGp.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnSkitto.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnRobi.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnBanglalink.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnTeletalk.setTypeface(AppController.getInstance().getAponaLohitFont());
@@ -88,8 +90,8 @@ public class OperatorMenuActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(OperatorMenuActivity.this, TopupMainActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(OperatorMenuActivity.this, TopupMainActivity.class);
+//        startActivity(intent);
         finish();
     }
 
@@ -100,23 +102,24 @@ public class OperatorMenuActivity extends AppCompatActivity {
                     operator = 1;
                     new InquiryAsync().execute(getResources().getString(R.string.topup_offer), String.valueOf(operator));
                 } else {
-                    Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
+                    showNoInternetConnectionFound();
                 }
                 break;
+            case R.id.homeBtnSkitto:
+                if (mCd.isConnectingToInternet()) {
+                    operator = 7;
+                    new InquiryAsync().execute(getResources().getString(R.string.topup_offer), String.valueOf(operator));
+                } else {
+                    showNoInternetConnectionFound();
+                }
+                break;
+
             case R.id.homeBtnRb:
                 if (mCd.isConnectingToInternet()) {
                     operator = 3;
                     new InquiryAsync().execute(getResources().getString(R.string.topup_offer), String.valueOf(operator));
                 } else {
-                    Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
+                    showNoInternetConnectionFound();
                 }
                 break;
             case R.id.homeBtnBl:
@@ -124,11 +127,7 @@ public class OperatorMenuActivity extends AppCompatActivity {
                     operator = 2;
                     new InquiryAsync().execute(getResources().getString(R.string.topup_offer), String.valueOf(operator));
                 } else {
-                    Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
+                    showNoInternetConnectionFound();
                 }
                 break;
             case R.id.homeBtnTt:
@@ -136,11 +135,7 @@ public class OperatorMenuActivity extends AppCompatActivity {
                     operator = 6;
                     new InquiryAsync().execute(getResources().getString(R.string.topup_offer), String.valueOf(operator));
                 } else {
-                    Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
+                    showNoInternetConnectionFound();
                 }
                 break;
             case R.id.homeBtnAt:
@@ -148,16 +143,20 @@ public class OperatorMenuActivity extends AppCompatActivity {
                     operator = 4;
                     new InquiryAsync().execute(getResources().getString(R.string.topup_offer), String.valueOf(operator));
                 } else {
-                    Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
+                    showNoInternetConnectionFound();
                 }
                 break;
             default:
                 break;
         }
+    }
+
+    private void showNoInternetConnectionFound() {
+        Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
+        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+        View snackBarView = snackbar.getView();
+        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+        snackbar.show();
     }
 
     private class InquiryAsync extends AsyncTask<String, Void, String> {
@@ -208,21 +207,51 @@ public class OperatorMenuActivity extends AppCompatActivity {
                         JSONArray array = jsonObject.getJSONArray(TAG_RECHARGE_OFFER);
                         Bundle bundle = new Bundle();
                         bundle.putString("array", array.toString());
-                        if (operator == 1) {
-                            OfferMainActivity.operatorName = getString(R.string.home_gp);
-                        } else if (operator == 2) {
-                            OfferMainActivity.operatorName = getString(R.string.home_bl);
-                        } else if (operator == 3) {
-                            OfferMainActivity.operatorName = getString(R.string.home_rb);
-                        } else if (operator == 4) {
-                            OfferMainActivity.operatorName = getString(R.string.home_at);
-                        } else if (operator == 6) {
-                            OfferMainActivity.operatorName = getString(R.string.home_tt);
+                        OperatorType operatorType;
+
+                        switch (operator) {
+                            case 1:
+                                operatorType = OperatorType.GP;
+                                OfferMainActivity.operatorName = getString(R.string.home_gp);
+                                startOfferMainActivity(bundle, operatorType);
+                                break;
+
+                            case 7:
+                                operatorType = OperatorType.Skitto;
+                                OfferMainActivity.operatorName = getString(R.string.home_skitto);
+                                startOfferMainActivity(bundle, operatorType);
+                                break;
+
+                            case 2:
+                                operatorType = OperatorType.BANGLALINK;
+                                OfferMainActivity.operatorName = getString(R.string.home_bl);
+                                startOfferMainActivity(bundle, operatorType);
+                                break;
+                            case 3:
+                                operatorType = OperatorType.ROBI;
+                                OfferMainActivity.operatorName = getString(R.string.home_rb);
+                                startOfferMainActivity(bundle, operatorType);
+                                break;
+                            case 4:
+                                operatorType = OperatorType.AIRTEL;
+                                OfferMainActivity.operatorName = getString(R.string.home_at);
+                                startOfferMainActivity(bundle, operatorType);
+                                break;
+
+
+                            case 6:
+                                operatorType = OperatorType.TELETALK;
+                                OfferMainActivity.operatorName = getString(R.string.home_tt);
+                                startOfferMainActivity(bundle, operatorType);
+
+                                break;
+
+                            default:
+                                break;
+
                         }
-                        Intent intent = new Intent(OperatorMenuActivity.this, OfferMainActivity.class);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                        finish();
+
+
                     }else{
                         Snackbar snackbar = Snackbar.make(mRelativeLayout, jsonObject.getString(TAG_MESSAGE), Snackbar.LENGTH_LONG);
                         snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -246,6 +275,14 @@ public class OperatorMenuActivity extends AppCompatActivity {
                 snackbar.show();
             }
         }
+    }
+
+    private void startOfferMainActivity(Bundle bundle, OperatorType operatorType) {
+        Intent intent = new Intent(OperatorMenuActivity.this, OfferMainActivity.class);
+        intent.putExtras(bundle);
+        intent.putExtra("key", operatorType.getText());
+        startActivity(intent);
+        finish();
     }
 
 }

@@ -14,6 +14,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDialog;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -23,23 +26,33 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.topup.adapter.MyRecyclerViewAdapter;
+import com.cloudwell.paywell.services.activity.topup.model.MobileOperator;
+import com.cloudwell.paywell.services.activity.topup.model.RequestTopup;
+import com.cloudwell.paywell.services.activity.topup.model.TopupData;
+import com.cloudwell.paywell.services.activity.topup.model.TopupDatum;
+import com.cloudwell.paywell.services.activity.topup.model.TopupReposeData;
 import com.cloudwell.paywell.services.activity.topup.offer.OfferMainActivity;
 import com.cloudwell.paywell.services.activity.utility.ivac.DrawableClickListener;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
 import org.apache.http.NameValuePair;
@@ -56,8 +69,20 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class TopupMainActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
+    public final static String KEY_GP = "GP";
+    public final static String KEY_ROBI = "Robi";
+    public final static String KEY_BL = "Banglalink";
+    public final static String KEY_AIRTEL = "Airtel";
+    public final static String KEY_TELETALK = "Teletalk";
+    public final static String KEY_SKITTO = "Skitto";
+
+    public static String KEY_TAG = TopupMainActivity.class.getName();
     private LinearLayout topUpLayout;
     private int addNoFlag = 0;
     private static String mHotLine;
@@ -88,16 +113,16 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
     private static final String TAG_STATUS = "status";
     private static final String TAG_RECHARGE_OFFER = "RechargeOffer";
     private static final String TAG_MESSAGE = "message";
+    private TextView tvError;
+    private TextView tvResult;
+    private String operator;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_topup_main);
-
-        key = getIntent().getStringExtra("key");
-        Log.d("Key", key);
+        mAppHandler = new AppHandler(this);
 
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
@@ -105,7 +130,11 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         initView();
+        refreshLanguage();
+
+
     }
+
 
     private void initView() {
         mRelativeLayout = findViewById(R.id.linearLayout);
@@ -113,7 +142,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
         topUpLayout = findViewById(R.id.topUpAddLayout);
         Button buttonSubmit = findViewById(R.id.btnSubmit);
 
-        ((Button) mRelativeLayout.findViewById(R.id.btnSubmit)).setTypeface(AppController.getInstance().getOxygenLightFont());
+
 
         slideInAnim.setDuration(50);
         slideOutAnim.setDuration(50);
@@ -150,6 +179,17 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
         addAnotherNo();
     }
 
+    private void refreshLanguage() {
+
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            ((Button) findViewById(R.id.btnSubmit)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            ((Button) findViewById(R.id.btnSubmit)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
+
+    }
+
+
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btnSubmit) {
@@ -175,7 +215,8 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
         } else if (v.getId() == R.id.enquiryBtn) {
             showEnquiryPrompt();
         } else if (v.getId() == R.id.imageOffer) {
-            onClickBundleOffer(key);
+            startActivity(new Intent(TopupMainActivity.this, OperatorMenuActivity.class));
+            // onClickBundleOffer(key);
         }
     }
 
@@ -185,10 +226,18 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
         EditText phoneNoET = topUpView.findViewById(R.id.phoneNo);
         Button removeBtn = topUpView.findViewById(R.id.removeLayoutImgBtn);
 
+        tvError = topUpView.findViewById(R.id.tvError);
+        tvResult = topUpView.findViewById(R.id.tvResult);
+
         topUpView.setTag(addNoFlag);
 
         if (addNoFlag == 1) {
             removeBtn.setVisibility(View.GONE);
+        } else {
+            LinearLayout layout = (LinearLayout) topUpView.findViewById(R.id.linerLayoutRoot);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(4, 18, 4, 4);
+            layout.setLayoutParams(params);
         }
 
         phoneNoET.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(phoneNoET) {
@@ -202,10 +251,8 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
             }
         });
 
-        ((EditText) topUpView.findViewById(R.id.phoneNo)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        ((EditText) topUpView.findViewById(R.id.amount)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        ((RadioButton) topUpView.findViewById(R.id.preRadioButton)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        ((RadioButton) topUpView.findViewById(R.id.postRadioButton)).setTypeface(AppController.getInstance().getOxygenLightFont());
+
+        refrashLanguageDynamicView(topUpView);
 
         removeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -237,8 +284,140 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                 topUpView.startAnimation(slideOutAnim);
             }
         });
+
+        tvError.setVisibility(View.VISIBLE);
+        tvError.setText(Html.fromHtml(getString(R.string.error_correct_operator)));
+        tvResult.setText("");
+
+
+        final ArrayList<MobileOperator> mobileOperatorArrayList = new ArrayList<>();
+        mobileOperatorArrayList.add(new MobileOperator(KEY_GP, R.drawable.gp_logo, R.drawable.gp_selected, false));
+        mobileOperatorArrayList.add(new MobileOperator(KEY_BL, R.drawable.banglalink_logo, R.drawable.banglalink_selected, false));
+        mobileOperatorArrayList.add(new MobileOperator(KEY_ROBI, R.drawable.robi_logo, R.drawable.robi_selected, false));
+        mobileOperatorArrayList.add(new MobileOperator(KEY_AIRTEL, R.drawable.airtel_logo, R.drawable.airtel_selected, false));
+        mobileOperatorArrayList.add(new MobileOperator(KEY_TELETALK, R.drawable.teletalk_logo, R.drawable.teletalk_selected, false));
+        mobileOperatorArrayList.add(new MobileOperator(KEY_SKITTO, R.drawable.skitto_logo, R.drawable.skitto_selected, false));
+
+
+        // new recycle view
+        final RecyclerView recyclerView = topUpView.findViewById(R.id.rvOperatorList);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+//        recyclerView.addItemDecoration(new SpacesItemDecoration(6));
+
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(horizontalLayoutManager);
+        recyclerView.getLayoutManager().setMeasurementCacheEnabled(false);
+        MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(this, mobileOperatorArrayList);
+
+        adapter.setClickListener(new MyRecyclerViewAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+                updateRecycleviewData(topUpView, position, mobileOperatorArrayList, recyclerView);
+
+            }
+        });
+        recyclerView.setAdapter(adapter);
+
+
         topUpLayout.addView(topUpView);
         topUpView.startAnimation(slideInAnim);
+    }
+
+    private void updateRecycleviewData(View topUpView, int position, ArrayList<MobileOperator> mobileOperatorArrayList, RecyclerView recyclerView) {
+        MobileOperator mobileOperator = mobileOperatorArrayList.get(position);
+
+        boolean isCheck = false;
+        String seletedresult = "";
+
+        for (MobileOperator data : mobileOperatorArrayList) {
+
+            // compared selected data
+            if (mobileOperator.getName().equals(data.getName())) {
+
+                boolean seleted = data.isSeleted();
+                if (seleted) {
+
+                    data.setSeleted(false);
+                    mobileOperatorArrayList.set(position, data);
+
+                    isCheck = false;
+                    seletedresult = "";
+
+                } else {
+
+                    // desleeted all data
+                    for (MobileOperator data1 : mobileOperatorArrayList) {
+                        data1.setSeleted(false);
+                        mobileOperatorArrayList.set(position, data1);
+                    }
+
+
+                    seletedresult = data.getName();
+                    // set selected data
+                    data.setSeleted(true);
+                    mobileOperatorArrayList.set(position, data);
+
+                    isCheck = true;
+
+                }
+            }
+        }
+
+
+        if (isCheck) {
+            tvError = topUpView.findViewById(R.id.tvError);
+            tvError.setVisibility(View.GONE);
+            tvResult = topUpView.findViewById(R.id.tvResult);
+            tvResult.setText("" + seletedresult);
+
+
+            tvError.setText(getString(R.string.error_correct_operator));
+            tvError.setTextColor(Color.BLACK);
+            LinearLayout linearLayout = topUpView.findViewById(R.id.llHeader);
+            linearLayout.setBackgroundColor(Color.WHITE);
+            linearLayout.setVisibility(View.GONE);
+
+
+        } else {
+            tvError = topUpView.findViewById(R.id.tvError);
+            tvError.setVisibility(View.VISIBLE);
+            tvError.setText(Html.fromHtml(getString(R.string.error_correct_operator)));
+            tvResult.setText("" + seletedresult);
+
+
+            tvError.setText(getString(R.string.error_correct_operator));
+            tvError.setTextColor(Color.BLACK);
+
+            LinearLayout linearLayout = topUpView.findViewById(R.id.llHeader);
+            linearLayout.setVisibility(View.VISIBLE);
+            linearLayout.setBackgroundColor(Color.WHITE);
+
+
+        }
+
+
+        recyclerView.getAdapter().notifyDataSetChanged();
+    }
+
+    private void refrashLanguageDynamicView(View topUpView) {
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+
+            ((EditText) topUpView.findViewById(R.id.phoneNo)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((EditText) topUpView.findViewById(R.id.amount)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((RadioButton) topUpView.findViewById(R.id.preRadioButton)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((RadioButton) topUpView.findViewById(R.id.postRadioButton)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((TextView) topUpView.findViewById(R.id.tvError)).setTypeface(AppController.getInstance().getOxygenLightFont());
+
+
+        } else {
+            ((EditText) topUpView.findViewById(R.id.phoneNo)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((EditText) topUpView.findViewById(R.id.amount)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((RadioButton) topUpView.findViewById(R.id.preRadioButton)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((RadioButton) topUpView.findViewById(R.id.postRadioButton)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((TextView) topUpView.findViewById(R.id.tvError)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
     }
 
     @Override
@@ -791,10 +970,30 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                         amountET.setError(Html.fromHtml("<font color='red'>" + getString(R.string.amount_error_msg) + "</font>"));
                         return;
                     }
+
+
+                    TextView textView = singleTopUpView.findViewById(R.id.tvResult);
+                    String result = textView.getText().toString();
+
+
+                    if (result.equals("")) {
+                        // No item selected
+                        TextView tvError = singleTopUpView.findViewById(R.id.tvError);
+                        tvError.setVisibility(View.VISIBLE);
+                        tvError.setText(getString(R.string.error_correct_operator));
+                        tvError.setTextColor(Color.WHITE);
+                        LinearLayout linearLayout = singleTopUpView.findViewById(R.id.llHeader);
+                        linearLayout.setBackgroundColor(Color.RED);
+                        return;
+
+                    }
+
                     reqStrBuilder.append((i + 1) + ". " + getString(R.string.phone_no_des) + " " + phoneStr
                             + "\n " + getString(R.string.amount_des) + " " + amountStr + getString(R.string.tk)
-                            + "\n " + getString(R.string.package_type_des) + " " + planStr.substring(0, 1).toUpperCase()
-                            + planStr.substring(1).toLowerCase() + "\n\n");
+                            + "\n " + getString(R.string.package_type_des) + " : " + planStr.substring(0, 1).toUpperCase()
+                            + planStr.substring(1).toLowerCase() + "\n"
+                            + "" + getString(R.string.operator) + " : " + result.toString() + "\n\n");
+
                 }
             }
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -844,7 +1043,8 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                     dialogInterface.dismiss();
                     PIN_NO = pinNoET.getText().toString();
                     if (cd.isConnectingToInternet()) {
-                        new TopUpAsync().execute();
+                        // new TopUpAsync().execute();
+                        handleTopupAPIValidation(PIN_NO);
                     } else {
                         Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
                         snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -865,229 +1065,256 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
         alert.show();
     }
 
-    private class TopUpAsync extends AsyncTask<Object, String, String> {
-        private ProgressDialog progressDialog;
+    private void handleTopupAPIValidation(String pinNo) {
+        final ProgressDialog progressDialog;
+        progressDialog = ProgressDialog.show(TopupMainActivity.this, "", getString(R.string.loading_msg), true);
+        progressDialog.show();
 
-        @Override
-        protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(TopupMainActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
-        }
+        final RequestTopup requestTopup = new RequestTopup();
+        requestTopup.setPassword("" + pinNo);
+        requestTopup.setUserName("" + mAppHandler.getImeiNo());
 
-        @Override
-        protected String doInBackground(Object... params) {
-            return generateRequestURL();
-        }
+        List<TopupData> topupDatumList = new ArrayList<>();
 
-        @Override
-        protected void onPostExecute(String result) {
-            progressDialog.dismiss();
-            if (result != null) {
-                if (result.startsWith("313")) {
-                    showTransactionLog(result, false);
-                } else {
-                    if (result.startsWith("200")) {
-                        statusCode = true;
-                    }
-                    showTransactionLog(result, true);
-                }
-            } else {
-                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-        }
+//        String requestString = null;
+        if (topUpLayout.getChildCount() > 1) {
 
-        private String generateRequestURL() {
-            String requestString = null;
-            if (topUpLayout.getChildCount() > 1) {
-                // Multiple
-                StringBuilder reqStrBuilder = new StringBuilder();
-                reqStrBuilder.append(getResources().getString(R.string.multi_top)
-                        + "iemi_no=" + mAppHandler.getImeiNo()
-                        + "&pin_code=" + PIN_NO
-                        + "&no_of_req=" + topUpLayout.getChildCount());
-
-                for (int i = 0; i < topUpLayout.getChildCount(); i++) {
-                    EditText mPhoneNoET, mAmountET;
-                    RadioGroup prePostSelector;
-
-                    View singleTopUpView = topUpLayout.getChildAt(i);
-                    if (singleTopUpView != null) {
-                        mPhoneNoET = singleTopUpView.findViewById(R.id.phoneNo);
-                        mAmountET = singleTopUpView.findViewById(R.id.amount);
-                        prePostSelector = singleTopUpView.findViewById(R.id.prePostRadioGroup);
-
-                        String phoneStr = mPhoneNoET.getText().toString();
-                        String amountStr = mAmountET.getText().toString();
-                        String planStr = null;
-                        if (prePostSelector.getCheckedRadioButtonId() == R.id.preRadioButton) {
-                            planStr = getResources().getString(R.string.pre_paid_str);
-                        } else if (prePostSelector.getCheckedRadioButtonId() == R.id.postRadioButton) {
-                            planStr = getResources().getString(R.string.post_paid_str);
-                        }
-                        reqStrBuilder.append("&msisdn" + (i + 1) + "="
-                                + phoneStr + "&amount" + (i + 1) + "="
-                                + amountStr + "&con_type" + (i + 1) + "="
-                                + planStr);
-                    }
-                }
-                requestString = reqStrBuilder.toString();
-            } else {
-                // Single
-                EditText phoneNoET, amountET;
+            for (int i = 0; i < topUpLayout.getChildCount(); i++) {
+                EditText mPhoneNoET, mAmountET;
                 RadioGroup prePostSelector;
 
-                View singleTopUpView = topUpLayout.getChildAt(0);
+                View singleTopUpView = topUpLayout.getChildAt(i);
                 if (singleTopUpView != null) {
-                    phoneNoET = singleTopUpView.findViewById(R.id.phoneNo);
-                    amountET = singleTopUpView.findViewById(R.id.amount);
+                    mPhoneNoET = singleTopUpView.findViewById(R.id.phoneNo);
+                    mAmountET = singleTopUpView.findViewById(R.id.amount);
                     prePostSelector = singleTopUpView.findViewById(R.id.prePostRadioGroup);
 
-                    String phoneStr = phoneNoET.getText().toString();
-                    String amountStr = amountET.getText().toString();
+                    String phoneStr = mPhoneNoET.getText().toString();
+                    String amountStr = mAmountET.getText().toString();
                     String planStr = null;
-
                     if (prePostSelector.getCheckedRadioButtonId() == R.id.preRadioButton) {
                         planStr = getResources().getString(R.string.pre_paid_str);
                     } else if (prePostSelector.getCheckedRadioButtonId() == R.id.postRadioButton) {
                         planStr = getResources().getString(R.string.post_paid_str);
                     }
-                    requestString = getResources().getString(R.string.single_top)
-                            + "iemi_no=" + mAppHandler.getImeiNo()
-                            + "&msisdn=" + phoneStr
-                            + "&amount=" + amountStr
-                            + "&con_type=" + planStr
-                            + "&pin_code=" + PIN_NO;
+
+
+                    TextView textView = singleTopUpView.findViewById(R.id.tvResult);
+                    String result = textView.getText().toString();
+
+
+                    if (result.equals("")) {
+                        // No item selected
+                        TextView tvError = singleTopUpView.findViewById(R.id.tvError);
+                        tvError.setVisibility(View.VISIBLE);
+                        tvError.setText(Html.fromHtml("<font color='white'>" + getString(R.string.error_correct_operator)));
+
+                        return;
+
+                    }
+
+                    String operatorTextForServer = getOperatorTextForServer(result);
+
+                    TopupData topupDatum = new TopupData(amountStr, planStr, phoneStr, operatorTextForServer);
+                    topupDatumList.add(topupDatum);
+
                 }
             }
-            return sendingHTTPSTopupRequest(requestString);
-        }
-    }
 
-    @SuppressWarnings("deprecation")
-    private String sendingHTTPSTopupRequest(String requestString) {
-        String responseTxt = null;
-        HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost(requestString);
-        try {
-            ResponseHandler<String> responseHandler = new BasicResponseHandler();
-            responseTxt = httpclient.execute(httppost, responseHandler);
-        } catch (Exception e) {
-            e.fillInStackTrace();
-            Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-            View snackBarView = snackbar.getView();
-            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-        }
-        return responseTxt;
-
-    }
-
-    @SuppressWarnings("deprecation")
-    private void showTransactionLog(String responseTxt, final boolean isAuthorized) {
-        // code for topup receipt dialog
-        if (isAuthorized) {
-            StringBuilder receiptBuilder = new StringBuilder();
-            final StringBuilder topupBuilder = new StringBuilder();
-            EditText multiplePhoneNoET, multipleAmountET, singlePhoneNoET, singleAmountET;
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(TopupMainActivity.this);
-
-            if (topUpLayout.getChildCount() > 1 && responseTxt.contains("@@@")) {
-                // code for multiple top up
-                String[] splitTripleAt = responseTxt.split("@@@");
-                for (int i = 0; i < splitTripleAt.length; i++) {
-                    if (i == splitTripleAt.length - 1) {
-                        mHotLine = splitTripleAt[i].split("@")[2];
-                    } else {
-                        View multipleTopupView = topUpLayout.getChildAt(i);
-                        if (multipleTopupView != null) {
-                            multiplePhoneNoET = multipleTopupView.findViewById(R.id.phoneNo);
-                            multipleAmountET = multipleTopupView.findViewById(R.id.amount);
-                            mPhnNo = multiplePhoneNoET.getText().toString();
-                            mAmount = multipleAmountET.getText().toString();
-                        }
-                        String _status = splitTripleAt[i].split("@")[1];
-                        String _trxId = splitTripleAt[i].split("@")[2];
-
-                        topupBuilder.append((i + 1) + ". " + getString(R.string.phone_no_des) + " " + mPhnNo
-                                + "\n " + getString(R.string.amount_des) + " " + mAmount + getString(R.string.tk)
-                                + "\n " + getString(R.string.trx_id_des) + " " + _trxId
-                                + "\n " + getString(R.string.status_des) + " " + _status
-                                + "\n\n");
-                    }
-                }
-                receiptBuilder.append(topupBuilder
-                        + "\n\n" + getString(R.string.using_paywell_des)
-                        + "\n" + getString(R.string.hotline_des) + mHotLine);
-
-                builder.setTitle("Result");
-            } else {
-                // code for single topup
-                View singleTopupView = topUpLayout.getChildAt(0);
-                if (singleTopupView != null) {
-                    singlePhoneNoET = singleTopupView.findViewById(R.id.phoneNo);
-                    singleAmountET = singleTopupView.findViewById(R.id.amount);
-                    mPhnNo = singlePhoneNoET.getText().toString();
-                    mAmount = singleAmountET.getText().toString();
-
-                }
-                String[] splitSingleAt = responseTxt.split("@");
-                String mStatusMessage = splitSingleAt[1];
-                String mTrxId = splitSingleAt[2];
-                mHotLine = splitSingleAt[5];
-                if (splitSingleAt[0].equals("200")) {
-                    receiptBuilder.append(getString(R.string.phone_no_des) + " " + mPhnNo
-                            + "\n" + getString(R.string.amount_des) + " " + mAmount + " " + getString(R.string.tk_des)
-                            + "\n" + getString(R.string.trx_id_des) + " " + mTrxId
-                            + "\n\n" + getString(R.string.using_paywell_des)
-                            + "\n" + getString(R.string.hotline_des) + " " + mHotLine);
-                } else {
-                    receiptBuilder.append(getString(R.string.phone_no_des) + " " + mPhnNo
-                            + "\n" + getString(R.string.amount_des) + " " + mAmount + " " + getString(R.string.tk_des)
-                            + "\n\n" + getString(R.string.status_des) + " " + mStatusMessage
-                            + "\n\n" + getString(R.string.trx_id_des) + " " + mTrxId
-                            + "\n\n" + getString(R.string.using_paywell_des)
-                            + "\n" + getString(R.string.hotline_des) + " " + mHotLine);
-                }
-                if (splitSingleAt[0].equals("200")) {
-                    builder.setTitle(Html.fromHtml("<font color='#008000'>Result Successful</font>"));
-                } else {
-                    builder.setTitle(Html.fromHtml("<font color='#ff0000'>Result Failed</font>"));
-                }
-            }
-            builder.setMessage(receiptBuilder.toString());
-
-            builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int id) {
-                    dialogInterface.dismiss();
-                    if (statusCode) {
-                        startActivity(new Intent(TopupMainActivity.this, TopupMainActivity.class));
-                        finish();
-                    }
-                }
-            });
-            AlertDialog alert = builder.create();
-            alert.show();
         } else {
-            // 313@AuthenticationError
-            AlertDialog.Builder builder = new AlertDialog.Builder(TopupMainActivity.this);
-            builder.setMessage(R.string.services_alert_msg);
-            builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int id) {
-                    dialogInterface.dismiss();
+            // Single
+            EditText phoneNoET, amountET;
+            RadioGroup prePostSelector;
+
+            View singleTopUpView = topUpLayout.getChildAt(0);
+            if (singleTopUpView != null) {
+                phoneNoET = singleTopUpView.findViewById(R.id.phoneNo);
+                amountET = singleTopUpView.findViewById(R.id.amount);
+                prePostSelector = singleTopUpView.findViewById(R.id.prePostRadioGroup);
+
+                String phoneStr = phoneNoET.getText().toString();
+                String amountStr = amountET.getText().toString();
+                String planStr = null;
+
+                if (prePostSelector.getCheckedRadioButtonId() == R.id.preRadioButton) {
+                    planStr = getResources().getString(R.string.pre_paid_str);
+                } else if (prePostSelector.getCheckedRadioButtonId() == R.id.postRadioButton) {
+                    planStr = getResources().getString(R.string.post_paid_str);
                 }
-            });
-            AlertDialog alert = builder.create();
-            alert.show();
+
+                TextView textView = singleTopUpView.findViewById(R.id.tvResult);
+                String result = textView.getText().toString();
+
+
+                if (result.equals("")) {
+                    // No item selected
+                    TextView tvError = singleTopUpView.findViewById(R.id.tvError);
+                    tvError.setVisibility(View.VISIBLE);
+                    tvError.setText(Html.fromHtml("<font color='white'>" + getString(R.string.error_correct_operator)));
+
+                    return;
+
+                }
+
+                String operatorTextForServer = getOperatorTextForServer(result);
+
+                TopupData topupDatum = new TopupData(amountStr, planStr, phoneStr, operatorTextForServer);
+                topupDatumList.add(topupDatum);
+
+            }
         }
+
+
+        requestTopup.setTopupData(topupDatumList);
+
+
+        Call<TopupReposeData> responseBodyCall = ApiUtils.getAPIService().callTopAPI(requestTopup);
+
+
+        responseBodyCall.enqueue(new Callback<TopupReposeData>() {
+            @Override
+            public void onResponse(Call<TopupReposeData> call, Response<TopupReposeData> response) {
+                progressDialog.dismiss();
+                Log.d(KEY_TAG, "onResponse:" + response.body());
+
+                showReposeUI(response.body());
+
+            }
+
+            @Override
+            public void onFailure(Call<TopupReposeData> call, Throwable t) {
+                progressDialog.dismiss();
+                Log.d(KEY_TAG, "onFailure:");
+                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
+
+
+            }
+        });
+
     }
+
+    private String getOperatorTextForServer(CharSequence checkedRadioButtonText) {
+        String operator = "";
+
+        switch (checkedRadioButtonText.toString()) {
+
+            case KEY_GP:
+                operator = OperatorType.GP.getText();
+                break;
+
+            case KEY_SKITTO:
+                operator = OperatorType.Skitto.getText();
+                break;
+            case KEY_BL:
+                operator = OperatorType.BANGLALINK.getText();
+                break;
+            case KEY_ROBI:
+                operator = OperatorType.ROBI.getText();
+                break;
+            case KEY_AIRTEL:
+                operator = OperatorType.AIRTEL.getText();
+                break;
+
+            case KEY_TELETALK:
+                operator = OperatorType.TELETALK.getText();
+                break;
+
+        }
+        return operator;
+    }
+
+    private void showReposeUI(TopupReposeData response) {
+        StringBuilder receiptBuilder = new StringBuilder();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(TopupMainActivity.this);
+
+        // check authentication
+        TopupData topupData = response.getTopupData().get(0).getTopupData();
+        if (topupData == null) {
+            showAuthticationError();
+        } else {
+            showDialog(response, receiptBuilder, builder);
+        }
+
+
+    }
+
+    private void showDialog(TopupReposeData response, StringBuilder receiptBuilder, AlertDialog.Builder builder) {
+
+        boolean isTotalRequestSuccess = false;
+        for (int i = 0; i < response.getTopupData().size(); i++) {
+
+            TopupDatum topupData = response.getTopupData().get(i);
+            if (topupData != null) {
+                int number = i + 1;
+                receiptBuilder.append(number + ".");
+
+
+                receiptBuilder.append(getString(R.string.phone_no_des) + " " + topupData.getTopupData().getMsisdn());
+                receiptBuilder.append("\n" + getString(R.string.amount_des) + " " + topupData.getTopupData().getAmount() + " " + getString(R.string.tk_des));
+
+                if (topupData.getStatus().toString().startsWith("3")) {
+
+                    receiptBuilder.append("\n" + Html.fromHtml("<font color='#ff0000'>" + getString(R.string.status_des) + "</font>") + " " + topupData.getMessage());
+
+                    isTotalRequestSuccess = false;
+                } else {
+                    receiptBuilder.append("\n" + Html.fromHtml("<font color='#008000>" + getString(R.string.status_des) + "</font>") + " " + topupData.getMessage());
+
+                    isTotalRequestSuccess = true;
+                }
+                receiptBuilder.append("\n" + getString(R.string.trx_id_des) + " " + topupData.getTransId());
+
+                receiptBuilder.append("\n\n");
+
+            }
+
+        }
+        mHotLine = response.getHotlineNumber();
+        receiptBuilder.append("\n\n" + getString(R.string.using_paywell_des) + "\n" + getString(R.string.hotline_des) + " " + mHotLine);
+
+        if (isTotalRequestSuccess == false) {
+            builder.setTitle(Html.fromHtml("<font color='#ff0000'>Result Failed</font>"));
+        } else {
+            builder.setTitle(Html.fromHtml("<font color='#008000'>Result Successful</font>"));
+        }
+
+        builder.setMessage(receiptBuilder.toString());
+
+
+        final boolean finalIsTotalRequestSuccess = isTotalRequestSuccess;
+        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int id) {
+                dialogInterface.dismiss();
+                if (finalIsTotalRequestSuccess) {
+                    startActivity(new Intent(TopupMainActivity.this, TopupMainActivity.class));
+                    finish();
+                }
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void showAuthticationError() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(TopupMainActivity.this);
+        builder.setMessage(R.string.services_alert_msg);
+        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int id) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -1118,7 +1345,20 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                     snackbar.show();
                 }
                 break;
-            case "ROBI":
+            case "GP ST":
+                if (cd.isConnectingToInternet()) {
+                    operator_number = 1;
+                    new OfferInquiryAsync().execute(getResources().getString(R.string.topup_offer), String.valueOf(operator_number));
+                } else {
+                    Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                    View snackBarView = snackbar.getView();
+                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                    snackbar.show();
+                }
+                break;
+
+            case "RB":
                 if (cd.isConnectingToInternet()) {
                     operator_number = 3;
                     new OfferInquiryAsync().execute(getResources().getString(R.string.topup_offer), String.valueOf(operator_number));
@@ -1130,7 +1370,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                     snackbar.show();
                 }
                 break;
-            case "BANGLALINK":
+            case "BL":
                 if (cd.isConnectingToInternet()) {
                     operator_number = 2;
                     new OfferInquiryAsync().execute(getResources().getString(R.string.topup_offer), String.valueOf(operator_number));
@@ -1142,7 +1382,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                     snackbar.show();
                 }
                 break;
-            case "TELETALK":
+            case "TT":
                 if (cd.isConnectingToInternet()) {
                     operator_number = 6;
                     new OfferInquiryAsync().execute(getResources().getString(R.string.topup_offer), String.valueOf(operator_number));
@@ -1154,7 +1394,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                     snackbar.show();
                 }
                 break;
-            case "AIRTEL":
+            case "AT":
                 if (cd.isConnectingToInternet()) {
                     operator_number = 4;
                     new OfferInquiryAsync().execute(getResources().getString(R.string.topup_offer), String.valueOf(operator_number));

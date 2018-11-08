@@ -66,7 +66,7 @@ import com.cloudwell.paywell.services.activity.settings.SettingsActivity;
 import com.cloudwell.paywell.services.activity.sms.SmsReceiver;
 import com.cloudwell.paywell.services.activity.statements.StatementMainActivity;
 import com.cloudwell.paywell.services.activity.terms.TermsActivity;
-import com.cloudwell.paywell.services.activity.topup.MainTopUpActivity;
+import com.cloudwell.paywell.services.activity.topup.TopupMenuActivity;
 import com.cloudwell.paywell.services.activity.topup.TopupMainActivity;
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.adapter.MainSliderAdapter;
@@ -228,16 +228,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             home_settings.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
 
-//        home_utility.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                home_utility.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.polli_favourite,0,0);
-//                return true;
-//            }
-//        });
 
-//        home_topup.setOnTouchListener(new ChoiceTouchListenre());
-//        home_topup.setOnDragListener(new ChoiceDragListener());
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -1065,7 +1056,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.homeBtnTopup:
                 if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
                     if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
-                        startActivity(new Intent(this, MainTopUpActivity.class));
+                        startActivity(new Intent(this, TopupMenuActivity.class));
                     } else {
                         Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.allow_error_msg, Snackbar.LENGTH_LONG);
                         snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -1314,6 +1305,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onPause();
         // stop auto scroll when onPause
         // viewPager.stopNestedScroll();
+        viewPager.setInterval(0);
     }
 
     @Override
@@ -1326,6 +1318,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // start auto scroll when onResume
         // viewPager.startAutoScroll();
         checkPayWellBalance();
+
+        viewPager.setInterval(2000);
     }
 
     private boolean getMailAddress() {

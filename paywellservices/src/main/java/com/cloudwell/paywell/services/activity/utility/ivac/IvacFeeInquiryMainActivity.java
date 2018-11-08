@@ -378,11 +378,11 @@ public class IvacFeeInquiryMainActivity extends AppCompatActivity implements Vie
         }
     }
 
-    private void showFullInfo(String web_file, String passport, String amount,String center, String phone, String trx_response_date_time,
-                            String trx_id, String status, String message) {
+    private void showFullInfo(String web_file, String passport, String amount, String center, String phone, String trx_response_date_time,
+                              String trx_id, String status, String message) {
         String msg = "Web File: " + web_file + "\nPassport No: " + passport
                 + "\nAmount: " + getString(R.string.tk_des) + " " + amount + "\nCenter Name: " + center
-                +"\nPhone Number: " + phone +"\nDate: " + trx_response_date_time
+                + "\nPhone Number: " + phone + "\nDate: " + trx_response_date_time
                 + "\nTrx ID: " + trx_id;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(IvacFeeInquiryMainActivity.this);
