@@ -144,7 +144,7 @@ public class IvacFeeInquiryActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(IvacFeeInquiryActivity.this, IvacMainActivity.class);
+        Intent intent = new Intent(IvacFeeInquiryActivity.this, IvacFeeInquiryMainActivity.class);
         startActivity(intent);
         finish();
     }

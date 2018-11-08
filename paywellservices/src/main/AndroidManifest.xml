@@ -4,7 +4,6 @@
     package="com.cloudwell.paywell.services">
 
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -13,10 +12,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
@@ -24,7 +21,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-    <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -507,14 +503,15 @@
             android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="OPEN_ACTIVITY_1"/>
+                <action android:name="OPEN_ACTIVITY_1" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-            <!--<intent-filter>-->
-            <!--<action android:name="com.cloudwell.paywell.services.MESSAGE" />-->
-            <!--&lt;!&ndash; <action android:name="android.intent.action.VIEW"/> &ndash;&gt;-->
-            <!--<category android:name="android.intent.category.DEFAULT" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="com.cloudwell.paywell.services.MESSAGE" /> -->
+            <!-- &lt;!&ndash; <action android:name="android.intent.action.VIEW"/> &ndash;&gt; -->
+            <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+            <!-- </intent-filter> -->
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -1096,14 +1093,23 @@
                 android:value="com.cloudwell.paywell.services.activity.utility.ivac.IvacMainActivity" />
         </activity>
         <activity
-            android:name=".activity.utility.ivac.IvacFeeInquiryActivity"
+            android:name=".activity.utility.ivac.IvacFeeInquiryMainActivity"
             android:parentActivityName=".activity.utility.ivac.IvacMainActivity"
+            android:screenOrientation="portrait">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.ivac.IvacMainActivity" />
+        </activity>
+        <activity
+            android:name=".activity.utility.ivac.IvacFeeInquiryActivity"
+            android:parentActivityName=".activity.utility.ivac.IvacFeeInquiryMainActivity"
             android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.ivac.IvacMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.ivac.IvacFeeInquiryMainActivity" />
         </activity>
         <activity
             android:name=".activity.utility.ivac.ScannerActivity"
@@ -1157,39 +1163,33 @@
         <activity
             android:name=".activity.location.LocationActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.notification.NotificationFullViewActivity"
             android:screenOrientation="portrait">
-
             <intent-filter>
-                <action android:name="OPEN_ACTIVITY_DETAILS"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
+                <action android:name="OPEN_ACTIVITY_DETAILS" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.notification.ImageViewActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.topup.TopUpOperatorMenuActivity"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.topup.MainTopUpActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.topup.brilliant.BrilliantTopupActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.topup.brilliant.BrilliantTransactionLogActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.WebViewActivity"
-            android:screenOrientation="portrait"></activity>
-
+            android:screenOrientation="portrait" />
 
         <!-- SMS Receiver -->
         <receiver android:name=".activity.sms.SmsReceiver">
@@ -1212,7 +1212,7 @@
         -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/pw_notification_bar"/>
+            android:resource="@drawable/pw_notification_bar" />
         <!--
              Set color used with incoming notification messages. This is used when no color is set for the incoming
              notification message. See README(https://goo.gl/6BKBk7) for more.
@@ -1236,8 +1236,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
-
     </application>
 
 </manifest>

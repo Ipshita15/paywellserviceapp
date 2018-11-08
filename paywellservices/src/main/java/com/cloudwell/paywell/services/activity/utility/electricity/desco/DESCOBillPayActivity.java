@@ -3,6 +3,7 @@ package com.cloudwell.paywell.services.activity.utility.electricity.desco;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,10 +18,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.davemorrissey.labs.subscaleview.ImageSource;
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
+import com.github.chrisbanes.photoview.PhotoView;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -105,8 +114,9 @@ public class DESCOBillPayActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void showBillImage() {
-        ImageView image = new ImageView(this);
-        image.setImageResource(R.drawable.ic_help_desco_bill);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_custom_image_layout, null);
+        PhotoView photoView = mView.findViewById(R.id.imageView);
+        photoView.setImageResource(R.drawable.ic_help_desco_bill);
 
         AlertDialog.Builder builder =
                 new AlertDialog.Builder(this).
@@ -116,7 +126,7 @@ public class DESCOBillPayActivity extends AppCompatActivity implements View.OnCl
                                 dialog.dismiss();
                             }
                         }).
-                        setView(image);
+                        setView(mView);
         builder.create().show();
     }
 

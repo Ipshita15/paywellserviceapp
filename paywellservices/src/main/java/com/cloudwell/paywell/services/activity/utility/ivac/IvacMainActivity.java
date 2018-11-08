@@ -94,7 +94,9 @@ public class IvacMainActivity extends AppCompatActivity implements CompoundButto
                 }
                 break;
             case R.id.homeBtnInquiry:
-                showLimitPrompt();
+//                showLimitPrompt();
+                startActivity(new Intent(IvacMainActivity.this, IvacFeeInquiryMainActivity.class));
+                finish();
                 break;
             default:
                 break;
