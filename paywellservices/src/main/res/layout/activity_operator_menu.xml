@@ -44,7 +44,7 @@
                     android:id="@+id/homeBtnSkitto"
                     style="@style/HomeButtonNew"
                     android:layout_weight="1"
-                    android:drawableTop="@drawable/skitto"
+                    android:drawableTop="@drawable/skitto_logo_offer"
                     android:onClick="onButtonClicker"
                     android:text="@string/home_skitto"
                     android:textAllCaps="false"

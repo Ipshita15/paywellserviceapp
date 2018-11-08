@@ -503,7 +503,7 @@
             android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="OPEN_ACTIVITY_1" />
+                <action android:name="OPEN_ACTIVITY_1"/>
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -1109,7 +1109,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.ivac.IvacFeeInquiryMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.ivac.IvacFeeInquiryMainActivity"/>
         </activity>
         <activity
             android:name=".activity.utility.ivac.ScannerActivity"
@@ -1167,9 +1167,9 @@
             android:name=".activity.notification.NotificationFullViewActivity"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="OPEN_ACTIVITY_DETAILS" />
+                <action android:name="OPEN_ACTIVITY_DETAILS"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity
@@ -1177,7 +1177,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.topup.TopUpOperatorMenuActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.topup.TopupMenuActivity"
             android:screenOrientation="portrait" />
@@ -1186,10 +1186,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.topup.brilliant.BrilliantTransactionLogActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.WebViewActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
 
         <!-- SMS Receiver -->
         <receiver android:name=".activity.sms.SmsReceiver">
@@ -1212,7 +1212,7 @@
         -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/pw_notification_bar" />
+            android:resource="@drawable/pw_notification_bar"/>
         <!--
              Set color used with incoming notification messages. This is used when no color is set for the incoming
              notification message. See README(https://goo.gl/6BKBk7) for more.
