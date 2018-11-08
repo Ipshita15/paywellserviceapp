@@ -140,6 +140,7 @@ public class PBMainActivity extends AppCompatActivity implements CompoundButton.
         dialog.setContentView(R.layout.dialog_trx_limit);
 
         Button btn_okay = dialog.findViewById(R.id.buttonOk);
+        Button btn_cancel = dialog.findViewById(R.id.cancelBtn);
 
         radioButton_five = dialog.findViewById(R.id.radio_five);
         radioButton_ten = dialog.findViewById(R.id.radio_ten);
@@ -175,6 +176,13 @@ public class PBMainActivity extends AppCompatActivity implements CompoundButton.
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
+            }
+        });
+        assert btn_cancel != null;
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
             }
         });
         dialog.setCancelable(true);
