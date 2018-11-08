@@ -14,6 +14,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDialog;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -42,6 +43,7 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.topup.adapter.MyRecyclerViewAdapter;
+import com.cloudwell.paywell.services.activity.topup.adapter.SpacesItemDecoration;
 import com.cloudwell.paywell.services.activity.topup.model.MobileOperator;
 import com.cloudwell.paywell.services.activity.topup.model.RequestTopup;
 import com.cloudwell.paywell.services.activity.topup.model.TopupData;
@@ -299,9 +301,13 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
 
         // new recycle view
         final RecyclerView recyclerView = topUpView.findViewById(R.id.rvOperatorList);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+//        recyclerView.addItemDecoration(new SpacesItemDecoration(6));
 
         LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(horizontalLayoutManager);
+        recyclerView.getLayoutManager().setMeasurementCacheEnabled(false);
         MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(this, mobileOperatorArrayList);
 
         adapter.setClickListener(new MyRecyclerViewAdapter.ItemClickListener() {
