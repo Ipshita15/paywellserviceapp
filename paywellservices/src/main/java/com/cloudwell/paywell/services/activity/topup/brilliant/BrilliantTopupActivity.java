@@ -67,6 +67,7 @@ public class BrilliantTopupActivity extends AppCompatActivity implements Compoun
     private static final int CONTACT_REQ_CODE = 333;
     private static final String BRILLIANT_PREFIX = "09638";
     private static final String COUNTRY_CODE = "88";
+    private static final String COUNTRY_CODE_PLUSE = "+88";
     public static final String LIMIT_STRING ="limit" ;
     private static final int CONTACT_PERMISSION_CODE = 444;
     public boolean statusCode = false;
@@ -272,8 +273,7 @@ public class BrilliantTopupActivity extends AppCompatActivity implements Compoun
                             phoneNumOne = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                         }
                         phones.close();
-                        if (!phoneNumOne.isEmpty() && !phoneNumOne.contains("+") && !phoneNumOne.contains("-")
-                                && !phoneNumOne.contains(" ") && !phoneNumOne.startsWith("88")) {
+                        if (!phoneNumOne.isEmpty() && !phoneNumOne.contains("+") && !phoneNumOne.contains("-") && !phoneNumOne.contains(" ") && !phoneNumOne.startsWith("88")) {
                             if (phoneNumOne.startsWith(BRILLIANT_PREFIX)){
                                 phoneNoET.setText(phoneNumOne);
                             }else {
@@ -296,7 +296,10 @@ public class BrilliantTopupActivity extends AppCompatActivity implements Compoun
                                 phoneNumOne = phoneNumOne.replace(" ", "");
                             }
                             if (phoneNumOne.startsWith(COUNTRY_CODE)){
-                               phoneNumOne.replace(COUNTRY_CODE,"");
+                                phoneNumOne =  phoneNumOne.replace(COUNTRY_CODE,"");
+                            }
+                            if (phoneNumOne.startsWith(COUNTRY_CODE_PLUSE)){
+                                phoneNumOne =   phoneNumOne.replace(COUNTRY_CODE_PLUSE,"");
                             }
                             if (phoneNumOne.startsWith(BRILLIANT_PREFIX)){
                                 phoneNoET.setText(phoneNumOne);
