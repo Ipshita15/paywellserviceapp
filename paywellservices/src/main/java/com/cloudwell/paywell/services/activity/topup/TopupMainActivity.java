@@ -1245,42 +1245,38 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
 
     private void showDialog(TopupReposeData response, StringBuilder receiptBuilder, AlertDialog.Builder builder) {
 
-        boolean isTotalRequestSuccess = false;
+        boolean isTotalRequestSuccess;
+        TopupDatum topupData = null;
+
         for (int i = 0; i < response.getTopupData().size(); i++) {
 
-            TopupDatum topupData = response.getTopupData().get(i);
+            topupData = response.getTopupData().get(i);
             if (topupData != null) {
                 int number = i + 1;
                 receiptBuilder.append(number + ".");
-
-
                 receiptBuilder.append(getString(R.string.phone_no_des) + " " + topupData.getTopupData().getMsisdn());
                 receiptBuilder.append("\n" + getString(R.string.amount_des) + " " + topupData.getTopupData().getAmount() + " " + getString(R.string.tk_des));
 
-                if (!topupData.getStatus().toString().equals("200")) {
-
+                if (topupData.getStatus().toString().equals("200")) {
                     receiptBuilder.append("\n" + Html.fromHtml("<font color='#ff0000'>" + getString(R.string.status_des) + "</font>") + " " + topupData.getMessage());
-
-                    isTotalRequestSuccess = false;
                 } else {
                     receiptBuilder.append("\n" + Html.fromHtml("<font color='#008000>" + getString(R.string.status_des) + "</font>") + " " + topupData.getMessage());
-
-                    isTotalRequestSuccess = true;
                 }
+
                 receiptBuilder.append("\n" + getString(R.string.trx_id_des) + " " + topupData.getTransId());
-
                 receiptBuilder.append("\n\n");
-
             }
-
         }
+
+        isTotalRequestSuccess = checkTotalRequestSuccess(response);
+
         mHotLine = response.getHotlineNumber();
         receiptBuilder.append("\n\n" + getString(R.string.using_paywell_des) + "\n" + getString(R.string.hotline_des) + " " + mHotLine);
 
-        if (isTotalRequestSuccess == false) {
-            builder.setTitle(Html.fromHtml("<font color='#ff0000'>Result Failed</font>"));
-        } else {
+        if (isTotalRequestSuccess) {
             builder.setTitle(Html.fromHtml("<font color='#008000'>Result Successful</font>"));
+        } else {
+            builder.setTitle(Html.fromHtml("<font color='#ff0000'>Result Failed</font>"));
         }
 
         builder.setMessage(receiptBuilder.toString());
@@ -1313,6 +1309,24 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
         AlertDialog alert = builder.create();
         alert.show();
 
+    }
+
+    public  boolean checkTotalRequestSuccess(TopupReposeData response){
+        boolean isTotalSuccess = false;
+
+        for (int i = 0; i < response.getTopupData().size(); i++) {
+            TopupDatum topupData = response.getTopupData().get(i);
+            if (topupData != null) {
+
+                if (topupData.getStatus().toString().equals("200")) {
+                    isTotalSuccess = true;
+                } else {
+                    isTotalSuccess = false;
+                    return isTotalSuccess;
+                }
+            }
+        }
+        return isTotalSuccess;
     }
 
 
