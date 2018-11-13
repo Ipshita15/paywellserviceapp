@@ -1257,7 +1257,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
                 receiptBuilder.append(getString(R.string.phone_no_des) + " " + topupData.getTopupData().getMsisdn());
                 receiptBuilder.append("\n" + getString(R.string.amount_des) + " " + topupData.getTopupData().getAmount() + " " + getString(R.string.tk_des));
 
-                if (topupData.getStatus().toString().startsWith("3")) {
+                if (!topupData.getStatus().toString().equals("200")) {
 
                     receiptBuilder.append("\n" + Html.fromHtml("<font color='#ff0000'>" + getString(R.string.status_des) + "</font>") + " " + topupData.getMessage());
 
