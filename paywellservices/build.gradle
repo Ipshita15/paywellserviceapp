@@ -25,15 +25,15 @@ android {
         minSdkVersion 16
         //for push notification its 20 otherwise it was 25
         targetSdkVersion 27
-        versionCode 33
+        versionCode 36
         versionName '10.16'
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
-        debug {
-            applicationIdSuffix '.debug'
-        }
+//        debug {
+//            applicationIdSuffix '.debug'
+//        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

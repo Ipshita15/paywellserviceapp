@@ -16,3 +16,4 @@
 #   public *;
 #}
 -dontwarn okhttp3.internal.platform.*
+-ignorewarnings
