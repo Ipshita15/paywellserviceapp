@@ -1907,32 +1907,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         viewPager.setOnSlideClickListener(new OnSlideClickListener() {
             @Override
             public void onSlideClick(int position) {
-                currentPage = position;
 
-                String link = mAppHandler.getDisplayPictureArrayList().get(currentPage);
-                // link = "facebook.com";
+              try {
+                  currentPage = position;
 
-                if (link.isEmpty()) {
+                  String link = mAppHandler.getDisplayPictureArrayList().get(currentPage);
 
-                } else if (link.contains("facebook.com")) {
-                    if (!mCd.isConnectingToInternet()) {
-                        AppHandler.showDialog(getSupportFragmentManager());
-                    } else {
-                        goToFacebook();
-                    }
-                } else if (link.contains("youtube.com")) {
-                    if (!mCd.isConnectingToInternet()) {
-                        AppHandler.showDialog(getSupportFragmentManager());
-                    } else {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=mRg-yT20Iyc"));
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.setPackage("com.google.android.youtube");
-                        startActivity(intent);
-                    }
-                } else {
-                    WebViewActivity.TAG_LINK = link;
-                    startActivity(new Intent(MainActivity.this, WebViewActivity.class));
-                }
+
+                  if (link.isEmpty()) {
+
+                  } else if (link.contains("facebook.com")) {
+                      if (!mCd.isConnectingToInternet()) {
+                          AppHandler.showDialog(getSupportFragmentManager());
+                      } else {
+                          goToFacebook();
+                      }
+                  } else if (link.contains("youtube.com")) {
+                      if (!mCd.isConnectingToInternet()) {
+                          AppHandler.showDialog(getSupportFragmentManager());
+                      } else {
+                          Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=mRg-yT20Iyc"));
+                          intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                          intent.setPackage("com.google.android.youtube");
+                          startActivity(intent);
+                      }
+                  } else {
+                      WebViewActivity.TAG_LINK = link;
+                      startActivity(new Intent(MainActivity.this, WebViewActivity.class));
+                  }
+              }catch (Exception e){
+
+              }
+
             }
         });
     }
