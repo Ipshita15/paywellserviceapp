@@ -9,6 +9,8 @@ import android.util.Log;
 
 import com.cloudwell.paywell.services.BuildConfig;
 import com.cloudwell.paywell.services.utils.MyHttpClient;
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.leakcanary.LeakCanary;
 
@@ -16,6 +18,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by Android on 12/1/2015.
@@ -50,7 +54,16 @@ public class AppController extends Application {
             LeakCanary.install(this);
         }
 
+        configureCrashReporting();
 
+
+    }
+
+    private void configureCrashReporting() {
+        CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder()
+                .disabled(BuildConfig.DEBUG)
+                .build();
+        Fabric.with(this, new Crashlytics.Builder().core(crashlyticsCore).build());
     }
 
 
