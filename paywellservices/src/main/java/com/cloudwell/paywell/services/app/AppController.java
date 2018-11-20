@@ -10,6 +10,7 @@ import android.util.Log;
 import com.cloudwell.paywell.services.BuildConfig;
 import com.cloudwell.paywell.services.utils.MyHttpClient;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.squareup.leakcanary.LeakCanary;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.params.BasicHttpParams;
@@ -46,6 +47,7 @@ public class AppController extends Application {
         if (BuildConfig.DEBUG) {
             String id = FirebaseInstanceId.getInstance().getToken();
             Log.e("device_token", "" + id);
+            LeakCanary.install(this);
         }
 
 
