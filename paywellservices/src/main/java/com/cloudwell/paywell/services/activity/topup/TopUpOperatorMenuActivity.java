@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
 
-import com.cloudwell.paywell.services.BaseActivity;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;

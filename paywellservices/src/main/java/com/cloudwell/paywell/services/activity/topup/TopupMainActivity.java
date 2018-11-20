@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,6 +40,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.topup.adapter.MyRecyclerViewAdapter;
 import com.cloudwell.paywell.services.activity.topup.model.MobileOperator;
@@ -73,7 +73,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TopupMainActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class TopupMainActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     public final static String KEY_GP = "GP";
     public final static String KEY_ROBI = "Robi";
@@ -116,6 +116,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
     private TextView tvError;
     private TextView tvResult;
     private String operator;
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -1066,9 +1067,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void handleTopupAPIValidation(String pinNo) {
-        final ProgressDialog progressDialog;
-        progressDialog = ProgressDialog.show(TopupMainActivity.this, "", getString(R.string.loading_msg), true);
-        progressDialog.show();
+        showProgressDialog();
 
         final RequestTopup requestTopup = new RequestTopup();
         requestTopup.setPassword("" + pinNo);
@@ -1174,7 +1173,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
         responseBodyCall.enqueue(new Callback<TopupReposeData>() {
             @Override
             public void onResponse(Call<TopupReposeData> call, Response<TopupReposeData> response) {
-                progressDialog.dismiss();
+                dismissProgressDialog();
                 Log.d(KEY_TAG, "onResponse:" + response.body());
 
                 showReposeUI(response.body());
@@ -1183,7 +1182,8 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
 
             @Override
             public void onFailure(Call<TopupReposeData> call, Throwable t) {
-                progressDialog.dismiss();
+                dismissProgressDialog();
+
                 Log.d(KEY_TAG, "onFailure:");
                 Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -1195,6 +1195,15 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
             }
         });
 
+    }
+
+
+
+
+    @Override
+    protected void onDestroy() {
+        dismissProgressDialog();
+        super.onDestroy();
     }
 
     private String getOperatorTextForServer(CharSequence checkedRadioButtonText) {

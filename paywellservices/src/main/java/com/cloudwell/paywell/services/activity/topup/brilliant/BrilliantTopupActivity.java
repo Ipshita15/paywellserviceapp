@@ -18,7 +18,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDialog;
 import android.text.Html;
 import android.text.InputFilter;
@@ -43,6 +42,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.BrilliantTopUpInquiry;
 import com.cloudwell.paywell.services.activity.utility.ivac.DrawableClickListener;
 import com.cloudwell.paywell.services.app.AppHandler;
@@ -61,7 +61,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class BrilliantTopupActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
+public class BrilliantTopupActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
 
 
     private static final int CONTACT_REQ_CODE = 333;
@@ -434,9 +434,7 @@ public class BrilliantTopupActivity extends AppCompatActivity implements Compoun
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(BrilliantTopupActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -447,7 +445,7 @@ public class BrilliantTopupActivity extends AppCompatActivity implements Compoun
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.dismiss();
+           dismissProgressDialog();
             if (result != null) {
                 if (result.startsWith("313")) {
 //                    showTransactionLog(result, false);
@@ -554,15 +552,7 @@ public class BrilliantTopupActivity extends AppCompatActivity implements Compoun
 
 
 
-//            Snackbar snackbar = Snackbar.make(topUpLayout, message, Snackbar.LENGTH_LONG);
-//            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-//            View snackBarView = snackbar.getView();
-//            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-//            snackbar.show();
 
-//            if (statusCode.equalsIgnoreCase("200")){
-//                startActivity(new Intent(BrilliantTopupActivity.this,TopupMainActivity.class));
-//            }
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -622,73 +612,6 @@ public class BrilliantTopupActivity extends AppCompatActivity implements Compoun
     }
 
 
-//    private void showTransactionLog(String responseTxt, final boolean isAuthorized) {
-//        // code for topup receipt dialog
-//        if (isAuthorized) {
-//            StringBuilder receiptBuilder = new StringBuilder();
-//            final StringBuilder topupBuilder = new StringBuilder();
-//            EditText multiplePhoneNoET, multipleAmountET, singlePhoneNoET, singleAmountET;
-//
-//            AlertDialog.Builder builder = new AlertDialog.Builder(BrilliantTopupActivity.this);
-//             // code for single topup
-//
-//                    singlePhoneNoET = (EditText) findViewById(R.id.brilliantPhoneNo);
-//                    singleAmountET = (EditText) findViewById(R.id.brilliantAmount);
-//            String mPhnNo = singlePhoneNoET.getText().toString();
-//            String mAmount = singleAmountET.getText().toString();
-//                    String[] splitSingleAt = responseTxt.split("@");
-//
-//                String mStatusMessage = splitSingleAt[1];
-//                String mTrxId = splitSingleAt[2];
-//                String mHotLine = splitSingleAt[5];
-//                if (splitSingleAt[0].equals("200")) {
-//                    receiptBuilder.append(getString(R.string.phone_no_des) + " " + mPhnNo
-//                            + "\n" + getString(R.string.amount_des) + " " + mAmount + " " + getString(R.string.tk_des)
-//                            + "\n" + getString(R.string.trx_id_des) + " " + mTrxId
-//                            + "\n\n" + getString(R.string.using_paywell_des)
-//                            + "\n" + getString(R.string.hotline_des) + " " + mHotLine);
-//                } else {
-//                    receiptBuilder.append(getString(R.string.phone_no_des) + " " + mPhnNo
-//                            + "\n" + getString(R.string.amount_des) + " " + mAmount + " " + getString(R.string.tk_des)
-//                            + "\n\n" + getString(R.string.status_des) + " " + mStatusMessage
-//                            + "\n\n" + getString(R.string.trx_id_des) + " " + mTrxId
-//                            + "\n\n" + getString(R.string.using_paywell_des)
-//                            + "\n" + getString(R.string.hotline_des) + " " + mHotLine);
-//                }
-//                if (splitSingleAt[0].equals("200")) {
-//                    builder.setTitle(Html.fromHtml("<font color='#008000'>Result Successful</font>"));
-//                } else {
-//                    builder.setTitle(Html.fromHtml("<font color='#ff0000'>Result Failed</font>"));
-//                }
-//
-//            builder.setMessage(receiptBuilder.toString());
-//
-//            builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialogInterface, int id) {
-//                    dialogInterface.dismiss();
-//                    if (statusCode) {
-//                        startActivity(new Intent(BrilliantTopupActivity.this, BrilliantTopupActivity.class));
-//                        finish();
-//                    }
-//                }
-//            });
-//            AlertDialog alert = builder.create();
-//            alert.show();
-//        } else {
-//            // 313@AuthenticationError
-//            AlertDialog.Builder builder = new AlertDialog.Builder(BrilliantTopupActivity.this);
-//            builder.setMessage(R.string.services_alert_msg);
-//            builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialogInterface, int id) {
-//                    dialogInterface.dismiss();
-//                }
-//            });
-//            AlertDialog alert = builder.create();
-//            alert.show();
-//        }
-//    }
 
     private void showEnquiryPrompt() {
         AlertDialog.Builder builder = new AlertDialog.Builder(BrilliantTopupActivity.this);
