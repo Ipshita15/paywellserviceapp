@@ -1,10 +1,8 @@
 package com.cloudwell.paywell.services.activity.reg;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -29,7 +28,6 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -37,7 +35,7 @@ import java.util.List;
 
 import static com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regModel;
 
-public class EntrySecondActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class EntrySecondActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
 
     private EditText et_landmark;
     private Spinner spnr_district, spnr_thana, spnr_postcode;
@@ -209,13 +207,12 @@ public class EntrySecondActivity extends AppCompatActivity implements AdapterVie
     }
 
     private class GetThanaResponseAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(EntrySecondActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+
+            showProgressDialog();
         }
 
         @SuppressWarnings("deprecation")
@@ -242,8 +239,7 @@ public class EntrySecondActivity extends AppCompatActivity implements AdapterVie
 
         @Override
         protected void onPostExecute(String result) {
-            if (progressDialog.isShowing())
-                progressDialog.dismiss();
+          dismissProgressDialog();
             if (result != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
@@ -279,13 +275,11 @@ public class EntrySecondActivity extends AppCompatActivity implements AdapterVie
     }
 
     private class GetPostResponseAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(EntrySecondActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @SuppressWarnings("deprecation")
@@ -314,8 +308,8 @@ public class EntrySecondActivity extends AppCompatActivity implements AdapterVie
 
         @Override
         protected void onPostExecute(String result) {
-            if (progressDialog.isShowing())
-                progressDialog.dismiss();
+            dismissProgressDialog();
+
             if (result != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(result);

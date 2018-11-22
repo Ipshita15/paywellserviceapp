@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.mfs.mycash;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,13 +7,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.inquiry.LastTransactionsActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.inquiry.StatementActivity;
 import com.cloudwell.paywell.services.app.AppController;
@@ -35,7 +34,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InquiryMenuActivity extends AppCompatActivity {
+public class InquiryMenuActivity extends BaseActivity {
 
     private ConnectionDetector mCd;
     private RelativeLayout mRelativeLayout;
@@ -121,13 +120,11 @@ public class InquiryMenuActivity extends AppCompatActivity {
     }
 
     private class TrxInquiryAsync extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(InquiryMenuActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -158,7 +155,8 @@ public class InquiryMenuActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
+
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);

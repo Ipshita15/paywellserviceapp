@@ -32,13 +32,14 @@ public class BaseActivity extends AppCompatActivity {
 
     public void showProgressDialog() {
         progressDialog = ProgressDialog.show(this, "", this.getString(R.string.loading_msg), true);
-        progressDialog.setCancelable(true);
+        progressDialog.setCancelable(false);
         progressDialog.setIndeterminate(false);
         progressDialog.show();
     }
     public void dismissProgressDialog() {
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
+            progressDialog = null;
         }
     }
 

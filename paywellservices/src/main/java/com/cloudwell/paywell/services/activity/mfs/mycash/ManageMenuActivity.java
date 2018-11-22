@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.mfs.mycash;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,13 +8,13 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.manage.BalanceTransferRequestActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.manage.MYCashToPayWellActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.manage.PayWellToMYCashActivity;
@@ -34,14 +33,13 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManageMenuActivity extends AppCompatActivity {
+public class ManageMenuActivity extends BaseActivity {
 
     private ConnectionDetector mCd;
     private CoordinatorLayout mCoordinateLayout;
@@ -126,13 +124,11 @@ public class ManageMenuActivity extends AppCompatActivity {
     }
 
     private class SubmitAsync extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(ManageMenuActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
 
         }
 
@@ -170,7 +166,7 @@ public class ManageMenuActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);

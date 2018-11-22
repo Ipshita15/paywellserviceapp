@@ -1,12 +1,10 @@
 package com.cloudwell.paywell.services.activity.utility.ivac;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDialog;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +14,7 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
@@ -35,7 +34,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IvacMainActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
+public class IvacMainActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
 
     private RelativeLayout mRelativeLayout;
     private RadioButton radioButton_five, radioButton_ten, radioButton_twenty, radioButton_fifty, radioButton_hundred, radioButton_twoHundred;
@@ -220,13 +219,11 @@ public class IvacMainActivity extends AppCompatActivity implements CompoundButto
 
     @SuppressWarnings("deprecation")
     private class TransactionLogAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(IvacMainActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+           showProgressDialog();
         }
 
         @Override
@@ -264,7 +261,7 @@ public class IvacMainActivity extends AppCompatActivity implements CompoundButto
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             if (result != null) {
                 try {
                     JSONObject object = new JSONObject(result);

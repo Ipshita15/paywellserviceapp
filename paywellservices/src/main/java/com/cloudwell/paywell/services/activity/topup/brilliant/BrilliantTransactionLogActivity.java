@@ -1,11 +1,9 @@
 package com.cloudwell.paywell.services.activity.topup.brilliant;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +18,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.APIBrilliantTRXLog;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.BrilliantTRXLogModel;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.Datum;
@@ -27,7 +26,7 @@ import com.cloudwell.paywell.services.app.AppHandler;
 
 import java.util.ArrayList;
 
-public class BrilliantTransactionLogActivity extends AppCompatActivity {
+public class BrilliantTransactionLogActivity extends BaseActivity {
     private ListView trxLogLV;
     private ArrayList<BrilliantTRXLogModel> brilliantTRXLogModels;
     private ArrayList allDataList;
@@ -63,10 +62,8 @@ public class BrilliantTransactionLogActivity extends AppCompatActivity {
     }
     private void getBrilliantTrxLogData(final String userName, String limitNumber){
         allDataList.clear();
-        final ProgressDialog progressDialog=new ProgressDialog(this);
-        progressDialog.setMessage("Please Wait...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+
+        showProgressDialog();
 
         AndroidNetworking.get("https://api.paywellonline.com/PayWellBrilliantSystem/transactionLog?")
                 .addQueryParameter("username",userName)
@@ -96,13 +93,13 @@ public class BrilliantTransactionLogActivity extends AppCompatActivity {
                             snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                             snackbar.show();
                         }
-                        progressDialog.dismiss();
+                       dismissProgressDialog();
                     }
                     @Override
                     public void onError(ANError anError) {
                         // handle error
                         anError.printStackTrace();
-                        progressDialog.dismiss();
+                        dismissProgressDialog();
                     }
                 });
     }

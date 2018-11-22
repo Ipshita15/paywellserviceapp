@@ -2,7 +2,6 @@ package com.cloudwell.paywell.services.activity.topup.brilliant;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -430,7 +429,7 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
     }
 
     private class TopUpAsync extends AsyncTask<Object, String, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
@@ -661,11 +660,7 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
     }
 
     private void getTopUpInquiry(final String userName, String number){
-
-        final ProgressDialog progressDialog=new ProgressDialog(this);
-        progressDialog.setMessage("Please Wait...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+        showProgressDialog();
 
         AndroidNetworking.get("https://api.paywellonline.com/PayWellBrilliantSystem/transactionEnquiry?")
                 .addQueryParameter("username",userName)
@@ -674,18 +669,18 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
                 .build().getAsObject(BrilliantTopUpInquiry.class, new ParsedRequestListener<BrilliantTopUpInquiry>() {
             @Override
             public void onResponse(BrilliantTopUpInquiry o) {
+                dismissProgressDialog();
                 if (o.getStatusCode()==200){
                     showEnquiryResult(o.getData().getBrilliantMobileNumber(),o.getData().getAmount(),o.getData().getBriliantTrxId(),o.getData().getPaywellTrxId(),String.valueOf(o.getStatusCode()),o.getData().getStatusName(),o.getData().getAddDatetime(),o.getPwContact());
                 }else {
                     showEnquiryResult(null,null,null,null,String.valueOf(o.getStatusCode()),o.getMessage(),null,o.getPwContact());
                 }
-                progressDialog.dismiss();
             }
 
             @Override
             public void onError(ANError anError) {
                 anError.printStackTrace();
-                progressDialog.dismiss();
+                dismissProgressDialog();
             }
         });
     }

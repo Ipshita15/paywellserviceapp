@@ -134,6 +134,8 @@ dependencies {
 
     // A memory leak detection library for Android and Java.
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.2'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.2'
+
 
 
 

@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.utility.qubee;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -34,7 +33,7 @@ import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ComplainAmountActivity extends AppCompatActivity implements View.OnClickListener {
+public class ComplainAmountActivity extends BaseActivity implements View.OnClickListener {
 
     private ConnectionDetector cd;
     private AppHandler mAppHandler;
@@ -116,13 +115,11 @@ public class ComplainAmountActivity extends AppCompatActivity implements View.On
     }
 
     private class SubmitAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(ComplainAmountActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showStatusDialog();
         }
 
         @Override
@@ -155,7 +152,7 @@ public class ComplainAmountActivity extends AppCompatActivity implements View.On
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+           dismissProgressDialog();
             try {
                 if (result != null && result.contains("@")) {
                     String splitedArray[] = result.split("@");

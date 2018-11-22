@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.utility.ivac;
 
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,7 +11,6 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDialog;
 import android.text.Html;
 import android.view.MenuItem;
@@ -25,6 +23,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -45,7 +44,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IvacFeeInquiryMainActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class IvacFeeInquiryMainActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     private ConstraintLayout mConstraintLayout;
     private RadioButton radioButton_five, radioButton_ten, radioButton_twenty, radioButton_fifty, radioButton_hundred, radioButton_twoHundred;
@@ -284,13 +283,11 @@ public class IvacFeeInquiryMainActivity extends AppCompatActivity implements Vie
 
     @SuppressWarnings("deprecation")
     private class TransactionLogAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(IvacFeeInquiryMainActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -327,7 +324,7 @@ public class IvacFeeInquiryMainActivity extends AppCompatActivity implements Vie
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             if (result != null) {
                 try {
                     if (requestType == TAG_REQUEST_IVAC_FEE_INQUIRY) {

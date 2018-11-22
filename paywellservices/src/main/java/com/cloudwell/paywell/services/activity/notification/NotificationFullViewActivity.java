@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.notification;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.util.Linkify;
@@ -26,6 +24,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.StringRequestListener;
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.squareup.picasso.Picasso;
 
@@ -37,7 +36,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class NotificationFullViewActivity extends AppCompatActivity implements View.OnClickListener {
+public class NotificationFullViewActivity extends BaseActivity implements View.OnClickListener {
 
     public static int TAG_NOTIFICATION_SOURCE;
     public static int TAG_NOTIFICATION_POSITION;
@@ -53,7 +52,7 @@ public class NotificationFullViewActivity extends AppCompatActivity implements V
     private AppHandler mAppHandler;
 
     boolean isNotificationFlow;
-    private ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,13 +182,11 @@ public class NotificationFullViewActivity extends AppCompatActivity implements V
     }
 
     private class PinRequestAsync extends AsyncTask<String, String, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(NotificationFullViewActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -214,7 +211,7 @@ public class NotificationFullViewActivity extends AppCompatActivity implements V
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             if (result != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
@@ -291,9 +288,7 @@ public class NotificationFullViewActivity extends AppCompatActivity implements V
     }
 
     public void callNotificationReadAPI(String messageId) {
-        progressDialog = ProgressDialog.show(NotificationFullViewActivity.this, "", getString(R.string.loading_msg), true);
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+        showProgressDialog();
 
         AndroidNetworking.post(getResources().getString(R.string.notif_url))
                 .addBodyParameter("username", mAppHandler.getImeiNo())
@@ -303,7 +298,7 @@ public class NotificationFullViewActivity extends AppCompatActivity implements V
                 .build().getAsString(new StringRequestListener() {
             @Override
             public void onResponse(String response) {
-                progressDialog.dismiss();
+                dismissProgressDialog();
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new JSONObject(response);
@@ -329,7 +324,7 @@ public class NotificationFullViewActivity extends AppCompatActivity implements V
 
             @Override
             public void onError(ANError anError) {
-                progressDialog.dismiss();
+                dismissProgressDialog();
             }
         });
 

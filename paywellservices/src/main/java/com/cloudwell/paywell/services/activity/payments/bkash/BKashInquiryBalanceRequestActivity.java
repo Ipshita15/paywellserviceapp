@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.payments.bkash;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
@@ -19,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -35,7 +34,7 @@ import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BKashInquiryBalanceRequestActivity extends AppCompatActivity implements View.OnClickListener {
+public class BKashInquiryBalanceRequestActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String REQUEST_TYPE = "requestType";
     public static final String PW_BALANCE = "pwBalance";
@@ -140,13 +139,11 @@ public class BKashInquiryBalanceRequestActivity extends AppCompatActivity implem
     }
 
     private class ResponseAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(BKashInquiryBalanceRequestActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -177,7 +174,7 @@ public class BKashInquiryBalanceRequestActivity extends AppCompatActivity implem
         @Override
         protected void onPostExecute(String result) {
             Log.e("logTag", result);
-            progressDialog.cancel();
+            dismissProgressDialog();
             if (result != null) {
                 String[] splitArray = result.split("@");
                 txt = String.valueOf(splitArray[1]);

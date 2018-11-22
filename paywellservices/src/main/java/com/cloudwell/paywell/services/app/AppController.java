@@ -13,6 +13,7 @@ import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.params.BasicHttpParams;
@@ -37,6 +38,8 @@ public class AppController extends Application {
 
     AppHandler mAppHandler;
 
+    private RefWatcher refWatcher;
+
     public static synchronized AppController getInstance() {
         return mInstance;
     }
@@ -51,12 +54,24 @@ public class AppController extends Application {
         if (BuildConfig.DEBUG) {
             String id = FirebaseInstanceId.getInstance().getToken();
             Log.e("device_token", "" + id);
-            LeakCanary.install(this);
+
+
+            if (LeakCanary.isInAnalyzerProcess(this)) {
+                // This process is dedicated to LeakCanary for heap analysis.
+                // You should not init your app in this process.
+                return;
+            }
+            refWatcher=LeakCanary.install(this);
         }
 
         configureCrashReporting();
 
 
+    }
+
+    public static RefWatcher getRefWatcher(Context context){
+        AppController myApplication= (AppController) context.getApplicationContext();
+        return myApplication.refWatcher;
     }
 
     private void configureCrashReporting() {

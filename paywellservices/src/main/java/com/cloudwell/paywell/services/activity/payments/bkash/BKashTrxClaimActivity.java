@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.payments.bkash;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +15,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -34,7 +33,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BKashTrxClaimActivity extends AppCompatActivity implements View.OnClickListener {
+public class BKashTrxClaimActivity extends BaseActivity implements View.OnClickListener {
 
     private ConnectionDetector mCd;
     private LinearLayout mLinearLayout;
@@ -126,13 +125,11 @@ public class BKashTrxClaimActivity extends AppCompatActivity implements View.OnC
 
     @SuppressWarnings("deprecation")
     private class TransactionInquiryAsync extends AsyncTask<String, String, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(BKashTrxClaimActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -168,7 +165,7 @@ public class BKashTrxClaimActivity extends AppCompatActivity implements View.OnC
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);

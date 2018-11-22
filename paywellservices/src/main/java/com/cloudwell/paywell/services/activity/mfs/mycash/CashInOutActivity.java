@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.mfs.mycash;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,13 +7,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.cash.CashInActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.cash.CashOutActivity;
 import com.cloudwell.paywell.services.app.AppController;
@@ -35,7 +34,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CashInOutActivity extends AppCompatActivity {
+public class CashInOutActivity extends BaseActivity {
 
     private RelativeLayout mRelativeLayout;
     private ConnectionDetector mCd;
@@ -85,7 +84,7 @@ public class CashInOutActivity extends AppCompatActivity {
     }
 
     private void checkTrxLimit() {
-        final String[] limitTypes = {"5","10","20"};
+        final String[] limitTypes = {"5", "10", "20"};
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.log_limit_title_msg);
         builder.setSingleChoiceItems(limitTypes, 0, new DialogInterface.OnClickListener() {
@@ -101,7 +100,7 @@ public class CashInOutActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        if(selectedLimit.isEmpty()) {
+                        if (selectedLimit.isEmpty()) {
                             selectedLimit = "5";
                         }
                         int limit = Integer.parseInt(selectedLimit);
@@ -122,13 +121,11 @@ public class CashInOutActivity extends AppCompatActivity {
     }
 
     private class CashOutInquiryAsync extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(CashInOutActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
 
         }
 
@@ -160,7 +157,7 @@ public class CashInOutActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
@@ -173,7 +170,7 @@ public class CashInOutActivity extends AppCompatActivity {
                         intent.putExtras(bundle);
                         startActivity(intent);
                         finish();
-                    }else{
+                    } else {
                         Snackbar snackbar = Snackbar.make(mRelativeLayout, jsonObject.getString(TAG_MESSAGE), Snackbar.LENGTH_LONG);
                         snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                         View snackBarView = snackbar.getView();

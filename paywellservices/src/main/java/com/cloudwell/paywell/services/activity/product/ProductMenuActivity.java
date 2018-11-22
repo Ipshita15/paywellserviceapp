@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.product;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -11,8 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +17,7 @@ import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 
@@ -30,7 +28,7 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 
-public class ProductMenuActivity extends AppCompatActivity {
+public class ProductMenuActivity extends BaseActivity {
     RelativeLayout relativeLayout;
     private static final int PERMISSIONS_REQUEST_WRITE_STORAGE = 100;
     private AppHandler mAppHandler;
@@ -139,12 +137,11 @@ public class ProductMenuActivity extends AppCompatActivity {
 
     @SuppressWarnings("deprecation")
     protected class GetToken extends AsyncTask<String, String, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(ProductMenuActivity.this, "", getString(R.string.loading_msg), true);
-            progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -171,7 +168,7 @@ public class ProductMenuActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             try {
                 if (!result.isEmpty()) {
-                    progressDialog.dismiss();
+                 dismissProgressDialog();
                     if(serviceType == TAG_AJKER_DEAL) {
                         AjkerDealActivity.token = result;
                         startActivity(new Intent(ProductMenuActivity.this, AjkerDealActivity.class));

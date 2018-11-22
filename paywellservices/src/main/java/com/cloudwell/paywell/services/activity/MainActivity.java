@@ -6,7 +6,6 @@ import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
@@ -36,7 +35,6 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Patterns;
@@ -53,6 +51,7 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.about.AboutActivity;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.chat.ChatActivity;
 import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
 import com.cloudwell.paywell.services.activity.mfs.MFSMainActivity;
@@ -66,8 +65,8 @@ import com.cloudwell.paywell.services.activity.settings.SettingsActivity;
 import com.cloudwell.paywell.services.activity.sms.SmsReceiver;
 import com.cloudwell.paywell.services.activity.statements.StatementMainActivity;
 import com.cloudwell.paywell.services.activity.terms.TermsActivity;
-import com.cloudwell.paywell.services.activity.topup.TopupMenuActivity;
 import com.cloudwell.paywell.services.activity.topup.TopupMainActivity;
+import com.cloudwell.paywell.services.activity.topup.TopupMenuActivity;
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.adapter.MainSliderAdapter;
 import com.cloudwell.paywell.services.adapter.PicassoImageLoadingService;
@@ -114,7 +113,7 @@ import ss.com.bannerslider.Slider;
 import ss.com.bannerslider.event.OnSlideClickListener;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener {
 
     private boolean doubleBackToExitPressedOnce = false;
     private CoordinatorLayout mCoordinateLayout;
@@ -1420,13 +1419,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private class RequestPhnNumberAddAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(MainActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+           showProgressDialog();
         }
 
         @SuppressWarnings("deprecation")
@@ -1456,7 +1453,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.dismiss();
+           dismissProgressDialog();
             try {
                 JSONObject jsonObject = new JSONObject(result);
 
@@ -1559,13 +1556,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private class ConfirmPhnNumberAddAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(MainActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+           showProgressDialog();
         }
 
         @SuppressWarnings("deprecation")
@@ -1597,7 +1591,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.dismiss();
+           dismissProgressDialog();
+
             try {
                 JSONObject jsonObject = new JSONObject(result);
 
@@ -1645,15 +1640,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    @SuppressWarnings("deprecation")
+
     private class PushFirebaseIdTask extends AsyncTask<String, Intent, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(MainActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -1684,7 +1677,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.dismiss();
+            dismissProgressDialog();
             if (result != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
