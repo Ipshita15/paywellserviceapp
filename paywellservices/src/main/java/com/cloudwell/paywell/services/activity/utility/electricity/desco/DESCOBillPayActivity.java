@@ -3,7 +3,6 @@ package com.cloudwell.paywell.services.activity.utility.electricity.desco;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,18 +16,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
-import com.davemorrissey.labs.subscaleview.ImageSource;
-import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.github.chrisbanes.photoview.PhotoView;
 
 import org.apache.http.NameValuePair;
@@ -39,7 +32,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -82,12 +74,34 @@ public class DESCOBillPayActivity extends AppCompatActivity implements View.OnCl
 
     private void initializeView() {
         mLinearLayout = findViewById(R.id.utilityLinearLayout);
+
+        TextView _mPin = findViewById(R.id.tvDescoPin);
+        TextView _mBill = findViewById(R.id.tvDescoBillNo);
+        TextView _mPhn = findViewById(R.id.tvDescoPhn);
+
+        etPin = findViewById(R.id.pin_no);
         etBill = findViewById(R.id.mycash_bill);
         etPhn = findViewById(R.id.mycash_phn);
-        etPin = findViewById(R.id.pin_no);
         imageView = findViewById(R.id.imageView_info);
         btnConfirm = findViewById(R.id.mycash_confirm);
 
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            _mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            etPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _mBill.setTypeface(AppController.getInstance().getOxygenLightFont());
+            etBill.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _mPhn.setTypeface(AppController.getInstance().getOxygenLightFont());
+            etPhn.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            _mPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            etPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _mBill.setTypeface(AppController.getInstance().getAponaLohitFont());
+            etBill.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _mPhn.setTypeface(AppController.getInstance().getAponaLohitFont());
+            etPhn.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnConfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
         btnConfirm.setOnClickListener(this);
         imageView.setOnClickListener(this);
     }

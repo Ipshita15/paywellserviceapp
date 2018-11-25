@@ -51,6 +51,7 @@
                             android:textColor="#FF4719" />
 
                         <TextView
+                            android:id="@+id/tvDpdcPin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingEnd="2dp"
@@ -90,6 +91,7 @@
                             android:textColor="#FF4719" />
 
                         <TextView
+                            android:id="@+id/tvDpdcBill"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingEnd="2dp"
@@ -139,6 +141,7 @@
                             android:textColor="#FF4719" />
 
                         <TextView
+                            android:id="@+id/tvDpdcPhn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingEnd="2dp"
@@ -179,6 +182,7 @@
                             android:textColor="#FF4719" />
 
                         <TextView
+                            android:id="@+id/tvDpdcLocation"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingEnd="2dp"

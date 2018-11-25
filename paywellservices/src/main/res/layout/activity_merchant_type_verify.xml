@@ -11,12 +11,12 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -32,8 +32,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="5dp"
             card_view:cardBackgroundColor="@color/bg_color"
             card_view:cardCornerRadius="4dp"
             card_view:cardUseCompatPadding="true">
@@ -41,10 +41,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
-
 
                 <TextView
                     android:id="@+id/bkash_balance_title"
@@ -61,19 +61,10 @@
                     android:layout_marginTop="@dimen/activity_horizontal_margin">
 
                     <RadioButton
+                        android:id="@+id/radioButton_merchant"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/merchant_type_retail" />
-
-                    <!--<RadioButton-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="@string/merchant_type_wholesale" />-->
-
-                    <!--<RadioButton-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="@string/merchant_type_sme" />-->
                 </RadioGroup>
 
                 <TextView
@@ -88,8 +79,8 @@
                     android:id="@+id/spinner_businessType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
                     android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
                     android:spinnerMode="dropdown" />
 
                 <LinearLayout

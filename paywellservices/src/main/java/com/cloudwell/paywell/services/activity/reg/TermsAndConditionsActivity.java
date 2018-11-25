@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.app.AppController;
 
 import java.io.InputStream;
 

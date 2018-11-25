@@ -255,16 +255,16 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            final TrxAdapter.ViewHolder viewHolder;
+            final ViewHolder viewHolder;
             if (convertView == null) {
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.dialog_mycash_trx_log, parent, false);
-                viewHolder = new TrxAdapter.ViewHolder();
+                viewHolder = new ViewHolder();
                 viewHolder.status = convertView.findViewById(R.id.serviceType);
                 viewHolder.amount = convertView.findViewById(R.id.amount);
                 viewHolder.datetime = convertView.findViewById(R.id.trxID);
                 convertView.setTag(viewHolder);
             } else {
-                viewHolder = (TrxAdapter.ViewHolder) convertView.getTag();
+                viewHolder = (ViewHolder) convertView.getTag();
             }
 
             if (mStatus[position].equals("600")) {
@@ -274,7 +274,15 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
             }
             viewHolder.amount.setText(mAmount[position]);
             viewHolder.datetime.setText(mDateTime[position]);
-
+            if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                viewHolder.status.setTypeface(AppController.getInstance().getOxygenLightFont());
+                viewHolder.amount.setTypeface(AppController.getInstance().getOxygenLightFont());
+                viewHolder.datetime.setTypeface(AppController.getInstance().getOxygenLightFont());
+            } else {
+                viewHolder.status.setTypeface(AppController.getInstance().getAponaLohitFont());
+                viewHolder.amount.setTypeface(AppController.getInstance().getAponaLohitFont());
+                viewHolder.datetime.setTypeface(AppController.getInstance().getAponaLohitFont());
+            }
             return convertView;
         }
 

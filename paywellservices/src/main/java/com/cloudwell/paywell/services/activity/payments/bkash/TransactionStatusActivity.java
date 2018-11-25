@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 
 import java.util.ArrayList;
@@ -183,6 +184,11 @@ public class TransactionStatusActivity extends AppCompatActivity {
                         convertView.setTag(holder);
                         holder.textView.clearComposingText();
                         holder.textView.setText(mData.get(position));
+                        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                            holder.textView.setTypeface(AppController.getInstance().getOxygenLightFont());
+                        } else {
+                            holder.textView.setTypeface(AppController.getInstance().getAponaLohitFont());
+                        }
                         break;
                     case TYPE_ITEM:
                         convertView = mInflater.inflate(R.layout.dialog_bkash_success_trx_log, parent, false);
@@ -202,7 +208,19 @@ public class TransactionStatusActivity extends AppCompatActivity {
                         holder.amount.setText(amountStr);
                         holder.time.setText(splitArray_row_first[2]);
                         holder.trxId.setText(trxIdStr);
-
+                        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                            holder.username.setTypeface(AppController.getInstance().getOxygenLightFont());
+                            holder.phnNo.setTypeface(AppController.getInstance().getOxygenLightFont());
+                            holder.amount.setTypeface(AppController.getInstance().getOxygenLightFont());
+                            holder.time.setTypeface(AppController.getInstance().getOxygenLightFont());
+                            holder.trxId.setTypeface(AppController.getInstance().getOxygenLightFont());
+                        } else {
+                            holder.username.setTypeface(AppController.getInstance().getAponaLohitFont());
+                            holder.phnNo.setTypeface(AppController.getInstance().getAponaLohitFont());
+                            holder.amount.setTypeface(AppController.getInstance().getAponaLohitFont());
+                            holder.time.setTypeface(AppController.getInstance().getAponaLohitFont());
+                            holder.trxId.setTypeface(AppController.getInstance().getAponaLohitFont());
+                        }
                         break;
                 }
             } else {
@@ -214,6 +232,11 @@ public class TransactionStatusActivity extends AppCompatActivity {
                         convertView.setTag(holder);
                         holder.textView.clearComposingText();
                         holder.textView.setText(mData.get(position));
+                        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                            holder.textView.setTypeface(AppController.getInstance().getOxygenLightFont());
+                        } else {
+                            holder.textView.setTypeface(AppController.getInstance().getAponaLohitFont());
+                        }
                         break;
                     case TYPE_ITEM:
                         convertView = mInflater.inflate(R.layout.dialog_bkash_success_trx_log, parent, false);
@@ -233,7 +256,19 @@ public class TransactionStatusActivity extends AppCompatActivity {
                         holder.amount.setText(amountStr);
                         holder.time.setText(splitArray_row_second[2]);
                         holder.trxId.setText(trxIdStr);
-
+                        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                            holder.username.setTypeface(AppController.getInstance().getOxygenLightFont());
+                            holder.phnNo.setTypeface(AppController.getInstance().getOxygenLightFont());
+                            holder.amount.setTypeface(AppController.getInstance().getOxygenLightFont());
+                            holder.time.setTypeface(AppController.getInstance().getOxygenLightFont());
+                            holder.trxId.setTypeface(AppController.getInstance().getOxygenLightFont());
+                        } else {
+                            holder.username.setTypeface(AppController.getInstance().getAponaLohitFont());
+                            holder.phnNo.setTypeface(AppController.getInstance().getAponaLohitFont());
+                            holder.amount.setTypeface(AppController.getInstance().getAponaLohitFont());
+                            holder.time.setTypeface(AppController.getInstance().getAponaLohitFont());
+                            holder.trxId.setTypeface(AppController.getInstance().getAponaLohitFont());
+                        }
                         break;
                 }
             }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView_forth"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -41,6 +42,7 @@
                 android:text="হাঁ" />
 
             <RadioButton
+                android:id="@+id/rechargeNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -57,6 +59,7 @@
             android:visibility="gone">
 
             <TextView
+                android:id="@+id/textView_opetator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -176,6 +179,7 @@
                 android:text="হাঁ" />
 
             <RadioButton
+                android:id="@+id/agentNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -192,6 +196,7 @@
             android:visibility="gone">
 
             <TextView
+                android:id="@+id/textView_service"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -311,6 +316,7 @@
                 android:text="হাঁ" />
 
             <RadioButton
+                android:id="@+id/downloadNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -327,6 +333,7 @@
             android:weightSum="2">
 
             <Button
+                android:id="@+id/button_nextForth"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -342,6 +349,7 @@
                 android:textColor="#ffffff" />
 
             <Button
+                android:id="@+id/button_preForth"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"

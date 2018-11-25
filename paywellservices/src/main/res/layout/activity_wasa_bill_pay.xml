@@ -51,6 +51,7 @@
                             android:textColor="#FF4719" />
 
                         <TextView
+                            android:id="@+id/tvWasaPin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingEnd="2dp"
@@ -90,6 +91,7 @@
                             android:textColor="#FF4719" />
 
                         <TextView
+                            android:id="@+id/tvWasaBill"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingEnd="2dp"
@@ -139,6 +141,7 @@
                             android:textColor="#FF4719" />
 
                         <TextView
+                            android:id="@+id/tvWasaPhn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingEnd="2dp"

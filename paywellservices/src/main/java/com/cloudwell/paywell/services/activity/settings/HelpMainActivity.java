@@ -17,7 +17,6 @@ public class HelpMainActivity extends AppCompatActivity implements View.OnClickL
 
     private AppHandler mAppHandler;
     private ConnectionDetector mCd;
-    private Button btnBalanceRefill, btnBkashPayment, btnDpdcBillPay, btnPolliBiddutBillPay, btnAllServices;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +35,11 @@ public class HelpMainActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void initializeView() {
-        btnBalanceRefill = findViewById(R.id.homeBtnBalanceRefill);
-        btnBkashPayment = findViewById(R.id.homeBtnBkashPayment);
-        btnDpdcBillPay = findViewById(R.id.homeBtnDpdcBillPay);
-        btnPolliBiddutBillPay = findViewById(R.id.homeBtnPolliBiddutBillPay);
-        btnAllServices = findViewById(R.id.homeBtnAllServices);
+        Button btnBalanceRefill = findViewById(R.id.homeBtnBalanceRefill);
+        Button btnBkashPayment = findViewById(R.id.homeBtnBkashPayment);
+        Button btnDpdcBillPay = findViewById(R.id.homeBtnDpdcBillPay);
+        Button btnPolliBiddutBillPay = findViewById(R.id.homeBtnPolliBiddutBillPay);
+        Button btnAllServices = findViewById(R.id.homeBtnAllServices);
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             btnBalanceRefill.setTypeface(AppController.getInstance().getOxygenLightFont());

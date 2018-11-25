@@ -21,6 +21,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.app.AppController;
+import com.cloudwell.paywell.services.app.AppHandler;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -32,6 +34,7 @@ import java.util.Date;
 
 public class WZPDCLBillInquiryActivity extends AppCompatActivity {
 
+    private AppHandler mAppHandler;
     private RelativeLayout mRelativeLayout;
     private ListView listView;
     public static String TRANSLOG_TAG = "TRANSLOGTXT";
@@ -57,6 +60,7 @@ public class WZPDCLBillInquiryActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_topup_trx_log);
         }
+        mAppHandler = new AppHandler(this);
         mRelativeLayout = findViewById(R.id.relativeLayout);
         adapter = new CustomAdapter(this);
         initializeView();
@@ -223,6 +227,11 @@ public class WZPDCLBillInquiryActivity extends AppCompatActivity {
                         convertView.setTag(holder);
                         holder.textView.clearComposingText();
                         holder.textView.setText(mData.get(position));
+                        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                            holder.textView.setTypeface(AppController.getInstance().getOxygenLightFont());
+                        } else {
+                            holder.textView.setTypeface(AppController.getInstance().getAponaLohitFont());
+                        }
                         break;
                     case TYPE_ITEM:
                         convertView = mInflater.inflate(R.layout.dialog_polli_reg_inq, parent, false);
@@ -245,6 +254,15 @@ public class WZPDCLBillInquiryActivity extends AppCompatActivity {
                         } else {
                             holder.status.setTextColor(Color.parseColor("#ff0000"));
                         }
+                        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                            holder.billNo.setTypeface(AppController.getInstance().getOxygenLightFont());
+                            holder.status.setTypeface(AppController.getInstance().getOxygenLightFont());
+                            holder.amount.setTypeface(AppController.getInstance().getOxygenLightFont());
+                        } else {
+                            holder.billNo.setTypeface(AppController.getInstance().getAponaLohitFont());
+                            holder.status.setTypeface(AppController.getInstance().getAponaLohitFont());
+                            holder.amount.setTypeface(AppController.getInstance().getAponaLohitFont());
+                        }
                         break;
                 }
             } else {
@@ -256,6 +274,11 @@ public class WZPDCLBillInquiryActivity extends AppCompatActivity {
                         convertView.setTag(holder);
                         holder.textView.clearComposingText();
                         holder.textView.setText(mData.get(position));
+                        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                            holder.textView.setTypeface(AppController.getInstance().getOxygenLightFont());
+                        } else {
+                            holder.textView.setTypeface(AppController.getInstance().getAponaLohitFont());
+                        }
                         break;
                     case TYPE_ITEM:
                         convertView = mInflater.inflate(R.layout.dialog_polli_reg_inq, parent, false);
@@ -277,6 +300,15 @@ public class WZPDCLBillInquiryActivity extends AppCompatActivity {
                             holder.status.setTextColor(Color.parseColor("#008000"));
                         } else {
                             holder.status.setTextColor(Color.parseColor("#ff0000"));
+                        }
+                        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                            holder.billNo.setTypeface(AppController.getInstance().getOxygenLightFont());
+                            holder.status.setTypeface(AppController.getInstance().getOxygenLightFont());
+                            holder.amount.setTypeface(AppController.getInstance().getOxygenLightFont());
+                        } else {
+                            holder.billNo.setTypeface(AppController.getInstance().getAponaLohitFont());
+                            holder.status.setTypeface(AppController.getInstance().getAponaLohitFont());
+                            holder.amount.setTypeface(AppController.getInstance().getAponaLohitFont());
                         }
                         break;
                 }
