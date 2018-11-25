@@ -11,6 +11,7 @@ import com.cloudwell.paywell.services.BuildConfig;
 import com.cloudwell.paywell.services.utils.MyHttpClient;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
@@ -52,6 +53,7 @@ public class AppController extends Application {
         client = createTrustedHttpsClient();
 
         if (BuildConfig.DEBUG) {
+            FirebaseApp.initializeApp(this);
             String id = FirebaseInstanceId.getInstance().getToken();
             Log.e("device_token", "" + id);
 
