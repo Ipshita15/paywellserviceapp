@@ -146,6 +146,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     AlertDialog.Builder builderNotification;
     private AlertDialog alertNotification;
     private Slider viewPager;
+    private int currentSlideNo;
     private int currentPage;
 
     private Button home_topup, home_utility, home_payments, home_eticket, home_mfs, home_product_catalog, home_statement, home_refill_balance, home_settings;
@@ -262,6 +263,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setAutomaticDatetime();
         checkSoftwareUpdate();
 
+        /*Location Change Log*/
         if ((System.currentTimeMillis() / 1000) >= (mAppHandler.getLocationUpdateCheck() + UPDATE_LOCATION_INTERVAL)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                     && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -282,6 +284,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             checkLocationUpdate();
         }
 
+        //////Before
         if (mAppHandler.getPhnNumberVerificationStatus().equalsIgnoreCase("false") || mAppHandler.getMerchantTypeVerificationStatus().equalsIgnoreCase("false")) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED
                     && ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
@@ -304,7 +307,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initializePreview();
 
         //Tutorial
-        //showTutorial();
+        showTutorial();
     }
 
     @Override
@@ -1051,7 +1054,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.homeBtnTopup:
                 if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
                     if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
-                        startActivity(new Intent(this, MainTopUpActivity.class));
+                        startActivity(new Intent(this, TopupMenuActivity.class));
                     } else {
                         Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.allow_error_msg, Snackbar.LENGTH_LONG);
                         snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -1300,6 +1303,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onPause();
         // stop auto scroll when onPause
         // viewPager.stopNestedScroll();
+        viewPager.setInterval(0);
     }
 
     @Override
@@ -1312,6 +1316,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // start auto scroll when onResume
         // viewPager.startAutoScroll();
         checkPayWellBalance();
+
+        viewPager.setInterval(2000);
     }
 
     private boolean getMailAddress() {

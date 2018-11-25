@@ -56,7 +56,7 @@
                         android:imeOptions="actionNext"
                         android:inputType="phone"
                         android:maxLength="15"
-                        android:drawableRight="@drawable/phone_book"
+                        android:drawableRight="@drawable/ic_phone_book"
                         android:textColor="@color/blackShade"
                         android:textColorHint="@color/blackShade_trans70" />
 

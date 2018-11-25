@@ -25,7 +25,7 @@ android {
         minSdkVersion 16
         //for push notification its 20 otherwise it was 25
         targetSdkVersion 27
-        versionCode 33
+        versionCode 36
         versionName '10.16'
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -48,6 +48,19 @@ android {
         // but continue the build even when errors are found:
         abortOnError false
     }
+}
+
+ext {
+    // Sdk and tools
+    supportLibraryVersion = '27.1.1'
+    androidMaterialIntroScreen = '0.0.5'
+    gogolePlay = '11.6.0'
+    firebaseVersion = '11.6.0'
+
+    okhttpVersion = '3.8.1'
+    timberVersion = '4.6.0'
+    retrofitVersion = '2.3.0'
+    rxJava = '2.1.6'
 }
 
 dependencies {
@@ -106,6 +119,19 @@ dependencies {
     //slider
     implementation 'com.ss.bannerslider:bannerslider:2.0.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+
+    //okhttp
+    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+
+    //Secure, simple key-value storage for android
+    implementation "com.orhanobut:hawk:2.0.1"
+
 
 
 

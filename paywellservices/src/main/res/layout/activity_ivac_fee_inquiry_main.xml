@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constrainLayoutIvacInq"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.utility.ivac.IvacFeeInquiryMainActivity"
-    android:descendantFocusability="beforeDescendants"
-    android:focusableInTouchMode="true">
+                                             xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:id="@+id/constrainLayoutIvacInq"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             tools:context=".activity.utility.ivac.IvacFeeInquiryMainActivity"
+                                             android:descendantFocusability="beforeDescendants"
+                                             android:focusableInTouchMode="true">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -54,14 +54,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/star_sign"
-                                android:textColor="#FF4719" />
+                                android:textColor="#FF4719"/>
 
                             <TextView
                                 android:id="@+id/tvIvacWebFileNo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/web_file_des"
-                                android:textAppearance="?android:attr/textAppearanceMedium" />
+                                android:textAppearance="?android:attr/textAppearanceMedium"/>
                         </LinearLayout>
 
                         <EditText
@@ -73,7 +73,7 @@
                             android:drawableRight="@drawable/ic_bar_code"
                             android:imeOptions="actionDone"
                             android:inputType="textCapCharacters"
-                            android:text="BGD" />
+                            android:text="BGD"/>
 
                     </LinearLayout>
 
@@ -92,14 +92,14 @@
                         android:shadowRadius="2"
                         android:text="@string/confirm_btn"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@color/colorText" />
+                        android:textColor="@color/colorText"/>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
-                android:layout_weight="1" />
+                android:layout_weight="1"/>
 
             <ImageView
                 android:id="@+id/btnIvacTrxLog"
@@ -109,7 +109,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="10dp"
-                android:src="@drawable/ic_trx_log" />
+                android:src="@drawable/ic_trx_log"/>
 
         </LinearLayout>
     </ScrollView>
