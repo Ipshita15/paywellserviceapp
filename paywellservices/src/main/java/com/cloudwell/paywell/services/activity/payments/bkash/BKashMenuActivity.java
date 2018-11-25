@@ -47,7 +47,6 @@ public class BKashMenuActivity extends AppCompatActivity implements CompoundButt
     String selectedLimit = "";
     RadioButton radioButton_five, radioButton_ten, radioButton_twenty, radioButton_fifty, radioButton_hundred, radioButton_twoHundred;
     Button requestBtn;
-    boolean root = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,7 +143,6 @@ public class BKashMenuActivity extends AppCompatActivity implements CompoundButt
     }
 
     private void showLimitPrompt() {
-        // custom dialog
         final AppCompatDialog dialog = new AppCompatDialog(this);
         dialog.setTitle(R.string.log_limit_title_msg);
         dialog.setContentView(R.layout.dialog_trx_limit);

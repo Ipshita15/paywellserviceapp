@@ -26,8 +26,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 card_view:cardBackgroundColor="@color/card_background"
                 card_view:cardCornerRadius="4dp"
                 card_view:cardUseCompatPadding="true">
@@ -42,8 +42,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_marginRight="@dimen/activity_horizontal_margin"
                         android:layout_marginTop="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
                         android:orientation="horizontal">
 
                         <TextView
@@ -53,12 +53,13 @@
                             android:textColor="#FF4719" />
 
                         <TextView
+                            android:id="@+id/tvWzpdclPin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingEnd="2dp"
-                            android:paddingLeft="2dp"
-                            android:paddingRight="2dp"
                             android:paddingStart="2dp"
+                            android:paddingLeft="2dp"
+                            android:paddingEnd="2dp"
+                            android:paddingRight="2dp"
                             android:text="@string/pw_pin_no_des"
                             android:textAppearance="?android:attr/textAppearanceMedium" />
                     </LinearLayout>
@@ -68,10 +69,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_marginRight="@dimen/activity_horizontal_margin"
                         android:layout_marginTop="5dp"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
                         android:digits="0123456789"
                         android:imeOptions="actionNext"
                         android:inputType="numberPassword"
@@ -81,8 +82,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_marginRight="@dimen/activity_horizontal_margin"
                         android:layout_marginTop="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
                         android:orientation="horizontal">
 
                         <TextView
@@ -92,12 +93,13 @@
                             android:textColor="#FF4719" />
 
                         <TextView
+                            android:id="@+id/tvWzpdclBillNo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingEnd="2dp"
-                            android:paddingLeft="2dp"
-                            android:paddingRight="2dp"
                             android:paddingStart="2dp"
+                            android:paddingLeft="2dp"
+                            android:paddingEnd="2dp"
+                            android:paddingRight="2dp"
                             android:text="@string/consumer_no_des"
                             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -105,10 +107,10 @@
                             android:id="@+id/imageView_info"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginLeft="10dp"
                             android:background="@drawable/ic_info"
-                            android:contentDescription="@string/bell_msg"/>
+                            android:contentDescription="@string/bell_msg" />
                     </LinearLayout>
 
                     <EditText
@@ -116,10 +118,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_marginRight="@dimen/activity_horizontal_margin"
                         android:layout_marginTop="5dp"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
                         android:digits="0123456789"
                         android:imeOptions="actionNext"
                         android:inputType="number"
@@ -130,8 +132,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_marginRight="@dimen/activity_horizontal_margin"
                         android:layout_marginTop="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
                         android:orientation="horizontal">
 
                         <TextView
@@ -141,12 +143,13 @@
                             android:textColor="#FF4719" />
 
                         <TextView
+                            android:id="@+id/tvWzpdclPhn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingEnd="2dp"
-                            android:paddingLeft="2dp"
-                            android:paddingRight="2dp"
                             android:paddingStart="2dp"
+                            android:paddingLeft="2dp"
+                            android:paddingEnd="2dp"
+                            android:paddingRight="2dp"
                             android:text="@string/payer_phone_number_des"
                             android:textAppearance="?android:attr/textAppearanceMedium" />
                     </LinearLayout>
@@ -156,64 +159,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_marginRight="@dimen/activity_horizontal_margin"
                         android:layout_marginTop="5dp"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
                         android:digits="0123456789"
                         android:imeOptions="actionDone"
                         android:inputType="number"
                         android:maxLength="11"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                    <!--<LinearLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
-                    <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
-                    <!--android:layout_marginTop="@dimen/activity_horizontal_margin"-->
-                    <!--android:orientation="horizontal">-->
-
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="@string/star_sign"-->
-                    <!--android:textColor="#FF4719" />-->
-
-                    <!--<TextView-->
-                    <!--android:id="@+id/tvLocation"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:paddingEnd="2dp"-->
-                    <!--android:paddingLeft="2dp"-->
-                    <!--android:paddingRight="2dp"-->
-                    <!--android:paddingStart="2dp"-->
-                    <!--android:text="@string/location_des"-->
-                    <!--android:textAppearance="?android:attr/textAppearanceMedium" />-->
-                    <!--</LinearLayout>-->
-
-                    <!--<EditText-->
-                    <!--android:id="@+id/mycash_location"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center_vertical"-->
-                    <!--android:layout_marginBottom="@dimen/activity_horizontal_margin"-->
-                    <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
-                    <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
-                    <!--android:layout_marginTop="5dp"-->
-                    <!--android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 "-->
-                    <!--android:imeOptions="actionDone"-->
-                    <!--android:inputType="text"-->
-                    <!--android:maxLength="20"-->
-                    <!--android:textAppearance="?android:attr/textAppearanceMedium" />-->
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_marginRight="@dimen/activity_horizontal_margin"
                         android:layout_marginTop="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
                         android:orientation="horizontal"
                         android:weightSum="2">
 

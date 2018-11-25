@@ -68,11 +68,19 @@ public class ChangeMYCashPinActivity extends AppCompatActivity implements View.O
         mNewPin = findViewById(R.id.newPin);
         mConfirm = findViewById(R.id.mycash_confirm);
 
-        ((TextView) mLinearLayout.findViewById(R.id.tvOldPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        mOldPin.setTypeface(AppController.getInstance().getOxygenLightFont());
-        ((TextView) mLinearLayout.findViewById(R.id.tvNewPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        mNewPin.setTypeface(AppController.getInstance().getOxygenLightFont());
-        ((Button) mLinearLayout.findViewById(R.id.mycash_confirm)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            ((TextView) mLinearLayout.findViewById(R.id.tvOldPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            mOldPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((TextView) mLinearLayout.findViewById(R.id.tvNewPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            mNewPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((Button) mLinearLayout.findViewById(R.id.mycash_confirm)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            ((TextView) mLinearLayout.findViewById(R.id.tvOldPin)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            mOldPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((TextView) mLinearLayout.findViewById(R.id.tvNewPin)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            mNewPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((Button) mLinearLayout.findViewById(R.id.mycash_confirm)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
 
         mConfirm.setOnClickListener(this);
 

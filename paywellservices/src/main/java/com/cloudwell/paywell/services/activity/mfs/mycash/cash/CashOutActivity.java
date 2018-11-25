@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.mfs.mycash.CashInOutActivity;
 import com.cloudwell.paywell.services.app.AppController;
+import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
 import org.json.JSONArray;
@@ -28,6 +29,7 @@ import org.json.JSONObject;
 
 public class CashOutActivity extends AppCompatActivity {
 
+    private AppHandler mAppHandler;
     private RelativeLayout mRelativeLayout;
     private ConnectionDetector mCd;
     ListView listView;
@@ -53,6 +55,7 @@ public class CashOutActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_cash_out);
         }
+        mAppHandler = new AppHandler(this);
         mRelativeLayout = findViewById(R.id.relativeLayoutCashOut);
         mCd = new ConnectionDetector(AppController.getContext());
         listView = findViewById(R.id.trxListView);
@@ -158,7 +161,7 @@ public class CashOutActivity extends AppCompatActivity {
 
         private final Context mContext;
 
-        public TrxAdapter(Context context) {
+        TrxAdapter(Context context) {
             mContext = context;
         }
 
@@ -198,6 +201,17 @@ public class CashOutActivity extends AppCompatActivity {
             viewHolder.trxID.setText(mCustomerMobileNo[position]);
             viewHolder.dateTime.setText(mDate[position]);
 
+            if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                viewHolder.serviceType.setTypeface(AppController.getInstance().getOxygenLightFont());
+                viewHolder.amount.setTypeface(AppController.getInstance().getOxygenLightFont());
+                viewHolder.trxID.setTypeface(AppController.getInstance().getOxygenLightFont());
+                viewHolder.dateTime.setTypeface(AppController.getInstance().getOxygenLightFont());
+            } else {
+                viewHolder.serviceType.setTypeface(AppController.getInstance().getAponaLohitFont());
+                viewHolder.amount.setTypeface(AppController.getInstance().getAponaLohitFont());
+                viewHolder.trxID.setTypeface(AppController.getInstance().getAponaLohitFont());
+                viewHolder.dateTime.setTypeface(AppController.getInstance().getAponaLohitFont());
+            }
             return convertView;
         }
 

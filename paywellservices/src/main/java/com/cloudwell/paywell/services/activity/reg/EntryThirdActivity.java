@@ -16,11 +16,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 
 import java.io.ByteArrayOutputStream;
@@ -31,7 +35,6 @@ import static com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regM
 public class EntryThirdActivity extends AppCompatActivity {
     private EditText et_salesCode, et_collectionCode;
     private String str_which_btn_selected;
-    private String strBuild;
     private ImageView img_one, img_two, img_three, img_four, img_five, img_six, img_seven, img_eight, img_nine;
     private static final int PERMISSION_FOR_GALLERY = 321;
     private AppHandler mAppHandler;
@@ -47,6 +50,7 @@ public class EntryThirdActivity extends AppCompatActivity {
         }
         mAppHandler = new AppHandler(this);
 
+        ScrollView mScrollView = findViewById(R.id.scrollView_third);
         et_salesCode = findViewById(R.id.editText_salesCode);
         et_collectionCode = findViewById(R.id.editText_collectionCode);
 
@@ -82,6 +86,22 @@ public class EntryThirdActivity extends AppCompatActivity {
             if (regModel.getVisitingCard() != null)
                 img_nine.setVisibility(View.VISIBLE);
         }
+
+        ((TextView) mScrollView.findViewById(R.id.textView_salesCode)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        et_salesCode.setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) mScrollView.findViewById(R.id.textView_collectionCode)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        et_collectionCode.setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) mScrollView.findViewById(R.id.btn_picOutlet)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) mScrollView.findViewById(R.id.btn_picNidFront)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) mScrollView.findViewById(R.id.btn_picNidBack)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) mScrollView.findViewById(R.id.btn_picOwner)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) mScrollView.findViewById(R.id.btn_picTrade)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) mScrollView.findViewById(R.id.btn_picPassport)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) mScrollView.findViewById(R.id.btn_picBirth)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) mScrollView.findViewById(R.id.btn_picDrive)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) mScrollView.findViewById(R.id.btn_picVisit)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) mScrollView.findViewById(R.id.btn_preStep)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) mScrollView.findViewById(R.id.btn_nextStep)).setTypeface(AppController.getInstance().getAponaLohitFont());
     }
 
     public void previousOnClick(View view) {
@@ -337,7 +357,7 @@ public class EntryThirdActivity extends AppCompatActivity {
         byte[] b = baos.toByteArray();
         String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT).replaceAll("[\n\r]", "");
 
-        strBuild = ("xxCloud" + imageEncoded + "xxCloud");
+        String strBuild = ("xxCloud" + imageEncoded + "xxCloud");
 
         switch (str_which_btn_selected) {
             case "1":

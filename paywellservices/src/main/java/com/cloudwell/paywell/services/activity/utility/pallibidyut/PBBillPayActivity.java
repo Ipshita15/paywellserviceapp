@@ -59,24 +59,33 @@ public class PBBillPayActivity extends AppCompatActivity implements View.OnClick
 
     private void initView() {
         mLinearLayout = findViewById(R.id.linearLayout);
+
         TextView _pin = findViewById(R.id.tvPBPin2);
-        _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mPin = findViewById(R.id.etPBPin2);
-        mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         TextView _billNo = findViewById(R.id.tvPBBillNo);
-        _billNo.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mBillNo = findViewById(R.id.etPBBIllNo);
-        mBillNo.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         TextView _amount = findViewById(R.id.tvPBBillAmount);
-        _amount.setTypeface(AppController.getInstance().getOxygenLightFont());
+
+        mPin = findViewById(R.id.etPBPin2);
+        mBillNo = findViewById(R.id.etPBBIllNo);
         mAmount = findViewById(R.id.etPBBillAmount);
-        mAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         mComfirm = findViewById(R.id.btnPBBillConfirm);
-        mComfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
 
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _billNo.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mBillNo.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _amount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mComfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            _pin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _billNo.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mBillNo.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _amount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mAmount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mComfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
         mComfirm.setOnClickListener(this);
     }
 
@@ -210,9 +219,7 @@ public class PBBillPayActivity extends AppCompatActivity implements View.OnClick
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if (this != null) {
-                this.onBackPressed();
-            }
+            this.onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);

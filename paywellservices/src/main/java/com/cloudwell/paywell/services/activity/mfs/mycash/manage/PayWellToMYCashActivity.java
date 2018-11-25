@@ -43,7 +43,6 @@ public class PayWellToMYCashActivity extends AppCompatActivity implements View.O
     private LinearLayout mLinearLayout;
     private EditText etAmount;
     private Button btnConfirm;
-    private String mTrxType = "P2M";
     private String mAmount;
     private static final String TAG_STATUS = "status";
     private static final String TAG_MESSAGE = "message";
@@ -69,9 +68,15 @@ public class PayWellToMYCashActivity extends AppCompatActivity implements View.O
         etAmount = findViewById(R.id.mycash_amount);
         btnConfirm = findViewById(R.id.mycash_confirm);
 
-        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashAmount)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        etAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
-        btnConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            ((TextView) mLinearLayout.findViewById(R.id.tvMyCashAmount)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            etAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            ((TextView) mLinearLayout.findViewById(R.id.tvMyCashAmount)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            etAmount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnConfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
 
         btnConfirm.setOnClickListener(this);
     }
@@ -121,7 +126,7 @@ public class PayWellToMYCashActivity extends AppCompatActivity implements View.O
                 nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("amount", mAmount));
                 nameValuePairs.add(new BasicNameValuePair("password", mAppHandler.getPin()));
-                nameValuePairs.add(new BasicNameValuePair("trx_type", mTrxType));
+                nameValuePairs.add(new BasicNameValuePair("trx_type", "P2M"));
                 nameValuePairs.add(new BasicNameValuePair("service_type", "Fund_Management"));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));

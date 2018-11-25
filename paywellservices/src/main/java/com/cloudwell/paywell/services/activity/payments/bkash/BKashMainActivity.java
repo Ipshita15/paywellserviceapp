@@ -68,9 +68,15 @@ public class BKashMainActivity extends AppCompatActivity implements View.OnClick
         mPin = findViewById(R.id.bkash_pin);
         mConfirm = findViewById(R.id.bkash_confirm);
 
-        ((TextView) mLinearLayout.findViewById(R.id.tvBkashPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            ((TextView) mLinearLayout.findViewById(R.id.tvBkashPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            ((TextView) mLinearLayout.findViewById(R.id.tvBkashPin)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            mPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mConfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
 
         mConfirm.setOnClickListener(this);
     }

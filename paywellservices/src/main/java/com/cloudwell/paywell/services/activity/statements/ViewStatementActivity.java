@@ -71,22 +71,15 @@ public class ViewStatementActivity extends AppCompatActivity {
     }
 
     private void startWebView(String url) {
-
-        //Create new webview Client to show progress dialog
-        //When opening a url or click on link
         mWebview.setWebViewClient(new WebViewClient() {
             ProgressDialog progressDialog;
 
-            //If you will not use this method url links are opeen in new brower not in webview
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
             }
-
-            //Show loader on url load
             public void onLoadResource(WebView view, String url) {
                 if (progressDialog == null) {
-                    // in standard case YourActivity.this
                     progressDialog = new ProgressDialog(ViewStatementActivity.this);
                     progressDialog.setMessage(getString(R.string.loading_msg));
                     progressDialog.setCanceledOnTouchOutside(false);
@@ -109,9 +102,7 @@ public class ViewStatementActivity extends AppCompatActivity {
                 }
             }
         });
-        // Javascript inabled on webview
         mWebview.getSettings().setJavaScriptEnabled(true);
-        //Load url in webview
         mWebview.loadUrl(url);
     }
 

@@ -77,9 +77,15 @@ public class BKashInquiryBalanceRequestActivity extends AppCompatActivity implem
     private void initView() {
         mBkashAmount = findViewById(R.id.etReqBalance);
         mBtnSubmit = findViewById(R.id.bKashReqConfirm);
-        ((TextView) _linearLayout.findViewById(R.id.tvSelectAmount)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        mBkashAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mBtnSubmit.setTypeface(AppController.getInstance().getOxygenLightFont());
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            ((TextView) _linearLayout.findViewById(R.id.tvSelectAmount)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            mBkashAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mBtnSubmit.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            ((TextView) _linearLayout.findViewById(R.id.tvSelectAmount)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            mBkashAmount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mBtnSubmit.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
         mBtnSubmit.setOnClickListener(this);
     }
 
@@ -87,7 +93,6 @@ public class BKashInquiryBalanceRequestActivity extends AppCompatActivity implem
     public void onClick(View v) {
         if (v == mBtnSubmit) {
             if (mBkashAmount.getText().toString().matches("^0") || mBkashAmount.getText().toString().matches("^00") || mBkashAmount.getText().toString().length() == 0) {
-                // Not allowed
                 mBkashAmount.setError(Html.fromHtml("<font color='red'>" + getString(R.string.amount_error_msg) + "</font>"));
             } else {
                 bAmount = mBkashAmount.getText().toString().trim();
@@ -176,7 +181,6 @@ public class BKashInquiryBalanceRequestActivity extends AppCompatActivity implem
 
         @Override
         protected void onPostExecute(String result) {
-            Log.e("logTag", result);
             progressDialog.cancel();
             if (result != null) {
                 String[] splitArray = result.split("@");
@@ -208,9 +212,7 @@ public class BKashInquiryBalanceRequestActivity extends AppCompatActivity implem
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if (this != null) {
-                this.onBackPressed();
-            }
+            this.onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);

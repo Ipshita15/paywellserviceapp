@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,19 +40,16 @@ import static com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regM
 
 public class EntryFirstActivity extends AppCompatActivity {
 
+    private ScrollView mScrollView;
     private TextView textView_email;
     private EditText et_outletName, et_address, et_ownerName, et_phnNo, et_email;
     private Spinner spnr_merchatnType, spnr_businessType;
-    private ArrayAdapter<CharSequence> arrayAdapter_business_type_spinner;
-    private ArrayAdapter<CharSequence> arrayAdapter_merchant_type_spinner;
     private static String str_businessId = "";
     private static String str_businessType = "";
     private static String str_merchantType = "";
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
-    private Bundle bundle;
     private ArrayList<String> business_type_id_array;
-    private List business_type_name_array;
     private ArrayList<String> merchant_type_array;
     private HashMap<String, String> hashMap = new HashMap<>();
     private String merchantId;
@@ -69,6 +67,8 @@ public class EntryFirstActivity extends AppCompatActivity {
 
         mAppHandler = new AppHandler(this);
         mCd = new ConnectionDetector(AppController.getContext());
+
+        mScrollView = findViewById(R.id.scrollView_first);
 
         et_outletName = findViewById(R.id.editText_outletName);
         et_address = findViewById(R.id.editText_address);
@@ -141,7 +141,7 @@ public class EntryFirstActivity extends AppCompatActivity {
             if (result != null) {
                 try {
                     business_type_id_array = new ArrayList<>();
-                    business_type_name_array = new ArrayList<>();
+                    List business_type_name_array = new ArrayList<>();
 
                     JSONObject jsonObject = new JSONObject(result);
                     String status = jsonObject.getString("status");
@@ -160,7 +160,7 @@ public class EntryFirstActivity extends AppCompatActivity {
                             business_type_name_array.add(name);
                         }
 
-                        arrayAdapter_business_type_spinner = new ArrayAdapter(EntryFirstActivity.this, android.R.layout.simple_spinner_dropdown_item, business_type_name_array);
+                        ArrayAdapter<CharSequence> arrayAdapter_business_type_spinner = new ArrayAdapter(EntryFirstActivity.this, android.R.layout.simple_spinner_dropdown_item, business_type_name_array);
 
                         spnr_businessType.setAdapter(arrayAdapter_business_type_spinner);
                         spnr_businessType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -197,7 +197,7 @@ public class EntryFirstActivity extends AppCompatActivity {
         textView_email.setText(Html.fromHtml(custom_text));
 
         /****Merchant Type ***/
-        arrayAdapter_merchant_type_spinner = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, merchant_type_array);
+        ArrayAdapter<CharSequence> arrayAdapter_merchant_type_spinner = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, merchant_type_array);
 
         spnr_merchatnType.setAdapter(arrayAdapter_merchant_type_spinner);
         spnr_merchatnType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -221,6 +221,18 @@ public class EntryFirstActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
+        ((TextView) mScrollView.findViewById(R.id.textView_outletName)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        et_outletName.setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) mScrollView.findViewById(R.id.textView_address)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        et_address.setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) mScrollView.findViewById(R.id.textView_ownerName)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        et_ownerName.setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) mScrollView.findViewById(R.id.textView_merchantType)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) mScrollView.findViewById(R.id.textView_businessType)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) mScrollView.findViewById(R.id.textView_mobileNumber)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        et_phnNo.setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) mScrollView.findViewById(R.id.textView_emailAddress)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        textView_email.setTypeface(AppController.getInstance().getAponaLohitFont());
     }
 
     public void nextOnClick(View view) {
@@ -273,7 +285,6 @@ public class EntryFirstActivity extends AppCompatActivity {
             HttpPost httppost = new HttpPost(data[0]);
 
             try {
-                //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(1);
                 nameValuePairs.add(new BasicNameValuePair("mode", "district"));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -297,7 +308,7 @@ public class EntryFirstActivity extends AppCompatActivity {
                     if (result_status.equals("200")) {
                         JSONArray result_data = jsonObject.getJSONArray("data");
 
-                        bundle = new Bundle();
+                        Bundle bundle = new Bundle();
                         bundle.putString("district_array", result_data.toString());
                         mAppHandler.setDistrictArray(result_data.toString());
                         Intent intent = new Intent(EntryFirstActivity.this, EntrySecondActivity.class);

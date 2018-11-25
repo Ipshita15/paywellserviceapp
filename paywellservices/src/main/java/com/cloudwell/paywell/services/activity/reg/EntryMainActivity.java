@@ -8,12 +8,14 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.reg.model.RegistrationModel;
+import com.cloudwell.paywell.services.app.AppController;
 
 import java.util.Locale;
 
@@ -21,7 +23,6 @@ public class EntryMainActivity extends AppCompatActivity{
 
     private CheckBox checkBox;
     private LinearLayout mLinearLayout;
-    private TextView textViewTerms;
     public static RegistrationModel regModel;
 
     @Override
@@ -36,7 +37,14 @@ public class EntryMainActivity extends AppCompatActivity{
         mLinearLayout = findViewById(R.id.layout);
         checkBox = findViewById(R.id.item_check);
 
-        textViewTerms = findViewById(R.id.textViewTerms);
+        TextView textViewTerms = findViewById(R.id.textViewTerms);
+
+        ((TextView) mLinearLayout.findViewById(R.id.textView_welcome)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) mLinearLayout.findViewById(R.id.textView_me)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        textViewTerms.setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) mLinearLayout.findViewById(R.id.textView_confirmText)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) mLinearLayout.findViewById(R.id.btn_nextStep)).setTypeface(AppController.getInstance().getAponaLohitFont());
+
         textViewTerms.setPaintFlags(textViewTerms.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
         textViewTerms.setOnClickListener(new View.OnClickListener() {
             @Override

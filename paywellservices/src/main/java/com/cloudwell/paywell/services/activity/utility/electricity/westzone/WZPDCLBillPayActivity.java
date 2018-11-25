@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.app.AppController;
@@ -74,9 +75,14 @@ public class WZPDCLBillPayActivity extends AppCompatActivity implements View.OnC
 
     private void initializeView() {
         mLinearLayout = findViewById(R.id.utilityLinearLayout);
+
+        TextView _mPin = findViewById(R.id.tvWzpdclPin);
+        TextView _mBill = findViewById(R.id.tvWzpdclBillNo);
+        TextView _mPhn = findViewById(R.id.tvWzpdclPhn);
+
+        etPin = findViewById(R.id.west_zone_pin_no);
         etBill = findViewById(R.id.west_zone_bill);
         etPhn = findViewById(R.id.west_zone_phn);
-        etPin = findViewById(R.id.west_zone_pin_no);
         imageView = findViewById(R.id.imageView_info);
         btnConfirm = findViewById(R.id.west_zone_confirm);
 
@@ -126,6 +132,23 @@ public class WZPDCLBillPayActivity extends AppCompatActivity implements View.OnC
             }
         });
 
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            _mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            etPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _mBill.setTypeface(AppController.getInstance().getOxygenLightFont());
+            etBill.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _mPhn.setTypeface(AppController.getInstance().getOxygenLightFont());
+            etPhn.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            _mPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            etPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _mBill.setTypeface(AppController.getInstance().getAponaLohitFont());
+            etBill.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _mPhn.setTypeface(AppController.getInstance().getAponaLohitFont());
+            etPhn.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnConfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
         btnConfirm.setOnClickListener(this);
         imageView.setOnClickListener(this);
     }

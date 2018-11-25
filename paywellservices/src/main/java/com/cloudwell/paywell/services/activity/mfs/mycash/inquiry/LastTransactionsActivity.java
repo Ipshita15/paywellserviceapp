@@ -20,12 +20,15 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.mfs.mycash.InquiryMenuActivity;
+import com.cloudwell.paywell.services.app.AppController;
+import com.cloudwell.paywell.services.app.AppHandler;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class LastTransactionsActivity extends AppCompatActivity {
 
+    private AppHandler mAppHandler;
     private RelativeLayout relativeLayout;
     private ListView listView;
     private TrxAdapter mAdapter;
@@ -46,9 +49,12 @@ public class LastTransactionsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_last_transactions);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.home_activity_log);
-
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.home_activity_log);
+        }
+        mAppHandler = new AppHandler(this);
         relativeLayout = findViewById(R.id.trxRelativeLayout);
         listView = findViewById(R.id.trxListView);
         mAdapter = new TrxAdapter(this);
@@ -170,7 +176,7 @@ public class LastTransactionsActivity extends AppCompatActivity {
 
         private final Context mContext;
 
-        public TrxAdapter(Context context) {
+        TrxAdapter(Context context) {
             mContext = context;
         }
 
@@ -218,6 +224,15 @@ public class LastTransactionsActivity extends AppCompatActivity {
             }
             viewHolder.trxID.setText(mTrx[position]);
 
+            if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                viewHolder.serviceType.setTypeface(AppController.getInstance().getOxygenLightFont());
+                viewHolder.amount.setTypeface(AppController.getInstance().getOxygenLightFont());
+                viewHolder.trxID.setTypeface(AppController.getInstance().getOxygenLightFont());
+            } else {
+                viewHolder.serviceType.setTypeface(AppController.getInstance().getAponaLohitFont());
+                viewHolder.amount.setTypeface(AppController.getInstance().getAponaLohitFont());
+                viewHolder.trxID.setTypeface(AppController.getInstance().getAponaLohitFont());
+            }
             return convertView;
         }
 

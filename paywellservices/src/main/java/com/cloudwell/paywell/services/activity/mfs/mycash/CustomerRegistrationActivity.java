@@ -73,14 +73,23 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
         etPin = findViewById(R.id.mycash_pin);
         btnConfirm = findViewById(R.id.mycash_confirm);
 
-        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashPhone)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashSerial)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        etPhn.setTypeface(AppController.getInstance().getOxygenLightFont());
-        etSerial.setTypeface(AppController.getInstance().getOxygenLightFont());
-        etPin.setTypeface(AppController.getInstance().getOxygenLightFont());
-        btnConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
-
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            ((TextView) mLinearLayout.findViewById(R.id.tvMyCashPhone)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((TextView) mLinearLayout.findViewById(R.id.tvMyCashSerial)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((TextView) mLinearLayout.findViewById(R.id.tvMyCashPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            etPhn.setTypeface(AppController.getInstance().getOxygenLightFont());
+            etSerial.setTypeface(AppController.getInstance().getOxygenLightFont());
+            etPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            ((TextView) mLinearLayout.findViewById(R.id.tvMyCashPhone)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((TextView) mLinearLayout.findViewById(R.id.tvMyCashSerial)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((TextView) mLinearLayout.findViewById(R.id.tvMyCashPin)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            etPhn.setTypeface(AppController.getInstance().getAponaLohitFont());
+            etSerial.setTypeface(AppController.getInstance().getAponaLohitFont());
+            etPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnConfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
         btnConfirm.setOnClickListener(this);
     }
 

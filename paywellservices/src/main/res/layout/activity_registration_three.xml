@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/scrollView_third">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -81,6 +82,7 @@
             android:layout_marginTop="5dp">
 
             <Button
+                android:id="@+id/btn_picOutlet"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -121,6 +123,7 @@
             android:layout_marginTop="5dp">
 
             <Button
+                android:id="@+id/btn_picNidFront"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -161,6 +164,7 @@
             android:layout_marginTop="5dp">
 
             <Button
+                android:id="@+id/btn_picNidBack"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -202,6 +206,7 @@
             android:layout_marginTop="5dp">
 
             <Button
+                android:id="@+id/btn_picOwner"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -243,6 +248,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp">
             <Button
+                android:id="@+id/btn_picTrade"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -282,6 +288,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp">
             <Button
+                android:id="@+id/btn_picPassport"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -321,6 +328,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp">
             <Button
+                android:id="@+id/btn_picBirth"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -360,6 +368,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp">
             <Button
+                android:id="@+id/btn_picDrive"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -399,6 +408,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp">
             <Button
+                android:id="@+id/btn_picVisit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -437,6 +447,7 @@
             android:weightSum="2">
 
             <Button
+                android:id="@+id/btn_preStep"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -452,6 +463,7 @@
                 android:textColor="#ffffff" />
 
             <Button
+                android:id="@+id/btn_nextStep"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
