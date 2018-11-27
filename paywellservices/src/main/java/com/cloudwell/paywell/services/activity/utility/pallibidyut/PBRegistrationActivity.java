@@ -1,5 +1,6 @@
 package com.cloudwell.paywell.services.activity.utility.pallibidyut;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -7,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.InputType;
 import android.view.Gravity;
@@ -61,34 +63,45 @@ public class PBRegistrationActivity extends BaseActivity implements View.OnClick
 
     private void initView() {
         mLinearLayout = findViewById(R.id.linearLayout);
+
         TextView _pin = findViewById(R.id.tvPBPin);
-        _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mPinNumber = findViewById(R.id.etPBPin);
-        mPinNumber.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         TextView _accountNo = findViewById(R.id.tvPBAccount);
-        _accountNo.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mAccount = findViewById(R.id.etPBAccount);
-        mAccount.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         TextView _accountConfirm = findViewById(R.id.tvPBAccountConfirm);
-        _accountConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mConfirmAccount = findViewById(R.id.etPBConfirmAccount);
-        mConfirmAccount.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         TextView _customerName = findViewById(R.id.tvFullName);
-        _customerName.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mCustomerName = findViewById(R.id.etFullName);
-        mCustomerName.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         TextView _phone = findViewById(R.id.tvPhone);
-        _phone.setTypeface(AppController.getInstance().getOxygenLightFont());
+
+        mPinNumber = findViewById(R.id.etPBPin);
+        mAccount = findViewById(R.id.etPBAccount);
+        mConfirmAccount = findViewById(R.id.etPBConfirmAccount);
+        mCustomerName = findViewById(R.id.etFullName);
         mPhone = findViewById(R.id.etPhone);
-        mPhone.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         mSubmitButton = findViewById(R.id.btnPBConfirm);
-        mSubmitButton.setTypeface(AppController.getInstance().getOxygenLightFont());
 
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mPinNumber.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _accountNo.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mAccount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _accountConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mConfirmAccount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _customerName.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mCustomerName.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _phone.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mPhone.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mSubmitButton.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            _pin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mPinNumber.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _accountNo.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mAccount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _accountConfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mConfirmAccount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _customerName.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mCustomerName.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _phone.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mPhone.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mSubmitButton.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
         mSubmitButton.setOnClickListener(this);
     }
 
@@ -357,9 +370,7 @@ public class PBRegistrationActivity extends BaseActivity implements View.OnClick
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if (this != null) {
-                this.onBackPressed();
-            }
+            this.onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);

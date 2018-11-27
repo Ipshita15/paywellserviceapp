@@ -25,6 +25,7 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.StringRequestListener;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.squareup.picasso.Picasso;
 
@@ -41,7 +42,6 @@ public class NotificationFullViewActivity extends BaseActivity implements View.O
     public static int TAG_NOTIFICATION_SOURCE;
     public static int TAG_NOTIFICATION_POSITION;
     private static final String TAG_RESPONSE_STATUS = "status";
-
 
     private LinearLayout mLinearLayout;
     private TextView mTextViewTitle, mTextViewMsg;
@@ -69,12 +69,10 @@ public class NotificationFullViewActivity extends BaseActivity implements View.O
         isNotificationFlow = getIntent().getBooleanExtra("isNotificationFlow", false);
 
         if (isNotificationFlow) {
-
             handleNotificationClickFlow(getIntent().getStringExtra("Notification_Details"));
         } else {
             handleNormalFlow();
         }
-
     }
 
     private void handleNotificationClickFlow(String notifcation_details) {
@@ -103,8 +101,6 @@ public class NotificationFullViewActivity extends BaseActivity implements View.O
                     }
                 });
             }
-
-
             callNotificationReadAPI("" + message_id);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -147,9 +143,19 @@ public class NotificationFullViewActivity extends BaseActivity implements View.O
         mImageView = findViewById(R.id.notiImg);
         mEditText = findViewById(R.id.notiEditText);
         mBtn = findViewById(R.id.notiButton);
+
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            mTextViewTitle.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mTextViewMsg.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mEditText.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mBtn.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            mTextViewTitle.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mTextViewMsg.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mEditText.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mBtn.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
         mBtn.setOnClickListener(NotificationFullViewActivity.this);
-
-
     }
 
     @Override
@@ -275,7 +281,6 @@ public class NotificationFullViewActivity extends BaseActivity implements View.O
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
         if (isNotificationFlow) {
             Intent intent = new Intent(getApplicationContext(), NotificationAllActivity.class);
             startActivity(intent);
@@ -283,8 +288,6 @@ public class NotificationFullViewActivity extends BaseActivity implements View.O
         } else {
             finish();
         }
-
-
     }
 
     public void callNotificationReadAPI(String messageId) {
@@ -312,7 +315,7 @@ public class NotificationFullViewActivity extends BaseActivity implements View.O
                         snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                         snackbar.show();
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -327,6 +330,5 @@ public class NotificationFullViewActivity extends BaseActivity implements View.O
                 dismissProgressDialog();
             }
         });
-
     }
 }

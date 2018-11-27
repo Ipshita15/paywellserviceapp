@@ -1,10 +1,12 @@
 package com.cloudwell.paywell.services.activity.utility.ivac;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDialog;
 import android.view.MenuItem;
 import android.view.View;
@@ -82,7 +84,6 @@ public class IvacMainActivity extends BaseActivity implements CompoundButton.OnC
         switch (v.getId()) {
             case R.id.homeBtnBillPay:
                 if (cd.isConnectingToInternet()) {
-                    requestType = TAG_REQUEST_IVAC_GET_CENTER;
                     new TransactionLogAsync().execute(getResources().getString(R.string.utility_ivac_get_center));
                 } else {
                     Snackbar snackbar = Snackbar.make(mRelativeLayout, getResources().getString(R.string.connection_error_msg), Snackbar.LENGTH_LONG);
@@ -93,7 +94,6 @@ public class IvacMainActivity extends BaseActivity implements CompoundButton.OnC
                 }
                 break;
             case R.id.homeBtnInquiry:
-//                showLimitPrompt();
                 startActivity(new Intent(IvacMainActivity.this, IvacFeeInquiryMainActivity.class));
                 finish();
                 break;

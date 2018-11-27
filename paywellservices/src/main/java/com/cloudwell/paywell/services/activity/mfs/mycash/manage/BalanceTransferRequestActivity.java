@@ -59,7 +59,10 @@ public class BalanceTransferRequestActivity extends BaseActivity implements View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_balance_transfer);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         _linearLayout = findViewById(R.id.linearLayout);
         cd = new ConnectionDetector(AppController.getContext());
@@ -82,10 +85,17 @@ public class BalanceTransferRequestActivity extends BaseActivity implements View
         etAgentOTP = findViewById(R.id.etAgentOTP);
         mBtnSubmit = findViewById(R.id.mycash_confirm);
 
-        ((TextView) _linearLayout.findViewById(R.id.tvAmount)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        etAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
-        etAgentOTP.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mBtnSubmit.setTypeface(AppController.getInstance().getOxygenLightFont());
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            ((TextView) _linearLayout.findViewById(R.id.tvAmount)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            etAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            etAgentOTP.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mBtnSubmit.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            ((TextView) _linearLayout.findViewById(R.id.tvAmount)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            etAmount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            etAgentOTP.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mBtnSubmit.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
         mBtnSubmit.setOnClickListener(this);
 
         if (!mAppHandler.getMYCashOTP().equals("unknown") && !mAppHandler.getMYCashOTP().equals("null")) {
@@ -223,9 +233,7 @@ public class BalanceTransferRequestActivity extends BaseActivity implements View
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if (this != null) {
-                this.onBackPressed();
-            }
+            this.onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 
 import org.apache.http.NameValuePair;
@@ -213,7 +214,15 @@ public class NotificationActivity extends BaseActivity {
             viewHolder.title.setText(NotificationActivity.mTitle[position]);
             viewHolder.date.setText(NotificationActivity.mDate[position]);
             viewHolder.msg.setText(NotificationActivity.mMsg[position]);
-
+            if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                viewHolder.title.setTypeface(AppController.getInstance().getOxygenLightFont());
+                viewHolder.date.setTypeface(AppController.getInstance().getOxygenLightFont());
+                viewHolder.msg.setTypeface(AppController.getInstance().getOxygenLightFont());
+            } else {
+                viewHolder.title.setTypeface(AppController.getInstance().getAponaLohitFont());
+                viewHolder.date.setTypeface(AppController.getInstance().getAponaLohitFont());
+                viewHolder.msg.setTypeface(AppController.getInstance().getAponaLohitFont());
+            }
             return convertView;
         }
 

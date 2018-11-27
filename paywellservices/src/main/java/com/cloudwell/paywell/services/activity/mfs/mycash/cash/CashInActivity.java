@@ -70,13 +70,23 @@ public class CashInActivity extends BaseActivity implements View.OnClickListener
         etOTP = findViewById(R.id.mycash_otp);
         btnConfirm = findViewById(R.id.mycash_confirm);
 
-        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashAccount)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashAmount)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashOTP)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        etAccount.setTypeface(AppController.getInstance().getOxygenLightFont());
-        etAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
-        etOTP.setTypeface(AppController.getInstance().getOxygenLightFont());
-        btnConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            ((TextView) mLinearLayout.findViewById(R.id.tvMyCashAccount)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((TextView) mLinearLayout.findViewById(R.id.tvMyCashAmount)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((TextView) mLinearLayout.findViewById(R.id.tvMyCashOTP)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            etAccount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            etAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            etOTP.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            ((TextView) mLinearLayout.findViewById(R.id.tvMyCashAccount)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((TextView) mLinearLayout.findViewById(R.id.tvMyCashAmount)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((TextView) mLinearLayout.findViewById(R.id.tvMyCashOTP)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            etAccount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            etAmount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            etOTP.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnConfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
 
         if(!mAppHandler.getMYCashOTP().equals("unknown") && !mAppHandler.getMYCashOTP().equals("null")) {
             etOTP.setText(mAppHandler.getMYCashOTP());

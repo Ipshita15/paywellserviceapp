@@ -1,5 +1,6 @@
 package com.cloudwell.paywell.services.activity.settings;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -7,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
@@ -50,6 +52,9 @@ public class ChangePinActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_settings_change_pin);
         }
+
+        mCd = new ConnectionDetector(AppController.getContext());
+        mAppHandler = new AppHandler(this);
         initView();
     }
 
@@ -59,14 +64,19 @@ public class ChangePinActivity extends BaseActivity {
         mOldPin = findViewById(R.id.oldPin);
         mNewPin = findViewById(R.id.newPin);
 
-        ((TextView) mLinearLayout.findViewById(R.id.tvOldPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        mOldPin.setTypeface(AppController.getInstance().getOxygenLightFont());
-        ((TextView) mLinearLayout.findViewById(R.id.tvNewPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        mNewPin.setTypeface(AppController.getInstance().getOxygenLightFont());
-        ((Button) mLinearLayout.findViewById(R.id.btnChangePin)).setTypeface(AppController.getInstance().getOxygenLightFont());
-
-        mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            ((TextView) mLinearLayout.findViewById(R.id.tvOldPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            mOldPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((TextView) mLinearLayout.findViewById(R.id.tvNewPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            mNewPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((Button) mLinearLayout.findViewById(R.id.btnChangePin)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            ((TextView) mLinearLayout.findViewById(R.id.tvOldPin)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            mOldPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((TextView) mLinearLayout.findViewById(R.id.tvNewPin)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            mNewPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((Button) mLinearLayout.findViewById(R.id.btnChangePin)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
     }
 
     @SuppressWarnings("deprecation")

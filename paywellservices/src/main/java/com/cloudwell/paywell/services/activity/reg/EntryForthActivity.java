@@ -8,9 +8,13 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
@@ -36,9 +40,7 @@ import static com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regM
 
 public class EntryForthActivity extends BaseActivity {
 
-    private RadioGroup radioGroup_one, radioGroup_two, radioGroup_three;
     private LinearLayout linearLayoutOne, linearLayoutTwo;
-    private TelephonyInfo telephonyInfo;
     private int radio_one = 0, radio_two = 0, radio_three = 0;
     private String email, landmark, sales_code = "", collection_code = "", imeiOne = "", imeiTwo = "", outlet_img = "", nid_img = "",
             nid_back_img = "", owner_img = "", trade_license_img = "", passport_img = "", birth_certificate_img = "",
@@ -57,7 +59,8 @@ public class EntryForthActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        radioGroup_one = findViewById(R.id.radioGroup_one);
+        ScrollView mScrollView = findViewById(R.id.scrollView_forth);
+        RadioGroup radioGroup_one = findViewById(R.id.radioGroup_one);
         linearLayoutOne = findViewById(R.id.linearLayoutOne);
         linearLayoutTwo = findViewById(R.id.linearLayoutTwo);
         radioGroup_one.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -76,7 +79,7 @@ public class EntryForthActivity extends BaseActivity {
                 }
             }
         });
-        radioGroup_two = findViewById(R.id.radioGroup_two);
+        RadioGroup radioGroup_two = findViewById(R.id.radioGroup_two);
         radioGroup_two.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -93,7 +96,7 @@ public class EntryForthActivity extends BaseActivity {
                 }
             }
         });
-        radioGroup_three = findViewById(R.id.radioGroup_three);
+        RadioGroup radioGroup_three = findViewById(R.id.radioGroup_three);
         radioGroup_three.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -105,6 +108,30 @@ public class EntryForthActivity extends BaseActivity {
                 }
             }
         });
+
+        ((TextView) mScrollView.findViewById(R.id.textView_mobileRecharge)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((RadioButton) mScrollView.findViewById(R.id.rechargeYes)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((RadioButton) mScrollView.findViewById(R.id.rechargeNo)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) mScrollView.findViewById(R.id.textView_opetator)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((CheckBox) mScrollView.findViewById(R.id.item_check_gp)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((CheckBox) mScrollView.findViewById(R.id.item_check_bl)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((CheckBox) mScrollView.findViewById(R.id.item_check_rb)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((CheckBox) mScrollView.findViewById(R.id.item_check_at)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((CheckBox) mScrollView.findViewById(R.id.item_check_tt)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) mScrollView.findViewById(R.id.textView_bkashagent)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((RadioButton) mScrollView.findViewById(R.id.agentYes)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((RadioButton) mScrollView.findViewById(R.id.agentNo)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) mScrollView.findViewById(R.id.textView_service)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((CheckBox) mScrollView.findViewById(R.id.item_check_bkash)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((CheckBox) mScrollView.findViewById(R.id.item_check_rocket)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((CheckBox) mScrollView.findViewById(R.id.item_check_mcash)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((CheckBox) mScrollView.findViewById(R.id.item_check_mobile_money)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((CheckBox) mScrollView.findViewById(R.id.item_check_mycash)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) mScrollView.findViewById(R.id.textView_downloadOption)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((RadioButton) mScrollView.findViewById(R.id.downloadYes)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((RadioButton) mScrollView.findViewById(R.id.downloadNo)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) mScrollView.findViewById(R.id.button_nextForth)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) mScrollView.findViewById(R.id.button_preForth)).setTypeface(AppController.getInstance().getAponaLohitFont());
     }
 
     @Override
@@ -141,7 +168,7 @@ public class EntryForthActivity extends BaseActivity {
                         || checkBox_eight.isChecked() || checkBox_nine.isChecked() || checkBox_ten.isChecked())) {
                     Toast.makeText(this, "অন্তত একটি সেবা বাছাই করুন", Toast.LENGTH_SHORT).show();
                 } else {
-                    telephonyInfo = TelephonyInfo.getInstance(EntryForthActivity.this);
+                    TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(EntryForthActivity.this);
                     imeiOne = telephonyInfo.getImeiSIM1();
                     imeiTwo = telephonyInfo.getImeiSIM2();
 

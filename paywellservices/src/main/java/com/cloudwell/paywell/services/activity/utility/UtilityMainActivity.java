@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
@@ -25,7 +24,6 @@ import com.cloudwell.paywell.services.app.AppHandler;
 public class UtilityMainActivity extends AppCompatActivity {
 
     private AppHandler mAppHandler;
-    private RelativeLayout mRelativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +34,6 @@ public class UtilityMainActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_utility);
         }
-        mRelativeLayout = findViewById(R.id.relativeLayout);
         mAppHandler = new AppHandler(this);
 
         Button btnDesco = findViewById(R.id.homeBtnDESCO);

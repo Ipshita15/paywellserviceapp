@@ -57,10 +57,8 @@ public class BankTransferMainActivity extends BaseActivity {
     private static final String TAG_ACCOUNT_NO = "accountno";
     private static final String TAG_BRANCH = "branch";
     private static final String TAG_MESSAGE = "message";
-    private Cursor mCursor;
     private String strImage = "";
     private String bankName;
-    private String bankAccount;
     private String bankNo;
     private static final int PERMISSION_FOR_GALLERY = 321;
 
@@ -68,9 +66,11 @@ public class BankTransferMainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bank_transfer_main);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        getSupportActionBar().setTitle(R.string.home_refill_bank);
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.home_refill_bank);
+        }
         mAppHandler = new AppHandler(this);
         mCoordinateLayout = findViewById(R.id.coordinateLayout);
         mCd = new ConnectionDetector(AppController.getContext());
@@ -176,7 +176,6 @@ public class BankTransferMainActivity extends BaseActivity {
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(params[0]);
             try {
-                //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(1);
                 nameValuePairs.add(new BasicNameValuePair("Bank_Name", params[1]));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -201,7 +200,7 @@ public class BankTransferMainActivity extends BaseActivity {
 
                 if (status.equalsIgnoreCase("200")) {
                     bankName = jsonObject.getString(TAG_BANK_NAME);
-                    bankAccount = jsonObject.getString(TAG_ACCOUNT_NAME);
+                    String bankAccount = jsonObject.getString(TAG_ACCOUNT_NAME);
                     bankNo = jsonObject.getString(TAG_ACCOUNT_NO);
                     String accountBranch = jsonObject.getString(TAG_BRANCH);
 
@@ -262,7 +261,7 @@ public class BankTransferMainActivity extends BaseActivity {
                             new Intent(
                                     Intent.ACTION_PICK,
                                     android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI),
-                            00001);
+                            1);
                 }
             }
         });
@@ -274,8 +273,8 @@ public class BankTransferMainActivity extends BaseActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (resultCode == RESULT_OK) {
-            mCursor = null;
-            if (requestCode == 00001) {
+            Cursor mCursor = null;
+            if (requestCode == 1) {
                 mCursor = getContentResolver()
                         .query(data.getData(),
                                 new String[]{android.provider.MediaStore.Images.ImageColumns._ID},
@@ -402,7 +401,7 @@ public class BankTransferMainActivity extends BaseActivity {
                             new Intent(
                                     Intent.ACTION_PICK,
                                     android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI),
-                            00001);
+                            1);
                 } else {
                     // permission denied
                     Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.access_denied_msg, Snackbar.LENGTH_LONG);

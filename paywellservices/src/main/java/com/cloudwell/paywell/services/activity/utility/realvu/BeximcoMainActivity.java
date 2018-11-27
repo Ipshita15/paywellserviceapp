@@ -61,13 +61,23 @@ public class BeximcoMainActivity extends BaseActivity {
         mAccountNo = findViewById(R.id.etAccountNo);
         mAmount = findViewById(R.id.etBillAmount);
 
-        ((TextView) mLinearLayout.findViewById(R.id.tvPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        ((EditText) mLinearLayout.findViewById(R.id.etPinNo)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        ((TextView) mLinearLayout.findViewById(R.id.tvAccount)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        ((EditText) mLinearLayout.findViewById(R.id.etAccountNo)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        ((TextView) mLinearLayout.findViewById(R.id.tvBillAmount)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        ((EditText) mLinearLayout.findViewById(R.id.etBillAmount)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        ((Button) mLinearLayout.findViewById(R.id.btnConfirm)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            ((TextView) mLinearLayout.findViewById(R.id.tvPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((EditText) mLinearLayout.findViewById(R.id.etPinNo)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((TextView) mLinearLayout.findViewById(R.id.tvAccount)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((EditText) mLinearLayout.findViewById(R.id.etAccountNo)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((TextView) mLinearLayout.findViewById(R.id.tvBillAmount)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((EditText) mLinearLayout.findViewById(R.id.etBillAmount)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((Button) mLinearLayout.findViewById(R.id.btnConfirm)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            ((TextView) mLinearLayout.findViewById(R.id.tvPin)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((EditText) mLinearLayout.findViewById(R.id.etPinNo)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((TextView) mLinearLayout.findViewById(R.id.tvAccount)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((EditText) mLinearLayout.findViewById(R.id.etAccountNo)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((TextView) mLinearLayout.findViewById(R.id.tvBillAmount)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((EditText) mLinearLayout.findViewById(R.id.etBillAmount)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((Button) mLinearLayout.findViewById(R.id.btnConfirm)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
     }
 
     public void onSubmitButtonClick(View v) {

@@ -58,23 +58,33 @@ public class RechargeActivity extends BaseActivity implements View.OnClickListen
 
     private void initView() {
         mLinearLayout = findViewById(R.id.linearLayout);
+
         TextView _pin = findViewById(R.id.tvQbeePin);
-        _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mPin = findViewById(R.id.etQubeePin);
-        mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         TextView _qubeeAccNo = findViewById(R.id.tvQbeeAccount);
-        _qubeeAccNo.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mAccountNo = findViewById(R.id.etQubeeAccount);
-        mAccountNo.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         TextView _amount = findViewById(R.id.tvQbeeAmount);
-        _amount.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mAmount = findViewById(R.id.etQbeeAmount);
-        mAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
 
+        mPin = findViewById(R.id.etQubeePin);
+        mAccountNo = findViewById(R.id.etQubeeAccount);
+        mAmount = findViewById(R.id.etQbeeAmount);
         mConfirm = findViewById(R.id.btnQubeeConfirm);
-        mConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _qubeeAccNo.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mAccountNo.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _amount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            _pin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _qubeeAccNo.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mAccountNo.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _amount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mAmount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mConfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
         mConfirm.setOnClickListener(this);
     }
 
@@ -204,9 +214,7 @@ public class RechargeActivity extends BaseActivity implements View.OnClickListen
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if (this != null) {
-                this.onBackPressed();
-            }
+            this.onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -1158,9 +1158,6 @@
             android:name=".activity.settings.HelpMainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.utility.electricity.dpdc.DPDCPrepaidInquiryActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.location.LocationActivity"
             android:screenOrientation="portrait" />
         <activity

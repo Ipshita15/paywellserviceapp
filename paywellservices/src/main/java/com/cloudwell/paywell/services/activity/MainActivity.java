@@ -35,6 +35,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Patterns;
@@ -65,6 +66,7 @@ import com.cloudwell.paywell.services.activity.settings.SettingsActivity;
 import com.cloudwell.paywell.services.activity.sms.SmsReceiver;
 import com.cloudwell.paywell.services.activity.statements.StatementMainActivity;
 import com.cloudwell.paywell.services.activity.terms.TermsActivity;
+import com.cloudwell.paywell.services.activity.topup.MainTopUpActivity;
 import com.cloudwell.paywell.services.activity.topup.TopupMainActivity;
 import com.cloudwell.paywell.services.activity.topup.TopupMenuActivity;
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
@@ -226,8 +228,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             home_refill_balance.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_settings.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
-
-
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

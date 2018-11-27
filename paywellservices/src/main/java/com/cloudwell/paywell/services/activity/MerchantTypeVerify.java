@@ -12,8 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
@@ -41,10 +43,8 @@ public class MerchantTypeVerify extends BaseActivity {
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
     private ConstraintLayout mConstraintLayout;
-    private RadioGroup radioGroup;
     private String merchantTypeId = "0", str_businessId = "", str_businessType = "";
     private Spinner spnr_businessType;
-    private ArrayAdapter<String> arrayAdapter_business_type_spinner;
     private ArrayList<String> business_type_id_array, business_type_name_array;
 
     @Override
@@ -65,7 +65,7 @@ public class MerchantTypeVerify extends BaseActivity {
 
         mConstraintLayout = findViewById(R.id.constrainLayout);
 
-        radioGroup = findViewById(R.id.radioGroup_merchantType);
+        RadioGroup radioGroup = findViewById(R.id.radioGroup_merchantType);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -75,6 +75,19 @@ public class MerchantTypeVerify extends BaseActivity {
         });
 
         spnr_businessType = findViewById(R.id.spinner_businessType);
+
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            ((TextView) mConstraintLayout.findViewById(R.id.bkash_balance_title)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((RadioButton) mConstraintLayout.findViewById(R.id.radioButton_merchant)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((TextView) mConstraintLayout.findViewById(R.id.business_type_title)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((TextView) mConstraintLayout.findViewById(R.id.submit_btn)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            ((TextView) mConstraintLayout.findViewById(R.id.bkash_balance_title)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((RadioButton) mConstraintLayout.findViewById(R.id.radioButton_merchant)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((TextView) mConstraintLayout.findViewById(R.id.business_type_title)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((TextView) mConstraintLayout.findViewById(R.id.submit_btn)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
+
     }
 
     public void initializationBusinessType() {
@@ -140,7 +153,7 @@ public class MerchantTypeVerify extends BaseActivity {
                             business_type_id_array.add(id);
                             business_type_name_array.add(name);
                         }
-                        arrayAdapter_business_type_spinner = new ArrayAdapter<>(MerchantTypeVerify.this, android.R.layout.simple_spinner_dropdown_item, business_type_name_array);
+                        ArrayAdapter<String> arrayAdapter_business_type_spinner = new ArrayAdapter<>(MerchantTypeVerify.this, android.R.layout.simple_spinner_dropdown_item, business_type_name_array);
 
                         spnr_businessType.setAdapter(arrayAdapter_business_type_spinner);
                         spnr_businessType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

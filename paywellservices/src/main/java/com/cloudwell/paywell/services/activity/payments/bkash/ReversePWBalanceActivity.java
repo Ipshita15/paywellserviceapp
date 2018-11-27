@@ -235,6 +235,11 @@ public class ReversePWBalanceActivity extends BaseActivity {
                         String splitArray[] = mData.get(position).split("@");
                         holder.textView.clearComposingText();
                         holder.textView.setText(splitArray[0]);
+                        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                            holder.textView.setTypeface(AppController.getInstance().getOxygenLightFont());
+                        } else {
+                            holder.textView.setTypeface(AppController.getInstance().getAponaLohitFont());
+                        }
                         break;
                     case TYPE_ITEM:
                         convertView = mInflater.inflate(R.layout.dialog_payment_reverse, parent, false);
@@ -250,6 +255,11 @@ public class ReversePWBalanceActivity extends BaseActivity {
 
                         holder.amount.setText(type_data);
                         holder.amount.setBackgroundResource(R.drawable.square_right);
+                        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                            holder.amount.setTypeface(AppController.getInstance().getOxygenLightFont());
+                        } else {
+                            holder.amount.setTypeface(AppController.getInstance().getAponaLohitFont());
+                        }
                         break;
                 }
             } else {
@@ -262,6 +272,11 @@ public class ReversePWBalanceActivity extends BaseActivity {
                         String splitArray[] = mData.get(position).split("@");
                         holder.textView.clearComposingText();
                         holder.textView.setText(splitArray[0]);
+                        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                            holder.textView.setTypeface(AppController.getInstance().getOxygenLightFont());
+                        } else {
+                            holder.textView.setTypeface(AppController.getInstance().getAponaLohitFont());
+                        }
                         break;
                     case TYPE_ITEM:
                         convertView = mInflater.inflate(R.layout.dialog_payment_reverse, parent, false);
@@ -277,7 +292,11 @@ public class ReversePWBalanceActivity extends BaseActivity {
 
                         holder.amount.setText(type_data);
                         holder.amount.setBackgroundResource(R.drawable.square_right);
-
+                        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                            holder.amount.setTypeface(AppController.getInstance().getOxygenLightFont());
+                        } else {
+                            holder.amount.setTypeface(AppController.getInstance().getAponaLohitFont());
+                        }
                         break;
                 }
             }

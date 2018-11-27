@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
@@ -64,8 +65,20 @@ public class BKashTrxClaimActivity extends BaseActivity implements View.OnClickL
         mLinearLayout = findViewById(R.id.linearLayout);
         mEtPhoneNo = findViewById(R.id.etPhoneNoOrId);
         mEtAmount = findViewById(R.id.etAmount);
-
         mConfirm = findViewById(R.id.btnBkashInqConfirm);
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            ((TextView) mLinearLayout.findViewById(R.id.tvPhnOrId)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            mEtPhoneNo.setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((TextView) mLinearLayout.findViewById(R.id.tvAmount)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            mEtAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            ((TextView) mLinearLayout.findViewById(R.id.tvPhnOrId)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            mEtPhoneNo.setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((TextView) mLinearLayout.findViewById(R.id.tvAmount)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            mEtAmount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mConfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
         mConfirm.setOnClickListener(this);
     }
 

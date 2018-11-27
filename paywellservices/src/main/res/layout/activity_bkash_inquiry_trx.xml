@@ -46,7 +46,7 @@
                             android:textColor="#FF4719" />
 
                         <TextView
-                            android:id="@+id/tvFirstName"
+                            android:id="@+id/tvPhnOrId"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="2dp"
@@ -80,7 +80,7 @@
                             android:textColor="#FF4719" />
 
                         <TextView
-                            android:id="@+id/tvLastName"
+                            android:id="@+id/tvAmount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="2dp"

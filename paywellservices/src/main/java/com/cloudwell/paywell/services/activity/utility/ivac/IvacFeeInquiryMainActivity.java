@@ -20,6 +20,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
@@ -76,6 +77,9 @@ public class IvacFeeInquiryMainActivity extends BaseActivity implements View.OnC
         }
 
         mConstraintLayout = findViewById(R.id.constrainLayoutIvacInq);
+
+        TextView _mWeb = findViewById(R.id.tvIvacWebFileNo);
+
         editTextWebFile = findViewById(R.id.etWebFile);
         imageViewTrxLog = findViewById(R.id.btnIvacTrxLog);
         buttonSubmit = findViewById(R.id.btnIvacInqSubmit);
@@ -96,6 +100,16 @@ public class IvacFeeInquiryMainActivity extends BaseActivity implements View.OnC
                 return true;
             }
         });
+
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            _mWeb.setTypeface(AppController.getInstance().getOxygenLightFont());
+            editTextWebFile.setTypeface(AppController.getInstance().getOxygenLightFont());
+            buttonSubmit.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            _mWeb.setTypeface(AppController.getInstance().getAponaLohitFont());
+            editTextWebFile.setTypeface(AppController.getInstance().getAponaLohitFont());
+            buttonSubmit.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
 
         imageViewTrxLog.setOnClickListener(this);
         buttonSubmit.setOnClickListener(this);

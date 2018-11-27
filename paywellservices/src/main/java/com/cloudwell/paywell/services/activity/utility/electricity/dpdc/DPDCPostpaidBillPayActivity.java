@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
@@ -73,10 +74,17 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
 
     private void initializeView() {
         mLinearLayout = findViewById(R.id.utilityLinearLayout);
+
+        TextView _mPin = findViewById(R.id.tvDpdcPin);
+        TextView _mBill = findViewById(R.id.tvDpdcBill);
+        TextView _mPhn = findViewById(R.id.tvDpdcPhn);
+        TextView _mLocation = findViewById(R.id.tvDpdcLocation);
+
+        etPin = findViewById(R.id.pin_no);
         etBill = findViewById(R.id.mycash_bill);
         etPhn = findViewById(R.id.mycash_phn);
         etLocation = findViewById(R.id.mycash_location);
-        etPin = findViewById(R.id.pin_no);
+
         ivInfoBill = findViewById(R.id.imageView_infoBill);
         ivInfoLocation = findViewById(R.id.imageView_infoLocation);
         btnConfirm = findViewById(R.id.mycash_confirm);
@@ -84,6 +92,27 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
         spnr_month = findViewById(R.id.monthSpinner);
         spnr_year = findViewById(R.id.yearSpinner);
 
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            _mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            etPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _mBill.setTypeface(AppController.getInstance().getOxygenLightFont());
+            etBill.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _mPhn.setTypeface(AppController.getInstance().getOxygenLightFont());
+            etPhn.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _mLocation.setTypeface(AppController.getInstance().getOxygenLightFont());
+            etLocation.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            _mPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            etPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _mBill.setTypeface(AppController.getInstance().getAponaLohitFont());
+            etBill.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _mPhn.setTypeface(AppController.getInstance().getAponaLohitFont());
+            etPhn.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _mLocation.setTypeface(AppController.getInstance().getAponaLohitFont());
+            etLocation.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnConfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> month_adapter = ArrayAdapter.createFromResource(this,
                 R.array.month_array, android.R.layout.simple_spinner_item);

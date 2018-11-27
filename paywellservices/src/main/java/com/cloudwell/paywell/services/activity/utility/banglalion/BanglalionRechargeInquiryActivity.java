@@ -61,18 +61,26 @@ public class BanglalionRechargeInquiryActivity extends BaseActivity implements V
     private void initView() {
         mLinearLayout = findViewById(R.id.banglalionRechargeInquiryLL);
         TextView _pin = findViewById(R.id.tvQubeePin2);
-        _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mPin = findViewById(R.id.etQubeePin2);
-        mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         TextView _inq_acc = findViewById(R.id.tvQubeeccount2);
-        _inq_acc.setTypeface(AppController.getInstance().getOxygenLightFont());
+
+        mPin = findViewById(R.id.etQubeePin2);
         mAccountNO = findViewById(R.id.etQubeeccount2);
-        mAccountNO.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         mSubmitInquiry = findViewById(R.id.btnQubeeConfirm2);
-        mSubmitInquiry.setTypeface(AppController.getInstance().getOxygenLightFont());
 
+
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _inq_acc.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mAccountNO.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mSubmitInquiry.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            _pin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _inq_acc.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mAccountNO.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mSubmitInquiry.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
         mSubmitInquiry.setOnClickListener(this);
     }
 
@@ -210,9 +218,7 @@ public class BanglalionRechargeInquiryActivity extends BaseActivity implements V
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if (this != null) {
-                this.onBackPressed();
-            }
+            this.onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);

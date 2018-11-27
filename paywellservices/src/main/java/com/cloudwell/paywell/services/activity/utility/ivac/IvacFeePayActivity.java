@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -85,12 +86,48 @@ public class IvacFeePayActivity extends BaseActivity {
     private void initializeData() {
         mConstraintLayout = findViewById(R.id.constrainLayout);
         spnr_center = findViewById(R.id.spinner_center);
-        textViewAmount = findViewById(R.id.tvFeeAmount);
+
+        TextView _mPin = findViewById(R.id.tvIvacPin);
+        TextView _mCenter = findViewById(R.id.tvIvacCenter);
+        TextView _mAmount = findViewById(R.id.tvIvacAmount);
+        TextView _mWeb = findViewById(R.id.tvIvacWebFileNo);
+        TextView _mPassport = findViewById(R.id.tvIvacPassport);
+        TextView _mPhn = findViewById(R.id.tvIvacPhn);
+        Button _mBtn = findViewById(R.id.btnIvacSubmit);
+
         editTextPassword = findViewById(R.id.etPassword);
+        textViewAmount = findViewById(R.id.tvFeeAmount);
         editTextWebFile = findViewById(R.id.etWebFile);
         editTextPassport = findViewById(R.id.etPassport);
         editTextPhnNum = findViewById(R.id.etPhnNum);
 
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            _mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            editTextPassword.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _mCenter.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _mAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            textViewAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _mWeb.setTypeface(AppController.getInstance().getOxygenLightFont());
+            editTextWebFile.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _mPassport.setTypeface(AppController.getInstance().getOxygenLightFont());
+            editTextPassport.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _mPhn.setTypeface(AppController.getInstance().getOxygenLightFont());
+            editTextPhnNum.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _mBtn.setTypeface(AppController.getInstance().getOxygenLightFont());
+        }else {
+            _mPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            editTextPassword.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _mCenter.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _mAmount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            textViewAmount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _mWeb.setTypeface(AppController.getInstance().getAponaLohitFont());
+            editTextWebFile.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _mPassport.setTypeface(AppController.getInstance().getAponaLohitFont());
+            editTextPassport.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _mPhn.setTypeface(AppController.getInstance().getAponaLohitFont());
+            editTextPhnNum.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _mBtn.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
         editTextWebFile.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(editTextWebFile) {
             @Override
             public boolean onDrawableClick() {

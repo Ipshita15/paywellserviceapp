@@ -94,7 +94,6 @@ public class InquiryMenuActivity extends BaseActivity {
                 selectedLimit = limitTypes[arg1].toString();
             }
         });
-        // Button OK
         builder.setPositiveButton(R.string.okay_btn,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {

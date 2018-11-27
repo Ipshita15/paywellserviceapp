@@ -245,6 +245,11 @@ public class DeclarePurposeActivity extends BaseActivity {
                         convertView.setTag(holder);
                         holder.textView.clearComposingText();
                         holder.textView.setText(mData.get(position));
+                        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                            holder.textView.setTypeface(AppController.getInstance().getOxygenLightFont());
+                        } else {
+                            holder.textView.setTypeface(AppController.getInstance().getAponaLohitFont());
+                        }
                         break;
                     case TYPE_ITEM:
                         convertView = mInflater.inflate(R.layout.purpose_declare_list_row, parent, false);
@@ -259,6 +264,13 @@ public class DeclarePurposeActivity extends BaseActivity {
                         String textTime = getString(R.string.time_des) + " " + splitArray_row_first[3];
                         holder.amount.setText(textAmount);
                         holder.time.setText(textTime);
+                        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                            holder.amount.setTypeface(AppController.getInstance().getOxygenLightFont());
+                            holder.time.setTypeface(AppController.getInstance().getOxygenLightFont());
+                        } else {
+                            holder.amount.setTypeface(AppController.getInstance().getAponaLohitFont());
+                            holder.time.setTypeface(AppController.getInstance().getAponaLohitFont());
+                        }
                         break;
                 }
             } else {
@@ -270,6 +282,11 @@ public class DeclarePurposeActivity extends BaseActivity {
                         convertView.setTag(holder);
                         holder.textView.clearComposingText();
                         holder.textView.setText(mData.get(position));
+                        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                            holder.textView.setTypeface(AppController.getInstance().getOxygenLightFont());
+                        } else {
+                            holder.textView.setTypeface(AppController.getInstance().getAponaLohitFont());
+                        }
                         break;
                     case TYPE_ITEM:
                         convertView = mInflater.inflate(R.layout.purpose_declare_list_row, parent, false);
@@ -284,7 +301,13 @@ public class DeclarePurposeActivity extends BaseActivity {
                         String textTime = getString(R.string.time_des) + " " + splitArray_row_second[3];
                         holder.amount.setText(textAmount);
                         holder.time.setText(textTime);
-
+                        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                            holder.amount.setTypeface(AppController.getInstance().getOxygenLightFont());
+                            holder.time.setTypeface(AppController.getInstance().getOxygenLightFont());
+                        } else {
+                            holder.amount.setTypeface(AppController.getInstance().getAponaLohitFont());
+                            holder.time.setTypeface(AppController.getInstance().getAponaLohitFont());
+                        }
                         break;
                 }
             }
@@ -400,8 +423,6 @@ public class DeclarePurposeActivity extends BaseActivity {
 
                     @Override
                     public void onClick(View view) {
-                        // Do something when button positive clicked
-                        // Your validation is here
                         if (!cd.isConnectingToInternet()) {
                             AppHandler.showDialog(getSupportFragmentManager());
                         } else {
@@ -461,13 +482,11 @@ public class DeclarePurposeActivity extends BaseActivity {
 
                     @Override
                     public void onClick(View view) {
-                        // Do something when button negative clicked
                         dialog.dismiss();
                     }
                 });
             }
         });
-
         alertDialog.show();
     }
 
@@ -545,7 +564,6 @@ public class DeclarePurposeActivity extends BaseActivity {
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(params[0]);
             try {
-                //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(11);
                 nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("pin", mAppHandler.getPin()));

@@ -60,18 +60,27 @@ public class ComplainTrxActivity extends BaseActivity implements View.OnClickLis
 
     private void initView() {
         mLinearLayout = findViewById(R.id.linearLayout);
+
         TextView _pin = findViewById(R.id.tvQbeePin5);
-        _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mPin = findViewById(R.id.etQubeePin5);
-        mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         TextView _trxId = findViewById(R.id.tvTrxId);
-        _trxId.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mTrxId = findViewById(R.id.etTrxId);
-        mTrxId.setTypeface(AppController.getInstance().getOxygenLightFont());
 
+        mPin = findViewById(R.id.etQubeePin5);
+        mTrxId = findViewById(R.id.etTrxId);
         mConfirmTrx = findViewById(R.id.btnComplainTrxId);
-        mConfirmTrx.setTypeface(AppController.getInstance().getOxygenLightFont());
+
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _trxId.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mTrxId.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mConfirmTrx.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            _pin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _trxId.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mTrxId.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mConfirmTrx.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
         mConfirmTrx.setOnClickListener(this);
     }
 
@@ -203,9 +212,7 @@ public class ComplainTrxActivity extends BaseActivity implements View.OnClickLis
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if (this != null) {
-                this.onBackPressed();
-            }
+            this.onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);

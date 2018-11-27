@@ -51,8 +51,11 @@ public class ManageMenuActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mycash_balance_transfer_menu);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.home_fund_management_title);
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.home_fund_management_title);
+        }
         mAppHandler = new AppHandler(this);
         mCoordinateLayout = findViewById(R.id.coordinateLayout);
         mCd = new ConnectionDetector(AppController.getContext());

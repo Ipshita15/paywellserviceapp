@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 
 import org.apache.http.NameValuePair;
@@ -62,7 +63,6 @@ public class NotificationAllActivity extends BaseActivity {
     public static String[] mType = null;
     public static String[] mData = null;
 
-    private int flag = 0;
     private int position;
     MsgAdapter adapter;
 
@@ -202,17 +202,10 @@ public class NotificationAllActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int msgPosition, long id) {
                 position = msgPosition;
-                flag = 1;
-
                 new NotificationAsync().execute(getResources().getString(R.string.notif_url), mId[msgPosition]);
-
-//                NotificationFullViewActivity.TAG_NOTIFICATION_SOURCE = 2;
-//                NotificationFullViewActivity.TAG_NOTIFICATION_POSITION = position;
-//                startActivity(new Intent(NotificationAllActivity.this, NotificationFullViewActivity.class));
             }
         });
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -268,7 +261,6 @@ public class NotificationAllActivity extends BaseActivity {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
 
-            // Set the color here
             if (NotificationAllActivity.mStatus[position].equals("Unread")) {
                 viewHolder.title.setTextColor(Color.parseColor("#ff0000"));
             } else {
@@ -278,7 +270,15 @@ public class NotificationAllActivity extends BaseActivity {
             viewHolder.title.setText(NotificationAllActivity.mTitle[position]);
             viewHolder.date.setText(NotificationAllActivity.mDate[position]);
             viewHolder.msg.setText(NotificationAllActivity.mMsg[position]);
-
+            if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                viewHolder.title.setTypeface(AppController.getInstance().getOxygenLightFont());
+                viewHolder.date.setTypeface(AppController.getInstance().getOxygenLightFont());
+                viewHolder.msg.setTypeface(AppController.getInstance().getOxygenLightFont());
+            } else {
+                viewHolder.title.setTypeface(AppController.getInstance().getAponaLohitFont());
+                viewHolder.date.setTypeface(AppController.getInstance().getAponaLohitFont());
+                viewHolder.msg.setTypeface(AppController.getInstance().getAponaLohitFont());
+            }
             return convertView;
         }
 
@@ -346,6 +346,4 @@ public class NotificationAllActivity extends BaseActivity {
             }
         }
     }
-
-
 }

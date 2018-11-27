@@ -52,8 +52,11 @@ public class ConfirmPaymentActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_payment);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.home_bkash_payment_confirm_title);
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.home_bkash_payment_confirm_title);
+        }
 
         cd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
@@ -91,7 +94,6 @@ public class ConfirmPaymentActivity extends BaseActivity {
                 mDate[i] = date;
                 trx_length++;
             }
-
             listView.setAdapter(adapter);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -151,7 +153,13 @@ public class ConfirmPaymentActivity extends BaseActivity {
             String date = getString(R.string.date_and_time_des) + " " + mDate[position];
             viewHolder.amount.setText(amount);
             viewHolder.datetime.setText(date);
-
+            if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                viewHolder.amount.setTypeface(AppController.getInstance().getOxygenLightFont());
+                viewHolder.datetime.setTypeface(AppController.getInstance().getOxygenLightFont());
+            } else {
+                viewHolder.amount.setTypeface(AppController.getInstance().getAponaLohitFont());
+                viewHolder.datetime.setTypeface(AppController.getInstance().getAponaLohitFont());
+            }
             return convertView;
         }
 
@@ -164,9 +172,7 @@ public class ConfirmPaymentActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if (this != null) {
-                this.onBackPressed();
-            }
+            this.onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -226,7 +232,6 @@ public class ConfirmPaymentActivity extends BaseActivity {
         @Override
         protected JSONObject doInBackground(String... params) {
             JSONParser jParser = new JSONParser();
-            // Getting JSON from URL
             String url = params[0] + params[1] + params[2] + params[3] + params[4] + params[5] + params[6];
             //String url = params[0] + params[1] + params[2] + params[3] + params[4];
             return jParser.getJSONFromUrl(url);
@@ -273,5 +278,4 @@ public class ConfirmPaymentActivity extends BaseActivity {
         AlertDialog alert = builder.create();
         alert.show();
     }
-
 }
