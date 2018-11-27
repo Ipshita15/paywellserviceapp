@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.utility.realvu;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
@@ -28,7 +27,7 @@ import org.json.JSONObject;
 
 import java.net.URLEncoder;
 
-public class BeximcoMainActivity extends AppCompatActivity {
+public class BeximcoMainActivity extends BaseActivity {
     private static final String TAG_RESPONSE_STATUS = "status";
     private static final String TAG_MESSAGE = "message";
     private static final String TAG_DATA = "data";
@@ -120,13 +119,11 @@ public class BeximcoMainActivity extends AppCompatActivity {
     }
 
     private class SubmitAsync extends AsyncTask<String, String, JSONObject> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(BeximcoMainActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+          showProgressDialog();
         }
 
         @Override
@@ -139,7 +136,7 @@ public class BeximcoMainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(JSONObject jsonObject) {
-            progressDialog.cancel();
+           dismissProgressDialog();
             try {
                 String status = jsonObject.getString(TAG_RESPONSE_STATUS);
                 String message = jsonObject.getString(TAG_MESSAGE);

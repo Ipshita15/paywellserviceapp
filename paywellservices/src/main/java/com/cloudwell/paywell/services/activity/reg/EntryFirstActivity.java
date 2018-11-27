@@ -1,10 +1,8 @@
 package com.cloudwell.paywell.services.activity.reg;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -38,7 +37,7 @@ import java.util.List;
 
 import static com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regModel;
 
-public class EntryFirstActivity extends AppCompatActivity {
+public class EntryFirstActivity extends BaseActivity {
 
     private ScrollView mScrollView;
     private TextView textView_email;
@@ -105,13 +104,11 @@ public class EntryFirstActivity extends AppCompatActivity {
     }
 
     private class BusinessTypeAsync extends AsyncTask<String, String, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(EntryFirstActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -137,7 +134,7 @@ public class EntryFirstActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             if (result != null) {
                 try {
                     business_type_id_array = new ArrayList<>();
@@ -268,13 +265,11 @@ public class EntryFirstActivity extends AppCompatActivity {
     }
 
     private class GetDistrictResponseAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(EntryFirstActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+           showProgressDialog();
         }
 
         @Override
@@ -299,8 +294,8 @@ public class EntryFirstActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            if (progressDialog.isShowing())
-                progressDialog.dismiss();
+          dismissProgressDialog();
+
             if (result != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(result);

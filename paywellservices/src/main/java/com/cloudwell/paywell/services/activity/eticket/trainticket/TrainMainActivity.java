@@ -1,13 +1,11 @@
 package com.cloudwell.paywell.services.activity.eticket.trainticket;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +15,7 @@ import android.widget.TextView;
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
@@ -35,7 +34,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class TrainMainActivity extends AppCompatActivity implements View.OnClickListener {
+public class TrainMainActivity extends BaseActivity implements View.OnClickListener {
 
     private ConnectionDetector mCd;
     private RelativeLayout mRelativeLayout;
@@ -184,13 +183,11 @@ public class TrainMainActivity extends AppCompatActivity implements View.OnClick
     }
 
     private class SourceAsync extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(TrainMainActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+          showProgressDialog();
         }
 
         @Override
@@ -209,7 +206,7 @@ public class TrainMainActivity extends AppCompatActivity implements View.OnClick
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+           dismissProgressDialog();
             ArrayList<String> mSources = new ArrayList<>();
             ArrayList<String> mSourceCodes = new ArrayList<>();
 

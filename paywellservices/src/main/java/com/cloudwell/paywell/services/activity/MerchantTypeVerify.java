@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,7 +8,6 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -39,7 +38,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MerchantTypeVerify extends AppCompatActivity {
+public class MerchantTypeVerify extends BaseActivity {
 
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
@@ -101,13 +100,10 @@ public class MerchantTypeVerify extends AppCompatActivity {
     }
 
     private class BusinessTypeAsync extends AsyncTask<String, String, String> {
-        ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(MerchantTypeVerify.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -135,7 +131,7 @@ public class MerchantTypeVerify extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
 
-            progressDialog.cancel();
+            dismissProgressDialog();
             if (result != null) {
                 try {
                     business_type_id_array = new ArrayList<>();
@@ -226,13 +222,10 @@ public class MerchantTypeVerify extends AppCompatActivity {
     }
 
     private class ConfirmMerchantTypeAsync extends AsyncTask<String, String, String> {
-        ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(MerchantTypeVerify.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -263,7 +256,7 @@ public class MerchantTypeVerify extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             if (result != null) {
                 try {
                     business_type_id_array = new ArrayList<>();

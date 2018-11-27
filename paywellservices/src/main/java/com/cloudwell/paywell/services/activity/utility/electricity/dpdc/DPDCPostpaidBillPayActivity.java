@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.utility.electricity.dpdc;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +20,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -40,7 +39,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DPDCPostpaidBillPayActivity extends AppCompatActivity implements View.OnClickListener {
+public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.OnClickListener {
 
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
@@ -239,13 +238,11 @@ public class DPDCPostpaidBillPayActivity extends AppCompatActivity implements Vi
     }
 
     private class SubmitInquiryAsync extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(DPDCPostpaidBillPayActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @SuppressWarnings("deprecation")
@@ -283,7 +280,7 @@ public class DPDCPostpaidBillPayActivity extends AppCompatActivity implements Vi
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
@@ -373,13 +370,11 @@ public class DPDCPostpaidBillPayActivity extends AppCompatActivity implements Vi
     }
 
     private class SubmitBillAsync extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(DPDCPostpaidBillPayActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @SuppressWarnings("deprecation")
@@ -420,7 +415,7 @@ public class DPDCPostpaidBillPayActivity extends AppCompatActivity implements Vi
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);

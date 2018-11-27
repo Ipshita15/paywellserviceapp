@@ -1,12 +1,10 @@
 package com.cloudwell.paywell.services.activity.reg;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.TelephonyInfo;
@@ -39,7 +38,7 @@ import java.util.List;
 
 import static com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regModel;
 
-public class EntryForthActivity extends AppCompatActivity {
+public class EntryForthActivity extends BaseActivity {
 
     private LinearLayout linearLayoutOne, linearLayoutTwo;
     private int radio_one = 0, radio_two = 0, radio_three = 0;
@@ -326,7 +325,7 @@ public class EntryForthActivity extends AppCompatActivity {
 
     private class SubmitRequestTask extends AsyncTask<Void, Intent, String> {
 
-        private ProgressDialog progressDialog;
+
         private final String mURL;
         private String operators;
 
@@ -342,9 +341,7 @@ public class EntryForthActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(EntryForthActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -398,7 +395,7 @@ public class EntryForthActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             mSubmitRequestTask = null;
-            progressDialog.dismiss();
+           dismissProgressDialog();
             try {
                 JSONObject jsonObject = new JSONObject(result);
                 String status = jsonObject.getString("status");
@@ -413,7 +410,7 @@ public class EntryForthActivity extends AppCompatActivity {
         @Override
         protected void onCancelled() {
             mSubmitRequestTask = null;
-            progressDialog.dismiss();
+            dismissProgressDialog();
         }
     }
 

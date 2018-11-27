@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.topup;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,7 +11,6 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,6 +40,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.topup.adapter.MyRecyclerViewAdapter;
 import com.cloudwell.paywell.services.activity.topup.model.MobileOperator;
 import com.cloudwell.paywell.services.activity.topup.model.RequestTopup;
@@ -73,7 +72,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TopupMainActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class TopupMainActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     public final static String KEY_GP = "GP";
     public final static String KEY_ROBI = "Robi";
@@ -141,7 +140,6 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
 
         topUpLayout = findViewById(R.id.topUpAddLayout);
         Button buttonSubmit = findViewById(R.id.btnSubmit);
-
 
 
         slideInAnim.setDuration(50);
@@ -655,14 +653,12 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
 
     @SuppressWarnings("deprecation")
     private class TransEnquiryAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
         private String inquiryReceipt;
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(TopupMainActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -691,7 +687,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             if (result != null) {
                 try {
                     String splitSingleAt[] = result.split("@");
@@ -884,13 +880,11 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
 
     @SuppressWarnings("deprecation")
     private class TransactionLogAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(TopupMainActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -920,7 +914,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             if (result != null) {
                 if (result.startsWith("200")) {
                     TransLogActivity.TRANSLOG_TAG = result;
@@ -1066,9 +1060,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void handleTopupAPIValidation(String pinNo) {
-        final ProgressDialog progressDialog;
-        progressDialog = ProgressDialog.show(TopupMainActivity.this, "", getString(R.string.loading_msg), true);
-        progressDialog.show();
+        showProgressDialog();
 
         final RequestTopup requestTopup = new RequestTopup();
         requestTopup.setPassword("" + pinNo);
@@ -1174,7 +1166,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
         responseBodyCall.enqueue(new Callback<TopupReposeData>() {
             @Override
             public void onResponse(Call<TopupReposeData> call, Response<TopupReposeData> response) {
-                progressDialog.dismiss();
+                dismissProgressDialog();
                 Log.d(KEY_TAG, "onResponse:" + response.body());
 
                 showReposeUI(response.body());
@@ -1183,7 +1175,8 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
 
             @Override
             public void onFailure(Call<TopupReposeData> call, Throwable t) {
-                progressDialog.dismiss();
+                dismissProgressDialog();
+
                 Log.d(KEY_TAG, "onFailure:");
                 Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -1195,6 +1188,13 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
             }
         });
 
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        dismissProgressDialog();
+        super.onDestroy();
     }
 
     private String getOperatorTextForServer(CharSequence checkedRadioButtonText) {
@@ -1311,7 +1311,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
 
     }
 
-    public  boolean checkTotalRequestSuccess(TopupReposeData response){
+    public boolean checkTotalRequestSuccess(TopupReposeData response){
         boolean isTotalSuccess = false;
 
         for (int i = 0; i < response.getTopupData().size(); i++) {
@@ -1426,13 +1426,11 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
     }
 
     private class OfferInquiryAsync extends AsyncTask<String, Void, String> {
-        private ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(TopupMainActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @SuppressWarnings("deprecation")
@@ -1464,7 +1462,7 @@ public class TopupMainActivity extends AppCompatActivity implements View.OnClick
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);

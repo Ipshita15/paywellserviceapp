@@ -1,13 +1,11 @@
 package com.cloudwell.paywell.services.activity.eticket.trainticket;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -38,7 +37,7 @@ import java.util.ArrayList;
 /**
  * Created by android on 5/17/2016.
  */
-public class TrainTicketActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class TrainTicketActivity extends BaseActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     private Button mBtnSource;
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
@@ -176,13 +175,11 @@ public class TrainTicketActivity extends AppCompatActivity implements AdapterVie
     }
 
     private class DestinationAsync extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(TrainTicketActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -201,7 +198,7 @@ public class TrainTicketActivity extends AppCompatActivity implements AdapterVie
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             ArrayList<String> destinationStations = new ArrayList<>();
             ArrayList<String> destinationStationCodes = new ArrayList<>();
             ArrayList<String> passengerCodes = new ArrayList<>();

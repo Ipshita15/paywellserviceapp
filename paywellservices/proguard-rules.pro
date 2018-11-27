@@ -17,3 +17,7 @@
 #}
 -dontwarn okhttp3.internal.platform.*
 -ignorewarnings
+
+# fabric:
+-keepattributes *Annotation*
+-keepattributes SourceFile,LineNumberTable

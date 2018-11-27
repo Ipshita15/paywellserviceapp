@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.refill.banktransfer;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.ContentUris;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,7 +16,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -26,6 +24,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.refill.RefillBalanceMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
@@ -39,7 +38,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -47,7 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class BankTransferMainActivity extends AppCompatActivity {
+public class BankTransferMainActivity extends BaseActivity {
 
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
@@ -163,13 +161,12 @@ public class BankTransferMainActivity extends AppCompatActivity {
     }
 
     private class InformationAsync extends AsyncTask<String, String, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(BankTransferMainActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+
+            showProgressDialog();
         }
 
         @Override
@@ -196,7 +193,7 @@ public class BankTransferMainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             try {
                 JSONObject jsonObject = new JSONObject(result);
                 String status = jsonObject.getString(TAG_RESPONSE_STATUS);
@@ -330,13 +327,10 @@ public class BankTransferMainActivity extends AppCompatActivity {
     }
 
     private class DepositInformationAsync extends AsyncTask<String, String, String> {
-        ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(BankTransferMainActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -368,7 +362,7 @@ public class BankTransferMainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             try {
                 JSONObject jsonObject = new JSONObject(result);
 

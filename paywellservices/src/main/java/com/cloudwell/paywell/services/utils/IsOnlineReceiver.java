@@ -18,8 +18,9 @@ public class IsOnlineReceiver extends BroadcastReceiver {
 		if (isOnline())
 			if (!isAutoTimeEnabled()) {
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-					mContext.getApplicationContext().startActivity(new Intent(
-							android.provider.Settings.ACTION_DATE_SETTINGS));
+					Intent intent1 = new Intent(Settings.ACTION_DATE_SETTINGS);
+					intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					mContext.getApplicationContext().startActivity(intent1);
 				} else {
 					Settings.System.putInt(mContext.getContentResolver(),
 							Settings.System.AUTO_TIME, 1);

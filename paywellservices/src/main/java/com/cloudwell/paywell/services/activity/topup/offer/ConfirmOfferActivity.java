@@ -1,13 +1,11 @@
 package com.cloudwell.paywell.services.activity.topup.offer;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
@@ -18,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.topup.TopUpOperatorMenuActivity;
 import com.cloudwell.paywell.services.activity.topup.model.RequestTopup;
 import com.cloudwell.paywell.services.activity.topup.model.TopupData;
@@ -33,7 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ConfirmOfferActivity extends AppCompatActivity implements View.OnClickListener {
+public class ConfirmOfferActivity extends BaseActivity implements View.OnClickListener {
 
     private static String KEY_TAG = ConfirmOfferActivity.class.getName();
 
@@ -116,9 +115,7 @@ public class ConfirmOfferActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void handleTopupAPIValidation(String pin) {
-        final ProgressDialog progressDialog;
-        progressDialog = ProgressDialog.show(ConfirmOfferActivity.this, "", getString(R.string.loading_msg), true);
-        progressDialog.show();
+        showProgressDialog();
 
         List<TopupData> topupDatumList = new ArrayList<>();
         TopupData topupDatum = new TopupData(amount, "prepaid", mPhn, key);
@@ -138,7 +135,7 @@ public class ConfirmOfferActivity extends AppCompatActivity implements View.OnCl
         responseBodyCall.enqueue(new Callback<TopupReposeData>() {
             @Override
             public void onResponse(Call<TopupReposeData> call, Response<TopupReposeData> response) {
-                progressDialog.dismiss();
+                dismissProgressDialog();
                 Log.d(KEY_TAG, "onResponse:" + response.body());
 
                 showReposeUI(response.body());
@@ -147,7 +144,7 @@ public class ConfirmOfferActivity extends AppCompatActivity implements View.OnCl
 
             @Override
             public void onFailure(Call<TopupReposeData> call, Throwable t) {
-                progressDialog.dismiss();
+                dismissProgressDialog();
                 Log.d(KEY_TAG, "onFailure:");
                 Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));

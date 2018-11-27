@@ -1,13 +1,11 @@
 package com.cloudwell.paywell.services.activity.notification;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +18,7 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 
@@ -37,7 +36,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotificationAllActivity extends AppCompatActivity {
+public class NotificationAllActivity extends BaseActivity {
 
     public static final String IS_NOTIFICATION_SHOWN = "isNotificationShown";
     private ListView listView;
@@ -87,13 +86,11 @@ public class NotificationAllActivity extends AppCompatActivity {
     }
 
     private class NotificationAllListAsync extends AsyncTask<String, Intent, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(NotificationAllActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+           showProgressDialog();
         }
 
         @Override
@@ -127,7 +124,7 @@ public class NotificationAllActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+           dismissProgressDialog();
             if (result != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
@@ -293,13 +290,10 @@ public class NotificationAllActivity extends AppCompatActivity {
 
     @SuppressWarnings("deprecation")
     private class NotificationAsync extends AsyncTask<String, Intent, String> {
-        ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(NotificationAllActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+           showProgressDialog();
         }
 
         @Override
@@ -332,11 +326,11 @@ public class NotificationAllActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
+          dismissProgressDialog();
             if (result != null) {
                 try {
                     mStatus[position] = "Read";
                     adapter.notifyDataSetChanged();
-                    progressDialog.dismiss();
                     JSONObject jsonObject = new JSONObject(result);
                     NotificationFullViewActivity.TAG_NOTIFICATION_SOURCE = 1;
                     NotificationFullViewActivity.TAG_NOTIFICATION_POSITION = position;

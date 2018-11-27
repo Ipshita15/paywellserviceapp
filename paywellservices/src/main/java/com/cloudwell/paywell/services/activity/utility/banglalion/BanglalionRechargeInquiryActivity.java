@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.utility.banglalion;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -35,7 +34,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BanglalionRechargeInquiryActivity extends AppCompatActivity implements View.OnClickListener {
+public class BanglalionRechargeInquiryActivity extends BaseActivity implements View.OnClickListener {
 
 
     private static EditText mPin;
@@ -110,13 +109,11 @@ public class BanglalionRechargeInquiryActivity extends AppCompatActivity impleme
     }
 
     private class SubmitAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(BanglalionRechargeInquiryActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -149,7 +146,7 @@ public class BanglalionRechargeInquiryActivity extends AppCompatActivity impleme
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             try {
                 JSONObject jsonObject = new JSONObject(result);
                 String status = jsonObject.getString("status");
@@ -157,14 +154,14 @@ public class BanglalionRechargeInquiryActivity extends AppCompatActivity impleme
                 if (status != null && status.equals("200")) {
                     JSONObject data = jsonObject.getJSONObject("data");
                     if (data != null) {
-                        String transactionStatus= data.getString("status");
+                        String transactionStatus = data.getString("status");
                         String trxId = data.getString("tran_id");
                         String blcTrx = data.getString("BLCTrx");
                         String amount = data.getString("amount");
                         String retailCommission = data.getString("retCommission");
                         String accountNum = data.getString("customerID");
                         String hotLine = data.getString("contact");
-                        showStatusDialog(transactionStatus,accountNum, amount, trxId, blcTrx, retailCommission,hotLine);
+                        showStatusDialog(transactionStatus, accountNum, amount, trxId, blcTrx, retailCommission, hotLine);
                     }
                 } else {
                     String message = jsonObject.getString("message");
@@ -185,7 +182,7 @@ public class BanglalionRechargeInquiryActivity extends AppCompatActivity impleme
         }
     }
 
-    private void showStatusDialog(String status,String accountNo, String amount, String trxId, String banglalinkTrx, String retailCommission,String hotline) {
+    private void showStatusDialog(String status, String accountNo, String amount, String trxId, String banglalinkTrx, String retailCommission, String hotline) {
         StringBuilder reqStrBuilder = new StringBuilder();
         reqStrBuilder.append(getString(R.string.acc_no_des) + " " + accountNo
                 + "\n" + getString(R.string.amount_des) + " " + amount + " " + R.string.tk_des

@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.mfs.mycash;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,12 +16,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -31,14 +29,12 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChangeMYCashPinActivity extends AppCompatActivity implements View.OnClickListener {
+public class ChangeMYCashPinActivity extends BaseActivity implements View.OnClickListener {
 
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
@@ -114,13 +110,13 @@ public class ChangeMYCashPinActivity extends AppCompatActivity implements View.O
     }
 
     private class submitConfirm extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(ChangeMYCashPinActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+
+
+            showProgressDialog();
         }
 
         @Override
@@ -154,7 +150,7 @@ public class ChangeMYCashPinActivity extends AppCompatActivity implements View.O
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.dismiss();
+           dismissProgressDialog();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);

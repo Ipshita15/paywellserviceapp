@@ -3,7 +3,6 @@ package com.cloudwell.paywell.services.activity.payments.bkash;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,7 +16,6 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.util.Base64;
@@ -36,6 +34,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.payments.PaymentsMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
@@ -51,7 +50,6 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -64,7 +62,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DeclarePurposeActivity extends AppCompatActivity {
+public class DeclarePurposeActivity extends BaseActivity {
 
     private String TAG_STATUS = "Status";
     private String TAG_TRX_DETAILS = "Trx Details";
@@ -437,7 +435,9 @@ public class DeclarePurposeActivity extends AppCompatActivity {
 
                                     try {
                                         mSenderPhn = etSenderPhn.getText().toString().trim();
+                                        long phnNumber = Long.valueOf(mSenderPhn);
                                     } catch (Exception ex) {
+                                        //handle exception here
                                         etSenderPhn.setError(getString(R.string.phone_no_error_msg));
                                         return;
                                     }
@@ -550,13 +550,11 @@ public class DeclarePurposeActivity extends AppCompatActivity {
     }
 
     private class PDAsyncTask extends AsyncTask<String, String, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(DeclarePurposeActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -595,7 +593,7 @@ public class DeclarePurposeActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             if (result != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
@@ -650,13 +648,11 @@ public class DeclarePurposeActivity extends AppCompatActivity {
     }
 
     private class CheckPDAsyncTask extends AsyncTask<String, String, JSONObject> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(DeclarePurposeActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -669,7 +665,7 @@ public class DeclarePurposeActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(JSONObject jsonObject) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             try {
                 String status = jsonObject.getString(TAG_STATUS);
                 if (status.equalsIgnoreCase("200")) {

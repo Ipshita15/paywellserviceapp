@@ -1,19 +1,18 @@
 package com.cloudwell.paywell.services.activity.payments.bkash;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 
@@ -31,7 +30,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BKashBalanceRequestMenuActivity extends AppCompatActivity {
+public class BKashBalanceRequestMenuActivity extends BaseActivity {
 
     private AppHandler mAppHandler;
     private CoordinatorLayout mCoordinatorLayout;
@@ -107,13 +106,11 @@ public class BKashBalanceRequestMenuActivity extends AppCompatActivity {
 
     @SuppressWarnings("deprecation")
     private class BkashPWBalanceReverseAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(BKashBalanceRequestMenuActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+           showProgressDialog();
         }
 
         @Override
@@ -145,7 +142,7 @@ public class BKashBalanceRequestMenuActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String response) {
-            progressDialog.cancel();
+          dismissProgressDialog();
             if (response != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
