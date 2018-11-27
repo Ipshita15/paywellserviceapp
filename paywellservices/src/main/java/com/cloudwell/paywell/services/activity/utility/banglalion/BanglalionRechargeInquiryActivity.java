@@ -37,12 +37,13 @@ import java.util.List;
 public class BanglalionRechargeInquiryActivity extends BaseActivity implements View.OnClickListener {
 
 
-    private static EditText mPin;
-    private static EditText mAccountNO;
+    private EditText mPin;
+    private EditText mAccountNO;
     private Button mSubmitInquiry;
     private ConnectionDetector cd;
-    private static AppHandler mAppHandler;
+    private AppHandler mAppHandler;
     private LinearLayout mLinearLayout;
+    private AsyncTask<String, Integer, String> mSubmitAsync;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +101,7 @@ public class BanglalionRechargeInquiryActivity extends BaseActivity implements V
                     mAccountNO.setError(Html.fromHtml("<font color='red'>" + getString(R.string.qubee_acc_error_msg) + "</font></font>"));
                     return;
                 }
-                new SubmitAsync().execute(getResources().getString(R.string.banglalion_bill_inquiry),
+                mSubmitAsync =  new SubmitAsync().execute(getResources().getString(R.string.banglalion_bill_inquiry),
                         mAppHandler.getImeiNo(),
                         _account,
                         _pin);
@@ -210,9 +211,13 @@ public class BanglalionRechargeInquiryActivity extends BaseActivity implements V
         super.onResume();
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (mSubmitAsync!=null){
+            mSubmitAsync.cancel(true);
+        }
     }
 
     @Override

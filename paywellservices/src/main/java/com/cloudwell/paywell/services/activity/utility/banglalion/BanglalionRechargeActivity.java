@@ -36,15 +36,16 @@ import java.util.List;
 
 public class BanglalionRechargeActivity extends BaseActivity implements View.OnClickListener {
 
-    private static EditText mPin;
-    private static EditText mAccountNo;
+    private EditText mPin;
+    private EditText mAccountNo;
     private Button mConfirm;
     private ConnectionDetector cd;
-    private static EditText mAmount;
-    private static String accountNo;
-    private static String amount;
+    private EditText mAmount;
+    private String accountNo;
+    private String amount;
     private AppHandler mAppHandler;
     private LinearLayout mLinearLayout;
+    private AsyncTask<String, Integer, String> mSubmitAsync;
 
 
     @Override
@@ -108,7 +109,7 @@ public class BanglalionRechargeActivity extends BaseActivity implements View.OnC
                 if (!cd.isConnectingToInternet()) {
                     AppHandler.showDialog(getSupportFragmentManager());
                 } else {
-                    new SubmitAsync().execute(getResources().getString(R.string.banglalion_bill_pay),
+                    mSubmitAsync =  new SubmitAsync().execute(getResources().getString(R.string.banglalion_bill_pay),
                             mAppHandler.getImeiNo(),
                             accountNo,
                             amount,
@@ -190,15 +191,15 @@ public class BanglalionRechargeActivity extends BaseActivity implements View.OnC
         }
     }
 
-    private void showStatusDialog(String msg, String accountNo, String amount, String trxId, String banglalinkTrx, String retailCommission,String hotline) {
+    private void showStatusDialog(String msg, String accountNo, String amount, String trxId, String banglalinkTrx, String retailCommission, String hotline) {
         StringBuilder reqStrBuilder = new StringBuilder();
         reqStrBuilder.append(getString(R.string.acc_no_des) + " " + accountNo
-                        + "\n" + getString(R.string.amount_des) + " " + amount + " " + R.string.tk_des
-                        + "\n" + getString(R.string.trx_id_des) + " " + trxId
-                        + "\n" + getString(R.string.banglalion_trx_id_des) + " " + banglalinkTrx
-                        + "\n" + getString(R.string.retail_commission) + " " + retailCommission + " " + R.string.tk_des
-                        + "\n\n" + getString(R.string.using_paywell_des)
-                        + "\n" + getString(R.string.hotline_des) + " " + hotline);
+                + "\n" + getString(R.string.amount_des) + " " + amount + " " + R.string.tk_des
+                + "\n" + getString(R.string.trx_id_des) + " " + trxId
+                + "\n" + getString(R.string.banglalion_trx_id_des) + " " + banglalinkTrx
+                + "\n" + getString(R.string.retail_commission) + " " + retailCommission + " " + R.string.tk_des
+                + "\n\n" + getString(R.string.using_paywell_des)
+                + "\n" + getString(R.string.hotline_des) + " " + hotline);
         AlertDialog.Builder builder = new AlertDialog.Builder(BanglalionRechargeActivity.this);
         builder.setTitle("Result " + msg);
         builder.setMessage(reqStrBuilder.toString());
@@ -222,6 +223,9 @@ public class BanglalionRechargeActivity extends BaseActivity implements View.OnC
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (mSubmitAsync!=null) {
+            mSubmitAsync.cancel(true);
+        }
     }
 
     @Override
