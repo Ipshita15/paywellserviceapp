@@ -36,6 +36,7 @@ public class BKashBalanceActivity extends AppCompatActivity {
         tvMainBalance = (TextView) findViewById(R.id.bKashBalance);
         mButtonPurposeDeclare = (Button) findViewById(R.id.btnPurposeDeclare);
 
+        mAppHandler = new AppHandler(getApplicationContext());
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             tvMainBalance.setTypeface(AppController.getInstance().getOxygenLightFont());
             mButtonPurposeDeclare.setTypeface(AppController.getInstance().getOxygenLightFont());

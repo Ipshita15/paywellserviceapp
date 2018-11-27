@@ -1,12 +1,10 @@
 package com.cloudwell.paywell.services.activity.utility.ivac;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDialog;
 import android.view.MenuItem;
 import android.view.View;
@@ -232,21 +230,10 @@ public class IvacMainActivity extends BaseActivity implements CompoundButton.OnC
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(params[0]);
             try {
-                if (requestType == TAG_REQUEST_IVAC_GET_CENTER) {
-                    //add data
-                    List<NameValuePair> nameValuePairs = new ArrayList<>(2);
-                    nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                    nameValuePairs.add(new BasicNameValuePair("format", "json"));
-                    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                } else if (requestType == TAG_REQUEST_IVAC_FEE_INQUIRY) {
-                    //add data
-                    List<NameValuePair> nameValuePairs = new ArrayList<>(4);
-                    nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                    nameValuePairs.add(new BasicNameValuePair("password", "1234"));
-                    nameValuePairs.add(new BasicNameValuePair("limit", selectedLimit));
-                    nameValuePairs.add(new BasicNameValuePair("format", "json"));
-                    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                }
+                List<NameValuePair> nameValuePairs = new ArrayList<>(2);
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("format", "json"));
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
                 responseTxt = httpclient.execute(httppost, responseHandler);
             } catch (Exception e) {
@@ -270,17 +257,10 @@ public class IvacMainActivity extends BaseActivity implements CompoundButton.OnC
                     String msg = object.getString(TAG_RESPONSE_IVAC_MSG);
 
                     if (status.equalsIgnoreCase("200")) {
-                        if (requestType == TAG_REQUEST_IVAC_GET_CENTER) {
-                            JSONArray jsonArray = object.getJSONArray(TAG_RESPONSE_IVAC_CENTER_DETAILS);
-                            IvacFeePayActivity.TAG_CENTER_DETAILS = jsonArray.toString();
-                            startActivity(new Intent(IvacMainActivity.this, IvacFeePayActivity.class));
-                            finish();
-                        } else if (requestType == TAG_REQUEST_IVAC_FEE_INQUIRY) {
-                            JSONArray jsonArray = object.getJSONArray(TAG_RESPONSE_IVAC_TRX_DETAILS);
-                            IvacFeeInquiryActivity.TRANSLOG_TAG = jsonArray.toString();
-                            startActivity(new Intent(IvacMainActivity.this, IvacFeeInquiryActivity.class));
-                            finish();
-                        }
+                        JSONArray jsonArray = object.getJSONArray(TAG_RESPONSE_IVAC_CENTER_DETAILS);
+                        IvacFeePayActivity.TAG_CENTER_DETAILS = jsonArray.toString();
+                        startActivity(new Intent(IvacMainActivity.this, IvacFeePayActivity.class));
+                        finish();
                     } else {
                         Snackbar snackbar = Snackbar.make(mRelativeLayout, msg, Snackbar.LENGTH_LONG);
                         snackbar.setActionTextColor(Color.parseColor("#ffffff"));
