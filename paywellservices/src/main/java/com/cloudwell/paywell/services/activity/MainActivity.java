@@ -119,26 +119,26 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private CoordinatorLayout mCoordinateLayout;
     private AppHandler mAppHandler;
     private UpdateChecker mUpdateChecker;
-    public static final long UPDATE_SOFTWARE_INTERVAL = 24 * 60 * 60;// 1 day
-    public static final long PHN_NUM_CHECK_INTERVAL = 24 * 60 * 60;// 1 day
-    public static final long UPDATE_LOCATION_INTERVAL = 7 * 24 * 60 * 60;// 7 day
+    public final long UPDATE_SOFTWARE_INTERVAL = 24 * 60 * 60;// 1 day
+    public final long PHN_NUM_CHECK_INTERVAL = 24 * 60 * 60;// 1 day
+    public final long UPDATE_LOCATION_INTERVAL = 7 * 24 * 60 * 60;// 7 day
     private TextView mToolbarHeading;
     private ConnectionDetector mCd;
-    public static int mNumOfNotification;
+    public int mNumOfNotification;
     private TextView mNotification = null;
     private Toolbar mToolbar;
     private boolean mIsNotificationShown;
-    private static final String TAG_RESPONSE_STATUS = "status";
-    private static final String TAG_RESPONSE_TOTAL_UREAD_MSG = "unread_message";
-    private static final String TAG_RESPONSE_MSG_SUBJECT = "message_sub";
-    private static final String TAG_RESPONSE_MSG_ID = "message_id";
-    private static final String TAG_RESPONSE_MSG_ARRAY = "detail_message";
-    private static final String TAG_RESPONSE_MESSAGE = "message";
-    private static final String TAG_RESPONSE_DATE = "added_datetime";
-    private static final String TAG_RESPONSE_IMAGE = "image_url";
-    private static final String TAG_RESPONSE_TYPE = "type";
-    private static final String TAG_RESPONSE_NOTIFICATION_BALANCE_RETURN_DATA = "balance_return_data";
-    private static final String TAG_RESPONSE_OTP = "otp";
+    private final String TAG_RESPONSE_STATUS = "status";
+    private final String TAG_RESPONSE_TOTAL_UREAD_MSG = "unread_message";
+    private final String TAG_RESPONSE_MSG_SUBJECT = "message_sub";
+    private final String TAG_RESPONSE_MSG_ID = "message_id";
+    private final String TAG_RESPONSE_MSG_ARRAY = "detail_message";
+    private final String TAG_RESPONSE_MESSAGE = "message";
+    private final String TAG_RESPONSE_DATE = "added_datetime";
+    private final String TAG_RESPONSE_IMAGE = "image_url";
+    private final String TAG_RESPONSE_TYPE = "type";
+    private final String TAG_RESPONSE_NOTIFICATION_BALANCE_RETURN_DATA = "balance_return_data";
+    private final String TAG_RESPONSE_OTP = "otp";
     private NavigationView navigationView;
     boolean checkNotificationFlag = false;
 
@@ -150,12 +150,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private Button home_topup, home_utility, home_payments, home_eticket, home_mfs, home_product_catalog, home_statement, home_refill_balance, home_settings;
 
-    private static final int PERMISSIONS_FOR_QR_CODE_SCAN = 100;
-    private static final int PERMISSIONS_REQUEST_FOR_WRITE_EXTERNAL_STORAGE = 101;
-    private static final int PERMISSIONS_REQUEST_FOR_READ_OTP = 102;
-    private static final int PERMISSIONS_REQUEST_ACCESS_LOCATION = 103;
-    private static final int PERMISSIONS_REQUEST_ACCESS_CALL = 104;
-    final static int REQUEST_LOCATION = 1000;
+    private final int PERMISSIONS_FOR_QR_CODE_SCAN = 100;
+    private final int PERMISSIONS_REQUEST_FOR_WRITE_EXTERNAL_STORAGE = 101;
+    private final int PERMISSIONS_REQUEST_FOR_READ_OTP = 102;
+    private final int PERMISSIONS_REQUEST_ACCESS_LOCATION = 103;
+    private final int PERMISSIONS_REQUEST_ACCESS_CALL = 104;
+    final int REQUEST_LOCATION = 1000;
 
     private String phn_num;
     private int phn_num_count;
@@ -1324,6 +1324,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         checkPayWellBalance();
 
         viewPager.setInterval(2000);
+
     }
 
     private boolean getMailAddress() {
@@ -2043,6 +2044,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         if (mPushFirebaseIdTask != null) {
             mPushFirebaseIdTask.cancel(true);
+        }
+
+        if (viewPager != null) {
+            Slider.imageLoadingService = null;
+            viewPager = null;
+
+
         }
 
         super.onDestroy();
