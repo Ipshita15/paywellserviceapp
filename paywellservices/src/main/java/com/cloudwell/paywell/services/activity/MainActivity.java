@@ -141,7 +141,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private static final String TAG_RESPONSE_OTP = "otp";
     private NavigationView navigationView;
     boolean checkNotificationFlag = false;
-    private PayWellBalanceAsync pwBalanceCheck;
+
     AlertDialog.Builder builderNotification;
     private AlertDialog alertNotification;
     private Slider viewPager;
@@ -168,6 +168,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private int downloadType = 0;
     private int TAG_DOWNLOAD_PLAY_STORE = 1;
+
+
+    // all async
+    private AsyncTask<String, Intent, String> mNotificationAsync;
+    private PayWellBalanceAsync pwBalanceCheck;
+    private AsyncTask<String, Integer, String> mRequestPhnNumberAddAsync;
+    private AsyncTask<String, Integer, String> mConfirmPhnNumberAddAsync;
+    private AsyncTask<String, Intent, String> mPushFirebaseIdTask;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -298,7 +306,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             for (String key : getIntent().getExtras().keySet()) {
                 String value = getIntent().getExtras().getString(key);
                 if (key.equals("Notification") && value.equals("True")) {
-                    new NotificationAsync().execute(getResources().getString(R.string.notif_url));
+                    mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
                 }
             }
         }
@@ -415,7 +423,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (!mIsNotificationShown) {
             if (!mCd.isConnectingToInternet())
                 AppHandler.showDialog(getSupportFragmentManager());
-            new NotificationAsync().execute(getResources().getString(R.string.notif_url));
+            mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
         }
         notificationView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -699,8 +707,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void checkPayWellBalance() {
         pwBalanceCheck = new PayWellBalanceAsync();
-        pwBalanceCheck.execute(
-                getResources().getString(R.string.pw_bal));
+        pwBalanceCheck.execute(getResources().getString(R.string.pw_bal));
     }
 
     @SuppressWarnings("deprecation")
@@ -767,7 +774,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                                         public void onClick(DialogInterface dialogInterface, int id) {
                                             dialogInterface.dismiss();
                                             checkNotificationFlag = true;
-                                            new NotificationAsync().execute(getResources().getString(R.string.notif_url));
+                                            mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
                                         }
                                     });
                                     alertNotification = builderNotification.create();
@@ -1381,7 +1388,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     dialogInterface.dismiss();
                     phn_num = etPhn.getText().toString();
                     if (mCd.isConnectingToInternet()) {
-                        new RequestPhnNumberAddAsync().execute(getResources().getString(R.string.otp_for_phn_num), phn_num);
+                        mRequestPhnNumberAddAsync = new RequestPhnNumberAddAsync().execute(getResources().getString(R.string.otp_for_phn_num), phn_num);
                     } else {
                         Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
                         snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -1421,7 +1428,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         @Override
         protected void onPreExecute() {
-           showProgressDialog();
+            showProgressDialog();
         }
 
         @SuppressWarnings("deprecation")
@@ -1451,7 +1458,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         @Override
         protected void onPostExecute(String result) {
-           dismissProgressDialog();
+            dismissProgressDialog();
             try {
                 JSONObject jsonObject = new JSONObject(result);
 
@@ -1521,7 +1528,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         dialogInterface.dismiss();
                         String inputedOtp = etOtp.getText().toString();
                         if (inputedOtp.equalsIgnoreCase(otp)) {
-                            new ConfirmPhnNumberAddAsync().execute(getResources().getString(R.string.conf_phn_num), phn_num, otp);
+                            mConfirmPhnNumberAddAsync = new ConfirmPhnNumberAddAsync().execute(getResources().getString(R.string.conf_phn_num), phn_num, otp);
                         } else {
                             Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_correct_msg, Snackbar.LENGTH_LONG);
                             snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -1557,7 +1564,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         @Override
         protected void onPreExecute() {
-           showProgressDialog();
+            showProgressDialog();
         }
 
         @SuppressWarnings("deprecation")
@@ -1589,7 +1596,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         @Override
         protected void onPostExecute(String result) {
-           dismissProgressDialog();
+            dismissProgressDialog();
 
             try {
                 JSONObject jsonObject = new JSONObject(result);
@@ -1627,7 +1634,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void subscribeToPushService() {
         if (mAppHandler.getFirebaseTokenStatus().equals("true")) {
             if (mCd.isConnectingToInternet()) {
-                new PushFirebaseIdTask().execute(getString(R.string.notification_token_url), mAppHandler.getFirebaseId());
+                mPushFirebaseIdTask = new PushFirebaseIdTask().execute(getString(R.string.notification_token_url), mAppHandler.getFirebaseId());
             } else {
                 Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -1640,8 +1647,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
     private class PushFirebaseIdTask extends AsyncTask<String, Intent, String> {
-
-
         @Override
         protected void onPreExecute() {
             showProgressDialog();
@@ -1899,36 +1904,36 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onSlideClick(int position) {
 
-              try {
-                  currentPage = position;
+                try {
+                    currentPage = position;
 
-                  String link = mAppHandler.getDisplayPictureArrayList().get(currentPage);
+                    String link = mAppHandler.getDisplayPictureArrayList().get(currentPage);
 
 
-                  if (link.isEmpty()) {
+                    if (link.isEmpty()) {
 
-                  } else if (link.contains("facebook.com")) {
-                      if (!mCd.isConnectingToInternet()) {
-                          AppHandler.showDialog(getSupportFragmentManager());
-                      } else {
-                          goToFacebook();
-                      }
-                  } else if (link.contains("youtube.com")) {
-                      if (!mCd.isConnectingToInternet()) {
-                          AppHandler.showDialog(getSupportFragmentManager());
-                      } else {
-                          Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=mRg-yT20Iyc"));
-                          intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                          intent.setPackage("com.google.android.youtube");
-                          startActivity(intent);
-                      }
-                  } else {
-                      WebViewActivity.TAG_LINK = link;
-                      startActivity(new Intent(MainActivity.this, WebViewActivity.class));
-                  }
-              }catch (Exception e){
+                    } else if (link.contains("facebook.com")) {
+                        if (!mCd.isConnectingToInternet()) {
+                            AppHandler.showDialog(getSupportFragmentManager());
+                        } else {
+                            goToFacebook();
+                        }
+                    } else if (link.contains("youtube.com")) {
+                        if (!mCd.isConnectingToInternet()) {
+                            AppHandler.showDialog(getSupportFragmentManager());
+                        } else {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=mRg-yT20Iyc"));
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.setPackage("com.google.android.youtube");
+                            startActivity(intent);
+                        }
+                    } else {
+                        WebViewActivity.TAG_LINK = link;
+                        startActivity(new Intent(MainActivity.this, WebViewActivity.class));
+                    }
+                } catch (Exception e) {
 
-              }
+                }
 
             }
         });
@@ -2016,5 +2021,31 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 .setDelay(500) // optional but starting animations immediately in onCreate can make them choppy
                 .singleUse(SHOWCASE_ID_TOPUP) // provide a unique ID used to ensure it is only shown once
                 .show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mNotificationAsync != null) {
+            mNotificationAsync.cancel(true);
+        }
+
+        if (pwBalanceCheck != null) {
+            pwBalanceCheck.cancel(true);
+        }
+
+        if (mRequestPhnNumberAddAsync != null) {
+            mRequestPhnNumberAddAsync.cancel(true);
+        }
+
+        if (mConfirmPhnNumberAddAsync != null) {
+            mConfirmPhnNumberAddAsync.cancel(true);
+        }
+
+        if (mPushFirebaseIdTask != null) {
+            mPushFirebaseIdTask.cancel(true);
+        }
+
+        super.onDestroy();
+
     }
 }
