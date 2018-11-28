@@ -201,9 +201,6 @@ public class AjkerDealActivity extends AppCompatActivity {
                 getResources().updateConfiguration(config, getResources().getDisplayMetrics());
             }
             invalidateOptionsMenu();
-            Intent intent = new Intent(AjkerDealActivity.this, ProductMenuActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
             finish();
         }
     }
