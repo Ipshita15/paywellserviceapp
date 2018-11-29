@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="5dp">
+            android:padding="4dp">
 
             <LinearLayout
                 android:id="@+id/topUpAddLayout"
@@ -46,7 +46,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorText" />
 
-            <LinearLayout
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/linearLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -54,61 +55,58 @@
 
                 <ImageView
                     android:id="@+id/imageOffer"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    tools:src="@drawable/bundle_en"
-                    />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/bundle_en"/>
 
                 <ImageView
                     android:id="@+id/imageAdd"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginRight="4dp"
                     android:gravity="right"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:src="@drawable/add_en"/>
-            </LinearLayout>
+            </android.support.constraint.ConstraintLayout>
         </LinearLayout>
 
     </ScrollView>
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/button_layout"
         android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:paddingTop="8dp"
-        android:weightSum="3">
+        >
 
         <ImageView
             android:id="@+id/enquiryBtn"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/topup_in_en"/>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1">
-        </LinearLayout>
 
         <ImageView
             android:id="@+id/transLogBtn"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="right"
-            tools:src="@drawable/ic_trx_log"/>
-    </LinearLayout>
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/enquiryBtn"
+            tools:src="@drawable/transaction_log_en"/>
+    </android.support.constraint.ConstraintLayout>
 
     <ProgressBar
         style="@android:style/Widget.ProgressBar.Small.Inverse"
