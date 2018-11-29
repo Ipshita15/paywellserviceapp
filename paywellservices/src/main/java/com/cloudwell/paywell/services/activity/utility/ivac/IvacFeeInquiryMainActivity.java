@@ -113,6 +113,18 @@ public class IvacFeeInquiryMainActivity extends BaseActivity implements View.OnC
 
         imageViewTrxLog.setOnClickListener(this);
         buttonSubmit.setOnClickListener(this);
+
+        refreshLanguage();
+    }
+
+    private void refreshLanguage() {
+
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            imageViewTrxLog.setBackgroundResource(R.drawable.transaction_log_en);
+        } else {
+            imageViewTrxLog.setBackgroundResource(R.drawable.transaction_log_bn);
+        }
+
     }
 
     @Override

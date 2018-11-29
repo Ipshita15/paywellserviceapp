@@ -104,12 +104,12 @@
             <ImageView
                 android:id="@+id/btnIvacTrxLog"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_marginRight="5dp"
                 android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_marginBottom="10dp"
-                android:src="@drawable/ic_trx_log"/>
+                tools:src="@drawable/transaction_log_en"/>
 
         </LinearLayout>
     </ScrollView>

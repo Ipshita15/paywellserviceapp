@@ -145,6 +145,18 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
                 return true;
             }
         });
+
+        refreshLanguage();
+    }
+
+    private void refreshLanguage() {
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            brilliantTopUpInquiry.setBackgroundResource(R.drawable.topup_in_en);
+            brilliantTrxLog.setBackgroundResource(R.drawable.transaction_log_en);
+        } else {
+            brilliantTopUpInquiry.setBackgroundResource(R.drawable.topup_in_bn);
+            brilliantTrxLog.setBackgroundResource(R.drawable.transaction_log_bn);
+        }
     }
 
     private void showLimitPrompt(final Intent intent) {

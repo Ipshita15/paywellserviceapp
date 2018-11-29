@@ -116,6 +116,11 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
     private TextView tvResult;
     private String operator;
 
+    private ImageView imageViewOffer;
+    private ImageView imageViewAdd;
+    private ImageView imageViewInq;
+    private ImageView imageViewTrxLog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,7 +152,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
         assert buttonSubmit != null;
         buttonSubmit.setOnClickListener(this);
 
-        ImageView imageViewAdd = findViewById(R.id.imageAdd);
+        imageViewAdd = findViewById(R.id.imageAdd);
         imageViewAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,13 +167,13 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
                 }
             }
         });
-        ImageView imageViewTrxLog = findViewById(R.id.transLogBtn);
+        imageViewTrxLog = findViewById(R.id.transLogBtn);
         imageViewTrxLog.setOnClickListener(this);
 
-        ImageView imageViewInq = findViewById(R.id.enquiryBtn);
+        imageViewInq = findViewById(R.id.enquiryBtn);
         imageViewInq.setOnClickListener(this);
 
-        ImageView imageViewOffer = findViewById(R.id.imageOffer);
+        imageViewOffer = findViewById(R.id.imageOffer);
         imageViewOffer.setOnClickListener(this);
 
         inflater = getLayoutInflater();
@@ -181,8 +186,16 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             ((Button) findViewById(R.id.btnSubmit)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            imageViewOffer.setBackgroundResource(R.drawable.bundle_en);
+            imageViewAdd.setBackgroundResource(R.drawable.add_en);
+            imageViewInq.setBackgroundResource(R.drawable.topup_in_en);
+            imageViewTrxLog.setBackgroundResource(R.drawable.transaction_log_en);
         } else {
             ((Button) findViewById(R.id.btnSubmit)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            imageViewOffer.setBackgroundResource(R.drawable.bundle_bn);
+            imageViewAdd.setBackgroundResource(R.drawable.add_bn);
+            imageViewInq.setBackgroundResource(R.drawable.topup_in_bn);
+            imageViewTrxLog.setBackgroundResource(R.drawable.transaction_log_bn);
         }
 
     }
