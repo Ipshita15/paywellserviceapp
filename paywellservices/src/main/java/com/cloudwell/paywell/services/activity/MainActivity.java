@@ -172,7 +172,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     // all async
     private AsyncTask<String, Intent, String> mNotificationAsync;
-    private PayWellBalanceAsync pwBalanceCheck;
+//    private PayWellBalanceAsync pwBalanceCheck;
     private AsyncTask<String, Integer, String> mRequestPhnNumberAddAsync;
     private AsyncTask<String, Integer, String> mConfirmPhnNumberAddAsync;
     private AsyncTask<String, Intent, String> mPushFirebaseIdTask;
