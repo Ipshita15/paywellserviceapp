@@ -6,6 +6,7 @@ import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
@@ -24,11 +25,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -37,6 +40,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -67,6 +71,7 @@ import com.cloudwell.paywell.services.activity.statements.StatementMainActivity;
 import com.cloudwell.paywell.services.activity.terms.TermsActivity;
 import com.cloudwell.paywell.services.activity.topup.TopupMainActivity;
 import com.cloudwell.paywell.services.activity.topup.TopupMenuActivity;
+import com.cloudwell.paywell.services.activity.topup.brilliant.model.APIBrilliantTRXLog;
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.adapter.MainSliderAdapter;
 import com.cloudwell.paywell.services.adapter.PicassoImageLoadingService;
@@ -75,6 +80,10 @@ import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.endpoints.SmsListener;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.UpdateChecker;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.credentials.HintRequest;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.Api;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
@@ -103,15 +112,20 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 import ss.com.bannerslider.Slider;
 import ss.com.bannerslider.event.OnSlideClickListener;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+
+import static com.cloudwell.paywell.services.app.AppController.getContext;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener {
 
@@ -152,7 +166,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private static final int PERMISSIONS_FOR_QR_CODE_SCAN = 100;
     private static final int PERMISSIONS_REQUEST_FOR_WRITE_EXTERNAL_STORAGE = 101;
-    private static final int PERMISSIONS_REQUEST_FOR_READ_OTP = 102;
+//    private static final int PERMISSIONS_REQUEST_FOR_READ_OTP = 102;
     private static final int PERMISSIONS_REQUEST_ACCESS_LOCATION = 103;
     private static final int PERMISSIONS_REQUEST_ACCESS_CALL = 104;
     final static int REQUEST_LOCATION = 1000;
@@ -182,7 +196,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mToolbarHeading = (mToolbar.findViewById(R.id.txtHeading));
         mCoordinateLayout = findViewById(R.id.coordinateLayout);
 
-        mCd = new ConnectionDetector(AppController.getContext());
+        mCd = new ConnectionDetector(getContext());
         mAppHandler = new AppHandler(this);
 
         builderNotification = new AlertDialog.Builder(this);
@@ -285,13 +299,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         //////Before
         if (mAppHandler.getPhnNumberVerificationStatus().equalsIgnoreCase("false") || mAppHandler.getMerchantTypeVerificationStatus().equalsIgnoreCase("false")) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
-                // permission has not been granted.
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS}, PERMISSIONS_REQUEST_FOR_READ_OTP);
-            } else {
+//            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED
+//                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
+//                // permission has not been granted.
+//                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS}, PERMISSIONS_REQUEST_FOR_READ_OTP);
+//            } else {
                 checkPhnNoUpdate();
-            }
+//            }
         }
 //      Handle possible data accompanying notification message.
         if (getIntent().getExtras() != null) {
@@ -927,24 +941,24 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
                 break;
             }
-            case PERMISSIONS_REQUEST_FOR_READ_OTP: {
-                // Check if the only required permission has been granted
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Phone permission has been granted
-                    if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                        checkPhnNoUpdate();
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                } else {
-                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS}, PERMISSIONS_REQUEST_FOR_READ_OTP);
-                }
-                break;
-            }
+//            case PERMISSIONS_REQUEST_FOR_READ_OTP: {
+//                // Check if the only required permission has been granted
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    // Phone permission has been granted
+//                    if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
+//                        checkPhnNoUpdate();
+//                    } else {
+//                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
+//                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+//                        View snackBarView = snackbar.getView();
+//                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+//                        snackbar.show();
+//                    }
+//                } else {
+//                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS}, PERMISSIONS_REQUEST_FOR_READ_OTP);
+//                }
+//                break;
+//            }
             case PERMISSIONS_REQUEST_ACCESS_LOCATION: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was grantedTask
@@ -1503,13 +1517,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             builder.setView(layout);
 
-            SmsReceiver.bindListener(new SmsListener() {
-                @Override
-                public void messageReceived(String messageText) {
-                    etOtp.setText(messageText);
-                    etOtp.setSelection(etOtp.getText().length());
-                }
-            });
+//            SmsReceiver.bindListener(new SmsListener() {
+//                @Override
+//                public void messageReceived(String messageText) {
+//                    etOtp.setText(messageText);
+//                    etOtp.setSelection(etOtp.getText().length());
+//                }
+//            });
 
             builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
                 @Override

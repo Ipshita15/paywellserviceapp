@@ -128,10 +128,10 @@ public class AppLoadingActivity extends AppCompatActivity {
                 Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int accessFineLocationPermission = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
-        int readSmsPermission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_SMS);
-        int receiveSmsPermission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.RECEIVE_SMS);
+//        int readSmsPermission = ContextCompat.checkSelfPermission(this,
+//                Manifest.permission.READ_SMS);
+//        int receiveSmsPermission = ContextCompat.checkSelfPermission(this,
+//                Manifest.permission.RECEIVE_SMS);
         int cameraPermission = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA);
         int callPhnPermission = ContextCompat.checkSelfPermission(this,
@@ -152,12 +152,12 @@ public class AppLoadingActivity extends AppCompatActivity {
         if (accessFineLocationPermission != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION);
         }
-        if (readSmsPermission != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.READ_SMS);
-        }
-        if (receiveSmsPermission != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.RECEIVE_SMS);
-        }
+//        if (readSmsPermission != PackageManager.PERMISSION_GRANTED) {
+//            listPermissionsNeeded.add(Manifest.permission.READ_SMS);
+//        }
+//        if (receiveSmsPermission != PackageManager.PERMISSION_GRANTED) {
+//            listPermissionsNeeded.add(Manifest.permission.RECEIVE_SMS);
+//        }
         if (cameraPermission != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.CAMERA);
         }
@@ -276,6 +276,7 @@ public class AppLoadingActivity extends AppCompatActivity {
                         String displayPictureCount = jsonObject.getString("displayPictureCount");
                         mAppHandler.setDisplayPictureCount(Integer.parseInt(displayPictureCount));
 
+                        mAppHandler.displayPictureArray = new String[Integer.parseInt(displayPictureCount)];
                         JSONArray pictureArrayJson = jsonObject.getJSONArray("imageLink");
                         for(int i = 0; i < pictureArrayJson.length(); i++) {
                             String disImglink =  pictureArrayJson.getString(i);
