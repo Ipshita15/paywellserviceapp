@@ -119,29 +119,29 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private CoordinatorLayout mCoordinateLayout;
     private AppHandler mAppHandler;
     private UpdateChecker mUpdateChecker;
-    public final long UPDATE_SOFTWARE_INTERVAL = 24 * 60 * 60;// 1 day
-    public final long PHN_NUM_CHECK_INTERVAL = 24 * 60 * 60;// 1 day
-    public final long UPDATE_LOCATION_INTERVAL = 7 * 24 * 60 * 60;// 7 day
+    public static final long UPDATE_SOFTWARE_INTERVAL = 24 * 60 * 60;// 1 day
+    public static final long PHN_NUM_CHECK_INTERVAL = 24 * 60 * 60;// 1 day
+    public static final long UPDATE_LOCATION_INTERVAL = 7 * 24 * 60 * 60;// 7 day
     private TextView mToolbarHeading;
     private ConnectionDetector mCd;
-    public int mNumOfNotification;
+    public static int mNumOfNotification;
     private TextView mNotification = null;
     private Toolbar mToolbar;
     private boolean mIsNotificationShown;
-    private final String TAG_RESPONSE_STATUS = "status";
-    private final String TAG_RESPONSE_TOTAL_UREAD_MSG = "unread_message";
-    private final String TAG_RESPONSE_MSG_SUBJECT = "message_sub";
-    private final String TAG_RESPONSE_MSG_ID = "message_id";
-    private final String TAG_RESPONSE_MSG_ARRAY = "detail_message";
-    private final String TAG_RESPONSE_MESSAGE = "message";
-    private final String TAG_RESPONSE_DATE = "added_datetime";
-    private final String TAG_RESPONSE_IMAGE = "image_url";
-    private final String TAG_RESPONSE_TYPE = "type";
-    private final String TAG_RESPONSE_NOTIFICATION_BALANCE_RETURN_DATA = "balance_return_data";
-    private final String TAG_RESPONSE_OTP = "otp";
+    private static final String TAG_RESPONSE_STATUS = "status";
+    private static final String TAG_RESPONSE_TOTAL_UREAD_MSG = "unread_message";
+    private static final String TAG_RESPONSE_MSG_SUBJECT = "message_sub";
+    private static final String TAG_RESPONSE_MSG_ID = "message_id";
+    private static final String TAG_RESPONSE_MSG_ARRAY = "detail_message";
+    private static final String TAG_RESPONSE_MESSAGE = "message";
+    private static final String TAG_RESPONSE_DATE = "added_datetime";
+    private static final String TAG_RESPONSE_IMAGE = "image_url";
+    private static final String TAG_RESPONSE_TYPE = "type";
+    private static final String TAG_RESPONSE_NOTIFICATION_BALANCE_RETURN_DATA = "balance_return_data";
+    private static final String TAG_RESPONSE_OTP = "otp";
     private NavigationView navigationView;
     boolean checkNotificationFlag = false;
-
+    private PayWellBalanceAsync pwBalanceCheck;
     AlertDialog.Builder builderNotification;
     private AlertDialog alertNotification;
     private Slider viewPager;
@@ -150,12 +150,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private Button home_topup, home_utility, home_payments, home_eticket, home_mfs, home_product_catalog, home_statement, home_refill_balance, home_settings;
 
-    private final int PERMISSIONS_FOR_QR_CODE_SCAN = 100;
-    private final int PERMISSIONS_REQUEST_FOR_WRITE_EXTERNAL_STORAGE = 101;
-    private final int PERMISSIONS_REQUEST_FOR_READ_OTP = 102;
-    private final int PERMISSIONS_REQUEST_ACCESS_LOCATION = 103;
-    private final int PERMISSIONS_REQUEST_ACCESS_CALL = 104;
-    final int REQUEST_LOCATION = 1000;
+    private static final int PERMISSIONS_FOR_QR_CODE_SCAN = 100;
+    private static final int PERMISSIONS_REQUEST_FOR_WRITE_EXTERNAL_STORAGE = 101;
+    private static final int PERMISSIONS_REQUEST_FOR_READ_OTP = 102;
+    private static final int PERMISSIONS_REQUEST_ACCESS_LOCATION = 103;
+    private static final int PERMISSIONS_REQUEST_ACCESS_CALL = 104;
+    final static int REQUEST_LOCATION = 1000;
 
     private String phn_num;
     private int phn_num_count;
@@ -172,7 +172,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     // all async
     private AsyncTask<String, Intent, String> mNotificationAsync;
-    private PayWellBalanceAsync pwBalanceCheck;
+//    private PayWellBalanceAsync pwBalanceCheck;
     private AsyncTask<String, Integer, String> mRequestPhnNumberAddAsync;
     private AsyncTask<String, Integer, String> mConfirmPhnNumberAddAsync;
     private AsyncTask<String, Intent, String> mPushFirebaseIdTask;
@@ -293,20 +293,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         //////Before
         if (mAppHandler.getPhnNumberVerificationStatus().equalsIgnoreCase("false") || mAppHandler.getMerchantTypeVerificationStatus().equalsIgnoreCase("false")) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
-                // permission has not been granted.
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS}, PERMISSIONS_REQUEST_FOR_READ_OTP);
-            } else {
+//            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED
+//                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
+//                // permission has not been granted.
+//                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS}, PERMISSIONS_REQUEST_FOR_READ_OTP);
+//            } else {
                 checkPhnNoUpdate();
-            }
+            //}
         }
 //      Handle possible data accompanying notification message.
         if (getIntent().getExtras() != null) {
             for (String key : getIntent().getExtras().keySet()) {
                 String value = getIntent().getExtras().getString(key);
                 if (key.equals("Notification") && value.equals("True")) {
-                    mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
+                    new NotificationAsync().execute(getResources().getString(R.string.notif_url));
                 }
             }
         }
@@ -423,7 +423,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (!mIsNotificationShown) {
             if (!mCd.isConnectingToInternet())
                 AppHandler.showDialog(getSupportFragmentManager());
-            mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
+            new NotificationAsync().execute(getResources().getString(R.string.notif_url));
         }
         notificationView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -707,7 +707,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void checkPayWellBalance() {
         pwBalanceCheck = new PayWellBalanceAsync();
-        pwBalanceCheck.execute(getResources().getString(R.string.pw_bal));
+        pwBalanceCheck.execute(
+                getResources().getString(R.string.pw_bal));
     }
 
     @SuppressWarnings("deprecation")
@@ -774,7 +775,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                                         public void onClick(DialogInterface dialogInterface, int id) {
                                             dialogInterface.dismiss();
                                             checkNotificationFlag = true;
-                                            mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
+                                            new NotificationAsync().execute(getResources().getString(R.string.notif_url));
                                         }
                                     });
                                     alertNotification = builderNotification.create();
@@ -934,24 +935,24 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
                 break;
             }
-            case PERMISSIONS_REQUEST_FOR_READ_OTP: {
-                // Check if the only required permission has been granted
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Phone permission has been granted
-                    if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                        checkPhnNoUpdate();
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                } else {
-                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS}, PERMISSIONS_REQUEST_FOR_READ_OTP);
-                }
-                break;
-            }
+//            case PERMISSIONS_REQUEST_FOR_READ_OTP: {
+//                // Check if the only required permission has been granted
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    // Phone permission has been granted
+//                    if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
+//                        checkPhnNoUpdate();
+//                    } else {
+//                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
+//                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+//                        View snackBarView = snackbar.getView();
+//                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+//                        snackbar.show();
+//                    }
+//                } else {
+//                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS}, PERMISSIONS_REQUEST_FOR_READ_OTP);
+//                }
+//                break;
+//            }
             case PERMISSIONS_REQUEST_ACCESS_LOCATION: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was grantedTask
@@ -1324,7 +1325,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         checkPayWellBalance();
 
         viewPager.setInterval(2000);
-
     }
 
     private boolean getMailAddress() {
@@ -1389,7 +1389,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     dialogInterface.dismiss();
                     phn_num = etPhn.getText().toString();
                     if (mCd.isConnectingToInternet()) {
-                        mRequestPhnNumberAddAsync = new RequestPhnNumberAddAsync().execute(getResources().getString(R.string.otp_for_phn_num), phn_num);
+                        new RequestPhnNumberAddAsync().execute(getResources().getString(R.string.otp_for_phn_num), phn_num);
                     } else {
                         Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
                         snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -1429,7 +1429,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         @Override
         protected void onPreExecute() {
-            showProgressDialog();
+           showProgressDialog();
         }
 
         @SuppressWarnings("deprecation")
@@ -1511,13 +1511,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             builder.setView(layout);
 
-            SmsReceiver.bindListener(new SmsListener() {
-                @Override
-                public void messageReceived(String messageText) {
-                    etOtp.setText(messageText);
-                    etOtp.setSelection(etOtp.getText().length());
-                }
-            });
+//            SmsReceiver.bindListener(new SmsListener() {
+//                @Override
+//                public void messageReceived(String messageText) {
+//                    etOtp.setText(messageText);
+//                    etOtp.setSelection(etOtp.getText().length());
+//                }
+//            });
 
             builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
                 @Override
@@ -1529,7 +1529,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         dialogInterface.dismiss();
                         String inputedOtp = etOtp.getText().toString();
                         if (inputedOtp.equalsIgnoreCase(otp)) {
-                            mConfirmPhnNumberAddAsync = new ConfirmPhnNumberAddAsync().execute(getResources().getString(R.string.conf_phn_num), phn_num, otp);
+                            new ConfirmPhnNumberAddAsync().execute(getResources().getString(R.string.conf_phn_num), phn_num, otp);
                         } else {
                             Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_correct_msg, Snackbar.LENGTH_LONG);
                             snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -1565,7 +1565,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         @Override
         protected void onPreExecute() {
-            showProgressDialog();
+           showProgressDialog();
         }
 
         @SuppressWarnings("deprecation")
@@ -1597,7 +1597,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         @Override
         protected void onPostExecute(String result) {
-            dismissProgressDialog();
+           dismissProgressDialog();
 
             try {
                 JSONObject jsonObject = new JSONObject(result);
@@ -1635,7 +1635,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void subscribeToPushService() {
         if (mAppHandler.getFirebaseTokenStatus().equals("true")) {
             if (mCd.isConnectingToInternet()) {
-                mPushFirebaseIdTask = new PushFirebaseIdTask().execute(getString(R.string.notification_token_url), mAppHandler.getFirebaseId());
+                new PushFirebaseIdTask().execute(getString(R.string.notification_token_url), mAppHandler.getFirebaseId());
             } else {
                 Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -1648,6 +1648,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
     private class PushFirebaseIdTask extends AsyncTask<String, Intent, String> {
+
+
         @Override
         protected void onPreExecute() {
             showProgressDialog();
@@ -1934,7 +1936,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     }
                 } catch (Exception e) {
 
-                }
+              }
 
             }
         });

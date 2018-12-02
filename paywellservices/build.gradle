@@ -136,10 +136,6 @@ dependencies {
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.2'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.2'
 
-
-
-
-
 }
 // Add to the bottom of the file
 apply plugin: 'com.google.gms.google-services'
