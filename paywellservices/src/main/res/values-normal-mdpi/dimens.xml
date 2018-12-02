@@ -2,7 +2,6 @@
 <resources>
 
     <dimen name="radioButtonPadding">-4dp</dimen>
-    <dimen name="radioButtonMarginVertical">-10dp</dimen>
     <dimen name="menuTextSize">23sp</dimen>
 
 </resources>

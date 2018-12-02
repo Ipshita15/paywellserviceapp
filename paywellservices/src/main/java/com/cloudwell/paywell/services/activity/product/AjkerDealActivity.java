@@ -48,6 +48,9 @@ public class AjkerDealActivity extends AppCompatActivity {
     final long period = 300000;
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
+    private AsyncTask<String, Integer, String> mRefreshTokenAsync;
+    Timer timer;
+    TimerTask timerTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,13 +65,17 @@ public class AjkerDealActivity extends AppCompatActivity {
         mAppHandler = new AppHandler(this);
         mCd = new ConnectionDetector(AppController.getContext());
 
-        new Timer().schedule(new TimerTask() {
+        timer = new Timer();
+
+        timerTask = new TimerTask() {
             @Override
             public void run() {
                 // do your task here
-                new RefreshTokenAsync().execute(getString(R.string.ajd_refresh_token));
+                mRefreshTokenAsync =  new RefreshTokenAsync().execute(getString(R.string.ajd_refresh_token));
             }
-        }, 0, period);
+        };
+
+        timer.schedule(timerTask,0, period);
 
         //Sharing
         ActionBar actionBar = getSupportActionBar();
@@ -194,9 +201,6 @@ public class AjkerDealActivity extends AppCompatActivity {
                 getResources().updateConfiguration(config, getResources().getDisplayMetrics());
             }
             invalidateOptionsMenu();
-            Intent intent = new Intent(AjkerDealActivity.this, ProductMenuActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
             finish();
         }
     }
@@ -234,13 +238,13 @@ public class AjkerDealActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        new RefreshTokenAsync().execute(getString(R.string.ajd_refresh_token));
+        mRefreshTokenAsync =  new RefreshTokenAsync().execute(getString(R.string.ajd_refresh_token));
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        new RefreshTokenAsync().execute(getString(R.string.ajd_refresh_token));
+
     }
 
     private void connectionError() {
@@ -260,5 +264,27 @@ public class AjkerDealActivity extends AppCompatActivity {
                 });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mRefreshTokenAsync != null){
+            mRefreshTokenAsync.cancel(true);
+        }
+
+        if (timer!=null){
+            timer.cancel();
+        }
+
+        if (timerTask !=null){
+            timerTask.cancel();
+        }
+
     }
 }

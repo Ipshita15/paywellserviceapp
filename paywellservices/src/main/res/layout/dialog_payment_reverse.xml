@@ -23,7 +23,7 @@
                 android:id="@+id/profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_bkash_b"
+                android:background="@drawable/bkash"
                 android:gravity="top|start" />
 
         </LinearLayout>
@@ -70,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:background="@drawable/ic_paywell_pw" />
+                android:background="@drawable/paywell"/>
 
         </LinearLayout>
     </LinearLayout>

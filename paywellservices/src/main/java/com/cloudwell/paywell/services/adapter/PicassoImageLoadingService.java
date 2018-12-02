@@ -33,7 +33,6 @@ public class PicassoImageLoadingService implements ImageLoadingService {
             Picasso.get()
                     .load(url)
                     .fit()
-                    .centerCrop()
                     .memoryPolicy(MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE)
                     .into(imageView);
@@ -41,7 +40,6 @@ public class PicassoImageLoadingService implements ImageLoadingService {
             Picasso.get()
                     .load(url)
                     .fit()
-                    .centerCrop()
                     .into(imageView);
         }
 

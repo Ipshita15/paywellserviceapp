@@ -4,12 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/brilliantLL"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.topup.brilliant.BrilliantTopupActivity"
     android:background="@color/bg_color"
     android:orientation="vertical"
-    android:id="@+id/brilliantLL">
+    tools:context=".activity.topup.brilliant.BrilliantTopupActivity">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -52,20 +52,20 @@
                         android:layout_height="50dp"
                         android:layout_weight="2.7"
                         android:digits="0123456789"
+                        android:drawableRight="@drawable/ic_phone_book"
                         android:hint="@string/phone_no_msg"
                         android:imeOptions="actionNext"
                         android:inputType="phone"
                         android:maxLength="15"
-                        android:drawableRight="@drawable/ic_phone_book"
                         android:textColor="@color/blackShade"
-                        android:textColorHint="@color/blackShade_trans70" />
+                        android:textColorHint="@color/blackShade_trans70"/>
 
                     <EditText
                         android:id="@+id/brilliantAmount"
                         android:layout_width="100dp"
                         android:layout_height="50dp"
-                        android:layout_marginLeft="10dp"
                         android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_weight="1"
                         android:digits="0123456789"
                         android:hint="@string/amount_msg"
@@ -73,7 +73,7 @@
                         android:maxLength="5"
                         android:singleLine="true"
                         android:textColor="@color/blackShade"
-                        android:textColorHint="@color/blackShade_trans70" />
+                        android:textColorHint="@color/blackShade_trans70"/>
 
                 </LinearLayout>
 
@@ -97,45 +97,45 @@
                         android:text="@string/confirm_btn"
                         android:textAllCaps="false"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@color/colorText" />
+                        android:textColor="@color/colorText"/>
 
                 </LinearLayout>
             </LinearLayout>
         </FrameLayout>
 
     </android.support.v7.widget.CardView>
-    <LinearLayout
+
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/button_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:paddingTop="10dp"
         android:layout_marginBottom="10dp"
-        android:weightSum="3">
+        >
 
         <ImageView
             android:id="@+id/brilliantInquiryBtn"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1.2"
-            android:paddingLeft="10dp"
-            android:paddingStart="10dp"
-            android:src="@drawable/ic_topup_inquiry" />
-
-        <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.6"></LinearLayout>
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+
+            app:layout_constraintBottom_toBottomOf="@+id/brilliantTransLogBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/brilliantTransLogBtn"
+            tools:src="@drawable/transaction_log_en"
+            />
 
         <ImageView
             android:id="@+id/brilliantTransLogBtn"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1.2"
-            android:paddingRight="10dp"
-            android:paddingEnd="10dp"
-            android:src="@drawable/ic_trx_log" />
-    </LinearLayout>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/transaction_log_bn"/>
+    </android.support.constraint.ConstraintLayout>
 
 </RelativeLayout>
 

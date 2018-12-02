@@ -6,7 +6,6 @@ import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
@@ -25,13 +24,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -40,7 +37,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -71,7 +67,6 @@ import com.cloudwell.paywell.services.activity.statements.StatementMainActivity;
 import com.cloudwell.paywell.services.activity.terms.TermsActivity;
 import com.cloudwell.paywell.services.activity.topup.TopupMainActivity;
 import com.cloudwell.paywell.services.activity.topup.TopupMenuActivity;
-import com.cloudwell.paywell.services.activity.topup.brilliant.model.APIBrilliantTRXLog;
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.adapter.MainSliderAdapter;
 import com.cloudwell.paywell.services.adapter.PicassoImageLoadingService;
@@ -80,10 +75,6 @@ import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.endpoints.SmsListener;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.UpdateChecker;
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.credentials.HintRequest;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.Api;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
@@ -112,20 +103,15 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileDescriptor;
 import java.io.FileOutputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 import ss.com.bannerslider.Slider;
 import ss.com.bannerslider.event.OnSlideClickListener;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
-
-import static com.cloudwell.paywell.services.app.AppController.getContext;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener {
 
@@ -166,7 +152,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private static final int PERMISSIONS_FOR_QR_CODE_SCAN = 100;
     private static final int PERMISSIONS_REQUEST_FOR_WRITE_EXTERNAL_STORAGE = 101;
-//    private static final int PERMISSIONS_REQUEST_FOR_READ_OTP = 102;
+    private static final int PERMISSIONS_REQUEST_FOR_READ_OTP = 102;
     private static final int PERMISSIONS_REQUEST_ACCESS_LOCATION = 103;
     private static final int PERMISSIONS_REQUEST_ACCESS_CALL = 104;
     final static int REQUEST_LOCATION = 1000;
@@ -183,6 +169,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private int downloadType = 0;
     private int TAG_DOWNLOAD_PLAY_STORE = 1;
 
+
+    // all async
+    private AsyncTask<String, Intent, String> mNotificationAsync;
+    private PayWellBalanceAsync pwBalanceCheck;
+    private AsyncTask<String, Integer, String> mRequestPhnNumberAddAsync;
+    private AsyncTask<String, Integer, String> mConfirmPhnNumberAddAsync;
+    private AsyncTask<String, Intent, String> mPushFirebaseIdTask;
+
     @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -196,7 +190,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mToolbarHeading = (mToolbar.findViewById(R.id.txtHeading));
         mCoordinateLayout = findViewById(R.id.coordinateLayout);
 
-        mCd = new ConnectionDetector(getContext());
+        mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
 
         builderNotification = new AlertDialog.Builder(this);
@@ -305,7 +299,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS}, PERMISSIONS_REQUEST_FOR_READ_OTP);
 //            } else {
                 checkPhnNoUpdate();
-//            }
+            //}
         }
 //      Handle possible data accompanying notification message.
         if (getIntent().getExtras() != null) {
@@ -1465,7 +1459,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         @Override
         protected void onPostExecute(String result) {
-           dismissProgressDialog();
+            dismissProgressDialog();
             try {
                 JSONObject jsonObject = new JSONObject(result);
 
@@ -1913,34 +1907,34 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onSlideClick(int position) {
 
-              try {
-                  currentPage = position;
+                try {
+                    currentPage = position;
 
-                  String link = mAppHandler.getDisplayPictureArrayList().get(currentPage);
+                    String link = mAppHandler.getDisplayPictureArrayList().get(currentPage);
 
 
-                  if (link.isEmpty()) {
+                    if (link.isEmpty()) {
 
-                  } else if (link.contains("facebook.com")) {
-                      if (!mCd.isConnectingToInternet()) {
-                          AppHandler.showDialog(getSupportFragmentManager());
-                      } else {
-                          goToFacebook();
-                      }
-                  } else if (link.contains("youtube.com")) {
-                      if (!mCd.isConnectingToInternet()) {
-                          AppHandler.showDialog(getSupportFragmentManager());
-                      } else {
-                          Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=mRg-yT20Iyc"));
-                          intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                          intent.setPackage("com.google.android.youtube");
-                          startActivity(intent);
-                      }
-                  } else {
-                      WebViewActivity.TAG_LINK = link;
-                      startActivity(new Intent(MainActivity.this, WebViewActivity.class));
-                  }
-              }catch (Exception e){
+                    } else if (link.contains("facebook.com")) {
+                        if (!mCd.isConnectingToInternet()) {
+                            AppHandler.showDialog(getSupportFragmentManager());
+                        } else {
+                            goToFacebook();
+                        }
+                    } else if (link.contains("youtube.com")) {
+                        if (!mCd.isConnectingToInternet()) {
+                            AppHandler.showDialog(getSupportFragmentManager());
+                        } else {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=mRg-yT20Iyc"));
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.setPackage("com.google.android.youtube");
+                            startActivity(intent);
+                        }
+                    } else {
+                        WebViewActivity.TAG_LINK = link;
+                        startActivity(new Intent(MainActivity.this, WebViewActivity.class));
+                    }
+                } catch (Exception e) {
 
               }
 
@@ -2030,5 +2024,38 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 .setDelay(500) // optional but starting animations immediately in onCreate can make them choppy
                 .singleUse(SHOWCASE_ID_TOPUP) // provide a unique ID used to ensure it is only shown once
                 .show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mNotificationAsync != null) {
+            mNotificationAsync.cancel(true);
+        }
+
+        if (pwBalanceCheck != null) {
+            pwBalanceCheck.cancel(true);
+        }
+
+        if (mRequestPhnNumberAddAsync != null) {
+            mRequestPhnNumberAddAsync.cancel(true);
+        }
+
+        if (mConfirmPhnNumberAddAsync != null) {
+            mConfirmPhnNumberAddAsync.cancel(true);
+        }
+
+        if (mPushFirebaseIdTask != null) {
+            mPushFirebaseIdTask.cancel(true);
+        }
+
+        if (viewPager != null) {
+            Slider.imageLoadingService = null;
+            viewPager = null;
+
+
+        }
+
+        super.onDestroy();
+
     }
 }
