@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.WebViewActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.payments.PaymentsMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
@@ -45,7 +46,8 @@ public class BKashMainActivity extends BaseActivity implements View.OnClickListe
     private EditText mPin;
     private Button mConfirm;
     private String _pin;
-
+    private String packageNameYoutube = "com.google.android.youtube";
+    private String linkBkashPayment = "https://www.youtube.com/watch?v=wOlYSchfWPo";
     private static final String TAG_RESPONSE_STATUS = "Status";
 
     @Override
@@ -237,10 +239,15 @@ public class BKashMainActivity extends BaseActivity implements View.OnClickListe
             this.onBackPressed();
             return true;
         } else if (item.getItemId() == R.id.action_video) {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=wOlYSchfWPo"));
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setPackage("com.google.android.youtube");
-            startActivity(intent);
+            if (isAppInstalled(packageNameYoutube)) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkBkashPayment));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setPackage(packageNameYoutube);
+                startActivity(intent);
+            } else {
+                WebViewActivity.TAG_LINK = linkBkashPayment;
+                startActivity(new Intent(BKashMainActivity.this, WebViewActivity.class));
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -250,6 +257,15 @@ public class BKashMainActivity extends BaseActivity implements View.OnClickListe
         Intent intent = new Intent(BKashMainActivity.this, PaymentsMainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    protected boolean isAppInstalled(String packageName) {
+        Intent mIntent = getPackageManager().getLaunchIntentForPackage(packageName);
+        if (mIntent != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 

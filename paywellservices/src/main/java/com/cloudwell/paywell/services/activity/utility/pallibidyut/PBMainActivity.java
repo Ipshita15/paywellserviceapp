@@ -16,6 +16,7 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.WebViewActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
@@ -42,7 +43,8 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
     private ConnectionDetector cd;
     private static AppHandler mAppHandler;
     private static String serviceName;
-
+    private String packageNameYoutube = "com.google.android.youtube";
+    private String linkPolliBillPay = "https://www.youtube.com/watch?v=SAuIFcUclvs&t=1s";
     private static String TAG_SERVICE_REGISTRATION_INQUIRY = "POLLI_REG";
     private static String TAG_SERVICE_BILL_INQUIRY = "POLLI_BILL";
 
@@ -97,10 +99,15 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
             this.onBackPressed();
             return true;
         } else if (item.getItemId() == R.id.action_video) {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=SAuIFcUclvs&t=1s"));
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setPackage("com.google.android.youtube");
-            startActivity(intent);
+            if (isAppInstalled(packageNameYoutube)) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkPolliBillPay));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setPackage(packageNameYoutube);
+                startActivity(intent);
+            } else {
+                WebViewActivity.TAG_LINK = linkPolliBillPay;
+                startActivity(new Intent(this, WebViewActivity.class));
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -295,6 +302,15 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
                 snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                 snackbar.show();
             }
+        }
+    }
+
+    protected boolean isAppInstalled(String packageName) {
+        Intent mIntent = getPackageManager().getLaunchIntentForPackage(packageName);
+        if (mIntent != null) {
+            return true;
+        } else {
+            return false;
         }
     }
 }
