@@ -5,15 +5,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.multidex.MultiDex;
-import android.util.Log;
 
 import com.cloudwell.paywell.services.BuildConfig;
 import com.cloudwell.paywell.services.utils.MyHttpClient;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
 import org.apache.http.client.HttpClient;
@@ -52,19 +48,19 @@ public class AppController extends Application {
         mContext = this;
         client = createTrustedHttpsClient();
 
-        if (BuildConfig.DEBUG) {
-            FirebaseApp.initializeApp(this);
-            String id = FirebaseInstanceId.getInstance().getToken();
-            Log.e("device_token", "" + id);
-
-
-            if (LeakCanary.isInAnalyzerProcess(this)) {
-                // This process is dedicated to LeakCanary for heap analysis.
-                // You should not init your app in this process.
-                return;
-            }
-            refWatcher=LeakCanary.install(this);
-        }
+//        if (BuildConfig.DEBUG) {
+//            FirebaseApp.initializeApp(this);
+//            String id = FirebaseInstanceId.getInstance().getToken();
+//            Log.e("device_token", "" + id);
+//
+//
+//            if (LeakCanary.isInAnalyzerProcess(this)) {
+//                // This process is dedicated to LeakCanary for heap analysis.
+//                // You should not init your app in this process.
+//                return;
+//            }
+//            refWatcher=LeakCanary.install(this);
+//        }
 
         configureCrashReporting();
 

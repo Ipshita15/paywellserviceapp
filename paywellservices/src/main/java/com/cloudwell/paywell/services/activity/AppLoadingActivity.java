@@ -214,7 +214,7 @@ public class AppLoadingActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_PHONE_STATE);
     }
 
-    private float getVersionName() {
+    private String getVersionName() {
         String _versionName = null;
         try {
             _versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
@@ -224,7 +224,7 @@ public class AppLoadingActivity extends AppCompatActivity {
         } catch (NullPointerException e) {
             Log.e(TAG, "Context is null");
         }
-        return Float.parseFloat(_versionName); // Found the code!
+        return versionName; // Found the code!
     }
 
     @SuppressWarnings("deprecation")

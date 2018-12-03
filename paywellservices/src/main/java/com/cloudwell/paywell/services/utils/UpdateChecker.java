@@ -59,45 +59,28 @@ public class UpdateChecker {
         }
     }
 
-    // Modified Part
 
-    /**
-     * Checks for app update by version name.
-     * <p>
-     * Example call: updateChecker.checkForUpdateByVersionName(
-     * "http://www.example.com/version.txt");
-     *
-     * @param url URL at which the text file containing your latest version code
-     *            is located.
-     * @since API 1
-     */
-    @SuppressLint("LongLogTag")
     public void checkForUpdateByVersionName(String url) {
         if (isOnline()) {
             if (haveValidContext) {
-                float versionName = getVersionName();
-                float readName = 0;
-                if (versionName >= 0) {
-                    try {
-                        String fileValue = readFile(url);
-                        if (fileValue != null) {
-                            readName = Float.parseFloat(fileValue);
-                        } else {
-                            readName = versionName;
-                        }
-                        // Check if update is available.
-                        if (readName > versionName) {
-                            updateAvailable = true; // We have an update available
-                            latestVersionName = "" + readName;
-                        }
-                    } catch (NumberFormatException e) {
-                        Log.e(TAG, "Invalid number"); // Something wrong with the file content
-                    } catch (NullPointerException ex) {
-                        Log.e(TAG, "Invalid number"); // Something wrong with the file content
-                    }
-                } else {
+                String serverVersion = readFile(url);
+                String appVersion = getVersionString();
+
+
+                int i = VersionHelper.versionCompare(serverVersion, appVersion);
+                if (i == 1) {
+                    //The result is 1 if v1 is greater than v2.
+                    updateAvailable = true; // We have an update available
+                    latestVersionName = "" + serverVersion;
+                } else if (i == 2) {
+                    //The result is 2 if v2 is greater than v1.
+                } else if (i == -1) {
+                    //The result is -1 if the version format is unrecognized.
+                } else if (i == 0) {
+                    //The result is zero if the strings are equal.
                     Log.e(TAG, "Invalid version code in app"); // Invalid version code
                 }
+
             } else {
                 Log.e(TAG, "Context is null"); // Context was null
             }
@@ -118,6 +101,18 @@ public class UpdateChecker {
             Log.e(TAG, "Context is null");
         }
         return Float.parseFloat(versionName); // Found the code!
+    }
+
+    private String getVersionString() {
+        String versionName = null;
+        try {
+            versionName = mContext.getPackageManager().getPackageInfo(mContext.getPackageName(), 0).versionName;
+        } catch (NameNotFoundException e) {
+            Log.e(TAG, "Version Code not available"); // There was a problem with the code retrieval
+        } catch (NullPointerException e) {
+            Log.e(TAG, "Context is null");
+        }
+        return versionName; // Found the code!
     }
 
     public String getLatestVersionName() {
