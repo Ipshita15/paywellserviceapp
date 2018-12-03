@@ -16,6 +16,7 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.WebViewActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
@@ -42,6 +43,8 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
     private ConnectionDetector cd;
     private static AppHandler mAppHandler;
     private static int service_type;
+    private String packageNameYoutube = "com.google.android.youtube";
+    private String linkDpdcBillPay = "https://www.youtube.com/watch?v=EovJfDwrKSc&t=4s";
     private static int TAG_SERVICE_POSTPAID_INQUIRY = 1;
 
     @Override
@@ -96,10 +99,15 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
             this.onBackPressed();
             return true;
         } else if (item.getItemId() == R.id.action_video) {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=EovJfDwrKSc&t=4s"));
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setPackage("com.google.android.youtube");
-            startActivity(intent);
+            if (isAppInstalled(packageNameYoutube)) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkDpdcBillPay));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setPackage(packageNameYoutube);
+                startActivity(intent);
+            } else {
+                WebViewActivity.TAG_LINK = linkDpdcBillPay;
+                startActivity(new Intent(this, WebViewActivity.class));
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -271,6 +279,15 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
                 snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                 snackbar.show();
             }
+        }
+    }
+
+    protected boolean isAppInstalled(String packageName) {
+        Intent mIntent = getPackageManager().getLaunchIntentForPackage(packageName);
+        if (mIntent != null) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

@@ -1925,10 +1925,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         if (!mCd.isConnectingToInternet()) {
                             AppHandler.showDialog(getSupportFragmentManager());
                         } else {
-                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=mRg-yT20Iyc"));
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.setPackage("com.google.android.youtube");
-                            startActivity(intent);
+                            Intent mIntent = getPackageManager().getLaunchIntentForPackage("com.google.android.youtube");
+                            if (mIntent != null) {
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.setPackage("com.google.android.youtube");
+                                startActivity(intent);
+                            } else {
+                                WebViewActivity.TAG_LINK = link;
+                                startActivity(new Intent(MainActivity.this, WebViewActivity.class));
+                            }
                         }
                     } else {
                         WebViewActivity.TAG_LINK = link;
@@ -2051,11 +2057,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (viewPager != null) {
             Slider.imageLoadingService = null;
             viewPager = null;
-
-
         }
-
         super.onDestroy();
-
     }
 }
