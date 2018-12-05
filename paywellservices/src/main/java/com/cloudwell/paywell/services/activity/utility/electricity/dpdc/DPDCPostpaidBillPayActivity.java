@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.utility.electricity.dpdc;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,8 +17,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -34,13 +34,12 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DPDCPostpaidBillPayActivity extends AppCompatActivity implements View.OnClickListener {
+public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.OnClickListener {
 
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
@@ -75,10 +74,17 @@ public class DPDCPostpaidBillPayActivity extends AppCompatActivity implements Vi
 
     private void initializeView() {
         mLinearLayout = findViewById(R.id.utilityLinearLayout);
+
+        TextView _mPin = findViewById(R.id.tvDpdcPin);
+        TextView _mBill = findViewById(R.id.tvDpdcBill);
+        TextView _mPhn = findViewById(R.id.tvDpdcPhn);
+        TextView _mLocation = findViewById(R.id.tvDpdcLocation);
+
+        etPin = findViewById(R.id.pin_no);
         etBill = findViewById(R.id.mycash_bill);
         etPhn = findViewById(R.id.mycash_phn);
         etLocation = findViewById(R.id.mycash_location);
-        etPin = findViewById(R.id.pin_no);
+
         ivInfoBill = findViewById(R.id.imageView_infoBill);
         ivInfoLocation = findViewById(R.id.imageView_infoLocation);
         btnConfirm = findViewById(R.id.mycash_confirm);
@@ -86,6 +92,27 @@ public class DPDCPostpaidBillPayActivity extends AppCompatActivity implements Vi
         spnr_month = findViewById(R.id.monthSpinner);
         spnr_year = findViewById(R.id.yearSpinner);
 
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            _mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            etPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _mBill.setTypeface(AppController.getInstance().getOxygenLightFont());
+            etBill.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _mPhn.setTypeface(AppController.getInstance().getOxygenLightFont());
+            etPhn.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _mLocation.setTypeface(AppController.getInstance().getOxygenLightFont());
+            etLocation.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            _mPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            etPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _mBill.setTypeface(AppController.getInstance().getAponaLohitFont());
+            etBill.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _mPhn.setTypeface(AppController.getInstance().getAponaLohitFont());
+            etPhn.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _mLocation.setTypeface(AppController.getInstance().getAponaLohitFont());
+            etLocation.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnConfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> month_adapter = ArrayAdapter.createFromResource(this,
                 R.array.month_array, android.R.layout.simple_spinner_item);
@@ -211,13 +238,11 @@ public class DPDCPostpaidBillPayActivity extends AppCompatActivity implements Vi
     }
 
     private class SubmitInquiryAsync extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(DPDCPostpaidBillPayActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @SuppressWarnings("deprecation")
@@ -255,7 +280,7 @@ public class DPDCPostpaidBillPayActivity extends AppCompatActivity implements Vi
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
@@ -345,13 +370,11 @@ public class DPDCPostpaidBillPayActivity extends AppCompatActivity implements Vi
     }
 
     private class SubmitBillAsync extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(DPDCPostpaidBillPayActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @SuppressWarnings("deprecation")
@@ -392,7 +415,7 @@ public class DPDCPostpaidBillPayActivity extends AppCompatActivity implements Vi
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);

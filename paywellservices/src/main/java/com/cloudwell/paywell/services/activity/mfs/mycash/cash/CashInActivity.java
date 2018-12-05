@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.mfs.mycash.cash;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.CashInOutActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
@@ -36,7 +35,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CashInActivity extends AppCompatActivity implements View.OnClickListener {
+public class CashInActivity extends BaseActivity implements View.OnClickListener {
 
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
@@ -71,13 +70,23 @@ public class CashInActivity extends AppCompatActivity implements View.OnClickLis
         etOTP = findViewById(R.id.mycash_otp);
         btnConfirm = findViewById(R.id.mycash_confirm);
 
-        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashAccount)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashAmount)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashOTP)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        etAccount.setTypeface(AppController.getInstance().getOxygenLightFont());
-        etAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
-        etOTP.setTypeface(AppController.getInstance().getOxygenLightFont());
-        btnConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            ((TextView) mLinearLayout.findViewById(R.id.tvMyCashAccount)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((TextView) mLinearLayout.findViewById(R.id.tvMyCashAmount)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((TextView) mLinearLayout.findViewById(R.id.tvMyCashOTP)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            etAccount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            etAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            etOTP.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            ((TextView) mLinearLayout.findViewById(R.id.tvMyCashAccount)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((TextView) mLinearLayout.findViewById(R.id.tvMyCashAmount)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((TextView) mLinearLayout.findViewById(R.id.tvMyCashOTP)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            etAccount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            etAmount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            etOTP.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnConfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
 
         if(!mAppHandler.getMYCashOTP().equals("unknown") && !mAppHandler.getMYCashOTP().equals("null")) {
             etOTP.setText(mAppHandler.getMYCashOTP());
@@ -113,13 +122,11 @@ public class CashInActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private class SubmitAsync extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(CashInActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+           showProgressDialog();
         }
 
         @Override
@@ -153,7 +160,7 @@ public class CashInActivity extends AppCompatActivity implements View.OnClickLis
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+           dismissProgressDialog();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);

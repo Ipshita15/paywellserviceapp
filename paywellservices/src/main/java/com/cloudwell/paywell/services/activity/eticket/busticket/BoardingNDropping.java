@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.eticket.busticket;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
@@ -10,7 +9,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.view.Gravity;
@@ -27,6 +25,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
 import com.cloudwell.paywell.services.activity.eticket.busticket.model.BoardingAndDropping;
 import com.cloudwell.paywell.services.app.AppController;
@@ -48,7 +47,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class BoardingNDropping extends AppCompatActivity {
+public class BoardingNDropping extends BaseActivity {
     public static final String OPTION_ID = "optionId";
     public static final String COMPANY_NAME = "companyName";
     public static final String ARRIVAL_TIME = "arrivalTime";
@@ -350,14 +349,12 @@ public class BoardingNDropping extends AppCompatActivity {
 
     // final asyncTask
     private class GetPreConfirmDataAsync extends AsyncTask<String, Void, String> implements OnDismissListener {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = ProgressDialog.show(BoardingNDropping.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+           showProgressDialog();
         }
 
         @Override
@@ -385,7 +382,9 @@ public class BoardingNDropping extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            progressDialog.cancel();
+
+            dismissProgressDialog();
+
             if (result != null) {
                 try {
                     JSONObject jsonObj = new JSONObject(result);
@@ -448,14 +447,12 @@ public class BoardingNDropping extends AppCompatActivity {
         private String mPurchaseDate;
         private String mPassengerName;
         private String mPhone;
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = ProgressDialog.show(BoardingNDropping.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -483,7 +480,7 @@ public class BoardingNDropping extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            progressDialog.cancel();
+            dismissProgressDialog();
             StringBuilder receipt;
 
             if (result != null) {

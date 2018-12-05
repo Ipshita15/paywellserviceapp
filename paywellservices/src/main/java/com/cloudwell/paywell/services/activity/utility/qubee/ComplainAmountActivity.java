@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.utility.qubee;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -34,7 +33,7 @@ import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ComplainAmountActivity extends AppCompatActivity implements View.OnClickListener {
+public class ComplainAmountActivity extends BaseActivity implements View.OnClickListener {
 
     private ConnectionDetector cd;
     private AppHandler mAppHandler;
@@ -59,28 +58,39 @@ public class ComplainAmountActivity extends AppCompatActivity implements View.On
 
     private void initView() {
         mLinearLayout = findViewById(R.id.linearLayout);
+
         TextView _pin = findViewById(R.id.tvQbeePin4);
-        _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mPin = findViewById(R.id.etQubeePin4);
-        mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         TextView _account = findViewById(R.id.tvAccount);
-        _account.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mAccount = findViewById(R.id.etAccount);
-        mAccount.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         TextView _incorrectAmount = findViewById(R.id.tvIncorrectAmount);
-        _incorrectAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mIncorrectAmount = findViewById(R.id.etIncorrectAmount);
-        mIncorrectAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         TextView _correctAmount = findViewById(R.id.tvCorrectAmount);
-        _correctAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mCorrectAmount = findViewById(R.id.etCorrectAmount);
-        mCorrectAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
 
+        mPin = findViewById(R.id.etQubeePin4);
+        mAccount = findViewById(R.id.etAccount);
+        mIncorrectAmount = findViewById(R.id.etIncorrectAmount);
+        mCorrectAmount = findViewById(R.id.etCorrectAmount);
         mConfirmAmount = findViewById(R.id.btnComplainConfirm2);
-        mConfirmAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _account.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mAccount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _incorrectAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mIncorrectAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _correctAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mCorrectAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mConfirmAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            _pin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _account.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mAccount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _incorrectAmount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mIncorrectAmount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _correctAmount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mCorrectAmount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mConfirmAmount.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
         mConfirmAmount.setOnClickListener(this);
     }
 
@@ -116,13 +126,11 @@ public class ComplainAmountActivity extends AppCompatActivity implements View.On
     }
 
     private class SubmitAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(ComplainAmountActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showStatusDialog();
         }
 
         @Override
@@ -155,7 +163,7 @@ public class ComplainAmountActivity extends AppCompatActivity implements View.On
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+           dismissProgressDialog();
             try {
                 if (result != null && result.contains("@")) {
                     String splitedArray[] = result.split("@");
@@ -212,9 +220,7 @@ public class ComplainAmountActivity extends AppCompatActivity implements View.On
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if (this != null) {
-                this.onBackPressed();
-            }
+            this.onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);

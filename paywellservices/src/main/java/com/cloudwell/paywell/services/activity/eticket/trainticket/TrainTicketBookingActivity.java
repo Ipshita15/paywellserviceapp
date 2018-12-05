@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.eticket.trainticket;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
@@ -29,6 +27,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
@@ -50,7 +49,7 @@ import java.net.URLEncoder;
 /**
  * Created by android on 5/24/2016.
  */
-public class TrainTicketBookingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class TrainTicketBookingActivity extends BaseActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private RelativeLayout mRelativeLayout;
     private EditText mEtMobileNo;
@@ -228,16 +227,14 @@ public class TrainTicketBookingActivity extends AppCompatActivity implements Ada
     }
 
     private class TrainSeatAsync extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
+
         private String ticketId;
         private String ticketFare;
         private String pin;
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(TrainTicketBookingActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
 
         }
 
@@ -262,7 +259,7 @@ public class TrainTicketBookingActivity extends AppCompatActivity implements Ada
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             if (result != null) {
                 if (result.startsWith("200")) {
                     String[] spiltArray = result.split("@");
@@ -335,13 +332,11 @@ public class TrainTicketBookingActivity extends AppCompatActivity implements Ada
     }
 
     private class PurchaseTicketAsync extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(TrainTicketBookingActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+
+            showProgressDialog();
         }
 
         @Override
@@ -360,7 +355,7 @@ public class TrainTicketBookingActivity extends AppCompatActivity implements Ada
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             if (result != null) {
                 if (result.startsWith("200")) {
                     String[] spiltArray = result.split("@");

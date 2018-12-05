@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.utility.banglalion;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -35,15 +34,16 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BanglalionRechargeInquiryActivity extends AppCompatActivity implements View.OnClickListener {
+public class BanglalionRechargeInquiryActivity extends BaseActivity implements View.OnClickListener {
 
 
-    private static EditText mPin;
-    private static EditText mAccountNO;
+    private EditText mPin;
+    private EditText mAccountNO;
     private Button mSubmitInquiry;
     private ConnectionDetector cd;
-    private static AppHandler mAppHandler;
+    private AppHandler mAppHandler;
     private LinearLayout mLinearLayout;
+    private AsyncTask<String, Integer, String> mSubmitAsync;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,18 +62,26 @@ public class BanglalionRechargeInquiryActivity extends AppCompatActivity impleme
     private void initView() {
         mLinearLayout = findViewById(R.id.banglalionRechargeInquiryLL);
         TextView _pin = findViewById(R.id.tvQubeePin2);
-        _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mPin = findViewById(R.id.etQubeePin2);
-        mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         TextView _inq_acc = findViewById(R.id.tvQubeeccount2);
-        _inq_acc.setTypeface(AppController.getInstance().getOxygenLightFont());
+
+        mPin = findViewById(R.id.etQubeePin2);
         mAccountNO = findViewById(R.id.etQubeeccount2);
-        mAccountNO.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         mSubmitInquiry = findViewById(R.id.btnQubeeConfirm2);
-        mSubmitInquiry.setTypeface(AppController.getInstance().getOxygenLightFont());
 
+
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _inq_acc.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mAccountNO.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mSubmitInquiry.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            _pin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _inq_acc.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mAccountNO.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mSubmitInquiry.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
         mSubmitInquiry.setOnClickListener(this);
     }
 
@@ -93,7 +101,7 @@ public class BanglalionRechargeInquiryActivity extends AppCompatActivity impleme
                     mAccountNO.setError(Html.fromHtml("<font color='red'>" + getString(R.string.qubee_acc_error_msg) + "</font></font>"));
                     return;
                 }
-                new SubmitAsync().execute(getResources().getString(R.string.banglalion_bill_inquiry),
+                mSubmitAsync =  new SubmitAsync().execute(getResources().getString(R.string.banglalion_bill_inquiry),
                         mAppHandler.getImeiNo(),
                         _account,
                         _pin);
@@ -102,13 +110,11 @@ public class BanglalionRechargeInquiryActivity extends AppCompatActivity impleme
     }
 
     private class SubmitAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(BanglalionRechargeInquiryActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -141,7 +147,7 @@ public class BanglalionRechargeInquiryActivity extends AppCompatActivity impleme
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             try {
                 JSONObject jsonObject = new JSONObject(result);
                 String status = jsonObject.getString("status");
@@ -149,14 +155,14 @@ public class BanglalionRechargeInquiryActivity extends AppCompatActivity impleme
                 if (status != null && status.equals("200")) {
                     JSONObject data = jsonObject.getJSONObject("data");
                     if (data != null) {
-                        String transactionStatus= data.getString("status");
+                        String transactionStatus = data.getString("status");
                         String trxId = data.getString("tran_id");
                         String blcTrx = data.getString("BLCTrx");
                         String amount = data.getString("amount");
                         String retailCommission = data.getString("retCommission");
                         String accountNum = data.getString("customerID");
                         String hotLine = data.getString("contact");
-                        showStatusDialog(transactionStatus,accountNum, amount, trxId, blcTrx, retailCommission,hotLine);
+                        showStatusDialog(transactionStatus, accountNum, amount, trxId, blcTrx, retailCommission, hotLine);
                     }
                 } else {
                     String message = jsonObject.getString("message");
@@ -177,7 +183,7 @@ public class BanglalionRechargeInquiryActivity extends AppCompatActivity impleme
         }
     }
 
-    private void showStatusDialog(String status,String accountNo, String amount, String trxId, String banglalinkTrx, String retailCommission,String hotline) {
+    private void showStatusDialog(String status, String accountNo, String amount, String trxId, String banglalinkTrx, String retailCommission, String hotline) {
         StringBuilder reqStrBuilder = new StringBuilder();
         reqStrBuilder.append(getString(R.string.acc_no_des) + " " + accountNo
                 + "\n" + getString(R.string.amount_des) + " " + amount + " " + R.string.tk_des
@@ -205,17 +211,19 @@ public class BanglalionRechargeInquiryActivity extends AppCompatActivity impleme
         super.onResume();
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (mSubmitAsync!=null){
+            mSubmitAsync.cancel(true);
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if (this != null) {
-                this.onBackPressed();
-            }
+            this.onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);

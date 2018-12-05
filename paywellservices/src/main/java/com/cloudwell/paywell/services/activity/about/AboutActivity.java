@@ -90,13 +90,7 @@ public class AboutActivity extends AppCompatActivity {
                 viewHolder = new ViewHolder();
                 viewHolder.titleView = convertView.findViewById(R.id.title);
                 viewHolder.textView = convertView.findViewById(R.id.about_textView);
-                if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-                    viewHolder.titleView.setTypeface(AppController.getInstance().getOxygenLightFont());
-                    viewHolder.textView.setTypeface(AppController.getInstance().getOxygenLightFont());
-                } else {
-                    viewHolder.titleView.setTypeface(AppController.getInstance().getAponaLohitFont());
-                    viewHolder.textView.setTypeface(AppController.getInstance().getAponaLohitFont());
-                }
+
                 convertView.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
@@ -104,9 +98,13 @@ public class AboutActivity extends AppCompatActivity {
             if (mAppHandler.getAppLanguage().equalsIgnoreCase("bn")) {
                 String title = "পেওয়েল সার্ভিস" + " v" + AppLoadingActivity.versionName;
                 viewHolder.titleView.setText(title);
+                viewHolder.titleView.setTypeface(AppController.getInstance().getAponaLohitFont());
+                viewHolder.textView.setTypeface(AppController.getInstance().getAponaLohitFont());
             } else {
                 String title = "PayWell Services" + " v" + AppLoadingActivity.versionName;
                 viewHolder.titleView.setText(title);
+                viewHolder.titleView.setTypeface(AppController.getInstance().getOxygenLightFont());
+                viewHolder.textView.setTypeface(AppController.getInstance().getOxygenLightFont());
             }
             viewHolder.textView.setText(sampleStrings[position]);
 

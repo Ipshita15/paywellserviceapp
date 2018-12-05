@@ -7,7 +7,6 @@
 
     <!-- Paywell Services dimension -->
     <dimen name="text_size_medium">18sp</dimen>
-    <dimen name="text_size">18sp</dimen>
     <dimen name="text_size_button">15sp</dimen>
 
     <!-- bluetooth api -->
@@ -15,7 +14,6 @@
     <!-- Paywell topup dimension -->
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="radioButtonPadding">29dp</dimen>
-    <dimen name="radioButtonMarginVertical">-10dp</dimen>
     <dimen name="menuTextSize">22sp</dimen>
 
     <dimen name="card_radius">4dp</dimen>

@@ -68,10 +68,20 @@ public class AppLoadingActivity extends AppCompatActivity {
         mConErrorMsg = findViewById(R.id.connErrorMsg);
         mBtnRetry = findViewById(R.id.btnRetry);
         mPBAppLoading = findViewById(R.id.pbAppLoading);
+        Button btnClose = findViewById(R.id.btnClose);
 
         mAppHandler = new AppHandler(this);
         mCd = new ConnectionDetector(AppController.getContext());
 
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            mConErrorMsg.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mBtnRetry.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnClose.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            mConErrorMsg.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mBtnRetry.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnClose.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
         if (Build.VERSION.SDK_INT < 23) {
             //Do not need to check the permission
             if (mAppHandler.getAppStatus().equalsIgnoreCase("registered")) {
@@ -118,10 +128,10 @@ public class AppLoadingActivity extends AppCompatActivity {
                 Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int accessFineLocationPermission = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
-        int readSmsPermission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_SMS);
-        int receiveSmsPermission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.RECEIVE_SMS);
+//        int readSmsPermission = ContextCompat.checkSelfPermission(this,
+//                Manifest.permission.READ_SMS);
+//        int receiveSmsPermission = ContextCompat.checkSelfPermission(this,
+//                Manifest.permission.RECEIVE_SMS);
         int cameraPermission = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA);
         int callPhnPermission = ContextCompat.checkSelfPermission(this,
@@ -142,12 +152,12 @@ public class AppLoadingActivity extends AppCompatActivity {
         if (accessFineLocationPermission != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION);
         }
-        if (readSmsPermission != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.READ_SMS);
-        }
-        if (receiveSmsPermission != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.RECEIVE_SMS);
-        }
+//        if (readSmsPermission != PackageManager.PERMISSION_GRANTED) {
+//            listPermissionsNeeded.add(Manifest.permission.READ_SMS);
+//        }
+//        if (receiveSmsPermission != PackageManager.PERMISSION_GRANTED) {
+//            listPermissionsNeeded.add(Manifest.permission.RECEIVE_SMS);
+//        }
         if (cameraPermission != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.CAMERA);
         }
@@ -179,9 +189,7 @@ public class AppLoadingActivity extends AppCompatActivity {
             TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(this);
             mImeiNo = telephonyInfo.getImeiSIM1();
             mAppHandler.setImeiNo(mImeiNo);
-//            mAppHandler.setImeiNo("353398080026058");
-            new AuthAsync().execute(getResources().getString(R.string.pw_auth), "" + getVersionName(),
-                    "1");
+            new AuthAsync().execute(getResources().getString(R.string.pw_auth), "" + getVersionName());
         }
     }
 
@@ -198,9 +206,7 @@ public class AppLoadingActivity extends AppCompatActivity {
             TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(this);
             mImeiNo = telephonyInfo.getImeiSIM1();
             mAppHandler.setImeiNo(mImeiNo);
-//            mAppHandler.setImeiNo("353398080026058");
-            new AuthenticationAsync().execute(getResources().getString(R.string.pw_auth), "" + getVersionName(),
-                    "2");
+            new AuthenticationAsync().execute(getResources().getString(R.string.pw_auth), "" + getVersionName());
         }
     }
 
@@ -208,7 +214,7 @@ public class AppLoadingActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_PHONE_STATE);
     }
 
-    private float getVersionName() {
+    private String getVersionName() {
         String _versionName = null;
         try {
             _versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
@@ -218,7 +224,7 @@ public class AppLoadingActivity extends AppCompatActivity {
         } catch (NullPointerException e) {
             Log.e(TAG, "Context is null");
         }
-        return Float.parseFloat(_versionName); // Found the code!
+        return versionName; // Found the code!
     }
 
     @SuppressWarnings("deprecation")
@@ -270,6 +276,7 @@ public class AppLoadingActivity extends AppCompatActivity {
                         String displayPictureCount = jsonObject.getString("displayPictureCount");
                         mAppHandler.setDisplayPictureCount(Integer.parseInt(displayPictureCount));
 
+                        mAppHandler.displayPictureArray = new String[Integer.parseInt(displayPictureCount)];
                         JSONArray pictureArrayJson = jsonObject.getJSONArray("imageLink");
                         for(int i = 0; i < pictureArrayJson.length(); i++) {
                             String disImglink =  pictureArrayJson.getString(i);
@@ -505,12 +512,10 @@ public class AppLoadingActivity extends AppCompatActivity {
                     TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(this);
                     mImeiNo = telephonyInfo.getImeiSIM1();
                     mAppHandler.setImeiNo(mImeiNo);
-//                    mAppHandler.setImeiNo("353398080026058");
                     if (!mCd.isConnectingToInternet()) {
                         mAppHandler.showDialog(getSupportFragmentManager());
                     } else {
-                        new AuthAsync().execute(getResources().getString(R.string.pw_auth), "" + getVersionName(),
-                                "3");
+                        new AuthAsync().execute(getResources().getString(R.string.pw_auth), "" + getVersionName());
                     }
                 } else {
                     Snackbar snackbar = Snackbar.make(mRelativeLayout, "Permission denied", Snackbar.LENGTH_LONG);

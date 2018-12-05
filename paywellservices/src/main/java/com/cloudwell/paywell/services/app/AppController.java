@@ -5,16 +5,19 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.multidex.MultiDex;
-import android.util.Log;
 
 import com.cloudwell.paywell.services.BuildConfig;
 import com.cloudwell.paywell.services.utils.MyHttpClient;
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
+import com.squareup.leakcanary.RefWatcher;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by Android on 12/1/2015.
@@ -32,6 +35,8 @@ public class AppController extends Application {
 
     AppHandler mAppHandler;
 
+    private RefWatcher refWatcher;
+
     public static synchronized AppController getInstance() {
         return mInstance;
     }
@@ -43,12 +48,35 @@ public class AppController extends Application {
         mContext = this;
         client = createTrustedHttpsClient();
 
-        if (BuildConfig.DEBUG) {
-            String id = FirebaseInstanceId.getInstance().getToken();
-            Log.e("device_token", "" + id);
-        }
+//        if (BuildConfig.DEBUG) {
+//            FirebaseApp.initializeApp(this);
+//            String id = FirebaseInstanceId.getInstance().getToken();
+//            Log.e("device_token", "" + id);
+//
+//
+//            if (LeakCanary.isInAnalyzerProcess(this)) {
+//                // This process is dedicated to LeakCanary for heap analysis.
+//                // You should not init your app in this process.
+//                return;
+//            }
+//            refWatcher=LeakCanary.install(this);
+//        }
+
+        configureCrashReporting();
 
 
+    }
+
+    public static RefWatcher getRefWatcher(Context context){
+        AppController myApplication= (AppController) context.getApplicationContext();
+        return myApplication.refWatcher;
+    }
+
+    private void configureCrashReporting() {
+        CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder()
+                .disabled(BuildConfig.DEBUG)
+                .build();
+        Fabric.with(this, new Crashlytics.Builder().core(crashlyticsCore).build());
     }
 
 

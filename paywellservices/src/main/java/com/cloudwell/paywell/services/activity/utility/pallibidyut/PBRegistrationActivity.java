@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -37,7 +38,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PBRegistrationActivity extends AppCompatActivity implements View.OnClickListener {
+public class PBRegistrationActivity extends BaseActivity implements View.OnClickListener {
     private EditText mPinNumber, mAccount, mConfirmAccount, mCustomerName, mPhone;
     private Button mSubmitButton;
     private ConnectionDetector cd;
@@ -62,34 +63,45 @@ public class PBRegistrationActivity extends AppCompatActivity implements View.On
 
     private void initView() {
         mLinearLayout = findViewById(R.id.linearLayout);
+
         TextView _pin = findViewById(R.id.tvPBPin);
-        _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mPinNumber = findViewById(R.id.etPBPin);
-        mPinNumber.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         TextView _accountNo = findViewById(R.id.tvPBAccount);
-        _accountNo.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mAccount = findViewById(R.id.etPBAccount);
-        mAccount.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         TextView _accountConfirm = findViewById(R.id.tvPBAccountConfirm);
-        _accountConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mConfirmAccount = findViewById(R.id.etPBConfirmAccount);
-        mConfirmAccount.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         TextView _customerName = findViewById(R.id.tvFullName);
-        _customerName.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mCustomerName = findViewById(R.id.etFullName);
-        mCustomerName.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         TextView _phone = findViewById(R.id.tvPhone);
-        _phone.setTypeface(AppController.getInstance().getOxygenLightFont());
+
+        mPinNumber = findViewById(R.id.etPBPin);
+        mAccount = findViewById(R.id.etPBAccount);
+        mConfirmAccount = findViewById(R.id.etPBConfirmAccount);
+        mCustomerName = findViewById(R.id.etFullName);
         mPhone = findViewById(R.id.etPhone);
-        mPhone.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         mSubmitButton = findViewById(R.id.btnPBConfirm);
-        mSubmitButton.setTypeface(AppController.getInstance().getOxygenLightFont());
 
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mPinNumber.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _accountNo.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mAccount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _accountConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mConfirmAccount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _customerName.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mCustomerName.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _phone.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mPhone.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mSubmitButton.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            _pin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mPinNumber.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _accountNo.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mAccount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _accountConfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mConfirmAccount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _customerName.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mCustomerName.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _phone.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mPhone.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mSubmitButton.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
         mSubmitButton.setOnClickListener(this);
     }
 
@@ -130,13 +142,11 @@ public class PBRegistrationActivity extends AppCompatActivity implements View.On
     }
 
     private class CheckOTPAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(PBRegistrationActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -168,7 +178,7 @@ public class PBRegistrationActivity extends AppCompatActivity implements View.On
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             try {
                 if (result != null && result.contains("@")) {
                     String splitArray[] = result.split("@");
@@ -267,13 +277,11 @@ public class PBRegistrationActivity extends AppCompatActivity implements View.On
     }
 
     private class SubmitAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(PBRegistrationActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+           showStatusDialog();
         }
 
         @Override
@@ -304,7 +312,7 @@ public class PBRegistrationActivity extends AppCompatActivity implements View.On
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+           dismissProgressDialog();
             try {
                 if (result != null && result.contains("@")) {
                     String splitArray[] = result.split("@");
@@ -362,9 +370,7 @@ public class PBRegistrationActivity extends AppCompatActivity implements View.On
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if (this != null) {
-                this.onBackPressed();
-            }
+            this.onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);

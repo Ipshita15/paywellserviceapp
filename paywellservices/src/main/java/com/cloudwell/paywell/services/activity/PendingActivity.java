@@ -8,6 +8,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.app.AppController;
+import com.cloudwell.paywell.services.app.AppHandler;
 
 public class PendingActivity extends AppCompatActivity {
 
@@ -15,6 +17,8 @@ public class PendingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_loading);
+
+        AppHandler mAppHandler = new AppHandler(this);
 
         TextView mConErrorMsg = findViewById(R.id.connErrorMsg);
         Button mBtnRetry = findViewById(R.id.btnRetry);
@@ -26,6 +30,16 @@ public class PendingActivity extends AppCompatActivity {
         mPBAppLoading.setVisibility(View.GONE);
         mBtnRetry.setVisibility(View.GONE);
         mBtnClose.setVisibility(View.VISIBLE);
+
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            mConErrorMsg.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mBtnRetry.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mBtnClose.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            mConErrorMsg.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mBtnRetry.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mBtnClose.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
     }
 
     @Override

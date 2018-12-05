@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.mfs.mycash.manage;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,7 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.ManageMenuActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
@@ -40,7 +39,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PaymentConfirmationActivity extends AppCompatActivity {
+public class PaymentConfirmationActivity extends BaseActivity {
 
     public static final String JSON_RESPONSE = "jsonResponse";
     private AppHandler mAppHandler;
@@ -138,13 +137,11 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
     }
 
     private class SubmitAsync extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(PaymentConfirmationActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -176,7 +173,7 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
@@ -255,16 +252,16 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            final TrxAdapter.ViewHolder viewHolder;
+            final ViewHolder viewHolder;
             if (convertView == null) {
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.dialog_mycash_trx_log, parent, false);
-                viewHolder = new TrxAdapter.ViewHolder();
+                viewHolder = new ViewHolder();
                 viewHolder.status = convertView.findViewById(R.id.serviceType);
                 viewHolder.amount = convertView.findViewById(R.id.amount);
                 viewHolder.datetime = convertView.findViewById(R.id.trxID);
                 convertView.setTag(viewHolder);
             } else {
-                viewHolder = (TrxAdapter.ViewHolder) convertView.getTag();
+                viewHolder = (ViewHolder) convertView.getTag();
             }
 
             if (mStatus[position].equals("600")) {
@@ -274,7 +271,15 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
             }
             viewHolder.amount.setText(mAmount[position]);
             viewHolder.datetime.setText(mDateTime[position]);
-
+            if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                viewHolder.status.setTypeface(AppController.getInstance().getOxygenLightFont());
+                viewHolder.amount.setTypeface(AppController.getInstance().getOxygenLightFont());
+                viewHolder.datetime.setTypeface(AppController.getInstance().getOxygenLightFont());
+            } else {
+                viewHolder.status.setTypeface(AppController.getInstance().getAponaLohitFont());
+                viewHolder.amount.setTypeface(AppController.getInstance().getAponaLohitFont());
+                viewHolder.datetime.setTypeface(AppController.getInstance().getAponaLohitFont());
+            }
             return convertView;
         }
 

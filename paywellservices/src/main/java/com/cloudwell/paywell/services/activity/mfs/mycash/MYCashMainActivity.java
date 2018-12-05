@@ -1,13 +1,11 @@
 package com.cloudwell.paywell.services.activity.mfs.mycash;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.mfs.MFSMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
@@ -36,7 +35,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MYCashMainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MYCashMainActivity extends BaseActivity implements View.OnClickListener {
 
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
@@ -64,9 +63,15 @@ public class MYCashMainActivity extends AppCompatActivity implements View.OnClic
         mPin = findViewById(R.id.mycash_pin);
         mConfirm = findViewById(R.id.mycash_confirm);
 
-        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            ((TextView) mLinearLayout.findViewById(R.id.tvMyCashPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            ((TextView) mLinearLayout.findViewById(R.id.tvMyCashPin)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            mPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mConfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
 
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(mPin, InputMethodManager.SHOW_IMPLICIT);
@@ -95,14 +100,12 @@ public class MYCashMainActivity extends AppCompatActivity implements View.OnClic
     }
 
     private class SubmitAsync extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
+
         private String txt;
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(MYCashMainActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
 
         }
 
@@ -132,11 +135,13 @@ public class MYCashMainActivity extends AppCompatActivity implements View.OnClic
 
         @Override
         protected void onPostExecute(String result) {
+            dismissProgressDialog();
+
             if (result != null) {
                 if (result.startsWith("200")) {
                     BalanceInquiry();
                 } else {
-                    progressDialog.cancel();
+
                     String[] splitArray = result.split("@");
                     txt = String.valueOf(splitArray[1]);
 
@@ -147,7 +152,7 @@ public class MYCashMainActivity extends AppCompatActivity implements View.OnClic
                     snackbar.show();
                 }
             } else {
-                progressDialog.cancel();
+
                 Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                 View snackBarView = snackbar.getView();

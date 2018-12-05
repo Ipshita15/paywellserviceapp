@@ -2,11 +2,9 @@ package com.cloudwell.paywell.services.activity.reg.missing;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -16,13 +14,14 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,6 +30,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -45,7 +45,6 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -54,34 +53,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MissingMainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class MissingMainActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
 
     public static String RESPONSE_DETAILS;
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
-    private TelephonyInfo telephonyInfo;
     private ScrollView scrollView;
     private LinearLayout layoutOutletName, layoutOutletAddress, layoutOwnerName, layoutMerchantType, layoutBusinessType,
-            layoutPhnNumber, layoutEmailAddress, layoutDistrict, layoutThana, layoutPost, layoutLandmark, layoutSalesCode,
-            layoutCollectionCode, layoutOutletImg, layoutNidFrontImg, layoutNidBackImg, layoutOwnerImg, layoutTradeImg,
-            layoutPassportImg, layoutBirthImg, layoutDrivingImg, layoutVisitingImg, layoutMobileRecharge, layoutMobileBanking,
-            layoutDownload, layoutOperator, layoutAgent;
-    private TextView textView_email, textView_landmark;
-    private EditText editText_outletName, editText_address, editText_ownerName, editText_phnNo, editText_email, editText_landmark,
-            editText_salesCode, editText_collectionCode;
+            layoutPhnNumber, layoutDistrict, layoutThana, layoutPost, layoutLandmark,
+            layoutOutletImg, layoutNidFrontImg, layoutNidBackImg, layoutOwnerImg, layoutTradeImg,
+            layoutPassportImg, layoutBirthImg, layoutDrivingImg, layoutVisitingImg;
+    private EditText editText_outletName, editText_address, editText_ownerName, editText_phnNo, editText_landmark;
     private Spinner spnr_merchatnType, spnr_businessType, spnr_district, spnr_thana, spnr_postcode;
-    private String imeiOne, imeiTwo, str_businessId, str_businessType, str_merchantType, str_district, str_thana, str_postcodeId, str_postcode, dist_name,
-            thana_name, postcode_name, strBuild, str_which_btn_selected, outlet_img = "", nid_img = "", nid_back_img = "",
+    private String str_businessId, str_businessType, str_merchantType, str_district, str_thana, str_postcodeId, str_postcode,
+            str_which_btn_selected, outlet_img = "", nid_img = "", nid_back_img = "",
             owner_img = "", trade_license_img = "", passport_img = "", birth_certificate_img = "", driving_license_img = "",
             visiting_card_img = "";
     private ArrayList<String> layoutNames, business_type_id_array;
-    private List business_type_name_array;
-    private ArrayList<String> merchant_type_array;
     private HashMap<String, String> hashMap = new HashMap<>();
-    private String merchantId;
-    private ArrayAdapter<CharSequence> arrayAdapter_business_type_spinner, arrayAdapter_merchant_type_spinner,
-            arrayAdapter_spinner_district, arrayAdapter_spinner_thana, arrayAdapter_spinner_postcode;
-    private String[] district_array_id, district_array_name, thana_array_id, thana_array_name, post_array_id, post_array_name;
+    private String[] district_array_id, thana_array_id, post_array_id, post_array_name;
     private ImageView img_one, img_two, img_three, img_four, img_five, img_six, img_seven, img_eight, img_nine;
 
     private static final int PERMISSION_FOR_GALLERY = 321;
@@ -130,13 +120,10 @@ public class MissingMainActivity extends AppCompatActivity implements AdapterVie
         layoutMerchantType = findViewById(R.id.layoutMerchantType);
         layoutBusinessType = findViewById(R.id.layoutBusinessType);
         layoutPhnNumber = findViewById(R.id.layoutPhnNumber);
-        layoutEmailAddress = findViewById(R.id.layoutEmailAddress);
         layoutDistrict = findViewById(R.id.layoutDistrict);
         layoutThana = findViewById(R.id.layoutThana);
         layoutPost = findViewById(R.id.layoutPost);
         layoutLandmark = findViewById(R.id.layoutLandmark);
-        layoutSalesCode = findViewById(R.id.layoutSalesCode);
-        layoutCollectionCode = findViewById(R.id.layoutCollectionCode);
         layoutOutletImg = findViewById(R.id.layoutOutletImg);
         layoutNidFrontImg = findViewById(R.id.layoutNidFrontImg);
         layoutNidBackImg = findViewById(R.id.layoutNidBackImg);
@@ -146,23 +133,11 @@ public class MissingMainActivity extends AppCompatActivity implements AdapterVie
         layoutBirthImg = findViewById(R.id.layoutBirthImg);
         layoutDrivingImg = findViewById(R.id.layoutDrivingImg);
         layoutVisitingImg = findViewById(R.id.layoutVisitingImg);
-        layoutMobileRecharge = findViewById(R.id.layoutMobileRecharge);
-        layoutMobileBanking = findViewById(R.id.layoutMobileBanking);
-        layoutDownload = findViewById(R.id.layoutDownload);
-        layoutOperator = findViewById(R.id.layoutOperator);
-        layoutAgent = findViewById(R.id.layoutAgent);
-
-        textView_email = findViewById(R.id.textView_emailAddress);
-        textView_landmark = findViewById(R.id.textView_landmarke);
-
         editText_outletName = findViewById(R.id.editText_outletName);
         editText_address = findViewById(R.id.editText_address);
         editText_ownerName = findViewById(R.id.editText_ownerName);
         editText_phnNo = findViewById(R.id.editText_mobileNumber);
-        editText_email = findViewById(R.id.editText_emailAddress);
         editText_landmark = findViewById(R.id.editText_landmark);
-        editText_salesCode = findViewById(R.id.editText_salesCode);
-        editText_collectionCode = findViewById(R.id.editText_collectionCode);
 
         spnr_merchatnType = findViewById(R.id.spinner_merchantType);
         spnr_businessType = findViewById(R.id.spinner_businessType);
@@ -188,20 +163,41 @@ public class MissingMainActivity extends AppCompatActivity implements AdapterVie
 
         hashMap.put("Retail Merchant", "1");
 
-        merchant_type_array = new ArrayList<>();
+        ArrayList<String> merchant_type_array = new ArrayList<>();
         merchant_type_array.add("Select One");
         merchant_type_array.add("Retail Merchant");
 
-        String custom_text = "<font color=#41882b>ইমেইল </font> <font color=#b3b3b3> (ঐচ্ছিক)</font>";
-        textView_email.setText(Html.fromHtml(custom_text));
-
-        String textLandmark = "<font color=#41882b>ল্যান্ডমার্কঃ </font> <font color=#b3b3b3> (ঐচ্ছিক)</font>";
-        textView_landmark.setText(Html.fromHtml(textLandmark));
-
         /****Merchant Type ***/
-        arrayAdapter_merchant_type_spinner = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, merchant_type_array);
+        ArrayAdapter<CharSequence> arrayAdapter_merchant_type_spinner = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, merchant_type_array);
 
         spnr_merchatnType.setAdapter(arrayAdapter_merchant_type_spinner);
+
+        ((TextView) scrollView.findViewById(R.id.textView_outletName)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        editText_outletName.setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) scrollView.findViewById(R.id.textView_address)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        editText_address.setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) scrollView.findViewById(R.id.textView_ownerName)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        editText_ownerName.setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) scrollView.findViewById(R.id.textView_merchantType)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) scrollView.findViewById(R.id.textView_businessType)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) scrollView.findViewById(R.id.textView_mobileNumber)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        editText_phnNo.setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) scrollView.findViewById(R.id.textView_district)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) scrollView.findViewById(R.id.textView_thana)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) scrollView.findViewById(R.id.textView_postcode)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) scrollView.findViewById(R.id.textView_landmarke)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        editText_landmark.setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) scrollView.findViewById(R.id.button_outletImg)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) scrollView.findViewById(R.id.button_nidFrontImg)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) scrollView.findViewById(R.id.button_nidBackImg)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) scrollView.findViewById(R.id.button_ownerImg)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) scrollView.findViewById(R.id.button_tradeImg)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) scrollView.findViewById(R.id.button_passportImg)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) scrollView.findViewById(R.id.button_birthImg)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) scrollView.findViewById(R.id.button_driveImg)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) scrollView.findViewById(R.id.button_cardImg)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) scrollView.findViewById(R.id.button_submitMissing)).setTypeface(AppController.getInstance().getAponaLohitFont());
+
         visibilityStateDefine();
     }
 
@@ -276,7 +272,7 @@ public class MissingMainActivity extends AppCompatActivity implements AdapterVie
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         switch (adapterView.getId()) {
             case R.id.spinner_merchantType:
-                merchantId = spnr_merchatnType.getSelectedItem().toString();
+                String merchantId = spnr_merchatnType.getSelectedItem().toString();
                 if (merchantId.equals("Select One")) {
                     str_merchantType = "";
                 } else {
@@ -296,8 +292,7 @@ public class MissingMainActivity extends AppCompatActivity implements AdapterVie
                 }
                 break;
             case R.id.spinner_district:
-                dist_name = spnr_district.getSelectedItem().toString();
-                if (dist_name.equals("Select One")) {
+                if (spnr_district.getSelectedItem().toString().equals("Select One")) {
                     str_district = "";
                 } else {
                     str_district = String.valueOf(district_array_id[i]);
@@ -313,8 +308,7 @@ public class MissingMainActivity extends AppCompatActivity implements AdapterVie
                 }
                 break;
             case R.id.spinner_thana:
-                thana_name = adapterView.getItemAtPosition(i).toString();
-                if (thana_name.equals("Select One")) {
+                if (adapterView.getItemAtPosition(i).toString().equals("Select One")) {
                     str_thana = "";
                 } else {
                     str_thana = thana_array_id[i];
@@ -330,8 +324,7 @@ public class MissingMainActivity extends AppCompatActivity implements AdapterVie
                 }
                 break;
             case R.id.spinner_postcode:
-                postcode_name = adapterView.getItemAtPosition(i).toString();
-                if (postcode_name.equals("Select One")) {
+                if (adapterView.getItemAtPosition(i).toString().equals("Select One")) {
                     str_postcodeId = "";
                     str_postcode = "";
                 } else {
@@ -359,13 +352,10 @@ public class MissingMainActivity extends AppCompatActivity implements AdapterVie
     }
 
     private class BusinessTypeAsync extends AsyncTask<String, String, String> {
-        ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(MissingMainActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -376,7 +366,6 @@ public class MissingMainActivity extends AppCompatActivity implements AdapterVie
             HttpPost httppost = new HttpPost(params[0]);
 
             try {
-                //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(1);
                 nameValuePairs.add(new BasicNameValuePair("serviceId", str_merchantType));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -397,11 +386,12 @@ public class MissingMainActivity extends AppCompatActivity implements AdapterVie
         @Override
         protected void onPostExecute(String result) {
 
-            progressDialog.cancel();
+            dismissProgressDialog();
+
             if (result != null) {
                 try {
                     business_type_id_array = new ArrayList<>();
-                    business_type_name_array = new ArrayList<>();
+                    List business_type_name_array = new ArrayList<>();
 
                     JSONObject jsonObject = new JSONObject(result);
                     String status = jsonObject.getString("status");
@@ -420,7 +410,7 @@ public class MissingMainActivity extends AppCompatActivity implements AdapterVie
                             business_type_name_array.add(name);
                         }
 
-                        arrayAdapter_business_type_spinner = new ArrayAdapter(MissingMainActivity.this, android.R.layout.simple_spinner_dropdown_item, business_type_name_array);
+                        ArrayAdapter<CharSequence> arrayAdapter_business_type_spinner = new ArrayAdapter(MissingMainActivity.this, android.R.layout.simple_spinner_dropdown_item, business_type_name_array);
 
                         spnr_businessType.setAdapter(arrayAdapter_business_type_spinner);
                     } else {
@@ -443,13 +433,11 @@ public class MissingMainActivity extends AppCompatActivity implements AdapterVie
     }
 
     private class GetDistrictResponseAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(MissingMainActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -479,8 +467,9 @@ public class MissingMainActivity extends AppCompatActivity implements AdapterVie
 
         @Override
         protected void onPostExecute(String result) {
-            if (progressDialog.isShowing())
-                progressDialog.dismiss();
+
+            dismissProgressDialog();
+
             if (result != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
@@ -517,7 +506,7 @@ public class MissingMainActivity extends AppCompatActivity implements AdapterVie
         try {
             JSONArray array = new JSONArray(response);
 
-            district_array_name = new String[array.length() + 1];
+            String[] district_array_name = new String[array.length() + 1];
             district_array_id = new String[array.length() + 1];
             district_array_name[0] = "Select One";
             district_array_id[0] = "0";
@@ -529,7 +518,7 @@ public class MissingMainActivity extends AppCompatActivity implements AdapterVie
                 district_array_id[i + 1] = obj.getString("id");
                 district_array_name[i + 1] = name;
             }
-            arrayAdapter_spinner_district = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, district_array_name);
+            ArrayAdapter<CharSequence> arrayAdapter_spinner_district = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, district_array_name);
             spnr_district.setAdapter(arrayAdapter_spinner_district);
         } catch (Exception e) {
             e.printStackTrace();
@@ -543,13 +532,11 @@ public class MissingMainActivity extends AppCompatActivity implements AdapterVie
 
 
     private class GetThanaResponseAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(MissingMainActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @SuppressWarnings("deprecation")
@@ -581,8 +568,8 @@ public class MissingMainActivity extends AppCompatActivity implements AdapterVie
 
         @Override
         protected void onPostExecute(String result) {
-            if (progressDialog.isShowing())
-                progressDialog.dismiss();
+            dismissProgressDialog();
+
             if (result != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
@@ -590,7 +577,7 @@ public class MissingMainActivity extends AppCompatActivity implements AdapterVie
                     if (result_status != null && result_status.equals("200")) {
                         JSONArray result_data = jsonObject.getJSONArray("data");
 
-                        thana_array_name = new String[result_data.length() + 1];
+                        String[] thana_array_name = new String[result_data.length() + 1];
                         thana_array_id = new String[result_data.length() + 1];
                         thana_array_name[0] = "Select One";
                         thana_array_id[0] = "0";
@@ -602,7 +589,7 @@ public class MissingMainActivity extends AppCompatActivity implements AdapterVie
                             thana_array_id[i + 1] = obj.getString("id");
                             thana_array_name[i + 1] = name;
                         }
-                        arrayAdapter_spinner_thana = new ArrayAdapter(MissingMainActivity.this, android.R.layout.simple_spinner_dropdown_item, thana_array_name);
+                        ArrayAdapter<CharSequence> arrayAdapter_spinner_thana = new ArrayAdapter(MissingMainActivity.this, android.R.layout.simple_spinner_dropdown_item, thana_array_name);
                         spnr_thana.setAdapter(arrayAdapter_spinner_thana);
 
                     } else {
@@ -632,13 +619,9 @@ public class MissingMainActivity extends AppCompatActivity implements AdapterVie
 
 
     private class GetPostResponseAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
-
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(MissingMainActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @SuppressWarnings("deprecation")
@@ -671,8 +654,9 @@ public class MissingMainActivity extends AppCompatActivity implements AdapterVie
 
         @Override
         protected void onPostExecute(String result) {
-            if (progressDialog.isShowing())
-                progressDialog.dismiss();
+
+            dismissProgressDialog();
+
             if (result != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
@@ -693,7 +677,7 @@ public class MissingMainActivity extends AppCompatActivity implements AdapterVie
                             post_array_id[i + 1] = obj.getString("id");
                             post_array_name[i + 1] = name;
                         }
-                        arrayAdapter_spinner_postcode = new ArrayAdapter(MissingMainActivity.this, android.R.layout.simple_spinner_dropdown_item, post_array_name);
+                        ArrayAdapter<CharSequence> arrayAdapter_spinner_postcode = new ArrayAdapter(MissingMainActivity.this, android.R.layout.simple_spinner_dropdown_item, post_array_name);
                         spnr_postcode.setAdapter(arrayAdapter_spinner_postcode);
 
                     } else {
@@ -857,7 +841,7 @@ public class MissingMainActivity extends AppCompatActivity implements AdapterVie
         byte[] b = baos.toByteArray();
         String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
 
-        strBuild = ("xxCloud" + imageEncoded + "xxCloud");
+        String strBuild = ("xxCloud" + imageEncoded + "xxCloud");
 
         switch (str_which_btn_selected) {
             case "1":
@@ -1150,13 +1134,11 @@ public class MissingMainActivity extends AppCompatActivity implements AdapterVie
     }
 
     private class RetailerMissingAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(MissingMainActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -1167,9 +1149,9 @@ public class MissingMainActivity extends AppCompatActivity implements AdapterVie
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(data[0]);
             try {
-                telephonyInfo = TelephonyInfo.getInstance(MissingMainActivity.this);
-                imeiOne = telephonyInfo.getImeiSIM1();
-                imeiTwo = telephonyInfo.getImeiSIM2();
+                TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(MissingMainActivity.this);
+                String imeiOne = telephonyInfo.getImeiSIM1();
+                String imeiTwo = telephonyInfo.getImeiSIM2();
 
                 JSONObject jsonInformationData = new JSONObject();
                 try {
@@ -1263,7 +1245,7 @@ public class MissingMainActivity extends AppCompatActivity implements AdapterVie
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
 
             if (result != null) {
                 try {

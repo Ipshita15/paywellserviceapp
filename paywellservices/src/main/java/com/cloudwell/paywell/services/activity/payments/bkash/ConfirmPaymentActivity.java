@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.payments.bkash;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,7 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +20,7 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.AppLoadingActivity;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -30,7 +29,7 @@ import com.cloudwell.paywell.services.utils.JSONParser;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class ConfirmPaymentActivity extends AppCompatActivity {
+public class ConfirmPaymentActivity extends BaseActivity {
 
     private static final String TAG_RESPONSE_STATUS = "Status";
     private static final String TAG_MESSAGE = "Message";
@@ -53,8 +52,11 @@ public class ConfirmPaymentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_payment);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.home_bkash_payment_confirm_title);
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.home_bkash_payment_confirm_title);
+        }
 
         cd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
@@ -92,7 +94,6 @@ public class ConfirmPaymentActivity extends AppCompatActivity {
                 mDate[i] = date;
                 trx_length++;
             }
-
             listView.setAdapter(adapter);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -152,7 +153,13 @@ public class ConfirmPaymentActivity extends AppCompatActivity {
             String date = getString(R.string.date_and_time_des) + " " + mDate[position];
             viewHolder.amount.setText(amount);
             viewHolder.datetime.setText(date);
-
+            if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                viewHolder.amount.setTypeface(AppController.getInstance().getOxygenLightFont());
+                viewHolder.datetime.setTypeface(AppController.getInstance().getOxygenLightFont());
+            } else {
+                viewHolder.amount.setTypeface(AppController.getInstance().getAponaLohitFont());
+                viewHolder.datetime.setTypeface(AppController.getInstance().getAponaLohitFont());
+            }
             return convertView;
         }
 
@@ -165,9 +172,7 @@ public class ConfirmPaymentActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if (this != null) {
-                this.onBackPressed();
-            }
+            this.onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -217,19 +222,16 @@ public class ConfirmPaymentActivity extends AppCompatActivity {
     }
 
     private class ResponseAsyncNext extends AsyncTask<String, String, JSONObject> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(ConfirmPaymentActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+          showProgressDialog();
         }
 
         @Override
         protected JSONObject doInBackground(String... params) {
             JSONParser jParser = new JSONParser();
-            // Getting JSON from URL
             String url = params[0] + params[1] + params[2] + params[3] + params[4] + params[5] + params[6];
             //String url = params[0] + params[1] + params[2] + params[3] + params[4];
             return jParser.getJSONFromUrl(url);
@@ -237,7 +239,7 @@ public class ConfirmPaymentActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(JSONObject jsonObject) {
-            progressDialog.cancel();
+           dismissProgressDialog();
             try {
                 String status = jsonObject.getString(TAG_RESPONSE_STATUS);
                 mMessage = jsonObject.getString(TAG_MESSAGE);
@@ -276,5 +278,4 @@ public class ConfirmPaymentActivity extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
     }
-
 }

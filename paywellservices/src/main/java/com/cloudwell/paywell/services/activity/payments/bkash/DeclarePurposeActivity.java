@@ -3,7 +3,6 @@ package com.cloudwell.paywell.services.activity.payments.bkash;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,7 +16,6 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.util.Base64;
@@ -36,6 +34,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.payments.PaymentsMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
@@ -51,7 +50,6 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -64,7 +62,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DeclarePurposeActivity extends AppCompatActivity {
+public class DeclarePurposeActivity extends BaseActivity {
 
     private String TAG_STATUS = "Status";
     private String TAG_TRX_DETAILS = "Trx Details";
@@ -247,6 +245,11 @@ public class DeclarePurposeActivity extends AppCompatActivity {
                         convertView.setTag(holder);
                         holder.textView.clearComposingText();
                         holder.textView.setText(mData.get(position));
+                        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                            holder.textView.setTypeface(AppController.getInstance().getOxygenLightFont());
+                        } else {
+                            holder.textView.setTypeface(AppController.getInstance().getAponaLohitFont());
+                        }
                         break;
                     case TYPE_ITEM:
                         convertView = mInflater.inflate(R.layout.purpose_declare_list_row, parent, false);
@@ -261,6 +264,13 @@ public class DeclarePurposeActivity extends AppCompatActivity {
                         String textTime = getString(R.string.time_des) + " " + splitArray_row_first[3];
                         holder.amount.setText(textAmount);
                         holder.time.setText(textTime);
+                        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                            holder.amount.setTypeface(AppController.getInstance().getOxygenLightFont());
+                            holder.time.setTypeface(AppController.getInstance().getOxygenLightFont());
+                        } else {
+                            holder.amount.setTypeface(AppController.getInstance().getAponaLohitFont());
+                            holder.time.setTypeface(AppController.getInstance().getAponaLohitFont());
+                        }
                         break;
                 }
             } else {
@@ -272,6 +282,11 @@ public class DeclarePurposeActivity extends AppCompatActivity {
                         convertView.setTag(holder);
                         holder.textView.clearComposingText();
                         holder.textView.setText(mData.get(position));
+                        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                            holder.textView.setTypeface(AppController.getInstance().getOxygenLightFont());
+                        } else {
+                            holder.textView.setTypeface(AppController.getInstance().getAponaLohitFont());
+                        }
                         break;
                     case TYPE_ITEM:
                         convertView = mInflater.inflate(R.layout.purpose_declare_list_row, parent, false);
@@ -286,7 +301,13 @@ public class DeclarePurposeActivity extends AppCompatActivity {
                         String textTime = getString(R.string.time_des) + " " + splitArray_row_second[3];
                         holder.amount.setText(textAmount);
                         holder.time.setText(textTime);
-
+                        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                            holder.amount.setTypeface(AppController.getInstance().getOxygenLightFont());
+                            holder.time.setTypeface(AppController.getInstance().getOxygenLightFont());
+                        } else {
+                            holder.amount.setTypeface(AppController.getInstance().getAponaLohitFont());
+                            holder.time.setTypeface(AppController.getInstance().getAponaLohitFont());
+                        }
                         break;
                 }
             }
@@ -402,8 +423,6 @@ public class DeclarePurposeActivity extends AppCompatActivity {
 
                     @Override
                     public void onClick(View view) {
-                        // Do something when button positive clicked
-                        // Your validation is here
                         if (!cd.isConnectingToInternet()) {
                             AppHandler.showDialog(getSupportFragmentManager());
                         } else {
@@ -414,10 +433,10 @@ public class DeclarePurposeActivity extends AppCompatActivity {
                                     mAmount = array[2];
                                     mSenderName = etSenderName.getText().toString().trim();
 
-                                    try{
+                                    try {
                                         mSenderPhn = etSenderPhn.getText().toString().trim();
                                         long phnNumber = Long.valueOf(mSenderPhn);
-                                    }catch (Exception ex) {
+                                    } catch (Exception ex) {
                                         //handle exception here
                                         etSenderPhn.setError(getString(R.string.phone_no_error_msg));
                                         return;
@@ -463,13 +482,11 @@ public class DeclarePurposeActivity extends AppCompatActivity {
 
                     @Override
                     public void onClick(View view) {
-                        // Do something when button negative clicked
                         dialog.dismiss();
                     }
                 });
             }
         });
-
         alertDialog.show();
     }
 
@@ -533,13 +550,11 @@ public class DeclarePurposeActivity extends AppCompatActivity {
     }
 
     private class PDAsyncTask extends AsyncTask<String, String, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(DeclarePurposeActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -549,7 +564,6 @@ public class DeclarePurposeActivity extends AppCompatActivity {
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(params[0]);
             try {
-                //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(11);
                 nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("pin", mAppHandler.getPin()));
@@ -579,7 +593,7 @@ public class DeclarePurposeActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             if (result != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
@@ -634,13 +648,11 @@ public class DeclarePurposeActivity extends AppCompatActivity {
     }
 
     private class CheckPDAsyncTask extends AsyncTask<String, String, JSONObject> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(DeclarePurposeActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -653,7 +665,7 @@ public class DeclarePurposeActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(JSONObject jsonObject) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             try {
                 String status = jsonObject.getString(TAG_STATUS);
                 if (status.equalsIgnoreCase("200")) {

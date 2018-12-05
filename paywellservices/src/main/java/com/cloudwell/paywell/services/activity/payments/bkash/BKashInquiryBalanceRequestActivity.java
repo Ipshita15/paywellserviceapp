@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
@@ -19,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -35,7 +35,7 @@ import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BKashInquiryBalanceRequestActivity extends AppCompatActivity implements View.OnClickListener {
+public class BKashInquiryBalanceRequestActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String REQUEST_TYPE = "requestType";
     public static final String PW_BALANCE = "pwBalance";
@@ -77,9 +77,15 @@ public class BKashInquiryBalanceRequestActivity extends AppCompatActivity implem
     private void initView() {
         mBkashAmount = findViewById(R.id.etReqBalance);
         mBtnSubmit = findViewById(R.id.bKashReqConfirm);
-        ((TextView) _linearLayout.findViewById(R.id.tvSelectAmount)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        mBkashAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mBtnSubmit.setTypeface(AppController.getInstance().getOxygenLightFont());
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            ((TextView) _linearLayout.findViewById(R.id.tvSelectAmount)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            mBkashAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mBtnSubmit.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            ((TextView) _linearLayout.findViewById(R.id.tvSelectAmount)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            mBkashAmount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mBtnSubmit.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
         mBtnSubmit.setOnClickListener(this);
     }
 
@@ -87,7 +93,6 @@ public class BKashInquiryBalanceRequestActivity extends AppCompatActivity implem
     public void onClick(View v) {
         if (v == mBtnSubmit) {
             if (mBkashAmount.getText().toString().matches("^0") || mBkashAmount.getText().toString().matches("^00") || mBkashAmount.getText().toString().length() == 0) {
-                // Not allowed
                 mBkashAmount.setError(Html.fromHtml("<font color='red'>" + getString(R.string.amount_error_msg) + "</font>"));
             } else {
                 bAmount = mBkashAmount.getText().toString().trim();
@@ -140,13 +145,11 @@ public class BKashInquiryBalanceRequestActivity extends AppCompatActivity implem
     }
 
     private class ResponseAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(BKashInquiryBalanceRequestActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -177,7 +180,7 @@ public class BKashInquiryBalanceRequestActivity extends AppCompatActivity implem
         @Override
         protected void onPostExecute(String result) {
             Log.e("logTag", result);
-            progressDialog.cancel();
+            dismissProgressDialog();
             if (result != null) {
                 String[] splitArray = result.split("@");
                 txt = String.valueOf(splitArray[1]);
@@ -208,9 +211,7 @@ public class BKashInquiryBalanceRequestActivity extends AppCompatActivity implem
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if (this != null) {
-                this.onBackPressed();
-            }
+            this.onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);

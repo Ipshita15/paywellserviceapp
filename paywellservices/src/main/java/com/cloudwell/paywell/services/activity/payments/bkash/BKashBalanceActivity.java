@@ -34,9 +34,16 @@ public class BKashBalanceActivity extends AppCompatActivity {
 
         mRelativeLayout = (RelativeLayout) findViewById(R.id.linearLayout);
         tvMainBalance = (TextView) findViewById(R.id.bKashBalance);
-        tvMainBalance.setTypeface(AppController.getInstance().getOxygenLightFont());
         mButtonPurposeDeclare = (Button) findViewById(R.id.btnPurposeDeclare);
-        mButtonPurposeDeclare.setTypeface(AppController.getInstance().getOxygenLightFont());
+
+        mAppHandler = new AppHandler(getApplicationContext());
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            tvMainBalance.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mButtonPurposeDeclare.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            tvMainBalance.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mButtonPurposeDeclare.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
 
         String response = null;
         Bundle bundle = getIntent().getExtras();

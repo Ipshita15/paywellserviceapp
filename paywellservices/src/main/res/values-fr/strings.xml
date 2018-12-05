@@ -40,8 +40,6 @@
     <string name="home_topup_trx_log">লেনদেন</string>
     <string name="home_utility_pollibiddut">পল্লী বিদ্যুৎ</string>
     <string name="home_utility_qubee">কিউবি</string>
-    <string name="home_utility_passport">পাসপোর্ট</string>
-    <string name="home_utility_nid_title">ন্যাশনাল আইডি</string>
     <string name="home_utility_beximco">রিয়েল ভিউ</string>
     <string name="home_utility_ivac">আইভিএসি</string>
     <string name="home_utility_banglalion">বাংলালায়ন</string>
@@ -60,17 +58,9 @@
     <string name="home_utility_qubee_wrong_amount_title">ভুল টাকার পরিমান</string>
     <string name="home_utility_qubee_payment">না পৌঁছানোর\nঅভিযোগ</string>
     <string name="home_utility_qubee_payment_title">না পৌঁছানোর অভিযোগ</string>
-    <string name="home_utility_passport_pay_fee">পাসপোর্ট বিল\nপ্রদান</string>
-    <string name="home_utility_passport_pay_fee_title">পাসপোর্ট বিল প্রদান</string>
-    <string name="home_utility_passport_status_inquiry">পেমেন্ট সংক্রান্ত\nঅনুসন্ধান</string>
-    <string name="home_utility_passport_status_inquiry_title">পেমেন্ট সংক্রান্ত অনুসন্ধান</string>
-    <string name="home_utility_nid_correction">সংশোধনী বিল\nপ্রদান</string>
-    <string name="home_utility_nid_correction_title">সংশোধনী বিল প্রদান</string>
     <string name="home_utility_ivac_fee_pay">ফি পরিশোধ</string>
     <string name="home_payment_bkash">বিকাশ থেকে\nপ্রাপ্ত পেমেন্ট</string>
     <string name="home_payment_bkash_title">বিকাশ থেকে প্রাপ্ত পেমেন্ট</string>
-    <string name="home_payment_pay_to_rocket">রকেট পেমেন্ট</string>
-    <string name="home_payment_transactions">লেনদেনের\nবিবরণী</string>
     <string name="home_payment_transactions_title">লেনদেনের বিবরণী</string>
     <string name="home_bkash_last_trx">সফল\nলেনদেন</string>
     <string name="home_bkash_last_trx_title">সফল লেনদেন</string>
@@ -89,9 +79,6 @@
     <string name="home_bkash_cash_req">ক্যাশের জন্য\nঅনুরোধ</string>
     <string name="home_bkash_cash_req_title">ক্যাশের জন্য অনুরোধ</string>
     <string name="home_bkash_paywell_balance_return">পেওয়েল\nব্যালেন্স\nফেরত</string>
-    <string name="home_rocket_pay_to">পেমেন্ট</string>
-    <string name="home_rocket_pay_inquiry">পেমেন্ট\nঅনুসন্ধান</string>
-    <string name="home_rocket_pay_inquiry_title">পেমেন্ট অনুসন্ধান</string>
     <string name="home_eticket_bus">বাস টিকেট</string>
     <string name="home_eticket_train">ট্রেন টিকেট</string>
     <string name="home_product_ajker_deal">আজকের ডিল</string>
@@ -101,9 +88,6 @@
     <string name="home_settings_change_pin">পিন পরিবর্তন</string>
     <string name="home_settings_upgrade">আপগ্রেড</string>
     <string name="home_settings_change_language">ভাষা\nপরিবর্তন</string>
-    <string name="home_refill_bkash">বিকাশ</string>
-    <string name="home_refill_rocket">রকেট</string>
-    <string name="home_refill_mcash">এমক্যাশ</string>
     <string name="home_refill_sda_info">ডিলার সংক্রান্ত\nতথ্য</string>
     <string name="home_refill_bank">ব্যাংক ডিপোজিট</string>
     <string name="home_refill_card">কার্ড</string>
@@ -114,7 +98,6 @@
     <string name="home_bank_scb">স্ট্যান্ডার্ড\nচার্টার্ড ব্যাংক</string>
     <string name="home_bank_city">সিটি ব্যাংক</string>
     <string name="home_mfs_mycash">মাইক্যাশ</string>
-    <string name="home_mfs_trust_bank">ট্রাস্ট ব্যাংক</string>
     <string name="home_utility_desco">ডেসকো</string>
     <string name="home_utility_dpdc">ডিপিডিসি</string>
     <string name="home_fund_management">ফান্ড\nব্যবস্থাপনা</string>
@@ -151,13 +134,12 @@
     <string name="home_all_service">সকল\nসার্ভিসেস</string>
     <string name="home_utility_postpaid_bill_pay">পোস্টপেইড\nবিল প্রদান</string>
     <string name="home_utility_postpaid_bill_inq">পোস্টপেইড\nবিল অনুসন্ধান</string>
-    <string name="home_utility_prepaid_bill_inq">প্রিপেইড\nবিল অনুসন্ধান</string>
     <string name="home_utility_banglalion_recharge">বাংলালায়ন\nরিচার্জ</string>
     <string name="home_utility_banglalion_recharge_title">বাংলালায়ন রিচার্জ</string>
     <string name="banglalion_acc_no">গ্রাহক আইডি/গ্রাহক নম্বর/এমএসআইএসডিএন</string>
 
     <string name="home_gp">জিপি</string>
-    <string name="home_skitto">স্কিটতো</string>
+    <string name="home_skitto">স্কিটো</string>
     <string name="home_bl">বাংলালিংক</string>
     <string name="home_at">এয়ারটেল</string>
     <string name="home_rb">রবি</string>
@@ -169,7 +151,6 @@
     <string name="version_upgrade">ভার্শন আপগ্রেড</string>
     <string name="upgrade_msg">নতুন ভার্শন এসেছে। অনুগ্রহ করে অবিলম্বে আপগ্রেড করুন। </string>
     <string name="auto_date_time_msg">এই অ্যাপ্লিকেশনটি ব্যবহার করতে, আপনাকে অটো তারিখ এবং সময় সক্রিয় করতে হবে।</string>
-    <string name="access_msg">অ্যাক্সেস করার জন্য আপনাকে অনুমতি দিতে হবে</string>
     <string name="access_denied_msg">অনুমতি অস্বীকার</string>
     <string name="conn_timeout_msg">সংযোগ সময় শেষ, দয়া করে আবার চেষ্টা করুন!</string>
     <string name="try_again_msg">পুনরায় চেষ্টা করুন</string>
@@ -179,21 +160,14 @@
     <string name="phone_no_title_msg">ফোন নম্বর</string>
     <string name="phone_no_error_msg">সঠিক ফোন নম্বর দিন</string>
     <string name="amount_error_msg">সর্বনিম্ন ১ ডিজিট দিন</string>
-    <string name="amount_limit_error_msg">সর্বনিম্ন ২০ থেকে ১০০০০</string>
     <string name="pin_no_error_msg">পিন নম্বর দিন</string>
     <string name="pb_acc_error_msg">সর্বনিম্ন ৮ ডিজিট দিন</string>
     <string name="pb_acc_mismatch_error_msg">অ্যাকাউন্ট নম্বর মিলেনি</string>
     <string name="pb_full_name_error_msg">সম্পূর্ণ নাম দিন</string>
     <string name="qubee_acc_error_msg">সর্বনিম্ন ৪ ডিজিট দিন</string>
-    <string name="passport_first_name_error_msg">নামের প্রথমাংশ দিন</string>
-    <string name="passport_last_name_error_msg">নামের শেষাংশ দিন</string>
-    <string name="passport_email_error_msg">সঠিক ইমেইল দিন</string>
-    <string name="nid_card_error_msg">ন্যাশনাল আইডি নং দিন</string>
     <string name="id_phone_error_msg">ফোন নম্বর বা আইডি দিন</string>
-    <string name="fillup_error_msg">সঠিকভাবে পূরণ করুন</string>
     <string name="selection_error_msg">সঠিকভাবে নির্বাচন করুন</string>
     <string name="journey_date_select_error_msg">যাত্রা শুরু নির্বাচন করুন</string>
-    <string name="previous_journey_date_select_error_msg">পূর্ববর্তী তারিখ দেওয়া যাবে না</string>
     <string name="seat_select_error_msg">আসন নির্বাচন করুন</string>
     <string name="seat_limit_select_error_msg">সর্বোচ্চ ৪টি আসন নির্বাচন করা যাবে</string>
     <string name="ticket_name_error_msg">নাম দিন</string>
@@ -223,17 +197,12 @@
     <string name="prepaid_msg">প্রি পেইড</string>
     <string name="postpaid_msg">পোস্ট পেইড</string>
     <string name="conf_topup_title_msg">অনুরোধ বিস্তারিত</string>
-    <string name="correction_fee_first_time_msg">সংশোধনী ফি - প্রথমবার</string>
-    <string name="amount_value_msg">টাকাঃ ২৩৬ টাকা</string>
     <string name="purpose_type_msg">উদ্দেশ্যর ধরন</string>
     <string name="fund_transfer_title_msg">ট্রান্সফার</string>
     <string name="alert_transfer_msg">আপনি কি নিশ্চিত?</string>
     <string name="alert_reverse_msg">আপনি রিভার্স করার জন্য নিশ্চিত</string>
     <string name="confirm_title_msg">নিশ্চিতকরণ</string>
     <string name="alert_confirm_msg">আপনি কি ক্যাশ টাকা হাতে পেয়েছেন?</string>
-    <string name="employee_payment_msg">কর্মচারী পেমেন্ট</string>
-    <string name="supplier_payment_msg">সরবরাহকারী পেমেন্ট</string>
-    <string name="incentive_payment_msg">ইনসেন্টিভ পেমেন্ট</string>
     <string name="from_city_msg">যাত্রা শুরু</string>
     <string name="to_city_msg">গন্তব্য</string>
     <string name="select_city_ticket_msg">শহর নির্বাচন</string>
@@ -266,8 +235,6 @@
     <string name="offer_talk_time_msg">Talk Time</string>
     <string name="offer_internet_msg">Internet</string>
     <string name="offer_other_msg">Other</string>
-    <string name="trx_title_bkash_msg">bKash</string>
-    <string name="trx_title_rocket_msg">Rocket</string>
     <string name="merchant_type_error_msg">মার্চেন্টের ধরন সিলেক্ট করুন</string>
     <string name="business_type_error_msg">ব্যবসার ধরন সিলেক্ট করুন</string>
     <string name="center_error_msg">কেন্দ্র সিলেক্ট করুন</string>
@@ -326,20 +293,12 @@
     <string name="qubee_incorrect_amount_des">ভুল টাকার পরিমানঃ</string>
     <string name="qubee_correct_amount_des">সঠিক টাকার পরিমানঃ</string>
     <string name="message_des">তথ্যঃ</string>
-    <string name="first_name_des">নামের প্রথমাংশঃ</string>
-    <string name="last_name_des">নামের শেষাংশঃ</string>
-    <string name="email_des">ইমেইলঃ</string>
-    <string name="nid_no_des">ন্যাশনাল আইডি নম্বরঃ</string>
-    <string name="nid_or_phone_des">ন্যাশনাল আইডি অথবা ফোন নম্বরঃ</string>
     <string name="bkash_frozen_balance_des">অনাদায়ী ব্যালেন্সঃ</string>
     <string name="bkash_declare_balance_des">পেমেন্টের উদ্দেশ্য সিলেক্ট করুনঃ</string>
     <string name="bkash_verification_balance_des">অযাচাইকৃত ব্যালেন্সঃ</string>
     <string name="balance_des">ব্যালেন্সঃ</string>
     <string name="tk_des">টাকা</string>
     <string name="phone_or_id_des">ফোন নম্বর বা লেনদেনের আইডিঃ</string>
-    <string name="purpose_des">উদ্দেশ্যঃ</string>
-    <string name="from_date_des">শুরুর তারিখঃ</string>
-    <string name="to_date_des">শেষের তারিখঃ</string>
     <string name="from_city_ticket_des">যাত্রা শুরুঃ</string>
     <string name="to_city_ticket_des">গন্তব্যঃ</string>
     <string name="journey_date_ticket_des">যাত্রার দিনঃ</string>
@@ -389,9 +348,6 @@
     <string name="pre_paid_str">prepaid</string>
     <string name="post_paid_str">postpaid</string>
     <string name="image_city_str">City</string>
-    <string name="employee_payment_str">Employee Payment</string>
-    <string name="supplier_payment_str">Supplier Payment</string>
-    <string name="incentive_payment_str">Incentive Payment</string>
 
     <string name="star_sign">*</string>
 
@@ -404,8 +360,6 @@
     <string name="date_format">EEE dd-MMM-yyyy</string>
     <string name="time_format">"yyyy-MM-dd</string>
     <string name="paywell_footer">https://www.paywellonline.com</string>
-    <string name="select_to_date">Select To Date</string>
-    <string name="select_from_date">Select From Date</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
@@ -432,10 +386,6 @@
         <item>2016</item>
         <item>2017</item>
         <item>2018</item>
-    </string-array>
-    <string-array name="passport_fee_array">
-        <item>স্বাভাবিক ফি (৩৪৫০ টাকা)</item>
-        <item>দ্রুতগামী ফি (৬৯০০ টাকা)</item>
     </string-array>
     <string-array name="sampleStrings" formatted="false">
         <item>পেওয়েল তথ্য প্রযুক্তি নির্ভর একটি সার্ভিস প্লাটফর্ম যা মোবাইল রিচার্জ, মোবাইল ব্যাংকিং, ইউটিলিটি বিল, পাসপোর্ট, ন্যাশনাল আইডি ফি গ্রহন ও অ্যাসিস্টেড
@@ -565,8 +515,6 @@
     <string name="missing_reg_url">https://www.paywellonline.com/crs3291/android/sales_manager/getUnverifiedData.php</string>
 
     <!-- Topup -->
-    <string name="single_top">https://www.paywellonline.com/crs3291/live/topup.php?</string>
-    <string name="multi_top">https://www.paywellonline.com/crs3291/live/multiple_topup.php?</string>
     <string name="inq_top">https://www.paywellonline.com/default/api/enquiry.php?</string>
     <string name="trx_log">https://www.paywellonline.com/crs3291/live/view_log.php?</string>
     <string name="topup_offer">https://api.paywellonline.com/Android/GetRechargeOffer?</string>
@@ -574,7 +522,6 @@
     <string name="mobileOperator">সকল অপারেটর</string>
     <string name="operator"> অপারেটর</string>
     <string name="brilliant">ব্রিলিয়ান্ট</string>
-    <string name="home_utility_dpdc_prepaid">প্রিপেইড</string>
     <string name="brilliant_topup">ব্রিলিয়ান্ট টপআপ</string>
     <string name="paywell_trx_id">পেওয়েল লেনদেন আইডি:</string>
     <string name="brilliant_trx_id">ব্রিলিয়ান্ট লেনদেন আইডি:</string>
@@ -592,15 +539,11 @@
     <string name="qb_inq">https://www.paywellonline.com/default/api/qubee/wimax_enquery.php?</string>
     <string name="qb_com">https://www.paywellonline.com/default/api/qubee/wimax_reversal.php?</string>
 
-    <string name="nid_or_passport_billpay">https://api.paywellonline.com/paywelltransactionDIPNID/dipNidBillPay?</string>
-    <string name="nid_or_passport_query">https://api.paywellonline.com/paywelltransactionDIPNID/dipnidStatusQuery?</string>
-
     <string name="desco_bill_enq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
     <string name="desco_bill_pay">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
 
     <string name="dpdc_postpaid_bill_inq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DPDC</string>
     <string name="dpdc_postpaid_bill_pay">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DPDC</string>
-    <string name="dpdc_prepaid_bill_inq">https://api.paywellonline.com/PaywelltransactionDPDCPrepaid/getDPDCTransactionReport?</string>
 
     <string name="wasa_bill">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_WASA</string>
 
@@ -623,7 +566,6 @@
     <string name="train_source_url">https://www.paywellonline.com/banglalink_services/train.php?</string>
 
     <!-- Payment -->
-    <string name="bkash_rocket_combo_trx">https://api.paywellonline.com/Android/AndiroidStatement?</string>
     <string name="bkash_trx_check">https://bkapi.paywellonline.com/retailer/lastSuccessfulTrx.php?</string>
     <string name="bkash_balance_check">https://bkapi.paywellonline.com/retailer/userBalanceCheck.php?</string>
     <string name="bkash_paymnt_req_paywell">https://bkapi.paywellonline.com/retailer/payment_request_for_pwl_balance.php?</string>
@@ -635,9 +577,6 @@
     <string name="bkash_inq_url">https://bkapi.paywellonline.com/retailer/transactionInquiry.php?</string>
     <string name="bkash_reverse_inq_url">https://api.paywellonline.com/PaywelltransactionRetailer/GetGateWayPaymentRequestList</string>
     <string name="bkash_reverse_url">https://api.paywellonline.com/PaywelltransactionRetailer/CancelPaywellBalanceRequestAndRevesresBalnceInBkashwallet</string>
-
-    <string name="rocket_cash_in">https://api.paywellonline.com/PaywelltransactionDBBLAgent/DbblAgentSystem?</string>
-    <string name="rocket_inquiry">https://api.paywellonline.com/PaywelltransactionDBBLAgent/DBBLAgentStatusQuery?</string>
 
     <!-- MFS -->
     <string name="mycash_generate_otp">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/GenerateOTP?</string>
@@ -653,9 +592,6 @@
     <string name="mycash_balance_transfer">https://api.paywellonline.com/PaywelltransactionMYCash/DoMyCahsToCashOrBankTransfer?</string>
     <string name="mycash_balance_transfer_confirm_pending">https://api.paywellonline.com/PaywelltransactionMYCash/CheckMyCashPendingCashRequest?</string>
     <string name="mycash_balance_transfer_confirm">https://api.paywellonline.com/PaywelltransactionMYCash/MyCashPendingCashRequestConfirmation?</string>
-
-    <string name="tbl_req">https://api.paywellonline.com/PaywelltransactionTBL/DOTBLLiftingToRetailerAllocation</string>
-    <string name="tbl_trx_inq">https://api.paywellonline.com/PaywelltransactionTBL/RetailerLiftingInquiry</string>
 
     <!-- Refill -->
     <string name="refill_sda_info">https://api.paywellonline.com/Android/SDAinformation?</string>

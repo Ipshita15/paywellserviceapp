@@ -1,12 +1,10 @@
 package com.cloudwell.paywell.services.activity.utility.ivac;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDialog;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +14,7 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
@@ -35,7 +34,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IvacMainActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
+public class IvacMainActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
 
     private RelativeLayout mRelativeLayout;
     private RadioButton radioButton_five, radioButton_ten, radioButton_twenty, radioButton_fifty, radioButton_hundred, radioButton_twoHundred;
@@ -83,7 +82,6 @@ public class IvacMainActivity extends AppCompatActivity implements CompoundButto
         switch (v.getId()) {
             case R.id.homeBtnBillPay:
                 if (cd.isConnectingToInternet()) {
-                    requestType = TAG_REQUEST_IVAC_GET_CENTER;
                     new TransactionLogAsync().execute(getResources().getString(R.string.utility_ivac_get_center));
                 } else {
                     Snackbar snackbar = Snackbar.make(mRelativeLayout, getResources().getString(R.string.connection_error_msg), Snackbar.LENGTH_LONG);
@@ -94,7 +92,6 @@ public class IvacMainActivity extends AppCompatActivity implements CompoundButto
                 }
                 break;
             case R.id.homeBtnInquiry:
-//                showLimitPrompt();
                 startActivity(new Intent(IvacMainActivity.this, IvacFeeInquiryMainActivity.class));
                 finish();
                 break;
@@ -220,13 +217,11 @@ public class IvacMainActivity extends AppCompatActivity implements CompoundButto
 
     @SuppressWarnings("deprecation")
     private class TransactionLogAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(IvacMainActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+           showProgressDialog();
         }
 
         @Override
@@ -235,21 +230,10 @@ public class IvacMainActivity extends AppCompatActivity implements CompoundButto
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(params[0]);
             try {
-                if (requestType == TAG_REQUEST_IVAC_GET_CENTER) {
-                    //add data
-                    List<NameValuePair> nameValuePairs = new ArrayList<>(2);
-                    nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                    nameValuePairs.add(new BasicNameValuePair("format", "json"));
-                    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                } else if (requestType == TAG_REQUEST_IVAC_FEE_INQUIRY) {
-                    //add data
-                    List<NameValuePair> nameValuePairs = new ArrayList<>(4);
-                    nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                    nameValuePairs.add(new BasicNameValuePair("password", "1234"));
-                    nameValuePairs.add(new BasicNameValuePair("limit", selectedLimit));
-                    nameValuePairs.add(new BasicNameValuePair("format", "json"));
-                    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                }
+                List<NameValuePair> nameValuePairs = new ArrayList<>(2);
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("format", "json"));
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
                 responseTxt = httpclient.execute(httppost, responseHandler);
             } catch (Exception e) {
@@ -264,7 +248,7 @@ public class IvacMainActivity extends AppCompatActivity implements CompoundButto
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             if (result != null) {
                 try {
                     JSONObject object = new JSONObject(result);
@@ -273,17 +257,10 @@ public class IvacMainActivity extends AppCompatActivity implements CompoundButto
                     String msg = object.getString(TAG_RESPONSE_IVAC_MSG);
 
                     if (status.equalsIgnoreCase("200")) {
-                        if (requestType == TAG_REQUEST_IVAC_GET_CENTER) {
-                            JSONArray jsonArray = object.getJSONArray(TAG_RESPONSE_IVAC_CENTER_DETAILS);
-                            IvacFeePayActivity.TAG_CENTER_DETAILS = jsonArray.toString();
-                            startActivity(new Intent(IvacMainActivity.this, IvacFeePayActivity.class));
-                            finish();
-                        } else if (requestType == TAG_REQUEST_IVAC_FEE_INQUIRY) {
-                            JSONArray jsonArray = object.getJSONArray(TAG_RESPONSE_IVAC_TRX_DETAILS);
-                            IvacFeeInquiryActivity.TRANSLOG_TAG = jsonArray.toString();
-                            startActivity(new Intent(IvacMainActivity.this, IvacFeeInquiryActivity.class));
-                            finish();
-                        }
+                        JSONArray jsonArray = object.getJSONArray(TAG_RESPONSE_IVAC_CENTER_DETAILS);
+                        IvacFeePayActivity.TAG_CENTER_DETAILS = jsonArray.toString();
+                        startActivity(new Intent(IvacMainActivity.this, IvacFeePayActivity.class));
+                        finish();
                     } else {
                         Snackbar snackbar = Snackbar.make(mRelativeLayout, msg, Snackbar.LENGTH_LONG);
                         snackbar.setActionTextColor(Color.parseColor("#ffffff"));

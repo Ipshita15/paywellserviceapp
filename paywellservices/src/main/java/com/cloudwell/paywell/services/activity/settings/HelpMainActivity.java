@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.WebViewActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -17,7 +18,12 @@ public class HelpMainActivity extends AppCompatActivity implements View.OnClickL
 
     private AppHandler mAppHandler;
     private ConnectionDetector mCd;
-    private Button btnBalanceRefill, btnBkashPayment, btnDpdcBillPay, btnPolliBiddutBillPay, btnAllServices;
+    private String packageNameYoutube = "com.google.android.youtube";
+    private String linkRefillBalance = "https://www.youtube.com/watch?v=mRg-yT20Iyc";
+    private String linkBkashPayment = "https://www.youtube.com/watch?v=wOlYSchfWPo";
+    private String linkDpdcBillPay = "https://www.youtube.com/watch?v=EovJfDwrKSc&t=4s";
+    private String linkPolliBillPay = "https://www.youtube.com/watch?v=SAuIFcUclvs&t=1s";
+    private String linkAllServices = "https://www.youtube.com/watch?v=RNEjADit-PQ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +42,11 @@ public class HelpMainActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void initializeView() {
-        btnBalanceRefill = findViewById(R.id.homeBtnBalanceRefill);
-        btnBkashPayment = findViewById(R.id.homeBtnBkashPayment);
-        btnDpdcBillPay = findViewById(R.id.homeBtnDpdcBillPay);
-        btnPolliBiddutBillPay = findViewById(R.id.homeBtnPolliBiddutBillPay);
-        btnAllServices = findViewById(R.id.homeBtnAllServices);
+        Button btnBalanceRefill = findViewById(R.id.homeBtnBalanceRefill);
+        Button btnBkashPayment = findViewById(R.id.homeBtnBkashPayment);
+        Button btnDpdcBillPay = findViewById(R.id.homeBtnDpdcBillPay);
+        Button btnPolliBiddutBillPay = findViewById(R.id.homeBtnPolliBiddutBillPay);
+        Button btnAllServices = findViewById(R.id.homeBtnAllServices);
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             btnBalanceRefill.setTypeface(AppController.getInstance().getOxygenLightFont());
@@ -70,46 +76,72 @@ public class HelpMainActivity extends AppCompatActivity implements View.OnClickL
             if (!mCd.isConnectingToInternet()) {
                 AppHandler.showDialog(this.getSupportFragmentManager());
             } else {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=mRg-yT20Iyc"));
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.setPackage("com.google.android.youtube");
-                startActivity(intent);
+                boolean isYoutubeInstalled = isAppInstalled(packageNameYoutube);
+                if (isYoutubeInstalled) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkRefillBalance));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setPackage(packageNameYoutube);
+                    startActivity(intent);
+                } else {
+                    WebViewActivity.TAG_LINK = linkRefillBalance;
+                    startActivity(new Intent(HelpMainActivity.this, WebViewActivity.class));
+                }
             }
         } else if (i == R.id.homeBtnBkashPayment) {
             if (!mCd.isConnectingToInternet()) {
                 AppHandler.showDialog(this.getSupportFragmentManager());
             } else {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=wOlYSchfWPo"));
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.setPackage("com.google.android.youtube");
-                startActivity(intent);
+                if (isAppInstalled(packageNameYoutube)) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkBkashPayment));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setPackage(packageNameYoutube);
+                    startActivity(intent);
+                } else {
+                    WebViewActivity.TAG_LINK = linkBkashPayment;
+                    startActivity(new Intent(HelpMainActivity.this, WebViewActivity.class));
+                }
             }
         } else if (i == R.id.homeBtnDpdcBillPay) {
             if (!mCd.isConnectingToInternet()) {
                 AppHandler.showDialog(this.getSupportFragmentManager());
             } else {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=EovJfDwrKSc&t=4s"));
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.setPackage("com.google.android.youtube");
-                startActivity(intent);
+                if (isAppInstalled(packageNameYoutube)) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkDpdcBillPay));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setPackage(packageNameYoutube);
+                    startActivity(intent);
+                } else {
+                    WebViewActivity.TAG_LINK = linkDpdcBillPay;
+                    startActivity(new Intent(HelpMainActivity.this, WebViewActivity.class));
+                }
             }
         } else if (i == R.id.homeBtnPolliBiddutBillPay) {
             if (!mCd.isConnectingToInternet()) {
                 AppHandler.showDialog(this.getSupportFragmentManager());
             } else {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=SAuIFcUclvs&t=1s"));
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.setPackage("com.google.android.youtube");
-                startActivity(intent);
+                if (isAppInstalled(packageNameYoutube)) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkPolliBillPay));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setPackage(packageNameYoutube);
+                    startActivity(intent);
+                } else {
+                    WebViewActivity.TAG_LINK = linkPolliBillPay;
+                    startActivity(new Intent(HelpMainActivity.this, WebViewActivity.class));
+                }
             }
         } else if (i == R.id.homeBtnAllServices) {
             if (!mCd.isConnectingToInternet()) {
                 AppHandler.showDialog(this.getSupportFragmentManager());
             } else {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=RNEjADit-PQ"));
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.setPackage("com.google.android.youtube");
-                startActivity(intent);
+                if (isAppInstalled(packageNameYoutube)) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkAllServices));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setPackage(packageNameYoutube);
+                    startActivity(intent);
+                } else {
+                    WebViewActivity.TAG_LINK = linkAllServices;
+                    startActivity(new Intent(HelpMainActivity.this, WebViewActivity.class));
+                }
             }
         }
     }
@@ -128,5 +160,14 @@ public class HelpMainActivity extends AppCompatActivity implements View.OnClickL
         Intent intent = new Intent(HelpMainActivity.this, SettingsActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    protected boolean isAppInstalled(String packageName) {
+        Intent mIntent = getPackageManager().getLaunchIntentForPackage(packageName);
+        if (mIntent != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

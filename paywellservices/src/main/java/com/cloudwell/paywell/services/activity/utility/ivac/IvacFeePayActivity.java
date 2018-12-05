@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.utility.ivac;
 
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,17 +11,18 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -43,7 +43,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IvacFeePayActivity extends AppCompatActivity {
+public class IvacFeePayActivity extends BaseActivity {
 
     public static String TAG_CENTER_DETAILS = "centerDetails";
     private ConnectionDetector mCd;
@@ -86,12 +86,48 @@ public class IvacFeePayActivity extends AppCompatActivity {
     private void initializeData() {
         mConstraintLayout = findViewById(R.id.constrainLayout);
         spnr_center = findViewById(R.id.spinner_center);
-        textViewAmount = findViewById(R.id.tvFeeAmount);
+
+        TextView _mPin = findViewById(R.id.tvIvacPin);
+        TextView _mCenter = findViewById(R.id.tvIvacCenter);
+        TextView _mAmount = findViewById(R.id.tvIvacAmount);
+        TextView _mWeb = findViewById(R.id.tvIvacWebFileNo);
+        TextView _mPassport = findViewById(R.id.tvIvacPassport);
+        TextView _mPhn = findViewById(R.id.tvIvacPhn);
+        Button _mBtn = findViewById(R.id.btnIvacSubmit);
+
         editTextPassword = findViewById(R.id.etPassword);
+        textViewAmount = findViewById(R.id.tvFeeAmount);
         editTextWebFile = findViewById(R.id.etWebFile);
         editTextPassport = findViewById(R.id.etPassport);
         editTextPhnNum = findViewById(R.id.etPhnNum);
 
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            _mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            editTextPassword.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _mCenter.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _mAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            textViewAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _mWeb.setTypeface(AppController.getInstance().getOxygenLightFont());
+            editTextWebFile.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _mPassport.setTypeface(AppController.getInstance().getOxygenLightFont());
+            editTextPassport.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _mPhn.setTypeface(AppController.getInstance().getOxygenLightFont());
+            editTextPhnNum.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _mBtn.setTypeface(AppController.getInstance().getOxygenLightFont());
+        }else {
+            _mPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            editTextPassword.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _mCenter.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _mAmount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            textViewAmount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _mWeb.setTypeface(AppController.getInstance().getAponaLohitFont());
+            editTextWebFile.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _mPassport.setTypeface(AppController.getInstance().getAponaLohitFont());
+            editTextPassport.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _mPhn.setTypeface(AppController.getInstance().getAponaLohitFont());
+            editTextPhnNum.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _mBtn.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
         editTextWebFile.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(editTextWebFile) {
             @Override
             public boolean onDrawableClick() {
@@ -266,13 +302,11 @@ public class IvacFeePayActivity extends AppCompatActivity {
     }
 
     private class ConfirmFeePayAsync extends AsyncTask<String, String, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(IvacFeePayActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+          showProgressDialog();
         }
 
         @Override
@@ -308,7 +342,7 @@ public class IvacFeePayActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+           dismissProgressDialog();
             if (result != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(result);

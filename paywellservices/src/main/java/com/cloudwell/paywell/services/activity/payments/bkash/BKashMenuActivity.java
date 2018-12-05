@@ -1,12 +1,10 @@
 package com.cloudwell.paywell.services.activity.payments.bkash;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDialog;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +15,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.payments.PaymentsMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
@@ -37,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class BKashMenuActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
+public class BKashMenuActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
 
     private AppHandler mAppHandler;
     private ConnectionDetector mCd;
@@ -47,7 +46,6 @@ public class BKashMenuActivity extends AppCompatActivity implements CompoundButt
     String selectedLimit = "";
     RadioButton radioButton_five, radioButton_ten, radioButton_twenty, radioButton_fifty, radioButton_hundred, radioButton_twoHundred;
     Button requestBtn;
-    boolean root = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,7 +142,6 @@ public class BKashMenuActivity extends AppCompatActivity implements CompoundButt
     }
 
     private void showLimitPrompt() {
-        // custom dialog
         final AppCompatDialog dialog = new AppCompatDialog(this);
         dialog.setTitle(R.string.log_limit_title_msg);
         dialog.setContentView(R.layout.dialog_trx_limit);
@@ -244,13 +241,11 @@ public class BKashMenuActivity extends AppCompatActivity implements CompoundButt
     }
 
     private class PaymentConfirmAsync extends AsyncTask<String, String, JSONObject> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(BKashMenuActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -263,7 +258,7 @@ public class BKashMenuActivity extends AppCompatActivity implements CompoundButt
 
         @Override
         protected void onPostExecute(JSONObject jsonObject) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             try {
                 String status = jsonObject.getString(TAG_RESPONSE_STATUS);
                 String message = jsonObject.getString(TAG_MESSAGE);
@@ -291,13 +286,11 @@ public class BKashMenuActivity extends AppCompatActivity implements CompoundButt
 
     @SuppressWarnings("deprecation")
     private class BkashBalanceAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(BKashMenuActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -327,7 +320,7 @@ public class BKashMenuActivity extends AppCompatActivity implements CompoundButt
 
         @Override
         protected void onPostExecute(String response) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             if (response != null) {
                 String[] splitArray = response.split("@");
                 String txt = String.valueOf(splitArray[1]);
@@ -354,13 +347,11 @@ public class BKashMenuActivity extends AppCompatActivity implements CompoundButt
 
     @SuppressWarnings("deprecation")
     private class TransactionLogAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(BKashMenuActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -391,7 +382,7 @@ public class BKashMenuActivity extends AppCompatActivity implements CompoundButt
 
         @Override
         protected void onPostExecute(String response) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             if (response != null) {
                 String[] splitArray = response.split("@");
                 String txt = String.valueOf(splitArray[1]);

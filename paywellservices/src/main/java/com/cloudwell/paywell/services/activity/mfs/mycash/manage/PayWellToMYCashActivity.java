@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.mfs.mycash.manage;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.ManageMenuActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
@@ -36,14 +35,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PayWellToMYCashActivity extends AppCompatActivity implements View.OnClickListener {
+public class PayWellToMYCashActivity extends BaseActivity implements View.OnClickListener {
 
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
     private LinearLayout mLinearLayout;
     private EditText etAmount;
     private Button btnConfirm;
-    private String mTrxType = "P2M";
     private String mAmount;
     private static final String TAG_STATUS = "status";
     private static final String TAG_MESSAGE = "message";
@@ -69,9 +67,15 @@ public class PayWellToMYCashActivity extends AppCompatActivity implements View.O
         etAmount = findViewById(R.id.mycash_amount);
         btnConfirm = findViewById(R.id.mycash_confirm);
 
-        ((TextView) mLinearLayout.findViewById(R.id.tvMyCashAmount)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        etAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
-        btnConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            ((TextView) mLinearLayout.findViewById(R.id.tvMyCashAmount)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            etAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            ((TextView) mLinearLayout.findViewById(R.id.tvMyCashAmount)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            etAmount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnConfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
 
         btnConfirm.setOnClickListener(this);
     }
@@ -98,13 +102,11 @@ public class PayWellToMYCashActivity extends AppCompatActivity implements View.O
 
 
     private class SubmitAsync extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(PayWellToMYCashActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
 
         }
 
@@ -121,7 +123,7 @@ public class PayWellToMYCashActivity extends AppCompatActivity implements View.O
                 nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("amount", mAmount));
                 nameValuePairs.add(new BasicNameValuePair("password", mAppHandler.getPin()));
-                nameValuePairs.add(new BasicNameValuePair("trx_type", mTrxType));
+                nameValuePairs.add(new BasicNameValuePair("trx_type", "P2M"));
                 nameValuePairs.add(new BasicNameValuePair("service_type", "Fund_Management"));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -139,7 +141,7 @@ public class PayWellToMYCashActivity extends AppCompatActivity implements View.O
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);

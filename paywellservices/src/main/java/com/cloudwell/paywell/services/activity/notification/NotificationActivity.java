@@ -1,13 +1,11 @@
 package com.cloudwell.paywell.services.activity.notification;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +18,8 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 
 import org.apache.http.NameValuePair;
@@ -35,7 +35,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotificationActivity extends AppCompatActivity {
+public class NotificationActivity extends BaseActivity {
 
     public static final String IS_NOTIFICATION_SHOWN = "isNotificationShown";
     private LinearLayout mLinearLayout;
@@ -108,13 +108,12 @@ public class NotificationActivity extends AppCompatActivity {
 
     @SuppressWarnings("deprecation")
     private class NotificationAsync extends AsyncTask<String, Intent, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(NotificationActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+
+            showProgressDialog();
         }
 
         @Override
@@ -147,11 +146,11 @@ public class NotificationActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
+           dismissProgressDialog();
             if (result != null) {
                 try {
                     mStatus[position] = "Read";
                     adapter.notifyDataSetChanged();
-                    progressDialog.dismiss();
                     JSONObject jsonObject = new JSONObject(result);
                     NotificationFullViewActivity.TAG_NOTIFICATION_SOURCE = 1;
                     NotificationFullViewActivity.TAG_NOTIFICATION_POSITION = position;
@@ -215,7 +214,15 @@ public class NotificationActivity extends AppCompatActivity {
             viewHolder.title.setText(NotificationActivity.mTitle[position]);
             viewHolder.date.setText(NotificationActivity.mDate[position]);
             viewHolder.msg.setText(NotificationActivity.mMsg[position]);
-
+            if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                viewHolder.title.setTypeface(AppController.getInstance().getOxygenLightFont());
+                viewHolder.date.setTypeface(AppController.getInstance().getOxygenLightFont());
+                viewHolder.msg.setTypeface(AppController.getInstance().getOxygenLightFont());
+            } else {
+                viewHolder.title.setTypeface(AppController.getInstance().getAponaLohitFont());
+                viewHolder.date.setTypeface(AppController.getInstance().getAponaLohitFont());
+                viewHolder.msg.setTypeface(AppController.getInstance().getAponaLohitFont());
+            }
             return convertView;
         }
 

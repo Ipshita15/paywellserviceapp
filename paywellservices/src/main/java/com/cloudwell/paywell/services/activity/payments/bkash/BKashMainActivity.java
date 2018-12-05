@@ -1,13 +1,11 @@
 package com.cloudwell.paywell.services.activity.payments.bkash;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.WebViewActivity;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.payments.PaymentsMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
@@ -38,7 +38,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BKashMainActivity extends AppCompatActivity implements View.OnClickListener {
+public class BKashMainActivity extends BaseActivity implements View.OnClickListener {
 
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
@@ -46,7 +46,8 @@ public class BKashMainActivity extends AppCompatActivity implements View.OnClick
     private EditText mPin;
     private Button mConfirm;
     private String _pin;
-
+    private String packageNameYoutube = "com.google.android.youtube";
+    private String linkBkashPayment = "https://www.youtube.com/watch?v=wOlYSchfWPo";
     private static final String TAG_RESPONSE_STATUS = "Status";
 
     @Override
@@ -68,9 +69,15 @@ public class BKashMainActivity extends AppCompatActivity implements View.OnClick
         mPin = findViewById(R.id.bkash_pin);
         mConfirm = findViewById(R.id.bkash_confirm);
 
-        ((TextView) mLinearLayout.findViewById(R.id.tvBkashPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            ((TextView) mLinearLayout.findViewById(R.id.tvBkashPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            ((TextView) mLinearLayout.findViewById(R.id.tvBkashPin)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            mPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mConfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
 
         mConfirm.setOnClickListener(this);
     }
@@ -96,14 +103,12 @@ public class BKashMainActivity extends AppCompatActivity implements View.OnClick
     }
 
     private class SubmitAsync extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
+
         private String txt;
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(BKashMainActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
 
         }
 
@@ -134,7 +139,7 @@ public class BKashMainActivity extends AppCompatActivity implements View.OnClick
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             if (result != null) {
                 if (result.startsWith("200")) {
                     mAppHandler.setPin(_pin);
@@ -181,13 +186,11 @@ public class BKashMainActivity extends AppCompatActivity implements View.OnClick
     }
 
     private class PDAsyncTask extends AsyncTask<String, String, JSONObject> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(BKashMainActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -200,7 +203,7 @@ public class BKashMainActivity extends AppCompatActivity implements View.OnClick
 
         @Override
         protected void onPostExecute(JSONObject jsonObject) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             try {
                 String status = jsonObject.getString(TAG_RESPONSE_STATUS);
                 if (status.equalsIgnoreCase("200")) {
@@ -236,10 +239,15 @@ public class BKashMainActivity extends AppCompatActivity implements View.OnClick
             this.onBackPressed();
             return true;
         } else if (item.getItemId() == R.id.action_video) {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=wOlYSchfWPo"));
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setPackage("com.google.android.youtube");
-            startActivity(intent);
+            if (isAppInstalled(packageNameYoutube)) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkBkashPayment));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setPackage(packageNameYoutube);
+                startActivity(intent);
+            } else {
+                WebViewActivity.TAG_LINK = linkBkashPayment;
+                startActivity(new Intent(BKashMainActivity.this, WebViewActivity.class));
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -249,6 +257,15 @@ public class BKashMainActivity extends AppCompatActivity implements View.OnClick
         Intent intent = new Intent(BKashMainActivity.this, PaymentsMainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    protected boolean isAppInstalled(String packageName) {
+        Intent mIntent = getPackageManager().getLaunchIntentForPackage(packageName);
+        if (mIntent != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 

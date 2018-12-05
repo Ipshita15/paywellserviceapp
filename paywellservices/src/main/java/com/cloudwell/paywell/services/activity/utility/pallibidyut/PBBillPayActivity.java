@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.utility.pallibidyut;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -34,7 +33,7 @@ import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PBBillPayActivity extends AppCompatActivity implements View.OnClickListener {
+public class PBBillPayActivity extends BaseActivity implements View.OnClickListener {
 
     private LinearLayout mLinearLayout;
     private EditText mPin, mBillNo, mAmount;
@@ -59,24 +58,33 @@ public class PBBillPayActivity extends AppCompatActivity implements View.OnClick
 
     private void initView() {
         mLinearLayout = findViewById(R.id.linearLayout);
+
         TextView _pin = findViewById(R.id.tvPBPin2);
-        _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mPin = findViewById(R.id.etPBPin2);
-        mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         TextView _billNo = findViewById(R.id.tvPBBillNo);
-        _billNo.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mBillNo = findViewById(R.id.etPBBIllNo);
-        mBillNo.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         TextView _amount = findViewById(R.id.tvPBBillAmount);
-        _amount.setTypeface(AppController.getInstance().getOxygenLightFont());
+
+        mPin = findViewById(R.id.etPBPin2);
+        mBillNo = findViewById(R.id.etPBBIllNo);
         mAmount = findViewById(R.id.etPBBillAmount);
-        mAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         mComfirm = findViewById(R.id.btnPBBillConfirm);
-        mComfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
 
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _billNo.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mBillNo.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _amount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mComfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            _pin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _billNo.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mBillNo.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _amount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mAmount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mComfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
         mComfirm.setOnClickListener(this);
     }
 
@@ -107,13 +115,12 @@ public class PBBillPayActivity extends AppCompatActivity implements View.OnClick
     }
 
     private class SubmitAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(PBBillPayActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+
+            showProgressDialog();
         }
 
         @Override
@@ -145,7 +152,7 @@ public class PBBillPayActivity extends AppCompatActivity implements View.OnClick
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+          dismissProgressDialog();
             try {
                 if (result != null && result.contains("@")) {
                     String splitArray[] = result.split("@");
@@ -210,9 +217,7 @@ public class PBBillPayActivity extends AppCompatActivity implements View.OnClick
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if (this != null) {
-                this.onBackPressed();
-            }
+            this.onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);

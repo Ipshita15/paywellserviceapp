@@ -877,4 +877,5 @@ public class AppHandler {
         editor.putInt(DISPLAY_PICTURE_SIZE_, displayPictureArrayList.size());
         editor.commit();
     }
+
 }

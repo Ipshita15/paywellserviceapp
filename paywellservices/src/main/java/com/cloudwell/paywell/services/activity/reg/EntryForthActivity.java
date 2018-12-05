@@ -1,21 +1,24 @@
 package com.cloudwell.paywell.services.activity.reg;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.TelephonyInfo;
@@ -35,11 +38,9 @@ import java.util.List;
 
 import static com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regModel;
 
-public class EntryForthActivity extends AppCompatActivity {
+public class EntryForthActivity extends BaseActivity {
 
-    private RadioGroup radioGroup_one, radioGroup_two, radioGroup_three;
     private LinearLayout linearLayoutOne, linearLayoutTwo;
-    private TelephonyInfo telephonyInfo;
     private int radio_one = 0, radio_two = 0, radio_three = 0;
     private String email, landmark, sales_code = "", collection_code = "", imeiOne = "", imeiTwo = "", outlet_img = "", nid_img = "",
             nid_back_img = "", owner_img = "", trade_license_img = "", passport_img = "", birth_certificate_img = "",
@@ -58,7 +59,8 @@ public class EntryForthActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        radioGroup_one = findViewById(R.id.radioGroup_one);
+        ScrollView mScrollView = findViewById(R.id.scrollView_forth);
+        RadioGroup radioGroup_one = findViewById(R.id.radioGroup_one);
         linearLayoutOne = findViewById(R.id.linearLayoutOne);
         linearLayoutTwo = findViewById(R.id.linearLayoutTwo);
         radioGroup_one.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -77,7 +79,7 @@ public class EntryForthActivity extends AppCompatActivity {
                 }
             }
         });
-        radioGroup_two = findViewById(R.id.radioGroup_two);
+        RadioGroup radioGroup_two = findViewById(R.id.radioGroup_two);
         radioGroup_two.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -94,7 +96,7 @@ public class EntryForthActivity extends AppCompatActivity {
                 }
             }
         });
-        radioGroup_three = findViewById(R.id.radioGroup_three);
+        RadioGroup radioGroup_three = findViewById(R.id.radioGroup_three);
         radioGroup_three.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -106,6 +108,30 @@ public class EntryForthActivity extends AppCompatActivity {
                 }
             }
         });
+
+        ((TextView) mScrollView.findViewById(R.id.textView_mobileRecharge)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((RadioButton) mScrollView.findViewById(R.id.rechargeYes)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((RadioButton) mScrollView.findViewById(R.id.rechargeNo)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) mScrollView.findViewById(R.id.textView_opetator)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((CheckBox) mScrollView.findViewById(R.id.item_check_gp)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((CheckBox) mScrollView.findViewById(R.id.item_check_bl)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((CheckBox) mScrollView.findViewById(R.id.item_check_rb)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((CheckBox) mScrollView.findViewById(R.id.item_check_at)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((CheckBox) mScrollView.findViewById(R.id.item_check_tt)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) mScrollView.findViewById(R.id.textView_bkashagent)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((RadioButton) mScrollView.findViewById(R.id.agentYes)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((RadioButton) mScrollView.findViewById(R.id.agentNo)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) mScrollView.findViewById(R.id.textView_service)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((CheckBox) mScrollView.findViewById(R.id.item_check_bkash)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((CheckBox) mScrollView.findViewById(R.id.item_check_rocket)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((CheckBox) mScrollView.findViewById(R.id.item_check_mcash)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((CheckBox) mScrollView.findViewById(R.id.item_check_mobile_money)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((CheckBox) mScrollView.findViewById(R.id.item_check_mycash)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) mScrollView.findViewById(R.id.textView_downloadOption)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((RadioButton) mScrollView.findViewById(R.id.downloadYes)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((RadioButton) mScrollView.findViewById(R.id.downloadNo)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) mScrollView.findViewById(R.id.button_nextForth)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) mScrollView.findViewById(R.id.button_preForth)).setTypeface(AppController.getInstance().getAponaLohitFont());
     }
 
     @Override
@@ -142,7 +168,7 @@ public class EntryForthActivity extends AppCompatActivity {
                         || checkBox_eight.isChecked() || checkBox_nine.isChecked() || checkBox_ten.isChecked())) {
                     Toast.makeText(this, "অন্তত একটি সেবা বাছাই করুন", Toast.LENGTH_SHORT).show();
                 } else {
-                    telephonyInfo = TelephonyInfo.getInstance(EntryForthActivity.this);
+                    TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(EntryForthActivity.this);
                     imeiOne = telephonyInfo.getImeiSIM1();
                     imeiTwo = telephonyInfo.getImeiSIM2();
 
@@ -299,7 +325,7 @@ public class EntryForthActivity extends AppCompatActivity {
 
     private class SubmitRequestTask extends AsyncTask<Void, Intent, String> {
 
-        private ProgressDialog progressDialog;
+
         private final String mURL;
         private String operators;
 
@@ -315,9 +341,7 @@ public class EntryForthActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(EntryForthActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -371,7 +395,7 @@ public class EntryForthActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             mSubmitRequestTask = null;
-            progressDialog.dismiss();
+           dismissProgressDialog();
             try {
                 JSONObject jsonObject = new JSONObject(result);
                 String status = jsonObject.getString("status");
@@ -386,7 +410,7 @@ public class EntryForthActivity extends AppCompatActivity {
         @Override
         protected void onCancelled() {
             mSubmitRequestTask = null;
-            progressDialog.dismiss();
+            dismissProgressDialog();
         }
     }
 

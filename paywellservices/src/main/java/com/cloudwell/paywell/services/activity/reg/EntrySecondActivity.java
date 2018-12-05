@@ -1,21 +1,22 @@
 package com.cloudwell.paywell.services.activity.reg;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -29,7 +30,6 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -37,16 +37,13 @@ import java.util.List;
 
 import static com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regModel;
 
-public class EntrySecondActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class EntrySecondActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
 
     private EditText et_landmark;
     private Spinner spnr_district, spnr_thana, spnr_postcode;
     private String str_districtId = "", str_thanaId = "", str_postcodeId = "", str_postcode = "";
-    private ArrayAdapter<CharSequence> arrayAdapter_spinner_district;
-    private ArrayAdapter<CharSequence> arrayAdapter_spinner_thana;
-    private ArrayAdapter<CharSequence> arrayAdapter_spinner_postcode;
-    private String[] district_array_id, district_array_name, thana_array_id, thana_array_name, post_array_id, post_array_name;
-    private String dist_name, thana_name, postcode_name;
+    private String[] district_array_id, thana_array_id, post_array_id, post_array_name;
+    private String dist_name, thana_name;
     private ConnectionDetector cd;
     private boolean isInternetPresent = false;
     private AppHandler mAppHandler;
@@ -63,7 +60,8 @@ public class EntrySecondActivity extends AppCompatActivity implements AdapterVie
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        TextView tv_landmark = findViewById(R.id.textView_landmarke);
+        ScrollView mScrollView = findViewById(R.id.scrollView_second);
+        TextView tv_landmark = findViewById(R.id.textView_landmark);
         String custom_text = "<font color=#41882b>ল্যান্ডমার্কঃ </font> <font color=#b3b3b3>(ঐচ্ছিক)</font>";
         tv_landmark.setText(Html.fromHtml(custom_text));
 
@@ -71,6 +69,14 @@ public class EntrySecondActivity extends AppCompatActivity implements AdapterVie
         et_landmark = findViewById(R.id.editText_landmark);
         spnr_thana = findViewById(R.id.spinner_thana);
         spnr_postcode = findViewById(R.id.spinner_postcode);
+
+        ((TextView) mScrollView.findViewById(R.id.textView_district)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) mScrollView.findViewById(R.id.textView_thana)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((TextView) mScrollView.findViewById(R.id.textView_postcode)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        tv_landmark.setTypeface(AppController.getInstance().getAponaLohitFont());
+        et_landmark.setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) mScrollView.findViewById(R.id.btn_preStep)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) mScrollView.findViewById(R.id.btn_nextStep)).setTypeface(AppController.getInstance().getAponaLohitFont());
 
         spnr_thana.setOnItemSelectedListener(EntrySecondActivity.this);
         spnr_postcode.setOnItemSelectedListener(EntrySecondActivity.this);
@@ -85,7 +91,7 @@ public class EntrySecondActivity extends AppCompatActivity implements AdapterVie
         try {
             JSONArray array = new JSONArray(mAppHandler.getDistrictArray());
 
-            district_array_name = new String[array.length() + 1];
+            String[] district_array_name = new String[array.length() + 1];
             district_array_id = new String[array.length() + 1];
             district_array_name[0] = "Select One";
             district_array_id[0] = "0";
@@ -98,7 +104,7 @@ public class EntrySecondActivity extends AppCompatActivity implements AdapterVie
                 district_array_name[i + 1] = name;
             }
 
-            arrayAdapter_spinner_district = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, district_array_name);
+            ArrayAdapter<CharSequence> arrayAdapter_spinner_district = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, district_array_name);
             spnr_district.setAdapter(arrayAdapter_spinner_district);
             spnr_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -189,7 +195,7 @@ public class EntrySecondActivity extends AppCompatActivity implements AdapterVie
                 }
                 break;
             case R.id.spinner_postcode:
-                postcode_name = adapterView.getItemAtPosition(i).toString();
+                String postcode_name = adapterView.getItemAtPosition(i).toString();
                 if (postcode_name.equals("Select One")) {
                     str_postcodeId = "";
                     str_postcode = "";
@@ -209,13 +215,12 @@ public class EntrySecondActivity extends AppCompatActivity implements AdapterVie
     }
 
     private class GetThanaResponseAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(EntrySecondActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+
+            showProgressDialog();
         }
 
         @SuppressWarnings("deprecation")
@@ -242,8 +247,7 @@ public class EntrySecondActivity extends AppCompatActivity implements AdapterVie
 
         @Override
         protected void onPostExecute(String result) {
-            if (progressDialog.isShowing())
-                progressDialog.dismiss();
+          dismissProgressDialog();
             if (result != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
@@ -251,7 +255,7 @@ public class EntrySecondActivity extends AppCompatActivity implements AdapterVie
                     if (result_status.equals("200")) {
                         JSONArray result_data = jsonObject.getJSONArray("data");
 
-                        thana_array_name = new String[result_data.length() + 1];
+                        String[] thana_array_name = new String[result_data.length() + 1];
                         thana_array_id = new String[result_data.length() + 1];
                         thana_array_name[0] = "Select One";
                         thana_array_id[0] = "0";
@@ -263,7 +267,7 @@ public class EntrySecondActivity extends AppCompatActivity implements AdapterVie
                             thana_array_id[i + 1] = obj.getString("id");
                             thana_array_name[i + 1] = name;
                         }
-                        arrayAdapter_spinner_thana = new ArrayAdapter(EntrySecondActivity.this, android.R.layout.simple_spinner_dropdown_item, thana_array_name);
+                        ArrayAdapter<CharSequence> arrayAdapter_spinner_thana = new ArrayAdapter(EntrySecondActivity.this, android.R.layout.simple_spinner_dropdown_item, thana_array_name);
                         spnr_thana.setAdapter(arrayAdapter_spinner_thana);
                     } else {
                         Toast.makeText(EntrySecondActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
@@ -279,13 +283,11 @@ public class EntrySecondActivity extends AppCompatActivity implements AdapterVie
     }
 
     private class GetPostResponseAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(EntrySecondActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @SuppressWarnings("deprecation")
@@ -314,8 +316,8 @@ public class EntrySecondActivity extends AppCompatActivity implements AdapterVie
 
         @Override
         protected void onPostExecute(String result) {
-            if (progressDialog.isShowing())
-                progressDialog.dismiss();
+            dismissProgressDialog();
+
             if (result != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
@@ -336,7 +338,7 @@ public class EntrySecondActivity extends AppCompatActivity implements AdapterVie
                             post_array_id[i + 1] = obj.getString("id");
                             post_array_name[i + 1] = name;
                         }
-                        arrayAdapter_spinner_postcode = new ArrayAdapter(EntrySecondActivity.this, android.R.layout.simple_spinner_dropdown_item, post_array_name);
+                        ArrayAdapter<CharSequence> arrayAdapter_spinner_postcode = new ArrayAdapter(EntrySecondActivity.this, android.R.layout.simple_spinner_dropdown_item, post_array_name);
                         spnr_postcode.setAdapter(arrayAdapter_spinner_postcode);
                     } else {
                         Toast.makeText(EntrySecondActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();

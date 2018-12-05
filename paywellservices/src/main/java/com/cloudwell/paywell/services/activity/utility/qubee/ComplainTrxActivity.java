@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.utility.qubee;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -35,7 +34,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ComplainTrxActivity extends AppCompatActivity implements View.OnClickListener {
+public class ComplainTrxActivity extends BaseActivity implements View.OnClickListener {
 
     private ConnectionDetector cd;
     private AppHandler mAppHandler;
@@ -61,18 +60,27 @@ public class ComplainTrxActivity extends AppCompatActivity implements View.OnCli
 
     private void initView() {
         mLinearLayout = findViewById(R.id.linearLayout);
+
         TextView _pin = findViewById(R.id.tvQbeePin5);
-        _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mPin = findViewById(R.id.etQubeePin5);
-        mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         TextView _trxId = findViewById(R.id.tvTrxId);
-        _trxId.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mTrxId = findViewById(R.id.etTrxId);
-        mTrxId.setTypeface(AppController.getInstance().getOxygenLightFont());
 
+        mPin = findViewById(R.id.etQubeePin5);
+        mTrxId = findViewById(R.id.etTrxId);
         mConfirmTrx = findViewById(R.id.btnComplainTrxId);
-        mConfirmTrx.setTypeface(AppController.getInstance().getOxygenLightFont());
+
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _trxId.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mTrxId.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mConfirmTrx.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            _pin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _trxId.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mTrxId.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mConfirmTrx.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
         mConfirmTrx.setOnClickListener(this);
     }
 
@@ -107,13 +115,12 @@ public class ComplainTrxActivity extends AppCompatActivity implements View.OnCli
     }
 
     private class SubmitAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(ComplainTrxActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+
+            showProgressDialog();
         }
 
         @Override
@@ -144,7 +151,7 @@ public class ComplainTrxActivity extends AppCompatActivity implements View.OnCli
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             try {
                 if (result != null && result.contains("@")) {
                     String splitArray[] = result.split("@");
@@ -205,9 +212,7 @@ public class ComplainTrxActivity extends AppCompatActivity implements View.OnCli
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if (this != null) {
-                this.onBackPressed();
-            }
+            this.onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);

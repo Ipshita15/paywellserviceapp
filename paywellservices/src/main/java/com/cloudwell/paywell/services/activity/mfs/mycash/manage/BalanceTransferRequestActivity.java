@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.mfs.mycash.manage;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.ManageMenuActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
@@ -36,7 +35,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BalanceTransferRequestActivity extends AppCompatActivity implements View.OnClickListener {
+public class BalanceTransferRequestActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String REQUEST_TYPE = "requestType";
     public static final String BANK_TRANSFER = "MyCashToBank";
@@ -60,7 +59,10 @@ public class BalanceTransferRequestActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_balance_transfer);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         _linearLayout = findViewById(R.id.linearLayout);
         cd = new ConnectionDetector(AppController.getContext());
@@ -83,10 +85,17 @@ public class BalanceTransferRequestActivity extends AppCompatActivity implements
         etAgentOTP = findViewById(R.id.etAgentOTP);
         mBtnSubmit = findViewById(R.id.mycash_confirm);
 
-        ((TextView) _linearLayout.findViewById(R.id.tvAmount)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        etAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
-        etAgentOTP.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mBtnSubmit.setTypeface(AppController.getInstance().getOxygenLightFont());
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            ((TextView) _linearLayout.findViewById(R.id.tvAmount)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            etAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            etAgentOTP.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mBtnSubmit.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            ((TextView) _linearLayout.findViewById(R.id.tvAmount)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            etAmount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            etAgentOTP.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mBtnSubmit.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
         mBtnSubmit.setOnClickListener(this);
 
         if (!mAppHandler.getMYCashOTP().equals("unknown") && !mAppHandler.getMYCashOTP().equals("null")) {
@@ -103,8 +112,7 @@ public class BalanceTransferRequestActivity extends AppCompatActivity implements
             } else if (etAgentOTP.getText().toString().trim().length() == 0) {
                 // Not allowed
                 etAgentOTP.setError(Html.fromHtml("<font color='red'>" + getString(R.string.otp_error_msg) + "</font>"));
-            }
-            else {
+            } else {
                 mAmount = etAmount.getText().toString().trim();
                 mAgentOTP = etAgentOTP.getText().toString().trim();
                 ResponsePrompt();
@@ -126,13 +134,11 @@ public class BalanceTransferRequestActivity extends AppCompatActivity implements
     }
 
     private class ResponseAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(BalanceTransferRequestActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -165,7 +171,7 @@ public class BalanceTransferRequestActivity extends AppCompatActivity implements
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
@@ -227,9 +233,7 @@ public class BalanceTransferRequestActivity extends AppCompatActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if (this != null) {
-                this.onBackPressed();
-            }
+            this.onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);

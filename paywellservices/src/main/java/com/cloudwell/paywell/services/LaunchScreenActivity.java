@@ -2,13 +2,9 @@ package com.cloudwell.paywell.services;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
@@ -18,12 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.activity.AppLoadingActivity;
-import com.crashlytics.android.Crashlytics;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import io.fabric.sdk.android.Fabric;
 
 public class LaunchScreenActivity extends Activity {
 
@@ -40,12 +30,6 @@ public class LaunchScreenActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Fabric.with(this, new Crashlytics());
-        final Fabric fabric = new Fabric.Builder(this)
-                .kits(new Crashlytics())
-                .debuggable(true)
-                .build();
-        Fabric.with(fabric);
         setContentView(R.layout.activity_launchscreen);
 
         StartAnimations();

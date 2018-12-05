@@ -6,7 +6,6 @@ import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
@@ -36,7 +35,6 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Patterns;
@@ -53,6 +51,7 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.about.AboutActivity;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.chat.ChatActivity;
 import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
 import com.cloudwell.paywell.services.activity.mfs.MFSMainActivity;
@@ -63,17 +62,15 @@ import com.cloudwell.paywell.services.activity.product.ProductMenuActivity;
 import com.cloudwell.paywell.services.activity.refill.RefillBalanceMainActivity;
 import com.cloudwell.paywell.services.activity.scan.DisplayQRCodeActivity;
 import com.cloudwell.paywell.services.activity.settings.SettingsActivity;
-import com.cloudwell.paywell.services.activity.sms.SmsReceiver;
 import com.cloudwell.paywell.services.activity.statements.StatementMainActivity;
 import com.cloudwell.paywell.services.activity.terms.TermsActivity;
-import com.cloudwell.paywell.services.activity.topup.TopupMenuActivity;
 import com.cloudwell.paywell.services.activity.topup.TopupMainActivity;
+import com.cloudwell.paywell.services.activity.topup.TopupMenuActivity;
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.adapter.MainSliderAdapter;
 import com.cloudwell.paywell.services.adapter.PicassoImageLoadingService;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
-import com.cloudwell.paywell.services.endpoints.SmsListener;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.UpdateChecker;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -112,37 +109,36 @@ import java.util.regex.Pattern;
 
 import ss.com.bannerslider.Slider;
 import ss.com.bannerslider.event.OnSlideClickListener;
-import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener {
 
     private boolean doubleBackToExitPressedOnce = false;
     private CoordinatorLayout mCoordinateLayout;
     private AppHandler mAppHandler;
     private UpdateChecker mUpdateChecker;
-    public static final long UPDATE_SOFTWARE_INTERVAL = 24 * 60 * 60;// 1 day
-    public static final long PHN_NUM_CHECK_INTERVAL = 24 * 60 * 60;// 1 day
-    public static final long UPDATE_LOCATION_INTERVAL = 7 * 24 * 60 * 60;// 7 day
+    public final long UPDATE_SOFTWARE_INTERVAL = 24 * 60 * 60;// 1 day
+    public final long PHN_NUM_CHECK_INTERVAL = 24 * 60 * 60;// 1 day
+    public final long UPDATE_LOCATION_INTERVAL = 7 * 24 * 60 * 60;// 7 day
     private TextView mToolbarHeading;
     private ConnectionDetector mCd;
-    public static int mNumOfNotification;
+    public int mNumOfNotification;
     private TextView mNotification = null;
     private Toolbar mToolbar;
     private boolean mIsNotificationShown;
-    private static final String TAG_RESPONSE_STATUS = "status";
-    private static final String TAG_RESPONSE_TOTAL_UREAD_MSG = "unread_message";
-    private static final String TAG_RESPONSE_MSG_SUBJECT = "message_sub";
-    private static final String TAG_RESPONSE_MSG_ID = "message_id";
-    private static final String TAG_RESPONSE_MSG_ARRAY = "detail_message";
-    private static final String TAG_RESPONSE_MESSAGE = "message";
-    private static final String TAG_RESPONSE_DATE = "added_datetime";
-    private static final String TAG_RESPONSE_IMAGE = "image_url";
-    private static final String TAG_RESPONSE_TYPE = "type";
-    private static final String TAG_RESPONSE_NOTIFICATION_BALANCE_RETURN_DATA = "balance_return_data";
-    private static final String TAG_RESPONSE_OTP = "otp";
+    private final String TAG_RESPONSE_STATUS = "status";
+    private final String TAG_RESPONSE_TOTAL_UREAD_MSG = "unread_message";
+    private final String TAG_RESPONSE_MSG_SUBJECT = "message_sub";
+    private final String TAG_RESPONSE_MSG_ID = "message_id";
+    private final String TAG_RESPONSE_MSG_ARRAY = "detail_message";
+    private final String TAG_RESPONSE_MESSAGE = "message";
+    private final String TAG_RESPONSE_DATE = "added_datetime";
+    private final String TAG_RESPONSE_IMAGE = "image_url";
+    private final String TAG_RESPONSE_TYPE = "type";
+    private final String TAG_RESPONSE_NOTIFICATION_BALANCE_RETURN_DATA = "balance_return_data";
+    private final String TAG_RESPONSE_OTP = "otp";
     private NavigationView navigationView;
     boolean checkNotificationFlag = false;
-    private PayWellBalanceAsync pwBalanceCheck;
+
     AlertDialog.Builder builderNotification;
     private AlertDialog alertNotification;
     private Slider viewPager;
@@ -151,12 +147,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private Button home_topup, home_utility, home_payments, home_eticket, home_mfs, home_product_catalog, home_statement, home_refill_balance, home_settings;
 
-    private static final int PERMISSIONS_FOR_QR_CODE_SCAN = 100;
-    private static final int PERMISSIONS_REQUEST_FOR_WRITE_EXTERNAL_STORAGE = 101;
-    private static final int PERMISSIONS_REQUEST_FOR_READ_OTP = 102;
-    private static final int PERMISSIONS_REQUEST_ACCESS_LOCATION = 103;
-    private static final int PERMISSIONS_REQUEST_ACCESS_CALL = 104;
-    final static int REQUEST_LOCATION = 1000;
+    private final int PERMISSIONS_FOR_QR_CODE_SCAN = 100;
+    private final int PERMISSIONS_REQUEST_FOR_WRITE_EXTERNAL_STORAGE = 101;
+    private final int PERMISSIONS_REQUEST_FOR_READ_OTP = 102;
+    private final int PERMISSIONS_REQUEST_ACCESS_LOCATION = 103;
+    private final int PERMISSIONS_REQUEST_ACCESS_CALL = 104;
+    final int REQUEST_LOCATION = 1000;
 
     private String phn_num;
     private int phn_num_count;
@@ -169,6 +165,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private int downloadType = 0;
     private int TAG_DOWNLOAD_PLAY_STORE = 1;
+
+
+    // all async
+    private AsyncTask<String, Intent, String> mNotificationAsync;
+    private PayWellBalanceAsync pwBalanceCheck;
+    private AsyncTask<String, Integer, String> mRequestPhnNumberAddAsync;
+    private AsyncTask<String, Integer, String> mConfirmPhnNumberAddAsync;
+    private AsyncTask<String, Intent, String> mPushFirebaseIdTask;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -228,8 +232,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             home_settings.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
 
-
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -288,20 +290,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //////Before
         if (mAppHandler.getPhnNumberVerificationStatus().equalsIgnoreCase("false") || mAppHandler.getMerchantTypeVerificationStatus().equalsIgnoreCase("false")) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
-                // permission has not been granted.
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS}, PERMISSIONS_REQUEST_FOR_READ_OTP);
-            } else {
-                checkPhnNoUpdate();
-            }
+//            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED
+//                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
+//                // permission has not been granted.
+//                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS}, PERMISSIONS_REQUEST_FOR_READ_OTP);
+//            } else {
+            checkPhnNoUpdate();
+            //}
         }
 //      Handle possible data accompanying notification message.
         if (getIntent().getExtras() != null) {
             for (String key : getIntent().getExtras().keySet()) {
                 String value = getIntent().getExtras().getString(key);
                 if (key.equals("Notification") && value.equals("True")) {
-                    new NotificationAsync().execute(getResources().getString(R.string.notif_url));
+                    mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
                 }
             }
         }
@@ -418,7 +420,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (!mIsNotificationShown) {
             if (!mCd.isConnectingToInternet())
                 AppHandler.showDialog(getSupportFragmentManager());
-            new NotificationAsync().execute(getResources().getString(R.string.notif_url));
+            mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
         }
         notificationView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -702,8 +704,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void checkPayWellBalance() {
         pwBalanceCheck = new PayWellBalanceAsync();
-        pwBalanceCheck.execute(
-                getResources().getString(R.string.pw_bal));
+        pwBalanceCheck.execute(getResources().getString(R.string.pw_bal));
     }
 
     @SuppressWarnings("deprecation")
@@ -770,7 +771,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         public void onClick(DialogInterface dialogInterface, int id) {
                                             dialogInterface.dismiss();
                                             checkNotificationFlag = true;
-                                            new NotificationAsync().execute(getResources().getString(R.string.notif_url));
+                                            mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
                                         }
                                     });
                                     alertNotification = builderNotification.create();
@@ -930,24 +931,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 break;
             }
-            case PERMISSIONS_REQUEST_FOR_READ_OTP: {
-                // Check if the only required permission has been granted
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Phone permission has been granted
-                    if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                        checkPhnNoUpdate();
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                } else {
-                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS}, PERMISSIONS_REQUEST_FOR_READ_OTP);
-                }
-                break;
-            }
+//            case PERMISSIONS_REQUEST_FOR_READ_OTP: {
+//                // Check if the only required permission has been granted
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    // Phone permission has been granted
+//                    if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
+//                        checkPhnNoUpdate();
+//                    } else {
+//                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
+//                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+//                        View snackBarView = snackbar.getView();
+//                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+//                        snackbar.show();
+//                    }
+//                } else {
+//                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS}, PERMISSIONS_REQUEST_FOR_READ_OTP);
+//                }
+//                break;
+//            }
             case PERMISSIONS_REQUEST_ACCESS_LOCATION: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was grantedTask
@@ -1384,7 +1385,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     dialogInterface.dismiss();
                     phn_num = etPhn.getText().toString();
                     if (mCd.isConnectingToInternet()) {
-                        new RequestPhnNumberAddAsync().execute(getResources().getString(R.string.otp_for_phn_num), phn_num);
+                        mRequestPhnNumberAddAsync = new RequestPhnNumberAddAsync().execute(getResources().getString(R.string.otp_for_phn_num), phn_num);
                     } else {
                         Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
                         snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -1420,13 +1421,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private class RequestPhnNumberAddAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(MainActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @SuppressWarnings("deprecation")
@@ -1456,7 +1455,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.dismiss();
+            dismissProgressDialog();
             try {
                 JSONObject jsonObject = new JSONObject(result);
 
@@ -1508,13 +1507,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             builder.setView(layout);
 
-            SmsReceiver.bindListener(new SmsListener() {
-                @Override
-                public void messageReceived(String messageText) {
-                    etOtp.setText(messageText);
-                    etOtp.setSelection(etOtp.getText().length());
-                }
-            });
+//            SmsReceiver.bindListener(new SmsListener() {
+//                @Override
+//                public void messageReceived(String messageText) {
+//                    etOtp.setText(messageText);
+//                    etOtp.setSelection(etOtp.getText().length());
+//                }
+//            });
 
             builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
                 @Override
@@ -1526,7 +1525,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         dialogInterface.dismiss();
                         String inputedOtp = etOtp.getText().toString();
                         if (inputedOtp.equalsIgnoreCase(otp)) {
-                            new ConfirmPhnNumberAddAsync().execute(getResources().getString(R.string.conf_phn_num), phn_num, otp);
+                            mConfirmPhnNumberAddAsync = new ConfirmPhnNumberAddAsync().execute(getResources().getString(R.string.conf_phn_num), phn_num, otp);
                         } else {
                             Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_correct_msg, Snackbar.LENGTH_LONG);
                             snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -1559,13 +1558,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private class ConfirmPhnNumberAddAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(MainActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @SuppressWarnings("deprecation")
@@ -1597,7 +1593,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.dismiss();
+            dismissProgressDialog();
+
             try {
                 JSONObject jsonObject = new JSONObject(result);
 
@@ -1634,7 +1631,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void subscribeToPushService() {
         if (mAppHandler.getFirebaseTokenStatus().equals("true")) {
             if (mCd.isConnectingToInternet()) {
-                new PushFirebaseIdTask().execute(getString(R.string.notification_token_url), mAppHandler.getFirebaseId());
+                mPushFirebaseIdTask = new PushFirebaseIdTask().execute(getString(R.string.notification_token_url), mAppHandler.getFirebaseId());
             } else {
                 Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -1645,15 +1642,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    @SuppressWarnings("deprecation")
-    private class PushFirebaseIdTask extends AsyncTask<String, Intent, String> {
-        ProgressDialog progressDialog;
 
+    private class PushFirebaseIdTask extends AsyncTask<String, Intent, String> {
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(MainActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -1684,7 +1677,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.dismiss();
+            dismissProgressDialog();
             if (result != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
@@ -1907,32 +1900,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         viewPager.setOnSlideClickListener(new OnSlideClickListener() {
             @Override
             public void onSlideClick(int position) {
-                currentPage = position;
 
-                String link = mAppHandler.getDisplayPictureArrayList().get(currentPage);
-                // link = "facebook.com";
+                try {
+                    currentPage = position;
 
-                if (link.isEmpty()) {
+                    String link = mAppHandler.getDisplayPictureArrayList().get(currentPage);
 
-                } else if (link.contains("facebook.com")) {
-                    if (!mCd.isConnectingToInternet()) {
-                        AppHandler.showDialog(getSupportFragmentManager());
+
+                    if (link.isEmpty()) {
+
+                    } else if (link.contains("facebook.com")) {
+                        if (!mCd.isConnectingToInternet()) {
+                            AppHandler.showDialog(getSupportFragmentManager());
+                        } else {
+                            goToFacebook();
+                        }
+                    } else if (link.contains("youtube.com")) {
+                        if (!mCd.isConnectingToInternet()) {
+                            AppHandler.showDialog(getSupportFragmentManager());
+                        } else {
+                            Intent mIntent = getPackageManager().getLaunchIntentForPackage("com.google.android.youtube");
+                            if (mIntent != null) {
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.setPackage("com.google.android.youtube");
+                                startActivity(intent);
+                            } else {
+                                WebViewActivity.TAG_LINK = link;
+                                startActivity(new Intent(MainActivity.this, WebViewActivity.class));
+                            }
+                        }
                     } else {
-                        goToFacebook();
+                        WebViewActivity.TAG_LINK = link;
+                        startActivity(new Intent(MainActivity.this, WebViewActivity.class));
                     }
-                } else if (link.contains("youtube.com")) {
-                    if (!mCd.isConnectingToInternet()) {
-                        AppHandler.showDialog(getSupportFragmentManager());
-                    } else {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=mRg-yT20Iyc"));
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.setPackage("com.google.android.youtube");
-                        startActivity(intent);
-                    }
-                } else {
-                    WebViewActivity.TAG_LINK = link;
-                    startActivity(new Intent(MainActivity.this, WebViewActivity.class));
+                } catch (Exception e) {
+
                 }
+
             }
         });
     }
@@ -2010,14 +2015,43 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void showTutorial() {
-        String SHOWCASE_ID_TOPUP = "topup";
-        // single example
-        new MaterialShowcaseView.Builder(this)
-                .setTarget(home_topup)
-                .setDismissText("GOT IT")
-                .setContentText("This is some amazing feature you should know about")
-                .setDelay(500) // optional but starting animations immediately in onCreate can make them choppy
-                .singleUse(SHOWCASE_ID_TOPUP) // provide a unique ID used to ensure it is only shown once
-                .show();
+//        String SHOWCASE_ID_TOPUP = "topup";
+//        // single example
+//        new MaterialShowcaseView.Builder(this)
+//                .setTarget(home_topup)
+//                .setDismissText("GOT IT")
+//                .setContentText("This is some amazing feature you should know about")
+//                .setDelay(500) // optional but starting animations immediately in onCreate can make them choppy
+//                .singleUse(SHOWCASE_ID_TOPUP) // provide a unique ID used to ensure it is only shown once
+//                .show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mNotificationAsync != null) {
+            mNotificationAsync.cancel(true);
+        }
+
+        if (pwBalanceCheck != null) {
+            pwBalanceCheck.cancel(true);
+        }
+
+        if (mRequestPhnNumberAddAsync != null) {
+            mRequestPhnNumberAddAsync.cancel(true);
+        }
+
+        if (mConfirmPhnNumberAddAsync != null) {
+            mConfirmPhnNumberAddAsync.cancel(true);
+        }
+
+        if (mPushFirebaseIdTask != null) {
+            mPushFirebaseIdTask.cancel(true);
+        }
+
+        if (viewPager != null) {
+            Slider.imageLoadingService = null;
+            viewPager = null;
+        }
+        super.onDestroy();
     }
 }

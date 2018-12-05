@@ -1,13 +1,11 @@
 package com.cloudwell.paywell.services.activity.utility.pallibidyut;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDialog;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +16,8 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.WebViewActivity;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
@@ -35,7 +35,7 @@ import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PBMainActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
+public class PBMainActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
 
     private RelativeLayout mRelativeLayout;
     private RadioButton radioButton_five, radioButton_ten, radioButton_twenty, radioButton_fifty, radioButton_hundred, radioButton_twoHundred;
@@ -43,7 +43,8 @@ public class PBMainActivity extends AppCompatActivity implements CompoundButton.
     private ConnectionDetector cd;
     private static AppHandler mAppHandler;
     private static String serviceName;
-
+    private String packageNameYoutube = "com.google.android.youtube";
+    private String linkPolliBillPay = "https://www.youtube.com/watch?v=SAuIFcUclvs&t=1s";
     private static String TAG_SERVICE_REGISTRATION_INQUIRY = "POLLI_REG";
     private static String TAG_SERVICE_BILL_INQUIRY = "POLLI_BILL";
 
@@ -98,10 +99,15 @@ public class PBMainActivity extends AppCompatActivity implements CompoundButton.
             this.onBackPressed();
             return true;
         } else if (item.getItemId() == R.id.action_video) {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=SAuIFcUclvs&t=1s"));
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setPackage("com.google.android.youtube");
-            startActivity(intent);
+            if (isAppInstalled(packageNameYoutube)) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkPolliBillPay));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setPackage(packageNameYoutube);
+                startActivity(intent);
+            } else {
+                WebViewActivity.TAG_LINK = linkPolliBillPay;
+                startActivity(new Intent(this, WebViewActivity.class));
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -245,13 +251,11 @@ public class PBMainActivity extends AppCompatActivity implements CompoundButton.
 
     @SuppressWarnings("deprecation")
     private class TransactionLogAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(PBMainActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -280,7 +284,7 @@ public class PBMainActivity extends AppCompatActivity implements CompoundButton.
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             if (result != null) {
                 if (serviceName.equalsIgnoreCase(TAG_SERVICE_REGISTRATION_INQUIRY)) {
                     PBInquiryRegActivity.TRANSLOG_TAG = result;
@@ -298,6 +302,15 @@ public class PBMainActivity extends AppCompatActivity implements CompoundButton.
                 snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                 snackbar.show();
             }
+        }
+    }
+
+    protected boolean isAppInstalled(String packageName) {
+        Intent mIntent = getPackageManager().getLaunchIntentForPackage(packageName);
+        if (mIntent != null) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

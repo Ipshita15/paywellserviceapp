@@ -25,7 +25,6 @@ public class ResetPinActivity extends AppCompatActivity {
     private static final String TAG_RESPONSE_STATUS = "status";
     private static final String TAG_MESSAGE = "message";
     private RelativeLayout mRelativeLayout;
-    private ConnectionDetector mCd;
     private AppHandler mAppHandler;
     private ProgressBar mProgressbar;
     private TextView mTextView;
@@ -43,7 +42,7 @@ public class ResetPinActivity extends AppCompatActivity {
         mProgressbar = findViewById(R.id.progressBar);
         mTextView = findViewById(R.id.tvMessage);
         mTextView.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mCd = new ConnectionDetector(AppController.getContext());
+        ConnectionDetector mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
 
         if (!mCd.isConnectingToInternet()) {

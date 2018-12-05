@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.utility.banglalion;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -35,17 +34,18 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BanglalionRechargeActivity extends AppCompatActivity implements View.OnClickListener {
+public class BanglalionRechargeActivity extends BaseActivity implements View.OnClickListener {
 
-    private static EditText mPin;
-    private static EditText mAccountNo;
+    private EditText mPin;
+    private EditText mAccountNo;
     private Button mConfirm;
     private ConnectionDetector cd;
-    private static EditText mAmount;
-    private static String accountNo;
-    private static String amount;
+    private EditText mAmount;
+    private String accountNo;
+    private String amount;
     private AppHandler mAppHandler;
     private LinearLayout mLinearLayout;
+    private AsyncTask<String, Integer, String> mSubmitAsync;
 
 
     @Override
@@ -65,22 +65,32 @@ public class BanglalionRechargeActivity extends AppCompatActivity implements Vie
     private void initView() {
         mLinearLayout = findViewById(R.id.banglalionRechargeLL);
         TextView _pin = findViewById(R.id.tvQbeePin);
-        _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mPin = findViewById(R.id.etQubeePin);
-        mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         TextView _qubeeAccNo = findViewById(R.id.tvQbeeAccount);
-        _qubeeAccNo.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mAccountNo = findViewById(R.id.etQubeeAccount);
-        mAccountNo.setTypeface(AppController.getInstance().getOxygenLightFont());
-
         TextView _amount = findViewById(R.id.tvQbeeAmount);
-        _amount.setTypeface(AppController.getInstance().getOxygenLightFont());
-        mAmount = findViewById(R.id.etQbeeAmount);
-        mAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
 
+        mPin = findViewById(R.id.etQubeePin);
+        mAccountNo = findViewById(R.id.etQubeeAccount);
+        mAmount = findViewById(R.id.etQbeeAmount);
         mConfirm = findViewById(R.id.btnQubeeConfirm);
-        mConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _qubeeAccNo.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mAccountNo.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _amount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            _pin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _qubeeAccNo.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mAccountNo.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _amount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mAmount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mConfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
+
         mConfirm.setOnClickListener(this);
     }
 
@@ -99,7 +109,7 @@ public class BanglalionRechargeActivity extends AppCompatActivity implements Vie
                 if (!cd.isConnectingToInternet()) {
                     AppHandler.showDialog(getSupportFragmentManager());
                 } else {
-                    new SubmitAsync().execute(getResources().getString(R.string.banglalion_bill_pay),
+                    mSubmitAsync =  new SubmitAsync().execute(getResources().getString(R.string.banglalion_bill_pay),
                             mAppHandler.getImeiNo(),
                             accountNo,
                             amount,
@@ -110,13 +120,11 @@ public class BanglalionRechargeActivity extends AppCompatActivity implements Vie
     }
 
     private class SubmitAsync extends AsyncTask<String, Integer, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(BanglalionRechargeActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -126,7 +134,6 @@ public class BanglalionRechargeActivity extends AppCompatActivity implements Vie
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(params[0]);
             try {
-                //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(5);
                 nameValuePairs.add(new BasicNameValuePair("userName", params[1]));
                 nameValuePairs.add(new BasicNameValuePair("customerID", params[2]));
@@ -149,7 +156,7 @@ public class BanglalionRechargeActivity extends AppCompatActivity implements Vie
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.cancel();
+            dismissProgressDialog();
             try {
                 JSONObject jsonObject = new JSONObject(result);
                 String status = jsonObject.getString("status");
@@ -184,15 +191,15 @@ public class BanglalionRechargeActivity extends AppCompatActivity implements Vie
         }
     }
 
-    private void showStatusDialog(String msg, String accountNo, String amount, String trxId, String banglalinkTrx, String retailCommission,String hotline) {
+    private void showStatusDialog(String msg, String accountNo, String amount, String trxId, String banglalinkTrx, String retailCommission, String hotline) {
         StringBuilder reqStrBuilder = new StringBuilder();
         reqStrBuilder.append(getString(R.string.acc_no_des) + " " + accountNo
-                        + "\n" + getString(R.string.amount_des) + " " + amount + " " + R.string.tk_des
-                        + "\n" + getString(R.string.trx_id_des) + " " + trxId
-                        + "\n" + getString(R.string.banglalion_trx_id_des) + " " + banglalinkTrx
-                        + "\n" + getString(R.string.retail_commission) + " " + retailCommission + " " + R.string.tk_des
-                        + "\n\n" + getString(R.string.using_paywell_des)
-                        + "\n" + getString(R.string.hotline_des) + " " + hotline);
+                + "\n" + getString(R.string.amount_des) + " " + amount + " " + R.string.tk_des
+                + "\n" + getString(R.string.trx_id_des) + " " + trxId
+                + "\n" + getString(R.string.banglalion_trx_id_des) + " " + banglalinkTrx
+                + "\n" + getString(R.string.retail_commission) + " " + retailCommission + " " + R.string.tk_des
+                + "\n\n" + getString(R.string.using_paywell_des)
+                + "\n" + getString(R.string.hotline_des) + " " + hotline);
         AlertDialog.Builder builder = new AlertDialog.Builder(BanglalionRechargeActivity.this);
         builder.setTitle("Result " + msg);
         builder.setMessage(reqStrBuilder.toString());
@@ -216,6 +223,9 @@ public class BanglalionRechargeActivity extends AppCompatActivity implements Vie
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (mSubmitAsync!=null) {
+            mSubmitAsync.cancel(true);
+        }
     }
 
     @Override
@@ -228,9 +238,7 @@ public class BanglalionRechargeActivity extends AppCompatActivity implements Vie
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if (this != null) {
-                this.onBackPressed();
-            }
+            this.onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);

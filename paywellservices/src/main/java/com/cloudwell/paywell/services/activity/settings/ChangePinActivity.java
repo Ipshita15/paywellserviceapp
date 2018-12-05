@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -35,7 +36,7 @@ import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChangePinActivity extends AppCompatActivity {
+public class ChangePinActivity extends BaseActivity {
 
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
@@ -51,6 +52,9 @@ public class ChangePinActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_settings_change_pin);
         }
+
+        mCd = new ConnectionDetector(AppController.getContext());
+        mAppHandler = new AppHandler(this);
         initView();
     }
 
@@ -60,14 +64,19 @@ public class ChangePinActivity extends AppCompatActivity {
         mOldPin = findViewById(R.id.oldPin);
         mNewPin = findViewById(R.id.newPin);
 
-        ((TextView) mLinearLayout.findViewById(R.id.tvOldPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        mOldPin.setTypeface(AppController.getInstance().getOxygenLightFont());
-        ((TextView) mLinearLayout.findViewById(R.id.tvNewPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        mNewPin.setTypeface(AppController.getInstance().getOxygenLightFont());
-        ((Button) mLinearLayout.findViewById(R.id.btnChangePin)).setTypeface(AppController.getInstance().getOxygenLightFont());
-
-        mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            ((TextView) mLinearLayout.findViewById(R.id.tvOldPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            mOldPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((TextView) mLinearLayout.findViewById(R.id.tvNewPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            mNewPin.setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((Button) mLinearLayout.findViewById(R.id.btnChangePin)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            ((TextView) mLinearLayout.findViewById(R.id.tvOldPin)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            mOldPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((TextView) mLinearLayout.findViewById(R.id.tvNewPin)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            mNewPin.setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((Button) mLinearLayout.findViewById(R.id.btnChangePin)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
     }
 
     @SuppressWarnings("deprecation")
@@ -90,13 +99,11 @@ public class ChangePinActivity extends AppCompatActivity {
     }
 
     private class ChangePinAsync extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(ChangePinActivity.this, "", getString(R.string.loading_msg), true);
-            if (!isFinishing())
-                progressDialog.show();
+           showProgressDialog();
         }
 
         @Override
@@ -127,7 +134,7 @@ public class ChangePinActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             Log.e("logTag", result);
-            progressDialog.dismiss();
+            dismissProgressDialog();
             if (result != null) {
                 String splitStr[] = result.split("@");
                 if (result.startsWith("200")) {
