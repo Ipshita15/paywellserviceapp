@@ -80,7 +80,7 @@ public class AppController extends Application {
         CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder()
                 .disabled(BuildConfig.DEBUG)
                 .build();
-        Fabric.with(this, new Crashlytics.Builder().core(crashlyticsCore).build());
+        Fabric.with(this, new Crashlytics.Builder().core(crashlyticsCore).build(), new Crashlytics());
     }
 
 
