@@ -56,6 +56,11 @@ public class WZPDCLBillPayActivity extends BaseActivity implements View.OnClickL
     private static final String TAG_TRANSACTION_ID = "trans_id";
     private static final String TAG_TOTAL_AMOUNT = "total_amount";
 
+
+    // all Async
+    AsyncTask<String, Void, String> mSubmitInquiryAsync;
+    AsyncTask<String, Void, String> mSubmitBillAsync;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -213,7 +218,7 @@ public class WZPDCLBillPayActivity extends BaseActivity implements View.OnClickL
         if (!mCd.isConnectingToInternet()) {
             AppHandler.showDialog(this.getSupportFragmentManager());
         } else {
-            new SubmitInquiryAsync().execute(getString(R.string.west_zone_bill));
+            mSubmitInquiryAsync = new SubmitInquiryAsync().execute(getString(R.string.west_zone_bill));
         }
     }
 
@@ -344,7 +349,7 @@ public class WZPDCLBillPayActivity extends BaseActivity implements View.OnClickL
         if (!mCd.isConnectingToInternet()) {
             AppHandler.showDialog(this.getSupportFragmentManager());
         } else {
-            new SubmitBillAsync().execute(getString(R.string.west_zone_bill));
+            mSubmitBillAsync = new SubmitBillAsync().execute(getString(R.string.west_zone_bill));
         }
     }
 
@@ -464,5 +469,17 @@ public class WZPDCLBillPayActivity extends BaseActivity implements View.OnClickL
         Intent intent = new Intent(WZPDCLBillPayActivity.this, WZPDCLMainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mSubmitInquiryAsync != null) {
+            mSubmitInquiryAsync.cancel(true);
+        }
+
+        if (mSubmitBillAsync != null) {
+            mSubmitBillAsync.cancel(true);
+        }
+        super.onDestroy();
     }
 }
