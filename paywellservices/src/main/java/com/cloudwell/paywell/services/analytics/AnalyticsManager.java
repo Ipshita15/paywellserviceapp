@@ -65,7 +65,7 @@ public class AnalyticsManager {
     public static void sendEvent(String category, String action) {
 
         Answers.getInstance().logCustom(new CustomEvent(category)
-                .putCustomAttribute(AnalyticsParameters.KEY_ACTION, "Sample"));
+                .putCustomAttribute(AnalyticsParameters.KEY_ACTION, action));
 
 
         Log.d(TAG, "Event recorded:");
