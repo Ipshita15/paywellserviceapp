@@ -13,8 +13,6 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 
 public class StatementMainActivity extends AppCompatActivity implements View.OnClickListener{
-
-    private TextView btnMiniStatement, btnBalanceStatement, btnSalesStatement, btnTransactionStatement;
     private AppHandler mAppHandler;
 
     @Override
@@ -29,10 +27,10 @@ public class StatementMainActivity extends AppCompatActivity implements View.OnC
 
         mAppHandler = new AppHandler(this);
 
-        btnMiniStatement = findViewById(R.id.mini_statement_btn);
-        btnBalanceStatement = findViewById(R.id.balance_statement_btn);
-        btnSalesStatement = findViewById(R.id.sales_statement_btn);
-        btnTransactionStatement = findViewById(R.id.trx_statement_btn);
+        TextView btnMiniStatement = findViewById(R.id.mini_statement_btn);
+        TextView btnBalanceStatement = findViewById(R.id.balance_statement_btn);
+        TextView btnSalesStatement = findViewById(R.id.sales_statement_btn);
+        TextView btnTransactionStatement = findViewById(R.id.trx_statement_btn);
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             btnMiniStatement.setTypeface(AppController.getInstance().getOxygenLightFont());
