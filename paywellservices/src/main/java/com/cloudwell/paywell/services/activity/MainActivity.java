@@ -463,8 +463,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return true;
     }
 
-    // call the updating code on the main thread,
-    // so we can call this asynchronously
     public void notificationCount(final int newNotification) {
         mNumOfNotification = newNotification;
         runOnUiThread(new Runnable() {
