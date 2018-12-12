@@ -63,16 +63,30 @@ public class AppController extends Application {
                 // You should not init your app in this process.
                 return;
             }
-            refWatcher=LeakCanary.install(this);
+            refWatcher = LeakCanary.install(this);
         }
 
         configureCrashReporting();
+        setupCrashlyticsUserInfo();
 
 
     }
 
-    public static RefWatcher getRefWatcher(Context context){
-        AppController myApplication= (AppController) context.getApplicationContext();
+    private void setupCrashlyticsUserInfo() {
+        mAppHandler = new AppHandler(getApplicationContext());
+        String appStatus = mAppHandler.getAppStatus();
+        if (!appStatus.equals("unknown")) {
+            String rid = mAppHandler.getRID();
+            String userName = mAppHandler.getUserName();
+            Crashlytics.setUserIdentifier(rid);
+            Crashlytics.setUserName(userName);
+            Log.v("setupCrashlyticsUserInfo", "setupCrashlyticsUserInfo: ");
+
+        }
+    }
+
+    public static RefWatcher getRefWatcher(Context context) {
+        AppController myApplication = (AppController) context.getApplicationContext();
         return myApplication.refWatcher;
     }
 
@@ -80,7 +94,7 @@ public class AppController extends Application {
         CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder()
                 .disabled(BuildConfig.DEBUG)
                 .build();
-        Fabric.with(this, new Crashlytics.Builder().core(crashlyticsCore).build());
+        Fabric.with(this, new Crashlytics.Builder().core(crashlyticsCore).build(), new Crashlytics());
     }
 
 

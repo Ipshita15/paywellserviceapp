@@ -1,11 +1,8 @@
 package com.cloudwell.paywell.services.service;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
@@ -39,13 +36,14 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     private static final String TAG_RESPONSE_STATUS = "status";
     private String token;
 
+    private AsyncTask<String, Intent, String> mPushFirebaseIdTask;
+
     /**
      * Called if InstanceID token is updated. This may occur if the security of
      * the previous token had been compromised. Note that this is called when the InstanceID token
      * is initially generated so this is where you would retrieve the token.
      */
     // [START refresh_token]
-
     @Override
     public void onTokenRefresh() {
         // Get updated InstanceID token.
@@ -61,7 +59,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
     /**
      * Persist token to third-party servers.
-     *
+     * <p>
      * Modify this method to associate the user's FCM InstanceID token with any server-side account
      * maintained by your application.
      *
@@ -72,7 +70,8 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
         if (mCd.isConnectingToInternet()) {
-            new PushFirebaseIdTask().execute(getString(R.string.notification_token_url), token);
+
+            mPushFirebaseIdTask = new PushFirebaseIdTask().execute(getString(R.string.notification_token_url), token);
         } else {
             Toast.makeText(MyFirebaseInstanceIDService.this, R.string.connection_error_msg, Toast.LENGTH_LONG).show();
         }
@@ -122,5 +121,14 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
                 Toast.makeText(MyFirebaseInstanceIDService.this, R.string.try_again_msg, Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (mPushFirebaseIdTask != null) {
+            mPushFirebaseIdTask.cancel(true);
+        }
+
+        super.onDestroy();
     }
 }
