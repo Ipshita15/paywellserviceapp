@@ -276,6 +276,10 @@ public class AppLoadingActivity extends AppCompatActivity {
                         String displayPictureCount = jsonObject.getString("displayPictureCount");
                         mAppHandler.setDisplayPictureCount(Integer.parseInt(displayPictureCount));
 
+                        String mobileNumber = jsonObject.getString("mobile_number");
+                        mAppHandler.setMobileNumber(mobileNumber);
+
+
                         mAppHandler.displayPictureArray = new String[Integer.parseInt(displayPictureCount)];
                         JSONArray pictureArrayJson = jsonObject.getJSONArray("imageLink");
                         for(int i = 0; i < pictureArrayJson.length(); i++) {

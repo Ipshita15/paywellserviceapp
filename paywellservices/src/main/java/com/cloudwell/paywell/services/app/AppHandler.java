@@ -101,6 +101,8 @@ public class AppHandler {
     private static final String AGE_OF_PASSENGER = "ageOfPassenger";
     private static final String UNKNOWN_PASSENGER_AGE = "unknownPassengerAge";
     private static final String UNKNOWN_SOURCE_STATION_CODE = "unknownSourceStationCode";
+    private static final String UNKNOWN_MOBILE_NUMBER = "UNKNOWN_MOBILE_NUMBER";
+    private static final String MOBILE_NUMBER = "MOBILE_NUMBER";
 
     private static final String REG_DISTRICT_ARRAY = "district_array";
     public static Boolean REG_FLAG_ONE = false;
@@ -642,6 +644,16 @@ public class AppHandler {
     public String getPassengerCode () {
         return mPref.getString(PASSENGER_CODE, UNKNOWN_PASSENGER_CODE);
     }
+
+    public void setMobileNumber(String mobileNumber) {
+        editor.putString(MOBILE_NUMBER, mobileNumber);
+        editor.commit();
+    }
+
+    public String getMobileNumber() {
+        return mPref.getString(MOBILE_NUMBER, UNKNOWN_MOBILE_NUMBER);
+    }
+
     public static class MyDialogFragment extends DialogFragment {
         private ConnectionDetector cd;
 

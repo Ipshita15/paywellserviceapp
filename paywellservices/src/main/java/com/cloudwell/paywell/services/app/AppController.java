@@ -67,23 +67,11 @@ public class AppController extends Application {
         }
 
         configureCrashReporting();
-        setupCrashlyticsUserInfo();
 
 
     }
 
-    private void setupCrashlyticsUserInfo() {
-        mAppHandler = new AppHandler(getApplicationContext());
-        String appStatus = mAppHandler.getAppStatus();
-        if (!appStatus.equals("unknown")) {
-            String rid = mAppHandler.getRID();
-            String userName = mAppHandler.getUserName();
-            Crashlytics.setUserIdentifier(rid);
-            Crashlytics.setUserName(userName);
-            Log.v("setupCrashlyticsUserInfo", "setupCrashlyticsUserInfo: ");
 
-        }
-    }
 
     public static RefWatcher getRefWatcher(Context context) {
         AppController myApplication = (AppController) context.getApplicationContext();
