@@ -24,6 +24,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 
@@ -105,6 +107,7 @@ public class EntryThirdActivity extends AppCompatActivity {
     }
 
     public void previousOnClick(View view) {
+        AnalyticsManager.sendEvent(AnalyticsParameters.KEY_REGISTRATION_MENU, AnalyticsParameters.KEY_REGISTRATION_THIRD_PORTION_PREVIOUS_REQUEST);
         onBackPressed();
     }
 
@@ -130,6 +133,7 @@ public class EntryThirdActivity extends AppCompatActivity {
 
         mAppHandler.REG_FLAG_THREE = true;
 
+        AnalyticsManager.sendEvent(AnalyticsParameters.KEY_REGISTRATION_MENU, AnalyticsParameters.KEY_REGISTRATION_THIRD_PORTION_SUBMIT_REQUEST);
         Intent intent = new Intent(EntryThirdActivity.this, EntryForthActivity.class);
         startActivity(intent);
         finish();

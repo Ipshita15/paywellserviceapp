@@ -81,7 +81,5 @@ public class AnalyticsManager {
         Log.d(TAG, "Event recorded:");
         Log.d(TAG, "\tCategory: " + category);
     }
-
-
 }
 

@@ -19,6 +19,8 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -87,7 +89,6 @@ public class MerchantTypeVerify extends BaseActivity {
             ((TextView) mConstraintLayout.findViewById(R.id.business_type_title)).setTypeface(AppController.getInstance().getAponaLohitFont());
             ((TextView) mConstraintLayout.findViewById(R.id.submit_btn)).setTypeface(AppController.getInstance().getAponaLohitFont());
         }
-
     }
 
     public void initializationBusinessType() {
@@ -215,6 +216,7 @@ public class MerchantTypeVerify extends BaseActivity {
             if (!mCd.isConnectingToInternet()) {
                 AppHandler.showDialog(getSupportFragmentManager());
             } else {
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_MERCHANT_TYPE_CONFIRM_REQUEST);
                 new ConfirmMerchantTypeAsync().execute(
                         getResources().getString(R.string.conf_merchant_type));
             }

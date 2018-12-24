@@ -21,6 +21,8 @@ import android.widget.RelativeLayout;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
 import com.cloudwell.paywell.services.activity.location.LocationActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.UpdateChecker;
@@ -28,12 +30,14 @@ import com.cloudwell.paywell.services.utils.UpdateChecker;
 import java.util.Locale;
 
 public class SettingsActivity extends AppCompatActivity {
+
     private AppHandler mAppHandler;
     private RelativeLayout mRelativeLayout;
     private UpdateChecker mUpdateChecker;
     private Button home_change_pin, home_upgrade, home_password_reset, home_change_language, home_help;
-    String selectedOption = "";
-    int flag = 0;
+    private String selectedOption = "";
+    private int flag = 0;
+
     private static final int PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 101;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 102;
 
@@ -42,7 +46,10 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         mRelativeLayout = findViewById(R.id.linearLayout);
         mAppHandler = new AppHandler(this);
@@ -59,12 +66,15 @@ public class SettingsActivity extends AppCompatActivity {
     public void onSettingsButtonClicker(View v) {
         switch (v.getId()) {
             case R.id.homeBtnChangPin:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_SETTINGS_MENU, AnalyticsParameters.KEY_SETTINGS_CHANGE_PIN_MENU);
                 startActivity(new Intent(this, ChangePinActivity.class));
                 break;
             case R.id.homeBtnUpgrade:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_SETTINGS_MENU, AnalyticsParameters.KEY_SETTINGS_UPGRADE_MENU);
                 checkPermission();
                 break;
             case R.id.homeBtnPasswordReset:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_SETTINGS_MENU, AnalyticsParameters.KEY_SETTINGS_RESET_PIN_MENU);
                 AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
                 builder.setTitle(R.string.home_settings_reset_pin);
                 builder.setMessage(R.string.reset_pin_msg);
@@ -85,9 +95,11 @@ public class SettingsActivity extends AppCompatActivity {
                 alert.show();
                 break;
             case R.id.homeBtnChangeLanguage:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_SETTINGS_MENU, AnalyticsParameters.KEY_SETTINGS_CHANGE_LANGUAGE_MENU);
                 ShowLanguagePrompt();
                 break;
             case R.id.homeBtnHelp:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_SETTINGS_MENU, AnalyticsParameters.KEY_SETTINGS_HELP_MENU);
                 startHelpMenu();
                 break;
 //            case R.id.homeBtnLocation:

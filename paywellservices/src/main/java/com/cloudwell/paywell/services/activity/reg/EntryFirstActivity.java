@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -104,7 +106,6 @@ public class EntryFirstActivity extends BaseActivity {
     }
 
     private class BusinessTypeAsync extends AsyncTask<String, String, String> {
-
 
         @Override
         protected void onPreExecute() {
@@ -306,6 +307,8 @@ public class EntryFirstActivity extends BaseActivity {
                         Bundle bundle = new Bundle();
                         bundle.putString("district_array", result_data.toString());
                         mAppHandler.setDistrictArray(result_data.toString());
+
+                        AnalyticsManager.sendEvent(AnalyticsParameters.KEY_REGISTRATION_MENU, AnalyticsParameters.KEY_REGISTRATION_FIRST_PORTION_SUBMIT_REQUEST);
                         Intent intent = new Intent(EntryFirstActivity.this, EntrySecondActivity.class);
                         intent.putExtras(bundle);
                         startActivity(intent);

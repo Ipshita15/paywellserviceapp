@@ -18,12 +18,12 @@ import com.cloudwell.paywell.services.activity.utility.ivac.IvacMainActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity;
 import com.cloudwell.paywell.services.activity.utility.qubee.QubeeMainActivity;
 import com.cloudwell.paywell.services.activity.utility.realvu.BeximcoMainActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 
 public class UtilityMainActivity extends AppCompatActivity {
-
-    private AppHandler mAppHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class UtilityMainActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_utility);
         }
-        mAppHandler = new AppHandler(this);
+        AppHandler mAppHandler = new AppHandler(this);
 
         Button btnDesco = findViewById(R.id.homeBtnDESCO);
         Button btnDpdc = findViewById(R.id.homeBtnDPDC);
@@ -88,32 +88,41 @@ public class UtilityMainActivity extends AppCompatActivity {
     public void onButtonClicker(View v) {
         switch (v.getId()) {
             case R.id.homeBtnDESCO:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_MENU);
                 startActivity(new Intent(this, DESCOMainActivity.class));
                 break;
             case R.id.homeBtnDPDC:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_DPDC_MENU);
                 startActivity(new Intent(this, DPDCMainActivity.class));
                 break;
             case R.id.homeBtnWasa:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_WASA_MENU);
                 startActivity(new Intent(this, WASAMainActivity.class));
                 break;
             case R.id.homeBtnWestZone:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_WZPDCL_MENU);
                 startActivity(new Intent(this, WZPDCLMainActivity.class));
                 break;
             case R.id.homeBtnPolliBiddut:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_MENU);
                 startActivity(new Intent(this, PBMainActivity.class));
                 finish();
                 break;
             case R.id.homeBtnQubee:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_QUBEE_MENU);
                 startActivity(new Intent(this, QubeeMainActivity.class));
                 break;
             case R.id.homeBtnRealVU:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_REAL_VU_MENU);
                 startActivity(new Intent(this, BeximcoMainActivity.class));
                 finish();
                 break;
             case R.id.homeBtnIvac:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_IVAC_MENU);
                 startActivity(new Intent(this, IvacMainActivity.class));
                 break;
             case R.id.homeBtnBanglalion:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_BANGLALION_MENU);
                 startActivity(new Intent(this, BanglalionMainActivity.class));
                 break;
             default:

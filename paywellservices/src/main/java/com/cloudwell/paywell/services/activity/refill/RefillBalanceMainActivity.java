@@ -17,6 +17,8 @@ import com.cloudwell.paywell.services.activity.MainActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.refill.banktransfer.BankTransferMainActivity;
 import com.cloudwell.paywell.services.activity.refill.card.CardTransferMainActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -44,8 +46,6 @@ public class RefillBalanceMainActivity extends BaseActivity {
     private static final String TAG_MESSAGE = "message";
     private static final String TAG_INFORMATION = "information";
     private CoordinatorLayout mCoordinateLayout;
-    String sdaName;
-    String sdaPhone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,22 +101,25 @@ public class RefillBalanceMainActivity extends BaseActivity {
     public void onButtonClicker(View v) {
         switch (v.getId()) {
             case R.id.homeBtnSDA:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_BALANCE_REFILL_MENU, AnalyticsParameters.KEY_BALANCE_REFILL_SDA_INFO_MENU);
                 showSDAInformation();
                 break;
             case R.id.homeBtnMfs:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_BALANCE_REFILL_MENU, AnalyticsParameters.KEY_BALANCE_REFILL_BKASH_INFO_MENU);
                 showInformation();
                 break;
             case R.id.homeBtnBankTransfer:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_BALANCE_REFILL_MENU, AnalyticsParameters.KEY_BALANCE_REFILL_BANK_TRANSFER_INFO_MENU);
                 startActivity(new Intent(this, BankTransferMainActivity.class));
                 break;
             case R.id.homeBtnCard:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_BALANCE_REFILL_MENU, AnalyticsParameters.KEY_BALANCE_REFILL_CARD_MENU);
                 startActivity(new Intent(this, CardTransferMainActivity.class));
                 break;
             default:
                 break;
         }
     }
-
 
     public void showSDAInformation() {
         if (!mCd.isConnectingToInternet()) {
@@ -128,7 +131,6 @@ public class RefillBalanceMainActivity extends BaseActivity {
     }
 
     private class SDAInformationAsync extends AsyncTask<String, String, String> {
-
 
         @Override
         protected void onPreExecute() {
@@ -167,8 +169,8 @@ public class RefillBalanceMainActivity extends BaseActivity {
                 String status = jsonObject.getString(TAG_RESPONSE_STATUS);
 
                 if (status.equalsIgnoreCase("200")) {
-                    sdaName = jsonObject.getString(TAG_SDA_NAME);
-                    sdaPhone = jsonObject.getString(TAG_PHONE_NO);
+                    String sdaName = jsonObject.getString(TAG_SDA_NAME);
+                    String sdaPhone = jsonObject.getString(TAG_PHONE_NO);
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(RefillBalanceMainActivity.this);
                     builder.setTitle("Result");
@@ -210,7 +212,6 @@ public class RefillBalanceMainActivity extends BaseActivity {
     }
 
     private class InformationAsync extends AsyncTask<String, String, String> {
-
 
         @Override
         protected void onPreExecute() {

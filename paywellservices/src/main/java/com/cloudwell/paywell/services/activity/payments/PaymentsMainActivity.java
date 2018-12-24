@@ -10,12 +10,12 @@ import android.widget.Button;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
 import com.cloudwell.paywell.services.activity.payments.bkash.BKashMainActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 
 public class PaymentsMainActivity extends AppCompatActivity {
-
-    private AppHandler mAppHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,7 @@ public class PaymentsMainActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_payments);
         }
-        mAppHandler = new AppHandler(this);
+        AppHandler mAppHandler = new AppHandler(this);
 
         Button btnBkash = findViewById(R.id.homeBtnBkash);
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
@@ -40,6 +40,7 @@ public class PaymentsMainActivity extends AppCompatActivity {
 
         switch (v.getId()) {
             case R.id.homeBtnBkash:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_PAYMENT_MENU, AnalyticsParameters.KEY_PAYMENT_BKASH_MENU);
                 startActivity(new Intent(this, BKashMainActivity.class));
                 finish();
                 break;

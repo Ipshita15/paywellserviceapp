@@ -1,17 +1,15 @@
 package com.cloudwell.paywell.services.activity.refill.banktransfer;
 
 import android.app.AlertDialog;
-import android.content.ContentUris;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.net.Uri;
+import android.graphics.Matrix;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -21,6 +19,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
@@ -41,6 +40,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -155,13 +155,12 @@ public class BankTransferMainActivity extends BaseActivity {
         if (!mCd.isConnectingToInternet()) {
             AppHandler.showDialog(getSupportFragmentManager());
         } else {
-            new BankTransferMainActivity.InformationAsync().execute(
+            new InformationAsync().execute(
                     getResources().getString(R.string.refill_bank_info), bank_name);
         }
     }
 
     private class InformationAsync extends AsyncTask<String, String, String> {
-
 
         @Override
         protected void onPreExecute() {
@@ -250,18 +249,14 @@ public class BankTransferMainActivity extends BaseActivity {
         builder.setNegativeButton(R.string.form_galary_btn, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int id) {
-                int permissionCheck = ContextCompat.checkSelfPermission(BankTransferMainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                int permissionCheck = ContextCompat.checkSelfPermission(BankTransferMainActivity.this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
 
                 if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(
-                            BankTransferMainActivity.this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY
+                            BankTransferMainActivity.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY
                     );
                 } else {
-                    startActivityForResult(
-                            new Intent(
-                                    Intent.ACTION_PICK,
-                                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI),
-                            1);
+                    galleryIntent();
                 }
             }
         });
@@ -269,19 +264,32 @@ public class BankTransferMainActivity extends BaseActivity {
         alert.show();
     }
 
+    private void galleryIntent() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select File"), 123);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (resultCode == RESULT_OK) {
-            Cursor mCursor = null;
-            if (requestCode == 1) {
-                mCursor = getContentResolver()
-                        .query(data.getData(),
-                                new String[]{android.provider.MediaStore.Images.ImageColumns._ID},
-                                null, null, null);
+            if (requestCode == 123) {
+                InputStream imageStream;
+                try {
+                    imageStream = this.getContentResolver().openInputStream(data.getData());
+                    Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                    encodeTobase64(selectedImage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                    View snackBarView = snackbar.getView();
+                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                    snackbar.show();
+                }
             }
-            processImage(false, mCursor);
-            mCursor.close();
         } else {
             Snackbar snackbar = Snackbar.make(mCoordinateLayout, "error", Snackbar.LENGTH_LONG);
             snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -291,30 +299,26 @@ public class BankTransferMainActivity extends BaseActivity {
         }
     }
 
-    private void processImage(boolean fromGallery, Cursor cursor) {
-        Uri newuri = null;
-        if (cursor.moveToFirst()) {
-            String uristringpic = "content://media/external/images/media/" + cursor.getInt(0);
-            newuri = Uri.parse(uristringpic);
-        }
-        cursor.close();
+    public void encodeTobase64(Bitmap image) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        Bitmap myBm = getResizedBitmap(image, 1000, 700);
+        myBm.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+        byte[] b = baos.toByteArray();
+        String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT).replaceAll("[\n\r]", "");
 
-        long selectedImageUri = ContentUris.parseId(newuri);
-
-        Bitmap bm1 = MediaStore.Images.Thumbnails.getThumbnail(
-                this.getContentResolver(), selectedImageUri,
-                MediaStore.Images.Thumbnails.MINI_KIND, null);
-
-        Bitmap bm = Bitmap.createScaledBitmap(bm1, 600, 600, true);
-
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.PNG, 0, bos);
-        byte[] bitmapdata = bos.toByteArray();
-
-        String encodedImage = Base64.encodeToString(bitmapdata, Base64.DEFAULT).replaceAll("[\n\r]", "");
-
-        strImage = encodedImage;
+        strImage = imageEncoded;
         uploadDepositInformation(bankName, bankNo);
+    }
+
+    public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+        return resizedBitmap;
     }
 
     public void uploadDepositInformation(String bankName, String bankAccountNo) {
@@ -397,11 +401,7 @@ public class BankTransferMainActivity extends BaseActivity {
             case PERMISSION_FOR_GALLERY: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted
-                    startActivityForResult(
-                            new Intent(
-                                    Intent.ACTION_PICK,
-                                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI),
-                            1);
+                    galleryIntent();
                 } else {
                     // permission denied
                     Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.access_denied_msg, Snackbar.LENGTH_LONG);

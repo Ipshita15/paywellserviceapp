@@ -9,10 +9,13 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 
-public class StatementMainActivity extends AppCompatActivity implements View.OnClickListener{
+public class StatementMainActivity extends AppCompatActivity implements View.OnClickListener {
+
     private AppHandler mAppHandler;
 
     @Override
@@ -54,24 +57,28 @@ public class StatementMainActivity extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.mini_statement_btn:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_STATEMENT_MENU, AnalyticsParameters.KEY_STATEMENT_MINI_MENU);
                 ViewStatementActivity.title = "mini";
                 ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/StatementInquiry?username="
-                                    + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
+                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
                 startActivity(new Intent(StatementMainActivity.this, ViewStatementActivity.class));
                 break;
             case R.id.balance_statement_btn:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_STATEMENT_MENU, AnalyticsParameters.KEY_STATEMENT_BALANCE_MENU);
                 ViewStatementActivity.title = "balance";
                 ViewStatementActivity.url = "http://api.cloudwell.co/AndroidWebViewController/balanceStatement?username="
                         + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
                 startActivity(new Intent(StatementMainActivity.this, ViewStatementActivity.class));
                 break;
             case R.id.sales_statement_btn:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_STATEMENT_MENU, AnalyticsParameters.KEY_STATEMENT_SALES_MENU);
                 ViewStatementActivity.title = "sales";
                 ViewStatementActivity.url = "http://api.cloudwell.co/AndroidWebViewController/salesStatement?username="
                         + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
                 startActivity(new Intent(StatementMainActivity.this, ViewStatementActivity.class));
                 break;
             case R.id.trx_statement_btn:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_STATEMENT_MENU, AnalyticsParameters.KEY_STATEMENT_TRX_MENU);
                 ViewStatementActivity.title = "trx";
                 ViewStatementActivity.url = "http://api.cloudwell.co/AndroidWebViewController/getAllTransactionStatement?username="
                         + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
