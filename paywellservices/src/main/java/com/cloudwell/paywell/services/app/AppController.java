@@ -13,6 +13,8 @@ import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
@@ -53,6 +55,7 @@ public class AppController extends Application {
         client = createTrustedHttpsClient();
 
         if (BuildConfig.DEBUG) {
+            Logger.addLogAdapter(new AndroidLogAdapter());
             FirebaseApp.initializeApp(this);
             String id = FirebaseInstanceId.getInstance().getToken();
             Log.e("device_token", "" + id);
@@ -67,6 +70,7 @@ public class AppController extends Application {
         }
 
         configureCrashReporting();
+        setupCrashlyticsUserInfo();
 
 
     }
@@ -131,5 +135,24 @@ public class AppController extends Application {
 
     public static AppController getmContext() {
         return mContext;
+    }
+
+    private void setupCrashlyticsUserInfo() {
+        try {
+            mAppHandler = new AppHandler(getApplicationContext());
+            String appStatus = mAppHandler.getAppStatus();
+            if (!appStatus.equals("unknown")) {
+                String rid = mAppHandler.getRID();
+                String userName = mAppHandler.getUserName();
+                String mobileNumber = mAppHandler.getMobileNumber();
+                Crashlytics.setUserIdentifier(rid);
+                Crashlytics.setUserName("UserName: " + userName + " Mobile number: " + mobileNumber);
+                Logger.v("UserName: " + userName + " Mobile number: " + mobileNumber);
+
+
+            }
+        } catch (Exception e) {
+
+        }
     }
 }

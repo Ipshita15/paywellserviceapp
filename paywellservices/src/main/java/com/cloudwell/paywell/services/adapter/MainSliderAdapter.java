@@ -27,8 +27,14 @@ public class MainSliderAdapter extends SliderAdapter {
     @Override
     public void onBindImageSlide(int position, ImageSlideViewHolder viewHolder) {
 
-        String imageUrl = imageUrls[position];
-        viewHolder.bindImageSlide(imageUrl);
+        try {
+            String imageUrl = imageUrls[position];
+            viewHolder.bindImageSlide(imageUrl);
+        } catch (Exception e) {
+
+        }
+
+
 
 
     }

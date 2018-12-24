@@ -73,7 +73,6 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.UpdateChecker;
-import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
@@ -89,7 +88,6 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
-import com.orhanobut.logger.Logger;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -198,7 +196,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         viewPager = findViewById(R.id.view_pager_auto);
 
         InitializeData();
-        setupCrashlyticsUserInfo();
     }
 
     private void InitializeData() {
@@ -2058,21 +2055,5 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         super.onDestroy();
     }
 
-    private void setupCrashlyticsUserInfo() {
-        try {
-            mAppHandler = new AppHandler(getApplicationContext());
-            String appStatus = mAppHandler.getAppStatus();
-            if (!appStatus.equals("unknown")) {
-                String rid = mAppHandler.getRID();
-                String userName = mAppHandler.getUserName();
-                String mobileNumber = mAppHandler.getMobileNumber();
-                Crashlytics.setUserIdentifier(rid);
-                Crashlytics.setUserName("UserName: " + userName + " Mobile number: " + mobileNumber);
-                Logger.v("setupCrashlyticsUserInfo");
 
-            }
-        } catch (Exception e) {
-
-        }
-    }
 }
