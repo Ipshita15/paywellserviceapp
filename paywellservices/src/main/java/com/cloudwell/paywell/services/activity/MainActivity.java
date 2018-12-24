@@ -37,6 +37,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -69,6 +70,8 @@ import com.cloudwell.paywell.services.activity.topup.TopupMenuActivity;
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.adapter.MainSliderAdapter;
 import com.cloudwell.paywell.services.adapter.PicassoImageLoadingService;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -103,6 +106,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
@@ -118,7 +122,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private UpdateChecker mUpdateChecker;
     public final long UPDATE_SOFTWARE_INTERVAL = 24 * 60 * 60;// 1 day
     public final long PHN_NUM_CHECK_INTERVAL = 24 * 60 * 60;// 1 day
-    public final long UPDATE_LOCATION_INTERVAL = 7 * 24 * 60 * 60;// 7 day
+    public final long UPDATE_LOCATION_INTERVAL = 1 * 24 * 60 * 60;// 1 day
     private TextView mToolbarHeading;
     private ConnectionDetector mCd;
     public int mNumOfNotification;
@@ -142,14 +146,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     AlertDialog.Builder builderNotification;
     private AlertDialog alertNotification;
     private Slider viewPager;
-    private int currentSlideNo;
     private int currentPage;
 
     private Button home_topup, home_utility, home_payments, home_eticket, home_mfs, home_product_catalog, home_statement, home_refill_balance, home_settings;
 
     private final int PERMISSIONS_FOR_QR_CODE_SCAN = 100;
     private final int PERMISSIONS_REQUEST_FOR_WRITE_EXTERNAL_STORAGE = 101;
-    private final int PERMISSIONS_REQUEST_FOR_READ_OTP = 102;
     private final int PERMISSIONS_REQUEST_ACCESS_LOCATION = 103;
     private final int PERMISSIONS_REQUEST_ACCESS_CALL = 104;
     final int REQUEST_LOCATION = 1000;
@@ -166,13 +168,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private int downloadType = 0;
     private int TAG_DOWNLOAD_PLAY_STORE = 1;
 
-
     // all async
     private AsyncTask<String, Intent, String> mNotificationAsync;
     private PayWellBalanceAsync pwBalanceCheck;
     private AsyncTask<String, Integer, String> mRequestPhnNumberAddAsync;
     private AsyncTask<String, Integer, String> mConfirmPhnNumberAddAsync;
     private AsyncTask<String, Intent, String> mPushFirebaseIdTask;
+
+    int start = 9;
+    int end = 18;
+    long startHourMilli, endHourMilli;
+    Calendar cal;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -195,7 +201,22 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         viewPager = findViewById(R.id.view_pager_auto);
 
+        cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, start);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+
+        startHourMilli = cal.getTimeInMillis() / 1000;
+
+        cal.set(Calendar.HOUR_OF_DAY, end);
+        endHourMilli = cal.getTimeInMillis() / 1000;
+
+        Log.e("logTag3", "true " + (System.currentTimeMillis() / 1000) + " " + startHourMilli + " " + endHourMilli);
+
         InitializeData();
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_DASHBOARD);
     }
 
     private void InitializeData() {
@@ -268,7 +289,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         checkSoftwareUpdate();
 
         /*Location Change Log*/
-        if ((System.currentTimeMillis() / 1000) >= (mAppHandler.getLocationUpdateCheck() + UPDATE_LOCATION_INTERVAL)) {
+        if ((System.currentTimeMillis() / 1000) >= (mAppHandler.getLocationUpdateCheck() + UPDATE_LOCATION_INTERVAL)
+                && (System.currentTimeMillis() / 1000) >= startHourMilli
+                && (System.currentTimeMillis() / 1000) <= endHourMilli) {
+            Log.e("logTag1", "true " + (System.currentTimeMillis() / 1000) + " " + startHourMilli + " " + endHourMilli);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                     && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_REQUEST_ACCESS_LOCATION);
@@ -288,15 +312,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             checkLocationUpdate();
         }
 
-        //////Before
         if (mAppHandler.getPhnNumberVerificationStatus().equalsIgnoreCase("false") || mAppHandler.getMerchantTypeVerificationStatus().equalsIgnoreCase("false")) {
-//            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED
-//                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
-//                // permission has not been granted.
-//                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS}, PERMISSIONS_REQUEST_FOR_READ_OTP);
-//            } else {
             checkPhnNoUpdate();
-            //}
         }
 //      Handle possible data accompanying notification message.
         if (getIntent().getExtras() != null) {
@@ -425,6 +442,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         notificationView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NOTIFICATION_ICON);
                 if (mNumOfNotification != 0) {
                     Intent intent = new Intent(MainActivity.this, NotificationAllActivity.class);
                     startActivity(intent);
@@ -448,6 +467,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_QRCODE_ICON);
                 return (scanOnClick());
             }
         });
@@ -463,8 +483,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return true;
     }
 
-    // call the updating code on the main thread,
-    // so we can call this asynchronously
     public void notificationCount(final int newNotification) {
         mNumOfNotification = newNotification;
         runOnUiThread(new Runnable() {
@@ -483,12 +501,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         if (item.getItemId() == android.R.id.home) {
             this.onBackPressed();
-            //IS_HOME_AS_UP_ENABLE_PRESS = true;
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -499,6 +513,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         // Handle navigation terms_and_conditions_format item clicks here.
         int id = item.getItemId();
         if (id == R.id.nav_topup) {
+            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_TOPUP_MENU);
             if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
                 if (!mCd.isConnectingToInternet()) {
                     AppHandler.showDialog(getSupportFragmentManager());
@@ -514,6 +529,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 snackbar.show();
             }
         } else if (id == R.id.nav_utility) {
+            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_UTILITY_MENU);
             if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
                 if (!mCd.isConnectingToInternet()) {
                     AppHandler.showDialog(getSupportFragmentManager());
@@ -529,6 +545,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 snackbar.show();
             }
         } else if (id == R.id.nav_payments) {
+            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_PAYMENT_MENU);
             if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
                 if (!mCd.isConnectingToInternet()) {
                     AppHandler.showDialog(getSupportFragmentManager());
@@ -544,6 +561,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 snackbar.show();
             }
         } else if (id == R.id.nav_eticket) {
+            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_ETICKET_MENU);
             if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
                 // Handle the eTicket action
                 if (!mCd.isConnectingToInternet()) {
@@ -560,6 +578,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 snackbar.show();
             }
         } else if (id == R.id.nav_mfs) {
+            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_MFS_MENU);
             if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
                 if (!mCd.isConnectingToInternet()) {
                     AppHandler.showDialog(getSupportFragmentManager());
@@ -574,6 +593,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 snackbar.show();
             }
         } else if (id == R.id.nav_product) {
+            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_PRODUCT_MENU);
             if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
                 if (!mCd.isConnectingToInternet()) {
                     AppHandler.showDialog(getSupportFragmentManager());
@@ -588,17 +608,21 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 snackbar.show();
             }
         } else if (id == R.id.nav_check_balance) {
+            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_BALANCE_CHECK_MENU);
             if (!mCd.isConnectingToInternet()) {
                 AppHandler.showDialog(getSupportFragmentManager());
             } else {
                 checkPayWellBalance();
             }
         } else if (id == R.id.nav_terms) {
+            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_TERMS_MENU);
             startActivity(new Intent(MainActivity.this, TermsActivity.class));
         } else if (id == R.id.nav_policy) {
+            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_PRIVACY_MENU);
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.paywellonline.com/Privacy.php"));
             startActivity(browserIntent);
         } else if (id == R.id.nav_about) {
+            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_ABOUT_MENU);
             if (!mCd.isConnectingToInternet()) {
                 AppHandler.showDialog(getSupportFragmentManager());
             } else {
@@ -653,7 +677,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                         String totalUnreadMsg = jsonObject.getString(TAG_RESPONSE_TOTAL_UREAD_MSG);
                         String totalMsg = jsonObject.getString("total_message");
-//                        NotificationActivity.length = Integer.parseInt(totalMsg);
                         mNumOfNotification = Integer.parseInt(totalUnreadMsg);
 
                         JSONArray jsonArray = jsonObject.getJSONArray(TAG_RESPONSE_MSG_ARRAY);
@@ -703,6 +726,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void checkPayWellBalance() {
+        AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_BALANCE_CHECK);
         pwBalanceCheck = new PayWellBalanceAsync();
         pwBalanceCheck.execute(getResources().getString(R.string.pw_bal));
     }
@@ -769,6 +793,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                                     builderNotification.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int id) {
+                                            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CEHCK_NEW_NOTIFICATION);
                                             dialogInterface.dismiss();
                                             checkNotificationFlag = true;
                                             mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
@@ -851,6 +876,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         builder.setPositiveButton(R.string.play_btn, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_UPGRADE_PLAYSTORE_OPTION);
                 dialog.dismiss();
                 downloadType = TAG_DOWNLOAD_PLAY_STORE;
                 checkPermission();
@@ -859,6 +885,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         builder.setNeutralButton(R.string.pw_btn, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_UPGRADE_PAYWELL_OPTION);
                 dialog.dismiss();
                 downloadType = TAG_DOWNLOAD_PLAY_STORE;
                 checkPermission();
@@ -931,24 +958,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
                 break;
             }
-//            case PERMISSIONS_REQUEST_FOR_READ_OTP: {
-//                // Check if the only required permission has been granted
-//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    // Phone permission has been granted
-//                    if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-//                        checkPhnNoUpdate();
-//                    } else {
-//                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-//                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-//                        View snackBarView = snackbar.getView();
-//                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-//                        snackbar.show();
-//                    }
-//                } else {
-//                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS}, PERMISSIONS_REQUEST_FOR_READ_OTP);
-//                }
-//                break;
-//            }
             case PERMISSIONS_REQUEST_ACCESS_LOCATION: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was grantedTask
@@ -1036,7 +1045,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     startActivity(new Intent(android.provider.Settings.ACTION_DATE_SETTINGS));
-
                                 }
                             });
             AlertDialog alert = builder.create();
@@ -1055,6 +1063,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public void onButtonClicker(View v) {
         switch (v.getId()) {
             case R.id.homeBtnTopup:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_TOPUP_MENU);
                 if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
                     if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
                         startActivity(new Intent(this, TopupMenuActivity.class));
@@ -1074,6 +1083,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
                 break;
             case R.id.homeBtnUtility:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_UTILITY_MENU);
                 if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
                     if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
                         startActivity(new Intent(this, UtilityMainActivity.class));
@@ -1093,6 +1103,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
                 break;
             case R.id.homeBtnPayments:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_PAYMENT_MENU);
                 if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
                     if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
                         startActivity(new Intent(this, PaymentsMainActivity.class));
@@ -1112,6 +1123,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
                 break;
             case R.id.homeBtnEticket:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_ETICKET_MENU);
                 if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
                     if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
                         startActivity(new Intent(this, ETicketMainActivity.class));
@@ -1131,6 +1143,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
                 break;
             case R.id.homeBtnMFS:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_MFS_MENU);
                 if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
                     if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
                         startActivity(new Intent(MainActivity.this, MFSMainActivity.class));
@@ -1150,6 +1163,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
                 break;
             case R.id.homeBtnProductCategory:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_PRODUCT_MENU);
                 if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
                     if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
                         startActivity(new Intent(MainActivity.this, ProductMenuActivity.class));
@@ -1169,6 +1183,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
                 break;
             case R.id.homeBtnMiniStatement:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_STATEMENT_MENU);
                 if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
                     if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
                         startActivity(new Intent(MainActivity.this, StatementMainActivity.class));
@@ -1188,6 +1203,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
                 break;
             case R.id.homeBtnRefillBalance:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_BALANCE_REFILL_MENU);
                 if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
                     if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
                         startActivity(new Intent(this, RefillBalanceMainActivity.class));
@@ -1207,6 +1223,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
                 break;
             case R.id.homeBtnSettings:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_SETTINGS_MENU);
                 if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
                     startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                 } else {
@@ -1218,6 +1235,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
                 break;
             case R.id.homeBtnMessage:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CHAT_MENU);
                 if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
                     startActivity(new Intent(MainActivity.this, ChatActivity.class));
                 } else {
@@ -1229,6 +1247,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
                 break;
             case R.id.homeBtnCall:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CALL_MENU);
                 if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
                     callPreview();
                 } else {
@@ -1422,7 +1441,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private class RequestPhnNumberAddAsync extends AsyncTask<String, Integer, String> {
 
-
         @Override
         protected void onPreExecute() {
             showProgressDialog();
@@ -1506,15 +1524,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             layout.addView(etOtp);
 
             builder.setView(layout);
-
-//            SmsReceiver.bindListener(new SmsListener() {
-//                @Override
-//                public void messageReceived(String messageText) {
-//                    etOtp.setText(messageText);
-//                    etOtp.setSelection(etOtp.getText().length());
-//                }
-//            });
-
             builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int id) {
@@ -1716,7 +1725,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             if (!mAppHandler.getLongitude().equalsIgnoreCase(String.valueOf(PLACE_LONGITUDE))) {
                 mAppHandler.setLongitude(String.valueOf(PLACE_LONGITUDE));
             }
-            if ((System.currentTimeMillis() / 1000) >= (mAppHandler.getLocationUpdateCheck() + UPDATE_LOCATION_INTERVAL)) {
+            if ((System.currentTimeMillis() / 1000) >= (mAppHandler.getLocationUpdateCheck() + UPDATE_LOCATION_INTERVAL)
+                    && (System.currentTimeMillis() / 1000) >= startHourMilli
+                    && (System.currentTimeMillis() / 1000) <= endHourMilli) {
+                Log.e("logTag2", "true " + (System.currentTimeMillis() / 1000) + " " + startHourMilli + " " + endHourMilli);
                 checkLocationUpdate();
             }
         }
@@ -1748,9 +1760,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             locationRequest.setFastestInterval(5 * 1000);
             LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
 
-            // **************************
-            builder.setAlwaysShow(true); // this is the key ingredient
-            // **************************
+            builder.setAlwaysShow(true);
 
             PendingResult result = LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build());
             result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
@@ -1898,9 +1908,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
         viewPager.setOnSlideClickListener(new OnSlideClickListener() {
+
             @Override
             public void onSlideClick(int position) {
-
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_SLIDER_IMAGE);
                 try {
                     currentPage = position;
 
@@ -1937,7 +1948,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 } catch (Exception e) {
 
                 }
-
             }
         });
     }
@@ -1988,8 +1998,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case REQUEST_LOCATION:
                 switch (resultCode) {
                     case Activity.RESULT_OK: {
-                        // All required changes were successfully made
-//                        Toast.makeText(MainActivity.this, "Location enabled by user!", Toast.LENGTH_LONG).show();
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                                 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_REQUEST_ACCESS_LOCATION);
@@ -2002,8 +2010,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         break;
                     }
                     case Activity.RESULT_CANCELED: {
-                        // The user was asked to change settings, but chose not to
-//                        Toast.makeText(MainActivity.this, "Location not enabled, user cancelled.", Toast.LENGTH_LONG).show();
                         break;
                     }
                     default: {

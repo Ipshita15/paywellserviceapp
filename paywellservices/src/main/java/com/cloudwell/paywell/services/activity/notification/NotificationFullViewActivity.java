@@ -1,8 +1,10 @@
 package com.cloudwell.paywell.services.activity.notification;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -10,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.util.Linkify;
+import android.view.Display;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,6 +30,7 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.client.HttpClient;
@@ -52,7 +56,6 @@ public class NotificationFullViewActivity extends BaseActivity implements View.O
     private AppHandler mAppHandler;
 
     boolean isNotificationFlow;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +92,26 @@ public class NotificationFullViewActivity extends BaseActivity implements View.O
             mTextViewMsg.setText(message);
 
             if (!image.equals("")) {
+                showProgressDialog();
                 mImageView.setVisibility(View.VISIBLE);
-                Picasso.get().load(image).into(mImageView);
+                Display display = getWindowManager().getDefaultDisplay();
+                Point size = new Point();
+                display.getSize(size);
+                int width = size.x;
+                Picasso.get()
+                        .load(image)
+                        .resize(width, 0)
+                        .into(mImageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        dismissProgressDialog();
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        dismissProgressDialog();
+                    }
+                });
 
                 mImageView.setOnTouchListener(new View.OnTouchListener() {
                     @Override
@@ -117,7 +138,25 @@ public class NotificationFullViewActivity extends BaseActivity implements View.O
             mTextViewTitle.setText(NotificationAllActivity.mTitle[TAG_NOTIFICATION_POSITION]);
             mTextViewMsg.setText(spannableString);
             if (!NotificationAllActivity.mImage[TAG_NOTIFICATION_POSITION].equalsIgnoreCase("empty")) {
-                Picasso.get().load(NotificationAllActivity.mImage[TAG_NOTIFICATION_POSITION]).into(mImageView);
+                showProgressDialog();
+                Display display = getWindowManager().getDefaultDisplay();
+                Point size = new Point();
+                display.getSize(size);
+                int width = size.x;
+                Picasso.get()
+                        .load(NotificationAllActivity.mImage[TAG_NOTIFICATION_POSITION])
+                        .resize(width, 0)
+                        .into(mImageView, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                dismissProgressDialog();
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+                                dismissProgressDialog();
+                            }
+                        });
                 mImageView.setVisibility(View.VISIBLE);
                 mImageView.setOnTouchListener(new View.OnTouchListener() {
                     @Override
@@ -128,6 +167,9 @@ public class NotificationFullViewActivity extends BaseActivity implements View.O
                     }
                 });
             }
+
+//            Display display = getWindowManager().getDefaultDisplay();
+//            Point size = new Point(); display.getSize(size); int width = size.x; //.resize(width, 0)
 
             if (NotificationAllActivity.mType[TAG_NOTIFICATION_POSITION].equalsIgnoreCase("BalanceReturnPwl")) {
                 mEditText.setVisibility(View.VISIBLE);

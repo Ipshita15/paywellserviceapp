@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -136,6 +138,7 @@ public class EntrySecondActivity extends BaseActivity implements AdapterView.OnI
     }
 
     public void previousOnClick(View view) {
+        AnalyticsManager.sendEvent(AnalyticsParameters.KEY_REGISTRATION_MENU, AnalyticsParameters.KEY_REGISTRATION_SECOND_PORTION_PREVIOUS_REQUEST);
         onBackPressed();
     }
 
@@ -167,6 +170,7 @@ public class EntrySecondActivity extends BaseActivity implements AdapterView.OnI
 
             mAppHandler.REG_FLAG_TWO = true;
 
+            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_REGISTRATION_MENU, AnalyticsParameters.KEY_REGISTRATION_SECOND_PORTION_SUBMIT_REQUEST);
             Intent intent = new Intent(EntrySecondActivity.this, EntryThirdActivity.class);
             startActivity(intent);
             finish();

@@ -253,6 +253,8 @@
     <string name="data_error_msg">Unable to get data properly</string>
     <string name="permission_error_msg">You need to click on the allow buttons in order to let PayWell app function properly</string>
     <string name="internet_connection_error_msg">Sorry, no internet connection is available. Please reconnect and try again.</string>
+    <string name="error_correct_operator_msg">Please select correct operator</string>
+    <string name="copy_msg">Copied</string>
 
     <!-- Button Description -->
     <string name="auto_date_time_btn">Automatic date &amp; time</string>
@@ -618,6 +620,5 @@
     <string name="chat">https://www.paywellonline.com/chatting-retailer/?</string>
 
     <string name="merchant_balance_return_url">https://api.paywellonline.com/PaywelltransactionSDA/SDAToMerchentBalanceReturn</string>
-    <string name="error_correct_operator">Please select correct operator</string>
 
 </resources>

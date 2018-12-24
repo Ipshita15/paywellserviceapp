@@ -1,5 +1,6 @@
 package com.cloudwell.paywell.services.activity.payments.bkash;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -62,13 +63,59 @@ public class BKashMenuActivity extends BaseActivity implements CompoundButton.On
         mLinearLayout = findViewById(R.id.linearLayout);
         requestBtn = findViewById(R.id.homeBtnBkashRequest);
 
-        TextView mAgent = findViewById(R.id.bkashAgentNo);
-        TextView mRID = findViewById(R.id.bkashRID);
-        String agentNo = getString(R.string.agent_phn_des) + " " + mAppHandler.getAgentPhnNum();
-        String rid = getString(R.string.rid) + " " + mAppHandler.getRID().substring(mAppHandler.getRID().length() - 5, mAppHandler.getRID().length());
+        TextView mAgentFst = findViewById(R.id.bkashAgentNoFirst);
+        TextView mAgentSec = findViewById(R.id.bkashAgentNoSecond);
+        TextView mRIDFst = findViewById(R.id.bkashRIDFirst);
+        TextView mRIDSec = findViewById(R.id.bkashRIDSecond);
+        String agentNoFst = getString(R.string.agent_phn_des) + " ";
+        final String agentNoSec = mAppHandler.getAgentPhnNum();
+        String ridFst = getString(R.string.rid) + " ";
+        final String ridSec = mAppHandler.getRID().substring(mAppHandler.getRID().length() - 5, mAppHandler.getRID().length());
 
-        mAgent.setText(agentNo);
-        mRID.setText(rid);
+        mAgentFst.setText(agentNoFst);
+        mAgentSec.setText(agentNoSec);
+        mRIDFst.setText(ridFst);
+        mRIDSec.setText(ridSec);
+
+        mAgentSec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int sdk = android.os.Build.VERSION.SDK_INT;
+                if(sdk < android.os.Build.VERSION_CODES.HONEYCOMB) {
+                    android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    clipboard.setText(agentNoSec);
+                } else {
+                    android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    android.content.ClipData clip = android.content.ClipData.newPlainText("agent number",agentNoSec);
+                    clipboard.setPrimaryClip(clip);
+                }
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.copy_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
+            }
+        });
+
+        mRIDSec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int sdk = android.os.Build.VERSION.SDK_INT;
+                if(sdk < android.os.Build.VERSION_CODES.HONEYCOMB) {
+                    android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    clipboard.setText(ridSec);
+                } else {
+                    android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    android.content.ClipData clip = android.content.ClipData.newPlainText("rid",ridSec);
+                    clipboard.setPrimaryClip(clip);
+                }
+                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.copy_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
+            }
+        });
 
         Button btnTrx = findViewById(R.id.homeBtnBkashTrx);
         Button btnBalance = findViewById(R.id.homeBtnBkashBalance);
@@ -77,8 +124,10 @@ public class BKashMenuActivity extends BaseActivity implements CompoundButton.On
         Button btnInquiry = findViewById(R.id.homeBtnBkashInquiry);
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-            mAgent.setTypeface(AppController.getInstance().getOxygenLightFont());
-            mRID.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mAgentFst.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mAgentSec.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mRIDFst.setTypeface(AppController.getInstance().getOxygenLightFont());
+            mRIDSec.setTypeface(AppController.getInstance().getOxygenLightFont());
 
             btnTrx.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnBalance.setTypeface(AppController.getInstance().getOxygenLightFont());
@@ -86,8 +135,10 @@ public class BKashMenuActivity extends BaseActivity implements CompoundButton.On
             btnConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnInquiry.setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
-            mAgent.setTypeface(AppController.getInstance().getAponaLohitFont());
-            mRID.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mAgentFst.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mAgentSec.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mRIDFst.setTypeface(AppController.getInstance().getAponaLohitFont());
+            mRIDSec.setTypeface(AppController.getInstance().getAponaLohitFont());
 
             btnTrx.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnBalance.setTypeface(AppController.getInstance().getAponaLohitFont());
