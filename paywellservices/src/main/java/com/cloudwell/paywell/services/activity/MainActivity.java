@@ -75,6 +75,7 @@ import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.LocationUtility;
 import com.cloudwell.paywell.services.utils.UpdateChecker;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -91,6 +92,7 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
+import com.orhanobut.logger.Logger;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -1718,6 +1720,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (location != null) {
             double PLACE_LATITUDE = (location.getLatitude());
             double PLACE_LONGITUDE = (location.getLongitude());
+            float PLACE_ACCURACY = location.getAccuracy();
+
+            String address = LocationUtility.getAddress(getApplicationContext(), location.getLatitude(), location.getLongitude());
+            String country = LocationUtility.getCountry(getApplicationContext(), location.getLatitude(), location.getLongitude());
 
             if (!mAppHandler.getLatitude().equalsIgnoreCase(String.valueOf(PLACE_LATITUDE))) {
                 mAppHandler.setLatitude(String.valueOf(PLACE_LATITUDE));
@@ -1725,6 +1731,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             if (!mAppHandler.getLongitude().equalsIgnoreCase(String.valueOf(PLACE_LONGITUDE))) {
                 mAppHandler.setLongitude(String.valueOf(PLACE_LONGITUDE));
             }
+            mAppHandler.setAccuracy(String.valueOf(location.getAccuracy()));
+            mAppHandler.setCountry(country);
+            mAppHandler.setAddress(address);
+
             if ((System.currentTimeMillis() / 1000) >= (mAppHandler.getLocationUpdateCheck() + UPDATE_LOCATION_INTERVAL)
                     && (System.currentTimeMillis() / 1000) >= startHourMilli
                     && (System.currentTimeMillis() / 1000) <= endHourMilli) {
@@ -1811,6 +1821,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("latitude", mAppHandler.getLatitude()));
                 nameValuePairs.add(new BasicNameValuePair("longitude", mAppHandler.getLongitude()));
+                nameValuePairs.add(new BasicNameValuePair("accuracy", mAppHandler.getAccuracy()));
+                nameValuePairs.add(new BasicNameValuePair("country", mAppHandler.getCountry()));
+                nameValuePairs.add(new BasicNameValuePair("address", mAppHandler.getAddress()));
+
+                Logger.v("username " + mAppHandler.getImeiNo() +
+                        " latitude " + mAppHandler.getLatitude() +
+                        " longitude " + mAppHandler.getLongitude() +
+                        " accuracy " + mAppHandler.getAccuracy() +
+                        " country" + mAppHandler.getCountry() +
+                        " address" + mAppHandler.getAddress()
+                );
+
 
                 httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
