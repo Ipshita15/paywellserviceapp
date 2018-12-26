@@ -28,6 +28,8 @@ import com.facebook.imagepipeline.request.ImageRequest;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "FirebaseMessageService";
@@ -65,7 +67,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             imageUri = "";
         }
 
-        sendNotification(title, message, imageUri);
+        String m = StringEscapeUtils.unescapeJava(message);
+
+        sendNotification(title, m, imageUri);
 
 
     }
@@ -161,7 +165,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationCompat.BigPictureStyle bigPicutureStyle = new NotificationCompat.BigPictureStyle(builder);
         bigPicutureStyle.bigPicture(bitmap);
         bigPicutureStyle.setBigContentTitle(title);
-        bigPicutureStyle.setSummaryText("Click on the image for full screen preview");
+        bigPicutureStyle.setSummaryText(messageBody);
         builder.setSound(defaultSoundUri);
         builder.setContentIntent(resultPendingIntent);
 
@@ -194,6 +198,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         final PendingIntent pendingIntent = PendingIntent.getActivity(this, requestID /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
 
 
+        NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
+        bigText.bigText(messageBody);
+        bigText.setBigContentTitle(title);
+
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.pw_notification_bar)
                 .setContentTitle(title)
@@ -202,6 +211,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent)
+                .setStyle(bigText)
                 .setPriority(Notification.PRIORITY_MAX);
 
         if (notificationManager != null) {
