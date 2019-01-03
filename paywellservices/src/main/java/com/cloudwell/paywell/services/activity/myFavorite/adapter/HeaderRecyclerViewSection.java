@@ -39,7 +39,11 @@ public class HeaderRecyclerViewSection extends StatelessSection {
     @Override
     public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
         ItemViewHolder iHolder = (ItemViewHolder) holder;
-        iHolder.itemContent.setText(list.get(position).getName());
+        FavoriteMenu favoriteMenu = list.get(position);
+        iHolder.itemContent.setText(favoriteMenu.getName());
+        iHolder.ivIcon.setBackgroundResource(favoriteMenu.getIcon());
+
+
     }
 
     @Override

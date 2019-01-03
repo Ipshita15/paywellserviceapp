@@ -35,6 +35,8 @@
     <!-- Sub Menu Names -->
     <string name="home_topup_trx_log">Trx. Log</string>
     <string name="home_utility_pollibiddut">Polli Biddut</string>
+    <string name="home_utility_pollibiddut_registion">Polli Biddut\nReg.</string>
+    <string name="home_utility_pollibiddut_bill_pay_favorite">Polli Biddut\nBill Pay</string>
     <string name="home_utility_qubee">Qubee</string>
     <string name="home_utility_beximco">Real VU</string>
     <string name="home_utility_ivac">IVAC</string>
@@ -45,6 +47,7 @@
     <string name="home_utility_pb_reg_inq_log">Registration Log</string>
     <string name="home_utility_pb_bill_ing">Bill Pay\nInquiry</string>
     <string name="home_utility_qubee_recharge">Qubee\nRecharge</string>
+    <string name="home_utility_qubee_recharge_inquiry">Qubee\nRecharge Inquiry</string>
     <string name="home_utility_qubee_recharge_title">Qubee Recharge</string>
     <string name="home_utility_qubee_inq">Recharge\nInquiry</string>
     <string name="home_utility_qubee_inq_title">Recharge Inquiry</string>
@@ -52,9 +55,13 @@
     <string name="home_utility_qubee_wrong_acc_title">Wrong Account</string>
     <string name="home_utility_qubee_wrong_amount">Wrong\nAmount</string>
     <string name="home_utility_qubee_wrong_amount_title">Wrong Amount</string>
+    <string name="home_utility_qubee_wrong_acc_title_favoirte">Qubee\nWrong Amount</string>
     <string name="home_utility_qubee_payment">Payment Not\nReceived</string>
     <string name="home_utility_qubee_payment_title">Payment Not Received</string>
+    <string name="home_utility_qubee_payment_title_favoirte">Payment Not Received</string>
     <string name="home_utility_ivac_fee_pay">Fee Pay</string>
+    <string name="home_utility_ivac_free_pay_favorite">IVAC \nFee Pay</string>
+    <string name="home_utility_ivac_inquiry">IVAC \nInquiry</string>
     <string name="home_payment_bkash">Payments\nFrom bKash</string>
     <string name="home_payment_bkash_title">Payments From bKash</string>
     <string name="home_payment_transactions_title">Transactions</string>
@@ -119,11 +126,13 @@
     <string name="home_notification_img_view">Image View</string>
     <string name="home_scan">Scan</string>
     <string name="home_utility_desco">DESCO</string>
-    <string name="home_utility_desco_pay">Desco-Bill Pay</string>
+    <string name="home_utility_desco_pay">Desco \nBill Pay</string>
     <string name="home_utility_dpdc">DPDC</string>
     <string name="home_utility_dpdc_pay">DPDC-Pay</string>
     <string name="home_utility_wasa">WASA</string>
+    <string name="home_utility_wasa_pay">WASA-Pay</string>
     <string name="home_utility_west_zone">West Zone</string>
+    <string name="home_utility_west_zone_pay">West Zone-Pay</string>
     <string name="home_scan_qr_code">PayWell RID</string>
     <string name="home_settings_help">Help</string>
     <string name="home_utility_polli_biddut_bill_pay">Polli Biddut\nBill Pay</string>
@@ -132,6 +141,7 @@
     <string name="home_utility_postpaid_bill_pay">Postpaid\nBill Pay</string>
     <string name="home_utility_postpaid_bill_inq">Postpaid\nBill Inquiry</string>
     <string name="home_utility_banglalion_recharge">Banglalion\nRecharge</string>
+    <string name="home_utility_banglalion_recharge_inquiry">Banglalion\nRecharge</string>
     <string name="home_utility_banglalion_recharge_title">Banglalion Recharge</string>
     <string name="banglalion_acc_no">Customer ID/Customer Number/MSISDN</string>
 
