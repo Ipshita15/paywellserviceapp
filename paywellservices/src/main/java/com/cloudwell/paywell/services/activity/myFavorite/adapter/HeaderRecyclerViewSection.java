@@ -1,11 +1,16 @@
 package com.cloudwell.paywell.services.activity.myFavorite.adapter;
 
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
+import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -17,11 +22,13 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
  */
 public class HeaderRecyclerViewSection extends StatelessSection {
     private static final String TAG = HeaderRecyclerViewSection.class.getSimpleName();
+    private Context mContext;
     private String title;
     private List<FavoriteMenu> list;
 
-    public HeaderRecyclerViewSection(String title, List<FavoriteMenu> list) {
+    public HeaderRecyclerViewSection(Context context, String title, List<FavoriteMenu> list) {
         super(R.layout.header_favourite, R.layout.item_unfavorite);
+        mContext = context;
         this.title = title;
         this.list = list;
     }
@@ -37,11 +44,45 @@ public class HeaderRecyclerViewSection extends StatelessSection {
     }
 
     @Override
-    public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindItemViewHolder(RecyclerView.ViewHolder holder, final int position) {
         ItemViewHolder iHolder = (ItemViewHolder) holder;
-        FavoriteMenu favoriteMenu = list.get(position);
+        final FavoriteMenu favoriteMenu = list.get(position);
         iHolder.itemContent.setText(favoriteMenu.getName());
         iHolder.ivIcon.setBackgroundResource(favoriteMenu.getIcon());
+
+        iHolder.rootLinarLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(mContext, "Added " + mContext.getString(favoriteMenu.getName()), Toast.LENGTH_LONG).show();
+
+                MessageEvent messageEvent = new MessageEvent(position, favoriteMenu);
+                EventBus.getDefault().post(messageEvent);
+
+
+            }
+        });
+
+        iHolder.ivIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, "Added " + mContext.getString(favoriteMenu.getName()), Toast.LENGTH_LONG).show();
+                MessageEvent messageEvent = new MessageEvent(position, favoriteMenu);
+                EventBus.getDefault().post(messageEvent);
+
+            }
+        });
+
+        iHolder.ivAdded.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, "Added " + mContext.getString(favoriteMenu.getName()), Toast.LENGTH_LONG).show();
+                MessageEvent messageEvent = new MessageEvent(position, favoriteMenu);
+                EventBus.getDefault().post(messageEvent);
+
+
+            }
+        });
 
 
     }

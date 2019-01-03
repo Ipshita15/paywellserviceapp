@@ -19,10 +19,10 @@ import io.reactivex.Maybe;
 @Dao
 public interface FavoriteMenuDab {
 
-    @Query("SELECT * FROM favoritemenu")
+    @Query("SELECT * FROM favoritemenu ")
     List<FavoriteMenu> getAll();
 
-    @Query("SELECT * FROM favoritemenu")
+    @Query("SELECT * FROM favoritemenu WHERE status ='unFavourite'")
     Maybe<List<FavoriteMenu>> getAllUnFavoriteMenu();
 
     @Insert
@@ -35,7 +35,7 @@ public interface FavoriteMenuDab {
     void delete(FavoriteMenu task);
 
     @Update
-    void update(FavoriteMenu task);
+    int update(FavoriteMenu task);
 
     @Query("DELETE FROM favoritemenu")
     public void deletedALl();

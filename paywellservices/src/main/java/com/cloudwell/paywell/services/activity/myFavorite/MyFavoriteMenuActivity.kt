@@ -5,17 +5,25 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.DisplayMetrics
+import android.util.Log
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.myFavorite.adapter.HeaderRecyclerViewSection
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu
+import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEvent
 import com.cloudwell.paywell.services.database.DatabaseClient
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 class MyFavoriteMenuActivity : Activity() {
+
+
+    lateinit var sectionAdapter: SectionedRecyclerViewAdapter;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +33,32 @@ class MyFavoriteMenuActivity : Activity() {
 
 
     }
+
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    fun onMessageEvent(event: MessageEvent) {
+
+        val favoriteMenu = event.favoriteMenu;
+        favoriteMenu.status = MenuStatus.Favourite.text;
+        val update = DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().update(favoriteMenu)
+
+        sectionAdapter.notifyItemRemoved(event.position)
+
+
+        Log.e("", "");
+
+
+    }
+
+    public override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    public override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
 
     private fun generartedUnFavaroitRecycview(users: List<FavoriteMenu>) {
 
@@ -53,13 +87,13 @@ class MyFavoriteMenuActivity : Activity() {
         }
 
 
-        val sectionAdapter = SectionedRecyclerViewAdapter()
+        sectionAdapter = SectionedRecyclerViewAdapter()
 
 
         allCategory.forEach {
 
             val section = getString(it)
-            val sectionData = HeaderRecyclerViewSection(section, allFavoriteData.get(it))
+            val sectionData = HeaderRecyclerViewSection(applicationContext, section, allFavoriteData.get(it))
             sectionAdapter.addSection(sectionData)
 
         }
@@ -99,6 +133,13 @@ class MyFavoriteMenuActivity : Activity() {
     }
 
     private fun initialisationView() {
+        getAllUnFavoriteItem()
+
+
+    }
+
+    private fun getAllUnFavoriteItem() {
+
         val allUnFavoriteMenu = DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().allUnFavoriteMenu
         allUnFavoriteMenu.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(object : Consumer<List<FavoriteMenu>> {
             @Throws(Exception::class)
@@ -109,9 +150,7 @@ class MyFavoriteMenuActivity : Activity() {
             }
 
 
-        })
-
-
+        });
     }
 
 
