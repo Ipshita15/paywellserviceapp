@@ -6,9 +6,9 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.DisplayMetrics
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.database.DatabaseClient
 import com.cloudwell.paywell.services.activity.myFavorite.adapter.HeaderRecyclerViewSection
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu
+import com.cloudwell.paywell.services.database.DatabaseClient
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
@@ -21,7 +21,7 @@ class MyFavoriteMenuActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_favorite_menu)
 
-        initialisationView();
+        initialisationView()
 
 
     }
@@ -34,14 +34,14 @@ class MyFavoriteMenuActivity : Activity() {
         val allCategory = mutableSetOf<Int>()
 
         users.forEach {
-            val category = it.category;
+            val category = it.category
             allCategory.add(category)
         }
 
 
         allCategory.forEach {
-            val category = it;
-            var data = mutableListOf<FavoriteMenu>()
+            val category = it
+            val data = mutableListOf<FavoriteMenu>()
 
             users.forEach {
                 if (category.equals(it.category)) {
@@ -58,7 +58,7 @@ class MyFavoriteMenuActivity : Activity() {
 
         allCategory.forEach {
 
-            val section = getString(it);
+            val section = getString(it)
             val sectionData = HeaderRecyclerViewSection(section, allFavoriteData.get(it))
             sectionAdapter.addSection(sectionData)
 
@@ -93,12 +93,12 @@ class MyFavoriteMenuActivity : Activity() {
     }
 
     private fun initialisationView() {
-        val allUnFavoriteMenu = DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().allUnFavoriteMenu;
+        val allUnFavoriteMenu = DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().allUnFavoriteMenu
         allUnFavoriteMenu.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(object : Consumer<List<FavoriteMenu>> {
             @Throws(Exception::class)
             override fun accept(users: List<FavoriteMenu>) {
 
-                generartedUnFavaroitRecycview(users);
+                generartedUnFavaroitRecycview(users)
 
             }
 
