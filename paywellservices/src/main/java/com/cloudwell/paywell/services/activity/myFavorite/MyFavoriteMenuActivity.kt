@@ -1,10 +1,12 @@
 package com.cloudwell.paywell.services.activity.myFavorite
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.DisplayMetrics
+import android.util.TypedValue
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.myFavorite.adapter.HeaderRecyclerViewSection
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu
@@ -70,14 +72,20 @@ class MyFavoriteMenuActivity : Activity() {
 
         val density = resources.displayMetrics.density
         val dpWidth = outMetrics.widthPixels / density
-        val columns = Math.round(dpWidth / 120)
+        var columns = 4;
+        if (dpWidth > 320) {
+            columns = 4;
+        } else {
+            columns = 3;
+        }
 
-        val glm = GridLayoutManager(applicationContext, 4)
+
+        val glm = GridLayoutManager(applicationContext, columns)
         glm.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 when (sectionAdapter.getSectionItemViewType(position)) {
                     SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER ->
-                        return 4
+                        return columns
                     else ->
                         return 1
                 }
@@ -106,6 +114,21 @@ class MyFavoriteMenuActivity : Activity() {
         })
 
 
+    }
+
+    private fun checkedColumnWidth(context: Context, columnWidth: Int): Int {
+        var columnWidth = columnWidth
+        if (columnWidth <= 0) {
+            /* Set default columnWidth value (48dp here). It is better to move this constant
+        to static constant on top, but we need context to convert it to dp, so can't really
+        do so. */
+            columnWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48f,
+                    context.getResources().getDisplayMetrics()).toInt()
+        } else {
+            columnWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, columnWidth.toFloat(),
+                    context.getResources().getDisplayMetrics()).toInt()
+        }
+        return columnWidth
     }
 
 }

@@ -52,4 +52,6 @@ public class HeaderRecyclerViewSection extends StatelessSection {
         HeaderViewHolder hHolder = (HeaderViewHolder) holder;
         hHolder.headerTitle.setText(title);
     }
+
+
 }

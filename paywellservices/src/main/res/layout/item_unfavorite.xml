@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="80dp"
+              android:layout_marginLeft="8dp"
+              android:layout_marginRight="8dp"
+              android:layout_width="75dp"
               android:layout_height="100dp"
               android:layout_marginTop="18dp"
-              android:gravity="center"
               android:layout_marginBottom="18dp"
               android:background="@drawable/item_favorite_background"
-              android:orientation="vertical"
-
-    >
+              android:orientation="vertical">
 
     <ImageView
-        android:layout_marginTop="8dp"
         android:id="@+id/imageView2"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
         android:background="@drawable/all_operator"
         android:contentDescription="TODO"/>
 
