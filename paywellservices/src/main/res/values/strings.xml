@@ -119,7 +119,9 @@
     <string name="home_notification_img_view">Image View</string>
     <string name="home_scan">Scan</string>
     <string name="home_utility_desco">DESCO</string>
+    <string name="home_utility_desco_pay">Desco-Bill Pay</string>
     <string name="home_utility_dpdc">DPDC</string>
+    <string name="home_utility_dpdc_pay">DPDC-Pay</string>
     <string name="home_utility_wasa">WASA</string>
     <string name="home_utility_west_zone">West Zone</string>
     <string name="home_scan_qr_code">PayWell RID</string>
@@ -620,5 +622,6 @@
     <string name="chat">https://www.paywellonline.com/chatting-retailer/?</string>
 
     <string name="merchant_balance_return_url">https://api.paywellonline.com/PaywelltransactionSDA/SDAToMerchentBalanceReturn</string>
+    <string name="title_activity_my_favorite_menu">MyFavoriteMenuActivity</string>
 
 </resources>

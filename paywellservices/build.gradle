@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 buildscript {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
@@ -14,6 +15,7 @@ apply plugin: 'io.fabric'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
+    mavenCentral()
 }
 
 android {
@@ -29,10 +31,17 @@ android {
         versionName '10.16.1'
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
     buildTypes {
         debug {
             applicationIdSuffix '.debug'
+
         }
         release {
             minifyEnabled true
@@ -61,6 +70,9 @@ ext {
     timberVersion = '4.6.0'
     retrofitVersion = '2.3.0'
     rxJava = '2.1.6'
+    room_version = "2.1.0-alpha03"
+
+    room_version = "1.1.1"
 }
 
 dependencies {
@@ -125,6 +137,25 @@ dependencies {
     //Logger
     implementation 'com.orhanobut:logger:2.2.0'
 
+
+    // room
+    implementation "android.arch.persistence.room:runtime:$room_version"
+    annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+    implementation "android.arch.persistence.room:rxjava2:$room_version"
+
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:1.0.4'
+
+
+    // rxjava
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
+
+
+
 }
 // Add to the bottom of the file
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'kotlin-android-extensions'

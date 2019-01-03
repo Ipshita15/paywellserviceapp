@@ -27,5 +27,6 @@
 
     <!-- Paywell dialg color -->
     <color name="foreground">#ff355689</color>
+    <color name="black">#000000</color>
 
 </resources>

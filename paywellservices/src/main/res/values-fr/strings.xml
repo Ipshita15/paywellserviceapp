@@ -97,7 +97,9 @@
     <string name="home_bank_city">সিটি ব্যাংক</string>
     <string name="home_mfs_mycash">মাইক্যাশ</string>
     <string name="home_utility_desco">ডেসকো</string>
+    <string name="home_utility_desco_pay">ডেসকো-বিল প্রদান</string>
     <string name="home_utility_dpdc">ডিপিডিসি</string>
+    <string name="home_utility_dpdc_pay">ডিপিডিসি-বিল প্রদান</string>
     <string name="home_fund_management">ফান্ড\nব্যবস্থাপনা</string>
     <string name="home_fund_management_title">ফান্ড ব্যবস্থাপনা</string>
     <string name="home_cash_in_out">ক্যাশ ইন\nআউট</string>
