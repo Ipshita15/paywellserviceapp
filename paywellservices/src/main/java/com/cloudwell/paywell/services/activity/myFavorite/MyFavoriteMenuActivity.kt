@@ -27,17 +27,17 @@ import org.jetbrains.anko.uiThread
 
 
 class MyFavoriteMenuActivity : Activity(), OnStartDragListener {
-    override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
-
-
-    }
-
-
     lateinit var sectionAdapter: SectionedRecyclerViewAdapter;
     var allFavoriteData = kotlin.collections.mutableMapOf<String, List<FavoriteMenu>>()
 
     var previewPogistion = 0
+    private var mItemTouchHelper: ItemTouchHelper? = null
 
+    override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
+        mItemTouchHelper?.startDrag(viewHolder)
+
+    }
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_favorite_menu)
@@ -99,8 +99,6 @@ class MyFavoriteMenuActivity : Activity(), OnStartDragListener {
 
         allFavoriteData = mutableMapOf<String, List<FavoriteMenu>>()
         val allCategory = mutableSetOf<String>()
-
-
 
         DBDatas.forEach {
             val category = it.category
@@ -212,20 +210,6 @@ class MyFavoriteMenuActivity : Activity(), OnStartDragListener {
 
     }
 
-//    private fun getAllFavoriteDateFormDB(): Any {
-//        val allUnFavoriteMenu = DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().allUnFavoriteMenu
-//        allUnFavoriteMenu.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(object : Consumer<List<FavoriteMenu>> {
-//            @Throws(Exception::class)
-//            override fun accept(users: List<FavoriteMenu>) {
-//
-//              return  generartedUnFavaroitRecycview(users)
-//
-//            }
-//
-//
-//        });
-//
-//    }
 
     private fun generatedFavaroitRecycView(result: List<FavoriteMenu>) {
 
@@ -256,8 +240,8 @@ class MyFavoriteMenuActivity : Activity(), OnStartDragListener {
         recyclerView.isNestedScrollingEnabled = true;
 
         val callback = SimpleItemTouchHelperCallback(recyclerListAdapter)
-        var mItemTouchHelper = ItemTouchHelper(callback)
-        mItemTouchHelper.attachToRecyclerView(recyclerView)
+        mItemTouchHelper = ItemTouchHelper(callback)
+        mItemTouchHelper?.attachToRecyclerView(recyclerView)
 
 
     }

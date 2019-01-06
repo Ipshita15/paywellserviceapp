@@ -1,8 +1,8 @@
 package com.cloudwell.paywell.services.activity.myFavorite.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -56,7 +56,7 @@ public class FavoirteAdapter extends RecyclerView.Adapter<FavoirteAdapter.ItemVi
         holder.ivIcon.setBackgroundResource(favoriteMenu.getIcon());
 
         // Start a drag whenever the handle view it touched
-        holder.ivIcon.setOnTouchListener(new View.OnTouchListener() {
+        holder.rootLinarLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
@@ -64,6 +64,8 @@ public class FavoirteAdapter extends RecyclerView.Adapter<FavoirteAdapter.ItemVi
                 }
                 return false;
             }
+
+
         });
 
         holder.ivDeleted.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +78,8 @@ public class FavoirteAdapter extends RecyclerView.Adapter<FavoirteAdapter.ItemVi
 
             }
         });
+
+
     }
 
     @Override
@@ -106,22 +110,25 @@ public class FavoirteAdapter extends RecyclerView.Adapter<FavoirteAdapter.ItemVi
         public final TextView textView;
         public final ImageView ivIcon;
         public final ImageView ivDeleted;
+        public final ConstraintLayout rootLinarLayout;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.item_content);
             ivIcon = (ImageView) itemView.findViewById(R.id.ivIcon);
             ivDeleted = (ImageView) itemView.findViewById(R.id.ivDeleted);
+            rootLinarLayout = (ConstraintLayout) itemView.findViewById(R.id.rootLinarLayout);
         }
+
 
         @Override
         public void onItemSelected() {
-            itemView.setBackgroundColor(Color.LTGRAY);
+            // itemView.setBackgroundColor(Color.LTGRAY);
         }
 
         @Override
         public void onItemClear() {
-            itemView.setBackgroundColor(0);
+            // itemView.setBackgroundColor(0);
         }
     }
 }
