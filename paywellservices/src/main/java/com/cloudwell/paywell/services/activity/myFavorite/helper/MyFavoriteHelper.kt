@@ -34,7 +34,7 @@ class MyFavoriteHelper {
             listOfData.add(FavoriteMenu(R.string.home_utility_wasa_pay, R.string.home_utility, R.drawable.ic_wasa, MenuStatus.UnFavorite.text))
             listOfData.add(FavoriteMenu(R.string.home_utility_west_zone, R.string.home_utility, R.drawable.ic_west_zone, MenuStatus.UnFavorite.text))
             listOfData.add(FavoriteMenu(R.string.home_utility_qubee, R.string.home_utility, R.drawable.ic_qubee, MenuStatus.UnFavorite.text))
-            listOfData.add(FavoriteMenu(R.string.home_utility_qubee_recharge, R.string.home_utility_qubee_recharge, R.drawable.ic_qubee, MenuStatus.UnFavorite.text))
+            listOfData.add(FavoriteMenu(R.string.home_utility_qubee_recharge, R.string.home_utility, R.drawable.ic_qubee, MenuStatus.UnFavorite.text))
             listOfData.add(FavoriteMenu(R.string.home_utility_qubee_recharge_inquiry, R.string.home_utility, R.drawable.ic_recharge_information, MenuStatus.UnFavorite.text))
             listOfData.add(FavoriteMenu(R.string.home_utility_qubee_wrong_acc_title_favoirte, R.string.home_utility, R.drawable.ic_wrong_acc, MenuStatus.UnFavorite.text))
             listOfData.add(FavoriteMenu(R.string.home_utility_qubee_payment_title_favoirte, R.string.home_utility, R.drawable.ic_payment_not_recived, MenuStatus.UnFavorite.text))

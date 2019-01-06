@@ -14,7 +14,7 @@
     <string name="home_utility">ইউটিলিটি</string>
     <string name="home_payments">পেমেন্ট</string>
     <string name="home_eticket">টিকেট</string>
-    <string name="home_mfs">মোবাইল\nব্যাংকিং</string>
+    <string name="home_mfs">মোবাইল ব্যাংকিং</string>
     <string name="nav_mfs">মোবাইল ব্যাংকিং</string>
     <string name="home_product_catalog">প্রোডাক্ট\nক্যাটালগ</string>
     <string name="nav_product_catalog">প্রোডাক্ট ক্যাটালগ</string>
@@ -25,7 +25,7 @@
     <string name="nav_about">সম্পর্কে</string>
     <string name="nav_more_title">আর&#8230;</string>
     <string name="home_statement">বিবরণী</string>
-    <string name="home_refill_balance">ব্যালেন্স\nরিফিল</string>
+    <string name="home_refill_balance">ব্যালেন্স রিফিল</string>
     <string name="home_refill_balance_title">ব্যালেন্স রিফিল</string>
     <string name="home_settings">সেটিংস</string>
     <string name="home_chat">আমাদের সাথে চ্যাট করুন</string>
@@ -62,7 +62,7 @@
     <string name="home_utility_qubee_payment_title">না পৌঁছানোর অভিযোগ</string>
     <string name="home_utility_qubee_payment_title_favoirte">কিউবি \n না পৌঁছানোর অভিযোগ</string>
     <string name="home_utility_ivac_fee_pay">ফি পরিশোধ</string>
-    <string name="home_utility_ivac_free_pay_favorite"> আইভিএসি \nঅভিযোগ</string>
+    <string name="home_utility_ivac_free_pay_favorite"> আইভিএসি \nফ্রি পরিশোধ</string>
     <string name="home_utility_ivac_inquiry">ফি পরিশোধ</string>
     <string name="home_payment_bkash">বিকাশ থেকে\nপ্রাপ্ত পেমেন্ট</string>
     <string name="home_payment_bkash_title">বিকাশ থেকে প্রাপ্ত পেমেন্ট</string>

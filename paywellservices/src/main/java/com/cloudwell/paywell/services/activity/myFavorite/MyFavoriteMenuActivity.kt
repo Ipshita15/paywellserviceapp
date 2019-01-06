@@ -4,12 +4,16 @@ import android.app.Activity
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.DisplayMetrics
-import android.util.Log
 import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.activity.myFavorite.adapter.FavoirteAdapter
 import com.cloudwell.paywell.services.activity.myFavorite.adapter.HeaderRecyclerViewSection
+import com.cloudwell.paywell.services.activity.myFavorite.adapter.helper.OnStartDragListener
+import com.cloudwell.paywell.services.activity.myFavorite.adapter.helper.SimpleItemTouchHelperCallback
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu
 import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEvent
+import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEventFavDeleted
 import com.cloudwell.paywell.services.database.DatabaseClient
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -18,9 +22,15 @@ import io.reactivex.schedulers.Schedulers
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 
-class MyFavoriteMenuActivity : Activity() {
+class MyFavoriteMenuActivity : Activity(), OnStartDragListener {
+    override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
+
+
+    }
 
 
     lateinit var sectionAdapter: SectionedRecyclerViewAdapter;
@@ -37,7 +47,7 @@ class MyFavoriteMenuActivity : Activity() {
 
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
     fun onMessageEvent(event: MessageEvent) {
 
         previewPogistion = event.index;
@@ -46,32 +56,30 @@ class MyFavoriteMenuActivity : Activity() {
 
         val favoriteMenu = event.favoriteMenu;
         favoriteMenu.status = MenuStatus.Favourite.text;
-//        val update = DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().update(favoriteMenu)
+        val update = DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().update(favoriteMenu)
 
 
-        getAllUnFavoriteItem()
-
-//        var items = mutableListOf<FavoriteMenu>();
-//
-//        for (key in allFavoriteData.keys){
-//
-//            if (key.equals(title)){
-//                items = allFavoriteData.get(key)?.toMutableList()!!;
-//                items.remove(favoriteMenu)
-//                break
-//
-//            }
-//        }
-//
-//        allFavoriteData.put(title, items);
-//
-//
-//        sectionAdapter.notifyDataSetChanged();
-//        sectionAdapter.notifyItemRemoved(event.position)
+        this.runOnUiThread {
+            getAllUnFavoriteItem()
+            getAllFavoriteDate()
+        }
 
 
+    }
 
-        Log.e("", "");
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    fun onFavoriteItemdeleted(event: MessageEventFavDeleted) {
+
+
+        val favoriteMenu = event.favoriteMenu;
+        favoriteMenu.status = MenuStatus.UnFavorite.text;
+        val update = DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().update(favoriteMenu)
+
+
+        this.runOnUiThread {
+            getAllUnFavoriteItem()
+            getAllFavoriteDate()
+        }
 
 
     }
@@ -128,7 +136,6 @@ class MyFavoriteMenuActivity : Activity() {
         }
 
 
-
         val display = this.getWindowManager().getDefaultDisplay()
         val outMetrics = DisplayMetrics()
         display.getMetrics(outMetrics)
@@ -159,6 +166,7 @@ class MyFavoriteMenuActivity : Activity() {
         sectionHeader.setLayoutManager(glm)
         sectionHeader.setHasFixedSize(true)
         sectionHeader.setAdapter(sectionAdapter)
+//        sectionHeader.isNestedScrollingEnabled = true;
 
         if (previewPogistion != 0) {
             sectionAdapter.notifyDataSetChanged();
@@ -169,7 +177,87 @@ class MyFavoriteMenuActivity : Activity() {
     }
 
     private fun initialisationView() {
+        getAllFavoriteDate();
+
         getAllUnFavoriteItem()
+
+
+    }
+
+    private fun getAllFavoriteDate() {
+
+
+        val allUnFavoriteMenu = DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().allFavoriteMenu
+        allUnFavoriteMenu.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(object : Consumer<List<FavoriteMenu>> {
+            @Throws(Exception::class)
+            override fun accept(users: List<FavoriteMenu>) {
+
+                generatedFavaroitRecycView(users)
+
+            }
+
+
+        });
+
+        doAsync {
+            val result = DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().getAllFavoriteMenu()
+
+            val blockingGet = result.blockingGet();
+            uiThread {
+
+                generatedFavaroitRecycView(blockingGet)
+            }
+        }
+
+
+    }
+
+//    private fun getAllFavoriteDateFormDB(): Any {
+//        val allUnFavoriteMenu = DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().allUnFavoriteMenu
+//        allUnFavoriteMenu.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(object : Consumer<List<FavoriteMenu>> {
+//            @Throws(Exception::class)
+//            override fun accept(users: List<FavoriteMenu>) {
+//
+//              return  generartedUnFavaroitRecycview(users)
+//
+//            }
+//
+//
+//        });
+//
+//    }
+
+    private fun generatedFavaroitRecycView(result: List<FavoriteMenu>) {
+
+        val display = this.getWindowManager().getDefaultDisplay()
+        val outMetrics = DisplayMetrics()
+        display.getMetrics(outMetrics)
+
+        val density = resources.displayMetrics.density
+        val dpWidth = outMetrics.widthPixels / density
+        var columns = 4;
+        if (dpWidth > 320) {
+            columns = 4;
+        } else {
+            columns = 3;
+        }
+
+
+        val recyclerView = findViewById<RecyclerView>(R.id.add_favoirte) as RecyclerView
+        recyclerView.setHasFixedSize(true)
+
+        val glm = GridLayoutManager(applicationContext, columns)
+        recyclerView.layoutManager = glm
+
+
+        val recyclerListAdapter = FavoirteAdapter(applicationContext, result, this)
+        recyclerView.layoutManager = glm
+        recyclerView.adapter = recyclerListAdapter;
+        recyclerView.isNestedScrollingEnabled = true;
+
+        val callback = SimpleItemTouchHelperCallback(recyclerListAdapter)
+        var mItemTouchHelper = ItemTouchHelper(callback)
+        mItemTouchHelper.attachToRecyclerView(recyclerView)
 
 
     }

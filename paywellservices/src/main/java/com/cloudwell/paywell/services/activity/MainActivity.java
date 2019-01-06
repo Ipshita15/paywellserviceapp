@@ -56,6 +56,7 @@ import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.chat.ChatActivity;
 import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
 import com.cloudwell.paywell.services.activity.mfs.MFSMainActivity;
+import com.cloudwell.paywell.services.activity.myFavorite.MyFavoriteMenuActivity;
 import com.cloudwell.paywell.services.activity.notification.NotificationActivity;
 import com.cloudwell.paywell.services.activity.notification.NotificationAllActivity;
 import com.cloudwell.paywell.services.activity.payments.PaymentsMainActivity;
@@ -1259,6 +1260,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
+                break;
+
+            case R.id.test:
+
+                Intent intent1 = new Intent(getApplicationContext(), MyFavoriteMenuActivity.class);
+                startActivity(intent1);
+
                 break;
             default:
                 break;
