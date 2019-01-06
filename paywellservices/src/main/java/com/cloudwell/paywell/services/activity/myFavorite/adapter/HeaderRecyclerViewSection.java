@@ -23,15 +23,18 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 public class HeaderRecyclerViewSection extends StatelessSection {
     private static final String TAG = HeaderRecyclerViewSection.class.getSimpleName();
     private Context mContext;
+    private int mIndex;
     private String title;
     private List<FavoriteMenu> list;
 
-    public HeaderRecyclerViewSection(Context context, String title, List<FavoriteMenu> list) {
+    public HeaderRecyclerViewSection(Context context, int index, String title, List<FavoriteMenu> list) {
         super(R.layout.header_favourite, R.layout.item_unfavorite);
         mContext = context;
+        mIndex = index;
         this.title = title;
         this.list = list;
     }
+
 
     @Override
     public int getContentItemsTotal() {
@@ -56,7 +59,7 @@ public class HeaderRecyclerViewSection extends StatelessSection {
 
                 Toast.makeText(mContext, "Added " + mContext.getString(favoriteMenu.getName()), Toast.LENGTH_LONG).show();
 
-                MessageEvent messageEvent = new MessageEvent(position, favoriteMenu);
+                MessageEvent messageEvent = new MessageEvent(mIndex, position, title, favoriteMenu);
                 EventBus.getDefault().post(messageEvent);
 
 
@@ -67,7 +70,7 @@ public class HeaderRecyclerViewSection extends StatelessSection {
             @Override
             public void onClick(View v) {
                 Toast.makeText(mContext, "Added " + mContext.getString(favoriteMenu.getName()), Toast.LENGTH_LONG).show();
-                MessageEvent messageEvent = new MessageEvent(position, favoriteMenu);
+                MessageEvent messageEvent = new MessageEvent(mIndex, position, title, favoriteMenu);
                 EventBus.getDefault().post(messageEvent);
 
             }
@@ -77,7 +80,7 @@ public class HeaderRecyclerViewSection extends StatelessSection {
             @Override
             public void onClick(View v) {
                 Toast.makeText(mContext, "Added " + mContext.getString(favoriteMenu.getName()), Toast.LENGTH_LONG).show();
-                MessageEvent messageEvent = new MessageEvent(position, favoriteMenu);
+                MessageEvent messageEvent = new MessageEvent(mIndex, position, title, favoriteMenu);
                 EventBus.getDefault().post(messageEvent);
 
 

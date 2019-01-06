@@ -1,5 +1,5 @@
 package com.cloudwell.paywell.services.activity.myFavorite.model
 
-class MessageEvent(var position: Int, var favoriteMenu: FavoriteMenu) {
+class MessageEvent(var index: Int, var position: Int, var title: String, var favoriteMenu: FavoriteMenu) {
 
 }

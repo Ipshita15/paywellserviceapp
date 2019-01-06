@@ -24,6 +24,9 @@ class MyFavoriteMenuActivity : Activity() {
 
 
     lateinit var sectionAdapter: SectionedRecyclerViewAdapter;
+    var allFavoriteData = kotlin.collections.mutableMapOf<String, List<FavoriteMenu>>()
+
+    var previewPogistion = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,14 +37,38 @@ class MyFavoriteMenuActivity : Activity() {
 
     }
 
-    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: MessageEvent) {
+
+        previewPogistion = event.index;
+
+        val title = event.title;
 
         val favoriteMenu = event.favoriteMenu;
         favoriteMenu.status = MenuStatus.Favourite.text;
-        val update = DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().update(favoriteMenu)
+//        val update = DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().update(favoriteMenu)
 
-        sectionAdapter.notifyItemRemoved(event.position)
+
+        getAllUnFavoriteItem()
+
+//        var items = mutableListOf<FavoriteMenu>();
+//
+//        for (key in allFavoriteData.keys){
+//
+//            if (key.equals(title)){
+//                items = allFavoriteData.get(key)?.toMutableList()!!;
+//                items.remove(favoriteMenu)
+//                break
+//
+//            }
+//        }
+//
+//        allFavoriteData.put(title, items);
+//
+//
+//        sectionAdapter.notifyDataSetChanged();
+//        sectionAdapter.notifyItemRemoved(event.position)
+
 
 
         Log.e("", "");
@@ -60,16 +87,17 @@ class MyFavoriteMenuActivity : Activity() {
     }
 
 
-    private fun generartedUnFavaroitRecycview(users: List<FavoriteMenu>) {
+    private fun generartedUnFavaroitRecycview(DBDatas: List<FavoriteMenu>) {
+
+        allFavoriteData = mutableMapOf<String, List<FavoriteMenu>>()
+        val allCategory = mutableSetOf<String>()
 
 
-        val allFavoriteData = mutableMapOf<Int, List<FavoriteMenu>>()
 
-        val allCategory = mutableSetOf<Int>()
-
-        users.forEach {
+        DBDatas.forEach {
             val category = it.category
-            allCategory.add(category)
+            val string = getString(it.category);
+            allCategory.add(string)
         }
 
 
@@ -77,8 +105,9 @@ class MyFavoriteMenuActivity : Activity() {
             val category = it
             val data = mutableListOf<FavoriteMenu>()
 
-            users.forEach {
-                if (category.equals(it.category)) {
+            DBDatas.forEach {
+                val string = getString(it.category)
+                if (category.equals(string)) {
                     data.add(it)
                 }
             }
@@ -90,13 +119,15 @@ class MyFavoriteMenuActivity : Activity() {
         sectionAdapter = SectionedRecyclerViewAdapter()
 
 
-        allCategory.forEach {
+        // generator HeaderRecyclerViewSection
 
-            val section = getString(it)
-            val sectionData = HeaderRecyclerViewSection(applicationContext, section, allFavoriteData.get(it))
+        for ((index, value) in allCategory.withIndex()) {
+
+            val sectionData = HeaderRecyclerViewSection(applicationContext, index, value, allFavoriteData.get(value))
             sectionAdapter.addSection(sectionData)
-
         }
+
+
 
         val display = this.getWindowManager().getDefaultDisplay()
         val outMetrics = DisplayMetrics()
@@ -128,6 +159,11 @@ class MyFavoriteMenuActivity : Activity() {
         sectionHeader.setLayoutManager(glm)
         sectionHeader.setHasFixedSize(true)
         sectionHeader.setAdapter(sectionAdapter)
+
+        if (previewPogistion != 0) {
+            sectionAdapter.notifyDataSetChanged();
+            sectionAdapter.notifyItemRemoved(previewPogistion)
+        }
 
 
     }
