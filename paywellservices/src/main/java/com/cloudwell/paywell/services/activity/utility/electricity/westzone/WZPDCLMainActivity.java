@@ -15,7 +15,6 @@ import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
-import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -70,7 +69,6 @@ public class WZPDCLMainActivity extends BaseActivity implements CompoundButton.O
         switch (v.getId()) {
             case R.id.homeBtnBillPay:
                 startActivity(new Intent(this, WZPDCLBillPayActivity.class));
-                finish();
                 break;
             case R.id.homeBtnInquiry:
                 showLimitPrompt();
@@ -91,8 +89,6 @@ public class WZPDCLMainActivity extends BaseActivity implements CompoundButton.O
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(WZPDCLMainActivity.this, UtilityMainActivity.class);
-        startActivity(intent);
         finish();
     }
 
@@ -239,11 +235,11 @@ public class WZPDCLMainActivity extends BaseActivity implements CompoundButton.O
 
         @Override
         protected void onPostExecute(String result) {
-           dismissProgressDialog();
+            dismissProgressDialog();
             if (result != null) {
                 WZPDCLBillInquiryActivity.TRANSLOG_TAG = result;
                 startActivity(new Intent(WZPDCLMainActivity.this, WZPDCLBillInquiryActivity.class));
-                finish();
+
             } else {
                 Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));

@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.utility.electricity.wasa;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -388,8 +387,6 @@ public class WASABillPayActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(WASABillPayActivity.this, WASAMainActivity.class);
-        startActivity(intent);
         finish();
     }
 }

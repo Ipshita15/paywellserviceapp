@@ -132,7 +132,7 @@
     <string name="home_utility_wasa">WASA</string>
     <string name="home_utility_wasa_pay">WASA-Pay</string>
     <string name="home_utility_west_zone">West Zone</string>
-    <string name="home_utility_west_zone_pay">West Zone-Pay</string>
+    <string name="home_utility_west_zone_pay">West Zone\nPay</string>
     <string name="home_scan_qr_code">PayWell RID</string>
     <string name="home_settings_help">Help</string>
     <string name="home_utility_polli_biddut_bill_pay">Polli Biddut\nBill Pay</string>

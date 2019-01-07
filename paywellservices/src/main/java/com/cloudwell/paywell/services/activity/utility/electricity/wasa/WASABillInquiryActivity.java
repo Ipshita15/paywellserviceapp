@@ -2,7 +2,6 @@ package com.cloudwell.paywell.services.activity.utility.electricity.wasa;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -144,8 +143,6 @@ public class WASABillInquiryActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(WASABillInquiryActivity.this, WASAMainActivity.class);
-        startActivity(intent);
         finish();
     }
 

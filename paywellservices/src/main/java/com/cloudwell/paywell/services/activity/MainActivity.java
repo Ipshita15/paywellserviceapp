@@ -73,7 +73,13 @@ import com.cloudwell.paywell.services.activity.topup.brilliant.BrilliantTopupAct
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.DESCOBillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.DESCOMainActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.wasa.WASABillPayActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.wasa.WASAMainActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.westzone.WZPDCLBillPayActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.westzone.WZPDCLMainActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBBillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBRegistrationActivity;
 import com.cloudwell.paywell.services.adapter.MainSliderAdapter;
 import com.cloudwell.paywell.services.adapter.PicassoImageLoadingService;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
@@ -2061,8 +2067,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void onFavoiteItemClick() {
 
-        FavoriteMenu favoriteMenu = new FavoriteMenu(R.string.home_utility_pollibiddut, R.string.home_topup, R.drawable.all_operator, "Favourite", 0);
+        FavoriteMenu favoriteMenu = new FavoriteMenu(R.string.home_utility_west_zone_pay, R.string.home_topup, R.drawable.all_operator, "Favourite", 0);
         Intent intent;
+
         switch (favoriteMenu.getName()) {
             case R.string.mobileOperator:
                 intent = new Intent(getApplicationContext(), TopupMainActivity.class);
@@ -2086,6 +2093,40 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 intent = new Intent(getApplicationContext(), PBMainActivity.class);
                 startActivityWithFlag(intent);
                 break;
+
+            case R.string.home_utility_pollibiddut_registion:
+                intent = new Intent(getApplicationContext(), PBRegistrationActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_pollibiddut_bill_pay_favorite:
+                intent = new Intent(getApplicationContext(), PBBillPayActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_wasa:
+                intent = new Intent(getApplicationContext(), WASAMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_wasa_pay:
+                intent = new Intent(getApplicationContext(), WASABillPayActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+
+            case R.string.home_utility_west_zone:
+                intent = new Intent(getApplicationContext(), WZPDCLMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+
+            case R.string.home_utility_west_zone_pay:
+                intent = new Intent(getApplicationContext(), WZPDCLBillPayActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+
 
         }
 

@@ -15,7 +15,6 @@ import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
-import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -71,7 +70,7 @@ public class WASAMainActivity extends BaseActivity implements CompoundButton.OnC
         switch (v.getId()) {
             case R.id.homeBtnBillPay:
                 startActivity(new Intent(this, WASABillPayActivity.class));
-                finish();
+
                 break;
             case R.id.homeBtnInquiry:
                 showLimitPrompt();
@@ -92,8 +91,6 @@ public class WASAMainActivity extends BaseActivity implements CompoundButton.OnC
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(WASAMainActivity.this, UtilityMainActivity.class);
-        startActivity(intent);
         finish();
     }
 
@@ -244,7 +241,6 @@ public class WASAMainActivity extends BaseActivity implements CompoundButton.OnC
             if (result != null) {
                 WASABillInquiryActivity.TRANSLOG_TAG = result;
                 startActivity(new Intent(WASAMainActivity.this, WASABillInquiryActivity.class));
-                finish();
             } else {
                 Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));
