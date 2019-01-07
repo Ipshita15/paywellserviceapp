@@ -70,7 +70,6 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
         switch (v.getId()) {
             case R.id.homeBtnBillPay:
                 startActivity(new Intent(this, DESCOBillPayActivity.class));
-                finish();
                 break;
             case R.id.homeBtnInquiry:
                 showLimitPrompt();
@@ -80,11 +79,6 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.help_menu, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
