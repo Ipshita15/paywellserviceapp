@@ -14,7 +14,9 @@ import com.cloudwell.paywell.services.activity.myFavorite.adapter.helper.SimpleI
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu
 import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEvent
 import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEventFavDeleted
+import com.cloudwell.paywell.services.constant.AllConstant
 import com.cloudwell.paywell.services.database.DatabaseClient
+import com.cloudwell.paywell.services.preference.FavoritePreference
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
@@ -22,8 +24,6 @@ import io.reactivex.schedulers.Schedulers
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 
 
 class MyFavoriteMenuActivity : Activity(), OnStartDragListener {
@@ -37,7 +37,7 @@ class MyFavoriteMenuActivity : Activity(), OnStartDragListener {
         mItemTouchHelper?.startDrag(viewHolder)
 
     }
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_favorite_menu)
@@ -48,15 +48,25 @@ class MyFavoriteMenuActivity : Activity(), OnStartDragListener {
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    fun onMessageEvent(event: MessageEvent) {
+    fun onFavoriteItemAdd(event: MessageEvent) {
+
+        var counter = FavoritePreference.with(applicationContext).getInt(AllConstant.COUNTER_FAVORITE, 0);
+        if (counter == 0) {
+            counter = 1;
+        } else {
+            counter = counter + 1;
+        }
+        FavoritePreference.with(applicationContext).addInt(AllConstant.COUNTER_FAVORITE, counter).save()
+
+
 
         previewPogistion = event.index;
-
-        val title = event.title;
+        event.title;
 
         val favoriteMenu = event.favoriteMenu;
         favoriteMenu.status = MenuStatus.Favourite.text;
-        val update = DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().update(favoriteMenu)
+        favoriteMenu.favoriteListPosition = counter;
+        DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().update(favoriteMenu)
 
 
         this.runOnUiThread {
@@ -71,9 +81,19 @@ class MyFavoriteMenuActivity : Activity(), OnStartDragListener {
     fun onFavoriteItemdeleted(event: MessageEventFavDeleted) {
 
 
+        var counter = FavoritePreference.with(applicationContext).getInt(AllConstant.COUNTER_FAVORITE, 0)
+        if (counter == 0) {
+            counter = 0
+        } else {
+            counter = counter - 1
+        }
+        FavoritePreference.with(applicationContext).addInt(AllConstant.COUNTER_FAVORITE, counter).save()
+
+
         val favoriteMenu = event.favoriteMenu;
         favoriteMenu.status = MenuStatus.UnFavorite.text;
-        val update = DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().update(favoriteMenu)
+        favoriteMenu.favoriteListPosition = counter
+        DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().update(favoriteMenu)
 
 
         this.runOnUiThread {
@@ -101,7 +121,7 @@ class MyFavoriteMenuActivity : Activity(), OnStartDragListener {
         val allCategory = mutableSetOf<String>()
 
         DBDatas.forEach {
-            val category = it.category
+            it.category
             val string = getString(it.category);
             allCategory.add(string)
         }
@@ -140,7 +160,7 @@ class MyFavoriteMenuActivity : Activity(), OnStartDragListener {
 
         val density = resources.displayMetrics.density
         val dpWidth = outMetrics.widthPixels / density
-        var columns = 4;
+        val columns: Int;
         if (dpWidth > 320) {
             columns = 4;
         } else {
@@ -190,22 +210,30 @@ class MyFavoriteMenuActivity : Activity(), OnStartDragListener {
             @Throws(Exception::class)
             override fun accept(users: List<FavoriteMenu>) {
 
-                generatedFavaroitRecycView(users)
+                val sortedWith = users.sortedWith(object : Comparator<FavoriteMenu> {
+                    override fun compare(p1: FavoriteMenu, p2: FavoriteMenu): Int = when {
+                        p1.favoriteListPosition > p2.favoriteListPosition -> 0
+                        p1.favoriteListPosition == p2.favoriteListPosition -> 1
+                        else -> -1
+                    }
+                })
+
+                generatedFavaroitRecycView(sortedWith)
 
             }
 
 
         });
 
-        doAsync {
-            val result = DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().getAllFavoriteMenu()
-
-            val blockingGet = result.blockingGet();
-            uiThread {
-
-                generatedFavaroitRecycView(blockingGet)
-            }
-        }
+//        doAsync {
+//            val result = DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().getAllFavoriteMenu()
+//
+//            val blockingGet = result.blockingGet();
+//            uiThread {
+//
+//                generatedFavaroitRecycView(blockingGet)
+//            }
+//        }
 
 
     }

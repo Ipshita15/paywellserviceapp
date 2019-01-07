@@ -19,10 +19,17 @@ class FavoriteMenu(
         var icon: Int,
 
         @ColumnInfo(name = "status")
-        var status: String
+        var status: String,
+
+        @ColumnInfo(name = "favorite_list_position")
+        var favoriteListPosition: Int
 
 ) {
+
+
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0 // or foodId: Int? = null
+
+
 }
 

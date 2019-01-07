@@ -18,6 +18,7 @@ import com.cloudwell.paywell.services.activity.myFavorite.adapter.helper.ItemTou
 import com.cloudwell.paywell.services.activity.myFavorite.adapter.helper.OnStartDragListener;
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
 import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEventFavDeleted;
+import com.cloudwell.paywell.services.database.DatabaseClient;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -33,9 +34,11 @@ public class FavoirteAdapter extends RecyclerView.Adapter<FavoirteAdapter.ItemVi
 
     private List<FavoriteMenu> mItems = new ArrayList<>();
 
+    private Context mContext;
     private final OnStartDragListener mDragStartListener;
 
     public FavoirteAdapter(Context context, List<FavoriteMenu> data, OnStartDragListener dragStartListener) {
+        mContext = context;
         mDragStartListener = dragStartListener;
         this.mItems = data;
     }
@@ -92,6 +95,22 @@ public class FavoirteAdapter extends RecyclerView.Adapter<FavoirteAdapter.ItemVi
     public boolean onItemMove(int fromPosition, int toPosition) {
         Collections.swap(mItems, fromPosition, toPosition);
         notifyItemMoved(fromPosition, toPosition);
+
+        FavoriteMenu fromMenu = mItems.get(fromPosition);
+        fromMenu.setFavoriteListPosition(fromPosition);
+
+
+        DatabaseClient.getInstance(mContext).getAppDatabase().mFavoriteMenuDab().update(fromMenu);
+
+
+        FavoriteMenu toMenu = mItems.get(toPosition);
+        toMenu.setFavoriteListPosition(toPosition);
+        DatabaseClient.getInstance(mContext).getAppDatabase().mFavoriteMenuDab().update(toMenu);
+
+
+
+
+
         return true;
     }
 
