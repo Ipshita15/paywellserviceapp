@@ -71,7 +71,9 @@ import com.cloudwell.paywell.services.activity.topup.TopupMainActivity;
 import com.cloudwell.paywell.services.activity.topup.TopupMenuActivity;
 import com.cloudwell.paywell.services.activity.topup.brilliant.BrilliantTopupActivity;
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.DESCOBillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.DESCOMainActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity;
 import com.cloudwell.paywell.services.adapter.MainSliderAdapter;
 import com.cloudwell.paywell.services.adapter.PicassoImageLoadingService;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
@@ -2059,7 +2061,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void onFavoiteItemClick() {
 
-        FavoriteMenu favoriteMenu = new FavoriteMenu(R.string.home_utility_desco, R.string.home_topup, R.drawable.all_operator, "Favourite", 0);
+        FavoriteMenu favoriteMenu = new FavoriteMenu(R.string.home_utility_pollibiddut, R.string.home_topup, R.drawable.all_operator, "Favourite", 0);
         Intent intent;
         switch (favoriteMenu.getName()) {
             case R.string.mobileOperator:
@@ -2073,6 +2075,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.string.home_utility_desco:
                 intent = new Intent(getApplicationContext(), DESCOMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_desco_pay:
+                intent = new Intent(getApplicationContext(), DESCOBillPayActivity.class);
+                startActivityWithFlag(intent);
+                break;
+            case R.string.home_utility_pollibiddut:
+                intent = new Intent(getApplicationContext(), PBMainActivity.class);
                 startActivityWithFlag(intent);
                 break;
 

@@ -106,7 +106,6 @@ public class UtilityMainActivity extends AppCompatActivity {
             case R.id.homeBtnPolliBiddut:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_MENU);
                 startActivity(new Intent(this, PBMainActivity.class));
-                finish();
                 break;
             case R.id.homeBtnQubee:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_QUBEE_MENU);
