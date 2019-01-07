@@ -4,7 +4,6 @@ package com.cloudwell.paywell.services.activity.myFavorite.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
@@ -57,11 +56,8 @@ public class HeaderRecyclerViewSection extends StatelessSection {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(mContext, "Added " + mContext.getString(favoriteMenu.getName()), Toast.LENGTH_LONG).show();
-
                 MessageEvent messageEvent = new MessageEvent(mIndex, position, title, favoriteMenu);
                 EventBus.getDefault().post(messageEvent);
-
 
             }
         });
@@ -69,7 +65,7 @@ public class HeaderRecyclerViewSection extends StatelessSection {
         iHolder.ivIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "Added " + mContext.getString(favoriteMenu.getName()), Toast.LENGTH_LONG).show();
+
                 MessageEvent messageEvent = new MessageEvent(mIndex, position, title, favoriteMenu);
                 EventBus.getDefault().post(messageEvent);
 
@@ -79,7 +75,7 @@ public class HeaderRecyclerViewSection extends StatelessSection {
         iHolder.ivAdded.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "Added " + mContext.getString(favoriteMenu.getName()), Toast.LENGTH_LONG).show();
+
                 MessageEvent messageEvent = new MessageEvent(mIndex, position, title, favoriteMenu);
                 EventBus.getDefault().post(messageEvent);
 

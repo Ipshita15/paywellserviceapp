@@ -1243,7 +1243,9 @@
         <activity android:name=".activity.refill.banktransfer.BankDetailsActivity"/>
         <activity
             android:name=".activity.myFavorite.MyFavoriteMenuActivity"
-            android:label="@string/title_activity_my_favorite_menu">
+            android:label="@string/title_activity_my_favorite_menu"
+            android:screenOrientation="portrait"
+            >
         </activity>
     </application>
 

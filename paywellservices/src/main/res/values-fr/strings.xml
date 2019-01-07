@@ -637,4 +637,7 @@
 
     <string name="merchant_balance_return_url">https://api.paywellonline.com/PaywelltransactionSDA/SDAToMerchentBalanceReturn</string>
     <string name="title_activity_my_favorite_menu">আমার পছন্দ</string>
+    <string name="can_not_add_more_than">৮ মেনু থেকে বেশি যোগ করতে পারবেন না</string>
+    <string name="Added">যোগ করা হয়েছে:</string>
+
 </resources>

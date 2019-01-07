@@ -1,11 +1,15 @@
 package com.cloudwell.paywell.services.activity.myFavorite
 
-import android.app.Activity
+import android.graphics.Color
 import android.os.Bundle
+import android.support.design.widget.Snackbar
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.DisplayMetrics
+import android.view.MenuItem
+import android.widget.Toast
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.myFavorite.adapter.FavoirteAdapter
 import com.cloudwell.paywell.services.activity.myFavorite.adapter.HeaderRecyclerViewSection
@@ -14,6 +18,7 @@ import com.cloudwell.paywell.services.activity.myFavorite.adapter.helper.SimpleI
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu
 import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEvent
 import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEventFavDeleted
+import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEventPositionMove
 import com.cloudwell.paywell.services.constant.AllConstant
 import com.cloudwell.paywell.services.database.DatabaseClient
 import com.cloudwell.paywell.services.preference.FavoritePreference
@@ -21,30 +26,53 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapt
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_my_favorite_menu.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 
-class MyFavoriteMenuActivity : Activity(), OnStartDragListener {
+class MyFavoriteMenuActivity : AppCompatActivity(), OnStartDragListener {
     lateinit var sectionAdapter: SectionedRecyclerViewAdapter;
     var allFavoriteData = kotlin.collections.mutableMapOf<String, List<FavoriteMenu>>()
 
     var previewPogistion = 0
     private var mItemTouchHelper: ItemTouchHelper? = null
 
-    override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
-        mItemTouchHelper?.startDrag(viewHolder)
-
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_favorite_menu)
 
+        assert(getSupportActionBar() != null)
+        if (getSupportActionBar() != null) {
+            getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
+            getSupportActionBar()!!.setTitle(R.string.title_activity_my_favorite_menu)
+
+
+        }
+
+
         initialisationView()
 
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            this.onBackPressed()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed();
+        finish()
+    }
+
+
+    override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
+        mItemTouchHelper?.startDrag(viewHolder)
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
@@ -56,22 +84,26 @@ class MyFavoriteMenuActivity : Activity(), OnStartDragListener {
         } else {
             counter = counter + 1;
         }
-        FavoritePreference.with(applicationContext).addInt(AllConstant.COUNTER_FAVORITE, counter).save()
+        if (counter > 8) {
+            showMessage()
+            return
+        } else {
+            FavoritePreference.with(applicationContext).addInt(AllConstant.COUNTER_FAVORITE, counter).save()
+
+            previewPogistion = event.index;
+            event.title;
+
+            val favoriteMenu = event.favoriteMenu;
+            favoriteMenu.status = MenuStatus.Favourite.text;
+            favoriteMenu.favoriteListPosition = counter;
+            DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().update(favoriteMenu)
 
 
-
-        previewPogistion = event.index;
-        event.title;
-
-        val favoriteMenu = event.favoriteMenu;
-        favoriteMenu.status = MenuStatus.Favourite.text;
-        favoriteMenu.favoriteListPosition = counter;
-        DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().update(favoriteMenu)
-
-
-        this.runOnUiThread {
-            getAllUnFavoriteItem()
-            getAllFavoriteDate()
+            this.runOnUiThread {
+                Toast.makeText(applicationContext, getString(R.string.Added) + getString(event.favoriteMenu.name), Toast.LENGTH_LONG).show()
+                getAllUnFavoriteItem()
+                getAllFavoriteDate()
+            }
         }
 
 
@@ -80,15 +112,13 @@ class MyFavoriteMenuActivity : Activity(), OnStartDragListener {
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     fun onFavoriteItemdeleted(event: MessageEventFavDeleted) {
 
-
         var counter = FavoritePreference.with(applicationContext).getInt(AllConstant.COUNTER_FAVORITE, 0)
         if (counter == 0) {
             counter = 0
         } else {
-            counter = counter - 1
+            counter -= 1
         }
         FavoritePreference.with(applicationContext).addInt(AllConstant.COUNTER_FAVORITE, counter).save()
-
 
         val favoriteMenu = event.favoriteMenu;
         favoriteMenu.status = MenuStatus.UnFavorite.text;
@@ -101,6 +131,14 @@ class MyFavoriteMenuActivity : Activity(), OnStartDragListener {
             getAllFavoriteDate()
         }
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    fun onFavoriteItemPositionMove(event: MessageEventPositionMove) {
+
+
+        DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().update(event.fromMenu)
+        DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().update(event.toMenu)
 
     }
 
@@ -146,13 +184,10 @@ class MyFavoriteMenuActivity : Activity(), OnStartDragListener {
 
 
         // generator HeaderRecyclerViewSection
-
         for ((index, value) in allCategory.withIndex()) {
-
             val sectionData = HeaderRecyclerViewSection(applicationContext, index, value, allFavoriteData.get(value))
             sectionAdapter.addSection(sectionData)
         }
-
 
         val display = this.getWindowManager().getDefaultDisplay()
         val outMetrics = DisplayMetrics()
@@ -166,7 +201,6 @@ class MyFavoriteMenuActivity : Activity(), OnStartDragListener {
         } else {
             columns = 3;
         }
-
 
         val glm = GridLayoutManager(applicationContext, columns)
         glm.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
@@ -225,16 +259,6 @@ class MyFavoriteMenuActivity : Activity(), OnStartDragListener {
 
         });
 
-//        doAsync {
-//            val result = DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().getAllFavoriteMenu()
-//
-//            val blockingGet = result.blockingGet();
-//            uiThread {
-//
-//                generatedFavaroitRecycView(blockingGet)
-//            }
-//        }
-
 
     }
 
@@ -247,7 +271,7 @@ class MyFavoriteMenuActivity : Activity(), OnStartDragListener {
 
         val density = resources.displayMetrics.density
         val dpWidth = outMetrics.widthPixels / density
-        var columns = 4;
+        var columns: Int;
         if (dpWidth > 320) {
             columns = 4;
         } else {
@@ -282,11 +306,20 @@ class MyFavoriteMenuActivity : Activity(), OnStartDragListener {
             override fun accept(users: List<FavoriteMenu>) {
 
                 generartedUnFavaroitRecycview(users)
-
             }
 
 
         });
+    }
+
+
+    private fun showMessage() {
+
+        val snackbar = Snackbar.make(coordinateLayout, R.string.can_not_add_more_than, Snackbar.LENGTH_LONG)
+        snackbar.setActionTextColor(Color.parseColor("#ffffff"))
+        val snackBarView = snackbar.view
+        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))
+        snackbar.show()
     }
 
 

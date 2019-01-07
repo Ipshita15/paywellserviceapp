@@ -18,7 +18,7 @@ import com.cloudwell.paywell.services.activity.myFavorite.adapter.helper.ItemTou
 import com.cloudwell.paywell.services.activity.myFavorite.adapter.helper.OnStartDragListener;
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
 import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEventFavDeleted;
-import com.cloudwell.paywell.services.database.DatabaseClient;
+import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEventPositionMove;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -93,23 +93,23 @@ public class FavoirteAdapter extends RecyclerView.Adapter<FavoirteAdapter.ItemVi
 
     @Override
     public boolean onItemMove(int fromPosition, int toPosition) {
-        Collections.swap(mItems, fromPosition, toPosition);
-        notifyItemMoved(fromPosition, toPosition);
 
-        FavoriteMenu fromMenu = mItems.get(fromPosition);
-        fromMenu.setFavoriteListPosition(fromPosition);
+        try {
+            Collections.swap(mItems, fromPosition, toPosition);
+            notifyItemMoved(fromPosition, toPosition);
 
+            FavoriteMenu fromMenu = mItems.get(fromPosition);
+            fromMenu.setFavoriteListPosition(fromPosition);
 
-        DatabaseClient.getInstance(mContext).getAppDatabase().mFavoriteMenuDab().update(fromMenu);
+            FavoriteMenu toMenu = mItems.get(toPosition);
+            toMenu.setFavoriteListPosition(toPosition);
 
+            MessageEventPositionMove messageEvent = new MessageEventPositionMove(fromMenu, toMenu);
+            EventBus.getDefault().post(messageEvent);
 
-        FavoriteMenu toMenu = mItems.get(toPosition);
-        toMenu.setFavoriteListPosition(toPosition);
-        DatabaseClient.getInstance(mContext).getAppDatabase().mFavoriteMenuDab().update(toMenu);
+        } catch (Exception ignored) {
 
-
-
-
+        }
 
         return true;
     }
@@ -133,10 +133,10 @@ public class FavoirteAdapter extends RecyclerView.Adapter<FavoirteAdapter.ItemVi
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            textView = (TextView) itemView.findViewById(R.id.item_content);
-            ivIcon = (ImageView) itemView.findViewById(R.id.ivIcon);
-            ivDeleted = (ImageView) itemView.findViewById(R.id.ivDeleted);
-            rootLinarLayout = (ConstraintLayout) itemView.findViewById(R.id.rootLinarLayout);
+            textView = itemView.findViewById(R.id.item_content);
+            ivIcon = itemView.findViewById(R.id.ivIcon);
+            ivDeleted = itemView.findViewById(R.id.ivDeleted);
+            rootLinarLayout = itemView.findViewById(R.id.rootLinarLayout);
         }
 
 
