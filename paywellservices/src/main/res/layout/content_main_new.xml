@@ -187,9 +187,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.3"
+        android:layout_weight="0.2"
         android:orientation="horizontal"
-        android:weightSum="3">
+        android:weightSum="2">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -221,22 +221,6 @@
                 android:contentDescription="@string/app_name"
                 android:onClick="onButtonClicker"
                 android:src="@drawable/ic_call" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <ImageView
-                android:id="@+id/test"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:alpha="128"
-                android:background="#3eaa4d"
-                android:contentDescription="@string/app_name"
-                android:onClick="onButtonClicker"
-                />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

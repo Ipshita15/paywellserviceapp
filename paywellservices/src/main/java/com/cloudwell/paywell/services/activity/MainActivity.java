@@ -57,6 +57,7 @@ import com.cloudwell.paywell.services.activity.chat.ChatActivity;
 import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
 import com.cloudwell.paywell.services.activity.mfs.MFSMainActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.MyFavoriteMenuActivity;
+import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
 import com.cloudwell.paywell.services.activity.notification.NotificationActivity;
 import com.cloudwell.paywell.services.activity.notification.NotificationAllActivity;
 import com.cloudwell.paywell.services.activity.payments.PaymentsMainActivity;
@@ -68,13 +69,16 @@ import com.cloudwell.paywell.services.activity.statements.StatementMainActivity;
 import com.cloudwell.paywell.services.activity.terms.TermsActivity;
 import com.cloudwell.paywell.services.activity.topup.TopupMainActivity;
 import com.cloudwell.paywell.services.activity.topup.TopupMenuActivity;
+import com.cloudwell.paywell.services.activity.topup.brilliant.BrilliantTopupActivity;
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.DESCOMainActivity;
 import com.cloudwell.paywell.services.adapter.MainSliderAdapter;
 import com.cloudwell.paywell.services.adapter.PicassoImageLoadingService;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.constant.AllConstant;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.LocationUtility;
 import com.cloudwell.paywell.services.utils.UpdateChecker;
@@ -1250,27 +1254,30 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
                 break;
             case R.id.homeBtnCall:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CALL_MENU);
-                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                    callPreview();
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-                break;
+//                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CALL_MENU);
+//                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
+//                    callPreview();
+//                } else {
+//                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
+//                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+//                    View snackBarView = snackbar.getView();
+//                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+//                    snackbar.show();
+//                }
 
-            case R.id.test:
-
-                Intent intent1 = new Intent(getApplicationContext(), MyFavoriteMenuActivity.class);
-                startActivity(intent1);
+                onFavoiteItemClick();
 
                 break;
+
             default:
                 break;
         }
+    }
+
+
+    private void startMyFavoriteMenuActivity() {
+        Intent intent1 = new Intent(getApplicationContext(), MyFavoriteMenuActivity.class);
+        startActivity(intent1);
     }
 
     public void generateQRCode() {
@@ -2049,6 +2056,36 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
         }
     }
+
+    private void onFavoiteItemClick() {
+
+        FavoriteMenu favoriteMenu = new FavoriteMenu(R.string.home_utility_desco, R.string.home_topup, R.drawable.all_operator, "Favourite", 0);
+        Intent intent;
+        switch (favoriteMenu.getName()) {
+            case R.string.mobileOperator:
+                intent = new Intent(getApplicationContext(), TopupMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.brilliant:
+                intent = new Intent(getApplicationContext(), BrilliantTopupActivity.class);
+                startActivityWithFlag(intent);
+                break;
+            case R.string.home_utility_desco:
+                intent = new Intent(getApplicationContext(), DESCOMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+        }
+
+
+    }
+
+    private void startActivityWithFlag(Intent intent) {
+        intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE, true);
+        startActivity(intent);
+    }
+
 
     private void showTutorial() {
 //        String SHOWCASE_ID_TOPUP = "topup";

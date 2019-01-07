@@ -218,7 +218,7 @@ class MyFavoriteMenuActivity : AppCompatActivity(), OnStartDragListener {
         sectionHeader.setLayoutManager(glm)
         sectionHeader.setHasFixedSize(true)
         sectionHeader.setAdapter(sectionAdapter)
-//        sectionHeader.isNestedScrollingEnabled = true;
+        sectionHeader.isNestedScrollingEnabled = false;
 
         if (previewPogistion != 0) {
             sectionAdapter.notifyDataSetChanged();
@@ -289,7 +289,7 @@ class MyFavoriteMenuActivity : AppCompatActivity(), OnStartDragListener {
         val recyclerListAdapter = FavoirteAdapter(applicationContext, result, this)
         recyclerView.layoutManager = glm
         recyclerView.adapter = recyclerListAdapter;
-        recyclerView.isNestedScrollingEnabled = true;
+        recyclerView.isNestedScrollingEnabled = false;
 
         val callback = SimpleItemTouchHelperCallback(recyclerListAdapter)
         mItemTouchHelper = ItemTouchHelper(callback)
@@ -315,7 +315,7 @@ class MyFavoriteMenuActivity : AppCompatActivity(), OnStartDragListener {
 
     private fun showMessage() {
 
-        val snackbar = Snackbar.make(coordinateLayout, R.string.can_not_add_more_than, Snackbar.LENGTH_LONG)
+        val snackbar = Snackbar.make(coordinatorLayout_fav, R.string.can_not_add_more_than, Snackbar.LENGTH_LONG)
         snackbar.setActionTextColor(Color.parseColor("#ffffff"))
         val snackBarView = snackbar.view
         snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))

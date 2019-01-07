@@ -15,7 +15,6 @@ import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
-import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -93,19 +92,13 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
             this.onBackPressed();
             return true;
         }
-//        else if (item.getItemId() == R.id.menu_help) {
-//            Intent intent = new Intent(DESCOMainActivity.this, ElectricityHelpActivity.class);
-//            intent.putExtra("serviceName", "DESCO");
-//            startActivity(intent);
-//            finish();
-//        }
+
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(DESCOMainActivity.this, UtilityMainActivity.class);
-        startActivity(intent);
+        super.onBackPressed();
         finish();
     }
 
@@ -258,7 +251,6 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
             if (result != null) {
                 DESCOInquiryActivity.TRANSLOG_TAG = result;
                 startActivity(new Intent(DESCOMainActivity.this, DESCOInquiryActivity.class));
-                finish();
             } else {
                 Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));

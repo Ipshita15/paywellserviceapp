@@ -5,4 +5,5 @@ package com.cloudwell.paywell.services.constant;
  */
 public class AllConstant {
     public static final String COUNTER_FAVORITE = "COUNTER_FAVORITE";
+    public static final String IS_FLOW_FROM_FAVORITE = "IS_FLOW_FROM_FAVORITE";
 }
