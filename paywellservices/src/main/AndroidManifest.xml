@@ -253,7 +253,7 @@
         </activity>
         <!-- activities for qubee services -->
         <activity
-            android:name=".activity.utility.qubee.RechargeActivity"
+            android:name=".activity.utility.qubee.QubeeRechargeActivity"
             android:parentActivityName=".activity.utility.qubee.QubeeMainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
