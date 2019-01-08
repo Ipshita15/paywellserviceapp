@@ -56,7 +56,7 @@ public class BalanceActivity extends BaseActivity implements View.OnClickListene
         }
 
         mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler();
+        mAppHandler = new AppHandler(getApplicationContext());
         initializeView();
     }
 
@@ -64,7 +64,6 @@ public class BalanceActivity extends BaseActivity implements View.OnClickListene
         mLinearLayout = findViewById(R.id.balanceLinearLayout);
         mPin = findViewById(R.id.mycash_pin);
         mConfirm = findViewById(R.id.mycash_confirm);
-
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             ((TextView) mLinearLayout.findViewById(R.id.tvMyCashPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
             mPin.setTypeface(AppController.getInstance().getOxygenLightFont());

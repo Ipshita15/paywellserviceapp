@@ -55,6 +55,7 @@ public class ChangeMYCashPinActivity extends BaseActivity implements View.OnClic
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_mycash_change_pin_title);
         }
+        mAppHandler = new AppHandler(getApplicationContext());
         initializeView();
     }
 

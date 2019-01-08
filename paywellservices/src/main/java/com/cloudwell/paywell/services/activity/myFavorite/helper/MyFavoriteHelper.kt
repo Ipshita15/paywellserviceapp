@@ -50,8 +50,8 @@ class MyFavoriteHelper {
 
 
             // end utility
-            listOfData.add(FavoriteMenu(R.string.home_eticket_bus, R.string.home_eticket, R.drawable.ic_bus_ticket, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_eticket_train, R.string.home_eticket, R.drawable.ic_train_ticket, MenuStatus.UnFavorite.text, 0))
+//            listOfData.add(FavoriteMenu(R.string.home_eticket_bus, R.string.home_eticket, R.drawable.ic_bus_ticket, MenuStatus.UnFavorite.text, 0))
+//            listOfData.add(FavoriteMenu(R.string.home_eticket_train, R.string.home_eticket, R.drawable.ic_train_ticket, MenuStatus.UnFavorite.text, 0))
 
             listOfData.add(FavoriteMenu(R.string.home_mfs_mycash, R.string.home_mfs, R.drawable.ic_train_ticket, MenuStatus.UnFavorite.text, 0))
 

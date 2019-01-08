@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.utility.banglalion;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -230,8 +229,6 @@ public class BanglalionRechargeActivity extends BaseActivity implements View.OnC
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(BanglalionRechargeActivity.this, BanglalionMainActivity.class);
-        startActivity(intent);
         finish();
     }
 

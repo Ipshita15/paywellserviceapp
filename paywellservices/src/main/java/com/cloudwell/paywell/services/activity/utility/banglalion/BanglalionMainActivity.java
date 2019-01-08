@@ -1,14 +1,13 @@
 package com.cloudwell.paywell.services.activity.utility.banglalion;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 
@@ -42,12 +41,12 @@ public class BanglalionMainActivity extends AppCompatActivity {
 
     public void goToBanglalionRecharge(View view) {
         startActivity(new Intent(BanglalionMainActivity.this,BanglalionRechargeActivity.class));
-        finish();
+
     }
 
     public void goToRechargeInquiry(View view) {
         startActivity(new Intent(BanglalionMainActivity.this,BanglalionRechargeInquiryActivity.class));
-        finish();
+
     }
 
     @Override
@@ -61,8 +60,6 @@ public class BanglalionMainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(BanglalionMainActivity.this, UtilityMainActivity.class);
-        startActivity(intent);
         finish();
     }
 }

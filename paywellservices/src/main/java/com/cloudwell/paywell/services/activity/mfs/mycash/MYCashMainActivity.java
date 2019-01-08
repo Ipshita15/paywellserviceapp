@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
-import com.cloudwell.paywell.services.activity.mfs.MFSMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -95,6 +94,7 @@ public class MYCashMainActivity extends BaseActivity implements View.OnClickList
         if (!mCd.isConnectingToInternet()) {
             AppHandler.showDialog(this.getSupportFragmentManager());
         } else {
+            _pin = mPin.getText().toString().trim();
             new SubmitAsync().execute(getString(R.string.bkash_balance_check));
         }
     }
@@ -119,7 +119,7 @@ public class MYCashMainActivity extends BaseActivity implements View.OnClickList
             try {
                 List<NameValuePair> nameValuePairs = new ArrayList<>(2);
                 nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("pin", mAppHandler.getPin()));
+                nameValuePairs.add(new BasicNameValuePair("pin", _pin));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
@@ -245,8 +245,6 @@ public class MYCashMainActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(MYCashMainActivity.this, MFSMainActivity.class);
-        startActivity(intent);
         finish();
     }
 }
