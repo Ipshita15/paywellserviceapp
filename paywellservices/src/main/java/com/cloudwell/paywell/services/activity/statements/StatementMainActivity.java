@@ -1,14 +1,13 @@
 package com.cloudwell.paywell.services.activity.statements;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.MainActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
@@ -100,8 +99,6 @@ public class StatementMainActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(StatementMainActivity.this, MainActivity.class);
-        startActivity(intent);
         finish();
     }
 }

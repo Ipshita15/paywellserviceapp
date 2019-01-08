@@ -1,11 +1,10 @@
 package com.cloudwell.paywell.services.activity.refill.card;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
@@ -13,7 +12,6 @@ import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.refill.RefillBalanceMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -116,8 +114,6 @@ public class CardTransferMainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(CardTransferMainActivity.this, RefillBalanceMainActivity.class);
-        startActivity(intent);
         finish();
     }
 }
