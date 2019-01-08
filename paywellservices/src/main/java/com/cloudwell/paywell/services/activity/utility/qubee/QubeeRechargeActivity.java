@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.utility.qubee;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -33,7 +32,7 @@ import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RechargeActivity extends BaseActivity implements View.OnClickListener {
+public class QubeeRechargeActivity extends BaseActivity implements View.OnClickListener {
 
     private EditText mPin, mAccountNo, mAmount;
     private Button mConfirm;
@@ -190,7 +189,7 @@ public class RechargeActivity extends BaseActivity implements View.OnClickListen
                 + "\n" + getString(R.string.trx_id_des) + " " + trxId
                 + "\n\n" + getString(R.string.using_paywell_des)
                 + "\n" + getString(R.string.hotline_des) + " " + hotline);
-        AlertDialog.Builder builder = new AlertDialog.Builder(RechargeActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(QubeeRechargeActivity.this);
         builder.setTitle("Result " + status);
         builder.setMessage(reqStrBuilder.toString());
         builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
@@ -206,8 +205,6 @@ public class RechargeActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(RechargeActivity.this, QubeeMainActivity.class);
-        startActivity(intent);
         finish();
     }
 

@@ -60,9 +60,17 @@ public class IvacFeePayActivity extends BaseActivity {
     private static String TAG_RESPONSE_IVAC_CENTER_NAME = "center_name";
     private static String TAG_RESPONSE_IVAC_CENTER_AMOUNT = "amount";
 
+    private static String TAG_RESPONSE_IVAC_STATUS = "status";
+    private static String TAG_RESPONSE_IVAC_MSG = "message";
+    private static String TAG_RESPONSE_IVAC_CENTER_DETAILS = "centerDetails";
+
+
     private static final int PERMISSION_OPEN_CAMERA = 100;
     private int state = 0;
+    private ConnectionDetector cd;
 
+    private AsyncTask<String, Integer, String> mTransactionLogAsync;
+    private AsyncTask<String, String, String> mConfirmFeePayAsync;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +87,19 @@ public class IvacFeePayActivity extends BaseActivity {
         mAppHandler = new AppHandler(this);
 
         initializeData();
-        autoSelectedCenterPosition();
+
+        cd = new ConnectionDetector(AppController.getContext());
+        if (cd.isConnectingToInternet()) {
+            mTransactionLogAsync = new TransactionLogAsync().execute(getResources().getString(R.string.utility_ivac_get_center));
+        } else {
+            Snackbar snackbar = Snackbar.make(mConstraintLayout, getResources().getString(R.string.connection_error_msg), Snackbar.LENGTH_LONG);
+            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+            View snackBarView = snackbar.getView();
+            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+            snackbar.show();
+        }
+
+
     }
 
 
@@ -114,7 +134,7 @@ public class IvacFeePayActivity extends BaseActivity {
             _mPhn.setTypeface(AppController.getInstance().getOxygenLightFont());
             editTextPhnNum.setTypeface(AppController.getInstance().getOxygenLightFont());
             _mBtn.setTypeface(AppController.getInstance().getOxygenLightFont());
-        }else {
+        } else {
             _mPin.setTypeface(AppController.getInstance().getAponaLohitFont());
             editTextPassword.setTypeface(AppController.getInstance().getAponaLohitFont());
             _mCenter.setTypeface(AppController.getInstance().getAponaLohitFont());
@@ -159,6 +179,10 @@ public class IvacFeePayActivity extends BaseActivity {
             }
         });
 
+
+    }
+
+    private void setupCenterDetailsSpiner() {
         try {
             center_id_array = new ArrayList<>();
             center_name_array = new ArrayList<>();
@@ -294,9 +318,109 @@ public class IvacFeePayActivity extends BaseActivity {
                     webFile = editTextWebFile.getText().toString().trim();
                     passportNo = editTextPassport.getText().toString().trim();
                     phnNum = editTextPhnNum.getText().toString().trim();
-                    new ConfirmFeePayAsync().execute(
+                    mConfirmFeePayAsync = new ConfirmFeePayAsync().execute(
                             getResources().getString(R.string.utility_ivac_fee_pay));
                 }
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mTransactionLogAsync != null) {
+            mTransactionLogAsync.cancel(true);
+        }
+
+        if (mConfirmFeePayAsync != null) {
+            mConfirmFeePayAsync.cancel(true);
+        }
+
+        super.onDestroy();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            this.onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private class TransactionLogAsync extends AsyncTask<String, Integer, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            showProgressDialog();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String responseTxt = null;
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(params[0]);
+            try {
+                List<NameValuePair> nameValuePairs = new ArrayList<>(2);
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("format", "json"));
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                responseTxt = httpclient.execute(httppost, responseHandler);
+            } catch (Exception e) {
+                e.fillInStackTrace();
+                Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+            }
+            return responseTxt;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            dismissProgressDialog();
+            if (result != null) {
+                try {
+                    JSONObject object = new JSONObject(result);
+
+                    String status = object.getString(TAG_RESPONSE_IVAC_STATUS);
+                    String msg = object.getString(TAG_RESPONSE_IVAC_MSG);
+
+                    if (status.equalsIgnoreCase("200")) {
+                        JSONArray jsonArray = object.getJSONArray(TAG_RESPONSE_IVAC_CENTER_DETAILS);
+                        IvacFeePayActivity.TAG_CENTER_DETAILS = jsonArray.toString();
+
+                        setupCenterDetailsSpiner();
+                        autoSelectedCenterPosition();
+
+                    } else {
+                        Snackbar snackbar = Snackbar.make(mConstraintLayout, msg, Snackbar.LENGTH_LONG);
+                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                        View snackBarView = snackbar.getView();
+                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                        snackbar.show();
+                    }
+                } catch (Exception ex) {
+                    Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                    View snackBarView = snackbar.getView();
+                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                    snackbar.show();
+                }
+            } else {
+                Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
         }
     }
@@ -306,7 +430,7 @@ public class IvacFeePayActivity extends BaseActivity {
 
         @Override
         protected void onPreExecute() {
-          showProgressDialog();
+            showProgressDialog();
         }
 
         @Override
@@ -342,7 +466,7 @@ public class IvacFeePayActivity extends BaseActivity {
 
         @Override
         protected void onPostExecute(String result) {
-           dismissProgressDialog();
+            dismissProgressDialog();
             if (result != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
@@ -373,20 +497,5 @@ public class IvacFeePayActivity extends BaseActivity {
                 }
             }
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            this.onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(IvacFeePayActivity.this, IvacMainActivity.class));
-        finish();
     }
 }

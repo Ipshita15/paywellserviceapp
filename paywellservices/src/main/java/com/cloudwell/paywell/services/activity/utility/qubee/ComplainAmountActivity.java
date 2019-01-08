@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.utility.qubee;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -41,6 +40,8 @@ public class ComplainAmountActivity extends BaseActivity implements View.OnClick
     private Button mConfirmAmount;
     private String _returnMessage, _trxId;
     private LinearLayout mLinearLayout;
+
+    private AsyncTask<String, Integer, String> mSubmitAsync;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,14 +121,54 @@ public class ComplainAmountActivity extends BaseActivity implements View.OnClick
                     mCorrectAmount.setError(Html.fromHtml("<font color='red'>" + getString(R.string.amount_error_msg) + "</font>"));
                     return;
                 }
-                new SubmitAsync().execute(getString(R.string.qb_com), _pin, _account, _correctAmount, _incorrectAmount);
+                mSubmitAsync = new SubmitAsync().execute(getString(R.string.qb_com), _pin, _account, _correctAmount, _incorrectAmount);
             }
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        if (mSubmitAsync != null) {
+            mSubmitAsync.cancel(true);
+        }
+        super.onDestroy();
+
+    }
+
+
+    private void showStatusDialog() {
+        StringBuilder reqStrBuilder = new StringBuilder();
+        reqStrBuilder.append(getString(R.string.message_des) + " " + _returnMessage
+                + "\n" + getString(R.string.trx_id_des) + " " + _trxId);
+        AlertDialog.Builder builder = new AlertDialog.Builder(ComplainAmountActivity.this);
+        builder.setTitle("Result");
+        builder.setMessage(reqStrBuilder.toString());
+        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int id) {
+                dialogInterface.dismiss();
+                onBackPressed();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            this.onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
     private class SubmitAsync extends AsyncTask<String, Integer, String> {
-
-
         @Override
         protected void onPreExecute() {
             showStatusDialog();
@@ -163,7 +204,7 @@ public class ComplainAmountActivity extends BaseActivity implements View.OnClick
 
         @Override
         protected void onPostExecute(String result) {
-           dismissProgressDialog();
+            dismissProgressDialog();
             try {
                 if (result != null && result.contains("@")) {
                     String splitedArray[] = result.split("@");
@@ -196,40 +237,5 @@ public class ComplainAmountActivity extends BaseActivity implements View.OnClick
                 snackbar.show();
             }
         }
-    }
-
-
-    private void showStatusDialog() {
-        StringBuilder reqStrBuilder = new StringBuilder();
-        reqStrBuilder.append(getString(R.string.message_des) + " " + _returnMessage
-                + "\n" + getString(R.string.trx_id_des) + " " + _trxId);
-        AlertDialog.Builder builder = new AlertDialog.Builder(ComplainAmountActivity.this);
-        builder.setTitle("Result");
-        builder.setMessage(reqStrBuilder.toString());
-        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int id) {
-                dialogInterface.dismiss();
-                onBackPressed();
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            this.onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(ComplainAmountActivity.this, QubeeMainActivity.class);
-        startActivity(intent);
-        finish();
     }
 }

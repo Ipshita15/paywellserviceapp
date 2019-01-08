@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 
@@ -51,8 +50,6 @@ public class QubeeMainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(QubeeMainActivity.this, UtilityMainActivity.class);
-        startActivity(intent);
         finish();
     }
 
@@ -68,24 +65,24 @@ public class QubeeMainActivity extends AppCompatActivity {
     public void onButtonClicker(View v) {
         switch (v.getId()) {
             case R.id.homeBtnRecharge:
-                startActivity(new Intent(this, RechargeActivity.class));
-                finish();
+                startActivity(new Intent(this, QubeeRechargeActivity.class));
+
                 break;
             case R.id.homeBtnInquiry:
                 startActivity(new Intent(this, InquiryActivity.class));
-                finish();
+
                 break;
             case R.id.homeBtnWrongAccount:
                 startActivity(new Intent(this, ComplainAccountActivity.class));
-                finish();
+
                 break;
             case R.id.homeBtnWrongAmount:
                 startActivity(new Intent(this, ComplainAmountActivity.class));
-                finish();
+
                 break;
             case R.id.homeBtnPayment:
                 startActivity(new Intent(this, ComplainTrxActivity.class));
-                finish();
+
                 break;
             default:
                 break;

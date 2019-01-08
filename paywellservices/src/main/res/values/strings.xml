@@ -58,7 +58,7 @@
     <string name="home_utility_qubee_wrong_acc_title_favoirte">Qubee\nWrong Amount</string>
     <string name="home_utility_qubee_payment">Payment Not\nReceived</string>
     <string name="home_utility_qubee_payment_title">Payment Not Received</string>
-    <string name="home_utility_qubee_payment_title_favoirte">Payment Not Received</string>
+    <string name="home_utility_qubee_payment_not_title_favoirte">Payment Not Received</string>
     <string name="home_utility_ivac_fee_pay">Fee Pay</string>
     <string name="home_utility_ivac_free_pay_favorite">IVAC \nFee Pay</string>
     <string name="home_utility_ivac_inquiry">IVAC \nInquiry</string>

@@ -60,7 +60,7 @@
     <string name="home_utility_qubee_wrong_amount_title">ভুল টাকার পরিমান</string>
     <string name="home_utility_qubee_payment">না পৌঁছানোর\nঅভিযোগ</string>
     <string name="home_utility_qubee_payment_title">না পৌঁছানোর অভিযোগ</string>
-    <string name="home_utility_qubee_payment_title_favoirte">কিউবি \n না পৌঁছানোর অভিযোগ</string>
+    <string name="home_utility_qubee_payment_not_title_favoirte">কিউবি \n না পৌঁছানোর অভিযোগ</string>
     <string name="home_utility_ivac_fee_pay">ফি পরিশোধ</string>
     <string name="home_utility_ivac_free_pay_favorite"> আইভিএসি \nফ্রি পরিশোধ</string>
     <string name="home_utility_ivac_inquiry">ফি পরিশোধ</string>

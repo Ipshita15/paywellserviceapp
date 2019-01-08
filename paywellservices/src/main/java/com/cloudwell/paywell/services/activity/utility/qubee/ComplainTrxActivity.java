@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.utility.qubee;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -220,8 +219,6 @@ public class ComplainTrxActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(ComplainTrxActivity.this, QubeeMainActivity.class);
-        startActivity(intent);
         finish();
     }
 }

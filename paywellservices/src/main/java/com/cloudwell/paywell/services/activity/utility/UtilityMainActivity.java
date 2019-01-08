@@ -114,7 +114,6 @@ public class UtilityMainActivity extends AppCompatActivity {
             case R.id.homeBtnRealVU:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_REAL_VU_MENU);
                 startActivity(new Intent(this, BeximcoMainActivity.class));
-                finish();
                 break;
             case R.id.homeBtnIvac:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_IVAC_MENU);

@@ -138,8 +138,6 @@ public class IvacFeeInquiryMainActivity extends BaseActivity implements View.OnC
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(IvacFeeInquiryMainActivity.this, IvacMainActivity.class);
-        startActivity(intent);
         finish();
     }
 
