@@ -18,7 +18,6 @@ import android.widget.RelativeLayout;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.WebViewActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
-import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -76,7 +75,7 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
         switch (v.getId()) {
             case R.id.homeBtnPostpaidBillPay:
                 startActivity(new Intent(this, DPDCPostpaidBillPayActivity.class));
-                finish();
+
                 break;
             case R.id.homeBtnPostpaidInquiry:
                 service_type = TAG_SERVICE_POSTPAID_INQUIRY;
@@ -114,8 +113,6 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(DPDCMainActivity.this, UtilityMainActivity.class);
-        startActivity(intent);
         finish();
     }
 

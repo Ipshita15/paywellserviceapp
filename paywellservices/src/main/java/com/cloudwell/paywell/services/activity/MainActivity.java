@@ -24,6 +24,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -35,6 +37,9 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
@@ -47,39 +52,59 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.about.AboutActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
-import com.cloudwell.paywell.services.activity.chat.ChatActivity;
 import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
 import com.cloudwell.paywell.services.activity.mfs.MFSMainActivity;
+import com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.MyFavoriteMenuActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
 import com.cloudwell.paywell.services.activity.notification.NotificationActivity;
 import com.cloudwell.paywell.services.activity.notification.NotificationAllActivity;
 import com.cloudwell.paywell.services.activity.payments.PaymentsMainActivity;
 import com.cloudwell.paywell.services.activity.product.ProductMenuActivity;
+import com.cloudwell.paywell.services.activity.product.productHelper.ProductHelper;
 import com.cloudwell.paywell.services.activity.refill.RefillBalanceMainActivity;
+import com.cloudwell.paywell.services.activity.refill.banktransfer.BankTransferMainActivity;
+import com.cloudwell.paywell.services.activity.refill.card.CardTransferMainActivity;
 import com.cloudwell.paywell.services.activity.scan.DisplayQRCodeActivity;
 import com.cloudwell.paywell.services.activity.settings.SettingsActivity;
 import com.cloudwell.paywell.services.activity.statements.StatementMainActivity;
+import com.cloudwell.paywell.services.activity.statements.ViewStatementActivity;
 import com.cloudwell.paywell.services.activity.terms.TermsActivity;
 import com.cloudwell.paywell.services.activity.topup.TopupMainActivity;
 import com.cloudwell.paywell.services.activity.topup.TopupMenuActivity;
 import com.cloudwell.paywell.services.activity.topup.brilliant.BrilliantTopupActivity;
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
+import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionMainActivity;
+import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionRechargeActivity;
+import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionRechargeInquiryActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.DESCOBillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.DESCOMainActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCMainActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCPostpaidBillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.wasa.WASABillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.wasa.WASAMainActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.westzone.WZPDCLBillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.westzone.WZPDCLMainActivity;
+import com.cloudwell.paywell.services.activity.utility.ivac.IvacFeeInquiryMainActivity;
+import com.cloudwell.paywell.services.activity.utility.ivac.IvacFeePayActivity;
+import com.cloudwell.paywell.services.activity.utility.ivac.IvacMainActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBBillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBRegistrationActivity;
+import com.cloudwell.paywell.services.activity.utility.qubee.ComplainAccountActivity;
+import com.cloudwell.paywell.services.activity.utility.qubee.ComplainTrxActivity;
+import com.cloudwell.paywell.services.activity.utility.qubee.InquiryActivity;
+import com.cloudwell.paywell.services.activity.utility.qubee.QubeeMainActivity;
+import com.cloudwell.paywell.services.activity.utility.qubee.QubeeRechargeActivity;
+import com.cloudwell.paywell.services.activity.utility.realvu.BeximcoMainActivity;
+import com.cloudwell.paywell.services.adapter.HomeFavoriteAdapter;
 import com.cloudwell.paywell.services.adapter.MainSliderAdapter;
 import com.cloudwell.paywell.services.adapter.PicassoImageLoadingService;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
@@ -87,6 +112,8 @@ import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
+import com.cloudwell.paywell.services.database.DatabaseClient;
+import com.cloudwell.paywell.services.database.FavoriteMenuDab;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.LocationUtility;
 import com.cloudwell.paywell.services.utils.UpdateChecker;
@@ -122,17 +149,22 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import ss.com.bannerslider.Slider;
 import ss.com.bannerslider.event.OnSlideClickListener;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener {
 
     private boolean doubleBackToExitPressedOnce = false;
-    private CoordinatorLayout mCoordinateLayout;
+    public CoordinatorLayout mCoordinateLayout;
     private AppHandler mAppHandler;
     private UpdateChecker mUpdateChecker;
     public final long UPDATE_SOFTWARE_INTERVAL = 24 * 60 * 60;// 1 day
@@ -195,11 +227,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     long startHourMilli, endHourMilli;
     Calendar cal;
 
+    // bottom slider
+    private BottomSheetBehavior sheetBehavior;
+    private ConstraintLayout layoutBottomSheet;
+    private RecyclerView recyclerViewFavoirte;
+    private ImageView ivUptown, ivEdit;
+    private boolean isSliderUp = false;
+    private int lastFavoitePosition = 0;
+
     @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -232,7 +273,154 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         InitializeData();
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_DASHBOARD);
+
+        setupBottonSheetSlider();
+        getAllFavoriteDate();
+        hiddenFavoriteRecycview();
     }
+
+    private void hiddenFavoriteRecycview() {
+
+    }
+
+    private void setupBottonSheetSlider() {
+        layoutBottomSheet = findViewById(R.id.bottom_sheet);
+        ivUptown = layoutBottomSheet.findViewById(R.id.ivImageUpAndDown);
+        ivEdit = layoutBottomSheet.findViewById(R.id.ivEdit);
+
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+
+//         sheetBehavior.setHideable(true);
+        int height = getHeightOfView(ivUptown);
+
+//        sheetBehavior.setPeekHeight(100);
+
+
+        /**
+         * bottom sheet state change listener
+         * we are changing button text when sheet changed state
+         * */
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+//                        btnBottomSheet.setText("Close Sheet");
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+//                        btnBottomSheet.setText("Expand Sheet");
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(View bottomSheet, float slideOffset) {
+                // animateBottomSheetArrows(slideOffset);
+            }
+        });
+
+
+        ivUptown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isSliderUp) {
+                    isSliderUp = true;
+                    sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    recyclerViewFavoirte.setVisibility(View.VISIBLE);
+
+                } else {
+                    isSliderUp = false;
+                    sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    recyclerViewFavoirte.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        ivEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startMyFavoriteMenuActivity();
+
+            }
+        });
+    }
+
+    private void animateBottomSheetArrows(float slideOffset) {
+        ivUptown.setRotation(slideOffset * 180);
+    }
+
+    private void getAllFavoriteDate() {
+
+        final FavoriteMenuDab favoriteMenuDab = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mFavoriteMenuDab();
+        favoriteMenuDab.getAllFavoriteMenu().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<FavoriteMenu>>() {
+                    @Override
+                    public void accept(List<FavoriteMenu> favoriteMenus) throws Exception {
+
+                        Collections.sort(favoriteMenus, new Comparator<FavoriteMenu>() {
+                            @Override
+                            public int compare(FavoriteMenu o1, FavoriteMenu o2) {
+                                if (o1.getFavoriteListPosition() > o2.getFavoriteListPosition()) {
+                                    return 0;
+                                } else if (o1.getFavoriteListPosition() > o2.getFavoriteListPosition()) {
+                                    return 1;
+                                } else {
+                                    return -1;
+                                }
+                            }
+                        });
+
+                        generatedFavaroitRecycView(favoriteMenus);
+
+                    }
+                });
+
+
+    }
+
+    private void generatedFavaroitRecycView(List<FavoriteMenu> result) {
+
+        recyclerViewFavoirte = layoutBottomSheet.findViewById(R.id.rvOperatorList);
+        recyclerViewFavoirte.setHasFixedSize(true);
+        recyclerViewFavoirte.setItemAnimator(new DefaultItemAnimator());
+
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewFavoirte.setLayoutManager(horizontalLayoutManager);
+        recyclerViewFavoirte.getLayoutManager().setMeasurementCacheEnabled(false);
+        HomeFavoriteAdapter adapter = new HomeFavoriteAdapter(this, result);
+
+        adapter.setClickListener(new HomeFavoriteAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(int position, FavoriteMenu favoriteMenu) {
+                onFavoriteItemClick(favoriteMenu);
+                lastFavoitePosition = position;
+            }
+        });
+        recyclerViewFavoirte.setAdapter(adapter);
+
+        if (0 != lastFavoitePosition) {
+            recyclerViewFavoirte.smoothScrollToPosition(lastFavoitePosition);
+
+        }
+
+        // recyclerViewFavoirte.setVisibility(View.GONE);
+
+
+    }
+
+    private void updateMyFavorityView() {
+        getAllFavoriteDate();
+    }
+
 
     private void InitializeData() {
         /*Buttons Initialization*/
@@ -1249,22 +1437,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     snackbar.show();
                 }
                 break;
-            case R.id.homeBtnMessage:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CHAT_MENU);
-                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                    startActivity(new Intent(MainActivity.this, ChatActivity.class));
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-                break;
-            case R.id.homeBtnCall:
-//                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CALL_MENU);
+//            case R.id.homeBtnMessage:
+//                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CHAT_MENU);
 //                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-//                    callPreview();
+//                    startActivity(new Intent(MainActivity.this, ChatActivity.class));
 //                } else {
 //                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
 //                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -1272,10 +1448,22 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
 //                    snackbar.show();
 //                }
-
-                onFavoiteItemClick();
-
-                break;
+//                break;
+//            case R.id.homeBtnCall:
+////                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CALL_MENU);
+////                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
+////                    callPreview();
+////                } else {
+////                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
+////                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+////                    View snackBarView = snackbar.getView();
+////                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+////                    snackbar.show();
+////                }
+//
+//                onFavoriteItemClick();
+//
+//                break;
 
             default:
                 break;
@@ -1365,7 +1553,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         checkPayWellBalance();
 
         viewPager.setInterval(2000);
+
+        updateMyFavorityView();
+
     }
+
 
     private boolean getMailAddress() {
         String gmail = "";
@@ -2065,9 +2257,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    private void onFavoiteItemClick() {
-
-        FavoriteMenu favoriteMenu = new FavoriteMenu(R.string.home_utility_west_zone_pay, R.string.home_topup, R.drawable.all_operator, "Favourite", 0);
+    private void onFavoriteItemClick(FavoriteMenu favoriteMenu) {
         Intent intent;
 
         switch (favoriteMenu.getName()) {
@@ -2089,6 +2279,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 intent = new Intent(getApplicationContext(), DESCOBillPayActivity.class);
                 startActivityWithFlag(intent);
                 break;
+
+            case R.string.home_utility_dpdc:
+                intent = new Intent(getApplicationContext(), DPDCMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+            case R.string.home_utility_dpdc_bill_pay:
+                intent = new Intent(getApplicationContext(), DPDCPostpaidBillPayActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
             case R.string.home_utility_pollibiddut:
                 intent = new Intent(getApplicationContext(), PBMainActivity.class);
                 startActivityWithFlag(intent);
@@ -2126,7 +2326,152 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivityWithFlag(intent);
                 break;
 
+            case R.string.home_utility_qubee:
+                intent = new Intent(getApplicationContext(), QubeeMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
 
+            case R.string.home_utility_qubee_recharge:
+                intent = new Intent(getApplicationContext(), QubeeRechargeActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_qubee_recharge_inquiry:
+                intent = new Intent(getApplicationContext(), InquiryActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_qubee_wrong_acc_title_favoirte:
+                intent = new Intent(getApplicationContext(), ComplainAccountActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_qubee_wrong_amount_title:
+                intent = new Intent(getApplicationContext(), ComplainAccountActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_qubee_payment_not_title_favoirte:
+                intent = new Intent(getApplicationContext(), ComplainTrxActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+
+            case R.string.home_utility_beximco:
+                intent = new Intent(getApplicationContext(), BeximcoMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+
+            case R.string.home_utility_ivac:
+                intent = new Intent(getApplicationContext(), IvacMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_ivac_free_pay_favorite:
+                intent = new Intent(getApplicationContext(), IvacFeePayActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_ivac_inquiry:
+                intent = new Intent(getApplicationContext(), IvacFeeInquiryMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+
+            case R.string.home_utility_banglalion:
+                intent = new Intent(getApplicationContext(), BanglalionMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_banglalion_recharge:
+                intent = new Intent(getApplicationContext(), BanglalionRechargeActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_banglalion_recharge_inquiry:
+                intent = new Intent(getApplicationContext(), BanglalionRechargeInquiryActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_mfs_mycash:
+                intent = new Intent(getApplicationContext(), MYCashMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_product_ajker_deal:
+
+                new ProductHelper().getToken(this, 1);
+
+                break;
+
+            case R.string.home_product_pw_wholesale:
+
+                new ProductHelper().getToken(this, 2);
+
+                break;
+
+            case R.string.home_statement_mini:
+
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_STATEMENT_MENU, AnalyticsParameters.KEY_STATEMENT_MINI_MENU);
+                ViewStatementActivity.title = "mini";
+                ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/StatementInquiry?username="
+                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
+
+                intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
+                startActivityWithFlag(intent);
+
+                break;
+            case R.string.home_statement_balance:
+
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_STATEMENT_MENU, AnalyticsParameters.KEY_STATEMENT_BALANCE_MENU);
+                ViewStatementActivity.title = "balance";
+                ViewStatementActivity.url = "http://api.cloudwell.co/AndroidWebViewController/balanceStatement?username="
+                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
+
+                intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
+                startActivityWithFlag(intent);
+
+                break;
+
+
+            case R.string.home_statement_sales:
+
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_STATEMENT_MENU, AnalyticsParameters.KEY_STATEMENT_SALES_MENU);
+                ViewStatementActivity.title = "sales";
+                ViewStatementActivity.url = "http://api.cloudwell.co/AndroidWebViewController/salesStatement?username="
+                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
+
+
+                intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
+                startActivityWithFlag(intent);
+
+                break;
+            case R.string.home_statement_transaction:
+
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_STATEMENT_MENU, AnalyticsParameters.KEY_STATEMENT_TRX_MENU);
+                ViewStatementActivity.title = "trx";
+                ViewStatementActivity.url = "http://api.cloudwell.co/AndroidWebViewController/getAllTransactionStatement?username="
+                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
+
+                intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
+                startActivityWithFlag(intent);
+
+                break;
+
+            case R.string.home_refill_bank:
+
+                intent = new Intent(getApplicationContext(), BankTransferMainActivity.class);
+                startActivityWithFlag(intent);
+
+                break;
+
+            case R.string.home_refill_card:
+
+                intent = new Intent(getApplicationContext(), CardTransferMainActivity.class);
+                startActivityWithFlag(intent);
+
+                break;
 
         }
 
@@ -2178,6 +2523,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             viewPager = null;
         }
         super.onDestroy();
+    }
+
+    private int getHeightOfView(View contentview) {
+        contentview.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        //contentview.getMeasuredWidth();
+        return contentview.getMeasuredHeight();
     }
 
 
