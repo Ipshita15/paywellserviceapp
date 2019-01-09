@@ -59,6 +59,7 @@ import android.widget.TextView;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.about.AboutActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.chat.ChatActivity;
 import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
 import com.cloudwell.paywell.services.activity.mfs.MFSMainActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity;
@@ -234,6 +235,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private ImageView ivUptown, ivEdit;
     private boolean isSliderUp = false;
     private int lastFavoitePosition = 0;
+    private boolean isFirstTime = true;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -290,6 +292,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
 
+
 //         sheetBehavior.setHideable(true);
         int height = getHeightOfView(ivUptown);
 
@@ -333,13 +336,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             public void onClick(View v) {
                 if (!isSliderUp) {
                     isSliderUp = true;
-                    sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                     recyclerViewFavoirte.setVisibility(View.VISIBLE);
+                    ivEdit.setVisibility(View.VISIBLE);
+                    ivUptown.setBackgroundResource(R.drawable.circle_angle_down);
+                    sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
 
                 } else {
                     isSliderUp = false;
-                    sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                     recyclerViewFavoirte.setVisibility(View.GONE);
+                    ivEdit.setVisibility(View.GONE);
+                    ivUptown.setBackgroundResource(R.drawable.circle_angle_up);
+                    sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+
                 }
             }
         });
@@ -351,6 +361,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             }
         });
+
+
     }
 
     private void animateBottomSheetArrows(float slideOffset) {
@@ -389,6 +401,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void generatedFavaroitRecycView(List<FavoriteMenu> result) {
 
+        boolean isEnglish = mAppHandler.getAppLanguage().equalsIgnoreCase("en");
+
         recyclerViewFavoirte = layoutBottomSheet.findViewById(R.id.rvOperatorList);
         recyclerViewFavoirte.setHasFixedSize(true);
         recyclerViewFavoirte.setItemAnimator(new DefaultItemAnimator());
@@ -396,7 +410,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewFavoirte.setLayoutManager(horizontalLayoutManager);
         recyclerViewFavoirte.getLayoutManager().setMeasurementCacheEnabled(false);
-        HomeFavoriteAdapter adapter = new HomeFavoriteAdapter(this, result);
+
+
+        if (result.size() == 0) {
+            result.add(new FavoriteMenu(R.string.add_fav, R.string.home_topup, R.drawable.add_fav, "", 0));
+        }
+
+        HomeFavoriteAdapter adapter = new HomeFavoriteAdapter(this, result, isEnglish);
 
         adapter.setClickListener(new HomeFavoriteAdapter.ItemClickListener() {
             @Override
@@ -410,6 +430,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (0 != lastFavoitePosition) {
             recyclerViewFavoirte.smoothScrollToPosition(lastFavoitePosition);
 
+        }
+        if (isFirstTime) {
+            isFirstTime = false;
+            recyclerViewFavoirte.setVisibility(View.GONE);
+            ivEdit.setVisibility(View.GONE);
+            ivUptown.setBackgroundResource(R.drawable.circle_angle_up);
+            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         }
 
         // recyclerViewFavoirte.setVisibility(View.GONE);
@@ -1437,33 +1464,32 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     snackbar.show();
                 }
                 break;
-//            case R.id.homeBtnMessage:
-//                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CHAT_MENU);
-//                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-//                    startActivity(new Intent(MainActivity.this, ChatActivity.class));
-//                } else {
-//                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-//                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-//                    View snackBarView = snackbar.getView();
-//                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-//                    snackbar.show();
-//                }
-//                break;
-//            case R.id.homeBtnCall:
-////                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CALL_MENU);
-////                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-////                    callPreview();
-////                } else {
-////                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-////                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-////                    View snackBarView = snackbar.getView();
-////                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-////                    snackbar.show();
-////                }
-//
-//                onFavoriteItemClick();
-//
-//                break;
+            case R.id.homeBtnMessage:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CHAT_MENU);
+                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
+                    startActivity(new Intent(MainActivity.this, ChatActivity.class));
+                } else {
+                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                    View snackBarView = snackbar.getView();
+                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                    snackbar.show();
+                }
+                break;
+            case R.id.homeBtnCall:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CALL_MENU);
+                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
+                    callPreview();
+                } else {
+                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                    View snackBarView = snackbar.getView();
+                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                    snackbar.show();
+                }
+
+
+                break;
 
             default:
                 break;
@@ -2261,6 +2287,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         Intent intent;
 
         switch (favoriteMenu.getName()) {
+            case R.string.add_fav:
+                startMyFavoriteMenuActivity();
+                break;
+
             case R.string.mobileOperator:
                 intent = new Intent(getApplicationContext(), TopupMainActivity.class);
                 startActivityWithFlag(intent);

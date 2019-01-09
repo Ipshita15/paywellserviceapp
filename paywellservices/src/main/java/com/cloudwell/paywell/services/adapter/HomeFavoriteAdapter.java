@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.myFavorite.adapter.helper.ItemTouchHelperViewHolder;
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
+import com.cloudwell.paywell.services.app.AppController;
 
 import java.util.List;
 
@@ -22,14 +23,16 @@ import java.util.List;
 public class HomeFavoriteAdapter extends RecyclerView.Adapter<HomeFavoriteAdapter.ItemViewHolder> {
 
     private List<FavoriteMenu> mData;
+    private boolean mIsEnglish;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
     private boolean isSeleted = false;
 
     // data is passed into the constructor
-    public HomeFavoriteAdapter(Context context, List<FavoriteMenu> data) {
+    public HomeFavoriteAdapter(Context context, List<FavoriteMenu> data, boolean isEnglish) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
+        mIsEnglish = isEnglish;
     }
 
     // inflates the cell layout from xml when needed
@@ -56,29 +59,12 @@ public class HomeFavoriteAdapter extends RecyclerView.Adapter<HomeFavoriteAdapte
             }
         });
 
-//        // Start a drag whenever the handle view it touched
-//        holder.rootLinarLayout.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
-//                    mDragStartListener.onStartDrag(holder);
-//                }
-//                return false;
-//            }
-//
-//
-//        });
-//
-//        holder.ivDeleted.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                MessageEventFavDeleted messageEvent = new MessageEventFavDeleted(favoriteMenu);
-//                EventBus.getDefault().post(messageEvent);
-//
-//
-//            }
-//        });
+        if (mIsEnglish) {
+            holder.textView.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            holder.textView.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
+
     }
 
 

@@ -63,7 +63,7 @@
     <string name="home_utility_qubee_payment_not_title_favoirte">কিউবি \n না পৌঁছানোর অভিযোগ</string>
     <string name="home_utility_ivac_fee_pay">ফি পরিশোধ</string>
     <string name="home_utility_ivac_free_pay_favorite"> আইভিএসি \nফ্রি পরিশোধ</string>
-    <string name="home_utility_ivac_inquiry">ফি পরিশোধ</string>
+    <string name="home_utility_ivac_inquiry">আইভিএসি \nলেনদেনের বিবরণী</string>
     <string name="home_payment_bkash">বিকাশ থেকে\nপ্রাপ্ত পেমেন্ট</string>
     <string name="home_payment_bkash_title">বিকাশ থেকে প্রাপ্ত পেমেন্ট</string>
     <string name="home_payment_transactions_title">লেনদেনের বিবরণী</string>
@@ -639,5 +639,6 @@
     <string name="title_activity_my_favorite_menu">আমার পছন্দ</string>
     <string name="can_not_add_more_than">৮ মেনু থেকে বেশি যোগ করতে পারবেন না</string>
     <string name="Added">যোগ করা হয়েছে:</string>
+    <string name="add_fav">যোগ করুন</string>
 
 </resources>

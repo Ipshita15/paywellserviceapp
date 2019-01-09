@@ -19,6 +19,7 @@ import com.cloudwell.paywell.services.activity.myFavorite.adapter.helper.OnStart
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
 import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEventFavDeleted;
 import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEventPositionMove;
+import com.cloudwell.paywell.services.app.AppController;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -33,14 +34,16 @@ public class FavoirteAdapter extends RecyclerView.Adapter<FavoirteAdapter.ItemVi
         implements ItemTouchHelperAdapter {
 
     private List<FavoriteMenu> mItems = new ArrayList<>();
+    private boolean mIsEnglish;
 
     private Context mContext;
     private final OnStartDragListener mDragStartListener;
 
-    public FavoirteAdapter(Context context, List<FavoriteMenu> data, OnStartDragListener dragStartListener) {
+    public FavoirteAdapter(Context context, List<FavoriteMenu> data, OnStartDragListener dragStartListener, boolean isEnglish) {
         mContext = context;
         mDragStartListener = dragStartListener;
         this.mItems = data;
+        mIsEnglish = isEnglish;
     }
 
 
@@ -57,6 +60,12 @@ public class FavoirteAdapter extends RecyclerView.Adapter<FavoirteAdapter.ItemVi
         final FavoriteMenu favoriteMenu = mItems.get(position);
         holder.textView.setText(favoriteMenu.getName());
         holder.ivIcon.setBackgroundResource(favoriteMenu.getIcon());
+
+        if (mIsEnglish) {
+            holder.textView.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            holder.textView.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
 
         // Start a drag whenever the handle view it touched
         holder.rootLinarLayout.setOnTouchListener(new View.OnTouchListener() {

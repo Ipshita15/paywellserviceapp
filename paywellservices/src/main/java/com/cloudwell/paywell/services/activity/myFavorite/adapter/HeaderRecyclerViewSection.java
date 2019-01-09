@@ -8,6 +8,7 @@ import android.view.View;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
 import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEvent;
+import com.cloudwell.paywell.services.app.AppController;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -25,13 +26,15 @@ public class HeaderRecyclerViewSection extends StatelessSection {
     private int mIndex;
     private String title;
     private List<FavoriteMenu> list;
+    private boolean mIsEnglish;
 
-    public HeaderRecyclerViewSection(Context context, int index, String title, List<FavoriteMenu> list) {
+    public HeaderRecyclerViewSection(Context context, int index, String title, List<FavoriteMenu> list, boolean isEnglish) {
         super(R.layout.header_favourite, R.layout.item_unfavorite);
         mContext = context;
         mIndex = index;
         this.title = title;
         this.list = list;
+        mIsEnglish = isEnglish;
     }
 
 
@@ -83,6 +86,13 @@ public class HeaderRecyclerViewSection extends StatelessSection {
             }
         });
 
+        if (mIsEnglish) {
+            iHolder.itemContent.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            iHolder.itemContent.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
+
+
 
     }
 
@@ -95,6 +105,12 @@ public class HeaderRecyclerViewSection extends StatelessSection {
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder) {
         HeaderViewHolder hHolder = (HeaderViewHolder) holder;
         hHolder.headerTitle.setText(title);
+
+        if (mIsEnglish) {
+            hHolder.headerTitle.setTypeface(AppController.getInstance().getOxygenLightFont());
+        } else {
+            hHolder.headerTitle.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
     }
 
 

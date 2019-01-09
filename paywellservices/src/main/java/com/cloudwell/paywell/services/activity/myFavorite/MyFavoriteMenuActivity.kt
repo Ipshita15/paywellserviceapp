@@ -19,6 +19,7 @@ import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu
 import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEvent
 import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEventFavDeleted
 import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEventPositionMove
+import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.constant.AllConstant
 import com.cloudwell.paywell.services.database.DatabaseClient
 import com.cloudwell.paywell.services.preference.FavoritePreference
@@ -154,6 +155,9 @@ class MyFavoriteMenuActivity : AppCompatActivity(), OnStartDragListener {
 
 
     private fun generartedUnFavaroitRecycview(DBDatas: List<FavoriteMenu>) {
+        val appHandler = AppHandler(applicationContext);
+        val isEnglish = appHandler.getAppLanguage().equals("en", ignoreCase = true)
+
 
         allFavoriteData = mutableMapOf<String, List<FavoriteMenu>>()
         val allCategory = mutableSetOf<String>()
@@ -185,7 +189,7 @@ class MyFavoriteMenuActivity : AppCompatActivity(), OnStartDragListener {
 
         // generator HeaderRecyclerViewSection
         for ((index, value) in allCategory.withIndex()) {
-            val sectionData = HeaderRecyclerViewSection(applicationContext, index, value, allFavoriteData.get(value))
+            val sectionData = HeaderRecyclerViewSection(applicationContext, index, value, allFavoriteData.get(value), isEnglish)
             sectionAdapter.addSection(sectionData)
         }
 
@@ -252,7 +256,7 @@ class MyFavoriteMenuActivity : AppCompatActivity(), OnStartDragListener {
                     }
                 })
 
-                generatedFavaroitRecycView(sortedWith)
+                generatedFavoriteRacyView(sortedWith)
 
             }
 
@@ -263,7 +267,9 @@ class MyFavoriteMenuActivity : AppCompatActivity(), OnStartDragListener {
     }
 
 
-    private fun generatedFavaroitRecycView(result: List<FavoriteMenu>) {
+    private fun generatedFavoriteRacyView(result: List<FavoriteMenu>) {
+        var mAppHandler = AppHandler(applicationContext);
+        val isEnglish = mAppHandler.getAppLanguage().equals("en", ignoreCase = true)
 
         val display = this.getWindowManager().getDefaultDisplay()
         val outMetrics = DisplayMetrics()
@@ -286,7 +292,7 @@ class MyFavoriteMenuActivity : AppCompatActivity(), OnStartDragListener {
         recyclerView.layoutManager = glm
 
 
-        val recyclerListAdapter = FavoirteAdapter(applicationContext, result, this)
+        val recyclerListAdapter = FavoirteAdapter(applicationContext, result, this, isEnglish)
         recyclerView.layoutManager = glm
         recyclerView.adapter = recyclerListAdapter;
         recyclerView.isNestedScrollingEnabled = false;
