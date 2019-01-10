@@ -87,6 +87,14 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ItemVi
             }
         });
 
+        holder.rootLinarLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MessageEventFavDeleted messageEvent = new MessageEventFavDeleted(favoriteMenu);
+                EventBus.getDefault().post(messageEvent);
+            }
+        });
+
 
     }
 
