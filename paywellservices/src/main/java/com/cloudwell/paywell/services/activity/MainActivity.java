@@ -293,16 +293,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
 
 
-//         sheetBehavior.setHideable(true);
-        int height = getHeightOfView(ivUptown);
-
-//        sheetBehavior.setPeekHeight(100);
-
-
-        /**
-         * bottom sheet state change listener
-         * we are changing button text when sheet changed state
-         * */
         sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(View bottomSheet, int newState) {
@@ -310,11 +300,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     case BottomSheetBehavior.STATE_HIDDEN:
                         break;
                     case BottomSheetBehavior.STATE_EXPANDED: {
-//                        btnBottomSheet.setText("Close Sheet");
+
                     }
                     break;
                     case BottomSheetBehavior.STATE_COLLAPSED: {
-//                        btnBottomSheet.setText("Expand Sheet");
+
                     }
                     break;
                     case BottomSheetBehavior.STATE_DRAGGING:
@@ -326,7 +316,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             @Override
             public void onSlide(View bottomSheet, float slideOffset) {
-                // animateBottomSheetArrows(slideOffset);
+
             }
         });
 
@@ -413,7 +403,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
         if (result.size() == 0) {
-            result.add(new FavoriteMenu(R.string.add_fav, R.string.home_topup, R.drawable.add_fav, "", 0));
+            result.add(new FavoriteMenu(R.string.add_fav, R.string.home_topup, R.drawable.add_fav_action, "", 0));
         }
 
         HomeFavoriteAdapter adapter = new HomeFavoriteAdapter(this, result, isEnglish);
