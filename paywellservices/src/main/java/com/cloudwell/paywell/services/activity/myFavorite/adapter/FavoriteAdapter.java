@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,24 +23,22 @@ import com.cloudwell.paywell.services.app.AppController;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 6/1/19.
  */
-public class FavoirteAdapter extends RecyclerView.Adapter<FavoirteAdapter.ItemViewHolder>
-        implements ItemTouchHelperAdapter {
+public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ItemViewHolder> implements ItemTouchHelperAdapter {
 
-    private List<FavoriteMenu> mItems = new ArrayList<>();
+    private List<FavoriteMenu> mItems;
     private boolean mIsEnglish;
 
     private final OnStartDragListener mDragStartListener;
 
-    public FavoirteAdapter(List<FavoriteMenu> data, OnStartDragListener dragStartListener, boolean isEnglish) {
+    public FavoriteAdapter(List<FavoriteMenu> data, OnStartDragListener dragStartListener, boolean isEnglish) {
         mDragStartListener = dragStartListener;
-        this.mItems = data;
+        mItems = data;
         mIsEnglish = isEnglish;
     }
 
@@ -101,19 +100,24 @@ public class FavoirteAdapter extends RecyclerView.Adapter<FavoirteAdapter.ItemVi
     public boolean onItemMove(int fromPosition, int toPosition) {
 
         try {
-            Collections.swap(mItems, fromPosition, toPosition);
+            Log.v("onItemMove ", "fromPosition: " + fromPosition);
+            Log.v("onItemMove ", "toPosition: " + toPosition);
+
+            Collections.swap(this.mItems, toPosition, fromPosition);
             notifyItemMoved(fromPosition, toPosition);
 
-            FavoriteMenu fromMenu = mItems.get(fromPosition);
+            FavoriteMenu fromMenu = this.mItems.get(fromPosition);
             fromMenu.setFavoriteListPosition(fromPosition);
 
-            FavoriteMenu toMenu = mItems.get(toPosition);
+            FavoriteMenu toMenu = this.mItems.get(toPosition);
             toMenu.setFavoriteListPosition(toPosition);
 
             MessageEventPositionMove messageEvent = new MessageEventPositionMove(fromMenu, toMenu);
             EventBus.getDefault().post(messageEvent);
 
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            Log.v("Exception ", "Exception: " + e.getMessage());
+
 
         }
 
@@ -137,7 +141,7 @@ public class FavoirteAdapter extends RecyclerView.Adapter<FavoirteAdapter.ItemVi
         public final ImageView ivDeleted;
         public final ConstraintLayout rootLinarLayout;
 
-        public ItemViewHolder(View itemView) {
+        ItemViewHolder(View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.item_content);
             ivIcon = itemView.findViewById(R.id.ivIcon);
@@ -148,12 +152,17 @@ public class FavoirteAdapter extends RecyclerView.Adapter<FavoirteAdapter.ItemVi
 
         @Override
         public void onItemSelected() {
-            // itemView.setBackgroundColor(Color.LTGRAY);
+//            rootLinarLayout.setBackgroundColor(0);
+            ivDeleted.setVisibility(View.INVISIBLE);
         }
 
         @Override
         public void onItemClear() {
-            // itemView.setBackgroundColor(0);
+//            rootLinarLayout.setBackgroundResource(R.drawable.item_favorite_background);
+            ivDeleted.setVisibility(View.VISIBLE);
+
+
+
         }
     }
 }

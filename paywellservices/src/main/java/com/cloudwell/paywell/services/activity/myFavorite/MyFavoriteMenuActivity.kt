@@ -8,10 +8,11 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.myFavorite.adapter.FavoirteAdapter
+import com.cloudwell.paywell.services.activity.myFavorite.adapter.FavoriteAdapter
 import com.cloudwell.paywell.services.activity.myFavorite.adapter.HeaderRecyclerViewSection
 import com.cloudwell.paywell.services.activity.myFavorite.adapter.helper.OnStartDragListener
 import com.cloudwell.paywell.services.activity.myFavorite.adapter.helper.SimpleItemTouchHelperCallback
@@ -79,16 +80,15 @@ class MyFavoriteMenuActivity : AppCompatActivity(), OnStartDragListener {
     fun onFavoriteItemAdd(event: MessageEvent) {
 
         var counter = FavoritePreference.with(applicationContext).getInt(AllConstant.COUNTER_FAVORITE, 0);
-        if (counter == 0) {
-            counter = 1;
-        } else {
-            counter = counter + 1;
-        }
-        if (counter > 8) {
+
+        if (counter > 7) {
             showMessage()
             return
         } else {
+            counter = counter + 1;
+
             FavoritePreference.with(applicationContext).addInt(AllConstant.COUNTER_FAVORITE, counter).save()
+            Log.v("Add ", "Counter: " + counter);
 
             previewPogistion = event.index;
             event.title;
@@ -113,12 +113,15 @@ class MyFavoriteMenuActivity : AppCompatActivity(), OnStartDragListener {
     fun onFavoriteItemdeleted(event: MessageEventFavDeleted) {
 
         var counter = FavoritePreference.with(applicationContext).getInt(AllConstant.COUNTER_FAVORITE, 0)
-        if (counter == 0) {
+
+        if (counter <= 0) {
             counter = 0
         } else {
             counter -= 1
         }
+
         FavoritePreference.with(applicationContext).addInt(AllConstant.COUNTER_FAVORITE, counter).save()
+        Log.v("deleted ", "Counter: " + counter);
 
         val favoriteMenu = event.favoriteMenu;
         favoriteMenu.status = MenuStatus.UnFavorite.text;
@@ -267,7 +270,7 @@ class MyFavoriteMenuActivity : AppCompatActivity(), OnStartDragListener {
 
 
     private fun generatedFavoriteRacyView(result: List<FavoriteMenu>) {
-        var mAppHandler = AppHandler(applicationContext);
+        val mAppHandler = AppHandler(applicationContext);
         val isEnglish = mAppHandler.getAppLanguage().equals("en", ignoreCase = true)
 
         val display = this.getWindowManager().getDefaultDisplay()
@@ -276,7 +279,7 @@ class MyFavoriteMenuActivity : AppCompatActivity(), OnStartDragListener {
 
         val density = resources.displayMetrics.density
         val dpWidth = outMetrics.widthPixels / density
-        var columns: Int;
+        val columns: Int;
         if (dpWidth > 320) {
             columns = 4;
         } else {
@@ -284,14 +287,14 @@ class MyFavoriteMenuActivity : AppCompatActivity(), OnStartDragListener {
         }
 
 
-        val recyclerView = findViewById<RecyclerView>(R.id.add_favoirte) as RecyclerView
+        val recyclerView = findViewById(R.id.add_favoirte) as RecyclerView
         recyclerView.setHasFixedSize(true)
 
         val glm = GridLayoutManager(applicationContext, columns)
         recyclerView.layoutManager = glm
 
 
-        val recyclerListAdapter = FavoirteAdapter(result, this, isEnglish)
+        val recyclerListAdapter = FavoriteAdapter(result, this, isEnglish)
         recyclerView.layoutManager = glm
         recyclerView.adapter = recyclerListAdapter;
         recyclerView.isNestedScrollingEnabled = false;
