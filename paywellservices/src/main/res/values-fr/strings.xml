@@ -15,6 +15,7 @@
     <string name="home_payments">পেমেন্ট</string>
     <string name="home_eticket">টিকেট</string>
     <string name="home_mfs">মোবাইল ব্যাংকিং</string>
+    <string name="home_mfs_fav">মোবাইল ব্যাংকিং</string>
     <string name="nav_mfs">মোবাইল ব্যাংকিং</string>
     <string name="home_product_catalog">প্রোডাক্ট\nক্যাটালগ</string>
     <string name="nav_product_catalog">প্রোডাক্ট ক্যাটালগ</string>

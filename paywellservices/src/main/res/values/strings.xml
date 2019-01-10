@@ -13,6 +13,7 @@
     <string name="home_payments">Payments</string>
     <string name="home_eticket">eTicket</string>
     <string name="home_mfs">Mobile\nBanking</string>
+    <string name="home_mfs_fav">Mobile Banking</string>
     <string name="nav_mfs">Mobile Banking</string>
     <string name="home_product_catalog">Product\nCatalog</string>
     <string name="nav_product_catalog">Product Catalog</string>

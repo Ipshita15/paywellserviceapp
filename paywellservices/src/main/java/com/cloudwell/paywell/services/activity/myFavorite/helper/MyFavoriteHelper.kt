@@ -54,7 +54,7 @@ class MyFavoriteHelper {
 //            listOfData.add(FavoriteMenu(R.string.home_eticket_bus, R.string.home_eticket, R.drawable.ic_bus_ticket, MenuStatus.UnFavorite.text, 0))
 //            listOfData.add(FavoriteMenu(R.string.home_eticket_train, R.string.home_eticket, R.drawable.ic_train_ticket, MenuStatus.UnFavorite.text, 0))
 
-            listOfData.add(FavoriteMenu(R.string.home_mfs_mycash, R.string.home_mfs, R.drawable.ic_train_ticket, MenuStatus.UnFavorite.text, 0))
+            listOfData.add(FavoriteMenu(R.string.home_mfs_mycash, R.string.home_mfs_fav, R.drawable.ic_train_ticket, MenuStatus.UnFavorite.text, 0))
 
             listOfData.add(FavoriteMenu(R.string.home_product_ajker_deal, R.string.home_product_catalog, R.drawable.ic_ajker_deal, MenuStatus.UnFavorite.text, 0))
             listOfData.add(FavoriteMenu(R.string.home_product_pw_wholesale, R.string.home_product_catalog, R.drawable.ic_wholesale, MenuStatus.UnFavorite.text, 0))
