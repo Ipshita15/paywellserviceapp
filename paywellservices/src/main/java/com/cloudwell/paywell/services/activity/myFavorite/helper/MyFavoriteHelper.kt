@@ -21,7 +21,7 @@ class MyFavoriteHelper {
 
             // utility
             listOfData.add(FavoriteMenu(R.string.home_utility_desco, R.string.home_utility, R.drawable.ic_desco, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_desco_pay, R.string.home_utility, R.drawable.ic_desco, MenuStatus.UnFavorite.text, 0))
+            listOfData.add(FavoriteMenu(R.string.home_utility_desco_pay, R.string.home_utility, R.drawable.ic_bill_pay, MenuStatus.UnFavorite.text, 0))
 
             listOfData.add(FavoriteMenu(R.string.home_utility_dpdc, R.string.home_utility, R.drawable.ic_dpdc, MenuStatus.UnFavorite.text, 0))
             listOfData.add(FavoriteMenu(R.string.home_utility_dpdc_bill_pay, R.string.home_utility, R.drawable.ic_dpdc, MenuStatus.UnFavorite.text, 0))
