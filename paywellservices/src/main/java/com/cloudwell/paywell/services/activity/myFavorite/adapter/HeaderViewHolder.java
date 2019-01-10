@@ -9,10 +9,10 @@ import com.cloudwell.paywell.services.R;
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 2/1/19.
  */
-public class HeaderViewHolder extends RecyclerView.ViewHolder {
-    public TextView headerTitle;
+class HeaderViewHolder extends RecyclerView.ViewHolder {
+    TextView headerTitle;
 
-    public HeaderViewHolder(View itemView) {
+    HeaderViewHolder(View itemView) {
         super(itemView);
         headerTitle = (TextView) itemView.findViewById(R.id.header_id);
     }

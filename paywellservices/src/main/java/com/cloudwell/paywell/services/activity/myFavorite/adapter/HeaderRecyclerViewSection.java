@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.myFavorite.adapter;
 
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -22,15 +21,13 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
  */
 public class HeaderRecyclerViewSection extends StatelessSection {
     private static final String TAG = HeaderRecyclerViewSection.class.getSimpleName();
-    private Context mContext;
     private int mIndex;
     private String title;
     private List<FavoriteMenu> list;
     private boolean mIsEnglish;
 
-    public HeaderRecyclerViewSection(Context context, int index, String title, List<FavoriteMenu> list, boolean isEnglish) {
+    public HeaderRecyclerViewSection(int index, String title, List<FavoriteMenu> list, boolean isEnglish) {
         super(R.layout.header_favourite, R.layout.item_unfavorite);
-        mContext = context;
         mIndex = index;
         this.title = title;
         this.list = list;
@@ -55,7 +52,7 @@ public class HeaderRecyclerViewSection extends StatelessSection {
         iHolder.itemContent.setText(favoriteMenu.getName());
         iHolder.ivIcon.setBackgroundResource(favoriteMenu.getIcon());
 
-        iHolder.rootLinarLayout.setOnClickListener(new View.OnClickListener() {
+        iHolder.rootLiarLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -91,7 +88,6 @@ public class HeaderRecyclerViewSection extends StatelessSection {
         } else {
             iHolder.itemContent.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
-
 
 
     }

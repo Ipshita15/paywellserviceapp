@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.myFavorite.adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.MotionEventCompat;
@@ -36,11 +35,9 @@ public class FavoirteAdapter extends RecyclerView.Adapter<FavoirteAdapter.ItemVi
     private List<FavoriteMenu> mItems = new ArrayList<>();
     private boolean mIsEnglish;
 
-    private Context mContext;
     private final OnStartDragListener mDragStartListener;
 
-    public FavoirteAdapter(Context context, List<FavoriteMenu> data, OnStartDragListener dragStartListener, boolean isEnglish) {
-        mContext = context;
+    public FavoirteAdapter(List<FavoriteMenu> data, OnStartDragListener dragStartListener, boolean isEnglish) {
         mDragStartListener = dragStartListener;
         this.mItems = data;
         mIsEnglish = isEnglish;

@@ -50,7 +50,6 @@ class MyFavoriteMenuActivity : AppCompatActivity(), OnStartDragListener {
             getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
             getSupportActionBar()!!.setTitle(R.string.title_activity_my_favorite_menu)
 
-
         }
 
 
@@ -189,7 +188,7 @@ class MyFavoriteMenuActivity : AppCompatActivity(), OnStartDragListener {
 
         // generator HeaderRecyclerViewSection
         for ((index, value) in allCategory.withIndex()) {
-            val sectionData = HeaderRecyclerViewSection(applicationContext, index, value, allFavoriteData.get(value), isEnglish)
+            val sectionData = HeaderRecyclerViewSection(index, value, allFavoriteData.get(value), isEnglish)
             sectionAdapter.addSection(sectionData)
         }
 
@@ -292,7 +291,7 @@ class MyFavoriteMenuActivity : AppCompatActivity(), OnStartDragListener {
         recyclerView.layoutManager = glm
 
 
-        val recyclerListAdapter = FavoirteAdapter(applicationContext, result, this, isEnglish)
+        val recyclerListAdapter = FavoirteAdapter(result, this, isEnglish)
         recyclerView.layoutManager = glm
         recyclerView.adapter = recyclerListAdapter;
         recyclerView.isNestedScrollingEnabled = false;

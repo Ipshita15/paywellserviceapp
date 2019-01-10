@@ -15,7 +15,7 @@ class ItemViewHolder extends RecyclerView.ViewHolder {
     TextView itemContent;
     ImageView ivIcon;
     ImageView ivAdded;
-    ConstraintLayout rootLinarLayout;
+    ConstraintLayout rootLiarLayout;
 
 
     ItemViewHolder(View itemView) {
@@ -23,6 +23,6 @@ class ItemViewHolder extends RecyclerView.ViewHolder {
         itemContent = itemView.findViewById(R.id.item_content);
         ivIcon = itemView.findViewById(R.id.ivIcon);
         ivAdded = itemView.findViewById(R.id.ivAdded);
-        rootLinarLayout = itemView.findViewById(R.id.rootLinarLayout);
+        rootLiarLayout = itemView.findViewById(R.id.rootLinarLayout);
     }
 }
