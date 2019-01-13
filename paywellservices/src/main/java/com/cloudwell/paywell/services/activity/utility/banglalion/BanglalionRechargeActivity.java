@@ -101,7 +101,7 @@ public class BanglalionRechargeActivity extends BaseActivity implements View.OnC
             if (_pin.length() == 0) {
                 mPin.setError(Html.fromHtml("<font color='red'>" + getString(R.string.pin_no_error_msg) + "</font>"));
             } else if (accountNo.length() < 4) {
-                mAccountNo.setError(Html.fromHtml("<font color='red'>" + getString(R.string.qubee_acc_error_msg) + "</font></font>"));
+                mAccountNo.setError(Html.fromHtml("<font color='red'>" + getString(R.string.banglalion_acc_error_msg) + "</font></font>"));
             } else if (amount.length() == 0) {
                 mAmount.setError(Html.fromHtml("<font color='red'>" + getString(R.string.amount_error_msg) + "</font></font>"));
             } else {

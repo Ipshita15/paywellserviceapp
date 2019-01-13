@@ -97,7 +97,7 @@ public class BanglalionRechargeInquiryActivity extends BaseActivity implements V
                 }
                 String _account = mAccountNO.getText().toString().trim();
                 if (_account.length() < 4) {
-                    mAccountNO.setError(Html.fromHtml("<font color='red'>" + getString(R.string.qubee_acc_error_msg) + "</font></font>"));
+                    mAccountNO.setError(Html.fromHtml("<font color='red'>" + getString(R.string.banglalion_acc_error_msg) + "</font></font>"));
                     return;
                 }
                 mSubmitAsync =  new SubmitAsync().execute(getResources().getString(R.string.banglalion_bill_inquiry),

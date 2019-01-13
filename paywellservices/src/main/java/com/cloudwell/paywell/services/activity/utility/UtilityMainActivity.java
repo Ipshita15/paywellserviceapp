@@ -16,8 +16,6 @@ import com.cloudwell.paywell.services.activity.utility.electricity.wasa.WASAMain
 import com.cloudwell.paywell.services.activity.utility.electricity.westzone.WZPDCLMainActivity;
 import com.cloudwell.paywell.services.activity.utility.ivac.IvacMainActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity;
-import com.cloudwell.paywell.services.activity.utility.qubee.QubeeMainActivity;
-import com.cloudwell.paywell.services.activity.utility.realvu.BeximcoMainActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
@@ -41,8 +39,6 @@ public class UtilityMainActivity extends AppCompatActivity {
         Button btnWasa = findViewById(R.id.homeBtnWasa);
         Button btnWzpdcl = findViewById(R.id.homeBtnWestZone);
         Button btnPolli = findViewById(R.id.homeBtnPolliBiddut);
-        Button btnQubee = findViewById(R.id.homeBtnQubee);
-        Button btnReal = findViewById(R.id.homeBtnRealVU);
         Button btnIvac = findViewById(R.id.homeBtnIvac);
         Button btnBanglalion = findViewById(R.id.homeBtnBanglalion);
 
@@ -52,8 +48,6 @@ public class UtilityMainActivity extends AppCompatActivity {
             btnWasa.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnWzpdcl.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnPolli.setTypeface(AppController.getInstance().getOxygenLightFont());
-            btnQubee.setTypeface(AppController.getInstance().getOxygenLightFont());
-            btnReal.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnIvac.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnBanglalion.setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
@@ -62,8 +56,6 @@ public class UtilityMainActivity extends AppCompatActivity {
             btnWasa.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnWzpdcl.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnPolli.setTypeface(AppController.getInstance().getAponaLohitFont());
-            btnQubee.setTypeface(AppController.getInstance().getAponaLohitFont());
-            btnReal.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnIvac.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnBanglalion.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
@@ -107,14 +99,7 @@ public class UtilityMainActivity extends AppCompatActivity {
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_MENU);
                 startActivity(new Intent(this, PBMainActivity.class));
                 break;
-            case R.id.homeBtnQubee:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_QUBEE_MENU);
-                startActivity(new Intent(this, QubeeMainActivity.class));
-                break;
-            case R.id.homeBtnRealVU:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_REAL_VU_MENU);
-                startActivity(new Intent(this, BeximcoMainActivity.class));
-                break;
+
             case R.id.homeBtnIvac:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_IVAC_MENU);
                 startActivity(new Intent(this, IvacMainActivity.class));

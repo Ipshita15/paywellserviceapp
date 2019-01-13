@@ -42,8 +42,6 @@
     <string name="home_utility_pollibiddut_bill_pay_favorite">পল্লী বিদ্যুৎ \nবিল প্রদান</string>
     <string name="home_utility_pollibiddut_reg_inquiry">পল্লী বিদ্যুৎ \nরেজিস্ট্রেশন \nঅনুসন্ধান </string>
     <string name="home_utility_pollibiddut_bill_inquiry">পল্লী বিদ্যুৎ \বিল অনুসন্ধান </string>
-    <string name="home_utility_qubee">কিউবি</string>
-    <string name="home_utility_beximco">রিয়েল ভিউ</string>
     <string name="home_utility_ivac">আইভিএসি</string>
     <string name="home_utility_banglalion">বাংলালায়ন</string>
     <string name="home_utility_pb_reg">রেজিস্ট্রেশন</string>
@@ -51,19 +49,7 @@
     <string name="home_utility_pb_reg_inq">রেজিস্ট্রেশন\nঅনুসন্ধান</string>
     <string name="home_utility_pb_reg_inq_log">রেজিস্ট্রেশন লগ</string>
     <string name="home_utility_pb_bill_ing">বিল প্রদান\nঅনুসন্ধান</string>
-    <string name="home_utility_qubee_recharge">কিউবি\nরিচার্জ</string>
-    <string name="home_utility_qubee_recharge_title">কিউবি রিচার্জ</string>
-    <string name="home_utility_qubee_inq">রিচার্জ\nঅনুসন্ধান</string>
-    <string name="home_utility_qubee_recharge_inquiry">কিউবি \n রিচার্জ অনুসন্ধান</string>
     <string name="home_utility_qubee_inq_title">রিচার্জ অনুসন্ধান</string>
-    <string name="home_utility_qubee_wrong_acc">ভুল\nঅ্যাকাউন্ট</string>
-    <string name="home_utility_qubee_wrong_acc_title">ভুল অ্যাকাউন্ট</string>
-    <string name="home_utility_qubee_wrong_acc_title_favoirte">কিউবি \nভুল অ্যাকাউন্ট</string>
-    <string name="home_utility_qubee_wrong_amount">ভুল টাকার\nপরিমান</string>
-    <string name="home_utility_qubee_wrong_amount_title">ভুল টাকার পরিমান</string>
-    <string name="home_utility_qubee_payment">না পৌঁছানোর\nঅভিযোগ</string>
-    <string name="home_utility_qubee_payment_title">না পৌঁছানোর অভিযোগ</string>
-    <string name="home_utility_qubee_payment_not_title_favoirte">কিউবি \n না পৌঁছানোর অভিযোগ</string>
     <string name="home_utility_ivac_fee_pay">ফি পরিশোধ</string>
     <string name="home_utility_ivac_free_pay_favorite"> আইভিএসি \nফ্রি পরিশোধ</string>
     <string name="home_utility_ivac_inquiry">আইভিএসি \nলেনদেনের বিবরণী</string>
@@ -178,7 +164,7 @@
     <string name="pb_acc_error_msg">সর্বনিম্ন ৮ ডিজিট দিন</string>
     <string name="pb_acc_mismatch_error_msg">অ্যাকাউন্ট নম্বর মিলেনি</string>
     <string name="pb_full_name_error_msg">সম্পূর্ণ নাম দিন</string>
-    <string name="qubee_acc_error_msg">সর্বনিম্ন ৪ ডিজিট দিন</string>
+    <string name="banglalion_acc_error_msg">সর্বনিম্ন ৪ ডিজিট দিন</string>
     <string name="id_phone_error_msg">ফোন নম্বর বা আইডি দিন</string>
     <string name="selection_error_msg">সঠিকভাবে নির্বাচন করুন</string>
     <string name="journey_date_select_error_msg">যাত্রা শুরু নির্বাচন করুন</string>
@@ -291,7 +277,6 @@
     <string name="amount_des">টাকার পরিমানঃ</string>
     <string name="trx_id_des">লেনদেনের আইডিঃ</string>
     <string name="status_des">স্ট্যাটাসঃ</string>
-    <string name="commission_des">কমিশনঃ</string>
     <string name="acc_no_des">অ্যাকাউন্ট নম্বরঃ</string>
     <string name="conf_acc_des">অ্যাকাউন্ট নম্বর পুনরায় দিনঃ</string>
     <string name="cust_name_des">সম্পূর্ণ নামঃ</string>
@@ -304,11 +289,6 @@
     <string name="date_and_time_des">দিন ও সময়ঃ</string>
     <string name="tbps_charge_des">টিবিপিএস চার্জঃ</string>
     <string name="total_des">মোটঃ</string>
-    <string name="qubee_incorrect_acc_des">ভুল অ্যাকাউন্ট নম্বরঃ</string>
-    <string name="qubee_correct_acc_des">সঠিক অ্যাকাউন্ট নম্বরঃ</string>
-    <string name="qubee_incorrect_amount_des">ভুল টাকার পরিমানঃ</string>
-    <string name="qubee_correct_amount_des">সঠিক টাকার পরিমানঃ</string>
-    <string name="message_des">তথ্যঃ</string>
     <string name="bkash_frozen_balance_des">অনাদায়ী ব্যালেন্সঃ</string>
     <string name="bkash_declare_balance_des">পেমেন্টের উদ্দেশ্য সিলেক্ট করুনঃ</string>
     <string name="bkash_verification_balance_des">অযাচাইকৃত ব্যালেন্সঃ</string>
@@ -552,10 +532,6 @@
     <string name="pb_reg_with_otp">https://www.paywellonline.com/default/api/polli/polli_reg_otp.php</string>
     <string name="pb_bill_pay">https://www.paywellonline.com/default/api/polli/polli.php?</string>
 
-    <string name="qb_bill_pay">https://www.paywellonline.com/default/api/qubee/wimax_topup.php?</string>
-    <string name="qb_inq">https://www.paywellonline.com/default/api/qubee/wimax_enquery.php?</string>
-    <string name="qb_com">https://www.paywellonline.com/default/api/qubee/wimax_reversal.php?</string>
-
     <string name="desco_bill_enq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
     <string name="desco_bill_pay">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
 
@@ -567,8 +543,6 @@
     <string name="west_zone_bill">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_WZPDCL</string>
 
     <string name="utility_multi_trx_inq">https://api.paywellonline.com/PaywellTransactionReport/TransactionReport?</string>
-
-    <string name="beximco_url">https://www.paywellonline.com/Beximco/beximco.php</string>
 
     <string name="utility_ivac_get_center">https://api.paywellonline.com/PaywelltransactionIVAC/getIvacCenter</string>
     <string name="utility_ivac_fee_pay">https://api.paywellonline.com/PaywelltransactionIVAC/IVACRequest</string>

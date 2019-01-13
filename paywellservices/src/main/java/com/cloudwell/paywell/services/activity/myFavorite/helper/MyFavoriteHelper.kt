@@ -36,30 +36,18 @@ class MyFavoriteHelper {
             listOfData.add(FavoriteMenu(R.string.home_utility_wasa_pay, R.string.home_utility, R.drawable.ic_bill_pay, MenuStatus.UnFavorite.text, 0))
             listOfData.add(FavoriteMenu(R.string.home_utility_wasa_inquiry, R.string.home_utility, R.drawable.ic_enquiry, MenuStatus.UnFavorite.text, 0))
 
-
             listOfData.add(FavoriteMenu(R.string.home_utility_west_zone, R.string.home_utility, R.drawable.ic_west_zone, MenuStatus.UnFavorite.text, 0))
             listOfData.add(FavoriteMenu(R.string.home_utility_west_zone_pay, R.string.home_utility, R.drawable.ic_bill_pay, MenuStatus.UnFavorite.text, 0))
             listOfData.add(FavoriteMenu(R.string.home_utility_west_zone_pay_inquiry, R.string.home_utility, R.drawable.ic_west_zone, MenuStatus.UnFavorite.text, 0))
 
-
-            listOfData.add(FavoriteMenu(R.string.home_utility_qubee, R.string.home_utility, R.drawable.ic_qubee, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_qubee_recharge, R.string.home_utility, R.drawable.ic_qubee, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_qubee_recharge_inquiry, R.string.home_utility, R.drawable.ic_recharge_information, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_qubee_wrong_acc_title_favoirte, R.string.home_utility, R.drawable.ic_wrong_acc, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_qubee_wrong_amount_title, R.string.home_utility, R.drawable.ic_wrong_acc, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_qubee_payment_not_title_favoirte, R.string.home_utility, R.drawable.ic_payment_not_recived, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_beximco, R.string.home_utility, R.drawable.ic_realvu, MenuStatus.UnFavorite.text, 0))
             listOfData.add(FavoriteMenu(R.string.home_utility_ivac, R.string.home_utility, R.drawable.ic_ivac, MenuStatus.UnFavorite.text, 0))
             listOfData.add(FavoriteMenu(R.string.home_utility_ivac_free_pay_favorite, R.string.home_utility, R.drawable.ic_bill_pay, MenuStatus.UnFavorite.text, 0))
             listOfData.add(FavoriteMenu(R.string.home_utility_ivac_inquiry, R.string.home_utility, R.drawable.ic_enquiry, MenuStatus.UnFavorite.text, 0))
+
             listOfData.add(FavoriteMenu(R.string.home_utility_banglalion, R.string.home_utility, R.drawable.ic_banglalion, MenuStatus.UnFavorite.text, 0))
             listOfData.add(FavoriteMenu(R.string.home_utility_banglalion_recharge, R.string.home_utility, R.drawable.ic_banglalion_recharge, MenuStatus.UnFavorite.text, 0))
             listOfData.add(FavoriteMenu(R.string.home_utility_banglalion_recharge_inquiry, R.string.home_utility, R.drawable.ic_recharge_information, MenuStatus.UnFavorite.text, 0))
-
-
             // end utility
-//            listOfData.add(FavoriteMenu(R.string.home_eticket_bus, R.string.home_eticket, R.drawable.ic_bus_ticket, MenuStatus.UnFavorite.text, 0))
-//            listOfData.add(FavoriteMenu(R.string.home_eticket_train, R.string.home_eticket, R.drawable.ic_train_ticket, MenuStatus.UnFavorite.text, 0))
 
             listOfData.add(FavoriteMenu(R.string.home_mfs_mycash, R.string.home_mfs_fav, R.drawable.ic_train_ticket, MenuStatus.UnFavorite.text, 0))
 

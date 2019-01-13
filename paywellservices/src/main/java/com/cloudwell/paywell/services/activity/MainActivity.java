@@ -98,12 +98,6 @@ import com.cloudwell.paywell.services.activity.utility.ivac.IvacFeePayActivity;
 import com.cloudwell.paywell.services.activity.utility.ivac.IvacMainActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBRegistrationActivity;
-import com.cloudwell.paywell.services.activity.utility.qubee.ComplainAccountActivity;
-import com.cloudwell.paywell.services.activity.utility.qubee.ComplainTrxActivity;
-import com.cloudwell.paywell.services.activity.utility.qubee.InquiryActivity;
-import com.cloudwell.paywell.services.activity.utility.qubee.QubeeMainActivity;
-import com.cloudwell.paywell.services.activity.utility.qubee.QubeeRechargeActivity;
-import com.cloudwell.paywell.services.activity.utility.realvu.BeximcoMainActivity;
 import com.cloudwell.paywell.services.adapter.HomeFavoriteAdapter;
 import com.cloudwell.paywell.services.adapter.MainSliderAdapter;
 import com.cloudwell.paywell.services.adapter.PicassoImageLoadingService;
@@ -2358,42 +2352,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             case R.string.home_utility_west_zone_pay_inquiry:
                 intent = new Intent(getApplicationContext(), WZPDCLMainActivity.class);
-                startActivityWithFlag(intent);
-                break;
-
-            case R.string.home_utility_qubee:
-                intent = new Intent(getApplicationContext(), QubeeMainActivity.class);
-                startActivityWithFlag(intent);
-                break;
-
-            case R.string.home_utility_qubee_recharge:
-                intent = new Intent(getApplicationContext(), QubeeRechargeActivity.class);
-                startActivityWithFlag(intent);
-                break;
-
-            case R.string.home_utility_qubee_recharge_inquiry:
-                intent = new Intent(getApplicationContext(), InquiryActivity.class);
-                startActivityWithFlag(intent);
-                break;
-
-            case R.string.home_utility_qubee_wrong_acc_title_favoirte:
-                intent = new Intent(getApplicationContext(), ComplainAccountActivity.class);
-                startActivityWithFlag(intent);
-                break;
-
-            case R.string.home_utility_qubee_wrong_amount_title:
-                intent = new Intent(getApplicationContext(), ComplainAccountActivity.class);
-                startActivityWithFlag(intent);
-                break;
-
-            case R.string.home_utility_qubee_payment_not_title_favoirte:
-                intent = new Intent(getApplicationContext(), ComplainTrxActivity.class);
-                startActivityWithFlag(intent);
-                break;
-
-
-            case R.string.home_utility_beximco:
-                intent = new Intent(getApplicationContext(), BeximcoMainActivity.class);
                 startActivityWithFlag(intent);
                 break;
 

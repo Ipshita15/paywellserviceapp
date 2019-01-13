@@ -38,8 +38,6 @@
     <string name="home_utility_pollibiddut">Polli Biddut</string>
     <string name="home_utility_pollibiddut_registion">Polli Biddut\nReg.</string>
     <string name="home_utility_pollibiddut_bill_pay_favorite">Polli Biddut\nBill Pay</string>
-    <string name="home_utility_qubee">Qubee</string>
-    <string name="home_utility_beximco">Real VU</string>
     <string name="home_utility_ivac">IVAC</string>
     <string name="home_utility_banglalion">Banglalion</string>
     <string name="home_utility_pb_reg">Registration</string>
@@ -49,19 +47,7 @@
     <string name="home_utility_pollibiddut_bill_inquiry">Polli Biddut\nBill Inquiry</string>
     <string name="home_utility_pb_reg_inq_log">Registration Log</string>
     <string name="home_utility_pb_bill_ing">Bill Pay\nInquiry</string>
-    <string name="home_utility_qubee_recharge">Qubee\nRecharge</string>
-    <string name="home_utility_qubee_recharge_inquiry">Qubee\nRecharge Inquiry</string>
-    <string name="home_utility_qubee_recharge_title">Qubee Recharge</string>
-    <string name="home_utility_qubee_inq">Recharge\nInquiry</string>
     <string name="home_utility_qubee_inq_title">Recharge Inquiry</string>
-    <string name="home_utility_qubee_wrong_acc">Wrong\nAccount</string>
-    <string name="home_utility_qubee_wrong_acc_title">Wrong Account</string>
-    <string name="home_utility_qubee_wrong_amount">Wrong\nAmount</string>
-    <string name="home_utility_qubee_wrong_amount_title">Wrong Amount</string>
-    <string name="home_utility_qubee_wrong_acc_title_favoirte">Qubee\nWrong Amount</string>
-    <string name="home_utility_qubee_payment">Payment Not\nReceived</string>
-    <string name="home_utility_qubee_payment_title">Payment Not Received</string>
-    <string name="home_utility_qubee_payment_not_title_favoirte">Payment Not Received</string>
     <string name="home_utility_ivac_fee_pay">Fee Pay</string>
     <string name="home_utility_ivac_free_pay_favorite">IVAC \nFee Pay</string>
     <string name="home_utility_ivac_inquiry">IVAC \nInquiry</string>
@@ -174,7 +160,7 @@
     <string name="pb_acc_error_msg">Enter at least 8 digits</string>
     <string name="pb_acc_mismatch_error_msg">Account number do not match</string>
     <string name="pb_full_name_error_msg">Enter full name</string>
-    <string name="qubee_acc_error_msg">Enter at least 4 digits</string>
+    <string name="banglalion_acc_error_msg">Enter at least 4 digits</string>
     <string name="id_phone_error_msg">Enter phone number or ID</string>
     <string name="selection_error_msg">Please fill up all the fields</string>
     <string name="journey_date_select_error_msg">Select your journey date</string>
@@ -293,7 +279,6 @@
     <string name="amount_des">Amount:</string>
     <string name="trx_id_des">TRX ID:</string>
     <string name="status_des">Status:</string>
-    <string name="commission_des">Commission:</string>
     <string name="acc_no_des">Account Number:</string>
     <string name="bill_no_des">Bill Number:</string>
     <string name="conf_acc_des">Confirm Account Number:</string>
@@ -306,11 +291,6 @@
     <string name="date_and_time_des">Date&amp;Time:</string>
     <string name="tbps_charge_des">TBPS Charge:</string>
     <string name="total_des">Total Amount:</string>
-    <string name="qubee_incorrect_acc_des">Incorrect Account Number:</string>
-    <string name="qubee_correct_acc_des">Correct Account Number:</string>
-    <string name="qubee_incorrect_amount_des">Incorrect Amount:</string>
-    <string name="qubee_correct_amount_des">Correct Amount:</string>
-    <string name="message_des">Message:</string>
     <string name="bkash_frozen_balance_des">Frozen Balance:</string>
     <string name="bkash_declare_balance_des">Purpose to be Declared:</string>
     <string name="bkash_verification_balance_des">Unverified Balance:</string>
@@ -548,10 +528,6 @@
     <string name="pb_reg_with_otp">https://www.paywellonline.com/default/api/polli/polli_reg_otp.php</string>
     <string name="pb_bill_pay">https://www.paywellonline.com/default/api/polli/polli.php?</string>
 
-    <string name="qb_bill_pay">https://www.paywellonline.com/default/api/qubee/wimax_topup.php?</string>
-    <string name="qb_inq">https://www.paywellonline.com/default/api/qubee/wimax_enquery.php?</string>
-    <string name="qb_com">https://www.paywellonline.com/default/api/qubee/wimax_reversal.php?</string>
-
     <string name="desco_bill_enq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
     <string name="desco_bill_pay">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
 
@@ -563,8 +539,6 @@
     <string name="west_zone_bill">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_WZPDCL</string>
 
     <string name="utility_multi_trx_inq">https://api.paywellonline.com/PaywellTransactionReport/TransactionReport?</string>
-
-    <string name="beximco_url">https://www.paywellonline.com/Beximco/beximco.php</string>
 
     <string name="utility_ivac_get_center">https://api.paywellonline.com/PaywelltransactionIVAC/getIvacCenter</string>
     <string name="utility_ivac_fee_pay">https://api.paywellonline.com/PaywelltransactionIVAC/IVACRequest</string>

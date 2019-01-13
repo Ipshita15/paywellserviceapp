@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.utility.banglalion.BanglalionMainActivity">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".activity.utility.banglalion.BanglalionMainActivity">
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -48,7 +47,7 @@
                     style="@style/HomeButtonNew"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/ic_recharge_information"
-                    android:text="@string/home_utility_qubee_inq"
+                    android:text="@string/home_utility_banglalion_recharge"
                     android:onClick="goToRechargeInquiry"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
