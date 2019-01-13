@@ -29,7 +29,8 @@ class MyFavoriteHelper {
             listOfData.add(FavoriteMenu(R.string.home_utility_pollibiddut, R.string.home_utility, R.drawable.ic_polli_biddut, MenuStatus.UnFavorite.text, 0))
             listOfData.add(FavoriteMenu(R.string.home_utility_pollibiddut_registion, R.string.home_utility, R.drawable.ic_registration, MenuStatus.UnFavorite.text, 0))
             listOfData.add(FavoriteMenu(R.string.home_utility_pollibiddut_bill_pay_favorite, R.string.home_utility, R.drawable.ic_bill_pay, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_pollibiddut_reg_inquiry, R.string.home_utility, R.drawable.ic_polli_biddut, MenuStatus.UnFavorite.text, 0))
+            listOfData.add(FavoriteMenu(R.string.home_utility_pollibiddut_reg_inquiry, R.string.home_utility, R.drawable.ic_enquiry, MenuStatus.UnFavorite.text, 0))
+            listOfData.add(FavoriteMenu(R.string.home_utility_pollibiddut_bill_inquiry, R.string.home_utility, R.drawable.ic_enquiry, MenuStatus.UnFavorite.text, 0))
 
             listOfData.add(FavoriteMenu(R.string.home_utility_wasa, R.string.home_utility, R.drawable.ic_wasa, MenuStatus.UnFavorite.text, 0))
             listOfData.add(FavoriteMenu(R.string.home_utility_wasa_pay, R.string.home_utility, R.drawable.ic_wasa, MenuStatus.UnFavorite.text, 0))

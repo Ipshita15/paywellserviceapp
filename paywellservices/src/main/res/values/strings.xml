@@ -46,7 +46,7 @@
     <string name="home_utility_pb_billpay">Bill Pay</string>
     <string name="home_utility_pb_reg_inq">Registration\nInquiry</string>
     <string name="home_utility_pollibiddut_reg_inquiry">Polli Biddut\nRegistration\nInquiry</string>
-
+    <string name="home_utility_pollibiddut_bill_inquiry">Polli Biddut\nBill Inquiry</string>
     <string name="home_utility_pb_reg_inq_log">Registration Log</string>
     <string name="home_utility_pb_bill_ing">Bill Pay\nInquiry</string>
     <string name="home_utility_qubee_recharge">Qubee\nRecharge</string>

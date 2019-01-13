@@ -96,7 +96,6 @@ import com.cloudwell.paywell.services.activity.utility.electricity.westzone.WZPD
 import com.cloudwell.paywell.services.activity.utility.ivac.IvacFeeInquiryMainActivity;
 import com.cloudwell.paywell.services.activity.utility.ivac.IvacFeePayActivity;
 import com.cloudwell.paywell.services.activity.utility.ivac.IvacMainActivity;
-import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBBillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBRegistrationActivity;
 import com.cloudwell.paywell.services.activity.utility.qubee.ComplainAccountActivity;
@@ -2319,8 +2318,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivityWithFlag(intent);
                 break;
 
-            case R.string.home_utility_pollibiddut_bill_pay_favorite:
-                intent = new Intent(getApplicationContext(), PBBillPayActivity.class);
+            case R.string.home_utility_pollibiddut_reg_inquiry:
+                intent = new Intent(getApplicationContext(), PBMainActivity.class);
+                intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_RG_INQUERY, true);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_pollibiddut_bill_inquiry:
+                intent = new Intent(getApplicationContext(), PBMainActivity.class);
+                intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_BILL_INQUERY, true);
                 startActivityWithFlag(intent);
                 break;
 

@@ -41,6 +41,7 @@
     <string name="home_utility_pollibiddut_registion">পল্লী বিদ্যুৎ \nরেজিস্ট্রেশন</string>
     <string name="home_utility_pollibiddut_bill_pay_favorite">পল্লী বিদ্যুৎ \nবিল প্রদান</string>
     <string name="home_utility_pollibiddut_reg_inquiry">পল্লী বিদ্যুৎ \nরেজিস্ট্রেশন \nঅনুসন্ধান </string>
+    <string name="home_utility_pollibiddut_bill_inquiry">পল্লী বিদ্যুৎ \বিল অনুসন্ধান </string>
     <string name="home_utility_qubee">কিউবি</string>
     <string name="home_utility_beximco">রিয়েল ভিউ</string>
     <string name="home_utility_ivac">আইভিএসি</string>
