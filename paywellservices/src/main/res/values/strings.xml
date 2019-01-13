@@ -133,6 +133,7 @@
     <string name="home_utility_dpdc">DPDC</string>
     <string name="home_utility_wasa">WASA</string>
     <string name="home_utility_wasa_pay">WASA-Pay</string>
+    <string name="home_utility_wasa_inquiry">WASA Bill Inquiry</string>
     <string name="home_utility_west_zone">West Zone</string>
     <string name="home_utility_west_zone_pay">West Zone\nPay</string>
     <string name="home_utility_west_zone_pay_inquiry">West Zone\nBill Inquiry</string>

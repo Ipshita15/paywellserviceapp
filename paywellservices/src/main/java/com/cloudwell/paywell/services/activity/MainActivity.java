@@ -2340,6 +2340,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivityWithFlag(intent);
                 break;
 
+            case R.string.home_utility_wasa_inquiry:
+                intent = new Intent(getApplicationContext(), WASAMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
 
             case R.string.home_utility_west_zone:
                 intent = new Intent(getApplicationContext(), WZPDCLMainActivity.class);

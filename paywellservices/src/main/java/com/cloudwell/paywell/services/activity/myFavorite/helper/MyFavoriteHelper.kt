@@ -33,10 +33,12 @@ class MyFavoriteHelper {
             listOfData.add(FavoriteMenu(R.string.home_utility_pollibiddut_bill_inquiry, R.string.home_utility, R.drawable.ic_enquiry, MenuStatus.UnFavorite.text, 0))
 
             listOfData.add(FavoriteMenu(R.string.home_utility_wasa, R.string.home_utility, R.drawable.ic_wasa, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_wasa_pay, R.string.home_utility, R.drawable.ic_wasa, MenuStatus.UnFavorite.text, 0))
+            listOfData.add(FavoriteMenu(R.string.home_utility_wasa_pay, R.string.home_utility, R.drawable.ic_bill_pay, MenuStatus.UnFavorite.text, 0))
+            listOfData.add(FavoriteMenu(R.string.home_utility_wasa_inquiry, R.string.home_utility, R.drawable.ic_enquiry, MenuStatus.UnFavorite.text, 0))
+
 
             listOfData.add(FavoriteMenu(R.string.home_utility_west_zone, R.string.home_utility, R.drawable.ic_west_zone, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_west_zone_pay, R.string.home_utility, R.drawable.ic_west_zone, MenuStatus.UnFavorite.text, 0))
+            listOfData.add(FavoriteMenu(R.string.home_utility_west_zone_pay, R.string.home_utility, R.drawable.ic_bill_pay, MenuStatus.UnFavorite.text, 0))
             listOfData.add(FavoriteMenu(R.string.home_utility_west_zone_pay_inquiry, R.string.home_utility, R.drawable.ic_west_zone, MenuStatus.UnFavorite.text, 0))
 
 

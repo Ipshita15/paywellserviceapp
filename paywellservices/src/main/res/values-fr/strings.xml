@@ -136,6 +136,7 @@
     <string name="internet_connection_title_msg">ইন্টারনেট সংযোগ</string>
     <string name="home_utility_wasa">ওয়াসা</string>
     <string name="home_utility_wasa_pay">ওয়াসা-বিল প্রদান</string>
+    <string name="home_utility_wasa_inquiry">ওয়াসা \nবিল অনুসন্ধান</string>
     <string name="home_utility_west_zone">ওয়েস্ট জোন</string>
     <string name="home_utility_west_zone_pay">ওয়েস্ট জোন\nবিল প্রদান</string>
     <string name="home_utility_west_zone_pay_inquiry">ওয়েস্ট জোন\nবিল অনুসন্ধান</string>
