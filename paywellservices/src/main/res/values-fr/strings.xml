@@ -138,7 +138,7 @@
     <string name="home_utility_wasa_pay">ওয়াসা-বিল প্রদান</string>
     <string name="home_utility_west_zone">ওয়েস্ট জোন</string>
     <string name="home_utility_west_zone_pay">ওয়েস্ট জোন\nবিল প্রদান</string>
-
+    <string name="home_utility_west_zone_pay_inquiry">ওয়েস্ট জোন\nবিল অনুসন্ধান</string>
     <string name="home_scan_qr_code">পেওয়েল আরআইডি</string>
     <string name="home_settings_help">হেল্প</string>
     <string name="home_utility_polli_biddut_bill_pay">পল্লী বিদ্যুৎ\nবিল প্রদান</string>

@@ -2352,6 +2352,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivityWithFlag(intent);
                 break;
 
+            case R.string.home_utility_west_zone_pay_inquiry:
+                intent = new Intent(getApplicationContext(), WZPDCLMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
             case R.string.home_utility_qubee:
                 intent = new Intent(getApplicationContext(), QubeeMainActivity.class);
                 startActivityWithFlag(intent);

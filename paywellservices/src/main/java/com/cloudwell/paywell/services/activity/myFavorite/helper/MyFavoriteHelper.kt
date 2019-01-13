@@ -34,8 +34,12 @@ class MyFavoriteHelper {
 
             listOfData.add(FavoriteMenu(R.string.home_utility_wasa, R.string.home_utility, R.drawable.ic_wasa, MenuStatus.UnFavorite.text, 0))
             listOfData.add(FavoriteMenu(R.string.home_utility_wasa_pay, R.string.home_utility, R.drawable.ic_wasa, MenuStatus.UnFavorite.text, 0))
+
             listOfData.add(FavoriteMenu(R.string.home_utility_west_zone, R.string.home_utility, R.drawable.ic_west_zone, MenuStatus.UnFavorite.text, 0))
             listOfData.add(FavoriteMenu(R.string.home_utility_west_zone_pay, R.string.home_utility, R.drawable.ic_west_zone, MenuStatus.UnFavorite.text, 0))
+            listOfData.add(FavoriteMenu(R.string.home_utility_west_zone_pay_inquiry, R.string.home_utility, R.drawable.ic_west_zone, MenuStatus.UnFavorite.text, 0))
+
+
             listOfData.add(FavoriteMenu(R.string.home_utility_qubee, R.string.home_utility, R.drawable.ic_qubee, MenuStatus.UnFavorite.text, 0))
             listOfData.add(FavoriteMenu(R.string.home_utility_qubee_recharge, R.string.home_utility, R.drawable.ic_qubee, MenuStatus.UnFavorite.text, 0))
             listOfData.add(FavoriteMenu(R.string.home_utility_qubee_recharge_inquiry, R.string.home_utility, R.drawable.ic_recharge_information, MenuStatus.UnFavorite.text, 0))
