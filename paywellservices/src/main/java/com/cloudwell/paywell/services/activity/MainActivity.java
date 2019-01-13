@@ -49,6 +49,8 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -323,6 +325,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     ivUptown.setBackgroundResource(R.drawable.circle_angle_down);
                     sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
+                    ivUptown.clearAnimation();
+
 
                 } else {
                     isSliderUp = false;
@@ -331,10 +335,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     ivUptown.setBackgroundResource(R.drawable.circle_angle_up);
                     sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
+                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_item);
+                    ivUptown.setAnimation(animation);
+
 
                 }
             }
         });
+
+        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_item);
+        ivUptown.setAnimation(animation);
+
 
         ivEdit.setOnClickListener(new View.OnClickListener() {
             @Override
