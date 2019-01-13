@@ -66,12 +66,12 @@
                 android:gravity="center" />
 
             <Button
-                android:id="@+id/homeBtnPayments"
+                android:id="@+id/homeBtnEticket"
                 style="@style/HomeButtonNew"
                 android:layout_weight="1"
-                android:drawableTop="@drawable/ic_payments"
+                android:drawableTop="@drawable/ic_eticket"
                 android:onClick="onButtonClicker"
-                android:text="@string/home_payments"
+                android:text="@string/home_eticket"
                 android:textAllCaps="false"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
@@ -83,22 +83,6 @@
             android:orientation="horizontal"
             android:weightSum="5">
 
-            <Button
-                android:id="@+id/homeBtnEticket"
-                style="@style/HomeButtonNew"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/ic_eticket"
-                android:onClick="onButtonClicker"
-                android:text="@string/home_eticket"
-                android:textAllCaps="false"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="center" />
 
             <Button
                 android:id="@+id/homeBtnMFS"
@@ -128,12 +112,33 @@
                 android:text="@string/home_product_catalog"
                 android:textAllCaps="false"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center" />
+
+            <Button
+                android:id="@+id/homeBtnRefillBalance"
+                style="@style/HomeButtonNew"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_balance_refill"
+                android:onClick="onButtonClicker"
+                android:paddingTop="10dp"
+                android:text="@string/home_refill_balance"
+                android:textAllCaps="false"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:gravity="center_horizontal"
             android:orientation="horizontal"
             android:weightSum="5">
 
@@ -153,17 +158,6 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center" />
-
-            <Button
-                android:id="@+id/homeBtnRefillBalance"
-                style="@style/HomeButtonNew"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/ic_balance_refill"
-                android:onClick="onButtonClicker"
-                android:paddingTop="10dp"
-                android:text="@string/home_refill_balance"
-                android:textAllCaps="false"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

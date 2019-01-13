@@ -67,7 +67,6 @@ import com.cloudwell.paywell.services.activity.myFavorite.MyFavoriteMenuActivity
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
 import com.cloudwell.paywell.services.activity.notification.NotificationActivity;
 import com.cloudwell.paywell.services.activity.notification.NotificationAllActivity;
-import com.cloudwell.paywell.services.activity.payments.PaymentsMainActivity;
 import com.cloudwell.paywell.services.activity.product.ProductMenuActivity;
 import com.cloudwell.paywell.services.activity.product.productHelper.ProductHelper;
 import com.cloudwell.paywell.services.activity.refill.RefillBalanceMainActivity;
@@ -189,7 +188,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private Slider viewPager;
     private int currentPage;
 
-    private Button home_topup, home_utility, home_payments, home_eticket, home_mfs, home_product_catalog, home_statement, home_refill_balance, home_settings;
+    private Button home_topup, home_utility, home_eticket, home_mfs, home_product_catalog, home_statement, home_refill_balance, home_settings;
 
     private final int PERMISSIONS_FOR_QR_CODE_SCAN = 100;
     private final int PERMISSIONS_REQUEST_FOR_WRITE_EXTERNAL_STORAGE = 101;
@@ -436,7 +435,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         /*Buttons Initialization*/
         home_topup = findViewById(R.id.homeBtnTopup);
         home_utility = findViewById(R.id.homeBtnUtility);
-        home_payments = findViewById(R.id.homeBtnPayments);
+
         home_eticket = findViewById(R.id.homeBtnEticket);
         home_mfs = findViewById(R.id.homeBtnMFS);
         home_product_catalog = findViewById(R.id.homeBtnProductCategory);
@@ -447,7 +446,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             home_topup.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_utility.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_payments.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_eticket.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_mfs.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_product_catalog.setTypeface(AppController.getInstance().getOxygenLightFont());
@@ -457,7 +455,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else {
             home_topup.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_utility.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_payments.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_eticket.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_mfs.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_product_catalog.setTypeface(AppController.getInstance().getAponaLohitFont());
@@ -572,7 +569,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public void RefreshStringsOfButton() {
         home_topup.setText(R.string.home_topup);
         home_utility.setText(R.string.home_utility);
-        home_payments.setText(R.string.home_payments);
         home_eticket.setText(R.string.home_eticket);
         home_mfs.setText(R.string.home_mfs);
         home_product_catalog.setText(R.string.home_product_catalog);
@@ -583,7 +579,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             home_topup.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_utility.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_payments.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_eticket.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_mfs.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_product_catalog.setTypeface(AppController.getInstance().getOxygenLightFont());
@@ -593,7 +588,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else {
             home_topup.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_utility.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_payments.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_eticket.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_mfs.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_product_catalog.setTypeface(AppController.getInstance().getAponaLohitFont());
@@ -604,7 +598,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         navigationView.getMenu().findItem(R.id.nav_topup).setTitle(R.string.home_topup);
         navigationView.getMenu().findItem(R.id.nav_utility).setTitle(R.string.home_utility);
-        navigationView.getMenu().findItem(R.id.nav_payments).setTitle(R.string.home_payments);
         navigationView.getMenu().findItem(R.id.nav_eticket).setTitle(R.string.home_eticket);
         navigationView.getMenu().findItem(R.id.nav_mfs).setTitle(R.string.nav_mfs);
         navigationView.getMenu().findItem(R.id.nav_product).setTitle(R.string.nav_product_catalog);
@@ -749,22 +742,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 } else {
                     // Handle the utility action
                     startActivity(new Intent(this, UtilityMainActivity.class));
-                }
-            } else {
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-        } else if (id == R.id.nav_payments) {
-            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_PAYMENT_MENU);
-            if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
-                if (!mCd.isConnectingToInternet()) {
-                    AppHandler.showDialog(getSupportFragmentManager());
-                } else {
-                    // Handle the bKash action
-                    startActivity(new Intent(this, PaymentsMainActivity.class));
                 }
             } else {
                 Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
@@ -1300,26 +1277,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
                     if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
                         startActivity(new Intent(this, UtilityMainActivity.class));
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.allow_error_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-                break;
-            case R.id.homeBtnPayments:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_PAYMENT_MENU);
-                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                    if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
-                        startActivity(new Intent(this, PaymentsMainActivity.class));
                     } else {
                         Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.allow_error_msg, Snackbar.LENGTH_LONG);
                         snackbar.setActionTextColor(Color.parseColor("#ffffff"));

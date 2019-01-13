@@ -10,7 +10,6 @@
     <string name="home_topup">Topup</string>
     <string name="home_topup_offer_title">Bundle &amp; Pack</string>
     <string name="home_utility">Utility</string>
-    <string name="home_payments">Payments</string>
     <string name="home_eticket">eTicket</string>
     <string name="home_mfs">Mobile\nBanking</string>
     <string name="home_mfs_fav">Mobile Banking</string>
@@ -52,25 +51,12 @@
     <string name="home_utility_ivac_free_pay_favorite">IVAC \nFee Pay</string>
     <string name="home_utility_ivac_inquiry">IVAC \nInquiry</string>
     <string name="home_payment_bkash">Payments\nFrom bKash</string>
-    <string name="home_payment_bkash_title">Payments From bKash</string>
-    <string name="home_payment_transactions_title">Transactions</string>
-    <string name="home_bkash_last_trx">Successful\nTransaction</string>
-    <string name="home_bkash_last_trx_title">Successful Transaction</string>
-    <string name="home_bkash_balance">Balance</string>
-    <string name="home_bkash_declare_purpose_title">Declare Purpose</string>
-    <string name="home_bkash_balance_req">Request\nBalance</string>
-    <string name="home_bkash_balance_req_title">Request For Balance</string>
     <string name="home_bkash_payment_confirm">Payment\nConfirm</string>
     <string name="home_bkash_payment_confirm_title">Payment Confirmation</string>
-    <string name="home_bkash_trx_claim">Claim\nPayment</string>
-    <string name="home_bkash_trx_claim_title">Claim Payment</string>
-    <string name="home_bkash_paywell_balance_req">PayWell\nBalance</string>
-    <string name="home_bkash_paywell_balance_req_title">PayWell Balance</string>
     <string name="home_bkash_bank_trns_req">Bank\nTransfer</string>
     <string name="home_bkash_bank_trns_req_title">Bank Transfer</string>
     <string name="home_bkash_cash_req">For Cash</string>
     <string name="home_bkash_cash_req_title">For Cash</string>
-    <string name="home_bkash_paywell_balance_return">PW Balance\nReturn</string>
     <string name="home_eticket_bus">Bus Ticket</string>
     <string name="home_eticket_train">Train Ticket</string>
     <string name="home_product_ajker_deal">Ajker Deal</string>
@@ -161,7 +147,6 @@
     <string name="pb_acc_mismatch_error_msg">Account number do not match</string>
     <string name="pb_full_name_error_msg">Enter full name</string>
     <string name="banglalion_acc_error_msg">Enter at least 4 digits</string>
-    <string name="id_phone_error_msg">Enter phone number or ID</string>
     <string name="selection_error_msg">Please fill up all the fields</string>
     <string name="journey_date_select_error_msg">Select your journey date</string>
     <string name="route_select_error_msg">Bus routes are not available</string>
@@ -197,10 +182,6 @@
     <string name="amount_msg">Amount</string>
     <string name="prepaid_msg">Prepaid</string>
     <string name="postpaid_msg">Postpaid</string>
-    <string name="purpose_type_msg">Purpose Type</string>
-    <string name="fund_transfer_title_msg">Fund Transfer</string>
-    <string name="alert_transfer_msg">Are you sure, you want to transfer fund?</string>
-    <string name="alert_reverse_msg">Are you sure, you want to reverse</string>
     <string name="confirm_title_msg">Confirmation</string>
     <string name="alert_confirm_msg">Did you receive cash?</string>
     <string name="from_city_msg">From City</string>
@@ -240,7 +221,6 @@
     <string name="business_type_error_msg">Select business type</string>
     <string name="center_error_msg">Select center</string>
     <string name="input_error_msg">Enter properly</string>
-    <string name="nid_input_error_msg">Enter correct NID number</string>
     <string name="please_type_in_english">Please type in English</string>
     <string name="info_collect_title">Important Information Collection</string>
     <string name="phn_num_hint">Please enter your current phone number</string>
@@ -256,14 +236,12 @@
     <string name="permission_error_msg">You need to click on the allow buttons in order to let PayWell app function properly</string>
     <string name="internet_connection_error_msg">Sorry, no internet connection is available. Please reconnect and try again.</string>
     <string name="error_correct_operator_msg">Please select correct operator</string>
-    <string name="copy_msg">Copied</string>
 
     <!-- Button Description -->
     <string name="auto_date_time_btn">Automatic date &amp; time</string>
     <string name="okay_btn">OK</string>
     <string name="confirm_btn">Confirm</string>
     <string name="cancel_btn">Cancel</string>
-    <string name="bkash_declare_page_btn">Go to Declare Purpose</string>
     <string name="form_galary_btn">From Galary</string>
     <string name="next_btn">Next</string>
     <string name="skip_btn">Skip</string>
@@ -288,15 +266,9 @@
     <string name="time_des">Time:</string>
     <string name="using_paywell_des">THANKS FOR USING PAYWELL</string>
     <string name="hotline_des">HOTLINE:</string>
-    <string name="date_and_time_des">Date&amp;Time:</string>
     <string name="tbps_charge_des">TBPS Charge:</string>
     <string name="total_des">Total Amount:</string>
-    <string name="bkash_frozen_balance_des">Frozen Balance:</string>
-    <string name="bkash_declare_balance_des">Purpose to be Declared:</string>
-    <string name="bkash_verification_balance_des">Unverified Balance:</string>
-    <string name="balance_des">Balance:</string>
     <string name="tk_des">Tk</string>
-    <string name="phone_or_id_des">Phone/Id Number:</string>
     <string name="from_city_ticket_des">From:</string>
     <string name="to_city_ticket_des">To:</string>
     <string name="journey_date_ticket_des">Journey Date:</string>
@@ -339,7 +311,6 @@
     <string name="center_des">Center:</string>
     <string name="web_file_des">Web File No:</string>
     <string name="passport_des">Passport No:</string>
-    <string name="agent_phn_des">Merchant No:</string>
     <string name="banglalion_trx_id_des">Banglalion TRX ID :</string>
     <string name="retail_commission">Retailer Commission:</string>
 
@@ -553,18 +524,8 @@
     <string name="train_source_url">https://www.paywellonline.com/banglalink_services/train.php?</string>
 
     <!-- Payment -->
-    <string name="bkash_trx_check">https://bkapi.paywellonline.com/retailer/lastSuccessfulTrx.php?</string>
     <string name="bkash_balance_check">https://bkapi.paywellonline.com/retailer/userBalanceCheck.php?</string>
-    <string name="bkash_paymnt_req_paywell">https://bkapi.paywellonline.com/retailer/payment_request_for_pwl_balance.php?</string>
-    <string name="bkash_bank_trns">https://bkapi.paywellonline.com/retailer/payment_request_for_bank_balance.php?</string>
-    <string name="bkash_req_for_cash">https://bkapi.paywellonline.com/retailer/payment_request_for_cash.php?</string>
-    <string name="bkash_paymnt_pending_check">https://bkapi.paywellonline.com/retailer/paymentRequestFromCo.php?</string>
-    <string name="bkash_pending_req_conf">https://bkapi.paywellonline.com/retailer/ConfirmPaymentRequestFromCoOrSda.php?</string>
     <!--<string name="bkash_pending_req_conf">https://bkapi.paywellonline.com/retailer/ConfirmPaymentRequestFromCoOrSda_test.php?</string>-->
-    <string name="bkash_pd_url">https://bkapi.paywellonline.com/retailer/bkash_purpose_declaration.php?</string>
-    <string name="bkash_inq_url">https://bkapi.paywellonline.com/retailer/transactionInquiry.php?</string>
-    <string name="bkash_reverse_inq_url">https://api.paywellonline.com/PaywelltransactionRetailer/GetGateWayPaymentRequestList</string>
-    <string name="bkash_reverse_url">https://api.paywellonline.com/PaywelltransactionRetailer/CancelPaywellBalanceRequestAndRevesresBalnceInBkashwallet</string>
 
     <!-- MFS -->
     <string name="mycash_generate_otp">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/GenerateOTP?</string>

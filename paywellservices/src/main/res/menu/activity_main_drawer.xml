@@ -11,10 +11,6 @@
             android:icon="@drawable/icMenuUtility"
             android:title="@string/home_utility" />
         <item
-            android:id="@+id/nav_payments"
-            android:icon="@drawable/icMenuPayments"
-            android:title="@string/home_payments" />
-        <item
             android:id="@+id/nav_eticket"
             android:icon="@drawable/icETicket"
             android:title="@string/home_eticket" />
