@@ -3,7 +3,6 @@ package com.cloudwell.paywell.services.activity.myFavorite.helper
 import android.content.Context
 import android.os.AsyncTask
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.myFavorite.MenuStatus
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu
 import com.cloudwell.paywell.services.database.DatabaseClient
 

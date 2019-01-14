@@ -58,7 +58,7 @@
     <string name="home_bkash_cash_req">For Cash</string>
     <string name="home_bkash_cash_req_title">For Cash</string>
     <string name="home_eticket_bus">Bus Ticket</string>
-    <string name="home_eticket_train">Train Ticket</string>
+    <string name="home_eticket_air">Air Ticket</string>
     <string name="home_product_ajker_deal">Ajker Deal</string>
     <string name="home_product_pw_wholesale">PayWell\nWholesale</string>
     <string name="home_product_pw_wholesale_title">PayWell Wholesale</string>

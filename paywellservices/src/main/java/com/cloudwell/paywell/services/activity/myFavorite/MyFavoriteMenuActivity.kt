@@ -12,10 +12,11 @@ import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.myFavorite.adapter.FavoriteAdapter
+import com.cloudwell.paywell.services.activity.myFavorite.adapter.AdapterForFavList
 import com.cloudwell.paywell.services.activity.myFavorite.adapter.HeaderRecyclerViewSection
-import com.cloudwell.paywell.services.activity.myFavorite.adapter.helper.OnStartDragListener
-import com.cloudwell.paywell.services.activity.myFavorite.adapter.helper.SimpleItemTouchHelperCallback
+import com.cloudwell.paywell.services.activity.myFavorite.adapter.ItemMoveCallback
+import com.cloudwell.paywell.services.activity.myFavorite.adapter.StartDragListener
+import com.cloudwell.paywell.services.activity.myFavorite.helper.MenuStatus
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu
 import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEvent
 import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEventFavDeleted
@@ -34,12 +35,16 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 
-class MyFavoriteMenuActivity : AppCompatActivity(), OnStartDragListener {
+class MyFavoriteMenuActivity : AppCompatActivity(), StartDragListener {
+
+
     lateinit var sectionAdapter: SectionedRecyclerViewAdapter;
     var allFavoriteData = kotlin.collections.mutableMapOf<String, List<FavoriteMenu>>()
 
     var previewPogistion = 0
     private var mItemTouchHelper: ItemTouchHelper? = null
+
+    lateinit var touchHelper: ItemTouchHelper
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,9 +58,12 @@ class MyFavoriteMenuActivity : AppCompatActivity(), OnStartDragListener {
 
         }
 
-
         initialisationView()
 
+    }
+
+    override fun requestDrag(viewHolder: RecyclerView.ViewHolder?) {
+        touchHelper.startDrag(viewHolder)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -71,10 +79,6 @@ class MyFavoriteMenuActivity : AppCompatActivity(), OnStartDragListener {
         finish()
     }
 
-
-    override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
-        mItemTouchHelper?.startDrag(viewHolder)
-    }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     fun onFavoriteItemAdd(event: MessageEvent) {
@@ -105,8 +109,6 @@ class MyFavoriteMenuActivity : AppCompatActivity(), OnStartDragListener {
                 getAllFavoriteDate()
             }
         }
-
-
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
@@ -138,7 +140,6 @@ class MyFavoriteMenuActivity : AppCompatActivity(), OnStartDragListener {
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     fun onFavoriteItemPositionMove(event: MessageEventPositionMove) {
-
 
         DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().update(event.fromMenu)
         DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().update(event.toMenu)
@@ -293,15 +294,15 @@ class MyFavoriteMenuActivity : AppCompatActivity(), OnStartDragListener {
         val glm = GridLayoutManager(applicationContext, columns)
         recyclerView.layoutManager = glm
 
-
-        val recyclerListAdapter = FavoriteAdapter(result, this, isEnglish)
+        AdapterForFavList.mItems = result
+        val recyclerListAdapter = AdapterForFavList(this, isEnglish)
         recyclerView.layoutManager = glm
         recyclerView.adapter = recyclerListAdapter;
         recyclerView.isNestedScrollingEnabled = false;
 
-        val callback = SimpleItemTouchHelperCallback(recyclerListAdapter)
-        mItemTouchHelper = ItemTouchHelper(callback)
-        mItemTouchHelper?.attachToRecyclerView(recyclerView)
+        val callback = ItemMoveCallback(recyclerListAdapter)
+        touchHelper = ItemTouchHelper(callback)
+        touchHelper.attachToRecyclerView(recyclerView)
 
 
     }

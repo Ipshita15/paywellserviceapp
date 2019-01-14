@@ -55,7 +55,7 @@ public class TrainTicketActivity extends BaseActivity implements AdapterView.OnI
         setContentView(R.layout.activity_train_ticket);
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(R.string.home_eticket_train);
+            getSupportActionBar().setTitle(R.string.home_eticket_air);
         }
 
         // Creating adapter for spinner

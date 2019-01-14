@@ -113,12 +113,12 @@ public class HomeFavoriteAdapter extends RecyclerView.Adapter<HomeFavoriteAdapte
 
 
         @Override
-        public void onItemSelected() {
+        public void onItemSelected(RecyclerView.ViewHolder viewHolder) {
             // itemView.setBackgroundColor(Color.LTGRAY);
         }
 
         @Override
-        public void onItemClear() {
+        public void onItemClear(RecyclerView.ViewHolder viewHolder) {
             // itemView.setBackgroundColor(0);
         }
     }

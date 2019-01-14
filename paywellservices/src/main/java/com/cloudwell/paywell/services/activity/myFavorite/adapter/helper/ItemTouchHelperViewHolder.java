@@ -16,6 +16,7 @@
 
 package com.cloudwell.paywell.services.activity.myFavorite.adapter.helper;
 
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
 /**
@@ -29,13 +30,15 @@ public interface ItemTouchHelperViewHolder {
     /**
      * Called when the {@link ItemTouchHelper} first registers an item as being moved or swiped.
      * Implementations should update the item view to indicate it's active state.
+     * @param viewHolder
      */
-    void onItemSelected();
+    void onItemSelected(RecyclerView.ViewHolder viewHolder);
 
 
     /**
      * Called when the {@link ItemTouchHelper} has completed the move or swipe, and the active item
      * state should be cleared.
+     * @param viewHolder
      */
-    void onItemClear();
+    void onItemClear(RecyclerView.ViewHolder viewHolder);
 }
