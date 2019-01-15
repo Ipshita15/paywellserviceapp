@@ -119,7 +119,7 @@ public class MYCashMainActivity extends BaseActivity implements View.OnClickList
             try {
                 List<NameValuePair> nameValuePairs = new ArrayList<>(2);
                 nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("pin", mAppHandler.getPin()));
+                nameValuePairs.add(new BasicNameValuePair("pin", _pin));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();

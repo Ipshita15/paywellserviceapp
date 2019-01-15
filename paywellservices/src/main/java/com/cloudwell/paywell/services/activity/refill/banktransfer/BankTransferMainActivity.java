@@ -15,18 +15,21 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.refill.RefillBalanceMainActivity;
+import com.cloudwell.paywell.services.activity.refill.model.DistrictData;
+import com.cloudwell.paywell.services.activity.refill.model.RequestDistrict;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
 import org.apache.http.NameValuePair;
@@ -44,8 +47,14 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class BankTransferMainActivity extends BaseActivity {
+
+    private static String KEY_TAG = BankTransferMainActivity.class.getName();
 
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
@@ -124,293 +133,77 @@ public class BankTransferMainActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.homeBtnBrac:
                 bank_name = "BRAC";
-                showInformation(bank_name);
+//                startActivity(new Intent(BankTransferMainActivity.this, BankDetailsActivity.class));
+//                showInformation(bank_name);
+                getDistrictList("1");
                 break;
             case R.id.homeBtnDbbl:
-                bank_name = "DBBL";
-                showInformation(bank_name);
+//                bank_name = "DBBL";
+//                showInformation(bank_name);
+                getDistrictList("2");
                 break;
             case R.id.homeBtnIbbl:
-                bank_name = "IBBL";
-                showInformation(bank_name);
+//                bank_name = "IBBL";
+//                showInformation(bank_name);
+                getDistrictList("3");
                 break;
             case R.id.homeBtnPbl:
-                bank_name = "PBL";
-                showInformation(bank_name);
+//                bank_name = "PBL";
+//                showInformation(bank_name);
+                getDistrictList("4");
                 break;
             case R.id.homeBtnScb:
-                bank_name = "SCB";
-                showInformation(bank_name);
+//                bank_name = "SCB";
+//                showInformation(bank_name);
+                getDistrictList("5");
                 break;
             case R.id.homeBtnCity:
-                bank_name = "City";
-                showInformation(bank_name);
+//                bank_name = "City";
+//                showInformation(bank_name);
+                getDistrictList("6");
                 break;
             default:
                 break;
         }
     }
 
-    public void showInformation(String bank_name) {
-        if (!mCd.isConnectingToInternet()) {
-            AppHandler.showDialog(getSupportFragmentManager());
-        } else {
-            new InformationAsync().execute(
-                    getResources().getString(R.string.refill_bank_info), bank_name);
-        }
-    }
+    private void getDistrictList(String bankId) {
+        showProgressDialog();
 
-    private class InformationAsync extends AsyncTask<String, String, String> {
+        final RequestDistrict requestDistrict = new RequestDistrict();
+        requestDistrict.setmUsername("" + mAppHandler.getImeiNo());
+        requestDistrict.setmBankId("" + bankId);
 
-        @Override
-        protected void onPreExecute() {
+        Call<DistrictData> responseBodyCall = ApiUtils.getAPIService().callDistrictDataAPI(requestDistrict.getmUsername(), requestDistrict.getmBankId());
 
-            showProgressDialog();
-        }
+        responseBodyCall.enqueue(new Callback<DistrictData>() {
+            @Override
+            public void onResponse(Call<DistrictData> call, Response<DistrictData> response) {
+                dismissProgressDialog();
+                Bundle bundle = new Bundle();
+                bundle.putString("bankId", requestDistrict.getmBankId());
 
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
-                nameValuePairs.add(new BasicNameValuePair("Bank_Name", params[1]));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                BankDetailsActivity.responseDistrictData = response.body();
+                startBankDetailsActivity(bundle);
             }
-            return responseTxt;
-        }
 
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            try {
-                JSONObject jsonObject = new JSONObject(result);
-                String status = jsonObject.getString(TAG_RESPONSE_STATUS);
-
-                if (status.equalsIgnoreCase("200")) {
-                    bankName = jsonObject.getString(TAG_BANK_NAME);
-                    String bankAccount = jsonObject.getString(TAG_ACCOUNT_NAME);
-                    bankNo = jsonObject.getString(TAG_ACCOUNT_NO);
-                    String accountBranch = jsonObject.getString(TAG_BRANCH);
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(BankTransferMainActivity.this);
-                    builder.setTitle(bank_name + " Bank Details");
-                    builder.setMessage("Bank Name: " + bankName + "\nAcc. Name: " + bankAccount + "\nAcc. No: " + bankNo + "\nBranch: " + accountBranch);
-
-                    builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int id) {
-                            dialogInterface.dismiss();
-                        }
-                    });
-                    builder.setNegativeButton("Upload", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int id) {
-                            dialogInterface.dismiss();
-                            uploadImg();
-                        }
-                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    TextView messageText = alert.findViewById(android.R.id.message);
-                    messageText.setGravity(Gravity.CENTER);
-                } else {
-                    String message = jsonObject.getString(TAG_MESSAGE);
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, message, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            @Override
+            public void onFailure(Call<DistrictData> call, Throwable t) {
+                dismissProgressDialog();
+                Log.d(KEY_TAG, "onFailure:");
                 Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                 View snackBarView = snackbar.getView();
                 snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                 snackbar.show();
-            }
-        }
-    }
-
-    public void uploadImg() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(BankTransferMainActivity.this);
-        builder.setMessage(R.string.choose_image_for_upload_msg);
-        builder.setNegativeButton(R.string.form_galary_btn, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int id) {
-                int permissionCheck = ContextCompat.checkSelfPermission(BankTransferMainActivity.this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
-
-                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(
-                            BankTransferMainActivity.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY
-                    );
-                } else {
-                    galleryIntent();
-                }
             }
         });
-        AlertDialog alert = builder.create();
-        alert.show();
     }
 
-    private void galleryIntent() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select File"), 123);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (resultCode == RESULT_OK) {
-            if (requestCode == 123) {
-                InputStream imageStream;
-                try {
-                    imageStream = this.getContentResolver().openInputStream(data.getData());
-                    Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                    encodeTobase64(selectedImage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-            }
-        } else {
-            Snackbar snackbar = Snackbar.make(mCoordinateLayout, "error", Snackbar.LENGTH_LONG);
-            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-            View snackBarView = snackbar.getView();
-            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            snackbar.show();
-        }
-    }
-
-    public void encodeTobase64(Bitmap image) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        Bitmap myBm = getResizedBitmap(image, 1000, 700);
-        myBm.compress(Bitmap.CompressFormat.JPEG, 50, baos);
-        byte[] b = baos.toByteArray();
-        String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT).replaceAll("[\n\r]", "");
-
-        strImage = imageEncoded;
-        uploadDepositInformation(bankName, bankNo);
-    }
-
-    public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
-        int width = bm.getWidth();
-        int height = bm.getHeight();
-        float scaleWidth = ((float) newWidth) / width;
-        float scaleHeight = ((float) newHeight) / height;
-        Matrix matrix = new Matrix();
-        matrix.postScale(scaleWidth, scaleHeight);
-        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
-        return resizedBitmap;
-    }
-
-    public void uploadDepositInformation(String bankName, String bankAccountNo) {
-        if (!mCd.isConnectingToInternet()) {
-            AppHandler.showDialog(getSupportFragmentManager());
-        } else {
-            new DepositInformationAsync().execute(
-                    getResources().getString(R.string.refill_bank_deposit), mAppHandler.getImeiNo(), bankName, bankAccountNo, strImage);
-        }
-    }
-
-    private class DepositInformationAsync extends AsyncTask<String, String, String> {
-
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<>(4);
-                nameValuePairs.add(new BasicNameValuePair("imei", params[1]));
-                nameValuePairs.add(new BasicNameValuePair("bank", params[2]));
-                nameValuePairs.add(new BasicNameValuePair("account", params[3]));
-                nameValuePairs.add(new BasicNameValuePair("depositslip", params[4]));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            try {
-                JSONObject jsonObject = new JSONObject(result);
-
-                String message = jsonObject.getString(TAG_MESSAGE);
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(BankTransferMainActivity.this);
-                builder.setTitle("Status");
-                builder.setMessage(message);
-                builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int id) {
-                        dialogInterface.dismiss();
-                        startActivity(new Intent(BankTransferMainActivity.this, RefillBalanceMainActivity.class));
-                    }
-                });
-                AlertDialog alert = builder.create();
-                alert.show();
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSION_FOR_GALLERY: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was granted
-                    galleryIntent();
-                } else {
-                    // permission denied
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.access_denied_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-            }
-        }
+    private void startBankDetailsActivity(Bundle bundle) {
+        Intent intent = new Intent(BankTransferMainActivity.this, BankDetailsActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
+        finish();
     }
 }

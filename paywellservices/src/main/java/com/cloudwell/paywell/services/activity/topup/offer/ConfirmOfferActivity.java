@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
@@ -37,7 +36,6 @@ public class ConfirmOfferActivity extends BaseActivity implements View.OnClickLi
     private static String KEY_TAG = ConfirmOfferActivity.class.getName();
 
     private AppHandler mAppHandler;
-    private LinearLayout mLinearLayout;
     public static String amount;
     public static String retCom;
     public static String details;
@@ -59,7 +57,6 @@ public class ConfirmOfferActivity extends BaseActivity implements View.OnClickLi
         }
 
         mAppHandler = new AppHandler(this);
-        mLinearLayout = findViewById(R.id.linearLayout);
         TextView textView = findViewById(R.id.tvDetails);
         textView.setText(getString(R.string.amount_des) + " " + amount + getString(R.string.tk)
                 + "\n" + getString(R.string.ret_com_des) + " " + retCom + getString(R.string.tk)
@@ -93,7 +90,6 @@ public class ConfirmOfferActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
         finish();
     }
 
@@ -108,7 +104,6 @@ public class ConfirmOfferActivity extends BaseActivity implements View.OnClickLi
             if (mPin.isEmpty()) {
                 editTextPin.setError(getString(R.string.pin_no_error_msg));
             } else {
-                // new TopupAsync().execute(getString(R.string.single_top));
                 handleTopupAPIValidation(mPin);
             }
         }
@@ -121,16 +116,13 @@ public class ConfirmOfferActivity extends BaseActivity implements View.OnClickLi
         TopupData topupDatum = new TopupData(amount, "prepaid", mPhn, key);
         topupDatumList.add(topupDatum);
 
-
         final RequestTopup requestTopup = new RequestTopup();
         requestTopup.setPassword("" + pin);
         requestTopup.setUserName("" + mAppHandler.getImeiNo());
 
         requestTopup.setTopupData(topupDatumList);
 
-
         Call<TopupReposeData> responseBodyCall = ApiUtils.getAPIService().callTopAPI(requestTopup);
-
 
         responseBodyCall.enqueue(new Callback<TopupReposeData>() {
             @Override
@@ -139,7 +131,6 @@ public class ConfirmOfferActivity extends BaseActivity implements View.OnClickLi
                 Log.d(KEY_TAG, "onResponse:" + response.body());
 
                 showReposeUI(response.body());
-
             }
 
             @Override
@@ -151,11 +142,8 @@ public class ConfirmOfferActivity extends BaseActivity implements View.OnClickLi
                 View snackBarView = snackbar.getView();
                 snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                 snackbar.show();
-
-
             }
         });
-
 
     }
 
@@ -171,8 +159,6 @@ public class ConfirmOfferActivity extends BaseActivity implements View.OnClickLi
         } else {
             showDialog(response, receiptBuilder, builder);
         }
-
-
     }
 
     private void showAuthticationError() {

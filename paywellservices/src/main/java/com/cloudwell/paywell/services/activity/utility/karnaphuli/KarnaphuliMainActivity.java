@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.utility.electricity.desco;
+package com.cloudwell.paywell.services.activity.utility.karnaphuli;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -32,7 +32,7 @@ import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DESCOMainActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
+public class KarnaphuliMainActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
 
     private RelativeLayout mRelativeLayout;
     RadioButton radioButton_five, radioButton_ten, radioButton_twenty, radioButton_fifty, radioButton_hundred, radioButton_twoHundred;
@@ -47,7 +47,7 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_utility_desco);
+            getSupportActionBar().setTitle(R.string.home_utility_karnaphuli);
         }
 
         mRelativeLayout = findViewById(R.id.relativeLayout);
@@ -70,7 +70,7 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
 
         switch (v.getId()) {
             case R.id.homeBtnBillPay:
-                startActivity(new Intent(this, DESCOBillPayActivity.class));
+                startActivity(new Intent(this, KarnaphuliBillPayActivity.class));
                 finish();
                 break;
             case R.id.homeBtnInquiry:
@@ -81,31 +81,17 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.help_menu, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             this.onBackPressed();
-//            return true;
         }
-//        else if (item.getItemId() == R.id.menu_help) {
-//            Intent intent = new Intent(DESCOMainActivity.this, ElectricityHelpActivity.class);
-//            intent.putExtra("serviceName", "DESCO");
-//            startActivity(intent);
-//            finish();
-//        }
-//        return super.onOptionsItemSelected(item);
         return true;
     }
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(DESCOMainActivity.this, UtilityMainActivity.class);
+        Intent intent = new Intent(KarnaphuliMainActivity.this, UtilityMainActivity.class);
         startActivity(intent);
         finish();
     }
@@ -224,7 +210,7 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
 
         @Override
         protected void onPreExecute() {
-           showProgressDialog();
+            showProgressDialog();
         }
 
 
@@ -237,7 +223,7 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
             try {
                 List<NameValuePair> nameValuePairs = new ArrayList<>(3);
                 nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("service", "DESCO"));
+                nameValuePairs.add(new BasicNameValuePair("service", "KGDCL"));
                 nameValuePairs.add(new BasicNameValuePair("limit", selectedLimit));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -255,10 +241,10 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
 
         @Override
         protected void onPostExecute(String result) {
-           dismissProgressDialog();
+            dismissProgressDialog();
             if (result != null) {
-                DESCOInquiryActivity.TRANSLOG_TAG = result;
-                startActivity(new Intent(DESCOMainActivity.this, DESCOInquiryActivity.class));
+                KarnaphuliInquiryActivity.TRANSLOG_TAG = result;
+                startActivity(new Intent(KarnaphuliMainActivity.this, KarnaphuliInquiryActivity.class));
                 finish();
             } else {
                 Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);

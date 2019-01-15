@@ -15,9 +15,6 @@
     <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <!-- <uses-permission android:name="android.permission.READ_SMS" /> -->
-    <!-- <uses-permission android:name="android.permission.RECEIVE_SMS" /> -->
-    <!-- <uses-permission android:name="android.permission.SEND_SMS" /> -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
@@ -1144,6 +1141,36 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionMainActivity" />
+        </activity>
+        <activity
+            android:name=".activity.utility.karnaphuli.KarnaphuliMainActivity"
+            android:parentActivityName=".activity.utility.UtilityMainActivity"
+            android:screenOrientation="portrait">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity" />
+        </activity>
+        <activity
+            android:name=".activity.utility.karnaphuli.KarnaphuliBillPayActivity"
+            android:parentActivityName=".activity.utility.karnaphuli.KarnaphuliMainActivity"
+            android:screenOrientation="portrait">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliMainActivity" />
+        </activity>
+        <activity
+            android:name=".activity.utility.karnaphuli.KarnaphuliInquiryActivity"
+            android:parentActivityName=".activity.utility.karnaphuli.KarnaphuliMainActivity"
+            android:screenOrientation="portrait">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliMainActivity" />
         </activity>
         <activity
             android:name=".activity.chat.ChatActivity"
