@@ -33,7 +33,7 @@ public class TokenAuthenticator implements Authenticator {
 
             AppHandler mAppHandler = new AppHandler(AppController.getContext());
 
-            Map<String, String> params = new HashMap<String, String>();
+            Map<String, String> params = new HashMap<>();
             params.put("skey", "fLdjl3VX_OPOx6zvadOGuCvq2Ay0civ6v-HUQeiLVRg");
             params.put("username", "" + mAppHandler.getRID());
             params.put("retailer_code", "" + mAppHandler.getRID());

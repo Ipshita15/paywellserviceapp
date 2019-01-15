@@ -17,7 +17,7 @@ import com.cloudwell.paywell.services.activity.AppLoadingActivity;
 
 public class LaunchScreenActivity extends Activity {
 
-    private static final int SPLASH_TIME_OUT = 5000;
+    private static final int SPLASH_TIME_OUT = 3000;
     private ImageView iv;
     private TextView tv;
 

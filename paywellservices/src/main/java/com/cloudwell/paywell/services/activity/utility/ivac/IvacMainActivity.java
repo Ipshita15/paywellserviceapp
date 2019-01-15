@@ -20,6 +20,9 @@ public class IvacMainActivity extends BaseActivity {
     private RelativeLayout mRelativeLayout;
     private ConnectionDetector cd;
 
+    private static String TAG_RESPONSE_IVAC_STATUS = "status";
+    private static String TAG_RESPONSE_IVAC_MSG = "message";
+    private static String TAG_RESPONSE_IVAC_CENTER_DETAILS = "centerDetails";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

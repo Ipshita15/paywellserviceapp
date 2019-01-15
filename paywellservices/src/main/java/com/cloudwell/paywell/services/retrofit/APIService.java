@@ -1,6 +1,9 @@
 package com.cloudwell.paywell.services.retrofit;
 
 
+import com.cloudwell.paywell.services.activity.refill.model.BranchData;
+import com.cloudwell.paywell.services.activity.refill.model.DistrictData;
+import com.cloudwell.paywell.services.activity.refill.model.RefillRequestData;
 import com.cloudwell.paywell.services.activity.topup.model.RequestTopup;
 import com.cloudwell.paywell.services.activity.topup.model.TopupReposeData;
 import com.cloudwell.paywell.services.app.model.APIResposeGenerateToken;
@@ -8,6 +11,7 @@ import com.cloudwell.paywell.services.app.model.APIResposeGenerateToken;
 import java.util.Map;
 
 import retrofit2.Call;
+import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Header;
@@ -30,6 +34,25 @@ public interface APIService {
     @Multipart
     Call<TopupReposeData> callTopAPI(@Part("requestData") RequestTopup requestTopup);
 
+
+    @POST("PayWellBankDepositSystem/getDistrictListforBankDeposit")
+    @FormUrlEncoded
+    Call<DistrictData> callDistrictDataAPI(@Field("username") String username,
+                                           @Field("bankId") String bankId);
+
+    @POST("PayWellBankDepositSystem/getBankBranch")
+    @FormUrlEncoded
+    Call<BranchData> callBranchDataAPI(@Field("username") String username,
+                                       @Field("bankId") String bankId,
+                                       @Field("districtId") String districtId);
+
+    @POST("PayWellBankDepositSystem/depositBankSlip")
+    @FormUrlEncoded
+    Call<RefillRequestData> callBalanceRefillAPI(@Field("username") String username,
+                                                 @Field("bankId") String bankId,
+                                                 @Field("districtId") String districtId,
+                                                 @Field("branchId") String branchId,
+                                                 @Field("depositslip") String depositslip);
 }
 
 

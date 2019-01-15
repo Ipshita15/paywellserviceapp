@@ -173,7 +173,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private UpdateChecker mUpdateChecker;
     public final long UPDATE_SOFTWARE_INTERVAL = 24 * 60 * 60;// 1 day
     public final long PHN_NUM_CHECK_INTERVAL = 24 * 60 * 60;// 1 day
-    public final long UPDATE_LOCATION_INTERVAL = 1 * 24 * 60 * 60;// 1 day
+    public final long UPDATE_LOCATION_INTERVAL = 24 * 60 * 60;// 1 day
     private TextView mToolbarHeading;
     DotProgressBar pb_dot;
     private ConnectionDetector mCd;
@@ -183,14 +183,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private boolean mIsNotificationShown;
     private final String TAG_RESPONSE_STATUS = "status";
     private final String TAG_RESPONSE_TOTAL_UREAD_MSG = "unread_message";
-    private final String TAG_RESPONSE_MSG_SUBJECT = "message_sub";
-    private final String TAG_RESPONSE_MSG_ID = "message_id";
     private final String TAG_RESPONSE_MSG_ARRAY = "detail_message";
     private final String TAG_RESPONSE_MESSAGE = "message";
-    private final String TAG_RESPONSE_DATE = "added_datetime";
-    private final String TAG_RESPONSE_IMAGE = "image_url";
-    private final String TAG_RESPONSE_TYPE = "type";
-    private final String TAG_RESPONSE_NOTIFICATION_BALANCE_RETURN_DATA = "balance_return_data";
     private final String TAG_RESPONSE_OTP = "otp";
     private NavigationView navigationView;
     boolean checkNotificationFlag = false;
@@ -280,8 +274,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         cal.set(Calendar.HOUR_OF_DAY, end);
         endHourMilli = cal.getTimeInMillis() / 1000;
-
-        Log.e("logTag3", "true " + (System.currentTimeMillis() / 1000) + " " + startHourMilli + " " + endHourMilli);
 
         InitializeData();
 
@@ -519,7 +511,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if ((System.currentTimeMillis() / 1000) >= (mAppHandler.getLocationUpdateCheck() + UPDATE_LOCATION_INTERVAL)
                 && (System.currentTimeMillis() / 1000) >= startHourMilli
                 && (System.currentTimeMillis() / 1000) <= endHourMilli) {
-            Log.e("logTag1", "true " + (System.currentTimeMillis() / 1000) + " " + startHourMilli + " " + endHourMilli);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                     && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_REQUEST_ACCESS_LOCATION);
@@ -900,26 +891,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     if (status.equalsIgnoreCase("200")) {
 
                         String totalUnreadMsg = jsonObject.getString(TAG_RESPONSE_TOTAL_UREAD_MSG);
-                        String totalMsg = jsonObject.getString("total_message");
+
                         mNumOfNotification = Integer.parseInt(totalUnreadMsg);
 
                         JSONArray jsonArray = jsonObject.getJSONArray(TAG_RESPONSE_MSG_ARRAY);
                         for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject object = jsonArray.getJSONObject(i);
-                            String msg_id = object.getString(TAG_RESPONSE_MSG_ID);
-                            String msg_status = object.getString(TAG_RESPONSE_STATUS);
-                            String msg_title = object.getString(TAG_RESPONSE_MSG_SUBJECT);
-                            String msg = object.getString(TAG_RESPONSE_MESSAGE);
-                            String date = object.getString(TAG_RESPONSE_DATE);
-                            String type = object.getString(TAG_RESPONSE_TYPE);
-                            String data = object.getString(TAG_RESPONSE_NOTIFICATION_BALANCE_RETURN_DATA);
-                            String image;
-                            if (!object.getString(TAG_RESPONSE_IMAGE).isEmpty()) {
-                                image = object.getString(TAG_RESPONSE_IMAGE);
-                            } else {
-                                image = "empty";
-                            }
-
                             if (checkNotificationFlag) {
                                 checkNotificationFlag = false;
                                 mNumOfNotification = 0;
@@ -1827,7 +1803,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             if ((System.currentTimeMillis() / 1000) >= (mAppHandler.getLocationUpdateCheck() + UPDATE_LOCATION_INTERVAL)
                     && (System.currentTimeMillis() / 1000) >= startHourMilli
                     && (System.currentTimeMillis() / 1000) <= endHourMilli) {
-                Log.e("logTag2", "true " + (System.currentTimeMillis() / 1000) + " " + startHourMilli + " " + endHourMilli);
                 checkLocationUpdate();
             }
         }
@@ -2017,7 +1992,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         viewPager.hideIndicators();
         viewPager.setLoopSlides(true);
 
-
         viewPager.setOnSlideClickListener(new OnSlideClickListener() {
 
             @Override
@@ -2027,7 +2001,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     currentPage = position;
 
                     String link = mAppHandler.getDisplayPictureArrayList().get(currentPage);
-
 
                     if (link.isEmpty()) {
 
@@ -2057,12 +2030,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         startActivity(new Intent(MainActivity.this, WebViewActivity.class));
                     }
                 } catch (Exception e) {
-
+                    e.printStackTrace();
                 }
             }
         });
     }
-
 
     private void goToFacebook() {
         try {
