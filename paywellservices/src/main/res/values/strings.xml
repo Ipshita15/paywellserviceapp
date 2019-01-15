@@ -1,9 +1,7 @@
 <resources>
     <string name="app_name">PayWell Services</string>
     <string name="rid">RID:&#160;</string>
-    <string name="balance">Balance:&#160;</string>
     <string name="tk">&#160;Tk.</string>
-    <string name="balance_checking">Checking Balance&#8230;</string>
 
 
     <!-- Menu Names -->
@@ -576,5 +574,6 @@
     <string name="can_not_add_more_than">Can\'t add more than 8 menu</string>
     <string name="Added">Added:</string>
     <string name="add_fav">Add</string>
+    <string name="balance_pre_text">Balance</string>
 
 </resources>

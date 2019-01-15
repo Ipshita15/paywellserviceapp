@@ -2,9 +2,7 @@
 <resources>
     <string name="app_name">পেওয়েল সার্ভিস</string>
     <string name="rid">আরআইডিঃ&#160;</string>
-    <string name="balance">ব্যালেন্সঃ&#160;</string>
     <string name="tk">&#160;টাকা</string>
-    <string name="balance_checking">ব্যালেন্স চেক&#8230;</string>
     <string name="exit">পুনরায় ব্যাক চাপুন</string>
 
 
@@ -579,5 +577,6 @@
     <string name="can_not_add_more_than">৮ মেনু থেকে বেশি যোগ করতে পারবেন না</string>
     <string name="Added">যোগ করা হয়েছে:</string>
     <string name="add_fav">যোগ করুন</string>
+    <string name="balance_pre_text">ব্যালেন্স</string>
 
 </resources>

@@ -157,6 +157,9 @@ dependencies {
 
     implementation 'org.jetbrains.anko:anko-common:0.9'
 
+    implementation 'com.github.silvestrpredko:dot-progress-bar:1.1'
+
+
 
 
 

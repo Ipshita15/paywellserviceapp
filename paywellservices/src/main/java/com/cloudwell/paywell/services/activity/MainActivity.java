@@ -5,6 +5,7 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -109,9 +110,13 @@ import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
 import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.database.FavoriteMenuDab;
+import com.cloudwell.paywell.services.service.notificaiton.NotificationCheckerService;
+import com.cloudwell.paywell.services.service.notificaiton.model.EventNewNotificaiton;
+import com.cloudwell.paywell.services.service.notificaiton.model.StartNotificationService;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.LocationUtility;
 import com.cloudwell.paywell.services.utils.UpdateChecker;
+import com.github.silvestrpredko.dotprogressbar.DotProgressBar;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
@@ -137,6 +142,9 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -156,8 +164,9 @@ import io.reactivex.schedulers.Schedulers;
 import ss.com.bannerslider.Slider;
 import ss.com.bannerslider.event.OnSlideClickListener;
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener, View.OnClickListener {
 
+    private static final long KEY_BALANCE_CHECK_INTERVAL = 4000;
     private boolean doubleBackToExitPressedOnce = false;
     public CoordinatorLayout mCoordinateLayout;
     private AppHandler mAppHandler;
@@ -166,6 +175,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public final long PHN_NUM_CHECK_INTERVAL = 24 * 60 * 60;// 1 day
     public final long UPDATE_LOCATION_INTERVAL = 1 * 24 * 60 * 60;// 1 day
     private TextView mToolbarHeading;
+    DotProgressBar pb_dot;
     private ConnectionDetector mCd;
     public int mNumOfNotification;
     private TextView mNotification = null;
@@ -217,6 +227,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private AsyncTask<String, Integer, String> mConfirmPhnNumberAddAsync;
     private AsyncTask<String, Intent, String> mPushFirebaseIdTask;
 
+    // hidden balance menu
+    boolean isBalacedCheckProcessRunning;
+    ImageView ivBalanceBorder;
+
     int start = 9;
     int end = 18;
     long startHourMilli, endHourMilli;
@@ -244,6 +258,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         mToolbarHeading = (mToolbar.findViewById(R.id.txtHeading));
         mCoordinateLayout = findViewById(R.id.coordinateLayout);
+        pb_dot = findViewById(R.id.dot_progress_bar);
+        ivBalanceBorder = findViewById(R.id.ivBalanceBorder);
+        ivBalanceBorder.setOnClickListener(this);
 
         mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
@@ -285,8 +302,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         ivEdit = layoutBottomSheet.findViewById(R.id.ivEdit);
 
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-
-
         sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(View bottomSheet, int newState) {
@@ -314,7 +329,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         });
 
-
         ivUptown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -327,7 +341,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                     ivUptown.clearAnimation();
 
-
                 } else {
                     isSliderUp = false;
                     recyclerViewFavoirte.setVisibility(View.GONE);
@@ -337,15 +350,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                     Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_item);
                     ivUptown.setAnimation(animation);
-
-
                 }
             }
         });
 
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_item);
         ivUptown.setAnimation(animation);
-
 
         ivEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -355,11 +365,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         });
 
-
-    }
-
-    private void animateBottomSheetArrows(float slideOffset) {
-        ivUptown.setRotation(slideOffset * 180);
     }
 
     private void getAllFavoriteDate() {
@@ -388,7 +393,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                     }
                 });
-
 
     }
 
@@ -499,12 +503,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             getResources().updateConfiguration(config, getResources().getDisplayMetrics());
         }
 
-        mToolbarHeading.setText(getString(R.string.balance) + mAppHandler.getPwBalance() + getString(R.string.tk));
+        // mToolbarHeading.setText(getString(R.string.balance) + mAppHandler.getPwBalance() + getString(R.string.tk));
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             mToolbarHeading.setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
             mToolbarHeading.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
+        mToolbarHeading.setText(getString(R.string.balance_pre_text));
+        mToolbarHeading.setOnClickListener(this);
 
         setAutomaticDatetime();
         checkSoftwareUpdate();
@@ -577,7 +583,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    public void RefreshStringsOfButton() {
+    public void refreshStringsOfButton() {
         home_topup.setText(R.string.home_topup);
         home_utility.setText(R.string.home_utility);
         home_eticket.setText(R.string.home_eticket);
@@ -667,16 +673,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     mNumOfNotification = 0;
                     finish();
                 } else {
-                    if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                        startActivity(new Intent(MainActivity.this, NotificationAllActivity.class));
-                        finish();
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
+
+                    startActivity(new Intent(MainActivity.this, NotificationAllActivity.class));
+                    finish();
+
                 }
             }
         });
@@ -836,6 +836,29 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return true;
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.txtHeading:
+                Log.e("check balance", "check balance");
+                if (!isBalacedCheckProcessRunning) {
+                    checkPayWellBalance();
+                }
+
+                break;
+
+            case R.id.ivBalanceBorder:
+                Log.e("check balance", "check balance");
+                if (!isBalacedCheckProcessRunning) {
+                    checkPayWellBalance();
+                }
+
+                break;
+
+
+        }
+    }
+
 
     @SuppressWarnings("deprecation")
     private class NotificationAsync extends AsyncTask<String, Intent, String> {
@@ -932,106 +955,92 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         pwBalanceCheck.execute(getResources().getString(R.string.pw_bal));
     }
 
-    @SuppressWarnings("deprecation")
-    private class PayWellBalanceAsync extends AsyncTask<String, Integer, String> {
+    private void startHiddenBalance() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Logger.v("Hidden Balance box");
+                mToolbarHeading.setText(getString(R.string.balance_pre_text));
 
-        @Override
-        protected void onPreExecute() {
-            mToolbarHeading.setText(R.string.balance_checking);
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
-                nameValuePairs.add(new BasicNameValuePair("imei_no", mAppHandler.getImeiNo()));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
-            return responseTxt;
-        }
+        }, KEY_BALANCE_CHECK_INTERVAL);
 
-        @Override
-        protected void onPostExecute(String result) {
-            try {
-                if (result != null && result.contains("@")) {
-                    String splitArray[] = result.split("@");
-                    if (splitArray.length > 0) {
-                        if ((splitArray[0].equalsIgnoreCase("\r\n200")) || (splitArray[0].equalsIgnoreCase("200"))) {
 
-                            StringBuilder stringBuilder = new StringBuilder();
-                            String[] balance = splitArray[1].split("[.]");
-                            String round = balance[0];
-                            String fraction = balance[1];
-                            fraction = (String) fraction.subSequence(0, 2);
-                            stringBuilder.append(round).append(".").append(fraction);
+    }
 
-                            mAppHandler.setPWBalance(stringBuilder.toString());
-
-                            String strBalance = getString(R.string.balance) + mAppHandler.getPwBalance() + getString(R.string.tk);
-                            mToolbarHeading.setText(strBalance);
-
-                            mAppHandler.setRID(splitArray[3]);
-
-                            if (splitArray.length > 4) {
-                                if (Integer.parseInt(splitArray[4]) > 0) {
-                                    notificationCount(Integer.parseInt(splitArray[4]));
-                                    builderNotification = new AlertDialog.Builder(MainActivity.this);
-                                    builderNotification.setTitle(R.string.home_notification);
-                                    builderNotification.setMessage(getString(R.string.unread_first_msg) + " "
-                                            + splitArray[4] + " " + getString(R.string.unread_second_msg));
-                                    builderNotification.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int id) {
-                                            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CEHCK_NEW_NOTIFICATION);
-                                            dialogInterface.dismiss();
-                                            checkNotificationFlag = true;
-                                            mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
-                                        }
-                                    });
-                                    alertNotification = builderNotification.create();
-                                    alertNotification.show();
-                                    TextView messageText = alertNotification.findViewById(android.R.id.message);
-                                    messageText.setGravity(Gravity.CENTER);
-                                }
-                            }
-                        } else {
-                            Snackbar snackbar = Snackbar.make(mCoordinateLayout, splitArray[1], Snackbar.LENGTH_LONG);
-                            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                            View snackBarView = snackbar.getView();
-                            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                            snackbar.show();
-                            Intent i = new Intent(MainActivity.this, AppLoadingActivity.class);
-                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(i);
-                            finish();
-                        }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[],
+                                           int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_FOR_WRITE_EXTERNAL_STORAGE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was grantedTask
+                    if (getMailAddress()) {
+                        mUpdateChecker.launchMarketDetails();
+                    } else {
+                        mUpdateChecker.downloadAndInstall(getResources().getString(R.string.update_check));
                     }
                 } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.conn_timeout_msg, Snackbar.LENGTH_LONG);
+                    // permission denied
+                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.access_denied_msg, Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
+                    checkPermission();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
+                break;
+            }
+            case PERMISSIONS_FOR_QR_CODE_SCAN: {
+                // Check if the only required permission has been granted
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Phone permission has been granted
+
+                    startActivity(new Intent(MainActivity.this, DisplayQRCodeActivity.class));
+                    finish();
+
+                } else {
+                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_FOR_QR_CODE_SCAN);
+                }
+                break;
+            }
+            case PERMISSIONS_REQUEST_ACCESS_LOCATION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was grantedTask
+                    try {
+                        getMyLocation();
+                        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+                        checkLocationUpdate();
+                    } catch (Exception e) {
+                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                        View snackBarView = snackbar.getView();
+                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                        snackbar.show();
+                    }
+                } else {
+                    // permission denied
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                            PERMISSIONS_REQUEST_ACCESS_LOCATION);
+                }
+                break;
+            }
+            case PERMISSIONS_REQUEST_ACCESS_CALL: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was grantedTask
+
+                    Intent intent = new Intent(Intent.ACTION_CALL);
+                    intent.setData(Uri.parse("tel:" + selectedPhnNo));
+                    startActivity(intent);
+
+                } else {
+                    // permission denied
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},
+                            PERMISSIONS_REQUEST_ACCESS_CALL);
+                }
+                break;
             }
         }
     }
@@ -1117,91 +1126,93 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[],
-                                           int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSIONS_REQUEST_FOR_WRITE_EXTERNAL_STORAGE: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was grantedTask
-                    if (getMailAddress()) {
-                        mUpdateChecker.launchMarketDetails();
-                    } else {
-                        mUpdateChecker.downloadAndInstall(getResources().getString(R.string.update_check));
-                    }
+    public void onButtonClicker(View v) {
+        switch (v.getId()) {
+            case R.id.homeBtnTopup:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_TOPUP_MENU);
+                if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
+                    startActivity(new Intent(this, TopupMenuActivity.class));
                 } else {
-                    // permission denied
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.access_denied_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                    checkPermission();
+                    showNotAllowMessage();
                 }
+
                 break;
-            }
-            case PERMISSIONS_FOR_QR_CODE_SCAN: {
-                // Check if the only required permission has been granted
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Phone permission has been granted
-                    if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                        startActivity(new Intent(MainActivity.this, DisplayQRCodeActivity.class));
-                        finish();
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
+            case R.id.homeBtnUtility:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_UTILITY_MENU);
+
+                if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
+                    startActivity(new Intent(this, UtilityMainActivity.class));
                 } else {
-                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_FOR_QR_CODE_SCAN);
+                    showNotAllowMessage();
                 }
+
+
                 break;
-            }
-            case PERMISSIONS_REQUEST_ACCESS_LOCATION: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was grantedTask
-                    try {
-                        getMyLocation();
-                        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-                        checkLocationUpdate();
-                    } catch (Exception e) {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
+            case R.id.homeBtnEticket:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_ETICKET_MENU);
+
+                if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
+                    startActivity(new Intent(this, ETicketMainActivity.class));
                 } else {
-                    // permission denied
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                            PERMISSIONS_REQUEST_ACCESS_LOCATION);
+                    showNotAllowMessage();
                 }
+
                 break;
-            }
-            case PERMISSIONS_REQUEST_ACCESS_CALL: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was grantedTask
-                    if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                        Intent intent = new Intent(Intent.ACTION_CALL);
-                        intent.setData(Uri.parse("tel:" + selectedPhnNo));
-                        startActivity(intent);
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
+            case R.id.homeBtnMFS:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_MFS_MENU);
+
+                if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
+                    startActivity(new Intent(MainActivity.this, MFSMainActivity.class));
                 } else {
-                    // permission denied
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},
-                            PERMISSIONS_REQUEST_ACCESS_CALL);
+                    showNotAllowMessage();
                 }
+
                 break;
-            }
+            case R.id.homeBtnProductCategory:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_PRODUCT_MENU);
+
+                if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
+                    startActivity(new Intent(MainActivity.this, ProductMenuActivity.class));
+                } else {
+                    showNotAllowMessage();
+                }
+
+                break;
+            case R.id.homeBtnMiniStatement:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_STATEMENT_MENU);
+
+                if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
+                    startActivity(new Intent(MainActivity.this, StatementMainActivity.class));
+                } else {
+                    showNotAllowMessage();
+                }
+
+                break;
+            case R.id.homeBtnRefillBalance:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_BALANCE_REFILL_MENU);
+
+                if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
+                    startActivity(new Intent(this, RefillBalanceMainActivity.class));
+                } else {
+                    showNotAllowMessage();
+                }
+
+                break;
+            case R.id.homeBtnSettings:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_SETTINGS_MENU);
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+
+                break;
+            case R.id.homeBtnMessage:
+                startActivity(new Intent(MainActivity.this, ChatActivity.class));
+                break;
+            case R.id.homeBtnCall:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CALL_MENU);
+                callPreview();
+                break;
+
+            default:
+                break;
         }
     }
 
@@ -1261,190 +1272,29 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    public void onButtonClicker(View v) {
-        switch (v.getId()) {
-            case R.id.homeBtnTopup:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_TOPUP_MENU);
-                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                    if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
-                        startActivity(new Intent(this, TopupMenuActivity.class));
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.allow_error_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-                break;
-            case R.id.homeBtnUtility:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_UTILITY_MENU);
-                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                    if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
-                        startActivity(new Intent(this, UtilityMainActivity.class));
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.allow_error_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-                break;
-            case R.id.homeBtnEticket:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_ETICKET_MENU);
-                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                    if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
-                        startActivity(new Intent(this, ETicketMainActivity.class));
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.allow_error_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-                break;
-            case R.id.homeBtnMFS:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_MFS_MENU);
-                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                    if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
-                        startActivity(new Intent(MainActivity.this, MFSMainActivity.class));
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.allow_error_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-                break;
-            case R.id.homeBtnProductCategory:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_PRODUCT_MENU);
-                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                    if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
-                        startActivity(new Intent(MainActivity.this, ProductMenuActivity.class));
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.allow_error_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-                break;
-            case R.id.homeBtnMiniStatement:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_STATEMENT_MENU);
-                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                    if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
-                        startActivity(new Intent(MainActivity.this, StatementMainActivity.class));
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.allow_error_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-                break;
-            case R.id.homeBtnRefillBalance:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_BALANCE_REFILL_MENU);
-                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                    if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
-                        startActivity(new Intent(this, RefillBalanceMainActivity.class));
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.allow_error_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-                break;
-            case R.id.homeBtnSettings:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_SETTINGS_MENU);
-                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                    startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-                break;
-            case R.id.homeBtnMessage:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CHAT_MENU);
-                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                    startActivity(new Intent(MainActivity.this, ChatActivity.class));
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-                break;
-            case R.id.homeBtnCall:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CALL_MENU);
-                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                    callPreview();
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
+    private void showNotAllowMessage() {
+        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.allow_error_msg, Snackbar.LENGTH_LONG);
+        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+        View snackBarView = snackbar.getView();
+        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+        snackbar.show();
+    }
 
-
-                break;
-
-            default:
-                break;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshStringsOfButton();
+        if (alertNotification.isShowing()) {
+            alertNotification.dismiss();
         }
+        // start auto scroll when onResume
+        // viewPager.startAutoScroll();
+        // checkPayWellBalance();
+
+        viewPager.setInterval(2000);
+        updateMyFavorityView();
+        notificationCounterCheck();
+
     }
 
 
@@ -1518,21 +1368,68 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         viewPager.setInterval(0);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onNewnotificationcomming(EventNewNotificaiton eventNewNotificaiton) {
+        int counter = eventNewNotificaiton.getCounter();
+
+        notificationCount(counter);
+        builderNotification = new AlertDialog.Builder(MainActivity.this);
+        builderNotification.setTitle(R.string.home_notification);
+        builderNotification.setMessage(getString(R.string.unread_first_msg) + " " + counter + " " + getString(R.string.unread_second_msg));
+        builderNotification.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int id) {
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CEHCK_NEW_NOTIFICATION);
+                dialogInterface.dismiss();
+                checkNotificationFlag = true;
+                mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
+            }
+        });
+        alertNotification = builderNotification.create();
+        alertNotification.show();
+        TextView messageText = alertNotification.findViewById(android.R.id.message);
+        messageText.setGravity(Gravity.CENTER);
+
+
+    }
+
     @Override
-    protected void onResume() {
-        super.onResume();
-        RefreshStringsOfButton();
-        if (alertNotification.isShowing()) {
-            alertNotification.dismiss();
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    ;
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    private void notificationCounterCheck() {
+        if (mCd.isConnectingToInternet()) {
+            boolean myServiceRunning = isMyServiceRunning(NotificationCheckerService.class);
+            if (!myServiceRunning) {
+                Intent intent = new Intent(getApplicationContext(), NotificationCheckerService.class);
+                startService(intent);
+            } else {
+                boolean apiCalledRuing = NotificationCheckerService.Companion.isAPICalledRunning();
+                if (!apiCalledRuing) {
+                    EventBus.getDefault().post(new StartNotificationService(1));
+                }
+            }
         }
-        // start auto scroll when onResume
-        // viewPager.startAutoScroll();
-        checkPayWellBalance();
+    }
 
-        viewPager.setInterval(2000);
-
-        updateMyFavorityView();
-
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -2490,6 +2387,121 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         contentview.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         //contentview.getMeasuredWidth();
         return contentview.getMeasuredHeight();
+    }
+
+    @SuppressWarnings("deprecation")
+    private class PayWellBalanceAsync extends AsyncTask<String, Integer, String> {
+
+        @Override
+        protected void onPreExecute() {
+            isBalacedCheckProcessRunning = true;
+            pb_dot.setVisibility(View.VISIBLE);
+            mToolbarHeading.setVisibility(View.GONE);
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String responseTxt = null;
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(params[0]);
+            try {
+                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
+                nameValuePairs.add(new BasicNameValuePair("imei_no", mAppHandler.getImeiNo()));
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                responseTxt = httpclient.execute(httppost, responseHandler);
+            } catch (Exception e) {
+                e.fillInStackTrace();
+                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+            }
+            return responseTxt;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            pb_dot.setVisibility(View.GONE);
+            mToolbarHeading.setVisibility(View.VISIBLE);
+            isBalacedCheckProcessRunning = false;
+
+            try {
+                if (result != null && result.contains("@")) {
+                    String splitArray[] = result.split("@");
+                    if (splitArray.length > 0) {
+                        if ((splitArray[0].equalsIgnoreCase("\r\n200")) || (splitArray[0].equalsIgnoreCase("200"))) {
+
+                            StringBuilder stringBuilder = new StringBuilder();
+                            String[] balance = splitArray[1].split("[.]");
+                            String round = balance[0];
+                            String fraction = balance[1];
+                            fraction = (String) fraction.subSequence(0, 2);
+                            stringBuilder.append(round).append(".").append(fraction);
+
+                            mAppHandler.setPWBalance(stringBuilder.toString());
+
+                            String strBalance = "100000.00" + getString(R.string.tk);
+                            mToolbarHeading.setText(strBalance);
+
+                            mAppHandler.setRID(splitArray[3]);
+
+                            if (splitArray.length > 4) {
+                                if (Integer.parseInt(splitArray[4]) > 0) {
+                                    notificationCount(Integer.parseInt(splitArray[4]));
+                                    builderNotification = new AlertDialog.Builder(MainActivity.this);
+                                    builderNotification.setTitle(R.string.home_notification);
+                                    builderNotification.setMessage(getString(R.string.unread_first_msg) + " "
+                                            + splitArray[4] + " " + getString(R.string.unread_second_msg));
+                                    builderNotification.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int id) {
+                                            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CEHCK_NEW_NOTIFICATION);
+                                            dialogInterface.dismiss();
+                                            checkNotificationFlag = true;
+                                            mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
+                                        }
+                                    });
+                                    alertNotification = builderNotification.create();
+                                    alertNotification.show();
+                                    TextView messageText = alertNotification.findViewById(android.R.id.message);
+                                    messageText.setGravity(Gravity.CENTER);
+                                }
+                            }
+
+                            startHiddenBalance();
+
+
+                        } else {
+                            Snackbar snackbar = Snackbar.make(mCoordinateLayout, splitArray[1], Snackbar.LENGTH_LONG);
+                            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                            View snackBarView = snackbar.getView();
+                            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                            snackbar.show();
+                            Intent i = new Intent(MainActivity.this, AppLoadingActivity.class);
+                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(i);
+                            finish();
+                        }
+                    }
+                } else {
+                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.conn_timeout_msg, Snackbar.LENGTH_LONG);
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                    View snackBarView = snackbar.getView();
+                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                    snackbar.show();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
+            }
+        }
     }
 
 
