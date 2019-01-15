@@ -42,6 +42,8 @@
     <string name="home_utility_ivac">আইভিএসি</string>
     <string name="home_utility_banglalion">বাংলালায়ন</string>
     <string name="home_utility_karnaphuli">কর্ণফুলী</string>
+    <string name="home_utility_karnaphuli_bill_pay">কর্ণফুলী\nবিল প্রদান</string>
+    <string name="home_utility_karnaphuli_inquiry">কর্ণফুলী\nবিল অনুসন্ধান</string>
     <string name="home_utility_pb_reg">রেজিস্ট্রেশন</string>
     <string name="home_utility_pb_billpay">বিল প্রদান</string>
     <string name="home_utility_pb_reg_inq">রেজিস্ট্রেশন\nঅনুসন্ধান</string>

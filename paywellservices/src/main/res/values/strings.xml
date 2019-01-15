@@ -38,6 +38,8 @@
     <string name="home_utility_ivac">IVAC</string>
     <string name="home_utility_banglalion">Banglalion</string>
     <string name="home_utility_karnaphuli">Karnaphuli</string>
+    <string name="home_utility_karnaphuli_bill_pay">Karnaphuli \nBill Pay</string>
+    <string name="home_utility_karnaphuli_inquiry">Karnaphuli \nInquiry</string>
     <string name="home_utility_pb_reg">Registration</string>
     <string name="home_utility_pb_billpay">Bill Pay</string>
     <string name="home_utility_pb_reg_inq">Registration\nInquiry</string>

@@ -98,6 +98,8 @@ import com.cloudwell.paywell.services.activity.utility.electricity.westzone.WZPD
 import com.cloudwell.paywell.services.activity.utility.ivac.IvacFeeInquiryMainActivity;
 import com.cloudwell.paywell.services.activity.utility.ivac.IvacFeePayActivity;
 import com.cloudwell.paywell.services.activity.utility.ivac.IvacMainActivity;
+import com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliBillPayActivity;
+import com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliMainActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBRegistrationActivity;
 import com.cloudwell.paywell.services.adapter.HomeFavoriteAdapter;
@@ -2222,6 +2224,24 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 intent = new Intent(getApplicationContext(), BanglalionRechargeInquiryActivity.class);
                 startActivityWithFlag(intent);
                 break;
+
+            case R.string.home_utility_karnaphuli:
+                intent = new Intent(getApplicationContext(), KarnaphuliMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_karnaphuli_bill_pay:
+
+                intent = new Intent(getApplicationContext(), KarnaphuliBillPayActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_karnaphuli_inquiry:
+                intent = new Intent(getApplicationContext(), KarnaphuliMainActivity.class);
+                intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_KARACHI_INQUIRY, true);
+                startActivityWithFlag(intent);
+                break;
+
 
             case R.string.home_mfs_mycash:
                 intent = new Intent(getApplicationContext(), MYCashMainActivity.class);

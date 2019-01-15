@@ -8,4 +8,5 @@ public class AllConstant {
     public static final String IS_FLOW_FROM_FAVORITE = "IS_FLOW_FROM_FAVORITE";
     public static final String IS_FLOW_FROM_FAVORITE_AND_PB_RG_INQUERY = "IS_FLOW_FROM_FAVORITE_AND_PB_RG_INQUERY";
     public static final String IS_FLOW_FROM_FAVORITE_AND_PB_BILL_INQUERY = "PB_BILL_INQUERY";
+    public static final String IS_FLOW_FROM_FAVORITE_KARACHI_INQUIRY = "IS_FLOW_FROM_FAVORITE_KARACHI_INQUIRY";
 }

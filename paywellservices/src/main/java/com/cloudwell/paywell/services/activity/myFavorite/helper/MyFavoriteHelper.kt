@@ -46,6 +46,10 @@ class MyFavoriteHelper {
             listOfData.add(FavoriteMenu(R.string.home_utility_banglalion, R.string.home_utility, R.drawable.ic_banglalion, MenuStatus.UnFavorite.text, 0))
             listOfData.add(FavoriteMenu(R.string.home_utility_banglalion_recharge, R.string.home_utility, R.drawable.ic_banglalion_recharge, MenuStatus.UnFavorite.text, 0))
             listOfData.add(FavoriteMenu(R.string.home_utility_banglalion_recharge_inquiry, R.string.home_utility, R.drawable.ic_recharge_information, MenuStatus.UnFavorite.text, 0))
+
+            listOfData.add(FavoriteMenu(R.string.home_utility_karnaphuli, R.string.home_utility, R.drawable.ic_karnafuli_gas, MenuStatus.UnFavorite.text, 0))
+            listOfData.add(FavoriteMenu(R.string.home_utility_karnaphuli_bill_pay, R.string.home_utility, R.drawable.ic_bill_pay, MenuStatus.UnFavorite.text, 0))
+            listOfData.add(FavoriteMenu(R.string.home_utility_karnaphuli_inquiry, R.string.home_utility, R.drawable.ic_enquiry, MenuStatus.UnFavorite.text, 0))
             // end utility
 
             listOfData.add(FavoriteMenu(R.string.home_mfs_mycash, R.string.home_mfs_fav, R.drawable.ic_train_ticket, MenuStatus.UnFavorite.text, 0))
