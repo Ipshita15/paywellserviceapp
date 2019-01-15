@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.cloudwell.paywell.services.activity.refill.banktransfer.BankDetailsActivity">
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:id="@+id/constraintLayout"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             tools:context="com.cloudwell.paywell.services.activity.refill.banktransfer.BankDetailsActivity">
 
 
     <android.support.v7.widget.CardView
@@ -31,9 +31,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:layout_marginRight="5dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
             <TextView
                 android:id="@+id/textViewDistrict"
@@ -43,7 +43,7 @@
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:text="District"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
             <Spinner
                 android:id="@+id/spinner_district"
@@ -53,7 +53,7 @@
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                android:spinnerMode="dropdown" />
+                android:spinnerMode="dropdown"/>
 
             <TextView
                 android:id="@+id/textViewBranch"
@@ -63,7 +63,7 @@
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:text="Branch"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
             <Spinner
                 android:id="@+id/spinner_branch"
@@ -73,7 +73,7 @@
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                android:spinnerMode="dropdown" />
+                android:spinnerMode="dropdown"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -100,12 +100,12 @@
                     android:text="Upload"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/colorText" />
+                    android:textColor="@color/colorText"/>
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"/>
 
                 <Button
                     android:id="@+id/btn_ok"
@@ -122,7 +122,7 @@
                     android:text="@string/okay_btn"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/colorText" />
+                    android:textColor="@color/colorText"/>
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>

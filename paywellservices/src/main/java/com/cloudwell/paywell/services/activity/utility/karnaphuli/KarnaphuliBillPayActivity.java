@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.utility.karnaphuli;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -37,17 +36,17 @@ import java.util.List;
 
 public class KarnaphuliBillPayActivity extends BaseActivity implements View.OnClickListener {
 
+    private static final String TAG_STATUS = "status";
+    private static final String TAG_MESSAGE = "message";
+    private static final String TAG_MESSAGE_TEXT = "msg_text";
+    private static final String TAG_TRANSACTION_ID = "trans_id";
+    private static final String TAG_TOTAL_AMOUNT = "total_amount";
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
     private LinearLayout mLinearLayout;
     private EditText etBill, etPhn, etPin;
     private Button btnConfirm;
     private String mBill, mPhn, mPin, mTrxId, mTotalAmount;
-    private static final String TAG_STATUS = "status";
-    private static final String TAG_MESSAGE = "message";
-    private static final String TAG_MESSAGE_TEXT = "msg_text";
-    private static final String TAG_TRANSACTION_ID = "trans_id";
-    private static final String TAG_TOTAL_AMOUNT = "total_amount";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +144,28 @@ public class KarnaphuliBillPayActivity extends BaseActivity implements View.OnCl
         }
     }
 
+    private void submitBillConfirm() {
+        if (!mCd.isConnectingToInternet()) {
+            AppHandler.showDialog(this.getSupportFragmentManager());
+        } else {
+            new SubmitBillAsync().execute(getString(R.string.karnaphuli_bill));
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            this.onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
     private class SubmitInquiryAsync extends AsyncTask<String, Void, String> {
 
 
@@ -197,7 +218,7 @@ public class KarnaphuliBillPayActivity extends BaseActivity implements View.OnCl
                         mTrxId = jsonObject.getString(TAG_TRANSACTION_ID);
                         String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
                         String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
-                        if(!mTotalAmount.equals("0")) {
+                        if (!mTotalAmount.equals("0")) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(KarnaphuliBillPayActivity.this);
                             builder.setTitle("Result");
                             builder.setMessage(msg_text + "\n\n" + getString(R.string.phone_no_des) + " " + mPhn + "\n\nPayWell Trx ID: " + trx_id);
@@ -265,14 +286,6 @@ public class KarnaphuliBillPayActivity extends BaseActivity implements View.OnCl
                 snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                 snackbar.show();
             }
-        }
-    }
-
-    private void submitBillConfirm() {
-        if (!mCd.isConnectingToInternet()) {
-            AppHandler.showDialog(this.getSupportFragmentManager());
-        } else {
-            new SubmitBillAsync().execute(getString(R.string.karnaphuli_bill));
         }
     }
 
@@ -376,21 +389,5 @@ public class KarnaphuliBillPayActivity extends BaseActivity implements View.OnCl
                 snackbar.show();
             }
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            this.onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(KarnaphuliBillPayActivity.this, KarnaphuliMainActivity.class);
-        startActivity(intent);
-        finish();
     }
 }

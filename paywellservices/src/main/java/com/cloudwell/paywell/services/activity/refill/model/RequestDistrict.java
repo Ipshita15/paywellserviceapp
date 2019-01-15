@@ -13,12 +13,12 @@ public class RequestDistrict {
         return mUsername;
     }
 
-    public String getmBankId() {
-        return mBankId;
-    }
-
     public void setmUsername(String mUsername) {
         this.mUsername = mUsername;
+    }
+
+    public String getmBankId() {
+        return mBankId;
     }
 
     public void setmBankId(String mBankId) {

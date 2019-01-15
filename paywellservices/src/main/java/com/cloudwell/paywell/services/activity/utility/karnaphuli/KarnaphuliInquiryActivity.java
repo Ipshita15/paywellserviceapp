@@ -2,7 +2,6 @@ package com.cloudwell.paywell.services.activity.utility.karnaphuli;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,9 +33,9 @@ import java.util.Date;
 
 public class KarnaphuliInquiryActivity extends AppCompatActivity {
 
+    public static String TRANSLOG_TAG = "TRANSLOGTXT";
     private AppHandler mAppHandler;
     private RelativeLayout mRelativeLayout;
-    public static String TRANSLOG_TAG = "TRANSLOGTXT";
     private String date = "";
     private CustomAdapter adapter;
 
@@ -108,7 +107,7 @@ public class KarnaphuliInquiryActivity extends AppCompatActivity {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if(adapter.mData.get(position).contains("@")) {
+                    if (adapter.mData.get(position).contains("@")) {
                         showFullInfo(position);
                     }
                 }
@@ -133,9 +132,31 @@ public class KarnaphuliInquiryActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(KarnaphuliInquiryActivity.this, KarnaphuliMainActivity.class);
-        startActivity(intent);
         finish();
+    }
+
+    private void showFullInfo(int position) {
+        String array[] = adapter.mData.get(position).split("@");
+        String msg = "Bill No: " + array[0] + "\nAmount: " + getString(R.string.tk_des) + " " + array[3]
+                + "\nPhone: " + array[5] + "\nDate: " + array[6]
+                + "\nTrx ID: " + array[4];
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(KarnaphuliInquiryActivity.this);
+        if (array[1].equalsIgnoreCase("200")) {
+            builder.setTitle(Html.fromHtml("<font color='#008000'>Result Successful</font>"));
+        } else {
+            builder.setTitle(Html.fromHtml("<font color='#ff0000'>Result Failed</font>"));
+            msg = msg + "\n\nStatus: " + array[2];
+        }
+        builder.setMessage(msg);
+        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int id) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     public class CustomAdapter extends BaseAdapter {
@@ -144,9 +165,9 @@ public class KarnaphuliInquiryActivity extends AppCompatActivity {
         private static final int TYPE_SEPARATOR = 1;
 
         public ArrayList<String> mData = new ArrayList<>();
+        String splitArray_row_first[], splitArray_row_second[];
         private ArrayList<String> array = new ArrayList<>();
         private LayoutInflater mInflater;
-        String splitArray_row_first[], splitArray_row_second[];
 
         public CustomAdapter(Context context) {
             mInflater = (LayoutInflater) context
@@ -304,30 +325,5 @@ public class KarnaphuliInquiryActivity extends AppCompatActivity {
         public class ViewHolder {
             TextView textView, billNo, status, amount;
         }
-    }
-
-
-    private void showFullInfo(int position) {
-        String array[] = adapter.mData.get(position).split("@");
-        String msg = "Bill No: " + array[0] + "\nAmount: " + getString(R.string.tk_des) + " " + array[3]
-                + "\nPhone: " + array[5] + "\nDate: " + array[6]
-                + "\nTrx ID: " + array[4];
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(KarnaphuliInquiryActivity.this);
-        if (array[1].equalsIgnoreCase("200")) {
-            builder.setTitle(Html.fromHtml("<font color='#008000'>Result Successful</font>"));
-        } else {
-            builder.setTitle(Html.fromHtml("<font color='#ff0000'>Result Failed</font>"));
-            msg = msg + "\n\nStatus: " + array[2];
-        }
-        builder.setMessage(msg);
-        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int id) {
-                dialogInterface.dismiss();
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
     }
 }
