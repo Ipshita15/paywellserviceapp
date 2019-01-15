@@ -33,8 +33,6 @@
     <string name="home_statement_balance">ব্যালেন্স স্টেটমেন্ট</string>
     <string name="home_statement_sales">সেল্‌স স্টেটমেন্ট</string>
     <string name="home_statement_transaction">ট্রানজেকশন স্টেটমেন্ট</string>
-    <string name="error_correct_operator">সঠিক অপারেটর নির্বাচন করুন</string>
-
 
     <!-- Sub Menu Names -->
     <string name="home_topup_trx_log">লেনদেন</string>
@@ -43,6 +41,7 @@
     <string name="home_utility_beximco">রিয়েল ভিউ</string>
     <string name="home_utility_ivac">আইভিএসি</string>
     <string name="home_utility_banglalion">বাংলালায়ন</string>
+    <string name="home_utility_karnaphuli">কর্ণফুলী</string>
     <string name="home_utility_pb_reg">রেজিস্ট্রেশন</string>
     <string name="home_utility_pb_billpay">বিল প্রদান</string>
     <string name="home_utility_pb_reg_inq">রেজিস্ট্রেশন\nঅনুসন্ধান</string>
@@ -253,6 +252,8 @@
     <string name="data_error_msg">সঠিকভাবে তথ্য পেতে ব্যর্থ</string>
     <string name="permission_error_msg">পেওয়েল এপ্লিকেশন সঠিকভাবে চালানোর জন্য পরবর্তী ধাপ গুলোতে এলাও বাটনে ক্লিক করুন</string>
     <string name="internet_connection_error_msg">দুঃখিত, কোন ইন্টারনেট সংযোগ পাওয়া যায়নি। পুনঃসংযোগ করে আবার চেষ্টা করুন।</string>
+    <string name="error_correct_operator_msg">সঠিক অপারেটর নির্বাচন করুন</string>
+    <string name="copy_msg">কোপিড</string>
 
     <!-- Button Description -->
     <string name="auto_date_time_btn">অটো তারিখ এবং সময়</string>
@@ -560,6 +561,8 @@
 
     <string name="banglalion_bill_pay">https://api.paywellonline.com/PayWellInternateBillPay/banglalionBillPay</string>
     <string name="banglalion_bill_inquiry">https://api.paywellonline.com/PayWellInternateBillPay/banglalionEnquiry</string>
+
+    <string name="karnaphuli_bill">https://api.paywellonline.com/PaywelltransactionMYCash/kgdcl_billinfo</string>
 
     <!-- Eticket -->
     <string name="bus_ticket_url">https://www.paywellonline.com/final/BdTickets/BdBusTicket.php?</string>

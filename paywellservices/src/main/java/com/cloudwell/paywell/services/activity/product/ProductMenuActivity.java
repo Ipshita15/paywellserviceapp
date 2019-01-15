@@ -18,6 +18,8 @@ import android.widget.RelativeLayout;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 
@@ -82,10 +84,12 @@ public class ProductMenuActivity extends BaseActivity {
 
         switch (v.getId()) {
             case R.id.homeBtnAjkerDeal:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_PRODUCT_MENU, AnalyticsParameters.KEY_PRODUCT_AJKER_DEAL_MENU);
                 serviceType = TAG_AJKER_DEAL;
                 checkPermission();
                 break;
             case R.id.homeBtnWholesale:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_PRODUCT_MENU, AnalyticsParameters.KEY_PRODUCT_WHOLESALE_MENU);
                 serviceType = TAG_WHOLESALE;
                 checkPermission();
                 break;

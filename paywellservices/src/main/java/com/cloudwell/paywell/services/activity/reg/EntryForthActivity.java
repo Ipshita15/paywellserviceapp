@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.TelephonyInfo;
@@ -151,10 +153,12 @@ public class EntryForthActivity extends BaseActivity {
     }
 
     public void previousOnClick(View view) {
+        AnalyticsManager.sendEvent(AnalyticsParameters.KEY_REGISTRATION_MENU, AnalyticsParameters.KEY_REGISTRATION_FORTH_PORTION_PREVIOUS_REQUEST);
         onBackPressed();
     }
 
     public void submitOnClick(View view) {
+
         ConnectionDetector cd = new ConnectionDetector(AppController.getContext());
         boolean isInternetPresent = cd.isConnectingToInternet();
         if (isInternetPresent) {
@@ -245,6 +249,8 @@ public class EntryForthActivity extends BaseActivity {
                             && !collection_code.isEmpty() && !outlet_img.isEmpty() && !nid_img.isEmpty() && !nid_back_img.isEmpty()
                             && !owner_img.isEmpty() && !trade_license_img.isEmpty() && !passport_img.isEmpty() && !birth_certificate_img.isEmpty()
                             && !driving_license_img.isEmpty() && !visiting_card_img.isEmpty()) {
+
+                        AnalyticsManager.sendEvent(AnalyticsParameters.KEY_REGISTRATION_MENU, AnalyticsParameters.KEY_REGISTRATION_FORTH_PORTION_SUBMIT_REQUEST);
                         checkRequest();
                     } else {
                         Toast.makeText(this, "সঠিকভাবে ইনপুট দিন", Toast.LENGTH_SHORT).show();

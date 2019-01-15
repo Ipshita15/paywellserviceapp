@@ -22,7 +22,6 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +32,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
 import com.androidnetworking.AndroidNetworking;
@@ -44,6 +42,8 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.BrilliantTopUpInquiry;
 import com.cloudwell.paywell.services.activity.utility.ivac.DrawableClickListener;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.MyHttpClient;
@@ -67,23 +67,19 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
     private static final String BRILLIANT_PREFIX = "09638";
     private static final String COUNTRY_CODE = "88";
     private static final String COUNTRY_CODE_PLUSE = "+88";
-    public static final String LIMIT_STRING ="limit" ;
+    public static final String LIMIT_STRING = "limit";
     private static final int CONTACT_PERMISSION_CODE = 444;
     public boolean statusCode = false;
     private RelativeLayout topUpLayout;
     private static String PIN_NO = "unknown";
     private ConnectionDetector cd;
     private AppHandler mAppHandler;
-    private Button btnConfirmBrilliant;
-    private String phoneStr=new String();
-    private String amountStr=new String();
     private EditText phoneNoET;
     private EditText amountET;
     private ImageView brilliantTopUpInquiry;
     private ImageView brilliantTrxLog;
     private RadioButton radioButton_five, radioButton_ten, radioButton_twenty, radioButton_fifty, radioButton_hundred, radioButton_twoHundred;
     private String selectedLimit = "";
-
 
 
     @Override
@@ -97,21 +93,23 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        topUpLayout = (RelativeLayout) findViewById(R.id.brilliantLL);
+        topUpLayout = findViewById(R.id.brilliantLL);
         cd = new ConnectionDetector(getApplicationContext());
         mAppHandler = new AppHandler(this);
-        btnConfirmBrilliant= (Button) findViewById(R.id.btnConfirmBrilliant);
-        phoneNoET = (EditText) findViewById(R.id.brilliantPhoneNo);
-        amountET = (EditText) findViewById(R.id.brilliantAmount);
-        brilliantTopUpInquiry=findViewById(R.id.brilliantInquiryBtn);
-        brilliantTrxLog=findViewById(R.id.brilliantTransLogBtn);
+
+        phoneNoET = findViewById(R.id.brilliantPhoneNo);
+        amountET = findViewById(R.id.brilliantAmount);
+        brilliantTopUpInquiry = findViewById(R.id.brilliantInquiryBtn);
+        brilliantTrxLog = findViewById(R.id.brilliantTransLogBtn);
         phoneNoET.setText("");
         phoneNoET.append(BRILLIANT_PREFIX);
 
 
+        Button btnConfirmBrilliant = findViewById(R.id.btnConfirmBrilliant);
         btnConfirmBrilliant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_TOPUP_BRILLIANT_MENU, AnalyticsParameters.KEY_TOPUP_BRILLIANT_SUBMIT_REQUEST);
                 showCurrentTopupLog();
             }
         });
@@ -119,12 +117,14 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
         brilliantTrxLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showLimitPrompt(new Intent(BrilliantTopupActivity.this,BrilliantTransactionLogActivity.class));
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_TOPUP_BRILLIANT_MENU, AnalyticsParameters.KEY_TOPUP_BRILLIANT_TRX_LOG_MENU);
+                showLimitPrompt(new Intent(BrilliantTopupActivity.this, BrilliantTransactionLogActivity.class));
             }
         });
         brilliantTopUpInquiry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_TOPUP_BRILLIANT_MENU, AnalyticsParameters.KEY_TOPUP_BRILLIANT_ENQUIRY_TRX_MENU);
                 showEnquiryPrompt();
             }
         });
@@ -140,7 +140,7 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
                     Intent intent = new Intent(Intent.ACTION_PICK,
                             ContactsContract.Contacts.CONTENT_URI);
                     intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
-                    startActivityForResult(intent,CONTACT_REQ_CODE);
+                    startActivityForResult(intent, CONTACT_REQ_CODE);
                 }
                 return true;
             }
@@ -165,15 +165,15 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
         dialog.setTitle(R.string.log_limit_title_msg);
         dialog.setContentView(R.layout.dialog_trx_limit);
 
-        Button btn_okay = (Button) dialog.findViewById(R.id.buttonOk);
-        Button btn_cancel = (Button) dialog.findViewById(R.id.cancelBtn);
+        Button btn_okay = dialog.findViewById(R.id.buttonOk);
+        Button btn_cancel = dialog.findViewById(R.id.cancelBtn);
 
-        radioButton_five = (RadioButton) dialog.findViewById(R.id.radio_five);
-        radioButton_ten = (RadioButton) dialog.findViewById(R.id.radio_ten);
-        radioButton_twenty = (RadioButton) dialog.findViewById(R.id.radio_twenty);
-        radioButton_fifty = (RadioButton) dialog.findViewById(R.id.radio_fifty);
-        radioButton_hundred = (RadioButton) dialog.findViewById(R.id.radio_hundred);
-        radioButton_twoHundred = (RadioButton) dialog.findViewById(R.id.radio_twoHundred);
+        radioButton_five = dialog.findViewById(R.id.radio_five);
+        radioButton_ten = dialog.findViewById(R.id.radio_ten);
+        radioButton_twenty = dialog.findViewById(R.id.radio_twenty);
+        radioButton_fifty = dialog.findViewById(R.id.radio_fifty);
+        radioButton_hundred = dialog.findViewById(R.id.radio_hundred);
+        radioButton_twoHundred = dialog.findViewById(R.id.radio_twoHundred);
 
         radioButton_five.setOnCheckedChangeListener(this);
         radioButton_ten.setOnCheckedChangeListener(this);
@@ -189,9 +189,8 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
                 if (selectedLimit.isEmpty()) {
                     selectedLimit = "5";
                 }
-                int limit = Integer.parseInt(selectedLimit);
                 if (cd.isConnectingToInternet()) {
-                    startActivity(intent.putExtra(LIMIT_STRING,selectedLimit));
+                    startActivity(intent.putExtra(LIMIT_STRING, selectedLimit));
                 } else {
                     Snackbar snackbar = Snackbar.make(topUpLayout, getResources().getString(R.string.connection_error_msg), Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -265,7 +264,6 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -285,10 +283,9 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
                         }
                         phones.close();
                         if (!phoneNumOne.isEmpty() && !phoneNumOne.contains("+") && !phoneNumOne.contains("-") && !phoneNumOne.contains(" ") && !phoneNumOne.startsWith("88")) {
-                            if (phoneNumOne.startsWith(BRILLIANT_PREFIX)){
+                            if (phoneNumOne.startsWith(BRILLIANT_PREFIX)) {
                                 phoneNoET.setText(phoneNumOne);
-                            }else {
-                                Log.d("TEST","NUMBER-"+phoneNumOne);
+                            } else {
                                 phoneNoET.setText("");
                                 Snackbar snackbar = Snackbar.make(topUpLayout, "Please, Select Brilliant number only", Snackbar.LENGTH_LONG);
                                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -306,16 +303,15 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
                             if (phoneNumOne.contains(" ")) {
                                 phoneNumOne = phoneNumOne.replace(" ", "");
                             }
-                            if (phoneNumOne.startsWith(COUNTRY_CODE)){
-                                phoneNumOne =  phoneNumOne.replace(COUNTRY_CODE,"");
+                            if (phoneNumOne.startsWith(COUNTRY_CODE)) {
+                                phoneNumOne = phoneNumOne.replace(COUNTRY_CODE, "");
                             }
-                            if (phoneNumOne.startsWith(COUNTRY_CODE_PLUSE)){
-                                phoneNumOne =   phoneNumOne.replace(COUNTRY_CODE_PLUSE,"");
+                            if (phoneNumOne.startsWith(COUNTRY_CODE_PLUSE)) {
+                                phoneNumOne = phoneNumOne.replace(COUNTRY_CODE_PLUSE, "");
                             }
-                            if (phoneNumOne.startsWith(BRILLIANT_PREFIX)){
+                            if (phoneNumOne.startsWith(BRILLIANT_PREFIX)) {
                                 phoneNoET.setText(phoneNumOne);
-                            }else {
-                                Log.d("TEST","NUMBER-"+phoneNumOne);
+                            } else {
                                 phoneNoET.setText("");
                                 Snackbar snackbar = Snackbar.make(topUpLayout, "Please, Select Brilliant number only", Snackbar.LENGTH_LONG);
                                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -334,15 +330,15 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
 
         View view = this.getCurrentFocus();
         if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
 
-        StringBuilder reqStrBuilder=new StringBuilder();
+        StringBuilder reqStrBuilder = new StringBuilder();
         String phoneStr = phoneNoET.getText().toString();
         String amountStr = amountET.getText().toString();
 
-        if (phoneStr.startsWith(BRILLIANT_PREFIX)){
+        if (phoneStr.startsWith(BRILLIANT_PREFIX)) {
             if (phoneStr.length() < 11) {
                 phoneNoET.setError(Html.fromHtml("<font color='red'>" + getString(R.string.phone_no_error_msg) + "</font>"));
                 return;
@@ -350,9 +346,9 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
                 amountET.setError(Html.fromHtml("<font color='red'>" + getString(R.string.amount_error_msg) + "</font>"));
                 return;
             }
-            reqStrBuilder.append( getString(R.string.phone_no_des) + " " + phoneStr
+            reqStrBuilder.append(getString(R.string.phone_no_des) + " " + phoneStr
                     + "\n " + getString(R.string.amount_des) + " " + amountStr + getString(R.string.tk)
-                    +"\n\n");
+                    + "\n\n");
 
 
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -373,19 +369,13 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
             });
             AlertDialog alert = builder.create();
             alert.show();
-
-
-
-        }else{
+        } else {
             Snackbar snackbar = Snackbar.make(topUpLayout, "It's not a 'Brilliant' number, Enter a valid number", Snackbar.LENGTH_LONG);
             snackbar.setActionTextColor(Color.parseColor("#ffffff"));
             View snackBarView = snackbar.getView();
             snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             snackbar.show();
         }
-
-
-
     }
 
     private void askForPin() {
@@ -442,7 +432,6 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
 
     private class TopUpAsync extends AsyncTask<Object, String, String> {
 
-
         @Override
         protected void onPreExecute() {
             showProgressDialog();
@@ -456,13 +445,10 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
 
         @Override
         protected void onPostExecute(String result) {
-           dismissProgressDialog();
+            dismissProgressDialog();
             if (result != null) {
                 if (result.startsWith("313")) {
-//                    showTransactionLog(result, false);
-
                     showResponse(result);
-
                 } else {
                     if (result.startsWith("200")) {
                         statusCode = true;
@@ -477,30 +463,24 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
                 snackbar.show();
             }
         }
+
         private String generateRequestURL() {
             String requestString = null;
 
             // Single
             EditText phoneNoET, amountET;
-            RadioGroup prePostSelector;
 
+            phoneNoET = findViewById(R.id.brilliantPhoneNo);
+            amountET = findViewById(R.id.brilliantAmount);
 
-            phoneNoET = (EditText) findViewById(R.id.brilliantPhoneNo);
-            amountET = (EditText) findViewById(R.id.brilliantAmount);
-
-            phoneStr = phoneNoET.getText().toString();
-            amountStr = amountET.getText().toString();
+            String phoneStr = phoneNoET.getText().toString();
+            String amountStr = amountET.getText().toString();
 
             requestString = "https://api.paywellonline.com/PayWellBrilliantSystem/addBalance?"
                     + "username=" + mAppHandler.getImeiNo()
                     + "&password=" + PIN_NO
                     + "&amount=" + amountStr
-                    + "&brilliantNumber=" +COUNTRY_CODE+phoneStr;
-
-            Log.d("Brilliant_test","username=" + mAppHandler.getImeiNo()
-                    + "&password=" + PIN_NO
-                    + "&amount=" + amountStr
-                    + "&brilliantNumber=" + phoneStr);
+                    + "&brilliantNumber=" + COUNTRY_CODE + phoneStr;
 
             return sendingHTTPSTopupRequest(requestString);
         }
@@ -510,14 +490,12 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
 
         try {
             JSONObject json = new JSONObject(result);
-            String statusCode=json.getString("status_code");
-//            String message=json.getString("message");
-            String userResponse=new String();
+            String statusCode = json.getString("status_code");
+            String userResponse;
 
+            if (statusCode.equalsIgnoreCase("200")) {
 
-            if (statusCode.equalsIgnoreCase("200")){
-
-                userResponse=getString(R.string.brilliant_num) + " " + json.getString("brilliantNumber")
+                userResponse = getString(R.string.brilliant_num) + " " + json.getString("brilliantNumber")
                         + "\n" + getString(R.string.amount_des) + " " + json.getString("amount") + " " + getString(R.string.tk_des)
                         + "\n\n" + getString(R.string.paywell_trx_id) + " " + json.getString("paywell_trx_id")
                         + "\n" + getString(R.string.brilliant_trx_id) + " " + json.getString("brilliant_trx_id")
@@ -532,20 +510,16 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
                     @Override
                     public void onClick(DialogInterface dialogInterface, int id) {
                         dialogInterface.dismiss();
-//                        startActivity(new Intent(BrilliantTopupActivity.this,TopupMainActivity.class));
                         phoneNoET.setText("");
                         amountET.setText("");
-
                     }
                 });
                 AlertDialog alert = builder.create();
                 alert.show();
-            }else {
-
-                userResponse=json.getString("message")
+            } else {
+                userResponse = json.getString("message")
                         + "\n\n" + getString(R.string.using_paywell_des)
                         + "\n" + getString(R.string.hotline_des) + " " + json.getString("pwContact");
-
 
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(Html.fromHtml("<font color='#ff0000'>Result Failed</font>"));
@@ -560,11 +534,6 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
                 AlertDialog alert = builder.create();
                 alert.show();
             }
-
-
-
-
-
         } catch (JSONException e) {
             e.printStackTrace();
 
@@ -573,12 +542,7 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
             View snackBarView = snackbar.getView();
             snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             snackbar.show();
-
-//            startActivity(new Intent(BrilliantTopupActivity.this,TopupMainActivity.class));
-
         }
-
-
     }
 
     @SuppressWarnings("deprecation")
@@ -623,7 +587,6 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
     }
 
 
-
     private void showEnquiryPrompt() {
         AlertDialog.Builder builder = new AlertDialog.Builder(BrilliantTopupActivity.this);
         builder.setTitle(R.string.phone_no_title_msg);
@@ -654,7 +617,7 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
                     if (!cd.isConnectingToInternet()) {
                         AppHandler.showDialog(getSupportFragmentManager());
                     } else {
-                        getTopUpInquiry(mAppHandler.getImeiNo(),enqNoET.getText().toString());
+                        getTopUpInquiry(mAppHandler.getImeiNo(), enqNoET.getText().toString());
                     }
                     dialogInterface.dismiss();
                 }
@@ -664,28 +627,27 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
-
             }
         });
         AlertDialog alert = builder.create();
         alert.show();
     }
 
-    private void getTopUpInquiry(final String userName, String number){
+    private void getTopUpInquiry(final String userName, String number) {
         showProgressDialog();
 
         AndroidNetworking.get("https://api.paywellonline.com/PayWellBrilliantSystem/transactionEnquiry?")
-                .addQueryParameter("username",userName)
+                .addQueryParameter("username", userName)
                 .addQueryParameter("brilliant_number", number)
                 .setPriority(Priority.HIGH)
                 .build().getAsObject(BrilliantTopUpInquiry.class, new ParsedRequestListener<BrilliantTopUpInquiry>() {
             @Override
             public void onResponse(BrilliantTopUpInquiry o) {
                 dismissProgressDialog();
-                if (o.getStatusCode()==200){
-                    showEnquiryResult(o.getData().getBrilliantMobileNumber(),o.getData().getAmount(),o.getData().getBriliantTrxId(),o.getData().getPaywellTrxId(),String.valueOf(o.getStatusCode()),o.getData().getStatusName(),o.getData().getAddDatetime(),o.getPwContact());
-                }else {
-                    showEnquiryResult(null,null,null,null,String.valueOf(o.getStatusCode()),o.getMessage(),null,o.getPwContact());
+                if (o.getStatusCode() == 200) {
+                    showEnquiryResult(o.getData().getBrilliantMobileNumber(), o.getData().getAmount(), o.getData().getBriliantTrxId(), o.getData().getPaywellTrxId(), String.valueOf(o.getStatusCode()), o.getData().getStatusName(), o.getData().getAddDatetime(), o.getPwContact());
+                } else {
+                    showEnquiryResult(null, null, null, null, String.valueOf(o.getStatusCode()), o.getMessage(), null, o.getPwContact());
                 }
             }
 
@@ -697,9 +659,9 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
         });
     }
 
-    private void showEnquiryResult(String phone, String amount, String brilliant_trx_id, String trxId, String status,String statusMsg, String datetime, String hotline) {
+    private void showEnquiryResult(String phone, String amount, String brilliant_trx_id, String trxId, String status, String statusMsg, String datetime, String hotline) {
 
-        String inquiryReceipt=new String();
+        String inquiryReceipt;
         if (status.equalsIgnoreCase("200")) {
             inquiryReceipt = getString(R.string.phone_no_des) + " " + phone
                     + "\n" + getString(R.string.brilliant_trx_id) + " " + brilliant_trx_id
@@ -735,26 +697,24 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode){
+        switch (requestCode) {
 
-            case CONTACT_PERMISSION_CODE:{
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            case CONTACT_PERMISSION_CODE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                     Intent intent = new Intent(Intent.ACTION_PICK,
                             ContactsContract.Contacts.CONTENT_URI);
                     intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
-                    startActivityForResult(intent,CONTACT_REQ_CODE);
+                    startActivityForResult(intent, CONTACT_REQ_CODE);
 
-                }else {
+                } else {
                     Snackbar snackbar = Snackbar.make(topUpLayout, R.string.access_denied_msg, Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
-//                    checkPermission();
                 }
             }
-
         }
     }
 }

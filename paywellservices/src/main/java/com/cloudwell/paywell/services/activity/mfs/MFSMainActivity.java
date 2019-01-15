@@ -10,13 +10,13 @@ import android.widget.Button;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 
 
 public class MFSMainActivity  extends AppCompatActivity {
-
-    private AppHandler mAppHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,7 @@ public class MFSMainActivity  extends AppCompatActivity {
             getSupportActionBar().setTitle(R.string.nav_mfs);
         }
 
-        mAppHandler = new AppHandler(this);
+        AppHandler mAppHandler = new AppHandler(this);
 
         Button btnMycash = findViewById(R.id.homeBtnMyCash);
 
@@ -42,6 +42,7 @@ public class MFSMainActivity  extends AppCompatActivity {
     public void onButtonClicker(View v) {
         switch (v.getId()) {
             case R.id.homeBtnMyCash:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_MFS_MENU, AnalyticsParameters.KEY_MFS_MYCASH_MENU);
                 startActivity(new Intent(this, MYCashMainActivity.class));
                 finish();
                 break;

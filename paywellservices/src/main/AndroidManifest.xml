@@ -15,9 +15,6 @@
     <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <!--<uses-permission android:name="android.permission.READ_SMS" />-->
-    <!--<uses-permission android:name="android.permission.RECEIVE_SMS" />-->
-    <!--<uses-permission android:name="android.permission.SEND_SMS" />-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
@@ -503,7 +500,7 @@
             android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="OPEN_ACTIVITY_1"/>
+                <action android:name="OPEN_ACTIVITY_1" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -1096,6 +1093,7 @@
             android:name=".activity.utility.ivac.IvacFeeInquiryMainActivity"
             android:parentActivityName=".activity.utility.ivac.IvacMainActivity"
             android:screenOrientation="portrait">
+
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -1109,7 +1107,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.ivac.IvacFeeInquiryMainActivity"/>
+                android:value="com.cloudwell.paywell.services.activity.utility.ivac.IvacFeeInquiryMainActivity" />
         </activity>
         <activity
             android:name=".activity.utility.ivac.ScannerActivity"
@@ -1145,6 +1143,36 @@
                 android:value="com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionMainActivity" />
         </activity>
         <activity
+            android:name=".activity.utility.karnaphuli.KarnaphuliMainActivity"
+            android:parentActivityName=".activity.utility.UtilityMainActivity"
+            android:screenOrientation="portrait">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity" />
+        </activity>
+        <activity
+            android:name=".activity.utility.karnaphuli.KarnaphuliBillPayActivity"
+            android:parentActivityName=".activity.utility.karnaphuli.KarnaphuliMainActivity"
+            android:screenOrientation="portrait">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliMainActivity" />
+        </activity>
+        <activity
+            android:name=".activity.utility.karnaphuli.KarnaphuliInquiryActivity"
+            android:parentActivityName=".activity.utility.karnaphuli.KarnaphuliMainActivity"
+            android:screenOrientation="portrait">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliMainActivity" />
+        </activity>
+        <activity
             android:name=".activity.chat.ChatActivity"
             android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait">
@@ -1164,9 +1192,9 @@
             android:name=".activity.notification.NotificationFullViewActivity"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="OPEN_ACTIVITY_DETAILS"/>
+                <action android:name="OPEN_ACTIVITY_DETAILS" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -1174,7 +1202,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.topup.TopUpOperatorMenuActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.topup.TopupMenuActivity"
             android:screenOrientation="portrait" />
@@ -1183,17 +1211,17 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.topup.brilliant.BrilliantTransactionLogActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.WebViewActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <!-- SMS Receiver -->
-        <!--<receiver android:name=".activity.sms.SmsReceiver">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.provider.Telephony.SMS_RECEIVED" />-->
-            <!--</intent-filter>-->
-        <!--</receiver>-->
+        <!-- <receiver android:name=".activity.sms.SmsReceiver"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.provider.Telephony.SMS_RECEIVED" /> -->
+        <!-- </intent-filter> -->
+        <!-- </receiver> -->
         <!-- ./SMS Receiver -->
         <!-- Firebase Notifications -->
         <service
@@ -1209,7 +1237,7 @@
         -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/pw_notification_bar"/>
+            android:resource="@drawable/pw_notification_bar" />
         <!--
              Set color used with incoming notification messages. This is used when no color is set for the incoming
              notification message. See README(https://goo.gl/6BKBk7) for more.
@@ -1233,6 +1261,8 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".activity.refill.banktransfer.BankDetailsActivity"></activity>
     </application>
 
 </manifest>

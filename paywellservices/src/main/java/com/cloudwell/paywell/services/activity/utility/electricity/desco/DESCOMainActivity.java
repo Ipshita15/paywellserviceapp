@@ -91,7 +91,7 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             this.onBackPressed();
-            return true;
+//            return true;
         }
 //        else if (item.getItemId() == R.id.menu_help) {
 //            Intent intent = new Intent(DESCOMainActivity.this, ElectricityHelpActivity.class);
@@ -99,7 +99,8 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
 //            startActivity(intent);
 //            finish();
 //        }
-        return super.onOptionsItemSelected(item);
+//        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     @Override

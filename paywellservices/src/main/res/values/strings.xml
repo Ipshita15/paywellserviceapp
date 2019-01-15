@@ -39,6 +39,7 @@
     <string name="home_utility_beximco">Real VU</string>
     <string name="home_utility_ivac">IVAC</string>
     <string name="home_utility_banglalion">Banglalion</string>
+    <string name="home_utility_karnaphuli">Karnaphuli</string>
     <string name="home_utility_pb_reg">Registration</string>
     <string name="home_utility_pb_billpay">Bill Pay</string>
     <string name="home_utility_pb_reg_inq">Registration\nInquiry</string>
@@ -253,6 +254,8 @@
     <string name="data_error_msg">Unable to get data properly</string>
     <string name="permission_error_msg">You need to click on the allow buttons in order to let PayWell app function properly</string>
     <string name="internet_connection_error_msg">Sorry, no internet connection is available. Please reconnect and try again.</string>
+    <string name="error_correct_operator_msg">Please select correct operator</string>
+    <string name="copy_msg">Copied</string>
 
     <!-- Button Description -->
     <string name="auto_date_time_btn">Automatic date &amp; time</string>
@@ -555,6 +558,8 @@
     <string name="banglalion_bill_pay">https://api.paywellonline.com/PayWellInternateBillPay/banglalionBillPay</string>
     <string name="banglalion_bill_inquiry">https://api.paywellonline.com/PayWellInternateBillPay/banglalionEnquiry</string>
 
+    <string name="karnaphuli_bill">https://api.paywellonline.com/PaywelltransactionMYCash/kgdcl_billinfo</string>
+
     <!-- Eticket -->
     <string name="bus_ticket_url">https://www.paywellonline.com/final/BdTickets/BdBusTicket.php?</string>
     <string name="train_source_url">https://www.paywellonline.com/banglalink_services/train.php?</string>
@@ -618,6 +623,5 @@
     <string name="chat">https://www.paywellonline.com/chatting-retailer/?</string>
 
     <string name="merchant_balance_return_url">https://api.paywellonline.com/PaywelltransactionSDA/SDAToMerchentBalanceReturn</string>
-    <string name="error_correct_operator">Please select correct operator</string>
 
 </resources>

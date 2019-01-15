@@ -49,6 +49,8 @@ import com.cloudwell.paywell.services.activity.topup.model.TopupDatum;
 import com.cloudwell.paywell.services.activity.topup.model.TopupReposeData;
 import com.cloudwell.paywell.services.activity.topup.offer.OfferMainActivity;
 import com.cloudwell.paywell.services.activity.utility.ivac.DrawableClickListener;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
@@ -85,11 +87,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
     private LinearLayout topUpLayout;
     private int addNoFlag = 0;
     private static String mHotLine;
-    private String mPhnNo;
-    private String mAmount;
     private ConnectionDetector cd;
-    public boolean statusCode = false;
-
     private static String PIN_NO = "unknown";
 
     private static AppHandler mAppHandler;
@@ -107,14 +105,12 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
     private RadioButton radioButton_five, radioButton_ten, radioButton_twenty, radioButton_fifty, radioButton_hundred, radioButton_twoHundred;
     private String selectedLimit = "";
 
-    String key;
     private int operator_number;
     private static final String TAG_STATUS = "status";
     private static final String TAG_RECHARGE_OFFER = "RechargeOffer";
     private static final String TAG_MESSAGE = "message";
     private TextView tvError;
     private TextView tvResult;
-    private String operator;
 
     private ImageView imageViewOffer;
     private ImageView imageViewAdd;
@@ -135,8 +131,6 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
         }
         initView();
         refreshLanguage();
-
-
     }
 
 
@@ -145,7 +139,6 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
 
         topUpLayout = findViewById(R.id.topUpAddLayout);
         Button buttonSubmit = findViewById(R.id.btnSubmit);
-
 
         slideInAnim.setDuration(50);
         slideOutAnim.setDuration(50);
@@ -197,13 +190,13 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
             imageViewInq.setBackgroundResource(R.drawable.topup_in_bn);
             imageViewTrxLog.setBackgroundResource(R.drawable.transaction_log_bn);
         }
-
     }
 
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btnSubmit) {
+            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_TOPUP_ALL_OPERATOR_MENU, AnalyticsParameters.KEY_TOPUP_ALL_OPERATOR_SUBMIT_RECHARGE_REQUEST);
             if (cd.isConnectingToInternet()) {
                 showCurrentTopupLog();
             } else {
@@ -214,6 +207,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
                 snackbar.show();
             }
         } else if (v.getId() == R.id.transLogBtn) {
+            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_TOPUP_ALL_OPERATOR_MENU, AnalyticsParameters.KEY_TOPUP_ALL_OPERATOR_TRX_LOG_MENU);
             if (cd.isConnectingToInternet()) {
                 showLimitPrompt();
             } else {
@@ -224,10 +218,11 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
                 snackbar.show();
             }
         } else if (v.getId() == R.id.enquiryBtn) {
+            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_TOPUP_ALL_OPERATOR_MENU, AnalyticsParameters.KEY_TOPUP_ALL_OPERATOR_ENQUIRY_TRX_MENU);
             showEnquiryPrompt();
         } else if (v.getId() == R.id.imageOffer) {
+            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_TOPUP_ALL_OPERATOR_MENU, AnalyticsParameters.KEY_TOPUP_ALL_OPERATOR_BUNDLE_OFFER_MENU);
             startActivity(new Intent(TopupMainActivity.this, OperatorMenuActivity.class));
-            // onClickBundleOffer(key);
         }
     }
 
@@ -297,7 +292,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
         });
 
         tvError.setVisibility(View.VISIBLE);
-        tvError.setText(Html.fromHtml(getString(R.string.error_correct_operator)));
+        tvError.setText(Html.fromHtml(getString(R.string.error_correct_operator_msg)));
         tvResult.setText("");
 
 
@@ -309,12 +304,10 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
         mobileOperatorArrayList.add(new MobileOperator(KEY_TELETALK, R.drawable.teletalk_logo, R.drawable.teletalk_selected, false));
         mobileOperatorArrayList.add(new MobileOperator(KEY_SKITTO, R.drawable.skitto_logo, R.drawable.skitto_selected, false));
 
-
         // new recycle view
         final RecyclerView recyclerView = topUpView.findViewById(R.id.rvOperatorList);
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        recyclerView.addItemDecoration(new SpacesItemDecoration(6));
 
         LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(horizontalLayoutManager);
@@ -384,7 +377,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
             tvResult.setText("" + seletedresult);
 
 
-            tvError.setText(getString(R.string.error_correct_operator));
+            tvError.setText(getString(R.string.error_correct_operator_msg));
             tvError.setTextColor(Color.BLACK);
             LinearLayout linearLayout = topUpView.findViewById(R.id.llHeader);
             linearLayout.setBackgroundColor(Color.WHITE);
@@ -394,11 +387,11 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
         } else {
             tvError = topUpView.findViewById(R.id.tvError);
             tvError.setVisibility(View.VISIBLE);
-            tvError.setText(Html.fromHtml(getString(R.string.error_correct_operator)));
+            tvError.setText(Html.fromHtml(getString(R.string.error_correct_operator_msg)));
             tvResult.setText("" + seletedresult);
 
 
-            tvError.setText(getString(R.string.error_correct_operator));
+            tvError.setText(getString(R.string.error_correct_operator_msg));
             tvError.setTextColor(Color.BLACK);
 
             LinearLayout linearLayout = topUpView.findViewById(R.id.llHeader);
@@ -987,7 +980,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
                         // No item selected
                         TextView tvError = singleTopUpView.findViewById(R.id.tvError);
                         tvError.setVisibility(View.VISIBLE);
-                        tvError.setText(getString(R.string.error_correct_operator));
+                        tvError.setText(getString(R.string.error_correct_operator_msg));
                         tvError.setTextColor(Color.WHITE);
                         LinearLayout linearLayout = singleTopUpView.findViewById(R.id.llHeader);
                         linearLayout.setBackgroundColor(Color.RED);
@@ -1081,8 +1074,8 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
 
         List<TopupData> topupDatumList = new ArrayList<>();
 
-//        String requestString = null;
         if (topUpLayout.getChildCount() > 1) {
+            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_TOPUP_ALL_OPERATOR_MENU, AnalyticsParameters.KEY_TOPUP_ALL_OPERATOR_RECHARGE, AnalyticsParameters.KEY_BULK_TOPUP, (topUpLayout.getChildCount()+1));
 
             for (int i = 0; i < topUpLayout.getChildCount(); i++) {
                 EditText mPhoneNoET, mAmountET;
@@ -1112,7 +1105,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
                         // No item selected
                         TextView tvError = singleTopUpView.findViewById(R.id.tvError);
                         tvError.setVisibility(View.VISIBLE);
-                        tvError.setText(Html.fromHtml("<font color='white'>" + getString(R.string.error_correct_operator)));
+                        tvError.setText(Html.fromHtml("<font color='white'>" + getString(R.string.error_correct_operator_msg)));
 
                         return;
 
@@ -1128,6 +1121,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
 
         } else {
             // Single
+            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_TOPUP_ALL_OPERATOR_MENU, AnalyticsParameters.KEY_TOPUP_ALL_OPERATOR_RECHARGE, AnalyticsParameters.KEY_SINGLE_TOPUP);
             EditText phoneNoET, amountET;
             RadioGroup prePostSelector;
 
@@ -1155,7 +1149,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
                     // No item selected
                     TextView tvError = singleTopUpView.findViewById(R.id.tvError);
                     tvError.setVisibility(View.VISIBLE);
-                    tvError.setText(Html.fromHtml("<font color='white'>" + getString(R.string.error_correct_operator)));
+                    tvError.setText(Html.fromHtml("<font color='white'>" + getString(R.string.error_correct_operator_msg)));
 
                     return;
 

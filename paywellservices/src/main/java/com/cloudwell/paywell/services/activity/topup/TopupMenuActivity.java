@@ -12,6 +12,8 @@ import android.widget.Button;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
 import com.cloudwell.paywell.services.activity.topup.brilliant.BrilliantTopupActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -34,12 +36,14 @@ public class TopupMenuActivity extends AppCompatActivity {
         }
 
         mAppHandler = new AppHandler(this);
-        mobileOperatorBtn = (Button) findViewById(R.id.btnMobileOperators);
-        brilliantBtn = (Button) findViewById(R.id.btnBrilliant);
+        mobileOperatorBtn = findViewById(R.id.btnMobileOperators);
+        brilliantBtn = findViewById(R.id.btnBrilliant);
 
         mobileOperatorBtn.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_TOPUP_MENU, AnalyticsParameters.KEY_TOPUP_ALL_OPERATOR_MENU);
                 startActivity(new Intent(TopupMenuActivity.this, TopupMainActivity.class));
             }
         });
@@ -47,13 +51,12 @@ public class TopupMenuActivity extends AppCompatActivity {
         brilliantBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_TOPUP_MENU, AnalyticsParameters.KEY_TOPUP_BRILLIANT_MENU);
                 startActivity(new Intent(TopupMenuActivity.this, BrilliantTopupActivity.class));
             }
         });
 
         refrashLanguage();
-
-
     }
 
     private void refrashLanguage() {
