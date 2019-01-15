@@ -94,42 +94,27 @@ public class UtilityMainActivity extends AppCompatActivity {
             case R.id.homeBtnDESCO:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_MENU);
                 startActivity(new Intent(this, DESCOMainActivity.class));
-                finish();
                 break;
             case R.id.homeBtnDPDC:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_DPDC_MENU);
                 startActivity(new Intent(this, DPDCMainActivity.class));
-                finish();
                 break;
             case R.id.homeBtnWasa:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_WASA_MENU);
                 startActivity(new Intent(this, WASAMainActivity.class));
-                finish();
                 break;
             case R.id.homeBtnWestZone:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_WZPDCL_MENU);
                 startActivity(new Intent(this, WZPDCLMainActivity.class));
-                finish();
                 break;
             case R.id.homeBtnPolliBiddut:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_MENU);
                 startActivity(new Intent(this, PBMainActivity.class));
-                finish();
                 break;
-            case R.id.homeBtnQubee:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_QUBEE_MENU);
-                startActivity(new Intent(this, QubeeMainActivity.class));
-                finish();
-                break;
-            case R.id.homeBtnRealVU:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_REAL_VU_MENU);
-                startActivity(new Intent(this, BeximcoMainActivity.class));
-                finish();
-                break;
+
             case R.id.homeBtnIvac:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_IVAC_MENU);
                 startActivity(new Intent(this, IvacMainActivity.class));
-                finish();
                 break;
             case R.id.homeBtnBanglalion:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_BANGLALION_MENU);
@@ -138,7 +123,6 @@ public class UtilityMainActivity extends AppCompatActivity {
             case R.id.homeBtnKarnaphuli:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_KARNAPHULI_MENU);
                 startActivity(new Intent(this, KarnaphuliMainActivity.class));
-                finish();
                 break;
             default:
                 break;

@@ -65,18 +65,17 @@ public class RefillBalanceMainActivity extends BaseActivity {
         mCd = new ConnectionDetector(AppController.getContext());
 
         Button btnSda = findViewById(R.id.homeBtnSDA);
-        Button btnBkash = findViewById(R.id.homeBtnMfs);
         Button btnBank = findViewById(R.id.homeBtnBankTransfer);
         Button btnCard = findViewById(R.id.homeBtnCard);
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             btnSda.setTypeface(AppController.getInstance().getOxygenLightFont());
-            btnBkash.setTypeface(AppController.getInstance().getOxygenLightFont());
+
             btnBank.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnCard.setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
             btnSda.setTypeface(AppController.getInstance().getAponaLohitFont());
-            btnBkash.setTypeface(AppController.getInstance().getAponaLohitFont());
+
             btnBank.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnCard.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
@@ -103,10 +102,6 @@ public class RefillBalanceMainActivity extends BaseActivity {
             case R.id.homeBtnSDA:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_BALANCE_REFILL_MENU, AnalyticsParameters.KEY_BALANCE_REFILL_SDA_INFO_MENU);
                 showSDAInformation();
-                break;
-            case R.id.homeBtnMfs:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_BALANCE_REFILL_MENU, AnalyticsParameters.KEY_BALANCE_REFILL_BKASH_INFO_MENU);
-                showInformation();
                 break;
             case R.id.homeBtnBankTransfer:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_BALANCE_REFILL_MENU, AnalyticsParameters.KEY_BALANCE_REFILL_BANK_TRANSFER_INFO_MENU);

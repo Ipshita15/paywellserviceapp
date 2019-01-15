@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.utility.pallibidyut;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -225,8 +224,6 @@ public class PBBillPayActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(PBBillPayActivity.this, PBMainActivity.class);
-        startActivity(intent);
         finish();
     }
 }

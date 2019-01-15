@@ -53,7 +53,7 @@ public class SearchTrainActivity extends BaseActivity implements AdapterView.OnI
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_train);
-        getSupportActionBar().setTitle(R.string.home_eticket_train);
+        getSupportActionBar().setTitle(R.string.home_eticket_air);
         initView();
     }
 

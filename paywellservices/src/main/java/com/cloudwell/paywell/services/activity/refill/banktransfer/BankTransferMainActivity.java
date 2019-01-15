@@ -124,8 +124,6 @@ public class BankTransferMainActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(BankTransferMainActivity.this, RefillBalanceMainActivity.class);
-        startActivity(intent);
         finish();
     }
 

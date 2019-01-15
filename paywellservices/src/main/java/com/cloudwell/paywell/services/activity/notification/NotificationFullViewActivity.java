@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.notification;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -33,6 +32,7 @@ import com.cloudwell.paywell.services.app.AppHandler;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
@@ -88,8 +88,13 @@ public class NotificationFullViewActivity extends BaseActivity implements View.O
             final String image = jsonObject.getString("image");
 
 
+            String s1 = StringEscapeUtils.unescapeJava(message);
+
+            final SpannableString spannableString = new SpannableString(s1);
+            Linkify.addLinks(spannableString, Linkify.WEB_URLS);
+
             mTextViewTitle.setText(title);
-            mTextViewMsg.setText(message);
+            mTextViewMsg.setText(spannableString);
 
             if (!image.equals("")) {
                 showProgressDialog();
@@ -333,7 +338,7 @@ public class NotificationFullViewActivity extends BaseActivity implements View.O
     }
 
     public void callNotificationReadAPI(String messageId) {
-        showProgressDialog();
+        // showProgressDialog();
 
         AndroidNetworking.post(getResources().getString(R.string.notif_url))
                 .addBodyParameter("username", mAppHandler.getImeiNo())

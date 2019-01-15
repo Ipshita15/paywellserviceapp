@@ -46,13 +46,12 @@
                     android:layout_weight="1" />
 
                 <Button
-                    android:id="@+id/homeBtnMfs"
+                    android:id="@+id/homeBtnCard"
                     style="@style/HomeButtonNew"
                     android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_bkash"
+                    android:drawableTop="@drawable/ic_visa_master_card"
                     android:onClick="onButtonClicker"
-                    android:paddingTop="10dp"
-                    android:text="@string/home_payment_bkash"
+                    android:text="@string/home_refill_card"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -72,35 +71,6 @@
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:orientation="horizontal"
-                android:weightSum="3">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center" />
-
-                <Button
-                    android:id="@+id/homeBtnCard"
-                    style="@style/HomeButtonNew"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_visa_master_card"
-                    android:onClick="onButtonClicker"
-                    android:text="@string/home_refill_card"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

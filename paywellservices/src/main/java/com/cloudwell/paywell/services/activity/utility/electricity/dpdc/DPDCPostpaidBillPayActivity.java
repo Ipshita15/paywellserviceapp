@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.utility.electricity.dpdc;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -484,8 +483,6 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(DPDCPostpaidBillPayActivity.this, DPDCMainActivity.class);
-        startActivity(intent);
         finish();
     }
 

@@ -1,14 +1,11 @@
 package com.cloudwell.paywell.services.activity.utility.pallibidyut;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.InputType;
 import android.view.Gravity;
@@ -378,8 +375,6 @@ public class PBRegistrationActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(PBRegistrationActivity.this, PBMainActivity.class);
-        startActivity(intent);
         finish();
     }
 }

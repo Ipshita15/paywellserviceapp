@@ -5,6 +5,7 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -24,6 +25,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -35,6 +38,9 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
@@ -44,9 +50,12 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -56,26 +65,58 @@ import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.chat.ChatActivity;
 import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
 import com.cloudwell.paywell.services.activity.mfs.MFSMainActivity;
+import com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity;
+import com.cloudwell.paywell.services.activity.myFavorite.MyFavoriteMenuActivity;
+import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
 import com.cloudwell.paywell.services.activity.notification.NotificationActivity;
 import com.cloudwell.paywell.services.activity.notification.NotificationAllActivity;
-import com.cloudwell.paywell.services.activity.payments.PaymentsMainActivity;
 import com.cloudwell.paywell.services.activity.product.ProductMenuActivity;
+import com.cloudwell.paywell.services.activity.product.productHelper.ProductHelper;
 import com.cloudwell.paywell.services.activity.refill.RefillBalanceMainActivity;
+import com.cloudwell.paywell.services.activity.refill.banktransfer.BankTransferMainActivity;
+import com.cloudwell.paywell.services.activity.refill.card.CardTransferMainActivity;
 import com.cloudwell.paywell.services.activity.scan.DisplayQRCodeActivity;
 import com.cloudwell.paywell.services.activity.settings.SettingsActivity;
 import com.cloudwell.paywell.services.activity.statements.StatementMainActivity;
+import com.cloudwell.paywell.services.activity.statements.ViewStatementActivity;
 import com.cloudwell.paywell.services.activity.terms.TermsActivity;
 import com.cloudwell.paywell.services.activity.topup.TopupMainActivity;
 import com.cloudwell.paywell.services.activity.topup.TopupMenuActivity;
+import com.cloudwell.paywell.services.activity.topup.brilliant.BrilliantTopupActivity;
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
+import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionMainActivity;
+import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionRechargeActivity;
+import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionRechargeInquiryActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.DESCOBillPayActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.DESCOMainActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCMainActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCPostpaidBillPayActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.wasa.WASABillPayActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.wasa.WASAMainActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.westzone.WZPDCLBillPayActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.westzone.WZPDCLMainActivity;
+import com.cloudwell.paywell.services.activity.utility.ivac.IvacFeeInquiryMainActivity;
+import com.cloudwell.paywell.services.activity.utility.ivac.IvacFeePayActivity;
+import com.cloudwell.paywell.services.activity.utility.ivac.IvacMainActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBRegistrationActivity;
+import com.cloudwell.paywell.services.adapter.HomeFavoriteAdapter;
 import com.cloudwell.paywell.services.adapter.MainSliderAdapter;
 import com.cloudwell.paywell.services.adapter.PicassoImageLoadingService;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.constant.AllConstant;
+import com.cloudwell.paywell.services.database.DatabaseClient;
+import com.cloudwell.paywell.services.database.FavoriteMenuDab;
+import com.cloudwell.paywell.services.service.notificaiton.NotificationCheckerService;
+import com.cloudwell.paywell.services.service.notificaiton.model.EventNewNotificaiton;
+import com.cloudwell.paywell.services.service.notificaiton.model.StartNotificationService;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.LocationUtility;
 import com.cloudwell.paywell.services.utils.UpdateChecker;
+import com.github.silvestrpredko.dotprogressbar.DotProgressBar;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
@@ -91,6 +132,7 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
+import com.orhanobut.logger.Logger;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -100,6 +142,9 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -107,23 +152,30 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import ss.com.bannerslider.Slider;
 import ss.com.bannerslider.event.OnSlideClickListener;
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener, View.OnClickListener {
 
+    private static final long KEY_BALANCE_CHECK_INTERVAL = 4000;
     private boolean doubleBackToExitPressedOnce = false;
-    private CoordinatorLayout mCoordinateLayout;
+    public CoordinatorLayout mCoordinateLayout;
     private AppHandler mAppHandler;
     private UpdateChecker mUpdateChecker;
     public final long UPDATE_SOFTWARE_INTERVAL = 24 * 60 * 60;// 1 day
     public final long PHN_NUM_CHECK_INTERVAL = 24 * 60 * 60;// 1 day
     public final long UPDATE_LOCATION_INTERVAL = 24 * 60 * 60;// 1 day
     private TextView mToolbarHeading;
+    DotProgressBar pb_dot;
     private ConnectionDetector mCd;
     public int mNumOfNotification;
     private TextView mNotification = null;
@@ -142,7 +194,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private Slider viewPager;
     private int currentPage;
 
-    private Button home_topup, home_utility, home_payments, home_eticket, home_mfs, home_product_catalog, home_statement, home_refill_balance, home_settings;
+    private Button home_topup, home_utility, home_eticket, home_mfs, home_product_catalog, home_statement, home_refill_balance, home_settings;
 
     private final int PERMISSIONS_FOR_QR_CODE_SCAN = 100;
     private final int PERMISSIONS_REQUEST_FOR_WRITE_EXTERNAL_STORAGE = 101;
@@ -169,10 +221,23 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private AsyncTask<String, Integer, String> mConfirmPhnNumberAddAsync;
     private AsyncTask<String, Intent, String> mPushFirebaseIdTask;
 
+    // hidden balance menu
+    boolean isBalacedCheckProcessRunning;
+    ImageView ivBalanceBorder;
+
     int start = 9;
     int end = 18;
     long startHourMilli, endHourMilli;
     Calendar cal;
+
+    // bottom slider
+    private BottomSheetBehavior sheetBehavior;
+    private ConstraintLayout layoutBottomSheet;
+    private RecyclerView recyclerViewFavoirte;
+    private ImageView ivUptown, ivEdit;
+    private boolean isSliderUp = false;
+    private int lastFavoitePosition = 0;
+    private boolean isFirstTime = true;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -180,12 +245,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         mToolbar.setTitleTextColor(Color.parseColor("#ffffff"));
 
         mToolbarHeading = (mToolbar.findViewById(R.id.txtHeading));
         mCoordinateLayout = findViewById(R.id.coordinateLayout);
+        pb_dot = findViewById(R.id.dot_progress_bar);
+        ivBalanceBorder = findViewById(R.id.ivBalanceBorder);
+        ivBalanceBorder.setOnClickListener(this);
 
         mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
@@ -209,13 +278,171 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         InitializeData();
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_DASHBOARD);
+
+        setupBottonSheetSlider();
+        getAllFavoriteDate();
+        hiddenFavoriteRecycview();
     }
+
+    private void hiddenFavoriteRecycview() {
+
+    }
+
+    private void setupBottonSheetSlider() {
+        layoutBottomSheet = findViewById(R.id.bottom_sheet);
+        ivUptown = layoutBottomSheet.findViewById(R.id.ivImageUpAndDown);
+        ivEdit = layoutBottomSheet.findViewById(R.id.ivEdit);
+
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(View bottomSheet, float slideOffset) {
+
+            }
+        });
+
+        ivUptown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isSliderUp) {
+                    isSliderUp = true;
+                    recyclerViewFavoirte.setVisibility(View.VISIBLE);
+                    ivEdit.setVisibility(View.VISIBLE);
+                    ivUptown.setBackgroundResource(R.drawable.circle_angle_down);
+                    sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+                    ivUptown.clearAnimation();
+
+                } else {
+                    isSliderUp = false;
+                    recyclerViewFavoirte.setVisibility(View.GONE);
+                    ivEdit.setVisibility(View.GONE);
+                    ivUptown.setBackgroundResource(R.drawable.circle_angle_up);
+                    sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_item);
+                    ivUptown.setAnimation(animation);
+                }
+            }
+        });
+
+        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_item);
+        ivUptown.setAnimation(animation);
+
+        ivEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startMyFavoriteMenuActivity();
+
+            }
+        });
+
+    }
+
+    private void getAllFavoriteDate() {
+
+        final FavoriteMenuDab favoriteMenuDab = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mFavoriteMenuDab();
+        favoriteMenuDab.getAllFavoriteMenu().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<FavoriteMenu>>() {
+                    @Override
+                    public void accept(List<FavoriteMenu> favoriteMenus) throws Exception {
+
+                        Collections.sort(favoriteMenus, new Comparator<FavoriteMenu>() {
+                            @Override
+                            public int compare(FavoriteMenu o1, FavoriteMenu o2) {
+                                if (o1.getFavoriteListPosition() > o2.getFavoriteListPosition()) {
+                                    return 0;
+                                } else if (o1.getFavoriteListPosition() > o2.getFavoriteListPosition()) {
+                                    return 1;
+                                } else {
+                                    return -1;
+                                }
+                            }
+                        });
+
+                        generatedFavaroitRecycView(favoriteMenus);
+
+                    }
+                });
+
+    }
+
+    private void generatedFavaroitRecycView(List<FavoriteMenu> result) {
+
+        boolean isEnglish = mAppHandler.getAppLanguage().equalsIgnoreCase("en");
+
+        recyclerViewFavoirte = layoutBottomSheet.findViewById(R.id.rvOperatorList);
+        recyclerViewFavoirte.setHasFixedSize(true);
+        recyclerViewFavoirte.setItemAnimator(new DefaultItemAnimator());
+
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewFavoirte.setLayoutManager(horizontalLayoutManager);
+        recyclerViewFavoirte.getLayoutManager().setMeasurementCacheEnabled(false);
+
+
+        if (result.size() == 0) {
+            result.add(new FavoriteMenu(R.string.add_fav, R.string.home_topup, R.drawable.add_fav_action, "", 0));
+        }
+
+        HomeFavoriteAdapter adapter = new HomeFavoriteAdapter(this, result, isEnglish);
+
+        adapter.setClickListener(new HomeFavoriteAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(int position, FavoriteMenu favoriteMenu) {
+                onFavoriteItemClick(favoriteMenu);
+                lastFavoitePosition = position;
+            }
+        });
+        recyclerViewFavoirte.setAdapter(adapter);
+
+        if (0 != lastFavoitePosition) {
+            recyclerViewFavoirte.smoothScrollToPosition(lastFavoitePosition);
+
+        }
+        if (isFirstTime) {
+            isFirstTime = false;
+            recyclerViewFavoirte.setVisibility(View.GONE);
+            ivEdit.setVisibility(View.GONE);
+            ivUptown.setBackgroundResource(R.drawable.circle_angle_up);
+            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        }
+
+        // recyclerViewFavoirte.setVisibility(View.GONE);
+
+
+    }
+
+    private void updateMyFavorityView() {
+        getAllFavoriteDate();
+    }
+
 
     private void InitializeData() {
         /*Buttons Initialization*/
         home_topup = findViewById(R.id.homeBtnTopup);
         home_utility = findViewById(R.id.homeBtnUtility);
-        home_payments = findViewById(R.id.homeBtnPayments);
+
         home_eticket = findViewById(R.id.homeBtnEticket);
         home_mfs = findViewById(R.id.homeBtnMFS);
         home_product_catalog = findViewById(R.id.homeBtnProductCategory);
@@ -226,7 +453,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             home_topup.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_utility.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_payments.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_eticket.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_mfs.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_product_catalog.setTypeface(AppController.getInstance().getOxygenLightFont());
@@ -236,7 +462,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else {
             home_topup.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_utility.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_payments.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_eticket.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_mfs.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_product_catalog.setTypeface(AppController.getInstance().getAponaLohitFont());
@@ -270,12 +495,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             getResources().updateConfiguration(config, getResources().getDisplayMetrics());
         }
 
-        mToolbarHeading.setText(getString(R.string.balance) + mAppHandler.getPwBalance() + getString(R.string.tk));
+        // mToolbarHeading.setText(getString(R.string.balance) + mAppHandler.getPwBalance() + getString(R.string.tk));
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             mToolbarHeading.setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
             mToolbarHeading.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
+        mToolbarHeading.setText(getString(R.string.balance_pre_text));
+        mToolbarHeading.setOnClickListener(this);
 
         setAutomaticDatetime();
         checkSoftwareUpdate();
@@ -347,10 +574,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    public void RefreshStringsOfButton() {
+    public void refreshStringsOfButton() {
         home_topup.setText(R.string.home_topup);
         home_utility.setText(R.string.home_utility);
-        home_payments.setText(R.string.home_payments);
         home_eticket.setText(R.string.home_eticket);
         home_mfs.setText(R.string.home_mfs);
         home_product_catalog.setText(R.string.home_product_catalog);
@@ -361,7 +587,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             home_topup.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_utility.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_payments.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_eticket.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_mfs.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_product_catalog.setTypeface(AppController.getInstance().getOxygenLightFont());
@@ -371,7 +596,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else {
             home_topup.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_utility.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_payments.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_eticket.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_mfs.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_product_catalog.setTypeface(AppController.getInstance().getAponaLohitFont());
@@ -382,7 +606,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         navigationView.getMenu().findItem(R.id.nav_topup).setTitle(R.string.home_topup);
         navigationView.getMenu().findItem(R.id.nav_utility).setTitle(R.string.home_utility);
-        navigationView.getMenu().findItem(R.id.nav_payments).setTitle(R.string.home_payments);
         navigationView.getMenu().findItem(R.id.nav_eticket).setTitle(R.string.home_eticket);
         navigationView.getMenu().findItem(R.id.nav_mfs).setTitle(R.string.nav_mfs);
         navigationView.getMenu().findItem(R.id.nav_product).setTitle(R.string.nav_product_catalog);
@@ -441,16 +664,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     mNumOfNotification = 0;
                     finish();
                 } else {
-                    if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                        startActivity(new Intent(MainActivity.this, NotificationAllActivity.class));
-                        finish();
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
+
+                    startActivity(new Intent(MainActivity.this, NotificationAllActivity.class));
+                    finish();
+
                 }
             }
         });
@@ -535,22 +752,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                 snackbar.show();
             }
-        } else if (id == R.id.nav_payments) {
-            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_PAYMENT_MENU);
-            if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
-                if (!mCd.isConnectingToInternet()) {
-                    AppHandler.showDialog(getSupportFragmentManager());
-                } else {
-                    // Handle the bKash action
-                    startActivity(new Intent(this, PaymentsMainActivity.class));
-                }
-            } else {
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
         } else if (id == R.id.nav_eticket) {
             AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_ETICKET_MENU);
             if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
@@ -624,6 +825,29 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         assert drawer != null;
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.txtHeading:
+                Log.e("check balance", "check balance");
+                if (!isBalacedCheckProcessRunning) {
+                    checkPayWellBalance();
+                }
+
+                break;
+
+            case R.id.ivBalanceBorder:
+                Log.e("check balance", "check balance");
+                if (!isBalacedCheckProcessRunning) {
+                    checkPayWellBalance();
+                }
+
+                break;
+
+
+        }
     }
 
 
@@ -707,106 +931,92 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         pwBalanceCheck.execute(getResources().getString(R.string.pw_bal));
     }
 
-    @SuppressWarnings("deprecation")
-    private class PayWellBalanceAsync extends AsyncTask<String, Integer, String> {
+    private void startHiddenBalance() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Logger.v("Hidden Balance box");
+                mToolbarHeading.setText(getString(R.string.balance_pre_text));
 
-        @Override
-        protected void onPreExecute() {
-            mToolbarHeading.setText(R.string.balance_checking);
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
-                nameValuePairs.add(new BasicNameValuePair("imei_no", mAppHandler.getImeiNo()));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
-            return responseTxt;
-        }
+        }, KEY_BALANCE_CHECK_INTERVAL);
 
-        @Override
-        protected void onPostExecute(String result) {
-            try {
-                if (result != null && result.contains("@")) {
-                    String splitArray[] = result.split("@");
-                    if (splitArray.length > 0) {
-                        if ((splitArray[0].equalsIgnoreCase("\r\n200")) || (splitArray[0].equalsIgnoreCase("200"))) {
 
-                            StringBuilder stringBuilder = new StringBuilder();
-                            String[] balance = splitArray[1].split("[.]");
-                            String round = balance[0];
-                            String fraction = balance[1];
-                            fraction = (String) fraction.subSequence(0, 2);
-                            stringBuilder.append(round).append(".").append(fraction);
+    }
 
-                            mAppHandler.setPWBalance(stringBuilder.toString());
-
-                            String strBalance = getString(R.string.balance) + mAppHandler.getPwBalance() + getString(R.string.tk);
-                            mToolbarHeading.setText(strBalance);
-
-                            mAppHandler.setRID(splitArray[3]);
-
-                            if (splitArray.length > 4) {
-                                if (Integer.parseInt(splitArray[4]) > 0) {
-                                    notificationCount(Integer.parseInt(splitArray[4]));
-                                    builderNotification = new AlertDialog.Builder(MainActivity.this);
-                                    builderNotification.setTitle(R.string.home_notification);
-                                    builderNotification.setMessage(getString(R.string.unread_first_msg) + " "
-                                            + splitArray[4] + " " + getString(R.string.unread_second_msg));
-                                    builderNotification.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int id) {
-                                            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CEHCK_NEW_NOTIFICATION);
-                                            dialogInterface.dismiss();
-                                            checkNotificationFlag = true;
-                                            mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
-                                        }
-                                    });
-                                    alertNotification = builderNotification.create();
-                                    alertNotification.show();
-                                    TextView messageText = alertNotification.findViewById(android.R.id.message);
-                                    messageText.setGravity(Gravity.CENTER);
-                                }
-                            }
-                        } else {
-                            Snackbar snackbar = Snackbar.make(mCoordinateLayout, splitArray[1], Snackbar.LENGTH_LONG);
-                            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                            View snackBarView = snackbar.getView();
-                            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                            snackbar.show();
-                            Intent i = new Intent(MainActivity.this, AppLoadingActivity.class);
-                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(i);
-                            finish();
-                        }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[],
+                                           int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_FOR_WRITE_EXTERNAL_STORAGE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was grantedTask
+                    if (getMailAddress()) {
+                        mUpdateChecker.launchMarketDetails();
+                    } else {
+                        mUpdateChecker.downloadAndInstall(getResources().getString(R.string.update_check));
                     }
                 } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.conn_timeout_msg, Snackbar.LENGTH_LONG);
+                    // permission denied
+                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.access_denied_msg, Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
+                    checkPermission();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
+                break;
+            }
+            case PERMISSIONS_FOR_QR_CODE_SCAN: {
+                // Check if the only required permission has been granted
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Phone permission has been granted
+
+                    startActivity(new Intent(MainActivity.this, DisplayQRCodeActivity.class));
+                    finish();
+
+                } else {
+                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_FOR_QR_CODE_SCAN);
+                }
+                break;
+            }
+            case PERMISSIONS_REQUEST_ACCESS_LOCATION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was grantedTask
+                    try {
+                        getMyLocation();
+                        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+                        checkLocationUpdate();
+                    } catch (Exception e) {
+                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                        View snackBarView = snackbar.getView();
+                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                        snackbar.show();
+                    }
+                } else {
+                    // permission denied
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                            PERMISSIONS_REQUEST_ACCESS_LOCATION);
+                }
+                break;
+            }
+            case PERMISSIONS_REQUEST_ACCESS_CALL: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was grantedTask
+
+                    Intent intent = new Intent(Intent.ACTION_CALL);
+                    intent.setData(Uri.parse("tel:" + selectedPhnNo));
+                    startActivity(intent);
+
+                } else {
+                    // permission denied
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},
+                            PERMISSIONS_REQUEST_ACCESS_CALL);
+                }
+                break;
             }
         }
     }
@@ -892,91 +1102,93 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[],
-                                           int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSIONS_REQUEST_FOR_WRITE_EXTERNAL_STORAGE: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was grantedTask
-                    if (getMailAddress()) {
-                        mUpdateChecker.launchMarketDetails();
-                    } else {
-                        mUpdateChecker.downloadAndInstall(getResources().getString(R.string.update_check));
-                    }
+    public void onButtonClicker(View v) {
+        switch (v.getId()) {
+            case R.id.homeBtnTopup:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_TOPUP_MENU);
+                if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
+                    startActivity(new Intent(this, TopupMenuActivity.class));
                 } else {
-                    // permission denied
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.access_denied_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                    checkPermission();
+                    showNotAllowMessage();
                 }
+
                 break;
-            }
-            case PERMISSIONS_FOR_QR_CODE_SCAN: {
-                // Check if the only required permission has been granted
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Phone permission has been granted
-                    if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                        startActivity(new Intent(MainActivity.this, DisplayQRCodeActivity.class));
-                        finish();
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
+            case R.id.homeBtnUtility:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_UTILITY_MENU);
+
+                if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
+                    startActivity(new Intent(this, UtilityMainActivity.class));
                 } else {
-                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_FOR_QR_CODE_SCAN);
+                    showNotAllowMessage();
                 }
+
+
                 break;
-            }
-            case PERMISSIONS_REQUEST_ACCESS_LOCATION: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was grantedTask
-                    try {
-                        getMyLocation();
-                        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-                        checkLocationUpdate();
-                    } catch (Exception e) {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
+            case R.id.homeBtnEticket:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_ETICKET_MENU);
+
+                if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
+                    startActivity(new Intent(this, ETicketMainActivity.class));
                 } else {
-                    // permission denied
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                            PERMISSIONS_REQUEST_ACCESS_LOCATION);
+                    showNotAllowMessage();
                 }
+
                 break;
-            }
-            case PERMISSIONS_REQUEST_ACCESS_CALL: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was grantedTask
-                    if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                        Intent intent = new Intent(Intent.ACTION_CALL);
-                        intent.setData(Uri.parse("tel:" + selectedPhnNo));
-                        startActivity(intent);
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
+            case R.id.homeBtnMFS:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_MFS_MENU);
+
+                if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
+                    startActivity(new Intent(MainActivity.this, MFSMainActivity.class));
                 } else {
-                    // permission denied
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},
-                            PERMISSIONS_REQUEST_ACCESS_CALL);
+                    showNotAllowMessage();
                 }
+
                 break;
-            }
+            case R.id.homeBtnProductCategory:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_PRODUCT_MENU);
+
+                if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
+                    startActivity(new Intent(MainActivity.this, ProductMenuActivity.class));
+                } else {
+                    showNotAllowMessage();
+                }
+
+                break;
+            case R.id.homeBtnMiniStatement:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_STATEMENT_MENU);
+
+                if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
+                    startActivity(new Intent(MainActivity.this, StatementMainActivity.class));
+                } else {
+                    showNotAllowMessage();
+                }
+
+                break;
+            case R.id.homeBtnRefillBalance:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_BALANCE_REFILL_MENU);
+
+                if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
+                    startActivity(new Intent(this, RefillBalanceMainActivity.class));
+                } else {
+                    showNotAllowMessage();
+                }
+
+                break;
+            case R.id.homeBtnSettings:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_SETTINGS_MENU);
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+
+                break;
+            case R.id.homeBtnMessage:
+                startActivity(new Intent(MainActivity.this, ChatActivity.class));
+                break;
+            case R.id.homeBtnCall:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CALL_MENU);
+                callPreview();
+                break;
+
+            default:
+                break;
         }
     }
 
@@ -1036,207 +1248,35 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    public void onButtonClicker(View v) {
-        switch (v.getId()) {
-            case R.id.homeBtnTopup:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_TOPUP_MENU);
-                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                    if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
-                        startActivity(new Intent(this, TopupMenuActivity.class));
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.allow_error_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-                break;
-            case R.id.homeBtnUtility:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_UTILITY_MENU);
-                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                    if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
-                        startActivity(new Intent(this, UtilityMainActivity.class));
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.allow_error_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-                break;
-            case R.id.homeBtnPayments:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_PAYMENT_MENU);
-                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                    if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
-                        startActivity(new Intent(this, PaymentsMainActivity.class));
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.allow_error_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-                break;
-            case R.id.homeBtnEticket:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_ETICKET_MENU);
-                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                    if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
-                        startActivity(new Intent(this, ETicketMainActivity.class));
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.allow_error_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-                break;
-            case R.id.homeBtnMFS:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_MFS_MENU);
-                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                    if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
-                        startActivity(new Intent(MainActivity.this, MFSMainActivity.class));
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.allow_error_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-                break;
-            case R.id.homeBtnProductCategory:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_PRODUCT_MENU);
-                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                    if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
-                        startActivity(new Intent(MainActivity.this, ProductMenuActivity.class));
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.allow_error_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-                break;
-            case R.id.homeBtnMiniStatement:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_STATEMENT_MENU);
-                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                    if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
-                        startActivity(new Intent(MainActivity.this, StatementMainActivity.class));
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.allow_error_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-                break;
-            case R.id.homeBtnRefillBalance:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_BALANCE_REFILL_MENU);
-                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                    if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
-                        startActivity(new Intent(this, RefillBalanceMainActivity.class));
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.allow_error_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-                break;
-            case R.id.homeBtnSettings:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_SETTINGS_MENU);
-                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                    startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-                break;
-            case R.id.homeBtnMessage:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CHAT_MENU);
-                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                    startActivity(new Intent(MainActivity.this, ChatActivity.class));
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-                break;
-            case R.id.homeBtnCall:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CALL_MENU);
-                if (pwBalanceCheck.getStatus() == AsyncTask.Status.FINISHED) {
-                    callPreview();
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-                break;
-            default:
-                break;
+    private void showNotAllowMessage() {
+        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.allow_error_msg, Snackbar.LENGTH_LONG);
+        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+        View snackBarView = snackbar.getView();
+        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+        snackbar.show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshStringsOfButton();
+        if (alertNotification.isShowing()) {
+            alertNotification.dismiss();
         }
+        // start auto scroll when onResume
+        // viewPager.startAutoScroll();
+        // checkPayWellBalance();
+
+        viewPager.setInterval(2000);
+        updateMyFavorityView();
+        notificationCounterCheck();
+
+    }
+
+
+    private void startMyFavoriteMenuActivity() {
+        Intent intent1 = new Intent(getApplicationContext(), MyFavoriteMenuActivity.class);
+        startActivity(intent1);
     }
 
     public void generateQRCode() {
@@ -1304,19 +1344,70 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         viewPager.setInterval(0);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        RefreshStringsOfButton();
-        if (alertNotification.isShowing()) {
-            alertNotification.dismiss();
-        }
-        // start auto scroll when onResume
-        // viewPager.startAutoScroll();
-        checkPayWellBalance();
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onNewnotificationcomming(EventNewNotificaiton eventNewNotificaiton) {
+        int counter = eventNewNotificaiton.getCounter();
 
-        viewPager.setInterval(2000);
+        notificationCount(counter);
+        builderNotification = new AlertDialog.Builder(MainActivity.this);
+        builderNotification.setTitle(R.string.home_notification);
+        builderNotification.setMessage(getString(R.string.unread_first_msg) + " " + counter + " " + getString(R.string.unread_second_msg));
+        builderNotification.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int id) {
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CEHCK_NEW_NOTIFICATION);
+                dialogInterface.dismiss();
+                checkNotificationFlag = true;
+                mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
+            }
+        });
+        alertNotification = builderNotification.create();
+        alertNotification.show();
+        TextView messageText = alertNotification.findViewById(android.R.id.message);
+        messageText.setGravity(Gravity.CENTER);
+
+
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    ;
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    private void notificationCounterCheck() {
+        if (mCd.isConnectingToInternet()) {
+            boolean myServiceRunning = isMyServiceRunning(NotificationCheckerService.class);
+            if (!myServiceRunning) {
+                Intent intent = new Intent(getApplicationContext(), NotificationCheckerService.class);
+                startService(intent);
+            } else {
+                boolean apiCalledRuing = NotificationCheckerService.Companion.isAPICalledRunning();
+                if (!apiCalledRuing) {
+                    EventBus.getDefault().post(new StartNotificationService(1));
+                }
+            }
+        }
+    }
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     private boolean getMailAddress() {
         String gmail = "";
@@ -1694,6 +1785,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (location != null) {
             double PLACE_LATITUDE = (location.getLatitude());
             double PLACE_LONGITUDE = (location.getLongitude());
+            float PLACE_ACCURACY = location.getAccuracy();
+
+            String address = LocationUtility.getAddress(getApplicationContext(), location.getLatitude(), location.getLongitude());
+            String country = LocationUtility.getCountry(getApplicationContext(), location.getLatitude(), location.getLongitude());
 
             if (!mAppHandler.getLatitude().equalsIgnoreCase(String.valueOf(PLACE_LATITUDE))) {
                 mAppHandler.setLatitude(String.valueOf(PLACE_LATITUDE));
@@ -1701,6 +1796,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             if (!mAppHandler.getLongitude().equalsIgnoreCase(String.valueOf(PLACE_LONGITUDE))) {
                 mAppHandler.setLongitude(String.valueOf(PLACE_LONGITUDE));
             }
+            mAppHandler.setAccuracy(String.valueOf(location.getAccuracy()));
+            mAppHandler.setCountry(country);
+            mAppHandler.setAddress(address);
+
             if ((System.currentTimeMillis() / 1000) >= (mAppHandler.getLocationUpdateCheck() + UPDATE_LOCATION_INTERVAL)
                     && (System.currentTimeMillis() / 1000) >= startHourMilli
                     && (System.currentTimeMillis() / 1000) <= endHourMilli) {
@@ -1786,6 +1885,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("latitude", mAppHandler.getLatitude()));
                 nameValuePairs.add(new BasicNameValuePair("longitude", mAppHandler.getLongitude()));
+                nameValuePairs.add(new BasicNameValuePair("accuracy", mAppHandler.getAccuracy()));
+                nameValuePairs.add(new BasicNameValuePair("country", mAppHandler.getCountry()));
+                nameValuePairs.add(new BasicNameValuePair("address", mAppHandler.getAddress()));
+
+                Logger.v("username " + mAppHandler.getImeiNo() +
+                        " latitude " + mAppHandler.getLatitude() +
+                        " longitude " + mAppHandler.getLongitude() +
+                        " accuracy " + mAppHandler.getAccuracy() +
+                        " country" + mAppHandler.getCountry() +
+                        " address" + mAppHandler.getAddress()
+                );
+
 
                 httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -1992,6 +2103,217 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
+    private void onFavoriteItemClick(FavoriteMenu favoriteMenu) {
+        Intent intent;
+
+        switch (favoriteMenu.getName()) {
+            case R.string.add_fav:
+                startMyFavoriteMenuActivity();
+                break;
+
+            case R.string.mobileOperator:
+                intent = new Intent(getApplicationContext(), TopupMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.brilliant:
+                intent = new Intent(getApplicationContext(), BrilliantTopupActivity.class);
+                startActivityWithFlag(intent);
+                break;
+            case R.string.home_utility_desco:
+                intent = new Intent(getApplicationContext(), DESCOMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_desco_pay:
+                intent = new Intent(getApplicationContext(), DESCOBillPayActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_dpdc:
+                intent = new Intent(getApplicationContext(), DPDCMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+            case R.string.home_utility_dpdc_bill_pay:
+                intent = new Intent(getApplicationContext(), DPDCPostpaidBillPayActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_pollibiddut:
+                intent = new Intent(getApplicationContext(), PBMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_pollibiddut_registion:
+                intent = new Intent(getApplicationContext(), PBRegistrationActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_pollibiddut_reg_inquiry:
+                intent = new Intent(getApplicationContext(), PBMainActivity.class);
+                intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_RG_INQUERY, true);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_pollibiddut_bill_inquiry:
+                intent = new Intent(getApplicationContext(), PBMainActivity.class);
+                intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_BILL_INQUERY, true);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_wasa:
+                intent = new Intent(getApplicationContext(), WASAMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_wasa_pay:
+                intent = new Intent(getApplicationContext(), WASABillPayActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_wasa_inquiry:
+                intent = new Intent(getApplicationContext(), WASAMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_west_zone:
+                intent = new Intent(getApplicationContext(), WZPDCLMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+
+            case R.string.home_utility_west_zone_pay:
+                intent = new Intent(getApplicationContext(), WZPDCLBillPayActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_west_zone_pay_inquiry:
+                intent = new Intent(getApplicationContext(), WZPDCLMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+
+            case R.string.home_utility_ivac:
+                intent = new Intent(getApplicationContext(), IvacMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_ivac_free_pay_favorite:
+                intent = new Intent(getApplicationContext(), IvacFeePayActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_ivac_inquiry:
+                intent = new Intent(getApplicationContext(), IvacFeeInquiryMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+
+            case R.string.home_utility_banglalion:
+                intent = new Intent(getApplicationContext(), BanglalionMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_banglalion_recharge:
+                intent = new Intent(getApplicationContext(), BanglalionRechargeActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_banglalion_recharge_inquiry:
+                intent = new Intent(getApplicationContext(), BanglalionRechargeInquiryActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_mfs_mycash:
+                intent = new Intent(getApplicationContext(), MYCashMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_product_ajker_deal:
+
+                new ProductHelper().getToken(this, 1);
+
+                break;
+
+            case R.string.home_product_pw_wholesale:
+
+                new ProductHelper().getToken(this, 2);
+
+                break;
+
+            case R.string.home_statement_mini:
+
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_STATEMENT_MENU, AnalyticsParameters.KEY_STATEMENT_MINI_MENU);
+                ViewStatementActivity.title = "mini";
+                ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/StatementInquiry?username="
+                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
+
+                intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
+                startActivityWithFlag(intent);
+
+                break;
+            case R.string.home_statement_balance:
+
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_STATEMENT_MENU, AnalyticsParameters.KEY_STATEMENT_BALANCE_MENU);
+                ViewStatementActivity.title = "balance";
+                ViewStatementActivity.url = "http://api.cloudwell.co/AndroidWebViewController/balanceStatement?username="
+                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
+
+                intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
+                startActivityWithFlag(intent);
+
+                break;
+
+
+            case R.string.home_statement_sales:
+
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_STATEMENT_MENU, AnalyticsParameters.KEY_STATEMENT_SALES_MENU);
+                ViewStatementActivity.title = "sales";
+                ViewStatementActivity.url = "http://api.cloudwell.co/AndroidWebViewController/salesStatement?username="
+                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
+
+
+                intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
+                startActivityWithFlag(intent);
+
+                break;
+            case R.string.home_statement_transaction:
+
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_STATEMENT_MENU, AnalyticsParameters.KEY_STATEMENT_TRX_MENU);
+                ViewStatementActivity.title = "trx";
+                ViewStatementActivity.url = "http://api.cloudwell.co/AndroidWebViewController/getAllTransactionStatement?username="
+                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
+
+                intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
+                startActivityWithFlag(intent);
+
+                break;
+
+            case R.string.home_refill_bank:
+
+                intent = new Intent(getApplicationContext(), BankTransferMainActivity.class);
+                startActivityWithFlag(intent);
+
+                break;
+
+            case R.string.home_refill_card:
+
+                intent = new Intent(getApplicationContext(), CardTransferMainActivity.class);
+                startActivityWithFlag(intent);
+
+                break;
+
+        }
+
+
+    }
+
+    private void startActivityWithFlag(Intent intent) {
+        intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE, true);
+        startActivity(intent);
+    }
+
+
     private void showTutorial() {
 //        String SHOWCASE_ID_TOPUP = "topup";
 //        // single example
@@ -2031,6 +2353,127 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             viewPager = null;
         }
         super.onDestroy();
+    }
+
+    private int getHeightOfView(View contentview) {
+        contentview.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        //contentview.getMeasuredWidth();
+        return contentview.getMeasuredHeight();
+    }
+
+    @SuppressWarnings("deprecation")
+    private class PayWellBalanceAsync extends AsyncTask<String, Integer, String> {
+
+        @Override
+        protected void onPreExecute() {
+            isBalacedCheckProcessRunning = true;
+            pb_dot.setVisibility(View.VISIBLE);
+            mToolbarHeading.setVisibility(View.GONE);
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String responseTxt = null;
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(params[0]);
+            try {
+                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
+                nameValuePairs.add(new BasicNameValuePair("imei_no", mAppHandler.getImeiNo()));
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                responseTxt = httpclient.execute(httppost, responseHandler);
+            } catch (Exception e) {
+                e.fillInStackTrace();
+                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+            }
+            return responseTxt;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            pb_dot.setVisibility(View.GONE);
+            mToolbarHeading.setVisibility(View.VISIBLE);
+            isBalacedCheckProcessRunning = false;
+
+            try {
+                if (result != null && result.contains("@")) {
+                    String splitArray[] = result.split("@");
+                    if (splitArray.length > 0) {
+                        if ((splitArray[0].equalsIgnoreCase("\r\n200")) || (splitArray[0].equalsIgnoreCase("200"))) {
+
+                            StringBuilder stringBuilder = new StringBuilder();
+                            String[] balance = splitArray[1].split("[.]");
+                            String round = balance[0];
+                            String fraction = balance[1];
+                            fraction = (String) fraction.subSequence(0, 2);
+                            stringBuilder.append(round).append(".").append(fraction);
+
+                            mAppHandler.setPWBalance(stringBuilder.toString());
+
+                            String strBalance = "100000.00" + getString(R.string.tk);
+                            mToolbarHeading.setText(strBalance);
+
+                            mAppHandler.setRID(splitArray[3]);
+
+                            if (splitArray.length > 4) {
+                                if (Integer.parseInt(splitArray[4]) > 0) {
+                                    notificationCount(Integer.parseInt(splitArray[4]));
+                                    builderNotification = new AlertDialog.Builder(MainActivity.this);
+                                    builderNotification.setTitle(R.string.home_notification);
+                                    builderNotification.setMessage(getString(R.string.unread_first_msg) + " "
+                                            + splitArray[4] + " " + getString(R.string.unread_second_msg));
+                                    builderNotification.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int id) {
+                                            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CEHCK_NEW_NOTIFICATION);
+                                            dialogInterface.dismiss();
+                                            checkNotificationFlag = true;
+                                            mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
+                                        }
+                                    });
+                                    alertNotification = builderNotification.create();
+                                    alertNotification.show();
+                                    TextView messageText = alertNotification.findViewById(android.R.id.message);
+                                    messageText.setGravity(Gravity.CENTER);
+                                }
+                            }
+
+                            startHiddenBalance();
+
+
+                        } else {
+                            Snackbar snackbar = Snackbar.make(mCoordinateLayout, splitArray[1], Snackbar.LENGTH_LONG);
+                            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                            View snackBarView = snackbar.getView();
+                            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                            snackbar.show();
+                            Intent i = new Intent(MainActivity.this, AppLoadingActivity.class);
+                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(i);
+                            finish();
+                        }
+                    }
+                } else {
+                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.conn_timeout_msg, Snackbar.LENGTH_LONG);
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                    View snackBarView = snackbar.getView();
+                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                    snackbar.show();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
+            }
+        }
     }
 
 

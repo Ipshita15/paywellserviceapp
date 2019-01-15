@@ -52,7 +52,7 @@ public class TrainMainActivity extends BaseActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_train_main);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.home_eticket_train);
+        getSupportActionBar().setTitle(R.string.home_eticket_air);
 
         mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(TrainMainActivity.this);

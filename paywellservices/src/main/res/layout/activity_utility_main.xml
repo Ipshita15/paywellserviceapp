@@ -104,14 +104,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
-
                 <Button
-                    android:id="@+id/homeBtnQubee"
+                    android:id="@+id/homeBtnIvac"
                     style="@style/HomeButtonNew"
                     android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_qubee"
+                    android:drawableTop="@drawable/ic_ivac"
                     android:onClick="onButtonClicker"
-                    android:text="@string/home_utility_qubee"
+                    android:text="@string/home_utility_ivac"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
@@ -123,31 +122,11 @@
                 android:orientation="horizontal"
                 android:weightSum="5">
 
-                <Button
-                    android:id="@+id/homeBtnRealVU"
-                    style="@style/HomeButtonNew"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_realvu"
-                    android:onClick="onButtonClicker"
-                    android:text="@string/home_utility_beximco"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
-
-                <Button
-                    android:id="@+id/homeBtnIvac"
-                    style="@style/HomeButtonNew"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_ivac"
-                    android:onClick="onButtonClicker"
-                    android:text="@string/home_utility_ivac"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

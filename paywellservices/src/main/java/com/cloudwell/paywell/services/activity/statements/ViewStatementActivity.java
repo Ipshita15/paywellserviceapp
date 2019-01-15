@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.statements;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -117,8 +116,6 @@ public class ViewStatementActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(ViewStatementActivity.this, StatementMainActivity.class);
-        startActivity(intent);
         finish();
     }
 }

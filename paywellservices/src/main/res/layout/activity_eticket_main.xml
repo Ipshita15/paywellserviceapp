@@ -53,9 +53,9 @@
                 <Button
                     android:id="@+id/homeBtnTrainTicket"
                     style="@style/HomeButtonNew"
-                    android:drawableTop="@drawable/ic_train_ticket"
+                    android:drawableTop="@drawable/air_ticket"
                     android:onClick="onButtonClicker"
-                    android:text="@string/home_eticket_train"
+                    android:text="@string/home_eticket_air"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 

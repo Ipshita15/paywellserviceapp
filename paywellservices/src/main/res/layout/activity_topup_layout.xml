@@ -65,6 +65,7 @@
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rvOperatorList"
+                        tools:listitem="@layout/recyclerview_item"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

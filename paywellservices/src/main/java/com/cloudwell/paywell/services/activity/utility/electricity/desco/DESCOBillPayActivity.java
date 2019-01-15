@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.utility.electricity.desco;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -395,8 +394,6 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(DESCOBillPayActivity.this, DESCOMainActivity.class);
-        startActivity(intent);
         finish();
     }
 }

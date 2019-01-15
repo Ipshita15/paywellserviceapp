@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.utility.banglalion;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -102,7 +101,7 @@ public class BanglalionRechargeActivity extends BaseActivity implements View.OnC
             if (_pin.length() == 0) {
                 mPin.setError(Html.fromHtml("<font color='red'>" + getString(R.string.pin_no_error_msg) + "</font>"));
             } else if (accountNo.length() < 4) {
-                mAccountNo.setError(Html.fromHtml("<font color='red'>" + getString(R.string.qubee_acc_error_msg) + "</font></font>"));
+                mAccountNo.setError(Html.fromHtml("<font color='red'>" + getString(R.string.banglalion_acc_error_msg) + "</font></font>"));
             } else if (amount.length() == 0) {
                 mAmount.setError(Html.fromHtml("<font color='red'>" + getString(R.string.amount_error_msg) + "</font></font>"));
             } else {
@@ -230,8 +229,6 @@ public class BanglalionRechargeActivity extends BaseActivity implements View.OnC
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(BanglalionRechargeActivity.this, BanglalionMainActivity.class);
-        startActivity(intent);
         finish();
     }
 

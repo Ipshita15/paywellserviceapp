@@ -18,9 +18,9 @@ import android.widget.RelativeLayout;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.WebViewActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
-import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.constant.AllConstant;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
 import org.apache.http.NameValuePair;
@@ -78,6 +78,21 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
             btnRegInq.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnBillInq.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
+
+        checkIsComeFromFav(getIntent());
+
+    }
+
+    private void checkIsComeFromFav(Intent intent) {
+        boolean isFav = intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE, false);
+        if (isFav) {
+            boolean booleanExtra = intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_RG_INQUERY, false);
+            if (booleanExtra) {
+                shwTheLimitedPrompt(TAG_SERVICE_REGISTRATION_INQUIRY);
+            } else if (intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_BILL_INQUERY, false)) {
+                shwTheLimitedPrompt(TAG_SERVICE_BILL_INQUIRY);
+            }
+        }
     }
 
     @Override
@@ -88,8 +103,6 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(PBMainActivity.this, UtilityMainActivity.class);
-        startActivity(intent);
         finish();
     }
 
@@ -117,23 +130,26 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
         switch (v.getId()) {
             case R.id.homeBtnRegistration:
                 startActivity(new Intent(this, PBRegistrationActivity.class));
-                finish();
+
                 break;
             case R.id.homeBtnBillPay:
                 startActivity(new Intent(this, PBBillPayActivity.class));
-                finish();
+
                 break;
             case R.id.homeBtnInquiryReg:
-                serviceName = TAG_SERVICE_REGISTRATION_INQUIRY;
-                showLimitPrompt();
+                shwTheLimitedPrompt(TAG_SERVICE_REGISTRATION_INQUIRY);
                 break;
             case R.id.homeBtnInquiryBillPay:
-                serviceName = TAG_SERVICE_BILL_INQUIRY;
-                showLimitPrompt();
+                shwTheLimitedPrompt(TAG_SERVICE_BILL_INQUIRY);
                 break;
             default:
                 break;
         }
+    }
+
+    private void shwTheLimitedPrompt(String tagServiceBillInquiry) {
+        serviceName = tagServiceBillInquiry;
+        showLimitPrompt();
     }
 
     private void showLimitPrompt() {

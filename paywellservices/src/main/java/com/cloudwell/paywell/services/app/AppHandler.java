@@ -134,6 +134,9 @@ public class AppHandler {
     private static final String LOCATION_UPDATE_CHECK = "last_location_update_check";
     private static final String LONGITUDE = "longitude";
     private static final String LATITUDE = "latitude";
+    private static final String ACCURACY = "ACCURACY";
+    private static final String ADDRESS = "address";
+    private static final String COUNTRY = "country";
 
     private static final String GATEWAY_ID = "gateway_id";
     private static final String AGENT_PHN_NUM = "agent_phn_num";
@@ -813,6 +816,35 @@ public class AppHandler {
         editor.putString(LONGITUDE, longitude);
         editor.commit();
     }
+
+    public String getAccuracy() {
+        return mPref.getString(ACCURACY, "unknown");
+    }
+
+    public void setAccuracy(String accuracy) {
+        editor.putString(ACCURACY, accuracy);
+        editor.commit();
+    }
+
+
+    public String getAddress() {
+        return mPref.getString(ADDRESS, "unknown");
+    }
+
+    public void setAddress(String address) {
+        editor.putString(ADDRESS, address);
+        editor.commit();
+    }
+
+    public String getCountry() {
+        return mPref.getString(COUNTRY, "unknown");
+    }
+
+    public void setCountry(String country) {
+        editor.putString(COUNTRY, country);
+        editor.commit();
+    }
+
 
     public String getLatitude() {
         return mPref.getString(LATITUDE, "unknown");

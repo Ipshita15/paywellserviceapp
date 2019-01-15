@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.utility.electricity.westzone;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -466,8 +465,6 @@ public class WZPDCLBillPayActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(WZPDCLBillPayActivity.this, WZPDCLMainActivity.class);
-        startActivity(intent);
         finish();
     }
 
