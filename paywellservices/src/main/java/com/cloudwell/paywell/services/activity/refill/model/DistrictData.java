@@ -1,8 +1,9 @@
 
 package com.cloudwell.paywell.services.activity.refill.model;
 
-import java.util.List;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 @SuppressWarnings("unused")
 public class DistrictData {

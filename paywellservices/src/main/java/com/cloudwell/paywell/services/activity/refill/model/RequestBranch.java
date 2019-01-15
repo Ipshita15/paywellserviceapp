@@ -14,20 +14,20 @@ public class RequestBranch {
         return mUsername;
     }
 
-    public String getmBankId() {
-        return mBankId;
-    }
-
-    public String getmDistrictId() {
-        return mDistrictId;
-    }
-
     public void setmUsername(String mUsername) {
         this.mUsername = mUsername;
     }
 
+    public String getmBankId() {
+        return mBankId;
+    }
+
     public void setmBankId(String mBankId) {
         this.mBankId = mBankId;
+    }
+
+    public String getmDistrictId() {
+        return mDistrictId;
     }
 
     public void setmDistrictId(String mDistrictId) {

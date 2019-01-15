@@ -850,79 +850,62 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
+    private void initializePreview() {
 
-    @SuppressWarnings("deprecation")
-    private class NotificationAsync extends AsyncTask<String, Intent, String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-            String notifications = null;
-            try {
-                HttpClient httpClients = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost(params[0]);
-
-                List<NameValuePair> nameValuePairs = new ArrayList<>(4);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("mes_type", "all_message"));
-                nameValuePairs.add(new BasicNameValuePair("message_status", "all"));
-                nameValuePairs.add(new BasicNameValuePair("format", "json"));
-
-                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                notifications = httpClients.execute(httpPost, responseHandler);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return notifications;
+        String[] imageUrl = new String[mAppHandler.getDisplayPictureCount()];
+        for (int len = 0; len < mAppHandler.getDisplayPictureCount(); len++) {
+            imageUrl[len] = "https://api.paywellonline.com/retailerPromotionImage/retailer_pic_" + len + ".jpg";
         }
 
-        @Override
-        protected void onPostExecute(String result) {
-            if (result != null) {
+        Slider.init(new PicassoImageLoadingService(this));
+
+        viewPager.setAdapter(new MainSliderAdapter(getApplicationContext(), imageUrl));
+        viewPager.setInterval(2000);
+        viewPager.hideIndicators();
+        viewPager.setLoopSlides(true);
+
+        viewPager.setOnSlideClickListener(new OnSlideClickListener() {
+
+            @Override
+            public void onSlideClick(int position) {
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_SLIDER_IMAGE);
                 try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String status = jsonObject.getString(TAG_RESPONSE_STATUS);
+                    currentPage = position;
 
-                    if (status.equalsIgnoreCase("200")) {
+                    String link = mAppHandler.getDisplayPictureArrayList().get(currentPage);
 
-                        String totalUnreadMsg = jsonObject.getString(TAG_RESPONSE_TOTAL_UREAD_MSG);
+                    if (link.isEmpty()) {
 
-                        mNumOfNotification = Integer.parseInt(totalUnreadMsg);
-
-                        JSONArray jsonArray = jsonObject.getJSONArray(TAG_RESPONSE_MSG_ARRAY);
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            if (checkNotificationFlag) {
-                                checkNotificationFlag = false;
-                                mNumOfNotification = 0;
-                                startActivity(new Intent(MainActivity.this, NotificationAllActivity.class));
-                                finish();
+                    } else if (link.contains("facebook.com")) {
+                        if (!mCd.isConnectingToInternet()) {
+                            AppHandler.showDialog(getSupportFragmentManager());
+                        } else {
+                            goToFacebook();
+                        }
+                    } else if (link.contains("youtube.com")) {
+                        if (!mCd.isConnectingToInternet()) {
+                            AppHandler.showDialog(getSupportFragmentManager());
+                        } else {
+                            Intent mIntent = getPackageManager().getLaunchIntentForPackage("com.google.android.youtube");
+                            if (mIntent != null) {
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.setPackage("com.google.android.youtube");
+                                startActivity(intent);
+                            } else {
+                                WebViewActivity.TAG_LINK = link;
+                                startActivity(new Intent(MainActivity.this, WebViewActivity.class));
                             }
                         }
                     } else {
-                        mNumOfNotification = 0;
+                        WebViewActivity.TAG_LINK = link;
+                        startActivity(new Intent(MainActivity.this, WebViewActivity.class));
                     }
-                    notificationCount(mNumOfNotification);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } else {
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.conn_timeout_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
             }
-        }
+        });
     }
 
     private void checkPayWellBalance() {
@@ -1978,62 +1961,78 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    private void initializePreview() {
+    @SuppressWarnings("deprecation")
+    private class NotificationAsync extends AsyncTask<String, Intent, String> {
 
-        String[] imageUrl = new String[mAppHandler.getDisplayPictureCount()];
-        for (int len = 0; len < mAppHandler.getDisplayPictureCount(); len++) {
-            imageUrl[len] = "https://api.paywellonline.com/retailerPromotionImage/retailer_pic_" + len + ".jpg";
+        @Override
+        protected String doInBackground(String... params) {
+            String notifications = null;
+            try {
+                HttpClient httpClients = new DefaultHttpClient();
+                HttpPost httpPost = new HttpPost(params[0]);
+
+                List<NameValuePair> nameValuePairs = new ArrayList<>(4);
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("mes_type", "all_message"));
+                nameValuePairs.add(new BasicNameValuePair("message_status", "all"));
+                nameValuePairs.add(new BasicNameValuePair("format", "json"));
+
+                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                notifications = httpClients.execute(httpPost, responseHandler);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+            }
+            return notifications;
         }
 
-        Slider.init(new PicassoImageLoadingService(this));
-
-        viewPager.setAdapter(new MainSliderAdapter(getApplicationContext(), imageUrl));
-        viewPager.setInterval(2000);
-        viewPager.hideIndicators();
-        viewPager.setLoopSlides(true);
-
-        viewPager.setOnSlideClickListener(new OnSlideClickListener() {
-
-            @Override
-            public void onSlideClick(int position) {
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_SLIDER_IMAGE);
+        @Override
+        protected void onPostExecute(String result) {
+            if (result != null) {
                 try {
-                    currentPage = position;
+                    JSONObject jsonObject = new JSONObject(result);
+                    String status = jsonObject.getString(TAG_RESPONSE_STATUS);
 
-                    String link = mAppHandler.getDisplayPictureArrayList().get(currentPage);
+                    if (status.equalsIgnoreCase("200")) {
 
-                    if (link.isEmpty()) {
+                        String totalUnreadMsg = jsonObject.getString(TAG_RESPONSE_TOTAL_UREAD_MSG);
 
-                    } else if (link.contains("facebook.com")) {
-                        if (!mCd.isConnectingToInternet()) {
-                            AppHandler.showDialog(getSupportFragmentManager());
-                        } else {
-                            goToFacebook();
-                        }
-                    } else if (link.contains("youtube.com")) {
-                        if (!mCd.isConnectingToInternet()) {
-                            AppHandler.showDialog(getSupportFragmentManager());
-                        } else {
-                            Intent mIntent = getPackageManager().getLaunchIntentForPackage("com.google.android.youtube");
-                            if (mIntent != null) {
-                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                intent.setPackage("com.google.android.youtube");
-                                startActivity(intent);
-                            } else {
-                                WebViewActivity.TAG_LINK = link;
-                                startActivity(new Intent(MainActivity.this, WebViewActivity.class));
+                        mNumOfNotification = Integer.parseInt(totalUnreadMsg);
+
+                        JSONArray jsonArray = jsonObject.getJSONArray(TAG_RESPONSE_MSG_ARRAY);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            if (checkNotificationFlag) {
+                                checkNotificationFlag = false;
+                                mNumOfNotification = 0;
+                                startActivity(new Intent(MainActivity.this, NotificationAllActivity.class));
+                                finish();
                             }
                         }
                     } else {
-                        WebViewActivity.TAG_LINK = link;
-                        startActivity(new Intent(MainActivity.this, WebViewActivity.class));
+                        mNumOfNotification = 0;
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    notificationCount(mNumOfNotification);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                    View snackBarView = snackbar.getView();
+                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                    snackbar.show();
                 }
+            } else {
+                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.conn_timeout_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
-        });
+        }
     }
 
     private void goToFacebook() {
@@ -2415,7 +2414,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                             mAppHandler.setPWBalance(stringBuilder.toString());
 
-                            String strBalance = "100000.00" + getString(R.string.tk);
+                            String strBalance = mAppHandler.getPwBalance() + getString(R.string.tk);
                             mToolbarHeading.setText(strBalance);
 
                             mAppHandler.setRID(splitArray[3]);

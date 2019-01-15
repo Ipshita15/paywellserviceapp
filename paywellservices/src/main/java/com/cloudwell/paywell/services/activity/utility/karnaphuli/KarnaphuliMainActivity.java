@@ -15,7 +15,6 @@ import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
-import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -34,11 +33,11 @@ import java.util.List;
 
 public class KarnaphuliMainActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
 
-    private RelativeLayout mRelativeLayout;
+    private static AppHandler mAppHandler;
     RadioButton radioButton_five, radioButton_ten, radioButton_twenty, radioButton_fifty, radioButton_hundred, radioButton_twoHundred;
     String selectedLimit = "";
+    private RelativeLayout mRelativeLayout;
     private ConnectionDetector cd;
-    private static AppHandler mAppHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +70,6 @@ public class KarnaphuliMainActivity extends BaseActivity implements CompoundButt
         switch (v.getId()) {
             case R.id.homeBtnBillPay:
                 startActivity(new Intent(this, KarnaphuliBillPayActivity.class));
-                finish();
                 break;
             case R.id.homeBtnInquiry:
                 showLimitPrompt();
@@ -91,8 +89,6 @@ public class KarnaphuliMainActivity extends BaseActivity implements CompoundButt
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(KarnaphuliMainActivity.this, UtilityMainActivity.class);
-        startActivity(intent);
         finish();
     }
 
@@ -245,7 +241,6 @@ public class KarnaphuliMainActivity extends BaseActivity implements CompoundButt
             if (result != null) {
                 KarnaphuliInquiryActivity.TRANSLOG_TAG = result;
                 startActivity(new Intent(KarnaphuliMainActivity.this, KarnaphuliInquiryActivity.class));
-                finish();
             } else {
                 Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));
