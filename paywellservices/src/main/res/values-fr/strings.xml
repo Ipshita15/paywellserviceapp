@@ -49,6 +49,8 @@
     <string name="home_utility_pb_reg_inq">রেজিস্ট্রেশন\nঅনুসন্ধান</string>
     <string name="home_utility_pb_reg_inq_log">রেজিস্ট্রেশন লগ</string>
     <string name="home_utility_pb_bill_ing">বিল প্রদান\nঅনুসন্ধান</string>
+    <string name="home_utility_pb_bill_status_inquiry">বিল প্রদান\nঅনুসন্ধান</string>
+    <string name="home_utility_pb_request_inquiry">আবেদন বিল প্রদান\nঅনুসন্ধান</string>
     <string name="home_utility_qubee_inq_title">রিচার্জ অনুসন্ধান</string>
     <string name="home_utility_ivac_fee_pay">ফি পরিশোধ</string>
     <string name="home_utility_ivac_free_pay_favorite"> আইভিএসি \nফ্রি পরিশোধ</string>
