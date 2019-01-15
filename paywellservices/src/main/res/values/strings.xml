@@ -47,6 +47,8 @@
     <string name="home_utility_pollibiddut_bill_inquiry">Polli Biddut\nBill Inquiry</string>
     <string name="home_utility_pb_reg_inq_log">Registration Log</string>
     <string name="home_utility_pb_bill_ing">Bill Pay\nInquiry</string>
+    <string name="home_utility_pb_request_inquiry">Request Bill Pay\nInquiry</string>
+    <string name="home_utility_pb_bill_status_inquiry">Bill Pay\nInquiry</string>
     <string name="home_utility_qubee_inq_title">Recharge Inquiry</string>
     <string name="home_utility_ivac_fee_pay">Fee Pay</string>
     <string name="home_utility_ivac_free_pay_favorite">IVAC \nFee Pay</string>
