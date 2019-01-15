@@ -39,6 +39,7 @@
     <string name="home_utility_beximco">Real VU</string>
     <string name="home_utility_ivac">IVAC</string>
     <string name="home_utility_banglalion">Banglalion</string>
+    <string name="home_utility_karnaphuli">Karnaphuli</string>
     <string name="home_utility_pb_reg">Registration</string>
     <string name="home_utility_pb_billpay">Bill Pay</string>
     <string name="home_utility_pb_reg_inq">Registration\nInquiry</string>
@@ -556,6 +557,8 @@
 
     <string name="banglalion_bill_pay">https://api.paywellonline.com/PayWellInternateBillPay/banglalionBillPay</string>
     <string name="banglalion_bill_inquiry">https://api.paywellonline.com/PayWellInternateBillPay/banglalionEnquiry</string>
+
+    <string name="karnaphuli_bill">https://api.paywellonline.com/PaywelltransactionMYCash/kgdcl_billinfo</string>
 
     <!-- Eticket -->
     <string name="bus_ticket_url">https://www.paywellonline.com/final/BdTickets/BdBusTicket.php?</string>

@@ -65,6 +65,7 @@ public class AnalyticsParameters {
     public static final String KEY_UTILITY_REAL_VU_MENU = "UtilityRealVuMenu";
     public static final String KEY_UTILITY_IVAC_MENU = "UtilityIvacMenu";
     public static final String KEY_UTILITY_BANGLALION_MENU = "UtilityBanglalionMenu";
+    public static final String KEY_UTILITY_KARNAPHULI_MENU = "UtilityKarnaphuliMenu";
     public static final String KEY_PAYMENT_BKASH_MENU = "PaymentBkashMenu";
     public static final String KEY_MFS_MYCASH_MENU = "MfsMycashMenu";
     public static final String KEY_PRODUCT_AJKER_DEAL_MENU = "ProductAjkerDealMenu";
