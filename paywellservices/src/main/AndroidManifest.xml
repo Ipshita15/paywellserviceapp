@@ -416,6 +416,12 @@
                 android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity"/>
         </activity>
         <activity
+            android:name=".activity.mfs.mycash.MYCashMainActivity"
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
             android:name=".activity.mfs.mycash.GenerateOTPActivity"
             android:parentActivityName=".activity.mfs.mycash.InquiryMenuActivity"
             android:screenOrientation="portrait">
