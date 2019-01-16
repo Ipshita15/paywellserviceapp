@@ -114,27 +114,7 @@ public class KarnaphuliBillPayActivity extends BaseActivity implements View.OnCl
                 submitInquiryConfirm();
             }
         }
-//        else if (v == imageView) {
-//            showBillImage();
-//        }
     }
-
-//    private void showBillImage() {
-//        View mView = getLayoutInflater().inflate(R.layout.dialog_custom_image_layout, null);
-//        PhotoView photoView = mView.findViewById(R.id.imageView);
-//        photoView.setImageResource(R.drawable.ic_help_desco_bill);
-//
-//        AlertDialog.Builder builder =
-//                new AlertDialog.Builder(this).
-//                        setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                dialog.dismiss();
-//                            }
-//                        }).
-//                        setView(mView);
-//        builder.create().show();
-//    }
 
     private void submitInquiryConfirm() {
         if (!mCd.isConnectingToInternet()) {

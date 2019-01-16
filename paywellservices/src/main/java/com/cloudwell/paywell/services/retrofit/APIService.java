@@ -6,6 +6,7 @@ import com.cloudwell.paywell.services.activity.refill.model.DistrictData;
 import com.cloudwell.paywell.services.activity.refill.model.RefillRequestData;
 import com.cloudwell.paywell.services.activity.topup.model.RequestTopup;
 import com.cloudwell.paywell.services.activity.topup.model.TopupReposeData;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.RequestBillStatusData;
 import com.cloudwell.paywell.services.app.model.APIResposeGenerateToken;
 
 import java.util.Map;
@@ -53,6 +54,15 @@ public interface APIService {
                                                  @Field("districtId") String districtId,
                                                  @Field("branchId") String branchId,
                                                  @Field("depositslip") String depositslip);
+
+    @POST("PaywelltransactionPollyBiddyut/pollyBiddyutBillStatusQuery")
+    @FormUrlEncoded
+    Call<RequestBillStatusData> callBillStatusRequestAPI(@Field("username") String username,
+                                                         @Field("pass") String password,
+                                                         @Field("account_no") String accountNo,
+                                                         @Field("month") String month,
+                                                         @Field("year") String year,
+                                                         @Field("format") String format);
 }
 
 

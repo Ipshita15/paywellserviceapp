@@ -137,7 +137,6 @@ dependencies {
     //Logger
     implementation 'com.orhanobut:logger:2.2.0'
 
-
     // room
     implementation "android.arch.persistence.room:runtime:$room_version"
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
@@ -148,7 +147,6 @@ dependencies {
 
     implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:1.0.4'
 
-
     // rxjava
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
@@ -158,9 +156,6 @@ dependencies {
     implementation 'org.jetbrains.anko:anko-common:0.9'
 
     implementation 'com.github.silvestrpredko:dot-progress-bar:1.1'
-
-
-
 
 
 }

@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatDialog;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,6 +48,7 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
     private String linkPolliBillPay = "https://www.youtube.com/watch?v=SAuIFcUclvs&t=1s";
     private static String TAG_SERVICE_REGISTRATION_INQUIRY = "POLLI_REG";
     private static String TAG_SERVICE_BILL_INQUIRY = "POLLI_BILL";
+    private static String TAG_SERVICE_BILL_STATUS = "POLLI_STATUS";
 
 
     @Override
@@ -72,11 +74,15 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
             btnBill.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnRegInq.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnBillInq.setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((Button) mRelativeLayout.findViewById(R.id.btRequestInquiry)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            ((Button) mRelativeLayout.findViewById(R.id.btBillStatusInquiry)).setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
             btnReg.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnBill.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnRegInq.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnBillInq.setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((Button) mRelativeLayout.findViewById(R.id.btRequestInquiry)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            ((Button) mRelativeLayout.findViewById(R.id.btBillStatusInquiry)).setTypeface(AppController.getInstance().getAponaLohitFont());
         }
 
         checkIsComeFromFav(getIntent());
@@ -130,17 +136,21 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
         switch (v.getId()) {
             case R.id.homeBtnRegistration:
                 startActivity(new Intent(this, PBRegistrationActivity.class));
-
                 break;
             case R.id.homeBtnBillPay:
                 startActivity(new Intent(this, PBBillPayActivity.class));
-
                 break;
             case R.id.homeBtnInquiryReg:
                 shwTheLimitedPrompt(TAG_SERVICE_REGISTRATION_INQUIRY);
                 break;
             case R.id.homeBtnInquiryBillPay:
                 shwTheLimitedPrompt(TAG_SERVICE_BILL_INQUIRY);
+                break;
+            case R.id.btRequestInquiry:
+                startActivity(new Intent(this, PBRequestBillStatusActivity.class));
+                break;
+            case R.id.btBillStatusInquiry:
+                shwTheLimitedPrompt(TAG_SERVICE_BILL_STATUS);
                 break;
             default:
                 break;
@@ -156,8 +166,10 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
         final AppCompatDialog dialog = new AppCompatDialog(this);
         if (serviceName.equalsIgnoreCase(TAG_SERVICE_REGISTRATION_INQUIRY)) {
             dialog.setTitle(R.string.reg_log_limit_title_msg);
-        } else {
+        } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_BILL_INQUIRY)) {
             dialog.setTitle(R.string.log_limit_title_msg);
+        } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_BILL_STATUS)) {
+            dialog.setTitle(R.string.status_log_limit_title_msg);
         }
         dialog.setContentView(R.layout.dialog_trx_limit);
 
@@ -305,11 +317,12 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
                 if (serviceName.equalsIgnoreCase(TAG_SERVICE_REGISTRATION_INQUIRY)) {
                     PBInquiryRegActivity.TRANSLOG_TAG = result;
                     startActivity(new Intent(PBMainActivity.this, PBInquiryRegActivity.class));
-                    finish();
-                } else {
+                } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_BILL_INQUIRY)) {
                     PBInquiryBillPayActivity.TRANSLOG_TAG = result;
                     startActivity(new Intent(PBMainActivity.this, PBInquiryBillPayActivity.class));
-                    finish();
+                } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_BILL_STATUS)) {
+                    PBRequestBillStatusInquiryActivity.TRANSLOG_TAG = result;
+                    startActivity(new Intent(PBMainActivity.this, PBRequestBillStatusInquiryActivity.class));
                 }
             } else {
                 Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);

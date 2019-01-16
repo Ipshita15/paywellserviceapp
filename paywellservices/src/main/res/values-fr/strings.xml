@@ -49,8 +49,10 @@
     <string name="home_utility_pb_reg_inq">রেজিস্ট্রেশন\nঅনুসন্ধান</string>
     <string name="home_utility_pb_reg_inq_log">রেজিস্ট্রেশন লগ</string>
     <string name="home_utility_pb_bill_ing">বিল প্রদান\nঅনুসন্ধান</string>
-    <string name="home_utility_pb_bill_status_inquiry">বিল প্রদান\nঅনুসন্ধান</string>
-    <string name="home_utility_pb_request_inquiry">আবেদন বিল প্রদান\nঅনুসন্ধান</string>
+    <string name="home_utility_pb_bill_status_inquiry">বিলের অবস্থা\nঅনুসন্ধান</string>
+    <string name="home_utility_pb_bill_status_inquiry_title">বিলের অবস্থা অনুসন্ধান</string>
+    <string name="home_utility_pb_request_inquiry">বিল সম্পর্কে\nজানার জন্য অনুরোধ</string>
+    <string name="home_utility_pb_request_inquiry_title">বিল সম্পর্কে জানার জন্য অনুরোধ</string>
     <string name="home_utility_qubee_inq_title">রিচার্জ অনুসন্ধান</string>
     <string name="home_utility_ivac_fee_pay">ফি পরিশোধ</string>
     <string name="home_utility_ivac_free_pay_favorite"> আইভিএসি \nফ্রি পরিশোধ</string>
@@ -176,6 +178,7 @@
     <string name="log_limit_title_msg">পূর্ববর্তী লেনদেনের সংখ্যা</string>
     <string name="reg_log_limit_title_msg">পূর্ববর্তী রেজিস্ট্রেশন সংখ্যা</string>
     <string name="activity_log_limit_title_msg">আক্টিভিটি লগের সংখ্যা</string>
+    <string name="status_log_limit_title_msg">স্ট্যাটাস লগের সংখ্যা</string>
     <string name="add_number_amount_msg">ফোন নম্বর অথবা টাকার পরিমান দিন</string>
     <string name="pin_no_title_msg">পিন নম্বর</string>
     <string name="services_alert_msg">দুঃখিত আপনি অনুমোদিত নন</string>
@@ -313,7 +316,7 @@
     <string name="web_file_des">ওয়েব ফাইল নম্বরঃ</string>
     <string name="passport_des">পাসপোর্ট নম্বরঃ</string>
     <string name="banglalion_trx_id_des">বাংলালায়ন লেনদেন নাম্বারঃ</string>
-    <string name="retail_commission">রিটেইলার কমিশনঃ</string>
+    <string name="retail_commission_des">রিটেইলার কমিশনঃ</string>
 
     <string name="pre_paid_str">prepaid</string>
     <string name="post_paid_str">postpaid</string>
