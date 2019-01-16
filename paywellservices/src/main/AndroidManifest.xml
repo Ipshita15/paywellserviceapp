@@ -124,6 +124,29 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity"/>
         </activity>
+
+        <activity
+            android:name=".activity.utility.pallibidyut.changeMobileNumber.RequestMobileNumberChangeActivity"
+            android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity"/>
+        </activity>
+
+        <activity
+            android:name=".activity.utility.pallibidyut.changeMobileNumber.PBInquiryMobileNumberChangeActivity"
+            android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity"/>
+        </activity>
+
         <activity
             android:name=".activity.utility.pallibidyut.PBInquiryRegActivity"
             android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
