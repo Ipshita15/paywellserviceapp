@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/relativeLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/ic_background_card"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activity.utility.pallibidyut.PBMainActivity">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/relativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_background_card"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:context=".activity.utility.pallibidyut.PBMainActivity">
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -34,12 +34,12 @@
                     android:onClick="onButtonClicker"
                     android:text="@string/home_utility_pb_reg"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"/>
 
                 <Button
                     android:id="@+id/homeBtnBillPay"
@@ -48,12 +48,12 @@
                     android:onClick="onButtonClicker"
                     android:text="@string/home_utility_pb_billpay"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"/>
 
                 <Button
                     android:id="@+id/homeBtnInquiryReg"
@@ -63,7 +63,7 @@
                     android:paddingTop="10dp"
                     android:text="@string/home_utility_pb_reg_inq"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
             </LinearLayout>
 
             <LinearLayout
@@ -81,7 +81,7 @@
                     android:onClick="onButtonClicker"
                     android:text="@string/home_utility_pb_bill_ing"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -101,7 +101,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"/>
 
 
                 <Button
@@ -109,7 +109,7 @@
                     style="@style/HomeButtonNew"
                     android:drawableTop="@drawable/ic_enquiry"
                     android:onClick="onButtonClicker"
-                    android:text="@string/home_utility_pb_bill_status_inquiry"
+                    android:text="@string/home_utility_pb_bill_statu_inquery"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
 
@@ -135,7 +135,7 @@
                     style="@style/HomeButtonNew"
                     android:drawableTop="@drawable/contact_number_change"
                     android:onClick="onButtonClicker"
-                    android:text="@string/home_utility_pb_bill_ing"
+                    android:text="@string/home_utility_pb_bill_change_number"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
 
@@ -149,7 +149,7 @@
                     style="@style/HomeButtonNew"
                     android:drawableTop="@drawable/ic_enquiry"
                     android:onClick="onButtonClicker"
-                    android:text="@string/home_utility_pb_bill_ing"
+                    android:text="@string/home_utility_pb_phone_number_inquiry"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
 

@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 
+import com.amitshekhar.DebugDB;
 import com.cloudwell.paywell.services.BuildConfig;
 import com.cloudwell.paywell.services.activity.myFavorite.helper.MyFavoriteHelper;
 import com.cloudwell.paywell.services.utils.AppVersionUtility;
@@ -62,6 +63,8 @@ public class AppController extends Application {
             String id = FirebaseInstanceId.getInstance().getToken();
             Log.e("device_token", "" + id);
 
+            Logger.v(DebugDB.getAddressLog());
+
 
             if (LeakCanary.isInAnalyzerProcess(this)) {
                 // This process is dedicated to LeakCanary for heap analysis.
@@ -74,28 +77,23 @@ public class AppController extends Application {
         configureCrashReporting();
         setupCrashlyticsUserInfo();
 
+        installMenuData();
+
+    }
+
+    private void installMenuData() {
         AppVersionUtility.AppStart appStart = AppVersionUtility.checkAppStart(getApplicationContext());
         switch (appStart) {
             case NORMAL:
-
                 break;
             case FIRST_TIME:
                 MyFavoriteHelper.Companion.insertData(getApplicationContext());
                 break;
-
             case FIRST_TIME_VERSION:
                 MyFavoriteHelper.Companion.insertData(getApplicationContext());
-
                 break;
-
-
         }
-
-
-
-
     }
-
 
 
     public static RefWatcher getRefWatcher(Context context) {

@@ -39,6 +39,8 @@
     <string name="home_utility_pollibiddut_bill_pay_favorite">পল্লী বিদ্যুৎ \nবিল প্রদান</string>
     <string name="home_utility_pollibiddut_reg_inquiry">পল্লী বিদ্যুৎ \nরেজিস্ট্রেশন \nঅনুসন্ধান </string>
     <string name="home_utility_pollibiddut_bill_inquiry">পল্লী বিদ্যুৎ \বিল অনুসন্ধান </string>
+    <string name="home_utility_pb_bill_change_number">ফোন নম্বর \nপরিবর্তন অনুরোধ</string>
+    <string name="home_utility_pb_phone_number_inquiry">ফোন নম্বর অনুসন্ধান</string>
     <string name="home_utility_ivac">আইভিএসি</string>
     <string name="home_utility_banglalion">বাংলালায়ন</string>
     <string name="home_utility_karnaphuli">কর্ণফুলী</string>
@@ -49,8 +51,9 @@
     <string name="home_utility_pb_reg_inq">রেজিস্ট্রেশন\nঅনুসন্ধান</string>
     <string name="home_utility_pb_reg_inq_log">রেজিস্ট্রেশন লগ</string>
     <string name="home_utility_pb_bill_ing">বিল প্রদান\nঅনুসন্ধান</string>
-    <string name="home_utility_pb_bill_status_inquiry">বিল প্রদান\nঅনুসন্ধান</string>
-    <string name="home_utility_pb_request_inquiry">আবেদন বিল প্রদান\nঅনুসন্ধান</string>
+    <string name="home_utility_pb_request_inquiry">বিল সম্পর্কে জানার \nজন্য অনুরোধ</string>
+    <string name="home_utility_pb_bill_statu_inquery">বিলের অবস্থা অনুসন্ধান</string>
+    <string name="home_utility_polli_request_mobile_number_change">বিল স্থিতি জন্য অনুরোধ</string>
     <string name="home_utility_qubee_inq_title">রিচার্জ অনুসন্ধান</string>
     <string name="home_utility_ivac_fee_pay">ফি পরিশোধ</string>
     <string name="home_utility_ivac_free_pay_favorite"> আইভিএসি \nফ্রি পরিশোধ</string>
@@ -206,7 +209,6 @@
     <string name="hint_source_msg">**স্টেশনের নাম দেখার জন্য, প্রথম তিন অক্ষর লিখুন</string>
     <string name="reset_pin_msg">আপনি কি পিন পরিবর্তন করতে চান?</string>
     <string name="change_pin_status_msg">আপনার পিন সফলভাবে পরিবর্তন করা হয়েছে</string>
-    <string name="choose_image_for_upload_msg">আপলোড করার জন্য চিত্র বাছাই</string>
     <string name="bank_transfer_header_msg">নীচের যেকোন ব্যাংকের লোগো সিলেক্ট করে, ব্যাংকের তথ্য জেনে নিন এবং ডিপোজিট স্লিপ আপলোড করুন</string>
     <string name="today_msg">Today</string>
     <string name="unread_first_msg">আপনার নতুন</string>
@@ -243,7 +245,6 @@
     <string name="okay_btn">OK</string>
     <string name="confirm_btn">কনফার্ম</string>
     <string name="cancel_btn">Cancel</string>
-    <string name="form_galary_btn">গ্যালারী থেকে</string>
     <string name="next_btn">পরবর্তী</string>
     <string name="skip_btn">Skip</string>
     <string name="got_it_btn">বুঝেছি</string>
@@ -258,6 +259,7 @@
     <string name="amount_des">টাকার পরিমানঃ</string>
     <string name="trx_id_des">লেনদেনের আইডিঃ</string>
     <string name="status_des">স্ট্যাটাসঃ</string>
+    <string name="sms">বার্তাঃ</string>
     <string name="acc_no_des">অ্যাকাউন্ট নম্বরঃ</string>
     <string name="conf_acc_des">অ্যাকাউন্ট নম্বর পুনরায় দিনঃ</string>
     <string name="cust_name_des">সম্পূর্ণ নামঃ</string>
@@ -505,6 +507,8 @@
     <string name="pb_reg">https://www.paywellonline.com/default/api/polli/polli_regs.php?</string>
     <string name="pb_reg_with_otp">https://www.paywellonline.com/default/api/polli/polli_reg_otp.php</string>
     <string name="pb_bill_pay">https://www.paywellonline.com/default/api/polli/polli.php?</string>
+    <string name="pb_bill_pay_pollyBiddyutPhoneNoChange">https://api.paywellonline.com/PaywelltransactionPollyBiddyut/pollyBiddyutPhoneNoChange?</string>
+
 
     <string name="desco_bill_enq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
     <string name="desco_bill_pay">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
@@ -553,8 +557,6 @@
     <!-- Refill -->
     <string name="refill_sda_info">https://api.paywellonline.com/Android/SDAinformation?</string>
     <string name="refill_mfs_info">https://api.paywellonline.com/Android/paymentInfo?</string>
-    <string name="refill_bank_info">https://api.paywellonline.com/Android/bankinformations?</string>
-    <string name="refill_bank_deposit">https://www.paywellonline.com/crs3291/android/deposit_slip.php</string>
 
     <!-- Product -->
     <string name="ajd_token">http://ajkerdeal.paywellonline.com/api/Paywell/CreateToken?</string>

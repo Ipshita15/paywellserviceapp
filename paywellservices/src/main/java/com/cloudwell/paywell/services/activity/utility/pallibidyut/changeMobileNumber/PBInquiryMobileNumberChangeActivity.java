@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.utility.pallibidyut;
+package com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -31,12 +31,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class  PBInquiryBillPayActivity extends AppCompatActivity {
+public class PBInquiryMobileNumberChangeActivity extends AppCompatActivity {
 
+    public static String TRANSLOG_TAG = "TRANSLOGTXT";
     private AppHandler mAppHandler;
     private RelativeLayout mRelativeLayout;
     private ListView listView;
-    public static String TRANSLOG_TAG = "TRANSLOGTXT";
     private String date = "";
     private CustomAdapter adapter;
 
@@ -54,7 +54,7 @@ public class  PBInquiryBillPayActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_utility_inquiry);
+        setContentView(R.layout.activity_utility_inquiry_mobile_number_change);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_topup_trx_log);
@@ -122,7 +122,7 @@ public class  PBInquiryBillPayActivity extends AppCompatActivity {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if(adapter.mData.get(position).contains("@")) {
+                    if (adapter.mData.get(position).contains("@")) {
                         showFullInfo(position);
                     }
                 }
@@ -150,16 +150,43 @@ public class  PBInquiryBillPayActivity extends AppCompatActivity {
         finish();
     }
 
+    private void showFullInfo(int position) {
+        String array[] = adapter.mData.get(position).split("@");
+        String msg = "Bill No: " + array[0] + "\nBill Amount: " + getString(R.string.tk_des) + " " + array[3]
+                + "\nMonth: " + array[6] + "\nTBPS Charge: " + getString(R.string.tk_des) + " " + array[8]
+                + "\nTotal: " + getString(R.string.tk_des) + " " + array[9]
+                + "\nDate: " + array[7] + "\nTrx ID: " + array[4];
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(PBInquiryMobileNumberChangeActivity.this);
+        if (array[1].equalsIgnoreCase("200")) {
+            builder.setTitle(Html.fromHtml("<font color='#008000'>Result Successful</font>"));
+        } else if (array[1].equalsIgnoreCase("100")) {
+            builder.setTitle(Html.fromHtml("<font color='#ff0000'>Result To Be Process</font>"));
+        } else {
+            builder.setTitle(Html.fromHtml("<font color='#ff0000'>Result Failed</font>"));
+            msg = msg + "\n\nStatus: " + array[2];
+        }
+        builder.setMessage(msg);
+        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int id) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
     public class CustomAdapter extends BaseAdapter {
 
         private static final int TYPE_ITEM = 0;
         private static final int TYPE_SEPARATOR = 1;
 
         public ArrayList<String> mData = new ArrayList<>();
-        private ArrayList<String> array = new ArrayList<>();
-        private LayoutInflater mInflater;
         String splitArray_row_first[];
         String splitArray_row_second[];
+        private ArrayList<String> array = new ArrayList<>();
+        private LayoutInflater mInflater;
 
         public CustomAdapter(Context context) {
             mInflater = (LayoutInflater) context
@@ -321,33 +348,5 @@ public class  PBInquiryBillPayActivity extends AppCompatActivity {
         public class ViewHolder {
             TextView textView, billNo, status, amount;
         }
-    }
-
-
-    private void showFullInfo(int position) {
-        String array[] = adapter.mData.get(position).split("@");
-        String msg = "Bill No: " + array[0] + "\nBill Amount: " + getString(R.string.tk_des) + " " + array[3]
-                + "\nMonth: " + array[6] + "\nTBPS Charge: " + getString(R.string.tk_des) + " " + array[8]
-                + "\nTotal: " + getString(R.string.tk_des) + " " + array[9]
-                + "\nDate: " + array[7] + "\nTrx ID: " + array[4];
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(PBInquiryBillPayActivity.this);
-        if (array[1].equalsIgnoreCase("200")) {
-            builder.setTitle(Html.fromHtml("<font color='#008000'>Result Successful</font>"));
-        } else if (array[1].equalsIgnoreCase("100")) {
-            builder.setTitle(Html.fromHtml("<font color='#ff0000'>Result To Be Process</font>"));
-        } else {
-            builder.setTitle(Html.fromHtml("<font color='#ff0000'>Result Failed</font>"));
-            msg = msg + "\n\nStatus: " + array[2];
-        }
-        builder.setMessage(msg);
-        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int id) {
-                dialogInterface.dismiss();
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
     }
 }
