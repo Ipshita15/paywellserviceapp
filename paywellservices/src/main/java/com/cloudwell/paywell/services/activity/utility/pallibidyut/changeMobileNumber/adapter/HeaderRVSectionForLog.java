@@ -28,7 +28,7 @@ public class HeaderRVSectionForLog extends StatelessSection {
     private boolean mIsEnglish;
 
     public HeaderRVSectionForLog(int index, String title, List<ResMobileChangeLog> list, boolean isEnglish) {
-        super(R.layout.dialog_both_header, R.layout.dialog_polli_reg_inq);
+        super(R.layout.dialog_both_header, R.layout.dialog_polli_reg_inq_new_log);
         mIndex = index;
         this.title = title;
         this.list = list;
