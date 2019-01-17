@@ -117,7 +117,7 @@
     <string name="home_scan_qr_code">PayWell RID</string>
     <string name="home_settings_help">Help</string>
     <string name="home_utility_polli_biddut_bill_pay">Polli Biddut\nBill Pay</string>
-    <string name="home_utility_polli_request_mobile_number_change">Request For Bill Status</string>
+    <string name="home_utility_polli_request_mobile_number_change">Change Reg. Phone Numbers</string>
     <string name="home_utility_polli_home_request_mobile_number_change">Request For Bill Status</string>
     <string name="home_utility_dpdc_bill_pay">DPDC\nBill Pay</string>
     <string name="home_all_service">All\nServices</string>
