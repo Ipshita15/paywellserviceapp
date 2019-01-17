@@ -102,7 +102,8 @@ import com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliBill
 import com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliMainActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBRegistrationActivity;
-import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.PBInquiryMobileNumberChangeActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBRequestBillStatusActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.RequestMobileNumberChangeActivity;
 import com.cloudwell.paywell.services.adapter.HomeFavoriteAdapter;
 import com.cloudwell.paywell.services.adapter.MainSliderAdapter;
 import com.cloudwell.paywell.services.adapter.PicassoImageLoadingService;
@@ -2164,13 +2165,23 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
 
             case R.string.home_utility_pb_request_inquiry:
-                intent = new Intent(getApplicationContext(), PBInquiryMobileNumberChangeActivity.class);
+                intent = new Intent(getApplicationContext(), PBRequestBillStatusActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_utility_pb_bill_statu_inquery:
                 intent = new Intent(getApplicationContext(), PBMainActivity.class);
                 intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_REQUEST_BILL_INQUIRY, true);
+                startActivityWithFlag(intent);
+                break;
+            case R.string.home_utility_pb_bill_change_number:
+                intent = new Intent(getApplicationContext(), RequestMobileNumberChangeActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_pb_phone_number_inquiry:
+                intent = new Intent(getApplicationContext(), PBMainActivity.class);
+                intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_MOBILE_NUMBER_CHANGE_INQUIRY, true);
                 startActivityWithFlag(intent);
                 break;
 

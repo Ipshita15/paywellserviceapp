@@ -45,12 +45,12 @@
     <string name="home_utility_pb_reg_inq">Registration\nInquiry</string>
     <string name="home_utility_pollibiddut_reg_inquiry">Polli Biddut\nRegistration\nInquiry</string>
     <string name="home_utility_pollibiddut_bill_inquiry">Polli Biddut\nBill Inquiry</string>
-    <string name="home_utility_pb_bill_change_number">Request phone number</string>
+    <string name="home_utility_pb_bill_change_number">Change Reg. \nPhone Number</string>
     <string name="home_utility_pb_reg_inq_log">Registration Log</string>
     <string name="home_utility_pb_bill_ing">Bill Pay\nInquiry</string>
-    <string name="home_utility_pb_phone_number_inquiry">Phone number \nchange Inquiry</string>
-    <string name="home_utility_pb_request_inquiry">Request For \nBill Status</string>
-    <string name="home_utility_pb_bill_statu_inquery">Bill Status Inquiry</string>
+    <string name="home_utility_pb_phone_number_inquiry">Inquiry Change \nPhone Number </string>
+    <string name="home_utility_pb_request_inquiry">Request For Bill Status</string>
+    <string name="home_utility_pb_bill_statu_inquery">Request bill pay inquiry</string>
     <string name="home_utility_qubee_inq_title">Recharge Inquiry</string>
     <string name="home_utility_ivac_fee_pay">Fee Pay</string>
     <string name="home_utility_ivac_free_pay_favorite">IVAC \nFee Pay</string>
@@ -118,6 +118,7 @@
     <string name="home_settings_help">Help</string>
     <string name="home_utility_polli_biddut_bill_pay">Polli Biddut\nBill Pay</string>
     <string name="home_utility_polli_request_mobile_number_change">Request For Bill Status</string>
+    <string name="home_utility_polli_home_request_mobile_number_change">Request For Bill Status</string>
     <string name="home_utility_dpdc_bill_pay">DPDC\nBill Pay</string>
     <string name="home_all_service">All\nServices</string>
     <string name="home_utility_postpaid_bill_pay">Postpaid\nBill Pay</string>
@@ -584,6 +585,8 @@
     <string name="Added">Added:</string>
     <string name="add_fav">Add</string>
     <string name="balance_pre_text">Balance</string>
+    <string name="home_utility_home_pb_bill_status_inquiry_title">Bill Status Inquery</string>
+    <string name="home_utility_pb_bill_status_inquiry_title">Inquiry Change Phone Number</string>
 
 
 </resources>
