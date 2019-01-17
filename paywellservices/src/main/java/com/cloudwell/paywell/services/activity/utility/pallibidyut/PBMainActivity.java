@@ -50,7 +50,7 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
     private static String TAG_SERVICE_REGISTRATION_INQUIRY = "POLLI_REG";
     private static String TAG_SERVICE_BILL_INQUIRY = "POLLI_BILL";
     private static String TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY = "POLLI_RREG";
-
+    private static String TAG_SERVICE_PHONE_NUMBER_BILL_STATUS = "POLLI_STATUS";
 
 
     @Override
@@ -70,6 +70,10 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
         Button btnBill = findViewById(R.id.homeBtnBillPay);
         Button btnRegInq = findViewById(R.id.homeBtnInquiryReg);
         Button btnBillInq = findViewById(R.id.homeBtnInquiryBillPay);
+
+        Button btRequestInquiry = findViewById(R.id.btRequestInquiry);
+        Button btBillStatusInquiry = findViewById(R.id.btBillStatusInquiry);
+
         Button btChangeMobileNumber = findViewById(R.id.btChangeMobileNumber);
         Button btChangeMobileNumbEnquiry = findViewById(R.id.btChangeMobileNumbeEnquiry);
 
@@ -78,13 +82,18 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
             btnBill.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnRegInq.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnBillInq.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btRequestInquiry.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btBillStatusInquiry.setTypeface(AppController.getInstance().getOxygenLightFont());
             btChangeMobileNumber.setTypeface(AppController.getInstance().getOxygenLightFont());
             btChangeMobileNumbEnquiry.setTypeface(AppController.getInstance().getOxygenLightFont());
+
         } else {
             btnReg.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnBill.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnRegInq.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnBillInq.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btRequestInquiry.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btBillStatusInquiry.setTypeface(AppController.getInstance().getAponaLohitFont());
             btChangeMobileNumber.setTypeface(AppController.getInstance().getAponaLohitFont());
             btChangeMobileNumbEnquiry.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
@@ -102,9 +111,9 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
             } else if (intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_BILL_INQUERY, false)) {
                 shwTheLimitedPrompt(TAG_SERVICE_BILL_INQUIRY);
             } else if (intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_REQUEST_BILL_INQUIRY, false)) {
-                shwTheLimitedPrompt(TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY);
+                shwTheLimitedPrompt(TAG_SERVICE_PHONE_NUMBER_BILL_STATUS);
             } else if (intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_MOBILE_NUMBER_CHANGE_INQUIRY, false)) {
-                // shwTheLimitedPrompt(TAG_MOBILE_NUMBER_CHANGE_INQUIRY);
+                shwTheLimitedPrompt(TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY);
             }
         }
     }
@@ -156,6 +165,14 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
                 break;
             case R.id.homeBtnInquiryBillPay:
                 shwTheLimitedPrompt(TAG_SERVICE_BILL_INQUIRY);
+                break;
+
+            case R.id.btRequestInquiry:
+                startActivity(new Intent(this, PBRequestBillStatusActivity.class));
+
+                break;
+            case R.id.btBillStatusInquiry:
+                shwTheLimitedPrompt(TAG_SERVICE_PHONE_NUMBER_BILL_STATUS);
                 break;
 
             case R.id.btChangeMobileNumber:
@@ -332,12 +349,12 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
                     PBInquiryBillPayActivity.TRANSLOG_TAG = result;
                     startActivity(new Intent(PBMainActivity.this, PBInquiryBillPayActivity.class));
 
-                } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY)) {
+                } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_PHONE_NUMBER_BILL_STATUS)) {
                     PBInquiryMobileNumberChangeActivity.Companion.setTRANSLOG_TAG(result);
-                    startActivity(new Intent(PBMainActivity.this, PBInquiryMobileNumberChangeActivity.class));
+                    startActivity(new Intent(PBMainActivity.this, PBRequestBillStatusInquiryActivity.class));
 
                 } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY)) {
-                    PBInquiryMobileNumberChangeActivity.TRANSLOG_TAG = result;
+                    PBInquiryMobileNumberChangeActivity.Companion.setTRANSLOG_TAG(result);
                     startActivity(new Intent(PBMainActivity.this, PBInquiryMobileNumberChangeActivity.class));
                 }
             } else {

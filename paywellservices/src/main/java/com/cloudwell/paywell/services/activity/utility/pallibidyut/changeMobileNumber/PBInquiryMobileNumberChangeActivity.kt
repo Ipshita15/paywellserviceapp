@@ -65,65 +65,74 @@ class PBInquiryMobileNumberChangeActivity : AppCompatActivity() {
         mRelativeLayout = findViewById(R.id.relativeLayout)
 
 
-        val response = TRANSLOG_TAG
-        var resMobileChangeLogs = Gson().fromJson(response, Array<ResMobileChangeLog>::class.java)
-        if (resMobileChangeLogs.size < 0) {
-            showNoDataFoundMessage()
-            return
-        }
-        initView(resMobileChangeLogs)
+
+        initView()
 
     }
 
-    private fun initView(resMobileChangeLogs: Array<ResMobileChangeLog>) {
+    private fun initView() {
 
-        var sectionAdapter = SectionedRecyclerViewAdapter()
-        val allHeaderSet = HashSet<String>()
-        val allData = kotlin.collections.mutableMapOf<String, List<ResMobileChangeLog>>()
-        val inputFormat = SimpleDateFormat("yyyy-MM-dd")
-        val outputFormat = SimpleDateFormat("dd MMM yyyy")
+        try {
 
-        val isEnglish = mAppHandler?.getAppLanguage().equals("en", ignoreCase = true)
+            val response = TRANSLOG_TAG
+            val resMobileChangeLogs = Gson().fromJson(response, Array<ResMobileChangeLog>::class.java)
+            if (resMobileChangeLogs.size < 0) {
+                showNoDataFoundMessage()
+                return
+            }
+
+            var sectionAdapter = SectionedRecyclerViewAdapter()
+            val allHeaderSet = HashSet<String>()
+            val allData = kotlin.collections.mutableMapOf<String, List<ResMobileChangeLog>>()
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd")
+            val outputFormat = SimpleDateFormat("dd MMM yyyy")
+
+            val isEnglish = mAppHandler?.getAppLanguage().equals("en", ignoreCase = true)
 
 
-        for (i in resMobileChangeLogs.indices) {
-            val resMobileChangeLog = resMobileChangeLogs[i]
-            val dateFormatedFirst = inputFormat.parse(resMobileChangeLog.requestDatetime)
-            val outputDateStr = outputFormat.format(dateFormatedFirst)
-
-            allHeaderSet.add(outputDateStr);
-        }
-
-
-        for (s in allHeaderSet) {
-            val tempData = ArrayList<ResMobileChangeLog>()
             for (i in resMobileChangeLogs.indices) {
-                val date = resMobileChangeLogs[i].requestDatetime
-                val dateFormatedFirst = inputFormat.parse(date)
+                val resMobileChangeLog = resMobileChangeLogs[i]
+                val dateFormatedFirst = inputFormat.parse(resMobileChangeLog.requestDatetime)
                 val outputDateStr = outputFormat.format(dateFormatedFirst)
 
-                if (outputDateStr == s) {
-                    tempData.add(resMobileChangeLogs[i])
-                }
+                allHeaderSet.add(outputDateStr);
             }
-            allData[s] = tempData
 
+
+            for (s in allHeaderSet) {
+                val tempData = ArrayList<ResMobileChangeLog>()
+                for (i in resMobileChangeLogs.indices) {
+                    val date = resMobileChangeLogs[i].requestDatetime
+                    val dateFormatedFirst = inputFormat.parse(date)
+                    val outputDateStr = outputFormat.format(dateFormatedFirst)
+
+                    if (outputDateStr == s) {
+                        tempData.add(resMobileChangeLogs[i])
+                    }
+                }
+                allData[s] = tempData
+
+            }
+
+            sectionAdapter = SectionedRecyclerViewAdapter()
+
+            for ((index, value) in allHeaderSet.withIndex()) {
+
+                val sectionData = HeaderRVSectionForLog(index, value, allData.get(value), isEnglish)
+                sectionAdapter.addSection(sectionData)
+            }
+            var linearLayoutManager = LinearLayoutManager(this)
+
+            val sectionHeader = findViewById<RecyclerView>(R.id.listviewLog) as RecyclerView
+            sectionHeader.setLayoutManager(linearLayoutManager)
+            sectionHeader.setHasFixedSize(true)
+            sectionHeader.setAdapter(sectionAdapter)
+            sectionHeader.isNestedScrollingEnabled = false;
+        } catch (e: Exception) {
+            showNoDataFoundMessage()
         }
 
-        sectionAdapter = SectionedRecyclerViewAdapter()
 
-        for ((index, value) in allHeaderSet.withIndex()) {
-
-            val sectionData = HeaderRVSectionForLog(index, value, allData.get(value), isEnglish)
-            sectionAdapter.addSection(sectionData)
-        }
-        var linearLayoutManager = LinearLayoutManager(this)
-
-        val sectionHeader = findViewById<RecyclerView>(R.id.listviewLog) as RecyclerView
-        sectionHeader.setLayoutManager(linearLayoutManager)
-        sectionHeader.setHasFixedSize(true)
-        sectionHeader.setAdapter(sectionAdapter)
-        sectionHeader.isNestedScrollingEnabled = false;
 
 
     }

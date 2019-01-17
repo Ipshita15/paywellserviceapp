@@ -50,7 +50,7 @@ public class PBRequestBillStatusActivity extends BaseActivity implements View.On
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_utility_pb_request_inquiry_title);
+            getSupportActionBar().setTitle(R.string.home_utility_polli_home_request_mobile_number_change);
         }
         mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
