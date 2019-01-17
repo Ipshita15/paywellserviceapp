@@ -3,18 +3,18 @@ package com.cloudwell.paywell.services.service.notificaiton
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import com.androidnetworking.AndroidNetworking
-import com.androidnetworking.common.Priority
-import com.androidnetworking.error.ANError
-import com.androidnetworking.interfaces.StringRequestListener
-import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.retrofit.ApiUtils
+import com.cloudwell.paywell.services.service.notificaiton.model.APIResNoCheckNotification
 import com.cloudwell.paywell.services.service.notificaiton.model.EventNewNotificaiton
 import com.cloudwell.paywell.services.service.notificaiton.model.StartNotificationService
 import com.orhanobut.logger.Logger
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 14/1/19.
@@ -59,39 +59,31 @@ class NotificationCheckerService : Service() {
 
     private fun callBalanceCheckAPI() {
         isAPICalledRunning = true;
-
         val ah = AppHandler(applicationContext);
         val imeiNo = ah.getImeiNo()
 
-        AndroidNetworking.post(getString(R.string.pw_bal))
-                .addBodyParameter("imei_no", imeiNo)
-                .setTag("test")
-                .setPriority(Priority.HIGH)
-                .build()
-                .getAsString(object : StringRequestListener {
-                    override fun onResponse(response: String) {
-                        Logger.v(response)
-                        isAPICalledRunning = false;
 
-                        val splitArray = response.split("@".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
-                        if (splitArray.size > 4) {
-                            val parseInt = Integer.parseInt(splitArray[4]);
-                            if (parseInt > 0) {
-                                EventBus.getDefault().post(EventNewNotificaiton(parseInt))
-                            }
-                        }
-                    }
+        val responseBodyCall = ApiUtils.getAPIService().callCheckNotification(imeiNo)
+        responseBodyCall.enqueue(object : Callback<APIResNoCheckNotification> {
+            override fun onFailure(call: Call<APIResNoCheckNotification>, t: Throwable) {
+                Logger.e(t.localizedMessage)
+                isAPICalledRunning = false;
+            }
 
-                    override fun onError(error: ANError) {
-                        // handle error
-                        Logger.e(error.localizedMessage)
+            override fun onResponse(call: Call<APIResNoCheckNotification>, response: Response<APIResNoCheckNotification>) {
+                Logger.v(response.toString())
+                isAPICalledRunning = false;
+                val unread = response.body()?.unread;
+                val parseInt = Integer.parseInt(unread);
+                if (parseInt > 0) {
+                    EventBus.getDefault().post(EventNewNotificaiton(parseInt))
+                }
+            }
 
-                        isAPICalledRunning = false;
-                    }
-                })
+        })
+
 
     }
-
 
 }
 

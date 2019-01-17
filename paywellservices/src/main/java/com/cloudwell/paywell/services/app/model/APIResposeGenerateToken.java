@@ -4,7 +4,6 @@ package com.cloudwell.paywell.services.app.model;
 import com.google.gson.annotations.SerializedName;
 
 
-@SuppressWarnings("unused")
 public class APIResposeGenerateToken {
 
     @SerializedName("ack_timestamp")
