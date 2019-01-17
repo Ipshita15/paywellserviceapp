@@ -179,6 +179,7 @@
     <string name="log_limit_title_msg">পূর্ববর্তী লেনদেনের সংখ্যা</string>
     <string name="reg_log_limit_title_msg">পূর্ববর্তী রেজিস্ট্রেশন সংখ্যা</string>
     <string name="activity_log_limit_title_msg">আক্টিভিটি লগের সংখ্যা</string>
+    <string name="status_log_limit_title_msg">স্ট্যাটাস লগের সংখ্যা</string>
     <string name="add_number_amount_msg">ফোন নম্বর অথবা টাকার পরিমান দিন</string>
     <string name="pin_no_title_msg">পিন নম্বর</string>
     <string name="services_alert_msg">দুঃখিত আপনি অনুমোদিত নন</string>
@@ -315,7 +316,7 @@
     <string name="web_file_des">ওয়েব ফাইল নম্বরঃ</string>
     <string name="passport_des">পাসপোর্ট নম্বরঃ</string>
     <string name="banglalion_trx_id_des">বাংলালায়ন লেনদেন নাম্বারঃ</string>
-    <string name="retail_commission">রিটেইলার কমিশনঃ</string>
+    <string name="retail_commission_des">রিটেইলার কমিশনঃ</string>
 
     <string name="pre_paid_str">prepaid</string>
     <string name="post_paid_str">postpaid</string>

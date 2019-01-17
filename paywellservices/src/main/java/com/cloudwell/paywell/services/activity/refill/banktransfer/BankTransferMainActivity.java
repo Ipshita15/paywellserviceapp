@@ -32,17 +32,6 @@ public class BankTransferMainActivity extends BaseActivity {
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
     private CoordinatorLayout mCoordinateLayout;
-    private String bank_name = null;
-    private static final String TAG_RESPONSE_STATUS = "status";
-    private static final String TAG_BANK_NAME = "Bank_Name";
-    private static final String TAG_ACCOUNT_NAME = "Account_Name";
-    private static final String TAG_ACCOUNT_NO = "accountno";
-    private static final String TAG_BRANCH = "branch";
-    private static final String TAG_MESSAGE = "message";
-    private String strImage = "";
-    private String bankName;
-    private String bankNo;
-    private static final int PERMISSION_FOR_GALLERY = 321;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,34 +92,21 @@ public class BankTransferMainActivity extends BaseActivity {
     public void onButtonClicker(View v) {
         switch (v.getId()) {
             case R.id.homeBtnBrac:
-                bank_name = "BRAC";
-//                startActivity(new Intent(BankTransferMainActivity.this, BankDetailsActivity.class));
-//                showInformation(bank_name);
                 getDistrictList("1");
                 break;
             case R.id.homeBtnDbbl:
-//                bank_name = "DBBL";
-//                showInformation(bank_name);
                 getDistrictList("2");
                 break;
             case R.id.homeBtnIbbl:
-//                bank_name = "IBBL";
-//                showInformation(bank_name);
                 getDistrictList("3");
                 break;
             case R.id.homeBtnPbl:
-//                bank_name = "PBL";
-//                showInformation(bank_name);
                 getDistrictList("4");
                 break;
             case R.id.homeBtnScb:
-//                bank_name = "SCB";
-//                showInformation(bank_name);
                 getDistrictList("5");
                 break;
             case R.id.homeBtnCity:
-//                bank_name = "City";
-//                showInformation(bank_name);
                 getDistrictList("6");
                 break;
             default:

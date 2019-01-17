@@ -52,7 +52,8 @@ public class BankDetailsActivity extends BaseActivity {
     private AppHandler mAppHandler;
     private ConstraintLayout mConstraintLayout;
     private Spinner mSpinnerDistrict, mSpinnerBranch;
-    private Button mBtnUpload, mBtnOk;
+    private Button mBtnUpload;
+//            , mBtnOk;
     private ArrayList<String> district_array, branch_array;
     private boolean districtChangeStatus;
     private ArrayAdapter<String> arrayAdapterBranchSpinner;
@@ -90,7 +91,7 @@ public class BankDetailsActivity extends BaseActivity {
         mSpinnerDistrict = findViewById(R.id.spinner_district);
         mSpinnerBranch = findViewById(R.id.spinner_branch);
         mBtnUpload = findViewById(R.id.btn_upload);
-        mBtnOk = findViewById(R.id.btn_ok);
+//        mBtnOk = findViewById(R.id.btn_ok);
 
         TextView textViewAccountNum = findViewById(R.id.textViewAccountNo);
 
@@ -99,13 +100,13 @@ public class BankDetailsActivity extends BaseActivity {
             ((TextView) mConstraintLayout.findViewById(R.id.textViewDistrict)).setTypeface(AppController.getInstance().getOxygenLightFont());
             ((TextView) mConstraintLayout.findViewById(R.id.textViewBranch)).setTypeface(AppController.getInstance().getOxygenLightFont());
             ((Button) mConstraintLayout.findViewById(R.id.btn_upload)).setTypeface(AppController.getInstance().getOxygenLightFont());
-            ((Button) mConstraintLayout.findViewById(R.id.btn_ok)).setTypeface(AppController.getInstance().getOxygenLightFont());
+//            ((Button) mConstraintLayout.findViewById(R.id.btn_ok)).setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
             ((TextView) mConstraintLayout.findViewById(R.id.textViewAccountNo)).setTypeface(AppController.getInstance().getAponaLohitFont());
             ((TextView) mConstraintLayout.findViewById(R.id.textViewDistrict)).setTypeface(AppController.getInstance().getAponaLohitFont());
             ((TextView) mConstraintLayout.findViewById(R.id.textViewBranch)).setTypeface(AppController.getInstance().getAponaLohitFont());
             ((Button) mConstraintLayout.findViewById(R.id.btn_upload)).setTypeface(AppController.getInstance().getAponaLohitFont());
-            ((Button) mConstraintLayout.findViewById(R.id.btn_ok)).setTypeface(AppController.getInstance().getAponaLohitFont());
+//            ((Button) mConstraintLayout.findViewById(R.id.btn_ok)).setTypeface(AppController.getInstance().getAponaLohitFont());
         }
 
         try {
@@ -181,12 +182,12 @@ public class BankDetailsActivity extends BaseActivity {
                 }
             });
 
-            mBtnOk.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onSubmitRequest();
-                }
-            });
+//            mBtnOk.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    onSubmitRequest();
+//                }
+//            });
 
             mBtnUpload.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -340,31 +341,32 @@ public class BankDetailsActivity extends BaseActivity {
 
         mRequestRefillBalance.setmImagePath(imageEncoded);
 
-        mBtnUpload.setText("Uploaded");
+//        mBtnUpload.setText("Uploaded");
+        onSubmitRequest();
     }
 
 
     private void onSubmitRequest() {
-        if (!districtChangeStatus && responseBranchData.getStatus() != 200 || mRequestRefillBalance.getmImagePath() == null) {
-            onBackPressed();
+//        if (!districtChangeStatus && responseBranchData.getStatus() != 200 || mRequestRefillBalance.getmImagePath() == null) {
+//            onBackPressed();
+//        } else {
+        if (districtChangeStatus) {
+            mRequestRefillBalance.setmDistrictId(responseDistrictData.getDistrictData().get(mSpinnerDistrict.getSelectedItemPosition()).getId());
+            mRequestRefillBalance.setmBranchId(responseDistrictData.getBranch().get(mSpinnerBranch.getSelectedItemPosition()).getId());
         } else {
-            if (districtChangeStatus) {
-                mRequestRefillBalance.setmDistrictId(responseDistrictData.getDistrictData().get(mSpinnerDistrict.getSelectedItemPosition()).getId());
-                mRequestRefillBalance.setmBranchId(responseDistrictData.getBranch().get(mSpinnerBranch.getSelectedItemPosition()).getId());
-            } else {
-                mRequestRefillBalance.setmDistrictId(responseDistrictData.getDistrictData().get(mSpinnerDistrict.getSelectedItemPosition()).getId());
-                mRequestRefillBalance.setmBranchId(responseBranchData.getBranch().get(mSpinnerBranch.getSelectedItemPosition()).getId());
-            }
-            if (mCd.isConnectingToInternet()) {
-                submitBalanceRequest();
-            } else {
-                Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.internet_connection_error_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
+            mRequestRefillBalance.setmDistrictId(responseDistrictData.getDistrictData().get(mSpinnerDistrict.getSelectedItemPosition()).getId());
+            mRequestRefillBalance.setmBranchId(responseBranchData.getBranch().get(mSpinnerBranch.getSelectedItemPosition()).getId());
         }
+        if (mCd.isConnectingToInternet()) {
+            submitBalanceRequest();
+        } else {
+            Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.internet_connection_error_msg, Snackbar.LENGTH_LONG);
+            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+            View snackBarView = snackbar.getView();
+            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+            snackbar.show();
+        }
+//        }
     }
 
     private void submitBalanceRequest() {

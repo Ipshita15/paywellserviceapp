@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools"
-                                             android:id="@+id/constraintLayout"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent"
-                                             tools:context="com.cloudwell.paywell.services.activity.refill.banktransfer.BankDetailsActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.cloudwell.paywell.services.activity.refill.banktransfer.BankDetailsActivity">
 
 
     <android.support.v7.widget.CardView
@@ -16,9 +16,13 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,7 +37,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="5dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
                 android:id="@+id/textViewDistrict"
@@ -43,7 +47,7 @@
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:text="District"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Spinner
                 android:id="@+id/spinner_district"
@@ -53,7 +57,7 @@
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                android:spinnerMode="dropdown"/>
+                android:spinnerMode="dropdown" />
 
             <TextView
                 android:id="@+id/textViewBranch"
@@ -63,7 +67,7 @@
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:text="Branch"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Spinner
                 android:id="@+id/spinner_branch"
@@ -73,57 +77,76 @@
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                android:spinnerMode="dropdown"/>
+                android:spinnerMode="dropdown" />
 
-            <LinearLayout
+            <Button
+                android:id="@+id/btn_upload"
+                style="?android:attr/buttonStyleSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                android:orientation="horizontal"
-                android:weightSum="3">
+                android:background="@drawable/button_green"
+                android:shadowColor="#000000"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                android:text="Upload"
+                android:textAllCaps="false"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/colorText" />
 
-                <Button
-                    android:id="@+id/btn_upload"
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_green"
-                    android:shadowColor="#000000"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:shadowRadius="2"
-                    android:text="Upload"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/colorText"/>
+            <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
+            <!--android:layout_marginTop="@dimen/activity_horizontal_margin"-->
+            <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
+            <!--android:layout_marginBottom="@dimen/activity_horizontal_margin"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:weightSum="3">-->
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"/>
+            <!---->
+            <!--<Button-->
+            <!--android:id="@+id/btn_upload"-->
+            <!--style="?android:attr/buttonStyleSmall"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="start"-->
+            <!--android:layout_weight="3"-->
+            <!--android:background="@drawable/button_green"-->
+            <!--android:shadowColor="#000000"-->
+            <!--android:shadowDx="1"-->
+            <!--android:shadowDy="1"-->
+            <!--android:shadowRadius="2"-->
+            <!--android:text="Upload"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--android:textColor="@color/colorText" />-->
+            <!--<View-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="1"/>-->
 
-                <Button
-                    android:id="@+id/btn_ok"
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_green"
-                    android:shadowColor="#000000"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:shadowRadius="2"
-                    android:text="@string/okay_btn"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/colorText"/>
-            </LinearLayout>
+            <!--<Button-->
+            <!--android:id="@+id/btn_ok"-->
+            <!--style="?android:attr/buttonStyleSmall"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="end"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@drawable/button_green"-->
+            <!--android:shadowColor="#000000"-->
+            <!--android:shadowDx="1"-->
+            <!--android:shadowDy="1"-->
+            <!--android:shadowRadius="2"-->
+            <!--android:text="@string/okay_btn"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--android:textColor="@color/colorText"/>-->
+            <!--</LinearLayout>-->
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

@@ -196,7 +196,7 @@ public class BanglalionRechargeActivity extends BaseActivity implements View.OnC
                 + "\n" + getString(R.string.amount_des) + " " + amount + " " + R.string.tk_des
                 + "\n" + getString(R.string.trx_id_des) + " " + trxId
                 + "\n" + getString(R.string.banglalion_trx_id_des) + " " + banglalinkTrx
-                + "\n" + getString(R.string.retail_commission) + " " + retailCommission + " " + R.string.tk_des
+                + "\n" + getString(R.string.retail_commission_des) + " " + retailCommission + " " + R.string.tk_des
                 + "\n\n" + getString(R.string.using_paywell_des)
                 + "\n" + getString(R.string.hotline_des) + " " + hotline);
         AlertDialog.Builder builder = new AlertDialog.Builder(BanglalionRechargeActivity.this);

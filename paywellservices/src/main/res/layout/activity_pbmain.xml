@@ -86,7 +86,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/btRequestInquiry"
@@ -95,7 +95,7 @@
                     android:onClick="onButtonClicker"
                     android:text="@string/home_utility_pb_request_inquiry"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
                 <LinearLayout
@@ -111,13 +111,13 @@
                     android:onClick="onButtonClicker"
                     android:text="@string/home_utility_pb_bill_statu_inquery"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
 
             </LinearLayout>
 
@@ -137,12 +137,12 @@
                     android:onClick="onButtonClicker"
                     android:text="@string/home_utility_pb_bill_change_number"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/btChangeMobileNumbeEnquiry"
@@ -151,12 +151,12 @@
                     android:onClick="onButtonClicker"
                     android:text="@string/home_utility_pb_phone_number_inquiry"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
 
 
             </LinearLayout>

@@ -137,7 +137,6 @@ dependencies {
     //Logger
     implementation 'com.orhanobut:logger:2.2.0'
 
-
     // room
     implementation "android.arch.persistence.room:runtime:$room_version"
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
@@ -147,7 +146,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:1.0.4'
-
 
     // rxjava
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
@@ -160,9 +158,6 @@ dependencies {
     implementation 'com.github.silvestrpredko:dot-progress-bar:1.1'
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
-
-
-
 
 
 
