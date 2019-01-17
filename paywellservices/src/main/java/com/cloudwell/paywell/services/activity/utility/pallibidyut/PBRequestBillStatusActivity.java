@@ -197,7 +197,7 @@ public class PBRequestBillStatusActivity extends BaseActivity implements View.On
         final RequestBillStatusData data = response;
         AlertDialog.Builder builder = new AlertDialog.Builder(PBRequestBillStatusActivity.this);
         builder.setTitle("Message");
-        builder.setMessage(getString(R.string.trx_id_des) + response.getTrxId() + "\n" + getString(R.string.status_des) + response.getTrxId());
+        builder.setMessage(getString(R.string.trx_id_des) + " " + response.getTrxId() + "\n\n" + getString(R.string.status_des) + " " + response.getMessage());
         builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int id) {
