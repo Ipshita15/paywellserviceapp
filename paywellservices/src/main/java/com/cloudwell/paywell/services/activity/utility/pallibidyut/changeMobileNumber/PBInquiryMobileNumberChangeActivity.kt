@@ -59,7 +59,7 @@ class PBInquiryMobileNumberChangeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_utility_inquiry_mobile_number_change)
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-            supportActionBar!!.setTitle(R.string.home_topup_trx_log)
+            supportActionBar!!.setTitle(R.string.home_utility_pb_bill_status_inquiry_title)
         }
         mAppHandler = AppHandler(this)
         mRelativeLayout = findViewById(R.id.relativeLayout)

@@ -53,7 +53,7 @@ public class PBRequestBillStatusInquiryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_utility_inquiry);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_utility_pb_bill_status_inquiry_title);
+            getSupportActionBar().setTitle(R.string.home_utility_pb_bill_statu_inquery);
         }
         mAppHandler = new AppHandler(this);
         mRelativeLayout = findViewById(R.id.relativeLayout);
