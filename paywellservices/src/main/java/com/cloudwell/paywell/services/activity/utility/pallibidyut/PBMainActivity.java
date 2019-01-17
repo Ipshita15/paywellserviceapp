@@ -331,7 +331,7 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
                     startActivity(new Intent(PBMainActivity.this, PBInquiryBillPayActivity.class));
 
                 } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY)) {
-                    PBInquiryMobileNumberChangeActivity.TRANSLOG_TAG = result;
+                    PBInquiryMobileNumberChangeActivity.Companion.setTRANSLOG_TAG(result);
                     startActivity(new Intent(PBMainActivity.this, PBInquiryMobileNumberChangeActivity.class));
                 }
             } else {
