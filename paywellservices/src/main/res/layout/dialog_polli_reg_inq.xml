@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/ivRootLayout"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,8 +25,8 @@
                 android:layout_weight="1"
                 android:gravity="start"
                 android:padding="2dp"
-                android:textColor="#404040"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="Account number "/>
 
             <TextView
                 android:id="@+id/status"
@@ -33,21 +35,38 @@
                 android:layout_weight="1"
                 android:gravity="end"
                 android:padding="2dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="Status"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:orientation="horizontal">
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/trxId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="2dp"
-                android:textColor="#000033" />
+
+                tools:text="Tx id "/>
+
+            <TextView
+                android:id="@+id/tvMobileNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                tools:text="Mobile Number: "/>
+
+            <TextView
+                android:id="@+id/tvSMS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="SMS"/>
+
         </LinearLayout>
     </LinearLayout>
 
@@ -59,6 +78,6 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#404040" />
+            android:background="#404040"/>
     </LinearLayout>
 </LinearLayout>
