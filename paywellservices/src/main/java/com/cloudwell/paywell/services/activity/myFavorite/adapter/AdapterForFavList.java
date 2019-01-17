@@ -14,6 +14,7 @@ import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
 import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEventFavDeleted;
 import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEventPositionMove;
 import com.cloudwell.paywell.services.app.AppController;
+import com.cloudwell.paywell.services.utils.ResorceHelper;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -41,8 +42,9 @@ public class AdapterForFavList extends RecyclerView.Adapter<AdapterForFavList.My
     public void onBindViewHolder(final MyViewHolder holder, int position) {
 
         final FavoriteMenu favoriteMenu = mItems.get(position);
-        holder.textView.setText(favoriteMenu.getName());
-        holder.ivIcon.setBackgroundResource(favoriteMenu.getIcon());
+        holder.textView.setText(ResorceHelper.getResId(favoriteMenu.getName(), R.string.class));
+
+        holder.ivIcon.setBackgroundResource(ResorceHelper.getResId(favoriteMenu.getIcon(), R.drawable.class));
 
         if (mIsEnglish) {
             holder.textView.setTypeface(AppController.getInstance().getOxygenLightFont());

@@ -8,6 +8,8 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
 import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEvent;
 import com.cloudwell.paywell.services.app.AppController;
+import com.cloudwell.paywell.services.utils.ResorceHelper;
+import com.orhanobut.logger.Logger;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -49,8 +51,12 @@ public class HeaderRecyclerViewSection extends StatelessSection {
     public void onBindItemViewHolder(RecyclerView.ViewHolder holder, final int position) {
         ItemViewHolder iHolder = (ItemViewHolder) holder;
         final FavoriteMenu favoriteMenu = list.get(position);
-        iHolder.itemContent.setText(favoriteMenu.getName());
-        iHolder.ivIcon.setBackgroundResource(favoriteMenu.getIcon());
+
+        Logger.v(favoriteMenu.getName());
+        iHolder.itemContent.setText(ResorceHelper.getResId(favoriteMenu.getName(), R.string.class));
+        int resId = ResorceHelper.getResId(favoriteMenu.getIcon(), R.drawable.class);
+
+        iHolder.ivIcon.setBackgroundResource(resId);
 
         iHolder.rootLiarLayout.setOnClickListener(new View.OnClickListener() {
             @Override

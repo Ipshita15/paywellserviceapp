@@ -112,6 +112,7 @@ import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
+import com.cloudwell.paywell.services.constant.IconConstant;
 import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.database.FavoriteMenuDab;
 import com.cloudwell.paywell.services.service.notificaiton.NotificationCheckerService;
@@ -119,6 +120,8 @@ import com.cloudwell.paywell.services.service.notificaiton.model.EventNewNotific
 import com.cloudwell.paywell.services.service.notificaiton.model.StartNotificationService;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.LocationUtility;
+import com.cloudwell.paywell.services.utils.ResorceHelper;
+import com.cloudwell.paywell.services.utils.StringConstant;
 import com.cloudwell.paywell.services.utils.UpdateChecker;
 import com.github.silvestrpredko.dotprogressbar.DotProgressBar;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -406,7 +409,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
         if (result.size() == 0) {
-            result.add(new FavoriteMenu(R.string.add_fav, R.string.home_topup, R.drawable.add_fav_action, "", 0));
+            result.add(new FavoriteMenu(StringConstant.KEY_add_fav, "", IconConstant.KEY_add_fav_action, "", 0, -1));
         }
 
         HomeFavoriteAdapter adapter = new HomeFavoriteAdapter(this, result, isEnglish);
@@ -431,9 +434,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             ivUptown.setBackgroundResource(R.drawable.circle_angle_up);
             sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         }
-
-        // recyclerViewFavoirte.setVisibility(View.GONE);
-
 
     }
 
@@ -2109,7 +2109,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void onFavoriteItemClick(FavoriteMenu favoriteMenu) {
         Intent intent;
 
-        switch (favoriteMenu.getName()) {
+        int resId = ResorceHelper.getResId(favoriteMenu.getName(), R.string.class);
+
+        switch (resId) {
             case R.string.add_fav:
                 startMyFavoriteMenuActivity();
                 break;
