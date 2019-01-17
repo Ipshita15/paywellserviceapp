@@ -45,12 +45,12 @@
     <string name="home_utility_pb_reg_inq">Registration\nInquiry</string>
     <string name="home_utility_pollibiddut_reg_inquiry">Polli Biddut\nRegistration\nInquiry</string>
     <string name="home_utility_pollibiddut_bill_inquiry">Polli Biddut\nBill Inquiry</string>
+    <string name="home_utility_pb_bill_change_number">Request phone number</string>
     <string name="home_utility_pb_reg_inq_log">Registration Log</string>
     <string name="home_utility_pb_bill_ing">Bill Pay\nInquiry</string>
-    <string name="home_utility_pb_request_inquiry">Request For\nBill Status</string>
-    <string name="home_utility_pb_request_inquiry_title">Request For Bill Status</string>
-    <string name="home_utility_pb_bill_status_inquiry">Bill Status\nInquiry</string>
-    <string name="home_utility_pb_bill_status_inquiry_title">Bill Status Inquiry</string>
+    <string name="home_utility_pb_phone_number_inquiry">Phone number \nchange Inquiry</string>
+    <string name="home_utility_pb_request_inquiry">Request For \nBill Status</string>
+    <string name="home_utility_pb_bill_statu_inquery">Bill Status Inquiry</string>
     <string name="home_utility_qubee_inq_title">Recharge Inquiry</string>
     <string name="home_utility_ivac_fee_pay">Fee Pay</string>
     <string name="home_utility_ivac_free_pay_favorite">IVAC \nFee Pay</string>
@@ -117,6 +117,7 @@
     <string name="home_scan_qr_code">PayWell RID</string>
     <string name="home_settings_help">Help</string>
     <string name="home_utility_polli_biddut_bill_pay">Polli Biddut\nBill Pay</string>
+    <string name="home_utility_polli_request_mobile_number_change">Request For Bill Status</string>
     <string name="home_utility_dpdc_bill_pay">DPDC\nBill Pay</string>
     <string name="home_all_service">All\nServices</string>
     <string name="home_utility_postpaid_bill_pay">Postpaid\nBill Pay</string>
@@ -209,7 +210,6 @@
     <string name="reset_pin_msg">Are you sure, you want to reset PIN?</string>
     <string name="today_msg">Today</string>
     <string name="change_pin_status_msg">Your PIN changed successfully</string>
-    <string name="choose_image_for_upload_msg">Choose Image For Upload</string>
     <string name="bank_transfer_header_msg">Please press any of the logos below to find out our bank account details and
         also upload deposit slip</string>
     <string name="unread_first_msg">You have</string>
@@ -248,7 +248,6 @@
     <string name="okay_btn">OK</string>
     <string name="confirm_btn">Confirm</string>
     <string name="cancel_btn">Cancel</string>
-    <string name="form_galary_btn">From Galary</string>
     <string name="next_btn">Next</string>
     <string name="skip_btn">Skip</string>
     <string name="got_it_btn">Got It</string>
@@ -263,6 +262,7 @@
     <string name="amount_des">Amount:</string>
     <string name="trx_id_des">TRX ID:</string>
     <string name="status_des">Status:</string>
+    <string name="sms">SMS:</string>
     <string name="acc_no_des">Account Number:</string>
     <string name="bill_no_des">Bill Number:</string>
     <string name="conf_acc_des">Confirm Account Number:</string>
@@ -504,6 +504,7 @@
     <string name="pb_reg">https://www.paywellonline.com/default/api/polli/polli_regs.php?</string>
     <string name="pb_reg_with_otp">https://www.paywellonline.com/default/api/polli/polli_reg_otp.php</string>
     <string name="pb_bill_pay">https://www.paywellonline.com/default/api/polli/polli.php?</string>
+    <string name="pb_bill_pay_pollyBiddyutPhoneNoChange">https://api.paywellonline.com/PaywelltransactionPollyBiddyut/pollyBiddyutPhoneNoChange?</string>
 
     <string name="desco_bill_enq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
     <string name="desco_bill_pay">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
@@ -553,8 +554,6 @@
     <!-- Refill -->
     <string name="refill_sda_info">https://api.paywellonline.com/Android/SDAinformation?</string>
     <string name="refill_mfs_info">https://api.paywellonline.com/Android/paymentInfo?</string>
-    <string name="refill_bank_info">https://api.paywellonline.com/Android/bankinformations?</string>
-    <string name="refill_bank_deposit">https://www.paywellonline.com/crs3291/android/deposit_slip.php</string>
 
     <!-- Product -->
     <string name="ajd_token">http://ajkerdeal.paywellonline.com/api/Paywell/CreateToken?</string>
@@ -585,5 +584,6 @@
     <string name="Added">Added:</string>
     <string name="add_fav">Add</string>
     <string name="balance_pre_text">Balance</string>
+
 
 </resources>

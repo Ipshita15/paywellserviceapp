@@ -145,9 +145,11 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
         switch (v.getId()) {
             case R.id.homeBtnRegistration:
                 startActivity(new Intent(this, PBRegistrationActivity.class));
+
                 break;
             case R.id.homeBtnBillPay:
                 startActivity(new Intent(this, PBBillPayActivity.class));
+
                 break;
             case R.id.homeBtnInquiryReg:
                 shwTheLimitedPrompt(TAG_SERVICE_REGISTRATION_INQUIRY);
@@ -329,6 +331,10 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
                 } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_BILL_INQUIRY)) {
                     PBInquiryBillPayActivity.TRANSLOG_TAG = result;
                     startActivity(new Intent(PBMainActivity.this, PBInquiryBillPayActivity.class));
+
+                } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY)) {
+                    PBInquiryMobileNumberChangeActivity.Companion.setTRANSLOG_TAG(result);
+                    startActivity(new Intent(PBMainActivity.this, PBInquiryMobileNumberChangeActivity.class));
 
                 } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY)) {
                     PBInquiryMobileNumberChangeActivity.TRANSLOG_TAG = result;

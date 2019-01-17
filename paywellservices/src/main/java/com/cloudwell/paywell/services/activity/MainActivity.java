@@ -102,6 +102,7 @@ import com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliBill
 import com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliMainActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBRegistrationActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.PBInquiryMobileNumberChangeActivity;
 import com.cloudwell.paywell.services.adapter.HomeFavoriteAdapter;
 import com.cloudwell.paywell.services.adapter.MainSliderAdapter;
 import com.cloudwell.paywell.services.adapter.PicassoImageLoadingService;
@@ -2159,6 +2160,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.string.home_utility_pollibiddut_bill_inquiry:
                 intent = new Intent(getApplicationContext(), PBMainActivity.class);
                 intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_BILL_INQUERY, true);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_pb_request_inquiry:
+                intent = new Intent(getApplicationContext(), PBInquiryMobileNumberChangeActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_pb_bill_statu_inquery:
+                intent = new Intent(getApplicationContext(), PBMainActivity.class);
+                intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_REQUEST_BILL_INQUIRY, true);
                 startActivityWithFlag(intent);
                 break;
 

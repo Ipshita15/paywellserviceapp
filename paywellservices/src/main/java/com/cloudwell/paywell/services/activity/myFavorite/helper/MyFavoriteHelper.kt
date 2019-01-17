@@ -31,6 +31,12 @@ class MyFavoriteHelper {
             listOfData.add(FavoriteMenu(R.string.home_utility_pollibiddut_reg_inquiry, R.string.home_utility, R.drawable.ic_enquiry, MenuStatus.UnFavorite.text, 0))
             listOfData.add(FavoriteMenu(R.string.home_utility_pollibiddut_bill_inquiry, R.string.home_utility, R.drawable.ic_enquiry, MenuStatus.UnFavorite.text, 0))
 
+            listOfData.add(FavoriteMenu(R.string.home_utility_pb_request_inquiry, R.string.home_utility, R.drawable.to_know_bill_status, MenuStatus.UnFavorite.text, 0))
+            listOfData.add(FavoriteMenu(R.string.home_utility_pb_bill_statu_inquery, R.string.home_utility, R.drawable.ic_enquiry, MenuStatus.UnFavorite.text, 0))
+            listOfData.add(FavoriteMenu(R.string.home_utility_pb_bill_change_number, R.string.home_utility, R.drawable.contact_number_change, MenuStatus.UnFavorite.text, 0))
+            listOfData.add(FavoriteMenu(R.string.home_utility_pb_phone_number_inquiry, R.string.home_utility, R.drawable.ic_enquiry, MenuStatus.UnFavorite.text, 0))
+
+
             listOfData.add(FavoriteMenu(R.string.home_utility_wasa, R.string.home_utility, R.drawable.ic_wasa, MenuStatus.UnFavorite.text, 0))
             listOfData.add(FavoriteMenu(R.string.home_utility_wasa_pay, R.string.home_utility, R.drawable.ic_bill_pay, MenuStatus.UnFavorite.text, 0))
             listOfData.add(FavoriteMenu(R.string.home_utility_wasa_inquiry, R.string.home_utility, R.drawable.ic_enquiry, MenuStatus.UnFavorite.text, 0))
@@ -64,8 +70,6 @@ class MyFavoriteHelper {
 
             listOfData.add(FavoriteMenu(R.string.home_refill_bank, R.string.home_refill_balance, R.drawable.ic_bank_deposit, MenuStatus.UnFavorite.text, 0))
             listOfData.add(FavoriteMenu(R.string.home_refill_card, R.string.home_refill_balance, R.drawable.ic_visa_master_card, MenuStatus.UnFavorite.text, 0))
-
-
 
             AsyncTask.execute {
                 DatabaseClient.getInstance(context).getAppDatabase()
