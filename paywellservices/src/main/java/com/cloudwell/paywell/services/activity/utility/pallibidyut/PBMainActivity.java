@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatDialog;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -333,13 +334,14 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
                 Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                 View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+//                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
             return responseTxt;
         }
 
         @Override
         protected void onPostExecute(String result) {
+            Log.e("logTag", result);
             dismissProgressDialog();
             if (result != null) {
                 if (serviceName.equalsIgnoreCase(TAG_SERVICE_REGISTRATION_INQUIRY)) {
@@ -350,7 +352,7 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
                     startActivity(new Intent(PBMainActivity.this, PBInquiryBillPayActivity.class));
 
                 } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_PHONE_NUMBER_BILL_STATUS)) {
-                    PBInquiryMobileNumberChangeActivity.Companion.setTRANSLOG_TAG(result);
+                    PBRequestBillStatusInquiryActivity.TRANSLOG_TAG = result;
                     startActivity(new Intent(PBMainActivity.this, PBRequestBillStatusInquiryActivity.class));
 
                 } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY)) {
