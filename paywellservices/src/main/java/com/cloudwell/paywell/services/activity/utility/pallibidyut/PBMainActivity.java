@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatDialog;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +18,8 @@ import android.widget.RelativeLayout;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.WebViewActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.PBInquiryMobileNumberChangeActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.RequestMobileNumberChangeActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
@@ -48,7 +49,8 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
     private String linkPolliBillPay = "https://www.youtube.com/watch?v=SAuIFcUclvs&t=1s";
     private static String TAG_SERVICE_REGISTRATION_INQUIRY = "POLLI_REG";
     private static String TAG_SERVICE_BILL_INQUIRY = "POLLI_BILL";
-    private static String TAG_SERVICE_BILL_STATUS = "POLLI_STATUS";
+    private static String TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY = "POLLI_RREG";
+
 
 
     @Override
@@ -68,21 +70,23 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
         Button btnBill = findViewById(R.id.homeBtnBillPay);
         Button btnRegInq = findViewById(R.id.homeBtnInquiryReg);
         Button btnBillInq = findViewById(R.id.homeBtnInquiryBillPay);
+        Button btChangeMobileNumber = findViewById(R.id.btChangeMobileNumber);
+        Button btChangeMobileNumbEnquiry = findViewById(R.id.btChangeMobileNumbeEnquiry);
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             btnReg.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnBill.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnRegInq.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnBillInq.setTypeface(AppController.getInstance().getOxygenLightFont());
-            ((Button) mRelativeLayout.findViewById(R.id.btRequestInquiry)).setTypeface(AppController.getInstance().getOxygenLightFont());
-            ((Button) mRelativeLayout.findViewById(R.id.btBillStatusInquiry)).setTypeface(AppController.getInstance().getOxygenLightFont());
+            btChangeMobileNumber.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btChangeMobileNumbEnquiry.setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
             btnReg.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnBill.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnRegInq.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnBillInq.setTypeface(AppController.getInstance().getAponaLohitFont());
-            ((Button) mRelativeLayout.findViewById(R.id.btRequestInquiry)).setTypeface(AppController.getInstance().getAponaLohitFont());
-            ((Button) mRelativeLayout.findViewById(R.id.btBillStatusInquiry)).setTypeface(AppController.getInstance().getAponaLohitFont());
+            btChangeMobileNumber.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btChangeMobileNumbEnquiry.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
 
         checkIsComeFromFav(getIntent());
@@ -97,9 +101,14 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
                 shwTheLimitedPrompt(TAG_SERVICE_REGISTRATION_INQUIRY);
             } else if (intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_BILL_INQUERY, false)) {
                 shwTheLimitedPrompt(TAG_SERVICE_BILL_INQUIRY);
+            } else if (intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_REQUEST_BILL_INQUIRY, false)) {
+                shwTheLimitedPrompt(TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY);
+            } else if (intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_MOBILE_NUMBER_CHANGE_INQUIRY, false)) {
+                // shwTheLimitedPrompt(TAG_MOBILE_NUMBER_CHANGE_INQUIRY);
             }
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -146,11 +155,13 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
             case R.id.homeBtnInquiryBillPay:
                 shwTheLimitedPrompt(TAG_SERVICE_BILL_INQUIRY);
                 break;
-            case R.id.btRequestInquiry:
-                startActivity(new Intent(this, PBRequestBillStatusActivity.class));
+
+            case R.id.btChangeMobileNumber:
+                startActivity(new Intent(this, RequestMobileNumberChangeActivity.class));
                 break;
-            case R.id.btBillStatusInquiry:
-                shwTheLimitedPrompt(TAG_SERVICE_BILL_STATUS);
+
+            case R.id.btChangeMobileNumbeEnquiry:
+                shwTheLimitedPrompt(TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY);
                 break;
             default:
                 break;
@@ -166,10 +177,8 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
         final AppCompatDialog dialog = new AppCompatDialog(this);
         if (serviceName.equalsIgnoreCase(TAG_SERVICE_REGISTRATION_INQUIRY)) {
             dialog.setTitle(R.string.reg_log_limit_title_msg);
-        } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_BILL_INQUIRY)) {
+        } else {
             dialog.setTitle(R.string.log_limit_title_msg);
-        } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_BILL_STATUS)) {
-            dialog.setTitle(R.string.status_log_limit_title_msg);
         }
         dialog.setContentView(R.layout.dialog_trx_limit);
 
@@ -320,9 +329,10 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
                 } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_BILL_INQUIRY)) {
                     PBInquiryBillPayActivity.TRANSLOG_TAG = result;
                     startActivity(new Intent(PBMainActivity.this, PBInquiryBillPayActivity.class));
-                } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_BILL_STATUS)) {
-                    PBRequestBillStatusInquiryActivity.TRANSLOG_TAG = result;
-                    startActivity(new Intent(PBMainActivity.this, PBRequestBillStatusInquiryActivity.class));
+
+                } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY)) {
+                    PBInquiryMobileNumberChangeActivity.TRANSLOG_TAG = result;
+                    startActivity(new Intent(PBMainActivity.this, PBInquiryMobileNumberChangeActivity.class));
                 }
             } else {
                 Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
