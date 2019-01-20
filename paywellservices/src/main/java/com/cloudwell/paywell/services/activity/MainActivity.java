@@ -180,7 +180,7 @@ import ss.com.bannerslider.event.OnSlideClickListener;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener, View.OnClickListener {
 
-    private static final long KEY_BALANCE_CHECK_INTERVAL = 4000;
+    private static final long KEY_BALANCE_CHECK_INTERVAL = 5000;
     private boolean doubleBackToExitPressedOnce = false;
     public CoordinatorLayout mCoordinateLayout;
     private AppHandler mAppHandler;
