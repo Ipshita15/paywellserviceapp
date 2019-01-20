@@ -41,12 +41,10 @@ class MyFavoriteMenuActivity : AppCompatActivity(), StartDragListener {
 
     lateinit var sectionAdapter: SectionedRecyclerViewAdapter;
     var allFavoriteData = kotlin.collections.mutableMapOf<String, List<FavoriteMenu>>()
-
     var previewPogistion = 0
-    private var mItemTouchHelper: ItemTouchHelper? = null
 
     lateinit var touchHelper: ItemTouchHelper
-
+    val totalFavCounter = 7;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +54,6 @@ class MyFavoriteMenuActivity : AppCompatActivity(), StartDragListener {
         if (getSupportActionBar() != null) {
             getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
             getSupportActionBar()!!.setTitle(R.string.title_activity_my_favorite_menu)
-
         }
 
         initialisationView()
@@ -86,7 +83,7 @@ class MyFavoriteMenuActivity : AppCompatActivity(), StartDragListener {
 
         var counter = FavoritePreference.with(applicationContext).getInt(AllConstant.COUNTER_FAVORITE, 0);
 
-        if (counter > 7) {
+        if (counter > totalFavCounter) {
             showMessage()
             return
         } else {
@@ -118,12 +115,7 @@ class MyFavoriteMenuActivity : AppCompatActivity(), StartDragListener {
     fun onFavoriteItemdeleted(event: MessageEventFavDeleted) {
 
         var counter = FavoritePreference.with(applicationContext).getInt(AllConstant.COUNTER_FAVORITE, 0)
-
-        if (counter <= 0) {
-            counter = 0
-        } else {
-            counter -= 1
-        }
+        counter = counter - 1
 
         FavoritePreference.with(applicationContext).addInt(AllConstant.COUNTER_FAVORITE, counter).save()
         Log.v("deleted ", "Counter: " + counter);
