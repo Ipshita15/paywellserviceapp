@@ -100,6 +100,7 @@ import com.cloudwell.paywell.services.activity.utility.ivac.IvacFeePayActivity;
 import com.cloudwell.paywell.services.activity.utility.ivac.IvacMainActivity;
 import com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliBillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliMainActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBBillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBRegistrationActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBRequestBillStatusActivity;
@@ -2209,6 +2210,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             case R.string.home_utility_pollibiddut_registion:
                 intent = new Intent(getApplicationContext(), PBRegistrationActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_pollibiddut_bill_pay_favorite:
+                intent = new Intent(getApplicationContext(), PBBillPayActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
