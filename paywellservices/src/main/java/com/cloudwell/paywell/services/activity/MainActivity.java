@@ -229,7 +229,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     // all async
     private AsyncTask<String, Intent, String> mNotificationAsync;
-    private PayWellBalanceAsync pwBalanceCheck;
     private AsyncTask<String, Integer, String> mRequestPhnNumberAddAsync;
     private AsyncTask<String, Integer, String> mConfirmPhnNumberAddAsync;
     private AsyncTask<String, Intent, String> mPushFirebaseIdTask;
@@ -920,8 +919,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void checkPayWellBalance() {
         AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_BALANCE_CHECK);
-//        pwBalanceCheck = new PayWellBalanceAsync();
-//        pwBalanceCheck.execute(getResources().getString(R.string.pw_bal));
         checkBalance();
     }
 
@@ -2437,9 +2434,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             mNotificationAsync.cancel(true);
         }
 
-        if (pwBalanceCheck != null) {
-            pwBalanceCheck.cancel(true);
-        }
 
         if (mRequestPhnNumberAddAsync != null) {
             mRequestPhnNumberAddAsync.cancel(true);
@@ -2458,127 +2452,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             viewPager = null;
         }
         super.onDestroy();
-    }
-
-    private int getHeightOfView(View contentview) {
-        contentview.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        //contentview.getMeasuredWidth();
-        return contentview.getMeasuredHeight();
-    }
-
-    @SuppressWarnings("deprecation")
-    private class PayWellBalanceAsync extends AsyncTask<String, Integer, String> {
-
-        @Override
-        protected void onPreExecute() {
-            isBalacedCheckProcessRunning = true;
-            pb_dot.setVisibility(View.VISIBLE);
-            mToolbarHeading.setVisibility(View.GONE);
-
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
-                nameValuePairs.add(new BasicNameValuePair("imei_no", mAppHandler.getImeiNo()));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            pb_dot.setVisibility(View.GONE);
-            mToolbarHeading.setVisibility(View.VISIBLE);
-            isBalacedCheckProcessRunning = false;
-
-            try {
-                if (result != null && result.contains("@")) {
-                    String splitArray[] = result.split("@");
-                    if (splitArray.length > 0) {
-                        if ((splitArray[0].equalsIgnoreCase("\r\n200")) || (splitArray[0].equalsIgnoreCase("200"))) {
-
-                            StringBuilder stringBuilder = new StringBuilder();
-                            String[] balance = splitArray[1].split("[.]");
-                            String round = balance[0];
-                            String fraction = balance[1];
-                            fraction = (String) fraction.subSequence(0, 2);
-                            stringBuilder.append(round).append(".").append(fraction);
-
-                            mAppHandler.setPWBalance(stringBuilder.toString());
-
-                            String strBalance = mAppHandler.getPwBalance() + getString(R.string.tk);
-                            mToolbarHeading.setText(strBalance);
-
-                            mAppHandler.setRID(splitArray[3]);
-
-                            if (splitArray.length > 4) {
-                                if (Integer.parseInt(splitArray[4]) > 0) {
-                                    notificationCount(Integer.parseInt(splitArray[4]));
-                                    builderNotification = new AlertDialog.Builder(MainActivity.this);
-                                    builderNotification.setTitle(R.string.home_notification);
-                                    builderNotification.setMessage(getString(R.string.unread_first_msg) + " "
-                                            + splitArray[4] + " " + getString(R.string.unread_second_msg));
-                                    builderNotification.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int id) {
-                                            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CEHCK_NEW_NOTIFICATION);
-                                            dialogInterface.dismiss();
-                                            checkNotificationFlag = true;
-                                            mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
-                                        }
-                                    });
-                                    alertNotification = builderNotification.create();
-                                    alertNotification.show();
-                                    TextView messageText = alertNotification.findViewById(android.R.id.message);
-                                    messageText.setGravity(Gravity.CENTER);
-                                }
-                            }
-
-                            startHiddenBalance();
-
-
-                        } else {
-                            Snackbar snackbar = Snackbar.make(mCoordinateLayout, splitArray[1], Snackbar.LENGTH_LONG);
-                            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                            View snackBarView = snackbar.getView();
-                            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                            snackbar.show();
-                            Intent i = new Intent(MainActivity.this, AppLoadingActivity.class);
-                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(i);
-                            finish();
-                        }
-                    }
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.conn_timeout_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-        }
     }
 
 
