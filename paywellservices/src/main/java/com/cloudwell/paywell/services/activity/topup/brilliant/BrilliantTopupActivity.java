@@ -44,6 +44,7 @@ import com.cloudwell.paywell.services.activity.topup.brilliant.model.BrilliantTo
 import com.cloudwell.paywell.services.activity.utility.ivac.DrawableClickListener;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
+import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.MyHttpClient;
@@ -80,6 +81,7 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
     private ImageView brilliantTrxLog;
     private RadioButton radioButton_five, radioButton_ten, radioButton_twenty, radioButton_fifty, radioButton_hundred, radioButton_twoHundred;
     private String selectedLimit = "";
+    Button btnConfirmBrilliant;
 
 
     @Override
@@ -105,7 +107,7 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
         phoneNoET.append(BRILLIANT_PREFIX);
 
 
-        Button btnConfirmBrilliant = findViewById(R.id.btnConfirmBrilliant);
+        btnConfirmBrilliant = findViewById(R.id.btnConfirmBrilliant);
         btnConfirmBrilliant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,9 +155,11 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             brilliantTopUpInquiry.setBackgroundResource(R.drawable.topup_in_en);
             brilliantTrxLog.setBackgroundResource(R.drawable.transaction_log_en);
+            btnConfirmBrilliant.setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
             brilliantTopUpInquiry.setBackgroundResource(R.drawable.topup_in_bn);
             brilliantTrxLog.setBackgroundResource(R.drawable.transaction_log_bn);
+            btnConfirmBrilliant.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
     }
 

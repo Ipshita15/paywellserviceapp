@@ -116,6 +116,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
     private ImageView imageViewAdd;
     private ImageView imageViewInq;
     private ImageView imageViewTrxLog;
+    Button buttonSubmit;
 
 
     @Override
@@ -138,7 +139,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
         mRelativeLayout = findViewById(R.id.linearLayout);
 
         topUpLayout = findViewById(R.id.topUpAddLayout);
-        Button buttonSubmit = findViewById(R.id.btnSubmit);
+        buttonSubmit = findViewById(R.id.btnSubmit);
 
         slideInAnim.setDuration(50);
         slideOutAnim.setDuration(50);
@@ -183,12 +184,14 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
             imageViewAdd.setBackgroundResource(R.drawable.add_en);
             imageViewInq.setBackgroundResource(R.drawable.topup_in_en);
             imageViewTrxLog.setBackgroundResource(R.drawable.transaction_log_en);
+            buttonSubmit.setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
             ((Button) findViewById(R.id.btnSubmit)).setTypeface(AppController.getInstance().getAponaLohitFont());
             imageViewOffer.setBackgroundResource(R.drawable.bundle_bn);
             imageViewAdd.setBackgroundResource(R.drawable.add_bn);
             imageViewInq.setBackgroundResource(R.drawable.topup_in_bn);
             imageViewTrxLog.setBackgroundResource(R.drawable.transaction_log_bn);
+            buttonSubmit.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
     }
 
