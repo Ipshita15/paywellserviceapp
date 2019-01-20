@@ -2,9 +2,10 @@ package com.cloudwell.paywell.services.activity.myFavorite.helper
 
 import android.content.Context
 import android.os.AsyncTask
-import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu
+import com.cloudwell.paywell.services.constant.IconConstant
 import com.cloudwell.paywell.services.database.DatabaseClient
+import com.cloudwell.paywell.services.utils.StringConstant
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 2/1/19.
@@ -15,61 +16,61 @@ class MyFavoriteHelper {
         fun insertData(context: Context) {
             val listOfData = mutableListOf<FavoriteMenu>()
 
-            listOfData.add(FavoriteMenu(R.string.mobileOperator, R.string.home_topup, R.drawable.all_operator, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.brilliant, R.string.home_topup, R.drawable.brilli_ant, MenuStatus.UnFavorite.text, 0))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_mobileOperator, StringConstant.KEY_topup, IconConstant.KEY_all_operator, MenuStatus.UnFavorite.text, 0, 1))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_brilliant, StringConstant.KEY_topup, IconConstant.KEY_brilli_ant, MenuStatus.UnFavorite.text, 0, 2))
 
-            // utility
-            listOfData.add(FavoriteMenu(R.string.home_utility_desco, R.string.home_utility, R.drawable.ic_desco, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_desco_pay, R.string.home_utility, R.drawable.ic_bill_pay, MenuStatus.UnFavorite.text, 0))
+//            // utility
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_desco, StringConstant.KEY_home_utility, IconConstant.KEY_ic_desco, MenuStatus.UnFavorite.text, 0, 3))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_desco_pay, StringConstant.KEY_home_utility, IconConstant.KEY_ic_bill_pay, MenuStatus.UnFavorite.text, 0, 4))
+//
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_dpdc, StringConstant.KEY_home_utility, IconConstant.KEY_ic_dpdc, MenuStatus.UnFavorite.text, 0, 5))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_dpdc_bill_pay, StringConstant.KEY_home_utility, IconConstant.KEY_ic_dpdc, MenuStatus.UnFavorite.text, 0, 6))
 
-            listOfData.add(FavoriteMenu(R.string.home_utility_dpdc, R.string.home_utility, R.drawable.ic_dpdc, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_dpdc_bill_pay, R.string.home_utility, R.drawable.ic_dpdc, MenuStatus.UnFavorite.text, 0))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_pollibiddut, StringConstant.KEY_home_utility, IconConstant.KEY_ic_polli_biddut, MenuStatus.UnFavorite.text, 0, 7))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_pollibiddut_registion, StringConstant.KEY_home_utility, IconConstant.KEY_ic_registration, MenuStatus.UnFavorite.text, 0, 8))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_pollibiddut_bill_pay_favorite, StringConstant.KEY_home_utility, IconConstant.KEY_ic_bill_pay, MenuStatus.UnFavorite.text, 0, 9))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_pollibiddut_reg_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, MenuStatus.UnFavorite.text, 0, 10))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_pollibiddut_bill_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, MenuStatus.UnFavorite.text, 0, 11))
 
-            listOfData.add(FavoriteMenu(R.string.home_utility_pollibiddut, R.string.home_utility, R.drawable.ic_polli_biddut, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_pollibiddut_registion, R.string.home_utility, R.drawable.ic_registration, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_pollibiddut_bill_pay_favorite, R.string.home_utility, R.drawable.ic_bill_pay, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_pollibiddut_reg_inquiry, R.string.home_utility, R.drawable.ic_enquiry, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_pollibiddut_bill_inquiry, R.string.home_utility, R.drawable.ic_enquiry, MenuStatus.UnFavorite.text, 0))
-
-            listOfData.add(FavoriteMenu(R.string.home_utility_pb_request_inquiry, R.string.home_utility, R.drawable.to_know_bill_status, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_pb_bill_statu_inquery, R.string.home_utility, R.drawable.ic_enquiry, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_pb_bill_change_number, R.string.home_utility, R.drawable.contact_number_change, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_pb_phone_number_inquiry, R.string.home_utility, R.drawable.ic_enquiry, MenuStatus.UnFavorite.text, 0))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_pb_request_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_to_know_bill_status, MenuStatus.UnFavorite.text, 0, 12))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_pb_bill_statu_inquery, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, MenuStatus.UnFavorite.text, 0, 13))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_pb_bill_change_number, StringConstant.KEY_home_utility, IconConstant.KEY_contact_number_change, MenuStatus.UnFavorite.text, 0, 14))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_pb_phone_number_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, MenuStatus.UnFavorite.text, 0, 15))
 
 
-            listOfData.add(FavoriteMenu(R.string.home_utility_wasa, R.string.home_utility, R.drawable.ic_wasa, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_wasa_pay, R.string.home_utility, R.drawable.ic_bill_pay, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_wasa_inquiry, R.string.home_utility, R.drawable.ic_enquiry, MenuStatus.UnFavorite.text, 0))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_wasa, StringConstant.KEY_home_utility, IconConstant.KEY_ic_wasa, MenuStatus.UnFavorite.text, 0, 16))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_wasa_pay, StringConstant.KEY_home_utility, IconConstant.KEY_ic_bill_pay, MenuStatus.UnFavorite.text, 0, 17))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_wasa_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, MenuStatus.UnFavorite.text, 0, 18))
 
-            listOfData.add(FavoriteMenu(R.string.home_utility_west_zone, R.string.home_utility, R.drawable.ic_west_zone, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_west_zone_pay, R.string.home_utility, R.drawable.ic_bill_pay, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_west_zone_pay_inquiry, R.string.home_utility, R.drawable.ic_west_zone, MenuStatus.UnFavorite.text, 0))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_west_zone, StringConstant.KEY_home_utility, IconConstant.KEY_ic_west_zone, MenuStatus.UnFavorite.text, 0, 19))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_west_zone_pay, StringConstant.KEY_home_utility, IconConstant.KEY_ic_bill_pay, MenuStatus.UnFavorite.text, 0, 20))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_west_zone_pay_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_west_zone, MenuStatus.UnFavorite.text, 0, 21))
 
-            listOfData.add(FavoriteMenu(R.string.home_utility_ivac, R.string.home_utility, R.drawable.ic_ivac, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_ivac_free_pay_favorite, R.string.home_utility, R.drawable.ic_bill_pay, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_ivac_inquiry, R.string.home_utility, R.drawable.ic_enquiry, MenuStatus.UnFavorite.text, 0))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_ivac, StringConstant.KEY_home_utility, IconConstant.KEY_ic_ivac, MenuStatus.UnFavorite.text, 0, 22))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_ivac_free_pay_favorite, StringConstant.KEY_home_utility, IconConstant.KEY_ic_bill_pay, MenuStatus.UnFavorite.text, 0, 23))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_ivac_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, MenuStatus.UnFavorite.text, 0, 24))
 
-            listOfData.add(FavoriteMenu(R.string.home_utility_banglalion, R.string.home_utility, R.drawable.ic_banglalion, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_banglalion_recharge, R.string.home_utility, R.drawable.ic_banglalion_recharge, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_banglalion_recharge_inquiry, R.string.home_utility, R.drawable.ic_recharge_information, MenuStatus.UnFavorite.text, 0))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_banglalion, StringConstant.KEY_home_utility, IconConstant.KEY_ic_banglalion, MenuStatus.UnFavorite.text, 0, 25))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_banglalion_recharge, StringConstant.KEY_home_utility, IconConstant.KEY_ic_banglalion_recharge, MenuStatus.UnFavorite.text, 0, 26))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_banglalion_recharge_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_recharge_information, MenuStatus.UnFavorite.text, 0, 27))
 
-            listOfData.add(FavoriteMenu(R.string.home_utility_karnaphuli, R.string.home_utility, R.drawable.ic_karnafuli_gas, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_karnaphuli_bill_pay, R.string.home_utility, R.drawable.ic_bill_pay, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_utility_karnaphuli_inquiry, R.string.home_utility, R.drawable.ic_enquiry, MenuStatus.UnFavorite.text, 0))
-            // end utility
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_karnaphuli, StringConstant.KEY_home_utility, IconConstant.KEY_ic_karnafuli_gas, MenuStatus.UnFavorite.text, 0, 28))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_karnaphuli_bill_pay, StringConstant.KEY_home_utility, IconConstant.KEY_ic_bill_pay, MenuStatus.UnFavorite.text, 0, 29))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_karnaphuli_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, MenuStatus.UnFavorite.text, 0, 30))
+//            // end utility
 
-            listOfData.add(FavoriteMenu(R.string.home_mfs_mycash, R.string.home_mfs_fav, R.drawable.ic_train_ticket, MenuStatus.UnFavorite.text, 0))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_mfs_mycash, StringConstant.KEY_home_mfs_fav, IconConstant.KEY_ic_train_ticket, MenuStatus.UnFavorite.text, 0, 31))
 
-            listOfData.add(FavoriteMenu(R.string.home_product_ajker_deal, R.string.home_product_catalog, R.drawable.ic_ajker_deal, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_product_pw_wholesale, R.string.home_product_catalog, R.drawable.ic_wholesale, MenuStatus.UnFavorite.text, 0))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_product_ajker_deal, StringConstant.KEY_home_product_catalog, IconConstant.KEY_ic_ajker_deal, MenuStatus.UnFavorite.text, 0, 32))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_product_pw_wholesale, StringConstant.KEY_home_product_catalog, IconConstant.KEY_ic_wholesale, MenuStatus.UnFavorite.text, 0, 33))
 
-            listOfData.add(FavoriteMenu(R.string.home_statement_mini, R.string.home_statement, R.drawable.ic_statement, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_statement_balance, R.string.home_statement, R.drawable.ic_statement, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_statement_sales, R.string.home_statement, R.drawable.ic_statement, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_statement_transaction, R.string.home_statement, R.drawable.ic_statement, MenuStatus.UnFavorite.text, 0))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_statement_mini, StringConstant.KEY_home_statement, IconConstant.KEY_ic_statement, MenuStatus.UnFavorite.text, 0, 34))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_statement_balance, StringConstant.KEY_home_statement, IconConstant.KEY_ic_statement, MenuStatus.UnFavorite.text, 0, 35))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_statement_sales, StringConstant.KEY_home_statement, IconConstant.KEY_ic_statement, MenuStatus.UnFavorite.text, 0, 36))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_statement_transaction, StringConstant.KEY_home_statement, IconConstant.KEY_ic_statement, MenuStatus.UnFavorite.text, 0, 39))
 
-            listOfData.add(FavoriteMenu(R.string.home_refill_bank, R.string.home_refill_balance, R.drawable.ic_bank_deposit, MenuStatus.UnFavorite.text, 0))
-            listOfData.add(FavoriteMenu(R.string.home_refill_card, R.string.home_refill_balance, R.drawable.ic_visa_master_card, MenuStatus.UnFavorite.text, 0))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_refill_bank, StringConstant.KEY_home_refill_balance, IconConstant.KEY_ic_bank_deposit, MenuStatus.UnFavorite.text, 0, 38))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_refill_card, StringConstant.KEY_home_refill_balance, IconConstant.KEY_ic_visa_master_card, MenuStatus.UnFavorite.text, 0, 39))
 
             AsyncTask.execute {
                 DatabaseClient.getInstance(context).getAppDatabase()

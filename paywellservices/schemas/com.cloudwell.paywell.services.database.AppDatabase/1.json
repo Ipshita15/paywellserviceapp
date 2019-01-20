@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "9676fba3b7dd534216793b08047cb69d",
+    "identityHash": "f31e3c2eb3b6bb2f3a0a22acde14bcbc",
     "entities": [
       {
         "tableName": "FavoriteMenu",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` INTEGER NOT NULL, `category` INTEGER NOT NULL, `icon` INTEGER NOT NULL, `status` TEXT NOT NULL, `favorite_list_position` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `category` TEXT NOT NULL, `icon` TEXT NOT NULL, `status` TEXT NOT NULL, `favorite_list_position` INTEGER NOT NULL, `alias key` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -17,19 +17,19 @@
           {
             "fieldPath": "name",
             "columnName": "name",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
             "fieldPath": "category",
             "columnName": "category",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
             "fieldPath": "icon",
             "columnName": "icon",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -41,6 +41,12 @@
           {
             "fieldPath": "favoriteListPosition",
             "columnName": "favorite_list_position",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "alias",
+            "columnName": "alias key",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -57,7 +63,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"9676fba3b7dd534216793b08047cb69d\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"f31e3c2eb3b6bb2f3a0a22acde14bcbc\")"
     ]
   }
 }

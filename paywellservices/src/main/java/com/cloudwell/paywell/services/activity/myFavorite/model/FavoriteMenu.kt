@@ -10,19 +10,22 @@ import android.arch.persistence.room.PrimaryKey
 @Entity
 class FavoriteMenu(
         @ColumnInfo(name = "name")
-        var name: Int,
+        var name: String,
 
         @ColumnInfo(name = "category")
-        var category: Int,
+        var category: String,
 
         @ColumnInfo(name = "icon")
-        var icon: Int,
+        var icon: String,
 
         @ColumnInfo(name = "status")
         var status: String,
 
         @ColumnInfo(name = "favorite_list_position")
-        var favoriteListPosition: Int
+        var favoriteListPosition: Int,
+
+        @ColumnInfo(name = "alias key")
+        var alias: Int
 
 ) {
 

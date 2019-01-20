@@ -14,6 +14,7 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.myFavorite.adapter.helper.ItemTouchHelperViewHolder;
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
 import com.cloudwell.paywell.services.app.AppController;
+import com.cloudwell.paywell.services.utils.ResorceHelper;
 
 import java.util.List;
 
@@ -46,8 +47,8 @@ public class HomeFavoriteAdapter extends RecyclerView.Adapter<HomeFavoriteAdapte
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, final int position) {
         final FavoriteMenu favoriteMenu = mData.get(position);
-        holder.textView.setText(favoriteMenu.getName());
-        holder.ivIcon.setBackgroundResource(favoriteMenu.getIcon());
+        holder.textView.setText(ResorceHelper.getResId(favoriteMenu.getName(), R.string.class));
+        holder.ivIcon.setBackgroundResource(ResorceHelper.getResId(favoriteMenu.getIcon(), R.drawable.class));
 
         holder.rootLinarLayout.setOnClickListener(new View.OnClickListener() {
             @Override

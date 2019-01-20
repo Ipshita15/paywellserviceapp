@@ -25,6 +25,7 @@ import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.constant.AllConstant
 import com.cloudwell.paywell.services.database.DatabaseClient
 import com.cloudwell.paywell.services.preference.FavoritePreference
+import com.cloudwell.paywell.services.utils.ResorceHelper
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
@@ -103,8 +104,10 @@ class MyFavoriteMenuActivity : AppCompatActivity(), StartDragListener {
             DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().update(favoriteMenu)
 
 
+
             this.runOnUiThread {
-                Toast.makeText(applicationContext, getString(R.string.Added) + getString(event.favoriteMenu.name), Toast.LENGTH_LONG).show()
+                val resId = ResorceHelper.getResId(event.favoriteMenu.name, R.string::class.java)
+                Toast.makeText(applicationContext, getString(R.string.Added) + getString(resId), Toast.LENGTH_LONG).show()
                 getAllUnFavoriteItem()
                 getAllFavoriteDate()
             }
@@ -167,17 +170,19 @@ class MyFavoriteMenuActivity : AppCompatActivity(), StartDragListener {
 
         DBDatas.forEach {
             it.category
-            val string = getString(it.category);
+            val resId = ResorceHelper.getResId(it.category, R.string::class.java);
+            val string = getString(resId);
             allCategory.add(string)
-        }
 
+        }
 
         allCategory.forEach {
             val category = it
             val data = mutableListOf<FavoriteMenu>()
 
             DBDatas.forEach {
-                val string = getString(it.category)
+                val resId = ResorceHelper.getResId(it.category, R.string::class.java);
+                val string = getString(resId)
                 if (category.equals(string)) {
                     data.add(it)
                 }
@@ -190,7 +195,7 @@ class MyFavoriteMenuActivity : AppCompatActivity(), StartDragListener {
         sectionAdapter = SectionedRecyclerViewAdapter()
 
 
-        // generator HeaderRecyclerViewSection
+//        // generator HeaderRecyclerViewSection
         for ((index, value) in allCategory.withIndex()) {
             val sectionData = HeaderRecyclerViewSection(index, value, allFavoriteData.get(value), isEnglish)
             sectionAdapter.addSection(sectionData)

@@ -111,14 +111,19 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.app.model.APIResBalanceCheck;
 import com.cloudwell.paywell.services.constant.AllConstant;
+import com.cloudwell.paywell.services.constant.IconConstant;
 import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.database.FavoriteMenuDab;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.service.notificaiton.NotificationCheckerService;
 import com.cloudwell.paywell.services.service.notificaiton.model.EventNewNotificaiton;
 import com.cloudwell.paywell.services.service.notificaiton.model.StartNotificationService;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.LocationUtility;
+import com.cloudwell.paywell.services.utils.ResorceHelper;
+import com.cloudwell.paywell.services.utils.StringConstant;
 import com.cloudwell.paywell.services.utils.UpdateChecker;
 import com.github.silvestrpredko.dotprogressbar.DotProgressBar;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -154,6 +159,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -165,6 +171,9 @@ import java.util.regex.Pattern;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import ss.com.bannerslider.Slider;
 import ss.com.bannerslider.event.OnSlideClickListener;
 
@@ -406,7 +415,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
         if (result.size() == 0) {
-            result.add(new FavoriteMenu(R.string.add_fav, R.string.home_topup, R.drawable.add_fav_action, "", 0));
+            result.add(new FavoriteMenu(StringConstant.KEY_add_fav, "", IconConstant.KEY_add_fav_action, "", 0, -1));
         }
 
         HomeFavoriteAdapter adapter = new HomeFavoriteAdapter(this, result, isEnglish);
@@ -431,9 +440,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             ivUptown.setBackgroundResource(R.drawable.circle_angle_up);
             sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         }
-
-        // recyclerViewFavoirte.setVisibility(View.GONE);
-
 
     }
 
@@ -914,8 +920,63 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void checkPayWellBalance() {
         AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_BALANCE_CHECK);
-        pwBalanceCheck = new PayWellBalanceAsync();
-        pwBalanceCheck.execute(getResources().getString(R.string.pw_bal));
+//        pwBalanceCheck = new PayWellBalanceAsync();
+//        pwBalanceCheck.execute(getResources().getString(R.string.pw_bal));
+        checkBalance();
+    }
+
+    private void checkBalance() {
+
+        isBalacedCheckProcessRunning = true;
+        pb_dot.setVisibility(View.VISIBLE);
+        mToolbarHeading.setVisibility(View.GONE);
+
+        String imeiNo = mAppHandler.getImeiNo();
+        Call<APIResBalanceCheck> responseBodyCall = ApiUtils.getAPIService().callCheckBalance(imeiNo);
+        responseBodyCall.enqueue(new Callback<APIResBalanceCheck>() {
+            @Override
+            public void onResponse(Call<APIResBalanceCheck> call, Response<APIResBalanceCheck> response) {
+
+                pb_dot.setVisibility(View.GONE);
+                mToolbarHeading.setVisibility(View.VISIBLE);
+                isBalacedCheckProcessRunning = false;
+
+                assert response.body() != null;
+                if (response.body().getStatus() == 200) {
+                    String balance = response.body().getBalanceData().getBalance();
+
+                    String balanceFraction = (String) balance.subSequence(0, 2);
+
+                    BigDecimal a = new BigDecimal(balance);
+                    BigDecimal roundOff = a.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+
+
+                    mAppHandler.setPWBalance("" + roundOff);
+
+                    String strBalance = mAppHandler.getPwBalance() + getString(R.string.tk);
+                    mToolbarHeading.setText(strBalance);
+
+                    startHiddenBalance();
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<APIResBalanceCheck> call, Throwable t) {
+                pb_dot.setVisibility(View.GONE);
+                mToolbarHeading.setVisibility(View.VISIBLE);
+                isBalacedCheckProcessRunning = false;
+
+                Logger.e("onFailure:" + t.getLocalizedMessage());
+                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
+            }
+        });
     }
 
     private void startHiddenBalance() {
@@ -2109,7 +2170,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void onFavoriteItemClick(FavoriteMenu favoriteMenu) {
         Intent intent;
 
-        switch (favoriteMenu.getName()) {
+        int resId = ResorceHelper.getResId(favoriteMenu.getName(), R.string.class);
+
+        switch (resId) {
             case R.string.add_fav:
                 startMyFavoriteMenuActivity();
                 break;
