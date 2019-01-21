@@ -24,7 +24,7 @@ class FavoriteMenu(
         @ColumnInfo(name = "favorite_list_position")
         var favoriteListPosition: Int,
 
-        @ColumnInfo(name = "alias key")
+        @ColumnInfo(name = "alias_key")
         var alias: Int
 
 ) {

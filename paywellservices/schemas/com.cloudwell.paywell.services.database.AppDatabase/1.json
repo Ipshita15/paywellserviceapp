@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "f31e3c2eb3b6bb2f3a0a22acde14bcbc",
+    "identityHash": "085ac74f0cf45d04697f1c537a651679",
     "entities": [
       {
         "tableName": "FavoriteMenu",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `category` TEXT NOT NULL, `icon` TEXT NOT NULL, `status` TEXT NOT NULL, `favorite_list_position` INTEGER NOT NULL, `alias key` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `category` TEXT NOT NULL, `icon` TEXT NOT NULL, `status` TEXT NOT NULL, `favorite_list_position` INTEGER NOT NULL, `alias_key` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -46,7 +46,7 @@
           },
           {
             "fieldPath": "alias",
-            "columnName": "alias key",
+            "columnName": "alias_key",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -63,7 +63,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"f31e3c2eb3b6bb2f3a0a22acde14bcbc\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"085ac74f0cf45d04697f1c537a651679\")"
     ]
   }
 }
