@@ -596,6 +596,8 @@
     <string name="home_utility_pb_bill_status_inquiry_title">Inquiry Change Phone Number</string>
     <string name="home_utility_bill_inquiry_title">Polli Biddut Bill Inquiry</string>
     <string name="home_utility_pb_reg_inq_log_title">Polli Biddut Registration Inquiry</string>
+    <string name="home_utility_wasa_billpay_title">WASA Bill Pay</string>
+    <string name="home_utility_wasa_bill_inquary_title">WASA Bill Inquiry</string>
 
 
 </resources>

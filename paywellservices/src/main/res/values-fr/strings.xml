@@ -512,7 +512,6 @@
     <string name="brilliant_trx_log">ব্রিলিয়ান্ট লেনদেন</string>
 
 
-
     <!-- Utility -->
     <string name="pb_reg">https://www.paywellonline.com/default/api/polli/polli_regs.php?</string>
     <string name="pb_reg_with_otp">https://www.paywellonline.com/default/api/polli/polli_reg_otp.php</string>
@@ -600,5 +599,6 @@
     <string name="home_utility_pb_bill_status_inquiry_title">ফোন নাম্বার পরিবর্তনের অবস্থা অনুসন্ধান</string>
     <string name="home_utility_bill_inquiry_title">পল্লী বিদ্যুৎ	বিল অনুসন্ধান</string>
     <string name="home_utility_pb_reg_inq_log_title">পল্লী বিদ্যুৎ রেজিস্ট্রেশন অনুসন্ধান</string>
-
+    <string name="home_utility_wasa_billpay_title">ওয়াসা বিল প্রদান</string>
+    <string name="home_utility_wasa_bill_inquary_title">ওয়াসা বিল অনুসন্ধান</string>
 </resources>

@@ -57,7 +57,7 @@ public class WASABillPayActivity extends BaseActivity implements View.OnClickLis
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_utility_pb_billpay);
+            getSupportActionBar().setTitle(R.string.home_utility_wasa_billpay_title);
         }
         mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
