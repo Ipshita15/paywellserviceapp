@@ -46,8 +46,10 @@
     <string name="home_utility_karnaphuli">কর্ণফুলী</string>
     <string name="home_utility_karnaphuli_bill_pay">কর্ণফুলী\nবিল প্রদান</string>
     <string name="home_utility_karnaphuli_inquiry">কর্ণফুলী\nবিল অনুসন্ধান</string>
-    <string name="home_utility_pb_reg">রেজিস্ট্রেশন</string>
+    <string name="home_utility_pb_reg_title">পল্লী বিদ্যুৎ রেজিস্ট্রেশন</string>
     <string name="home_utility_pb_billpay">বিল প্রদান</string>
+    <string name="home_utility_pb_billpay_title">পল্লী বিদ্যুৎ বিল প্রদান</string>
+    <string name="home_utility_pb_reg_statu_inquery_title">পল্লী বিদ্যুৎ  রেজিস্ট্রেশন অনুসন্ধান</string>
     <string name="home_utility_pb_reg_inq">রেজিস্ট্রেশন\nঅনুসন্ধান</string>
     <string name="home_utility_pb_reg_inq_log">রেজিস্ট্রেশন লগ</string>
     <string name="home_utility_pb_bill_ing">বিল প্রদান\nঅনুসন্ধান</string>
@@ -88,7 +90,11 @@
     <string name="home_mfs_mycash">মাইক্যাশ</string>
     <string name="home_utility_desco">ডেসকো</string>
     <string name="home_utility_desco_pay">ডেসকো-বিল প্রদান</string>
+    <string name="home_utility_desco_pay_title">ডেসকো বিল প্রদান</string>
+    <string name="home_utility_desco_inquary_title">ডেসকো বিল অনুসন্ধান</string>
     <string name="home_utility_dpdc">ডিপিডিসি</string>
+    <string name="home_utility_dpdc_bill_title">ডিপিডিসি বিল প্রদান</string>
+    <string name="home_utility_dpdc_inquary_title">ডিপিডিসি বিল অনুসন্ধান</string>
     <string name="home_fund_management">ফান্ড\nব্যবস্থাপনা</string>
     <string name="home_fund_management_title">ফান্ড ব্যবস্থাপনা</string>
     <string name="home_cash_in_out">ক্যাশ ইন\nআউট</string>

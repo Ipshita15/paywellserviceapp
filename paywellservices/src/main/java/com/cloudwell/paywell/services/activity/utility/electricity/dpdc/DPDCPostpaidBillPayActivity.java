@@ -62,7 +62,7 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_utility_pb_billpay);
+            getSupportActionBar().setTitle(R.string.home_utility_dpdc_bill_title);
         }
         mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
