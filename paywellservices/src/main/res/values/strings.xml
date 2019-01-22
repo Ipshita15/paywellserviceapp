@@ -598,6 +598,8 @@
     <string name="home_utility_pb_reg_inq_log_title">Polli Biddut Registration Inquiry</string>
     <string name="home_utility_wasa_billpay_title">WASA Bill Pay</string>
     <string name="home_utility_wasa_bill_inquary_title">WASA Bill Inquiry</string>
+    <string name="home_utility_west_zone_pay_title">West Zone Bill Pay</string>
+    <string name="home_wast_zone_inquiry_title">West Zone Bill Inquiry</string>
 
 
 </resources>

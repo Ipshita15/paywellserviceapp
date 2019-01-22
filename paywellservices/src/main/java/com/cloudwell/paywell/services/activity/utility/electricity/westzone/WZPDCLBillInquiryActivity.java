@@ -57,7 +57,7 @@ public class WZPDCLBillInquiryActivity extends AppCompatActivity {
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_topup_trx_log);
+            getSupportActionBar().setTitle(R.string.home_wast_zone_inquiry_title);
         }
         mAppHandler = new AppHandler(this);
         mRelativeLayout = findViewById(R.id.relativeLayout);

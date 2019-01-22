@@ -601,4 +601,6 @@
     <string name="home_utility_pb_reg_inq_log_title">পল্লী বিদ্যুৎ রেজিস্ট্রেশন অনুসন্ধান</string>
     <string name="home_utility_wasa_billpay_title">ওয়াসা বিল প্রদান</string>
     <string name="home_utility_wasa_bill_inquary_title">ওয়াসা বিল অনুসন্ধান</string>
+    <string name="home_utility_west_zone_pay_title">ওয়েস্ট জোন বিল প্রদান</string>
+    <string name="home_wast_zone_inquiry_title">ওয়েস্ট জোন বিল অনুসন্ধান</string>
 </resources>
