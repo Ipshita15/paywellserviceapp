@@ -603,4 +603,8 @@
     <string name="home_utility_wasa_bill_inquary_title">ওয়াসা বিল অনুসন্ধান</string>
     <string name="home_utility_west_zone_pay_title">ওয়েস্ট জোন বিল প্রদান</string>
     <string name="home_wast_zone_inquiry_title">ওয়েস্ট জোন বিল অনুসন্ধান</string>
+    <string name="home_utility_ivac_fee_pay_title">আইভিএসি ফ্রি পরিশোধ</string>
+    <string name="home_utility_ivac_inquiry_title">আইভিএসি ফ্রি অনুসন্ধান</string>
+
+
 </resources>

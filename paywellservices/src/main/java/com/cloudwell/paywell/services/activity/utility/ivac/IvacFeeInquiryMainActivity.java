@@ -73,7 +73,7 @@ public class IvacFeeInquiryMainActivity extends BaseActivity implements View.OnC
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_topup_trx_log);
+            getSupportActionBar().setTitle(R.string.home_utility_ivac_inquiry_title);
         }
 
         mConstraintLayout = findViewById(R.id.constrainLayoutIvacInq);
