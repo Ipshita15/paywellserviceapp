@@ -70,7 +70,6 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
         switch (v.getId()) {
             case R.id.homeBtnBillPay:
                 startActivity(new Intent(this, DESCOBillPayActivity.class));
-                finish();
                 break;
             case R.id.homeBtnInquiry:
                 showLimitPrompt();

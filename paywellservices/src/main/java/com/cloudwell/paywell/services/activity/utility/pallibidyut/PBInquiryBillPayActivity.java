@@ -57,7 +57,7 @@ public class  PBInquiryBillPayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_utility_inquiry);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_topup_trx_log);
+            getSupportActionBar().setTitle(R.string.home_utility_bill_inquiry_title);
         }
         mAppHandler = new AppHandler(this);
         mRelativeLayout = findViewById(R.id.relativeLayout);
