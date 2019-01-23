@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.utility.pallibidyut;
+package com.cloudwell.paywell.services.activity.utility.pallibidyut.registion;
 
 import android.content.DialogInterface;
 import android.graphics.Color;

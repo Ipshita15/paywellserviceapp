@@ -33,7 +33,7 @@ import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RequestMobileNumberChangeActivity extends BaseActivity implements View.OnClickListener {
+public class MobileNumberChangeActivity extends BaseActivity implements View.OnClickListener {
 
     private LinearLayout mLinearLayout;
     private EditText mPin, mAccount, mPhone;
@@ -48,7 +48,7 @@ public class RequestMobileNumberChangeActivity extends BaseActivity implements V
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_utility_polli_request_mobile_number_change);
+            getSupportActionBar().setTitle(R.string.home_utility_polli_request_mobile_number_change_title);
         }
         cd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
@@ -133,7 +133,7 @@ public class RequestMobileNumberChangeActivity extends BaseActivity implements V
         reqStrBuilder.append("\n");
         reqStrBuilder.append(getString(R.string.using_paywell_des));
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(RequestMobileNumberChangeActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(MobileNumberChangeActivity.this);
         builder.setTitle("Message");
         builder.setMessage(reqStrBuilder.toString());
         builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {

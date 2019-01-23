@@ -1,9 +1,10 @@
-package com.cloudwell.paywell.services.activity.utility.pallibidyut;
+package com.cloudwell.paywell.services.activity.utility.pallibidyut.registion;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -30,7 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class PBRequestBillStatusInquiryActivity extends AppCompatActivity {
+public class PBInquiryRegActivity extends AppCompatActivity {
 
     private AppHandler mAppHandler;
     private RelativeLayout mRelativeLayout;
@@ -39,11 +40,11 @@ public class PBRequestBillStatusInquiryActivity extends AppCompatActivity {
     private String date = "";
     private CustomAdapter adapter;
 
-    private String TAG_RESPONSE_POLLI_PHN_NO = "customer_phn";
+    private String TAG_RESPONSE_POLLI_PHN_NO = "cutomer_phn";
     private String TAG_RESPONSE_POLLI_TRX_ID = "trxId";
     private String TAG_RESPONSE_POLLI_STATUS = "statusCode";
     private String TAG_RESPONSE_POLLI_MESSAGE = "statusName";
-    private String TAG_RESPONSE_POLLI_RESPONSE_DETAILS = "response_details";
+    private String TAG_RESPONSE_POLLI_CUST_NAME = "customer_name";
     private String TAG_RESPONSE_POLLI_ACCOUNT_NO = "customer_acc_no";
     private String TAG_RESPONSE_POLLI_DATE_TIME = "request_datetime";
 
@@ -53,7 +54,7 @@ public class PBRequestBillStatusInquiryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_utility_inquiry);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_utility_pb_reg_statu_inquery_title);
+            getSupportActionBar().setTitle(R.string.home_utility_pb_reg_inq_log_title);
         }
         mAppHandler = new AppHandler(this);
         mRelativeLayout = findViewById(R.id.relativeLayout);
@@ -74,7 +75,7 @@ public class PBRequestBillStatusInquiryActivity extends AppCompatActivity {
                     String mTrx = jsonObject.getString(TAG_RESPONSE_POLLI_TRX_ID);
                     String mStatus = jsonObject.getString(TAG_RESPONSE_POLLI_STATUS);
                     String mMsg = jsonObject.getString(TAG_RESPONSE_POLLI_MESSAGE);
-                    String mResponseDetails = jsonObject.getString(TAG_RESPONSE_POLLI_RESPONSE_DETAILS);
+                    String mCustName = jsonObject.getString(TAG_RESPONSE_POLLI_CUST_NAME);
                     String mAccNo = jsonObject.getString(TAG_RESPONSE_POLLI_ACCOUNT_NO);
                     String mDate = jsonObject.getString(TAG_RESPONSE_POLLI_DATE_TIME);
 
@@ -90,7 +91,7 @@ public class PBRequestBillStatusInquiryActivity extends AppCompatActivity {
                         adapter.addSectionHeaderItem(date);
                     }
                     result = mAccNo + "@" + mStatus + "@" + mMsg
-                            + "@" + mTrx + "@" + mResponseDetails + "@" + mPhn + "@" + mDate;
+                            + "@" + mTrx + "@" + mCustName + "@" + mPhn + "@" + mDate;
                     adapter.addItem(result);
                 }
             } catch (Exception ex) {
@@ -100,12 +101,12 @@ public class PBRequestBillStatusInquiryActivity extends AppCompatActivity {
                 View snackBarView = snackbar.getView();
                 snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                 snackbar.show();
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        onBackPressed();
-//                    }
-//                }, 2000);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        onBackPressed();
+                    }
+                }, 2000);
             }
             listView = findViewById(R.id.listView);
             listView.setAdapter(adapter);
@@ -314,11 +315,10 @@ public class PBRequestBillStatusInquiryActivity extends AppCompatActivity {
 
     private void showFullInfo(int position) {
         String array[] = adapter.mData.get(position).split("@");
-        String msg = "Acc No: " + array[0]
+        String msg = "Cust. Name: " + array[4] + "\nAcc No: " + array[0]
                 + "\nPnone: " + array[5] + "\nRequest Date: " + array[6]
-                + "\nDetails: " + array[4]
                 + "\nTrx ID: " + array[3];
-        AlertDialog.Builder builder = new AlertDialog.Builder(PBRequestBillStatusInquiryActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(PBInquiryRegActivity.this);
         if (array[1].equalsIgnoreCase("200")) {
             builder.setTitle(Html.fromHtml("<font color='#008000'>Result Successful</font>"));
         } else if (array[1].equalsIgnoreCase("100")) {

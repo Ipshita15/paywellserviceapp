@@ -19,8 +19,14 @@ import android.widget.RelativeLayout;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.WebViewActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBBillPayActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBInquiryBillPayActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus.PBBillStatusActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus.PBBillStatusInquiryActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.MobileNumberChangeActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.PBInquiryMobileNumberChangeActivity;
-import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.RequestMobileNumberChangeActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.registion.PBInquiryRegActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.registion.PBRegistrationActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
@@ -169,7 +175,7 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
                 break;
 
             case R.id.btRequestInquiry:
-                startActivity(new Intent(this, PBRequestBillStatusActivity.class));
+                startActivity(new Intent(this, PBBillStatusActivity.class));
 
                 break;
             case R.id.btBillStatusInquiry:
@@ -177,7 +183,7 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
                 break;
 
             case R.id.btChangeMobileNumber:
-                startActivity(new Intent(this, RequestMobileNumberChangeActivity.class));
+                startActivity(new Intent(this, MobileNumberChangeActivity.class));
                 break;
 
             case R.id.btChangeMobileNumbeEnquiry:
@@ -352,8 +358,8 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
                     startActivity(new Intent(PBMainActivity.this, PBInquiryBillPayActivity.class));
 
                 } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_PHONE_NUMBER_BILL_STATUS)) {
-                    PBRequestBillStatusInquiryActivity.TRANSLOG_TAG = result;
-                    startActivity(new Intent(PBMainActivity.this, PBRequestBillStatusInquiryActivity.class));
+                    PBBillStatusInquiryActivity.TRANSLOG_TAG = result;
+                    startActivity(new Intent(PBMainActivity.this, PBBillStatusInquiryActivity.class));
 
                 } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY)) {
                     PBInquiryMobileNumberChangeActivity.Companion.setTRANSLOG_TAG(result);

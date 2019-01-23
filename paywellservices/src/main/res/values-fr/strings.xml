@@ -39,8 +39,8 @@
     <string name="home_utility_pollibiddut_bill_pay_favorite">পল্লী বিদ্যুৎ \nবিল প্রদান</string>
     <string name="home_utility_pollibiddut_reg_inquiry">পল্লী বিদ্যুৎ \nরেজিস্ট্রেশন \nঅনুসন্ধান </string>
     <string name="home_utility_pollibiddut_bill_inquiry">পল্লী বিদ্যুৎ \বিল অনুসন্ধান </string>
-    <string name="home_utility_pb_bill_change_number">ফোন নাম্বার \nপরিবর্তনের অনুরোধ</string>
-    <string name="home_utility_pb_phone_number_inquiry">ফোন নাম্বার \nপরিবর্তনের \nঅবস্থা অনুসন্ধান</string>
+    <string name="home_utility_pb_bill_change_number">নম্বর পরিবর্তন</string>
+    <string name="home_utility_pb_phone_number_inquiry">নম্বর পরিবর্তন \n অনুসন্ধান</string>
     <string name="home_utility_ivac">আইভিএসি</string>
     <string name="home_utility_banglalion">বাংলালায়ন</string>
     <string name="home_utility_karnaphuli">কর্ণফুলী</string>
@@ -50,14 +50,14 @@
     <string name="home_utility_pb_billpay">বিল প্রদান</string>
     <string name="home_utility_pb_reg">রেজিস্ট্রেশন</string>
     <string name="home_utility_pb_billpay_title">পল্লী বিদ্যুৎ বিল প্রদান</string>
-    <string name="home_utility_pb_reg_statu_inquery_title">বিলের অবস্থা অনুসন্ধান</string>
+    <string name="home_utility_pb_reg_statu_inquery_title">পল্লী বিদ্যুৎ বিল স্ট্যাটাস অনুসন্ধান</string>
     <string name="home_utility_pb_reg_inq">রেজিস্ট্রেশন\nঅনুসন্ধান</string>
     <string name="home_utility_pb_reg_inq_log">রেজিস্ট্রেশন লগ</string>
     <string name="home_utility_pb_bill_ing">বিল প্রদান\nঅনুসন্ধান</string>
-    <string name="home_utility_pb_request_inquiry">বিল সম্পর্কে \nজানার\nজন্য অনুরোধ</string>
-    <string name="home_utility_pb_bill_statu_inquery">বিলের অবস্থা\nঅনুসন্ধান</string>
-    <string name="home_utility_polli_request_mobile_number_change">ফোন নাম্বার পরিবর্তনের অনুরোধ</string>
-    <string name="home_utility_polli_home_request_mobile_number_change">বিল সম্পর্কে জানার জন্য অনুরোধ</string>
+    <string name="home_utility_pb_request_inquiry">বিল স্ট্যাটাস</string>
+    <string name="home_utility_pb_bill_statu_inquery">বিল স্ট্যাটাস \nঅনুসন্ধান</string>
+    <string name="home_utility_polli_request_mobile_number_change_title">পল্লী বিদ্যুৎ নম্বর পরিবর্তন</string>
+    <string name="home_utility_polli_home_bill_status">পল্লী বিদ্যুৎ বিল স্ট্যাটাস</string>
     <string name="home_utility_qubee_inq_title">রিচার্জ অনুসন্ধান</string>
     <string name="home_utility_home_pb_bill_status_inquiry_title">বিলের অবস্থা অনুসন্ধান</string>
     <string name="home_utility_ivac_fee_pay">ফি পরিশোধ</string>
@@ -324,7 +324,7 @@
     <string name="business_type_des">ব্যবসা ধরনঃ</string>
     <string name="web_file_des">ওয়েব ফাইল নম্বরঃ</string>
     <string name="passport_des">পাসপোর্ট নম্বরঃ</string>
-    <string name="banglalion_trx_id_des">বাংলালায়ন লেনদেন নাম্বারঃ</string>
+    <string name="banglalion_trx_id_des">বাংলালায়ন লেনদেন নম্বরঃ</string>
     <string name="retail_commission_des">রিটেইলার কমিশনঃ</string>
 
     <string name="pre_paid_str">prepaid</string>
@@ -596,7 +596,7 @@
     <string name="Added">যোগ করা হয়েছে:</string>
     <string name="add_fav">যোগ করুন</string>
     <string name="balance_pre_text">ব্যালেন্স</string>
-    <string name="home_utility_pb_bill_status_inquiry_title">ফোন নাম্বার পরিবর্তনের অবস্থা অনুসন্ধান</string>
+    <string name="home_utility_pb_bill_status_inquiry_title">পল্লী বিদ্যুৎ ফোন নম্বর পরিবর্তন অনুসন্ধান</string>
     <string name="home_utility_bill_inquiry_title">পল্লী বিদ্যুৎ	বিল অনুসন্ধান</string>
     <string name="home_utility_pb_reg_inq_log_title">পল্লী বিদ্যুৎ রেজিস্ট্রেশন অনুসন্ধান</string>
     <string name="home_utility_wasa_billpay_title">ওয়াসা বিল প্রদান</string>
