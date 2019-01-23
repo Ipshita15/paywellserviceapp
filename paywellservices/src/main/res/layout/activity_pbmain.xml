@@ -25,7 +25,34 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:orientation="horizontal"
-                android:weightSum="5">
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/homeBtnBillPay"
+                    style="@style/HomeButtonNew"
+                    android:drawableTop="@drawable/ic_bill_pay"
+                    android:onClick="onButtonClicker"
+                    android:text="@string/home_utility_pb_billpay"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                <Button
+                    android:id="@+id/homeBtnInquiryBillPay"
+                    style="@style/HomeButtonNew"
+                    android:drawableTop="@drawable/ic_enquiry"
+                    android:onClick="onButtonClicker"
+                    android:text="@string/home_utility_pb_bill_ing"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
                 <Button
                     android:id="@+id/homeBtnRegistration"
@@ -36,25 +63,6 @@
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
-
-                <Button
-                    android:id="@+id/homeBtnBillPay"
-                    style="@style/HomeButtonNew"
-                    android:drawableTop="@drawable/ic_bill_pay"
-                    android:onClick="onButtonClicker"
-                    android:text="@string/home_utility_pb_billpay"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
-
                 <Button
                     android:id="@+id/homeBtnInquiryReg"
                     style="@style/HomeButtonNew"
@@ -64,6 +72,8 @@
                     android:text="@string/home_utility_pb_reg_inq"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+
             </LinearLayout>
 
             <LinearLayout
@@ -71,22 +81,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:orientation="horizontal"
-                android:weightSum="5">
+                android:weightSum="2">
 
-
-                <Button
-                    android:id="@+id/homeBtnInquiryBillPay"
-                    style="@style/HomeButtonNew"
-                    android:drawableTop="@drawable/ic_enquiry"
-                    android:onClick="onButtonClicker"
-                    android:text="@string/home_utility_pb_bill_ing"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/btRequestInquiry"
@@ -96,12 +92,6 @@
                     android:text="@string/home_utility_pb_request_inquiry"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
-
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
 
 
                 <Button
@@ -114,11 +104,6 @@
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
             </LinearLayout>
 
 
@@ -127,7 +112,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:orientation="horizontal"
-                android:weightSum="3">
+                android:weightSum="2">
 
 
                 <Button
@@ -139,11 +124,6 @@
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
                 <Button
                     android:id="@+id/btChangeMobileNumbeEnquiry"
                     style="@style/HomeButtonNew"
@@ -152,11 +132,6 @@
                     android:text="@string/home_utility_pb_phone_number_inquiry"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
 
 
             </LinearLayout>

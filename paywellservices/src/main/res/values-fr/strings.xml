@@ -40,7 +40,7 @@
     <string name="home_utility_pollibiddut_reg_inquiry">পল্লী বিদ্যুৎ \nরেজিস্ট্রেশন \nঅনুসন্ধান </string>
     <string name="home_utility_pollibiddut_bill_inquiry">পল্লী বিদ্যুৎ \বিল অনুসন্ধান </string>
     <string name="home_utility_pb_bill_change_number">ফোন নাম্বার \nপরিবর্তনের অনুরোধ</string>
-    <string name="home_utility_pb_phone_number_inquiry">ফোন নাম্বার পরিবর্তনের অবস্থা অনুসন্ধান</string>
+    <string name="home_utility_pb_phone_number_inquiry">ফোন নাম্বার \nপরিবর্তনের \nঅবস্থা অনুসন্ধান</string>
     <string name="home_utility_ivac">আইভিএসি</string>
     <string name="home_utility_banglalion">বাংলালায়ন</string>
     <string name="home_utility_karnaphuli">কর্ণফুলী</string>
@@ -54,9 +54,9 @@
     <string name="home_utility_pb_reg_inq">রেজিস্ট্রেশন\nঅনুসন্ধান</string>
     <string name="home_utility_pb_reg_inq_log">রেজিস্ট্রেশন লগ</string>
     <string name="home_utility_pb_bill_ing">বিল প্রদান\nঅনুসন্ধান</string>
-    <string name="home_utility_pb_request_inquiry">বিল সম্পর্কে জানার\nজন্য অনুরোধ</string>
-    <string name="home_utility_pb_bill_statu_inquery">বিলের অবস্থা অনুসন্ধান</string>
-    <string name="home_utility_polli_request_mobile_number_change">ফোন নাম্বার পরিবর্তনের অবস্থা অনুসন্ধান</string>
+    <string name="home_utility_pb_request_inquiry">বিল সম্পর্কে \nজানার\nজন্য অনুরোধ</string>
+    <string name="home_utility_pb_bill_statu_inquery">বিলের অবস্থা\nঅনুসন্ধান</string>
+    <string name="home_utility_polli_request_mobile_number_change">ফোন নাম্বার পরিবর্তনের অনুরোধ</string>
     <string name="home_utility_polli_home_request_mobile_number_change">বিল সম্পর্কে জানার জন্য অনুরোধ</string>
     <string name="home_utility_qubee_inq_title">রিচার্জ অনুসন্ধান</string>
     <string name="home_utility_home_pb_bill_status_inquiry_title">বিলের অবস্থা অনুসন্ধান</string>
@@ -605,6 +605,8 @@
     <string name="home_wast_zone_inquiry_title">ওয়েস্ট জোন বিল অনুসন্ধান</string>
     <string name="home_utility_ivac_fee_pay_title">আইভিএসি ফ্রি পরিশোধ</string>
     <string name="home_utility_ivac_inquiry_title">আইভিএসি ফ্রি অনুসন্ধান</string>
+    <string name="home_karnaphuli_bill_title">কর্ণফুলী বিল প্রদান</string>
+    <string name="home_karnaphuli_inquiryl_title">কর্ণফুলী বিল অনুসন্ধান</string>
 
 
 </resources>
