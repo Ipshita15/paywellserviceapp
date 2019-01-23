@@ -80,7 +80,7 @@ public class IvacFeePayActivity extends BaseActivity {
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_utility_ivac_fee_pay);
+            getSupportActionBar().setTitle(R.string.home_utility_ivac_fee_pay_title);
         }
 
         mCd = new ConnectionDetector(AppController.getContext());

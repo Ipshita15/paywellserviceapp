@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.utility.pallibidyut;
+package com.cloudwell.paywell.services.activity.utility.pallibidyut.registion;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -54,7 +54,7 @@ public class PBInquiryRegActivity extends AppCompatActivity {
         setContentView(R.layout.activity_utility_inquiry);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_utility_pb_reg_inq_log);
+            getSupportActionBar().setTitle(R.string.home_utility_pb_reg_inq_log_title);
         }
         mAppHandler = new AppHandler(this);
         mRelativeLayout = findViewById(R.id.relativeLayout);

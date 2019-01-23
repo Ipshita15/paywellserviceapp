@@ -100,11 +100,11 @@ import com.cloudwell.paywell.services.activity.utility.ivac.IvacFeePayActivity;
 import com.cloudwell.paywell.services.activity.utility.ivac.IvacMainActivity;
 import com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliBillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliMainActivity;
-import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBBillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity;
-import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBRegistrationActivity;
-import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBRequestBillStatusActivity;
-import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.RequestMobileNumberChangeActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBBillPayActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus.PBBillStatusActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.MobileNumberChangeActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.registion.PBRegistrationActivity;
 import com.cloudwell.paywell.services.adapter.HomeFavoriteAdapter;
 import com.cloudwell.paywell.services.adapter.MainSliderAdapter;
 import com.cloudwell.paywell.services.adapter.PicassoImageLoadingService;
@@ -2194,6 +2194,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivityWithFlag(intent);
                 break;
 
+            case R.string.home_utility_desco_pay_inquiry:
+                intent = new Intent(getApplicationContext(), DESCOMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
             case R.string.home_utility_dpdc:
                 intent = new Intent(getApplicationContext(), DPDCMainActivity.class);
                 startActivityWithFlag(intent);
@@ -2202,6 +2207,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 intent = new Intent(getApplicationContext(), DPDCPostpaidBillPayActivity.class);
                 startActivityWithFlag(intent);
                 break;
+
+            case R.string.home_utility_dpdc_bill_pay_inquiry:
+                intent = new Intent(getApplicationContext(), DPDCMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
 
             case R.string.home_utility_pollibiddut:
                 intent = new Intent(getApplicationContext(), PBMainActivity.class);
@@ -2231,7 +2242,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
 
             case R.string.home_utility_pb_request_inquiry:
-                intent = new Intent(getApplicationContext(), PBRequestBillStatusActivity.class);
+                intent = new Intent(getApplicationContext(), PBBillStatusActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
@@ -2241,7 +2252,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivityWithFlag(intent);
                 break;
             case R.string.home_utility_pb_bill_change_number:
-                intent = new Intent(getApplicationContext(), RequestMobileNumberChangeActivity.class);
+                intent = new Intent(getApplicationContext(), MobileNumberChangeActivity.class);
                 startActivityWithFlag(intent);
                 break;
 

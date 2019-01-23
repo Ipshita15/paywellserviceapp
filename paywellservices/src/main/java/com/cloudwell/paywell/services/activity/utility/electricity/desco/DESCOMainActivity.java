@@ -17,6 +17,7 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.constant.AllConstant;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
 import org.apache.http.NameValuePair;
@@ -63,6 +64,16 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
             btnBill.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnInquiry.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
+
+        checkIsComeFromFav(getIntent());
+    }
+
+    private void checkIsComeFromFav(Intent intent) {
+
+        boolean isFav = intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE, false);
+        if (isFav) {
+            showLimitPrompt();
+        }
     }
 
     public void onButtonClicker(View v) {
@@ -70,7 +81,6 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
         switch (v.getId()) {
             case R.id.homeBtnBillPay:
                 startActivity(new Intent(this, DESCOBillPayActivity.class));
-                finish();
                 break;
             case R.id.homeBtnInquiry:
                 showLimitPrompt();

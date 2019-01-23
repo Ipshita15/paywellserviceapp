@@ -59,7 +59,7 @@ public class DPDCPostpaidInquiryActivity extends AppCompatActivity {
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_topup_trx_log);
+            getSupportActionBar().setTitle(R.string.home_utility_dpdc_inquary_title);
         }
 
         mAppHandler = new AppHandler(this);

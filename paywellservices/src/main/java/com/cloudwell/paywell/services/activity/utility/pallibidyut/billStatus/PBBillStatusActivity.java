@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.utility.pallibidyut;
+package com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -30,7 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PBRequestBillStatusActivity extends BaseActivity implements View.OnClickListener {
+public class PBBillStatusActivity extends BaseActivity implements View.OnClickListener {
 
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
@@ -41,7 +41,7 @@ public class PBRequestBillStatusActivity extends BaseActivity implements View.On
     private int month = 0, year = 0;
     private String mPin, mAcc, mMonth, mYear;
 
-    private static String KEY_TAG = PBRequestBillStatusActivity.class.getName();
+    private static String KEY_TAG = PBBillStatusActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class PBRequestBillStatusActivity extends BaseActivity implements View.On
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_utility_polli_home_request_mobile_number_change);
+            getSupportActionBar().setTitle(R.string.home_utility_polli_home_bill_status);
         }
         mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
@@ -195,7 +195,7 @@ public class PBRequestBillStatusActivity extends BaseActivity implements View.On
 
     private void showReposeUI(RequestBillStatusData response) {
         final RequestBillStatusData data = response;
-        AlertDialog.Builder builder = new AlertDialog.Builder(PBRequestBillStatusActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(PBBillStatusActivity.this);
         builder.setTitle("Message");
         builder.setMessage(getString(R.string.trx_id_des) + " " + response.getTrxId() + "\n\n" + getString(R.string.status_des) + " " + response.getMessage());
         builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {

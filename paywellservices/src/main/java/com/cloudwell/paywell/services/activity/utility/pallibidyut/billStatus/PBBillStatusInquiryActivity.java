@@ -1,10 +1,9 @@
-package com.cloudwell.paywell.services.activity.utility.pallibidyut;
+package com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -31,7 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class  PBInquiryBillPayActivity extends AppCompatActivity {
+public class PBBillStatusInquiryActivity extends AppCompatActivity {
 
     private AppHandler mAppHandler;
     private RelativeLayout mRelativeLayout;
@@ -40,16 +39,13 @@ public class  PBInquiryBillPayActivity extends AppCompatActivity {
     private String date = "";
     private CustomAdapter adapter;
 
+    private String TAG_RESPONSE_POLLI_PHN_NO = "customer_phn";
     private String TAG_RESPONSE_POLLI_TRX_ID = "trxId";
-    private String TAG_RESPONSE_POLLI_CUST_NAME = "customer_name";
-    private String TAG_RESPONSE_POLLI_BILL_NO = "bill_no";
-    private String TAG_RESPONSE_POLLI_BILL_AMOUNT = "bill_amount";
-    private String TAG_RESPONSE_POLLI_BILL_MONTH = "bill_month";
-    private String TAG_RESPONSE_POLLI_DATE_TIME = "request_datetime";
-    private String TAG_RESPONSE_POLLI_TBPS_CHARGE = "tbps_charge";
-    private String TAG_RESPONSE_POLLI_AMOUNT = "total_amount";
     private String TAG_RESPONSE_POLLI_STATUS = "statusCode";
     private String TAG_RESPONSE_POLLI_MESSAGE = "statusName";
+    private String TAG_RESPONSE_POLLI_RESPONSE_DETAILS = "response_details";
+    private String TAG_RESPONSE_POLLI_ACCOUNT_NO = "customer_acc_no";
+    private String TAG_RESPONSE_POLLI_DATE_TIME = "request_datetime";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +53,7 @@ public class  PBInquiryBillPayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_utility_inquiry);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_topup_trx_log);
+            getSupportActionBar().setTitle(R.string.home_utility_pb_reg_statu_inquery_title);
         }
         mAppHandler = new AppHandler(this);
         mRelativeLayout = findViewById(R.id.relativeLayout);
@@ -70,20 +66,17 @@ public class  PBInquiryBillPayActivity extends AppCompatActivity {
         if (response != null && response.length() > 0) {
             try {
                 JSONArray jsonArray = new JSONArray(response);
+
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     String result;
-
+                    String mPhn = jsonObject.getString(TAG_RESPONSE_POLLI_PHN_NO);
                     String mTrx = jsonObject.getString(TAG_RESPONSE_POLLI_TRX_ID);
-                    String mCustName = jsonObject.getString(TAG_RESPONSE_POLLI_CUST_NAME);
-                    String mBillNO = jsonObject.getString(TAG_RESPONSE_POLLI_BILL_NO);
-                    String mBillAmount = jsonObject.getString(TAG_RESPONSE_POLLI_BILL_AMOUNT);
-                    String mBillMonth = jsonObject.getString(TAG_RESPONSE_POLLI_BILL_MONTH);
-                    String mDate = jsonObject.getString(TAG_RESPONSE_POLLI_DATE_TIME);
-                    String mTbpsCharge = jsonObject.getString(TAG_RESPONSE_POLLI_TBPS_CHARGE);
-                    String mAmount = jsonObject.getString(TAG_RESPONSE_POLLI_AMOUNT);
                     String mStatus = jsonObject.getString(TAG_RESPONSE_POLLI_STATUS);
                     String mMsg = jsonObject.getString(TAG_RESPONSE_POLLI_MESSAGE);
+                    String mResponseDetails = jsonObject.getString(TAG_RESPONSE_POLLI_RESPONSE_DETAILS);
+                    String mAccNo = jsonObject.getString(TAG_RESPONSE_POLLI_ACCOUNT_NO);
+                    String mDate = jsonObject.getString(TAG_RESPONSE_POLLI_DATE_TIME);
 
                     String sub_date_comp = mDate.substring(0, 10);
 
@@ -96,10 +89,8 @@ public class  PBInquiryBillPayActivity extends AppCompatActivity {
                         date = outputDateStr;
                         adapter.addSectionHeaderItem(date);
                     }
-
-                    result = mBillNO + "@" + mStatus + "@" + mMsg
-                            + "@" + mBillAmount + "@" + mTrx + "@" + mCustName + "@" + mBillMonth
-                            + "@" + mDate + "@" + mTbpsCharge + "@" + mAmount;
+                    result = mAccNo + "@" + mStatus + "@" + mMsg
+                            + "@" + mTrx + "@" + mResponseDetails + "@" + mPhn + "@" + mDate;
                     adapter.addItem(result);
                 }
             } catch (Exception ex) {
@@ -109,20 +100,19 @@ public class  PBInquiryBillPayActivity extends AppCompatActivity {
                 View snackBarView = snackbar.getView();
                 snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                 snackbar.show();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        onBackPressed();
-                    }
-                }, 2000);
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        onBackPressed();
+//                    }
+//                }, 2000);
             }
-
             listView = findViewById(R.id.listView);
             listView.setAdapter(adapter);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if(adapter.mData.get(position).contains("@")) {
+                    if (adapter.mData.get(position).contains("@")) {
                         showFullInfo(position);
                     }
                 }
@@ -139,7 +129,9 @@ public class  PBInquiryBillPayActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            this.onBackPressed();
+            if (this != null) {
+                this.onBackPressed();
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -233,19 +225,17 @@ public class  PBInquiryBillPayActivity extends AppCompatActivity {
                         break;
                     case TYPE_ITEM:
                         convertView = mInflater.inflate(R.layout.dialog_polli_reg_inq, parent, false);
-                        holder.billNo = convertView.findViewById(R.id.accNo);
+                        holder.accNo = convertView.findViewById(R.id.accNo);
                         holder.status = convertView.findViewById(R.id.status);
-                        holder.amount = convertView.findViewById(R.id.trxId);
+                        holder.trxId = convertView.findViewById(R.id.trxId);
 
                         convertView.setTag(holder);
 
                         splitArray_row_first = mData.get(position).split("@");
 
-                        String text = getString(R.string.tk_des) + " " + splitArray_row_first[3];
-
-                        holder.billNo.setText(splitArray_row_first[0]);
+                        holder.accNo.setText(splitArray_row_first[0]);
                         holder.status.setText(splitArray_row_first[2]);
-                        holder.amount.setText(text);
+                        holder.trxId.setText(splitArray_row_first[3]);
 
                         if (splitArray_row_first[1].equalsIgnoreCase("200")) {
                             holder.status.setTextColor(Color.parseColor("#008000"));
@@ -255,13 +245,13 @@ public class  PBInquiryBillPayActivity extends AppCompatActivity {
                             holder.status.setTextColor(Color.parseColor("#ff0000"));
                         }
                         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-                            holder.billNo.setTypeface(AppController.getInstance().getOxygenLightFont());
+                            holder.accNo.setTypeface(AppController.getInstance().getOxygenLightFont());
                             holder.status.setTypeface(AppController.getInstance().getOxygenLightFont());
-                            holder.amount.setTypeface(AppController.getInstance().getOxygenLightFont());
+                            holder.trxId.setTypeface(AppController.getInstance().getOxygenLightFont());
                         } else {
-                            holder.billNo.setTypeface(AppController.getInstance().getAponaLohitFont());
+                            holder.accNo.setTypeface(AppController.getInstance().getAponaLohitFont());
                             holder.status.setTypeface(AppController.getInstance().getAponaLohitFont());
-                            holder.amount.setTypeface(AppController.getInstance().getAponaLohitFont());
+                            holder.trxId.setTypeface(AppController.getInstance().getAponaLohitFont());
                         }
                         break;
                 }
@@ -282,19 +272,17 @@ public class  PBInquiryBillPayActivity extends AppCompatActivity {
                         break;
                     case TYPE_ITEM:
                         convertView = mInflater.inflate(R.layout.dialog_polli_reg_inq, parent, false);
-                        holder.billNo = convertView.findViewById(R.id.accNo);
+                        holder.accNo = convertView.findViewById(R.id.accNo);
                         holder.status = convertView.findViewById(R.id.status);
-                        holder.amount = convertView.findViewById(R.id.trxId);
+                        holder.trxId = convertView.findViewById(R.id.trxId);
 
                         convertView.setTag(holder);
 
                         splitArray_row_second = mData.get(position).split("@");
 
-                        String text = getString(R.string.tk_des) + " " + splitArray_row_second[3];
-
-                        holder.billNo.setText(splitArray_row_second[0]);
+                        holder.accNo.setText(splitArray_row_second[0]);
                         holder.status.setText(splitArray_row_second[2]);
-                        holder.amount.setText(text);
+                        holder.trxId.setText(splitArray_row_second[3]);
 
                         if (splitArray_row_second[1].equalsIgnoreCase("200")) {
                             holder.status.setTextColor(Color.parseColor("#008000"));
@@ -304,13 +292,13 @@ public class  PBInquiryBillPayActivity extends AppCompatActivity {
                             holder.status.setTextColor(Color.parseColor("#ff0000"));
                         }
                         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-                            holder.billNo.setTypeface(AppController.getInstance().getOxygenLightFont());
+                            holder.accNo.setTypeface(AppController.getInstance().getOxygenLightFont());
                             holder.status.setTypeface(AppController.getInstance().getOxygenLightFont());
-                            holder.amount.setTypeface(AppController.getInstance().getOxygenLightFont());
+                            holder.trxId.setTypeface(AppController.getInstance().getOxygenLightFont());
                         } else {
-                            holder.billNo.setTypeface(AppController.getInstance().getAponaLohitFont());
+                            holder.accNo.setTypeface(AppController.getInstance().getAponaLohitFont());
                             holder.status.setTypeface(AppController.getInstance().getAponaLohitFont());
-                            holder.amount.setTypeface(AppController.getInstance().getAponaLohitFont());
+                            holder.trxId.setTypeface(AppController.getInstance().getAponaLohitFont());
                         }
                         break;
                 }
@@ -319,19 +307,18 @@ public class  PBInquiryBillPayActivity extends AppCompatActivity {
         }
 
         public class ViewHolder {
-            TextView textView, billNo, status, amount;
+            TextView textView, accNo, status, trxId;
         }
     }
 
 
     private void showFullInfo(int position) {
         String array[] = adapter.mData.get(position).split("@");
-        String msg = "Bill No: " + array[0] + "\nBill Amount: " + getString(R.string.tk_des) + " " + array[3]
-                + "\nMonth: " + array[6] + "\nTBPS Charge: " + getString(R.string.tk_des) + " " + array[8]
-                + "\nTotal: " + getString(R.string.tk_des) + " " + array[9]
-                + "\nDate: " + array[7] + "\nTrx ID: " + array[4];
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(PBInquiryBillPayActivity.this);
+        String msg = "Acc No: " + array[0]
+                + "\nPnone: " + array[5] + "\nRequest Date: " + array[6]
+                + "\nDetails: " + array[4]
+                + "\nTrx ID: " + array[3];
+        AlertDialog.Builder builder = new AlertDialog.Builder(PBBillStatusInquiryActivity.this);
         if (array[1].equalsIgnoreCase("200")) {
             builder.setTitle(Html.fromHtml("<font color='#008000'>Result Successful</font>"));
         } else if (array[1].equalsIgnoreCase("100")) {

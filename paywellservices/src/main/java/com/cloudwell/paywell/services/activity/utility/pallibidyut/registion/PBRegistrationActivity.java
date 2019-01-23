@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.utility.pallibidyut;
+package com.cloudwell.paywell.services.activity.utility.pallibidyut.registion;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -51,7 +51,7 @@ public class PBRegistrationActivity extends BaseActivity implements View.OnClick
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_utility_pb_reg);
+            getSupportActionBar().setTitle(R.string.home_utility_pb_reg_title);
         }
         cd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);

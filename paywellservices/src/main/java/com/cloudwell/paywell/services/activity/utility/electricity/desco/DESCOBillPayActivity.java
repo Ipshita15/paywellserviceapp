@@ -63,7 +63,7 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_utility_pb_billpay);
+            getSupportActionBar().setTitle(R.string.home_utility_desco_pay_title);
         }
         mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);

@@ -15,8 +15,10 @@ public class StringConstant {
     public static String KEY_home_utility = "home_utility";
     public static String KEY_home_utility_desco = "home_utility_desco";
     public static String KEY_home_utility_desco_pay = "home_utility_desco_pay";
+    public static String KEY_home_utility_desco_pay_inquiry = "home_utility_desco_pay_inquiry";
     public static String KEY_home_utility_dpdc = "home_utility_dpdc";
     public static String KEY_home_utility_dpdc_bill_pay = "home_utility_dpdc_bill_pay";
+    public static String KEY_home_utility_dpdc_bill_pay_inquiry = "home_utility_dpdc_bill_pay_inquiry";
     public static String KEY_home_utility_pollibiddut = "home_utility_pollibiddut";
     public static String KEY_home_utility_pollibiddut_registion = "home_utility_pollibiddut_registion";
     public static String KEY_home_utility_pollibiddut_bill_pay_favorite = "home_utility_pollibiddut_bill_pay_favorite";

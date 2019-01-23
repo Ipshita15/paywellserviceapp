@@ -16,15 +16,19 @@ class MyFavoriteHelper {
         fun insertData(context: Context) {
             val listOfData = mutableListOf<FavoriteMenu>()
 
+
+            // 41
             listOfData.add(FavoriteMenu(StringConstant.KEY_mobileOperator, StringConstant.KEY_topup, IconConstant.KEY_all_operator, MenuStatus.UnFavorite.text, 0, 1))
             listOfData.add(FavoriteMenu(StringConstant.KEY_brilliant, StringConstant.KEY_topup, IconConstant.KEY_brilli_ant, MenuStatus.UnFavorite.text, 0, 2))
 
 //            // utility
             listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_desco, StringConstant.KEY_home_utility, IconConstant.KEY_ic_desco, MenuStatus.UnFavorite.text, 0, 3))
             listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_desco_pay, StringConstant.KEY_home_utility, IconConstant.KEY_ic_bill_pay, MenuStatus.UnFavorite.text, 0, 4))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_desco_pay_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, MenuStatus.UnFavorite.text, 0, 40))
 //
             listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_dpdc, StringConstant.KEY_home_utility, IconConstant.KEY_ic_dpdc, MenuStatus.UnFavorite.text, 0, 5))
             listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_dpdc_bill_pay, StringConstant.KEY_home_utility, IconConstant.KEY_ic_dpdc, MenuStatus.UnFavorite.text, 0, 6))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_dpdc_bill_pay_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_dpdc, MenuStatus.UnFavorite.text, 0, 41))
 
             listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_pollibiddut, StringConstant.KEY_home_utility, IconConstant.KEY_ic_polli_biddut, MenuStatus.UnFavorite.text, 0, 7))
             listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_pollibiddut_registion, StringConstant.KEY_home_utility, IconConstant.KEY_ic_registration, MenuStatus.UnFavorite.text, 0, 8))
