@@ -12,7 +12,6 @@
     <string name="home_utility">ইউটিলিটি</string>
     <string name="home_eticket">টিকেট</string>
     <string name="home_mfs">মোবাইল ব্যাংকিং</string>
-    <string name="home_mfs_fav">মোবাইল ব্যাংকিং</string>
     <string name="nav_mfs">মোবাইল ব্যাংকিং</string>
     <string name="home_product_catalog">প্রোডাক্ট\nক্যাটালগ</string>
     <string name="nav_product_catalog">প্রোডাক্ট ক্যাটালগ</string>
@@ -52,16 +51,14 @@
     <string name="home_utility_pb_billpay_title">পল্লী বিদ্যুৎ বিল প্রদান</string>
     <string name="home_utility_pb_reg_statu_inquery_title">পল্লী বিদ্যুৎ বিল স্ট্যাটাস অনুসন্ধান</string>
     <string name="home_utility_pb_reg_inq">রেজিস্ট্রেশন\nঅনুসন্ধান</string>
-    <string name="home_utility_pb_reg_inq_log">রেজিস্ট্রেশন লগ</string>
     <string name="home_utility_pb_bill_ing">বিল প্রদান\nঅনুসন্ধান</string>
     <string name="home_utility_pb_request_inquiry">বিল স্ট্যাটাস</string>
     <string name="home_utility_pb_bill_statu_inquery">বিল স্ট্যাটাস \nঅনুসন্ধান</string>
     <string name="home_utility_polli_request_mobile_number_change_title">পল্লী বিদ্যুৎ নম্বর পরিবর্তন</string>
     <string name="home_utility_polli_home_bill_status">পল্লী বিদ্যুৎ বিল স্ট্যাটাস</string>
     <string name="home_utility_qubee_inq_title">রিচার্জ অনুসন্ধান</string>
-    <string name="home_utility_home_pb_bill_status_inquiry_title">বিলের অবস্থা অনুসন্ধান</string>
     <string name="home_utility_ivac_fee_pay">ফি পরিশোধ</string>
-    <string name="home_utility_ivac_free_pay_favorite"> আইভিএসি \nফ্রি পরিশোধ</string>
+    <string name="home_utility_ivac_free_pay_favorite"> আইভিএসি \nফি পরিশোধ</string>
     <string name="home_utility_ivac_inquiry">আইভিএসি \nলেনদেনের বিবরণী</string>
     <string name="home_payment_bkash">বিকাশ থেকে\nপ্রাপ্ত পেমেন্ট</string>
     <string name="home_bkash_payment_confirm">পেমেন্ট\nনিশ্চিতিকরন</string>
@@ -91,11 +88,13 @@
     <string name="home_mfs_mycash">মাইক্যাশ</string>
     <string name="home_utility_desco">ডেসকো</string>
     <string name="home_utility_desco_pay">ডেসকো-বিল প্রদান</string>
+    <string name="home_utility_desco_pay_inquiry">ডেসকো \nবিল অনুসন্ধান</string>
     <string name="home_utility_desco_pay_title">ডেসকো বিল প্রদান</string>
     <string name="home_utility_desco_inquary_title">ডেসকো বিল অনুসন্ধান</string>
     <string name="home_utility_dpdc">ডিপিডিসি</string>
     <string name="home_utility_dpdc_bill_title">ডিপিডিসি বিল প্রদান</string>
-    <string name="home_utility_dpdc_inquary_title">ডিপিডিসি বিল অনুসন্ধান</string>
+    <string name="home_utility_dpdc_inquary_title">ডিপিডিসি  অনুসন্ধান</string>
+    <string name="home_utility_dpdc_bill_pay_inquiry">ডিপিডিসি \nবিল অনুসন্ধান</string>
     <string name="home_fund_management">ফান্ড\nব্যবস্থাপনা</string>
     <string name="home_fund_management_title">ফান্ড ব্যবস্থাপনা</string>
     <string name="home_cash_in_out">ক্যাশ ইন\nআউট</string>
@@ -188,7 +187,6 @@
     <string name="log_limit_title_msg">পূর্ববর্তী লেনদেনের সংখ্যা</string>
     <string name="reg_log_limit_title_msg">পূর্ববর্তী রেজিস্ট্রেশন সংখ্যা</string>
     <string name="activity_log_limit_title_msg">আক্টিভিটি লগের সংখ্যা</string>
-    <string name="status_log_limit_title_msg">স্ট্যাটাস লগের সংখ্যা</string>
     <string name="add_number_amount_msg">ফোন নম্বর অথবা টাকার পরিমান দিন</string>
     <string name="pin_no_title_msg">পিন নম্বর</string>
     <string name="services_alert_msg">দুঃখিত আপনি অনুমোদিত নন</string>
@@ -477,7 +475,6 @@
     <!--<string name="pw_auth">https://www.paywellonline.com/crs3291/android/paywell_app_api/tab_user_service_profiling_test.php?</string>-->
     <!--<string name="pw_auth">https://www.paywellonline.com/crs3291/android/paywell_app_api/tab_user_service_profiling_new.php?</string>-->
     <string name="pw_auth">https://api.paywellonline.com/PaywelltransactionRetailer/TabUserServiceProfiling?</string>
-    <string name="pw_bal">https://www.paywellonline.com/crs3291/android/paywell_app_api/paywell_balance_check.php?</string>
     <string name="notif_url">https://www.paywellonline.com/default/api/notification_check_android.php?</string>
     <string name="notification_token_url">https://www.paywellonline.com/paywellapi/setUserFCMToken.php</string>
 
@@ -603,8 +600,8 @@
     <string name="home_utility_wasa_bill_inquary_title">ওয়াসা বিল অনুসন্ধান</string>
     <string name="home_utility_west_zone_pay_title">ওয়েস্ট জোন বিল প্রদান</string>
     <string name="home_wast_zone_inquiry_title">ওয়েস্ট জোন বিল অনুসন্ধান</string>
-    <string name="home_utility_ivac_fee_pay_title">আইভিএসি ফ্রি পরিশোধ</string>
-    <string name="home_utility_ivac_inquiry_title">আইভিএসি ফ্রি অনুসন্ধান</string>
+    <string name="home_utility_ivac_fee_pay_title">আইভিএসি ফি পরিশোধ</string>
+    <string name="home_utility_ivac_inquiry_title">আইভিএসি ফি অনুসন্ধান</string>
     <string name="home_karnaphuli_bill_title">কর্ণফুলী বিল প্রদান</string>
     <string name="home_karnaphuli_inquiryl_title">কর্ণফুলী বিল অনুসন্ধান</string>
 

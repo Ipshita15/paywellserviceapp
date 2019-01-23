@@ -20,6 +20,7 @@ import com.cloudwell.paywell.services.activity.WebViewActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.constant.AllConstant;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
 import org.apache.http.NameValuePair;
@@ -68,6 +69,16 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
         } else {
             btnPostBill.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnPostInquiry.setTypeface(AppController.getInstance().getAponaLohitFont());
+        }
+
+        checkIsComeFromFav(getIntent());
+    }
+
+    private void checkIsComeFromFav(Intent intent) {
+        boolean isFav = intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE, false);
+        if (isFav) {
+            service_type = TAG_SERVICE_POSTPAID_INQUIRY;
+            showLimitPrompt();
         }
     }
 

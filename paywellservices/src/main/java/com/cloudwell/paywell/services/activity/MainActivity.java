@@ -2194,6 +2194,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivityWithFlag(intent);
                 break;
 
+            case R.string.home_utility_desco_pay_inquiry:
+                intent = new Intent(getApplicationContext(), DESCOMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
             case R.string.home_utility_dpdc:
                 intent = new Intent(getApplicationContext(), DPDCMainActivity.class);
                 startActivityWithFlag(intent);
@@ -2202,6 +2207,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 intent = new Intent(getApplicationContext(), DPDCPostpaidBillPayActivity.class);
                 startActivityWithFlag(intent);
                 break;
+
+            case R.string.home_utility_dpdc_bill_pay_inquiry:
+                intent = new Intent(getApplicationContext(), DPDCMainActivity.class);
+                startActivityWithFlag(intent);
+                break;
+
 
             case R.string.home_utility_pollibiddut:
                 intent = new Intent(getApplicationContext(), PBMainActivity.class);

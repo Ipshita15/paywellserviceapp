@@ -10,7 +10,6 @@
     <string name="home_utility">Utility</string>
     <string name="home_eticket">eTicket</string>
     <string name="home_mfs">Mobile\nBanking</string>
-    <string name="home_mfs_fav">Mobile Banking</string>
     <string name="nav_mfs">Mobile Banking</string>
     <string name="home_product_catalog">Product\nCatalog</string>
     <string name="nav_product_catalog">Product Catalog</string>
@@ -49,7 +48,6 @@
     <string name="home_utility_pollibiddut_reg_inquiry">Polli Biddut\nRegistration\nInquiry</string>
     <string name="home_utility_pollibiddut_bill_inquiry">Polli Biddut\nBill Inquiry</string>
     <string name="home_utility_pb_bill_change_number">Number Change</string>
-    <string name="home_utility_pb_reg_inq_log">Registration Log</string>
     <string name="home_utility_pb_bill_ing">Bill Pay\nInquiry</string>
     <string name="home_utility_pb_phone_number_inquiry">Number Change \nInquiry</string>
     <string name="home_utility_pb_request_inquiry">Bill Status</string>
@@ -110,11 +108,13 @@
     <string name="home_scan">Scan</string>
     <string name="home_utility_desco">DESCO</string>
     <string name="home_utility_desco_pay">Desco \nBill Pay</string>
+    <string name="home_utility_desco_pay_inquiry">Desco \nBill Inquiry</string>
     <string name="home_utility_desco_pay_title">Desco Bill Pay</string>
     <string name="home_utility_desco_inquary_title">Desco Bill Inquiry</string>
     <string name="home_utility_dpdc">DPDC</string>
     <string name="home_utility_dpdc_bill_title">DPDC Bill Pay</string>
     <string name="home_utility_dpdc_inquary_title">DPDC Bill Inquiry</string>
+    <string name="home_utility_dpdc_bill_pay_inquiry">DPDC Bill Inquiry</string>
     <string name="home_utility_wasa">WASA</string>
     <string name="home_utility_wasa_pay">WASA-Pay</string>
     <string name="home_utility_wasa_inquiry">WASA Bill Inquiry</string>
@@ -184,7 +184,6 @@
     <string name="log_limit_title_msg">Transaction Log Limit</string>
     <string name="reg_log_limit_title_msg">Registration Log Limit</string>
     <string name="activity_log_limit_title_msg">Activity Log Limit</string>
-    <string name="status_log_limit_title_msg">Status Log Limit</string>
     <string name="add_number_amount_msg">Please add number and amount first</string>
     <string name="pin_no_title_msg">PIN Number</string>
     <string name="services_alert_msg">Currently you are not authorized for this service</string>
@@ -475,7 +474,6 @@
     <!--<string name="pw_auth">https://www.paywellonline.com/crs3291/android/paywell_app_api/tab_user_service_profiling_test.php?</string>-->
     <!--<string name="pw_auth">https://www.paywellonline.com/crs3291/android/paywell_app_api/tab_user_service_profiling_new.php?</string>-->
     <string name="pw_auth">https://api.paywellonline.com/PaywelltransactionRetailer/TabUserServiceProfiling?</string>
-    <string name="pw_bal">https://www.paywellonline.com/crs3291/android/paywell_app_api/paywell_balance_check.php?</string>
     <string name="notif_url">https://www.paywellonline.com/default/api/notification_check_android.php?</string>
     <string name="notification_token_url">https://www.paywellonline.com/paywellapi/setUserFCMToken.php</string>
 
@@ -592,7 +590,6 @@
     <string name="Added">Added:</string>
     <string name="add_fav">Add</string>
     <string name="balance_pre_text">Balance</string>
-    <string name="home_utility_home_pb_bill_status_inquiry_title">Bill Status Inquery</string>
     <string name="home_utility_pb_bill_status_inquiry_title">Polli Biddut Number Change Inquiry</string>
     <string name="home_utility_bill_inquiry_title">Polli Biddut Bill Inquiry</string>
     <string name="home_utility_pb_reg_inq_log_title">Polli Biddut Registration Inquiry</string>
