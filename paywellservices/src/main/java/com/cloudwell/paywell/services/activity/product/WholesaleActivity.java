@@ -24,6 +24,7 @@ import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -39,35 +40,26 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class WholesaleActivity extends AppCompatActivity {
+public class WholesaleActivity extends BaseActivity {
 
     public static String token;
     private WebView webView = null;
     private LinearLayout linearLayout;
     final long period = 300000;
     private ConnectionDetector mCd;
-    private AppHandler mAppHandler;
-
     private AsyncTask<String, Integer, String> mRefreshTokenAsync;
-    Timer timer;
-    TimerTask timerTask;
+    private Timer timer;
+    private TimerTask timerTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wholesale);
 
-        assert getSupportActionBar() != null;
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
-        mAppHandler = new AppHandler(this);
+        AppHandler mAppHandler = new AppHandler(this);
         mCd = new ConnectionDetector(AppController.getContext());
 
         timer = new Timer();
-
-
         timerTask = new TimerTask() {
             @Override
             public void run() {
@@ -75,20 +67,19 @@ public class WholesaleActivity extends AppCompatActivity {
                 mRefreshTokenAsync = new RefreshTokenAsync().execute(getString(R.string.b2b_refresh_token));
             }
         };
-
         timer.schedule(timerTask, 0, period);
 
-        //Sharing
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(R.string.home_product_pw_wholesale_title);
-
         linearLayout = findViewById(R.id.linearLayout);
-
-        //Get webview
         webView = findViewById(R.id.webView);
 
+        if(mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            switchToCzLocale(new Locale("en",""));
+        } else {
+            switchToCzLocale(new Locale("fr",""));
+        }
+        setToolbar(getString(R.string.home_product_pw_wholesale_title));
+
         webView.getSettings().setLoadsImagesAutomatically(true);
-        webView.getSettings().setJavaScriptEnabled(true);
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         try {
             if (token.length() == 36) {
@@ -114,21 +105,16 @@ public class WholesaleActivity extends AppCompatActivity {
     }
 
     private void startWebView(String url) {
-        //Create new webview Client to show progress dialog
-        //When opening a url or click on link
         webView.setWebViewClient(new WebViewClient() {
             ProgressDialog progressDialog;
 
-            //If you will not use this method url links are opeen in new brower not in webview
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
             }
 
-            //Show loader on url load
             public void onLoadResource(WebView view, String url) {
                 if (progressDialog == null) {
-                    // in standard case YourActivity.this
                     progressDialog = new ProgressDialog(WholesaleActivity.this);
                     progressDialog.setMessage("Loading...");
                     progressDialog.setCanceledOnTouchOutside(false);
@@ -152,9 +138,7 @@ public class WholesaleActivity extends AppCompatActivity {
                 }
             }
         });
-        // Javascript inabled on webview
         webView.getSettings().setJavaScriptEnabled(true);
-        //Load url in webview
         webView.loadUrl(url);
     }
 
@@ -192,16 +176,6 @@ public class WholesaleActivity extends AppCompatActivity {
         if (webView.canGoBack()) {
             webView.goBack();
         } else {
-            if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-                Configuration config = new Configuration();
-                config.locale = Locale.ENGLISH;
-                getResources().updateConfiguration(config, getResources().getDisplayMetrics());
-            } else {
-                Configuration config = new Configuration();
-                config.locale = Locale.FRANCE;
-                getResources().updateConfiguration(config, getResources().getDisplayMetrics());
-            }
-            invalidateOptionsMenu();
             finish();
         }
     }
@@ -223,10 +197,6 @@ public class WholesaleActivity extends AppCompatActivity {
                 responseTxt = httpclient.execute(httppost, responseHandler);
             } catch (Exception e) {
                 e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(linearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
             return responseTxt;
         }

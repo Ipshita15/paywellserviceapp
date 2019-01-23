@@ -3,12 +3,17 @@ package com.cloudwell.paywell.services.activity.chat;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -18,13 +23,16 @@ import android.widget.LinearLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
-public class ChatActivity extends AppCompatActivity {
+import java.util.Locale;
 
-    private WebView webView = null;
+public class ChatActivity extends BaseActivity {
+
+    private WebView webView;
     private LinearLayout linearLayout;
     private static AppHandler mAppHandler;
     private ConnectionDetector mCd;
@@ -33,21 +41,22 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajker_deal);
-        assert getSupportActionBar() != null;
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
 
         mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
-        linearLayout = findViewById(R.id.linearLayout);
 
-        //Get webview
+        linearLayout = findViewById(R.id.linearLayout);
         webView = findViewById(R.id.webView);
+
+        if(mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            switchToCzLocale(new Locale("en",""));
+        } else {
+            switchToCzLocale(new Locale("fr",""));
+        }
+        setToolbar(getString(R.string.app_name));
 
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        webView.getSettings().setJavaScriptEnabled(true);
         int currentapiVersion = android.os.Build.VERSION.SDK_INT;
         if (currentapiVersion >= android.os.Build.VERSION_CODES.JELLY_BEAN){
             fixNewAndroid(webView);
@@ -75,21 +84,16 @@ public class ChatActivity extends AppCompatActivity {
     @SuppressWarnings("deprecation")
     public void startWebView(String url) {
 
-        //Create new webview Client to show progress dialog
-        //When opening a url or click on link
         webView.setWebViewClient(new WebViewClient() {
             ProgressDialog progressDialog;
 
-            //If you will not use this method url links are opeen in new brower not in webview
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
             }
 
-            //Show loader on url load
             public void onLoadResource(WebView view, String url) {
                 if (progressDialog == null) {
-                    // in standard case YourActivity.this
                     progressDialog = new ProgressDialog(ChatActivity.this);
                     progressDialog.setMessage(getString(R.string.loading_msg));
                     progressDialog.setCanceledOnTouchOutside(false);
@@ -115,10 +119,9 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
         webView.setWebChromeClient(new WebChromeClient());
+        webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(url);
     }
-
-    // Open previous opened link from history on webview when back button pressed
 
 
     @Override

@@ -1,6 +1,7 @@
 package com.cloudwell.paywell.services.activity.base;
 
 import android.app.ProgressDialog;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,8 @@ import android.view.MenuItem;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.constant.AllConstant;
+
+import java.util.Locale;
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 10/29/18.
@@ -69,5 +72,14 @@ public class BaseActivity extends AppCompatActivity {
 //            startActivity(intent);
 //            return;
 //        }
+    }
+
+    public void switchToCzLocale(Locale locale) {
+        Locale mLocale = locale;
+        Configuration config = getBaseContext().getResources()
+                .getConfiguration();
+        Locale.setDefault(mLocale);
+        config.setLocale(mLocale);
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
     }
 }

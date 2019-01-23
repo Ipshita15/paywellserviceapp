@@ -3,6 +3,7 @@ package com.cloudwell.paywell.services.app;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.support.multidex.MultiDex;
 import android.util.Log;
@@ -24,6 +25,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+
+import java.util.Locale;
 
 import io.fabric.sdk.android.Fabric;
 

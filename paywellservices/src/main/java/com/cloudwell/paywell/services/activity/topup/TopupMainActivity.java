@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -37,6 +38,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
@@ -173,6 +175,28 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
         inflater = getLayoutInflater();
         cd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
+
+        ScrollView myScrollView = findViewById(R.id.topupScrollView);
+
+        myScrollView.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if (event != null && event.getAction() == MotionEvent.ACTION_MOVE)
+                {
+                    InputMethodManager imm = ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE));
+                    boolean isKeyboardUp = imm.isAcceptingText();
+
+                    if (isKeyboardUp)
+                    {
+                        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    }
+                }
+                return false;
+            }
+        });
+
         addAnotherNo();
     }
 
@@ -686,10 +710,6 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
                 responseTxt = httpclient.execute(httppost, responseHandler);
             } catch (Exception e) {
                 e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
             return responseTxt;
         }
@@ -913,10 +933,6 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
                 responseTxt = httpclient.execute(httppost, responseHandler);
             } catch (Exception e) {
                 e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
             return responseTxt;
         }
@@ -1078,7 +1094,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
         List<TopupData> topupDatumList = new ArrayList<>();
 
         if (topUpLayout.getChildCount() > 1) {
-            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_TOPUP_ALL_OPERATOR_MENU, AnalyticsParameters.KEY_TOPUP_ALL_OPERATOR_RECHARGE, AnalyticsParameters.KEY_BULK_TOPUP, (topUpLayout.getChildCount()+1));
+            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_TOPUP_ALL_OPERATOR_MENU, AnalyticsParameters.KEY_TOPUP_ALL_OPERATOR_RECHARGE, AnalyticsParameters.KEY_BULK_TOPUP, (topUpLayout.getChildCount() + 1));
 
             for (int i = 0; i < topUpLayout.getChildCount(); i++) {
                 EditText mPhoneNoET, mAmountET;
@@ -1321,7 +1337,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
 
     }
 
-    public boolean checkTotalRequestSuccess(TopupReposeData response){
+    public boolean checkTotalRequestSuccess(TopupReposeData response) {
         boolean isTotalSuccess = false;
 
         for (int i = 0; i < response.getTopupData().size(); i++) {
@@ -1462,10 +1478,6 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
                 responseTxt = httpclient.execute(httppost, responseHandler);
             } catch (Exception e) {
                 e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
             return responseTxt;
         }

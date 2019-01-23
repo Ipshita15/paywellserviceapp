@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.product;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.DialogInterface;
@@ -9,13 +8,10 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,6 +21,7 @@ import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -40,29 +37,23 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class AjkerDealActivity extends AppCompatActivity {
+public class AjkerDealActivity extends BaseActivity {
 
     public static String token;
     private WebView webView = null;
     private LinearLayout linearLayout;
     final long period = 300000;
     private ConnectionDetector mCd;
-    private AppHandler mAppHandler;
     private AsyncTask<String, Integer, String> mRefreshTokenAsync;
-    Timer timer;
-    TimerTask timerTask;
+    private Timer timer;
+    private TimerTask timerTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajker_deal);
 
-        assert getSupportActionBar() != null;
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
-        mAppHandler = new AppHandler(this);
+        AppHandler mAppHandler = new AppHandler(this);
         mCd = new ConnectionDetector(AppController.getContext());
 
         timer = new Timer();
@@ -77,17 +68,17 @@ public class AjkerDealActivity extends AppCompatActivity {
 
         timer.schedule(timerTask,0, period);
 
-        //Sharing
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(R.string.home_product_ajker_deal);
-
         linearLayout = findViewById(R.id.linearLayout);
-
-        //Get webview
         webView = findViewById(R.id.webView);
 
+        if(mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            switchToCzLocale(new Locale("en",""));
+        } else {
+            switchToCzLocale(new Locale("fr",""));
+        }
+        setToolbar(getString(R.string.home_product_ajker_deal));
+
         webView.getSettings().setLoadsImagesAutomatically(true);
-        webView.getSettings().setJavaScriptEnabled(true);
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         try {
             if (token.length() == 36) {
@@ -114,22 +105,16 @@ public class AjkerDealActivity extends AppCompatActivity {
 
     @SuppressWarnings("deprecation")
     private void startWebView(String url) {
-        //Create new webview Client to show progress dialog
-        //When opening a url or click on link
         webView.setWebViewClient(new WebViewClient() {
             ProgressDialog progressDialog;
-            Dialog dialog;
 
-            //If you will not use this method url links are opeen in new brower not in webview
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
             }
 
-            //Show loader on url load
             public void onLoadResource(WebView view, String url) {
                 if (progressDialog == null) {
-                    // in standard case YourActivity.this
                     progressDialog = new ProgressDialog(AjkerDealActivity.this);
                     progressDialog.setMessage(getString(R.string.loading_msg));
                     progressDialog.setCanceledOnTouchOutside(false);
@@ -153,9 +138,7 @@ public class AjkerDealActivity extends AppCompatActivity {
                 }
             }
         });
-        // Javascript inabled on webview
         webView.getSettings().setJavaScriptEnabled(true);
-        //Load url in webview
         webView.loadUrl(url);
     }
 
@@ -191,16 +174,6 @@ public class AjkerDealActivity extends AppCompatActivity {
         if (webView.canGoBack()) {
             webView.goBack();
         } else {
-            if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-                Configuration config = new Configuration();
-                config.locale = Locale.ENGLISH;
-                getResources().updateConfiguration(config, getResources().getDisplayMetrics());
-            } else {
-                Configuration config = new Configuration();
-                config.locale = Locale.FRANCE;
-                getResources().updateConfiguration(config, getResources().getDisplayMetrics());
-            }
-            invalidateOptionsMenu();
             finish();
         }
     }
@@ -222,10 +195,6 @@ public class AjkerDealActivity extends AppCompatActivity {
                 responseTxt = httpclient.execute(httppost, responseHandler);
             } catch (Exception e) {
                 e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(linearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
             return responseTxt;
         }
@@ -239,12 +208,6 @@ public class AjkerDealActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mRefreshTokenAsync =  new RefreshTokenAsync().execute(getString(R.string.ajd_refresh_token));
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
     }
 
     private void connectionError() {
