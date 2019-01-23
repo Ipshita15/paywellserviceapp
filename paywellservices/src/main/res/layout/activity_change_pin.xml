@@ -106,10 +106,17 @@
 
     <Button
         android:id="@+id/btnChangePin"
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:background="@drawable/button_green"
-        android:gravity="center"
+        android:shadowColor="#000000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"
         android:onClick="resetPin"
         android:text="@string/confirm_btn"
         android:textAllCaps="false"

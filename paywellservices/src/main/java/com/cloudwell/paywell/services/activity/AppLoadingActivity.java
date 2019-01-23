@@ -73,6 +73,7 @@ public class AppLoadingActivity extends AppCompatActivity {
         mAppHandler = new AppHandler(this);
         mCd = new ConnectionDetector(AppController.getContext());
 
+
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             mConErrorMsg.setTypeface(AppController.getInstance().getOxygenLightFont());
             mBtnRetry.setTypeface(AppController.getInstance().getOxygenLightFont());
