@@ -58,6 +58,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.about.AboutActivity;
@@ -251,6 +252,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private boolean isSliderUp = false;
     private int lastFavoitePosition = 0;
     private boolean isFirstTime = true;
+    DrawerLayout drawer;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -292,9 +294,37 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_DASHBOARD);
 
-        setupBottonSheetSlider();
+        // setupBottonSheetSlider();
         getAllFavoriteDate();
-        hiddenFavoriteRecycview();
+        //  hiddenFavoriteRecycview();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_right);
+        navigationView.setNavigationItemSelectedListener(this);
+
+
+        navigationView.setSystemUiVisibility(View.GONE);
+
+        ImageView ivRightSliderUpDown = findViewById(R.id.ivRightSliderUpDown);
+        ivRightSliderUpDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Slider click", Toast.LENGTH_LONG).show();
+                drawer.openDrawer(GravityCompat.END);
+
+
+            }
+        });
+
+        ivEdit = findViewById(R.id.ivEdit);
+        ivEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startMyFavoriteMenuActivity();
+
+            }
+        });
+
+
     }
 
     private void hiddenFavoriteRecycview() {
@@ -362,13 +392,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_item);
         ivUptown.setAnimation(animation);
 
-        ivEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startMyFavoriteMenuActivity();
 
-            }
-        });
 
     }
 
@@ -405,11 +429,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         boolean isEnglish = mAppHandler.getAppLanguage().equalsIgnoreCase("en");
 
-        recyclerViewFavoirte = layoutBottomSheet.findViewById(R.id.rvOperatorList);
+        recyclerViewFavoirte = findViewById(R.id.rvOperatorList);
         recyclerViewFavoirte.setHasFixedSize(true);
         recyclerViewFavoirte.setItemAnimator(new DefaultItemAnimator());
 
-        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerViewFavoirte.setLayoutManager(horizontalLayoutManager);
         recyclerViewFavoirte.getLayoutManager().setMeasurementCacheEnabled(false);
 
@@ -433,12 +457,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             recyclerViewFavoirte.smoothScrollToPosition(lastFavoitePosition);
 
         }
+
         if (isFirstTime) {
             isFirstTime = false;
-            recyclerViewFavoirte.setVisibility(View.GONE);
-            ivEdit.setVisibility(View.GONE);
-            ivUptown.setBackgroundResource(R.drawable.circle_angle_up);
-            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
         }
 
     }
@@ -480,7 +502,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             home_settings.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.syncState();
@@ -564,6 +586,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if (drawer.isDrawerOpen(GravityCompat.END)) {
+            drawer.closeDrawer(GravityCompat.END);
         } else {
             if (doubleBackToExitPressedOnce) {
                 super.onBackPressed();
@@ -2166,6 +2190,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void onFavoriteItemClick(FavoriteMenu favoriteMenu) {
+
+        drawer.closeDrawer(GravityCompat.END);
+
+
         Intent intent;
 
         int resId = ResorceHelper.getResId(favoriteMenu.getName(), R.string.class);

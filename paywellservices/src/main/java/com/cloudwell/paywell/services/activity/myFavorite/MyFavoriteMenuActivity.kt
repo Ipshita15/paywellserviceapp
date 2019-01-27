@@ -26,6 +26,7 @@ import com.cloudwell.paywell.services.constant.AllConstant
 import com.cloudwell.paywell.services.database.DatabaseClient
 import com.cloudwell.paywell.services.preference.FavoritePreference
 import com.cloudwell.paywell.services.utils.ResorceHelper
+import com.orhanobut.logger.Logger
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
@@ -164,6 +165,7 @@ class MyFavoriteMenuActivity : AppCompatActivity(), StartDragListener {
             it.category
             val resId = ResorceHelper.getResId(it.category, R.string::class.java);
             val string = getString(resId);
+            Logger.v(string)
             allCategory.add(string)
 
         }

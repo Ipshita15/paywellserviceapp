@@ -57,24 +57,24 @@ class MyFavoriteHelper {
             listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_banglalion, StringConstant.KEY_home_utility, IconConstant.KEY_ic_banglalion, MenuStatus.UnFavorite.text, 0, 25))
             listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_banglalion_recharge, StringConstant.KEY_home_utility, IconConstant.KEY_ic_banglalion_recharge, MenuStatus.UnFavorite.text, 0, 26))
             listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_banglalion_recharge_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_recharge_information, MenuStatus.UnFavorite.text, 0, 27))
-
-            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_karnaphuli, StringConstant.KEY_home_utility, IconConstant.KEY_ic_karnafuli_gas, MenuStatus.UnFavorite.text, 0, 28))
-            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_karnaphuli_bill_pay, StringConstant.KEY_home_utility, IconConstant.KEY_ic_bill_pay, MenuStatus.UnFavorite.text, 0, 29))
-            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_karnaphuli_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, MenuStatus.UnFavorite.text, 0, 30))
-//            // end utility
-
-            listOfData.add(FavoriteMenu(StringConstant.KEY_home_mfs_mycash, StringConstant.KEY_home_mfs_fav, IconConstant.KEY_ic_train_ticket, MenuStatus.UnFavorite.text, 0, 31))
-
-            listOfData.add(FavoriteMenu(StringConstant.KEY_home_product_ajker_deal, StringConstant.KEY_home_product_catalog, IconConstant.KEY_ic_ajker_deal, MenuStatus.UnFavorite.text, 0, 32))
-            listOfData.add(FavoriteMenu(StringConstant.KEY_home_product_pw_wholesale, StringConstant.KEY_home_product_catalog, IconConstant.KEY_ic_wholesale, MenuStatus.UnFavorite.text, 0, 33))
-
-            listOfData.add(FavoriteMenu(StringConstant.KEY_home_statement_mini, StringConstant.KEY_home_statement, IconConstant.KEY_ic_statement, MenuStatus.UnFavorite.text, 0, 34))
-            listOfData.add(FavoriteMenu(StringConstant.KEY_home_statement_balance, StringConstant.KEY_home_statement, IconConstant.KEY_ic_statement, MenuStatus.UnFavorite.text, 0, 35))
-            listOfData.add(FavoriteMenu(StringConstant.KEY_home_statement_sales, StringConstant.KEY_home_statement, IconConstant.KEY_ic_statement, MenuStatus.UnFavorite.text, 0, 36))
-            listOfData.add(FavoriteMenu(StringConstant.KEY_home_statement_transaction, StringConstant.KEY_home_statement, IconConstant.KEY_ic_statement, MenuStatus.UnFavorite.text, 0, 39))
-
-            listOfData.add(FavoriteMenu(StringConstant.KEY_home_refill_bank, StringConstant.KEY_home_refill_balance, IconConstant.KEY_ic_bank_deposit, MenuStatus.UnFavorite.text, 0, 38))
-            listOfData.add(FavoriteMenu(StringConstant.KEY_home_refill_card, StringConstant.KEY_home_refill_balance, IconConstant.KEY_ic_visa_master_card, MenuStatus.UnFavorite.text, 0, 39))
+//
+//            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_karnaphuli, StringConstant.KEY_home_utility, IconConstant.KEY_ic_karnafuli_gas, MenuStatus.UnFavorite.text, 0, 28))
+//            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_karnaphuli_bill_pay, StringConstant.KEY_home_utility, IconConstant.KEY_ic_bill_pay, MenuStatus.UnFavorite.text, 0, 29))
+//            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_karnaphuli_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, MenuStatus.UnFavorite.text, 0, 30))
+////            // end utility
+//
+//            listOfData.add(FavoriteMenu(StringConstant.KEY_home_mfs_mycash, StringConstant.KEY_home_mfs_fav, IconConstant.KEY_ic_my_cash, MenuStatus.UnFavorite.text, 0, 31))
+//
+//            listOfData.add(FavoriteMenu(StringConstant.KEY_home_product_ajker_deal, StringConstant.KEY_home_product_catalog, IconConstant.KEY_ic_ajker_deal, MenuStatus.UnFavorite.text, 0, 32))
+//            listOfData.add(FavoriteMenu(StringConstant.KEY_home_product_pw_wholesale, StringConstant.KEY_home_product_catalog, IconConstant.KEY_ic_wholesale, MenuStatus.UnFavorite.text, 0, 33))
+//
+//            listOfData.add(FavoriteMenu(StringConstant.KEY_home_statement_mini, StringConstant.KEY_home_statement, IconConstant.KEY_ic_statement, MenuStatus.UnFavorite.text, 0, 34))
+//            listOfData.add(FavoriteMenu(StringConstant.KEY_home_statement_balance, StringConstant.KEY_home_statement, IconConstant.KEY_ic_statement, MenuStatus.UnFavorite.text, 0, 35))
+//            listOfData.add(FavoriteMenu(StringConstant.KEY_home_statement_sales, StringConstant.KEY_home_statement, IconConstant.KEY_ic_statement, MenuStatus.UnFavorite.text, 0, 36))
+//            listOfData.add(FavoriteMenu(StringConstant.KEY_home_statement_transaction, StringConstant.KEY_home_statement, IconConstant.KEY_ic_statement, MenuStatus.UnFavorite.text, 0, 39))
+//
+//            listOfData.add(FavoriteMenu(StringConstant.KEY_home_refill_bank, StringConstant.KEY_home_refill_balance, IconConstant.KEY_ic_bank_deposit, MenuStatus.UnFavorite.text, 0, 38))
+//            listOfData.add(FavoriteMenu(StringConstant.KEY_home_refill_card, StringConstant.KEY_home_refill_balance, IconConstant.KEY_ic_visa_master_card, MenuStatus.UnFavorite.text, 0, 39))
 
             AsyncTask.execute {
                 DatabaseClient.getInstance(context).getAppDatabase()
