@@ -50,8 +50,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -294,9 +292,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_DASHBOARD);
 
-        // setupBottonSheetSlider();
+
         getAllFavoriteDate();
-        //  hiddenFavoriteRecycview();
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_right);
         navigationView.setNavigationItemSelectedListener(this);
@@ -310,7 +308,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "Slider click", Toast.LENGTH_LONG).show();
                 drawer.openDrawer(GravityCompat.END);
-
 
             }
         });
@@ -331,70 +328,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     }
 
-    private void setupBottonSheetSlider() {
-        layoutBottomSheet = findViewById(R.id.bottom_sheet);
-        ivUptown = layoutBottomSheet.findViewById(R.id.ivImageUpAndDown);
-        ivEdit = layoutBottomSheet.findViewById(R.id.ivEdit);
 
-        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(View bottomSheet, int newState) {
-                switch (newState) {
-                    case BottomSheetBehavior.STATE_HIDDEN:
-                        break;
-                    case BottomSheetBehavior.STATE_EXPANDED: {
-
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_COLLAPSED: {
-
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_DRAGGING:
-                        break;
-                    case BottomSheetBehavior.STATE_SETTLING:
-                        break;
-                }
-            }
-
-            @Override
-            public void onSlide(View bottomSheet, float slideOffset) {
-
-            }
-        });
-
-        ivUptown.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isSliderUp) {
-                    isSliderUp = true;
-                    recyclerViewFavoirte.setVisibility(View.VISIBLE);
-                    ivEdit.setVisibility(View.VISIBLE);
-                    ivUptown.setBackgroundResource(R.drawable.circle_angle_down);
-                    sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-
-                    ivUptown.clearAnimation();
-
-                } else {
-                    isSliderUp = false;
-                    recyclerViewFavoirte.setVisibility(View.GONE);
-                    ivEdit.setVisibility(View.GONE);
-                    ivUptown.setBackgroundResource(R.drawable.circle_angle_up);
-                    sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-
-                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_item);
-                    ivUptown.setAnimation(animation);
-                }
-            }
-        });
-
-        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_item);
-        ivUptown.setAnimation(animation);
-
-
-
-    }
 
     private void getAllFavoriteDate() {
 
