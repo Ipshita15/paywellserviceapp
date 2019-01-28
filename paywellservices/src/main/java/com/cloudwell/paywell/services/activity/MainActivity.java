@@ -113,7 +113,6 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.app.model.APIResBalanceCheck;
 import com.cloudwell.paywell.services.constant.AllConstant;
-import com.cloudwell.paywell.services.constant.IconConstant;
 import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.database.FavoriteMenuDab;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
@@ -123,7 +122,6 @@ import com.cloudwell.paywell.services.service.notificaiton.model.StartNotificati
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.LocationUtility;
 import com.cloudwell.paywell.services.utils.ResorceHelper;
-import com.cloudwell.paywell.services.utils.StringConstant;
 import com.cloudwell.paywell.services.utils.UpdateChecker;
 import com.github.silvestrpredko.dotprogressbar.DotProgressBar;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -378,9 +376,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         recyclerViewFavoirte.getLayoutManager().setMeasurementCacheEnabled(false);
 
 
-        if (result.size() == 0) {
-            result.add(new FavoriteMenu(StringConstant.KEY_add_fav, "", IconConstant.KEY_add_fav_action, "", 0, -1));
-        }
 
         HomeFavoriteAdapter adapter = new HomeFavoriteAdapter(this, result, isEnglish);
 

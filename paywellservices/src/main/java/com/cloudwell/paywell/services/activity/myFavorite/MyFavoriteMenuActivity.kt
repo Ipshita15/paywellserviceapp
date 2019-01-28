@@ -45,7 +45,7 @@ class MyFavoriteMenuActivity : AppCompatActivity(), StartDragListener {
     var previewPogistion = 0
 
     lateinit var touchHelper: ItemTouchHelper
-    val totalFavCounter = 7;
+    val totalFavCounter = 8;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,9 +82,9 @@ class MyFavoriteMenuActivity : AppCompatActivity(), StartDragListener {
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     fun onFavoriteItemAdd(event: MessageEvent) {
 
-        var counter = FavoritePreference.with(applicationContext).getInt(AllConstant.COUNTER_FAVORITE, 0);
+        var counter = FavoritePreference.with(applicationContext).getInt(AllConstant.COUNTER_FAVORITE, 4);
 
-        if (counter > totalFavCounter) {
+        if (counter >= totalFavCounter) {
             showMessage()
             return
         } else {
@@ -115,8 +115,12 @@ class MyFavoriteMenuActivity : AppCompatActivity(), StartDragListener {
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     fun onFavoriteItemdeleted(event: MessageEventFavDeleted) {
 
-        var counter = FavoritePreference.with(applicationContext).getInt(AllConstant.COUNTER_FAVORITE, 0)
+        var counter = FavoritePreference.with(applicationContext).getInt(AllConstant.COUNTER_FAVORITE, 4)
         counter = counter - 1
+
+        if (counter < 0) {
+            counter = 0;
+        }
 
         FavoritePreference.with(applicationContext).addInt(AllConstant.COUNTER_FAVORITE, counter).save()
         Log.v("deleted ", "Counter: " + counter);
