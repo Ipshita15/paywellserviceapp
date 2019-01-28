@@ -47,7 +47,7 @@
                     style="@style/HomeButtonNew"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/ic_recharge_information"
-                    android:text="@string/home_utility_banglalion_recharge"
+                    android:text="@string/home_utility_banglalion_recharge_inquiry"
                     android:onClick="goToRechargeInquiry"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall" />

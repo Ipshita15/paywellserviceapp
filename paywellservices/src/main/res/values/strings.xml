@@ -132,7 +132,7 @@
     <string name="home_utility_postpaid_bill_pay">Postpaid\nBill Pay</string>
     <string name="home_utility_postpaid_bill_inq">Postpaid\nBill Inquiry</string>
     <string name="home_utility_banglalion_recharge">Banglalion\nRecharge</string>
-    <string name="home_utility_banglalion_recharge_inquiry">Banglalion\nRecharge</string>
+    <string name="home_utility_banglalion_recharge_inquiry">Banglalion\nInquiry</string>
     <string name="home_utility_banglalion_recharge_title">Banglalion Recharge</string>
     <string name="banglalion_acc_no">Customer ID/Customer Number/MSISDN</string>
 
