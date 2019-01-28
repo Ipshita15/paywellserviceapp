@@ -3,6 +3,7 @@ package com.cloudwell.paywell.services.activity;
 import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -25,8 +26,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -50,13 +49,14 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.about.AboutActivity;
@@ -242,20 +242,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     long startHourMilli, endHourMilli;
     Calendar cal;
 
-    // bottom slider
-    private BottomSheetBehavior sheetBehavior;
-    private ConstraintLayout layoutBottomSheet;
-    private RecyclerView recyclerViewFavoirte;
-    private ImageView ivUptown, ivEdit;
-    private boolean isSliderUp = false;
     private int lastFavoitePosition = 0;
     private boolean isFirstTime = true;
     DrawerLayout drawer;
+    ImageView ivRightSliderUpDown;
+    ObjectAnimator animation;
 
     @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        changeStatusBarColor();
         setContentView(R.layout.activity_main);
 
 
@@ -292,27 +289,37 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_DASHBOARD);
 
-
         getAllFavoriteDate();
+        setupRightNagivationView();
 
 
+    }
+
+    private void changeStatusBarColor() {
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            int color = getResources().getColor(R.color.colorPrimaryDark);
+            window.setStatusBarColor(color);
+        }
+    }
+
+    private void setupRightNagivationView() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_right);
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        navigationView.setSystemUiVisibility(View.GONE);
-
-        ImageView ivRightSliderUpDown = findViewById(R.id.ivRightSliderUpDown);
+        ivRightSliderUpDown = findViewById(R.id.ivRightSliderUpDown);
         ivRightSliderUpDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Slider click", Toast.LENGTH_LONG).show();
                 drawer.openDrawer(GravityCompat.END);
 
             }
         });
 
-        ivEdit = findViewById(R.id.ivEdit);
+        ImageView ivEdit = findViewById(R.id.ivEdit);
         ivEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -327,7 +334,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void hiddenFavoriteRecycview() {
 
     }
-
 
 
     private void getAllFavoriteDate() {
@@ -363,7 +369,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         boolean isEnglish = mAppHandler.getAppLanguage().equalsIgnoreCase("en");
 
-        recyclerViewFavoirte = findViewById(R.id.rvOperatorList);
+        RecyclerView recyclerViewFavoirte = findViewById(R.id.rvOperatorList);
         recyclerViewFavoirte.setHasFixedSize(true);
         recyclerViewFavoirte.setItemAnimator(new DefaultItemAnimator());
 
@@ -1267,16 +1273,27 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (alertNotification.isShowing()) {
             alertNotification.dismiss();
         }
-        // start auto scroll when onResume
-        // viewPager.startAutoScroll();
-        // checkPayWellBalance();
 
         viewPager.setInterval(2000);
         updateMyFavorityView();
         notificationCounterCheck();
+        startRightLeftAnimation();
 
     }
 
+    private void startRightLeftAnimation() {
+        if (animation == null) {
+            animation = ObjectAnimator.ofFloat(ivRightSliderUpDown, "translationX", -16f);
+            animation.setDuration(800);
+            animation.setRepeatCount(ObjectAnimator.INFINITE);
+            animation.setRepeatMode(ObjectAnimator.REVERSE);
+        }
+        animation.start();
+    }
+
+    private void stopRightLefAnimation() {
+        animation.cancel();
+    }
 
     private void startMyFavoriteMenuActivity() {
         Intent intent1 = new Intent(getApplicationContext(), MyFavoriteMenuActivity.class);
@@ -1385,6 +1402,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
+        stopRightLefAnimation();
     }
 
     private void notificationCounterCheck() {

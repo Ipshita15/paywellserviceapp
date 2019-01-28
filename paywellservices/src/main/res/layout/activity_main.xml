@@ -6,7 +6,6 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:openDrawer="end">
 
     <include
@@ -26,11 +25,11 @@
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view_right"
-        android:layout_width="100dp"
+        android:layout_width="85dp"
         android:layout_height="match_parent"
         android:layout_gravity="end"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="60dp"
         android:background="@drawable/right_slider_background"
         android:fitsSystemWindows="true">
 
@@ -48,6 +47,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:scrollbars="vertical"
+                android:scrollbarSize='4dp'
+                android:scrollbarThumbVertical="@color/colorAccent"
                 app:layout_constraintBottom_toTopOf="@+id/ivEdit"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
