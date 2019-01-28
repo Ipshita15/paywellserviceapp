@@ -77,8 +77,12 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
     private void checkIsComeFromFav(Intent intent) {
         boolean isFav = intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE, false);
         if (isFav) {
-            service_type = TAG_SERVICE_POSTPAID_INQUIRY;
-            showLimitPrompt();
+            boolean booleanExtra = intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_DPDC_INQUERY, false);
+            if (booleanExtra) {
+                service_type = TAG_SERVICE_POSTPAID_INQUIRY;
+                showLimitPrompt();
+            }
+
         }
     }
 

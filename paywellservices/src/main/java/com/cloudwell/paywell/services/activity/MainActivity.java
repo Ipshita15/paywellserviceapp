@@ -1396,7 +1396,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         EventBus.getDefault().register(this);
     }
 
-    ;
 
     @Override
     public void onStop() {
@@ -2176,6 +2175,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             case R.string.home_utility_desco_pay_inquiry:
                 intent = new Intent(getApplicationContext(), DESCOMainActivity.class);
+                intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_DESCO_INQUERY, true);
                 startActivityWithFlag(intent);
                 break;
 
@@ -2190,6 +2190,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             case R.string.home_utility_dpdc_bill_pay_inquiry:
                 intent = new Intent(getApplicationContext(), DPDCMainActivity.class);
+                intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_DPDC_INQUERY, true);
                 startActivityWithFlag(intent);
                 break;
 
@@ -2254,6 +2255,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             case R.string.home_utility_wasa_inquiry:
                 intent = new Intent(getApplicationContext(), WASAMainActivity.class);
+                intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_WASA_BILL_INQUIRY, true);
                 startActivityWithFlag(intent);
                 break;
 
@@ -2270,6 +2272,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             case R.string.home_utility_west_zone_pay_inquiry:
                 intent = new Intent(getApplicationContext(), WZPDCLMainActivity.class);
+                intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_WEST_ZONE_BILL_INQUIRY, true);
                 startActivityWithFlag(intent);
                 break;
 
@@ -2319,6 +2322,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.string.home_utility_karnaphuli_inquiry:
                 intent = new Intent(getApplicationContext(), KarnaphuliMainActivity.class);
                 intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_KARACHI_INQUIRY, true);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_eticket_bus:
+                intent = new Intent(getApplicationContext(), ETicketMainActivity.class);
+                intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_BUS, true);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_eticket_air:
+                intent = new Intent(getApplicationContext(), ETicketMainActivity.class);
+                intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AIR, true);
                 startActivityWithFlag(intent);
                 break;
 

@@ -48,11 +48,11 @@
     <string name="home_utility_pb_reg_title">Polli Biddut Registration</string>
     <string name="home_utility_pollibiddut_reg_inquiry">Polli Biddut\nRegistration\nInquiry</string>
     <string name="home_utility_pollibiddut_bill_inquiry">Polli Biddut\nBill Inquiry</string>
-    <string name="home_utility_pb_bill_change_number">Number Change</string>
+    <string name="home_utility_pb_bill_change_number">Polli Biddut\nNumber Change</string>
     <string name="home_utility_pb_bill_ing">Bill Pay\nInquiry</string>
-    <string name="home_utility_pb_phone_number_inquiry">Number Change \nInquiry</string>
-    <string name="home_utility_pb_request_inquiry">Bill Status</string>
-    <string name="home_utility_pb_bill_statu_inquery">Bill Status \nInquiry</string>
+    <string name="home_utility_pb_phone_number_inquiry">Polli Biddut \nNumber Change \nInquiry</string>
+    <string name="home_utility_pb_request_inquiry">Polli Biddut\nBill Status</string>
+    <string name="home_utility_pb_bill_statu_inquery">Polli Biddut\n Bill Status \nInquiry</string>
     <string name="home_utility_qubee_inq_title">Recharge Inquiry</string>
     <string name="home_utility_ivac_fee_pay">Fee Pay</string>
     <string name="home_utility_ivac_free_pay_favorite">IVAC \nFee Pay</string>

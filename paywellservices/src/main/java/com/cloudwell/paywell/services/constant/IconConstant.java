@@ -29,4 +29,7 @@ public class IconConstant {
     public static final String KEY_ic_bank_deposit = "ic_bank_deposit";
     public static final String KEY_ic_visa_master_card = "ic_visa_master_card";
     public static final String KEY_ic_my_cash = "ic_my_cash";
+    public static final String KEY_ic_ticket = "ic_eticket";
+    public static final String KEY_air_ticket = "air_ticket";
+
 }

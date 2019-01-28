@@ -11,10 +11,9 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.MainActivity;
-import com.cloudwell.paywell.services.activity.eticket.trainticket.TrainMainActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.constant.AllConstant;
 
 public class ETicketMainActivity extends AppCompatActivity {
 
@@ -47,6 +46,22 @@ public class ETicketMainActivity extends AppCompatActivity {
             home_bus.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_train.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
+
+        checkIsComeFromFav(getIntent());
+
+    }
+
+    private void checkIsComeFromFav(Intent intent) {
+        boolean isFav = intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE, false);
+        if (isFav) {
+            boolean booleanExtra = intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE_BUS, false);
+            if (booleanExtra) {
+                showCommingSoonMesage();
+            } else if (intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AIR, false)) {
+                showCommingSoonMesage();
+            }
+
+        }
     }
 
     @Override
@@ -60,8 +75,6 @@ public class ETicketMainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(ETicketMainActivity.this, MainActivity.class);
-        startActivity(intent);
         finish();
     }
 
@@ -71,23 +84,23 @@ public class ETicketMainActivity extends AppCompatActivity {
             case R.id.homeBtnBusTicket:
 //                startActivity(new Intent(this, BusMainActivity.class));
 //                finish();
-                Snackbar snackbar = Snackbar.make(relativeLayout, R.string.coming_soon_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
+                showCommingSoonMesage();
                 break;
             case R.id.homeBtnTrainTicket:
 //                startActivity(new Intent(this, TrainMainActivity.class));
 //                finish();
-                Snackbar snackbarTrain = Snackbar.make(relativeLayout, R.string.coming_soon_msg, Snackbar.LENGTH_LONG);
-                snackbarTrain.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarViewTrain = snackbarTrain.getView();
-                snackBarViewTrain.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbarTrain.show();
+                showCommingSoonMesage();
                 break;
             default:
                 break;
         }
+    }
+
+    private void showCommingSoonMesage() {
+        Snackbar snackbar = Snackbar.make(relativeLayout, R.string.coming_soon_msg, Snackbar.LENGTH_LONG);
+        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+        View snackBarView = snackbar.getView();
+        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+        snackbar.show();
     }
 }

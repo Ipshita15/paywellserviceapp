@@ -63,6 +63,10 @@ class MyFavoriteHelper {
             listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_karnaphuli_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, MenuStatus.UnFavorite.text, 0, 32))
 ////            // end utility
 
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_bus, StringConstant.KEY_home_ticket, IconConstant.KEY_ic_ticket, MenuStatus.UnFavorite.text, 0, 3))
+            listOfData.add(FavoriteMenu(StringConstant.home_eticket_air, StringConstant.KEY_home_ticket, IconConstant.KEY_air_ticket, MenuStatus.UnFavorite.text, 0, 3))
+
+
             listOfData.add(FavoriteMenu(StringConstant.KEY_home_mfs_mycash, StringConstant.KEY_home_mfs_fav, IconConstant.KEY_ic_my_cash, MenuStatus.UnFavorite.text, 0, 33))
 
             listOfData.add(FavoriteMenu(StringConstant.KEY_home_product_ajker_deal, StringConstant.KEY_home_product_catalog, IconConstant.KEY_ic_ajker_deal, MenuStatus.UnFavorite.text, 0, 34))
