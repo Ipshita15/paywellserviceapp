@@ -41,10 +41,10 @@ public class CardTransferMainActivity extends BaseActivity {
         mRelativeLayout = findViewById(R.id.relativeLayout);
         mWebview = findViewById(R.id.webView);
 
-        if(mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-            switchToCzLocale(new Locale("en",""));
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            switchToCzLocale(new Locale("en", ""));
         } else {
-            switchToCzLocale(new Locale("fr",""));
+            switchToCzLocale(new Locale("fr", ""));
         }
         setToolbar(getString(R.string.home_refill_card));
 

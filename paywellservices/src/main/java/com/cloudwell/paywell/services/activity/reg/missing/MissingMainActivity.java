@@ -14,8 +14,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.text.Html;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
@@ -816,7 +814,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1 ) {
+        if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
                 InputStream imageStream;
                 try {

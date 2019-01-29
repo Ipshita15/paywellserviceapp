@@ -233,6 +233,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     // hidden balance menu
     boolean isBalacedCheckProcessRunning;
+    boolean isBalacedBoxOpen = true;
     ImageView ivBalanceBorder;
 
     int start = 9;
@@ -241,7 +242,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     Calendar cal;
 
     private int lastFavoitePosition = 0;
-    private boolean isFirstTime = true;
     DrawerLayout drawer;
     ImageView ivRightSliderUpDown;
     ObjectAnimator animation;
@@ -293,6 +293,48 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshStringsOfButton();
+        if (alertNotification.isShowing()) {
+            alertNotification.dismiss();
+        }
+
+        viewPager.setInterval(2000);
+        updateMyFavorityView();
+        notificationCounterCheck();
+        startRightLeftAnimation();
+
+        isBalacedBoxOpen = true;
+
+
+        mToolbarHeading.setText(getString(R.string.balance_pre_text));
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        viewPager.setInterval(0);
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+        stopRightLefAnimation();
+        isBalacedBoxOpen = false;
+    }
+
 
     private void changeStatusBarColor() {
         if (Build.VERSION.SDK_INT >= 21) {
@@ -376,7 +418,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         recyclerViewFavoirte.getLayoutManager().setMeasurementCacheEnabled(false);
 
 
-
         HomeFavoriteAdapter adapter = new HomeFavoriteAdapter(this, result, isEnglish);
 
         adapter.setClickListener(new HomeFavoriteAdapter.ItemClickListener() {
@@ -393,10 +434,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         }
 
-        if (isFirstTime) {
-            isFirstTime = false;
-
-        }
 
     }
 
@@ -911,7 +948,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     String strBalance = mAppHandler.getPwBalance() + getString(R.string.tk);
                     mToolbarHeading.setText(strBalance);
 
-                    startHiddenBalance();
+
                 }
             }
 
@@ -1256,20 +1293,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         snackbar.show();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        refreshStringsOfButton();
-        if (alertNotification.isShowing()) {
-            alertNotification.dismiss();
-        }
-
-        viewPager.setInterval(2000);
-        updateMyFavorityView();
-        notificationCounterCheck();
-        startRightLeftAnimation();
-
-    }
 
     private void startRightLeftAnimation() {
         if (animation == null) {
@@ -1347,13 +1370,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return directory.getAbsolutePath();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // stop auto scroll when onPause
-        // viewPager.stopNestedScroll();
-        viewPager.setInterval(0);
-    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onNewnotificationcomming(EventNewNotificaiton eventNewNotificaiton) {
@@ -1378,19 +1394,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         messageText.setGravity(Gravity.CENTER);
 
 
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-        stopRightLefAnimation();
     }
 
     private void notificationCounterCheck() {
