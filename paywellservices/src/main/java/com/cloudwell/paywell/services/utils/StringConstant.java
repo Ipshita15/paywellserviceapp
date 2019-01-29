@@ -45,6 +45,11 @@ public class StringConstant {
     public static String KEY_home_utility_karnaphuli_inquiry = "home_utility_karnaphuli_inquiry";
 
 
+    public static String KEY_home_ticket = "home_eticket";
+    public static String KEY_home_bus = "home_eticket_bus";
+    public static String home_eticket_air = "home_eticket_air";
+
+
     public static String KEY_home_mfs_fav = "home_mfs_fav";
     public static String KEY_home_mfs_mycash = "home_mfs_mycash";
 

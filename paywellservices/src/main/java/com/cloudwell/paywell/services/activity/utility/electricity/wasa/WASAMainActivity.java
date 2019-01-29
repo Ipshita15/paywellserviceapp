@@ -72,7 +72,10 @@ public class WASAMainActivity extends BaseActivity implements CompoundButton.OnC
     private void checkIsComeFromFav(Intent intent) {
         boolean isFav = intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE, false);
         if (isFav) {
-            showLimitPrompt();
+            boolean booleanExtra = intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_WASA_BILL_INQUIRY, false);
+            if (booleanExtra) {
+                showLimitPrompt();
+            }
         }
     }
 
