@@ -232,8 +232,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private AsyncTask<String, Intent, String> mPushFirebaseIdTask;
 
     // hidden balance menu
-    boolean isBalacedCheckProcessRunning;
-    boolean isBalacedBoxOpen = true;
+    boolean isBalaceCheckProcessRunning;
+    boolean isBalaceBoxOpen = true;
     ImageView ivBalanceBorder;
 
     int start = 9;
@@ -313,7 +313,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         notificationCounterCheck();
         startRightLeftAnimation();
 
-        isBalacedBoxOpen = true;
+        isBalaceBoxOpen = true;
 
 
         mToolbarHeading.setText(getString(R.string.balance_pre_text));
@@ -332,7 +332,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         super.onStop();
         EventBus.getDefault().unregister(this);
         stopRightLefAnimation();
-        isBalacedBoxOpen = false;
+        isBalaceBoxOpen = false;
     }
 
 
@@ -838,7 +838,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         switch (v.getId()) {
             case R.id.txtHeading:
                 Log.e("check balance", "check balance");
-                if (!isBalacedCheckProcessRunning) {
+                if (!isBalaceCheckProcessRunning) {
                     checkPayWellBalance();
                 }
 
@@ -846,7 +846,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             case R.id.ivBalanceBorder:
                 Log.e("check balance", "check balance");
-                if (!isBalacedCheckProcessRunning) {
+                if (!isBalaceCheckProcessRunning) {
                     checkPayWellBalance();
                 }
 
@@ -921,7 +921,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void checkBalance() {
 
-        isBalacedCheckProcessRunning = true;
+        isBalaceCheckProcessRunning = true;
         pb_dot.setVisibility(View.VISIBLE);
         mToolbarHeading.setVisibility(View.GONE);
 
@@ -933,7 +933,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 pb_dot.setVisibility(View.GONE);
                 mToolbarHeading.setVisibility(View.VISIBLE);
-                isBalacedCheckProcessRunning = false;
+                isBalaceCheckProcessRunning = false;
 
                 assert response.body() != null;
                 if (response.body().getStatus() == 200) {
@@ -956,7 +956,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             public void onFailure(Call<APIResBalanceCheck> call, Throwable t) {
                 pb_dot.setVisibility(View.GONE);
                 mToolbarHeading.setVisibility(View.VISIBLE);
-                isBalacedCheckProcessRunning = false;
+                isBalaceCheckProcessRunning = false;
 
                 Logger.e("onFailure:" + t.getLocalizedMessage());
                 Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
