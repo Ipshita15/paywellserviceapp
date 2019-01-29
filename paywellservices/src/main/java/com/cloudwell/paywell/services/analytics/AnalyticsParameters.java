@@ -4,13 +4,20 @@ package com.cloudwell.paywell.services.analytics;
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 9/12/18.
  */
 public class AnalyticsParameters {
+
+    public static final String KEY_TOPUP_ALL_OPERATOR_MENU = "TopupAllOperatorMenu";
+    public static final String KEY_REGISTRATION_MENU = "RegistrationMenu";
+    public static final String KEY_DASHBOARD = "Dashboard";
+
+
     public static final String KEY_UTILITY_DESCO_BILL_PAY = "UtilityDescoBillPay";
     public static final String KEY_UTILITY_DESCO_BILL_PAY_INQUIRY = "UtilityDescoBillPayInquiry";
     public static final String KEY_UTILITY_DPDC_BILL_PAY = "UtilityDPDCBillPay";
+    public static final String KEY_TOPUP_BRILLIANT_MENU = "TopupBrilliantMenu";
 
 
     //Dashboard
-    public static final String KEY_DASHBOARD = "Dashboard";
+
     public static final String KEY_NOTIFICATION_ICON = "Notification";
     public static final String KEY_CEHCK_NEW_NOTIFICATION = "NewNotificationCheck";
     public static final String KEY_NOTIFICATION_FULL_IMAGE_VIEW = "NotificationFullImageView";
@@ -21,7 +28,7 @@ public class AnalyticsParameters {
     public static final String KEY_BALANCE_CHECK = "BalanceCheck";
     public static final String KEY_MERCHANT_TYPE_CONFIRM_REQUEST = "MerchantTypeConfirmRequest";
 
-    public static final String KEY_REGISTRATION_MENU = "RegistrationMenu";
+
     public static final String KEY_TOPUP_MENU = "TopupMenu";
     public static final String KEY_UTILITY_MENU = "UtilityMenu";
     public static final String KEY_ETICKET_MENU = "EticketMenu";
@@ -59,9 +66,9 @@ public class AnalyticsParameters {
     public static final String KEY_UPGRADE_PLAYSTORE_OPTION = "UpgradeViaPlayStoreOption";
     public static final String KEY_UPGRADE_PAYWELL_OPTION = "UpgradeViaPayWellOption";
 
-    public static final String KEY_TOPUP_ALL_OPERATOR_MENU = "TopupAllOperatorMenu";
+
     public static final String KEY_TOPUP_ALL_OPERATOR_PAGE = "TopupAllOperatorPage";
-    public static final String KEY_TOPUP_BRILLIANT_MENU = "TopupBrilliantMenu";
+
     public static final String KEY_TOPUP_BRILLIANT_PAGE = "TopupBrilliantPage";
     public static final String KEY_TOPUP_ALL_OPERATOR_SUBMIT_RECHARGE_REQUEST = "TopupAllOperatorSubmitRechargeRequest";
     public static final String KEY_TOPUP_ALL_OPERATOR_TRX_LOG_MENU = "TopupAllOperatorTrxLogMenu";
