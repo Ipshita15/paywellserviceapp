@@ -288,7 +288,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_DASHBOARD);
 
         checkBalance();
-        setupBottonSheetSlider();
         getAllFavoriteDate();
         setupRightNagivationView();
 
