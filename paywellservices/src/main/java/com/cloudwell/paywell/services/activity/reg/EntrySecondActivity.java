@@ -87,6 +87,8 @@ public class EntrySecondActivity extends BaseActivity implements AdapterView.OnI
             et_landmark.setText(regModel.getLandmark());
         }
         Initializer();
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_REGISTRATION_SECOND_PAGE);
     }
 
     public void Initializer() {

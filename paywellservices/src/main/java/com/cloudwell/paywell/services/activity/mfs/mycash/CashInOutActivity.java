@@ -16,6 +16,8 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.cash.CashInActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.cash.CashOutActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -67,6 +69,8 @@ public class CashInOutActivity extends BaseActivity {
             btnCashIn.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnCashOut.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_MYCASH_CASH_OUT);
     }
 
     public void onButtonClicker(View v) {

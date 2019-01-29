@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.settings;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
@@ -20,6 +18,8 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -56,6 +56,9 @@ public class ChangePinActivity extends BaseActivity {
         mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
         initView();
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_SETTINGS_CHANGE_PIN_MENU);
+
     }
 
     private void initView() {

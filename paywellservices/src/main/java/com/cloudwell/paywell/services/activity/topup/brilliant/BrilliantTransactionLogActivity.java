@@ -22,6 +22,8 @@ import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.APIBrilliantTRXLog;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.BrilliantTRXLogModel;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.Datum;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppHandler;
 
 import java.util.ArrayList;
@@ -49,6 +51,9 @@ public class BrilliantTransactionLogActivity extends BaseActivity {
         allDataList=new ArrayList<>();
         customAdapter =new CustomAdapter(BrilliantTransactionLogActivity.this,allDataList);
         trxLogLV.setAdapter(customAdapter);
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_TOPUP_BRILLIANT_TRX_LOG_PAGE);
+
     }
 
     @Override

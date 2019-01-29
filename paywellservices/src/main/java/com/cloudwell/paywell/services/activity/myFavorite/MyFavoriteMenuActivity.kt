@@ -21,6 +21,8 @@ import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu
 import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEvent
 import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEventFavDeleted
 import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEventPositionMove
+import com.cloudwell.paywell.services.analytics.AnalyticsManager
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.constant.AllConstant
 import com.cloudwell.paywell.services.database.DatabaseClient
@@ -58,6 +60,8 @@ class MyFavoriteMenuActivity : AppCompatActivity(), StartDragListener {
         }
 
         initialisationView()
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_FAVORITE_MENU_PAGE)
 
     }
 

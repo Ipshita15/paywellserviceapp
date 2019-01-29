@@ -134,6 +134,8 @@ public class EntryForthActivity extends BaseActivity {
         ((RadioButton) mScrollView.findViewById(R.id.downloadNo)).setTypeface(AppController.getInstance().getAponaLohitFont());
         ((Button) mScrollView.findViewById(R.id.button_nextForth)).setTypeface(AppController.getInstance().getAponaLohitFont());
         ((Button) mScrollView.findViewById(R.id.button_preForth)).setTypeface(AppController.getInstance().getAponaLohitFont());
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_REGISTRATION_FORTH_PAGE);
     }
 
     @Override

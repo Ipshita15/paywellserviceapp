@@ -21,6 +21,8 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.RequestBillStatus;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.RequestBillStatusData;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
@@ -56,6 +58,9 @@ public class PBBillStatusActivity extends BaseActivity implements View.OnClickLi
         mAppHandler = new AppHandler(this);
 
         initializeView();
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_BILL_STATUS);
+
     }
 
     private void initializeView() {

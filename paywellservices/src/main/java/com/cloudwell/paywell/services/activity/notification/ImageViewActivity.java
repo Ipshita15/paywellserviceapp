@@ -16,6 +16,8 @@ import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 
@@ -59,6 +61,8 @@ public class ImageViewActivity extends BaseActivity {
                         imageView.setImage(ImageSource.bitmap(bitmap)); //For SubsampleImage
                     }
                 });
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_NOTIFICATION_FULL_IMAGE_VIEW);
 
     }
 

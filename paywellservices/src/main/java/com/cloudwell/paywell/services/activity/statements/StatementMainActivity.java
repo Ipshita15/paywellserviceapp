@@ -50,6 +50,8 @@ public class StatementMainActivity extends AppCompatActivity implements View.OnC
         btnBalanceStatement.setOnClickListener(this);
         btnSalesStatement.setOnClickListener(this);
         btnTransactionStatement.setOnClickListener(this);
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_STATEMENT_MENU);
     }
 
     @Override

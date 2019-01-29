@@ -18,6 +18,8 @@ import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -57,6 +59,10 @@ public class DisplayQRCodeActivity extends AppCompatActivity {
         } else {
             setImage(mAppHandler.getQrCodeImagePath());
         }
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_QRCODE_ICON_PAGE);
+
+
     }
 
 

@@ -12,6 +12,8 @@ import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppHandler;
 
 import java.util.Locale;
@@ -89,6 +91,9 @@ public class ViewStatementActivity extends BaseActivity {
         mWebView.getSettings().setLoadsImagesAutomatically(true);
         mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         startWebView(url);
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_STATEMENT_VIEW);
+
     }
 
     private void startWebView(String url) {

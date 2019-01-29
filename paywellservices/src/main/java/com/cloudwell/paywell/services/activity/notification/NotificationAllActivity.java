@@ -19,6 +19,8 @@ import android.widget.TextView;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 
@@ -79,6 +81,10 @@ public class NotificationAllActivity extends BaseActivity {
         mLinearLayout = findViewById(R.id.linearLayout);
         mAppHandler = new AppHandler(this);
         initializer();
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_NOTIFICATION_PAPGE);
+
+
     }
 
     public void initializer() {

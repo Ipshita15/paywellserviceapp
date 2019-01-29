@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -57,6 +59,10 @@ public class ChangeMYCashPinActivity extends BaseActivity implements View.OnClic
         }
         mAppHandler = new AppHandler(getApplicationContext());
         initializeView();
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_MYCASH_CHANGE_PIN_NUMBER);
+
+
     }
 
     private void initializeView() {

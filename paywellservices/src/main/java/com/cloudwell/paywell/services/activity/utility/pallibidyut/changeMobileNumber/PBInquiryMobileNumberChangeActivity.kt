@@ -15,6 +15,8 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.adapter.HeaderRVSectionForLog
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.model.MessageEventMobileNumberChange
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.model.ResMobileChangeLog
+import com.cloudwell.paywell.services.analytics.AnalyticsManager
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.google.gson.Gson
@@ -64,9 +66,10 @@ class PBInquiryMobileNumberChangeActivity : AppCompatActivity() {
         mAppHandler = AppHandler(this)
         mRelativeLayout = findViewById(R.id.relativeLayout)
 
-
-
         initView()
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_MOBILE_NUMBER_CHANGE_INQUIRY)
+
 
     }
 

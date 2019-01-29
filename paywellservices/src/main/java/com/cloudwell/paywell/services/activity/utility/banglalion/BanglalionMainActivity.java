@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 
@@ -37,6 +39,8 @@ public class BanglalionMainActivity extends AppCompatActivity {
             btnBLRecharge.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnBLInq.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_BANGLALION_MENU);
     }
 
     public void goToBanglalionRecharge(View view) {

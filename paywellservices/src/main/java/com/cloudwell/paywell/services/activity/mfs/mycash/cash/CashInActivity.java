@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.CashInOutActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -61,6 +63,9 @@ public class CashInActivity extends BaseActivity implements View.OnClickListener
         mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(AppController.getContext());
         initializeView();
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_MYCASH_CASH_IN);
+
     }
 
     private void initializeView() {

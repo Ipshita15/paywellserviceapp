@@ -27,6 +27,8 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.StringRequestListener;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.squareup.picasso.Callback;
@@ -76,6 +78,9 @@ public class NotificationFullViewActivity extends BaseActivity implements View.O
         } else {
             handleNormalFlow();
         }
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_NOTIFICATION_PAPGE_DETAILS);
+
     }
 
     private void handleNotificationClickFlow(String notifcation_details) {

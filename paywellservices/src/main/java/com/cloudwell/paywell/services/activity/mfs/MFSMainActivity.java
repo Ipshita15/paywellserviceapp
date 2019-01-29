@@ -37,6 +37,9 @@ public class MFSMainActivity  extends AppCompatActivity {
         } else {
             btnMycash.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_MFS_MENU);
+
     }
 
     public void onButtonClicker(View v) {
