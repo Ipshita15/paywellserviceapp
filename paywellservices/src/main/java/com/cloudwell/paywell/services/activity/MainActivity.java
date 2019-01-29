@@ -8,10 +8,12 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -235,6 +237,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     boolean isBalaceCheckProcessRunning;
     boolean isBalaceBoxOpen = true;
     ImageView ivBalanceBorder;
+    ScreenStateReceiver mReceiver;
+    //
 
     int start = 9;
     int end = 18;
@@ -245,6 +249,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     DrawerLayout drawer;
     ImageView ivRightSliderUpDown;
     ObjectAnimator animation;
+
 
     @SuppressWarnings("deprecation")
     @Override
@@ -291,7 +296,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         getAllFavoriteDate();
         setupRightNagivationView();
 
+        setScreenStateReciver();
 
+
+    }
+
+    private void setScreenStateReciver() {
+        mReceiver = new ScreenStateReceiver();
+        IntentFilter intentFilter = new IntentFilter(Intent.ACTION_SCREEN_ON);
+        intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
+        mReceiver = new ScreenStateReceiver();
+        registerReceiver(mReceiver, intentFilter);
     }
 
     @Override
@@ -333,6 +348,38 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         EventBus.getDefault().unregister(this);
         stopRightLefAnimation();
         isBalaceBoxOpen = false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        Logger.v("onDestroy");
+        if (mNotificationAsync != null) {
+            mNotificationAsync.cancel(true);
+        }
+
+
+        if (mRequestPhnNumberAddAsync != null) {
+            mRequestPhnNumberAddAsync.cancel(true);
+        }
+
+        if (mConfirmPhnNumberAddAsync != null) {
+            mConfirmPhnNumberAddAsync.cancel(true);
+        }
+
+        if (mPushFirebaseIdTask != null) {
+            mPushFirebaseIdTask.cancel(true);
+        }
+
+        if (viewPager != null) {
+            Slider.imageLoadingService = null;
+            viewPager = null;
+        }
+
+        if (mReceiver != null) {
+            unregisterReceiver(mReceiver);
+        }
+
+        super.onDestroy();
     }
 
 
@@ -2512,30 +2559,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //                .show();
     }
 
-    @Override
-    protected void onDestroy() {
-        if (mNotificationAsync != null) {
-            mNotificationAsync.cancel(true);
+    public class ScreenStateReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (Intent.ACTION_SCREEN_ON.equals(action)) {
+                Logger.v("On");
+                checkBalance();
+                //code
+            } else if (Intent.ACTION_SCREEN_OFF.equals(action)) {
+                //code
+                Logger.v("off");
+            }
         }
-
-
-        if (mRequestPhnNumberAddAsync != null) {
-            mRequestPhnNumberAddAsync.cancel(true);
-        }
-
-        if (mConfirmPhnNumberAddAsync != null) {
-            mConfirmPhnNumberAddAsync.cancel(true);
-        }
-
-        if (mPushFirebaseIdTask != null) {
-            mPushFirebaseIdTask.cancel(true);
-        }
-
-        if (viewPager != null) {
-            Slider.imageLoadingService = null;
-            viewPager = null;
-        }
-        super.onDestroy();
     }
 
 
