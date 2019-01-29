@@ -74,7 +74,11 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
 
         boolean isFav = intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE, false);
         if (isFav) {
-            showLimitPrompt();
+            boolean booleanExtra = intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_DESCO_INQUERY, false);
+            if (booleanExtra) {
+                showLimitPrompt();
+            }
+
         }
     }
 

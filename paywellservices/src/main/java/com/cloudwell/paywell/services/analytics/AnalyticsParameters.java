@@ -4,9 +4,9 @@ package com.cloudwell.paywell.services.analytics;
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 9/12/18.
  */
 public class AnalyticsParameters {
-    public static final String KEY_ACTION = "Action";
-    public static final String KEY_LABEL = "Label";
-    public static final String KEY_VALUE = "Value";
+    public static final String KEY_UTILITY_DESCO_BILL_PAY = "UtilityDescoBillPay";
+    public static final String KEY_UTILITY_DESCO_BILL_PAY_INQUIRY = "UtilityDescoBillPayInquiry";
+    public static final String KEY_UTILITY_DPDC_BILL_PAY = "UtilityDPDCBillPay";
 
 
     //Dashboard
@@ -57,22 +57,35 @@ public class AnalyticsParameters {
     public static final String KEY_TOPUP_BRILLIANT_ENQUIRY_TRX_MENU = "TopupBrilliantEnqTrxMenu";
     public static final String KEY_TOPUP_BRILLIANT_SUBMIT_REQUEST = "TopupBrilliantSubmitRechargeRequest";
     public static final String KEY_UTILITY_DESCO_MENU = "UtilityDescoMenu";
-    public static final String KEY_UTILITY_DESCO_BILL_PAY_MENU = "UtilityDescoBillPayMenu";
-    public static final String KEY_UTILITY_DESCO_BILL_INQUIRY_MENU = "UtilityDescoBillInquiryMenu";
+    public static final String KEY_UTILITY_DPDC_BILL_PAY_INQUIRY = "UtilityDPDCBillInquiry";
+    public static final String KEY_UTILITY_WASA_BILL_PAY = "UtilityWasaBillPay";
+    public static final String KEY_UTILITY_WASA_BILL_PAY_INQUIRY = "UtilityWasaBillPayInquiry";
+    public static final String KEY_UTILITY_WZPDCL_BILL_PAY = "UtilityWzpdclBillPay";
     public static final String KEY_UTILITY_DPDC_MENU = "UtilityDpdcMenu";
-    public static final String KEY_UTILITY_DPDC_BILL_PAY_MENU = "UtilityDpdcBillPayMenu";
-    public static final String KEY_UTILITY_DPDC_BILL_INQUIRY_MENU = "UtilityDpdcBillInquiryMenu";
     public static final String KEY_UTILITY_WASA_MENU = "UtilityWasaMenu";
+    public static final String KEY_UTILITY_WZPDCL_BILL_INQUIRY = "UtilityWzpdclBillInquiry";
+    public static final String KEY_UTILITY_POLLI_BIDDUT_REGISTION = "UtilityPolliBiddutRegistration";
     public static final String KEY_UTILITY_WZPDCL_MENU = "UtilityWzpdclMenu";
+    public static final String KEY_UTILITY_POLLI_BIDDUT_REGISTION_INQUIRY = "UtilityPolliBiddutRegistrationInquiry";
+    public static final String KEY_UTILITY_POLLI_BIDDUT_BILL_INQUIRY = "UtilityPolliBiddutBillInquiry";
     public static final String KEY_UTILITY_POLLI_BIDDUT_MENU = "UtilityPolliBiddutMenu";
-    public static final String KEY_UTILITY_POLLI_BIDDUT_REGISTRATION_MENU = "UtilityPolliBiddutRegistrationMenu";
-    public static final String KEY_UTILITY_POLLI_BIDDUT_BILL_PAY_MENU = "UtilityPolliBiddutBillPayMenu";
-    public static final String KEY_UTILITY_QUBEE_MENU = "UtilityQubeeMenu";
-    public static final String KEY_UTILITY_REAL_VU_MENU = "UtilityRealVuMenu";
+    public static final String KEY_UTILITY_POLLI_BIDDUT_BILL_STATUS = "UtilityPolliBiddutBillStatus";
+    public static final String KEY_UTILITY_POLLI_BIDDUT_BILL_STATUS_INQUIRY = "UtilityPolliBiddutBillStatusInquiry";
+    public static final String KEY_UTILITY_POLLI_BIDDUT_MOBILE_NUMBER_CHANGE = "UtilityPolliBiddutBillMobileNumberChange";
+    public static final String KEY_UTILITY_POLLI_BIDDUT_MOBILE_NUMBER_CHANGE_INQUIRY = "UtilityPolliBiddutBillMobileNumberChangeInquiry";
+    public static final String KEY_UTILITY_POLLI_BIDDUT_BILL_PAY = "UtilityPolliBiddutBillPay";
+    public static final String KEY_UTILITY_IVAC_BILL_PAY = "UtilityIvacBillPay";
+    public static final String KEY_UTILITY_IVAC_BILL_INQUIRY = "UtilityIvacBillPayInquiry";
+    public static final String KEY_UTILITY_BANGLALION_RECHARGE = "UtilityBanglalionRecharge";
     public static final String KEY_UTILITY_IVAC_MENU = "UtilityIvacMenu";
+    public static final String KEY_UTILITY_BANGLALION_RECHARGE_INQUIRY = "UtilityBanglalionRechargeInquir";
+    public static final String KEY_UTILITY_KARNAPHULI_MENU_BILL_PAY = "UtilityKarnaphuliBillPay";
     public static final String KEY_UTILITY_BANGLALION_MENU = "UtilityBanglalionMenu";
+    public static final String KEY_UTILITY_KARNAPHULI_MENU_BILL_PAY_INQUIRY = "UtilityKarnaphuliBillPayInquiry";
+    public static final String KEY_BALANCE_REFILL_BANK = "BalanceRefillBank";
     public static final String KEY_UTILITY_KARNAPHULI_MENU = "UtilityKarnaphuliMenu";
-    public static final String KEY_PAYMENT_BKASH_MENU = "PaymentBkashMenu";
+    public static final String KEY_BALANCE_REFILL_CARD = "BalanceRefillCard";
+    public static final String KEY_ETICKET_BUS = "E_TICKET_BUS";
     public static final String KEY_MFS_MYCASH_MENU = "MfsMycashMenu";
     public static final String KEY_PRODUCT_AJKER_DEAL_MENU = "ProductAjkerDealMenu";
     public static final String KEY_PRODUCT_WHOLESALE_MENU = "ProductWholesaleMenu";
@@ -81,7 +94,9 @@ public class AnalyticsParameters {
     public static final String KEY_STATEMENT_SALES_MENU = "StatementSalesMenu";
     public static final String KEY_STATEMENT_TRX_MENU = "StatementTrxMenu";
     public static final String KEY_BALANCE_REFILL_SDA_INFO_MENU = "BalanceRefillSdaInfoMenu";
-    public static final String KEY_BALANCE_REFILL_BKASH_INFO_MENU = "BalanceRefillBkashInfoMenu";
+    public static final String KEY_ETICKET_AIR = "ETICKET_AIR";
+    //favorite menu
+    public static final String KEY_FAVORITE_MENU = "FavoriteMenu";
     public static final String KEY_BALANCE_REFILL_BANK_TRANSFER_INFO_MENU = "BalanceRefillBankTransferInfoMenu";
     public static final String KEY_BALANCE_REFILL_CARD_MENU = "BalanceRefillCardMenu";
     public static final String KEY_SETTINGS_CHANGE_PIN_MENU = "SettingsChangePinMenu";
@@ -89,6 +104,10 @@ public class AnalyticsParameters {
     public static final String KEY_SETTINGS_RESET_PIN_MENU = "SettingsResetPinMenu";
     public static final String KEY_SETTINGS_CHANGE_LANGUAGE_MENU = "SettingsChangeLanguageMenu";
     public static final String KEY_SETTINGS_HELP_MENU = "SettingsHelpMenu";
+    static final String KEY_ACTION = "Action";
+    static final String KEY_LABEL = "Label";
+
+
 
     public static final String KEY_REGISTRATION_FIRST_PORTION_SUBMIT_REQUEST = "RegistrationFirstPortionSubmitRequest";
     public static final String KEY_REGISTRATION_SECOND_PORTION_SUBMIT_REQUEST = "RegistrationSecondPortionSubmitRequest";
@@ -97,4 +116,7 @@ public class AnalyticsParameters {
     public static final String KEY_REGISTRATION_THIRD_PORTION_PREVIOUS_REQUEST = "RegistrationThirdPortionPreviousRequest";
     public static final String KEY_REGISTRATION_FORTH_PORTION_SUBMIT_REQUEST = "RegistrationForthPortionSubmitRequest";
     public static final String KEY_REGISTRATION_FORTH_PORTION_PREVIOUS_REQUEST = "RegistrationForthPortionPreviousRequest";
+    static final String KEY_VALUE = "Value";
+
+
 }

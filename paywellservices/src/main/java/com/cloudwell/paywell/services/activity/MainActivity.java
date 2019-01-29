@@ -3,6 +3,7 @@ package com.cloudwell.paywell.services.activity;
 import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -25,8 +26,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -50,8 +49,8 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -114,7 +113,6 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.app.model.APIResBalanceCheck;
 import com.cloudwell.paywell.services.constant.AllConstant;
-import com.cloudwell.paywell.services.constant.IconConstant;
 import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.database.FavoriteMenuDab;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
@@ -124,7 +122,6 @@ import com.cloudwell.paywell.services.service.notificaiton.model.StartNotificati
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.LocationUtility;
 import com.cloudwell.paywell.services.utils.ResorceHelper;
-import com.cloudwell.paywell.services.utils.StringConstant;
 import com.cloudwell.paywell.services.utils.UpdateChecker;
 import com.github.silvestrpredko.dotprogressbar.DotProgressBar;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -243,19 +240,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     long startHourMilli, endHourMilli;
     Calendar cal;
 
-    // bottom slider
-    private BottomSheetBehavior sheetBehavior;
-    private ConstraintLayout layoutBottomSheet;
-    private RecyclerView recyclerViewFavoirte;
-    private ImageView ivUptown, ivEdit;
-    private boolean isSliderUp = false;
     private int lastFavoitePosition = 0;
     private boolean isFirstTime = true;
+    DrawerLayout drawer;
+    ImageView ivRightSliderUpDown;
+    ObjectAnimator animation;
 
     @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        changeStatusBarColor();
         setContentView(R.layout.activity_main);
 
 
@@ -295,74 +290,36 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         checkBalance();
         setupBottonSheetSlider();
         getAllFavoriteDate();
-        hiddenFavoriteRecycview();
-    }
+        setupRightNagivationView();
 
-    private void hiddenFavoriteRecycview() {
 
     }
 
-    private void setupBottonSheetSlider() {
-        layoutBottomSheet = findViewById(R.id.bottom_sheet);
-        ivUptown = layoutBottomSheet.findViewById(R.id.ivImageUpAndDown);
-        ivEdit = layoutBottomSheet.findViewById(R.id.ivEdit);
+    private void changeStatusBarColor() {
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            int color = getResources().getColor(R.color.colorPrimaryDark);
+            window.setStatusBarColor(color);
+        }
+    }
 
-        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(View bottomSheet, int newState) {
-                switch (newState) {
-                    case BottomSheetBehavior.STATE_HIDDEN:
-                        break;
-                    case BottomSheetBehavior.STATE_EXPANDED: {
+    private void setupRightNagivationView() {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_right);
+        navigationView.setNavigationItemSelectedListener(this);
 
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_COLLAPSED: {
 
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_DRAGGING:
-                        break;
-                    case BottomSheetBehavior.STATE_SETTLING:
-                        break;
-                }
-            }
-
-            @Override
-            public void onSlide(View bottomSheet, float slideOffset) {
-
-            }
-        });
-
-        ivUptown.setOnClickListener(new View.OnClickListener() {
+        ivRightSliderUpDown = findViewById(R.id.ivRightSliderUpDown);
+        ivRightSliderUpDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isSliderUp) {
-                    isSliderUp = true;
-                    recyclerViewFavoirte.setVisibility(View.VISIBLE);
-                    ivEdit.setVisibility(View.VISIBLE);
-                    ivUptown.setBackgroundResource(R.drawable.circle_angle_down);
-                    sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                drawer.openDrawer(GravityCompat.END);
 
-                    ivUptown.clearAnimation();
-
-                } else {
-                    isSliderUp = false;
-                    recyclerViewFavoirte.setVisibility(View.GONE);
-                    ivEdit.setVisibility(View.GONE);
-                    ivUptown.setBackgroundResource(R.drawable.circle_angle_up);
-                    sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-
-                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_item);
-                    ivUptown.setAnimation(animation);
-                }
             }
         });
 
-        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_item);
-        ivUptown.setAnimation(animation);
-
+        ImageView ivEdit = findViewById(R.id.ivEdit);
         ivEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -372,6 +329,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         });
 
     }
+
+    private void hiddenFavoriteRecycview() {
+
+    }
+
 
     private void getAllFavoriteDate() {
 
@@ -406,18 +368,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         boolean isEnglish = mAppHandler.getAppLanguage().equalsIgnoreCase("en");
 
-        recyclerViewFavoirte = layoutBottomSheet.findViewById(R.id.rvOperatorList);
+        RecyclerView recyclerViewFavoirte = findViewById(R.id.rvOperatorList);
         recyclerViewFavoirte.setHasFixedSize(true);
         recyclerViewFavoirte.setItemAnimator(new DefaultItemAnimator());
 
-        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerViewFavoirte.setLayoutManager(horizontalLayoutManager);
         recyclerViewFavoirte.getLayoutManager().setMeasurementCacheEnabled(false);
 
 
-        if (result.size() == 0) {
-            result.add(new FavoriteMenu(StringConstant.KEY_add_fav, "", IconConstant.KEY_add_fav_action, "", 0, -1));
-        }
 
         HomeFavoriteAdapter adapter = new HomeFavoriteAdapter(this, result, isEnglish);
 
@@ -434,12 +393,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             recyclerViewFavoirte.smoothScrollToPosition(lastFavoitePosition);
 
         }
+
         if (isFirstTime) {
             isFirstTime = false;
-            recyclerViewFavoirte.setVisibility(View.GONE);
-            ivEdit.setVisibility(View.GONE);
-            ivUptown.setBackgroundResource(R.drawable.circle_angle_up);
-            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
         }
 
     }
@@ -481,7 +438,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             home_settings.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.syncState();
@@ -565,6 +522,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if (drawer.isDrawerOpen(GravityCompat.END)) {
+            drawer.closeDrawer(GravityCompat.END);
         } else {
             if (doubleBackToExitPressedOnce) {
                 super.onBackPressed();
@@ -983,6 +942,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             }
         }, KEY_BALANCE_CHECK_INTERVAL);
+
+
     }
 
     @Override
@@ -1303,16 +1264,27 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (alertNotification.isShowing()) {
             alertNotification.dismiss();
         }
-        // start auto scroll when onResume
-        // viewPager.startAutoScroll();
-        // checkPayWellBalance();
 
         viewPager.setInterval(2000);
         updateMyFavorityView();
         notificationCounterCheck();
+        startRightLeftAnimation();
 
     }
 
+    private void startRightLeftAnimation() {
+        if (animation == null) {
+            animation = ObjectAnimator.ofFloat(ivRightSliderUpDown, "translationX", -16f);
+            animation.setDuration(800);
+            animation.setRepeatCount(ObjectAnimator.INFINITE);
+            animation.setRepeatMode(ObjectAnimator.REVERSE);
+        }
+        animation.start();
+    }
+
+    private void stopRightLefAnimation() {
+        animation.cancel();
+    }
 
     private void startMyFavoriteMenuActivity() {
         Intent intent1 = new Intent(getApplicationContext(), MyFavoriteMenuActivity.class);
@@ -1419,6 +1391,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
+        stopRightLefAnimation();
     }
 
     private void notificationCounterCheck() {
@@ -2158,195 +2131,290 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void onFavoriteItemClick(FavoriteMenu favoriteMenu) {
+
+        drawer.closeDrawer(GravityCompat.END);
+
+
         Intent intent;
 
         int resId = ResorceHelper.getResId(favoriteMenu.getName(), R.string.class);
 
         switch (resId) {
-            case R.string.add_fav:
-                startMyFavoriteMenuActivity();
-                break;
 
             case R.string.mobileOperator:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_TOPUP_ALL_OPERATOR_MENU);
+
                 intent = new Intent(getApplicationContext(), TopupMainActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.brilliant:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_TOPUP_BRILLIANT_MENU);
+
                 intent = new Intent(getApplicationContext(), BrilliantTopupActivity.class);
                 startActivityWithFlag(intent);
                 break;
             case R.string.home_utility_desco:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_MENU);
+
                 intent = new Intent(getApplicationContext(), DESCOMainActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_utility_desco_pay:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_BILL_PAY);
+
                 intent = new Intent(getApplicationContext(), DESCOBillPayActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_utility_desco_pay_inquiry:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_BILL_PAY_INQUIRY);
+
                 intent = new Intent(getApplicationContext(), DESCOMainActivity.class);
+                intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_DESCO_INQUERY, true);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_utility_dpdc:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_DPDC_MENU);
+
                 intent = new Intent(getApplicationContext(), DPDCMainActivity.class);
                 startActivityWithFlag(intent);
                 break;
             case R.string.home_utility_dpdc_bill_pay:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_DPDC_BILL_PAY);
+
                 intent = new Intent(getApplicationContext(), DPDCPostpaidBillPayActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_utility_dpdc_bill_pay_inquiry:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_DPDC_BILL_PAY_INQUIRY);
+
                 intent = new Intent(getApplicationContext(), DPDCMainActivity.class);
+                intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_DPDC_INQUERY, true);
                 startActivityWithFlag(intent);
                 break;
 
 
             case R.string.home_utility_pollibiddut:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_MENU);
+
                 intent = new Intent(getApplicationContext(), PBMainActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_utility_pollibiddut_registion:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_REGISTION);
+
                 intent = new Intent(getApplicationContext(), PBRegistrationActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_utility_pollibiddut_bill_pay_favorite:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_BILL_PAY);
+
                 intent = new Intent(getApplicationContext(), PBBillPayActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_utility_pollibiddut_reg_inquiry:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_REGISTION_INQUIRY);
+
                 intent = new Intent(getApplicationContext(), PBMainActivity.class);
                 intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_RG_INQUERY, true);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_utility_pollibiddut_bill_inquiry:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_BILL_INQUIRY);
+
+
                 intent = new Intent(getApplicationContext(), PBMainActivity.class);
                 intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_BILL_INQUERY, true);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_utility_pb_request_inquiry:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_BILL_STATUS);
+
+
                 intent = new Intent(getApplicationContext(), PBBillStatusActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_utility_pb_bill_statu_inquery:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_BILL_STATUS_INQUIRY);
+
                 intent = new Intent(getApplicationContext(), PBMainActivity.class);
                 intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_REQUEST_BILL_INQUIRY, true);
                 startActivityWithFlag(intent);
                 break;
             case R.string.home_utility_pb_bill_change_number:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_MOBILE_NUMBER_CHANGE);
+
                 intent = new Intent(getApplicationContext(), MobileNumberChangeActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_utility_pb_phone_number_inquiry:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_MOBILE_NUMBER_CHANGE_INQUIRY);
+
                 intent = new Intent(getApplicationContext(), PBMainActivity.class);
                 intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_MOBILE_NUMBER_CHANGE_INQUIRY, true);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_utility_wasa:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_WASA_MENU);
+
                 intent = new Intent(getApplicationContext(), WASAMainActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_utility_wasa_pay:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_WASA_BILL_PAY);
+
                 intent = new Intent(getApplicationContext(), WASABillPayActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_utility_wasa_inquiry:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_WASA_BILL_PAY_INQUIRY);
+
                 intent = new Intent(getApplicationContext(), WASAMainActivity.class);
+                intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_WASA_BILL_INQUIRY, true);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_utility_west_zone:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_WZPDCL_MENU);
+
                 intent = new Intent(getApplicationContext(), WZPDCLMainActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
 
             case R.string.home_utility_west_zone_pay:
+
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_WZPDCL_BILL_PAY);
+
                 intent = new Intent(getApplicationContext(), WZPDCLBillPayActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_utility_west_zone_pay_inquiry:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_WZPDCL_BILL_INQUIRY);
+
                 intent = new Intent(getApplicationContext(), WZPDCLMainActivity.class);
+                intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_WEST_ZONE_BILL_INQUIRY, true);
                 startActivityWithFlag(intent);
                 break;
 
 
             case R.string.home_utility_ivac:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_IVAC_MENU);
+
                 intent = new Intent(getApplicationContext(), IvacMainActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_utility_ivac_free_pay_favorite:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_IVAC_BILL_PAY);
+
                 intent = new Intent(getApplicationContext(), IvacFeePayActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_utility_ivac_inquiry:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_IVAC_BILL_INQUIRY);
+
                 intent = new Intent(getApplicationContext(), IvacFeeInquiryMainActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
 
             case R.string.home_utility_banglalion:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_BANGLALION_MENU);
+
                 intent = new Intent(getApplicationContext(), BanglalionMainActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_utility_banglalion_recharge:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_BANGLALION_RECHARGE);
+
                 intent = new Intent(getApplicationContext(), BanglalionRechargeActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_utility_banglalion_recharge_inquiry:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_BANGLALION_RECHARGE_INQUIRY);
+
+
                 intent = new Intent(getApplicationContext(), BanglalionRechargeInquiryActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_utility_karnaphuli:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_KARNAPHULI_MENU);
+
                 intent = new Intent(getApplicationContext(), KarnaphuliMainActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_utility_karnaphuli_bill_pay:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_KARNAPHULI_MENU_BILL_PAY);
 
                 intent = new Intent(getApplicationContext(), KarnaphuliBillPayActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_utility_karnaphuli_inquiry:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_KARNAPHULI_MENU_BILL_PAY_INQUIRY);
+
                 intent = new Intent(getApplicationContext(), KarnaphuliMainActivity.class);
                 intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_KARACHI_INQUIRY, true);
                 startActivityWithFlag(intent);
                 break;
 
+            case R.string.home_eticket_bus:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_ETICKET_BUS);
+
+
+                intent = new Intent(getApplicationContext(), ETicketMainActivity.class);
+                intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_BUS, true);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_eticket_air:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_ETICKET_AIR);
+
+                intent = new Intent(getApplicationContext(), ETicketMainActivity.class);
+                intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AIR, true);
+                startActivityWithFlag(intent);
+                break;
+
 
             case R.string.home_mfs_mycash:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_MFS_MYCASH_MENU);
+
                 intent = new Intent(getApplicationContext(), MYCashMainActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_product_ajker_deal:
 
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_PRODUCT_AJKER_DEAL_MENU);
+
+
                 new ProductHelper().getToken(this, 1);
 
                 break;
 
             case R.string.home_product_pw_wholesale:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_PRODUCT_WHOLESALE_MENU);
 
                 new ProductHelper().getToken(this, 2);
 
@@ -2354,7 +2422,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             case R.string.home_statement_mini:
 
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_STATEMENT_MENU, AnalyticsParameters.KEY_STATEMENT_MINI_MENU);
+
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_MINI_MENU);
+
                 ViewStatementActivity.title = "mini";
                 ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/StatementInquiry?username="
                         + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
@@ -2365,7 +2435,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.string.home_statement_balance:
 
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_STATEMENT_MENU, AnalyticsParameters.KEY_STATEMENT_BALANCE_MENU);
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_BALANCE_MENU);
                 ViewStatementActivity.title = "balance";
                 ViewStatementActivity.url = "http://api.cloudwell.co/AndroidWebViewController/balanceStatement?username="
                         + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
@@ -2378,7 +2448,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             case R.string.home_statement_sales:
 
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_STATEMENT_MENU, AnalyticsParameters.KEY_STATEMENT_SALES_MENU);
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_SALES_MENU);
                 ViewStatementActivity.title = "sales";
                 ViewStatementActivity.url = "http://api.cloudwell.co/AndroidWebViewController/salesStatement?username="
                         + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
@@ -2390,7 +2460,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.string.home_statement_transaction:
 
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_STATEMENT_MENU, AnalyticsParameters.KEY_STATEMENT_TRX_MENU);
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_TRX_MENU);
                 ViewStatementActivity.title = "trx";
                 ViewStatementActivity.url = "http://api.cloudwell.co/AndroidWebViewController/getAllTransactionStatement?username="
                         + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
@@ -2401,6 +2471,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
 
             case R.string.home_refill_bank:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_BALANCE_REFILL_BANK);
+
 
                 intent = new Intent(getApplicationContext(), BankTransferMainActivity.class);
                 startActivityWithFlag(intent);
@@ -2408,6 +2480,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
 
             case R.string.home_refill_card:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_BALANCE_REFILL_CARD);
 
                 intent = new Intent(getApplicationContext(), CardTransferMainActivity.class);
                 startActivityWithFlag(intent);

@@ -72,7 +72,10 @@ public class WZPDCLMainActivity extends BaseActivity implements CompoundButton.O
     private void checkIsComeFromFav(Intent intent) {
         boolean isFav = intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE, false);
         if (isFav) {
-            showLimitPrompt();
+            boolean booleanExtra = intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_WEST_ZONE_BILL_INQUIRY, false);
+            if (booleanExtra) {
+                showLimitPrompt();
+            }
         }
     }
 
