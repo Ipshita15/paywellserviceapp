@@ -57,10 +57,16 @@ public class AnalyticsParameters {
     public static final String KEY_TOPUP_BRILLIANT_ENQUIRY_TRX_MENU = "TopupBrilliantEnqTrxMenu";
     public static final String KEY_TOPUP_BRILLIANT_SUBMIT_REQUEST = "TopupBrilliantSubmitRechargeRequest";
     public static final String KEY_UTILITY_DESCO_MENU = "UtilityDescoMenu";
+    public static final String KEY_UTILITY_DESCO_BILL_PAY_MENU = "UtilityDescoBillPayMenu";
+    public static final String KEY_UTILITY_DESCO_BILL_INQUIRY_MENU = "UtilityDescoBillInquiryMenu";
     public static final String KEY_UTILITY_DPDC_MENU = "UtilityDpdcMenu";
+    public static final String KEY_UTILITY_DPDC_BILL_PAY_MENU = "UtilityDpdcBillPayMenu";
+    public static final String KEY_UTILITY_DPDC_BILL_INQUIRY_MENU = "UtilityDpdcBillInquiryMenu";
     public static final String KEY_UTILITY_WASA_MENU = "UtilityWasaMenu";
     public static final String KEY_UTILITY_WZPDCL_MENU = "UtilityWzpdclMenu";
     public static final String KEY_UTILITY_POLLI_BIDDUT_MENU = "UtilityPolliBiddutMenu";
+    public static final String KEY_UTILITY_POLLI_BIDDUT_REGISTRATION_MENU = "UtilityPolliBiddutRegistrationMenu";
+    public static final String KEY_UTILITY_POLLI_BIDDUT_BILL_PAY_MENU = "UtilityPolliBiddutBillPayMenu";
     public static final String KEY_UTILITY_QUBEE_MENU = "UtilityQubeeMenu";
     public static final String KEY_UTILITY_REAL_VU_MENU = "UtilityRealVuMenu";
     public static final String KEY_UTILITY_IVAC_MENU = "UtilityIvacMenu";

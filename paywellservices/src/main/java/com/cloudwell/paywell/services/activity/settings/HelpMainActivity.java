@@ -20,7 +20,6 @@ public class HelpMainActivity extends AppCompatActivity implements View.OnClickL
     private ConnectionDetector mCd;
     private String packageNameYoutube = "com.google.android.youtube";
     private String linkRefillBalance = "https://www.youtube.com/watch?v=mRg-yT20Iyc";
-    private String linkBkashPayment = "https://www.youtube.com/watch?v=wOlYSchfWPo";
     private String linkDpdcBillPay = "https://www.youtube.com/watch?v=EovJfDwrKSc&t=4s";
     private String linkPolliBillPay = "https://www.youtube.com/watch?v=SAuIFcUclvs&t=1s";
     private String linkAllServices = "https://www.youtube.com/watch?v=RNEjADit-PQ";
@@ -43,27 +42,23 @@ public class HelpMainActivity extends AppCompatActivity implements View.OnClickL
 
     private void initializeView() {
         Button btnBalanceRefill = findViewById(R.id.homeBtnBalanceRefill);
-        Button btnBkashPayment = findViewById(R.id.homeBtnBkashPayment);
         Button btnDpdcBillPay = findViewById(R.id.homeBtnDpdcBillPay);
         Button btnPolliBiddutBillPay = findViewById(R.id.homeBtnPolliBiddutBillPay);
         Button btnAllServices = findViewById(R.id.homeBtnAllServices);
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             btnBalanceRefill.setTypeface(AppController.getInstance().getOxygenLightFont());
-            btnBkashPayment.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnDpdcBillPay.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnPolliBiddutBillPay.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnAllServices.setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
             btnBalanceRefill.setTypeface(AppController.getInstance().getAponaLohitFont());
-            btnBkashPayment.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnDpdcBillPay.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnPolliBiddutBillPay.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnAllServices.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
 
         btnBalanceRefill.setOnClickListener(this);
-        btnBkashPayment.setOnClickListener(this);
         btnDpdcBillPay.setOnClickListener(this);
         btnPolliBiddutBillPay.setOnClickListener(this);
         btnAllServices.setOnClickListener(this);
@@ -84,20 +79,6 @@ public class HelpMainActivity extends AppCompatActivity implements View.OnClickL
                     startActivity(intent);
                 } else {
                     WebViewActivity.TAG_LINK = linkRefillBalance;
-                    startActivity(new Intent(HelpMainActivity.this, WebViewActivity.class));
-                }
-            }
-        } else if (i == R.id.homeBtnBkashPayment) {
-            if (!mCd.isConnectingToInternet()) {
-                AppHandler.showDialog(this.getSupportFragmentManager());
-            } else {
-                if (isAppInstalled(packageNameYoutube)) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkBkashPayment));
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.setPackage(packageNameYoutube);
-                    startActivity(intent);
-                } else {
-                    WebViewActivity.TAG_LINK = linkBkashPayment;
                     startActivity(new Intent(HelpMainActivity.this, WebViewActivity.class));
                 }
             }
