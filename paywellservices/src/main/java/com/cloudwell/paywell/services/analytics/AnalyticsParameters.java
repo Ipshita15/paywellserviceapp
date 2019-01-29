@@ -31,6 +31,7 @@ public class AnalyticsParameters {
 
     public static final String KEY_TOPUP_MENU = "TopupMenu";
     public static final String KEY_UTILITY_MENU = "UtilityMenu";
+    public static final String KEY_PAYMENT_MENU = "PaymentMenu";
     public static final String KEY_ETICKET_MENU = "EticketMenu";
     public static final String KEY_MFS_MENU = "MobileBankingMenu";
     public static final String KEY_MYCASH_CASH_IN = "MyCashCashIn";
@@ -51,10 +52,12 @@ public class AnalyticsParameters {
     public static final String KEY_STATEMENT_VIEW = "StatementsView";
     public static final String KEY_BALANCE_REFILL_MENU = "BalanceRefillMenu";
     public static final String KEY_SETTINGS_MENU = "SettingsMenu";
+    public static final String KEY_CHAT_MENU = "ChatWithCustomerAgentMenu";
     public static final String KEY_CALL_MENU = "CallToCustomerAgentMenu";
     public static final String KEY_SLIDER_IMAGE = "SliderImage";
     public static final String KEY_NAV_TOPUP_MENU = "TopupMenuNav";
     public static final String KEY_NAV_UTILITY_MENU = "UtilityMenuNav";
+    public static final String KEY_NAV_PAYMENT_MENU = "PaymentMenuNav";
     public static final String KEY_NAV_ETICKET_MENU = "EticketMenuNav";
     public static final String KEY_NAV_MFS_MENU = "MobileBankingMenuNav";
     public static final String KEY_NAV_PRODUCT_MENU = "ProductMenuNav";

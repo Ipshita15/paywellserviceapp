@@ -287,6 +287,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_DASHBOARD);
 
+        checkBalance();
         getAllFavoriteDate();
         setupRightNagivationView();
 
@@ -325,7 +326,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             }
         });
-
 
     }
 
@@ -696,7 +696,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     AppHandler.showDialog(getSupportFragmentManager());
                 } else {
                     // Handle the topup action
-                    startActivity(new Intent(this, TopupMainActivity.class));
+                    startActivity(new Intent(this, TopupMenuActivity.class));
                 }
             } else {
                 Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
@@ -902,8 +902,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 if (response.body().getStatus() == 200) {
                     String balance = response.body().getBalanceData().getBalance();
 
-                    String balanceFraction = (String) balance.subSequence(0, 2);
-
                     BigDecimal a = new BigDecimal(balance);
                     BigDecimal roundOff = a.setScale(2, BigDecimal.ROUND_HALF_EVEN);
 
@@ -914,10 +912,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     mToolbarHeading.setText(strBalance);
 
                     startHiddenBalance();
-
                 }
-
-
             }
 
             @Override
@@ -1390,7 +1385,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         super.onStart();
         EventBus.getDefault().register(this);
     }
-
 
     @Override
     public void onStop() {

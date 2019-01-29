@@ -89,9 +89,11 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
 
         switch (v.getId()) {
             case R.id.homeBtnBillPay:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_DESCO_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_BILL_PAY);
                 startActivity(new Intent(this, DESCOBillPayActivity.class));
                 break;
             case R.id.homeBtnInquiry:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_DESCO_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_BILL_PAY_INQUIRY);
                 showLimitPrompt();
                 break;
             default:

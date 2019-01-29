@@ -165,12 +165,12 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
 
         switch (v.getId()) {
             case R.id.homeBtnRegistration:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_MENU, AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_REGISTION);
                 startActivity(new Intent(this, PBRegistrationActivity.class));
-
                 break;
             case R.id.homeBtnBillPay:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_MENU, AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_BILL_PAY);
                 startActivity(new Intent(this, PBBillPayActivity.class));
-
                 break;
             case R.id.homeBtnInquiryReg:
                 shwTheLimitedPrompt(TAG_SERVICE_REGISTRATION_INQUIRY);

@@ -816,12 +816,20 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == 1) {
+        if (requestCode == 1 ) {
+            if (resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
                 InputStream imageStream;
                 try {
                     imageStream = this.getContentResolver().openInputStream(data.getData());
+
+                    // bimatp factory
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inSampleSize = 8;
+
                     Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+//                    Bitmap selectedImage = BitmapFactory.decodeStream(imageStream, null, options);
+//                    imageStream.close();
+
                     encodeTobase64(selectedImage);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -839,6 +847,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.JPEG, 50, baos);
         byte[] b = baos.toByteArray();
+//        String imageEncoded = Base64.encodeToString(b, Base64.URL_SAFE);
         String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
 
         String strBuild = ("xxCloud" + imageEncoded + "xxCloud");

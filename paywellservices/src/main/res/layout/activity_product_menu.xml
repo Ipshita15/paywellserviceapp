@@ -53,7 +53,6 @@
                     android:layout_weight="1"
                     android:drawableTop="@drawable/ic_wholesale"
                     android:onClick="onButtonClicker"
-                    android:paddingTop="10dp"
                     android:text="@string/home_product_pw_wholesale"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -62,6 +61,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
