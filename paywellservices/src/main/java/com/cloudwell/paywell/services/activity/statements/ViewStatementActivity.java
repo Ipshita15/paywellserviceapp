@@ -59,6 +59,7 @@ public class ViewStatementActivity extends BaseActivity {
         } else {
             switchToCzLocale(new Locale("fr",""));
         }
+
         if(!title.isEmpty()) {
             if (title.equalsIgnoreCase("mini")) {
                 setToolbar(getString(R.string.home_statement_mini));

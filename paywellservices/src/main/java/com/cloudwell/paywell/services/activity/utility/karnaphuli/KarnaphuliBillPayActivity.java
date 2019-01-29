@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
+import android.text.method.DigitsKeyListener;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -51,7 +52,7 @@ public class KarnaphuliBillPayActivity extends BaseActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_desco_bill_pay);
+        setContentView(R.layout.activity_karnaphuli_bill_pay);
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -65,15 +66,16 @@ public class KarnaphuliBillPayActivity extends BaseActivity implements View.OnCl
     private void initializeView() {
         mLinearLayout = findViewById(R.id.utilityLinearLayout);
 
-        TextView _mPin = findViewById(R.id.tvDescoPin);
-        TextView _mBill = findViewById(R.id.tvDescoBillNo);
-        TextView _mPhn = findViewById(R.id.tvDescoPhn);
+        TextView _mPin = findViewById(R.id.tvKarnaphuliPin);
+        TextView _mBill = findViewById(R.id.tvKarnaphuliBillNo);
+        TextView _mPhn = findViewById(R.id.tvKarnaphuliPhn);
 
         etPin = findViewById(R.id.pin_no);
         etBill = findViewById(R.id.mycash_bill);
         etPhn = findViewById(R.id.mycash_phn);
-        ImageView imageView = findViewById(R.id.imageView_info);
         btnConfirm = findViewById(R.id.mycash_confirm);
+
+//        etBill.setKeyListener(DigitsKeyListener.getInstance("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-"));
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             _mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
@@ -93,8 +95,6 @@ public class KarnaphuliBillPayActivity extends BaseActivity implements View.OnCl
             btnConfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
         btnConfirm.setOnClickListener(this);
-
-        imageView.setVisibility(View.GONE);
     }
 
     @SuppressWarnings("deprecation")
@@ -177,10 +177,6 @@ public class KarnaphuliBillPayActivity extends BaseActivity implements View.OnCl
                 responseTxt = httpclient.execute(httppost, responseHandler);
             } catch (Exception e) {
                 e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
             return responseTxt;
         }
@@ -302,10 +298,6 @@ public class KarnaphuliBillPayActivity extends BaseActivity implements View.OnCl
                 responseTxt = httpclient.execute(httppost, responseHandler);
             } catch (Exception e) {
                 e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
 
             return responseTxt;

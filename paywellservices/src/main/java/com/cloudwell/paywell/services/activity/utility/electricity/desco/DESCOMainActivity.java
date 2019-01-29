@@ -15,6 +15,8 @@ import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
@@ -84,9 +86,11 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
 
         switch (v.getId()) {
             case R.id.homeBtnBillPay:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_DESCO_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_BILL_PAY_MENU);
                 startActivity(new Intent(this, DESCOBillPayActivity.class));
                 break;
             case R.id.homeBtnInquiry:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_DESCO_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_BILL_INQUIRY_MENU);
                 showLimitPrompt();
                 break;
             default:

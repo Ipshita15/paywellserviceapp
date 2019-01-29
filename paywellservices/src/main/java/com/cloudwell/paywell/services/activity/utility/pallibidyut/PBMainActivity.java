@@ -27,6 +27,8 @@ import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileN
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.PBInquiryMobileNumberChangeActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.registion.PBInquiryRegActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.registion.PBRegistrationActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
@@ -160,12 +162,12 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
 
         switch (v.getId()) {
             case R.id.homeBtnRegistration:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_MENU, AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_REGISTRATION_MENU);
                 startActivity(new Intent(this, PBRegistrationActivity.class));
-
                 break;
             case R.id.homeBtnBillPay:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_MENU, AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_BILL_PAY_MENU);
                 startActivity(new Intent(this, PBBillPayActivity.class));
-
                 break;
             case R.id.homeBtnInquiryReg:
                 shwTheLimitedPrompt(TAG_SERVICE_REGISTRATION_INQUIRY);

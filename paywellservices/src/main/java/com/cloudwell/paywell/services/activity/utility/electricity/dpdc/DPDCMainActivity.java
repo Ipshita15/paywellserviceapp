@@ -18,6 +18,8 @@ import android.widget.RelativeLayout;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.WebViewActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
@@ -89,10 +91,11 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
     public void onButtonClicker(View v) {
         switch (v.getId()) {
             case R.id.homeBtnPostpaidBillPay:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_DPDC_MENU, AnalyticsParameters.KEY_UTILITY_DPDC_BILL_PAY_MENU);
                 startActivity(new Intent(this, DPDCPostpaidBillPayActivity.class));
-
                 break;
             case R.id.homeBtnPostpaidInquiry:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_DPDC_MENU, AnalyticsParameters.KEY_UTILITY_DPDC_BILL_INQUIRY_MENU);
                 service_type = TAG_SERVICE_POSTPAID_INQUIRY;
                 showLimitPrompt();
                 break;
