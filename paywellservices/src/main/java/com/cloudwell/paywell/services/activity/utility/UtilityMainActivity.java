@@ -63,6 +63,9 @@ public class UtilityMainActivity extends AppCompatActivity {
             btnBanglalion.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnKarnaphuli.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_MENU);
+
     }
 
     @Override

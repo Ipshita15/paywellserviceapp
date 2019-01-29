@@ -11,6 +11,8 @@ import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -49,6 +51,9 @@ public class IvacMainActivity extends BaseActivity {
             btnBill.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnInquiry.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_IVAC_MENU);
+
     }
 
     public void onButtonClicker(View v) {

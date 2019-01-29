@@ -74,6 +74,9 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
         }
 
         checkIsComeFromFav(getIntent());
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_DPDC_MENU);
+
     }
 
     private void checkIsComeFromFav(Intent intent) {

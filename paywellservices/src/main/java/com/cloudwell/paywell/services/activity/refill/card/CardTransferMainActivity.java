@@ -12,6 +12,8 @@ import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -39,10 +41,10 @@ public class CardTransferMainActivity extends BaseActivity {
         mRelativeLayout = findViewById(R.id.relativeLayout);
         mWebview = findViewById(R.id.webView);
 
-        if(mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-            switchToCzLocale(new Locale("en",""));
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            switchToCzLocale(new Locale("en", ""));
         } else {
-            switchToCzLocale(new Locale("fr",""));
+            switchToCzLocale(new Locale("fr", ""));
         }
         setToolbar(getString(R.string.home_refill_card));
 
@@ -64,6 +66,8 @@ public class CardTransferMainActivity extends BaseActivity {
             startWebView("https://www.paywellonline.com/payment_paywell/index.php?username=" +
                     mAppHandler.getRID());
         }
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_BALANCE_REFILL_CARD);
+
     }
 
     private void startWebView(String url) {

@@ -8,10 +8,12 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -232,8 +234,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private AsyncTask<String, Intent, String> mPushFirebaseIdTask;
 
     // hidden balance menu
-    boolean isBalacedCheckProcessRunning;
+    boolean isBalaceCheckProcessRunning;
+    boolean isBalaceBoxOpen = true;
     ImageView ivBalanceBorder;
+    ScreenStateReceiver mReceiver;
+    //
 
     int start = 9;
     int end = 18;
@@ -241,10 +246,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     Calendar cal;
 
     private int lastFavoitePosition = 0;
-    private boolean isFirstTime = true;
     DrawerLayout drawer;
     ImageView ivRightSliderUpDown;
     ObjectAnimator animation;
+
 
     @SuppressWarnings("deprecation")
     @Override
@@ -291,8 +296,92 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         getAllFavoriteDate();
         setupRightNagivationView();
 
+        setScreenStateReciver();
+
 
     }
+
+    private void setScreenStateReciver() {
+        mReceiver = new ScreenStateReceiver();
+        IntentFilter intentFilter = new IntentFilter(Intent.ACTION_SCREEN_ON);
+        intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
+        mReceiver = new ScreenStateReceiver();
+        registerReceiver(mReceiver, intentFilter);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshStringsOfButton();
+        if (alertNotification.isShowing()) {
+            alertNotification.dismiss();
+        }
+
+        viewPager.setInterval(2000);
+        updateMyFavorityView();
+        notificationCounterCheck();
+        startRightLeftAnimation();
+
+        isBalaceBoxOpen = true;
+
+
+        mToolbarHeading.setText(getString(R.string.balance_pre_text));
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        viewPager.setInterval(0);
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+        stopRightLefAnimation();
+        isBalaceBoxOpen = false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        Logger.v("onDestroy");
+        if (mNotificationAsync != null) {
+            mNotificationAsync.cancel(true);
+        }
+
+
+        if (mRequestPhnNumberAddAsync != null) {
+            mRequestPhnNumberAddAsync.cancel(true);
+        }
+
+        if (mConfirmPhnNumberAddAsync != null) {
+            mConfirmPhnNumberAddAsync.cancel(true);
+        }
+
+        if (mPushFirebaseIdTask != null) {
+            mPushFirebaseIdTask.cancel(true);
+        }
+
+        if (viewPager != null) {
+            Slider.imageLoadingService = null;
+            viewPager = null;
+        }
+
+        if (mReceiver != null) {
+            unregisterReceiver(mReceiver);
+        }
+
+        super.onDestroy();
+    }
+
 
     private void changeStatusBarColor() {
         if (Build.VERSION.SDK_INT >= 21) {
@@ -376,7 +465,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         recyclerViewFavoirte.getLayoutManager().setMeasurementCacheEnabled(false);
 
 
-
         HomeFavoriteAdapter adapter = new HomeFavoriteAdapter(this, result, isEnglish);
 
         adapter.setClickListener(new HomeFavoriteAdapter.ItemClickListener() {
@@ -393,10 +481,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         }
 
-        if (isFirstTime) {
-            isFirstTime = false;
-
-        }
 
     }
 
@@ -801,7 +885,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         switch (v.getId()) {
             case R.id.txtHeading:
                 Log.e("check balance", "check balance");
-                if (!isBalacedCheckProcessRunning) {
+                if (!isBalaceCheckProcessRunning) {
                     checkPayWellBalance();
                 }
 
@@ -809,7 +893,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             case R.id.ivBalanceBorder:
                 Log.e("check balance", "check balance");
-                if (!isBalacedCheckProcessRunning) {
+                if (!isBalaceCheckProcessRunning) {
                     checkPayWellBalance();
                 }
 
@@ -884,7 +968,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void checkBalance() {
 
-        isBalacedCheckProcessRunning = true;
+        isBalaceCheckProcessRunning = true;
         pb_dot.setVisibility(View.VISIBLE);
         mToolbarHeading.setVisibility(View.GONE);
 
@@ -896,7 +980,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 pb_dot.setVisibility(View.GONE);
                 mToolbarHeading.setVisibility(View.VISIBLE);
-                isBalacedCheckProcessRunning = false;
+                isBalaceCheckProcessRunning = false;
 
                 assert response.body() != null;
                 if (response.body().getStatus() == 200) {
@@ -911,7 +995,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     String strBalance = mAppHandler.getPwBalance() + getString(R.string.tk);
                     mToolbarHeading.setText(strBalance);
 
-                    startHiddenBalance();
+
                 }
             }
 
@@ -919,7 +1003,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             public void onFailure(Call<APIResBalanceCheck> call, Throwable t) {
                 pb_dot.setVisibility(View.GONE);
                 mToolbarHeading.setVisibility(View.VISIBLE);
-                isBalacedCheckProcessRunning = false;
+                isBalaceCheckProcessRunning = false;
 
                 Logger.e("onFailure:" + t.getLocalizedMessage());
                 Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
@@ -1256,20 +1340,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         snackbar.show();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        refreshStringsOfButton();
-        if (alertNotification.isShowing()) {
-            alertNotification.dismiss();
-        }
-
-        viewPager.setInterval(2000);
-        updateMyFavorityView();
-        notificationCounterCheck();
-        startRightLeftAnimation();
-
-    }
 
     private void startRightLeftAnimation() {
         if (animation == null) {
@@ -1347,13 +1417,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return directory.getAbsolutePath();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // stop auto scroll when onPause
-        // viewPager.stopNestedScroll();
-        viewPager.setInterval(0);
-    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onNewnotificationcomming(EventNewNotificaiton eventNewNotificaiton) {
@@ -1378,19 +1441,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         messageText.setGravity(Gravity.CENTER);
 
 
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-        stopRightLefAnimation();
     }
 
     private void notificationCounterCheck() {
@@ -2509,30 +2559,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //                .show();
     }
 
-    @Override
-    protected void onDestroy() {
-        if (mNotificationAsync != null) {
-            mNotificationAsync.cancel(true);
+    public class ScreenStateReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (Intent.ACTION_SCREEN_ON.equals(action)) {
+                Logger.v("On");
+                checkBalance();
+                //code
+            } else if (Intent.ACTION_SCREEN_OFF.equals(action)) {
+                //code
+                Logger.v("off");
+            }
         }
-
-
-        if (mRequestPhnNumberAddAsync != null) {
-            mRequestPhnNumberAddAsync.cancel(true);
-        }
-
-        if (mConfirmPhnNumberAddAsync != null) {
-            mConfirmPhnNumberAddAsync.cancel(true);
-        }
-
-        if (mPushFirebaseIdTask != null) {
-            mPushFirebaseIdTask.cancel(true);
-        }
-
-        if (viewPager != null) {
-            Slider.imageLoadingService = null;
-            viewPager = null;
-        }
-        super.onDestroy();
     }
 
 

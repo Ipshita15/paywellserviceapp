@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.model.ResBiddyutPhoneNoChange;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -53,6 +55,9 @@ public class MobileNumberChangeActivity extends BaseActivity implements View.OnC
         cd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
         initView();
+
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_MOBILE_NUMBER_CHANGE);
     }
 
     private void initView() {

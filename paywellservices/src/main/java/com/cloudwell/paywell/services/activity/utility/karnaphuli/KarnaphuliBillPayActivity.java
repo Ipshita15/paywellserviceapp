@@ -7,17 +7,17 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
-import android.text.method.DigitsKeyListener;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -61,6 +61,9 @@ public class KarnaphuliBillPayActivity extends BaseActivity implements View.OnCl
         mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = new AppHandler(this);
         initializeView();
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_KARNAPHULI_MENU_BILL_PAY);
+
     }
 
     private void initializeView() {

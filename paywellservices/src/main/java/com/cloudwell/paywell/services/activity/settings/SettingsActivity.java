@@ -61,6 +61,8 @@ public class SettingsActivity extends AppCompatActivity {
         home_help = findViewById(R.id.homeBtnHelp);
 
         RefreshStringsOfButton();
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_SETTINGS_HELP_MENU);
     }
 
     public void onSettingsButtonClicker(View v) {

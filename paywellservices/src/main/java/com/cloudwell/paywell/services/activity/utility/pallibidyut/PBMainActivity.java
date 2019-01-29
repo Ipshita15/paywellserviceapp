@@ -109,6 +109,9 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
 
         checkIsComeFromFav(getIntent());
 
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_MENU);
+
+
     }
 
     private void checkIsComeFromFav(Intent intent) {

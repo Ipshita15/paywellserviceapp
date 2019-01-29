@@ -134,6 +134,9 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
         }
         initView();
         refreshLanguage();
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_TOPUP_ALL_OPERATOR_PAGE);
+
     }
 
 

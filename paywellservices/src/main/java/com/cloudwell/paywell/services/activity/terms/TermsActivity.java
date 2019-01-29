@@ -8,6 +8,8 @@ import android.webkit.WebView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 
 import java.io.InputStream;
 
@@ -26,6 +28,9 @@ public class TermsActivity extends AppCompatActivity {
         mWebView.getSettings().setBuiltInZoomControls(true);
 
         displayTermsAndConditions();
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_TERMS_AND_CONDITIONS);
+
     }
 
     private void displayTermsAndConditions() {

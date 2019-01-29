@@ -14,6 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 
 import java.util.ArrayList;
 
@@ -97,6 +99,8 @@ public class TransLogActivity extends AppCompatActivity {
                 listView.setAdapter(adapter);
             }
         }
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_TOPUP_ALL_OPERATOR_ENQUIRY_TRX_PAGE);
     }
 
     public class CustomAdapter extends BaseAdapter {

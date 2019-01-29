@@ -94,6 +94,9 @@ public class EntryFirstActivity extends BaseActivity {
         merchant_type_array.add("Retail Merchant");
 
         initializationOther();
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_REGISTRATION_FIRST_PAGE);
+
     }
 
     public void initializationBusinessType() {

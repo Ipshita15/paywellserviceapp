@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
@@ -48,6 +50,8 @@ public class ETicketMainActivity extends AppCompatActivity {
         }
 
         checkIsComeFromFav(getIntent());
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_ABOUT_PAGE);
 
     }
 

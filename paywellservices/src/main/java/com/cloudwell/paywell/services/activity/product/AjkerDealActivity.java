@@ -22,6 +22,8 @@ import android.widget.LinearLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -93,6 +95,9 @@ public class AjkerDealActivity extends BaseActivity {
         } catch (Exception ex) {
             onBackPressed();
         }
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_PRODUCT_AJKER_DEAL_PAGE);
+
     }
 
     @Override

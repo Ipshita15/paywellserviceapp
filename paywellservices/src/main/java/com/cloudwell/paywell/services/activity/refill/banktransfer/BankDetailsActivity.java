@@ -30,6 +30,8 @@ import com.cloudwell.paywell.services.activity.refill.model.DistrictData;
 import com.cloudwell.paywell.services.activity.refill.model.RefillRequestData;
 import com.cloudwell.paywell.services.activity.refill.model.RequestBranch;
 import com.cloudwell.paywell.services.activity.refill.model.RequestRefillBalance;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
@@ -83,6 +85,9 @@ public class BankDetailsActivity extends BaseActivity {
         }
 
         initializeData();
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_BALANCE_REFILL_BANK);
+
     }
 
     public void initializeData() {

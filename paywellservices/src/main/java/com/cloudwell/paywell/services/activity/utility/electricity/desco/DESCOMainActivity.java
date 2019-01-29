@@ -68,6 +68,9 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
         }
 
         checkIsComeFromFav(getIntent());
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_DESCO_MENU);
+
     }
 
     private void checkIsComeFromFav(Intent intent) {

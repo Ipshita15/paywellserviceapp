@@ -149,6 +149,8 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
         });
 
         refreshLanguage();
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_TOPUP_BRILLIANT_PAGE);
     }
 
     private void refreshLanguage() {

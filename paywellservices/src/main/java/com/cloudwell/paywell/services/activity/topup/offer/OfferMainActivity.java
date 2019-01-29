@@ -18,6 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -66,6 +68,8 @@ public class OfferMainActivity extends AppCompatActivity {
         }
 
         initializeAdapter();
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_TOFU_ALL_OPERATOR_BUNDLE_OFFER_CONFIRM);
     }
 
     public void initializeAdapter() {
