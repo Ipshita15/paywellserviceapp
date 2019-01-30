@@ -3,12 +3,10 @@ package com.cloudwell.paywell.services.app;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 
-import com.amitshekhar.DebugDB;
 import com.cloudwell.paywell.services.BuildConfig;
 import com.cloudwell.paywell.services.activity.myFavorite.helper.MyFavoriteHelper;
 import com.cloudwell.paywell.services.utils.AppVersionUtility;
@@ -25,8 +23,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
-
-import java.util.Locale;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -65,7 +61,7 @@ public class AppController extends Application {
             String id = FirebaseInstanceId.getInstance().getToken();
             Log.e("device_token", "" + id);
 
-            Logger.v(DebugDB.getAddressLog());
+            // Logger.v(DebugDB.getAddressLog());
 
 //
 //            if (LeakCanary.isInAnalyzerProcess(this)) {
