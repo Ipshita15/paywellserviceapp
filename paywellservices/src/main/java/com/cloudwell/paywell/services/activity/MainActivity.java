@@ -712,15 +712,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NOTIFICATION_ICON);
                 if (mNumOfNotification != 0) {
+                    mNumOfNotification = 0;
                     Intent intent = new Intent(MainActivity.this, NotificationAllActivity.class);
                     startActivity(intent);
-                    mNumOfNotification = 0;
-                    finish();
                 } else {
-
                     startActivity(new Intent(MainActivity.this, NotificationAllActivity.class));
-                    finish();
-
                 }
             }
         });

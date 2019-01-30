@@ -67,6 +67,7 @@ public class NotificationAllActivity extends BaseActivity {
 
     private int position;
     MsgAdapter adapter;
+    private boolean isNotificationFlow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,9 @@ public class NotificationAllActivity extends BaseActivity {
             getSupportActionBar().setTitle(R.string.home_notification);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        isNotificationFlow = getIntent().getBooleanExtra("isNotificationFlow", false);
+
         listView = findViewById(R.id.listViewNotification);
         mLinearLayout = findViewById(R.id.linearLayout);
         mAppHandler = new AppHandler(this);
@@ -91,12 +95,45 @@ public class NotificationAllActivity extends BaseActivity {
         new NotificationAllActivity.NotificationAllListAsync().execute(getResources().getString(R.string.notif_url));
     }
 
+    @Override
+    public void onBackPressed() {
+        if (isNotificationFlow) {
+            Intent intent = new Intent(NotificationAllActivity.this, MainActivity.class);
+            intent.putExtra(IS_NOTIFICATION_SHOWN, true);
+            startActivity(intent);
+            finish();
+        } else {
+            finish();
+        }
+    }
+
+    public void createList() {
+        adapter = new MsgAdapter(this);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int msgPosition, long id) {
+                position = msgPosition;
+                new NotificationAsync().execute(getResources().getString(R.string.notif_url), mId[msgPosition]);
+            }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            this.onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private class NotificationAllListAsync extends AsyncTask<String, Intent, String> {
 
 
         @Override
         protected void onPreExecute() {
-           showProgressDialog();
+            showProgressDialog();
         }
 
         @Override
@@ -130,7 +167,7 @@ public class NotificationAllActivity extends BaseActivity {
 
         @Override
         protected void onPostExecute(String result) {
-           dismissProgressDialog();
+            dismissProgressDialog();
             if (result != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
@@ -199,35 +236,6 @@ public class NotificationAllActivity extends BaseActivity {
                 snackbar.show();
             }
         }
-    }
-
-    public void createList() {
-        adapter = new MsgAdapter(this);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int msgPosition, long id) {
-                position = msgPosition;
-                new NotificationAsync().execute(getResources().getString(R.string.notif_url), mId[msgPosition]);
-            }
-        });
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            this.onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(NotificationAllActivity.this, MainActivity.class);
-        intent.putExtra(IS_NOTIFICATION_SHOWN, true);
-        startActivity(intent);
-        finish();
     }
 
     public class MsgAdapter extends BaseAdapter {
@@ -299,7 +307,7 @@ public class NotificationAllActivity extends BaseActivity {
 
         @Override
         protected void onPreExecute() {
-           showProgressDialog();
+            showProgressDialog();
         }
 
         @Override
@@ -332,7 +340,7 @@ public class NotificationAllActivity extends BaseActivity {
 
         @Override
         protected void onPostExecute(String result) {
-          dismissProgressDialog();
+            dismissProgressDialog();
             if (result != null) {
                 try {
                     mStatus[position] = "Read";
