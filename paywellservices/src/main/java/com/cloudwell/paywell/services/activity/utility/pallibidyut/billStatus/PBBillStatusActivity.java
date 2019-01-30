@@ -157,6 +157,7 @@ public class PBBillStatusActivity extends BaseActivity implements View.OnClickLi
                     mMonth = String.valueOf(month);
                 }
                 mYear = String.valueOf(year);
+                mMonth = spnr_month.getSelectedItem().toString().trim().substring(0, 3).toUpperCase();
                 handleBillStatusCheckRequest();
             }
         }

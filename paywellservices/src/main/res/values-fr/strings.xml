@@ -602,6 +602,7 @@
     <string name="home_utility_ivac_inquiry_title">আইভিএসি ফি অনুসন্ধান</string>
     <string name="home_karnaphuli_bill_title">কর্ণফুলী বিল প্রদান</string>
     <string name="home_karnaphuli_inquiryl_title">কর্ণফুলী বিল অনুসন্ধান</string>
+    <string name="details">বিস্তারিত:</string>
 
 
 </resources>
