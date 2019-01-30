@@ -352,7 +352,6 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
 
         @Override
         protected void onPostExecute(String result) {
-            Log.e("logTag", result);
             dismissProgressDialog();
             if (result != null) {
                 if (serviceName.equalsIgnoreCase(TAG_SERVICE_REGISTRATION_INQUIRY)) {
