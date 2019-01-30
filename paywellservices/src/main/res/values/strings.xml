@@ -600,6 +600,10 @@
     <string name="home_karnaphuli_bill_title">Karnaphuli Bill Pay</string>
     <string name="home_karnaphuli_inquiryl_title">Karnaphuli Bill Inquiry</string>
     <string name="details">Details:</string>
+    <string name="home_utility_pb_request_inquiry_bt">Bill Status</string>
+    <string name="home_utility_pb_bill_statu_inquery_bt">Bill Status \nInquiry</string>
+    <string name="home_utility_pb_bill_change_number_bt">Number Change</string>
+    <string name="home_utility_pb_phone_number_inquiry_bt">Number Change \nInquiry</string>
 
 
 </resources>
