@@ -985,7 +985,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                     mAppHandler.setPWBalance("" + roundOff);
 
-                    String strBalance = mAppHandler.getPwBalance() + getString(R.string.tk);
+                    String strBalance = mAppHandler.getPwBalance();
                     mToolbarHeading.setText(strBalance);
 
 
