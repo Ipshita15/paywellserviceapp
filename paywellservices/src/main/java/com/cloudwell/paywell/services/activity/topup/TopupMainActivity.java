@@ -1262,9 +1262,12 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
         AlertDialog.Builder builder = new AlertDialog.Builder(TopupMainActivity.this);
 
         // check authentication
-        TopupData topupData = response.getTopupData().get(0).getTopupData();
-        if (topupData == null) {
-            showAuthticationError();
+        TopupData topupDataFirstItem = response.getTopupData().get(0).getTopupData();
+        if (topupDataFirstItem == null) {
+
+            String message = response.getTopupData().get(0).getMessage();
+            showAuthticationError(message);
+
         } else {
             showDialog(response, receiptBuilder, builder);
         }
@@ -1329,6 +1332,20 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
     private void showAuthticationError() {
         AlertDialog.Builder builder = new AlertDialog.Builder(TopupMainActivity.this);
         builder.setMessage(R.string.services_alert_msg);
+        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int id) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+
+    }
+
+    private void showAuthticationError(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(TopupMainActivity.this);
+        builder.setMessage(message);
         builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int id) {
