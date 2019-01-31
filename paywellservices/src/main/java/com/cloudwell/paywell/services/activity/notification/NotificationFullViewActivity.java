@@ -335,6 +335,7 @@ public class NotificationFullViewActivity extends BaseActivity implements View.O
         super.onBackPressed();
         if (isNotificationFlow) {
             Intent intent = new Intent(getApplicationContext(), NotificationAllActivity.class);
+            intent.putExtra("isNotificationFlow", true);
             startActivity(intent);
             finish();
         } else {

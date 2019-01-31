@@ -39,7 +39,7 @@ class PBInquiryMobileNumberChangeActivity : AppCompatActivity() {
         var TRANSLOG_TAG = "TRANSLOGTXT"
     }
 
-    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     fun onTransrationItemClick(event: MessageEventMobileNumberChange) {
         showFullInfo(event);
 
@@ -165,10 +165,17 @@ class PBInquiryMobileNumberChangeActivity : AppCompatActivity() {
         val o = obj.resMobileChangeLog;
         val context = AppController.getContext();
 
-        val message = context.getString(R.string.acc_no_des) + o.customerAccNo + "\n" +
+        var message = context.getString(R.string.acc_no_des) + o.customerAccNo + "\n" +
                 context.getString(R.string.phone_no_des) + o.customerPhn + "\n" +
-                context.getString(R.string.date_des) + o.requestDatetime + "\n"
-        context.getString(R.string.trx_id_des) + o.trxId + "\n"
+                context.getString(R.string.trx_id_des) + o.trxId + "\n"
+        context.getString(R.string.date_des) + o.requestDatetime + "\n"
+
+
+        if (!o.responseDetails.equals("")) {
+            message = message + "\n \n" + context.getString(R.string.details)
+        }
+
+
 
         val builder = AlertDialog.Builder(this@PBInquiryMobileNumberChangeActivity)
 

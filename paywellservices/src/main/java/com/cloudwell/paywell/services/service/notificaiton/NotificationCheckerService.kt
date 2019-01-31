@@ -75,9 +75,9 @@ class NotificationCheckerService : Service() {
                 isAPICalledRunning = false;
                 val unread = response.body()?.unread;
                 val parseInt = Integer.parseInt(unread);
-                if (parseInt > 0) {
+                // if (parseInt > 0) {
                     EventBus.getDefault().post(EventNewNotificaiton(parseInt))
-                }
+                //}
             }
 
         })

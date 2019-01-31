@@ -69,7 +69,6 @@ import com.cloudwell.paywell.services.activity.mfs.MFSMainActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.MyFavoriteMenuActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
-import com.cloudwell.paywell.services.activity.notification.NotificationActivity;
 import com.cloudwell.paywell.services.activity.notification.NotificationAllActivity;
 import com.cloudwell.paywell.services.activity.product.ProductMenuActivity;
 import com.cloudwell.paywell.services.activity.product.productHelper.ProductHelper;
@@ -154,7 +153,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -325,7 +323,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         viewPager.setInterval(2000);
         updateMyFavorityView();
+
+        mNumOfNotification = 0;
         notificationCounterCheck();
+
         startRightLeftAnimation();
 
         isBalaceBoxOpen = true;
@@ -531,10 +532,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Bundle delivered = getIntent().getExtras();
-        if (delivered != null && !delivered.isEmpty()) {
-            mIsNotificationShown = delivered.getBoolean(NotificationActivity.IS_NOTIFICATION_SHOWN);
-        }
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("bn") || mAppHandler.getAppLanguage().equalsIgnoreCase("unknown")) {
             Configuration config = new Configuration();
@@ -589,7 +586,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             for (String key : getIntent().getExtras().keySet()) {
                 String value = getIntent().getExtras().getString(key);
                 if (key.equals("Notification") && value.equals("True")) {
-                    mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
+                    // mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
                 }
             }
         }
@@ -704,7 +701,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (!mIsNotificationShown) {
             if (!mCd.isConnectingToInternet())
                 AppHandler.showDialog(getSupportFragmentManager());
-            mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
+//            mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
         }
         notificationView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -712,15 +709,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NOTIFICATION_ICON);
                 if (mNumOfNotification != 0) {
+                    mNumOfNotification = 0;
                     Intent intent = new Intent(MainActivity.this, NotificationAllActivity.class);
                     startActivity(intent);
-                    mNumOfNotification = 0;
-                    finish();
                 } else {
-
                     startActivity(new Intent(MainActivity.this, NotificationAllActivity.class));
-                    finish();
-
                 }
             }
         });
@@ -740,7 +733,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             generateQRCode();
         }
         startActivity(new Intent(MainActivity.this, DisplayQRCodeActivity.class));
-        finish();
+
         return true;
     }
 
@@ -992,7 +985,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                     mAppHandler.setPWBalance("" + roundOff);
 
-                    String strBalance = mAppHandler.getPwBalance() + getString(R.string.tk);
+                    String strBalance = mAppHandler.getPwBalance();
                     mToolbarHeading.setText(strBalance);
 
 
@@ -1421,25 +1414,31 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onNewnotificationcomming(EventNewNotificaiton eventNewNotificaiton) {
         int counter = eventNewNotificaiton.getCounter();
+        mNumOfNotification = counter;
 
-        notificationCount(counter);
-        builderNotification = new AlertDialog.Builder(MainActivity.this);
-        builderNotification.setTitle(R.string.home_notification);
-        builderNotification.setMessage(getString(R.string.unread_first_msg) + " " + counter + " " + getString(R.string.unread_second_msg));
-        builderNotification.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int id) {
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CEHCK_NEW_NOTIFICATION);
-                dialogInterface.dismiss();
-                checkNotificationFlag = true;
-                mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
-            }
-        });
-        alertNotification = builderNotification.create();
-        alertNotification.show();
-        TextView messageText = alertNotification.findViewById(android.R.id.message);
-        messageText.setGravity(Gravity.CENTER);
-
+        if (mNumOfNotification > 0) {
+            notificationCount(counter);
+            builderNotification = new AlertDialog.Builder(MainActivity.this);
+            builderNotification.setTitle(R.string.home_notification);
+            builderNotification.setMessage(getString(R.string.unread_first_msg) + " " + counter + " " + getString(R.string.unread_second_msg));
+            builderNotification.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int id) {
+                    AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CEHCK_NEW_NOTIFICATION);
+                    dialogInterface.dismiss();
+                    checkNotificationFlag = true;
+                    checkNotificationFlag = false;
+                    mNumOfNotification = 0;
+                    startActivity(new Intent(MainActivity.this, NotificationAllActivity.class));
+                }
+            });
+            alertNotification = builderNotification.create();
+            alertNotification.show();
+            TextView messageText = alertNotification.findViewById(android.R.id.message);
+            messageText.setGravity(Gravity.CENTER);
+        } else {
+            notificationCount(counter);
+        }
 
     }
 
@@ -2035,80 +2034,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             intent.setData(Uri.parse("tel:" + selectedPhnNo));
             startActivity(intent);
-        }
-    }
-
-    @SuppressWarnings("deprecation")
-    private class NotificationAsync extends AsyncTask<String, Intent, String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-            String notifications = null;
-            try {
-                HttpClient httpClients = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost(params[0]);
-
-                List<NameValuePair> nameValuePairs = new ArrayList<>(4);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("mes_type", "all_message"));
-                nameValuePairs.add(new BasicNameValuePair("message_status", "all"));
-                nameValuePairs.add(new BasicNameValuePair("format", "json"));
-
-                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                notifications = httpClients.execute(httpPost, responseHandler);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return notifications;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            if (result != null) {
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String status = jsonObject.getString(TAG_RESPONSE_STATUS);
-
-                    if (status.equalsIgnoreCase("200")) {
-
-                        String totalUnreadMsg = jsonObject.getString(TAG_RESPONSE_TOTAL_UREAD_MSG);
-
-                        mNumOfNotification = Integer.parseInt(totalUnreadMsg);
-
-                        JSONArray jsonArray = jsonObject.getJSONArray(TAG_RESPONSE_MSG_ARRAY);
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            if (checkNotificationFlag) {
-                                checkNotificationFlag = false;
-                                mNumOfNotification = 0;
-                                startActivity(new Intent(MainActivity.this, NotificationAllActivity.class));
-                                finish();
-                            }
-                        }
-                    } else {
-                        mNumOfNotification = 0;
-                    }
-                    notificationCount(mNumOfNotification);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-            } else {
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.conn_timeout_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
         }
     }
 
