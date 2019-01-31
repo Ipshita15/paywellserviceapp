@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.text.method.DigitsKeyListener;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -74,8 +75,6 @@ public class KarnaphuliBillPayActivity extends BaseActivity implements View.OnCl
         etBill = findViewById(R.id.mycash_bill);
         etPhn = findViewById(R.id.mycash_phn);
         btnConfirm = findViewById(R.id.mycash_confirm);
-
-//        etBill.setKeyListener(DigitsKeyListener.getInstance("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-"));
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             _mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
@@ -148,7 +147,6 @@ public class KarnaphuliBillPayActivity extends BaseActivity implements View.OnCl
 
     private class SubmitInquiryAsync extends AsyncTask<String, Void, String> {
 
-
         @Override
         protected void onPreExecute() {
             showProgressDialog();
@@ -158,12 +156,10 @@ public class KarnaphuliBillPayActivity extends BaseActivity implements View.OnCl
         @Override
         protected String doInBackground(String... data) {
             String responseTxt = null;
-            // Create a new HttpClient and Post Header
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(data[0]);
 
             try {
-                //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(6);
                 nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("password", mPin));
@@ -194,6 +190,8 @@ public class KarnaphuliBillPayActivity extends BaseActivity implements View.OnCl
                         mTrxId = jsonObject.getString(TAG_TRANSACTION_ID);
                         String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
                         String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
+//                        Integer.parseInt(mTotalAmount)
+                        Log.e("totalAmount", mTotalAmount);
                         if (!mTotalAmount.equals("0")) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(KarnaphuliBillPayActivity.this);
                             builder.setTitle("Result");
