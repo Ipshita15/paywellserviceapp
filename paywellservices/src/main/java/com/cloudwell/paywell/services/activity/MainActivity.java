@@ -116,6 +116,7 @@ import com.cloudwell.paywell.services.app.model.APIResBalanceCheck;
 import com.cloudwell.paywell.services.constant.AllConstant;
 import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.database.FavoriteMenuDab;
+import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.service.notificaiton.NotificationCheckerService;
 import com.cloudwell.paywell.services.service.notificaiton.model.EventNewNotificaiton;
@@ -141,6 +142,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.orhanobut.logger.Logger;
+import com.squareup.otto.Subscribe;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -150,9 +152,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -310,12 +309,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void onStart() {
         super.onStart();
-        EventBus.getDefault().register(this);
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        GlobalApplicationBus.getBus().register(this);
+
         refreshStringsOfButton();
         if (alertNotification.isShowing()) {
             alertNotification.dismiss();
@@ -340,13 +341,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected void onPause() {
         super.onPause();
         viewPager.setInterval(0);
+        GlobalApplicationBus.getBus().unregister(this);
+
     }
 
 
     @Override
     public void onStop() {
         super.onStop();
-        EventBus.getDefault().unregister(this);
         stopRightLefAnimation();
         isBalaceBoxOpen = false;
     }
@@ -1411,7 +1413,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe
     public void onNewnotificationcomming(EventNewNotificaiton eventNewNotificaiton) {
         int counter = eventNewNotificaiton.getCounter();
         mNumOfNotification = counter;
@@ -1451,7 +1453,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             } else {
                 boolean apiCalledRuing = NotificationCheckerService.Companion.isAPICalledRunning();
                 if (!apiCalledRuing) {
-                    EventBus.getDefault().post(new StartNotificationService(1));
+                    GlobalApplicationBus.getBus().post(new StartNotificationService(1));
                 }
             }
         }
