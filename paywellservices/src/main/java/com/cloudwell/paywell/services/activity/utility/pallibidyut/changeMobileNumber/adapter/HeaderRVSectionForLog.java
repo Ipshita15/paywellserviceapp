@@ -10,8 +10,7 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.model.MessageEventMobileNumberChange;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.model.ResMobileChangeLog;
 import com.cloudwell.paywell.services.app.AppController;
-
-import org.greenrobot.eventbus.EventBus;
+import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus;
 
 import java.util.List;
 
@@ -92,7 +91,7 @@ public class HeaderRVSectionForLog extends StatelessSection {
             public void onClick(View v) {
 
                 MessageEventMobileNumberChange messageEvent = new MessageEventMobileNumberChange(position, object);
-                EventBus.getDefault().post(messageEvent);
+                GlobalApplicationBus.getBus().post(messageEvent);
 
             }
         });

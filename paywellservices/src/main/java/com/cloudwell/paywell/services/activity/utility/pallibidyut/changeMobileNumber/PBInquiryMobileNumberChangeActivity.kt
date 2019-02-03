@@ -19,11 +19,11 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus
 import com.google.gson.Gson
+import com.squareup.otto.Subscribe
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
+
 import java.text.SimpleDateFormat
 
 /**
@@ -39,7 +39,7 @@ class PBInquiryMobileNumberChangeActivity : AppCompatActivity() {
         var TRANSLOG_TAG = "TRANSLOGTXT"
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe
     fun onTransrationItemClick(event: MessageEventMobileNumberChange) {
         showFullInfo(event);
 
@@ -47,12 +47,12 @@ class PBInquiryMobileNumberChangeActivity : AppCompatActivity() {
 
     public override fun onStart() {
         super.onStart()
-        EventBus.getDefault().register(this)
+        GlobalApplicationBus.getBus().register(this)
     }
 
     public override fun onStop() {
         super.onStop()
-        EventBus.getDefault().unregister(this)
+        GlobalApplicationBus.getBus().unregister(this)
     }
 
 
@@ -170,10 +170,13 @@ class PBInquiryMobileNumberChangeActivity : AppCompatActivity() {
                 context.getString(R.string.trx_id_des) + o.trxId + "\n"
         context.getString(R.string.date_des) + o.requestDatetime + "\n"
 
-
-        if (!o.responseDetails.equals("")) {
-            message = message + "\n \n" + context.getString(R.string.details)
+        if (o.responseDetails != null) {
+            if (!o.responseDetails.equals("")) {
+                message = message + "\n \n" + context.getString(R.string.details)
+            }
         }
+
+
 
 
 
