@@ -744,12 +744,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (newNotification == 0)
-                    mNotification.setVisibility(View.INVISIBLE);
-                else {
-                    String notification = Integer.toString(newNotification);
-                    mNotification.setVisibility(View.VISIBLE);
-                    mNotification.setText(notification);
+                if (newNotification == 0) {
+                    if (mNotification != null) {
+                        mNotification.setVisibility(View.INVISIBLE);
+                    }
+
+                } else {
+                    if (mNotification != null) {
+                        String notification = Integer.toString(newNotification);
+                        mNotification.setVisibility(View.VISIBLE);
+                        mNotification.setText(notification);
+                    }
+
                 }
             }
         });
