@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/airTicketIcon"
-        android:icon="@drawable/air_ticket"
+        android:icon="@drawable/ic_air_ticket_white"
         android:title="@string/home_eticket_air"
         app:showAsAction="always"/>
 </menu>

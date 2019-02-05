@@ -22,8 +22,8 @@ class SearchFlightAdapter(fm: FragmentManager?) : FragmentPagerAdapter(fm) {
 
     override fun getPageTitle(position: Int): CharSequence? {
         return when (position) {
-            0 -> "One Way"
-            1 -> "Round Trip"
+            0 -> "One-way"
+            1 -> "Round-trip"
             else -> {
                 return ""
             }

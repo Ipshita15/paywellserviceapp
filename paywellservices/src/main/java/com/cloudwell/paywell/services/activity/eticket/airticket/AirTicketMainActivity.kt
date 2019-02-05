@@ -1,5 +1,7 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -17,12 +19,14 @@ class AirTicketMainActivity : AppCompatActivity() {
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
             supportActionBar!!.setTitle("Search Flights")
+            supportActionBar!!.elevation = 0f
+            supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#189d49")));
         }
 
         val fragmentAdapter = SearchFlightAdapter(supportFragmentManager)
         viewpager_main.adapter = fragmentAdapter
 
-        tabs_main.setupWithViewPager(viewpager_main)
+        tabLayout_main.setupWithViewPager(viewpager_main)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
