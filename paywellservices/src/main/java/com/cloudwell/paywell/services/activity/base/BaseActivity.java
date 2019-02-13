@@ -2,10 +2,13 @@ package com.cloudwell.paywell.services.activity.base;
 
 import android.app.ProgressDialog;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.app.AppController;
@@ -80,6 +83,18 @@ public class BaseActivity extends AppCompatActivity {
     public boolean isInternetConnection() {
         return mCd.isConnectingToInternet();
     }
+
+
+    public void showSnackMessageWithTextMessage(View linearLayout, String message) {
+        Snackbar snackbar = Snackbar.make(linearLayout, message, Snackbar.LENGTH_LONG);
+        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+        View snackBarView = snackbar.getView();
+        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+        snackbar.show();
+
+    }
+
+
 
     public void switchToCzLocale(Locale locale) {
         Locale mLocale = locale;

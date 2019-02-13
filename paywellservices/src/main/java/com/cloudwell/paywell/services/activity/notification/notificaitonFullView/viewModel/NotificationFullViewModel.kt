@@ -6,7 +6,6 @@ import com.cloudwell.paywell.services.activity.base.newBase.SingleLiveEvent
 import com.cloudwell.paywell.services.activity.notification.model.NotificationDetailMessage
 import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.model.NotificationDetailMessageSync
 import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.view.NotificationFullViewStatus
-import com.cloudwell.paywell.services.utils.DateUtils
 import com.google.gson.Gson
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -48,7 +47,7 @@ class NotificationFullViewModel : BaseViewModel() {
         val message = jsonObject.getString("message");
         val image = jsonObject.getString("image");
 
-        val model = NotificationDetailMessage(DateUtils.currentDataAndTIme, "", image, message, "" + message_id, title, "Read", "Notification", "2019-02-28 23:59:59");
+        val model = NotificationDetailMessage("2019-02-13 01:59:59", "", image, message, "" + message_id, title, "Read", "Notification", "2019-02-28 23:59:59");
         mListMutableLiveData.value = model
 
 

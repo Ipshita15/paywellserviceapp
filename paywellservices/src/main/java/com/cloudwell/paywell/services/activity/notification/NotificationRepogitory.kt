@@ -38,8 +38,9 @@ class NotificationRepogitory(private val mContext: Context) {
 
                     if (response.isSuccessful) {
                         data.value = response.body()
+                    } else {
+                        data.value = null
                     }
-
                 }
 
                 override fun onFailure(call: Call<ResNotificationAPI>, t: Throwable) {
