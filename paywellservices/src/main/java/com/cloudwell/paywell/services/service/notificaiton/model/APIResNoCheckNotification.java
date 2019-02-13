@@ -1,7 +1,10 @@
 
 package com.cloudwell.paywell.services.service.notificaiton.model;
 
+import com.cloudwell.paywell.services.activity.notification.model.NotificationDetailMessage;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 
 @SuppressWarnings("unused")
@@ -13,6 +16,8 @@ public class APIResNoCheckNotification {
     private Long mStatus;
     @SerializedName("unread")
     private String mUnread;
+
+    private List<NotificationDetailMessage> detail_message;
 
     public String getMessage() {
         return mMessage;
@@ -38,4 +43,11 @@ public class APIResNoCheckNotification {
         mUnread = unread;
     }
 
+    public List<NotificationDetailMessage> getDetail_message() {
+        return detail_message;
+    }
+
+    public void setDetail_message(List<NotificationDetailMessage> detail_message) {
+        this.detail_message = detail_message;
+    }
 }

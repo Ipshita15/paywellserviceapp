@@ -6,7 +6,6 @@ import android.accounts.AccountManager;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -69,7 +68,7 @@ import com.cloudwell.paywell.services.activity.mfs.MFSMainActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.MyFavoriteMenuActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
-import com.cloudwell.paywell.services.activity.notification.NotificationAllActivity;
+import com.cloudwell.paywell.services.activity.notification.allNotificaiton.NotificationAllActivity;
 import com.cloudwell.paywell.services.activity.product.ProductMenuActivity;
 import com.cloudwell.paywell.services.activity.product.productHelper.ProductHelper;
 import com.cloudwell.paywell.services.activity.refill.RefillBalanceMainActivity;
@@ -118,9 +117,8 @@ import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.database.FavoriteMenuDab;
 import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
-import com.cloudwell.paywell.services.service.notificaiton.NotificationCheckerService;
 import com.cloudwell.paywell.services.service.notificaiton.model.EventNewNotificaiton;
-import com.cloudwell.paywell.services.service.notificaiton.model.StartNotificationService;
+import com.cloudwell.paywell.services.utils.AppHelper;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.LocationUtility;
 import com.cloudwell.paywell.services.utils.ResorceHelper;
@@ -176,6 +174,7 @@ import ss.com.bannerslider.event.OnSlideClickListener;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener, View.OnClickListener {
 
+    public static String KEY_COMMING_NEW_NOTIFICATION = "COMMING_NEW_NOTIFICATION";
     private static final long KEY_BALANCE_CHECK_INTERVAL = 5000;
     private boolean doubleBackToExitPressedOnce = false;
     public CoordinatorLayout mCoordinateLayout;
@@ -192,10 +191,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private Toolbar mToolbar;
     private boolean mIsNotificationShown;
     private final String TAG_RESPONSE_STATUS = "status";
-    private final String TAG_RESPONSE_TOTAL_UREAD_MSG = "unread_message";
-    private final String TAG_RESPONSE_MSG_ARRAY = "detail_message";
     private final String TAG_RESPONSE_MESSAGE = "message";
-    private final String TAG_RESPONSE_OTP = "otp";
     private NavigationView navigationView;
     boolean checkNotificationFlag = false;
 
@@ -326,7 +322,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         updateMyFavorityView();
 
         mNumOfNotification = 0;
-        notificationCounterCheck();
+
+        AppHelper.notificationCounterCheck(mCd, getApplicationContext());
 
         startRightLeftAnimation();
 
@@ -713,6 +710,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 if (mNumOfNotification != 0) {
                     mNumOfNotification = 0;
                     Intent intent = new Intent(MainActivity.this, NotificationAllActivity.class);
+                    intent.putExtra(KEY_COMMING_NEW_NOTIFICATION, true);
                     startActivity(intent);
                 } else {
                     startActivity(new Intent(MainActivity.this, NotificationAllActivity.class));
@@ -1431,7 +1429,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     checkNotificationFlag = true;
                     checkNotificationFlag = false;
                     mNumOfNotification = 0;
-                    startActivity(new Intent(MainActivity.this, NotificationAllActivity.class));
+                    Intent intent = new Intent(MainActivity.this, NotificationAllActivity.class);
+                    intent.putExtra(KEY_COMMING_NEW_NOTIFICATION, true);
+                    startActivity(intent);
                 }
             });
             alertNotification = builderNotification.create();
@@ -1444,30 +1444,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     }
 
-    private void notificationCounterCheck() {
-        if (mCd.isConnectingToInternet()) {
-            boolean myServiceRunning = isMyServiceRunning(NotificationCheckerService.class);
-            if (!myServiceRunning) {
-                Intent intent = new Intent(getApplicationContext(), NotificationCheckerService.class);
-                startService(intent);
-            } else {
-                boolean apiCalledRuing = NotificationCheckerService.Companion.isAPICalledRunning();
-                if (!apiCalledRuing) {
-                    GlobalApplicationBus.getBus().post(new StartNotificationService(1));
-                }
-            }
-        }
-    }
-
-    private boolean isMyServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-        return false;
-    }
 
 
     private boolean getMailAddress() {
@@ -1607,6 +1583,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 String status = jsonObject.getString(TAG_RESPONSE_STATUS);
                 String msg = jsonObject.getString(TAG_RESPONSE_MESSAGE);
+                String TAG_RESPONSE_OTP = "otp";
                 String foundOtp = jsonObject.getString(TAG_RESPONSE_OTP);
 
                 if (status.equalsIgnoreCase("200")) {

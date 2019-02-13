@@ -8,7 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.constant.AllConstant;
+import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
 import java.util.Locale;
 
@@ -19,12 +21,13 @@ public class BaseActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
     boolean isFlowFromFavorite;
+    private ConnectionDetector mCd;
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
         isFlowFromFavorite = getIntent().getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE, false);
-
+        mCd = new ConnectionDetector(AppController.getContext());
     }
 
     public void setToolbar(String title) {
@@ -72,6 +75,10 @@ public class BaseActivity extends AppCompatActivity {
 //            startActivity(intent);
 //            return;
 //        }
+    }
+
+    public boolean isInternetConnection() {
+        return mCd.isConnectingToInternet();
     }
 
     public void switchToCzLocale(Locale locale) {
