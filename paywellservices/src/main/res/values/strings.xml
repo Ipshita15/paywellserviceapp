@@ -600,4 +600,7 @@
     <string name="home_karnaphuli_bill_title">Karnaphuli Bill Pay</string>
     <string name="home_karnaphuli_inquiryl_title">Karnaphuli Bill Inquiry</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

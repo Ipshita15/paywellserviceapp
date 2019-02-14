@@ -2,14 +2,15 @@ package com.cloudwell.paywell.services.activity.eticket.airticket
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.cloudwell.paywell.services.R
 import kotlinx.android.synthetic.main.activity_air_ticket_main.*
 
-class AirTicketMainActivity : AppCompatActivity() {
+class AirTicketMainActivity : AppCompatActivity(), ClassBottomSheetDialog.ClassBottomSheetListener,
+        PassengerBottomSheetDialog.PsngrBottomSheetListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,5 +41,25 @@ class AirTicketMainActivity : AppCompatActivity() {
     }
     override fun onBackPressed() {
         finish()
+    }
+
+    override fun onButtonClickListener(text: String) {
+        val fragment = supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.viewpager_main + ":" + "1") as RoundTripFragment
+        fragment.onClassTextChange(text)
+    }
+
+    override fun onAdultButtonClickListener(text: String) {
+        val fragment = supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.viewpager_main + ":" + "1") as RoundTripFragment
+        fragment.onAdultPsngrTextChange(text)
+    }
+
+    override fun onKidButtonClickListener(text: String) {
+        val fragment = supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.viewpager_main + ":" + "1") as RoundTripFragment
+        fragment.onKidPsngrTextChange(text)
+    }
+
+    override fun onInfantButtonClickListener(text: String) {
+        val fragment = supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.viewpager_main + ":" + "1") as RoundTripFragment
+        fragment.onInfantPsngrTextChange(text)
     }
 }

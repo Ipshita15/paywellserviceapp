@@ -95,7 +95,6 @@ public class BankDetailsActivity extends BaseActivity {
         mSpinnerDistrict = findViewById(R.id.spinner_district);
         mSpinnerBranch = findViewById(R.id.spinner_branch);
         mBtnUpload = findViewById(R.id.btn_upload);
-//        mBtnOk = findViewById(R.id.btn_ok);
 
         TextView textViewAccountNum = findViewById(R.id.textViewAccountNo);
 
