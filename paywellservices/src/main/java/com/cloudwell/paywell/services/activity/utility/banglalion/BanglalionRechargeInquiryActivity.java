@@ -56,7 +56,7 @@ public class BanglalionRechargeInquiryActivity extends BaseActivity implements V
             getSupportActionBar().setTitle(R.string.home_utility_qubee_inq_title);
         }
         cd = new ConnectionDetector(getApplicationContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         initView();
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_BANGLALION_RECHARGE_INQUIRY);
@@ -104,7 +104,7 @@ public class BanglalionRechargeInquiryActivity extends BaseActivity implements V
                     mAccountNO.setError(Html.fromHtml("<font color='red'>" + getString(R.string.banglalion_acc_error_msg) + "</font></font>"));
                     return;
                 }
-                mSubmitAsync =  new SubmitAsync().execute(getResources().getString(R.string.banglalion_bill_inquiry),
+                mSubmitAsync = new SubmitAsync().execute(getResources().getString(R.string.banglalion_bill_inquiry),
                         mAppHandler.getImeiNo(),
                         _account,
                         _pin);
@@ -218,7 +218,7 @@ public class BanglalionRechargeInquiryActivity extends BaseActivity implements V
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mSubmitAsync!=null){
+        if (mSubmitAsync != null) {
             mSubmitAsync.cancel(true);
         }
     }

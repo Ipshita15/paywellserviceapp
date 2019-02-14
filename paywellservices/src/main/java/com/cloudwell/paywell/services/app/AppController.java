@@ -158,7 +158,7 @@ public class AppController extends Application {
 
     private void setupCrashlyticsUserInfo() {
         try {
-            mAppHandler = new AppHandler(getApplicationContext());
+            mAppHandler = AppHandler.getmInstance(getApplicationContext());
             String appStatus = mAppHandler.getAppStatus();
             if (!appStatus.equals("unknown")) {
                 String rid = mAppHandler.getRID();

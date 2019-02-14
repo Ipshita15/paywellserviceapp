@@ -37,7 +37,8 @@ public class HelpMainActivity extends AppCompatActivity implements View.OnClickL
             getSupportActionBar().setTitle(R.string.home_settings_help);
         }
 
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
+
         mCd = new ConnectionDetector(AppController.getContext());
         initializeView();
 

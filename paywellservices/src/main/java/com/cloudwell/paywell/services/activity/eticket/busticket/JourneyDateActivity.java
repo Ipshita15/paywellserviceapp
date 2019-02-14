@@ -1,17 +1,13 @@
 package com.cloudwell.paywell.services.activity.eticket.busticket;
 
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.applandeo.materialcalendarview.CalendarView;
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppHandler;
 
 import java.text.DateFormat;
@@ -20,15 +16,17 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import static com.cloudwell.paywell.services.utils.LanuageConstant.KEY_BANGLA;
 
-public class JourneyDateActivity extends AppCompatActivity {
+
+public class JourneyDateActivity extends BaseActivity {
 
     private String mSelectedDate;
     private AppHandler mAppHandler;
     private boolean flag = false;
     RelativeLayout mRelativeLayout;
     private static final DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-    String date_full, selected_date_full;
+    String date_full;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -37,14 +35,16 @@ public class JourneyDateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_journey_date);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.calendar_ticket_msg);
-        mAppHandler = new AppHandler(JourneyDateActivity.this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         mRelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
 
-        if(mAppHandler.getAppLanguage().equalsIgnoreCase("bn") || mAppHandler.getAppLanguage().equalsIgnoreCase("unknown")){
-            Configuration config = new Configuration();
-            config.locale = Locale.ENGLISH;
-            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("bn") || mAppHandler.getAppLanguage().equalsIgnoreCase("unknown")) {
+
+            AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
+            mAppHandler.setAppLanguage("en");
+            switchToCzLocale(new Locale(KEY_BANGLA, ""));
+
             flag = true;
         }
         //Initialize CustomCalendarView from layout
@@ -123,9 +123,9 @@ public class JourneyDateActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (flag) {
-            Configuration config = new Configuration();
-            config.locale = Locale.FRANCE;
-            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+            AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
+            mAppHandler.setAppLanguage("bn");
+            switchToCzLocale(new Locale(KEY_BANGLA, ""));
         }
         flag = false;
         Intent intent = new Intent(JourneyDateActivity.this, BusMainActivity.class);

@@ -54,7 +54,7 @@ public class ChangePinActivity extends BaseActivity {
         }
 
         mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         initView();
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_SETTINGS_CHANGE_PIN_MENU);
@@ -106,7 +106,7 @@ public class ChangePinActivity extends BaseActivity {
 
         @Override
         protected void onPreExecute() {
-           showProgressDialog();
+            showProgressDialog();
         }
 
         @Override

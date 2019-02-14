@@ -55,7 +55,7 @@ public class WholesaleActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wholesale);
 
-        AppHandler mAppHandler = new AppHandler(this);
+        AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mCd = new ConnectionDetector(AppController.getContext());
 
         timer = new Timer();
@@ -71,10 +71,10 @@ public class WholesaleActivity extends BaseActivity {
         linearLayout = findViewById(R.id.linearLayout);
         webView = findViewById(R.id.webView);
 
-        if(mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-            switchToCzLocale(new Locale("en",""));
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            switchToCzLocale(new Locale("en", ""));
         } else {
-            switchToCzLocale(new Locale("fr",""));
+            switchToCzLocale(new Locale("bn", ""));
         }
         setToolbar(getString(R.string.home_product_pw_wholesale_title));
 

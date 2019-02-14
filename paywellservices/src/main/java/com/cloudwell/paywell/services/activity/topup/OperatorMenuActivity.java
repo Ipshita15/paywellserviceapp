@@ -53,7 +53,7 @@ public class OperatorMenuActivity extends BaseActivity {
             getSupportActionBar().setTitle(R.string.home_topup_offer_title);
         }
         mRelativeLayout = findViewById(R.id.relativeLayout);
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mCd = new ConnectionDetector(AppController.getContext());
 
         Button btnGp = findViewById(R.id.homeBtnGp);
@@ -161,7 +161,7 @@ public class OperatorMenuActivity extends BaseActivity {
 
         @Override
         protected void onPreExecute() {
-           showProgressDialog();
+            showProgressDialog();
         }
 
         @SuppressWarnings("deprecation")
@@ -193,7 +193,7 @@ public class OperatorMenuActivity extends BaseActivity {
 
         @Override
         protected void onPostExecute(String result) {
-           dismissProgressDialog();
+            dismissProgressDialog();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
@@ -247,7 +247,7 @@ public class OperatorMenuActivity extends BaseActivity {
                         }
 
 
-                    }else{
+                    } else {
                         Snackbar snackbar = Snackbar.make(mRelativeLayout, jsonObject.getString(TAG_MESSAGE), Snackbar.LENGTH_LONG);
                         snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                         View snackBarView = snackbar.getView();

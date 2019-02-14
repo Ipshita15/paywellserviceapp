@@ -119,7 +119,7 @@ public class SeatListActivity extends AppCompatActivity {
             _date.setText(getString(R.string.time_des) + " " + _arrivalTime);
             _busName.setText(_companyName);
         }
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         new GetSeatsAsync().execute(getResources().getString(R.string.bus_ticket_url),
                 "imei=" + mAppHandler.getImeiNo(),
                 "&option_id=" + _optionId,

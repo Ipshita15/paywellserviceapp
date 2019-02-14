@@ -56,7 +56,7 @@ public class CashInOutActivity extends BaseActivity {
             getSupportActionBar().setTitle(R.string.home_cash_in_out_title);
         }
         mRelativeLayout = findViewById(R.id.relativeLayout);
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mCd = new ConnectionDetector(AppController.getContext());
 
         Button btnCashIn = findViewById(R.id.homeBtnCashIn);

@@ -55,7 +55,7 @@ public class TrainMainActivity extends BaseActivity implements View.OnClickListe
         getSupportActionBar().setTitle(R.string.home_eticket_air);
 
         mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(TrainMainActivity.this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         initViews();
     }
@@ -187,7 +187,7 @@ public class TrainMainActivity extends BaseActivity implements View.OnClickListe
 
         @Override
         protected void onPreExecute() {
-          showProgressDialog();
+            showProgressDialog();
         }
 
         @Override
@@ -206,7 +206,7 @@ public class TrainMainActivity extends BaseActivity implements View.OnClickListe
 
         @Override
         protected void onPostExecute(String result) {
-           dismissProgressDialog();
+            dismissProgressDialog();
             ArrayList<String> mSources = new ArrayList<>();
             ArrayList<String> mSourceCodes = new ArrayList<>();
 

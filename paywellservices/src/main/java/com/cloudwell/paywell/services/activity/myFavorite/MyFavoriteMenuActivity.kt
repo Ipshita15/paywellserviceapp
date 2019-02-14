@@ -147,8 +147,6 @@ class MyFavoriteMenuActivity : AppCompatActivity(), StartDragListener {
         }
 
 
-
-
     }
 
     @Subscribe
@@ -173,7 +171,7 @@ class MyFavoriteMenuActivity : AppCompatActivity(), StartDragListener {
 
 
     private fun generartedUnFavaroitRecycview(DBDatas: List<FavoriteMenu>) {
-        val appHandler = AppHandler(applicationContext);
+        val appHandler = AppHandler.getmInstance(applicationContext)
         val isEnglish = appHandler.getAppLanguage().equals("en", ignoreCase = true)
 
 
@@ -289,7 +287,7 @@ class MyFavoriteMenuActivity : AppCompatActivity(), StartDragListener {
 
 
     private fun generatedFavoriteRacyView(result: List<FavoriteMenu>) {
-        val mAppHandler = AppHandler(applicationContext);
+        val mAppHandler = AppHandler.getmInstance(applicationContext)
         val isEnglish = mAppHandler.getAppLanguage().equals("en", ignoreCase = true)
 
         val display = this.getWindowManager().getDefaultDisplay()

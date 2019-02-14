@@ -57,7 +57,7 @@ public class CashOutActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_cash_out);
         }
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mRelativeLayout = findViewById(R.id.relativeLayoutCashOut);
         mCd = new ConnectionDetector(AppController.getContext());
         listView = findViewById(R.id.trxListView);

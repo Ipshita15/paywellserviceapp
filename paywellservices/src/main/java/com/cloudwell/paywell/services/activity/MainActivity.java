@@ -15,7 +15,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
@@ -172,6 +171,9 @@ import retrofit2.Response;
 import ss.com.bannerslider.Slider;
 import ss.com.bannerslider.event.OnSlideClickListener;
 
+import static com.cloudwell.paywell.services.utils.LanuageConstant.KEY_BANGLA;
+import static com.cloudwell.paywell.services.utils.LanuageConstant.KEY_ENGLISH;
+
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener, View.OnClickListener {
 
     public static String KEY_COMMING_NEW_NOTIFICATION = "COMMING_NEW_NOTIFICATION";
@@ -263,7 +265,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         ivBalanceBorder.setOnClickListener(this);
 
         mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         builderNotification = new AlertDialog.Builder(this);
         alertNotification = builderNotification.create();
@@ -533,13 +535,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("bn") || mAppHandler.getAppLanguage().equalsIgnoreCase("unknown")) {
-            Configuration config = new Configuration();
-            config.locale = Locale.FRANCE;
-            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+            switchToCzLocale(new Locale(KEY_BANGLA, ""));
         } else {
-            Configuration config = new Configuration();
-            config.locale = Locale.ENGLISH;
-            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+            switchToCzLocale(new Locale(KEY_ENGLISH, ""));
         }
 
         // mToolbarHeading.setText(getString(R.string.balance) + mAppHandler.getPwBalance() + getString(R.string.tk));
@@ -742,12 +740,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (newNotification == 0)
-                    mNotification.setVisibility(View.INVISIBLE);
-                else {
-                    String notification = Integer.toString(newNotification);
-                    mNotification.setVisibility(View.VISIBLE);
-                    mNotification.setText(notification);
+                if (newNotification == 0) {
+                    if (mNotification != null) {
+                        mNotification.setVisibility(View.INVISIBLE);
+                    }
+
+                } else {
+                    if (mNotification != null) {
+                        String notification = Integer.toString(newNotification);
+                        mNotification.setVisibility(View.VISIBLE);
+                        mNotification.setText(notification);
+                    }
+
                 }
             }
         });

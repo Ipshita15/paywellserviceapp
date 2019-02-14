@@ -39,8 +39,7 @@ public class IvacMainActivity extends BaseActivity {
         mRelativeLayout = findViewById(R.id.relativeLayout);
         cd = new ConnectionDetector(AppController.getContext());
 
-        AppHandler appHandler = new AppHandler(this);
-
+        AppHandler appHandler = AppHandler.getmInstance(getApplicationContext());
         Button btnBill = findViewById(R.id.homeBtnBillPay);
         Button btnInquiry = findViewById(R.id.homeBtnInquiry);
 

@@ -61,7 +61,7 @@ public class AllFragment extends Fragment {
         _dateView.setTypeface(AppController.getInstance().getOxygenLightFont());
         _errorMsg.setTypeface(AppController.getInstance().getOxygenLightFont());
 
-        mAppHandler = new AppHandler(getActivity());
+        mAppHandler = AppHandler.getmInstance(getActivity().getApplicationContext());
         mBusList = new ArrayList<>();
 
         setRetainInstance(true);

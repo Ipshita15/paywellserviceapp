@@ -86,7 +86,7 @@ public class IvacFeeInquiryMainActivity extends BaseActivity implements View.OnC
         imageViewTrxLog = findViewById(R.id.btnIvacTrxLog);
         buttonSubmit = findViewById(R.id.btnIvacInqSubmit);
         cd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         editTextWebFile.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(editTextWebFile) {
             @Override
