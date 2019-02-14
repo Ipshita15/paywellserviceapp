@@ -45,7 +45,7 @@ public class ProductHelper {
     }
 
     private void checkPermission(AppCompatActivity appCompatActivity) {
-        AppHandler mAppHandler = new AppHandler(appCompatActivity.getApplicationContext());
+        AppHandler mAppHandler = AppHandler.getmInstance(appCompatActivity);
 
         // Check the SDK version and whether the permission is already granted or not.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M

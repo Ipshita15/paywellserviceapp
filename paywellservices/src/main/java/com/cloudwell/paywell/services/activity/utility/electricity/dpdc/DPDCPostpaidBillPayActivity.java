@@ -67,7 +67,7 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
             getSupportActionBar().setTitle(R.string.home_utility_dpdc_bill_title);
         }
         mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         initializeView();
 

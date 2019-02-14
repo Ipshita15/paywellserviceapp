@@ -58,7 +58,7 @@ public class ConfirmOfferActivity extends BaseActivity implements View.OnClickLi
             getSupportActionBar().setTitle(operatorName);
         }
 
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         TextView textView = findViewById(R.id.tvDetails);
         textView.setText(getString(R.string.amount_des) + " " + amount + getString(R.string.tk)
                 + "\n" + getString(R.string.ret_com_des) + " " + retCom + getString(R.string.tk)

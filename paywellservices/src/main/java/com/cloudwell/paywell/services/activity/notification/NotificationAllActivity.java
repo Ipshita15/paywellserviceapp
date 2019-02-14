@@ -83,7 +83,7 @@ public class NotificationAllActivity extends BaseActivity {
 
         listView = findViewById(R.id.listViewNotification);
         mLinearLayout = findViewById(R.id.linearLayout);
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         initializer();
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_NOTIFICATION_PAPGE);

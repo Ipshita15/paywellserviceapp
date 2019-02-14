@@ -36,7 +36,7 @@ public class CardTransferMainActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mCd = new ConnectionDetector(AppController.getContext());
         mRelativeLayout = findViewById(R.id.relativeLayout);
         mWebview = findViewById(R.id.webView);
@@ -44,7 +44,7 @@ public class CardTransferMainActivity extends BaseActivity {
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             switchToCzLocale(new Locale("en", ""));
         } else {
-            switchToCzLocale(new Locale("fr", ""));
+            switchToCzLocale(new Locale("bn", ""));
         }
         setToolbar(getString(R.string.home_refill_card));
 

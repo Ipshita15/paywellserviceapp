@@ -57,7 +57,7 @@ public class ChangeMYCashPinActivity extends BaseActivity implements View.OnClic
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_mycash_change_pin_title);
         }
-        mAppHandler = new AppHandler(getApplicationContext());
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         initializeView();
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_MYCASH_CHANGE_PIN_NUMBER);
@@ -88,7 +88,7 @@ public class ChangeMYCashPinActivity extends BaseActivity implements View.OnClic
         mConfirm.setOnClickListener(this);
 
         mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
     }
 
     public void resetPin(View v) {
@@ -157,7 +157,7 @@ public class ChangeMYCashPinActivity extends BaseActivity implements View.OnClic
 
         @Override
         protected void onPostExecute(String result) {
-           dismissProgressDialog();
+            dismissProgressDialog();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);

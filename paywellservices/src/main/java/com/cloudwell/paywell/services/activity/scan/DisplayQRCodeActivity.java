@@ -47,7 +47,7 @@ public class DisplayQRCodeActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(R.string.home_scan_qr_code);
         }
         mContext = this;
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mRelativeLayout = findViewById(R.id.relativeLayout);
 
         imageViewQRCode = findViewById(R.id.imageViewQRCode);
@@ -66,7 +66,7 @@ public class DisplayQRCodeActivity extends AppCompatActivity {
 
     public void generateQRCode() {
         try {
-            if(mAppHandler.getRID() != "unknown") {
+            if (mAppHandler.getRID() != "unknown") {
                 Bitmap bitmap = TextToImageEncode(mAppHandler.getRID());
                 imageViewQRCode.setImageBitmap(bitmap);
                 String path = saveToInternalStorage(bitmap);

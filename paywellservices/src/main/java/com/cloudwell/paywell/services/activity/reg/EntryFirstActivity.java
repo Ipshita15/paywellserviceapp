@@ -66,7 +66,8 @@ public class EntryFirstActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
+
         mCd = new ConnectionDetector(AppController.getContext());
 
         mScrollView = findViewById(R.id.scrollView_first);
@@ -273,7 +274,7 @@ public class EntryFirstActivity extends BaseActivity {
 
         @Override
         protected void onPreExecute() {
-           showProgressDialog();
+            showProgressDialog();
         }
 
         @Override
@@ -298,7 +299,7 @@ public class EntryFirstActivity extends BaseActivity {
 
         @Override
         protected void onPostExecute(String result) {
-          dismissProgressDialog();
+            dismissProgressDialog();
 
             if (result != null) {
                 try {

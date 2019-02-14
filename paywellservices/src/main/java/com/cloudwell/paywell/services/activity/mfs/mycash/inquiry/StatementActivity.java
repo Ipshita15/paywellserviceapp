@@ -60,7 +60,7 @@ public class StatementActivity extends BaseActivity implements View.OnClickListe
         }
 
         mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         initializeView();
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_MYCAH_STATEMENT);
@@ -110,7 +110,7 @@ public class StatementActivity extends BaseActivity implements View.OnClickListe
 
         @Override
         protected void onPreExecute() {
-          showProgressDialog();
+            showProgressDialog();
 
         }
 
@@ -144,7 +144,7 @@ public class StatementActivity extends BaseActivity implements View.OnClickListe
 
         @Override
         protected void onPostExecute(String result) {
-           dismissProgressDialog();
+            dismissProgressDialog();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);

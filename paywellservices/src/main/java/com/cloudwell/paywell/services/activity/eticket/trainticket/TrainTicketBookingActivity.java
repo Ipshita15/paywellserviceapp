@@ -92,7 +92,7 @@ public class TrainTicketBookingActivity extends BaseActivity implements AdapterV
         // Button click listener
         mBtnSearchSeat.setOnClickListener(this);
 
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         // Creating adapter for spinner
         assert mSpinnerTrainName != null;
         ArrayAdapter<String> destinationAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mAppHandler.getTrainNames()) {

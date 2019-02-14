@@ -60,7 +60,7 @@ public class TrainTicketActivity extends BaseActivity implements AdapterView.OnI
 
         // Creating adapter for spinner
         mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         mACTVDestination = (AutoCompleteTextView) findViewById(R.id.etDestination);
 

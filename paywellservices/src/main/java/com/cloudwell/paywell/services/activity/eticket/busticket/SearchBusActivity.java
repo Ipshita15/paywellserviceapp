@@ -2,7 +2,6 @@ package com.cloudwell.paywell.services.activity.eticket.busticket;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -28,7 +27,7 @@ public class SearchBusActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(R.string.bus_list_ticket_msg);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mAppHandeler = new AppHandler(this);
+        mAppHandeler = AppHandler.getmInstance(getApplicationContext());
         initSlidingTabs();
     }
 

@@ -97,7 +97,7 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
 
         topUpLayout = findViewById(R.id.brilliantLL);
         cd = new ConnectionDetector(getApplicationContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         phoneNoET = findViewById(R.id.brilliantPhoneNo);
         amountET = findViewById(R.id.brilliantAmount);

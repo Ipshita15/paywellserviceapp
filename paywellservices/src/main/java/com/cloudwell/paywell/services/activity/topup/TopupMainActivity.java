@@ -125,7 +125,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topup_main);
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
@@ -177,22 +177,19 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
 
         inflater = getLayoutInflater();
         cd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
+
 
         ScrollView myScrollView = findViewById(R.id.topupScrollView);
 
-        myScrollView.setOnTouchListener(new View.OnTouchListener()
-        {
+        myScrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                if (event != null && event.getAction() == MotionEvent.ACTION_MOVE)
-                {
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event != null && event.getAction() == MotionEvent.ACTION_MOVE) {
                     InputMethodManager imm = ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE));
                     boolean isKeyboardUp = imm.isAcceptingText();
 
-                    if (isKeyboardUp)
-                    {
+                    if (isKeyboardUp) {
                         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                     }
                 }

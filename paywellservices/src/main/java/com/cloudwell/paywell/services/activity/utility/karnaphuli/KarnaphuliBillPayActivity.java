@@ -59,7 +59,7 @@ public class KarnaphuliBillPayActivity extends BaseActivity implements View.OnCl
             getSupportActionBar().setTitle(R.string.home_karnaphuli_bill_title);
         }
         mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         initializeView();
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_KARNAPHULI_MENU_BILL_PAY);
