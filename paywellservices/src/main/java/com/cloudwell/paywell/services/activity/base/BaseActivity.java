@@ -2,8 +2,8 @@ package com.cloudwell.paywell.services.activity.base;
 
 import android.app.ProgressDialog;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -103,7 +103,6 @@ public class BaseActivity extends AppCompatActivity {
         snackbar.show();
 
     }
-
 
 
     public void switchToCzLocale(Locale locale) {

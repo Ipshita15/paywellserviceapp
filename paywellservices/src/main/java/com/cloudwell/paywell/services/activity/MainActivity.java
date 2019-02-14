@@ -1002,7 +1002,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 mToolbarHeading.setVisibility(View.VISIBLE);
                 isBalaceCheckProcessRunning = false;
 
-                Logger.e("onFailure:" + t.getLocalizedMessage());
+
                 Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                 View snackBarView = snackbar.getView();
@@ -1447,7 +1447,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
 
     }
-
 
 
     private boolean getMailAddress() {

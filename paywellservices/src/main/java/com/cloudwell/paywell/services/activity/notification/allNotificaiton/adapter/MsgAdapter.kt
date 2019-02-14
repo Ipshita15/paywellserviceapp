@@ -16,7 +16,7 @@ import com.cloudwell.paywell.services.app.AppHandler
  */
 class MsgAdapter(private val mContext: Context, val t: List<NotificationDetailMessage>) : BaseAdapter() {
 
-    var mAppHandler = AppHandler(mContext)
+    var mAppHandler = AppHandler.getmInstance(mContext)
 
     override fun getItemId(position: Int): Long {
         return position.toLong()

@@ -48,7 +48,7 @@ class NotificationDataSycService : Service() {
 
     private fun callnotificaitonCheckDetausAPI() {
         isAPICalledRunning = true;
-        val ah = AppHandler(applicationContext);
+        val ah = AppHandler.getmInstance(applicationContext)
         val imeiNo = ah.getImeiNo()
 
 

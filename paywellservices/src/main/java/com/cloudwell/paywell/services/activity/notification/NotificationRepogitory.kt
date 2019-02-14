@@ -25,7 +25,7 @@ class NotificationRepogitory(private val mContext: Context) {
 
     val remoteNotificationDate: MutableLiveData<ResNotificationAPI>
         get() {
-            mAppHandler = AppHandler(mContext)
+            mAppHandler = AppHandler.getmInstance(mContext)
             val url = mContext.getString(R.string.notif_url)
             val userName = mAppHandler!!.imeiNo
             val mesType = "all_message"

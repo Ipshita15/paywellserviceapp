@@ -118,7 +118,7 @@ class NotificationAllActivity : MVVMBaseActivity() {
         isNotificationFlow = intent.getBooleanExtra(IS_NOTIFICATION_SHOWN, false)
         listView = findViewById(com.cloudwell.paywell.services.R.id.listViewNotification)
         mLinearLayout = findViewById(com.cloudwell.paywell.services.R.id.linearLayout)
-        mAppHandler = AppHandler(this)
+        mAppHandler = AppHandler.getmInstance(applicationContext)
     }
 
     override fun onBackPressed() {
@@ -140,8 +140,6 @@ class NotificationAllActivity : MVVMBaseActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-
 
 
     companion object {

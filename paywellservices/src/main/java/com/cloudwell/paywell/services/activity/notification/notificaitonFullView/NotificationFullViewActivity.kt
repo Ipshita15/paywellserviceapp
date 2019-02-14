@@ -40,7 +40,7 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
         setContentView(com.cloudwell.paywell.services.R.layout.activity_notification_full_view)
         setToolbar(getString(R.string.home_notification_details))
 
-        mAppHandler = AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(applicationContext)
 
         initViewModel()
 
