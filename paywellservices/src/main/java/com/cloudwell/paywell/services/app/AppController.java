@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 
+import com.amitshekhar.DebugDB;
 import com.cloudwell.paywell.services.BuildConfig;
 import com.cloudwell.paywell.services.activity.myFavorite.helper.MyFavoriteHelper;
 import com.cloudwell.paywell.services.utils.AppVersionUtility;
@@ -17,6 +18,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
+import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
 import org.apache.http.client.HttpClient;
@@ -61,15 +63,15 @@ public class AppController extends Application {
             String id = FirebaseInstanceId.getInstance().getToken();
             Log.e("device_token", "" + id);
 
-            // Logger.v(DebugDB.getAddressLog());
+            Logger.v(DebugDB.getAddressLog());
 
-//
-//            if (LeakCanary.isInAnalyzerProcess(this)) {
-//                // This process is dedicated to LeakCanary for heap analysis.
-//                // You should not init your app in this process.
-//                return;
-//            }
-//            refWatcher = LeakCanary.install(this);
+
+            if (LeakCanary.isInAnalyzerProcess(this)) {
+                // This process is dedicated to LeakCanary for heap analysis.
+                // You should not init your app in this process.
+                return;
+            }
+            refWatcher = LeakCanary.install(this);
         }
 
         configureCrashReporting();

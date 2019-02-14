@@ -155,13 +155,6 @@ public class OperatorMenuActivity extends BaseActivity {
         }
     }
 
-    private void showNoInternetConnectionFound() {
-        Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
-        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-        View snackBarView = snackbar.getView();
-        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-        snackbar.show();
-    }
 
     private class InquiryAsync extends AsyncTask<String, Void, String> {
 

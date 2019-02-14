@@ -372,17 +372,7 @@
                 android:value="com.cloudwell.paywell.services.activity.statements.StatementMainActivity"/>
         </activity>
         <activity
-            android:name=".activity.notification.NotificationActivity"
-            android:parentActivityName=".activity.MainActivity"
-            android:screenOrientation="portrait">
-
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.MainActivity"/>
-        </activity>
-        <activity
-            android:name=".activity.notification.NotificationAllActivity"
+            android:name=".activity.notification.allNotificaiton.NotificationAllActivity"
             android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -1051,7 +1041,7 @@
             android:name=".activity.location.LocationActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.notification.NotificationFullViewActivity"
+            android:name=".activity.notification.notificaitonFullView.NotificationFullViewActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="OPEN_ACTIVITY_DETAILS"/>
@@ -1121,6 +1111,12 @@
 
         <service
             android:name=".service.notificaiton.NotificationCheckerService"
+            android:exported="true"
+            >
+        </service>
+
+        <service
+            android:name=".service.notificaiton.NotificationDataSycService"
             android:exported="true"
             >
         </service>
