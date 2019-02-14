@@ -5,6 +5,7 @@ package com.cloudwell.paywell.services.activity.base.newBase
  */
 
 data class BaseViewState(
-        var isProgressIndicatorShown: Boolean = false
+        val isProgressIndicatorShown: Boolean = false,
+        var isNoInternectConnectionFoud: Boolean = false
 )
 

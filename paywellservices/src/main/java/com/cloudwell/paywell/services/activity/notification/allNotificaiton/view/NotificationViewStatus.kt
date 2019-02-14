@@ -6,5 +6,6 @@ package com.cloudwell.paywell.services.activity.notification.allNotificaiton.vie
 enum class NotificationViewStatus {
     START_NOTFICATION_FULL_VIEW_ACTIVITY,
     START_NOTIFICATION_SERVICE,
-    NOTIFY_DATA_SET_CHANGE
+    NOTIFY_DATA_SET_CHANGE,
+    SHOW_NO_NOTIFICAITON_FOUND
 }

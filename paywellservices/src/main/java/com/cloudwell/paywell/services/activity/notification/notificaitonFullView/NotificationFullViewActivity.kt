@@ -10,7 +10,7 @@ import android.text.util.Linkify
 import android.view.MenuItem
 import android.view.View
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.base.newBase.MVVPBaseActivity
+import com.cloudwell.paywell.services.activity.base.newBase.MVVMBaseActivity
 import com.cloudwell.paywell.services.activity.notification.ImageViewActivity
 import com.cloudwell.paywell.services.activity.notification.allNotificaiton.NotificationAllActivity
 import com.cloudwell.paywell.services.activity.notification.allNotificaiton.NotificationAllActivity.Companion.IS_NOTIFICATION_SHOWN
@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.activity_notification_full_view.*
 import org.apache.commons.lang3.StringEscapeUtils
 
 
-class NotificationFullViewActivity : MVVPBaseActivity() {
+class NotificationFullViewActivity : MVVMBaseActivity() {
 
     private var mAppHandler: AppHandler? = null
 
@@ -53,7 +53,7 @@ class NotificationFullViewActivity : MVVPBaseActivity() {
     private fun initViewModel() {
         viewModel = ViewModelProviders.of(this).get(NotificationFullViewModel::class.java)
 
-        viewModel.status.observe(this, Observer {
+        viewModel.baseViewStatus.observe(this, Observer {
             handleViewCommonStatus(it)
         })
 

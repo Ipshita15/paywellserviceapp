@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -27,8 +26,8 @@ public class BaseActivity extends AppCompatActivity {
     private ConnectionDetector mCd;
 
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         isFlowFromFavorite = getIntent().getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE, false);
         mCd = new ConnectionDetector(AppController.getContext());
     }
@@ -85,8 +84,17 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
-    public void showSnackMessageWithTextMessage(View linearLayout, String message) {
-        Snackbar snackbar = Snackbar.make(linearLayout, message, Snackbar.LENGTH_LONG);
+    public void showSnackMessageWithTextMessage(String message) {
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG);
+        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+        View snackBarView = snackbar.getView();
+        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+        snackbar.show();
+
+    }
+
+    public void showNoInternetConnectionFound() {
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), getResources().getString(R.string.connection_error_msg), Snackbar.LENGTH_LONG);
         snackbar.setActionTextColor(Color.parseColor("#ffffff"));
         View snackBarView = snackbar.getView();
         snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));

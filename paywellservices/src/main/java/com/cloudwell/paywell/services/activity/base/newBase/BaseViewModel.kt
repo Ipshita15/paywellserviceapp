@@ -9,7 +9,7 @@ import com.cloudwell.paywell.services.app.AppController
  */
 open class BaseViewModel : ViewModel() {
     val mNotificationRepository: NotificationRepogitory
-    val status = SingleLiveEvent<BaseViewState>()
+    val baseViewStatus = SingleLiveEvent<BaseViewState>()
 
     init {
         mNotificationRepository = NotificationRepogitory(AppController.getContext())

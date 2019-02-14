@@ -11,8 +11,9 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.MainActivity
-import com.cloudwell.paywell.services.activity.base.newBase.MVVPBaseActivity
+import com.cloudwell.paywell.services.activity.base.newBase.MVVMBaseActivity
 import com.cloudwell.paywell.services.activity.notification.allNotificaiton.view.NotificationViewStatus
 import com.cloudwell.paywell.services.activity.notification.allNotificaiton.viewModel.NotificationViewModel
 import com.cloudwell.paywell.services.activity.notification.model.NotificationDetailMessage
@@ -24,7 +25,7 @@ import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.utils.AppHelper.startNotificationSyncService
 
 
-class NotificationAllActivity : MVVPBaseActivity() {
+class NotificationAllActivity : MVVMBaseActivity() {
     private var listView: ListView? = null
     private var mAppHandler: AppHandler? = null
     private var mLinearLayout: LinearLayout? = null
@@ -43,12 +44,14 @@ class NotificationAllActivity : MVVPBaseActivity() {
         initializer()
         initViewModel()
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_NOTIFICATION_PAPGE)
+
+
     }
 
     private fun initViewModel() {
         viewModel = ViewModelProviders.of(this).get(NotificationViewModel::class.java)
 
-        viewModel.status.observe(this, Observer {
+        viewModel.baseViewStatus.observe(this, Observer {
             handleViewCommonStatus(it)
         })
 
@@ -59,7 +62,7 @@ class NotificationAllActivity : MVVPBaseActivity() {
         subscribeDataStreams(viewModel)
 
         // call for data
-        viewModel.onPullRequested(intent)
+        viewModel.onPullRequested(intent, isInternetConnection)
 
     }
 
@@ -73,6 +76,10 @@ class NotificationAllActivity : MVVPBaseActivity() {
 
             NotificationViewStatus.NOTIFY_DATA_SET_CHANGE -> {
                 adapter.notifyDataSetChanged()
+            }
+
+            NotificationViewStatus.SHOW_NO_NOTIFICAITON_FOUND -> {
+                showSnackMessageWithTextMessage(getString(R.string.no_notification_msg))
             }
         }
 

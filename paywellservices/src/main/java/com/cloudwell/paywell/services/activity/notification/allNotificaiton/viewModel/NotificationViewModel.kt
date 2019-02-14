@@ -8,6 +8,7 @@ import com.cloudwell.paywell.services.activity.base.newBase.BaseViewState
 import com.cloudwell.paywell.services.activity.base.newBase.SingleLiveEvent
 import com.cloudwell.paywell.services.activity.notification.allNotificaiton.view.NotificationViewStatus
 import com.cloudwell.paywell.services.activity.notification.model.NotificationDetailMessage
+import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI
 import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.model.NotificationDetailMessageSync
 import com.cloudwell.paywell.services.utils.DateUtils.notificationDateFormat
 import com.google.gson.Gson
@@ -24,17 +25,28 @@ class NotificationViewModel : BaseViewModel() {
     val mListMutableLiveData = MutableLiveData<List<NotificationDetailMessage>>()
     val mViewStatus = SingleLiveEvent<NotificationViewStatus>()
 
-    fun onPullRequested(intent: Intent) {
+    fun onPullRequested(intent: Intent, internetConnection: Boolean) {
         val booleanExtra = intent.getBooleanExtra(MainActivity.KEY_COMMING_NEW_NOTIFICATION, false);
         if (booleanExtra) {
             // new notification combing
-            status.value = BaseViewState(true)
-            callNotificationRemoteAPI()
+            baseViewStatus.value = BaseViewState(true)
+
+            if (internetConnection) {
+                callNotificationRemoteAPI()
+            } else {
+
+                baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
+            }
+
         } else {
             mNotificationRepository.getLocalNotificationData()?.observeForever { detailMessages ->
                 if (detailMessages?.size == 0) {
                     // first time in app
-                    callNotificationRemoteAPI()
+                    if (internetConnection) {
+                        callNotificationRemoteAPI()
+                    } else {
+                        baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
+                    }
                 } else {
                     // normal time
                     val filletDataByCurrentTime = filletDataByCurrentTime(detailMessages);
@@ -48,29 +60,42 @@ class NotificationViewModel : BaseViewModel() {
 
     private fun callNotificationRemoteAPI() {
 
-        status.value = BaseViewState(true)
+        baseViewStatus.value = BaseViewState(true)
 
-        mNotificationRepository.remoteNotificationDate.observeForever { resNotificationAPI ->
+        mNotificationRepository.remoteNotificationDate.observeForever { it ->
+            baseViewStatus.value = BaseViewState(false)
 
-            var dateFilterData = filletDataByCurrentTime(resNotificationAPI?.mNotificationDetailMessage);
-
-            doAsync {
-
-                mNotificationRepository.clearNotificationData();
-
-                uiThread {
-                    doAsync {
-                        mNotificationRepository.saveNotificationData(dateFilterData as MutableList<NotificationDetailMessage>)
-                    }
-
-                }
-                uiThread {
-                    dateFilterData = dateFilterData?.reversed()
-                    mListMutableLiveData.setValue(dateFilterData)
-                    status.value = BaseViewState(false)
-                }
+            if (it == null) {
+                mViewStatus.value = NotificationViewStatus.SHOW_NO_NOTIFICAITON_FOUND
+            } else if (it.mNotificationDetailMessage.isEmpty()) {
+                mViewStatus.value = NotificationViewStatus.SHOW_NO_NOTIFICAITON_FOUND
+            } else {
+                handleRespose(it)
             }
 
+        }
+    }
+
+    private fun handleRespose(it: ResNotificationAPI?) {
+        val dateFilterData = filletDataByCurrentTime(it?.mNotificationDetailMessage);
+
+        // clear old data
+        doAsync {
+            mNotificationRepository.clearNotificationData();
+
+            // save notification data
+            uiThread {
+                doAsync {
+                    mNotificationRepository.saveNotificationData(dateFilterData as MutableList<NotificationDetailMessage>)
+                }
+
+            }
+            // reversed ana show in UI
+            uiThread {
+                //                dateFilterData = dateFilterData?.reversed()
+                mListMutableLiveData.setValue(dateFilterData)
+                baseViewStatus.value = BaseViewState(false)
+            }
         }
     }
 
