@@ -52,7 +52,6 @@ class NotificationViewModel : BaseViewModel() {
             }
         }
 
-
     }
 
     private fun callNotificationRemoteAPI() {
@@ -62,12 +61,12 @@ class NotificationViewModel : BaseViewModel() {
         mNotificationRepository.remoteNotificationDate.observeForever { it ->
             baseViewStatus.value = BaseViewState(false)
 
-            if (it == null) {
-                mViewStatus.value = NotificationViewStatus.SHOW_NO_NOTIFICAITON_FOUND
-            } else if (it.mNotificationDetailMessage.isEmpty()) {
-                mViewStatus.value = NotificationViewStatus.SHOW_NO_NOTIFICAITON_FOUND
-            } else {
-                handleRespose(it)
+            when {
+                it == null -> mViewStatus.value = NotificationViewStatus.SHOW_NO_NOTIFICAITON_FOUND
+
+                it.mNotificationDetailMessage.isEmpty() -> mViewStatus.value = NotificationViewStatus.SHOW_NO_NOTIFICAITON_FOUND
+
+                else -> handleRespose(it)
             }
 
         }
@@ -152,7 +151,6 @@ class NotificationViewModel : BaseViewModel() {
                 }
             }
 
-
             startSyncService()
 
             val gson = Gson()
@@ -173,7 +171,6 @@ class NotificationViewModel : BaseViewModel() {
 
     private fun startSyncService() {
         mViewStatus.value = NotificationViewStatus.START_NOTIFICATION_SERVICE
-
 
     }
 
