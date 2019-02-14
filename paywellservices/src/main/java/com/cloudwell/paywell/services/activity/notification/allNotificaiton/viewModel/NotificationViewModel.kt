@@ -1,8 +1,6 @@
 package com.cloudwell.paywell.services.activity.notification.allNotificaiton.viewModel
 
 import android.arch.lifecycle.MutableLiveData
-import android.content.Intent
-import com.cloudwell.paywell.services.activity.MainActivity
 import com.cloudwell.paywell.services.activity.base.newBase.BaseViewModel
 import com.cloudwell.paywell.services.activity.base.newBase.BaseViewState
 import com.cloudwell.paywell.services.activity.base.newBase.SingleLiveEvent
@@ -25,9 +23,8 @@ class NotificationViewModel : BaseViewModel() {
     val mListMutableLiveData = MutableLiveData<List<NotificationDetailMessage>>()
     val mViewStatus = SingleLiveEvent<NotificationViewStatus>()
 
-    fun onPullRequested(intent: Intent, internetConnection: Boolean) {
-        val booleanExtra = intent.getBooleanExtra(MainActivity.KEY_COMMING_NEW_NOTIFICATION, false);
-        if (booleanExtra) {
+    fun onPullRequested(isFlowForComingNewNotification: Boolean, internetConnection: Boolean) {
+        if (isFlowForComingNewNotification) {
             // new notification combing
             baseViewStatus.value = BaseViewState(true)
 

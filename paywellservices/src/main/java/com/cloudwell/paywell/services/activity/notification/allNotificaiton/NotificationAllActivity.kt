@@ -2,25 +2,22 @@ package com.cloudwell.paywell.services.activity.notification.allNotificaiton
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.LinearLayout
+import android.widget.ListView
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.MainActivity
 import com.cloudwell.paywell.services.activity.base.newBase.MVVMBaseActivity
+import com.cloudwell.paywell.services.activity.notification.allNotificaiton.adapter.MsgAdapter
 import com.cloudwell.paywell.services.activity.notification.allNotificaiton.view.NotificationViewStatus
 import com.cloudwell.paywell.services.activity.notification.allNotificaiton.viewModel.NotificationViewModel
 import com.cloudwell.paywell.services.activity.notification.model.NotificationDetailMessage
 import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.NotificationFullViewActivity
 import com.cloudwell.paywell.services.analytics.AnalyticsManager
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters
-import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.utils.AppHelper.startNotificationSyncService
 
@@ -62,7 +59,9 @@ class NotificationAllActivity : MVVMBaseActivity() {
         subscribeDataStreams(viewModel)
 
         // call for data
-        viewModel.onPullRequested(intent, isInternetConnection)
+        val isFlowForComingNewNotification = intent.getBooleanExtra(MainActivity.KEY_COMMING_NEW_NOTIFICATION, false);
+
+        viewModel.onPullRequested(isFlowForComingNewNotification, isInternetConnection)
 
     }
 
@@ -143,64 +142,7 @@ class NotificationAllActivity : MVVMBaseActivity() {
     }
 
 
-    inner class MsgAdapter(private val mContext: Context, val t: List<NotificationDetailMessage>) : BaseAdapter() {
-        override fun getItemId(position: Int): Long {
-            return position.toLong()
-        }
 
-        override fun getCount(): Int {
-            return t.size
-        }
-
-        override fun getItem(position: Int): Any? {
-            return t[position]
-        }
-
-
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-            var convertView = convertView
-            val viewHolder: ViewHolder
-            if (convertView == null) {
-                convertView = LayoutInflater.from(mContext).inflate(com.cloudwell.paywell.services.R.layout.dialog_notification, parent, false)
-                viewHolder = ViewHolder()
-                viewHolder.title = convertView!!.findViewById(com.cloudwell.paywell.services.R.id.title)
-                viewHolder.date = convertView.findViewById(com.cloudwell.paywell.services.R.id.date)
-                viewHolder.msg = convertView.findViewById(com.cloudwell.paywell.services.R.id.message)
-                convertView.tag = viewHolder
-            } else {
-                viewHolder = convertView.tag as ViewHolder
-            }
-
-            val model = t[position]
-
-            if (model.status.equals("Unread")) {
-                viewHolder.title!!.setTextColor(Color.parseColor("#ff0000"))
-            } else {
-                viewHolder.title!!.setTextColor(Color.parseColor("#355689"))
-            }
-
-            viewHolder.title!!.text = model.messageSub
-            viewHolder.date!!.text = model.addedDatetime
-            viewHolder.msg!!.text = model.message
-            if (mAppHandler!!.appLanguage.equals("en", ignoreCase = true)) {
-                viewHolder.title!!.typeface = AppController.getInstance().oxygenLightFont
-                viewHolder.date!!.typeface = AppController.getInstance().oxygenLightFont
-                viewHolder.msg!!.typeface = AppController.getInstance().oxygenLightFont
-            } else {
-                viewHolder.title!!.typeface = AppController.getInstance().aponaLohitFont
-                viewHolder.date!!.typeface = AppController.getInstance().aponaLohitFont
-                viewHolder.msg!!.typeface = AppController.getInstance().aponaLohitFont
-            }
-            return convertView
-        }
-
-
-        private inner class ViewHolder {
-            internal var title: TextView? = null
-            internal var date: TextView? = null
-            internal var msg: TextView? = null
-        }
-    }
 
     companion object {
         const val IS_NOTIFICATION_SHOWN = "isNotificationShown"
