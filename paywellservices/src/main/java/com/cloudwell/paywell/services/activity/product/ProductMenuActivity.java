@@ -49,7 +49,7 @@ public class ProductMenuActivity extends BaseActivity {
             getSupportActionBar().setTitle(R.string.nav_product_catalog);
         }
 
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         relativeLayout = findViewById(R.id.relativeLayout);
 
         Button btnAjkerDeal = findViewById(R.id.homeBtnAjkerDeal);
@@ -106,9 +106,9 @@ public class ProductMenuActivity extends BaseActivity {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_WRITE_STORAGE);
         } else {
             // Android version is lesser than 6.0 or the permission is already granted.
-            if(serviceType == TAG_AJKER_DEAL) {
+            if (serviceType == TAG_AJKER_DEAL) {
                 URL = getString(R.string.ajd_token) + "rid=" + mAppHandler.getRID();
-            } else if(serviceType == TAG_WHOLESALE) {
+            } else if (serviceType == TAG_WHOLESALE) {
                 URL = getString(R.string.b2b_token) + "rid=" + mAppHandler.getRID();
             }
             new GetToken().execute(URL);
@@ -122,10 +122,10 @@ public class ProductMenuActivity extends BaseActivity {
             case PERMISSIONS_REQUEST_WRITE_STORAGE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted
-                    if(serviceType == TAG_AJKER_DEAL) {
+                    if (serviceType == TAG_AJKER_DEAL) {
                         String URL = getString(R.string.ajd_token) + "rid=" + mAppHandler.getRID();
                         new GetToken().execute(URL);
-                    } else if(serviceType == TAG_WHOLESALE) {
+                    } else if (serviceType == TAG_WHOLESALE) {
                         String URL = getString(R.string.b2b_token) + "rid=" + mAppHandler.getRID();
                         new GetToken().execute(URL);
                     }
@@ -175,8 +175,8 @@ public class ProductMenuActivity extends BaseActivity {
         protected void onPostExecute(String result) {
             try {
                 if (!result.isEmpty()) {
-                 dismissProgressDialog();
-                    if(serviceType == TAG_AJKER_DEAL) {
+                    dismissProgressDialog();
+                    if (serviceType == TAG_AJKER_DEAL) {
                         AjkerDealActivity.token = result;
                         startActivity(new Intent(ProductMenuActivity.this, AjkerDealActivity.class));
                     } else {

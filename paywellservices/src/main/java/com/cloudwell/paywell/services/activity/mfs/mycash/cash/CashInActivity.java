@@ -61,7 +61,7 @@ public class CashInActivity extends BaseActivity implements View.OnClickListener
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.home_cash_in);
         mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(AppController.getContext());
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         initializeView();
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_MYCASH_CASH_IN);
@@ -93,7 +93,7 @@ public class CashInActivity extends BaseActivity implements View.OnClickListener
             btnConfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
 
-        if(!mAppHandler.getMYCashOTP().equals("unknown") && !mAppHandler.getMYCashOTP().equals("null")) {
+        if (!mAppHandler.getMYCashOTP().equals("unknown") && !mAppHandler.getMYCashOTP().equals("null")) {
             etOTP.setText(mAppHandler.getMYCashOTP());
         }
 
@@ -131,7 +131,7 @@ public class CashInActivity extends BaseActivity implements View.OnClickListener
 
         @Override
         protected void onPreExecute() {
-           showProgressDialog();
+            showProgressDialog();
         }
 
         @Override
@@ -165,7 +165,7 @@ public class CashInActivity extends BaseActivity implements View.OnClickListener
 
         @Override
         protected void onPostExecute(String result) {
-           dismissProgressDialog();
+            dismissProgressDialog();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
@@ -187,7 +187,7 @@ public class CashInActivity extends BaseActivity implements View.OnClickListener
                         AlertDialog alert = builder.create();
                         alert.setCanceledOnTouchOutside(true);
                         alert.show();
-                    } else{
+                    } else {
                         String msg = jsonObject.getString(TAG_MESSAGE);
                         String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
                         String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);

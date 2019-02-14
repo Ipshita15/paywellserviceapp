@@ -60,7 +60,7 @@ public class RefillBalanceMainActivity extends BaseActivity {
     }
 
     private void initView() {
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mCoordinateLayout = findViewById(R.id.coordinateLayout);
         mCd = new ConnectionDetector(AppController.getContext());
 

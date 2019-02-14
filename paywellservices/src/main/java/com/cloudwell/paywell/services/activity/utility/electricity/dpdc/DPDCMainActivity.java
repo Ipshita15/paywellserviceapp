@@ -60,7 +60,7 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
         }
         mRelativeLayout = findViewById(R.id.relativeLayout);
         cd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         Button btnPostBill = findViewById(R.id.homeBtnPostpaidBillPay);
         Button btnPostInquiry = findViewById(R.id.homeBtnPostpaidInquiry);
@@ -170,7 +170,7 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
                     selectedLimit = "5";
                 }
                 if (cd.isConnectingToInternet()) {
-                    if(service_type == TAG_SERVICE_POSTPAID_INQUIRY) {
+                    if (service_type == TAG_SERVICE_POSTPAID_INQUIRY) {
                         new TransactionLogAsync().execute(getResources().getString(R.string.utility_multi_trx_inq));
                     }
                 } else {
@@ -253,7 +253,7 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
 
         @Override
         protected void onPreExecute() {
-           showProgressDialog();
+            showProgressDialog();
         }
 
         @Override
@@ -285,7 +285,7 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
         protected void onPostExecute(String result) {
             dismissProgressDialog();
             if (result != null) {
-                if(service_type == TAG_SERVICE_POSTPAID_INQUIRY) {
+                if (service_type == TAG_SERVICE_POSTPAID_INQUIRY) {
                     DPDCPostpaidInquiryActivity.TRANSLOG_TAG = result;
                     startActivity(new Intent(DPDCMainActivity.this, DPDCPostpaidInquiryActivity.class));
                     finish();

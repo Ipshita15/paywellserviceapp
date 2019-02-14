@@ -45,7 +45,8 @@ public class ResetPinActivity extends AppCompatActivity {
         mTextView = findViewById(R.id.tvMessage);
         mTextView.setTypeface(AppController.getInstance().getOxygenLightFont());
         ConnectionDetector mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
+
 
         if (!mCd.isConnectingToInternet()) {
             mAppHandler.showDialog(getSupportFragmentManager());

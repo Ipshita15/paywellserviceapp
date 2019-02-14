@@ -59,7 +59,7 @@ public class DESCOInquiryActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_utility_desco_inquary_title);
         }
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mRelativeLayout = findViewById(R.id.relativeLayout);
         adapter = new CustomAdapter(this);
         initializeView();
@@ -120,7 +120,7 @@ public class DESCOInquiryActivity extends AppCompatActivity {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if(adapter.mData.get(position).contains("@")) {
+                    if (adapter.mData.get(position).contains("@")) {
                         showFullInfo(position);
                     }
                 }
@@ -319,26 +319,26 @@ public class DESCOInquiryActivity extends AppCompatActivity {
 
 
     private void showFullInfo(int position) {
-            String array[] = adapter.mData.get(position).split("@");
-            String msg = "Bill No: " + array[0] + "\nAmount: " + getString(R.string.tk_des) + " " + array[3]
-                    + "\nPhone: " + array[5] + "\nDate: " + array[6]
-                    + "\nTrx ID: " + array[4];
+        String array[] = adapter.mData.get(position).split("@");
+        String msg = "Bill No: " + array[0] + "\nAmount: " + getString(R.string.tk_des) + " " + array[3]
+                + "\nPhone: " + array[5] + "\nDate: " + array[6]
+                + "\nTrx ID: " + array[4];
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(DESCOInquiryActivity.this);
-            if (array[1].equalsIgnoreCase("200")) {
-                builder.setTitle(Html.fromHtml("<font color='#008000'>Result Successful</font>"));
-            } else {
-                builder.setTitle(Html.fromHtml("<font color='#ff0000'>Result Failed</font>"));
-                msg = msg + "\n\nStatus: " + array[2];
+        AlertDialog.Builder builder = new AlertDialog.Builder(DESCOInquiryActivity.this);
+        if (array[1].equalsIgnoreCase("200")) {
+            builder.setTitle(Html.fromHtml("<font color='#008000'>Result Successful</font>"));
+        } else {
+            builder.setTitle(Html.fromHtml("<font color='#ff0000'>Result Failed</font>"));
+            msg = msg + "\n\nStatus: " + array[2];
+        }
+        builder.setMessage(msg);
+        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int id) {
+                dialogInterface.dismiss();
             }
-            builder.setMessage(msg);
-            builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int id) {
-                    dialogInterface.dismiss();
-                }
-            });
-            AlertDialog alert = builder.create();
-            alert.show();
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

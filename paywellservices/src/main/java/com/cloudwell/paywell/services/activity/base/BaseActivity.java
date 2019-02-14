@@ -2,6 +2,7 @@ package com.cloudwell.paywell.services.activity.base;
 
 import android.app.ProgressDialog;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
@@ -50,6 +51,7 @@ public class BaseActivity extends AppCompatActivity {
         progressDialog.setIndeterminate(false);
         progressDialog.show();
     }
+
     public void dismissProgressDialog() {
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
@@ -75,11 +77,11 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void switchToCzLocale(Locale locale) {
-        Locale mLocale = locale;
-        Configuration config = getBaseContext().getResources()
-                .getConfiguration();
-        Locale.setDefault(mLocale);
-        config.setLocale(mLocale);
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        Locale.setDefault(locale);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            config.setLocale(locale);
+        }
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
     }
 }

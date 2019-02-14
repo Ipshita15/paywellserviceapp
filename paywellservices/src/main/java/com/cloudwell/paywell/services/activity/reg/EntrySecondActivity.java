@@ -55,7 +55,7 @@ public class EntrySecondActivity extends BaseActivity implements AdapterView.OnI
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_two);
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("২য় ধাপ");
@@ -253,7 +253,7 @@ public class EntrySecondActivity extends BaseActivity implements AdapterView.OnI
 
         @Override
         protected void onPostExecute(String result) {
-          dismissProgressDialog();
+            dismissProgressDialog();
             if (result != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(result);

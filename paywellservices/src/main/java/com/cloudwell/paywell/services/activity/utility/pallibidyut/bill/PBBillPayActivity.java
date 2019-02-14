@@ -53,7 +53,7 @@ public class PBBillPayActivity extends BaseActivity implements View.OnClickListe
             getSupportActionBar().setTitle(R.string.home_utility_pb_billpay_title);
         }
         cd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         initView();
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_BILL_PAY);
@@ -137,7 +137,7 @@ public class PBBillPayActivity extends BaseActivity implements View.OnClickListe
                 nameValuePairs.add(new BasicNameValuePair("imei_no", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("pin_code", params[1]));
                 nameValuePairs.add(new BasicNameValuePair("bill_no", params[2]));
-                nameValuePairs.add(new BasicNameValuePair("amount",params[3]));
+                nameValuePairs.add(new BasicNameValuePair("amount", params[3]));
                 nameValuePairs.add(new BasicNameValuePair("smsAccountNumber", "0"));
                 nameValuePairs.add(new BasicNameValuePair("coustomerPhoneNumber", "0"));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -156,7 +156,7 @@ public class PBBillPayActivity extends BaseActivity implements View.OnClickListe
 
         @Override
         protected void onPostExecute(String result) {
-          dismissProgressDialog();
+            dismissProgressDialog();
             try {
                 if (result != null && result.contains("@")) {
                     String splitArray[] = result.split("@");

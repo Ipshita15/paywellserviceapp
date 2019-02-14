@@ -56,7 +56,7 @@ public class LastTransactionsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_activity_log);
         }
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         relativeLayout = findViewById(R.id.trxRelativeLayout);
         listView = findViewById(R.id.trxListView);
         mAdapter = new TrxAdapter(this);

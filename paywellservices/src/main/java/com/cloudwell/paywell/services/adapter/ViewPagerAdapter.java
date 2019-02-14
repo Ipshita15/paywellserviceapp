@@ -21,7 +21,7 @@ public class ViewPagerAdapter extends PagerAdapter {
     public ViewPagerAdapter(Context context, String[] imageUrls) {
         this.context = context;
         this.imageUrls = imageUrls;
-        mAppHandler = new AppHandler(context);
+        mAppHandler = AppHandler.getmInstance(context);
     }
 
     @Override

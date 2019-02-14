@@ -68,7 +68,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     private void sendRegistrationToServer(String token) {
         this.token = token;
         mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         if (mCd.isConnectingToInternet()) {
 
             mPushFirebaseIdTask = new PushFirebaseIdTask().execute(getString(R.string.notification_token_url), token);

@@ -27,7 +27,7 @@ public class StatementMainActivity extends AppCompatActivity implements View.OnC
             getSupportActionBar().setTitle(R.string.home_statement);
         }
 
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         TextView btnMiniStatement = findViewById(R.id.mini_statement_btn);
         TextView btnBalanceStatement = findViewById(R.id.balance_statement_btn);

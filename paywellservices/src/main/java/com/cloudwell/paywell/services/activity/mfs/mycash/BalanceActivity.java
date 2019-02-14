@@ -58,7 +58,7 @@ public class BalanceActivity extends BaseActivity implements View.OnClickListene
         }
 
         mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(getApplicationContext());
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         initializeView();
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_MYCAH_BALANCE);

@@ -62,7 +62,7 @@ public class IvacFeeInquiryActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_utility_ivac_inquiry_title);
         }
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mRelativeLayout = findViewById(R.id.relativeLayout);
         adapter = new CustomAdapter(this);
         initializeView();
@@ -128,7 +128,7 @@ public class IvacFeeInquiryActivity extends AppCompatActivity {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if(adapter.mData.get(position).contains("@")) {
+                    if (adapter.mData.get(position).contains("@")) {
                         showFullInfo(position);
                     }
                 }
@@ -328,7 +328,7 @@ public class IvacFeeInquiryActivity extends AppCompatActivity {
         String array[] = adapter.mData.get(position).split("@");
         String msg = "Web File: " + array[0] + "\nPassport No: " + array[3]
                 + "\nAmount: " + getString(R.string.tk_des) + " " + array[5] + "\nCenter Name: " + array[6]
-                +"\nPhone Number: " + array[7] +"\nDate: " + array[8]
+                + "\nPhone Number: " + array[7] + "\nDate: " + array[8]
                 + "\nTrx ID: " + array[4];
 
         AlertDialog.Builder builder = new AlertDialog.Builder(IvacFeeInquiryActivity.this);

@@ -60,7 +60,7 @@ public class NonACFragment extends Fragment {
         _dateView.setTypeface(AppController.getInstance().getOxygenLightFont());
         _errorMsg.setTypeface(AppController.getInstance().getOxygenLightFont());
 
-        mAppHandler = new AppHandler(getActivity());
+        mAppHandler = AppHandler.getmInstance(getContext().getApplicationContext());
         mBusList = new ArrayList<>();
         setRetainInstance(true);
         try {

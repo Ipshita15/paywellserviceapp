@@ -68,7 +68,7 @@ public class NotificationFullViewActivity extends BaseActivity implements View.O
             getSupportActionBar().setTitle(R.string.home_notification_details);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         initializer();
 
         isNotificationFlow = getIntent().getBooleanExtra("isNotificationFlow", false);
@@ -112,16 +112,16 @@ public class NotificationFullViewActivity extends BaseActivity implements View.O
                         .load(image)
                         .resize(width, 0)
                         .into(mImageView, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        dismissProgressDialog();
-                    }
+                            @Override
+                            public void onSuccess() {
+                                dismissProgressDialog();
+                            }
 
-                    @Override
-                    public void onError(Exception e) {
-                        dismissProgressDialog();
-                    }
-                });
+                            @Override
+                            public void onError(Exception e) {
+                                dismissProgressDialog();
+                            }
+                        });
 
                 mImageView.setOnTouchListener(new View.OnTouchListener() {
                     @Override

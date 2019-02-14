@@ -63,7 +63,7 @@ class PBInquiryMobileNumberChangeActivity : AppCompatActivity() {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
             supportActionBar!!.setTitle(R.string.home_utility_pb_bill_status_inquiry_title)
         }
-        mAppHandler = AppHandler(this)
+        mAppHandler = AppHandler.getmInstance(applicationContext)
         mRelativeLayout = findViewById(R.id.relativeLayout)
 
         initView()
@@ -136,8 +136,6 @@ class PBInquiryMobileNumberChangeActivity : AppCompatActivity() {
         }
 
 
-
-
     }
 
     private fun showNoDataFoundMessage() {
@@ -175,9 +173,6 @@ class PBInquiryMobileNumberChangeActivity : AppCompatActivity() {
                 message = message + "\n \n" + context.getString(R.string.details)
             }
         }
-
-
-
 
 
         val builder = AlertDialog.Builder(this@PBInquiryMobileNumberChangeActivity)

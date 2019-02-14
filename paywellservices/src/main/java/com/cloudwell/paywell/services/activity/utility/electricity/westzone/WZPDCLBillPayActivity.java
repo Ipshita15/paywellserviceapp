@@ -72,7 +72,7 @@ public class WZPDCLBillPayActivity extends BaseActivity implements View.OnClickL
             getSupportActionBar().setTitle(R.string.home_utility_west_zone_pay_title);
         }
         mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         initializeView();
 
