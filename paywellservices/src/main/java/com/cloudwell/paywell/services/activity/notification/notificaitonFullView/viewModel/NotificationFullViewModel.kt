@@ -46,8 +46,10 @@ class NotificationFullViewModel : BaseViewModel() {
         val title = jsonObject.getString("title");
         val message = jsonObject.getString("message");
         val image = jsonObject.getString("image");
+        val addedDatetime = jsonObject.getString("added_datetime");
+        val expiryTime = jsonObject.getString("message_expiry_time");
 
-        val model = NotificationDetailMessage("2019-02-13 01:59:59", "", image, message, "" + message_id, title, "Read", "Notification", "2019-02-28 23:59:59");
+        val model = NotificationDetailMessage(addedDatetime, "", image, message, "" + message_id, title, "Read", "Notification", expiryTime);
         mListMutableLiveData.value = model
 
 
