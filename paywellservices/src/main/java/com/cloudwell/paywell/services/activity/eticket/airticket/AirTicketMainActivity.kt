@@ -1,0 +1,65 @@
+package com.cloudwell.paywell.services.activity.eticket.airticket
+
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.view.Menu
+import android.view.MenuItem
+import com.cloudwell.paywell.services.R
+import kotlinx.android.synthetic.main.activity_air_ticket_main.*
+
+class AirTicketMainActivity : AppCompatActivity(), ClassBottomSheetDialog.ClassBottomSheetListener,
+        PassengerBottomSheetDialog.PsngrBottomSheetListener {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_air_ticket_main)
+
+        assert(supportActionBar != null)
+        if (supportActionBar != null) {
+            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+            supportActionBar!!.setTitle("Search Flights")
+            supportActionBar!!.elevation = 0f
+            supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#189d49")));
+        }
+
+        val fragmentAdapter = SearchFlightAdapter(supportFragmentManager)
+        viewpager_main.adapter = fragmentAdapter
+
+        tabLayout_main.setupWithViewPager(viewpager_main)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.airticket_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if(item!!.itemId == android.R.id.home)
+            onBackPressed()
+        return super.onOptionsItemSelected(item)
+    }
+    override fun onBackPressed() {
+        finish()
+    }
+
+    override fun onButtonClickListener(text: String) {
+        val fragment = supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.viewpager_main + ":" + "1") as RoundTripFragment
+        fragment.onClassTextChange(text)
+    }
+
+    override fun onAdultButtonClickListener(text: String) {
+        val fragment = supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.viewpager_main + ":" + "1") as RoundTripFragment
+        fragment.onAdultPsngrTextChange(text)
+    }
+
+    override fun onKidButtonClickListener(text: String) {
+        val fragment = supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.viewpager_main + ":" + "1") as RoundTripFragment
+        fragment.onKidPsngrTextChange(text)
+    }
+
+    override fun onInfantButtonClickListener(text: String) {
+        val fragment = supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.viewpager_main + ":" + "1") as RoundTripFragment
+        fragment.onInfantPsngrTextChange(text)
+    }
+}

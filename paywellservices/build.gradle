@@ -181,6 +181,7 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
     implementation "android.arch.lifecycle:viewmodel:$lifecycle_version"
     implementation "android.arch.lifecycle:reactivestreams:$lifecycle_version"
+    implementation 'com.github.medyo:fancybuttons:1.9.0'
 
 
 }

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketMainActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
@@ -93,7 +94,8 @@ public class ETicketMainActivity extends AppCompatActivity {
             case R.id.homeBtnTrainTicket:
 //                startActivity(new Intent(this, TrainMainActivity.class));
 //                finish();
-                showCommingSoonMesage();
+//                showCommingSoonMesage();
+                startActivity(new Intent(this, AirTicketMainActivity.class));
                 break;
             default:
                 break;
