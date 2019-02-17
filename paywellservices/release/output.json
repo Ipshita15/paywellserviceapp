@@ -6,8 +6,8 @@
     "apkInfo": {
       "type": "MAIN",
       "splits": [],
-      "versionCode": 37,
-      "versionName": "10.16.1",
+      "versionCode": 42,
+      "versionName": "10.17.1",
       "enabled": true,
       "outputFile": "paywellservices-release.apk",
       "fullName": "release",

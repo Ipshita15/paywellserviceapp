@@ -30,6 +30,8 @@ public class LocationUtility {
             // Here 1 represent max location result to returned, by documents it recommended 1 to 5
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
         }
 
         return locationAddress;
@@ -48,6 +50,8 @@ public class LocationUtility {
             locationAddress = country;
             // Here 1 represent max location result to returned, by documents it recommended 1 to 5
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
         }
 

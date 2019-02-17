@@ -53,7 +53,7 @@ public class MYCashMainActivity extends BaseActivity implements View.OnClickList
             getSupportActionBar().setTitle(R.string.home_mfs_mycash);
         }
         mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         initView();
     }
 

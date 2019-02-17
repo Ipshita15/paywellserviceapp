@@ -62,7 +62,7 @@ public class WASABillPayActivity extends BaseActivity implements View.OnClickLis
             getSupportActionBar().setTitle(R.string.home_utility_wasa_billpay_title);
         }
         mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         initializeView();
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_WASA_BILL_PAY);
@@ -155,7 +155,7 @@ public class WASABillPayActivity extends BaseActivity implements View.OnClickLis
 
         @Override
         protected void onPreExecute() {
-          showProgressDialog();
+            showProgressDialog();
 
         }
 
@@ -190,7 +190,7 @@ public class WASABillPayActivity extends BaseActivity implements View.OnClickLis
 
         @Override
         protected void onPostExecute(String result) {
-           dismissProgressDialog();
+            dismissProgressDialog();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
@@ -285,7 +285,7 @@ public class WASABillPayActivity extends BaseActivity implements View.OnClickLis
 
         @Override
         protected void onPreExecute() {
-           showProgressDialog();
+            showProgressDialog();
         }
 
         @SuppressWarnings("deprecation")
@@ -322,7 +322,7 @@ public class WASABillPayActivity extends BaseActivity implements View.OnClickLis
 
         @Override
         protected void onPostExecute(String result) {
-           dismissProgressDialog();
+            dismissProgressDialog();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);

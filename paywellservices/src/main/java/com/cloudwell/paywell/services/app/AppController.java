@@ -3,7 +3,6 @@ package com.cloudwell.paywell.services.app;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.support.multidex.MultiDex;
 import android.util.Log;
@@ -19,14 +18,13 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
+import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
-
-import java.util.Locale;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -67,13 +65,13 @@ public class AppController extends Application {
 
             Logger.v(DebugDB.getAddressLog());
 
-//
-//            if (LeakCanary.isInAnalyzerProcess(this)) {
-//                // This process is dedicated to LeakCanary for heap analysis.
-//                // You should not init your app in this process.
-//                return;
-//            }
-//            refWatcher = LeakCanary.install(this);
+
+            if (LeakCanary.isInAnalyzerProcess(this)) {
+                // This process is dedicated to LeakCanary for heap analysis.
+                // You should not init your app in this process.
+                return;
+            }
+            refWatcher = LeakCanary.install(this);
         }
 
         configureCrashReporting();
@@ -160,7 +158,7 @@ public class AppController extends Application {
 
     private void setupCrashlyticsUserInfo() {
         try {
-            mAppHandler = new AppHandler(getApplicationContext());
+            mAppHandler = AppHandler.getmInstance(getApplicationContext());
             String appStatus = mAppHandler.getAppStatus();
             if (!appStatus.equals("unknown")) {
                 String rid = mAppHandler.getRID();

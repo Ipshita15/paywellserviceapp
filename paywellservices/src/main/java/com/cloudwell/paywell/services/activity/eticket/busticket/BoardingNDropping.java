@@ -86,7 +86,7 @@ public class BoardingNDropping extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.purchase_ticket_msg);
         cd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -283,6 +283,7 @@ public class BoardingNDropping extends BaseActivity {
                                 }
                                 return view;
                             }
+
                             @Override
                             public View getDropDownView(int position, View convertView, ViewGroup parent) {
                                 View view = super.getDropDownView(position, convertView, parent);
@@ -354,7 +355,7 @@ public class BoardingNDropping extends BaseActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-           showProgressDialog();
+            showProgressDialog();
         }
 
         @Override
@@ -513,21 +514,21 @@ public class BoardingNDropping extends BaseActivity {
                         }
                         StringBuilder formatBuilder = new StringBuilder();
                         receipt = formatBuilder.append(mBusName + "\n\n"
-                                                + getString(R.string.ticket_des) + " " + mTicketNo
-                                                + "\n" + getString(R.string.pin_no_des) + " " + mPinNO
-                                                + "\n" + getString(R.string.journey_date_ticket_des) + " " + mJourneyDate
-                                                + "\n" + getString(R.string.boarding_des) + " " + mTime
-                                                + "\n" + getString(R.string.passenger_name_des) + " " + mPassengerName
-                                                + "\n" + getString(R.string.phone_no_des) + " " + mPhone
-                                                + "\n" + getString(R.string.total_des) + " " + mTotalFare + " " + getString(R.string.tk_with_charge_msg)
-                                                + "\n" + getString(R.string.from_city_ticket_des) + " " + mFrom
-                                                + "\n" + getString(R.string.to_city_ticket_des) + " " + mTo
-                                                + "\n" + getString(R.string.droping_des) + " " + mDeparture
-                                                + "\n" + getString(R.string.coach_number_des) + " " + mCoachNo
-                                                + "\n" + getString(R.string.coach_des) + " " + mCoachType
-                                                + "\n" + getString(R.string.selected_seat_des) + " " + mSeatNo
-                                                + "\n" + getString(R.string.seat_type_des) + " " + mSeatType
-                                                + "\n" + getString(R.string.purchase_date_des) + " " + mPurchaseDate);
+                                + getString(R.string.ticket_des) + " " + mTicketNo
+                                + "\n" + getString(R.string.pin_no_des) + " " + mPinNO
+                                + "\n" + getString(R.string.journey_date_ticket_des) + " " + mJourneyDate
+                                + "\n" + getString(R.string.boarding_des) + " " + mTime
+                                + "\n" + getString(R.string.passenger_name_des) + " " + mPassengerName
+                                + "\n" + getString(R.string.phone_no_des) + " " + mPhone
+                                + "\n" + getString(R.string.total_des) + " " + mTotalFare + " " + getString(R.string.tk_with_charge_msg)
+                                + "\n" + getString(R.string.from_city_ticket_des) + " " + mFrom
+                                + "\n" + getString(R.string.to_city_ticket_des) + " " + mTo
+                                + "\n" + getString(R.string.droping_des) + " " + mDeparture
+                                + "\n" + getString(R.string.coach_number_des) + " " + mCoachNo
+                                + "\n" + getString(R.string.coach_des) + " " + mCoachType
+                                + "\n" + getString(R.string.selected_seat_des) + " " + mSeatNo
+                                + "\n" + getString(R.string.seat_type_des) + " " + mSeatType
+                                + "\n" + getString(R.string.purchase_date_des) + " " + mPurchaseDate);
                         AlertDialog.Builder builder = new AlertDialog.Builder(BoardingNDropping.this);
                         builder.setTitle("Result");
                         builder.setMessage(receipt.toString());

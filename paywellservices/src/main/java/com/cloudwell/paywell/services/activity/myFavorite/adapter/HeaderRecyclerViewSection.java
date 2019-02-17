@@ -8,10 +8,11 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
 import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEvent;
 import com.cloudwell.paywell.services.app.AppController;
+import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus;
 import com.cloudwell.paywell.services.utils.ResorceHelper;
 import com.orhanobut.logger.Logger;
 
-import org.greenrobot.eventbus.EventBus;
+
 
 import java.util.List;
 
@@ -63,7 +64,7 @@ public class HeaderRecyclerViewSection extends StatelessSection {
             public void onClick(View v) {
 
                 MessageEvent messageEvent = new MessageEvent(mIndex, position, title, favoriteMenu);
-                EventBus.getDefault().post(messageEvent);
+                GlobalApplicationBus.getBus().post(messageEvent);
 
             }
         });
@@ -73,7 +74,7 @@ public class HeaderRecyclerViewSection extends StatelessSection {
             public void onClick(View v) {
 
                 MessageEvent messageEvent = new MessageEvent(mIndex, position, title, favoriteMenu);
-                EventBus.getDefault().post(messageEvent);
+                GlobalApplicationBus.getBus().post(messageEvent);
 
             }
         });
@@ -83,7 +84,7 @@ public class HeaderRecyclerViewSection extends StatelessSection {
             public void onClick(View v) {
 
                 MessageEvent messageEvent = new MessageEvent(mIndex, position, title, favoriteMenu);
-                EventBus.getDefault().post(messageEvent);
+                GlobalApplicationBus.getBus().post(messageEvent);
 
 
             }

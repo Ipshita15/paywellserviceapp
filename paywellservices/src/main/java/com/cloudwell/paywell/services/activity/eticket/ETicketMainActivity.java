@@ -35,7 +35,7 @@ public class ETicketMainActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(R.string.home_eticket);
         }
 
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         relativeLayout = findViewById(R.id.eticketRelativeLayout);
 

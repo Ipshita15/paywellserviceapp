@@ -68,7 +68,7 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
             getSupportActionBar().setTitle(R.string.home_utility_desco_pay_title);
         }
         mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         initializeView();
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_DESCO_BILL_PAY);
@@ -160,7 +160,7 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
 
         @Override
         protected void onPreExecute() {
-          showProgressDialog();
+            showProgressDialog();
         }
 
         @SuppressWarnings("deprecation")
@@ -207,7 +207,7 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
                         mTrxId = jsonObject.getString(TAG_TRANSACTION_ID);
                         String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
                         String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
-                        if(!mTotalAmount.equals("0")) {
+                        if (!mTotalAmount.equals("0")) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(DESCOBillPayActivity.this);
                             builder.setTitle("Result");
                             builder.setMessage(msg_text + "\n\n" + getString(R.string.phone_no_des) + " " + mPhn + "\n\nPayWell Trx ID: " + trx_id);

@@ -77,6 +77,7 @@
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/linearLayout5"
                     app:layout_constraintEnd_toEndOf="@+id/ivBalanceBorder"
+                    app:layout_constraintHorizontal_bias="0.56"
                     app:layout_constraintStart_toStartOf="@+id/ivBalanceBorder"
                     app:layout_constraintTop_toTopOf="@+id/linearLayout5" />
 

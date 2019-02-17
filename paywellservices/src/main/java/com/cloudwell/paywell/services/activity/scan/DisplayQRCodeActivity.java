@@ -2,7 +2,6 @@ package com.cloudwell.paywell.services.activity.scan;
 
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -17,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.MainActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppHandler;
@@ -49,7 +47,7 @@ public class DisplayQRCodeActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(R.string.home_scan_qr_code);
         }
         mContext = this;
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mRelativeLayout = findViewById(R.id.relativeLayout);
 
         imageViewQRCode = findViewById(R.id.imageViewQRCode);
@@ -68,7 +66,7 @@ public class DisplayQRCodeActivity extends AppCompatActivity {
 
     public void generateQRCode() {
         try {
-            if(mAppHandler.getRID() != "unknown") {
+            if (mAppHandler.getRID() != "unknown") {
                 Bitmap bitmap = TextToImageEncode(mAppHandler.getRID());
                 imageViewQRCode.setImageBitmap(bitmap);
                 String path = saveToInternalStorage(bitmap);
@@ -147,8 +145,6 @@ public class DisplayQRCodeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(DisplayQRCodeActivity.this, MainActivity.class);
-        startActivity(intent);
         finish();
     }
 

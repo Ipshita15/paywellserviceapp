@@ -86,7 +86,7 @@ public class IvacFeePayActivity extends BaseActivity {
         }
 
         mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         initializeData();
 

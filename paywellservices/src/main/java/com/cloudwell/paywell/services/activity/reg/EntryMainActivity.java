@@ -1,12 +1,10 @@
 package com.cloudwell.paywell.services.activity.reg;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -14,12 +12,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.reg.model.RegistrationModel;
 import com.cloudwell.paywell.services.app.AppController;
+import com.cloudwell.paywell.services.app.AppHandler;
 
 import java.util.Locale;
 
-public class EntryMainActivity extends AppCompatActivity{
+import static com.cloudwell.paywell.services.utils.LanuageConstant.KEY_BANGLA;
+
+public class EntryMainActivity extends BaseActivity {
 
     private CheckBox checkBox;
     private LinearLayout mLinearLayout;
@@ -30,9 +32,10 @@ public class EntryMainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entry_main);
 
-        Configuration config = new Configuration();
-        config.locale = Locale.FRANCE;
-        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+
+        AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
+        mAppHandler.setAppLanguage("bn");
+        switchToCzLocale(new Locale(KEY_BANGLA, ""));
 
         mLinearLayout = findViewById(R.id.layout);
         checkBox = findViewById(R.id.item_check);
@@ -45,7 +48,7 @@ public class EntryMainActivity extends AppCompatActivity{
         ((TextView) mLinearLayout.findViewById(R.id.textView_confirmText)).setTypeface(AppController.getInstance().getAponaLohitFont());
         ((Button) mLinearLayout.findViewById(R.id.btn_nextStep)).setTypeface(AppController.getInstance().getAponaLohitFont());
 
-        textViewTerms.setPaintFlags(textViewTerms.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+        textViewTerms.setPaintFlags(textViewTerms.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         textViewTerms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

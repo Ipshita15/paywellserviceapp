@@ -31,7 +31,7 @@ public class TokenAuthenticator implements Authenticator {
             String base = userName + ":" + password;
             String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
 
-            AppHandler mAppHandler = new AppHandler(AppController.getContext());
+            AppHandler mAppHandler = AppHandler.getmInstance(AppController.getContext());
 
             Map<String, String> params = new HashMap<>();
             params.put("skey", "fLdjl3VX_OPOx6zvadOGuCvq2Ay0civ6v-HUQeiLVRg");

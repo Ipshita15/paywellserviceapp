@@ -15,8 +15,11 @@ import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.notification.NotificationFullViewActivity;
+import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.NotificationFullViewActivity;
+import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.utils.AppHelper;
+import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.facebook.common.executors.UiThreadImmediateExecutorService;
 import com.facebook.common.references.CloseableReference;
 import com.facebook.datasource.DataSource;
@@ -71,6 +74,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         sendNotification(title, m, imageUri);
 
+        ConnectionDetector mCd = new ConnectionDetector(AppController.getContext());
+        AppHelper.notificationCounterCheck(mCd, getApplicationContext());
+
+
 
     }
 
@@ -116,7 +123,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onNewToken(String token) {
         super.onNewToken(token);
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mAppHandler.setFirebaseId(token);
         mAppHandler.setFirebaseTokenStatus("true");
     }

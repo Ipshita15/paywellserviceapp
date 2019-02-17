@@ -70,7 +70,7 @@ public class AppLoadingActivity extends AppCompatActivity {
         mPBAppLoading = findViewById(R.id.pbAppLoading);
         Button btnClose = findViewById(R.id.btnClose);
 
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mCd = new ConnectionDetector(AppController.getContext());
 
 
@@ -283,9 +283,9 @@ public class AppLoadingActivity extends AppCompatActivity {
 
                         mAppHandler.displayPictureArray = new String[Integer.parseInt(displayPictureCount)];
                         JSONArray pictureArrayJson = jsonObject.getJSONArray("imageLink");
-                        for(int i = 0; i < pictureArrayJson.length(); i++) {
-                            String disImglink =  pictureArrayJson.getString(i);
-                            if(disImglink.isEmpty()) {
+                        for (int i = 0; i < pictureArrayJson.length(); i++) {
+                            String disImglink = pictureArrayJson.getString(i);
+                            if (disImglink.isEmpty()) {
                                 mAppHandler.displayPictureArray[i] = "";
                                 imgLink.add("");
                             } else {
@@ -417,9 +417,9 @@ public class AppLoadingActivity extends AppCompatActivity {
 
                         mAppHandler.displayPictureArray = new String[Integer.parseInt(displayPictureCount)];
                         JSONArray pictureArrayJson = jsonObject.getJSONArray("imageLink");
-                        for(int i = 0; i < pictureArrayJson.length(); i++) {
-                            String disImglink =  pictureArrayJson.getString(i);
-                            if(disImglink.isEmpty()) {
+                        for (int i = 0; i < pictureArrayJson.length(); i++) {
+                            String disImglink = pictureArrayJson.getString(i);
+                            if (disImglink.isEmpty()) {
                                 mAppHandler.displayPictureArray[i] = "";
                                 imgLink.add("");
                             } else {

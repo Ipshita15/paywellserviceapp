@@ -1,88 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.cloudwell.paywell.services">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.cloudwell.paywell.services">
 
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <uses-feature
         android:glEsVersion="0x00020000"
-        android:required="true" /> <!-- <permission -->
+        android:required="true"/>
+
+    <!-- <permission -->
     <!-- android:name="com.cloudwell.paywell.services.permission.MAPS_RECEIVE" -->
     <!-- android:protectionLevel="signature" /> -->
+
+
     <!-- <uses-permission android:name="com.example.permission.MAPS_RECEIVE" /> -->
+
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
         android:normalScreens="true"
         android:resizeable="true"
         android:smallScreens="true"
-        android:xlargeScreens="true" /> <!-- To auto-complete the email text field in ic_login_ajkogin form with the user's emails -->
-    <uses-permission android:name="android.permission.READ_PROFILE" />
+        android:xlargeScreens="true"/>
+
+    <!-- To auto-complete the email text field in ic_login_ajkogin form with the user's emails -->
+    <uses-permission android:name="android.permission.READ_PROFILE"/>
 
     <application
         android:name=".app.AppController"
-        android:allowBackup="true"
+        android:allowBackup="false"
+        tools:replace="allowBackup"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/paywell_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <uses-library
             android:name="com.google.android.maps"
-            android:required="false" />
+            android:required="false"/>
 
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
-            android:value="barcode" />
-
+            android:value="barcode"/>
         <activity
             android:name=".LaunchScreenActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
         </activity>
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="8fbad4b3a6a78a5e18c5f18b833263a48b46e3d0" />
+            android:value="8fbad4b3a6a78a5e18c5f18b833263a48b46e3d0"/>
 
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" /> <!-- activities for bKasah -->
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <!-- activities for bKasah -->
         <activity
             android:name=".activity.AppLoadingActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activity.PendingActivity"
-            android:screenOrientation="portrait" /> <!-- activities for utilities -->
+            android:screenOrientation="portrait"/>
+        <!-- activities for utilities -->
         <activity
             android:name=".activity.utility.UtilityMainActivity"
             android:parentActivityName=".activity.MainActivity"
@@ -91,8 +100,9 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.MainActivity" />
-        </activity> <!-- activities for palli bidyut -->
+                android:value="com.cloudwell.paywell.services.activity.MainActivity"/>
+        </activity>
+        <!-- activities for palli bidyut -->
         <activity
             android:name=".activity.utility.pallibidyut.registion.PBRegistrationActivity"
             android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
@@ -102,7 +112,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity"/>
         </activity>
         <activity
             android:name=".activity.utility.pallibidyut.bill.PBBillPayActivity"
@@ -113,30 +123,31 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity"/>
         </activity>
+
         <activity
             android:name=".activity.utility.pallibidyut.changeMobileNumber.MobileNumberChangeActivity"
             android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
-
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity"/>
         </activity>
+
         <activity
             android:name=".activity.utility.pallibidyut.changeMobileNumber.PBInquiryMobileNumberChangeActivity"
             android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
-
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity"/>
         </activity>
+
         <activity
             android:name=".activity.utility.pallibidyut.registion.PBInquiryRegActivity"
             android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
@@ -146,7 +157,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity"/>
         </activity>
         <activity
             android:name=".activity.utility.pallibidyut.bill.PBInquiryBillPayActivity"
@@ -157,8 +168,10 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity"/>
         </activity>
+
+
         <activity
             android:name=".activity.utility.pallibidyut.billStatus.PBBillStatusInquiryActivity"
             android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
@@ -168,8 +181,10 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity"/>
         </activity>
+
+
         <activity
             android:name=".activity.utility.pallibidyut.billStatus.PBBillStatusActivity"
             android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
@@ -179,17 +194,20 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity" />
-        </activity> <!-- recever for topup -->
+                android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity"/>
+        </activity>
+
+
+        <!-- recever for topup -->
         <receiver
             android:name=".utils.IsOnlineReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
 
@@ -202,7 +220,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.MainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.MainActivity"/>
         </activity>
         <activity
             android:name=".activity.topup.TransLogActivity"
@@ -212,7 +230,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.topup.TopupMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.topup.TopupMainActivity"/>
         </activity>
         <activity
             android:name=".activity.topup.OperatorMenuActivity"
@@ -222,7 +240,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.topup.TopupMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.topup.TopupMainActivity"/>
         </activity>
         <activity
             android:name=".activity.topup.offer.OfferMainActivity"
@@ -232,7 +250,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.topup.OperatorMenuActivity" />
+                android:value="com.cloudwell.paywell.services.activity.topup.OperatorMenuActivity"/>
         </activity>
         <activity
             android:name=".activity.topup.offer.ConfirmOfferActivity"
@@ -242,8 +260,9 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.topup.offer.OfferMainActivity" />
-        </activity> <!-- eTicket activity -->
+                android:value="com.cloudwell.paywell.services.activity.topup.offer.OfferMainActivity"/>
+        </activity>
+        <!-- eTicket activity -->
         <activity
             android:name=".activity.eticket.ETicketMainActivity"
             android:parentActivityName=".activity.MainActivity"
@@ -253,8 +272,9 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.MainActivity" />
-        </activity> <!-- Bus ticket activities -->
+                android:value="com.cloudwell.paywell.services.activity.MainActivity"/>
+        </activity>
+        <!-- Bus ticket activities -->
         <activity
             android:name=".activity.eticket.busticket.JourneyDateActivity"
             android:parentActivityName=".activity.eticket.busticket.BusMainActivity"
@@ -263,7 +283,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.eticket.busticket.BusMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.eticket.busticket.BusMainActivity"/>
         </activity>
         <activity
             android:name=".activity.eticket.busticket.FromCityListActivity"
@@ -271,16 +291,16 @@
             android:parentActivityName=".activity.eticket.busticket.BusMainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
+                <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
 
             <meta-data
                 android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
+                android:resource="@xml/searchable"/>
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.eticket.busticket.BusMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.eticket.busticket.BusMainActivity"/>
         </activity>
         <activity
             android:name=".activity.eticket.busticket.ToCityListActivity"
@@ -288,15 +308,15 @@
             android:parentActivityName=".activity.eticket.busticket.BusMainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
+                <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.eticket.busticket.BusMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.eticket.busticket.BusMainActivity"/>
             <meta-data
                 android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
+                android:resource="@xml/searchable"/>
         </activity>
         <activity
             android:name=".activity.eticket.busticket.SearchBusActivity"
@@ -306,7 +326,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.eticket.busticket.BusMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.eticket.busticket.BusMainActivity"/>
         </activity>
         <activity
             android:name=".activity.eticket.busticket.SeatListActivity"
@@ -316,7 +336,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.eticket.busticket.SearchBusActivity" />
+                android:value="com.cloudwell.paywell.services.activity.eticket.busticket.SearchBusActivity"/>
         </activity>
         <activity
             android:name=".activity.eticket.busticket.BoardingNDropping"
@@ -327,8 +347,10 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.eticket.busticket.SearchBusActivity" />
-        </activity> <!-- activities for Payments -->
+                android:value="com.cloudwell.paywell.services.activity.eticket.busticket.SearchBusActivity"/>
+        </activity>
+        <!-- activities for Payments -->
+
         <activity
             android:name=".activity.statements.StatementMainActivity"
             android:parentActivityName=".activity.MainActivity"
@@ -337,7 +359,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.MainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.MainActivity"/>
         </activity>
         <activity
             android:name=".activity.statements.ViewStatementActivity"
@@ -347,7 +369,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.statements.StatementMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.statements.StatementMainActivity"/>
         </activity>
         <activity
             android:name=".activity.notification.NotificationActivity"
@@ -357,16 +379,16 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.MainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.MainActivity"/>
         </activity>
         <activity
             android:name=".activity.notification.NotificationAllActivity"
             android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="OPEN_ACTIVITY_1" />
+                <action android:name="OPEN_ACTIVITY_1"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
             <!-- <intent-filter> -->
             <!-- <action android:name="com.cloudwell.paywell.services.MESSAGE" /> -->
@@ -376,8 +398,9 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.MainActivity" />
-        </activity> <!-- train ticket activities -->
+                android:value="com.cloudwell.paywell.services.activity.MainActivity"/>
+        </activity>
+        <!-- train ticket activities -->
         <activity
             android:name=".activity.eticket.trainticket.TrainTicketActivity"
             android:parentActivityName=".activity.eticket.ETicketMainActivity"
@@ -387,7 +410,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity"/>
         </activity>
         <activity
             android:name=".activity.eticket.trainticket.SearchTrainActivity"
@@ -398,7 +421,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.eticket.trainticket.TrainTicketActivity" />
+                android:value="com.cloudwell.paywell.services.activity.eticket.trainticket.TrainTicketActivity"/>
         </activity>
         <activity
             android:name=".activity.eticket.trainticket.TrainTicketBookingActivity"
@@ -409,7 +432,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.eticket.trainticket.SearchTrainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.eticket.trainticket.SearchTrainActivity"/>
         </activity>
         <activity
             android:name=".activity.eticket.trainticket.TrainTicketBookingStatusActivity"
@@ -419,8 +442,9 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity" />
-        </activity> <!-- MFS activities -->
+                android:value="com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity"/>
+        </activity>
+        <!-- MFS activities -->
         <activity
             android:name=".activity.mfs.MFSMainActivity"
             android:parentActivityName=".activity.MainActivity"
@@ -429,7 +453,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.MainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.MainActivity"/>
         </activity>
         <activity
             android:name=".activity.mfs.mycash.MYCashMenuActivity"
@@ -439,12 +463,14 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity"/>
         </activity>
         <activity
             android:name=".activity.mfs.mycash.MYCashMainActivity"
             android:parentActivityName=".activity.MainActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+        </activity>
+
         <activity
             android:name=".activity.mfs.mycash.GenerateOTPActivity"
             android:parentActivityName=".activity.mfs.mycash.InquiryMenuActivity"
@@ -453,7 +479,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.InquiryMenuActivity" />
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.InquiryMenuActivity"/>
         </activity>
         <activity
             android:name=".activity.mfs.mycash.cash.CashInActivity"
@@ -463,7 +489,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMenuActivity" />
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMenuActivity"/>
         </activity>
         <activity
             android:name=".activity.mfs.mycash.CustomerRegistrationActivity"
@@ -473,7 +499,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMenuActivity" />
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMenuActivity"/>
         </activity>
         <activity
             android:name=".activity.mfs.mycash.inquiry.StatementActivity"
@@ -483,7 +509,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.InquiryMenuActivity" />
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.InquiryMenuActivity"/>
         </activity>
         <activity
             android:name=".activity.mfs.mycash.BalanceActivity"
@@ -493,7 +519,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.InquiryMenuActivity" />
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.InquiryMenuActivity"/>
         </activity>
         <activity
             android:name=".activity.mfs.mycash.inquiry.LastTransactionsActivity"
@@ -503,7 +529,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.InquiryMenuActivity" />
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.InquiryMenuActivity"/>
         </activity>
         <activity
             android:name=".activity.mfs.mycash.ChangeMYCashPinActivity"
@@ -513,7 +539,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMenuActivity" />
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMenuActivity"/>
         </activity>
         <activity
             android:name=".activity.mfs.mycash.InquiryMenuActivity"
@@ -523,7 +549,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMenuActivity" />
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMenuActivity"/>
         </activity>
         <activity
             android:name=".activity.mfs.mycash.cash.CashOutActivity"
@@ -533,7 +559,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.InquiryMenuActivity" />
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.InquiryMenuActivity"/>
         </activity>
         <activity
             android:name=".activity.mfs.mycash.ManageMenuActivity"
@@ -543,7 +569,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMenuActivity" />
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMenuActivity"/>
         </activity>
         <activity
             android:name=".activity.mfs.mycash.manage.BalanceTransferRequestActivity"
@@ -553,7 +579,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.ManageMenuActivity" />
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.ManageMenuActivity"/>
         </activity>
         <activity
             android:name=".activity.mfs.mycash.manage.PaymentConfirmationActivity"
@@ -563,7 +589,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.ManageMenuActivity" />
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.ManageMenuActivity"/>
         </activity>
         <activity
             android:name=".activity.mfs.mycash.CashInOutActivity"
@@ -573,7 +599,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMenuActivity" />
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMenuActivity"/>
         </activity>
         <activity
             android:name=".activity.mfs.mycash.manage.PayWellToMYCashActivity"
@@ -583,7 +609,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.ManageMenuActivity" />
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.ManageMenuActivity"/>
         </activity>
         <activity
             android:name=".activity.mfs.mycash.manage.MYCashToPayWellActivity"
@@ -593,7 +619,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.ManageMenuActivity" />
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.ManageMenuActivity"/>
         </activity>
         <activity
             android:name=".activity.settings.ChangePinActivity"
@@ -604,7 +630,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.settings.SettingsActivity" />
+                android:value="com.cloudwell.paywell.services.activity.settings.SettingsActivity"/>
         </activity>
         <activity
             android:name=".activity.settings.ResetPinActivity"
@@ -614,7 +640,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.settings.SettingsActivity" />
+                android:value="com.cloudwell.paywell.services.activity.settings.SettingsActivity"/>
         </activity>
         <activity
             android:name=".activity.settings.SettingsActivity"
@@ -624,7 +650,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.MainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.MainActivity"/>
         </activity>
         <activity
             android:name=".activity.about.AboutActivity"
@@ -634,7 +660,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.MainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.MainActivity"/>
         </activity>
         <activity
             android:name=".activity.utility.pallibidyut.PBMainActivity"
@@ -644,8 +670,9 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity"/>
         </activity>
+
         <activity
             android:name=".activity.utility.electricity.desco.DESCOMainActivity"
             android:parentActivityName=".activity.utility.UtilityMainActivity"
@@ -654,7 +681,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity"/>
         </activity>
         <activity
             android:name=".activity.utility.electricity.desco.DESCOBillPayActivity"
@@ -664,7 +691,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.electricity.desco.DESCOMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.electricity.desco.DESCOMainActivity"/>
         </activity>
         <activity
             android:name=".activity.utility.electricity.desco.DESCOInquiryActivity"
@@ -674,7 +701,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.electricity.desco.DESCOMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.electricity.desco.DESCOMainActivity"/>
         </activity>
         <activity
             android:name=".activity.utility.electricity.ElectricityHelpActivity"
@@ -685,7 +712,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.electricity.desco.DESCOMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.electricity.desco.DESCOMainActivity"/>
         </activity>
         <activity
             android:name=".activity.utility.electricity.dpdc.DPDCMainActivity"
@@ -695,7 +722,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity"/>
         </activity>
         <activity
             android:name=".activity.utility.electricity.dpdc.DPDCPostpaidBillPayActivity"
@@ -705,7 +732,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCMainActivity"/>
         </activity>
         <activity
             android:name=".activity.utility.electricity.dpdc.DPDCPostpaidInquiryActivity"
@@ -715,7 +742,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCMainActivity"/>
         </activity>
         <activity
             android:name=".activity.eticket.busticket.BusMainActivity"
@@ -725,7 +752,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity"/>
         </activity>
         <activity
             android:name=".activity.eticket.trainticket.TrainMainActivity"
@@ -735,7 +762,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity"/>
         </activity>
         <activity
             android:name=".activity.refill.RefillBalanceMainActivity"
@@ -745,7 +772,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.MainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.MainActivity"/>
         </activity>
         <activity
             android:name=".activity.refill.banktransfer.BankTransferMainActivity"
@@ -755,16 +782,16 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.refill.RefillBalanceMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.refill.RefillBalanceMainActivity"/>
         </activity>
         <activity
             android:name=".activity.refill.card.CardTransferMainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.reg.EntryMainActivity"
             android:label="@string/app_name"
             android:noHistory="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.reg.EntryFirstActivity"
             android:configChanges="orientation"
@@ -776,7 +803,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.reg.EntryMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.reg.EntryMainActivity"/>
         </activity>
         <activity
             android:name=".activity.reg.EntrySecondActivity"
@@ -788,7 +815,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.reg.EntryFirstActivity" />
+                android:value="com.cloudwell.paywell.services.activity.reg.EntryFirstActivity"/>
         </activity>
         <activity
             android:name=".activity.reg.EntryThirdActivity"
@@ -800,7 +827,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.reg.EntrySecondActivity" />
+                android:value="com.cloudwell.paywell.services.activity.reg.EntrySecondActivity"/>
         </activity>
         <activity
             android:name=".activity.reg.EntryForthActivity"
@@ -809,7 +836,7 @@
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.reg.EntryThirdActivity" />
+                android:value="com.cloudwell.paywell.services.activity.reg.EntryThirdActivity"/>
         </activity>
         <activity
             android:name=".activity.reg.TermsAndConditionsActivity"
@@ -819,27 +846,27 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.reg.EntryMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.reg.EntryMainActivity"/>
         </activity>
         <activity
             android:name=".activity.reg.missing.MissingMainActivity"
             android:label="@string/paywell_reg_missing"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.terms.TermsActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.product.ProductMenuActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.product.AjkerDealActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.product.WholesaleActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.scan.DisplayQRCodeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.utility.electricity.wasa.WASAMainActivity"
             android:parentActivityName=".activity.utility.UtilityMainActivity"
@@ -848,7 +875,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity"/>
         </activity>
         <activity
             android:name=".activity.utility.electricity.wasa.WASABillPayActivity"
@@ -858,7 +885,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.electricity.wasa.WASAMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.electricity.wasa.WASAMainActivity"/>
         </activity>
         <activity
             android:name=".activity.utility.electricity.wasa.WASABillInquiryActivity"
@@ -868,7 +895,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.electricity.wasa.WASAMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.electricity.wasa.WASAMainActivity"/>
         </activity>
         <activity
             android:name=".activity.utility.electricity.westzone.WZPDCLMainActivity"
@@ -878,7 +905,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity"/>
         </activity>
         <activity
             android:name=".activity.utility.electricity.westzone.WZPDCLBillPayActivity"
@@ -888,7 +915,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.electricity.westzone.WZPDCLMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.electricity.westzone.WZPDCLMainActivity"/>
         </activity>
         <activity
             android:name=".activity.utility.electricity.westzone.WZPDCLBillInquiryActivity"
@@ -898,11 +925,11 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.electricity.westzone.WZPDCLMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.electricity.westzone.WZPDCLMainActivity"/>
         </activity>
         <activity
             android:name=".activity.MerchantTypeVerify"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.utility.ivac.IvacMainActivity"
             android:parentActivityName=".activity.utility.UtilityMainActivity"
@@ -911,7 +938,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity"/>
         </activity>
         <activity
             android:name=".activity.utility.ivac.IvacFeePayActivity"
@@ -922,7 +949,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.ivac.IvacMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.ivac.IvacMainActivity"/>
         </activity>
         <activity
             android:name=".activity.utility.ivac.IvacFeeInquiryMainActivity"
@@ -932,7 +959,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.ivac.IvacMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.ivac.IvacMainActivity"/>
         </activity>
         <activity
             android:name=".activity.utility.ivac.IvacFeeInquiryActivity"
@@ -942,11 +969,11 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.ivac.IvacFeeInquiryMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.ivac.IvacFeeInquiryMainActivity"/>
         </activity>
         <activity
             android:name=".activity.utility.ivac.ScannerActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.utility.banglalion.BanglalionMainActivity"
             android:parentActivityName=".activity.utility.UtilityMainActivity"
@@ -955,7 +982,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity"/>
         </activity>
         <activity
             android:name=".activity.utility.banglalion.BanglalionRechargeActivity"
@@ -965,7 +992,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionMainActivity"/>
         </activity>
         <activity
             android:name=".activity.utility.banglalion.BanglalionRechargeInquiryActivity"
@@ -975,7 +1002,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionMainActivity"/>
         </activity>
         <activity
             android:name=".activity.utility.karnaphuli.KarnaphuliMainActivity"
@@ -985,7 +1012,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity"/>
         </activity>
         <activity
             android:name=".activity.utility.karnaphuli.KarnaphuliBillPayActivity"
@@ -995,7 +1022,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliMainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliMainActivity"/>
         </activity>
         <activity
             android:name=".activity.utility.karnaphuli.KarnaphuliInquiryActivity"
@@ -1015,41 +1042,43 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.MainActivity" />
+                android:value="com.cloudwell.paywell.services.activity.MainActivity"/>
         </activity>
         <activity
             android:name=".activity.settings.HelpMainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.location.LocationActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.notification.NotificationFullViewActivity"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="OPEN_ACTIVITY_DETAILS" />
+                <action android:name="OPEN_ACTIVITY_DETAILS"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.notification.ImageViewActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.topup.TopUpOperatorMenuActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.topup.TopupMenuActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.topup.brilliant.BrilliantTopupActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.topup.brilliant.BrilliantTransactionLogActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.WebViewActivity"
-            android:screenOrientation="portrait" /> <!-- SMS Receiver -->
+            android:screenOrientation="portrait"/>
+
+        <!-- SMS Receiver -->
         <!-- <receiver android:name=".activity.sms.SmsReceiver"> -->
         <!-- <intent-filter> -->
         <!-- <action android:name="android.provider.Telephony.SMS_RECEIVED" /> -->
@@ -1091,7 +1120,15 @@
 
         <service
             android:name=".service.notificaiton.NotificationCheckerService"
-            android:exported="true" />
+            android:exported="true"
+            >
+        </service>
+
+        <service
+            android:name=".service.notificaiton.NotificationDataSycService"
+            android:exported="true"
+            >
+        </service>
 
         <meta-data
             android:name="com.google.android.gms.version"

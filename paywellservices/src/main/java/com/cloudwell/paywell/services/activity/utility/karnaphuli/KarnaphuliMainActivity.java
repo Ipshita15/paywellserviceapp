@@ -54,7 +54,7 @@ public class KarnaphuliMainActivity extends BaseActivity implements CompoundButt
 
         mRelativeLayout = findViewById(R.id.relativeLayout);
         cd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         Button btnBill = findViewById(R.id.homeBtnBillPay);
         Button btnInquiry = findViewById(R.id.homeBtnInquiry);

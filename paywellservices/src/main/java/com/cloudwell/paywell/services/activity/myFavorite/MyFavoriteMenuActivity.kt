@@ -8,7 +8,6 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import com.cloudwell.paywell.services.R
@@ -26,17 +25,18 @@ import com.cloudwell.paywell.services.analytics.AnalyticsParameters
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.constant.AllConstant
 import com.cloudwell.paywell.services.database.DatabaseClient
+import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus
 import com.cloudwell.paywell.services.preference.FavoritePreference
 import com.cloudwell.paywell.services.utils.ResorceHelper
 import com.orhanobut.logger.Logger
+import com.squareup.otto.Subscribe
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_my_favorite_menu.*
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 
 class MyFavoriteMenuActivity : AppCompatActivity(), StartDragListener {
@@ -83,7 +83,7 @@ class MyFavoriteMenuActivity : AppCompatActivity(), StartDragListener {
     }
 
 
-    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    @Subscribe
     fun onFavoriteItemAdd(event: MessageEvent) {
 
         var counter = FavoritePreference.with(applicationContext).getInt(AllConstant.COUNTER_FAVORITE, 4);
@@ -95,7 +95,7 @@ class MyFavoriteMenuActivity : AppCompatActivity(), StartDragListener {
             counter = counter + 1;
 
             FavoritePreference.with(applicationContext).addInt(AllConstant.COUNTER_FAVORITE, counter).save()
-            Log.v("Add ", "Counter: " + counter);
+            Logger.v("Add ", "Counter: " + counter);
 
             previewPogistion = event.index;
             event.title;
@@ -103,20 +103,23 @@ class MyFavoriteMenuActivity : AppCompatActivity(), StartDragListener {
             val favoriteMenu = event.favoriteMenu;
             favoriteMenu.status = MenuStatus.Favourite.text;
             favoriteMenu.favoriteListPosition = counter;
-            DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().update(favoriteMenu)
 
 
+            doAsync {
+                DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().update(favoriteMenu)
 
-            this.runOnUiThread {
-                val resId = ResorceHelper.getResId(event.favoriteMenu.name, R.string::class.java)
-                Toast.makeText(applicationContext, getString(R.string.Added) + getString(resId), Toast.LENGTH_LONG).show()
-                getAllUnFavoriteItem()
-                getAllFavoriteDate()
+                uiThread {
+                    val resId = ResorceHelper.getResId(event.favoriteMenu.name, R.string::class.java)
+                    Toast.makeText(applicationContext, getString(R.string.Added) + getString(resId), Toast.LENGTH_LONG).show()
+                    getAllUnFavoriteItem()
+                    getAllFavoriteDate()
+                }
             }
+
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    @Subscribe
     fun onFavoriteItemdeleted(event: MessageEventFavDeleted) {
 
         var counter = FavoritePreference.with(applicationContext).getInt(AllConstant.COUNTER_FAVORITE, 4)
@@ -127,42 +130,48 @@ class MyFavoriteMenuActivity : AppCompatActivity(), StartDragListener {
         }
 
         FavoritePreference.with(applicationContext).addInt(AllConstant.COUNTER_FAVORITE, counter).save()
-        Log.v("deleted ", "Counter: " + counter);
+        Logger.v("deleted ", "Counter: " + counter);
 
         val favoriteMenu = event.favoriteMenu;
         favoriteMenu.status = MenuStatus.UnFavorite.text;
         favoriteMenu.favoriteListPosition = counter
-        DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().update(favoriteMenu)
 
 
-        this.runOnUiThread {
-            getAllUnFavoriteItem()
-            getAllFavoriteDate()
+        doAsync {
+            DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().update(favoriteMenu)
+
+            uiThread {
+                getAllUnFavoriteItem()
+                getAllFavoriteDate()
+            }
+        }
+
+
+    }
+
+    @Subscribe
+    fun onFavoriteItemPositionMove(event: MessageEventPositionMove) {
+
+        doAsync {
+            DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().update(event.fromMenu)
+            DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().update(event.toMenu)
         }
 
     }
 
-    @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    fun onFavoriteItemPositionMove(event: MessageEventPositionMove) {
-
-        DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().update(event.fromMenu)
-        DatabaseClient.getInstance(applicationContext).appDatabase.mFavoriteMenuDab().update(event.toMenu)
-
+    public override fun onResume() {
+        super.onResume()
+        GlobalApplicationBus.getBus().register(this)
     }
 
-    public override fun onStart() {
-        super.onStart()
-        EventBus.getDefault().register(this)
-    }
-
-    public override fun onStop() {
-        super.onStop()
-        EventBus.getDefault().unregister(this)
+    public override fun onPause() {
+        super.onPause()
+        GlobalApplicationBus.getBus().unregister(this)
     }
 
 
     private fun generartedUnFavaroitRecycview(DBDatas: List<FavoriteMenu>) {
-        val appHandler = AppHandler(applicationContext);
+        val appHandler = AppHandler.getmInstance(applicationContext)
         val isEnglish = appHandler.getAppLanguage().equals("en", ignoreCase = true)
 
 
@@ -278,7 +287,7 @@ class MyFavoriteMenuActivity : AppCompatActivity(), StartDragListener {
 
 
     private fun generatedFavoriteRacyView(result: List<FavoriteMenu>) {
-        val mAppHandler = AppHandler(applicationContext);
+        val mAppHandler = AppHandler.getmInstance(applicationContext)
         val isEnglish = mAppHandler.getAppLanguage().equals("en", ignoreCase = true)
 
         val display = this.getWindowManager().getDefaultDisplay()

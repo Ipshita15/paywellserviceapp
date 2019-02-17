@@ -56,7 +56,7 @@ public class GenerateOTPActivity extends BaseActivity implements View.OnClickLis
             getSupportActionBar().setTitle(R.string.home_generate_otp_title);
         }
         mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         initializeView();
     }
 
@@ -142,8 +142,8 @@ public class GenerateOTPActivity extends BaseActivity implements View.OnClickLis
                     String msg = jsonObject.getString(TAG_MESSAGE);
                     String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
                     if (status.equals("200")) {
-                        String otp = msg_text.substring(12,17);
-                        String otp_validation_period = msg_text.substring(41,50);
+                        String otp = msg_text.substring(12, 17);
+                        String otp_validation_period = msg_text.substring(41, 50);
 
                         mAppHandler.setMYCashOTP(otp);
 
@@ -160,7 +160,7 @@ public class GenerateOTPActivity extends BaseActivity implements View.OnClickLis
                         AlertDialog alert = builder.create();
                         alert.setCanceledOnTouchOutside(true);
                         alert.show();
-                    }else{
+                    } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(GenerateOTPActivity.this);
                         builder.setTitle("Result");
                         builder.setMessage(msg);
