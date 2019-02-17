@@ -73,7 +73,7 @@ class NotificationViewModel : BaseViewModel() {
     }
 
     private fun handleRespose(it: ResNotificationAPI?) {
-        val dateFilterData = filletDataByCurrentTime(it?.mNotificationDetailMessage);
+        var dateFilterData = filletDataByCurrentTime(it?.mNotificationDetailMessage);
 
         // clear old data
         doAsync {
@@ -88,7 +88,7 @@ class NotificationViewModel : BaseViewModel() {
             }
             // reversed ana show in UI
             uiThread {
-                //                dateFilterData = dateFilterData?.reversed()
+                dateFilterData = filletDataByCurrentTime(dateFilterData);
                 mListMutableLiveData.setValue(dateFilterData)
                 baseViewStatus.value = BaseViewState(false)
             }
