@@ -57,7 +57,7 @@ public class PBBillStatusInquiryActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_utility_pb_reg_statu_inquery_title);
         }
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mRelativeLayout = findViewById(R.id.relativeLayout);
         adapter = new CustomAdapter(this);
         initView();
@@ -319,10 +319,21 @@ public class PBBillStatusInquiryActivity extends AppCompatActivity {
 
     private void showFullInfo(int position) {
         String array[] = adapter.mData.get(position).split("@");
-        String msg = "Acc No: " + array[0]
-                + "\nPnone: " + array[5] + "\nRequest Date: " + array[6]
-                + "\nDetails: " + array[4]
-                + "\nTrx ID: " + array[3];
+
+//        String msg = "Acc No: " + array[0]
+//                + "\nPnone: " + array[5] + "\nRequest Date: " + array[6]
+//                + "\nDetails: " + array[4]
+//                + "\nTrx ID: " + array[3];
+
+        String msg = getString(R.string.acc_no_des) + array[0] + "\n" +
+                getString(R.string.trx_id_des) + array[3] + "\n" +
+                getString(R.string.date_des) + array[6];
+
+
+        if (!array[4].equals("")) {
+            msg = msg + "\n \n" + getString(R.string.details) + "\n" + array[4];
+        }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(PBBillStatusInquiryActivity.this);
         if (array[1].equalsIgnoreCase("200")) {
             builder.setTitle(Html.fromHtml("<font color='#008000'>Result Successful</font>"));

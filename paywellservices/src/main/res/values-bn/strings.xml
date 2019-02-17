@@ -602,6 +602,11 @@
     <string name="home_utility_ivac_inquiry_title">আইভিএসি ফি অনুসন্ধান</string>
     <string name="home_karnaphuli_bill_title">কর্ণফুলী বিল প্রদান</string>
     <string name="home_karnaphuli_inquiryl_title">কর্ণফুলী বিল অনুসন্ধান</string>
+    <string name="details">বিস্তারিত:</string>
+    <string name="home_utility_pb_request_inquiry_bt">বিল স্ট্যাটাস</string>
+    <string name="home_utility_pb_bill_statu_inquery_bt">বিল স্ট্যাটাস \nঅনুসন্ধান</string>
+    <string name="home_utility_pb_bill_change_number_bt">নম্বর পরিবর্তন</string>
+    <string name="home_utility_pb_phone_number_inquiry_bt">নম্বর পরিবর্তন \n অনুসন্ধান</string>
 
 
 </resources>

@@ -60,7 +60,7 @@ public class PayWellToMYCashActivity extends BaseActivity implements View.OnClic
             getSupportActionBar().setTitle(R.string.home_paywell_to_mycash_title);
         }
         mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         initializeView();
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_MYCASH_PAYWELL_TO_MYCASH);
 

@@ -4,7 +4,8 @@
     <color name="colorPrimaryDark">#2E7D32</color>
     <color name="colorAccent">#5aac40</color>
     <drawable name="layout_background">#0c000000</drawable>
-    <color name="tab_background">@color/colorPrimary</color>
+    <color name="tab_background">#189d49</color>
+    <color name="tab_indicator">#8de291</color>
     <color name="colorText">#ffffff</color>
     <color name="card_background">@color/colorText</color>
     <color name="layout_background">#eeeeee</color>

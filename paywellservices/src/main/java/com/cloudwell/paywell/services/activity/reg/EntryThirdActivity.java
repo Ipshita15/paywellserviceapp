@@ -50,7 +50,7 @@ public class EntryThirdActivity extends AppCompatActivity {
             getSupportActionBar().setTitle("৩য় ধাপ");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         ScrollView mScrollView = findViewById(R.id.scrollView_third);
         et_salesCode = findViewById(R.id.editText_salesCode);

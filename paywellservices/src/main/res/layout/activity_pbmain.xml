@@ -89,7 +89,7 @@
                     style="@style/HomeButtonNew"
                     android:drawableTop="@drawable/to_know_bill_status"
                     android:onClick="onButtonClicker"
-                    android:text="@string/home_utility_pb_request_inquiry"
+                    android:text="@string/home_utility_pb_request_inquiry_bt"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -99,7 +99,7 @@
                     style="@style/HomeButtonNew"
                     android:drawableTop="@drawable/ic_enquiry"
                     android:onClick="onButtonClicker"
-                    android:text="@string/home_utility_pb_bill_statu_inquery"
+                    android:text="@string/home_utility_pb_bill_statu_inquery_bt"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -120,7 +120,7 @@
                     style="@style/HomeButtonNew"
                     android:drawableTop="@drawable/contact_number_change"
                     android:onClick="onButtonClicker"
-                    android:text="@string/home_utility_pb_bill_change_number"
+                    android:text="@string/home_utility_pb_bill_change_number_bt"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -129,7 +129,7 @@
                     style="@style/HomeButtonNew"
                     android:drawableTop="@drawable/ic_enquiry"
                     android:onClick="onButtonClicker"
-                    android:text="@string/home_utility_pb_phone_number_inquiry"
+                    android:text="@string/home_utility_pb_phone_number_inquiry_bt"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 

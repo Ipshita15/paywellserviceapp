@@ -56,7 +56,7 @@ public class PBRegistrationActivity extends BaseActivity implements View.OnClick
             getSupportActionBar().setTitle(R.string.home_utility_pb_reg_title);
         }
         cd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         initView();
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_REGISTION_INQUIRY);
@@ -257,9 +257,7 @@ public class PBRegistrationActivity extends BaseActivity implements View.OnClick
                     }
                 }
             });
-            builder.setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener()
-
-            {
+            builder.setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
@@ -283,7 +281,7 @@ public class PBRegistrationActivity extends BaseActivity implements View.OnClick
 
         @Override
         protected void onPreExecute() {
-           showStatusDialog();
+            showStatusDialog();
         }
 
         @Override
@@ -314,7 +312,7 @@ public class PBRegistrationActivity extends BaseActivity implements View.OnClick
 
         @Override
         protected void onPostExecute(String result) {
-           dismissProgressDialog();
+            dismissProgressDialog();
             try {
                 if (result != null && result.contains("@")) {
                     String splitArray[] = result.split("@");

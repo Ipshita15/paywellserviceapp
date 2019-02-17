@@ -20,7 +20,7 @@ public class PendingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_loading);
 
-        AppHandler mAppHandler = new AppHandler(this);
+        AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         TextView mConErrorMsg = findViewById(R.id.connErrorMsg);
         Button mBtnRetry = findViewById(R.id.btnRetry);

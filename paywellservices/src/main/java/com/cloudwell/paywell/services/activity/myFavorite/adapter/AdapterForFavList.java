@@ -14,9 +14,10 @@ import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
 import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEventFavDeleted;
 import com.cloudwell.paywell.services.activity.myFavorite.model.MessageEventPositionMove;
 import com.cloudwell.paywell.services.app.AppController;
+import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus;
 import com.cloudwell.paywell.services.utils.ResorceHelper;
 
-import org.greenrobot.eventbus.EventBus;
+
 
 import java.util.Collections;
 import java.util.List;
@@ -68,7 +69,7 @@ public class AdapterForFavList extends RecyclerView.Adapter<AdapterForFavList.My
             public void onClick(View v) {
 
                 MessageEventFavDeleted messageEvent = new MessageEventFavDeleted(favoriteMenu);
-                EventBus.getDefault().post(messageEvent);
+                GlobalApplicationBus.getBus().post(messageEvent);
 
             }
         });
@@ -77,7 +78,7 @@ public class AdapterForFavList extends RecyclerView.Adapter<AdapterForFavList.My
             @Override
             public void onClick(View v) {
                 MessageEventFavDeleted messageEvent = new MessageEventFavDeleted(favoriteMenu);
-                EventBus.getDefault().post(messageEvent);
+                GlobalApplicationBus.getBus().post(messageEvent);
             }
         });
     }
@@ -111,7 +112,7 @@ public class AdapterForFavList extends RecyclerView.Adapter<AdapterForFavList.My
         toMenu.setFavoriteListPosition(toPosition);
 
         MessageEventPositionMove messageEvent = new MessageEventPositionMove(fromMenu, toMenu);
-        EventBus.getDefault().post(messageEvent);
+        GlobalApplicationBus.getBus().post(messageEvent);
 
     }
 

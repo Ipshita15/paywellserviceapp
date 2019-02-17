@@ -85,7 +85,8 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
+
         mCd = new ConnectionDetector(AppController.getContext());
         scrollView = findViewById(R.id.scrollViewMissing);
 

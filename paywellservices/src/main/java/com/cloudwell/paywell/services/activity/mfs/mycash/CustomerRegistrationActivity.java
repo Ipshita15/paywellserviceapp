@@ -61,7 +61,7 @@ public class CustomerRegistrationActivity extends BaseActivity implements View.O
             getSupportActionBar().setTitle(R.string.home_customer_registration_title);
         }
         mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         initializeView();
     }
 

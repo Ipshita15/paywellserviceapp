@@ -67,7 +67,7 @@ public class PaymentConfirmationActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_bkash_payment_confirm_title);
         }
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mRelativeLayout = findViewById(R.id.trxRelativeLayout);
         mCd = new ConnectionDetector(AppController.getContext());
         listView = findViewById(R.id.trxListView);
@@ -236,7 +236,7 @@ public class PaymentConfirmationActivity extends BaseActivity {
         private final Context mContext;
 
         private TrxAdapter(Context context) {
-            mAppHandler = new AppHandler(context);
+            mAppHandler = AppHandler.getmInstance(getApplicationContext());
             mContext = context;
         }
 

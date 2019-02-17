@@ -6,7 +6,6 @@ import android.accounts.AccountManager;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,7 +15,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
@@ -69,8 +67,7 @@ import com.cloudwell.paywell.services.activity.mfs.MFSMainActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.MyFavoriteMenuActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
-import com.cloudwell.paywell.services.activity.notification.NotificationActivity;
-import com.cloudwell.paywell.services.activity.notification.NotificationAllActivity;
+import com.cloudwell.paywell.services.activity.notification.allNotificaiton.NotificationAllActivity;
 import com.cloudwell.paywell.services.activity.product.ProductMenuActivity;
 import com.cloudwell.paywell.services.activity.product.productHelper.ProductHelper;
 import com.cloudwell.paywell.services.activity.refill.RefillBalanceMainActivity;
@@ -117,10 +114,10 @@ import com.cloudwell.paywell.services.app.model.APIResBalanceCheck;
 import com.cloudwell.paywell.services.constant.AllConstant;
 import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.database.FavoriteMenuDab;
+import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
-import com.cloudwell.paywell.services.service.notificaiton.NotificationCheckerService;
 import com.cloudwell.paywell.services.service.notificaiton.model.EventNewNotificaiton;
-import com.cloudwell.paywell.services.service.notificaiton.model.StartNotificationService;
+import com.cloudwell.paywell.services.utils.AppHelper;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.LocationUtility;
 import com.cloudwell.paywell.services.utils.ResorceHelper;
@@ -142,6 +139,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.orhanobut.logger.Logger;
+import com.squareup.otto.Subscribe;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -151,10 +149,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -177,8 +171,12 @@ import retrofit2.Response;
 import ss.com.bannerslider.Slider;
 import ss.com.bannerslider.event.OnSlideClickListener;
 
+import static com.cloudwell.paywell.services.utils.LanuageConstant.KEY_BANGLA;
+import static com.cloudwell.paywell.services.utils.LanuageConstant.KEY_ENGLISH;
+
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener, View.OnClickListener {
 
+    public static String KEY_COMMING_NEW_NOTIFICATION = "COMMING_NEW_NOTIFICATION";
     private static final long KEY_BALANCE_CHECK_INTERVAL = 5000;
     private boolean doubleBackToExitPressedOnce = false;
     public CoordinatorLayout mCoordinateLayout;
@@ -195,10 +193,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private Toolbar mToolbar;
     private boolean mIsNotificationShown;
     private final String TAG_RESPONSE_STATUS = "status";
-    private final String TAG_RESPONSE_TOTAL_UREAD_MSG = "unread_message";
-    private final String TAG_RESPONSE_MSG_ARRAY = "detail_message";
     private final String TAG_RESPONSE_MESSAGE = "message";
-    private final String TAG_RESPONSE_OTP = "otp";
     private NavigationView navigationView;
     boolean checkNotificationFlag = false;
 
@@ -270,7 +265,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         ivBalanceBorder.setOnClickListener(this);
 
         mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         builderNotification = new AlertDialog.Builder(this);
         alertNotification = builderNotification.create();
@@ -312,12 +307,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void onStart() {
         super.onStart();
-        EventBus.getDefault().register(this);
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        GlobalApplicationBus.getBus().register(this);
+
         refreshStringsOfButton();
         if (alertNotification.isShowing()) {
             alertNotification.dismiss();
@@ -325,7 +322,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         viewPager.setInterval(2000);
         updateMyFavorityView();
-        notificationCounterCheck();
+
+        mNumOfNotification = 0;
+
+        AppHelper.notificationCounterCheck(mCd, getApplicationContext());
+
         startRightLeftAnimation();
 
         isBalaceBoxOpen = true;
@@ -339,13 +340,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected void onPause() {
         super.onPause();
         viewPager.setInterval(0);
+        GlobalApplicationBus.getBus().unregister(this);
+
     }
 
 
     @Override
     public void onStop() {
         super.onStop();
-        EventBus.getDefault().unregister(this);
         stopRightLefAnimation();
         isBalaceBoxOpen = false;
     }
@@ -531,19 +533,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Bundle delivered = getIntent().getExtras();
-        if (delivered != null && !delivered.isEmpty()) {
-            mIsNotificationShown = delivered.getBoolean(NotificationActivity.IS_NOTIFICATION_SHOWN);
-        }
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("bn") || mAppHandler.getAppLanguage().equalsIgnoreCase("unknown")) {
-            Configuration config = new Configuration();
-            config.locale = Locale.FRANCE;
-            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+            switchToCzLocale(new Locale(KEY_BANGLA, ""));
         } else {
-            Configuration config = new Configuration();
-            config.locale = Locale.ENGLISH;
-            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+            switchToCzLocale(new Locale(KEY_ENGLISH, ""));
         }
 
         // mToolbarHeading.setText(getString(R.string.balance) + mAppHandler.getPwBalance() + getString(R.string.tk));
@@ -589,7 +583,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             for (String key : getIntent().getExtras().keySet()) {
                 String value = getIntent().getExtras().getString(key);
                 if (key.equals("Notification") && value.equals("True")) {
-                    mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
+                    // mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
                 }
             }
         }
@@ -704,7 +698,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (!mIsNotificationShown) {
             if (!mCd.isConnectingToInternet())
                 AppHandler.showDialog(getSupportFragmentManager());
-            mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
+//            mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
         }
         notificationView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -712,15 +706,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NOTIFICATION_ICON);
                 if (mNumOfNotification != 0) {
-                    Intent intent = new Intent(MainActivity.this, NotificationAllActivity.class);
-                    startActivity(intent);
                     mNumOfNotification = 0;
-                    finish();
+                    Intent intent = new Intent(MainActivity.this, NotificationAllActivity.class);
+                    intent.putExtra(KEY_COMMING_NEW_NOTIFICATION, true);
+                    startActivity(intent);
                 } else {
-
                     startActivity(new Intent(MainActivity.this, NotificationAllActivity.class));
-                    finish();
-
                 }
             }
         });
@@ -740,7 +731,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             generateQRCode();
         }
         startActivity(new Intent(MainActivity.this, DisplayQRCodeActivity.class));
-        finish();
+
         return true;
     }
 
@@ -749,12 +740,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (newNotification == 0)
-                    mNotification.setVisibility(View.INVISIBLE);
-                else {
-                    String notification = Integer.toString(newNotification);
-                    mNotification.setVisibility(View.VISIBLE);
-                    mNotification.setText(notification);
+                if (newNotification == 0) {
+                    if (mNotification != null) {
+                        mNotification.setVisibility(View.INVISIBLE);
+                    }
+
+                } else {
+                    if (mNotification != null) {
+                        String notification = Integer.toString(newNotification);
+                        mNotification.setVisibility(View.VISIBLE);
+                        mNotification.setText(notification);
+                    }
+
                 }
             }
         });
@@ -992,7 +989,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                     mAppHandler.setPWBalance("" + roundOff);
 
-                    String strBalance = mAppHandler.getPwBalance() + getString(R.string.tk);
+                    String strBalance = mAppHandler.getPwBalance();
                     mToolbarHeading.setText(strBalance);
 
 
@@ -1005,7 +1002,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 mToolbarHeading.setVisibility(View.VISIBLE);
                 isBalaceCheckProcessRunning = false;
 
-                Logger.e("onFailure:" + t.getLocalizedMessage());
+
                 Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                 View snackBarView = snackbar.getView();
@@ -1418,54 +1415,37 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe
     public void onNewnotificationcomming(EventNewNotificaiton eventNewNotificaiton) {
         int counter = eventNewNotificaiton.getCounter();
+        mNumOfNotification = counter;
 
-        notificationCount(counter);
-        builderNotification = new AlertDialog.Builder(MainActivity.this);
-        builderNotification.setTitle(R.string.home_notification);
-        builderNotification.setMessage(getString(R.string.unread_first_msg) + " " + counter + " " + getString(R.string.unread_second_msg));
-        builderNotification.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int id) {
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CEHCK_NEW_NOTIFICATION);
-                dialogInterface.dismiss();
-                checkNotificationFlag = true;
-                mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
-            }
-        });
-        alertNotification = builderNotification.create();
-        alertNotification.show();
-        TextView messageText = alertNotification.findViewById(android.R.id.message);
-        messageText.setGravity(Gravity.CENTER);
-
-
-    }
-
-    private void notificationCounterCheck() {
-        if (mCd.isConnectingToInternet()) {
-            boolean myServiceRunning = isMyServiceRunning(NotificationCheckerService.class);
-            if (!myServiceRunning) {
-                Intent intent = new Intent(getApplicationContext(), NotificationCheckerService.class);
-                startService(intent);
-            } else {
-                boolean apiCalledRuing = NotificationCheckerService.Companion.isAPICalledRunning();
-                if (!apiCalledRuing) {
-                    EventBus.getDefault().post(new StartNotificationService(1));
+        if (mNumOfNotification > 0) {
+            notificationCount(counter);
+            builderNotification = new AlertDialog.Builder(MainActivity.this);
+            builderNotification.setTitle(R.string.home_notification);
+            builderNotification.setMessage(getString(R.string.unread_first_msg) + " " + counter + " " + getString(R.string.unread_second_msg));
+            builderNotification.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int id) {
+                    AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CEHCK_NEW_NOTIFICATION);
+                    dialogInterface.dismiss();
+                    checkNotificationFlag = true;
+                    checkNotificationFlag = false;
+                    mNumOfNotification = 0;
+                    Intent intent = new Intent(MainActivity.this, NotificationAllActivity.class);
+                    intent.putExtra(KEY_COMMING_NEW_NOTIFICATION, true);
+                    startActivity(intent);
                 }
-            }
+            });
+            alertNotification = builderNotification.create();
+            alertNotification.show();
+            TextView messageText = alertNotification.findViewById(android.R.id.message);
+            messageText.setGravity(Gravity.CENTER);
+        } else {
+            notificationCount(counter);
         }
-    }
 
-    private boolean isMyServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-        return false;
     }
 
 
@@ -1606,6 +1586,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 String status = jsonObject.getString(TAG_RESPONSE_STATUS);
                 String msg = jsonObject.getString(TAG_RESPONSE_MESSAGE);
+                String TAG_RESPONSE_OTP = "otp";
                 String foundOtp = jsonObject.getString(TAG_RESPONSE_OTP);
 
                 if (status.equalsIgnoreCase("200")) {
@@ -2035,80 +2016,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             intent.setData(Uri.parse("tel:" + selectedPhnNo));
             startActivity(intent);
-        }
-    }
-
-    @SuppressWarnings("deprecation")
-    private class NotificationAsync extends AsyncTask<String, Intent, String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-            String notifications = null;
-            try {
-                HttpClient httpClients = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost(params[0]);
-
-                List<NameValuePair> nameValuePairs = new ArrayList<>(4);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("mes_type", "all_message"));
-                nameValuePairs.add(new BasicNameValuePair("message_status", "all"));
-                nameValuePairs.add(new BasicNameValuePair("format", "json"));
-
-                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                notifications = httpClients.execute(httpPost, responseHandler);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return notifications;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            if (result != null) {
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String status = jsonObject.getString(TAG_RESPONSE_STATUS);
-
-                    if (status.equalsIgnoreCase("200")) {
-
-                        String totalUnreadMsg = jsonObject.getString(TAG_RESPONSE_TOTAL_UREAD_MSG);
-
-                        mNumOfNotification = Integer.parseInt(totalUnreadMsg);
-
-                        JSONArray jsonArray = jsonObject.getJSONArray(TAG_RESPONSE_MSG_ARRAY);
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            if (checkNotificationFlag) {
-                                checkNotificationFlag = false;
-                                mNumOfNotification = 0;
-                                startActivity(new Intent(MainActivity.this, NotificationAllActivity.class));
-                                finish();
-                            }
-                        }
-                    } else {
-                        mNumOfNotification = 0;
-                    }
-                    notificationCount(mNumOfNotification);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-            } else {
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.conn_timeout_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
         }
     }
 

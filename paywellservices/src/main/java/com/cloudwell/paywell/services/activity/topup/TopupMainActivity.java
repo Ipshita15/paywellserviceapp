@@ -125,7 +125,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topup_main);
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
@@ -177,22 +177,19 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
 
         inflater = getLayoutInflater();
         cd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
+
 
         ScrollView myScrollView = findViewById(R.id.topupScrollView);
 
-        myScrollView.setOnTouchListener(new View.OnTouchListener()
-        {
+        myScrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                if (event != null && event.getAction() == MotionEvent.ACTION_MOVE)
-                {
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event != null && event.getAction() == MotionEvent.ACTION_MOVE) {
                     InputMethodManager imm = ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE));
                     boolean isKeyboardUp = imm.isAcceptingText();
 
-                    if (isKeyboardUp)
-                    {
+                    if (isKeyboardUp) {
                         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                     }
                 }
@@ -1262,9 +1259,12 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
         AlertDialog.Builder builder = new AlertDialog.Builder(TopupMainActivity.this);
 
         // check authentication
-        TopupData topupData = response.getTopupData().get(0).getTopupData();
-        if (topupData == null) {
-            showAuthticationError();
+        TopupData topupDataFirstItem = response.getTopupData().get(0).getTopupData();
+        if (topupDataFirstItem == null) {
+
+            String message = response.getTopupData().get(0).getMessage();
+            showAuthticationError(message);
+
         } else {
             showDialog(response, receiptBuilder, builder);
         }
@@ -1329,6 +1329,20 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
     private void showAuthticationError() {
         AlertDialog.Builder builder = new AlertDialog.Builder(TopupMainActivity.this);
         builder.setMessage(R.string.services_alert_msg);
+        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int id) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+
+    }
+
+    private void showAuthticationError(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(TopupMainActivity.this);
+        builder.setMessage(message);
         builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int id) {

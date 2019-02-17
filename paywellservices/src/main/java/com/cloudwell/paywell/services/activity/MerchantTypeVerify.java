@@ -60,7 +60,7 @@ public class MerchantTypeVerify extends BaseActivity {
             getSupportActionBar().setTitle(R.string.info_collect_title);
         }
 
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mCd = new ConnectionDetector(AppController.getContext());
 
         mAppHandler.setPhnUpdateCheck(System.currentTimeMillis() / 1000);

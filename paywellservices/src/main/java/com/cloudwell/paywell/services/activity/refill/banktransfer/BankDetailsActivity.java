@@ -55,7 +55,7 @@ public class BankDetailsActivity extends BaseActivity {
     private ConstraintLayout mConstraintLayout;
     private Spinner mSpinnerDistrict, mSpinnerBranch;
     private Button mBtnUpload;
-//            , mBtnOk;
+    //            , mBtnOk;
     private ArrayList<String> district_array, branch_array;
     private boolean districtChangeStatus;
     private ArrayAdapter<String> arrayAdapterBranchSpinner;
@@ -73,7 +73,7 @@ public class BankDetailsActivity extends BaseActivity {
             getSupportActionBar().setTitle(R.string.home_refill_bank);
         }
 
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mCd = new ConnectionDetector(AppController.getContext());
 
         mRequestRefillBalance = new RequestRefillBalance();
@@ -96,7 +96,6 @@ public class BankDetailsActivity extends BaseActivity {
         mSpinnerDistrict = findViewById(R.id.spinner_district);
         mSpinnerBranch = findViewById(R.id.spinner_branch);
         mBtnUpload = findViewById(R.id.btn_upload);
-//        mBtnOk = findViewById(R.id.btn_ok);
 
         TextView textViewAccountNum = findViewById(R.id.textViewAccountNo);
 

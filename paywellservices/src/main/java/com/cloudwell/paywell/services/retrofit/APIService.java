@@ -1,6 +1,8 @@
 package com.cloudwell.paywell.services.retrofit;
 
 
+import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI;
+import com.cloudwell.paywell.services.activity.notification.model.ResNotificationReadAPI;
 import com.cloudwell.paywell.services.activity.refill.model.BranchData;
 import com.cloudwell.paywell.services.activity.refill.model.DistrictData;
 import com.cloudwell.paywell.services.activity.refill.model.RefillRequestData;
@@ -70,12 +72,24 @@ public interface APIService {
     @FormUrlEncoded
     Call<APIResBalanceCheck> callCheckBalance(@Field("username") String username);
 
-    @POST("RetailerService/checkNotification")
+    @POST("RetailerService/checkNotificationDetails")
     @FormUrlEncoded
     Call<APIResNoCheckNotification> callCheckNotification(@Field("username") String username);
 
+    @POST
+    @FormUrlEncoded
+    Call<ResNotificationAPI> callNotificationAPI(@Url String ur,
+                                                 @Field("username") String username,
+                                                 @Field("mes_type") String mesType,
+                                                 @Field("message_status") String messageStatus,
+                                                 @Field("format") String format);
 
-
+    @POST
+    @FormUrlEncoded
+    Call<ResNotificationReadAPI> callNotificationReadAPI(@Url String url,
+                                                         @Field("username") String username,
+                                                         @Field("message_id") String messageId,
+                                                         @Field("format") String format);
 }
 
 

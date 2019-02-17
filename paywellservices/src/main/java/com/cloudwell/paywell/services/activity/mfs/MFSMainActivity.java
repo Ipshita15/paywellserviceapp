@@ -16,7 +16,7 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 
 
-public class MFSMainActivity  extends AppCompatActivity {
+public class MFSMainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,7 @@ public class MFSMainActivity  extends AppCompatActivity {
             getSupportActionBar().setTitle(R.string.nav_mfs);
         }
 
-        AppHandler mAppHandler = new AppHandler(this);
+        AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         Button btnMycash = findViewById(R.id.homeBtnMyCash);
 

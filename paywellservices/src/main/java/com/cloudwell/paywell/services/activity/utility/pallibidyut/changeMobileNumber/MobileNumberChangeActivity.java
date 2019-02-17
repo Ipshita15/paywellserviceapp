@@ -53,7 +53,7 @@ public class MobileNumberChangeActivity extends BaseActivity implements View.OnC
             getSupportActionBar().setTitle(R.string.home_utility_polli_request_mobile_number_change_title);
         }
         cd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         initView();
 
 

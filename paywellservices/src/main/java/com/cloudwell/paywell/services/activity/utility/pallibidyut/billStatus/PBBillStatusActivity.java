@@ -55,7 +55,7 @@ public class PBBillStatusActivity extends BaseActivity implements View.OnClickLi
             getSupportActionBar().setTitle(R.string.home_utility_polli_home_bill_status);
         }
         mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         initializeView();
 
@@ -157,6 +157,7 @@ public class PBBillStatusActivity extends BaseActivity implements View.OnClickLi
                     mMonth = String.valueOf(month);
                 }
                 mYear = String.valueOf(year);
+                mMonth = spnr_month.getSelectedItem().toString().trim().substring(0, 3).toUpperCase();
                 handleBillStatusCheckRequest();
             }
         }

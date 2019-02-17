@@ -27,7 +27,7 @@ public class BanglalionMainActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(R.string.home_utility_banglalion);
         }
 
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         Button btnBLRecharge = findViewById(R.id.homeBtnRecharge);
         Button btnBLInq = findViewById(R.id.homeBtnInquiry);
@@ -44,12 +44,12 @@ public class BanglalionMainActivity extends AppCompatActivity {
     }
 
     public void goToBanglalionRecharge(View view) {
-        startActivity(new Intent(BanglalionMainActivity.this,BanglalionRechargeActivity.class));
+        startActivity(new Intent(BanglalionMainActivity.this, BanglalionRechargeActivity.class));
 
     }
 
     public void goToRechargeInquiry(View view) {
-        startActivity(new Intent(BanglalionMainActivity.this,BanglalionRechargeInquiryActivity.class));
+        startActivity(new Intent(BanglalionMainActivity.this, BanglalionRechargeInquiryActivity.class));
 
     }
 

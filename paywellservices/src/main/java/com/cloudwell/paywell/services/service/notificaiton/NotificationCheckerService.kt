@@ -3,15 +3,16 @@ package com.cloudwell.paywell.services.service.notificaiton
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
+import com.cloudwell.paywell.services.activity.notification.NotificationRepogitory
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.service.notificaiton.model.APIResNoCheckNotification
 import com.cloudwell.paywell.services.service.notificaiton.model.EventNewNotificaiton
 import com.cloudwell.paywell.services.service.notificaiton.model.StartNotificationService
 import com.orhanobut.logger.Logger
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
+import com.squareup.otto.Subscribe
+import org.jetbrains.anko.doAsync
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,36 +31,39 @@ class NotificationCheckerService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        EventBus.getDefault().register(this);
+        try {
+            GlobalApplicationBus.getBus().register(this);
+        } catch (e: Exception) {
 
-        callBalanceCheckAPI();
+        }
+
+        callnotificaitonCheckDetausAPI();
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+
+    @Subscribe
     fun callAgainBalanceCheckAPI(event: StartNotificationService) {
-        callBalanceCheckAPI();
+        callnotificaitonCheckDetausAPI();
 
     };
 
 
     override fun onDestroy() {
-        EventBus.getDefault().unregister(this);
+        GlobalApplicationBus.getBus().unregister(this);
         Logger.v("onDestroy")
-
         super.onDestroy()
 
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
         return super.onStartCommand(intent, flags, startId)
 
     }
 
 
-    private fun callBalanceCheckAPI() {
+    private fun callnotificaitonCheckDetausAPI() {
         isAPICalledRunning = true;
-        val ah = AppHandler(applicationContext);
+        val ah = AppHandler.getmInstance(applicationContext)
         val imeiNo = ah.getImeiNo()
 
 
@@ -75,8 +79,17 @@ class NotificationCheckerService : Service() {
                 isAPICalledRunning = false;
                 val unread = response.body()?.unread;
                 val parseInt = Integer.parseInt(unread);
-                if (parseInt > 0) {
-                    EventBus.getDefault().post(EventNewNotificaiton(parseInt))
+                GlobalApplicationBus.getBus().post(EventNewNotificaiton(parseInt))
+
+                val detail_message = response.body()?.detail_message;
+                if (detail_message != null) {
+                    if (detail_message.size > 0) {
+                        doAsync {
+                            val notificationRepogitory = NotificationRepogitory(applicationContext);
+                            notificationRepogitory.insertLocalData(detail_message)
+                        }
+
+                    }
                 }
             }
 

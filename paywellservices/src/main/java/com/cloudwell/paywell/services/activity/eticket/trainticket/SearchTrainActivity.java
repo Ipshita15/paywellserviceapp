@@ -81,7 +81,7 @@ public class SearchTrainActivity extends BaseActivity implements AdapterView.OnI
         // Button click listener
         mBtnSearchTrain.setOnClickListener(this);
 
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         // Creating adapter for spinner
         assert mSpinnerDestination != null;
         ArrayAdapter<String> destinationAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mAppHandler.getDestinationStations()) {
@@ -154,7 +154,7 @@ public class SearchTrainActivity extends BaseActivity implements AdapterView.OnI
 
     public void onBackPressed() {
         Intent intent = new Intent(SearchTrainActivity.this, TrainTicketActivity.class);
-        intent.putExtra("back","back");
+        intent.putExtra("back", "back");
         startActivity(intent);
         finish();
     }
@@ -211,7 +211,7 @@ public class SearchTrainActivity extends BaseActivity implements AdapterView.OnI
 
         @Override
         protected void onPreExecute() {
-          showProgressDialog();
+            showProgressDialog();
         }
 
         @Override
