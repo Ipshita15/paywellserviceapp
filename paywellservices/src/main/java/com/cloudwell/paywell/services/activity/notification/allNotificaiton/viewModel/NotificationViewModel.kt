@@ -24,33 +24,36 @@ class NotificationViewModel : BaseViewModel() {
     val mViewStatus = SingleLiveEvent<NotificationViewStatus>()
 
     fun onPullRequested(isFlowForComingNewNotification: Boolean, internetConnection: Boolean) {
-        if (isFlowForComingNewNotification) {
-            // new notification combing
-            baseViewStatus.value = BaseViewState(true)
 
-            if (internetConnection) {
-                callNotificationRemoteAPI()
-            } else {
+        callNotificationRemoteAPI()
 
-                baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
-            }
-
-        } else {
-            mNotificationRepository.getLocalNotificationData()?.observeForever { detailMessages ->
-                if (detailMessages?.size == 0) {
-                    // first time in app
-                    if (internetConnection) {
-                        callNotificationRemoteAPI()
-                    } else {
-                        baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
-                    }
-                } else {
-                    // normal time
-                    val filletDataByCurrentTime = filletDataByCurrentTime(detailMessages);
-                    mListMutableLiveData.setValue(filletDataByCurrentTime)
-                }
-            }
-        }
+//        if (isFlowForComingNewNotification) {
+//            // new notification combing
+//            baseViewStatus.value = BaseViewState(true)
+//
+//            if (internetConnection) {
+//                callNotificationRemoteAPI()
+//            } else {
+//
+//                baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
+//            }
+//
+//        } else {
+//            mNotificationRepository.getLocalNotificationData()?.observeForever { detailMessages ->
+//                if (detailMessages?.size == 0) {
+//                    // first time in app
+//                    if (internetConnection) {
+//                        callNotificationRemoteAPI()
+//                    } else {
+//                        baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
+//                    }
+//                } else {
+//                    // normal time
+//                    val filletDataByCurrentTime = filletDataByCurrentTime(detailMessages);
+//                    mListMutableLiveData.setValue(filletDataByCurrentTime)
+//                }
+//            }
+//        }
 
     }
 

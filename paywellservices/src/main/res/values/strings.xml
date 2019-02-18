@@ -472,7 +472,7 @@
     <!--<string name="pw_auth">https://www.paywellonline.com/crs3291/android/paywell_app_api/tab_user_service_profiling_test.php?</string>-->
     <!--<string name="pw_auth">https://www.paywellonline.com/crs3291/android/paywell_app_api/tab_user_service_profiling_new.php?</string>-->
     <string name="pw_auth">https://api.paywellonline.com/PaywelltransactionRetailer/TabUserServiceProfiling?</string>
-    <string name="notif_url">https://www.paywellonline.com/default/api/notification_check_android.php?</string>
+    <string name="notif_url">https://www.paywellonline.com/default/api/notification_check_android_1.php?</string>
     <string name="notification_token_url">https://www.paywellonline.com/paywellapi/setUserFCMToken.php</string>
 
     <!--<string name="update_check">https://app.paywellonline.com/apk_test/app-release.apk</string>-->
@@ -607,5 +607,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="one_way">One Way</string>
+    <string name="title_activity_air_tricket_menu">AirTricketMenuActivity</string>
 
 </resources>

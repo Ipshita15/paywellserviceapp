@@ -3,13 +3,13 @@ package com.cloudwell.paywell.services.activity.eticket.airticket
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import kotlinx.android.synthetic.main.activity_air_ticket_main.*
 
-class AirTicketMainActivity : AppCompatActivity(), ClassBottomSheetDialog.ClassBottomSheetListener,
+class AirTicketMainActivity : AirTricketBaseActivity(), ClassBottomSheetDialog.ClassBottomSheetListener,
         PassengerBottomSheetDialog.PsngrBottomSheetListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,11 +34,13 @@ class AirTicketMainActivity : AppCompatActivity(), ClassBottomSheetDialog.ClassB
         menuInflater.inflate(R.menu.airticket_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if(item!!.itemId == android.R.id.home)
+        if (item!!.itemId == android.R.id.home)
             onBackPressed()
         return super.onOptionsItemSelected(item)
     }
+
     override fun onBackPressed() {
         finish()
     }

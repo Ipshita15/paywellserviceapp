@@ -24,24 +24,17 @@
 
     <uses-feature
         android:glEsVersion="0x00020000"
-        android:required="true"/>
-
-    <!-- <permission -->
+        android:required="true"/> <!-- <permission -->
     <!-- android:name="com.cloudwell.paywell.services.permission.MAPS_RECEIVE" -->
     <!-- android:protectionLevel="signature" /> -->
-
-
     <!-- <uses-permission android:name="com.example.permission.MAPS_RECEIVE" /> -->
-
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
         android:normalScreens="true"
         android:resizeable="true"
         android:smallScreens="true"
-        android:xlargeScreens="true"/>
-
-    <!-- To auto-complete the email text field in ic_login_ajkogin form with the user's emails -->
+        android:xlargeScreens="true"/> <!-- To auto-complete the email text field in ic_login_ajkogin form with the user's emails -->
     <uses-permission android:name="android.permission.READ_PROFILE"/>
 
     <application
@@ -53,6 +46,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
+
         <uses-library
             android:name="com.google.android.maps"
             android:required="false"/>
@@ -60,6 +54,7 @@
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode"/>
+
         <activity
             android:name=".LaunchScreenActivity"
             android:label="@string/app_name"
@@ -71,7 +66,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
         </activity>
 
         <meta-data
@@ -82,16 +76,14 @@
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <!-- activities for bKasah -->
+            android:theme="@style/AppTheme.NoActionBar"/> <!-- activities for bKasah -->
         <activity
             android:name=".activity.AppLoadingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activity.PendingActivity"
-            android:screenOrientation="portrait"/>
-        <!-- activities for utilities -->
+            android:screenOrientation="portrait"/> <!-- activities for utilities -->
         <activity
             android:name=".activity.utility.UtilityMainActivity"
             android:parentActivityName=".activity.MainActivity"
@@ -101,8 +93,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cloudwell.paywell.services.activity.MainActivity"/>
-        </activity>
-        <!-- activities for palli bidyut -->
+        </activity> <!-- activities for palli bidyut -->
         <activity
             android:name=".activity.utility.pallibidyut.registion.PBRegistrationActivity"
             android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
@@ -125,29 +116,28 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity"/>
         </activity>
-
         <activity
             android:name=".activity.utility.pallibidyut.changeMobileNumber.MobileNumberChangeActivity"
             android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
+
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity"/>
         </activity>
-
         <activity
             android:name=".activity.utility.pallibidyut.changeMobileNumber.PBInquiryMobileNumberChangeActivity"
             android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
+
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity"/>
         </activity>
-
         <activity
             android:name=".activity.utility.pallibidyut.registion.PBInquiryRegActivity"
             android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
@@ -170,8 +160,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity"/>
         </activity>
-
-
         <activity
             android:name=".activity.utility.pallibidyut.billStatus.PBBillStatusInquiryActivity"
             android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
@@ -183,8 +171,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity"/>
         </activity>
-
-
         <activity
             android:name=".activity.utility.pallibidyut.billStatus.PBBillStatusActivity"
             android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
@@ -195,10 +181,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity"/>
-        </activity>
-
-
-        <!-- recever for topup -->
+        </activity> <!-- recever for topup -->
         <receiver
             android:name=".utils.IsOnlineReceiver"
             android:enabled="true"
@@ -261,8 +244,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cloudwell.paywell.services.activity.topup.offer.OfferMainActivity"/>
-        </activity>
-        <!-- eTicket activity -->
+        </activity> <!-- eTicket activity -->
         <activity
             android:name=".activity.eticket.ETicketMainActivity"
             android:parentActivityName=".activity.MainActivity"
@@ -273,8 +255,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cloudwell.paywell.services.activity.MainActivity"/>
-        </activity>
-        <!-- Bus ticket activities -->
+        </activity> <!-- Bus ticket activities -->
         <activity
             android:name=".activity.eticket.busticket.JourneyDateActivity"
             android:parentActivityName=".activity.eticket.busticket.BusMainActivity"
@@ -348,9 +329,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cloudwell.paywell.services.activity.eticket.busticket.SearchBusActivity"/>
-        </activity>
-        <!-- activities for Payments -->
-
+        </activity> <!-- activities for Payments -->
         <activity
             android:name=".activity.statements.StatementMainActivity"
             android:parentActivityName=".activity.MainActivity"
@@ -389,8 +368,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cloudwell.paywell.services.activity.MainActivity"/>
-        </activity>
-        <!-- train ticket activities -->
+        </activity> <!-- train ticket activities -->
         <activity
             android:name=".activity.eticket.trainticket.TrainTicketActivity"
             android:parentActivityName=".activity.eticket.ETicketMainActivity"
@@ -433,8 +411,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity"/>
-        </activity>
-        <!-- MFS activities -->
+        </activity> <!-- MFS activities -->
         <activity
             android:name=".activity.mfs.MFSMainActivity"
             android:parentActivityName=".activity.MainActivity"
@@ -458,8 +435,7 @@
         <activity
             android:name=".activity.mfs.mycash.MYCashMainActivity"
             android:parentActivityName=".activity.MainActivity"
-            android:screenOrientation="portrait"></activity>
-
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.mfs.mycash.GenerateOTPActivity"
             android:parentActivityName=".activity.mfs.mycash.InquiryMenuActivity"
@@ -661,7 +637,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity"/>
         </activity>
-
         <activity
             android:name=".activity.utility.electricity.desco.DESCOMainActivity"
             android:parentActivityName=".activity.utility.UtilityMainActivity"
@@ -1065,9 +1040,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.WebViewActivity"
-            android:screenOrientation="portrait"/>
-
-        <!-- SMS Receiver -->
+            android:screenOrientation="portrait"/> <!-- SMS Receiver -->
         <!-- <receiver android:name=".activity.sms.SmsReceiver"> -->
         <!-- <intent-filter> -->
         <!-- <action android:name="android.provider.Telephony.SMS_RECEIVED" /> -->
@@ -1106,14 +1079,12 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
-
         <service
             android:name=".service.notificaiton.NotificationCheckerService"
-            android:exported="true"></service>
-
+            android:exported="true"/>
         <service
             android:name=".service.notificaiton.NotificationDataSycService"
-            android:exported="true"></service>
+            android:exported="true"/>
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -1126,10 +1097,16 @@
             android:name=".activity.myFavorite.MyFavoriteMenuActivity"
             android:label="@string/title_activity_my_favorite_menu"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".activity.eticket.airticket.AirTicketMainActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.eticket.airticket.menu.AirTicketMenuActivity"
+            android:label="@string/title_activity_air_tricket_menu"
+            android:screenOrientation="portrait"
+            >
+        </activity>
+
     </application>
 
 </manifest>
