@@ -26,4 +26,19 @@
     <dimen name="radio_button_text_size">16sp</dimen>
     <dimen name="list_item_spacing">16dp</dimen>
     <dimen name="list_item_spacing_half">8dp</dimen>
+
+
+    <!-- Month -->
+    <dimen name="mti_month_width">72dp</dimen>
+    <dimen name="mti_month_height">48dp</dimen>
+    <dimen name="mti_month_lbl_padding_horizontal">8dp</dimen>
+    <dimen name="mti_month_lbl_padding_vertical">5dp</dimen>
+    <dimen name="mti_month_lbl_text">14sp</dimen>
+
+    <!-- Timeline -->
+    <dimen name="mti_timeline_width">50dp</dimen>
+    <dimen name="mti_timeline_height">110dp</dimen>
+    <dimen name="mti_timeline_lbl_day_text">10dp</dimen>
+    <dimen name="mti_timeline_lbl_date_text">14dp</dimen>
+    <dimen name="mti_timeline_lbl_value">12dp</dimen>
 </resources>

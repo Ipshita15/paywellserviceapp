@@ -29,4 +29,21 @@
     <!-- Paywell dialg color -->
     <color name="foreground">#ff355689</color>
 
+    <!-- horizontal date picker-->
+    <color name="mti_default_primary">#01b37c</color>
+    <color name="mti_default_primary_dark">#09865f</color>
+    <color name="mti_bg_timeline">#FFFFFF</color>
+    <color name="mti_lbl_tab_selected">#FFFFFF</color>
+    <color name="mti_lbl_tab_before_selection">#5affffff</color>
+    <color name="mti_lbl_day">#b3bdc2</color>
+    <color name="mti_lbl_date">#555e6f</color>
+    <color name="mti_lbl_date_selected">#FFFFFF</color>
+    <color name="mti_bg_lbl_date_selected_color">#00b47c</color>
+    <color name="mti_ring_lbl_date_color">#d2f6eb</color>
+    <color name="mti_bg_lbl_today">#d6d6d6</color>
+    <color name="mti_lbl_label">#CCC</color>
+    <color name="color_black">#000000</color>
+    <color name="text_color">#000000</color>
+
+
 </resources>
