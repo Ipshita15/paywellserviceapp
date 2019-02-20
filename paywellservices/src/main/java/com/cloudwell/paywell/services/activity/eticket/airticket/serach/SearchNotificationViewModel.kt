@@ -1,0 +1,63 @@
+package com.cloudwell.paywell.services.activity.eticket.airticket.serach
+
+import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.Observer
+import com.cloudwell.paywell.services.activity.base.newBase.BaseViewState
+import com.cloudwell.paywell.services.activity.base.newBase.SingleLiveEvent
+import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketBaseViewMode
+import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.ReposeAirSearch
+import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch
+import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.Result
+import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.Segment
+import com.cloudwell.paywell.services.activity.eticket.airticket.serach.view.SeachViewStatus
+
+/**
+ * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 19/2/19.
+ */
+class SearchNotificationViewModel : AirTicketBaseViewMode() {
+
+    val mViewStatus = SingleLiveEvent<SeachViewStatus>()
+
+    // view data
+
+    val mListMutableLiveDataFlightData = MutableLiveData<List<Result>>()
+
+
+    fun init(internetConnection: Boolean) {
+        if (!internetConnection) {
+            baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
+        } else {
+
+            val list = mutableListOf<Segment>()
+            val segment = Segment("Economy", "2019-03-20 04:34:35", "DAC", "CXB");
+            list.add(segment)
+
+            val requestAirSearch = RequestAirSearch(1, 0, 0, "Oneway", list)
+
+            callFlightSearch(requestAirSearch);
+        }
+    }
+
+    private fun callFlightSearch(requestAirSearch: RequestAirSearch) {
+        mAirTicketRepository.getAirSearchData(requestAirSearch).observeForever(object : Observer<ReposeAirSearch> {
+            override fun onChanged(t: ReposeAirSearch?) {
+                val checkNetworkAndStatusCode = isOkNetworkAndStatusCode(t)
+                if (checkNetworkAndStatusCode) {
+                    t.let {
+                        mListMutableLiveDataFlightData.value = it?.data?.results
+                    }
+                }
+            }
+        })
+    }
+
+    private fun handleRespose(it: ReposeAirSearch) {
+        val results = it.data.results
+        mListMutableLiveDataFlightData.value = results
+    }
+
+}
+
+private fun <T> MutableLiveData<T>.observe(observer: Observer<T>) {
+
+}

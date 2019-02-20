@@ -17,6 +17,9 @@ abstract class MVVMBaseActivity : BaseActivity() {
             if (status.isNoInternectConnectionFoud) {
                 showNoInternetConnectionFound()
             }
+            if (!status.errorMessage.equals("")) {
+                showServerErrorMessage(status.errorMessage)
+            }
         }
     }
 }

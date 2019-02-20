@@ -9,7 +9,7 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import kotlinx.android.synthetic.main.activity_air_ticket_main.*
 
-class AirTicketMainActivity : AirTricketBaseActivity(), ClassBottomSheetDialog.ClassBottomSheetListener,
+open class AirTicketMainActivity : AirTricketBaseActivity(), ClassBottomSheetDialog.ClassBottomSheetListener,
         PassengerBottomSheetDialog.PsngrBottomSheetListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {

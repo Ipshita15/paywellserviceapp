@@ -2,6 +2,7 @@ package com.cloudwell.paywell.services.customView.horizontalDatePicker;
 
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.app.AppController;
 
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
@@ -301,14 +303,15 @@ public class MyDateTimelineViewRecyclerView extends RecyclerView {
 
         }
 
+        @NonNull
         @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mti_item_day_new, parent, false);
             return new MyViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(MyViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
             Log.e("onBindViewHolder", "" + position);
             // Set calendar
@@ -325,8 +328,15 @@ public class MyDateTimelineViewRecyclerView extends RecyclerView {
 
             if (position == selectedPosition) {
                 holder.linearLayout.setBackgroundResource(R.drawable.layout_round_bg);
+                holder.tvDate.setTextColor(AppController.getContext().getResources().getColor((R.color.text_color_white)));
+                holder.tvDay.setTextColor(AppController.getContext().getResources().getColor((R.color.text_color_white)));
+                holder.tvMinValue.setTextColor(AppController.getContext().getResources().getColor((R.color.text_color_white)));
+
             } else {
                 holder.linearLayout.setBackgroundResource(R.color.white);
+                holder.tvDate.setTextColor(AppController.getContext().getResources().getColor((R.color.text_color)));
+                holder.tvDay.setTextColor(AppController.getContext().getResources().getColor((R.color.text_color)));
+                holder.tvMinValue.setTextColor(AppController.getContext().getResources().getColor((R.color.text_color)));
 
             }
 

@@ -1,6 +1,8 @@
 package com.cloudwell.paywell.services.retrofit;
 
 
+import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.ReposeAirSearch;
+import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationReadAPI;
 import com.cloudwell.paywell.services.activity.refill.model.BranchData;
@@ -90,6 +92,13 @@ public interface APIService {
                                                          @Field("username") String username,
                                                          @Field("message_id") String messageId,
                                                          @Field("format") String format);
+
+
+    @Multipart
+    @POST("PaywelltransactionHaltrip/airSearch")
+    Call<ReposeAirSearch> callAirSearch(@Part("username") String username,
+                                        @Part("search_params") RequestAirSearch search_params);
+
 }
 
 

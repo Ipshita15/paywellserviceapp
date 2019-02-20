@@ -1,9 +1,9 @@
 package com.cloudwell.paywell.services.activity.notification.allNotificaiton.viewModel
 
 import android.arch.lifecycle.MutableLiveData
-import com.cloudwell.paywell.services.activity.base.newBase.BaseViewModel
 import com.cloudwell.paywell.services.activity.base.newBase.BaseViewState
 import com.cloudwell.paywell.services.activity.base.newBase.SingleLiveEvent
+import com.cloudwell.paywell.services.activity.notification.BaseNotifcationViewModel
 import com.cloudwell.paywell.services.activity.notification.allNotificaiton.view.NotificationViewStatus
 import com.cloudwell.paywell.services.activity.notification.model.NotificationDetailMessage
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI
@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 6/2/19.
  */
-class NotificationViewModel : BaseViewModel() {
+class NotificationNotifcationViewModel : BaseNotifcationViewModel() {
 
     val mListMutableLiveData = MutableLiveData<List<NotificationDetailMessage>>()
     val mViewStatus = SingleLiveEvent<NotificationViewStatus>()

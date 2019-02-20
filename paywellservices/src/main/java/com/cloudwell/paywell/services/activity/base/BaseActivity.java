@@ -95,6 +95,15 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
+    public void showServerErrorMessage(String message) {
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG);
+        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+        View snackBarView = snackbar.getView();
+        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+        snackbar.show();
+
+    }
+
     public void showNoInternetConnectionFound() {
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), getResources().getString(R.string.connection_error_msg), Snackbar.LENGTH_LONG);
         snackbar.setActionTextColor(Color.parseColor("#ffffff"));

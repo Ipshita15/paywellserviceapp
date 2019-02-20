@@ -47,6 +47,7 @@
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
 
+
         <uses-library
             android:name="com.google.android.maps"
             android:required="false"/>
@@ -60,12 +61,8 @@
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+
         </activity>
 
         <meta-data
@@ -1103,10 +1100,21 @@
         <activity
             android:name=".activity.eticket.airticket.menu.AirTicketMenuActivity"
             android:label="@string/title_activity_air_tricket_menu"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait">
         </activity>
 
+        <activity
+            android:name=".activity.eticket.airticket.serach.SearchViewActivity"
+            android:label="@string/title_activity_air_tricket_menu"
+            android:screenOrientation="portrait">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

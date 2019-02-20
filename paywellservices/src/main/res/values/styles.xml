@@ -63,4 +63,11 @@
         <item name="android:background">@null</item>
     </style>
 
+
+    <style name="datepicker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/mti_default_primary</item>
+        <item name="colorPrimaryDark">@color/mti_default_primary</item>
+        <item name="colorAccent">@color/mti_ring_lbl_date_color</item>
+    </style>
+
 </resources>
