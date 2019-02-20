@@ -4,11 +4,13 @@ package com.cloudwell.paywell.services.activity.eticket.airticket
 import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.BottomSheetDialogFragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.BaseAdapter
+import android.widget.ImageView
+import android.widget.ListView
+import android.widget.TextView
 import com.cloudwell.paywell.services.R
 
 class PassengerBottomSheetDialog : BottomSheetDialogFragment() {

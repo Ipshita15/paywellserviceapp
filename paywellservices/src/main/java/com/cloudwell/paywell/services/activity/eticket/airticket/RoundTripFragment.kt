@@ -2,7 +2,6 @@ package com.cloudwell.paywell.services.activity.eticket.airticket
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
