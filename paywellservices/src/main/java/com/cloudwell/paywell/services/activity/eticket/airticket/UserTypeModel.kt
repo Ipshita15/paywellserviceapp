@@ -18,7 +18,7 @@ class UserTypeModel {
         userType = type
     }
 
-    fun getSelectedPsngrCount(): Int? {
+    fun getSelectedPsngrCount(): Int {
         return psngrCount
     }
 
