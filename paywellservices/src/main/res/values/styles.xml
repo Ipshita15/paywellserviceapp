@@ -8,9 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -63,4 +63,23 @@
         <item name="android:background">@null</item>
     </style>
 
+    <style name="TicketFrom">
+        <item name="android:textSize">18sp</item>
+        <item name="android:gravity">start</item>
+    </style>
+
+    <style name="TicketTo">
+        <item name="android:textSize">18sp</item>
+        <item name="android:gravity">end</item>
+    </style>
+
+    <style name="TicketFromPort">
+        <item name="android:textSize">10sp</item>
+        <item name="android:gravity">start</item>
+    </style>
+
+    <style name="TicketToPort">
+        <item name="android:textSize">10sp</item>
+        <item name="android:gravity">end</item>
+    </style>
 </resources>
