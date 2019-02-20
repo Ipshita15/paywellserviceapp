@@ -2,17 +2,13 @@ package com.cloudwell.paywell.services.activity.eticket.airticket
 
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.BottomSheetDialogFragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.ImageView
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
 import com.cloudwell.paywell.services.R
 
 class PassengerBottomSheetDialog : BottomSheetDialogFragment() {
@@ -29,6 +25,8 @@ class PassengerBottomSheetDialog : BottomSheetDialogFragment() {
         val view = inflater.inflate(R.layout.fragment_passenger_bottom_sheet_dialog, container, false)
 
         val listView = view.findViewById<ListView>(R.id.listViewAirTicketPassengers)
+        val ivClose = view.findViewById<ImageView>(R.id.btnCloseAirTicket)
+        val tvDone = view.findViewById<TextView>(R.id.tvDone)
 
         userType = ArrayList()
         userType.add(UserTypeModel("Adults", 0))
@@ -41,6 +39,17 @@ class PassengerBottomSheetDialog : BottomSheetDialogFragment() {
 
         val customAdapter = CustomAdapter(context, userType, mListenerPsngr)
         listView.adapter = customAdapter
+
+
+        ivClose.setOnClickListener {
+            dismiss()
+        }
+        tvDone.setOnClickListener {
+            mListenerPsngr.onAdultButtonClickListener("" + userType.get(0).getSelectedPsngrCount())
+            mListenerPsngr.onKidButtonClickListener("" + userType.get(1).getSelectedPsngrCount())
+            mListenerPsngr.onInfantButtonClickListener("" + userType.get(2).getSelectedPsngrCount())
+            dismiss()
+        }
 
         return view
     }
@@ -98,33 +107,21 @@ class PassengerBottomSheetDialog : BottomSheetDialogFragment() {
 
             holder.ivMinus.setOnClickListener(View.OnClickListener {
                 val count = model.getSelectedPsngrCount()
-                if (count?.compareTo(0) == 1) {
-                    val data = model.getSelectedPsngrCount()!!.minus(1)
+                if (count.compareTo(0) == 1) {
+                    val data = model.getSelectedPsngrCount().minus(1)
                     model.setSelectedPsngrCount(data)
 
                     updateRecords(userList)
-                    if (position.and(0) == 0)
-                        mListenerPsngr.onAdultButtonClickListener("" + model.getSelectedPsngrCount())
-                    if (position.and(1) == 0)
-                        mListenerPsngr.onKidButtonClickListener("" + model.getSelectedPsngrCount())
-                    if (position.and(2) == 0)
-                        mListenerPsngr.onInfantButtonClickListener("" + model.getSelectedPsngrCount())
                 }
             })
 
             holder.ivPlus.setOnClickListener(View.OnClickListener {
-                val data = model.getSelectedPsngrCount()!!.plus(1)
+                val data = model.getSelectedPsngrCount().plus(1)
                 model.setSelectedPsngrCount(data)
 
                 updateRecords(userList)
-                Log.e("logtag", "" + position)
-                if (position.and(0) == 0)
-                    mListenerPsngr.onAdultButtonClickListener("" + model.getSelectedPsngrCount())
-                if (position.and(1) == 0)
-                    mListenerPsngr.onKidButtonClickListener("" + model.getSelectedPsngrCount())
-                if (position.and(2) == 0)
-                    mListenerPsngr.onInfantButtonClickListener("" + model.getSelectedPsngrCount())
             })
+
             return view
         }
 
