@@ -187,6 +187,7 @@ dependencies {
 
     //ShimmerRecyclerView
     implementation 'com.github.sharish:ShimmerRecyclerView:v1.3'
+    implementation 'io.supercharge:shimmerlayout:2.1.0'
 
 
 }

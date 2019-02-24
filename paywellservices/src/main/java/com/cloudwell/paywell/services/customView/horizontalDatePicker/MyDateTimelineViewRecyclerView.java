@@ -104,7 +104,7 @@ public class MyDateTimelineViewRecyclerView extends RecyclerView {
             centerOnPosition(selectedPosition);
 
             if (onDateSelectedListener != null) {
-//                onDateSelectedListener.onDateSelected(selectedYear, selectedMonth, selectedDay, selectedPosition);
+                onDateSelectedListener.onDateSelected(selectedYear, selectedMonth, selectedDay, selectedPosition);
             }
         } else {
             post(new Runnable() {
@@ -184,13 +184,14 @@ public class MyDateTimelineViewRecyclerView extends RecyclerView {
                 calendar.get(Calendar.DAY_OF_MONTH));
     }
 
-//    public void setOnDateSelectedListener(DatePickerTimeline.OnDateSelectedListener onDateSelectedListener) {
-//        this.onDateSelectedListener = onDateSelectedListener;
-//    }
-//
-//    public DatePickerTimeline.OnDateSelectedListener getOnDateSelectedListener() {
-//        return onDateSelectedListener;
-//    }
+    //
+    public OnDateSelectedListener getOnDateSelectedListener() {
+        return onDateSelectedListener;
+    }
+
+    public void setOnDateSelectedListener(OnDateSelectedListener onDateSelectedListener) {
+        this.onDateSelectedListener = onDateSelectedListener;
+    }
 //
 //    public void setDateLabelAdapter(@Nullable MonthView.DateLabelAdapter dateLabelAdapter) {
 //        this.dateLabelAdapter = dateLabelAdapter;
@@ -295,6 +296,7 @@ public class MyDateTimelineViewRecyclerView extends RecyclerView {
     }
 
     public interface OnDateSelectedListener {
+        void onDateSelected(int selectedYear, int selectedMonth, int selectedDay, int selectedPosition);
     }
 
     private class TimelineAdapter extends Adapter<MyViewHolder> {

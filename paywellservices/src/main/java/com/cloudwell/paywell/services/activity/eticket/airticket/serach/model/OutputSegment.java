@@ -3,7 +3,7 @@ package com.cloudwell.paywell.services.activity.eticket.airticket.serach.model;
 import com.google.gson.annotations.SerializedName;
 
 
-public class Segment {
+public class OutputSegment {
 
     @SerializedName("Airline")
     private Airline mAirline;

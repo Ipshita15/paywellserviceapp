@@ -29,12 +29,11 @@ class AirThicketRepository(private val mContext: Context) {
             override fun onResponse(call: Call<ReposeAirSearch>, response: Response<ReposeAirSearch>) {
                 if (response.isSuccessful) {
                     data.value = response.body()
-                } else {
-                    data.value = ReposeAirSearch()
                 }
             }
 
             override fun onFailure(call: Call<ReposeAirSearch>, t: Throwable) {
+                com.orhanobut.logger.Logger.e("" + t.message)
                 data.value = ReposeAirSearch(t)
             }
         })

@@ -8,7 +8,7 @@ class Data {
     @SerializedName("Error")
     var error: Any? = null
     @SerializedName("Results")
-    var results: List<Result> = listOf()
+    var results: List<Result> = mutableListOf()
     @SerializedName("SearchId")
     var searchId: String = ""
 

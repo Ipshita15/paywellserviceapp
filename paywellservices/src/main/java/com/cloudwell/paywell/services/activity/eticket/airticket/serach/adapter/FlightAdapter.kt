@@ -13,8 +13,9 @@ import kotlinx.android.synthetic.main.flight_list_item.view.*
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 19/2/19.
  */
 class FlightAdapter(val items: List<Result>, val context: Context) : RecyclerView.Adapter<ViewHolder>() {
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder?.tvAnimalType?.text = items.get(position).currency
+        holder.tvStringTime?.text = items.get(position).currency
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,5 +33,6 @@ class FlightAdapter(val items: List<Result>, val context: Context) : RecyclerVie
 
 class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     // Holds the TextView that will add each animal to
-    val tvAnimalType = view.tv_animal_type
+    val tvStringTime = view.tvStringTime
+
 }

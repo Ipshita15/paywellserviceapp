@@ -39,25 +39,73 @@ class SearchNotificationViewModel : AirTicketBaseViewMode() {
     }
 
     private fun callFlightSearch(requestAirSearch: RequestAirSearch) {
+        mViewStatus.value = SeachViewStatus(isShowShimmerView = true)
         mAirTicketRepository.getAirSearchData(requestAirSearch).observeForever(object : Observer<ReposeAirSearch> {
             override fun onChanged(t: ReposeAirSearch?) {
+                mViewStatus.value = SeachViewStatus(isShowShimmerView = false)
                 val checkNetworkAndStatusCode = isOkNetworkAndStatusCode(t)
                 if (checkNetworkAndStatusCode) {
-                    t.let {
-                        mListMutableLiveDataFlightData.value = it?.data?.results
-                    }
+                    handleRespose(t)
+                } else {
+
                 }
             }
         })
     }
 
-    private fun handleRespose(it: ReposeAirSearch) {
-        val results = it.data.results
-        mListMutableLiveDataFlightData.value = results
+    private fun handleRespose(t: ReposeAirSearch?) {
+        t.let {
+            it?.data?.results.let {
+                mListMutableLiveDataFlightData.value = it
+            }
+        }
     }
 
+    fun onSetDate(internetConnection: Boolean, date: String) {
+        if (!internetConnection) {
+            baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
+        } else {
+            val list = mutableListOf<Segment>()
+            val segment = Segment("Economy", date, "DAC", "CXB");
+            list.add(segment)
+
+            val requestAirSearch = RequestAirSearch(1, 0, 0, "Oneway", list)
+
+            callFlightSearch(requestAirSearch);
+        }
+
+    }
+
+    fun isOkNetworkAndStatusCode(t: ReposeAirSearch?): Boolean {
+        t?.let {
+            if (it.throwable != null) {
+                baseViewStatus.value = it.throwable!!.message.let { it1 ->
+                    BaseViewState(errorMessage = it1.toString())
+                }
+
+                mViewStatus.value = SeachViewStatus(noSerachFoundMessage = "No Result Found!!", isShowShimmerView = false);
+
+                return false
+            } else if (it.status == 313) {
+                baseViewStatus.value = t.message?.let { it1 -> BaseViewState(errorMessage = it1) }
+                return false
+            } else if (it.status == 307) {
+                it.message.let {
+                    mViewStatus.value = SeachViewStatus(it.toString(), false)
+                }
+                return false
+            } else if (it.status != 200) {
+                baseViewStatus.value = t.message?.let { it1 -> BaseViewState(errorMessage = it1) }
+                return false
+            }
+            return true
+        }
+        return false
+    }
 }
 
-private fun <T> MutableLiveData<T>.observe(observer: Observer<T>) {
 
-}
+
+
+
+

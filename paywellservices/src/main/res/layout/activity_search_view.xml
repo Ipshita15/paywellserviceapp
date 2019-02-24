@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     >
 
+
     <ProgressBar
         android:id="@+id/progressBar2"
         style="?android:attr/progressBarStyleHorizontal"
@@ -22,6 +23,7 @@
         android:id="@+id/myDateTimelineView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,17 +35,87 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/shimmer_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="730dp"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBar2"
-        app:shimmer_demo_angle="20"
+        app:layout_constraintVertical_bias="1.0"
+        app:shimmer_demo_angle="30"
         app:shimmer_demo_child_count="10"
-        app:shimmer_demo_grid_child_count="2"
-        app:shimmer_demo_layout="@layout/layout_demo_grid"
-        app:shimmer_demo_layout_manager_type="grid"/>
+        app:shimmer_demo_layout_manager_type="linear_vertical"/>
+
+    <LinearLayout
+        android:id="@+id/layoutNoSerachFound"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/shimmer_recycler_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/shimmer_recycler_view">
+
+        <android.support.constraint.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F1FDFF">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/no_serach_found_icon"/>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/no_search_results"
+                android:textSize="26sp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView4"
+                app:layout_constraintStart_toStartOf="@+id/imageView4"
+                app:layout_constraintTop_toBottomOf="@+id/imageView4"/>
+
+            <Button
+
+                android:id="@+id/button"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/serach_roundedbutton"
+                android:drawableLeft="@drawable/icon_search"
+                android:drawablePadding="-60dp"
+                android:gravity="center"
+                android:paddingLeft="50dp"
+                android:text="@string/search_again"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2"/>
+        </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>

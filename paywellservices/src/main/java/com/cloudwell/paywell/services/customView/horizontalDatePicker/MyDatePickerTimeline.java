@@ -19,7 +19,7 @@ import java.util.Calendar;
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 27/12/18.
  */
-public class MyDatePickerTimeline extends LinearLayout implements View.OnClickListener {
+public class MyDatePickerTimeline extends LinearLayout implements View.OnClickListener, MyDateTimelineViewRecyclerView.OnDateSelectedListener {
     IDatePicker iDatePicker;
 
     //
@@ -49,6 +49,7 @@ public class MyDatePickerTimeline extends LinearLayout implements View.OnClickLi
 
         myDateTimelineViewRecyclerView = view.findViewById(R.id.myDateTimelineViewRecyclerView);
         myDateTimelineViewRecyclerView.setFirstDate(2018, 12, 27);
+        myDateTimelineViewRecyclerView.setOnDateSelectedListener(this);
 
         // store default value
         startYear = 2018;
@@ -119,4 +120,14 @@ public class MyDatePickerTimeline extends LinearLayout implements View.OnClickLi
     public void setOnDateChangeLincher(AppCompatActivity mainActivity) {
         this.iDatePicker = (IDatePicker) mainActivity;
     }
+
+
+    @Override
+    public void onDateSelected(int selectedYear, int selectedMonth, int selectedDay, int selectedPosition) {
+        if (iDatePicker != null) {
+            iDatePicker.onSetDate(selectedYear, selectedMonth, selectedDay);
+        }
+    }
+
+
 }

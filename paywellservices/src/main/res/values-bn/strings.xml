@@ -608,6 +608,9 @@
     <string name="home_utility_pb_bill_change_number_bt">নম্বর পরিবর্তন</string>
     <string name="home_utility_pb_phone_number_inquiry_bt">নম্বর পরিবর্তন \n অনুসন্ধান</string>
     <string name="one_way">একমুখী</string>
+    <string name="title_serach_view">Search</string>
+    <string name="no_search_results">No search results</string>
+    <string name="search_again">Search again</string>
 
 
 </resources>
