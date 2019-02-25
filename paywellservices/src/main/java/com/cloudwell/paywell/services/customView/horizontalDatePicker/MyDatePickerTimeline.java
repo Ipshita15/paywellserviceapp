@@ -61,6 +61,8 @@ public class MyDatePickerTimeline extends LinearLayout implements View.OnClickLi
         TextView ivMore = view.findViewById(R.id.textView4);
         ivMore.setOnClickListener(this);
 
+        view.findViewById(R.id.imageView).setOnClickListener(this);
+
         // setOrientation(VERTICAL);
 
 
@@ -82,6 +84,9 @@ public class MyDatePickerTimeline extends LinearLayout implements View.OnClickLi
             showDate();
 
         }
+        if (i == R.id.imageView) {
+            showDate();
+        }
     }
 
     //get date
@@ -97,7 +102,7 @@ public class MyDatePickerTimeline extends LinearLayout implements View.OnClickLi
         calendar.set(startYear, startMonth, startDay);
 
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), R.style.datepicker,
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {

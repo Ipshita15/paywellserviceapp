@@ -19,15 +19,15 @@ import kotlinx.android.synthetic.main.activity_search_view.*
 
 class SearchViewActivity : AirTricketBaseActivity(), IDatePicker {
     internal lateinit var myDatePickerTimeline: MyDatePickerTimeline
-    private lateinit var viewModel: SearchNotificationViewModel
+    private lateinit var mViewModelAir: AirSearchViewModel
 
 
     override fun onSetDate(year: Int, month: Int, day: Int) {
-        var mMonth = month
+        val mMonth = month + 1;
 
         val date = "$year-$mMonth-$day"
 
-        viewModel.onSetDate(isInternetConnection, date)
+        mViewModelAir.onSetDate(isInternetConnection, date)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,23 +51,23 @@ class SearchViewActivity : AirTricketBaseActivity(), IDatePicker {
 
 
     private fun initViewModel() {
-        viewModel = ViewModelProviders.of(this).get(SearchNotificationViewModel::class.java)
+        mViewModelAir = ViewModelProviders.of(this).get(AirSearchViewModel::class.java)
 
-        viewModel.baseViewStatus.observe(this, Observer {
+        mViewModelAir.baseViewStatus.observe(this, Observer {
             handleViewCommonStatus(it)
         })
 
-        viewModel.mViewStatus.observe(this, Observer {
+        mViewModelAir.mViewStatus.observe(this, Observer {
             handleViewStatus(it)
         })
 
 
-        viewModel.mListMutableLiveDataFlightData.observe(this, Observer {
+        mViewModelAir.mListMutableLiveDataFlightData.observe(this, Observer {
             setAdapter(it)
 
         })
 
-        viewModel.init(isInternetConnection)
+        mViewModelAir.init(isInternetConnection)
 
 
     }
@@ -81,20 +81,29 @@ class SearchViewActivity : AirTricketBaseActivity(), IDatePicker {
     private fun handleViewStatus(status: SeachViewStatus?) {
 
         status.let {
-            if (it?.isShowShimmerView!!) {
+            if (it?.isShowShimmerView == true) {
                 shimmer_recycler_view.showShimmerAdapter()
+            } else {
+                shimmer_recycler_view.hideShimmerAdapter();
             }
 
-            if (it.isShowShimmerView) {
-                shimmer_recycler_view.hideShimmerAdapter()
+            if (it?.isShowProcessIndicator == true) {
+                progressBar2.visibility = View.VISIBLE
+            } else {
+                progressBar2.visibility = View.INVISIBLE
             }
 
-            if (!it.noSerachFoundMessage.equals("")) {
+
+            if (!it?.noSerachFoundMessage.equals("")) {
                 shimmer_recycler_view.visibility = View.INVISIBLE
                 layoutNoSerachFound.visibility = View.VISIBLE
+            } else {
+                shimmer_recycler_view.visibility = View.VISIBLE
+                layoutNoSerachFound.visibility = View.INVISIBLE
             }
-        }
 
+
+        }
 
     }
 

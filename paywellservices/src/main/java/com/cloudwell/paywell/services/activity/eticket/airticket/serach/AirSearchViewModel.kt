@@ -14,7 +14,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.serach.view.Sea
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 19/2/19.
  */
-class SearchNotificationViewModel : AirTicketBaseViewMode() {
+class AirSearchViewModel : AirTicketBaseViewMode() {
 
     val mViewStatus = SingleLiveEvent<SeachViewStatus>()
 
@@ -39,10 +39,10 @@ class SearchNotificationViewModel : AirTicketBaseViewMode() {
     }
 
     private fun callFlightSearch(requestAirSearch: RequestAirSearch) {
-        mViewStatus.value = SeachViewStatus(isShowShimmerView = true)
+        mViewStatus.value = SeachViewStatus(isShowShimmerView = true, isShowProcessIndicator = true)
         mAirTicketRepository.getAirSearchData(requestAirSearch).observeForever(object : Observer<ReposeAirSearch> {
             override fun onChanged(t: ReposeAirSearch?) {
-                mViewStatus.value = SeachViewStatus(isShowShimmerView = false)
+                mViewStatus.value = SeachViewStatus(isShowShimmerView = false, isShowProcessIndicator = false)
                 val checkNetworkAndStatusCode = isOkNetworkAndStatusCode(t)
                 if (checkNetworkAndStatusCode) {
                     handleRespose(t)
@@ -83,7 +83,7 @@ class SearchNotificationViewModel : AirTicketBaseViewMode() {
                     BaseViewState(errorMessage = it1.toString())
                 }
 
-                mViewStatus.value = SeachViewStatus(noSerachFoundMessage = "No Result Found!!", isShowShimmerView = false);
+                mViewStatus.value = SeachViewStatus(noSerachFoundMessage = "No Result Found!!", isShowShimmerView = false, isShowProcessIndicator = false);
 
                 return false
             } else if (it.status == 313) {
@@ -91,7 +91,7 @@ class SearchNotificationViewModel : AirTicketBaseViewMode() {
                 return false
             } else if (it.status == 307) {
                 it.message.let {
-                    mViewStatus.value = SeachViewStatus(it.toString(), false)
+                    mViewStatus.value = SeachViewStatus(it.toString(), false, isShowProcessIndicator = false)
                 }
                 return false
             } else if (it.status != 200) {
