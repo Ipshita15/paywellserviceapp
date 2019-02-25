@@ -56,6 +56,10 @@ class PassengerBottomSheetDialog : BottomSheetDialogFragment() {
         return view
     }
 
+    fun setmListenerPsngr(psngrBottomSheetListener: PsngrBottomSheetListener) {
+        mListenerPsngr = psngrBottomSheetListener
+    }
+
     interface PsngrBottomSheetListener {
         fun onAdultButtonClickListener(text: String)
 
@@ -64,21 +68,6 @@ class PassengerBottomSheetDialog : BottomSheetDialogFragment() {
         fun onInfantButtonClickListener(text: String)
     }
 
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-
-        try {
-            if (context is PsngrBottomSheetListener)
-                mListenerPsngr = context
-            else {
-                throw ClassCastException(context.toString()
-                        + " must implement PsngrBottomSheetListener")
-            }
-        } catch (ex: ClassCastException) {
-            throw ClassCastException(context.toString()
-                    + " must implement PsngrBottomSheetListener")
-        }
-    }
 
     class CustomAdapter : BaseAdapter {
 

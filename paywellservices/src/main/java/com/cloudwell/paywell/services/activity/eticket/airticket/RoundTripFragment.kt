@@ -12,6 +12,7 @@ import android.widget.LinearLayout
 import android.widget.TextSwitcher
 import android.widget.TextView
 import com.cloudwell.paywell.services.R
+import kotlinx.android.synthetic.main.fragment_one_way.*
 
 class RoundTripFragment : Fragment() {
 
@@ -96,26 +97,61 @@ class RoundTripFragment : Fragment() {
 
         tvClass.setOnClickListener {
 
-            val b = Bundle()
-            b.putString("myClassName", tvClass.text.toString())
 
-            val bottomSheet = ClassBottomSheetDialog()
-            bottomSheet.arguments = b
-            bottomSheet.show(fragmentManager, "classBottomSheet")
+            handleClass()
         }
 
         llPassenger.setOnClickListener {
 
-            val b = Bundle()
-            b.putString("myAdult", tvAdult.text.toString())
-            b.putString("myKid", tvKid.text.toString())
-            b.putString("myInfant", tvInfant.text.toString())
-
-            val passengerBottomSheet = PassengerBottomSheetDialog()
-            passengerBottomSheet.arguments = b
-            passengerBottomSheet.show(fragmentManager, "psngrBottomSheet")
+            handlePassengerClick()
         }
         return view
+    }
+
+    private fun handleClass() {
+        val b = Bundle()
+        b.putString("myClassName", airTicketClass.text.toString())
+
+        val bottomSheet = ClassBottomSheetDialog()
+        bottomSheet.setOnClassListener(object : ClassBottomSheetDialog.ClassBottomSheetListener {
+            override fun onButtonClickListener(text: String) {
+
+                airTicketClass.setText(text)
+            }
+
+        })
+
+        bottomSheet.arguments = b
+        bottomSheet.show(fragmentManager, "classBottomSheet")
+    }
+
+
+    private fun handlePassengerClick() {
+        val b = Bundle()
+        b.putString("myAdult", airTicketAdult.text.toString())
+        b.putString("myKid", airTicketKid.text.toString())
+        b.putString("myInfant", airTicketInfant.text.toString())
+
+        val passengerBottomSheet = PassengerBottomSheetDialog()
+        passengerBottomSheet.setmListenerPsngr(object : PassengerBottomSheetDialog.PsngrBottomSheetListener {
+            override fun onInfantButtonClickListener(text: String) {
+                onAdultPsngrTextChange(text)
+
+            }
+
+            override fun onKidButtonClickListener(text: String) {
+                onKidPsngrTextChange(text)
+
+            }
+
+            override fun onAdultButtonClickListener(text: String) {
+                onInfantPsngrTextChange(text)
+
+            }
+
+        })
+        passengerBottomSheet.arguments = b
+        passengerBottomSheet.show(fragmentManager, "psngrBottomSheet")
     }
 
     fun onClassTextChange(text: String) {
