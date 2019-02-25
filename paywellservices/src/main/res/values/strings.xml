@@ -608,9 +608,12 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="one_way">One Way</string>
-    <string name="title_activity_air_tricket_menu">AirTricketMenuActivity</string>
+    <string name="title_activity_air_tricket_menu">Air Ticket</string>
     <string name="title_serach_view">Search</string>
     <string name="no_search_results">No search results</string>
     <string name="search_again">Search again</string>
+    <string name="search">Search</string>
+    <string name="cancel">Cancel</string>
+    <string name="transaction_log">Transaction Log</string>
 
 </resources>
