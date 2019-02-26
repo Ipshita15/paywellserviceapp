@@ -5,19 +5,20 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 
 class SearchFlightAdapter(fm: FragmentManager?) : FragmentPagerAdapter(fm) {
+    override fun getItem(position: Int): Fragment? {
 
-    override fun getItem(position: Int): Fragment {
-        return when (position) {
-            0 ->
-                OneWayFragment()
-            1 -> RoundTripFragment()
-            else ->
-                RoundTripFragment()
+        when (position) {
+            0 // Fragment # 0 - This will show FirstFragment
+            -> return OneWayFragment()
+            1 // Fragment # 0 - This will show FirstFragment different title
+            -> return RoundTripFragment()
+            else -> return null
         }
+
     }
 
     override fun getCount(): Int {
-        return 3;
+        return 2;
     }
 
     override fun getPageTitle(position: Int): CharSequence? {

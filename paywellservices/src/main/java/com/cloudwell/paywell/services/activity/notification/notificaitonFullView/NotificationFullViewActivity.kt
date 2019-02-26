@@ -16,7 +16,7 @@ import com.cloudwell.paywell.services.activity.notification.allNotificaiton.Noti
 import com.cloudwell.paywell.services.activity.notification.allNotificaiton.NotificationAllActivity.Companion.IS_NOTIFICATION_SHOWN
 import com.cloudwell.paywell.services.activity.notification.model.NotificationDetailMessage
 import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.view.NotificationFullViewStatus
-import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.viewModel.NotificationFullViewModel
+import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.viewModel.NotificationFullNotifcationViewModel
 import com.cloudwell.paywell.services.analytics.AnalyticsManager
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters
 import com.cloudwell.paywell.services.app.AppController
@@ -33,7 +33,7 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
     private var mAppHandler: AppHandler? = null
 
     internal var isNotificationFlow: Boolean = false
-    private lateinit var viewModel: NotificationFullViewModel
+    private lateinit var viewModel: NotificationFullNotifcationViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +51,7 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProviders.of(this).get(NotificationFullViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(NotificationFullNotifcationViewModel::class.java)
 
         viewModel.baseViewStatus.observe(this, Observer {
             handleViewCommonStatus(it)

@@ -1103,10 +1103,19 @@
         <activity
             android:name=".activity.eticket.airticket.menu.AirTicketMenuActivity"
             android:label="@string/title_activity_air_tricket_menu"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".activity.eticket.airticket.serach.SearchViewActivity"
+            android:label="@string/title_activity_air_tricket_menu"
+            android:screenOrientation="portrait">
         </activity>
 
+        <activity
+            android:name=".activity.eticket.airticket.serach.citySerach.AirportsSearchActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            >
+        </activity>
     </application>
 
 </manifest>
