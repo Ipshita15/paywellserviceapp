@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.SearchViewActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.AirportsSearchActivity
 import kotlinx.android.synthetic.main.fragment_one_way.*
 import mehdi.sakout.fancybuttons.FancyButton
 import java.text.SimpleDateFormat
@@ -20,6 +21,11 @@ import java.util.*
 
 
 class OneWayFragment : Fragment(), View.OnClickListener {
+
+    companion object {
+        val KEY_REQUEST_KEY = "KEY_REQUEST_KEY"
+        val KEY_REQUEST_FOR_FROM = 1
+    }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -31,12 +37,15 @@ class OneWayFragment : Fragment(), View.OnClickListener {
         val airTicketClass = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.airTicketClass)
         val llPassenger = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.llPsngr)
         val btnSearch = view.findViewById<FancyButton>(com.cloudwell.paywell.services.R.id.btn_search)
+        val tvFrom = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.tvFrom)
+
 
         tvDepart.setOnClickListener(this)
         tvDepartDate.setOnClickListener(this)
         airTicketClass.setOnClickListener(this)
         llPassenger.setOnClickListener(this)
         btnSearch.setOnClickListener(this)
+        tvFrom.setOnClickListener(this)
 
         return view
     }
@@ -66,6 +75,13 @@ class OneWayFragment : Fragment(), View.OnClickListener {
             R.id.btn_search -> {
 
                 val intent = Intent(activity?.applicationContext, SearchViewActivity::class.java)
+                startActivity(intent)
+            }
+
+            R.id.tvFrom -> {
+
+                val intent = Intent(activity?.applicationContext, AirportsSearchActivity::class.java)
+                intent.putExtra(KEY_REQUEST_KEY, KEY_REQUEST_FOR_FROM)
                 startActivity(intent)
             }
         }

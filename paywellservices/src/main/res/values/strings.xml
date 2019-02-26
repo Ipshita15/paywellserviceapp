@@ -615,5 +615,6 @@
     <string name="search">Search</string>
     <string name="cancel">Cancel</string>
     <string name="transaction_log">Transaction Log</string>
+    <string name="action_search">Serach</string>
 
 </resources>
