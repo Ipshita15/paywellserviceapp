@@ -3,17 +3,17 @@ package com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySer
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.DisplayMetrics
+import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.adapter.HeaderAirportRecyclerViewSection
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.Airport
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.viewModel.AirportSerachViewModel
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 
 
-class AirportsSearchActivity : AppCompatActivity() {
+class AirportsSearchActivity : AirTricketBaseActivity() {
 
     // view
 
@@ -37,11 +37,7 @@ class AirportsSearchActivity : AppCompatActivity() {
         })
 
 
-//        mViewModelAir.baseViewStatus.observe(this, Observer {
-//            handleViewCommonStatus(it)
-//        })
-
-        //  mAirTicketBaseViewMode.getData(isInternetConnection);
+        mAirTicketBaseViewMode.getData(isInternetConnection);
 
     }
 
