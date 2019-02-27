@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             android:id="@+id/linearLayout7"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="wrap_content"
-                                             android:background="@color/white">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linearLayout7"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/tvStringTime"
@@ -17,7 +17,7 @@
         android:textColor="#666666"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -28,7 +28,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/tvStringTime"
         app:layout_constraintStart_toEndOf="@+id/tvStringTime"
         app:layout_constraintTop_toTopOf="@+id/tvStringTime"
-        app:srcCompat="@drawable/ic_path"/>
+        app:srcCompat="@drawable/ic_path" />
 
     <TextView
         android:id="@+id/tvEndingTime"
@@ -41,7 +41,7 @@
         android:textColor="#666666"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvSrocesAddress"
@@ -52,7 +52,7 @@
 
         android:textColor="#999999"
         app:layout_constraintStart_toStartOf="@+id/tvStringTime"
-        app:layout_constraintTop_toBottomOf="@+id/tvStringTime"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvStringTime" />
 
     <TextView
         android:id="@+id/tvDestinationAddress"
@@ -62,7 +62,7 @@
         android:text="Cox's"
         android:textColor="#999999"
         app:layout_constraintStart_toStartOf="@+id/tvEndingTime"
-        app:layout_constraintTop_toBottomOf="@+id/tvEndingTime"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvEndingTime" />
 
     <TextView
         android:id="@+id/tvDurationAndKilometer"
@@ -74,7 +74,7 @@
         android:text="Duration: 35m | Nonstop  "
         android:textColor="#999999"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSrocesAddress"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvSrocesAddress" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -86,7 +86,7 @@
         android:background="@drawable/ic_green_flights"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDurationAndKilometer"
-        app:srcCompat="@drawable/ic_green_flights"/>
+        app:srcCompat="@drawable/ic_green_flights" />
 
     <TextView
         android:id="@+id/tvPrices"
@@ -97,7 +97,7 @@
         android:layout_marginRight="16dp"
         android:text="3500"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvAirlinesName"
@@ -109,6 +109,6 @@
         android:textColor="#999999"
         app:layout_constraintBottom_toBottomOf="@+id/imageView3"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="@+id/imageView3"/>
+        app:layout_constraintTop_toTopOf="@+id/imageView3" />
 
 </android.support.constraint.ConstraintLayout>

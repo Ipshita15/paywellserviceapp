@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mt_layout_toolbar"
     android:layout_width="150dp"
@@ -16,7 +15,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/mti_lbl_day"
         android:textSize="@dimen/mti_timeline_lbl_day_text"
-        tools:text="SUN"/>
+        tools:text="SUN" />
 
     <TextView
         android:id="@+id/mti_timeline_lbl_date"
@@ -27,7 +26,7 @@
         android:singleLine="true"
         android:textColor="#FFFFFF"
         android:textSize="@dimen/mti_timeline_lbl_date_text"
-        tools:text="25"/>
+        tools:text="25" />
 
     <TextView
         android:id="@+id/mti_timeline_lbl_value"
@@ -38,6 +37,6 @@
         android:gravity="center_horizontal"
         android:textColor="@color/mti_lbl_label"
         android:textSize="@dimen/mti_timeline_lbl_day_text"
-        tools:text="+ 9999"/>
+        tools:text="+ 9999" />
 
 </LinearLayout>
