@@ -13,8 +13,7 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_air_tricket_menu)
-        actionBar?.setDisplayHomeAsUpEnabled(true)
-
+        setToolbar(getString(R.string.home_eticket_air))
         btSerach.setOnClickListener(this)
     }
 

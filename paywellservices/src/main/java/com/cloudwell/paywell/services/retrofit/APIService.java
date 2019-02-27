@@ -1,6 +1,9 @@
 package com.cloudwell.paywell.services.retrofit;
 
 
+import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.ResGetAirports;
+import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.ReposeAirSearch;
+import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationReadAPI;
 import com.cloudwell.paywell.services.activity.refill.model.BranchData;
@@ -19,10 +22,12 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Query;
 import retrofit2.http.Url;
 
 /**
@@ -90,6 +95,17 @@ public interface APIService {
                                                          @Field("username") String username,
                                                          @Field("message_id") String messageId,
                                                          @Field("format") String format);
+
+
+    @Multipart
+    @POST("PaywelltransactionHaltrip/airSearch")
+    Call<ReposeAirSearch> callAirSearch(@Part("username") String username,
+                                        @Part("search_params") RequestAirSearch search_params);
+
+    @GET("PaywelltransactionHaltrip/getAirports?")
+    Call<ResGetAirports> getAirports(@Query("username") String username, @Query("format") String format, @Query("iso") String iso);
+
+
 }
 
 

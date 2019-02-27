@@ -55,6 +55,11 @@ class ClassBottomSheetDialog : BottomSheetDialogFragment() {
         return view
     }
 
+    public fun setOnClassListener(classBottomSheetListener: ClassBottomSheetListener) {
+        mListenerClass = classBottomSheetListener
+
+    }
+
     private fun getClassNamePosition(value: String): Int {
         var position = 0
         for (i in classes.indices) {
@@ -69,21 +74,6 @@ class ClassBottomSheetDialog : BottomSheetDialogFragment() {
         fun onButtonClickListener(text: String)
     }
 
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-
-        try {
-            if (context is ClassBottomSheetListener)
-                mListenerClass = context
-            else {
-                throw ClassCastException(context.toString()
-                        + " must implement ClassBottomSheetListener")
-            }
-        } catch (ex: ClassCastException) {
-            throw ClassCastException(context.toString()
-                    + " must implement ClassBottomSheetListener")
-        }
-    }
 
     class CustomAdapter : BaseAdapter {
 

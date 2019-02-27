@@ -13,7 +13,7 @@ import com.cloudwell.paywell.services.activity.MainActivity
 import com.cloudwell.paywell.services.activity.base.newBase.MVVMBaseActivity
 import com.cloudwell.paywell.services.activity.notification.allNotificaiton.adapter.MsgAdapter
 import com.cloudwell.paywell.services.activity.notification.allNotificaiton.view.NotificationViewStatus
-import com.cloudwell.paywell.services.activity.notification.allNotificaiton.viewModel.NotificationViewModel
+import com.cloudwell.paywell.services.activity.notification.allNotificaiton.viewModel.NotificationNotifcationViewModel
 import com.cloudwell.paywell.services.activity.notification.model.NotificationDetailMessage
 import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.NotificationFullViewActivity
 import com.cloudwell.paywell.services.analytics.AnalyticsManager
@@ -31,7 +31,7 @@ class NotificationAllActivity : MVVMBaseActivity() {
     lateinit var adapter: MsgAdapter
     private var isNotificationFlow: Boolean = false
 
-    private lateinit var viewModel: NotificationViewModel
+    private lateinit var viewModel: NotificationNotifcationViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +46,7 @@ class NotificationAllActivity : MVVMBaseActivity() {
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProviders.of(this).get(NotificationViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(NotificationNotifcationViewModel::class.java)
 
         viewModel.baseViewStatus.observe(this, Observer {
             handleViewCommonStatus(it)
@@ -84,7 +84,7 @@ class NotificationAllActivity : MVVMBaseActivity() {
 
     }
 
-    private fun subscribeDataStreams(viewModel: NotificationViewModel) {
+    private fun subscribeDataStreams(viewModel: NotificationNotifcationViewModel) {
         viewModel.mListMutableLiveData.observe(this, Observer<List<NotificationDetailMessage>> { t ->
             this.setupAdapter(t!!)
         })

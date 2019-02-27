@@ -9,7 +9,7 @@ public class ApiUtils {
     private ApiUtils() {
     }
 
-    public static final String BASE_URL = AllUrl.BASE_URL;
+    private static final String BASE_URL = AllUrl.BASE_URL;
 
     public static APIService getAPIService() {
         return RetrofitClient.getClient(BASE_URL).create(APIService.class);

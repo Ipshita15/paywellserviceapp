@@ -220,7 +220,7 @@ class MyFavoriteMenuActivity : AppCompatActivity(), StartDragListener {
         val dpWidth = outMetrics.widthPixels / density
         val columns: Int;
         if (dpWidth > 320) {
-            columns = 4;
+            columns = 3;
         } else {
             columns = 3;
         }
