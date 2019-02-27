@@ -9,8 +9,8 @@ import android.view.Menu
 import android.view.View
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.adapter.FlightAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.viewModel.FlightSearchViewModel
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.adapter.FlightAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.Result
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.view.SeachViewStatus
 import com.cloudwell.paywell.services.customView.horizontalDatePicker.MyDatePickerTimeline

@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.eticket.airticket.serach.adapter
+package com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
