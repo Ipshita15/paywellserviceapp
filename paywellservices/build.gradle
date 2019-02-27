@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'org.jetbrains.kotlin.android.extensions'
+
 buildscript {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
@@ -37,6 +39,11 @@ android {
             }
         }
     }
+
+    androidExtensions {
+        experimental = true
+    }
+
     buildTypes {
         debug {
             applicationIdSuffix '.debug'

@@ -2,7 +2,9 @@ package com.cloudwell.paywell.services.activity.eticket.airticket.serach.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import kotlinx.android.parcel.Parcelize;
 
+@Parcelize
 public class OutputSegment {
 
     @SerializedName("Airline")
