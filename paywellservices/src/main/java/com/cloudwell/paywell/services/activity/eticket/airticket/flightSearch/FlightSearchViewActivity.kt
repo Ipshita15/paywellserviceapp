@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.eticket.airticket.serach
+package com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.View
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.viewModel.FlightSearchViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.adapter.FlightAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.Result
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.view.SeachViewStatus
@@ -17,9 +18,9 @@ import com.cloudwell.paywell.services.customView.horizontalDatePicker.commincati
 import kotlinx.android.synthetic.main.activity_search_view.*
 
 
-class SearchViewActivity : AirTricketBaseActivity(), IDatePicker {
+class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
     internal lateinit var myDatePickerTimeline: MyDatePickerTimeline
-    private lateinit var mViewModelAir: AirSearchViewModel
+    private lateinit var mViewModelFlight: FlightSearchViewModel
 
 
     override fun onSetDate(year: Int, month: Int, day: Int) {
@@ -27,7 +28,7 @@ class SearchViewActivity : AirTricketBaseActivity(), IDatePicker {
 
         val date = "$year-$mMonth-$day"
 
-        mViewModelAir.onSetDate(isInternetConnection, date)
+        mViewModelFlight.onSetDate(isInternetConnection, date)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,23 +52,23 @@ class SearchViewActivity : AirTricketBaseActivity(), IDatePicker {
 
 
     private fun initViewModel() {
-        mViewModelAir = ViewModelProviders.of(this).get(AirSearchViewModel::class.java)
+        mViewModelFlight = ViewModelProviders.of(this).get(FlightSearchViewModel::class.java)
 
-        mViewModelAir.baseViewStatus.observe(this, Observer {
+        mViewModelFlight.baseViewStatus.observe(this, Observer {
             handleViewCommonStatus(it)
         })
 
-        mViewModelAir.mViewStatus.observe(this, Observer {
+        mViewModelFlight.mViewStatus.observe(this, Observer {
             handleViewStatus(it)
         })
 
 
-        mViewModelAir.mListMutableLiveDataFlightData.observe(this, Observer {
+        mViewModelFlight.mListMutableLiveDataFlightData.observe(this, Observer {
             setAdapter(it)
 
         })
 
-        mViewModelAir.init(isInternetConnection)
+        mViewModelFlight.init(isInternetConnection)
 
 
     }

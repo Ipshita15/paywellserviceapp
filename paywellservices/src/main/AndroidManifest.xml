@@ -1106,7 +1106,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".activity.eticket.airticket.serach.SearchViewActivity"
+            android:name=".activity.eticket.airticket.flightSearch.FlightSearchViewActivity"
             android:label="@string/title_activity_air_tricket_menu"
             android:screenOrientation="portrait">
         </activity>
