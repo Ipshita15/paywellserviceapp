@@ -45,7 +45,7 @@ class FlightSearchViewModel : AirTicketBaseViewMode() {
                 mViewStatus.value = SeachViewStatus(isShowShimmerView = false, isShowProcessIndicator = false)
                 val checkNetworkAndStatusCode = isOkNetworkAndStatusCode(t)
                 if (checkNetworkAndStatusCode) {
-                    handleRespose(t)
+                    handleRepose(t)
                 } else {
 
                 }
@@ -53,10 +53,11 @@ class FlightSearchViewModel : AirTicketBaseViewMode() {
         })
     }
 
-    private fun handleRespose(t: ReposeAirSearch?) {
+    private fun handleRepose(t: ReposeAirSearch?) {
         t.let {
             it?.data?.results.let {
-                mListMutableLiveDataFlightData.value = it
+                val sortedListTotalFare = it?.sortedWith(compareBy(Result::totalFare, Result::totalFare))
+                mListMutableLiveDataFlightData.value = sortedListTotalFare
             }
         }
     }

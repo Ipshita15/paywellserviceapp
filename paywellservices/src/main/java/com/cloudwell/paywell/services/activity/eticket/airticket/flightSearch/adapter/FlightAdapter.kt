@@ -15,7 +15,14 @@ import kotlinx.android.synthetic.main.flight_list_item.view.*
 class FlightAdapter(val items: List<Result>, val context: Context) : RecyclerView.Adapter<ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.tvStringTime?.text = items.get(position).currency
+        val model = items.get(position)
+        if (position == 0) {
+            holder.ivTake.setImageResource(R.drawable.ic_tk_symbol_low)
+        } else {
+            holder.ivTake.setImageResource(R.drawable.ic_tk_symbol_normal)
+        }
+
+        holder.tvPrices?.text = "" + model.totalFare
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -34,5 +41,7 @@ class FlightAdapter(val items: List<Result>, val context: Context) : RecyclerVie
 class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     // Holds the TextView that will add each animal to
     val tvStringTime = view.tvStringTime
+    val tvPrices = view.tvPrices
+    val ivTake = view.ivTake
 
 }
