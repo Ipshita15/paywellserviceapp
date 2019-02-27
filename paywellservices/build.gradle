@@ -196,6 +196,8 @@ dependencies {
     implementation 'com.github.sharish:ShimmerRecyclerView:v1.3'
     implementation 'io.supercharge:shimmerlayout:2.1.0'
 
+    implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
+
 
 }
 // Add to the bottom of the file

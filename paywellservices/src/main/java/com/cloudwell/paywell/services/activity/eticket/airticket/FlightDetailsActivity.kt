@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BaseActivity
+import kotlinx.android.synthetic.main.contant_flight_details.*
 
 class FlightDetailsActivity : BaseActivity() {
 
@@ -15,6 +16,25 @@ class FlightDetailsActivity : BaseActivity() {
 //
 //        val parcelable = getIntent().getExtras().getParcelable<Result>("object") as Result
 //        Log.v("", "");
+
+
+        ivUpDown.setOnClickListener {
+            val expanded = expandable_layout.isExpanded
+            if (expanded) {
+                expandable_layout.collapse()
+            } else {
+                expandable_layout.expand()
+            }
+        }
+
+        ivUpDown2.setOnClickListener {
+            val expanded = expandable_layout1.isExpanded
+            if (expanded) {
+                expandable_layout1.collapse()
+            } else {
+                expandable_layout1.expand()
+            }
+        }
 
     }
 
