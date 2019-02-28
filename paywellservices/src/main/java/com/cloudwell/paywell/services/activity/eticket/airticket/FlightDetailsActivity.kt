@@ -3,10 +3,10 @@ package com.cloudwell.paywell.services.activity.eticket.airticket
 import android.os.Bundle
 import android.view.Menu
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.base.BaseActivity
+import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import kotlinx.android.synthetic.main.contant_flight_details.*
 
-class FlightDetailsActivity : BaseActivity() {
+class FlightDetailsActivity : AirTricketBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
