@@ -27,14 +27,14 @@ class FlightDetailsActivity : BaseActivity() {
             }
         }
 
-        ivUpDown2.setOnClickListener {
-            val expanded = expandable_layout1.isExpanded
-            if (expanded) {
-                expandable_layout1.collapse()
-            } else {
-                expandable_layout1.expand()
-            }
-        }
+//        ivUpDown2.setOnClickListener {
+//            val expanded = expandable_layout1.isExpanded
+//            if (expanded) {
+//                expandable_layout1.collapse()
+//            } else {
+//                expandable_layout1.expand()
+//            }
+//        }
 
     }
 

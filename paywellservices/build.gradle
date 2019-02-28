@@ -48,6 +48,7 @@ android {
         debug {
             applicationIdSuffix '.debug'
 
+
         }
         release {
             minifyEnabled true
@@ -55,7 +56,7 @@ android {
         }
     }
     dexOptions {
-        javaMaxHeapSize "4g"
+        javaMaxHeapSize "8g"
     }
     lintOptions {
         checkReleaseBuilds false

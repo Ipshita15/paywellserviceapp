@@ -618,5 +618,6 @@
     <string name="action_search">Serach</string>
     <string name="title_booking_and_review">Review and Book</string>
     <string name="dumy_text">Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. limitations under the License.Copyright (C) 2015 A.Akira</string>
+    <string name="baggage_policy_details"><![CDATA[Baggage & Policy Details]]></string>
 
 </resources>
