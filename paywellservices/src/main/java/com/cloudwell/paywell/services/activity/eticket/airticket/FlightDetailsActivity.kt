@@ -19,11 +19,11 @@ class FlightDetailsActivity : BaseActivity() {
 
 
         ivUpDown.setOnClickListener {
-            val expanded = expandable_layout.isExpanded
+            val expanded = expandable_layout_2.isExpanded
             if (expanded) {
-                expandable_layout.collapse()
+                expandable_layout_2.collapse()
             } else {
-                expandable_layout.expand()
+                expandable_layout_2.expand()
             }
         }
 
