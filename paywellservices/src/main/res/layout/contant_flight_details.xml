@@ -12,7 +12,7 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <!--<LinearLayout-->
         <!--android:layout_width="match_parent"-->
@@ -84,6 +84,38 @@
                 app:layout_constraintTop_toTopOf="@+id/tvNameOfDate"/>
 
             <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="TextView"
+                app:layout_constraintStart_toEndOf="@+id/tvDepart"
+                app:layout_constraintTop_toBottomOf="@+id/tvNameOfDate"
+                tools:text="HHB-DXB "/>
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="1dp"
+                android:layout_height="12dp"
+                android:layout_marginStart="4dp"
+                android:background="#c0c0c0"
+                app:layout_constraintBottom_toBottomOf="@+id/textView8"
+                app:layout_constraintStart_toEndOf="@+id/textView8"
+                app:layout_constraintTop_toTopOf="@+id/textView8"/>
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:text="TextView"
+                app:layout_constraintStart_toEndOf="@+id/view3"
+                app:layout_constraintTop_toBottomOf="@+id/tvTotalDepartTime"
+                tools:text="00:30-0645"/>
+
+            <TextView
                 android:id="@+id/tvTotalDepartTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -116,7 +148,7 @@
                 app:el_parallax="0.5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvDepart">
+                app:layout_constraintTop_toBottomOf="@+id/textView17">
 
                 <ScrollView
                     android:layout_width="match_parent"
@@ -159,16 +191,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
                 android:background="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView9"
-                app:layout_constraintVertical_bias="1.0">
+                >
 
                 <TextView
-                    android:textSize="16dp"
                     android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -176,6 +205,7 @@
                     android:layout_marginTop="8dp"
                     android:text="Price Details  "
                     android:textColor="#686868"
+                    android:textSize="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
 
@@ -215,8 +245,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:textSize="16dp"
                     android:textColor="#686868"
+                    android:textSize="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView7"
                     tools:text="Economy Class"/>
@@ -232,7 +262,6 @@
                     app:srcCompat="@drawable/ic_prices_details"/>
 
                 <TextView
-                    android:textSize="16dp"
                     android:id="@+id/textView10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -240,6 +269,7 @@
                     android:layout_marginTop="8dp"
                     android:text="@string/baggage_policy_details"
                     android:textColor="#686868"
+                    android:textSize="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvClass"/>
 
@@ -311,15 +341,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
                     android:text="TextView"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView12"
                     app:layout_constraintTop_toBottomOf="@+id/textView12"
                     tools:text="Tickets wil be issued no late than 72h before departure"/>
 
                 <Button
-                    android:textAllCaps="false"
                     android:id="@+id/button2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -327,9 +354,32 @@
                     android:layout_marginEnd="16dp"
                     android:background="#69C630"
                     android:text="Book"
+                    android:textAllCaps="false"
                     android:textColor="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
+
+                <ImageView
+                    android:id="@+id/imageView17"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView19"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView19"
+                    app:srcCompat="@drawable/ic_rules"/>
+
+                <TextView
+                    android:id="@+id/textView19"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="Rules:"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView17"
+                    app:layout_constraintTop_toBottomOf="@+id/textView13"/>
             </android.support.constraint.ConstraintLayout>
 
             <android.support.constraint.ConstraintLayout
@@ -340,7 +390,8 @@
                 android:background="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constrainlayoutPricesDetailsView">
+                app:layout_constraintTop_toBottomOf="@+id/constrainlayoutPricesDetailsView"
+                >
 
                 <ImageView
                     android:id="@+id/imageView13"
