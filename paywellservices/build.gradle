@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'org.jetbrains.kotlin.android.extensions'
+
 buildscript {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
@@ -37,9 +39,15 @@ android {
             }
         }
     }
+
+    androidExtensions {
+        experimental = true
+    }
+
     buildTypes {
         debug {
             applicationIdSuffix '.debug'
+
 
         }
         release {
@@ -48,7 +56,7 @@ android {
         }
     }
     dexOptions {
-        javaMaxHeapSize "4g"
+        javaMaxHeapSize "8g"
     }
     lintOptions {
         checkReleaseBuilds false
@@ -188,6 +196,8 @@ dependencies {
     //ShimmerRecyclerView
     implementation 'com.github.sharish:ShimmerRecyclerView:v1.3'
     implementation 'io.supercharge:shimmerlayout:2.1.0'
+
+    implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
 
 
 }

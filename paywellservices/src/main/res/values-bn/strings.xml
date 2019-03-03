@@ -615,6 +615,8 @@
     <string name="cancel">Cancel</string>
     <string name="transaction_log">Transaction Log</string>
     <string name="action_search">Serach</string>
+    <string name="title_booking_and_review">Review and Book</string>
+    <string name="baggage_policy_details"><![CDATA[Baggage & Policy Details]]></string>
 
 
 </resources>

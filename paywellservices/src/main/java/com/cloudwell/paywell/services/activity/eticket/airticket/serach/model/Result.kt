@@ -1,33 +1,44 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.serach.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
+data class Result(
 
-class Result {
+        @SerializedName("Availabilty")
+        var availabilty: Long = 0,
 
-    @SerializedName("Availabilty")
-    var availabilty: Long? = null
-    @SerializedName("Currency")
-    var currency: String? = null
-    @SerializedName("Discount")
-    var discount: Long? = null
-    @SerializedName("FareType")
-    var fareType: String? = null
-    @SerializedName("Fares")
-    var fares: List<Fare>? = null
-    @SerializedName("IsRefundable")
-    var isRefundable: Boolean? = null
-    @SerializedName("LastTicketDate")
-    var lastTicketDate: Any? = null
-    @SerializedName("ResultID")
-    var resultID: String? = null
-    @SerializedName("segments")
-    var segments: List<OutputSegment>? = null
-    @SerializedName("TotalFare")
-    var totalFare: Long? = null
-    @SerializedName("TotalFareWithAgentMarkup")
-    var totalFareWithAgentMarkup: Long? = null
-    @SerializedName("Validatingcarrier")
-    var validatingcarrier: String? = null
+        @SerializedName("Currency")
+        var currency: String = "",
 
-}
+        @SerializedName("Discount")
+        var discount: Long = 0,
+
+        @SerializedName("FareType")
+        var fareType: String = "",
+
+        @SerializedName("Fares")
+        var fares: List<Fare> = mutableListOf(),
+
+        @SerializedName("IsRefundable")
+        var isRefundable: Boolean = false,
+
+//        @SerializedName("LastTicketDate")
+//        var lastTicketDate: Any? = null,
+
+        @SerializedName("ResultID")
+        var resultID: String = "",
+
+//        @SerializedName("segments")
+//        var segments: List<OutputSegment> = mutableListOf(),
+
+        @SerializedName("TotalFare")
+        var totalFare: Long = 0,
+        @SerializedName("TotalFareWithAgentMarkup")
+        var totalFareWithAgentMarkup: Long = 0,
+        @SerializedName("Validatingcarrier")
+        var validatingcarrier: String = ""
+
+) : Parcelable

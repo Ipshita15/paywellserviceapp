@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.SearchViewActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.FlightSearchViewActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.AirportsSearchActivity
 import kotlinx.android.synthetic.main.fragment_one_way.*
 import mehdi.sakout.fancybuttons.FancyButton
@@ -74,7 +74,7 @@ class OneWayFragment : Fragment(), View.OnClickListener {
 
             R.id.btn_search -> {
 
-                val intent = Intent(activity?.applicationContext, SearchViewActivity::class.java)
+                val intent = Intent(activity?.applicationContext, FlightSearchViewActivity::class.java)
                 startActivity(intent)
             }
 

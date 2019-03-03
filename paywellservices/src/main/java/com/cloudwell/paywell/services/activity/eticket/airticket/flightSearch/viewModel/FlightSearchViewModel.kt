@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.eticket.airticket.serach
+package com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.viewModel
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
@@ -14,7 +14,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.serach.view.Sea
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 19/2/19.
  */
-class AirSearchViewModel : AirTicketBaseViewMode() {
+class FlightSearchViewModel : AirTicketBaseViewMode() {
 
     val mViewStatus = SingleLiveEvent<SeachViewStatus>()
 
@@ -45,7 +45,7 @@ class AirSearchViewModel : AirTicketBaseViewMode() {
                 mViewStatus.value = SeachViewStatus(isShowShimmerView = false, isShowProcessIndicator = false)
                 val checkNetworkAndStatusCode = isOkNetworkAndStatusCode(t)
                 if (checkNetworkAndStatusCode) {
-                    handleRespose(t)
+                    handleRepose(t)
                 } else {
 
                 }
@@ -53,10 +53,11 @@ class AirSearchViewModel : AirTicketBaseViewMode() {
         })
     }
 
-    private fun handleRespose(t: ReposeAirSearch?) {
+    private fun handleRepose(t: ReposeAirSearch?) {
         t.let {
             it?.data?.results.let {
-                mListMutableLiveDataFlightData.value = it
+                val sortedListTotalFare = it?.sortedWith(compareBy(Result::totalFare, Result::totalFare))
+                mListMutableLiveDataFlightData.value = sortedListTotalFare
             }
         }
     }
