@@ -31,8 +31,8 @@ data class Result(
         @SerializedName("ResultID")
         var resultID: String = "",
 
-//        @SerializedName("segments")
-//        var segments: List<OutputSegment> = mutableListOf(),
+        @SerializedName("segments")
+        var segments: List<OutputSegment> = mutableListOf(),
 
         @SerializedName("TotalFare")
         var totalFare: Long = 0,

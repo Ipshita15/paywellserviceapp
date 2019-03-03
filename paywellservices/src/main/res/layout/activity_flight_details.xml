@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.eticket.airticket.FlightDetailsActivity">
+    tools:context=".activity.eticket.airticket.flightDetails1.FlightDetailsActivity">
 
     <android.support.design.widget.AppBarLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

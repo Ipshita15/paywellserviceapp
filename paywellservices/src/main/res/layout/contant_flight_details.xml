@@ -6,7 +6,7 @@
               android:layout_height="match_parent"
               android:background="#F2F3F8"
               android:orientation="vertical"
-              tools:context="com.cloudwell.paywell.services.activity.eticket.airticket.FlightDetailsActivity">
+              tools:context="com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.FlightDetailsActivity">
 
 
     <ScrollView
@@ -123,9 +123,11 @@
                 app:layout_constraintBottom_toBottomOf="@+id/tvNameOfDate"
                 app:layout_constraintStart_toEndOf="@+id/view"
                 app:layout_constraintTop_toTopOf="@+id/tvNameOfDate"
+                android:layout_marginLeft="4dp"
                 tools:text="1H55m"/>
 
             <ImageView
+                android:layout_marginRight="16dp"
                 android:id="@+id/ivUpDown"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -133,7 +135,7 @@
                 android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="@+id/viewDeartSectionWithColor"
                 app:layout_constraintTop_toTopOf="@+id/viewDeartSectionWithoutColor"
-                app:srcCompat="@drawable/ic_up_"/>
+                android:background="@drawable/down_icon"/>
 
 
             <net.cachapa.expandablelayout.ExpandableLayout
@@ -159,16 +161,13 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
+                        <com.cloudwell.paywell.services.libaray.SequenceLayout
+                            android:id="@+id/sequenceLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                        </com.cloudwell.paywell.services.libaray.SequenceLayout>
 
-                        <TextView
 
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="8dp"
-                            android:text="@string/dumy_text"
-                            />
                     </LinearLayout>
                 </ScrollView>
 
@@ -220,7 +219,7 @@
                     app:srcCompat="@drawable/ic_taka_small"/>
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/tvTotalFair"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -235,9 +234,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:text="/person "
-                    app:layout_constraintBottom_toBottomOf="@+id/textView6"
-                    app:layout_constraintStart_toEndOf="@+id/textView6"
-                    app:layout_constraintTop_toTopOf="@+id/textView6"/>
+                    app:layout_constraintBottom_toBottomOf="@+id/tvTotalFair"
+                    app:layout_constraintStart_toEndOf="@+id/tvTotalFair"
+                    app:layout_constraintTop_toTopOf="@+id/tvTotalFair"/>
 
                 <TextView
                     android:id="@+id/tvClass"
@@ -304,7 +303,7 @@
                     app:srcCompat="@drawable/ic_non_refundable"/>
 
                 <TextView
-                    android:id="@+id/textView11"
+                    android:id="@+id/tvNonRefundable"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -325,7 +324,7 @@
                     app:srcCompat="@drawable/ic_baggage_info"/>
 
                 <TextView
-                    android:id="@+id/textView12"
+                    android:id="@+id/tvBaggage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -343,7 +342,7 @@
                     android:layout_marginTop="8dp"
                     android:text="TextView"
                     app:layout_constraintStart_toEndOf="@+id/imageView12"
-                    app:layout_constraintTop_toBottomOf="@+id/textView12"
+                    app:layout_constraintTop_toBottomOf="@+id/tvBaggage"
                     tools:text="Tickets wil be issued no late than 72h before departure"/>
 
                 <Button

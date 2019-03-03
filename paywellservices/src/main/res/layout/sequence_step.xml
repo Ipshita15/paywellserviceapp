@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:tools="http://schemas.android.com/tools"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:clipChildren="false"
+       android:clipToPadding="false"
+       android:orientation="horizontal"
+       tools:parentTag="android.widget.TableRow">
+
+    <LinearLayout
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="28dp"
+            android:layout_marginRight="28dp"
+            android:ellipsize="end"
+            android:maxWidth="@dimen/sequence_anchor_max_width"
+            android:maxLines="1"
+            android:paddingStart="0dp"
+            android:paddingLeft="0dp"
+            android:paddingEnd="16dp"
+            android:paddingRight="16dp"
+            android:textColor="@color/black"
+            tools:layout_width="64dp"
+            tools:text="30 Novs dfsd "/>
+
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="28dp"
+            android:ellipsize="end"
+            android:maxWidth="@dimen/sequence_anchor_max_width"
+            android:maxLines="1"
+            android:paddingStart="0dp"
+            android:paddingLeft="0dp"
+            android:paddingEnd="16dp"
+            android:paddingRight="16dp"
+            android:textColor="@color/black"
+            tools:layout_width="64dp"
+            tools:text="10:33"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingBottom="16dp">
+
+        <TextView
+
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            tools:text="The Title of this Step"/>
+
+        <TextView
+            android:id="@+id/subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="#9d9d9f"
+            android:visibility="visible"
+            tools:text="More text More text More text\nMore text More text More text More text More text "/>
+    </LinearLayout>
+</merge>
