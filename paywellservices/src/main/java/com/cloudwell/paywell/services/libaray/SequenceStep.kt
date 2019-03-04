@@ -2,6 +2,7 @@ package com.cloudwell.paywell.services.libaray
 
 import android.content.Context
 import android.content.res.TypedArray
+import android.graphics.Color
 import android.support.annotation.StringRes
 import android.support.annotation.StyleRes
 import android.support.v4.widget.TextViewCompat
@@ -50,16 +51,20 @@ public class SequenceStep(context: Context?, attrs: AttributeSet?)
      *
      * @attr ref com.transferwise.sequencelayout.R.styleable#SequenceStep_anchor
      */
-    public fun setAnchor(anchor: CharSequence?) {
+    public fun setDate(anchor: CharSequence?) {
         this.date.text = anchor
         this.date.visibility = View.VISIBLE
         this.date.minWidth = resources.getDimensionPixelSize(R.dimen.sequence_anchor_min_width)
     }
 
-    public fun setAnchorTime(anchor: CharSequence?) {
+    public fun setTime(anchor: CharSequence?) {
         this.time.text = anchor
         this.time.visibility = View.VISIBLE
         this.time.minWidth = resources.getDimensionPixelSize(R.dimen.sequence_anchor_min_width)
+    }
+
+    fun setDateColor(s: String) {
+        this.date.setTextColor(Color.parseColor(s))
     }
 
 
@@ -155,7 +160,7 @@ public class SequenceStep(context: Context?, attrs: AttributeSet?)
         if (!attributes.hasValue(R.styleable.SequenceStep_anchor)) {
             date.visibility = View.INVISIBLE
         } else {
-            setAnchor(attributes.getString(R.styleable.SequenceStep_anchor))
+            setDate(attributes.getString(R.styleable.SequenceStep_anchor))
         }
     }
 

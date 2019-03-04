@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.View
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.FlightDetailsActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.FlightDetails1Activity
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.adapter.FlightAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.viewModel.FlightSearchViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.Result
@@ -90,7 +90,7 @@ class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
                         val get = mViewModelFlight.mListMutableLiveDataFlightData.value?.get(position)
 
 
-                        val intent = Intent(applicationContext, FlightDetailsActivity::class.java)
+                        val intent = Intent(applicationContext, FlightDetails1Activity::class.java)
                         intent.putExtra("object", get)
                         startActivity(intent)
 

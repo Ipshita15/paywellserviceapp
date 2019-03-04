@@ -199,6 +199,8 @@ dependencies {
 
     implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
 
+    implementation 'com.github.zagum:Android-ExpandIcon:1.2.1'
+
 
 }
 // Add to the bottom of the file

@@ -20,8 +20,8 @@ class FlightSequenceAdapter(private val items: List<MyItem>) : SequenceAdapter<F
     override fun bindView(sequenceStep: SequenceStep, item: MyItem) {
         with(sequenceStep) {
             setActive(item.isActive)
-            setAnchor(item.date)
-            setAnchorTime(item.time)
+            setDate(item.date)
+            setTime(item.time)
             setTitle(item.airportName)
 
 
@@ -32,11 +32,13 @@ class FlightSequenceAdapter(private val items: List<MyItem>) : SequenceAdapter<F
             }
 
             if (!item.totalTime.equals("")) {
-                setAnchor(item.totalTime)
+                setDate(item.totalTime)
+                setDateColor("#9d9d9f")
                 setSubtitle("")
                 hiddentext()
                 hiddenTime()
                 hiddensubtitle()
+
             }
 
 
