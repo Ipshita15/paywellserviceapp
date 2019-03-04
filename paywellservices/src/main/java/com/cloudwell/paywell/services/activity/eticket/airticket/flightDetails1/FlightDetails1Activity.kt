@@ -5,10 +5,11 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
-import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.DummayData
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.adapter.FlightSequenceAdapter
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.FlightFareDialogFragment
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Fare
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.RequestAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Result
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Segment
@@ -36,11 +37,12 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
         setToolbar(getString(com.cloudwell.paywell.services.R.string.title_booking_and_review))
 
+        val results = Gson().fromJson(DummayData().multipSegmentData, Array<com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Result>::class.java)
+
         initializationView()
-        // initViewModel()
+        initViewModel()
 //
 //        val parcelable = getIntent().getExtras().getParcelable<Result>("object") as Result
-        val results = Gson().fromJson(DummayData().multipSegmentData, Array<com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Result>::class.java)
 
 
         displayData(results.toList())
@@ -153,9 +155,9 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         tvClass.text = requestAirSearch.journeyType
 
         if (result.isRefundable) {
-            tvNonRefundable.text = getString(R.string.refundable)
+            tvNonRefundable.text = getString(com.cloudwell.paywell.services.R.string.refundable)
         } else {
-            tvNonRefundable.text = getString(R.string.non_refundable)
+            tvNonRefundable.text = getString(com.cloudwell.paywell.services.R.string.non_refundable)
 
         }
 
@@ -225,6 +227,49 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
             handleUpDownClick()
         }
 
+
+        ivFareInfo.setOnClickListener {
+            showFareDetailsDialog()
+        }
+
+        tvPriceDetails.setOnClickListener {
+            showFareDetailsDialog()
+        }
+
+        tvTotalFair.setOnClickListener {
+            showFareDetailsDialog()
+        }
+
+        tvPersonText.setOnClickListener {
+            showFareDetailsDialog()
+        }
+
+
+    }
+
+    private fun showFareDetailsDialog() {
+        val ft = supportFragmentManager.beginTransaction()
+        val prev = supportFragmentManager.findFragmentByTag("dialog")
+        if (prev != null) {
+            ft.remove(prev)
+        }
+        ft.addToBackStack(null)
+        val dialogFragment = FlightFareDialogFragment()
+
+//        val get = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.get(0)?.fares?.get(0)
+        val get = Fare()
+        get.baseFare = 100;
+        get.tax = 10;
+        get.currency = "Tk";
+        get.discount = 0;
+        get.otherCharges = 2000;
+        get.serviceFee = 33;
+
+        val args = Bundle()
+        args.putParcelable("object", get)
+
+        dialogFragment.arguments = args
+        dialogFragment.show(ft, "dialog")
     }
 
     private fun handleUpDownClick() {
@@ -233,12 +278,10 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
             expandable_layout_2.collapse()
             rotatedUpUp()
-
         } else {
 
             expandable_layout_2.expand()
             rotatedUpUp()
-
         }
     }
 
