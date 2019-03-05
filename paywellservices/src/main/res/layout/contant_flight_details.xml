@@ -6,18 +6,13 @@
               android:layout_height="match_parent"
               android:background="#F2F3F8"
               android:orientation="vertical"
-              tools:context="com.cloudwell.paywell.services.activity.eticket.airticket.FlightDetailsActivity">
+              tools:context="com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.FlightDetails1Activity">
 
 
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="vertical">-->
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -60,6 +55,7 @@
                 android:text="Depart"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="@+id/viewDeartSectionWithColor"
+                android:layout_marginLeft="8dp"
                 app:layout_constraintTop_toTopOf="@+id/viewDeartSectionWithColor"/>
 
             <TextView
@@ -67,7 +63,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:text="TextView"
+                android:textColor="@color/black33333"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/tvDepart"
                 app:layout_constraintStart_toEndOf="@+id/tvDepart"
                 app:layout_constraintTop_toTopOf="@+id/tvDepart"
@@ -78,40 +77,50 @@
                 android:layout_width="1dp"
                 android:layout_height="12dp"
                 android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
                 android:background="#c0c0c0"
                 app:layout_constraintBottom_toBottomOf="@+id/tvNameOfDate"
                 app:layout_constraintStart_toEndOf="@+id/tvNameOfDate"
                 app:layout_constraintTop_toTopOf="@+id/tvNameOfDate"/>
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/tvOrginAndDestinationAirportCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="TextView"
+                android:textColor="@color/black33333"
+                android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/tvDepart"
                 app:layout_constraintTop_toBottomOf="@+id/tvNameOfDate"
                 tools:text="HHB-DXB "/>
 
             <View
-                android:id="@+id/view3"
+                android:id="@+id/lineView"
                 android:layout_width="1dp"
                 android:layout_height="12dp"
                 android:layout_marginStart="4dp"
                 android:background="#c0c0c0"
-                app:layout_constraintBottom_toBottomOf="@+id/textView8"
-                app:layout_constraintStart_toEndOf="@+id/textView8"
-                app:layout_constraintTop_toTopOf="@+id/textView8"/>
+                app:layout_constraintBottom_toBottomOf="@+id/tvOrginAndDestinationAirportCode"
+                app:layout_constraintStart_toEndOf="@+id/tvOrginAndDestinationAirportCode"
+                app:layout_constraintTop_toTopOf="@+id/tvOrginAndDestinationAirportCode"/>
 
             <TextView
-                android:id="@+id/textView17"
+                android:id="@+id/tvShortDepartArriveTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:text="TextView"
-                app:layout_constraintStart_toEndOf="@+id/view3"
+                android:textColor="@color/black33333"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/lineView"
                 app:layout_constraintTop_toBottomOf="@+id/tvTotalDepartTime"
                 tools:text="00:30-0645"/>
 
@@ -120,20 +129,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:textColor="@color/black33333"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/tvNameOfDate"
+                app:layout_constraintEnd_toStartOf="@+id/ivUpDown"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/view"
                 app:layout_constraintTop_toTopOf="@+id/tvNameOfDate"
                 tools:text="1H55m"/>
 
-            <ImageView
+            <com.github.zagum.expandicon.ExpandIconView
                 android:id="@+id/ivUpDown"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
                 app:layout_constraintEnd_toEndOf="@+id/viewDeartSectionWithColor"
                 app:layout_constraintTop_toTopOf="@+id/viewDeartSectionWithoutColor"
-                app:srcCompat="@drawable/ic_up_"/>
+                />
 
 
             <net.cachapa.expandablelayout.ExpandableLayout
@@ -148,7 +165,7 @@
                 app:el_parallax="0.5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView17">
+                app:layout_constraintTop_toBottomOf="@+id/tvShortDepartArriveTime">
 
                 <ScrollView
                     android:layout_width="match_parent"
@@ -159,16 +176,13 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
+                        <com.cloudwell.paywell.services.libaray.SequenceLayout
+                            android:id="@+id/sequenceLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                        </com.cloudwell.paywell.services.libaray.SequenceLayout>
 
-                        <TextView
 
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="8dp"
-                            android:text="@string/dumy_text"
-                            />
                     </LinearLayout>
                 </ScrollView>
 
@@ -184,7 +198,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/viewDeartSectionWithoutColor"
-                tools:text="Don not remove me "/>
+                tools:text="sss "/>
+
+            <com.github.zagum.expandicon.ExpandIconView
+                android:id="@+id/ivUpDown2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView9"/>
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/constrainlayoutPricesDetailsView"
@@ -198,13 +224,14 @@
                 >
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/tvPriceDetails"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     android:text="Price Details  "
-                    android:textColor="#686868"
+                    android:textColor="@color/black33333"
                     android:textSize="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
@@ -216,49 +243,56 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView5"
+                    app:layout_constraintTop_toBottomOf="@+id/tvPriceDetails"
+                    android:layout_marginLeft="8dp"
                     app:srcCompat="@drawable/ic_taka_small"/>
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/tvTotalFair"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="2000"
+                    android:layout_marginLeft="8dp"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView7"
                     app:layout_constraintStart_toEndOf="@+id/imageView7"
+                    android:textColor="#189d49"
                     app:layout_constraintTop_toTopOf="@+id/imageView7"/>
 
                 <TextView
-                    android:id="@+id/textView7"
+                    android:id="@+id/tvPersonText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="/person "
-                    app:layout_constraintBottom_toBottomOf="@+id/textView6"
-                    app:layout_constraintStart_toEndOf="@+id/textView6"
-                    app:layout_constraintTop_toTopOf="@+id/textView6"/>
+                    android:layout_marginLeft="4dp"
+                    android:text="/person"
+                    android:textColor="@color/black33333"
+                    app:layout_constraintStart_toEndOf="@+id/tvTotalFair"
+                    app:layout_constraintTop_toTopOf="@+id/tvTotalFair"/>
 
                 <TextView
                     android:id="@+id/tvClass"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="22dp"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
-                    android:textColor="#686868"
+                    android:textColor="@color/black33333"
+
                     android:textSize="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView7"
                     tools:text="Economy Class"/>
 
                 <ImageView
-                    android:id="@+id/imageView8"
+                    android:id="@+id/ivFareInfo"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_marginStart="8dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView7"
-                    app:layout_constraintStart_toEndOf="@+id/textView7"
-                    app:layout_constraintTop_toTopOf="@+id/textView7"
+                    android:layout_marginLeft="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvPersonText"
+                    app:layout_constraintStart_toEndOf="@+id/tvPersonText"
+                    app:layout_constraintTop_toTopOf="@+id/tvPersonText"
                     app:srcCompat="@drawable/ic_prices_details"/>
 
                 <TextView
@@ -266,9 +300,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+
                     android:layout_marginTop="8dp"
                     android:text="@string/baggage_policy_details"
-                    android:textColor="#686868"
+                    android:textColor="@color/black33333"
                     android:textSize="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvClass"/>
@@ -278,6 +314,7 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     app:layout_constraintBottom_toBottomOf="@+id/textView10"
                     app:layout_constraintStart_toEndOf="@+id/textView10"
                     app:layout_constraintTop_toTopOf="@+id/textView10"
@@ -291,20 +328,11 @@
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView10"
-                    app:srcCompat="@drawable/ic_non_refundable"/>
-
-                <ImageView
-                    android:id="@+id/imageView12"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginStart="8dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView13"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView13"
+                    android:layout_marginLeft="8dp"
                     app:srcCompat="@drawable/ic_non_refundable"/>
 
                 <TextView
-                    android:id="@+id/textView11"
+                    android:id="@+id/tvNonRefundable"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -312,6 +340,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/imageView10"
                     app:layout_constraintStart_toEndOf="@+id/imageView10"
                     app:layout_constraintTop_toTopOf="@+id/imageView10"
+                    android:layout_marginLeft="8dp"
                     tools:text="Non-refundable"/>
 
                 <ImageView
@@ -322,10 +351,11 @@
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView10"
+                    android:layout_marginLeft="8dp"
                     app:srcCompat="@drawable/ic_baggage_info"/>
 
                 <TextView
-                    android:id="@+id/textView12"
+                    android:id="@+id/tvBaggage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -333,18 +363,8 @@
                     app:layout_constraintBottom_toBottomOf="@+id/imageView11"
                     app:layout_constraintStart_toEndOf="@+id/imageView11"
                     app:layout_constraintTop_toTopOf="@+id/imageView11"
+                    android:layout_marginLeft="8dp"
                     tools:text="Baggage : 20 KG per adult ticket "/>
-
-                <TextView
-                    android:id="@+id/textView13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="TextView"
-                    app:layout_constraintStart_toEndOf="@+id/imageView12"
-                    app:layout_constraintTop_toBottomOf="@+id/textView12"
-                    tools:text="Tickets wil be issued no late than 72h before departure"/>
 
                 <Button
                     android:id="@+id/button2"
@@ -357,6 +377,7 @@
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginRight="16dp"
                     app:layout_constraintTop_toTopOf="parent"/>
 
                 <ImageView
@@ -364,6 +385,7 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     app:layout_constraintBottom_toBottomOf="@+id/textView19"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/textView19"
@@ -374,12 +396,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="16dp"
                     android:text="Rules:"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView17"
-                    app:layout_constraintTop_toBottomOf="@+id/textView13"/>
+                    app:layout_constraintTop_toBottomOf="@+id/tvBaggage"/>
             </android.support.constraint.ConstraintLayout>
 
             <android.support.constraint.ConstraintLayout
@@ -387,27 +410,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constrainlayoutPricesDetailsView"
-                >
+                app:layout_constraintTop_toBottomOf="@+id/constrainlayoutPricesDetailsView">
 
                 <ImageView
                     android:id="@+id/imageView13"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_marginStart="8dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView14"
+                    android:layout_marginLeft="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvPassportMandatory"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView14"
+                    app:layout_constraintTop_toTopOf="@+id/tvPassportMandatory"
                     app:srcCompat="@drawable/ic_passport_mangatory"/>
 
                 <TextView
-                    android:id="@+id/textView14"
+                    android:id="@+id/tvPassportMandatory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     android:text="TextView"
                     app:layout_constraintStart_toEndOf="@+id/imageView13"
@@ -419,19 +445,21 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView14"
+                    app:layout_constraintTop_toBottomOf="@+id/tvPassportMandatory"
                     app:srcCompat="@drawable/ic_extra_services"/>
 
                 <TextView
-                    android:id="@+id/textView15"
+                    android:id="@+id/tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toEndOf="@+id/imageView14"
-                    app:layout_constraintTop_toBottomOf="@+id/textView14"
+                    app:layout_constraintTop_toBottomOf="@+id/tvPassportMandatory"
                     tools:text="Extra Servies"/>
 
                 <ImageView
@@ -439,24 +467,27 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView16"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView16"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView14"
+                    app:layout_constraintVertical_bias="0.49"
                     app:srcCompat="@drawable/ic_refundable"/>
 
                 <TextView
-                    android:id="@+id/textView16"
+                    android:id="@+id/tvExtraServies"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:text="TextView"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView15"
-                    app:layout_constraintTop_toBottomOf="@+id/textView15"
+                    app:layout_constraintTop_toBottomOf="@+id/tv"
                     tools:text="Is Refundable"/>
             </android.support.constraint.ConstraintLayout>
 

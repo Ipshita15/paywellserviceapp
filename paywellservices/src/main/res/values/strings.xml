@@ -617,7 +617,17 @@
     <string name="transaction_log">Transaction Log</string>
     <string name="action_search">Serach</string>
     <string name="title_booking_and_review">Review and Book</string>
-    <string name="dumy_text">Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. limitations under the License.Copyright (C) 2015 A.Akira</string>
     <string name="baggage_policy_details"><![CDATA[Baggage & Policy Details]]></string>
+    <string name="refundable"> IS refundable</string>
+    <string name="non_refundable">No Refundable</string>
+    <string name="passport_mandatory">Passport Mandatory</string>
+    <string name="passport_not_mandatory">Passport not mandatory</string>
+    <string name="title_activity_baggage_and_policies_actiivty">Baggage Allowance &amp; Pollicies
+    </string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_3">Tab 3</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 
 </resources>

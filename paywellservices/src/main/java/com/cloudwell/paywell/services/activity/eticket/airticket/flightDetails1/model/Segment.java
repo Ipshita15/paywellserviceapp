@@ -1,11 +1,9 @@
-package com.cloudwell.paywell.services.activity.eticket.airticket.serach.model;
+package com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import kotlinx.android.parcel.Parcelize;
 
-@Parcelize
-public class OutputSegment {
+public class Segment {
 
     @SerializedName("Airline")
     private Airline mAirline;
@@ -20,7 +18,7 @@ public class OutputSegment {
     @SerializedName("Origin")
     private Origin mOrigin;
     @SerializedName("StopQuantity")
-    private Object mStopQuantity;
+    private String mStopQuantity;
     @SerializedName("TripIndicator")
     private String mTripIndicator;
 
@@ -72,11 +70,11 @@ public class OutputSegment {
         mOrigin = origin;
     }
 
-    public Object getStopQuantity() {
+    public String getStopQuantity() {
         return mStopQuantity;
     }
 
-    public void setStopQuantity(Object stopQuantity) {
+    public void setStopQuantity(String stopQuantity) {
         mStopQuantity = stopQuantity;
     }
 

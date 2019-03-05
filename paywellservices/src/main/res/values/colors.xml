@@ -45,6 +45,8 @@
     <color name="color_black">#000000</color>
     <color name="text_color">#999999</color>
     <color name="text_color_white">#FFFFFF</color>
+    <color name="default_progress_background">#ccc</color>
+    <color name="black33333">#333333</color>
 
 
 </resources>
