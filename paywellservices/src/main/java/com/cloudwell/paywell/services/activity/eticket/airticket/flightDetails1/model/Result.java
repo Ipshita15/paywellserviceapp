@@ -25,7 +25,7 @@ public class Result {
     @SerializedName("LastTicketDate")
     private String mLastTicketDate;
     @SerializedName("PassportMadatory")
-    private Boolean mPassportMadatory;
+    private Boolean mPassportMadatory = false;
     @SerializedName("ResultID")
     private String mResultID;
     @SerializedName("segments")

@@ -5,14 +5,13 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.DummayData
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.adapter.FlightSequenceAdapter
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.AirlessDialogFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.FlightFareDialogFragment
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Fare
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.RequestAirPriceSearch
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Result
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Segment
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.*
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.viewModel.FlightDetails1ViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch
 import com.cloudwell.paywell.services.utils.DateUtils.differenceDate
@@ -106,8 +105,8 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         val requestAirSearch = RequestAirSearch(journeyType = "local")
 
 
-        val segments = it?.get(0)?.segments
-        val segment = it.get(0)?.segments?.get(0)
+        val segments = it.get(0).segments
+        val segment = it.get(0).segments?.get(0)
         val result = it.get(0);
 
 
@@ -154,6 +153,23 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         tvTotalFair.text = result.fares?.get(0)?.baseFare.toString()
         tvClass.text = requestAirSearch.journeyType
 
+
+
+        tvBaggage.text = "Baggage : " + segment?.baggage + " KG per adult ticket "
+
+
+        if (result.passportMadatory) {
+            tvPassportMandatory.text = getString(R.string.passport_mandatory)
+        } else {
+            tvPassportMandatory.text = getString(R.string.passport_not_mandatory)
+        }
+
+        if (result.extraServices == null) {
+            tvExtraServies.text = "N/A"
+        } else {
+            tvExtraServies.text = "" + result.extraServices
+        }
+
         if (result.isRefundable) {
             tvNonRefundable.text = getString(com.cloudwell.paywell.services.R.string.refundable)
         } else {
@@ -161,7 +177,6 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
         }
 
-        tvBaggage.text = "Baggage : " + segment?.baggage + " KG per adult ticket "
 
     }
 
@@ -175,7 +190,6 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
             var depTime = origin?.depTime?.split("T")?.get(1).toString()
             depTime = depTime.substring(0, depTime.length - 3)
             val airlineName = it.airline?.airlineName
-            segmentsList.add(FlightSequenceAdapter.MyItem(true, origin?.airport?.airportName!!, depDate, depTime, airlineName, "", ""))
 
 
             // parse journey time
@@ -187,7 +201,9 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
             val date1 = split1.get(0) + " " + split1.get(1)
             val secondDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss").parse(date1)
             val differenceDate = differenceDate(fistDate, secondDate)
-            segmentsList.add(FlightSequenceAdapter.MyItem(true, "", "", "", "", "", differenceDate))
+
+            segmentsList.add(FlightSequenceAdapter.MyItem(true, origin?.airport?.airportName!!, depDate, depTime, airlineName, "", differenceDate))
+
 
             storeTotalJourneyTime(differenceDate)
 
@@ -201,7 +217,39 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
         }
 
-        sequenceLayout.setAdapter(FlightSequenceAdapter(segmentsList))
+        val flightSequenceAdapter = FlightSequenceAdapter(segmentsList, object : FlightSequenceAdapter.OnFlightClick {
+            override fun onclick(airlineName: String?) {
+                val airline = segments.get(0).airline
+
+                showAirlessInfo(airline)
+
+
+            }
+        })
+
+        sequenceLayout.setAdapter(flightSequenceAdapter)
+    }
+
+    private fun showAirlessInfo(airline: Airline?) {
+        val dialogFragment = AirlessDialogFragment()
+
+//        val get = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.get(0)?.fares?.get(0)
+        val get = Airline()
+        get.airlineCode = "Code"
+        get.airlineCode = "PayWell"
+        get.bookingClass = "G";
+        get.cabinClass = "cabinClass"
+        get.flightNumber = "12334";
+        get.operatingCarrier = "erdf"
+        get.operatingCarrier = "operatingCarrier"
+
+        val args = Bundle()
+        args.putParcelable("object", get)
+
+        dialogFragment.arguments = args
+        dialogFragment.show(supportFragmentManager, "dialog")
+
+
     }
 
     private fun storeTotalJourneyTime(differenceDate: String) {
@@ -214,12 +262,19 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
     private fun initializationView() {
         ivUpDown.switchState()
+        ivUpDown2.switchState()
+
         tvOrginAndDestinationAirportCode.visibility = View.GONE
         tvShortDepartArriveTime.visibility = View.GONE
         lineView.visibility = View.GONE
 
 
         ivUpDown.setOnClickListener {
+            handleUpDownClick()
+
+        }
+
+        ivUpDown2.setOnClickListener {
             handleUpDownClick()
         }
 
@@ -275,11 +330,11 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
     private fun handleUpDownClick() {
         val expanded = expandable_layout_2.isExpanded
         if (expanded) {
-
+            ivUpDown2.visibility = View.GONE
             expandable_layout_2.collapse()
             rotatedUpUp()
         } else {
-
+            ivUpDown2.visibility = View.VISIBLE
             expandable_layout_2.expand()
             rotatedUpUp()
         }

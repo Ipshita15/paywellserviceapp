@@ -113,9 +113,13 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginLeft="4dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:text="TextView"
                 android:textColor="@color/black33333"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/lineView"
                 app:layout_constraintTop_toBottomOf="@+id/tvTotalDepartTime"
                 tools:text="00:30-0645"/>
@@ -194,7 +198,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/viewDeartSectionWithoutColor"
-                tools:text="Don not remove me "/>
+                tools:text="sss "/>
+
+            <com.github.zagum.expandicon.ExpandIconView
+                android:id="@+id/ivUpDown2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView9"/>
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/constrainlayoutPricesDetailsView"
@@ -315,17 +331,6 @@
                     android:layout_marginLeft="8dp"
                     app:srcCompat="@drawable/ic_non_refundable"/>
 
-                <ImageView
-                    android:id="@+id/imageView12"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginStart="8dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView13"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView13"
-                    android:layout_marginLeft="8dp"
-                    app:srcCompat="@drawable/ic_non_refundable"/>
-
                 <TextView
                     android:id="@+id/tvNonRefundable"
                     android:layout_width="wrap_content"
@@ -360,18 +365,6 @@
                     app:layout_constraintTop_toTopOf="@+id/imageView11"
                     android:layout_marginLeft="8dp"
                     tools:text="Baggage : 20 KG per adult ticket "/>
-
-                <TextView
-                    android:id="@+id/textView13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Tickets wil be issued no late than 72h before departure"
-                    app:layout_constraintStart_toEndOf="@+id/imageView12"
-                    app:layout_constraintTop_toBottomOf="@+id/tvBaggage"
-                    tools:text="Tickets wil be issued no late than 72h before departure"/>
 
                 <Button
                     android:id="@+id/button2"
@@ -409,7 +402,7 @@
                     android:text="Rules:"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView17"
-                    app:layout_constraintTop_toBottomOf="@+id/textView13"/>
+                    app:layout_constraintTop_toBottomOf="@+id/tvBaggage"/>
             </android.support.constraint.ConstraintLayout>
 
             <android.support.constraint.ConstraintLayout
@@ -417,33 +410,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constrainlayoutPricesDetailsView"
-                >
+                app:layout_constraintTop_toBottomOf="@+id/constrainlayoutPricesDetailsView">
 
                 <ImageView
                     android:id="@+id/imageView13"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_marginStart="8dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView14"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView14"
                     android:layout_marginLeft="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvPassportMandatory"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tvPassportMandatory"
                     app:srcCompat="@drawable/ic_passport_mangatory"/>
 
                 <TextView
-                    android:id="@+id/textView14"
+                    android:id="@+id/tvPassportMandatory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     android:text="TextView"
                     app:layout_constraintStart_toEndOf="@+id/imageView13"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginLeft="8dp"
                     tools:text="Passport Mandatory"/>
 
                 <ImageView
@@ -451,21 +445,21 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView14"
-                    android:layout_marginLeft="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tvPassportMandatory"
                     app:srcCompat="@drawable/ic_extra_services"/>
 
                 <TextView
-                    android:id="@+id/textView15"
+                    android:id="@+id/tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toEndOf="@+id/imageView14"
-                    app:layout_constraintTop_toBottomOf="@+id/textView14"
-                    android:layout_marginLeft="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tvPassportMandatory"
                     tools:text="Extra Servies"/>
 
                 <ImageView
@@ -473,26 +467,27 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView16"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView16"
-                    android:layout_marginLeft="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView14"
+                    app:layout_constraintVertical_bias="0.49"
                     app:srcCompat="@drawable/ic_refundable"/>
 
                 <TextView
-                    android:id="@+id/textView16"
+                    android:id="@+id/tvExtraServies"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:text="TextView"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView15"
-                    app:layout_constraintTop_toBottomOf="@+id/textView15"
-                    android:layout_marginLeft="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tv"
                     tools:text="Is Refundable"/>
             </android.support.constraint.ConstraintLayout>
 

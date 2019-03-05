@@ -2,12 +2,14 @@ package com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1
 
 import com.cloudwell.paywell.services.libaray.SequenceAdapter
 import com.cloudwell.paywell.services.libaray.SequenceStep
+import kotlinx.android.synthetic.main.sequence_step.view.*
 
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 3/3/19.
  */
-class FlightSequenceAdapter(private val items: List<MyItem>) : SequenceAdapter<FlightSequenceAdapter.MyItem>() {
+class FlightSequenceAdapter(private val items: List<MyItem>, var onFlightClick: OnFlightClick) : SequenceAdapter<FlightSequenceAdapter.MyItem>() {
+
 
     override fun getCount(): Int {
         return items.size
@@ -31,18 +33,27 @@ class FlightSequenceAdapter(private val items: List<MyItem>) : SequenceAdapter<F
                 setSubtitle("Stop " + item.cityName)
             }
 
-            if (!item.totalTime.equals("")) {
-                setDate(item.totalTime)
-                setDateColor("#9d9d9f")
-                setSubtitle("")
-                hiddentext()
-                hiddenTime()
-                hiddensubtitle()
+            if (item.totalTime.equals("")) {
+                hiddenFlightBackgroud(false)
+                hiddenFlightInfoIncon(false)
+            } else {
 
+                // first row....
+                hiddenFlightBackgroud(true)
+                hiddenFlightInfoIncon(true)
+                setTotalJounaryTime(item.totalTime)
             }
 
-
+            sequenceStep.vFlightBackgroud.setOnClickListener {
+                onFlightClick.onclick(item.airlineName)
+            }
         }
+
+
+    }
+
+    interface OnFlightClick {
+        fun onclick(airlineName: String?)
     }
 
 

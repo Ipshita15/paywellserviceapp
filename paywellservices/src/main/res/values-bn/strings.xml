@@ -619,6 +619,8 @@
     <string name="baggage_policy_details"><![CDATA[Baggage & Policy Details]]></string>
     <string name="Refundable">Refundable</string>
     <string name="non_refundable">No Refundable</string>
+    <string name="passport_mandatory">Passport Mandatory</string>
+    <string name="passport_not_mandatory">Passport not mandatory</string>
 
 
 </resources>

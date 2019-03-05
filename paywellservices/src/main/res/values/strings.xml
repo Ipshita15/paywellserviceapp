@@ -618,7 +618,9 @@
     <string name="action_search">Serach</string>
     <string name="title_booking_and_review">Review and Book</string>
     <string name="baggage_policy_details"><![CDATA[Baggage & Policy Details]]></string>
-    <string name="refundable">Refundable</string>
+    <string name="refundable"> IS refundable</string>
     <string name="non_refundable">No Refundable</string>
+    <string name="passport_mandatory">Passport Mandatory</string>
+    <string name="passport_not_mandatory">Passport not mandatory</string>
 
 </resources>

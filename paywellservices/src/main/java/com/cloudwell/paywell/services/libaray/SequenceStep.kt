@@ -88,6 +88,10 @@ public class SequenceStep(context: Context?, attrs: AttributeSet?)
         this.title.visibility = View.VISIBLE
     }
 
+    public fun setTotalJounaryTime(title: CharSequence?) {
+        this.tvTotalJounaryTime.text = title
+    }
+
     /**
      * Sets the title label
      *
@@ -237,6 +241,25 @@ public class SequenceStep(context: Context?, attrs: AttributeSet?)
 
     fun hiddensubtitle() {
         this.subtitle.visibility = View.GONE
+    }
+
+    fun hiddenFlightBackgroud(boolean: Boolean) {
+        if (boolean) {
+            vFlightBackgroud.visibility = View.VISIBLE
+        } else {
+            vFlightBackgroud.visibility = View.INVISIBLE
+
+        }
+    }
+
+
+    fun hiddenFlightInfoIncon(boolean: Boolean) {
+        if (boolean) {
+            flightInfoIncon.visibility = View.VISIBLE
+        } else {
+            flightInfoIncon.visibility = View.INVISIBLE
+
+        }
     }
 
 }
