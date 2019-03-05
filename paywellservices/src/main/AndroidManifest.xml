@@ -46,7 +46,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
-
+        <activity
+            android:name=".activity.eticket.airticket.flightDetails1.fragment.BaggageAndPoliciesActiivty"
+            android:label="@string/title_activity_baggage_and_policies_actiivty">
+        </activity>
 
         <uses-library
             android:name="com.google.android.maps"
@@ -61,12 +64,14 @@
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN"/>-->
-            <!--<action android:name="android.intent.action.VIEW"/>-->
 
-            <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-            <!--</intent-filter>-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.VIEW"/>
+
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
 
         </activity>
 
@@ -1112,36 +1117,28 @@
             android:label="@string/title_activity_air_tricket_menu"
             android:screenOrientation="portrait">
 
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN"/> -->
+            <!-- <action android:name="android.intent.action.VIEW"/> -->
 
+
+            <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
+            <!-- </intent-filter> -->
+
+        </activity>
+        <activity
+            android:name=".activity.eticket.airticket.serach.citySerach.AirportsSearchActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activity.eticket.airticket.flightDetails1.FlightDetails1Activity"
+            android:label="@string/title_activity_air_tricket_menu">
             <!--<intent-filter>-->
             <!--<action android:name="android.intent.action.MAIN"/>-->
             <!--<action android:name="android.intent.action.VIEW"/>-->
 
             <!--<category android:name="android.intent.category.LAUNCHER"/>-->
             <!--</intent-filter>-->
-
-
-        </activity>
-
-        <activity
-            android:name=".activity.eticket.airticket.serach.citySerach.AirportsSearchActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
-        </activity>
-
-
-        <activity
-            android:name=".activity.eticket.airticket.flightDetails1.FlightDetails1Activity"
-            android:label="@string/title_activity_air_tricket_menu"
-
-            >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <action android:name="android.intent.action.VIEW"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-
         </activity>
     </application>
 

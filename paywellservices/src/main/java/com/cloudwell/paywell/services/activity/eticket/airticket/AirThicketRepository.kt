@@ -2,13 +2,16 @@ package com.cloudwell.paywell.services.activity.eticket.airticket
 
 import android.arch.lifecycle.MutableLiveData
 import android.content.Context
+import com.cloudwell.paywell.services.activity.eticket.DummayData
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.RequestAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.airRules.ResposeAirRules
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.ResGetAirports
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.ReposeAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -90,5 +93,33 @@ class AirThicketRepository(private val mContext: Context) {
             }
         })
         return data
+    }
+
+    fun airRulesSearch(requestAirPriceSearch: RequestAirPriceSearch): MutableLiveData<ResposeAirRules> {
+        mAppHandler = AppHandler.getmInstance(mContext)
+//        val userName = mAppHandler!!.imeiNo
+        val userName = "cwntcl"
+
+        val data = MutableLiveData<ResposeAirRules>()
+
+        val callAirSearch = ApiUtils.getAPIService().airRulesSearch(userName, requestAirPriceSearch)
+        callAirSearch.enqueue(object : Callback<ResposeAirRules> {
+            override fun onResponse(call: Call<ResposeAirRules>, response: Response<ResposeAirRules>) {
+                if (response.isSuccessful) {
+
+                    val mock = Gson().fromJson(DummayData().airRues, ResposeAirRules::class.java)
+
+                    data.value = mock
+                }
+            }
+
+            override fun onFailure(call: Call<ResposeAirRules>, t: Throwable) {
+                com.orhanobut.logger.Logger.e("" + t.message)
+                data.value = ResposeAirRules(t)
+            }
+        })
+        return data
+
+
     }
 }

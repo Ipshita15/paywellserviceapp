@@ -3,6 +3,7 @@ package com.cloudwell.paywell.services.retrofit;
 
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.RequestAirPriceSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch;
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.airRules.ResposeAirRules;
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.ResGetAirports;
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.ReposeAirSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch;
@@ -109,6 +110,12 @@ public interface APIService {
     @POST("PaywelltransactionHaltrip/airSearch")
     Call<ResposeAirPriceSearch> callairPriceSearch(@Part("username") String username,
                                                    @Part("search_params") RequestAirPriceSearch search_params);
+
+
+    @Multipart
+    @POST("PaywelltransactionHaltrip/airSearch")
+    Call<ResposeAirRules> airRulesSearch(@Part("username") String username,
+                                         @Part("search_params") RequestAirPriceSearch search_params);
 
 
     @GET("PaywelltransactionHaltrip/getAirports?")

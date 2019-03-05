@@ -2,6 +2,7 @@ package com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1
 
 import android.annotation.SuppressLint
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -10,6 +11,7 @@ import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.DummayData
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.adapter.FlightSequenceAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.AirlessDialogFragment
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.BaggageAndPoliciesActiivty
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.FlightFareDialogFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.*
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.viewModel.FlightDetails1ViewModel
@@ -297,6 +299,11 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
         tvPersonText.setOnClickListener {
             showFareDetailsDialog()
+        }
+
+        constrainlayoutPricesDetailsView.setOnClickListener {
+            val intent = Intent(applicationContext, BaggageAndPoliciesActiivty::class.java)
+            startActivity(intent)
         }
 
 

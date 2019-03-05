@@ -1,0 +1,16 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/green_50"
+              tools:context="com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.RolesFragment">
+
+    <iammert.com.expandablelib.ExpandableLayout
+        android:id="@+id/el"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:childLayout="@layout/layout_roles_child"
+        app:parentLayout="@layout/layout_roles_parent"/>
+
+</LinearLayout>
