@@ -117,17 +117,22 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
         segments?.let { it1 -> setupTimelineExpanableView(it1) }
 
-        if (segments?.size == 1) {
+
+        if (segments?.size!! > 1) {
             val orignAirtportCode = segments.get(0).origin?.airport?.airportCode
             val destinationairportCode = segments.get(0).destination?.airport?.airportCode
             tvOrginAndDestinationAirportCode.text = orignAirtportCode + " - " + destinationairportCode
+
             displayHumanDate(segments)
 
             val orign = segments.get(0);
-            val orignTime = orign.origin?.depTime.toString().split("T").get(1).toString()
+            var orignTime = orign.origin?.depTime.toString().split("T").get(1).toString()
+            orignTime = orignTime.substring(0, orignTime.length - 3)
 
             val destination = segments.get(0);
-            val destinationTime = destination.destination?.arrTime.toString().split("T").get(1).toString()
+            var destinationTime = destination.destination?.arrTime.toString().split("T").get(1).toString()
+            destinationTime = destinationTime.substring(0, destinationTime.length - 3)
+
 
             tvShortDepartArriveTime.text = orignTime + "-" + destinationTime
 
@@ -387,17 +392,6 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         val humanReadAbleDate = SimpleDateFormat("EE, MMM DD").format(fdepTimeFormatDate)
         tvNameOfDate.text = humanReadAbleDate
 
-
-//        // show different time ..
-//        val split = outputSegment.origin?.depTime.toString().split("T");
-//        val date = split.get(0) + " " + split.get(1)
-//        val fistDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss").parse(date)
-//
-//        val split1 = outputSegment.destination?.arrTime.toString().split("T");
-//        val date1 = split1.get(0) + " " + split1.get(1)
-//        val secondDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss").parse(date1)
-//
-//        val differenceDate = differenceDate(fistDate, secondDate)
         tvTotalDepartTime.text = totalJourneyTimeString
     }
 

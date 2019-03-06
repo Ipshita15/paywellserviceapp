@@ -17,6 +17,8 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.serach.view.Sea
 import com.cloudwell.paywell.services.customView.horizontalDatePicker.commincation.IDatePicker
 import com.cloudwell.paywell.services.utils.RecyclerItemClickListener
 import kotlinx.android.synthetic.main.activity_search_view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
@@ -28,8 +30,13 @@ class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
         val mMonth = month + 1;
 
         val date = "$year-$mMonth-$day"
+        val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(date) as Date
 
-        mViewModelFlight.onSetDate(isInternetConnection, date)
+
+        val humanReadAbleDate = SimpleDateFormat("YYYY-mm-dd", Locale.ENGLISH).format(fdepTimeFormatDate)
+
+
+        mViewModelFlight.onSetDate(isInternetConnection, humanReadAbleDate)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,8 +46,8 @@ class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
         setToolbar(getString(com.cloudwell.paywell.services.R.string.title_serach_view))
 
 //        myDatePickerTimeline = findViewById<View>(com.cloudwell.paywell.services.R.id.myDateTimelineView) as MyDatePickerTimeline
-//        myDateTimelineView.setFirstDate(2019, 0, 5)
-//        myDateTimelineView.setOnDateChangeLincher(this)
+        myDateTimelineView.setFirstDate(2019, 5, 5)
+        myDateTimelineView.setOnDateChangeLincher(this)
 
         initializationView();
         initViewModel()
