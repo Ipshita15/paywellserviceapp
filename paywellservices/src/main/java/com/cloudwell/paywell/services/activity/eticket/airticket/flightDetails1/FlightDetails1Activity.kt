@@ -167,7 +167,7 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         tvBaggage.text = "Baggage : " + segment?.baggage + " KG per adult ticket "
 
 
-        if (result.passportMadatory) {
+        if (result.passportMadatory!!) {
             tvPassportMandatory.text = getString(R.string.passport_mandatory)
         } else {
             tvPassportMandatory.text = getString(R.string.passport_not_mandatory)
@@ -179,7 +179,7 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
             tvExtraServies.text = "" + result.extraServices
         }
 
-        if (result.isRefundable) {
+        if (result.isRefundable!!) {
             tvNonRefundable.text = getString(com.cloudwell.paywell.services.R.string.refundable)
         } else {
             tvNonRefundable.text = getString(com.cloudwell.paywell.services.R.string.non_refundable)
