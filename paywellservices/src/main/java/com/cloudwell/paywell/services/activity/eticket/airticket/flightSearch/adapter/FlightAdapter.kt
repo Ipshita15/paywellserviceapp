@@ -71,12 +71,12 @@ class FlightAdapter(val items: List<Result>, val context: Context) : RecyclerVie
 
         }
 
-        holder.tvStringTime.text = "" + orignTime
-        holder.tvEndTime.text = "" + destinationTime
-        holder.tvPrices?.text = "" + model.totalFare
-        holder.tvOriginAirportCode.text = "" + originAirport
-        holder.tvDestinationAirportCode.text = "" + destinationAirport
-        holder.tvAirlinesName.text = "" + airlineName
+        holder.tvStringTime.text = orignTime
+        holder.tvEndTime.text = destinationTime
+        holder.tvPrices.text = "${model.totalFare}"
+        holder.tvOriginAirportCode.text = originAirport
+        holder.tvDestinationAirportCode.text = destinationAirport
+        holder.tvAirlinesName.text = airlineName
 
 
         model.segments.forEach {
