@@ -1,6 +1,7 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -24,12 +25,14 @@ class FlightAdapter(val items: List<Result>, val context: Context) : RecyclerVie
         var airlineName = ""
         var stop = "";
 
-        var totalJourneyTimeString = ""
+        var totalJourneyTimeString = 0L
 
 
         val model = items.get(position)
         if (position == 0) {
             holder.ivTake.setImageResource(com.cloudwell.paywell.services.R.drawable.ic_tk_symbol_low)
+            val parseColor = Color.parseColor("#f15a24")
+            holder.tvPrices.setTextColor(parseColor)
         } else {
             holder.ivTake.setImageResource(com.cloudwell.paywell.services.R.drawable.ic_tk_symbol_normal)
         }
@@ -85,17 +88,16 @@ class FlightAdapter(val items: List<Result>, val context: Context) : RecyclerVie
             val split1 = it.destination?.arrTime.toString().split("T");
             val date1 = split1.get(0) + " " + split1.get(1)
             val secondDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss").parse(date1)
-            val differenceDate = DateUtils.differenceDate(fistDate, secondDate)
 
-            if (totalJourneyTimeString.equals("")) {
-                totalJourneyTimeString = differenceDate;
-            } else {
-                totalJourneyTimeString = totalJourneyTimeString + "|" + differenceDate
-            }
+
+            totalJourneyTimeString = totalJourneyTimeString + DateUtils.differenceMilliSecond(fistDate, secondDate)
 
         }
 
-        holder.tvDurationAndKilometer.text = "Duration: ${totalJourneyTimeString} | $stop"
+        val durtingJounaryTime = DateUtils.getDurtingJounaryTime(totalJourneyTimeString)
+
+
+        holder.tvDurationAndKilometer.text = "Duration: ${durtingJounaryTime} | $stop"
 
 
     }

@@ -17,7 +17,8 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.viewModel.FlightDetails1ViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
-import com.cloudwell.paywell.services.utils.DateUtils.differenceDate
+import com.cloudwell.paywell.services.utils.DateUtils
+import com.cloudwell.paywell.services.utils.DateUtils.differenceMilliSecond
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.contant_flight_details.*
 import java.text.SimpleDateFormat
@@ -27,7 +28,7 @@ import java.util.*
 class FlightDetails1Activity : AirTricketBaseActivity() {
 
 
-    var totalJourneyTimeString = ""
+    var totalJourneyinMiliSecound = 0L
 
     private lateinit var mFlightDetails1ViewModel: FlightDetails1ViewModel
 
@@ -208,12 +209,15 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
             val split1 = it.destination?.arrTime.toString().split("T");
             val date1 = split1.get(0) + " " + split1.get(1)
             val secondDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss").parse(date1)
-            val differenceDate = differenceDate(fistDate, secondDate)
 
-            segmentsList.add(FlightSequenceAdapter.MyItem(true, origin?.airport?.airportName!!, depDate, depTime, airlineName, "", differenceDate))
+            val differenceDate = differenceMilliSecond(fistDate, secondDate)
+
+            val differenceMilliSecondString = DateUtils.getTimeInformationdifferenceDate(fistDate, secondDate)
+
+            segmentsList.add(FlightSequenceAdapter.MyItem(true, origin?.airport?.airportName!!, depDate, depTime, airlineName, "", differenceMilliSecondString))
 
 
-            storeTotalJourneyTime(differenceDate)
+            totalJourneyinMiliSecound = totalJourneyinMiliSecound + differenceDate
 
             // parse destination
             val destination = it.destination
@@ -260,13 +264,6 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
     }
 
-    private fun storeTotalJourneyTime(differenceDate: String) {
-        if (totalJourneyTimeString.equals("")) {
-            totalJourneyTimeString = differenceDate;
-        } else {
-            totalJourneyTimeString = totalJourneyTimeString + "|" + differenceDate
-        }
-    }
 
     private fun initializationView() {
         ivUpDown.switchState()
@@ -392,7 +389,9 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         val humanReadAbleDate = SimpleDateFormat("EE, MMM DD").format(fdepTimeFormatDate)
         tvNameOfDate.text = humanReadAbleDate
 
-        tvTotalDepartTime.text = totalJourneyTimeString
+
+
+        tvTotalDepartTime.text = DateUtils.getDurtingJounaryTime(totalJourneyinMiliSecound)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
