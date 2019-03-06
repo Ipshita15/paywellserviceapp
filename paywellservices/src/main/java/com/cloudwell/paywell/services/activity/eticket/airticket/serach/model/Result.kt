@@ -36,8 +36,10 @@ data class Result(
 
         @SerializedName("TotalFare")
         var totalFare: Long = 0,
+
         @SerializedName("TotalFareWithAgentMarkup")
         var totalFareWithAgentMarkup: Long = 0,
+
         @SerializedName("Validatingcarrier")
         var validatingcarrier: String = ""
 

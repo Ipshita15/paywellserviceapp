@@ -8,18 +8,19 @@ import android.view.Menu
 import android.view.View
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
-import com.cloudwell.paywell.services.activity.eticket.DummayData
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.adapter.FlightSequenceAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.AirlessDialogFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.BaggageAndPoliciesActiivty
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.FlightFareDialogFragment
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.*
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Airline
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.RequestAirPriceSearch
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Result
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Segment
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.viewModel.FlightDetails1ViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.utils.DateUtils
 import com.cloudwell.paywell.services.utils.DateUtils.differenceMilliSecond
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.contant_flight_details.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -40,15 +41,17 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
         setToolbar(getString(com.cloudwell.paywell.services.R.string.title_booking_and_review))
 
-        val results = Gson().fromJson(DummayData().multipSegmentData, Array<com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Result>::class.java)
+//        val results = Gson().fromJson(DummayData().multipSegmentData, Array<com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Result>::class.java)
 
         initializationView()
+
+
         initViewModel()
 //
 //        val parcelable = getIntent().getExtras().getParcelable<Result>("object") as Result
 
 
-        displayData(results.toList())
+        // displayData(results.toList())
 
     }
 
@@ -71,10 +74,12 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
         })
 
+        val mSearchId = intent.extras.getString("mSearchId", "")
+        val resultID = intent.extras.getString("resultID", "")
 
         val requestAirPriceSearch = RequestAirPriceSearch()
-        requestAirPriceSearch.searchId = "effd3517-ee7c-4363-87ad-59333cd5f365"
-        requestAirPriceSearch.resultID = "3e55bbb0-2897-49ad-bbf2-f04b465d0b05"
+        requestAirPriceSearch.searchId = mSearchId
+        requestAirPriceSearch.resultID = resultID
 
 
 
@@ -159,7 +164,7 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
         }
 
-        tvTotalFair.text = result.fares?.get(0)?.baseFare.toString()
+        tvTotalFair.text = "${result.totalFare}"
         tvClass.text = requestAirSearch.journeyType
 
 
@@ -174,15 +179,15 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         }
 
         if (result.extraServices == null) {
-            tvExtraServies.text = "N/A"
+            tvExtraService.text = "N/A"
         } else {
-            tvExtraServies.text = "" + result.extraServices
+            tvExtraService.text = "N/A" + result.extraServices
         }
 
         if (result.isRefundable!!) {
-            tvNonRefundable.text = getString(com.cloudwell.paywell.services.R.string.refundable)
+            tvRefunable.text = getString(com.cloudwell.paywell.services.R.string.refundable)
         } else {
-            tvNonRefundable.text = getString(com.cloudwell.paywell.services.R.string.non_refundable)
+            tvRefunable.text = getString(com.cloudwell.paywell.services.R.string.non_refundable)
 
         }
 
@@ -245,15 +250,15 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
     private fun showAirlessInfo(airline: Airline?) {
         val dialogFragment = AirlessDialogFragment()
 
-//        val get = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.get(0)?.fares?.get(0)
-        val get = Airline()
-        get.airlineCode = "Code"
-        get.airlineCode = "PayWell"
-        get.bookingClass = "G";
-        get.cabinClass = "cabinClass"
-        get.flightNumber = "12334";
-        get.operatingCarrier = "erdf"
-        get.operatingCarrier = "operatingCarrier"
+        val get = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.get(0)?.fares?.get(0)
+//        val get = Airline()
+//        get.airlineCode = "Code"
+//        get.airlineCode = "PayWell"
+//        get.bookingClass = "G";
+//        get.cabinClass = "cabinClass"
+//        get.flightNumber = "12334";
+//        get.operatingCarrier = "erdf"
+//        get.operatingCarrier = "operatingCarrier"
 
         val args = Bundle()
         args.putParcelable("object", get)
@@ -306,14 +311,14 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
         constrainlayoutPricesDetailsView.setOnClickListener {
 
-            //        val get = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.get(0)?.fares?.get(0)
-            var get = Fare()
-            get.baseFare = 34344343;
-            get.tax = 10;
-            get.currency = "Tk";
-            get.discount = 33;
-            get.otherCharges = 2000;
-            get.serviceFee = 33;
+            val get = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.get(0)?.fares?.get(0)
+//            var get = Fare()
+//            get.baseFare = 34344343;
+//            get.tax = 10;
+//            get.currency = "Tk";
+//            get.discount = 33;
+//            get.otherCharges = 2000;
+//            get.serviceFee = 33;
 
 
             AppStorageBox.put(applicationContext, AppStorageBox.Key.FARE_DATA, get)
@@ -334,14 +339,14 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         ft.addToBackStack(null)
         val dialogFragment = FlightFareDialogFragment()
 
-//        val get = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.get(0)?.fares?.get(0)
-        val get = Fare()
-        get.baseFare = 100;
-        get.tax = 10;
-        get.currency = "Tk";
-        get.discount = 0;
-        get.otherCharges = 2000;
-        get.serviceFee = 33;
+        val get = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.get(0)?.fares?.get(0)
+//        val get = Fare()
+//        get.baseFare = 100;
+//        get.tax = 10;
+//        get.currency = "Tk";
+//        get.discount = 0;
+//        get.otherCharges = 2000;
+//        get.serviceFee = 33;
 
         val args = Bundle()
         args.putParcelable("object", get)

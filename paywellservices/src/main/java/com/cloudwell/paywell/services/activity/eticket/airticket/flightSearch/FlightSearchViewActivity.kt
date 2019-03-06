@@ -95,10 +95,13 @@ class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
                     override fun onItemClick(view: View, position: Int) {
                         // do whatever
                         val get = mViewModelFlight.mListMutableLiveDataFlightData.value?.get(position)
+                        val mSearchId = mViewModelFlight.mSearchId.value
+                        val resultID = get?.resultID
 
 
                         val intent = Intent(applicationContext, FlightDetails1Activity::class.java)
-                        intent.putExtra("object", get)
+                        intent.putExtra("mSearchId", mSearchId)
+                        intent.putExtra("resultID", resultID)
                         startActivity(intent)
 
                     }

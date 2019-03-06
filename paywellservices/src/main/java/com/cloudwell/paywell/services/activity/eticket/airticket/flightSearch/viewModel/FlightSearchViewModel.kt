@@ -21,6 +21,7 @@ class FlightSearchViewModel : AirTicketBaseViewMode() {
     // view data
 
     val mListMutableLiveDataFlightData = MutableLiveData<List<Result>>()
+    val mSearchId = MutableLiveData<String>()
 
 
     fun init(internetConnection: Boolean) {
@@ -59,6 +60,7 @@ class FlightSearchViewModel : AirTicketBaseViewMode() {
             it?.data?.results.let {
                 val sortedListTotalFare = it?.sortedWith(compareBy(Result::totalFare, Result::totalFare))
                 mListMutableLiveDataFlightData.value = sortedListTotalFare
+                mSearchId.value = t?.data?.searchId
             }
         }
     }

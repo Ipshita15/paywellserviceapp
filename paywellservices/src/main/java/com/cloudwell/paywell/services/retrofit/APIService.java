@@ -107,7 +107,7 @@ public interface APIService {
 
 
     @Multipart
-    @POST("PaywelltransactionHaltrip/airSearch")
+    @POST("PaywelltransactionHaltrip/airPriceSearch")
     Call<ResposeAirPriceSearch> callairPriceSearch(@Part("username") String username,
                                                    @Part("search_params") RequestAirPriceSearch search_params);
 
