@@ -1,18 +1,21 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment
 
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Fare
+import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import kotlinx.android.synthetic.main.fragment_flight_fare.view.*
 
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 4/3/19.
  */
-class FlightFareDialogFragment : DialogFragment() {
+
+class FlightFareFragment() : Fragment() {
+    lateinit var fare: Fare
 
     companion object {
         var fare = Fare()
@@ -20,15 +23,15 @@ class FlightFareDialogFragment : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fare = arguments?.getParcelable<Fare>("object") as Fare
-
-
     }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_flight_fare, container, false)
+        fare = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.FARE_DATA) as Fare
+
+
+        val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_flight_fare_fragment, container, false)
         v.tvBaseFire.text = "${fare.baseFare}"
         v.tvTax.text = "${fare.tax}"
         v.tvCurrency.text = "${fare.currency}"
@@ -39,13 +42,6 @@ class FlightFareDialogFragment : DialogFragment() {
         v.tvServiceFee.text = "${fare.serviceFee}"
 
 
-        v.tvOk.setOnClickListener {
-            dismiss()
-        }
-
-        v.tvCencel.setOnClickListener {
-            dismiss()
-        }
 
 
         return v

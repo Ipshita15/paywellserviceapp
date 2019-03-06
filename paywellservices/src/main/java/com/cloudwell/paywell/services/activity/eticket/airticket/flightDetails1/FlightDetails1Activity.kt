@@ -16,6 +16,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.*
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.viewModel.FlightDetails1ViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch
+import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.utils.DateUtils.differenceDate
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.contant_flight_details.*
@@ -302,8 +303,21 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         }
 
         constrainlayoutPricesDetailsView.setOnClickListener {
-            val intent = Intent(applicationContext, BaggageAndPoliciesActiivty::class.java)
-            startActivity(intent)
+
+            //        val get = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.get(0)?.fares?.get(0)
+            var get = Fare()
+            get.baseFare = 34344343;
+            get.tax = 10;
+            get.currency = "Tk";
+            get.discount = 33;
+            get.otherCharges = 2000;
+            get.serviceFee = 33;
+
+
+            AppStorageBox.put(applicationContext, AppStorageBox.Key.FARE_DATA, get)
+
+            val s = Intent(this.applicationContext, BaggageAndPoliciesActiivty::class.java)
+            startActivity(s)
         }
 
 
