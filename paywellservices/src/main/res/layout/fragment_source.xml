@@ -1,0 +1,38 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_horizontal_margin"
+    tools:context="com.cloudwell.paywell.services.activity.eticket.airticket.SourceFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_sourceSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner"
+            android:drawableLeft="@drawable/ic_search_black_24dp"
+            android:padding="5dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="@dimen/activity_horizontal_margin_half"
+            android:background="#f5f4f9" />
+
+        <TextView
+            android:id="@+id/countryTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_horizontal_margin_half"
+            android:text="Europe"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#333333"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</FrameLayout>

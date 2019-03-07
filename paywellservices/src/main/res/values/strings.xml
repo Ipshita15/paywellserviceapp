@@ -469,14 +469,10 @@
     </string-array>
 
     <!-- paywell apis -->
-    <!--<string name="pw_auth">https://www.paywellonline.com/crs3291/android/paywell_app_api/tab_user_service_profiling_test.php?</string>-->
-    <!--<string name="pw_auth">https://www.paywellonline.com/crs3291/android/paywell_app_api/tab_user_service_profiling_new.php?</string>-->
     <string name="pw_auth">https://api.paywellonline.com/PaywelltransactionRetailer/TabUserServiceProfiling?</string>
     <string name="notif_url">https://www.paywellonline.com/default/api/notification_check_android1.php?</string>
     <string name="notification_token_url">https://www.paywellonline.com/paywellapi/setUserFCMToken.php</string>
 
-    <!--<string name="update_check">https://app.paywellonline.com/apk_test/app-release.apk</string>-->
-    <!--<string name="check_version">https://app.paywellonline.com/apk_update_test/version/paywellservice_update.txt</string>-->
     <string name="app_next_version_no">vten_seventeen</string>
     <string name="update_check">https://app.paywellonline.com/apk/PaywellServices_v10_18.apk</string>
     <string name="check_version">https://app.paywellonline.com/version_update_info/paywellservice_update.txt</string>
@@ -484,10 +480,8 @@
     <string name="update_location">https://api.paywellonline.com/PaywellRetailerInformation/doUpdateRetailersCurrentLocation</string>
 
     <!-- Registration -->
-    <!--<string name="business_type_url">https://api.paywellonline.com/Android/business_type</string>-->
     <string name="business_type_url">https://api.paywellonline.com/Android/userSubBusinessType</string>
     <string name="district_info_url">https://www.paywellonline.com/crs3291/android/sales_manager/district_info_bangladesh.php</string>
-    <!--<string name="final_reg_url">https://www.paywellonline.com/crs3291/android/sales_manager/Retailer_Add_Request_Info.php</string>-->
     <string name="final_reg_url">https://www.paywellonline.com/crs3291/android/sales_manager/getRetailerInformationForRegistration.php</string>
     <string name="missing_reg_url">https://www.paywellonline.com/crs3291/android/sales_manager/getUnverifiedData.php</string>
 
@@ -538,7 +532,6 @@
 
     <!-- Payment -->
     <string name="bkash_balance_check">https://bkapi.paywellonline.com/retailer/userBalanceCheck.php?</string>
-    <!--<string name="bkash_pending_req_conf">https://bkapi.paywellonline.com/retailer/ConfirmPaymentRequestFromCoOrSda_test.php?</string>-->
 
     <!-- MFS -->
     <string name="mycash_generate_otp">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/GenerateOTP?</string>
@@ -605,8 +598,6 @@
     <string name="home_utility_pb_bill_change_number_bt">Number Change</string>
     <string name="home_utility_pb_phone_number_inquiry_bt">Number Change \nInquiry</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="one_way">One Way</string>
     <string name="title_activity_air_tricket_menu">Air Ticket</string>
     <string name="title_serach_view">Search</string>

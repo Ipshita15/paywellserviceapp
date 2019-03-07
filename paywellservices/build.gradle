@@ -189,6 +189,9 @@ dependencies {
     implementation 'com.github.sharish:ShimmerRecyclerView:v1.3'
     implementation 'io.supercharge:shimmerlayout:2.1.0'
 
+    //fullDialog
+    implementation 'com.github.franmontiel:FullScreenDialog:1.0.1'
+
 
 }
 // Add to the bottom of the file

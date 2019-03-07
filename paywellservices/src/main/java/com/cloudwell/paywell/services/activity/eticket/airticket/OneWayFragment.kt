@@ -5,22 +5,39 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.util.Log
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.view.animation.AnimationUtils
+import android.widget.*
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.SearchViewActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.AirportsSearchActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.source.model.AirPortsData
+import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.retrofit.ApiUtils
+import com.franmontiel.fullscreendialog.FullScreenDialogFragment
 import kotlinx.android.synthetic.main.fragment_one_way.*
 import mehdi.sakout.fancybuttons.FancyButton
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class OneWayFragment : Fragment(), View.OnClickListener {
+class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragment.OnConfirmListener, FullScreenDialogFragment.OnDiscardListener {
+
+    private val KEY_TAG = OneWayFragment::class.java!!.getName()
+
+    private var mAppHandler: AppHandler? = null
+    private lateinit var frameLayout: FrameLayout
+    private lateinit var dialogFragment: FullScreenDialogFragment
+    val dialogTag = "dialog"
 
     companion object {
         val KEY_REQUEST_KEY = "KEY_REQUEST_KEY"
@@ -32,6 +49,7 @@ class OneWayFragment : Fragment(), View.OnClickListener {
         // Inflate the layout for this fragment
         val view = inflater!!.inflate(com.cloudwell.paywell.services.R.layout.fragment_one_way, container, false)
 
+        frameLayout = view.findViewById(R.id.frameLayout)
         val tvDepart = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.tvDepart)
         val tvDepartDate = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.tvDepartDate)
         val airTicketClass = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.airTicketClass)
@@ -39,6 +57,7 @@ class OneWayFragment : Fragment(), View.OnClickListener {
         val btnSearch = view.findViewById<FancyButton>(com.cloudwell.paywell.services.R.id.btn_search)
         val tvFrom = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.tvFrom)
 
+        mAppHandler = AppHandler.getmInstance(context)
 
         tvDepart.setOnClickListener(this)
         tvDepartDate.setOnClickListener(this)
@@ -46,6 +65,70 @@ class OneWayFragment : Fragment(), View.OnClickListener {
         llPassenger.setOnClickListener(this)
         btnSearch.setOnClickListener(this)
         tvFrom.setOnClickListener(this)
+
+        val tsFrom = view.findViewById<TextSwitcher>(R.id.tsOneWayTripFrom)
+        val tsFromPort = view.findViewById<TextSwitcher>(R.id.tsOneWayTripFromPort)
+        val tsTo = view.findViewById<TextSwitcher>(R.id.tsOneWayTripTo)
+        val tsToPort = view.findViewById<TextSwitcher>(R.id.tsOneWayTripToPort)
+        val ivSwitchTrip = view.findViewById<ImageView>(R.id.ivOneWayTripTextSwitcher)
+
+        tsFrom.setFactory {
+            TextView(ContextThemeWrapper(context,
+                    R.style.TicketFrom), null, 0)
+        }
+        tsFromPort.setFactory {
+            TextView(ContextThemeWrapper(context,
+                    R.style.TicketFromPort), null, 0)
+        }
+        tsTo.setFactory {
+            TextView(ContextThemeWrapper(context,
+                    R.style.TicketTo), null, 0)
+        }
+        tsToPort.setFactory {
+            TextView(ContextThemeWrapper(context,
+                    R.style.TicketToPort), null, 0)
+        }
+        val inAnim = AnimationUtils.loadAnimation(context,
+                android.R.anim.fade_in)
+        val outAnim = AnimationUtils.loadAnimation(context,
+                android.R.anim.fade_out)
+        inAnim.duration = 200
+        outAnim.duration = 200
+        tsFrom.inAnimation = inAnim
+        tsFrom.outAnimation = outAnim
+        tsFromPort.inAnimation = inAnim
+        tsFromPort.outAnimation = outAnim
+        tsTo.inAnimation = inAnim
+        tsTo.outAnimation = outAnim
+        tsToPort.inAnimation = inAnim
+        tsToPort.outAnimation = outAnim
+
+        tsFrom.setCurrentText("Dhaka")
+        tsFromPort.setCurrentText("Shahjalal International")
+        tsTo.setCurrentText("COX'S BAZAR")
+        tsToPort.setCurrentText("Cox's Bazar airport")
+
+        val textFrom = tsFrom.currentView as TextView
+        val textFromPort = tsFromPort.currentView as TextView
+        val textTo = tsTo.currentView as TextView
+        val textToPort = tsToPort.currentView as TextView
+
+        val searchRoundTripModel = SearchRoundTripModel(textFrom.text.toString(), textTo.text.toString(),
+                textFromPort.text.toString(), textToPort.text.toString())
+
+        ivSwitchTrip.setOnClickListener {
+            tsFrom.setText(searchRoundTripModel.getToName())
+            tsTo.setText(searchRoundTripModel.getFromName())
+            val from = searchRoundTripModel.getFromName()
+            searchRoundTripModel.setFromName(searchRoundTripModel.getToName())
+            searchRoundTripModel.setToName(from)
+
+            tsFromPort.setText(searchRoundTripModel.getToPortName())
+            tsToPort.setText(searchRoundTripModel.getFromPortName())
+            val fromPort = searchRoundTripModel.getFromPortName()
+            searchRoundTripModel.setFromPortName(searchRoundTripModel.getToPortName())
+            searchRoundTripModel.setToPortName(fromPort)
+        }
 
         return view
     }
@@ -83,6 +166,7 @@ class OneWayFragment : Fragment(), View.OnClickListener {
                 val intent = Intent(activity?.applicationContext, AirportsSearchActivity::class.java)
                 intent.putExtra(KEY_REQUEST_KEY, KEY_REQUEST_FOR_FROM)
                 startActivity(intent)
+//                handleFromSearchClick()
             }
         }
     }
@@ -187,4 +271,58 @@ class OneWayFragment : Fragment(), View.OnClickListener {
     }
 
 
+    private fun handleFromSearchClick() {
+
+        val args = Bundle()
+        args.putString("Name", "Naima")
+
+        dialogFragment = FullScreenDialogFragment.Builder(context as AirTicketMainActivity)
+                .setTitle("From")
+                .setOnConfirmListener(this@OneWayFragment)
+                .setOnDiscardListener(this@OneWayFragment)
+                .setContent(SourceFragment::class.java, args)
+                .build()
+
+        dialogFragment.show(fragmentManager, dialogTag)
+    }
+
+    override fun onConfirm(result: Bundle?) {
+    }
+
+    override fun onDiscard() {
+        dialogFragment.dismiss()
+    }
+
+//    private fun getSourceList() {
+////        showProgressDialog()
+//
+////        val requestDistrict = RequestDistrict()
+////        requestDistrict.setmUsername("" + mAppHandler.getImeiNo())
+////        requestDistrict.setmBankId("" + bankId)
+//
+//        val responseBodyCall = ApiUtils.getAPIService().getAirports(mAppHandler?.getImeiNo(), requestDistrict.getmBankId())
+//
+//        responseBodyCall.enqueue(object : Callback<AirPortsData> {
+//            override fun onResponse(call: Call<AirPortsData>, response: Response<AirPortsData>) {
+////                dismissProgressDialog()
+//                val bundle = Bundle()
+//                bundle.putString("bankId", requestDistrict.getmBankId())
+//
+//                BankDetailsActivity.responseDistrictData = response.body()
+//                startBankDetailsActivity(bundle)
+//            }
+//
+//            override fun onFailure(call: Call<AirPortsData>, t: Throwable) {
+////                dismissProgressDialog()
+//                Log.d(KEY_TAG, "onFailure:")
+//                val snackbar = Snackbar.make(frameLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG)
+//                snackbar.setActionTextColor(Color.parseColor("#ffffff"))
+//                val snackBarView = snackbar.view
+//                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))
+//                snackbar.show()
+//            }
+//        })
+//    }
 }
+
+

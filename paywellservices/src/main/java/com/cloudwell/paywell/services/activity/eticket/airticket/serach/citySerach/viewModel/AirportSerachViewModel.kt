@@ -29,7 +29,6 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
                 } else {
 
                 }
-
             }
         }
     }
