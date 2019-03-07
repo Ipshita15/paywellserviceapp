@@ -30,8 +30,8 @@ class FlightSearchViewModel : AirTicketBaseViewMode() {
         } else {
 
             val list = mutableListOf<Segment>()
-//            val segment = Segment("Economy", "2019-03-20 04:34:35", "DAC", "CXB")
-            val segment = Segment("Economy", "2019-03-20 04:34:35", "ZYL", "CXB")
+            val segment = Segment("Economy", "2019-06-20 04:34:35", "DAC", "CXB")
+//            val segment = Segment("Economy", "2019-06-20 04:34:35", "ZYL", "CXB")
             list.add(segment)
 
             val requestAirSearch = RequestAirSearch(1, 0, 0, "Oneway", list)

@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
-import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.adapter.FlightSequenceAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.AirlessDialogFragment
@@ -17,6 +16,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Result
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Segment
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.viewModel.FlightDetails1ViewModel
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.FlightDetails2Activity
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.utils.DateUtils
@@ -74,14 +74,20 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
         })
 
-        val mSearchId = intent.extras.getString("mSearchId", "")
-        val resultID = intent.extras.getString("resultID", "")
+//        val mSearchId = intent.extras.getString("mSearchId", "")
+//        val resultID = intent.extras.getString("resultID", "")
+//
+//        val requestAirPriceSearch = RequestAirPriceSearch()
+//        requestAirPriceSearch.searchId = mSearchId
+//        requestAirPriceSearch.resultID = resultID
+
 
         val requestAirPriceSearch = RequestAirPriceSearch()
-        requestAirPriceSearch.searchId = mSearchId
-        requestAirPriceSearch.resultID = resultID
+        requestAirPriceSearch.searchId = ""
+        requestAirPriceSearch.resultID = ""
 
 
+        //shimmer_text.startShimmerAnimation()
 
         mFlightDetails1ViewModel.callAirPriceSearch(requestAirSearch = requestAirPriceSearch)
     }
@@ -173,9 +179,9 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
 
         if (result.passportMadatory!!) {
-            tvPassportMandatory.text = getString(R.string.passport_mandatory)
+            tvPassportMandatory.text = getString(com.cloudwell.paywell.services.R.string.passport_mandatory)
         } else {
-            tvPassportMandatory.text = getString(R.string.passport_not_mandatory)
+            tvPassportMandatory.text = getString(com.cloudwell.paywell.services.R.string.passport_not_mandatory)
         }
 
         if (result.extraServices == null) {
@@ -308,6 +314,15 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         tvPersonText.setOnClickListener {
             showFareDetailsDialog()
         }
+
+        btBook.setOnClickListener {
+
+
+            val s = Intent(this.applicationContext, FlightDetails2Activity::class.java)
+            startActivity(s)
+
+        }
+
 
         constrainlayoutPricesDetailsView.setOnClickListener {
 

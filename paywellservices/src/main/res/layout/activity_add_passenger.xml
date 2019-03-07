@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.eticket.airticket.flightDetails1.FlightDetails1Activity">
+    tools:context=".activity.eticket.airticket.flightDetails2.FlightDetails2Activity">
 
     <android.support.design.widget.AppBarLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -23,8 +23,8 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <include
-            layout="@layout/contant_flight_details"
-            >
+            layout="@layout/contant_add_passenger"
+            android:visibility="visible">
         </include>
 
 

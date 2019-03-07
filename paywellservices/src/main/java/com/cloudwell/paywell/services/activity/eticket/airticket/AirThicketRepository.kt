@@ -6,12 +6,16 @@ import com.cloudwell.paywell.services.activity.eticket.DummayData
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.RequestAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.airRules.ResposeAirRules
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.ResGetAirports
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.ReposeAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.database.DatabaseClient
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.google.gson.Gson
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -121,5 +125,16 @@ class AirThicketRepository(private val mContext: Context) {
         return data
 
 
+    }
+
+    fun getAllPassengers(): MutableLiveData<List<Passenger>> {
+        val data = MutableLiveData<List<Passenger>>()
+        doAsync {
+            val all: List<Passenger> = DatabaseClient.getInstance(mContext).appDatabase.mAirtricketDab().all
+            uiThread {
+                data.value = all
+            }
+        }
+        return data
     }
 }

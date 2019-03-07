@@ -623,6 +623,9 @@
     <string name="passport_not_mandatory">Passport not mandatory</string>
     <string name="fares_information">Fares information</string>
     <string name="roles">Roles</string>
+    <string name="title_flightDetails2">Review page 2</string>
+    <string name="title_passenger_list">Passenger Info</string>
+    <string name="title_add_passenger">Add Passenger</string>
 
 
 </resources>
