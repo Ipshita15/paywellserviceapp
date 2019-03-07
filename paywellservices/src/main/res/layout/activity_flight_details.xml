@@ -14,24 +14,6 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary">
 
-        <!--<android.support.design.widget.CollapsingToolbarLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="72dp"-->
-        <!--app:contentScrim="?attr/colorPrimary"-->
-        <!--app:titleEnabled="false"-->
-        <!--app:layout_scrollFlags="scroll|exitUntilCollapsed"-->
-        <!--app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Title">-->
-
-        <!--<android.support.v7.widget.Toolbar-->
-        <!--android:id="@+id/toolbar"-->
-        <!--android:layout_width="match_parent"-->
-        <!--app:layout_collapseMode="pin"-->
-        <!--android:layout_height="?attr/actionBarSize"-->
-        <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
-        <!--android:theme="@style/AppTheme.AppBarOverlay"/>-->
-        <!--</android.support.design.widget.CollapsingToolbarLayout>-->
-
-
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
@@ -40,9 +22,11 @@
         app:behavior_overlapTop="100dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <include layout="@layout/contant_flight_details">
-
+        <include
+            layout="@layout/contant_flight_details"
+            >
         </include>
+
 
     </android.support.v4.widget.NestedScrollView>
 

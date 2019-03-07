@@ -1140,6 +1140,22 @@
             <!--<category android:name="android.intent.category.LAUNCHER"/>-->
             <!--</intent-filter>-->
         </activity>
+
+
+        <activity
+            android:name=".activity.eticket.airticket.flightDetails2.FlightDetails2Activity"
+            android:label="@string/title_flightDetails2">
+        </activity>
+
+        <activity
+            android:name=".activity.eticket.airticket.passengerList.PassengerListActivity"
+            android:label="@string/title_passenger_list">
+        </activity>
+
+        <activity
+            android:name=".activity.eticket.airticket.passengerAdd.AddPassengerActivity"
+            android:label="@string/title_add_passenger">
+        </activity>
     </application>
 
 </manifest>

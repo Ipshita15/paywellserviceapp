@@ -6,16 +6,26 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ExpandableListView
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.adapter.ExpandableListAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.RequestAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.airRules.Datum
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.viewModel.FlightDetails1ViewModel
-import iammert.com.expandablelib.Section
-import kotlinx.android.synthetic.main.fragment_roles.*
+import kotlinx.android.synthetic.main.fragment_roles.view.*
 
 
 class RolesFragment : Fragment() {
 
     private lateinit var mFlightDetails1ViewModel: FlightDetails1ViewModel
+
+
+    // view
+    var listAdapter: ExpandableListAdapter? = null
+    var expListView: ExpandableListView? = null
+    var listDataHeader = mutableListOf<String>()
+    var listDataChild = mutableMapOf<String, ArrayList<String>>()
+    lateinit var lvExp: ExpandableListView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +36,13 @@ class RolesFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        val inflate = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_roles, container, false)
+        val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_roles, container, false)
+
+
+        // preparing list data
+        lvExp = v.lvExp as ExpandableListView
+
+
 
 
         mFlightDetails1ViewModel.mListMutableLiveDataAirRules.observe(this, android.arch.lifecycle.Observer {
@@ -42,7 +58,8 @@ class RolesFragment : Fragment() {
 
         mFlightDetails1ViewModel.callAirRolesAPI(requestAirPriceSearch)
 
-        return inflate
+
+        return v
     }
 
     private fun displayData(it1: List<Datum>) {
@@ -50,26 +67,38 @@ class RolesFragment : Fragment() {
 
         it1.forEach {
 
-            val section = Section<String, String>()
-            val ruleType = it.ruleType
-            val ruleDetails = it.ruleDetails
+            listDataHeader.add(it.ruleType)
+//            val ruleDetails = mutableListOf<String>().add(it.ruleDetails)
+            val arrayListOf = arrayListOf<String>()
+            arrayListOf.add(it.ruleDetails)
 
 
-//defaut is false
-            section.expanded = true
-
-            val fruitCategory = ruleType
-            val fruit1 = ruleDetails
-
-
-            section.parent = fruitCategory
-            section.children.add(fruit1)
-
-            el.addSection(section)
-            el.addChild(fruitCategory, fruit1);
-
+            listDataChild.put(it.ruleType, arrayListOf)
 
         }
+
+
+        listAdapter = ExpandableListAdapter(activity?.applicationContext!!, listDataHeader, listDataChild)
+
+        // setting list adapter
+        lvExp.setAdapter(listAdapter)
+
+        listAdapter?.notifyDataSetChanged()
+
+    }
+
+    private fun prepareListData() {
+
+
+        // Adding child data
+        (listDataHeader as ArrayList<String>).add("Top 250")
+        // Adding child data
+        val top250 = ArrayList<String>()
+        top250.add("The Shawshank Redemption")
+
+
+
+        listDataChild!![listDataHeader.get(0)] = top250 // Header, Child data
 
     }
 
