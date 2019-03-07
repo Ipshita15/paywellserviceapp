@@ -13,6 +13,7 @@ import com.google.gson.Gson
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.text.SimpleDateFormat
+import java.util.*
 
 
 /**
@@ -116,17 +117,20 @@ class NotificationNotifcationViewModel : BaseNotifcationViewModel() {
             }
         }
 
-
         var notificationList = data?.filter {
-            val date = SimpleDateFormat(notificationDateFormat).parse(it.messageExpiryTime)
+            val date = SimpleDateFormat(notificationDateFormat, Locale.ENGLISH).parse(it.messageExpiryTime)
             currentTimeMillis < date.time
         }
 
         if (notificationList != null) {
-            notificationList = notificationList.reversed()
-        }
+            notificationList = notificationList.sortedBy {
+                SimpleDateFormat(notificationDateFormat, Locale.ENGLISH).parse(it.addedDatetime).time
+            }
 
-        return notificationList;
+            notificationList = notificationList.reversed()
+
+        }
+        return notificationList
 
 
     }
