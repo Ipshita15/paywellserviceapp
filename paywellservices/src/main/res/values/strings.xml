@@ -637,5 +637,9 @@
     <string name="add_id">Add ID</string>
     <string name="passport_id">Passport/ID</string>
     <string name="number">Number</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="other">Other</string>
+    <string name="book">Book</string>
 
 </resources>

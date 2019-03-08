@@ -611,7 +611,7 @@
     <string name="title_serach_view">Search</string>
     <string name="no_search_results">No search results</string>
     <string name="search_again">Search again</string>
-    <string name="search">Search</string>
+    <string name="search">অনুসন্ধান</string>
     <string name="cancel">Cancel</string>
     <string name="transaction_log">Transaction Log</string>
     <string name="action_search">Serach</string>
@@ -638,6 +638,10 @@
     <string name="add_id">Add ID</string>
     <string name="passport_id">Passport/ID</string>
     <string name="number">Number</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="other">Other</string>
+    <string name="book">বুক</string>
 
 
 </resources>

@@ -41,6 +41,11 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewMode.getAllPassengers()
+    }
+
     private fun initViewModel() {
         viewMode = ViewModelProviders.of(this).get(FlightDetails2ViewModel::class.java)
 
@@ -52,7 +57,7 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
             it?.let { it1 -> handleViewStatus(it1) }
         })
 
-        viewMode.getAllPassengers();
+
 
 
     }
@@ -62,7 +67,7 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
         val recyclerView = findViewById(R.id.recyclerViewPassenger) as RecyclerView
         recyclerView.setHasFixedSize(true)
 
-        val columns = 2;
+        val columns = 2
 
         val glm = GridLayoutManager(applicationContext, columns)
         recyclerView.layoutManager = glm

@@ -11,6 +11,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySera
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.ReposeAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.database.DatabaseClient
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.google.gson.Gson
@@ -135,6 +136,23 @@ class AirThicketRepository(private val mContext: Context) {
                 data.value = all
             }
         }
+        return data
+    }
+
+    fun addPassenger(passenger: Passenger): MutableLiveData<Long> {
+        val data = MutableLiveData<Long>()
+
+        doAsync {
+            val insert = DatabaseClient.getInstance(mContext).appDatabase.mAirtricketDab().insert(passenger)
+
+            uiThread {
+                if (insert != -1L) {
+                    AppStorageBox.put(mContext, AppStorageBox.Key.COUNTER_PASSENGER, insert)
+                }
+                data.value = insert
+            }
+        }
+
         return data
     }
 }

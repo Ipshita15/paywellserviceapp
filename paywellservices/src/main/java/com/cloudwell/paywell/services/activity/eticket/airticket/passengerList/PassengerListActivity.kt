@@ -2,6 +2,7 @@ package com.cloudwell.paywell.services.activity.eticket.airticket.passengerList
 
 import android.annotation.SuppressLint
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -13,7 +14,9 @@ import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.adapter.AdapterForPassengers
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.viewmodel.FlightDetails2ViewModel
+import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.AddPassengerActivity
 import com.cloudwell.paywell.services.utils.RecyclerItemClickListener
+import kotlinx.android.synthetic.main.contant_passenger_list.*
 
 
 class PassengerListActivity : AirTricketBaseActivity() {
@@ -37,6 +40,11 @@ class PassengerListActivity : AirTricketBaseActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewMode.getAllPassengers();
+    }
+
     private fun initViewModel() {
         viewMode = ViewModelProviders.of(this).get(FlightDetails2ViewModel::class.java)
 
@@ -48,7 +56,7 @@ class PassengerListActivity : AirTricketBaseActivity() {
             it?.let { it1 -> handleViewStatus(it1) }
         })
 
-        viewMode.getAllPassengers();
+
 
 
     }
@@ -91,7 +99,9 @@ class PassengerListActivity : AirTricketBaseActivity() {
 
 
     private fun initializationView() {
-
+        layoutAddPassenger.setOnClickListener {
+            startActivity(Intent(applicationContext, AddPassengerActivity::class.java))
+        }
 
     }
 
