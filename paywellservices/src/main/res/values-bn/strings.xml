@@ -617,7 +617,7 @@
     <string name="action_search">Serach</string>
     <string name="title_booking_and_review">Review and Book</string>
     <string name="baggage_policy_details"><![CDATA[Baggage & Policy Details]]></string>
-    <string name="Refundable">Refundable</string>
+    <string name="refundable">Refundable</string>
     <string name="non_refundable">No Refundable</string>
     <string name="passport_mandatory">Passport Mandatory</string>
     <string name="passport_not_mandatory">Passport not mandatory</string>
@@ -626,6 +626,18 @@
     <string name="title_flightDetails2">Review page 2</string>
     <string name="title_passenger_list">Passenger Info</string>
     <string name="title_add_passenger">Add Passenger</string>
+    <string name="add">Add</string>
+    <string name="title">Title</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="gender">Gender</string>
+    <string name="country">Country</string>
+    <string name="contact_number">Contact Number</string>
+    <string name="email">Email</string>
+    <string name="please_ensure_the_id_is_valid_for_at_least_6_months_after_the_date_of_departure">Please ensure the ID is valid for at least 6 months after the date of departure.</string>
+    <string name="add_id">Add ID</string>
+    <string name="passport_id">Passport/ID</string>
+    <string name="number">Number</string>
 
 
 </resources>
