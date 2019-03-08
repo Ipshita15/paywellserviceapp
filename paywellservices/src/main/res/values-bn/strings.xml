@@ -615,6 +615,17 @@
     <string name="cancel">Cancel</string>
     <string name="transaction_log">Transaction Log</string>
     <string name="action_search">Serach</string>
+    <string name="title_booking_and_review">Review and Book</string>
+    <string name="baggage_policy_details"><![CDATA[Baggage & Policy Details]]></string>
+    <string name="Refundable">Refundable</string>
+    <string name="non_refundable">No Refundable</string>
+    <string name="passport_mandatory">Passport Mandatory</string>
+    <string name="passport_not_mandatory">Passport not mandatory</string>
+    <string name="fares_information">Fares information</string>
+    <string name="roles">Roles</string>
+    <string name="title_flightDetails2">Review page 2</string>
+    <string name="title_passenger_list">Passenger Info</string>
+    <string name="title_add_passenger">Add Passenger</string>
 
 
 </resources>

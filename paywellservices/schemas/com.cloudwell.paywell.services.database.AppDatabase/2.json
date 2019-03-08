@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "fcf0235bc1cd921fa1bd4729df2c6f3f",
+    "identityHash": "2faf23fcf4f4cfbc9bd2b5b963a4ab2f",
     "entities": [
       {
         "tableName": "FavoriteMenu",
@@ -215,11 +215,97 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "Passenger",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER NOT NULL, `ContactNumber` TEXT NOT NULL, `CountryCode` TEXT NOT NULL, `Email` TEXT NOT NULL, `FirstName` TEXT NOT NULL, `Gender` TEXT NOT NULL, `IsLeadPassenger` INTEGER NOT NULL, `LastName` TEXT NOT NULL, `Nationality` TEXT NOT NULL, `PaxType` TEXT NOT NULL, `Title` TEXT NOT NULL, `isDefault` INTEGER NOT NULL, PRIMARY KEY(`Id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "Id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "contactNumber",
+            "columnName": "ContactNumber",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "countryCode",
+            "columnName": "CountryCode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "email",
+            "columnName": "Email",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "firstName",
+            "columnName": "FirstName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "gender",
+            "columnName": "Gender",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isLeadPassenger",
+            "columnName": "IsLeadPassenger",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastName",
+            "columnName": "LastName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nationality",
+            "columnName": "Nationality",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "paxType",
+            "columnName": "PaxType",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "Title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isDefault",
+            "columnName": "isDefault",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "Id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"fcf0235bc1cd921fa1bd4729df2c6f3f\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"2faf23fcf4f4cfbc9bd2b5b963a4ab2f\")"
     ]
   }
 }

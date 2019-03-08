@@ -41,4 +41,10 @@
     <dimen name="mti_timeline_lbl_day_text">10sp</dimen>
     <dimen name="mti_timeline_lbl_date_text">14sp</dimen>
     <dimen name="mti_timeline_lbl_value">12sp</dimen>
+
+
+    <dimen name="sequence_active_step_padding_top">12dp</dimen>
+    <dimen name="sequence_active_step_padding_bottom">16dp</dimen>
+    <dimen name="sequence_anchor_min_width">48dp</dimen>
+    <dimen name="sequence_anchor_max_width">120dp</dimen>
 </resources>

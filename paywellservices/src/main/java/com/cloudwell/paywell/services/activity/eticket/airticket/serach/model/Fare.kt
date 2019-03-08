@@ -1,9 +1,11 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.serach.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
-
-class Fare {
+@Parcelize
+class Fare : Parcelable {
 
     @SerializedName("AgentMarkUp")
     var agentMarkUp: Long = 0

@@ -15,7 +15,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.*
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.SearchViewActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.FlightSearchViewActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.AirportsSearchActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.source.model.AirPortsData
 import com.cloudwell.paywell.services.app.AppHandler
@@ -157,7 +157,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
 
             R.id.btn_search -> {
 
-                val intent = Intent(activity?.applicationContext, SearchViewActivity::class.java)
+                val intent = Intent(activity?.applicationContext, FlightSearchViewActivity::class.java)
                 startActivity(intent)
             }
 
