@@ -6,10 +6,16 @@ import android.os.Bundle
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
 import android.view.MenuItem
-import com.cloudwell.paywell.services.R
+import android.view.View.OnFocusChangeListener
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.viewmodel.AddPassengerViewModel
+import com.mukesh.countrypicker.Country
+import com.mukesh.countrypicker.CountryPicker
+import com.mukesh.countrypicker.listeners.OnCountryPickerListener
+import kotlinx.android.synthetic.main.contant_add_passenger.*
+
+
 
 
 class AddPassengerActivity : AirTricketBaseActivity() {
@@ -50,20 +56,35 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
 
     private fun initializationView() {
+        etCountry.setOnFocusChangeListener(OnFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
+                hideUserKeyboard()
+                val builder = CountryPicker.Builder().with(applicationContext)
+                        .listener(object : OnCountryPickerListener {
+                            override fun onSelectCountry(country: Country) {
+                                etCountry.setText("" + country.name)
+                            }
+
+                        })
+                val picker = builder.build();
+                picker.showDialog(this)
+            }
+        })
+
 
 
     }
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_add_passenger, menu)
+        menuInflater.inflate(com.cloudwell.paywell.services.R.menu.menu_add_passenger, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle item selection
         when (item.itemId) {
-            R.id.add_passenger -> {
+            com.cloudwell.paywell.services.R.id.add_passenger -> {
 
                 addPassenger();
 
