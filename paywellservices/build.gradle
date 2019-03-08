@@ -204,6 +204,9 @@ dependencies {
 
     implementation 'com.github.iammert:ExpandableLayout:1.4.1'
 
+    //fullDialog
+    implementation 'com.github.franmontiel:FullScreenDialog:1.0.1'
+
     implementation 'com.github.mukeshsolanki:country-picker-android:2.0.1'
 
 
