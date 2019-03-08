@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout3"
@@ -31,8 +30,7 @@
             app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.45"
-            tools:listitem="@layout/mti_item_day_new">
-        </com.cloudwell.paywell.services.customView.horizontalDatePicker.MyDateTimelineViewRecyclerView>
+            tools:listitem="@layout/mti_item_day_new"></com.cloudwell.paywell.services.customView.horizontalDatePicker.MyDateTimelineViewRecyclerView>
     </LinearLayout>
 
     <LinearLayout
@@ -48,22 +46,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/linearLayout5"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6"
-        >
+        app:layout_constraintVertical_bias="0.6">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/ic_calendar"
-            />
+            android:background="@drawable/ic_calendar" />
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="More"/>
+            android:text="More" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

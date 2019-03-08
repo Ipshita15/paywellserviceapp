@@ -1,12 +1,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:card_view="http://schemas.android.com/apk/res-auto"
-             xmlns:fancy="http://schemas.android.com/apk/res-auto"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="com.cloudwell.paywell.services.activity.eticket.airticket.OneWayFragment">
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.cloudwell.paywell.services.activity.eticket.airticket.OneWayFragment">
 
-    <include layout="@layout/background_green"/>
+    <include layout="@layout/background_green" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,32 +48,32 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="From"
-                            android:textColor="#999999"/>
+                            android:textColor="#999999" />
 
                         <TextSwitcher
-                            android:id="@+id/tsRoundTripFrom"
+                            android:id="@+id/tsOneWayTripFrom"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="DHAKA"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
                         <TextSwitcher
-                            android:id="@+id/tsRoundTripFromPort"
+                            android:id="@+id/tsOneWayTripFromPort"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Shahjalal International"
-                            android:textSize="10sp"/>
+                            android:textSize="10sp" />
 
                     </LinearLayout>
 
                     <ImageView
-                        android:id="@+id/ivRoundTripTextSwitcher"
+                        android:id="@+id/ivOneWayTripTextSwitcher"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="0.4"
                         android:contentDescription="@string/app_name"
-                        android:src="@drawable/ic_round_trip"/>
+                        android:src="@drawable/ic_one_way" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -88,25 +89,25 @@
                             android:layout_gravity="end"
                             android:layout_weight="1"
                             android:text="To"
-                            android:textColor="#999999"/>
+                            android:textColor="#999999" />
 
                         <TextSwitcher
-                            android:id="@+id/tsRoundTripTo"
+                            android:id="@+id/tsOneWayTripTo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
                             android:layout_weight="1"
                             android:text="Dhaka"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
                         <TextSwitcher
-                            android:id="@+id/tsRoundTripToPort"
+                            android:id="@+id/tsOneWayTripToPort"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
                             android:layout_weight="1"
                             android:text="Cox's Bazar airport"
-                            android:textSize="10sp"/>
+                            android:textSize="10sp" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -116,7 +117,7 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:background="#c0c0c0"/>
+                    android:background="#c0c0c0" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -137,14 +138,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Depart"
-                            android:textColor="#999999"/>
+                            android:textColor="#999999" />
 
                         <TextView
                             android:id="@+id/tvDepartDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Date"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
                     </LinearLayout>
 
@@ -154,7 +155,7 @@
                         android:layout_margin="@dimen/activity_horizontal_margin"
                         android:layout_weight="1.3"
                         android:gravity="end"
-                        android:orientation="vertical"/>
+                        android:orientation="vertical" />
                 </LinearLayout>
 
                 <View
@@ -162,7 +163,7 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:background="#c0c0c0"/>
+                    android:background="#c0c0c0" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -182,7 +183,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:text="Class"/>
+                            android:text="Class" />
 
                         <TextView
                             android:id="@+id/airTicketClass"
@@ -192,7 +193,7 @@
                             android:gravity="start"
                             android:text="Economy/Primium Economy"
                             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:textColor="#999999"/>
+                            android:textColor="#999999" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -208,7 +209,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:text="Passengers"
-                            android:textColor="#999999"/>
+                            android:textColor="#999999" />
 
                         <LinearLayout
                             android:id="@+id/llPsngr"
@@ -228,14 +229,14 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="5dp"
-                                    android:src="@drawable/ic_adult"/>
+                                    android:src="@drawable/ic_adult" />
 
                                 <TextView
                                     android:id="@+id/airTicketAdult"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="1"
-                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -248,14 +249,14 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="5dp"
-                                    android:src="@drawable/ic_kid"/>
+                                    android:src="@drawable/ic_kid" />
 
                                 <TextView
                                     android:id="@+id/airTicketKid"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="0"
-                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -268,14 +269,14 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="5dp"
-                                    android:src="@drawable/ic_infant"/>
+                                    android:src="@drawable/ic_infant" />
 
                                 <TextView
                                     android:id="@+id/airTicketInfant"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="0"
-                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -286,7 +287,7 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:background="#c0c0c0"/>
+                    android:background="#c0c0c0" />
 
                 <mehdi.sakout.fancybuttons.FancyButton
                     android:id="@+id/btn_search"
@@ -299,7 +300,7 @@
                     fancy:fb_iconPosition="left"
                     fancy:fb_radius="2dp"
                     fancy:fb_text="Search"
-                    fancy:fb_textColor="#FFFFFF"/>
+                    fancy:fb_textColor="#FFFFFF" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
@@ -311,7 +312,7 @@
             android:layout_marginRight="@dimen/activity_horizontal_margin_half"
             card_view:cardBackgroundColor="@color/card_background"
             card_view:cardCornerRadius="8dp"
-            card_view:cardUseCompatPadding="true"/>
+            card_view:cardUseCompatPadding="true" />
 
     </LinearLayout>
 </FrameLayout>
