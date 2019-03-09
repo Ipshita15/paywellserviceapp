@@ -4,12 +4,12 @@ import android.annotation.SuppressLint
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.BottomSheetBehavior
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
 import android.view.View
-import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.adapter.AdapterForPassengers
@@ -20,6 +20,9 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.passengerList.P
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.utils.RecyclerItemClickListener
 import kotlinx.android.synthetic.main.contant_flight_details_2.*
+import kotlinx.android.synthetic.main.review_bottom_sheet.*
+
+
 
 
 class FlightDetails2Activity : AirTricketBaseActivity() {
@@ -37,9 +40,39 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
         setToolbar(getString(com.cloudwell.paywell.services.R.string.title_booking_and_review))
 
         initializationView()
-
+        initilizationReviewBottomSheet()
 
         initViewModel()
+
+
+    }
+
+    private fun initilizationReviewBottomSheet() {
+        val bottomSheetBehavior = BottomSheetBehavior.from(reviewBottonSheet)
+
+
+        bottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                    }
+                    BottomSheetBehavior.STATE_EXPANDED -> {
+
+                    }
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+
+                    }
+                    BottomSheetBehavior.STATE_DRAGGING -> {
+                    }
+                    BottomSheetBehavior.STATE_SETTLING -> {
+                    }
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+
+            }
+        })
 
 
     }
@@ -65,7 +98,7 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
 
     private fun handleViewStatus(it: List<Passenger>) {
 
-        val recyclerView = findViewById(R.id.recyclerViewPassenger) as RecyclerView
+        val recyclerView = findViewById(com.cloudwell.paywell.services.R.id.recyclerViewPassenger) as RecyclerView
         recyclerView.setHasFixedSize(true)
 
         val columns = 2
