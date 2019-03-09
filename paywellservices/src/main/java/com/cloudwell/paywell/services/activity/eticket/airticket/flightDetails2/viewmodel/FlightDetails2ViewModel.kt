@@ -7,7 +7,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.
 class FlightDetails2ViewModel : AirTicketBaseViewMode() {
 
 
-    val mListMutableLiveDPassengers = MutableLiveData<List<Passenger>>()
+    var mListMutableLiveDPassengers = MutableLiveData<MutableList<Passenger>>()
 
 
     fun getAllPassengers() {

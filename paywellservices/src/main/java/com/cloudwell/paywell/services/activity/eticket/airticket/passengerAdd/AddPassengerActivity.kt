@@ -246,6 +246,8 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         passenger.contactNumber = contactNumber
         passenger.email = emailAddress
 
+        passenger.isPassengerSleted = true
+
 
         viewMode.addPassenger(passenger)
 

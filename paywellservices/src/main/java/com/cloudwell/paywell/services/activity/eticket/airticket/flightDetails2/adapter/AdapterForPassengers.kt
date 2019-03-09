@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.passenger_list_item_with_title.view.*
  */
 class AdapterForPassengers(var context: Context, var items: List<Passenger>) : RecyclerView.Adapter<AdapterForPassengers.ViewHolder>() {
 
-
     override fun getItemCount(): Int {
         return items.size
     }
@@ -63,8 +62,12 @@ class AdapterForPassengers(var context: Context, var items: List<Passenger>) : R
             }
             else -> {
 
-                holder.layoutPassengerInfo.setOnClickListener {
-                    holder.ivIsSeleted.visibility = View.GONE
+                holder.tvFirstNameLastName.text = model.firstName + " | " + model.lastName
+
+                if (model.isPassengerSleted) {
+                    holder.ivIsSeleted.visibility = View.VISIBLE
+                } else {
+                    holder.ivIsSeleted.visibility = View.INVISIBLE
                 }
 
             }
@@ -73,20 +76,17 @@ class AdapterForPassengers(var context: Context, var items: List<Passenger>) : R
 
     }
 
-
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvStringTime = view.tvStringTime
         val ivAddPassenger = view.ivAddPassenger
         val tvAddEdit = view.tvAddEdit
-
 
         var layoutPassengerInfo = view.layoutPassengerInfo
         val tvFirstNameLastName = view.tvFirstNameAndLastName
         val tvPassportNumber = view.tvPassportNumber
         val ivIsSeleted = view.ivIsSeleted
 
-
-
-
     }
+
+
 }

@@ -11,6 +11,7 @@ import android.view.Menu
 import android.view.View
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.adapter.AdapterForPassengers
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.viewmodel.FlightDetails2ViewModel
@@ -18,6 +19,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.Ad
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerList.PassengerListActivity
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.utils.RecyclerItemClickListener
+import kotlinx.android.synthetic.main.contant_flight_details_2.*
 
 
 class FlightDetails2Activity : AirTricketBaseActivity() {
@@ -25,6 +27,7 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
 
     private lateinit var viewMode: FlightDetails2ViewModel
     lateinit var touchHelper: ItemTouchHelper
+    lateinit var adapterForPassengers: AdapterForPassengers
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,8 +61,6 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
         })
 
 
-
-
     }
 
     private fun handleViewStatus(it: List<Passenger>) {
@@ -73,9 +74,9 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
         recyclerView.layoutManager = glm
 
 
-        val recyclerListAdapter = AdapterForPassengers(this, it)
+        adapterForPassengers = AdapterForPassengers(this, it)
         recyclerView.layoutManager = glm
-        recyclerView.adapter = recyclerListAdapter;
+        recyclerView.adapter = adapterForPassengers;
         recyclerView.isNestedScrollingEnabled = false;
 
         recyclerView.addOnItemTouchListener(
@@ -91,6 +92,20 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
                             } else {
                                 startActivity(Intent(applicationContext, PassengerListActivity::class.java))
                             }
+                        } else {
+
+                            if (get.isPassengerSleted) {
+
+                                get.isPassengerSleted = false
+
+                            } else {
+                                get.isPassengerSleted = true
+                            }
+
+
+                            viewMode.mListMutableLiveDPassengers.value?.set(position, get)
+                            adapterForPassengers.notifyDataSetChanged()
+
                         }
 
                     }
@@ -106,6 +121,16 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
 
 
     private fun initializationView() {
+        try {
+            val resposeAirPriceSearch = AppStorageBox.get(applicationContext, AppStorageBox.Key.ResposeAirPriceSearch) as ResposeAirPriceSearch
+            val shortDepartArriveTime = AppStorageBox.get(applicationContext, AppStorageBox.Key.ShortDepartArriveTime)
+
+            tvNameOfDate.text = "" + shortDepartArriveTime
+
+        } catch (e: Exception) {
+
+        }
+
 
 
     }
