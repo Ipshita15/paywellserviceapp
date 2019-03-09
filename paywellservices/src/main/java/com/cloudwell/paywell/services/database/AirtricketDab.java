@@ -1,6 +1,7 @@
 package com.cloudwell.paywell.services.database;
 
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
@@ -24,6 +25,13 @@ public interface AirtricketDab {
     Long insert(Passenger passenger);
 
     @Update
-    int update(Passenger task);
+    int update(Passenger passenger);
+
+
+    @Delete
+    int deleted(Passenger passenger);
+
+
+
 
 }

@@ -642,6 +642,9 @@
     <string name="female">Female</string>
     <string name="other">Other</string>
     <string name="book">বুক</string>
+    <string name="passenger_deleted_message">Passenger info cannot be recovered once deleted. Are you sure you want to delete?</string>
+    <string name="ok">OK</string>
+    <string name="cencel">CANCEL</string>
 
 
 </resources>

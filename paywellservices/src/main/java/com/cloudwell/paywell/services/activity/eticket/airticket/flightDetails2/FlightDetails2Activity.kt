@@ -102,6 +102,8 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
                                 get.isPassengerSleted = true
                             }
 
+                            viewMode.updatePassenger(get)
+
 
                             viewMode.mListMutableLiveDPassengers.value?.set(position, get)
                             adapterForPassengers.notifyDataSetChanged()
