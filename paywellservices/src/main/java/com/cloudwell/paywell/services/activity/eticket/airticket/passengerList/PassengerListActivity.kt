@@ -8,21 +8,19 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
-import android.view.View
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.adapter.AdapterForPassengers
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.viewmodel.FlightDetails2ViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.AddPassengerActivity
-import com.cloudwell.paywell.services.utils.RecyclerItemClickListener
+import com.cloudwell.paywell.services.activity.eticket.airticket.passengerList.viewModel.PassengerListViewModel
+import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import kotlinx.android.synthetic.main.contant_passenger_list.*
 
 
 class PassengerListActivity : AirTricketBaseActivity() {
 
 
-    private lateinit var viewMode: FlightDetails2ViewModel
+    private lateinit var viewMode: PassengerListViewModel
     lateinit var touchHelper: ItemTouchHelper
 
     @SuppressLint("SetTextI18n")
@@ -46,7 +44,7 @@ class PassengerListActivity : AirTricketBaseActivity() {
     }
 
     private fun initViewModel() {
-        viewMode = ViewModelProviders.of(this).get(FlightDetails2ViewModel::class.java)
+        viewMode = ViewModelProviders.of(this).get(PassengerListViewModel::class.java)
 
         viewMode.baseViewStatus.observe(this, android.arch.lifecycle.Observer {
             handleViewCommonStatus(it)
@@ -66,33 +64,35 @@ class PassengerListActivity : AirTricketBaseActivity() {
         val recyclerView = findViewById(R.id.recyclerViewPassenger) as RecyclerView
         recyclerView.setHasFixedSize(true)
 
-        val columns = 2;
+        val columns = 1;
 
         val glm = GridLayoutManager(applicationContext, columns)
         recyclerView.layoutManager = glm
 
 
-        val recyclerListAdapter = AdapterForPassengers(this, it)
+        val recyclerListAdapter = AdapterForPassengersEdit(this, it, object : AdapterForPassengersEdit.OnClickListener {
+
+            override fun onDeleted(model: Passenger, position: Int) {
+
+
+            }
+
+            override fun onEditClick(model: Passenger, position: Int) {
+                AppStorageBox.put(applicationContext, AppStorageBox.Key.AIRTRICKET_EDIT_PASSENGER, model)
+                val intent = Intent(applicationContext, AddPassengerActivity::class.java)
+                intent.putExtra("isEditFlag", true)
+                startActivity(intent)
+
+            }
+
+        })
+
+
         recyclerView.layoutManager = glm
         recyclerView.adapter = recyclerListAdapter;
         recyclerView.isNestedScrollingEnabled = false;
 
-        recyclerView.addOnItemTouchListener(
-                RecyclerItemClickListener(applicationContext, recyclerView, object : RecyclerItemClickListener.OnItemClickListener {
-                    override fun onItemClick(view: View, position: Int) {
-                        // do whatever
-                        val get = viewMode.mListMutableLiveDPassengers.value?.get(position)
-                        if (get?.isDefault!!) {
-//                            val intent = Intent(applicationContext, )
-                        }
 
-                    }
-
-                    override fun onLongItemClick(view: View, position: Int) {
-                        // do whatever
-                    }
-                })
-        )
 
 
     }

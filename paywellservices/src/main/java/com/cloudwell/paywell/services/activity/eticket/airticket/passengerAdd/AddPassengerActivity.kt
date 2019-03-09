@@ -10,12 +10,14 @@ import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View.OnFocusChangeListener
+import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.fragment.GenderBottomSheetDialog
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.model.MyCountry
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.view.PassgerAddViewStatus
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.viewmodel.AddPassengerViewModel
+import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.utils.AssetHelper
 import com.google.gson.Gson
 import com.mukesh.countrypicker.Country
@@ -31,11 +33,14 @@ class AddPassengerActivity : AirTricketBaseActivity() {
     lateinit var touchHelper: ItemTouchHelper
 
     // ui
-
     val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
     var isEmailValid = false
     var countryCode = ""
 
+    var isEditFlag = false
+
+
+    private lateinit var oldPassenger: Passenger
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +54,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
         initViewModel()
 
+        hideUserKeyboard()
 
     }
 
@@ -78,6 +84,25 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
 
     private fun initializationView() {
+        try {
+            isEditFlag = intent.extras.getBoolean("isEditFlag", false)
+
+            if (isEditFlag) {
+                oldPassenger = AppStorageBox.get(applicationContext, AppStorageBox.Key.AIRTRICKET_EDIT_PASSENGER) as Passenger
+                etTitle.setText(oldPassenger.title)
+                etFirstName.setText(oldPassenger.firstName)
+                etLastName.setText(oldPassenger.lastName)
+                etGender.setText(oldPassenger.gender)
+                etCountry.setText(oldPassenger.country)
+                etContactNumber.setText(oldPassenger.contactNumber)
+                etEmail.setText(oldPassenger.email)
+                etNidorPassportNumber.setText(oldPassenger.passportOrNID)
+
+            }
+        } catch (e: Exception) {
+
+        }
+
         etCountry.setOnFocusChangeListener(OnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
                 hideUserKeyboard()
@@ -151,6 +176,11 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(com.cloudwell.paywell.services.R.menu.menu_add_passenger, menu)
+
+        if (isEditFlag == true) {
+            menu?.findItem(R.id.add_passenger)?.setTitle("Edit")
+        }
+
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -175,6 +205,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         val gender = this.etGender.text.toString().trim()
         val contactNumber = this.etContactNumber.text.toString().trim()
         val emailAddress = this.etEmail.text.toString().trim()
+        val InDorPassport = this.etNidorPassportNumber.text.toString().trim()
 
         if (title.equals("")) {
             textInputLayoutTitle.error = "Invalid Title"
@@ -218,11 +249,15 @@ class AddPassengerActivity : AirTricketBaseActivity() {
             textInputLayoutContactNumber.error = ""
         }
 
-        if (!isEmailValid) {
+
+        if (emailAddress.matches(emailPattern.toRegex()) && emailAddress.length > 0) {
+            isEmailValid = true
+            textInputLayoutEmail.error = ""
+
+        } else {
+            isEmailValid = false
             textInputLayoutEmail.error = "invalid email"
             return
-        } else {
-            textInputLayoutEmail.error = ""
         }
 
 
@@ -243,13 +278,20 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         passenger.gender = gender
         passenger.countryCode = countryCode
         passenger.nationality = nationality
+        passenger.country = country
         passenger.contactNumber = contactNumber
         passenger.email = emailAddress
+        passenger.passportOrNID = InDorPassport
 
         passenger.isPassengerSleted = true
 
 
-        viewMode.addPassenger(passenger)
+        if (isEditFlag) {
+            passenger.id = oldPassenger.id
+            viewMode.updatePassenger(passenger)
+        } else {
+            viewMode.addPassenger(passenger)
+        }
 
     }
 

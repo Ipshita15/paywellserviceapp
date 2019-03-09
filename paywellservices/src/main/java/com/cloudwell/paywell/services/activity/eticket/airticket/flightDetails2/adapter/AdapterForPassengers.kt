@@ -79,7 +79,7 @@ class AdapterForPassengers(var context: Context, var items: List<Passenger>) : R
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvStringTime = view.tvStringTime
         val ivAddPassenger = view.ivAddPassenger
-        val tvAddEdit = view.tvAddEdit
+        val tvAddEdit = view.tvShortFirstNameLastName
 
         var layoutPassengerInfo = view.layoutPassengerInfo
         val tvFirstNameLastName = view.tvFirstNameAndLastName

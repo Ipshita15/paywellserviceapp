@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "c22e4dd4e9bdbd2592a0ec73bff7638a",
+    "identityHash": "88c8ee8f8c86d0378d24209e6c9a3294",
     "entities": [
       {
         "tableName": "FavoriteMenu",
@@ -218,7 +218,7 @@
       },
       {
         "tableName": "Passenger",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `ContactNumber` TEXT NOT NULL, `CountryCode` TEXT NOT NULL, `Email` TEXT NOT NULL, `FirstName` TEXT NOT NULL, `Gender` TEXT NOT NULL, `IsLeadPassenger` INTEGER NOT NULL, `LastName` TEXT NOT NULL, `Nationality` TEXT NOT NULL, `PaxType` TEXT NOT NULL, `Title` TEXT NOT NULL, `isPassengerSleted` INTEGER NOT NULL, `isDefault` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `ContactNumber` TEXT NOT NULL, `CountryCode` TEXT NOT NULL, `Email` TEXT NOT NULL, `FirstName` TEXT NOT NULL, `Gender` TEXT NOT NULL, `IsLeadPassenger` INTEGER NOT NULL, `LastName` TEXT NOT NULL, `Nationality` TEXT NOT NULL, `PaxType` TEXT NOT NULL, `Title` TEXT NOT NULL, `isPassengerSleted` INTEGER NOT NULL, `Country` TEXT NOT NULL, `passportOrNID` TEXT NOT NULL, `isDefault` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -293,6 +293,18 @@
             "notNull": true
           },
           {
+            "fieldPath": "country",
+            "columnName": "Country",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "passportOrNID",
+            "columnName": "passportOrNID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "isDefault",
             "columnName": "isDefault",
             "affinity": "INTEGER",
@@ -311,7 +323,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"c22e4dd4e9bdbd2592a0ec73bff7638a\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"88c8ee8f8c86d0378d24209e6c9a3294\")"
     ]
   }
 }

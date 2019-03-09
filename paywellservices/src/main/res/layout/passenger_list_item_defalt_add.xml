@@ -23,7 +23,7 @@
         app:srcCompat="@drawable/ic_add_passenger"/>
 
     <TextView
-        android:id="@+id/tvAddEdit"
+        android:id="@+id/tvShortFirstNameLastName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

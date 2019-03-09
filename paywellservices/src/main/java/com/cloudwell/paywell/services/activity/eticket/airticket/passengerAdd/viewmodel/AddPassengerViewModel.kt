@@ -21,4 +21,16 @@ class AddPassengerViewModel : AirTicketBaseViewMode() {
         })
     }
 
+    fun updatePassenger(passenger: Passenger) {
+        baseViewStatus.value = BaseViewState(isProgressIndicatorShown = true)
+        mAirTicketRepository.updatePassenger(passenger).observeForever({
+            baseViewStatus.value = BaseViewState(isProgressIndicatorShown = false)
+            if (it != -1) {
+                mViewStatus.value = PassgerAddViewStatus(isPassengerAddSuccessful = true)
+            }
+
+        })
+
+    }
+
 }

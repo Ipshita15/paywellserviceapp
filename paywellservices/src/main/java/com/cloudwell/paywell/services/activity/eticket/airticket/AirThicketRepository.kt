@@ -155,4 +155,22 @@ class AirThicketRepository(private val mContext: Context) {
 
         return data
     }
+
+    fun updatePassenger(passenger: Passenger): MutableLiveData<Int> {
+        val data = MutableLiveData<Int>()
+
+        doAsync {
+            val insert = DatabaseClient.getInstance(mContext).appDatabase.mAirtricketDab().update(passenger)
+
+            uiThread {
+                if (insert != -1) {
+                    AppStorageBox.put(mContext, AppStorageBox.Key.COUNTER_PASSENGER, insert)
+                }
+                data.value = insert
+            }
+        }
+
+        return data
+
+    }
 }

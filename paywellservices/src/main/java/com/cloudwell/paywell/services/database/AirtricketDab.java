@@ -4,6 +4,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger;
 
@@ -19,25 +20,10 @@ public interface AirtricketDab {
     @Query("SELECT * FROM passenger ")
     List<Passenger> getAll();
 
-//    @Query("SELECT * FROM favoritemenu WHERE status ='unFavourite'")
-//    Maybe<List<FavoriteMenu>> getAllUnFavoriteMenu();
-//
-//
-//    @Query("SELECT * FROM favoritemenu WHERE status ='Favourite'")
-//    Maybe<List<FavoriteMenu>> getAllFavoriteMenu();
-//
-@Insert(onConflict = OnConflictStrategy.REPLACE)
-Long insert(Passenger passenger);
-//
-//    @Insert
-//    void insert(List<FavoriteMenu> task);
-//
-//    @Delete
-//    void delete(FavoriteMenu task);
-//
-//    @Update
-//    int update(FavoriteMenu task);
-//
-//    @Query("DELETE FROM favoritemenu")
-//    public void deletedALl();
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Long insert(Passenger passenger);
+
+    @Update
+    int update(Passenger task);
+
 }

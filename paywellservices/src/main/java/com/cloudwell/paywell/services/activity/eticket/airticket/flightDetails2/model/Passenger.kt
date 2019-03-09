@@ -60,4 +60,14 @@ data class Passenger(val isDefault: Boolean) {
     var isPassengerSleted: Boolean = false
 
 
+    @ColumnInfo(name = "Country")
+    var country: String = ""
+
+
+    @ColumnInfo(name = "passportOrNID")
+    var passportOrNID: String = ""
+
+
+
+
 }
