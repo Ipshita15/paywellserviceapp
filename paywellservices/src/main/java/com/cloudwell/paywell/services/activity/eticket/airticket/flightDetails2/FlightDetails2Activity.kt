@@ -11,6 +11,7 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
 import android.view.View
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.AllSummaryActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.adapter.AdapterForPassengers
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger
@@ -70,6 +71,10 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
 
             }
         })
+
+        viewReview.setOnClickListener {
+            startActivity(Intent(applicationContext, AllSummaryActivity::class.java))
+        }
 
 
     }
