@@ -1,0 +1,199 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    tools:context="com.cloudwell.paywell.services.activity.eticket.airticket.multiCity.MultiCityFragment">
+
+    <ScrollView
+        android:id="@+id/topupScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button_layout"
+        android:layout_alignParentTop="true"
+        android:overScrollMode="never">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include layout="@layout/background_green" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/fbCardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin_half"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin_half"
+                    card_view:cardBackgroundColor="@color/card_background"
+                    card_view:cardCornerRadius="8dp"
+                    card_view:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/flightListContainerLL"
+                            android:orientation="vertical">
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:layout_marginRight="@dimen/activity_horizontal_margin"
+                            android:background="#c0c0c0" />
+
+                        <mehdi.sakout.fancybuttons.FancyButton
+                            android:id="@+id/btn_add_another_flight"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_margin="@dimen/activity_horizontal_margin"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            fancy:fb_defaultColor="#ffffff"
+                            fancy:fb_fontIconResource="&#xf055;"
+                            fancy:fb_iconPosition="left"
+                            fancy:fb_radius="2dp"
+                            fancy:fb_text="Add another flight"
+                            fancy:fb_textColor="#9fd34c" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin_half"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin_half"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin_half"
+                    card_view:cardBackgroundColor="@color/card_background"
+                    card_view:cardCornerRadius="8dp"
+                    card_view:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_margin="@dimen/activity_horizontal_margin"
+                            android:weightSum="3">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Passengers"
+                                android:textColor="#999999" />
+
+                            <LinearLayout
+                                android:id="@+id/llPsngr"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="2"
+                                android:gravity="end|bottom"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginRight="5dp"
+                                        android:src="@drawable/ic_adult" />
+
+                                    <TextView
+                                        android:id="@+id/airTicketAdult"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="1"
+                                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginRight="5dp"
+                                        android:src="@drawable/ic_kid" />
+
+                                    <TextView
+                                        android:id="@+id/airTicketKid"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="0"
+                                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginRight="5dp"
+                                        android:src="@drawable/ic_infant" />
+
+                                    <TextView
+                                        android:id="@+id/airTicketInfant"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="0"
+                                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:layout_marginRight="@dimen/activity_horizontal_margin"
+                            android:background="#c0c0c0" />
+
+                        <mehdi.sakout.fancybuttons.FancyButton
+                            android:id="@+id/btn_search"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_margin="@dimen/activity_horizontal_margin"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            fancy:fb_defaultColor="#9fd34c"
+                            fancy:fb_fontIconResource="&#xf002;"
+                            fancy:fb_iconPosition="left"
+                            fancy:fb_radius="2dp"
+                            fancy:fb_text="Search"
+                            fancy:fb_textColor="#FFFFFF" />
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+        </FrameLayout>
+    </ScrollView>
+</FrameLayout>

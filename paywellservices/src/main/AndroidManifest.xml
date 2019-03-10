@@ -1156,9 +1156,6 @@
             android:name=".activity.eticket.airticket.passengerAdd.AddPassengerActivity"
             android:label="@string/title_add_passenger">
         </activity>
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-
     </application>
 
 </manifest>

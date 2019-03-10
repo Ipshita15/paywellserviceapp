@@ -626,4 +626,7 @@
     <string name="title_passenger_list">Passenger Info</string>
     <string name="title_add_passenger">Add Passenger</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
