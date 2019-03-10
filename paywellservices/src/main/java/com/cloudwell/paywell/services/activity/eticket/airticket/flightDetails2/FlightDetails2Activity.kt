@@ -23,8 +23,6 @@ import kotlinx.android.synthetic.main.contant_flight_details_2.*
 import kotlinx.android.synthetic.main.review_bottom_sheet.*
 
 
-
-
 class FlightDetails2Activity : AirTricketBaseActivity() {
 
 
@@ -36,7 +34,6 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.cloudwell.paywell.services.R.layout.activity_flight_details_2)
-
         setToolbar(getString(com.cloudwell.paywell.services.R.string.title_booking_and_review))
 
         initializationView()
@@ -165,7 +162,6 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
         } catch (e: Exception) {
 
         }
-
 
 
     }
