@@ -64,10 +64,14 @@ data class Passenger(val isDefault: Boolean) {
     var country: String = ""
 
 
-    @ColumnInfo(name = "passportOrNID")
-    var passportOrNID: String = ""
+    @ColumnInfo(name = "passportNumber")
+    var passportNumber: String = ""
 
+    @ColumnInfo(name = "passportImagePath")
+    var passportImagePath: String = ""
 
+    @ColumnInfo(name = "NIDnumber")
+    var nIDnumber: String = ""
 
 
 }
