@@ -29,7 +29,7 @@ class AdapterForPassengersEdit(var context: Context, var items: List<Passenger>,
 
     override fun onBindViewHolder(holder: AdapterForPassengersEdit.ViewHolder, position: Int) {
         val model = items.get(position)
-        holder.tvShortFirstNameLastName.text = "${model.firstName} | ${model.lastName}"
+        holder.tvShortFirstNameLastName.text = "${model.firstName} / ${model.lastName}"
 //        holder.tvPassport.text = "${model.firstName} | ${model.lastName}"
 
         holder.ivEdit.setOnClickListener {
