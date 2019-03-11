@@ -65,13 +65,13 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
 
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN"/>-->
-            <!--<action android:name="android.intent.action.VIEW"/>-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.VIEW"/>
 
 
-            <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-            <!--</intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
 
         </activity>
 
@@ -1130,16 +1130,16 @@
             android:name=".activity.eticket.airticket.serach.citySerach.AirportsSearchActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity
-            android:name=".activity.eticket.airticket.flightDetails1.FlightDetails1Activity"
-            android:label="@string/title_activity_air_tricket_menu">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <action android:name="android.intent.action.VIEW"/>
+        <!--<activity-->
+        <!--android:name=".activity.eticket.airticket.flightDetails1.FlightDetails1Activity"-->
+        <!--android:label="@string/title_activity_air_tricket_menu">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.MAIN"/>-->
+        <!--<action android:name="android.intent.action.VIEW"/>-->
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
+        <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+        <!--</intent-filter>-->
+        <!--</activity>-->
 
 
         <activity
@@ -1160,6 +1160,16 @@
         <activity
             android:name=".activity.eticket.airticket.finalReview.AllSummaryActivity"
             android:label="@string/title_all_summary">
+        </activity>
+
+        <activity
+            android:name=".activity.eticket.airticket.bookingCencel.BookingCancelActivity"
+            android:label="@string/tile_cencel_booking">
+        </activity>
+
+        <activity
+            android:name=".activity.eticket.airticket.transationLog.TransactionLogActivity"
+            android:label="@string/tile_cencel_transaction_log">
         </activity>
 
 
