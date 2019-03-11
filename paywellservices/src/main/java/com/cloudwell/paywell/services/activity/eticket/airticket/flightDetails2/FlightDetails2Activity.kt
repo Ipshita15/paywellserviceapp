@@ -2,14 +2,17 @@ package com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2
 
 import android.annotation.SuppressLint
 import android.arch.lifecycle.ViewModelProviders
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
 import android.view.View
+import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.AllSummaryActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
@@ -18,6 +21,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.viewmodel.FlightDetails2ViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.AddPassengerActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerList.PassengerListActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.utils.RecyclerItemClickListener
 import kotlinx.android.synthetic.main.contant_flight_details_2.*
@@ -34,7 +38,7 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.cloudwell.paywell.services.R.layout.activity_flight_details_2)
+        setContentView(R.layout.activity_flight_details_2)
         setToolbar(getString(com.cloudwell.paywell.services.R.string.title_booking_and_review))
 
         initializationView()
@@ -73,9 +77,71 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
         })
 
         viewReview.setOnClickListener {
-            startActivity(Intent(applicationContext, AllSummaryActivity::class.java))
+
+            var totalSeletedCounter = 0
+            var totalPassenger = 0
+            val passenger = mutableListOf<Passenger>()
+
+
+            val requestAirSearch = RequestAirSearch()
+            requestAirSearch.adultQuantity = 1
+            requestAirSearch.childQuantity = 1
+            requestAirSearch.infantQuantity = 0
+
+            totalPassenger = (requestAirSearch.adultQuantity + requestAirSearch.childQuantity + requestAirSearch.infantQuantity).toInt();
+
+
+            viewMode.mListMutableLiveDPassengers.value?.forEach {
+                val passengerSleted = it.isPassengerSleted
+                if (passengerSleted) {
+                    passenger.add(it)
+                    totalSeletedCounter = totalSeletedCounter + 1;
+                }
+            }
+
+            if (totalSeletedCounter == totalPassenger) {
+                AppStorageBox.put(applicationContext, AppStorageBox.Key.SELETED_PASSENGER, passenger)
+                startActivity(Intent(applicationContext, AllSummaryActivity::class.java))
+            } else {
+                showWarringForMissMax(requestAirSearch)
+            }
         }
 
+
+    }
+
+    private fun showWarringForMissMax(requestAirSearch: RequestAirSearch) {
+
+
+        var adultQuantityMessage = ""
+        if (requestAirSearch.adultQuantity != 0L) {
+            adultQuantityMessage = "${requestAirSearch.adultQuantity} adult"
+        }
+
+
+        var childQuantityMessage = ""
+        if (requestAirSearch.childQuantity != 0L) {
+            childQuantityMessage = ", ${requestAirSearch.childQuantity} child"
+        }
+
+
+        var infantQuantityMessage = ""
+        if (requestAirSearch.infantQuantity != 0L) {
+            infantQuantityMessage = ", ${requestAirSearch.infantQuantity} infant"
+        }
+
+
+        var message = "This price is only available for ${adultQuantityMessage} ${childQuantityMessage} ${infantQuantityMessage}.\nPlease provide all passenger information "
+
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage(message)
+                .setCancelable(true)
+                .setPositiveButton(getString(R.string.ok), DialogInterface.OnClickListener { dialog, id ->
+
+
+                })
+        val alert = builder.create()
+        alert.show()
 
     }
 
