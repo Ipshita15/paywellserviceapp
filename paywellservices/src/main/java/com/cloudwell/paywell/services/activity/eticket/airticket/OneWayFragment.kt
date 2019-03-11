@@ -1,11 +1,12 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket
 
 
+import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.ContextThemeWrapper
@@ -17,15 +18,10 @@ import android.widget.*
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.FlightSearchViewActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.AirportsSearchActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.source.model.AirPortsData
 import com.cloudwell.paywell.services.app.AppHandler
-import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.franmontiel.fullscreendialog.FullScreenDialogFragment
 import kotlinx.android.synthetic.main.fragment_one_way.*
 import mehdi.sakout.fancybuttons.FancyButton
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -33,11 +29,14 @@ import java.util.*
 class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragment.OnConfirmListener, FullScreenDialogFragment.OnDiscardListener {
 
     private val KEY_TAG = OneWayFragment::class.java!!.getName()
+    private val REQ_CODE_FROM = 1
 
     private var mAppHandler: AppHandler? = null
     private lateinit var frameLayout: FrameLayout
     private lateinit var dialogFragment: FullScreenDialogFragment
     val dialogTag = "dialog"
+
+    val myCalendar = Calendar.getInstance()
 
     companion object {
         val KEY_REQUEST_KEY = "KEY_REQUEST_KEY"
@@ -150,25 +149,62 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
 
             }
 
-            R.id.llPsngr -> {
+            com.cloudwell.paywell.services.R.id.llPsngr -> {
 
                 handlePassengerClick()
             }
 
-            R.id.btn_search -> {
+            com.cloudwell.paywell.services.R.id.btn_search -> {
 
                 val intent = Intent(activity?.applicationContext, FlightSearchViewActivity::class.java)
                 startActivity(intent)
             }
 
-            R.id.tvFrom -> {
+            com.cloudwell.paywell.services.R.id.tvFrom -> {
 
-                val intent = Intent(activity?.applicationContext, AirportsSearchActivity::class.java)
-                intent.putExtra(KEY_REQUEST_KEY, KEY_REQUEST_FOR_FROM)
-                startActivity(intent)
+//                val intent = Intent(activity?.applicationContext, AirportsSearchActivity::class.java)
+//                intent.putExtra(KEY_REQUEST_KEY, KEY_REQUEST_FOR_FROM)
+//                startActivity(intent)
 //                handleFromSearchClick()
+
+                val intent = Intent(context, AirportsSearchActivity::class.java)
+                intent.putExtra("from", 1)
+                startActivityForResult(intent, REQ_CODE_FROM)
+            }
+
+            com.cloudwell.paywell.services.R.id.llDatePicker -> {
+                DatePickerDialog(context, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show()
             }
         }
+    }
+
+    var date: DatePickerDialog.OnDateSetListener = object : DatePickerDialog.OnDateSetListener {
+
+        override fun onDateSet(view: DatePicker, year: Int, monthOfYear: Int,
+                               dayOfMonth: Int) {
+            myCalendar.set(Calendar.YEAR, year)
+            myCalendar.set(Calendar.MONTH, monthOfYear)
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            updateDateLabel()
+        }
+
+    }
+
+    private fun updateDateLabel() {
+        val date = "yyyy-MM-dd"
+        val myFormat = SimpleDateFormat(date, Locale.ENGLISH).parse(date) as Date
+
+
+        val humanReadAbleDate = SimpleDateFormat("YYYY-mm-dd", Locale.ENGLISH).format(myFormat)
+
+        val myFormatOne = "MM/dd/yy" //In which you need put here
+        val sdf = SimpleDateFormat(myFormatOne, Locale.ENGLISH)
+
+//        tvDepartDate.setText(sdf.format(myCalendar.time))
+        tvDepartDate.setText(humanReadAbleDate.format(myCalendar.time))
+        Log.e("logtag", myFormatOne)
     }
 
     private fun handlePassengerClick() {
@@ -323,6 +359,22 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
 //            }
 //        })
 //    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                REQ_CODE_FROM -> when (resultCode) {
+                    RESULT_OK -> {
+                        val cityFrom = data?.getStringExtra("cityName")
+                        val airportFrom = data?.getStringExtra("airportName")
+
+                        tsOneWayTripFrom.setText(cityFrom)
+                        tsOneWayTripFromPort.setText(airportFrom)
+                    }
+                }
+            }
+        }
+    }
 }
 
 
