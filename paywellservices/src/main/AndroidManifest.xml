@@ -355,7 +355,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.statements.StatementMainActivity"/>
+                android:value="com.cloudwell.paywell.services.activity.statements.StatementMainActivity" />
         </activity>
         <activity
             android:name=".activity.notification.allNotificaiton.NotificationAllActivity"
@@ -622,7 +622,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.MainActivity"/>
+                android:value="com.cloudwell.paywell.services.activity.MainActivity" />
         </activity>
         <activity
             android:name=".activity.about.AboutActivity"
@@ -753,7 +753,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.refill.RefillBalanceMainActivity"/>
+                android:value="com.cloudwell.paywell.services.activity.refill.RefillBalanceMainActivity" />
         </activity>
         <activity
             android:name=".activity.refill.card.CardTransferMainActivity"
@@ -896,7 +896,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.electricity.westzone.WZPDCLMainActivity"/>
+                android:value="com.cloudwell.paywell.services.activity.utility.electricity.westzone.WZPDCLMainActivity" />
         </activity>
         <activity
             android:name=".activity.MerchantTypeVerify"
@@ -993,7 +993,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliMainActivity"/>
+                android:value="com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliMainActivity" />
         </activity>
         <activity
             android:name=".activity.utility.karnaphuli.KarnaphuliInquiryActivity"
@@ -1128,18 +1128,19 @@
         </activity>
         <activity
             android:name=".activity.eticket.airticket.serach.citySerach.AirportsSearchActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         </activity>
-        <!--<activity-->
-        <!--android:name=".activity.eticket.airticket.flightDetails1.FlightDetails1Activity"-->
-        <!--android:label="@string/title_activity_air_tricket_menu">-->
-        <!--<intent-filter>-->
-        <!--<action android:name="android.intent.action.MAIN"/>-->
-        <!--<action android:name="android.intent.action.VIEW"/>-->
+        <activity
+            android:name=".activity.eticket.airticket.flightDetails1.FlightDetails1Activity"
+            android:label="@string/title_activity_air_tricket_menu">
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN"/>-->
+            <!--<action android:name="android.intent.action.VIEW"/>-->
 
-        <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-        <!--</intent-filter>-->
-        <!--</activity>-->
+            <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
+        </activity>
 
 
         <activity
