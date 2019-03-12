@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "2faf23fcf4f4cfbc9bd2b5b963a4ab2f",
+    "identityHash": "f730bdc5a2cee471fe8fcc49c38aeed6",
     "entities": [
       {
         "tableName": "FavoriteMenu",
@@ -218,7 +218,7 @@
       },
       {
         "tableName": "Passenger",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER NOT NULL, `ContactNumber` TEXT NOT NULL, `CountryCode` TEXT NOT NULL, `Email` TEXT NOT NULL, `FirstName` TEXT NOT NULL, `Gender` TEXT NOT NULL, `IsLeadPassenger` INTEGER NOT NULL, `LastName` TEXT NOT NULL, `Nationality` TEXT NOT NULL, `PaxType` TEXT NOT NULL, `Title` TEXT NOT NULL, `isDefault` INTEGER NOT NULL, PRIMARY KEY(`Id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `ContactNumber` TEXT NOT NULL, `CountryCode` TEXT NOT NULL, `Email` TEXT NOT NULL, `FirstName` TEXT NOT NULL, `Gender` TEXT NOT NULL, `IsLeadPassenger` INTEGER NOT NULL, `LastName` TEXT NOT NULL, `Nationality` TEXT NOT NULL, `PaxType` TEXT NOT NULL, `Title` TEXT NOT NULL, `isPassengerSleted` INTEGER NOT NULL, `Country` TEXT NOT NULL, `passportNumber` TEXT NOT NULL, `passportImagePath` TEXT NOT NULL, `NIDnumber` TEXT NOT NULL, `isDefault` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -287,6 +287,36 @@
             "notNull": true
           },
           {
+            "fieldPath": "isPassengerSleted",
+            "columnName": "isPassengerSleted",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "country",
+            "columnName": "Country",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "passportNumber",
+            "columnName": "passportNumber",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "passportImagePath",
+            "columnName": "passportImagePath",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nIDnumber",
+            "columnName": "NIDnumber",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "isDefault",
             "columnName": "isDefault",
             "affinity": "INTEGER",
@@ -297,7 +327,7 @@
           "columnNames": [
             "Id"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": []
@@ -305,7 +335,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"2faf23fcf4f4cfbc9bd2b5b963a4ab2f\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"f730bdc5a2cee471fe8fcc49c38aeed6\")"
     ]
   }
 }

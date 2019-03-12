@@ -18,7 +18,9 @@ import android.widget.*
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.FlightSearchViewActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.AirportsSearchActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.Airport
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.franmontiel.fullscreendialog.FullScreenDialogFragment
 import kotlinx.android.synthetic.main.fragment_one_way.*
 import mehdi.sakout.fancybuttons.FancyButton
@@ -365,11 +367,11 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
             when (requestCode) {
                 REQ_CODE_FROM -> when (resultCode) {
                     RESULT_OK -> {
-                        val cityFrom = data?.getStringExtra("cityName")
-                        val airportFrom = data?.getStringExtra("airportName")
 
-                        tsOneWayTripFrom.setText(cityFrom)
-                        tsOneWayTripFromPort.setText(airportFrom)
+                        val get = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.AIRPORT) as Airport
+
+                        tsOneWayTripFrom.setText(get.city)
+                        tsOneWayTripFromPort.setText(get.airportName)
                     }
                 }
             }

@@ -10,19 +10,20 @@ import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.TextView
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.adapter.HeaderAirportRecyclerViewSection
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.Airport
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.viewModel.AirportSerachViewModel
-import com.cloudwell.paywell.services.listener.RecyclerItemClickListener
+import com.cloudwell.paywell.services.app.storage.AppStorageBox
+import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus
+import com.squareup.otto.Subscribe
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_city_search.*
 import kotlinx.android.synthetic.main.content_airport_serach.*
+import java.util.*
 
 
 class AirportsSearchActivity : AirTricketBaseActivity() {
@@ -35,11 +36,13 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
     lateinit var allAirports: ArrayList<String>
     lateinit var allAirportsCity: ArrayList<String>
     var CITY_NAME = "cityName"
-    var AIRPORT_NAME = "airportName"
+    var AIRPORT_NAME = "airport"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.cloudwell.paywell.services.R.layout.activity_city_search)
+
+        getSupportActionBar()?.hide();
 
         initViewInitialization()
         initViewModel()
@@ -54,15 +57,14 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
             finish()
         }
 
-        var adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, allAirports)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, allAirports)
         searchListView.adapter = adapter
         searchListView.setOnItemClickListener { parent: AdapterView<*>?, view: View?, position: Int, id: Long ->
-            //            Log.e("logTag", adapter.getItem(position).toString())
-            val intent = Intent()
-            intent.putExtra(CITY_NAME, allAirportsCity.get(position))
-            intent.putExtra(AIRPORT_NAME, adapter.getItem(position).toString())
-            setResult(Activity.RESULT_OK, intent)
-            finish()
+
+            val airportName = adapter.getItem(position).toString();
+            val single = mAirTicketBaseViewMode.resGetAirports.airports.filter { s -> s.airportName == airportName }.single()
+
+            backResult(single)
         }
 
         etSearch.addTextChangedListener(object : TextWatcher {
@@ -85,6 +87,14 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
 
             }
         })
+    }
+
+    private fun backResult(single: Airport) {
+        AppStorageBox.put(applicationContext, AppStorageBox.Key.AIRPORT, single)
+
+        val intent = Intent()
+        setResult(Activity.RESULT_OK, intent)
+        finish()
     }
 
     private fun initViewModel() {
@@ -116,10 +126,6 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
                 allAirportsCity.add(name.city)
             }
 
-//        for ((index, value) in allAirportsMap.withIndex()) {
-//            val sectionData = HeaderAirportRecyclerViewSection(index, value, allAirportsMap.get(value))
-//            sectionAdapter.addSection(sectionData)
-//        }
 
         val display = this.getWindowManager().getDefaultDisplay()
         val outMetrics = DisplayMetrics()
@@ -152,32 +158,27 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
         sectionHeader.setAdapter(sectionAdapter)
         sectionHeader.isNestedScrollingEnabled = false
 
-//        sectionHeader.setOnClickListener { object: AdapterView.OnItemClickListener() }
 
-        recycviewContryAndAirport.addOnItemTouchListener(
-                com.cloudwell.paywell.services.utils.RecyclerItemClickListener(applicationContext, recycviewContryAndAirport, object : com.cloudwell.paywell.services.utils.RecyclerItemClickListener.OnItemClickListener {
-                    override fun onItemClick(view: View, position: Int) {
-                        // do whatever
-//                        val itemPosition = recycviewContryAndAirport.indexOfChild(view)
-//                        val test = sectionData.key.get(itemPosition)
-//                        val getTest = mAirTicketBaseViewMode.allAirportHashMap.value!!.get("" + test)
-//                        Log.e("logTag", "" + test + " " + getTest)
-//                        val fromAirport = sectionAdapter.getItemId(position).
-                        Log.e("logTag", "" + sectionAdapter.getItemId(position))
+    }
 
 
-//                        val intent = Intent(applicationContext, FlightDetails1Activity::class.java)
-//                        intent.putExtra("mSearchId", mSearchId)
-//                        intent.putExtra("resultID", resultID)
-//                        startActivity(intent)
+    @Subscribe
+    fun onFavoriteItemAdd(airport: Airport) {
 
-                    }
+        com.orhanobut.logger.Logger.e("'" + airport)
 
-                    override fun onLongItemClick(view: View, position: Int) {
-                        // do whatever
-                    }
-                })
-        )
+        backResult(airport)
+
+    }
+
+    public override fun onResume() {
+        super.onResume()
+        GlobalApplicationBus.getBus().register(this)
+    }
+
+    public override fun onPause() {
+        super.onPause()
+        GlobalApplicationBus.getBus().unregister(this)
     }
 
 
