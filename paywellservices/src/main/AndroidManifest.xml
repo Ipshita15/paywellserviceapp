@@ -65,13 +65,13 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <action android:name="android.intent.action.VIEW"/>
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN"/>-->
+            <!--<action android:name="android.intent.action.VIEW"/>-->
 
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+            <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
 
         </activity>
 
@@ -257,6 +257,15 @@
             android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
+
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.VIEW"/>
+
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data

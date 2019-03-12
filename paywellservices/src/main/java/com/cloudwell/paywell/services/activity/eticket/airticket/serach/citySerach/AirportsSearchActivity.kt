@@ -5,6 +5,8 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.Editable
@@ -13,6 +15,7 @@ import android.util.DisplayMetrics
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.adapter.HeaderAirportRecyclerViewSection
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.Airport
@@ -37,15 +40,23 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
     lateinit var allAirportsCity: ArrayList<String>
     var CITY_NAME = "cityName"
     var AIRPORT_NAME = "airport"
+    var IS_TO = "isTo"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.cloudwell.paywell.services.R.layout.activity_city_search)
+        setContentView(R.layout.activity_city_search)
 
         getSupportActionBar()?.hide();
 
         initViewInitialization()
         initViewModel()
+
+        val isTo = intent.extras.getBoolean(IS_TO, false)
+        if (!isTo) {
+            tvToOrFrom.text = getString(R.string.from)
+        } else {
+            tvToOrFrom.text = getString(R.string.to)
+        }
 
     }
 
@@ -152,11 +163,17 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
             }
         }
 
+
         val sectionHeader = findViewById(com.cloudwell.paywell.services.R.id.recycviewContryAndAirport) as RecyclerView
         sectionHeader.setLayoutManager(glm)
         sectionHeader.setHasFixedSize(true)
         sectionHeader.setAdapter(sectionAdapter)
         sectionHeader.isNestedScrollingEnabled = false
+
+
+        val verticalDecoration = DividerItemDecoration(sectionHeader.getContext(), DividerItemDecoration.HORIZONTAL)
+        val verticalDivider = ContextCompat.getDrawable(applicationContext, R.drawable.vertical_divider_new)
+        verticalDecoration.setDrawable(verticalDivider!!)
 
 
     }

@@ -32,6 +32,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
 
     private val KEY_TAG = OneWayFragment::class.java!!.getName()
     private val REQ_CODE_FROM = 1
+    private val REQ_CODE_TO = 3
 
     private var mAppHandler: AppHandler? = null
     private lateinit var frameLayout: FrameLayout
@@ -48,7 +49,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view = inflater!!.inflate(com.cloudwell.paywell.services.R.layout.fragment_one_way, container, false)
+        val view = inflater!!.inflate(R.layout.fragment_one_way, container, false)
 
         frameLayout = view.findViewById(R.id.frameLayout)
         val tvDepart = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.tvDepart)
@@ -57,6 +58,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
         val llPassenger = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.llPsngr)
         val btnSearch = view.findViewById<FancyButton>(com.cloudwell.paywell.services.R.id.btn_search)
         val tvFrom = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.tvFrom)
+        val layoutTo = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.layoutTo)
 
         mAppHandler = AppHandler.getmInstance(context)
 
@@ -66,6 +68,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
         llPassenger.setOnClickListener(this)
         btnSearch.setOnClickListener(this)
         tvFrom.setOnClickListener(this)
+        layoutTo.setOnClickListener(this)
 
         val tsFrom = view.findViewById<TextSwitcher>(R.id.tsOneWayTripFrom)
         val tsFromPort = view.findViewById<TextSwitcher>(R.id.tsOneWayTripFromPort)
@@ -104,7 +107,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
         tsToPort.inAnimation = inAnim
         tsToPort.outAnimation = outAnim
 
-        tsFrom.setCurrentText("Dhaka")
+        tsFrom.setCurrentText("From")
         tsFromPort.setCurrentText("Shahjalal International")
         tsTo.setCurrentText("COX'S BAZAR")
         tsToPort.setCurrentText("Cox's Bazar airport")
@@ -164,14 +167,18 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
 
             com.cloudwell.paywell.services.R.id.tvFrom -> {
 
-//                val intent = Intent(activity?.applicationContext, AirportsSearchActivity::class.java)
-//                intent.putExtra(KEY_REQUEST_KEY, KEY_REQUEST_FOR_FROM)
-//                startActivity(intent)
-//                handleFromSearchClick()
+                val intent = Intent(context, AirportsSearchActivity::class.java)
+                intent.putExtra("from", 1)
+                intent.putExtra("isTo", false)
+                startActivityForResult(intent, REQ_CODE_FROM)
+            }
+
+            com.cloudwell.paywell.services.R.id.layoutTo -> {
 
                 val intent = Intent(context, AirportsSearchActivity::class.java)
                 intent.putExtra("from", 1)
-                startActivityForResult(intent, REQ_CODE_FROM)
+                intent.putExtra("isTo", true)
+                startActivityForResult(intent, REQ_CODE_TO)
             }
 
             com.cloudwell.paywell.services.R.id.llDatePicker -> {
