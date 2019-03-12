@@ -9,9 +9,9 @@ import com.google.gson.annotations.SerializedName
 @Entity
 data class Passenger(val isDefault: Boolean) {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "Id")
-    var id: Int = 0
+    var id: Long = 0
 
     @ColumnInfo(name = "ContactNumber")
     @SerializedName("ContactNumber")
@@ -54,5 +54,24 @@ data class Passenger(val isDefault: Boolean) {
     @ColumnInfo(name = "Title")
     @SerializedName("Title")
     var title: String = ""
+
+
+    @ColumnInfo(name = "isPassengerSleted")
+    var isPassengerSleted: Boolean = false
+
+
+    @ColumnInfo(name = "Country")
+    var country: String = ""
+
+
+    @ColumnInfo(name = "passportNumber")
+    var passportNumber: String = ""
+
+    @ColumnInfo(name = "passportImagePath")
+    var passportImagePath: String = ""
+
+    @ColumnInfo(name = "NIDnumber")
+    var nIDnumber: String = ""
+
 
 }

@@ -13,7 +13,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.FlightFareDialogFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Airline
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.RequestAirPriceSearch
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Result
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Segment
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.viewModel.FlightDetails1ViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.FlightDetails2Activity
@@ -116,26 +116,36 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
     }
 
-    private fun displayData(it: List<Result>) {
+    private fun displayData(it: ResposeAirPriceSearch) {
         val requestAirSearch = RequestAirSearch(journeyType = "local")
 
+        val result = it.data?.results?.get(0);
 
-        val segments = it.get(0).segments
-        val segment = it.get(0).segments?.get(0)
-        val result = it.get(0);
+
+        val segments = result?.segments
+        val segment = result?.segments?.get(0)
+//        val result = it.get(0);
 
 
         //generator of segemnt view
 
         segments?.let { it1 -> setupTimelineExpanableView(it1) }
 
-
         if (segments?.size!! > 1) {
+            // multiple route
+
+
             val orignAirtportCode = segments.get(0).origin?.airport?.airportCode
             val destinationairportCode = segments.get(0).destination?.airport?.airportCode
             tvOrginAndDestinationAirportCode.text = orignAirtportCode + " - " + destinationairportCode
 
-            displayHumanDate(segments)
+            val outputSegment = segments.get(0);
+            val depTime = outputSegment.origin?.depTime?.split("T")
+            val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd").parse(depTime?.get(0)) as Date
+            val humanReadAbleDate = SimpleDateFormat("EE, MMM DD").format(fdepTimeFormatDate)
+            tvNameOfDate.text = humanReadAbleDate
+            tvTotalDepartTime.text = DateUtils.getDurtingJounaryTime(totalJourneyinMiliSecound)
+
 
             val orign = segments.get(0);
             var orignTime = orign.origin?.depTime.toString().split("T").get(1).toString()
@@ -147,6 +157,8 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
 
             tvShortDepartArriveTime.text = orignTime + "-" + destinationTime
+            AppStorageBox.put(applicationContext, AppStorageBox.Key.ShortDepartArriveTime, orignTime + "-" + destinationTime)
+
 
 
         } else {
@@ -167,6 +179,7 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
 
             tvShortDepartArriveTime.text = orignTime + "-" + destinationTime
+            AppStorageBox.put(applicationContext, AppStorageBox.Key.ShortDepartArriveTime, orignTime + "-" + destinationTime)
 
         }
 
@@ -256,7 +269,7 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
     private fun showAirlessInfo(airline: Airline?) {
         val dialogFragment = AirlessDialogFragment()
 
-        val get = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.get(0)?.fares?.get(0)
+        val get = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.data?.results?.get(0)?.fares?.get(0)
 //        val get = Airline()
 //        get.airlineCode = "Code"
 //        get.airlineCode = "PayWell"
@@ -318,6 +331,7 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         btBook.setOnClickListener {
 
 
+            AppStorageBox.put(applicationContext, AppStorageBox.Key.ResposeAirPriceSearch, mFlightDetails1ViewModel.mListMutableLiveDataResults.value)
             val s = Intent(this.applicationContext, FlightDetails2Activity::class.java)
             startActivity(s)
 
@@ -326,7 +340,7 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
         constrainlayoutPricesDetailsView.setOnClickListener {
 
-            val get = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.get(0)?.fares?.get(0)
+            val get = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.data?.results?.get(0)?.fares?.get(0)
 //            var get = Fare()
 //            get.baseFare = 34344343;
 //            get.tax = 10;
@@ -354,7 +368,7 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         ft.addToBackStack(null)
         val dialogFragment = FlightFareDialogFragment()
 
-        val get = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.get(0)?.fares?.get(0)
+        val get = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.data?.results?.get(0)?.fares?.get(0)
 //        val get = Fare()
 //        get.baseFare = 100;
 //        get.tax = 10;
@@ -402,16 +416,6 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
     private fun displayHumanDate(outputSegment: List<Segment>) {
 
-        val outputSegment = outputSegment.get(0);
-        val depTime = outputSegment.origin?.depTime?.split("T")
-        val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd").parse(depTime?.get(0)) as Date
-
-        val humanReadAbleDate = SimpleDateFormat("EE, MMM DD").format(fdepTimeFormatDate)
-        tvNameOfDate.text = humanReadAbleDate
-
-
-
-        tvTotalDepartTime.text = DateUtils.getDurtingJounaryTime(totalJourneyinMiliSecound)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
