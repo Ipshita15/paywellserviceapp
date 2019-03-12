@@ -14,6 +14,8 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
 
     val mViewStatus = SingleLiveEvent<AirportSeachStatus>()
 
+    lateinit var resGetAirports: ResGetAirports
+
     var allAirportHashMap = SingleLiveEvent<MutableMap<String, List<Airport>>>()
 
 
@@ -34,6 +36,10 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
     }
 
     private fun handleRespose(it: ResGetAirports?) {
+
+        it.let {
+            resGetAirports = it!!
+        }
 
         val tempAirportHashMap = kotlin.collections.mutableMapOf<String, List<Airport>>()
 
