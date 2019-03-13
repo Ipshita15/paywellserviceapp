@@ -2,5 +2,5 @@
 <paths>
     <external-cache-path
         name="cache"
-        path="camera"/>
+        path="camera" />
 </paths>

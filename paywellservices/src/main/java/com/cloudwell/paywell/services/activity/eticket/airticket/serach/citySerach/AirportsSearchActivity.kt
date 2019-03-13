@@ -37,12 +37,20 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
     lateinit var allAirportsCity: ArrayList<String>
     var CITY_NAME = "cityName"
     var AIRPORT_NAME = "airport"
+    var VALUE_FROM = "from"
+    var IS_TO = "isTo"
+    var fromValue = ""
+    var isTo = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.cloudwell.paywell.services.R.layout.activity_city_search)
 
         getSupportActionBar()?.hide();
+
+        fromValue = intent.getStringExtra(VALUE_FROM)
+        isTo = intent.getBooleanExtra(IS_TO, false)
 
         initViewInitialization()
         initViewModel()
@@ -93,6 +101,8 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
         AppStorageBox.put(applicationContext, AppStorageBox.Key.AIRPORT, single)
 
         val intent = Intent()
+        intent.putExtra("from", fromValue)
+        intent.putExtra("isTo", isTo)
         setResult(Activity.RESULT_OK, intent)
         finish()
     }

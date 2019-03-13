@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/allSummaryBottonSheet"
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:background="#189d49"
-    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
-    >
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
     <ImageView
         android:id="@+id/imageView20"
@@ -18,7 +16,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_cancel_all_summary"/>
+        app:srcCompat="@drawable/ic_cancel_all_summary" />
 
     <TextView
         android:id="@+id/textView20"
@@ -31,7 +29,7 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView20"
         app:layout_constraintStart_toEndOf="@+id/imageView20"
-        app:layout_constraintTop_toTopOf="@+id/imageView20"/>
+        app:layout_constraintTop_toTopOf="@+id/imageView20" />
 
     <TextView
         android:id="@+id/textView27"
@@ -46,7 +44,7 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView21"
@@ -57,5 +55,5 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView27"
         app:layout_constraintEnd_toStartOf="@+id/textView27"
         app:layout_constraintTop_toTopOf="@+id/textView27"
-        app:srcCompat="@drawable/ic_comfirm_all_summary"/>
+        app:srcCompat="@drawable/ic_comfirm_all_summary" />
 </android.support.constraint.ConstraintLayout>

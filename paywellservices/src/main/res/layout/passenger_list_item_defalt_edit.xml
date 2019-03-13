@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
-    >
+    android:layout_height="70dp">
 
     <TextView
         android:id="@+id/tvShortFirstNameLastName"
@@ -22,7 +20,7 @@
         android:textColor="@color/black33333"
         app:layout_constraintEnd_toStartOf="@+id/ivEdit"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/ivEdit"
@@ -35,7 +33,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ivDeleted"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/edit_1"/>
+        app:srcCompat="@drawable/edit_1" />
 
     <View
         android:id="@+id/view3"
@@ -44,7 +42,7 @@
         android:background="@color/blackcccccc"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tvPassport"
@@ -54,7 +52,7 @@
         app:layout_constraintEnd_toEndOf="@+id/tvShortFirstNameLastName"
         app:layout_constraintStart_toStartOf="@+id/tvShortFirstNameLastName"
         app:layout_constraintTop_toBottomOf="@+id/tvShortFirstNameLastName"
-        tools:text="Passport"/>
+        tools:text="Passport" />
 
     <ImageView
         android:id="@+id/ivDeleted"
@@ -69,5 +67,5 @@
         app:layout_constraintHorizontal_bias="0.846"
         app:layout_constraintStart_toEndOf="@+id/tvPassport"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/close_green"/>
+        app:srcCompat="@drawable/close_green" />
 </android.support.constraint.ConstraintLayout>
