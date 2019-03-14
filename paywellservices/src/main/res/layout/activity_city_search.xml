@@ -28,6 +28,7 @@
                 app:srcCompat="@drawable/close"/>
 
             <EditText
+
                 android:id="@+id/etSearch"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"

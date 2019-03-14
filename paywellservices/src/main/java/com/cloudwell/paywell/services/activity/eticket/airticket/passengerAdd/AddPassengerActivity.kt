@@ -21,7 +21,6 @@ import android.view.View
 import android.view.View.OnFocusChangeListener
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.fragment.GenderBottomSheetDialog
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.model.MyCountry
@@ -122,7 +121,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
                 if (!oldPassenger.passportImagePath.equals("")) {
                     passportImagePath = oldPassenger.passportImagePath
-                    ivPassportPageUpload.setImageResource(R.drawable.ic_file_upload_add_24dp)
+                    ivPassportPageUpload.setImageResource(R.drawable.ic_passport_unseleted)
                 } else {
                     ivPassportPageUpload.visibility = View.GONE
                     textInputLayoutPassport.visibility = View.GONE
@@ -140,27 +139,25 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         }
 
 
-
-        try {
-            val resposeAirPriceSearch = AppStorageBox.get(applicationContext, AppStorageBox.Key.ResposeAirPriceSearch) as ResposeAirPriceSearch
-            passportMadatory = resposeAirPriceSearch.data?.results?.get(0)?.passportMadatory!!
-            if (passportMadatory!!) {
-                textInputLayoutPassport.visibility = View.VISIBLE
-                ivPassportPageUpload.visibility = View.VISIBLE
-
-                textInputLayoutNId.visibility = View.GONE
-
-
-            } else {
-                textInputLayoutPassport.visibility = View.GONE
-                ivPassportPageUpload.visibility = View.GONE
-
-                textInputLayoutNId.visibility = View.VISIBLE
-            }
-        } catch (e: java.lang.Exception) {
-
-        }
-
+//        try {
+//            val resposeAirPriceSearch = AppStorageBox.get(applicationContext, AppStorageBox.Key.ResposeAirPriceSearch) as ResposeAirPriceSearch
+//            passportMadatory = resposeAirPriceSearch.data?.results?.get(0)?.passportMadatory!!
+//            if (passportMadatory!!) {
+//                textInputLayoutPassport.visibility = View.VISIBLE
+//                ivPassportPageUpload.visibility = View.VISIBLE
+//
+//                textInputLayoutNId.visibility = View.GONE
+//
+//
+//            } else {
+//                textInputLayoutPassport.visibility = View.GONE
+//                ivPassportPageUpload.visibility = View.GONE
+//
+//                textInputLayoutNId.visibility = View.VISIBLE
+//            }
+//        } catch (e: java.lang.Exception) {
+//
+//        }
 
 
         etCountry.setOnFocusChangeListener(OnFocusChangeListener { view, hasFocus ->
@@ -463,7 +460,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
                     passportImagePath = uri.path
                     // loading profile image from local cache
-                    ivPassportPageUpload.setImageResource(R.drawable.ic_file_upload_add_24dp)
+                    ivPassportPageUpload.setImageResource(R.drawable.ic_passport_seleted)
                     //loadProfile(uri.toString());
                 } catch (e: IOException) {
                     e.printStackTrace();

@@ -8,6 +8,7 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger;
+import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.Airport;
 
 import java.util.List;
 
@@ -24,6 +25,10 @@ public interface AirtricketDab {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Long insert(Passenger passenger);
 
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Long insertRecentAirport(Airport airport);
+
     @Update
     int update(Passenger passenger);
 
@@ -32,6 +37,8 @@ public interface AirtricketDab {
     int deleted(Passenger passenger);
 
 
+    @Query("SELECT * FROM Airport WHERE status ='recent'")
+    List<Airport> getRecentSearches();
 
 
 }

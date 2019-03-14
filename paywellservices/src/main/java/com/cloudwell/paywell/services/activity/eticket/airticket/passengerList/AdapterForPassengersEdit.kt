@@ -40,6 +40,14 @@ class AdapterForPassengersEdit(var context: Context, var items: List<Passenger>,
             onClickListener.onDeleted(model, position)
         }
 
+        if (!model.passportNumber.equals("")) {
+            holder.tvPassport.text = model.passportNumber
+        }
+
+        if (!model.nIDnumber.equals("")) {
+            holder.tvPassport.text = model.nIDnumber
+        }
+
     }
 
     public fun setOnClickListener(onClickListener: OnClickListener) {

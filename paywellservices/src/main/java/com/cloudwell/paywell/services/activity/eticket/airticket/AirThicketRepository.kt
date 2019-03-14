@@ -7,6 +7,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.airRules.ResposeAirRules
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger
+import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.Airport
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.ResGetAirports
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.ReposeAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch
@@ -51,12 +52,12 @@ class AirThicketRepository(private val mContext: Context) {
         return data
     }
 
-    fun getAllCity(s: String): MutableLiveData<ResGetAirports> {
+    fun getAllCity(iso: String): MutableLiveData<ResGetAirports> {
 
         mAppHandler = AppHandler.getmInstance(mContext)
 //        val userName = mAppHandler!!.imeiNo
         val userName = "cwntcl"
-        val iso = "BD,IN"
+
 
         val data = MutableLiveData<ResGetAirports>()
 
@@ -193,6 +194,31 @@ class AirThicketRepository(private val mContext: Context) {
             }
         }
 
+        return data
+    }
+
+    fun getRecentSearches(): MutableLiveData<List<Airport>> {
+        val data = MutableLiveData<List<Airport>>()
+
+        doAsync {
+            val result = DatabaseClient.getInstance(mContext).appDatabase.mAirtricketDab().getRecentSearches()
+
+            uiThread {
+                data.value = result
+            }
+        }
+        return data
+    }
+
+    fun addRecentAirport(airport: Airport): MutableLiveData<Long> {
+        val data = MutableLiveData<Long>()
+        doAsync {
+            val result = DatabaseClient.getInstance(mContext).appDatabase.mAirtricketDab().insertRecentAirport(airport)
+
+            uiThread {
+                data.value = result
+            }
+        }
         return data
     }
 }

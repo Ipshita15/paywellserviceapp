@@ -65,6 +65,15 @@ class AdapterForPassengers(var context: Context, var items: List<Passenger>) : R
                 holder.tvFirstNameLastName.text = model.firstName + "/" + model.lastName
                 holder.tvPassportNumber.text = model.passportNumber
 
+
+                if (!model.passportNumber.equals("")) {
+                    holder.tvPassportNumber.text = model.passportNumber
+                }
+
+                if (!model.nIDnumber.equals("")) {
+                    holder.tvPassportNumber.text = model.nIDnumber
+                }
+
                 if (model.isPassengerSleted) {
                     holder.ivIsSeleted.visibility = View.VISIBLE
                 } else {

@@ -229,8 +229,9 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
                         android:text="@string/add_id"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/ivPassportPageUpload"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"/>
 
@@ -244,7 +245,7 @@
                         android:visibility="visible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView16">
+                        app:layout_constraintTop_toBottomOf="@+id/ivPassportPageUpload">
 
                         <com.cloudwell.paywell.services.customView.clearableEditText.ClearableEditText
                             android:id="@+id/etNidorPassportNumber"
@@ -255,18 +256,17 @@
 
                     <ImageView
                         android:id="@+id/ivPassportPageUpload"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
 
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/ic_passport_unseleted"
+                        app:layout_constraintBottom_toTopOf="@+id/textInputLayoutPassport"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassport"
-                        app:srcCompat="@drawable/ic_file_upload_defalt_24dp"/>
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/textInputLayoutNId"
@@ -282,7 +282,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/ivPassportPageUpload">
+                        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassport">
 
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/etNationalIDNumber"

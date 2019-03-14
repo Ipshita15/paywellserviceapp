@@ -52,4 +52,10 @@ class Airport : Parcelable {
     @SerializedName("time_zone")
     var timeZone: String = ""
 
+
+    @ColumnInfo(name = "status")
+    @SerializedName("status")
+    var status: String = ""
+
+
 }

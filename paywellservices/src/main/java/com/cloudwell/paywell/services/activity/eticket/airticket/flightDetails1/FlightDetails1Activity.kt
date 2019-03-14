@@ -74,17 +74,17 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
         })
 
-//        val mSearchId = intent.extras.getString("mSearchId", "")
-//        val resultID = intent.extras.getString("resultID", "")
-//
-//        val requestAirPriceSearch = RequestAirPriceSearch()
-//        requestAirPriceSearch.searchId = mSearchId
-//        requestAirPriceSearch.resultID = resultID
-
+        val mSearchId = intent.extras.getString("mSearchId", "")
+        val resultID = intent.extras.getString("resultID", "")
 
         val requestAirPriceSearch = RequestAirPriceSearch()
-        requestAirPriceSearch.searchId = ""
-        requestAirPriceSearch.resultID = ""
+        requestAirPriceSearch.searchId = mSearchId
+        requestAirPriceSearch.resultID = resultID
+
+
+//        val requestAirPriceSearch = RequestAirPriceSearch()
+//        requestAirPriceSearch.searchId = ""
+//        requestAirPriceSearch.resultID = ""
 
 
         //shimmer_text.startShimmerAnimation()
@@ -158,7 +158,6 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
             tvShortDepartArriveTime.text = orignTime + "-" + destinationTime
             AppStorageBox.put(applicationContext, AppStorageBox.Key.ShortDepartArriveTime, orignTime + "-" + destinationTime)
-
 
 
         } else {
@@ -269,7 +268,9 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
     private fun showAirlessInfo(airline: Airline?) {
         val dialogFragment = AirlessDialogFragment()
 
+
         val get = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.data?.results?.get(0)?.fares?.get(0)
+        AppStorageBox.put(applicationContext, AppStorageBox.Key.Airline_details, airline)
 //        val get = Airline()
 //        get.airlineCode = "Code"
 //        get.airlineCode = "PayWell"

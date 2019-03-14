@@ -1,5 +1,5 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach
 
-class AirportSeachStatus(noSerachFoundMessage: String, isShowProcessIndicatior: Boolean) {
+class AirportSeachStatus(var noSerachFoundMessage: String, var isShowProcessIndicatior: Boolean) {
 
 }

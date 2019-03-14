@@ -13,6 +13,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.DisplayMetrics
 import android.view.View
+import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.cloudwell.paywell.services.R
@@ -41,15 +42,14 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
     var CITY_NAME = "cityName"
     var AIRPORT_NAME = "airport"
     var IS_TO = "isTo"
+    var isIndian = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_city_search)
 
         getSupportActionBar()?.hide();
-
-        initViewInitialization()
-        initViewModel()
 
         val isTo = intent.extras.getBoolean(IS_TO, false)
         if (!isTo) {
@@ -58,7 +58,18 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
             tvToOrFrom.text = getString(R.string.to)
         }
 
+
+        isIndian = intent.extras.getBoolean("indian", false)
+
+
+        initViewInitialization()
+        initViewModel()
+
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+
     }
+
 
     private fun initViewInitialization() {
         allAirports = ArrayList()
@@ -75,6 +86,7 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
             val airportName = adapter.getItem(position).toString();
             val single = mAirTicketBaseViewMode.resGetAirports.airports.filter { s -> s.airportName == airportName }.single()
 
+            addToRecentSearch(single)
             backResult(single)
         }
 
@@ -100,6 +112,12 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
         })
     }
 
+    private fun addToRecentSearch(airport: Airport) {
+//        airport.status = "recent"
+//        mAirTicketBaseViewMode.addRecentSearch(airport)
+
+    }
+
     private fun backResult(single: Airport) {
         AppStorageBox.put(applicationContext, AppStorageBox.Key.AIRPORT, single)
 
@@ -114,10 +132,23 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
         mAirTicketBaseViewMode.allAirportHashMap.observe(this, Observer {
             handleDisplayData(it)
         })
+        mAirTicketBaseViewMode.mViewStatus.observe(this, Observer {
+
+            it?.let { it1 -> handleStatus(it1) }
+        })
 
 
-        mAirTicketBaseViewMode.getData(isInternetConnection);
+        mAirTicketBaseViewMode.getData(isInternetConnection, isIndian);
 
+    }
+
+    private fun handleStatus(it: AirportSeachStatus) {
+
+        if (it.isShowProcessIndicatior) {
+            progressBar.visibility = View.VISIBLE
+        } else {
+            progressBar.visibility = View.INVISIBLE
+        }
     }
 
     private fun handleDisplayData(allAirportsMap: MutableMap<String, List<Airport>>?) {
@@ -182,8 +213,10 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
     @Subscribe
     fun onFavoriteItemAdd(airport: Airport) {
 
+
         com.orhanobut.logger.Logger.e("'" + airport)
 
+        addToRecentSearch(airport)
         backResult(airport)
 
     }
