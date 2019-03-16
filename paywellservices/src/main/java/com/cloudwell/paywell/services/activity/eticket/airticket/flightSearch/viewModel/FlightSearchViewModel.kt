@@ -10,8 +10,6 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.Re
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.Result
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.Segment
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.view.SeachViewStatus
-import com.cloudwell.paywell.services.app.AppController
-import com.cloudwell.paywell.services.app.storage.AppStorageBox
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 19/2/19.
@@ -26,7 +24,7 @@ class FlightSearchViewModel : AirTicketBaseViewMode() {
     val mSearchId = MutableLiveData<String>()
 
 
-    fun init(internetConnection: Boolean) {
+    fun init(internetConnection: Boolean, requestAirSearch: RequestAirSearch) {
         if (!internetConnection) {
             baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
         } else {
@@ -39,7 +37,6 @@ class FlightSearchViewModel : AirTicketBaseViewMode() {
 //            val requestAirSearch = RequestAirSearch(1, 0, 0, "Oneway", list)
 
 
-            val requestAirSearch = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.REQUEST_AIR_SERACH) as RequestAirSearch
 
             callFlightSearch(requestAirSearch);
         }

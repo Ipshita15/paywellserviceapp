@@ -655,5 +655,14 @@
     <string name="city">City</string>
     <string name="from">From</string>
     <string name="to">To</string>
+    <string name="mr">Mr.</string>
+    <string name="ms">Ms.</string>
+    <string name="mrs">Mrs.</string>
+    <string name="miss">Miss</string>
+    <string name="name_title">Title</string>
+    <string name="passenger_type">Passenger type</string>
+    <string name="adult">adult</string>
+    <string name="child">child</string>
+    <string name="infant">Infant</string>
 
 </resources>

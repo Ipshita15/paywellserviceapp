@@ -70,6 +70,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
         val btnSearch = view.findViewById<FancyButton>(com.cloudwell.paywell.services.R.id.btn_search)
         val tvFrom = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.tvFrom)
         val layoutTo = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.layoutTo)
+        val layoutDeaprtDate = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.layoutDeaprtDate)
 
         mAppHandler = AppHandler.getmInstance(context)
 
@@ -80,6 +81,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
         btnSearch.setOnClickListener(this)
         tvFrom.setOnClickListener(this)
         layoutTo.setOnClickListener(this)
+        layoutDeaprtDate.setOnClickListener(this)
 
         view.btn_search.setOnClickListener(this)
 
@@ -161,6 +163,10 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
             }
 
             com.cloudwell.paywell.services.R.id.tvDepartDate -> {
+                showDepartDatePicker()
+            }
+
+            R.id.layoutDeaprtDate -> {
                 showDepartDatePicker()
             }
 
@@ -298,7 +304,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
         val calendar = Calendar.getInstance()
 
         val year = calendar.get(Calendar.YEAR)
-        val thismonth = calendar.get(Calendar.MONTH) + 1
+        val thismonth = calendar.get(Calendar.MONTH)
         val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
 
 
@@ -320,7 +326,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
 
                     val mMonth = month + 1;
 
-                    val androidSystemdate = "$year-$mMonth-$day"
+                    val androidSystemdate = "${year}-${mMonth}-${day}"
 
                     val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(androidSystemdate) as Date
                     val humanReadAbleDate = SimpleDateFormat("YYYY-mm-dd", Locale.ENGLISH).format(fdepTimeFormatDate)

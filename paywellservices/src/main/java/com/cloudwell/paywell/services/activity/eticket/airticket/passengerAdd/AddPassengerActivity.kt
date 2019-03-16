@@ -19,10 +19,13 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.View.OnFocusChangeListener
+import android.view.WindowManager
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.fragment.GenderBottomSheetDialog
+import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.fragment.NameTitleSheetDialog
+import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.fragment.PassengerTypeSheetDialog
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.model.MyCountry
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.view.PassgerAddViewStatus
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.viewmodel.AddPassengerViewModel
@@ -50,6 +53,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
     private lateinit var viewMode: AddPassengerViewModel
     lateinit var touchHelper: ItemTouchHelper
 
+
     // ui
     val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
     var isEmailValid = false
@@ -61,6 +65,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
     private lateinit var oldPassenger: Passenger
     private var passportImagePath = ""
     var passportMadatory = false
+    var isFistTime = true
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,7 +79,8 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
         initViewModel()
 
-        hideUserKeyboard()
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+
 
     }
 
@@ -110,6 +116,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
             if (isEditFlag) {
                 oldPassenger = AppStorageBox.get(applicationContext, AppStorageBox.Key.AIRTRICKET_EDIT_PASSENGER) as Passenger
+                etPassengerType.setText(oldPassenger.paxType)
                 etTitle.setText(oldPassenger.title)
                 etFirstName.setText(oldPassenger.firstName)
                 etLastName.setText(oldPassenger.lastName)
@@ -159,43 +166,45 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 //
 //        }
 
+        etPassengerType.setOnClickListener {
 
-        etCountry.setOnFocusChangeListener(OnFocusChangeListener { view, hasFocus ->
+            handlePassengerType()
+        }
+
+        etPassengerType.setOnFocusChangeListener(OnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
-                hideUserKeyboard()
-                val builder = CountryPicker.Builder().with(applicationContext)
-                        .listener(object : OnCountryPickerListener {
-                            override fun onSelectCountry(country: Country) {
-                                etCountry.setText("" + country.name)
-                                countryCode = country.code
-                            }
-
-                        })
-                val picker = builder.build();
-                picker.showDialog(this)
+                handlePassengerType()
             }
         })
 
 
+        etCountry.setOnClickListener {
+            handleCountry()
+        }
+        etCountry.setOnFocusChangeListener(OnFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
+                handleCountry()
+            }
+        })
 
+
+        etGender.setOnClickListener {
+            handleGender()
+        }
         etGender.setOnFocusChangeListener(OnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
-                hideUserKeyboard()
+                handleGender()
 
-                val b = Bundle()
-                b.putString("myGenderName", etGender.text.toString())
+            }
+        })
 
-                val bottomSheet = GenderBottomSheetDialog()
-                bottomSheet.setOnClassListener(object : GenderBottomSheetDialog.ClassBottomSheetListener {
-                    override fun onButtonClickListener(text: String) {
+        etTitle.setOnClickListener {
+            handleTitle()
+        }
 
-                        etGender.setText(text)
-                    }
-
-                })
-
-                bottomSheet.arguments = b
-                bottomSheet.show(supportFragmentManager, "genderBottomSheet")
+        etTitle.setOnFocusChangeListener(OnFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
+                handleTitle()
 
             }
         })
@@ -235,6 +244,82 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
     }
 
+    private fun handleTitle() {
+        hideUserKeyboard()
+
+        val b = Bundle()
+        b.putString("title", etTitle.text.toString())
+
+        val bottomSheet = NameTitleSheetDialog()
+        bottomSheet.setOnClassListener(object : NameTitleSheetDialog.ClassBottomSheetListener {
+            override fun onButtonClickListener(text: String) {
+
+                etTitle.setText(text)
+            }
+
+        })
+
+        bottomSheet.arguments = b
+        bottomSheet.show(supportFragmentManager, "titleBottomSheet")
+    }
+
+    private fun handleGender() {
+        hideUserKeyboard()
+
+        val b = Bundle()
+        b.putString("myGenderName", etGender.text.toString())
+
+        val bottomSheet = GenderBottomSheetDialog()
+        bottomSheet.setOnClassListener(object : GenderBottomSheetDialog.ClassBottomSheetListener {
+            override fun onButtonClickListener(text: String) {
+
+                etGender.setText(text)
+            }
+
+        })
+
+        bottomSheet.arguments = b
+        bottomSheet.show(supportFragmentManager, "genderBottomSheet")
+    }
+
+    private fun handleCountry() {
+        hideUserKeyboard()
+        val builder = CountryPicker.Builder().with(applicationContext)
+                .listener(object : OnCountryPickerListener {
+                    override fun onSelectCountry(country: Country) {
+                        etCountry.setText("" + country.name)
+                        countryCode = country.code
+                    }
+
+                })
+        val picker = builder.build();
+        picker.showDialog(this)
+    }
+
+    private fun handlePassengerType() {
+        hideUserKeyboard()
+
+        if (!isFistTime) {
+
+            val b = Bundle()
+            b.putString("passengerType", etGender.text.toString())
+
+            val bottomSheet = PassengerTypeSheetDialog()
+            bottomSheet.setOnClassListener(object : PassengerTypeSheetDialog.ClassBottomSheetListener {
+                override fun onButtonClickListener(text: String) {
+
+                    etPassengerType.setText(text)
+                }
+
+            })
+
+            bottomSheet.arguments = b
+            bottomSheet.show(supportFragmentManager, "genderBottomSheet")
+        } else {
+            isFistTime = false
+        }
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(com.cloudwell.paywell.services.R.menu.menu_add_passenger, menu)
@@ -260,6 +345,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
     }
 
     private fun addPassenger() {
+        val passengerType = this.etPassengerType.text.toString().trim()
         val title = this.etTitle.text.toString().trim()
         val firstName = this.etFirstName.text.toString().trim()
         val lastName = this.etLastName.text.toString().trim()
@@ -270,6 +356,13 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         val passportNumber = this.etNidorPassportNumber.text.toString().trim()
         val nationalIDNumber = this.etNationalIDNumber.text.toString().trim()
 
+
+        if (passengerType.equals("")) {
+            textInputLayoutPassengerType.error = "Invalid type"
+            return
+        } else {
+            textInputLayoutPassengerType.error = ""
+        }
 
         if (title.equals("")) {
             textInputLayoutTitle.error = "Invalid Title"
@@ -345,6 +438,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
 
         val passenger = Passenger(false)
+        passenger.paxType = passengerType
         passenger.title = title
         passenger.firstName = firstName
         passenger.lastName = lastName
@@ -358,6 +452,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         passenger.isPassengerSleted = true
         passenger.passportImagePath = passportImagePath
         passenger.nIDnumber = nationalIDNumber
+
 
 
 
