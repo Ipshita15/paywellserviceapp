@@ -22,6 +22,10 @@ public interface AirtricketDab {
     @Query("SELECT * FROM passenger ")
     List<Passenger> getAll();
 
+    @Query("SELECT * FROM passenger WHERE Passenger.Id IN (:ids)")
+    List<Passenger> getAll(List<String> ids);
+
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Long insert(Passenger passenger);
 

@@ -221,4 +221,15 @@ class AirThicketRepository(private val mContext: Context) {
         }
         return data
     }
+
+    fun getAllPassengers(split: List<String>): MutableLiveData<List<Passenger>> {
+        val data = MutableLiveData<List<Passenger>>()
+        doAsync {
+            val all: List<Passenger> = DatabaseClient.getInstance(mContext).appDatabase.mAirtricketDab().getAll(split)
+            uiThread {
+                data.value = all
+            }
+        }
+        return data
+    }
 }

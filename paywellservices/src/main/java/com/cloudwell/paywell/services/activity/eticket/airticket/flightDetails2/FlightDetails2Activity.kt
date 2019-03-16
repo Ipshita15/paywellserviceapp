@@ -80,13 +80,10 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
 
             var totalSeletedCounter = 0
             var totalPassenger = 0
-            val passenger = mutableListOf<Passenger>()
+            var passengerString = ""
 
+            val requestAirSearch = AppStorageBox.get(applicationContext, AppStorageBox.Key.REQUEST_AIR_SERACH) as RequestAirSearch
 
-            val requestAirSearch = RequestAirSearch()
-            requestAirSearch.adultQuantity = 1
-            requestAirSearch.childQuantity = 1
-            requestAirSearch.infantQuantity = 0
 
             totalPassenger = (requestAirSearch.adultQuantity + requestAirSearch.childQuantity + requestAirSearch.infantQuantity).toInt();
 
@@ -94,13 +91,13 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
             viewMode.mListMutableLiveDPassengers.value?.forEach {
                 val passengerSleted = it.isPassengerSleted
                 if (passengerSleted) {
-                    passenger.add(it)
+                    passengerString = "$passengerString +${it.id},"
                     totalSeletedCounter = totalSeletedCounter + 1;
                 }
             }
 
             if (totalSeletedCounter == totalPassenger) {
-                AppStorageBox.put(applicationContext, AppStorageBox.Key.SELETED_PASSENGER, passenger)
+                AppStorageBox.put(applicationContext, AppStorageBox.Key.SELETED_PASSENGER_IDS, passengerString)
                 startActivity(Intent(applicationContext, AllSummaryActivity::class.java))
             } else {
                 showWarringForMissMax(requestAirSearch)

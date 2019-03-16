@@ -1170,6 +1170,14 @@
         <activity
             android:name=".activity.eticket.airticket.finalReview.AllSummaryActivity"
             android:label="@string/title_all_summary">
+
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN"/>-->
+            <!--<action android:name="android.intent.action.VIEW"/>-->
+
+            <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
+
         </activity>
 
         <activity
