@@ -42,7 +42,7 @@
             app:layout_constraintTop_toTopOf="@+id/imageView22"/>
 
         <TextView
-            android:id="@+id/textView28"
+            android:id="@+id/tvAirportCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -53,7 +53,7 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView22"/>
 
         <TextView
-            android:id="@+id/textView29"
+            android:id="@+id/tvAirportName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -61,10 +61,10 @@
             android:layout_marginTop="8dp"
             android:text="Airport Name: "
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView28"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvAirportCode"/>
 
         <TextView
-            android:id="@+id/textView30"
+            android:id="@+id/tvTerminal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -72,10 +72,10 @@
             android:layout_marginTop="8dp"
             android:text="Terminal:  "
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView29"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvAirportName"/>
 
         <TextView
-            android:id="@+id/textView31"
+            android:id="@+id/tvCityCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -83,10 +83,10 @@
             android:layout_marginTop="8dp"
             android:text="City Code"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView30"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvTerminal"/>
 
         <TextView
-            android:id="@+id/textView32"
+            android:id="@+id/tvCityName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -94,7 +94,7 @@
             android:layout_marginTop="8dp"
             android:text="City Name"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView31"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvCityCode"/>
 
         <TextView
             android:id="@+id/textView34"
@@ -105,10 +105,10 @@
             android:layout_marginTop="8dp"
             android:text="Country code: "
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView32"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvCityName"/>
 
         <TextView
-            android:id="@+id/textView36"
+            android:id="@+id/tvCountryName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -130,7 +130,7 @@
             android:background="@color/blackcccccc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView36"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvCountryName"/>
 
         <View
             android:id="@+id/view5"
@@ -145,7 +145,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView37"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvArrivalTime"/>
 
         <View
             android:id="@+id/view7"
@@ -160,10 +160,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView45"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvOperatorCarrier"/>
 
         <TextView
-            android:id="@+id/textView37"
+            android:id="@+id/tvArrivalTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -196,7 +196,7 @@
             app:layout_constraintTop_toTopOf="@+id/imageView23"/>
 
         <TextView
-            android:id="@+id/textView39"
+            android:id="@+id/tvAirlineCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -205,18 +205,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView38"/>
 
         <TextView
-            android:id="@+id/textView40"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Airless code : "
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView39"/>
-
-        <TextView
-            android:id="@+id/textView41"
+            android:id="@+id/Airless code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -224,10 +213,10 @@
             android:layout_marginTop="8dp"
             android:text="Airless name: "
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView40"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvAirlineCode"/>
 
         <TextView
-            android:id="@+id/textView42"
+            android:id="@+id/tvFlghtNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -235,10 +224,10 @@
             android:layout_marginTop="8dp"
             android:text="Flight number: "
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView41"/>
+            app:layout_constraintTop_toBottomOf="@+id/Airless code"/>
 
         <TextView
-            android:id="@+id/textView43"
+            android:id="@+id/tvBookingClass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -246,10 +235,10 @@
             android:layout_marginTop="8dp"
             android:text="Booking Class:  "
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView42"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvFlghtNumber"/>
 
         <TextView
-            android:id="@+id/textView44"
+            android:id="@+id/tvCabinClass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -257,10 +246,10 @@
             android:layout_marginTop="8dp"
             android:text="Cabin class : "
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView43"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvBookingClass"/>
 
         <TextView
-            android:id="@+id/textView45"
+            android:id="@+id/tvOperatorCarrier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -268,7 +257,7 @@
             android:layout_marginTop="8dp"
             android:text="Operating carrier: "
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView44"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvCabinClass"/>
 
         <ImageView
             android:id="@+id/imageView24"
@@ -292,7 +281,7 @@
             app:layout_constraintTop_toTopOf="@+id/imageView24"/>
 
         <TextView
-            android:id="@+id/textView47"
+            android:id="@+id/tvBaggage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -315,7 +304,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView47"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvBaggage"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycleviewForPassenger"

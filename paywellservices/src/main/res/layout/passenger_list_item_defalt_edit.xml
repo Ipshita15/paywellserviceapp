@@ -49,7 +49,7 @@
         app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
-        android:id="@+id/tvPassport"
+        android:id="@+id/tvPasswordFinal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -73,7 +73,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.846"
-        app:layout_constraintStart_toEndOf="@+id/tvPassport"
+        app:layout_constraintStart_toEndOf="@+id/tvPasswordFinal"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_remove_passenger"/>
 </android.support.constraint.ConstraintLayout>

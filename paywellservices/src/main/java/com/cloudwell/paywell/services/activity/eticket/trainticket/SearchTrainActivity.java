@@ -67,7 +67,7 @@ public class SearchTrainActivity extends BaseActivity implements AdapterView.OnI
         mBtnSearchTrain = findViewById(R.id.btnSearchTrain);
 
         ((TextView) mRelativeLayout.findViewById(R.id.tvStationTo)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        ((TextView) mRelativeLayout.findViewById(R.id.tvPassengerType)).setTypeface(AppController.getInstance().getOxygenLightFont());
+        ((TextView) mRelativeLayout.findViewById(R.id.tvPassengerTypeFinal)).setTypeface(AppController.getInstance().getOxygenLightFont());
         ((TextView) mRelativeLayout.findViewById(R.id.tvPassenger)).setTypeface(AppController.getInstance().getOxygenLightFont());
         mTvNoOfPassenger.setTypeface(AppController.getInstance().getOxygenLightFont());
         ((TextView) mRelativeLayout.findViewById(R.id.tvPassengerAge)).setTypeface(AppController.getInstance().getOxygenLightFont());

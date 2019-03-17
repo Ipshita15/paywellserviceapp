@@ -57,7 +57,7 @@ class AdapterForPassengersEdit(var context: Context, var items: List<Passenger>,
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvShortFirstNameLastName = view.tvShortFirstNameLastName
-        val tvPassport = view.tvPassport
+        val tvPassport = view.tvPasswordFinal
         val ivEdit = view.ivEdit
         val ivDeleted = view.ivDeleted
 

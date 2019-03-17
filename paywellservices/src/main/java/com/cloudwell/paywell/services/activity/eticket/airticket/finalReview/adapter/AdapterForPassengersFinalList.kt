@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger
-import kotlinx.android.synthetic.main.passenger_list_item_defalt_edit.view.*
+import kotlinx.android.synthetic.main.passenger_list_item_final.view.*
 
 class AdapterForPassengersFinalList(var context: Context, var items: List<Passenger>, private var onClickListener: OnClickListener) : RecyclerView.Adapter<AdapterForPassengersFinalList.ViewHolder>() {
 
@@ -29,7 +29,38 @@ class AdapterForPassengersFinalList(var context: Context, var items: List<Passen
 
     override fun onBindViewHolder(holder: AdapterForPassengersFinalList.ViewHolder, position: Int) {
         val model = items.get(position)
-        holder.tvShortFirstNameLastName.text = "${model.firstName} / ${model.lastName}"
+
+        var number = position + 1
+        holder.tvShortFirstNameLastName.text = "Passenger :" + number
+
+        holder.tvPassengerType.text = "Passenger type: " + model.paxType
+
+        if (model.isLeadPassenger) {
+            holder.tvLeadPassenger.text = "Lead passenger: Yes"
+        } else {
+            holder.tvLeadPassenger.text = "Lead passenger: No"
+        }
+
+        holder.tvTitle.text = "Title: " + model.title
+        holder.tvFirstName.text = "First Name: " + model.firstName
+        holder.tvLastName.text = "Last Name: " + model.lastName
+        holder.tvCountry.text = "Country: " + model.country
+        holder.tvGender.text = "Gender: " + model.gender
+        holder.tvContactNumber.text = "Contact Number: " + model.contactNumber
+
+        if (model.passportNumber.equals("")) {
+            holder.tvPassport.visibility = View.GONE
+        } else {
+            holder.tvPassport.visibility = View.GONE
+            holder.tvPassport.text = "Passport ID: " + model.passportNumber
+        }
+
+        if (model.nIDnumber.equals("")) {
+            holder.tvNid.visibility = View.GONE
+        } else {
+            holder.tvNid.visibility = View.GONE
+            holder.tvNid.text = "National ID: " + model.nIDnumber
+        }
 
         holder.ivEdit.setOnClickListener {
 
@@ -47,6 +78,17 @@ class AdapterForPassengersFinalList(var context: Context, var items: List<Passen
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvShortFirstNameLastName = view.tvShortFirstNameLastName
         val ivEdit = view.ivEdit
+        val tvPassengerType = view.tvPassengerTypeFinal
+        val tvLeadPassenger = view.tvLeadPassenger
+        val tvTitle = view.tvTitle
+        val tvFirstName = view.tvFirstName
+        val tvLastName = view.tvLastName
+        val tvCountry = view.tvCountry
+        val tvGender = view.tvGender
+        val tvContactNumber = view.tvContactNumber
+        val tvEmailAddress = view.tvEmailAddress
+        val tvPassport = view.tvPasswordFinal
+        val tvNid = view.tvNid
 
 
     }
