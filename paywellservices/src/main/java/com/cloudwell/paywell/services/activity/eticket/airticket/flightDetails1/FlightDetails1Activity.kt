@@ -417,6 +417,14 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
     private fun displayHumanDate(outputSegment: List<Segment>) {
 
+        val outputSegment = outputSegment.get(0);
+        val depTime = outputSegment.origin?.depTime?.split("T")
+        val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd").parse(depTime?.get(0)) as Date
+        val humanReadAbleDate = SimpleDateFormat("EE, MMM DD").format(fdepTimeFormatDate)
+        tvNameOfDate.text = humanReadAbleDate
+        tvTotalDepartTime.text = DateUtils.getDurtingJounaryTime(totalJourneyinMiliSecound)
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
