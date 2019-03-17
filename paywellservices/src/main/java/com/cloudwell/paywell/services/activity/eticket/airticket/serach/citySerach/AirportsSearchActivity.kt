@@ -128,6 +128,11 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
     private fun initViewModel() {
         mAirTicketBaseViewMode = ViewModelProviders.of(this).get(AirportSerachViewModel::class.java)
 
+
+        mAirTicketBaseViewMode.baseViewStatus.observe(this, Observer {
+            handleViewCommonStatus(it)
+        })
+
         mAirTicketBaseViewMode.allAirportHashMap.observe(this, Observer {
             handleDisplayData(it)
         })
@@ -148,6 +153,10 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
         } else {
             progressBar.visibility = View.INVISIBLE
         }
+
+
+        // if(it.)
+
     }
 
     private fun handleDisplayData(allAirportsMap: MutableMap<String, List<Airport>>?) {

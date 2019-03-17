@@ -251,7 +251,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
         val passengerBottomSheet = PassengerBottomSheetDialog()
         passengerBottomSheet.setmListenerPsngr(object : PassengerBottomSheetDialog.PsngrBottomSheetListener {
             override fun onInfantButtonClickListener(text: String) {
-                onAdultPsngrTextChange(text)
+                onInfantPsngrTextChange(text)
             }
 
             override fun onKidButtonClickListener(text: String) {
@@ -260,7 +260,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
             }
 
             override fun onAdultButtonClickListener(text: String) {
-                onInfantPsngrTextChange(text)
+                onAdultPsngrTextChange(text)
 
             }
 
