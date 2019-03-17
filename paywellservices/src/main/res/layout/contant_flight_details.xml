@@ -45,7 +45,7 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
-                android:id="@+id/tvDepart"
+                android:id="@+id/tvDepart2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -66,9 +66,9 @@
                 android:layout_marginLeft="8dp"
                 android:textColor="@color/black33333"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/tvDepart"
-                app:layout_constraintStart_toEndOf="@+id/tvDepart"
-                app:layout_constraintTop_toTopOf="@+id/tvDepart"
+                app:layout_constraintBottom_toBottomOf="@+id/tvDepart2"
+                app:layout_constraintStart_toEndOf="@+id/tvDepart2"
+                app:layout_constraintTop_toTopOf="@+id/tvDepart2"
                 tools:text="Thu, Jan 24"/>
 
             <View
@@ -90,7 +90,7 @@
                 android:layout_marginTop="8dp"
                 android:textColor="@color/black33333"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/tvDepart"
+                app:layout_constraintStart_toEndOf="@+id/tvDepart2"
                 app:layout_constraintTop_toBottomOf="@+id/tvNameOfDate"
                 tools:text="HHB-DXB "/>
 
@@ -318,36 +318,14 @@
                     app:srcCompat="@drawable/ic_baggage_details"/>
 
                 <ImageView
-                    android:id="@+id/imageView10"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView10"
-                    android:layout_marginLeft="8dp"
-                    app:srcCompat="@drawable/ic_non_refundable"/>
-
-                <TextView
-                    android:id="@+id/tvNonRefundable"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView10"
-                    app:layout_constraintStart_toEndOf="@+id/imageView10"
-                    app:layout_constraintTop_toTopOf="@+id/imageView10"
-                    tools:text="Non-refundable"/>
-
-                <ImageView
                     android:id="@+id/imageView11"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView10"
-                    android:layout_marginLeft="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/textView10"
                     app:srcCompat="@drawable/ic_baggage_info"/>
 
                 <TextView

@@ -36,6 +36,7 @@
                     android:weightSum="3">
 
                     <LinearLayout
+                        android:id="@+id/tvFrom"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/activity_horizontal_margin"
@@ -45,21 +46,21 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="From" />
+                            android:text="From"/>
 
                         <TextSwitcher
                             android:id="@+id/tsRoundTripFrom"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="DHAKA"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
                         <TextSwitcher
                             android:id="@+id/tsRoundTripFromPort"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Shahjalal International"
-                            android:textSize="10sp" />
+                            android:textSize="10sp"/>
 
                     </LinearLayout>
 
@@ -73,6 +74,7 @@
                         android:src="@drawable/ic_round_trip" />
 
                     <LinearLayout
+                        android:id="@+id/layoutTo"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/activity_horizontal_margin"
@@ -85,7 +87,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
                             android:layout_weight="1"
-                            android:text="To" />
+                            android:text="To"/>
 
                         <TextSwitcher
                             android:id="@+id/tsRoundTripTo"
@@ -94,7 +96,7 @@
                             android:layout_gravity="right"
                             android:layout_weight="1"
                             android:text="Dhaka"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
                         <TextSwitcher
                             android:id="@+id/tsRoundTripToPort"
@@ -103,7 +105,7 @@
                             android:layout_gravity="right"
                             android:layout_weight="1"
                             android:text="Cox's Bazar airport"
-                            android:textSize="10sp" />
+                            android:textSize="10sp"/>
 
                     </LinearLayout>
                 </LinearLayout>
@@ -116,6 +118,7 @@
                     android:background="#c0c0c0" />
 
                 <LinearLayout
+                    android:id="@+id/layoutDepart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -123,6 +126,7 @@
                     android:weightSum="2.6">
 
                     <LinearLayout
+                        android:id="@+id/tvDeaprt"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/activity_horizontal_margin"
@@ -130,15 +134,17 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tvDepart1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Depart" />
+                            android:text="Depart"/>
 
                         <TextView
+                            android:id="@+id/tvDepartDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Thu,Jan 24"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
                     </LinearLayout>
 
@@ -151,15 +157,17 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tvDepart2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Return" />
+                            android:text="Return"/>
 
                         <TextView
+                            android:id="@+id/tvDepartDate2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Date"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
                     </LinearLayout>
                 </LinearLayout>

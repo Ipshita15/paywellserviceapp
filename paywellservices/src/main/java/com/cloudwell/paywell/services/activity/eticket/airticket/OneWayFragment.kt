@@ -63,7 +63,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
         val view = inflater!!.inflate(R.layout.fragment_one_way, container, false)
 
         frameLayout = view.findViewById(R.id.frameLayout)
-        val tvDepart = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.tvDepart)
+        val tvDepart = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.tvDepart2)
         val tvDepartDate = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.tvDepartDate)
         val airTicketClass = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.airTicketClass)
         val llPassenger = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.llPsngr)
@@ -158,7 +158,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            com.cloudwell.paywell.services.R.id.tvDepart -> {
+            com.cloudwell.paywell.services.R.id.tvDepart2 -> {
                 showDepartDatePicker()
             }
 
@@ -321,7 +321,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
                     val nameOfMonth = SimpleDateFormat("MMM").format(calendar.getTime())
 
                     tvDepartDate.text = "$nameOfDayOfWeek, $day $nameOfMonth"
-                    tvDepart.setTextColor(Color.BLACK);
+                    tvDepart2.setTextColor(Color.BLACK);
 
 
                     val mMonth = month + 1;

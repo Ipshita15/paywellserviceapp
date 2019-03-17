@@ -50,4 +50,12 @@
     <color name="blackcccccc">#cccccc</color>
 
 
+    <color name="slycalendar_defBackgroundColor">#ffffff</color>
+    <color name="slycalendar_defHeaderColor">#5aac40</color>
+    <color name="slycalendar_defHeaderTextColor">#ffffff</color>
+    <color name="slycalendar_defTextColor">#333333</color>
+    <color name="slycalendar_defSelectedColor">#5aac40</color>
+    <color name="slycalendar_defSelectedTextColor">#ffffff</color>
+
+
 </resources>

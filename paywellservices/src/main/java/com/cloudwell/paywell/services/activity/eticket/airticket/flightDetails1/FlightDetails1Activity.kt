@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.adapter.FlightSequenceAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.AirlessDialogFragment
@@ -183,11 +184,13 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         }
 
         tvTotalFair.text = "${result.totalFare}"
-        tvClass.text = requestAirSearch.journeyType
+        tvClass.text = getString(R.string.economy_class) + requestAirSearch.journeyType
 
 
 
-        tvBaggage.text = "Baggage : " + segment?.baggage + " KG per adult ticket "
+
+
+        tvBaggage.text = getString(R.string.baggage) + segment?.baggage + getString(R.string.kg_per_adult)
 
 
         if (result.passportMadatory!!) {
@@ -197,9 +200,9 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         }
 
         if (result.extraServices == null) {
-            tvExtraService.text = "N/A"
+            tvExtraService.text = getString(R.string.n_a)
         } else {
-            tvExtraService.text = "N/A" + result.extraServices
+            tvExtraService.text = getString(R.string.n_a) + result.extraServices
         }
 
         if (result.isRefundable!!) {
