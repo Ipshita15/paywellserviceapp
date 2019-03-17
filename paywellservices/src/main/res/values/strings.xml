@@ -665,7 +665,7 @@
     <string name="child">child</string>
     <string name="infant">Infant</string>
     <string name="kg_per_adult">KG per adult ticket</string>
-    <string name="economy_class">Economy Class</string>
+    <string name="economy_class">Economy Class: </string>
     <string name="baggage">Baggage :</string>
     <string name="n_a">N/A</string>
     <string name="slycalendar_save">Save</string>

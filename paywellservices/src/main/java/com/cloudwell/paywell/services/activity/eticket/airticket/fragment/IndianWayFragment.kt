@@ -2,7 +2,6 @@ package com.cloudwell.paywell.services.activity.eticket.airticket.fragment
 
 
 import android.app.Activity
-import android.app.Activity.RESULT_OK
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Color
@@ -20,10 +19,13 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.*
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.FlightSearchViewActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.AirportsSearchActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.Airport
+import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch
+import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.Segment
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.franmontiel.fullscreendialog.FullScreenDialogFragment
-import kotlinx.android.synthetic.main.fragment_one_way.*
+import kotlinx.android.synthetic.main.fragment_india_one_way.*
+import kotlinx.android.synthetic.main.fragment_india_one_way.view.*
 import mehdi.sakout.fancybuttons.FancyButton
 import java.text.SimpleDateFormat
 import java.util.*
@@ -31,7 +33,7 @@ import java.util.*
 
 class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragment.OnConfirmListener, FullScreenDialogFragment.OnDiscardListener {
 
-    private val KEY_TAG = IndianWayFragment::class.java!!.getName()
+    private val KEY_TAG = OneWayFragment::class.java!!.getName()
     private val REQ_CODE_FROM = 1
     private val REQ_CODE_TO = 3
 
@@ -42,11 +44,20 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
     val myCalendar = Calendar.getInstance()
 
+
+    private lateinit var fromAirport: Airport
+    private lateinit var toAirport: Airport
+
+    private lateinit var searchRoundTripModel: SearchRoundTripModel
+    var mClassModel = ClassModel("Economy", "Economy", true)
+
     companion object {
         val KEY_REQUEST_KEY = "KEY_REQUEST_KEY"
         val KEY_REQUEST_FOR_FROM = 1
+        val KEY_FROM = "From"
+        val KEY_To = "To"
+        val KEY_AIRPORT = "Airport"
     }
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -60,6 +71,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
         val btnSearch = view.findViewById<FancyButton>(com.cloudwell.paywell.services.R.id.btn_search)
         val tvFrom = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.tvFrom)
         val layoutTo = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.layoutTo)
+        val layoutDeaprtDate = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.layoutDeaprtDate)
 
         mAppHandler = AppHandler.getmInstance(context)
 
@@ -70,6 +82,9 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
         btnSearch.setOnClickListener(this)
         tvFrom.setOnClickListener(this)
         layoutTo.setOnClickListener(this)
+        layoutDeaprtDate.setOnClickListener(this)
+
+        view.btn_search.setOnClickListener(this)
 
         val tsFrom = view.findViewById<TextSwitcher>(R.id.tsOneWayTripFrom)
         val tsFromPort = view.findViewById<TextSwitcher>(R.id.tsOneWayTripFromPort)
@@ -108,18 +123,20 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
         tsToPort.inAnimation = inAnim
         tsToPort.outAnimation = outAnim
 
-        tsFrom.setCurrentText("From")
-        tsFromPort.setCurrentText("Shahjalal International")
-        tsTo.setCurrentText("COX'S BAZAR")
-        tsToPort.setCurrentText("Cox's Bazar airport")
+        tsFrom.setCurrentText(OneWayFragment.KEY_FROM)
+        tsFromPort.setCurrentText(OneWayFragment.KEY_AIRPORT)
+
+
+        tsTo.setCurrentText(OneWayFragment.KEY_To)
+        tsToPort.setCurrentText(OneWayFragment.KEY_AIRPORT)
+
 
         val textFrom = tsFrom.currentView as TextView
         val textFromPort = tsFromPort.currentView as TextView
         val textTo = tsTo.currentView as TextView
         val textToPort = tsToPort.currentView as TextView
 
-        val searchRoundTripModel = SearchRoundTripModel(textFrom.text.toString(), textTo.text.toString(),
-                textFromPort.text.toString(), textToPort.text.toString())
+        searchRoundTripModel = SearchRoundTripModel(textFrom.text.toString(), textTo.text.toString(), textFromPort.text.toString(), textToPort.text.toString())
 
         ivSwitchTrip.setOnClickListener {
             tsFrom.setText(searchRoundTripModel.getToName())
@@ -130,14 +147,15 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
             tsFromPort.setText(searchRoundTripModel.getToPortName())
             tsToPort.setText(searchRoundTripModel.getFromPortName())
+
             val fromPort = searchRoundTripModel.getFromPortName()
             searchRoundTripModel.setFromPortName(searchRoundTripModel.getToPortName())
             searchRoundTripModel.setToPortName(fromPort)
+
         }
 
         return view
     }
-
     override fun onClick(v: View?) {
         when (v?.id) {
             com.cloudwell.paywell.services.R.id.tvDepart2 -> {
@@ -145,6 +163,10 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
             }
 
             com.cloudwell.paywell.services.R.id.tvDepartDate -> {
+                showDepartDatePicker()
+            }
+
+            R.id.layoutDeaprtDate -> {
                 showDepartDatePicker()
             }
 
@@ -162,8 +184,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
             com.cloudwell.paywell.services.R.id.btn_search -> {
 
-                val intent = Intent(activity?.applicationContext, FlightSearchViewActivity::class.java)
-                startActivity(intent)
+                handleSearchClick()
             }
 
             com.cloudwell.paywell.services.R.id.tvFrom -> {
@@ -184,13 +205,16 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
                 startActivityForResult(intent, REQ_CODE_TO)
             }
 
+
             com.cloudwell.paywell.services.R.id.llDatePicker -> {
                 DatePickerDialog(context, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show()
             }
+
         }
     }
+
 
     var date: DatePickerDialog.OnDateSetListener = object : DatePickerDialog.OnDateSetListener {
 
@@ -216,6 +240,8 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
 //        tvDepartDate.setText(sdf.format(myCalendar.time))
         tvDepartDate.setText(humanReadAbleDate.format(myCalendar.time))
+
+        searchRoundTripModel.departDate = humanReadAbleDate.format(myCalendar.time)
         Log.e("logtag", myFormatOne)
     }
 
@@ -228,7 +254,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
         val passengerBottomSheet = PassengerBottomSheetDialog()
         passengerBottomSheet.setmListenerPsngr(object : PassengerBottomSheetDialog.PsngrBottomSheetListener {
             override fun onInfantButtonClickListener(text: String) {
-                onAdultPsngrTextChange(text)
+                onInfantPsngrTextChange(text)
             }
 
             override fun onKidButtonClickListener(text: String) {
@@ -237,7 +263,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
             }
 
             override fun onAdultButtonClickListener(text: String) {
-                onInfantPsngrTextChange(text)
+                onAdultPsngrTextChange(text)
 
             }
 
@@ -265,9 +291,10 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
         val bottomSheet = ClassBottomSheetDialog()
         bottomSheet.setOnClassListener(object : ClassBottomSheetDialog.ClassBottomSheetListener {
-            override fun onButtonClickListener(text: String) {
+            override fun onButtonClickListener(classModel: ClassModel) {
+                mClassModel = classModel
 
-                airTicketClass.setText(text)
+                airTicketClass.setText(classModel.className)
             }
 
         })
@@ -281,7 +308,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
         val calendar = Calendar.getInstance()
 
         val year = calendar.get(Calendar.YEAR)
-        val thismonth = calendar.get(Calendar.MONTH) + 1
+        val thismonth = calendar.get(Calendar.MONTH)
         val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
 
 
@@ -299,6 +326,17 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
                     tvDepartDate.text = "$nameOfDayOfWeek, $day $nameOfMonth"
                     tvDepart2.setTextColor(Color.BLACK);
+
+
+                    val mMonth = month + 1;
+
+                    val androidSystemdate = "${year}-${mMonth}-${day}"
+
+                    val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(androidSystemdate) as Date
+                    val humanReadAbleDate = SimpleDateFormat("YYYY-mm-dd", Locale.ENGLISH).format(fdepTimeFormatDate)
+
+
+                    searchRoundTripModel.departDate = humanReadAbleDate
 
 
                 }, year, thismonth, dayOfMonth)
@@ -326,8 +364,8 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
         dialogFragment = FullScreenDialogFragment.Builder(context as AirTicketMainActivity)
                 .setTitle("From")
-                .setOnConfirmListener(this@IndianWayFragment)
-                .setOnDiscardListener(this@IndianWayFragment)
+                .setOnConfirmListener(this)
+                .setOnDiscardListener(this)
                 .setContent(SourceFragment::class.java, args)
                 .build()
 
@@ -374,19 +412,66 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
+            val get = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.AIRPORT) as Airport
+
             when (requestCode) {
-                REQ_CODE_FROM -> when (resultCode) {
-                    RESULT_OK -> {
+                REQ_CODE_FROM -> {
 
-                        val get = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.AIRPORT) as Airport
+                    fromAirport = get
 
-                        tsOneWayTripFrom.setText(get.city)
-                        tsOneWayTripFromPort.setText(get.airportName)
-                    }
+                    searchRoundTripModel.setFromName(get.iata)
+                    searchRoundTripModel.setFromPortName(get.airportName)
+
+                    tsOneWayTripFrom.setText(get.iata)
+                    tsOneWayTripFromPort.setText(get.airportName)
                 }
+
+                REQ_CODE_TO -> {
+
+                    toAirport = get
+
+                    searchRoundTripModel.setToName(get.iata)
+                    searchRoundTripModel.setToPortName(get.airportName)
+
+                    tsOneWayTripTo.setText(get.iata)
+                    tsOneWayTripToPort.setText(get.airportName)
+                }
+
             }
         }
     }
+
+    private fun handleSearchClick() {
+
+        if (searchRoundTripModel.getFromName().equals(OneWayFragment.KEY_FROM)) {
+            Toast.makeText(activity?.applicationContext, "Please select from airport", Toast.LENGTH_LONG).show()
+
+            return
+        }
+
+        if (searchRoundTripModel.getToName().equals(OneWayFragment.KEY_To)) {
+            Toast.makeText(activity?.applicationContext, "Please select arrival airport", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        if (searchRoundTripModel.departDate.equals("")) {
+            Toast.makeText(activity?.applicationContext, "Please select depart date", Toast.LENGTH_LONG).show()
+            return
+        }
+
+
+        val list = mutableListOf<Segment>()
+        val segment = Segment(mClassModel.apiClassName, searchRoundTripModel.departDate, toAirport.iata, fromAirport.iata)
+        list.add(segment)
+
+        val requestAirSearch = RequestAirSearch(airTicketAdult.text.toString().toLong(), airTicketKid.text.toString().toLong(), airTicketInfant.text.toString().toLong(), "Oneway", list)
+
+        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.REQUEST_AIR_SERACH, requestAirSearch)
+
+        val intent = Intent(activity?.applicationContext, FlightSearchViewActivity::class.java)
+        startActivity(intent)
+    }
+
 }
 
 

@@ -143,7 +143,7 @@
                             android:id="@+id/tvDepartDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Thu,Jan 24"
+                            android:text="Date"
                             android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
                     </LinearLayout>
@@ -314,54 +314,6 @@
                     fancy:fb_text="Search"
                     fancy:fb_textColor="#FFFFFF" />
             </LinearLayout>
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin_half"
-            android:layout_marginTop="@dimen/activity_horizontal_margin_half"
-            android:layout_marginRight="@dimen/activity_horizontal_margin_half"
-            card_view:cardBackgroundColor="@color/card_background"
-            card_view:cardCornerRadius="8dp"
-            card_view:cardUseCompatPadding="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_status" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Booking Status"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Nostrud exerci tation ullamcorper suscipit lobortis"
-                        android:textSize="10sp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
         </android.support.v7.widget.CardView>
 
     </LinearLayout>

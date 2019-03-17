@@ -10,12 +10,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextSwitcher
-import android.widget.TextView
+import android.widget.*
+import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.FlightSearchViewActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.AirportsSearchActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.Airport
+import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch
+import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.Segment
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.customView.multipDatePicker.SlyCalendarDialog
 import kotlinx.android.synthetic.main.fragment_round_trip.*
@@ -25,25 +26,57 @@ import java.util.*
 
 
 class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Callback {
+
+
+    private lateinit var fromAirport: Airport
+    private lateinit var toAirport: Airport
+    var mClassModel = ClassModel("Economy", "Economy", true)
+
+    var humanReadAbleDateFirst: String = ""
+    var humanReadAbleDateSecond: String = ""
+
+
+    lateinit var tvClass: TextView
+    lateinit var tvAdult: TextView
+    lateinit var tvKid: TextView
+    lateinit var tvInfant: TextView
+    lateinit var llPassenger: LinearLayout
+
+    private val REQ_CODE_FROM = 1
+    private val REQ_CODE_TO = 3
+
+    companion object {
+        val KEY_REQUEST_KEY = "KEY_REQUEST_KEY"
+        val KEY_REQUEST_FOR_FROM = 1
+        val KEY_FROM = "From"
+        val KEY_To = "To"
+        val KEY_AIRPORT = "Airport"
+    }
+
+    private lateinit var searchRoundTripModel: SearchRoundTripModel
+
+
     override fun onDataSelected(firstDate: Calendar?, secondDate: Calendar?, hours: Int, minutes: Int) {
         if (firstDate != null && secondDate != null) {
 
             val nameOfDayOfWeekFirst = SimpleDateFormat("EEE").format(firstDate.time)
             val nameOfMonthFirst = SimpleDateFormat("MMM").format(firstDate.time)
+            val dayFirst = SimpleDateFormat("dd").format(firstDate.time)
 
-            tvDepartDate.text = "$nameOfDayOfWeekFirst, ${firstDate.get(Calendar.DAY_OF_WEEK)} $nameOfMonthFirst"
+            tvDepartDate.text = "$nameOfDayOfWeekFirst, $dayFirst $nameOfMonthFirst"
             tvDepart1.setTextColor(Color.BLACK);
 
-            val humanReadAbleDateFirst = SimpleDateFormat("YYYY-MM-dd", Locale.ENGLISH).format(firstDate.time)
+            humanReadAbleDateFirst = SimpleDateFormat("YYYY-MM-dd", Locale.ENGLISH).format(firstDate.time)
 
 
             val nameOfDayOfWeekSecound = SimpleDateFormat("EEE").format(secondDate.time)
             val nameOfMonthSecound = SimpleDateFormat("MMM").format(secondDate.time)
+            val daySecound = SimpleDateFormat("dd").format(secondDate.time)
 
-            tvDepartDate2.text = "$nameOfDayOfWeekSecound, ${secondDate.get(Calendar.DAY_OF_WEEK)} $nameOfMonthSecound"
+            tvDepartDate2.text = "$nameOfDayOfWeekSecound, $daySecound $nameOfMonthSecound"
             tvDepart2.setTextColor(Color.BLACK);
 
-            val humanReadAbleDateSecound = SimpleDateFormat("YYYY-MM-dd", Locale.ENGLISH).format(secondDate.time)
+            humanReadAbleDateSecond = SimpleDateFormat("YYYY-MM-dd", Locale.ENGLISH).format(secondDate.time)
 
         }
 
@@ -51,9 +84,6 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
 
     override fun onCancelled() {
     }
-
-    private lateinit var fromAirport: Airport
-    private lateinit var toAirport: Airport
 
 
     override fun onClick(v: View?) {
@@ -82,36 +112,20 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
                         .setSingle(false)
                         .setCallback(this)
 
-//                callback.setStyle(DialogFragment.STYLE_NORMAL, R.style.FullScreenDialogStyle)
 
                 callback.show(activity?.supportFragmentManager, "TAG_SLYCALENDAR")
 
 
             }
+
+            R.id.btn_search -> {
+
+                handleSearchClick()
+            }
         }
 
 
     }
-
-
-    lateinit var tvClass: TextView
-    lateinit var tvAdult: TextView
-    lateinit var tvKid: TextView
-    lateinit var tvInfant: TextView
-    lateinit var llPassenger: LinearLayout
-
-    private val REQ_CODE_FROM = 1
-    private val REQ_CODE_TO = 3
-
-    companion object {
-        val KEY_REQUEST_KEY = "KEY_REQUEST_KEY"
-        val KEY_REQUEST_FOR_FROM = 1
-        val KEY_FROM = "From"
-        val KEY_To = "To"
-        val KEY_AIRPORT = "Airport"
-    }
-
-    private lateinit var searchRoundTripModel: SearchRoundTripModel
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -210,6 +224,7 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
             searchRoundTripModel.setToPortName(fromPort)
 
         }
+
         tvClass.setOnClickListener {
 
 
@@ -223,7 +238,6 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
 
 
 
-
         return view
     }
 
@@ -233,9 +247,11 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
 
         val bottomSheet = ClassBottomSheetDialog()
         bottomSheet.setOnClassListener(object : ClassBottomSheetDialog.ClassBottomSheetListener {
-            override fun onButtonClickListener(text: String) {
+            override fun onButtonClickListener(classModel: ClassModel) {
 
-                airTicketClass.setText(text)
+                mClassModel = classModel
+
+                airTicketClass.setText(classModel.className)
             }
 
         })
@@ -317,7 +333,49 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
                     tsRoundTripToPort.setText(get.airportName)
                 }
 
+
             }
         }
+    }
+
+    private fun handleSearchClick() {
+        if (searchRoundTripModel.getFromName().equals(OneWayFragment.KEY_FROM)) {
+            Toast.makeText(activity?.applicationContext, "Please select from airport", Toast.LENGTH_LONG).show()
+
+            return
+        }
+
+        if (searchRoundTripModel.getToName().equals(OneWayFragment.KEY_To)) {
+            Toast.makeText(activity?.applicationContext, "Please select arrival airport", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        if (humanReadAbleDateFirst.equals("")) {
+            Toast.makeText(activity?.applicationContext, "Please select depart date", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        if (humanReadAbleDateSecond.equals("")) {
+            Toast.makeText(activity?.applicationContext, "Please select return date", Toast.LENGTH_LONG).show()
+            return
+        }
+
+
+        val list = mutableListOf<Segment>()
+        val segment1 = Segment(mClassModel.apiClassName, humanReadAbleDateFirst, toAirport.iata, fromAirport.iata)
+        val segment2 = Segment(mClassModel.apiClassName, humanReadAbleDateSecond, fromAirport.iata, toAirport.iata)
+
+        list.add(segment1)
+        list.add(segment2)
+
+        val requestAirSearch = RequestAirSearch(airTicketAdult.text.toString().toLong(), airTicketKid.text.toString().toLong(), airTicketInfant.text.toString().toLong(), "Return", list)
+
+
+        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.REQUEST_AIR_SERACH, requestAirSearch)
+
+
+        val intent = Intent(activity?.applicationContext, FlightSearchViewActivity::class.java)
+        startActivity(intent)
+
     }
 }

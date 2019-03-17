@@ -48,6 +48,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
     private lateinit var toAirport: Airport
 
     private lateinit var searchRoundTripModel: SearchRoundTripModel
+    var mClassModel = ClassModel("Economy", "Economy", true)
 
     companion object {
         val KEY_REQUEST_KEY = "KEY_REQUEST_KEY"
@@ -288,9 +289,10 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
 
         val bottomSheet = ClassBottomSheetDialog()
         bottomSheet.setOnClassListener(object : ClassBottomSheetDialog.ClassBottomSheetListener {
-            override fun onButtonClickListener(text: String) {
+            override fun onButtonClickListener(classModel: ClassModel) {
+                mClassModel = classModel
 
-                airTicketClass.setText(text)
+                airTicketClass.setText(classModel.className)
             }
 
         })
@@ -457,15 +459,12 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
 
 
         val list = mutableListOf<Segment>()
-        val segment = Segment("Economy", searchRoundTripModel.departDate, toAirport.iata, fromAirport.iata)
-
+        val segment = Segment(mClassModel.apiClassName, searchRoundTripModel.departDate, toAirport.iata, fromAirport.iata)
         list.add(segment)
 
         val requestAirSearch = RequestAirSearch(airTicketAdult.text.toString().toLong(), airTicketKid.text.toString().toLong(), airTicketInfant.text.toString().toLong(), "Oneway", list)
 
-
         AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.REQUEST_AIR_SERACH, requestAirSearch)
-
 
         val intent = Intent(activity?.applicationContext, FlightSearchViewActivity::class.java)
         startActivity(intent)
