@@ -140,31 +140,26 @@ class AddPassengerActivity : AirTricketBaseActivity() {
                     textInputLayoutNId.visibility = View.GONE
                 }
 
+                if (oldPassenger.isPassengerSleted) {
+                    isLeadPassenger.isChecked = true
+                    isLeadPassenger.visibility = View.VISIBLE
+
+                } else {
+                    if (oldPassenger.paxType.equals(getString(R.string.adult))) {
+                        isLeadPassenger.visibility = View.VISIBLE
+                        isLeadPassenger.isChecked = false
+                    } else {
+                        isLeadPassenger.visibility = View.GONE
+                        isLeadPassenger.isChecked = false
+                    }
+                }
+
             }
         } catch (e: Exception) {
             //todo
         }
 
 
-//        try {
-//            val resposeAirPriceSearch = AppStorageBox.get(applicationContext, AppStorageBox.Key.ResposeAirPriceSearch) as ResposeAirPriceSearch
-//            passportMadatory = resposeAirPriceSearch.data?.results?.get(0)?.passportMadatory!!
-//            if (passportMadatory!!) {
-//                textInputLayoutPassport.visibility = View.VISIBLE
-//                ivPassportPageUpload.visibility = View.VISIBLE
-//
-//                textInputLayoutNId.visibility = View.GONE
-//
-//
-//            } else {
-//                textInputLayoutPassport.visibility = View.GONE
-//                ivPassportPageUpload.visibility = View.GONE
-//
-//                textInputLayoutNId.visibility = View.VISIBLE
-//            }
-//        } catch (e: java.lang.Exception) {
-//
-//        }
 
         etPassengerType.setOnClickListener {
 
@@ -307,6 +302,11 @@ class AddPassengerActivity : AirTricketBaseActivity() {
             val bottomSheet = PassengerTypeSheetDialog()
             bottomSheet.setOnClassListener(object : PassengerTypeSheetDialog.ClassBottomSheetListener {
                 override fun onButtonClickListener(text: String) {
+                    if (text.equals(getString(R.string.adult))) {
+                        isLeadPassenger.visibility = View.VISIBLE
+                    } else {
+                        isLeadPassenger.visibility = View.GONE
+                    }
 
                     etPassengerType.setText(text)
                 }
@@ -452,6 +452,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         passenger.isPassengerSleted = true
         passenger.passportImagePath = passportImagePath
         passenger.nIDnumber = nationalIDNumber
+        passenger.isPassengerSleted = isLeadPassenger.isChecked
 
 
 

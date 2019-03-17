@@ -15,6 +15,9 @@ import android.view.View
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.AllSummaryActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.BaggageAndPoliciesActiivty
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.FlightFareDialogFragment
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Fare
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.adapter.AdapterForPassengers
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger
@@ -35,6 +38,8 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
     lateinit var touchHelper: ItemTouchHelper
     lateinit var adapterForPassengers: AdapterForPassengers
 
+    lateinit var resposeAirPriceSearch: ResposeAirPriceSearch
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +48,8 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
 
         initializationView()
         initilizationReviewBottomSheet()
+
+
 
         initViewModel()
 
@@ -75,6 +82,22 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
 
             }
         })
+
+
+        tvTotalPrice.text = resposeAirPriceSearch.data?.results?.get(0)?.totalFare.toString()
+
+        tvTotalPrice.setOnClickListener {
+
+            val dialogFragment = FlightFareDialogFragment()
+            val get = resposeAirPriceSearch.data?.results?.get(0)?.fares?.get(0)
+
+            val args = Bundle()
+            args.putParcelable("object", get)
+
+            dialogFragment.arguments = args
+            dialogFragment.show(supportFragmentManager, "dialog")
+        }
+
 
         viewReview.setOnClickListener {
 
@@ -222,14 +245,41 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
 
     private fun initializationView() {
         try {
-            val resposeAirPriceSearch = AppStorageBox.get(applicationContext, AppStorageBox.Key.ResposeAirPriceSearch) as ResposeAirPriceSearch
-            val shortDepartArriveTime = AppStorageBox.get(applicationContext, AppStorageBox.Key.ShortDepartArriveTime)
+            resposeAirPriceSearch = AppStorageBox.get(applicationContext, AppStorageBox.Key.ResposeAirPriceSearch) as ResposeAirPriceSearch
 
-            tvNameOfDate.text = "" + shortDepartArriveTime
+            val shortDepartArriveTime = AppStorageBox.get(applicationContext, AppStorageBox.Key.ShortDepartArriveTime)
+            val orignAirportAnddestinationairportCode = AppStorageBox.get(applicationContext, AppStorageBox.Key.orignAirportAnddestinationairportCode) as String
+            val totalJourney_time = AppStorageBox.get(applicationContext, AppStorageBox.Key.totalJourney_time) as String
+            val humanReadAbleDate = AppStorageBox.get(applicationContext, AppStorageBox.Key.humanReadAbleDate) as String
+
+            tvNameOfDate.text = humanReadAbleDate + " " + shortDepartArriveTime
+            tvOrginAndDestinationAirportCode.text = orignAirportAnddestinationairportCode
+            tvShortDepartArriveTime.text = totalJourney_time
 
         } catch (e: Exception) {
 
         }
+
+
+        tvPoliciesAndBaggageAllowance.setOnClickListener {
+
+            val get = resposeAirPriceSearch.data?.results?.get(0)?.fares?.get(0) as Fare
+//            var get = Fare()
+//            get.baseFare = 34344343;
+//            get.tax = 10;
+//            get.currency = "Tk";
+//            get.discount = 33;
+//            get.otherCharges = 2000;
+//            get.serviceFee = 33;
+
+
+            AppStorageBox.put(applicationContext, AppStorageBox.Key.FARE_DATA, get)
+
+            val s = Intent(this.applicationContext, BaggageAndPoliciesActiivty::class.java)
+            startActivity(s)
+        }
+
+
 
 
     }

@@ -42,8 +42,6 @@ class FlightFareFragment() : Fragment() {
         v.tvServiceFee.text = "${fare.serviceFee}"
 
 
-
-
         return v
     }
 

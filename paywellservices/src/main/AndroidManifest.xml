@@ -46,10 +46,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
-        <activity
-            android:name=".activity.eticket.airticket.flightDetails1.fragment.BaggageAndPoliciesActiivty"
-            android:label="@string/title_activity_baggage_and_policies_actiivty">
-        </activity>
+
 
         <uses-library
             android:name="com.google.android.maps"
@@ -1178,6 +1175,12 @@
             <!--<category android:name="android.intent.category.LAUNCHER"/>-->
             <!--</intent-filter>-->
 
+        </activity>
+
+
+        <activity
+            android:name=".activity.eticket.airticket.flightDetails1.fragment.BaggageAndPoliciesActiivty"
+            android:label="@string/title_activity_baggage_and_policies_actiivty">
         </activity>
 
         <activity

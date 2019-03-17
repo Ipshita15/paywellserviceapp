@@ -140,12 +140,22 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
             val destinationairportCode = segments.get(0).destination?.airport?.airportCode
             tvOrginAndDestinationAirportCode.text = orignAirtportCode + " - " + destinationairportCode
 
+            AppStorageBox.put(applicationContext, AppStorageBox.Key.orignAirportAnddestinationairportCode, orignAirtportCode + " - " + destinationairportCode)
+
+
+
             val outputSegment = segments.get(0);
             val depTime = outputSegment.origin?.depTime?.split("T")
             val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd").parse(depTime?.get(0)) as Date
             val humanReadAbleDate = SimpleDateFormat("EE, MMM DD").format(fdepTimeFormatDate)
             tvNameOfDate.text = humanReadAbleDate
-            tvTotalDepartTime.text = DateUtils.getDurtingJounaryTime(totalJourneyinMiliSecound)
+            AppStorageBox.put(applicationContext, AppStorageBox.Key.humanReadAbleDate, humanReadAbleDate)
+
+
+            val durtingJounaryTime = DateUtils.getDurtingJounaryTime(totalJourneyinMiliSecound)
+            tvTotalDepartTime.text = durtingJounaryTime
+            AppStorageBox.put(applicationContext, AppStorageBox.Key.totalJourney_time, durtingJounaryTime)
+
 
 
             val orign = segments.get(0);
@@ -166,6 +176,10 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
             val orignAirtportCode = segments?.get(0)?.origin?.airport?.airportCode
             val destinationairportCode = segments?.get(segments.size - 1)?.destination?.airport?.airportCode
             tvOrginAndDestinationAirportCode.text = orignAirtportCode + " - " + destinationairportCode
+            AppStorageBox.put(applicationContext, AppStorageBox.Key.orignAirportAnddestinationairportCode, orignAirtportCode + " - " + destinationairportCode)
+
+
+
             segments?.let { it1 -> displayHumanDate(it1) }
 
 
@@ -425,7 +439,14 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd").parse(depTime?.get(0)) as Date
         val humanReadAbleDate = SimpleDateFormat("EE, MMM DD").format(fdepTimeFormatDate)
         tvNameOfDate.text = humanReadAbleDate
+        AppStorageBox.put(applicationContext, AppStorageBox.Key.humanReadAbleDate, humanReadAbleDate)
+
+
+        val durtingJounaryTime = DateUtils.getDurtingJounaryTime(totalJourneyinMiliSecound)
         tvTotalDepartTime.text = DateUtils.getDurtingJounaryTime(totalJourneyinMiliSecound)
+
+        AppStorageBox.put(applicationContext, AppStorageBox.Key.totalJourney_time, durtingJounaryTime)
+
 
 
     }

@@ -4,6 +4,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              xmlns:fancy="http://schemas.android.com/apk/res-auto"
               android:background="#F2F3F8"
               android:orientation="vertical"
               tools:context="com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.AddPassengerActivity">
@@ -60,24 +61,36 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/layoutAddPassenger">
 
+                    <CheckBox
+                        tools:visibility="visible"
+                        android:id="@+id/isLeadPassenger"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:text="Lead Passenger"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/constrainlayoutPricesDetailsView"/>
+
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/textInputLayoutPassengerType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginRight="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toBottomOf="@+id/isLeadPassenger">
 
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/etPassengerType"
-                            android:editable="false"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:editable="false"
                             android:hint="@string/passenger_type"/>
                     </android.support.design.widget.TextInputLayout>
 
@@ -237,32 +250,39 @@
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/constraintLayout2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_marginTop="8dp"
                     android:background="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView15">
 
-                    <TextView
-                        android:id="@+id/textView16"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <mehdi.sakout.fancybuttons.FancyButton
+                        android:id="@+id/btn_search"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_margin="@dimen/activity_horizontal_margin"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginLeft="8dp"
+
+                        android:layout_marginTop="32dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginRight="8dp"
-                        android:text="@string/add_id"
-                        app:layout_constraintEnd_toStartOf="@+id/ivPassportPageUpload"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutNId"
+                        fancy:fb_defaultColor="#9fd34c"
+                        fancy:fb_iconPosition="left"
+                        fancy:fb_radius="2dp"
+                        fancy:fb_text="Add"
+                        fancy:fb_textColor="#FFFFFF"/>
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/textInputLayoutPassport"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
                         android:visibility="visible"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -314,6 +334,7 @@
                             android:visibility="visible"/>
                     </android.support.design.widget.TextInputLayout>
                 </android.support.constraint.ConstraintLayout>
+
 
             </android.support.constraint.ConstraintLayout>
 
