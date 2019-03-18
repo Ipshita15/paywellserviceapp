@@ -1,5 +1,6 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ExpandableListView
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.FlightDetails1Status
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.adapter.ExpandableListAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.RequestAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.airRules.Datum
@@ -42,24 +44,45 @@ class RolesFragment : Fragment() {
         // preparing list data
         lvExp = v.lvExp as ExpandableListView
 
+        mFlightDetails1ViewModel.baseViewStatus.observe(this, android.arch.lifecycle.Observer {
+            val baggageAndPoliciesActiivty = activity as BaggageAndPoliciesActiivty
+            baggageAndPoliciesActiivty.handleViewCommonStatus(it)
 
+        })
+
+
+        mFlightDetails1ViewModel.mViewStatus.observe(this, Observer {
+            it?.let { it1 -> handleViewStatus(it1) }
+        })
 
 
         mFlightDetails1ViewModel.mListMutableLiveDataAirRules.observe(this, android.arch.lifecycle.Observer {
-
 
             it?.let { it1 -> displayData(it1) }
 
         })
 
         val requestAirPriceSearch = RequestAirPriceSearch()
-        requestAirPriceSearch.searchId = "effd3517-ee7c-4363-87ad-59333cd5f365"
-        requestAirPriceSearch.resultID = "3e55bbb0-2897-49ad-bbf2-f04b465d0b05"
+//        requestAirPriceSearch.searchId = "effd3517-ee7c-4363-87ad-59333cd5f365"
+//        requestAirPriceSearch.resultID = "3e55bbb0-2897-49ad-bbf2-f04b465d0b05"
 
         mFlightDetails1ViewModel.callAirRolesAPI(requestAirPriceSearch)
 
 
         return v
+    }
+
+    private fun handleViewStatus(it: FlightDetails1Status) {
+
+        val baggageAndPoliciesActiivty = activity as BaggageAndPoliciesActiivty
+
+        if (it.isShowProcessIndicator) {
+            baggageAndPoliciesActiivty.showProgressDialog()
+
+        } else {
+            baggageAndPoliciesActiivty.dismissProgressDialog()
+
+        }
     }
 
     private fun displayData(it1: List<Datum>) {

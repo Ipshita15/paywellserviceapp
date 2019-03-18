@@ -19,15 +19,37 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
     var allAirportHashMap = SingleLiveEvent<MutableMap<String, List<Airport>>>()
 
 
-    fun getData(internetConnection: Boolean) {
+    fun getData(internetConnection: Boolean, isIndian: Boolean) {
 
         if (!internetConnection) {
             baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
         } else {
-            mAirTicketRepository.getAllCity("BD,IN").observeForever {
+
+            mViewStatus.value = AirportSeachStatus(noSerachFoundMessage = "", isShowProcessIndicatior = true)
+            var serachParameter = "BD,IN"
+            if (isIndian) {
+                serachParameter = "IN"
+            }
+
+            mAirTicketRepository.getAllCity(serachParameter).observeForever {
                 val checkNetworkAndStatusCode = isOkNetworkAndStatusCode(it)
                 if (checkNetworkAndStatusCode) {
-                    handleRespose(it)
+                    mViewStatus.value = AirportSeachStatus(noSerachFoundMessage = "", isShowProcessIndicatior = false)
+
+                    val recentSearches = mAirTicketRepository.getRecentSearches()
+                    val resGetAirpots = it
+
+                    handleRespose(resGetAirpots, null)
+
+//                    recentSearches.observeForever {
+//                        if (it != null && it.size > 0) {
+//                            handleRespose(resGetAirpots, it)
+//                        } else {
+//                            handleRespose(resGetAirpots, null)
+//                        }
+//                    }
+
+
                 } else {
 
                 }
@@ -35,7 +57,7 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
         }
     }
 
-    private fun handleRespose(it: ResGetAirports?) {
+    private fun handleRespose(it: ResGetAirports?, it1: List<Airport>?) {
 
         it.let {
             resGetAirports = it!!
@@ -47,19 +69,40 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
             val airports = it?.airports;
 
             val countries = mutableSetOf<String>()
+
+            // add recent search
+            var recentAirpot = mutableListOf<Airport>()
+            if (it1 != null) {
+                countries.add("Recent Searches")
+
+                recentAirpot = it1.toMutableList()
+                recentAirpot.reverse()
+
+                tempAirportHashMap.put("Recent Searches", it1.toMutableList())
+            }
+
+
             it?.airports?.forEach {
                 countries.add(it.country)
             }
 
             countries.forEach {
                 val name = it;
-                val tempData = mutableListOf<Airport>()
+                var tempData = mutableListOf<Airport>()
 
-                airports?.forEach {
-                    if (name.equals(it.country)) {
-                        tempData.add(it)
+                if (name.equals("Recent Searches")) {
+
+                    tempData = recentAirpot
+
+                } else {
+                    airports?.forEach {
+                        if (name.equals(it.country)) {
+                            tempData.add(it)
+                        }
                     }
                 }
+
+
                 tempAirportHashMap.put(name, tempData)
             }
         }
@@ -92,6 +135,11 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
             return true
         }
         return false
+
+    }
+
+    fun addRecentSearch(airport: Airport) {
+        mAirTicketRepository.addRecentAirport(airport)
 
     }
 
