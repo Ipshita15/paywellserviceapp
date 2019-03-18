@@ -31,7 +31,7 @@ class AdapterForPassengersFinalList(var context: Context, var items: List<Passen
         val model = items.get(position)
 
         var number = position + 1
-        holder.tvShortFirstNameLastName.text = "Passenger :" + number
+        holder.tvShortFirstNameLastName.text = "Passenger No: " + number
 
         holder.tvPassengerType.text = "Passenger type: " + model.paxType
 
@@ -47,6 +47,7 @@ class AdapterForPassengersFinalList(var context: Context, var items: List<Passen
         holder.tvCountry.text = "Country: " + model.country
         holder.tvGender.text = "Gender: " + model.gender
         holder.tvContactNumber.text = "Contact Number: " + model.contactNumber
+        holder.tvEmailAddress.text = "Email: " + model.email
 
         if (model.passportNumber.equals("")) {
             holder.tvPassport.visibility = View.GONE

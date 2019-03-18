@@ -258,7 +258,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView15">
 
                     <mehdi.sakout.fancybuttons.FancyButton
-                        android:id="@+id/btn_search"
+                        android:id="@+id/btn_add"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_margin="@dimen/activity_horizontal_margin"

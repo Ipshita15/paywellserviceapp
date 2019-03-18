@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -16,7 +15,6 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.view.WindowManager
@@ -67,7 +65,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
     var passportMadatory = false
     var isFistTime = true
 
-    @SuppressLint("SetTextI18n")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.cloudwell.paywell.services.R.layout.activity_add_passenger)
@@ -140,7 +138,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
                     textInputLayoutNId.visibility = View.GONE
                 }
 
-                if (oldPassenger.isPassengerSleted) {
+                if (oldPassenger.isLeadPassenger) {
                     isLeadPassenger.isChecked = true
                     isLeadPassenger.visibility = View.VISIBLE
 
@@ -154,11 +152,17 @@ class AddPassengerActivity : AirTricketBaseActivity() {
                     }
                 }
 
+                btn_add.setText(getString(R.string.edit))
+
+
             }
         } catch (e: Exception) {
-            //todo
+
         }
 
+        btn_add.setOnClickListener {
+            addPassenger()
+        }
 
 
         etPassengerType.setOnClickListener {
@@ -304,8 +308,10 @@ class AddPassengerActivity : AirTricketBaseActivity() {
                 override fun onButtonClickListener(text: String) {
                     if (text.equals(getString(R.string.adult))) {
                         isLeadPassenger.visibility = View.VISIBLE
+                        isLeadPassenger.isChecked = true
                     } else {
                         isLeadPassenger.visibility = View.GONE
+                        isLeadPassenger.isChecked = false
                     }
 
                     etPassengerType.setText(text)
@@ -331,18 +337,6 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle item selection
-        when (item.itemId) {
-            com.cloudwell.paywell.services.R.id.add_passenger -> {
-
-                addPassenger();
-
-                return true
-            }
-            else -> return super.onOptionsItemSelected(item)
-        }
-    }
 
     private fun addPassenger() {
         val passengerType = this.etPassengerType.text.toString().trim()
@@ -452,7 +446,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         passenger.isPassengerSleted = true
         passenger.passportImagePath = passportImagePath
         passenger.nIDnumber = nationalIDNumber
-        passenger.isPassengerSleted = isLeadPassenger.isChecked
+        passenger.isLeadPassenger = isLeadPassenger.isChecked
 
 
 

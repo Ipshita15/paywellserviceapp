@@ -84,7 +84,9 @@ class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
     }
 
     private fun initializationView() {
-
+        btSerachAgain.setOnClickListener {
+            finish()
+        }
 
     }
 

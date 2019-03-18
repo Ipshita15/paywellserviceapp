@@ -1,6 +1,8 @@
 package com.cloudwell.paywell.services.retrofit;
 
 
+import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.RequestAirPrebookingSearchParams;
+import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResAirPreBooking;
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.RequestAirPriceSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.airRules.ResposeAirRules;
@@ -121,6 +123,17 @@ public interface APIService {
     @GET("PaywelltransactionHaltrip/getAirports?")
     Call<ResGetAirports> getAirports(@Query("username") String username, @Query("format") String format, @Query("iso") String iso);
 
+
+    @Multipart
+    @POST("PaywelltransactionHaltrip/airPreBooking")
+    Call<ResAirPreBooking> airPreBooking(@Part("username") String username, @Part("password") String password, @Part("format") String format,
+                                         @Part("search_params") RequestAirPrebookingSearchParams search_params);
+
+
+    @Multipart
+    @POST("PaywelltransactionHaltrip/airBooking")
+    Call<ResAirPreBooking> airBooking(@Part("username") String username, @Part("password") String password, @Part("format") String format,
+                                      @Part("search_params") RequestAirPrebookingSearchParams search_params);
 
 }
 

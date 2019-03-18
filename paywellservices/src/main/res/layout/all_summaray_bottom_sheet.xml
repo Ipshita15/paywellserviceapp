@@ -10,7 +10,7 @@
     >
 
     <ImageView
-        android:id="@+id/imageView20"
+        android:id="@+id/ivCancle"
         android:layout_width="18dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -21,7 +21,7 @@
         app:srcCompat="@drawable/ic_cancel_all_summary"/>
 
     <TextView
-        android:id="@+id/textView20"
+        android:id="@+id/tvCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -29,19 +29,19 @@
         android:text="Cancel"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView20"
-        app:layout_constraintStart_toEndOf="@+id/imageView20"
-        app:layout_constraintTop_toTopOf="@+id/imageView20"/>
+        app:layout_constraintBottom_toBottomOf="@+id/ivCancle"
+        app:layout_constraintStart_toEndOf="@+id/ivCancle"
+        app:layout_constraintTop_toTopOf="@+id/ivCancle"/>
 
     <TextView
-        android:id="@+id/textView27"
+        android:id="@+id/tvConfirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="8dp"
-        android:text="Confirm"
+        android:text="@string/continue_text"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -49,13 +49,13 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
-        android:id="@+id/imageView21"
+        android:id="@+id/ivConfirm"
         android:layout_width="18dp"
         android:layout_height="18dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView27"
-        app:layout_constraintEnd_toStartOf="@+id/textView27"
-        app:layout_constraintTop_toTopOf="@+id/textView27"
+        app:layout_constraintBottom_toBottomOf="@+id/tvConfirm"
+        app:layout_constraintEnd_toStartOf="@+id/tvConfirm"
+        app:layout_constraintTop_toTopOf="@+id/tvConfirm"
         app:srcCompat="@drawable/ic_comfirm_all_summary"/>
 </android.support.constraint.ConstraintLayout>

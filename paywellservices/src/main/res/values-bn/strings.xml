@@ -641,7 +641,8 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="other">Other</string>
-    <string name="book">বুক</string>
+    <string name="book">বুকিং অবস্থা
+</string>
     <string name="passenger_deleted_message">Passenger info cannot be recovered once deleted. Are you sure you want to delete?</string>
     <string name="ok">OK</string>
     <string name="cencel">CANCEL</string>
@@ -675,6 +676,8 @@
     <string name="slycalendar_short" translatable="false">EE, dd</string>
     <string name="slycalendar_short_month" translatable="false">EE, dd MMM</string>
     <string name="slycalendar_dates_period" translatable="false">%1$s – %2$s</string>
-
+    <string name="continue_text">Continue</string>
+    <string name="details_text">Details</string>
+    <string name="edit">Edit</string>
 
 </resources>

@@ -3,6 +3,8 @@ package com.cloudwell.paywell.services.activity.eticket.airticket
 import android.arch.lifecycle.MutableLiveData
 import android.content.Context
 import com.cloudwell.paywell.services.activity.eticket.DummayData
+import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.RequestAirPrebookingSearchParams
+import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResAirPreBooking
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.RequestAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.airRules.ResposeAirRules
@@ -232,4 +234,59 @@ class AirThicketRepository(private val mContext: Context) {
         }
         return data
     }
+
+    fun callAirPreBookingAPI(piN_NO: String, requestAirPrebookingSearchParams: RequestAirPrebookingSearchParams): MutableLiveData<ResAirPreBooking> {
+        mAppHandler = AppHandler.getmInstance(mContext)
+//        val userName = mAppHandler!!.imeiNo
+        val userName = "cwntcl"
+        val format = "json"
+
+        val data = MutableLiveData<ResAirPreBooking>()
+
+        val callAirSearch = ApiUtils.getAPIService().airPreBooking(userName, piN_NO, format, requestAirPrebookingSearchParams)
+        callAirSearch.enqueue(object : Callback<ResAirPreBooking> {
+            override fun onResponse(call: Call<ResAirPreBooking>, response: Response<ResAirPreBooking>) {
+                if (response.isSuccessful) {
+//                    data.value = Gson().fromJson(DummayData().mockPreBooking, ResAirPreBooking::class.java)
+                    data.value = response.body()
+                }
+            }
+
+            override fun onFailure(call: Call<ResAirPreBooking>, t: Throwable) {
+                com.orhanobut.logger.Logger.e("" + t.message)
+                data.value = ResAirPreBooking(t)
+            }
+        })
+
+        return data
+
+    }
+
+    fun callAirBookingAPI(piN_NO: String, requestAirPrebookingSearchParams: RequestAirPrebookingSearchParams): MutableLiveData<ResAirPreBooking> {
+        mAppHandler = AppHandler.getmInstance(mContext)
+//        val userName = mAppHandler!!.imeiNo
+        val userName = "cwntcl"
+        val format = "json"
+
+        val data = MutableLiveData<ResAirPreBooking>()
+
+        val callAirSearch = ApiUtils.getAPIService().airBooking(userName, piN_NO, format, requestAirPrebookingSearchParams)
+        callAirSearch.enqueue(object : Callback<ResAirPreBooking> {
+            override fun onResponse(call: Call<ResAirPreBooking>, response: Response<ResAirPreBooking>) {
+                if (response.isSuccessful) {
+//                    data.value = Gson().fromJson(DummayData().mockPreBooking, ResAirPreBooking::class.java)
+                    data.value = response.body()
+                }
+            }
+
+            override fun onFailure(call: Call<ResAirPreBooking>, t: Throwable) {
+                com.orhanobut.logger.Logger.e("" + t.message)
+                data.value = ResAirPreBooking(t)
+            }
+        })
+
+        return data
+
+    }
+
 }

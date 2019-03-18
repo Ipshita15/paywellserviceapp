@@ -48,14 +48,13 @@
         android:background="@color/blackcccccc"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvNid"/>
 
     <ImageView
         android:id="@+id/imageView25"
         android:layout_width="18dp"
         android:layout_height="18dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -65,8 +64,6 @@
         android:id="@+id/tvPassengerTypeFinal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:text="Passenger type : "
         app:layout_constraintStart_toStartOf="@+id/imageView25"

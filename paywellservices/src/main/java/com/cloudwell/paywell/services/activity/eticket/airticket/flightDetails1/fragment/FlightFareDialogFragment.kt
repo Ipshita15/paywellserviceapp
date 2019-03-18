@@ -22,7 +22,6 @@ class FlightFareDialogFragment : DialogFragment() {
         super.onCreate(savedInstanceState)
         fare = arguments?.getParcelable<Fare>("object") as Fare
 
-
     }
 
 
