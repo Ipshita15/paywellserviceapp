@@ -63,8 +63,6 @@ class PassengerListActivity : AirTricketBaseActivity() {
         })
 
 
-
-
     }
 
     private fun handleViewStatus(it: PassengerListViewStatus) {
@@ -106,8 +104,6 @@ class PassengerListActivity : AirTricketBaseActivity() {
         recyclerView.layoutManager = glm
         recyclerView.adapter = recyclerListAdapter;
         recyclerView.isNestedScrollingEnabled = false;
-
-
 
 
     }

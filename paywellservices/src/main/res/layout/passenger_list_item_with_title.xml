@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layoutPassengerInfo"
@@ -24,7 +23,7 @@
         app:layout_constraintEnd_toStartOf="@+id/ivIsSeleted"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="sklfjdlksadjflksjdflkjslkdfjlskdfjlksjdflksjdflkjsdlkfjsalkdfjlksdajflksdjflksjdflkjsdflkjsadlkfjlskdfjlkasjdflksjdflkjsadlkfj"/>
+        tools:text="sklfjdlksadjflksjdflkjslkdfjlskdfjlksjdflksjdflkjsdlkfjsalkdfjlksdajflksdjflksjdflkjsdflkjsadlkfjlskdfjlkasjdflksjdflkjsadlkfj" />
 
     <TextView
         android:id="@+id/tvPassportNumber"
@@ -40,7 +39,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvFirstNameAndLastName"
-        tools:text="Passport"/>
+        tools:text="Passport" />
 
     <ImageView
         android:id="@+id/ivIsSeleted"
@@ -48,6 +47,6 @@
         android:layout_height="30dp"
         android:background="@drawable/ic_passenger_seleted"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

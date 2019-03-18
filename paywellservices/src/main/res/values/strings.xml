@@ -648,7 +648,7 @@
     <string name="toast_image_intent_null">Image Intnet Null</string>
     <string name="lbl_take_camera_picture">Camara</string>
     <string name="lbl_choose_from_gallery">Gallery</string>
-    <string name="lbl_set_profile_photo"/>
+    <string name="lbl_set_profile_photo" />
     <string name="please_add_id_info_for_this_travaler">Please add ID info for this passenger</string>
     <string name="tile_cencel_booking">Cancel Booking</string>
     <string name="tile_cencel_transaction_log">Transaction Log</string>
@@ -678,5 +678,10 @@
     <string name="continue_text">Continue</string>
     <string name="details_text">Details</string>
     <string name="edit">Edit</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="multicity_limit_msg">Currently we are accepting only 5 requests</string>
+    <string name="bookingId">Booking Id</string>
 
 </resources>

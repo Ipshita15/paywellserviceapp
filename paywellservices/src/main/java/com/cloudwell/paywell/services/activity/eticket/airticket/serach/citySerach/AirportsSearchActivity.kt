@@ -43,6 +43,11 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
     var IS_TO = "isTo"
     var isIndian = false
 
+    var VALUE_FROM = "from"
+    var IS_TO = "isTo"
+    var fromValue = ""
+    var isTo = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +65,9 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
 
         isIndian = intent.extras.getBoolean("indian", false)
 
+
+        fromValue = intent.getStringExtra(VALUE_FROM)
+        isTo = intent.getBooleanExtra(IS_TO, false)
 
         initViewInitialization()
         initViewModel()
@@ -121,6 +129,8 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
         AppStorageBox.put(applicationContext, AppStorageBox.Key.AIRPORT, single)
 
         val intent = Intent()
+        intent.putExtra("from", fromValue)
+        intent.putExtra("isTo", isTo)
         setResult(Activity.RESULT_OK, intent)
         finish()
     }

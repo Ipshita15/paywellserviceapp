@@ -14,7 +14,6 @@ class PassengerListViewModel : AirTicketBaseViewMode() {
     val mViewStatus = SingleLiveEvent<PassengerListViewStatus>()
 
 
-
     fun getAllPassengers() {
 
         mAirTicketRepository.getAllPassengers().observeForever {
