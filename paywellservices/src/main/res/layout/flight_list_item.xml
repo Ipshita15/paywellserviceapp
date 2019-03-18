@@ -126,4 +126,16 @@
         app:layout_constraintTop_toTopOf="@+id/tvPrices"
         app:srcCompat="@drawable/ic_tk_symbol_low"/>
 
+    <Button
+        android:id="@+id/btDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/details_text"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tvPrices"/>
+
 </android.support.constraint.ConstraintLayout>

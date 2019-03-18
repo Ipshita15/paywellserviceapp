@@ -641,7 +641,8 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="other">Other</string>
-    <string name="book">বুক</string>
+    <string name="book">বুকিং অবস্থা
+</string>
     <string name="passenger_deleted_message">Passenger info cannot be recovered once deleted. Are you sure you want to delete?</string>
     <string name="ok">OK</string>
     <string name="cencel">CANCEL</string>
@@ -652,6 +653,31 @@
     <string name="please_add_id_info_for_this_travaler">Please add ID info for this passenger</string>
     <string name="tile_cencel_booking">Cancel Booking</string>
     <string name="tile_cencel_transaction_log">Transaction Log</string>
-
+    <string name="city">City</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="mr">Mr.</string>
+    <string name="ms">Ms.</string>
+    <string name="mrs">Mrs.</string>
+    <string name="miss">Miss</string>
+    <string name="name_title">Title</string>
+    <string name="passenger_type">Passenger type</string>
+    <string name="adult">adult</string>
+    <string name="child">child</string>
+    <string name="infant">Infant</string>
+    <string name="kg_per_adult">KG per adult ticket</string>
+    <string name="economy_class">Economy Class: </string>
+    <string name="baggage">Baggage :</string>
+    <string name="n_a">N/A</string>
+    <string name="slycalendar_save">Save</string>
+    <string name="slycalendar_cancel">Cancel</string>
+    <string name="slycalendar_next">Next</string>
+    <string name="slycalendar_singledate" translatable="false">EE, dd MMMM</string>
+    <string name="slycalendar_short" translatable="false">EE, dd</string>
+    <string name="slycalendar_short_month" translatable="false">EE, dd MMM</string>
+    <string name="slycalendar_dates_period" translatable="false">%1$s – %2$s</string>
+    <string name="continue_text">Continue</string>
+    <string name="details_text">Details</string>
+    <string name="edit">Edit</string>
 
 </resources>

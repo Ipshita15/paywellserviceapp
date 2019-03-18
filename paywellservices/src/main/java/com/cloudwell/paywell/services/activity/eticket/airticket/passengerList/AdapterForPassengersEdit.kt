@@ -40,6 +40,14 @@ class AdapterForPassengersEdit(var context: Context, var items: List<Passenger>,
             onClickListener.onDeleted(model, position)
         }
 
+        if (!model.passportNumber.equals("")) {
+            holder.tvPassport.text = model.passportNumber
+        }
+
+        if (!model.nIDnumber.equals("")) {
+            holder.tvPassport.text = model.nIDnumber
+        }
+
     }
 
     public fun setOnClickListener(onClickListener: OnClickListener) {
@@ -49,7 +57,7 @@ class AdapterForPassengersEdit(var context: Context, var items: List<Passenger>,
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvShortFirstNameLastName = view.tvShortFirstNameLastName
-        val tvPassport = view.tvPassport
+        val tvPassport = view.tvPasswordFinal
         val ivEdit = view.ivEdit
         val ivDeleted = view.ivDeleted
 

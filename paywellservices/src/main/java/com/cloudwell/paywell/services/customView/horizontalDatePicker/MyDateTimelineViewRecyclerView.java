@@ -268,7 +268,28 @@ public class MyDateTimelineViewRecyclerView extends RecyclerView {
         selectedPosition = 0;
         if (adapter != null) {
             adapter.notifyDataSetChanged();
+
         }
+    }
+
+
+    public void setNewDate(int startYear, int startMonth, int startDay) {
+        this.startYear = startYear;
+        this.startMonth = startMonth;
+        this.startDay = startDay;
+
+        selectedYear = startYear;
+        selectedMonth = startMonth;
+        selectedDay = startDay;
+        selectedPosition = 0;
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+            onDateSelected(selectedPosition, startYear, startMonth, startDay);
+
+        }
+
+
+
     }
 
     public void setLastDate(int endYear, int endMonth, int endDay) {

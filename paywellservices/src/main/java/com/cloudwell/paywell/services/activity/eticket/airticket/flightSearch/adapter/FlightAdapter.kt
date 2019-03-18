@@ -90,7 +90,8 @@ class FlightAdapter(val items: List<Result>, val context: Context) : RecyclerVie
             val secondDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss").parse(date1)
 
 
-            totalJourneyTimeString = totalJourneyTimeString + DateUtils.differenceMilliSecond(fistDate, secondDate)
+            val differenceMilliSecond = DateUtils.differenceMilliSecond(fistDate, secondDate)
+            totalJourneyTimeString = totalJourneyTimeString + differenceMilliSecond
 
         }
 
@@ -127,6 +128,7 @@ class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val tvDestinationAirportCode = view.tvDestinationAddress
     val tvDurationAndKilometer = view.tvDurationAndKilometer
     val tvAirlinesName = view.tvAirlinesName
+    val btDetails = view.btDetails
 
 
 }

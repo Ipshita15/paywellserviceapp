@@ -41,7 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView16"/>
 
     <TextView
-        android:id="@+id/tvBaseFire"
+        android:id="@+id/tvBookingId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
@@ -70,8 +70,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/tvBaseFire"
-        app:layout_constraintTop_toBottomOf="@+id/tvBaseFire"/>
+        app:layout_constraintStart_toStartOf="@+id/tvBookingId"
+        app:layout_constraintTop_toBottomOf="@+id/tvBookingId"/>
 
     <TextView
         android:id="@+id/textView18"
