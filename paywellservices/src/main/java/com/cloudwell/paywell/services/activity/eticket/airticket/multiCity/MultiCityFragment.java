@@ -114,7 +114,7 @@ public class MultiCityFragment extends Fragment {
                 long child = Long.parseLong(((TextView) parentView.findViewById(R.id.airTicketKid)).getText().toString());
                 long infant = Long.parseLong(((TextView) parentView.findViewById(R.id.airTicketInfant)).getText().toString());
                 ArrayList<Segment> segments = new ArrayList<>();
-                RequestAirSearch requestAirSearch = new RequestAirSearch(adult, adult, adult, "MultiStop", segments);
+                RequestAirSearch requestAirSearch = new RequestAirSearch(adult, child, infant, "MultiStop", segments);
 
                 for (int a = 1; a <= addNoFlag; a++) {
                     Segment segment = new Segment("", "", "", "");
@@ -123,10 +123,14 @@ public class MultiCityFragment extends Fragment {
                     TextSwitcher to = flightView.findViewById(R.id.tsMultiCityTripTo);
                     TextView date = flightView.findViewById(R.id.tvDepartDate);
                     TextView cabinClass = flightView.findViewById(R.id.airTicketClass);
-                    if (((TextView) from.getCurrentView()).getText().toString().equalsIgnoreCase(((TextView) to.getCurrentView()).getText().toString())) {
+                    if ((((TextView) from.getCurrentView()).getText().toString().
+                            equalsIgnoreCase(((TextView) to.getCurrentView()).getText().toString())) ||
+                            ((TextView) from.getCurrentView()).getText().toString().equals("From") ||
+                            ((TextView) to.getCurrentView()).getText().toString().equals("To")) {
 //                        ((TextView) from.getCurrentView()).setError("Same City!!!");
 //                        ((TextView) to.getCurrentView()).setError("Same City!!!");
                         isSameCity = true;
+                        break;
                     } else {
 //                        ((TextView) from.getCurrentView()).setError(null);
 //                        ((TextView) to.getCurrentView()).setError(null);
@@ -137,6 +141,7 @@ public class MultiCityFragment extends Fragment {
                     if (date.getText().toString().isEmpty() || date.getText().toString().equalsIgnoreCase("Date")) {
 //                        date.setError("Date not Found!!!");
                         isDateNotAvailable = true;
+                        break;
                     } else {
 //                        date.setError(null);
 
@@ -148,7 +153,7 @@ public class MultiCityFragment extends Fragment {
                     segments.add(segment);
                 }
                 requestAirSearch.setSegments(segments);
-                if (isSameCity && isDateNotAvailable) {
+                if (isSameCity || isDateNotAvailable) {
                     Toast.makeText(getContext(), "Please provide all the data.", Toast.LENGTH_SHORT).show();
                 } else {
                     AppStorageBox.put(getContext(), AppStorageBox.Key.REQUEST_AIR_SERACH, requestAirSearch);
@@ -301,7 +306,7 @@ public class MultiCityFragment extends Fragment {
                 calendar.set(Calendar.MONTH, i1);
                 calendar.set(Calendar.DAY_OF_MONTH, i2);
                 Date date = calendar.getTime();
-                String humanReadAbleDate = new SimpleDateFormat("YYYY-mm-dd", Locale.ENGLISH).format(calendar.getTime());
+                String humanReadAbleDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(calendar.getTime());
 
                 flightDates.put(position, humanReadAbleDate);
 
@@ -336,13 +341,13 @@ public class MultiCityFragment extends Fragment {
 
 
                 if (isTo) {
-                    searchRoundTripModel.setToName(get.getCity());
+                    searchRoundTripModel.setToName(get.getIata());
                     searchRoundTripModel.setToPortName(get.getAirportName());
                     ((TextSwitcher) getActivity().findViewById(android.R.id.content).findViewWithTag(position).findViewById(R.id.tsMultiCityTripTo)).setText(searchRoundTripModel.getToName());
                     ((TextSwitcher) getActivity().findViewById(android.R.id.content).findViewWithTag(position).findViewById(R.id.tsMultiCityTripToPort)).setText(searchRoundTripModel.getToPortName());
 
                 } else {
-                    searchRoundTripModel.setFromName(get.getCity());
+                    searchRoundTripModel.setFromName(get.getIata());
                     searchRoundTripModel.setFromPortName(get.getAirportName());
                     ((TextSwitcher) getActivity().findViewById(android.R.id.content).findViewWithTag(position).findViewById(R.id.tsMultiCityTripFrom)).setText(searchRoundTripModel.getFromName());
                     ((TextSwitcher) getActivity().findViewById(android.R.id.content).findViewWithTag(position).findViewById(R.id.tsMultiCityTripFromPort)).setText(searchRoundTripModel.getFromPortName());

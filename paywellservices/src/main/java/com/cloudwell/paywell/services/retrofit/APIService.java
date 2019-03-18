@@ -18,6 +18,7 @@ import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.Request
 import com.cloudwell.paywell.services.app.model.APIResBalanceCheck;
 import com.cloudwell.paywell.services.app.model.APIResposeGenerateToken;
 import com.cloudwell.paywell.services.service.notificaiton.model.APIResNoCheckNotification;
+import com.google.gson.JsonObject;
 
 import java.util.Map;
 
@@ -120,6 +121,15 @@ public interface APIService {
 
     @GET("PaywelltransactionHaltrip/getAirports?")
     Call<ResGetAirports> getAirports(@Query("username") String username, @Query("format") String format, @Query("iso") String iso);
+
+
+    @POST("PaywelltransactionHaltrip/cancelBooking")
+    @FormUrlEncoded
+    Call<JsonObject> cancelBooking(@Field("username") String username,
+                                   @Field("password") String password,
+                                   @Field("BookingID") String bookingId,
+                                   @Field("cancelReason") String cancelReason,
+                                   @Field("format") String apiFormat);
 
 
 }
