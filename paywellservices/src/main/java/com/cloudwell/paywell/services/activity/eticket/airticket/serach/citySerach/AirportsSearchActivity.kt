@@ -44,7 +44,6 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
     var isIndian = false
 
     var VALUE_FROM = "from"
-    var IS_TO = "isTo"
     var fromValue = ""
     var isTo = false
 
@@ -55,7 +54,7 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
 
         getSupportActionBar()?.hide();
 
-        val isTo = intent.extras.getBoolean(IS_TO, false)
+        isTo = intent.extras.getBoolean(IS_TO, false)
         if (!isTo) {
             tvToOrFrom.text = getString(R.string.from)
         } else {
@@ -66,8 +65,7 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
         isIndian = intent.extras.getBoolean("indian", false)
 
 
-        fromValue = intent.getStringExtra(VALUE_FROM)
-        isTo = intent.getBooleanExtra(IS_TO, false)
+        fromValue = intent.extras.getString(VALUE_FROM, "")
 
         initViewInitialization()
         initViewModel()
