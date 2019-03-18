@@ -62,7 +62,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/layoutAddPassenger">
 
                     <CheckBox
-                        tools:visibility="visible"
                         android:id="@+id/isLeadPassenger"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -72,7 +71,8 @@
                         android:text="Lead Passenger"
                         android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/constrainlayoutPricesDetailsView"/>
+                        app:layout_constraintTop_toTopOf="@+id/constrainlayoutPricesDetailsView"
+                        tools:visibility="visible"/>
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/textInputLayoutPassengerType"

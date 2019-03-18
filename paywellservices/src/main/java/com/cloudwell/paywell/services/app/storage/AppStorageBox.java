@@ -25,7 +25,7 @@ public class AppStorageBox {
          * String: SAMPLE_KEY, SAMPLE_STR or just SAMPLE
          */
         AUTHORIZATION_DATA, NOTIFICATION_DETAILS, FARE_DATA, COUNTER_PASSENGER, ResposeAirPriceSearch, ShortDepartArriveTime, AIRTRICKET_EDIT_PASSENGER, SELETED_PASSENGER_IDS, AIRPORT, Airline_details, REQUEST_AIR_SERACH, orignAirportAnddestinationairportCode, totalJourney_time, humanReadAbleDate, AIR_PRE_BOOKKING, AIR_BOOKKING
-        AUTHORIZATION_DATA, NOTIFICATION_DETAILS, FARE_DATA, COUNTER_PASSENGER, ResposeAirPriceSearch, ShortDepartArriveTime, AIRTRICKET_EDIT_PASSENGER, SELETED_PASSENGER, AIRPORT, REQUEST_AIR_SERACH;
+//        AUTHORIZATION_DATA, NOTIFICATION_DETAILS, FARE_DATA, COUNTER_PASSENGER, com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch, ShortDepartArriveTime, AIRTRICKET_EDIT_PASSENGER, SELETED_PASSENGER, AIRPORT, REQUEST_AIR_SERACH;
 
 
     }

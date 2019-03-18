@@ -156,6 +156,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
         return view
     }
+
     override fun onClick(v: View?) {
         when (v?.id) {
             com.cloudwell.paywell.services.R.id.tvDepart2 -> {

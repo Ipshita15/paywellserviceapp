@@ -20,10 +20,10 @@ import java.util.Locale;
  */
 public class MonthPagerAdapter extends PagerAdapter {
 
+    private final String TAG_PREFIX = "SLY_CAL_TAG";
     private SlyCalendarData slyCalendarData;
     private DateSelectListener listener;
     private ArrayList tags = new ArrayList();
-    private final String TAG_PREFIX = "SLY_CAL_TAG";
 
     MonthPagerAdapter(SlyCalendarData slyCalendarData, DateSelectListener listener) {
         this.slyCalendarData = slyCalendarData;
