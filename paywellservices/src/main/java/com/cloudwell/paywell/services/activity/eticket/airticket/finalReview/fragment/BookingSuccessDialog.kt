@@ -1,13 +1,17 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketMainActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResAirPreBooking
+import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResBookingAPI
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Fare
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
+import kotlinx.android.synthetic.main.fragment_booking_success.view.*
 
 
 /**
@@ -15,7 +19,7 @@ import com.cloudwell.paywell.services.app.storage.AppStorageBox
  */
 
 class BookingSuccessDialog : DialogFragment() {
-    lateinit var resAirPreBooking: ResAirPreBooking
+    lateinit var resBookingAPI: ResBookingAPI
     lateinit var bookingDialogListener: BookingDialogListener
 
     companion object {
@@ -27,17 +31,20 @@ class BookingSuccessDialog : DialogFragment() {
 
     }
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_booking_success, container, false)
+        resBookingAPI = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.AIR_BOOKKING) as ResBookingAPI
+
+        v.tvBookingId.text = resBookingAPI.bookingID
+        v.tvMessage.text = resBookingAPI.message
 
 
-        resAirPreBooking = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.AIR_BOOKKING) as ResAirPreBooking
-        v.setOnClickListener {
-
+        v.btBooking.setOnClickListener {
+            val intent = Intent(activity, AirTicketMainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent)
         }
-
         return v
     }
 

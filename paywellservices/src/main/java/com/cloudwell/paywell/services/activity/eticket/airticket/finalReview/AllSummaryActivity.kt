@@ -244,31 +244,33 @@ class AllSummaryActivity : AirTricketBaseActivity() {
         }
 
 
-        if (status.resAirPreBooking != null && status.isBooking) {
+        if (status.resBookingAPI != null) {
 
-            AppStorageBox.put(applicationContext, AppStorageBox.Key.AIR_BOOKKING, status.resAirPreBooking)
+            AppStorageBox.put(applicationContext, AppStorageBox.Key.AIR_BOOKKING, status.resBookingAPI)
 
             val dialogFragment = BookingSuccessDialog()
             dialogFragment.show(supportFragmentManager, "dialog")
-        }
+        } else {
 
 
-        if (status.resAirPreBooking != null) {
+            if (status.resAirPreBooking != null) {
 
-            val dialogFragment = BookingFragment()
-            dialogFragment.bookingDialogListener = object : BookingFragment.BookingDialogListener {
-                override fun onBooking(resAirPreBooking: ResAirPreBooking) {
+                val dialogFragment = BookingFragment()
+                dialogFragment.bookingDialogListener = object : BookingFragment.BookingDialogListener {
+                    override fun onBooking(resAirPreBooking: ResAirPreBooking) {
 
-                    AppStorageBox.put(applicationContext, AppStorageBox.Key.AIR_PRE_BOOKKING, status.resAirPreBooking)
-                    mViewModel.callAirBookingAPI(piN_NO = userPinNumber, passengerIDS = passengerIDS, internetConnection1 = isInternetConnection)
+                        AppStorageBox.put(applicationContext, AppStorageBox.Key.AIR_PRE_BOOKKING, status.resAirPreBooking)
+                        mViewModel.callAirBookingAPI(piN_NO = userPinNumber, passengerIDS = passengerIDS, internetConnection1 = isInternetConnection)
+
+                    }
 
                 }
+                AppStorageBox.put(applicationContext, AppStorageBox.Key.AIR_PRE_BOOKKING, status.resAirPreBooking)
+
+
+                dialogFragment.show(supportFragmentManager, "dialog")
 
             }
-            AppStorageBox.put(applicationContext, AppStorageBox.Key.AIR_PRE_BOOKKING, status.resAirPreBooking)
-
-
-            dialogFragment.show(supportFragmentManager, "dialog")
 
         }
 

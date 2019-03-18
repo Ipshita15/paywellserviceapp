@@ -36,6 +36,7 @@ class BookingFragment : DialogFragment() {
         val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_booking, container, false)
         v.btBooking.setOnClickListener {
             bookingDialogListener.onBooking(resAirPreBooking)
+            dismiss()
         }
 
         return v

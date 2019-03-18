@@ -48,13 +48,8 @@ class AllSummaryActivityViewModel : AirTicketBaseViewMode() {
 
 
                     mAirTicketRepository.callAirBookingAPI(piN_NO, requestModel).observeForever {
-                        mViewStatus.value = AllSummaryStatus(noSerachFoundMessage = "", isShowProcessIndicatior = false)
-                        val okNetworkAndStatusCode = isOkNetworkAndStatusCode(it)
-                        if (okNetworkAndStatusCode) {
+                        mViewStatus.value = AllSummaryStatus(noSerachFoundMessage = "", isShowProcessIndicatior = false, resBookingAPI = it)
 
-                            mViewStatus.value = it?.let { it1 -> AllSummaryStatus("", false, it1) }
-
-                        }
                     }
 
 

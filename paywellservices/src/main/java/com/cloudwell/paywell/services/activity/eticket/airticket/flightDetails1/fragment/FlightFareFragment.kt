@@ -32,7 +32,7 @@ class FlightFareFragment() : Fragment() {
 
 
         val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_flight_fare_fragment, container, false)
-        v.tvBaseFire.text = "${fare.baseFare}"
+        v.tvBookingId.text = "${fare.baseFare}"
         v.tvTax.text = "${fare.tax}"
         v.tvCurrency.text = "${fare.currency}"
         v.tvOhterCharge.text = "${fare.otherCharges}"

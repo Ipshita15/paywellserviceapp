@@ -5,6 +5,7 @@ import android.content.Context
 import com.cloudwell.paywell.services.activity.eticket.DummayData
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.RequestAirPrebookingSearchParams
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResAirPreBooking
+import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResBookingAPI
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.RequestAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.airRules.ResposeAirRules
@@ -262,26 +263,26 @@ class AirThicketRepository(private val mContext: Context) {
 
     }
 
-    fun callAirBookingAPI(piN_NO: String, requestAirPrebookingSearchParams: RequestAirPrebookingSearchParams): MutableLiveData<ResAirPreBooking> {
+    fun callAirBookingAPI(piN_NO: String, requestAirPrebookingSearchParams: RequestAirPrebookingSearchParams): MutableLiveData<ResBookingAPI> {
         mAppHandler = AppHandler.getmInstance(mContext)
 //        val userName = mAppHandler!!.imeiNo
         val userName = "cwntcl"
         val format = "json"
 
-        val data = MutableLiveData<ResAirPreBooking>()
+        val data = MutableLiveData<ResBookingAPI>()
 
         val callAirSearch = ApiUtils.getAPIService().airBooking(userName, piN_NO, format, requestAirPrebookingSearchParams)
-        callAirSearch.enqueue(object : Callback<ResAirPreBooking> {
-            override fun onResponse(call: Call<ResAirPreBooking>, response: Response<ResAirPreBooking>) {
+        callAirSearch.enqueue(object : Callback<ResBookingAPI> {
+            override fun onResponse(call: Call<ResBookingAPI>, response: Response<ResBookingAPI>) {
                 if (response.isSuccessful) {
 //                    data.value = Gson().fromJson(DummayData().mockPreBooking, ResAirPreBooking::class.java)
                     data.value = response.body()
                 }
             }
 
-            override fun onFailure(call: Call<ResAirPreBooking>, t: Throwable) {
+            override fun onFailure(call: Call<ResBookingAPI>, t: Throwable) {
                 com.orhanobut.logger.Logger.e("" + t.message)
-                data.value = ResAirPreBooking(t)
+                data.value = ResBookingAPI(t)
             }
         })
 
