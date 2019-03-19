@@ -649,7 +649,7 @@
     <string name="title_all_summary">All Summary</string>
     <string name="lbl_take_camera_picture">Camara</string>
     <string name="lbl_choose_from_gallery">Gallery</string>
-    <string name="lbl_set_profile_photo" />
+    <string name="lbl_set_profile_photo"/>
     <string name="please_add_id_info_for_this_travaler">Please add ID info for this passenger</string>
     <string name="tile_cencel_booking">Cancel Booking</string>
     <string name="tile_cencel_transaction_log">Transaction Log</string>
@@ -679,5 +679,11 @@
     <string name="continue_text">Continue</string>
     <string name="details_text">Details</string>
     <string name="edit">Edit</string>
+    <string name="depart">Depart</string>
+    <string name="date">Date</string>
+    <string name="class_text">Class</string>
+    <string name="economy">Economy</string>
+    <string name="passengers">Passengers</string>
+    <string name="search_text">Search</string>
 
 </resources>
