@@ -8,7 +8,6 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketBaseVi
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.FlightDetails1Status
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.RequestAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Result
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.airRules.Datum
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.airRules.ResposeAirRules
 
@@ -19,7 +18,7 @@ class FlightDetails1ViewModel : AirTicketBaseViewMode() {
     val mViewStatus = SingleLiveEvent<FlightDetails1Status>()
 
 
-    val mListMutableLiveDataResults = MutableLiveData<List<Result>>()
+    val mListMutableLiveDataResults = MutableLiveData<ResposeAirPriceSearch>()
     val mListMutableLiveDataAirRules = MutableLiveData<List<Datum>?>()
 
 
@@ -42,7 +41,7 @@ class FlightDetails1ViewModel : AirTicketBaseViewMode() {
 
         t.let {
             it?.data?.results.let {
-                mListMutableLiveDataResults.value = it
+                mListMutableLiveDataResults.value = t
             }
         }
     }

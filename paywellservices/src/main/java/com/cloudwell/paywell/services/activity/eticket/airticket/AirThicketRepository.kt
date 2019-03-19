@@ -3,14 +3,19 @@ package com.cloudwell.paywell.services.activity.eticket.airticket
 import android.arch.lifecycle.MutableLiveData
 import android.content.Context
 import com.cloudwell.paywell.services.activity.eticket.DummayData
+import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.RequestAirPrebookingSearchParams
+import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResAirPreBooking
+import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResBookingAPI
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.RequestAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.airRules.ResposeAirRules
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger
+import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.Airport
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.ResGetAirports
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.ReposeAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.database.DatabaseClient
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.google.gson.Gson
@@ -50,12 +55,12 @@ class AirThicketRepository(private val mContext: Context) {
         return data
     }
 
-    fun getAllCity(s: String): MutableLiveData<ResGetAirports> {
+    fun getAllCity(iso: String): MutableLiveData<ResGetAirports> {
 
         mAppHandler = AppHandler.getmInstance(mContext)
 //        val userName = mAppHandler!!.imeiNo
         val userName = "cwntcl"
-        val iso = "BD,IN"
+
 
         val data = MutableLiveData<ResGetAirports>()
 
@@ -137,4 +142,152 @@ class AirThicketRepository(private val mContext: Context) {
         }
         return data
     }
+
+    fun addPassenger(passenger: Passenger): MutableLiveData<Long> {
+        val data = MutableLiveData<Long>()
+
+        doAsync {
+            val insert = DatabaseClient.getInstance(mContext).appDatabase.mAirtricketDab().insert(passenger)
+
+            uiThread {
+                if (insert != -1L) {
+                    AppStorageBox.put(mContext, AppStorageBox.Key.COUNTER_PASSENGER, insert)
+                }
+                data.value = insert
+            }
+        }
+
+        return data
+    }
+
+    fun updatePassenger(passenger: Passenger): MutableLiveData<Int> {
+        val data = MutableLiveData<Int>()
+
+        doAsync {
+            val insert = DatabaseClient.getInstance(mContext).appDatabase.mAirtricketDab().update(passenger)
+
+            uiThread {
+                if (insert != -1) {
+                    AppStorageBox.put(mContext, AppStorageBox.Key.COUNTER_PASSENGER, insert)
+                }
+                data.value = insert
+            }
+        }
+
+        return data
+
+    }
+
+    fun deletedPassenger(passenger: Passenger): MutableLiveData<Int> {
+        val data = MutableLiveData<Int>()
+
+        doAsync {
+            val insert = DatabaseClient.getInstance(mContext).appDatabase.mAirtricketDab().deleted(passenger)
+
+            uiThread {
+                if (insert != -1) {
+                    if (insert == 1) {
+                        AppStorageBox.put(mContext, AppStorageBox.Key.COUNTER_PASSENGER, null)
+                    } else {
+                        AppStorageBox.put(mContext, AppStorageBox.Key.COUNTER_PASSENGER, insert)
+                    }
+
+                }
+                data.value = insert
+            }
+        }
+
+        return data
+    }
+
+    fun getRecentSearches(): MutableLiveData<List<Airport>> {
+        val data = MutableLiveData<List<Airport>>()
+
+        doAsync {
+            val result = DatabaseClient.getInstance(mContext).appDatabase.mAirtricketDab().getRecentSearches()
+
+            uiThread {
+                data.value = result
+            }
+        }
+        return data
+    }
+
+    fun addRecentAirport(airport: Airport): MutableLiveData<Long> {
+        val data = MutableLiveData<Long>()
+        doAsync {
+            val result = DatabaseClient.getInstance(mContext).appDatabase.mAirtricketDab().insertRecentAirport(airport)
+
+            uiThread {
+                data.value = result
+            }
+        }
+        return data
+    }
+
+    fun getAllPassengers(split: List<String>): MutableLiveData<List<Passenger>> {
+        val data = MutableLiveData<List<Passenger>>()
+        doAsync {
+            val all: List<Passenger> = DatabaseClient.getInstance(mContext).appDatabase.mAirtricketDab().getAll(split)
+            uiThread {
+                data.value = all
+            }
+        }
+        return data
+    }
+
+    fun callAirPreBookingAPI(piN_NO: String, requestAirPrebookingSearchParams: RequestAirPrebookingSearchParams): MutableLiveData<ResAirPreBooking> {
+        mAppHandler = AppHandler.getmInstance(mContext)
+//        val userName = mAppHandler!!.imeiNo
+        val userName = "cwntcl"
+        val format = "json"
+
+        val data = MutableLiveData<ResAirPreBooking>()
+
+        val callAirSearch = ApiUtils.getAPIService().airPreBooking(userName, piN_NO, format, requestAirPrebookingSearchParams)
+        callAirSearch.enqueue(object : Callback<ResAirPreBooking> {
+            override fun onResponse(call: Call<ResAirPreBooking>, response: Response<ResAirPreBooking>) {
+                if (response.isSuccessful) {
+//                    data.value = Gson().fromJson(DummayData().mockPreBooking, ResAirPreBooking::class.java)
+                    data.value = response.body()
+                }
+            }
+
+            override fun onFailure(call: Call<ResAirPreBooking>, t: Throwable) {
+                com.orhanobut.logger.Logger.e("" + t.message)
+                data.value = ResAirPreBooking(t)
+            }
+        })
+
+        return data
+
+    }
+
+    fun callAirBookingAPI(piN_NO: String, requestAirPrebookingSearchParams: RequestAirPrebookingSearchParams): MutableLiveData<ResBookingAPI> {
+        mAppHandler = AppHandler.getmInstance(mContext)
+//        val userName = mAppHandler!!.imeiNo
+        val userName = "cwntcl"
+        val format = "json"
+
+        val data = MutableLiveData<ResBookingAPI>()
+
+        val callAirSearch = ApiUtils.getAPIService().airBooking(userName, piN_NO, format, requestAirPrebookingSearchParams)
+        callAirSearch.enqueue(object : Callback<ResBookingAPI> {
+            override fun onResponse(call: Call<ResBookingAPI>, response: Response<ResBookingAPI>) {
+                if (response.isSuccessful) {
+//                    data.value = Gson().fromJson(DummayData().mockPreBooking, ResAirPreBooking::class.java)
+                    data.value = response.body()
+                }
+            }
+
+            override fun onFailure(call: Call<ResBookingAPI>, t: Throwable) {
+                com.orhanobut.logger.Logger.e("" + t.message)
+                data.value = ResBookingAPI(t)
+            }
+        })
+
+        return data
+
+    }
+
 }

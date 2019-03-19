@@ -5,6 +5,7 @@ class SearchRoundTripModel {
     var fromPort: String
     var to: String
     var toPort: String
+    var departDate: String = ""
 
     constructor(from: String, to: String, fromPort: String, toPort: String) {
         this.from = from
@@ -44,4 +45,6 @@ class SearchRoundTripModel {
     fun setToPortName(portName: String) {
         toPort = portName
     }
+
+
 }

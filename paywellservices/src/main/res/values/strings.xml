@@ -470,7 +470,7 @@
 
     <!-- paywell apis -->
     <string name="pw_auth">https://api.paywellonline.com/PaywelltransactionRetailer/TabUserServiceProfiling?</string>
-    <string name="notif_url">https://www.paywellonline.com/default/api/notification_check_android1.php?</string>
+    <string name="notif_url">https://www.paywellonline.com/default/api/notification_check_android.php?</string>
     <string name="notification_token_url">https://www.paywellonline.com/paywellapi/setUserFCMToken.php</string>
 
     <string name="app_next_version_no">vten_seventeen</string>
@@ -607,14 +607,14 @@
     <string name="cancel">Cancel</string>
     <string name="transaction_log">Transaction Log</string>
     <string name="action_search">Serach</string>
-    <string name="title_booking_and_review">Review and Book</string>
+    <string name="ettitle_booking_and_review">Review and Book</string>
     <string name="baggage_policy_details"><![CDATA[Baggage & Policy Details]]></string>
     <string name="refundable"> Is refundable</string>
     <string name="non_refundable">No Refundable</string>
     <string name="passport_mandatory">Passport Mandatory</string>
     <string name="passport_not_mandatory">Passport not mandatory</string>
-    <string name="title_activity_baggage_and_policies_actiivty">Baggage Allowance &amp; Pollicies
-    </string>
+    <string name="title_activity_baggage_and_policies_actiivty">Baggage Allowance &amp; Pollicies</string>
+    <string name="title_booking_and_review">Review and Book</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="tab_text_3">Tab 3</string>
@@ -626,5 +626,63 @@
     <string name="title_passenger_list">Passenger Info</string>
     <string name="title_add_passenger">Add Passenger</string>
     <string name="booking_status_menu">Booking Status</string>
+    <string name="add">Add</string>
+    <string name="title">Title</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="gender">Gender</string>
+    <string name="country">Country</string>
+    <string name="contact_number">Contact Number</string>
+    <string name="email">Email</string>
+    <string name="please_ensure_the_id_is_valid_for_at_least_6_months_after_the_date_of_departure">Please ensure the ID is valid for at least 6 months after the date of departure.</string>
+    <string name="add_id">Add ID</string>
+    <string name="passport_id">Passport/ID</string>
+    <string name="number">Passport Number</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="other">Other</string>
+    <string name="book">Booking Status</string>
+    <string name="passenger_deleted_message">Passenger info cannot be recovered once deleted. Are you sure you want to delete?</string>
+    <string name="ok">OK</string>
+    <string name="cencel">CANCEL</string>
+    <string name="title_all_summary">All Summary</string>
+    <string name="toast_image_intent_null">Image Intnet Null</string>
+    <string name="lbl_take_camera_picture">Camara</string>
+    <string name="lbl_choose_from_gallery">Gallery</string>
+    <string name="lbl_set_profile_photo" />
+    <string name="please_add_id_info_for_this_travaler">Please add ID info for this passenger</string>
+    <string name="tile_cencel_booking">Cancel Booking</string>
+    <string name="tile_cencel_transaction_log">Transaction Log</string>
+    <string name="city">City</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="mr">Mr.</string>
+    <string name="ms">Ms.</string>
+    <string name="mrs">Mrs.</string>
+    <string name="miss">Miss</string>
+    <string name="name_title">Title</string>
+    <string name="passenger_type">Passenger type</string>
+    <string name="adult">adult</string>
+    <string name="child">child</string>
+    <string name="infant">Infant</string>
+    <string name="kg_per_adult">KG per adult ticket</string>
+    <string name="economy_class">Economy Class: </string>
+    <string name="baggage">Baggage :</string>
+    <string name="n_a">N/A</string>
+    <string name="slycalendar_save">Save</string>
+    <string name="slycalendar_cancel">Cancel</string>
+    <string name="slycalendar_next">Next</string>
+    <string name="slycalendar_singledate" translatable="false">EE, dd MMMM</string>
+    <string name="slycalendar_short" translatable="false">EE, dd</string>
+    <string name="slycalendar_short_month" translatable="false">EE, dd MMM</string>
+    <string name="slycalendar_dates_period" translatable="false">%1$s – %2$s</string>
+    <string name="continue_text">Continue</string>
+    <string name="details_text">Details</string>
+    <string name="edit">Edit</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="multicity_limit_msg">Currently we are accepting only 5 requests</string>
+    <string name="bookingId">Booking Id</string>
 
 </resources>

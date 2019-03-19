@@ -153,6 +153,9 @@ public class AppHandler {
     private static final String DISPLAY_PICTURE_ = "displaypicture_";
     private static final String UNKNOWN_DISPLAY_PICTURE = "unknownDisplayPicture";
 
+    public static final int MULTI_CITY_LIMIT = 5;
+
+
     public AppHandler() {
 
     }

@@ -3,10 +3,14 @@ package com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySer
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+
+@Parcelize
 @Entity
-class Airport {
+class Airport : Parcelable {
 
     @PrimaryKey
     @ColumnInfo(name = "id")
@@ -47,5 +51,11 @@ class Airport {
     @ColumnInfo(name = "time_zone")
     @SerializedName("time_zone")
     var timeZone: String = ""
+
+
+    @ColumnInfo(name = "status")
+    @SerializedName("status")
+    var status: String = ""
+
 
 }

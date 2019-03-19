@@ -207,6 +207,11 @@ dependencies {
     //fullDialog
     implementation 'com.github.franmontiel:FullScreenDialog:1.0.1'
 
+    implementation 'com.github.mukeshsolanki:country-picker-android:2.0.1'
+
+    implementation "com.karumi:dexter:5.0.0"
+    implementation 'com.github.yalantis:ucrop:2.2.2'
+
 
 }
 // Add to the bottom of the file

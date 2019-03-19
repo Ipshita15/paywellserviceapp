@@ -22,14 +22,13 @@ class FlightFareDialogFragment : DialogFragment() {
         super.onCreate(savedInstanceState)
         fare = arguments?.getParcelable<Fare>("object") as Fare
 
-
     }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_flight_fare, container, false)
-        v.tvBaseFire.text = "${fare.baseFare}"
+        v.tvBookingId.text = "${fare.baseFare}"
         v.tvTax.text = "${fare.tax}"
         v.tvCurrency.text = "${fare.currency}"
         v.tvOhterCharge.text = "${fare.otherCharges}"

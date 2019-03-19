@@ -6,4 +6,6 @@ package com.cloudwell.paywell.services.customView.horizontalDatePicker.commincat
 public interface IDatePicker {
 
     public void onSetDate(int year, int month, int day);
+
+    public void onSetNewDate(int year, int month, int day);
 }

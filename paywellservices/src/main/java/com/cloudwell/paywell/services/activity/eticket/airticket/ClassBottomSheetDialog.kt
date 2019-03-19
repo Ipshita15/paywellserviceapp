@@ -27,11 +27,11 @@ class ClassBottomSheetDialog : BottomSheetDialogFragment() {
         val listView = view.findViewById<ListView>(R.id.listViewAirTicketClass)
 
         classes = ArrayList()
-        classes.add(ClassModel("Economy/Primium Economy", false))
-        classes.add(ClassModel("Primium Economy", false))
-        classes.add(ClassModel("Business/First", false))
-        classes.add(ClassModel("Business", false))
-        classes.add(ClassModel("First", false))
+        classes.add(ClassModel("Economy", "Economy", false))
+        classes.add(ClassModel("Premium Economy", "PremiumEconomy", false))
+        classes.add(ClassModel("Business", "Business", false))
+        classes.add(ClassModel("Premium Business", "PremiumBusiness", false))
+        classes.add(ClassModel("First", "First", false))
 
         classes.get(getClassNamePosition(className)).setClassSelectedStatus(true)
 
@@ -48,7 +48,7 @@ class ClassBottomSheetDialog : BottomSheetDialogFragment() {
             classes.set(position, model)
 
             customAdapter.updateRecords(classes)
-            mListenerClass.onButtonClickListener("" + model.getClassSelectedName())
+            mListenerClass.onButtonClickListener(model)
             dismiss()
         }
 
@@ -71,7 +71,7 @@ class ClassBottomSheetDialog : BottomSheetDialogFragment() {
     }
 
     interface ClassBottomSheetListener {
-        fun onButtonClickListener(text: String)
+        fun onButtonClickListener(classModel: ClassModel)
     }
 
 

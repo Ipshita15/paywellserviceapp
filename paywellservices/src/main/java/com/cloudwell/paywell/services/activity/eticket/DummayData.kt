@@ -334,4 +334,83 @@ data class DummayData(var multipSegmentData: String = "[\n" +
                               "  ]\n" +
                               "}"
 
-)
+
+) {
+    var mockPreBooking = "{\n" +
+            "  \"status\": 200,\n" +
+            "  \"message\": \"SUCCESS\",\n" +
+            "  \"data\": {\n" +
+            "    \"SearchId\": \"0549ae7c-4ae1-439f-ae1a-b77e40be9eec\",\n" +
+            "    \"Results\": [\n" +
+            "      {\n" +
+            "        \"PassportMadatory\": false,\n" +
+            "        \"ExtraServices\": null,\n" +
+            "        \"ResultID\": \"81969ef3-c6e6-4cbc-aaad-de1fb5d9fd05\",\n" +
+            "        \"IsRefundable\": false,\n" +
+            "        \"Fares\": [\n" +
+            "          {\n" +
+            "            \"BaseFare\": 4471,\n" +
+            "            \"Tax\": 529,\n" +
+            "            \"Currency\": \"BDT\",\n" +
+            "            \"OtherCharges\": 0,\n" +
+            "            \"Discount\": 0,\n" +
+            "            \"PaxType\": \"Adult\",\n" +
+            "            \"PassengerCount\": 1,\n" +
+            "            \"ServiceFee\": 0\n" +
+            "          }\n" +
+            "        ],\n" +
+            "        \"Discount\": 0,\n" +
+            "        \"Validatingcarrier\": \"BG\",\n" +
+            "        \"LastTicketDate\": \"2019-01-03T00:00:00\",\n" +
+            "        \"segments\": [\n" +
+            "          {\n" +
+            "            \"TripIndicator\": \"OutBound\",\n" +
+            "            \"Origin\": {\n" +
+            "              \"Airport\": {\n" +
+            "                \"AirportCode\": \"DAC\",\n" +
+            "                \"AirportName\": \"Shahjalal intl. Airport\",\n" +
+            "                \"Terminal\": \"1\",\n" +
+            "                \"CityCode\": \"DAC\",\n" +
+            "                \"CityName\": \"Dhaka\",\n" +
+            "                \"CountryCode\": \"BD\",\n" +
+            "                \"CountryName\": \"Bangladesh\"\n" +
+            "              },\n" +
+            "              \"DepTime\": \"2019-01-03T14:00:00\"\n" +
+            "            },\n" +
+            "            \"Destination\": {\n" +
+            "              \"Airport\": {\n" +
+            "                \"AirportCode\": \"CXB\",\n" +
+            "                \"AirportName\": \"Cox's Bazar Airport\",\n" +
+            "                \"Terminal\": \"1\",\n" +
+            "                \"CityCode\": \"CXB\",\n" +
+            "                \"CityName\": \"Coxs Bazar\",\n" +
+            "                \"CountryCode\": \"BD\",\n" +
+            "                \"CountryName\": \"Bangladesh\"\n" +
+            "              },\n" +
+            "              \"ArrTime\": \"2019-01-03T14:55:00\"\n" +
+            "            },\n" +
+            "            \"Airline\": {\n" +
+            "              \"AirlineCode\": \"BG\",\n" +
+            "              \"AirlineName\": \"BIMAN BANGLADESH\",\n" +
+            "              \"FlightNumber\": \"433\",\n" +
+            "              \"BookingClass\": \"G\",\n" +
+            "              \"CabinClass\": \"M\",\n" +
+            "              \"OperatingCarrier\": \"BG\"\n" +
+            "            },\n" +
+            "            \"Baggage\": \"20K\",\n" +
+            "            \"JourneyDuration\": \"55\",\n" +
+            "            \"StopQuantity\": \"0\",\n" +
+            "            \"Equipment\": \"738\"\n" +
+            "          }\n" +
+            "        ],\n" +
+            "        \"TotalFare\": 5000,\n" +
+            "        \"Currency\": \"BDT\",\n" +
+            "        \"Availabilty\": 9,\n" +
+            "        \"FareType\": \"NET\"\n" +
+            "      }\n" +
+            "    ],\n" +
+            "    \"Error\": null,\n" +
+            "    \"RePriceStatus\": \"NoPriceChange\"\n" +
+            "  }\n" +
+            "}"
+}

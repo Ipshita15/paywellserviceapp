@@ -5,24 +5,28 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.TextView
+import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.adapter.HeaderAirportRecyclerViewSection
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.Airport
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.viewModel.AirportSerachViewModel
-import com.cloudwell.paywell.services.listener.RecyclerItemClickListener
+import com.cloudwell.paywell.services.app.storage.AppStorageBox
+import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus
+import com.squareup.otto.Subscribe
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_city_search.*
 import kotlinx.android.synthetic.main.content_airport_serach.*
+import java.util.*
 
 
 class AirportsSearchActivity : AirTricketBaseActivity() {
@@ -35,16 +39,42 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
     lateinit var allAirports: ArrayList<String>
     lateinit var allAirportsCity: ArrayList<String>
     var CITY_NAME = "cityName"
-    var AIRPORT_NAME = "airportName"
+    var AIRPORT_NAME = "airport"
+    var IS_TO = "isTo"
+    var isIndian = false
+
+    var VALUE_FROM = "from"
+    var fromValue = ""
+    var isTo = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.cloudwell.paywell.services.R.layout.activity_city_search)
+        setContentView(R.layout.activity_city_search)
+
+        getSupportActionBar()?.hide();
+
+        isTo = intent.extras.getBoolean(IS_TO, false)
+        if (!isTo) {
+            tvToOrFrom.text = getString(R.string.from)
+        } else {
+            tvToOrFrom.text = getString(R.string.to)
+        }
+
+
+        isIndian = intent.extras.getBoolean("indian", false)
+
+
+        fromValue = intent.extras.getString(VALUE_FROM, "")
 
         initViewInitialization()
         initViewModel()
 
+
+        hiddenSoftKeyboard()
+
     }
+
 
     private fun initViewInitialization() {
         allAirports = ArrayList()
@@ -54,15 +84,15 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
             finish()
         }
 
-        var adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, allAirports)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, allAirports)
         searchListView.adapter = adapter
         searchListView.setOnItemClickListener { parent: AdapterView<*>?, view: View?, position: Int, id: Long ->
-            //            Log.e("logTag", adapter.getItem(position).toString())
-            val intent = Intent()
-            intent.putExtra(CITY_NAME, allAirportsCity.get(position))
-            intent.putExtra(AIRPORT_NAME, adapter.getItem(position).toString())
-            setResult(Activity.RESULT_OK, intent)
-            finish()
+
+            val airportName = adapter.getItem(position).toString();
+            val single = mAirTicketBaseViewMode.resGetAirports.airports.filter { s -> s.airportName == airportName }.single()
+
+            addToRecentSearch(single)
+            backResult(single)
         }
 
         etSearch.addTextChangedListener(object : TextWatcher {
@@ -87,15 +117,53 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
         })
     }
 
+    private fun addToRecentSearch(airport: Airport) {
+//        airport.status = "recent"
+//        mAirTicketBaseViewMode.addRecentSearch(airport)
+
+    }
+
+    private fun backResult(single: Airport) {
+        AppStorageBox.put(applicationContext, AppStorageBox.Key.AIRPORT, single)
+
+        val intent = Intent()
+        intent.putExtra("from", fromValue)
+        intent.putExtra("isTo", isTo)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
+    }
+
     private fun initViewModel() {
         mAirTicketBaseViewMode = ViewModelProviders.of(this).get(AirportSerachViewModel::class.java)
+
+
+        mAirTicketBaseViewMode.baseViewStatus.observe(this, Observer {
+            handleViewCommonStatus(it)
+        })
 
         mAirTicketBaseViewMode.allAirportHashMap.observe(this, Observer {
             handleDisplayData(it)
         })
+        mAirTicketBaseViewMode.mViewStatus.observe(this, Observer {
+
+            it?.let { it1 -> handleStatus(it1) }
+        })
 
 
-        mAirTicketBaseViewMode.getData(isInternetConnection);
+        mAirTicketBaseViewMode.getData(isInternetConnection, isIndian);
+
+    }
+
+    private fun handleStatus(it: AirportSeachStatus) {
+
+        if (it.isShowProcessIndicatior) {
+            progressBar.visibility = View.VISIBLE
+        } else {
+            progressBar.visibility = View.INVISIBLE
+        }
+
+
+        // if(it.)
 
     }
 
@@ -116,10 +184,6 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
                 allAirportsCity.add(name.city)
             }
 
-//        for ((index, value) in allAirportsMap.withIndex()) {
-//            val sectionData = HeaderAirportRecyclerViewSection(index, value, allAirportsMap.get(value))
-//            sectionAdapter.addSection(sectionData)
-//        }
 
         val display = this.getWindowManager().getDefaultDisplay()
         val outMetrics = DisplayMetrics()
@@ -146,38 +210,41 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
             }
         }
 
+
         val sectionHeader = findViewById(com.cloudwell.paywell.services.R.id.recycviewContryAndAirport) as RecyclerView
         sectionHeader.setLayoutManager(glm)
         sectionHeader.setHasFixedSize(true)
         sectionHeader.setAdapter(sectionAdapter)
         sectionHeader.isNestedScrollingEnabled = false
 
-//        sectionHeader.setOnClickListener { object: AdapterView.OnItemClickListener() }
 
-        recycviewContryAndAirport.addOnItemTouchListener(
-                com.cloudwell.paywell.services.utils.RecyclerItemClickListener(applicationContext, recycviewContryAndAirport, object : com.cloudwell.paywell.services.utils.RecyclerItemClickListener.OnItemClickListener {
-                    override fun onItemClick(view: View, position: Int) {
-                        // do whatever
-//                        val itemPosition = recycviewContryAndAirport.indexOfChild(view)
-//                        val test = sectionData.key.get(itemPosition)
-//                        val getTest = mAirTicketBaseViewMode.allAirportHashMap.value!!.get("" + test)
-//                        Log.e("logTag", "" + test + " " + getTest)
-//                        val fromAirport = sectionAdapter.getItemId(position).
-                        Log.e("logTag", "" + sectionAdapter.getItemId(position))
+        val verticalDecoration = DividerItemDecoration(sectionHeader.getContext(), DividerItemDecoration.HORIZONTAL)
+        val verticalDivider = ContextCompat.getDrawable(applicationContext, R.drawable.vertical_divider_new)
+        verticalDecoration.setDrawable(verticalDivider!!)
 
 
-//                        val intent = Intent(applicationContext, FlightDetails1Activity::class.java)
-//                        intent.putExtra("mSearchId", mSearchId)
-//                        intent.putExtra("resultID", resultID)
-//                        startActivity(intent)
+    }
 
-                    }
 
-                    override fun onLongItemClick(view: View, position: Int) {
-                        // do whatever
-                    }
-                })
-        )
+    @Subscribe
+    fun onFavoriteItemAdd(airport: Airport) {
+
+
+        com.orhanobut.logger.Logger.e("'" + airport)
+
+        addToRecentSearch(airport)
+        backResult(airport)
+
+    }
+
+    public override fun onResume() {
+        super.onResume()
+        GlobalApplicationBus.getBus().register(this)
+    }
+
+    public override fun onPause() {
+        super.onPause()
+        GlobalApplicationBus.getBus().unregister(this)
     }
 
 
