@@ -46,10 +46,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
+        <activity android:name=".activity.eticket.airticket.booking.BookingMainActivity"></activity>
         <activity
             android:name=".activity.eticket.airticket.flightDetails1.fragment.BaggageAndPoliciesActiivty"
-            android:label="@string/title_activity_baggage_and_policies_actiivty">
-        </activity>
+            android:label="@string/title_activity_baggage_and_policies_actiivty"></activity>
 
         <uses-library
             android:name="com.google.android.maps"
@@ -64,16 +64,13 @@
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
         <meta-data
@@ -1129,34 +1126,28 @@
         <activity
             android:name=".activity.eticket.airticket.serach.citySerach.AirportsSearchActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
-        </activity>
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
         <activity
             android:name=".activity.eticket.airticket.flightDetails1.FlightDetails1Activity"
             android:label="@string/title_activity_air_tricket_menu">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN"/>-->
-            <!--<action android:name="android.intent.action.VIEW"/>-->
 
-            <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN"/> -->
+            <!-- <action android:name="android.intent.action.VIEW"/> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
+            <!-- </intent-filter> -->
         </activity>
-
-
         <activity
             android:name=".activity.eticket.airticket.flightDetails2.FlightDetails2Activity"
-            android:label="@string/title_flightDetails2">
-        </activity>
-
+            android:label="@string/title_flightDetails2"></activity>
         <activity
             android:name=".activity.eticket.airticket.passengerList.PassengerListActivity"
-            android:label="@string/title_passenger_list">
-        </activity>
-
+            android:label="@string/title_passenger_list"></activity>
         <activity
             android:name=".activity.eticket.airticket.passengerAdd.AddPassengerActivity"
-            android:label="@string/title_add_passenger">
-        </activity>
+            android:label="@string/title_add_passenger"></activity>
     </application>
 
 </manifest>

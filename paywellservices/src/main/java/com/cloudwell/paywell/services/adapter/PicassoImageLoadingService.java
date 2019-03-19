@@ -17,7 +17,7 @@ import ss.com.bannerslider.ImageLoadingService;
 
 public class PicassoImageLoadingService implements ImageLoadingService {
     public Context context;
-    private static final long UPDATE_IMG_CACHE_CLEAN_INTERVAL = 7 * 24 * 60 * 60;// 1 day
+    private static final long UPDATE_IMG_CACHE_CLEAN_INTERVAL = 7 * 24 * 60 * 60;// 7 day
     private AppHandler mAppHandler;
 
 

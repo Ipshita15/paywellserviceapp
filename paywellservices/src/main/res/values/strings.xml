@@ -625,5 +625,6 @@
     <string name="title_flightDetails2">Review page 2</string>
     <string name="title_passenger_list">Passenger Info</string>
     <string name="title_add_passenger">Add Passenger</string>
+    <string name="booking_status_menu">Booking Status</string>
 
 </resources>
