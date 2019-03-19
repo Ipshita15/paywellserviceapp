@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,13 +22,13 @@
             android:gravity="center"
             android:text="1"
             android:textSize="10dp"
-            android:background="@color/colorPrimary" />
+            android:background="@color/colorPrimary"/>
 
 
         <TextView
             android:layout_width="0dp"
             android:layout_weight="10"
-            android:layout_height="30dp" />
+            android:layout_height="30dp"/>
 
         <ImageView
             android:id="@+id/flightCancelIV"
@@ -37,7 +37,7 @@
             android:layout_height="30dp"
             android:layout_gravity="center"
             android:clickable="true"
-            android:src="@drawable/close_green" />
+            android:src="@drawable/close_green"/>
 
     </LinearLayout>
 
@@ -46,7 +46,7 @@
         android:layout_height="1dp"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:background="#c0c0c0" />
+        android:background="#c0c0c0"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -67,21 +67,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="From"
-                android:textColor="#999999" />
+                android:textColor="#999999"/>
 
             <TextSwitcher
                 android:id="@+id/tsMultiCityTripFrom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="DHAKA"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
             <TextSwitcher
                 android:id="@+id/tsMultiCityTripFromPort"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Shahjalal International"
-                android:textSize="10sp" />
+                android:textSize="10sp"/>
 
         </LinearLayout>
 
@@ -92,7 +92,7 @@
             android:layout_gravity="center"
             android:layout_weight="0.4"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_one_way" />
+            android:src="@drawable/ic_one_way"/>
 
         <LinearLayout
             android:id="@+id/toLL"
@@ -109,7 +109,7 @@
                 android:layout_gravity="end"
                 android:layout_weight="1"
                 android:text="To"
-                android:textColor="#999999" />
+                android:textColor="#999999"/>
 
             <TextSwitcher
                 android:id="@+id/tsMultiCityTripTo"
@@ -118,7 +118,7 @@
                 android:layout_gravity="right"
                 android:layout_weight="1"
                 android:text="Dhaka"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
             <TextSwitcher
                 android:id="@+id/tsMultiCityTripToPort"
@@ -127,7 +127,7 @@
                 android:layout_gravity="right"
                 android:layout_weight="1"
                 android:text="Cox's Bazar airport"
-                android:textSize="10sp" />
+                android:textSize="10sp"/>
 
         </LinearLayout>
     </LinearLayout>
@@ -152,14 +152,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Depart"
-                android:textColor="#999999" />
+                android:textColor="#999999"/>
 
             <TextView
                 android:id="@+id/tvDepartDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Date"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
         </LinearLayout>
 
@@ -176,16 +176,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="Class" />
+                android:text="Class"/>
 
             <TextView
                 android:id="@+id/airTicketClass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start"
-                android:text="Economy/Primium Economy"
+                android:text="Economy"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="#999999" />
+                android:textColor="#999999"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -193,5 +193,5 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#c0c0c0" />
+        android:background="#c0c0c0"/>
 </LinearLayout>
