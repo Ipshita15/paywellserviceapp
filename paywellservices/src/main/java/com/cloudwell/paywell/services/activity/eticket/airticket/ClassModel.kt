@@ -4,9 +4,11 @@ class ClassModel {
 
     var className: String
     var isSelected: Boolean
+    var apiClassName: String
 
-    constructor(className: String, isSelected: Boolean) {
+    constructor(className: String, apiClassName: String, isSelected: Boolean) {
         this.className = className
+        this.apiClassName = apiClassName
         this.isSelected = isSelected
     }
 

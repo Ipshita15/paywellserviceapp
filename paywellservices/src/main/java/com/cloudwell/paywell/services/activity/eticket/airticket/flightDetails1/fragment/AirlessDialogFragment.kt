@@ -6,19 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Airline
+import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import kotlinx.android.synthetic.main.fragment_airless_info.view.*
 
 
 class AirlessDialogFragment : DialogFragment() {
-    lateinit var airline: Airline
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        airline = arguments?.getParcelable<Airline>("object") as Airline
 
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        val airline = AppStorageBox.get(context, AppStorageBox.Key.Airline_details) as Airline
+
 
         val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_airless_info, container, false)
         v.tvAirlineCode.text = airline.airlineCode

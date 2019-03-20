@@ -24,17 +24,19 @@ class FlightSearchViewModel : AirTicketBaseViewMode() {
     val mSearchId = MutableLiveData<String>()
 
 
-    fun init(internetConnection: Boolean) {
+    fun init(internetConnection: Boolean, requestAirSearch: RequestAirSearch) {
         if (!internetConnection) {
             baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
         } else {
 
-            val list = mutableListOf<Segment>()
-            val segment = Segment("Economy", "2019-06-20 04:34:35", "DAC", "CXB")
-//            val segment = Segment("Economy", "2019-06-20 04:34:35", "ZYL", "CXB")
-            list.add(segment)
+//            val list = mutableListOf<Segment>()
+//            val segment = Segment("Economy", "2019-06-20 04:34:35", "DAC", "CXB")
+////            val segment = Segment("Economy", "2019-06-20 04:34:35", "ZYL", "CXB")
+//            list.add(segment)
+//
+//            val requestAirSearch = RequestAirSearch(1, 0, 0, "Oneway", list)
 
-            val requestAirSearch = RequestAirSearch(1, 0, 0, "Oneway", list)
+
 
             callFlightSearch(requestAirSearch);
         }

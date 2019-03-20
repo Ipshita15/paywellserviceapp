@@ -24,8 +24,10 @@ import android.widget.ViewSwitcher;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.eticket.airticket.ClassBottomSheetDialog;
+import com.cloudwell.paywell.services.activity.eticket.airticket.ClassModel;
 import com.cloudwell.paywell.services.activity.eticket.airticket.PassengerBottomSheetDialog;
 import com.cloudwell.paywell.services.activity.eticket.airticket.SearchRoundTripModel;
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.FlightSearchViewActivity;
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.AirportsSearchActivity;
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.Airport;
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch;
@@ -157,6 +159,9 @@ public class MultiCityFragment extends Fragment {
 //                    Toast.makeText(getContext(), "Please provide all the data.", Toast.LENGTH_SHORT).show();
                 } else {
                     AppStorageBox.put(getContext(), AppStorageBox.Key.REQUEST_AIR_SERACH, requestAirSearch);
+                    Intent intent = new Intent(getActivity().getApplicationContext(), FlightSearchViewActivity.class);
+                    startActivity(intent);
+
                 }
             }
         });
@@ -214,9 +219,11 @@ public class MultiCityFragment extends Fragment {
                 ClassBottomSheetDialog bottomSheetDialog = new ClassBottomSheetDialog();
                 bottomSheetDialog.setOnClassListener(new ClassBottomSheetDialog.ClassBottomSheetListener() {
                     @Override
-                    public void onButtonClickListener(@NotNull String text) {
-                        ((TextView) flightView.findViewById(R.id.airTicketClass)).setText(text);
+                    public void onButtonClickListener(@NotNull ClassModel classModel) {
+                        ((TextView) flightView.findViewById(R.id.airTicketClass)).setText(classModel.getClassName());
                     }
+
+
                 });
                 bottomSheetDialog.setArguments(b);
                 bottomSheetDialog.show(getFragmentManager(), "classBottomSheet");

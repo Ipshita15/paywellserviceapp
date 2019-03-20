@@ -26,7 +26,7 @@ class PassengerBottomSheetDialog : BottomSheetDialogFragment() {
 
         val view = inflater.inflate(R.layout.fragment_passenger_bottom_sheet_dialog, container, false)
 
-        val listView = view.findViewById<ListView>(R.id.listViewAirTicketPassengers)
+        val listView = view.findViewById(R.id.listViewAirTicketPassengers) as ListView
         val ivClose = view.findViewById<ImageView>(R.id.btnCloseAirTicket)
         val tvDone = view.findViewById<TextView>(R.id.tvDone)
 
@@ -98,11 +98,25 @@ class PassengerBottomSheetDialog : BottomSheetDialogFragment() {
 
             holder.ivMinus.setOnClickListener(View.OnClickListener {
                 val count = model.getSelectedPsngrCount()
-                if (count.compareTo(0) == 1) {
-                    val data = model.getSelectedPsngrCount().minus(1)
-                    model.setSelectedPsngrCount(data)
 
-                    updateRecords(userList)
+
+                if (position == 0) {
+                    if (model.getSelectedPsngrCount() <= 1) {
+
+                    } else {
+                        val data = model.getSelectedPsngrCount().minus(1)
+                        model.setSelectedPsngrCount(data)
+
+                        updateRecords(userList)
+                    }
+                } else {
+                    if (count.compareTo(0) == 1) {
+                        val data = model.getSelectedPsngrCount().minus(1)
+                        model.setSelectedPsngrCount(data)
+
+                        updateRecords(userList)
+                    }
+
                 }
             })
 

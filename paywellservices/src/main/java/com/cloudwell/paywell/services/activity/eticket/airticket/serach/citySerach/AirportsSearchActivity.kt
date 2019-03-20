@@ -5,6 +5,8 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.Editable
@@ -13,6 +15,7 @@ import android.util.DisplayMetrics
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.adapter.HeaderAirportRecyclerViewSection
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.Airport
@@ -37,25 +40,41 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
     lateinit var allAirportsCity: ArrayList<String>
     var CITY_NAME = "cityName"
     var AIRPORT_NAME = "airport"
-    var VALUE_FROM = "from"
     var IS_TO = "isTo"
+    var isIndian = false
+
+    var VALUE_FROM = "from"
     var fromValue = ""
     var isTo = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.cloudwell.paywell.services.R.layout.activity_city_search)
+        setContentView(R.layout.activity_city_search)
 
         getSupportActionBar()?.hide();
 
-        fromValue = intent.getStringExtra(VALUE_FROM)
-        isTo = intent.getBooleanExtra(IS_TO, false)
+        isTo = intent.extras.getBoolean(IS_TO, false)
+        if (!isTo) {
+            tvToOrFrom.text = getString(R.string.from)
+        } else {
+            tvToOrFrom.text = getString(R.string.to)
+        }
+
+
+        isIndian = intent.extras.getBoolean("indian", false)
+
+
+        fromValue = intent.extras.getString(VALUE_FROM, "")
 
         initViewInitialization()
         initViewModel()
 
+
+        hiddenSoftKeyboard()
+
     }
+
 
     private fun initViewInitialization() {
         allAirports = ArrayList()
@@ -72,6 +91,7 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
             val airportName = adapter.getItem(position).toString();
             val single = mAirTicketBaseViewMode.resGetAirports.airports.filter { s -> s.airportName == airportName }.single()
 
+            addToRecentSearch(single)
             backResult(single)
         }
 
@@ -97,6 +117,12 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
         })
     }
 
+    private fun addToRecentSearch(airport: Airport) {
+//        airport.status = "recent"
+//        mAirTicketBaseViewMode.addRecentSearch(airport)
+
+    }
+
     private fun backResult(single: Airport) {
         AppStorageBox.put(applicationContext, AppStorageBox.Key.AIRPORT, single)
 
@@ -110,12 +136,34 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
     private fun initViewModel() {
         mAirTicketBaseViewMode = ViewModelProviders.of(this).get(AirportSerachViewModel::class.java)
 
+
+        mAirTicketBaseViewMode.baseViewStatus.observe(this, Observer {
+            handleViewCommonStatus(it)
+        })
+
         mAirTicketBaseViewMode.allAirportHashMap.observe(this, Observer {
             handleDisplayData(it)
         })
+        mAirTicketBaseViewMode.mViewStatus.observe(this, Observer {
+
+            it?.let { it1 -> handleStatus(it1) }
+        })
 
 
-        mAirTicketBaseViewMode.getData(isInternetConnection);
+        mAirTicketBaseViewMode.getData(isInternetConnection, isIndian);
+
+    }
+
+    private fun handleStatus(it: AirportSeachStatus) {
+
+        if (it.isShowProcessIndicatior) {
+            progressBar.visibility = View.VISIBLE
+        } else {
+            progressBar.visibility = View.INVISIBLE
+        }
+
+
+        // if(it.)
 
     }
 
@@ -162,11 +210,17 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
             }
         }
 
+
         val sectionHeader = findViewById(com.cloudwell.paywell.services.R.id.recycviewContryAndAirport) as RecyclerView
         sectionHeader.setLayoutManager(glm)
         sectionHeader.setHasFixedSize(true)
         sectionHeader.setAdapter(sectionAdapter)
         sectionHeader.isNestedScrollingEnabled = false
+
+
+        val verticalDecoration = DividerItemDecoration(sectionHeader.getContext(), DividerItemDecoration.HORIZONTAL)
+        val verticalDivider = ContextCompat.getDrawable(applicationContext, R.drawable.vertical_divider_new)
+        verticalDecoration.setDrawable(verticalDivider!!)
 
 
     }
@@ -175,8 +229,10 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
     @Subscribe
     fun onFavoriteItemAdd(airport: Airport) {
 
+
         com.orhanobut.logger.Logger.e("'" + airport)
 
+        addToRecentSearch(airport)
         backResult(airport)
 
     }

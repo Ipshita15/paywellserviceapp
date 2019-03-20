@@ -72,8 +72,16 @@ public class MyDatePickerTimeline extends LinearLayout implements View.OnClickLi
         this.startYear = startYear;
         this.startMonth = startMonth;
         this.startDay = startDay;
-
         myDateTimelineViewRecyclerView.setFirstDate(startYear, startMonth, startDay);
+
+    }
+
+
+    public void setNewDate(int startYear, int startMonth, int startDay) {
+        this.startYear = startYear;
+        this.startMonth = startMonth;
+        this.startDay = startDay;
+        myDateTimelineViewRecyclerView.setNewDate(startYear, startMonth, startDay);
 
     }
 
@@ -94,12 +102,12 @@ public class MyDatePickerTimeline extends LinearLayout implements View.OnClickLi
 
         Calendar calendar = Calendar.getInstance();
 
-        final int year = startYear;
-        final int thismonth = startMonth;
-        final int dayOfMonth = startDay;
+        final int year = calendar.get(Calendar.YEAR);
+        final int thismonth = calendar.get(Calendar.MONTH);
+        final int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
 
-        calendar.set(startYear, startMonth, startDay);
+        calendar.set(year, thismonth, dayOfMonth);
 
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
@@ -107,7 +115,7 @@ public class MyDatePickerTimeline extends LinearLayout implements View.OnClickLi
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         if (iDatePicker != null) {
-                            iDatePicker.onSetDate(year, month, day);
+                            iDatePicker.onSetNewDate(year, month, day);
                         }
                     }
                 }, year, thismonth, dayOfMonth);
