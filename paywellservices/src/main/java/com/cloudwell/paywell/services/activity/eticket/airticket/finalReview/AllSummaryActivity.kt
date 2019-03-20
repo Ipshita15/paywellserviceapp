@@ -26,10 +26,12 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.fra
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResAirPreBooking
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.viewModel.AllSummaryActivityViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.viewModel.view.AllSummaryStatus
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.AddPassengerActivity
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import kotlinx.android.synthetic.main.all_summaray_bottom_sheet.*
+import kotlinx.android.synthetic.main.contant_summary.*
 
 
 class AllSummaryActivity : AirTricketBaseActivity() {
@@ -52,9 +54,9 @@ class AllSummaryActivity : AirTricketBaseActivity() {
         setToolbar(getString(R.string.title_all_summary))
 
 
-//        passengerIDS = AppStorageBox.get(applicationContext, AppStorageBox.Key.SELETED_PASSENGER_IDS) as String
+        passengerIDS = AppStorageBox.get(applicationContext, AppStorageBox.Key.SELETED_PASSENGER_IDS) as String
 
-        passengerIDS = "1"
+//        passengerIDS = "1"
 
         initializationView()
         initilizationReviewBottomSheet()
@@ -267,11 +269,14 @@ class AllSummaryActivity : AirTricketBaseActivity() {
                 }
                 AppStorageBox.put(applicationContext, AppStorageBox.Key.AIR_PRE_BOOKKING, status.resAirPreBooking)
 
-
                 dialogFragment.show(supportFragmentManager, "dialog")
 
             }
 
+        }
+
+        if (status.test.equals("done")) {
+            mViewModel.callFileUploadAPI()
         }
 
 
@@ -279,6 +284,36 @@ class AllSummaryActivity : AirTricketBaseActivity() {
 
 
     private fun initializationView() {
+        val resposeAirPriceSearch = AppStorageBox.get(applicationContext, AppStorageBox.Key.ResposeAirPriceSearch) as ResposeAirPriceSearch
+        val airline = resposeAirPriceSearch.data?.results?.get(0)?.segments?.get(0)?.airline
+        val airport = resposeAirPriceSearch.data?.results?.get(0)?.segments?.get(0)?.origin?.airport
+
+
+        tvAirportCode.text = getString(R.string.airport_code) + " ${airport?.airportCode}"
+        tvAirportName.text = getString(R.string.airport_name) + " ${airport?.airportName}"
+        tvTerminal.text = getString(R.string.terminal) + " ${airport?.terminal}"
+        tvCityCode.text = getString(R.string.city_code) + " ${airport?.cityCode}"
+        tvCityName.text = getString(R.string.city_name) + " ${airport?.cityName}"
+        tvCountryCode.text = getString(R.string.country_code) + " ${airport?.countryCode}"
+        tvCountryName.text = getString(R.string.country_name) + " ${airport?.countryName}"
+
+
+        tvAirlineCode.text = getString(R.string.airline_code) + " ${airline?.airlineCode}"
+        tvAirlesscode.text = getString(R.string.airport_name) + " ${airline?.airlineName}"
+        tvFlghtNumber.text = getString(R.string.flight_number) + " ${airline?.flightNumber}"
+        tvBookingClass.text = getString(R.string.booking_class) + " ${airline?.bookingClass}"
+        tvOperatorCarrier.text = getString(R.string.operating_carrier) + " ${airline?.operatingCarrier}"
+        tvCabinClass.text = getString(R.string.cabin_class) + " ${airline?.cabinClass}"
+
+
+
+
+
+
+        tvArrivalTime.text = getString(R.string.arrival_time) + "${airport?.cityName}"
+
+
+        tvBaggage.text = getString(R.string.baggage) + resposeAirPriceSearch.data?.results?.get(0)?.segments?.get(0)?.baggage + getString(R.string.kg_per_adult)
 
 
     }

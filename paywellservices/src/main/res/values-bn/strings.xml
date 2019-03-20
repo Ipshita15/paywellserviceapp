@@ -627,22 +627,24 @@
     <string name="title_passenger_list">Passenger Info</string>
     <string name="title_add_passenger">Add Passenger</string>
     <string name="add">Add</string>
-    <string name="title">Title</string>
-    <string name="first_name">First Name</string>
-    <string name="last_name">Last Name</string>
-    <string name="gender">Gender</string>
-    <string name="country">Country</string>
-    <string name="contact_number">Contact Number</string>
-    <string name="email">Email</string>
+    <string name="title">Title *</string>
+    <string name="first_name">First Name *</string>
+    <string name="last_name">Last Name *</string>
+    <string name="gender">Gender *</string>
+    <string name="country">Country *</string>
+    <string name="contact_number">Contact Number *</string>
+    <string name="email">Email *</string>
     <string name="please_ensure_the_id_is_valid_for_at_least_6_months_after_the_date_of_departure">Please ensure the ID is valid for at least 6 months after the date of departure.</string>
     <string name="add_id">Add ID</string>
     <string name="passport_id">Passport/ID</string>
-    <string name="number">Passport Number</string>
+    <string name="hit_passport_number">Passport Number</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="other">Other</string>
     <string name="book">বুকিং অবস্থা
 </string>
+    <string name="title_activity_baggage_and_policies_actiivty">Pollicies &amp;  Fares</string>
+
     <string name="passenger_deleted_message">Passenger info cannot be recovered once deleted. Are you sure you want to delete?</string>
     <string name="ok">OK</string>
     <string name="cencel">CANCEL</string>
@@ -661,7 +663,7 @@
     <string name="mrs">Mrs.</string>
     <string name="miss">Miss</string>
     <string name="name_title">Title</string>
-    <string name="passenger_type">Passenger type</string>
+    <string name="passenger_type">Passenger type *</string>
     <string name="adult">adult</string>
     <string name="child">child</string>
     <string name="infant">Infant</string>
@@ -685,5 +687,33 @@
     <string name="economy">Economy</string>
     <string name="passengers">Passengers</string>
     <string name="search_text">Search</string>
+    <string name="airline_code">Airline code: </string>
+    <string name="airless_name">Airless name: </string>
+    <string name="flight_number">Flight number: </string>
+    <string name="booking_class">Booking Class: </string>
+    <string name="cabin_class">Cabin class : </string>
+    <string name="operating_carrier">Operating carrier: </string>
+    <string name="baggage_info">Baggage info</string>
+    <string name="airport_code">Airport Code: </string>
+    <string name="airport_name">Airport Name: </string>
+    <string name="terminal">Terminal: </string>
+    <string name="city_code">City Code: </string>
+    <string name="city_name">City Name: </string>
+    <string name="country_code">Country code: </string>
+    <string name="country_name">Country name: </string>
+    <string name="arrival_time">Arrival Time: </string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="invalid_passenger_type">Invalid passenger type</string>
+    <string name="invalid_title">Invalid Title</string>
+    <string name="invalid_first_name">Invalid First Name</string>
+    <string name="invalid_last_name">Invalid Last Name</string>
+    <string name="invalid_country_name">Invalid Country Name</string>
+    <string name="invalid_gender">Invalid Gender</string>
+    <string name="invalid_contact_name">Invalid Contact Name</string>
+    <string name="invalid_email">Invalid Email</string>
+    <string name="please_select_from_airport">Please select from airport</string>
+    <string name="please_select_arrival_airport">Please select arrival airport</string>
+    <string name="please_select_depart_date">Please select depart date</string>
 
 </resources>

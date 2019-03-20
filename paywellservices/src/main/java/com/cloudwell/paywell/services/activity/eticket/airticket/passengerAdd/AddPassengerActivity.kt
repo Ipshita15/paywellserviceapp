@@ -20,6 +20,7 @@ import android.view.View.OnFocusChangeListener
 import android.view.WindowManager
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.fragment.GenderBottomSheetDialog
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.fragment.NameTitleSheetDialog
@@ -50,6 +51,9 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
     private lateinit var viewMode: AddPassengerViewModel
     lateinit var touchHelper: ItemTouchHelper
+
+    lateinit var resposeAirPriceSearch: ResposeAirPriceSearch
+    var passportMadatory1 = false
 
 
     // ui
@@ -108,6 +112,14 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
 
     private fun initializationView() {
+
+        resposeAirPriceSearch = AppStorageBox.get(applicationContext, AppStorageBox.Key.ResposeAirPriceSearch) as ResposeAirPriceSearch
+        passportMadatory1 = resposeAirPriceSearch.data?.results?.get(0)?.passportMadatory!!
+
+        if (passportMadatory1) {
+            etNidorPassportNumber.setHint(getString(R.string.hit_passport_number) + "*")
+        }
+
 
         try {
             isEditFlag = intent.extras.getBoolean("isEditFlag", false)
@@ -352,49 +364,49 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
 
         if (passengerType.equals("")) {
-            textInputLayoutPassengerType.error = "Invalid type"
+            textInputLayoutPassengerType.error = getString(R.string.invalid_passenger_type)
             return
         } else {
             textInputLayoutPassengerType.error = ""
         }
 
         if (title.equals("")) {
-            textInputLayoutTitle.error = "Invalid Title"
+            textInputLayoutTitle.error = getString(R.string.invalid_title)
             return
         } else {
             textInputLayoutTitle.error = ""
         }
 
         if (firstName.equals("")) {
-            textInputLayoutFirstName.error = "Invalid First Name"
+            textInputLayoutFirstName.error = getString(R.string.invalid_first_name)
             return
         } else {
             textInputLayoutFirstName.error = ""
         }
 
         if (lastName.equals("")) {
-            textInputLayoutLastName.error = "Invalid Last Name"
+            textInputLayoutLastName.error = getString(R.string.invalid_last_name)
             return
         } else {
             textInputLayoutLastName.error = ""
         }
 
         if (country.equals("")) {
-            textInputLayoutCountry.error = "Invalid Country Name"
+            textInputLayoutCountry.error = getString(R.string.invalid_country_name)
             return
         } else {
             textInputLayoutCountry.error = ""
         }
 
         if (gender.equals("")) {
-            textInputLayoutGender.error = "Invalid Gender"
+            textInputLayoutGender.error = getString(R.string.invalid_gender)
             return
         } else {
             textInputLayoutGender.error = ""
         }
 
         if (contactNumber.equals("")) {
-            textInputLayoutContactNumber.error = "Invalid Country Name"
+            textInputLayoutContactNumber.error = getString(R.string.invalid_contact_name)
             return
         } else {
             textInputLayoutContactNumber.error = ""
@@ -407,7 +419,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
         } else {
             isEmailValid = false
-            textInputLayoutEmail.error = "invalid email"
+            textInputLayoutEmail.error = getString(R.string.invalid_email)
             return
         }
 
@@ -423,9 +435,10 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
 
 
-        if (passportMadatory) {
-            if (passportImagePath.equals("")) {
-                showPassportAddDilog()
+
+        if (passportMadatory1) {
+            if (passportNumber.equals("")) {
+                textInputLayoutPassport.error = "Passport number mandatory"
                 return
             }
         }
@@ -448,6 +461,15 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         passenger.nIDnumber = nationalIDNumber
         passenger.isLeadPassenger = isLeadPassenger.isChecked
 
+
+        if (!passportImagePath.equals("")) {
+            val lastIndexOf = passportImagePath.lastIndexOf('.')
+            if (lastIndexOf > 0) {
+                val extension = passportImagePath.substring(lastIndexOf + 1);
+                passenger.file_extension = extension
+            }
+
+        }
 
 
 
