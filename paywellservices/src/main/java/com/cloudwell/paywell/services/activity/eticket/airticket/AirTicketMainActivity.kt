@@ -18,7 +18,7 @@ open class AirTicketMainActivity : AirTricketBaseActivity() {
         assert(supportActionBar != null)
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-            supportActionBar!!.setTitle("Search Flights")
+            supportActionBar!!.setTitle(getString(R.string.search_flights))
             supportActionBar!!.elevation = 0f
             supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#189d49")));
         }

@@ -228,7 +228,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
-                    android:text="Price Details  "
+                    android:text="@string/price_details"
                     android:textColor="@color/black33333"
                     android:textSize="16dp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -373,7 +373,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="16dp"
-                    android:text="Rules:"
+                    android:text="@string/rules"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView17"
                     app:layout_constraintTop_toBottomOf="@+id/tvBaggage"
@@ -434,7 +434,7 @@
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toEndOf="@+id/imageView14"
                     app:layout_constraintTop_toBottomOf="@+id/tvPassportMandatory"
-                    tools:text="Extra Servies"/>
+                    tools:text="@string/extra_serviex"/>
 
                 <ImageView
                     android:id="@+id/imageView15"
