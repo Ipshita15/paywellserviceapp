@@ -41,7 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView16"/>
 
     <TextView
-        android:id="@+id/tvBookingId"
+        android:id="@+id/tvFare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
@@ -65,13 +65,13 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8"/>
 
     <TextView
-        android:id="@+id/tvTax"
+        android:id="@+id/tvRefunableForBooking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/tvBookingId"
-        app:layout_constraintTop_toBottomOf="@+id/tvBookingId"/>
+        app:layout_constraintStart_toStartOf="@+id/tvFare"
+        app:layout_constraintTop_toBottomOf="@+id/tvFare"/>
 
     <TextView
         android:id="@+id/textView18"
@@ -83,13 +83,13 @@
         app:layout_constraintTop_toBottomOf="@+id/textView12"/>
 
     <TextView
-        android:id="@+id/tvCurrency"
+        android:id="@+id/tvDepartTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/tvTax"
-        app:layout_constraintTop_toBottomOf="@+id/tvTax"/>
+        app:layout_constraintStart_toStartOf="@+id/tvRefunableForBooking"
+        app:layout_constraintTop_toBottomOf="@+id/tvRefunableForBooking"/>
 
     <TextView
         android:id="@+id/textView21"
@@ -101,13 +101,13 @@
         app:layout_constraintTop_toBottomOf="@+id/textView18"/>
 
     <TextView
-        android:id="@+id/tvOhterCharge"
+        android:id="@+id/tvArrivalTIme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/tvCurrency"
-        app:layout_constraintTop_toBottomOf="@+id/tvCurrency"/>
+        app:layout_constraintStart_toStartOf="@+id/tvDepartTime"
+        app:layout_constraintTop_toBottomOf="@+id/tvDepartTime"/>
 
     <TextView
         android:id="@+id/textView23"
@@ -146,13 +146,13 @@
         app:layout_constraintTop_toBottomOf="@+id/textView25"/>
 
     <TextView
-        android:id="@+id/tvDiscount"
+        android:id="@+id/tvAirlinesName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/tvOhterCharge"
-        app:layout_constraintTop_toBottomOf="@+id/tvOhterCharge"/>
+        app:layout_constraintStart_toStartOf="@+id/tvArrivalTIme"
+        app:layout_constraintTop_toBottomOf="@+id/tvArrivalTIme"/>
 
     <TextView
         android:id="@+id/tvPaxType"
@@ -160,8 +160,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/tvDiscount"
-        app:layout_constraintTop_toBottomOf="@+id/tvDiscount"/>
+        app:layout_constraintStart_toStartOf="@+id/tvAirlinesName"
+        app:layout_constraintTop_toBottomOf="@+id/tvAirlinesName"/>
 
     <TextView
         android:id="@+id/tvPassengerCount"

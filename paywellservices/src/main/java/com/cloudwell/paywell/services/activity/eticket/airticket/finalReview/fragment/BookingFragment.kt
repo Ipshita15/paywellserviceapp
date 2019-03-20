@@ -31,9 +31,40 @@ class BookingFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
+        val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_booking, container, false)
+
         resAirPreBooking = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.AIR_PRE_BOOKKING) as ResAirPreBooking
 
-        val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_booking, container, false)
+
+        val segments = resAirPreBooking.data?.results
+
+        v.tvFare.text = "${resAirPreBooking.data?.results?.get(0)?.totalFare}"
+
+        if (resAirPreBooking.data?.results?.get(0)?.isRefundable!!) {
+            v.tvRefunableForBooking.text = getString(com.cloudwell.paywell.services.R.string.refundable)
+        } else {
+            v.tvRefunableForBooking.text = getString(com.cloudwell.paywell.services.R.string.non_refundable)
+        }
+
+        if (segments?.size!! > 1) {
+            val arrTime = resAirPreBooking.data?.results?.get(0)!!.segments?.get(0)?.destination?.arrTime
+            val depTime = resAirPreBooking.data?.results?.get(0)!!.segments?.get(segments.size - 1)?.origin?.depTime
+
+            v.tvDepartTime.text = depTime
+            v.tvArrivalTIme.text = arrTime
+
+        } else {
+            val arrTime = resAirPreBooking.data?.results?.get(0)!!.segments?.get(0)?.destination?.arrTime
+            val depTime = resAirPreBooking.data?.results?.get(0)!!.segments?.get(0)?.origin?.depTime
+
+            v.tvDepartTime.text = depTime
+            v.tvArrivalTIme.text = arrTime
+        }
+
+        v.tvAirlinesName.text = resAirPreBooking.data?.results?.get(0)?.segments?.get(0)?.airline?.airlineName
+
+
+
         v.btBooking.setOnClickListener {
             bookingDialogListener.onBooking(resAirPreBooking)
             dismiss()

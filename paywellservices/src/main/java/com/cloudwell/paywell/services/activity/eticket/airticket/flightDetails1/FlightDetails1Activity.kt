@@ -44,6 +44,7 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
 //        val results = Gson().fromJson(DummayData().multipSegmentData, Array<com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Result>::class.java)
 
+        rootLayout.visibility = View.INVISIBLE
         initializationView()
 
 
@@ -118,7 +119,9 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
     }
 
     private fun displayData(it: ResposeAirPriceSearch) {
-        val requestAirSearch = RequestAirSearch(journeyType = "local")
+        rootLayout.visibility = View.VISIBLE
+
+        val requestAirSearch = AppStorageBox.get(applicationContext, AppStorageBox.Key.REQUEST_AIR_SERACH) as RequestAirSearch
 
         val result = it.data?.results?.get(0);
 
@@ -143,7 +146,6 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
             AppStorageBox.put(applicationContext, AppStorageBox.Key.orignAirportAnddestinationairportCode, orignAirtportCode + " - " + destinationairportCode)
 
 
-
             val outputSegment = segments.get(0);
             val depTime = outputSegment.origin?.depTime?.split("T")
             val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd").parse(depTime?.get(0)) as Date
@@ -155,7 +157,6 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
             val durtingJounaryTime = DateUtils.getDurtingJounaryTime(totalJourneyinMiliSecound)
             tvTotalDepartTime.text = durtingJounaryTime
             AppStorageBox.put(applicationContext, AppStorageBox.Key.totalJourney_time, durtingJounaryTime)
-
 
 
             val orign = segments.get(0);
@@ -198,9 +199,7 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         }
 
         tvTotalFair.text = "${result.totalFare}"
-        tvClass.text = getString(R.string.economy_class) + requestAirSearch.journeyType
-
-
+        tvClass.text = getString(R.string.class_text) + ": " + requestAirSearch.segments.get(0).cabinClass
 
 
 
@@ -220,9 +219,9 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         }
 
         if (result.isRefundable!!) {
-            tvRefunable.text = getString(com.cloudwell.paywell.services.R.string.refundable)
+            tvRefunable.text = getString(com.cloudwell.paywell.services.R.string.yes)
         } else {
-            tvRefunable.text = getString(com.cloudwell.paywell.services.R.string.non_refundable)
+            tvRefunable.text = getString(com.cloudwell.paywell.services.R.string.no)
 
         }
 
@@ -446,7 +445,6 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         tvTotalDepartTime.text = DateUtils.getDurtingJounaryTime(totalJourneyinMiliSecound)
 
         AppStorageBox.put(applicationContext, AppStorageBox.Key.totalJourney_time, durtingJounaryTime)
-
 
 
     }

@@ -48,7 +48,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:text="Airport Code: "
+            android:text="@string/airport_code"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView22"/>
 
@@ -59,7 +59,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:text="Airport Name: "
+            android:text="@string/airport_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvAirportCode"/>
 
@@ -70,7 +70,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:text="Terminal:  "
+            android:text="@string/terminal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvAirportName"/>
 
@@ -81,7 +81,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:text="City Code"
+            android:text="@string/city_code"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTerminal"/>
 
@@ -92,18 +92,18 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:text="City Name"
+            android:text="@string/city_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvCityCode"/>
 
         <TextView
-            android:id="@+id/textView34"
+            android:id="@+id/tvCountryCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:text="Country code: "
+            android:text="@string/country_code"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvCityName"/>
 
@@ -114,9 +114,9 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:text="Country name: "
+            android:text="@string/country_name"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView34"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvCountryCode"/>
 
         <View
             android:id="@+id/view4"
@@ -169,7 +169,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:text="Arrival Time: "
+            android:text="@string/arrival_time"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view4"/>
 
@@ -200,18 +200,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Airline code:  "
+            android:text="@string/airline_code"
             app:layout_constraintStart_toStartOf="@+id/imageView23"
             app:layout_constraintTop_toBottomOf="@+id/textView38"/>
 
         <TextView
-            android:id="@+id/Airlesscode"
+            android:id="@+id/tvAirlesscode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:text="Airless name: "
+            android:text="@string/airless_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvAirlineCode"/>
 
@@ -222,9 +222,9 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:text="Flight number: "
+            android:text="@string/flight_number"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Airlesscode"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvAirlesscode"/>
 
         <TextView
             android:id="@+id/tvBookingClass"
@@ -233,7 +233,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:text="Booking Class:  "
+            android:text="@string/booking_class"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvFlghtNumber"/>
 
@@ -244,7 +244,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:text="Cabin class : "
+            android:text="@string/cabin_class"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvBookingClass"/>
 
@@ -255,7 +255,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:text="Operating carrier: "
+            android:text="@string/operating_carrier"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvCabinClass"/>
 
@@ -276,7 +276,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:text="Baggage info "
+            android:text="@string/baggage_info"
             app:layout_constraintStart_toEndOf="@+id/imageView24"
             app:layout_constraintTop_toTopOf="@+id/imageView24"/>
 
@@ -287,7 +287,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:text="Baggage"
+            android:text="@string/baggage"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView46"/>
 
