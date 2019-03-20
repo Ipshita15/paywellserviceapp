@@ -73,7 +73,7 @@
         android:layout_marginTop="8dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="@+id/tvFare"
-        app:layout_constraintTop_toBottomOf="@+id/tvFare"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvFare" />
 
     <TextView
         android:id="@+id/textView18"
@@ -91,7 +91,7 @@
         android:layout_marginTop="8dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="@+id/tvRefunableForBooking"
-        app:layout_constraintTop_toBottomOf="@+id/tvRefunableForBooking"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvRefunableForBooking" />
 
     <TextView
         android:id="@+id/textView21"
@@ -109,7 +109,7 @@
         android:layout_marginTop="8dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="@+id/tvDepartTime"
-        app:layout_constraintTop_toBottomOf="@+id/tvDepartTime"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvDepartTime" />
 
     <TextView
         android:id="@+id/textView23"
@@ -154,7 +154,7 @@
         android:layout_marginTop="8dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="@+id/tvArrivalTIme"
-        app:layout_constraintTop_toBottomOf="@+id/tvArrivalTIme"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvArrivalTIme" />
 
     <TextView
         android:id="@+id/tvPaxType"
@@ -163,7 +163,7 @@
         android:layout_marginTop="8dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="@+id/tvAirlinesName"
-        app:layout_constraintTop_toBottomOf="@+id/tvAirlinesName"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvAirlinesName" />
 
     <TextView
         android:id="@+id/tvPassengerCount"
