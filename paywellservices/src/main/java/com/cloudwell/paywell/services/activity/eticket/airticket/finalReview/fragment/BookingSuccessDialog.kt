@@ -15,7 +15,6 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.mod
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Fare
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import kotlinx.android.synthetic.main.fragment_booking_success.view.*
-import kotlinx.android.synthetic.main.layout_demo_grid.*
 
 
 /**
@@ -37,6 +36,8 @@ class BookingSuccessDialog : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
+        isCancelable = false
+
         val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_booking_success, container, false)
         resBookingAPI = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.AIR_BOOKKING) as ResBookingAPI
 
@@ -45,7 +46,7 @@ class BookingSuccessDialog : DialogFragment() {
 
         v.tvFare.setOnClickListener {
             val cm = activity?.application?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            cm.setText(textView.getText())
+            cm.setText(v.tvFare.getText())
             Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_SHORT).show()
         }
 
