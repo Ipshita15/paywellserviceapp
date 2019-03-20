@@ -19,8 +19,8 @@ class BaggageAndPoliciesActiivty : AirTricketBaseActivity() {
         setContentView(com.cloudwell.paywell.services.R.layout.activity_baggage_and_policies_actiivty)
         setToolbar(getString(com.cloudwell.paywell.services.R.string.title_activity_baggage_and_policies_actiivty))
 
-        setupViewPager(viewpager);
-        tabs.setupWithViewPager(viewpager);
+        setupViewPager(viewpager)
+        tabs.setupWithViewPager(viewpager)
 
 
     }
