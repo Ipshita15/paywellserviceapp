@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -50,6 +51,11 @@ public class BookingCancelActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cencel_booking);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.tile_cencel_booking);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         cd = new ConnectionDetector(getApplicationContext());
         mAppHandler = AppHandler.getmInstance(getApplicationContext());
@@ -144,7 +150,7 @@ public class BookingCancelActivity extends AppCompatActivity {
                     dialogInterface.dismiss();
                     PIN_NO = pinNoET.getText().toString();
                     if (cd.isConnectingToInternet()) {
-                        submitCancelRequest(mAppHandler.getImeiNo(), PIN_NO, bookingId, cancelReason, "json");
+                        submitCancelRequest("cwntcl", PIN_NO, bookingId, cancelReason, "json");
                     } else {
                         Snackbar snackbar = Snackbar.make(cancelMainLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
                         snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -185,5 +191,18 @@ public class BookingCancelActivity extends AppCompatActivity {
         alert.show();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            this.onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 
 }

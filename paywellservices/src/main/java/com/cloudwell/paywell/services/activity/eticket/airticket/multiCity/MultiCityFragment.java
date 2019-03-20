@@ -154,7 +154,7 @@ public class MultiCityFragment extends Fragment {
                 }
                 requestAirSearch.setSegments(segments);
                 if (isSameCity || isDateNotAvailable) {
-                    Toast.makeText(getContext(), "Please provide all the data.", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "Please provide all the data.", Toast.LENGTH_SHORT).show();
                 } else {
                     AppStorageBox.put(getContext(), AppStorageBox.Key.REQUEST_AIR_SERACH, requestAirSearch);
                 }

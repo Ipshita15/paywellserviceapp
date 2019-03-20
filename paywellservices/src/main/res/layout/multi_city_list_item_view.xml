@@ -28,6 +28,8 @@
         <TextView
             android:layout_width="0dp"
             android:layout_weight="10"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:layout_height="30dp" />
 
         <ImageView

@@ -128,7 +128,7 @@ public interface APIService {
     Call<JsonObject> cancelBooking(@Field("username") String username,
                                    @Field("password") String password,
                                    @Field("BookingID") String bookingId,
-                                   @Field("cancelReason") String cancelReason,
+                                   @Field("reason") String cancelReason,
                                    @Field("format") String apiFormat);
 
 
