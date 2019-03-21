@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.view.Gravity;
@@ -23,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -35,7 +35,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BookingCancelActivity extends AppCompatActivity {
+public class BookingCancelActivity extends AirTricketBaseActivity {
     private ArrayAdapter bookingCancelAdapter;
     private ArrayList<String> cancelReasonList = new ArrayList<>();
     private EditText bookingIdET;
