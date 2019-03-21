@@ -277,14 +277,37 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
     fun onAdultPsngrTextChange(text: String) {
         airTicketAdult.setText(text)
+
+        val toInt = text.toInt()
+
+        if (toInt > 0) {
+            airTicketAdult.setTextColor(getResources().getColor(R.color.black33333))
+        } else {
+            airTicketAdult.setTextColor(getResources().getColor(R.color.blackcccccc))
+        }
     }
 
     fun onKidPsngrTextChange(text: String) {
         airTicketKid.setText(text)
+
+        val toInt = text.toInt()
+
+        if (toInt > 0) {
+            airTicketKid.setTextColor(getResources().getColor(R.color.black33333))
+        } else {
+            airTicketKid.setTextColor(getResources().getColor(R.color.blackcccccc))
+        }
     }
 
     fun onInfantPsngrTextChange(text: String) {
         airTicketInfant.setText(text)
+
+        val toInt = text.toInt()
+        if (toInt > 0) {
+            airTicketInfant.setTextColor(getResources().getColor(R.color.black33333))
+        } else {
+            airTicketInfant.setTextColor(getResources().getColor(R.color.blackcccccc))
+        }
     }
 
     private fun handleClass() {
@@ -327,7 +350,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
                     val nameOfMonth = SimpleDateFormat("MMM").format(calendar.getTime())
 
                     tvDepartDate.text = "$nameOfDayOfWeek, $day $nameOfMonth"
-                    tvDepart2.setTextColor(Color.BLACK);
+                    tvDepartDate.setTextColor(Color.BLACK);
 
 
                     val mMonth = month + 1;

@@ -64,7 +64,7 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
             val dayFirst = SimpleDateFormat("dd").format(firstDate.time)
 
             tvDepartDate.text = "$nameOfDayOfWeekFirst, $dayFirst $nameOfMonthFirst"
-            tvDepart1.setTextColor(Color.BLACK);
+            tvDepartDate.setTextColor(Color.BLACK);
 
             humanReadAbleDateFirst = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(firstDate.time)
 
@@ -74,7 +74,7 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
             val daySecound = SimpleDateFormat("dd").format(secondDate.time)
 
             tvDepartDate2.text = "$nameOfDayOfWeekSecound, $daySecound $nameOfMonthSecound"
-            tvDepart2.setTextColor(Color.BLACK);
+            tvDepartDate2.setTextColor(Color.BLACK);
 
             humanReadAbleDateSecond = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(secondDate.time)
 
@@ -293,18 +293,44 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
 
     fun onClassTextChange(text: String) {
         tvClass.setText(text)
+
+
     }
 
     fun onAdultPsngrTextChange(text: String) {
         tvAdult.setText(text)
+
+        val toInt = text.toInt()
+
+        if (toInt > 0) {
+            tvAdult.setTextColor(getResources().getColor(R.color.black33333))
+        } else {
+            tvAdult.setTextColor(getResources().getColor(R.color.blackcccccc))
+        }
     }
 
     fun onKidPsngrTextChange(text: String) {
         tvKid.setText(text)
+
+        val toInt = text.toInt()
+
+        if (toInt > 0) {
+            tvKid.setTextColor(getResources().getColor(R.color.black33333))
+        } else {
+            tvKid.setTextColor(getResources().getColor(R.color.blackcccccc))
+        }
     }
 
     fun onInfantPsngrTextChange(text: String) {
         tvInfant.setText(text)
+
+        val toInt = text.toInt()
+
+        if (toInt > 0) {
+            tvInfant.setTextColor(getResources().getColor(R.color.black33333))
+        } else {
+            tvInfant.setTextColor(getResources().getColor(R.color.blackcccccc))
+        }
     }
 
 

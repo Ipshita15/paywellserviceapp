@@ -275,14 +275,35 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
 
     fun onAdultPsngrTextChange(text: String) {
         airTicketAdult.setText(text)
+        val toInt = text.toInt()
+
+        if (toInt > 0) {
+            airTicketAdult.setTextColor(getResources().getColor(R.color.black33333))
+        } else {
+            airTicketAdult.setTextColor(getResources().getColor(R.color.blackcccccc))
+        }
     }
 
     fun onKidPsngrTextChange(text: String) {
         airTicketKid.setText(text)
+        val toInt = text.toInt()
+
+        if (toInt > 0) {
+            airTicketKid.setTextColor(getResources().getColor(R.color.black33333))
+        } else {
+            airTicketKid.setTextColor(getResources().getColor(R.color.blackcccccc))
+        }
     }
 
     fun onInfantPsngrTextChange(text: String) {
         airTicketInfant.setText(text)
+        val toInt = text.toInt()
+
+        if (toInt > 0) {
+            airTicketInfant.setTextColor(getResources().getColor(R.color.black33333))
+        } else {
+            airTicketInfant.setTextColor(getResources().getColor(R.color.blackcccccc))
+        }
     }
 
     private fun handleClass() {
@@ -325,7 +346,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
                     val nameOfMonth = SimpleDateFormat("MMM").format(calendar.getTime())
 
                     tvDepartDate.text = "$nameOfDayOfWeek, $day $nameOfMonth"
-                    tvDepart2.setTextColor(Color.BLACK);
+                    tvDepartDate.setTextColor(Color.BLACK);
 
 
                     val mMonth = month + 1;
@@ -379,36 +400,6 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
         dialogFragment.dismiss()
     }
 
-//    private fun getSourceList() {
-////        showProgressDialog()
-//
-////        val requestDistrict = RequestDistrict()
-////        requestDistrict.setmUsername("" + mAppHandler.getImeiNo())
-////        requestDistrict.setmBankId("" + bankId)
-//
-//        val responseBodyCall = ApiUtils.getAPIService().getAirports(mAppHandler?.getImeiNo(), requestDistrict.getmBankId())
-//
-//        responseBodyCall.enqueue(object : Callback<AirPortsData> {
-//            override fun onResponse(call: Call<AirPortsData>, response: Response<AirPortsData>) {
-////                dismissProgressDialog()
-//                val bundle = Bundle()
-//                bundle.putString("bankId", requestDistrict.getmBankId())
-//
-//                BankDetailsActivity.responseDistrictData = response.body()
-//                startBankDetailsActivity(bundle)
-//            }
-//
-//            override fun onFailure(call: Call<AirPortsData>, t: Throwable) {
-////                dismissProgressDialog()
-//                Log.d(KEY_TAG, "onFailure:")
-//                val snackbar = Snackbar.make(frameLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG)
-//                snackbar.setActionTextColor(Color.parseColor("#ffffff"))
-//                val snackBarView = snackbar.view
-//                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))
-//                snackbar.show()
-//            }
-//        })
-//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
