@@ -617,7 +617,7 @@
     <string name="action_search">Serach</string>
     <string name="title_booking_and_review">পর্যালোচনা এবং বুকিং</string>
     <string name="baggage_policy_details">যাত্রীর মালপত্র এবং নীতি বিবরণ</string>
-    <string name="refundable">Refundable</string>
+    <string name="refundable">ফেরতযোগ্য</string>
     <string name="non_refundable">No Refundable</string>
     <string name="passport_mandatory">Passport Mandatory</string>
     <string name="passport_not_mandatory">Passport not mandatory</string>

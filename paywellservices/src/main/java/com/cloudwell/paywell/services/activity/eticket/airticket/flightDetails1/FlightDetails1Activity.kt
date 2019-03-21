@@ -193,15 +193,15 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         }
 
         if (result.extraServices == null) {
-            tvExtraService.text = getString(R.string.n_a)
+            tvExtraService.text = getString(R.string.extra_serviex) + ": " + getString(R.string.n_a)
         } else {
-            tvExtraService.text = getString(R.string.n_a) + result.extraServices
+            tvExtraService.text = getString(R.string.extra_serviex) + ": " + getString(R.string.n_a) + result.extraServices
         }
 
         if (result.isRefundable!!) {
-            tvRefunable.text = getString(com.cloudwell.paywell.services.R.string.yes)
+            tvRefunable.text = getString(R.string.refundable) + ": " + getString(com.cloudwell.paywell.services.R.string.yes)
         } else {
-            tvRefunable.text = getString(com.cloudwell.paywell.services.R.string.no)
+            tvRefunable.text = getString(R.string.refundable) + ": " + getString(com.cloudwell.paywell.services.R.string.no)
 
         }
 
