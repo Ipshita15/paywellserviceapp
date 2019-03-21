@@ -63,7 +63,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:textSize="12sp" />
+                            android:textSize="12sp"/>
 
                     </LinearLayout>
 
@@ -106,7 +106,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
                             android:text=""
-                            android:textSize="12sp" />
+                            android:textSize="12sp"/>
 
                     </LinearLayout>
                 </LinearLayout>
@@ -177,7 +177,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:text="@string/class_text" />
+                            android:text="@string/class_text"/>
 
                         <TextView
                             android:id="@+id/airTicketClass"
