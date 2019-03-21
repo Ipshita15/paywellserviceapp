@@ -41,6 +41,7 @@ captures/
 .idea/assetWizardSettings.xml
 .idea/dictionaries
 .idea/libraries
+.idea/modules
 .idea/caches
 
 # Keystore files

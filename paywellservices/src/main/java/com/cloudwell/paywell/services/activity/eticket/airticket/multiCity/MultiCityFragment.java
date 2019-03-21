@@ -68,7 +68,6 @@ public class MultiCityFragment extends Fragment {
     private HashMap<Integer, String> flightDates = new HashMap<>();
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -91,7 +90,7 @@ public class MultiCityFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (addNoFlag < AppHandler.MULTI_CITY_LIMIT) {
-                addAnotherNo();
+                    addAnotherNo();
                 } else {
                     Snackbar snackbar = Snackbar.make(parentView.findViewById(R.id.multiCityMainFL), R.string.multicity_limit_msg, Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -110,7 +109,7 @@ public class MultiCityFragment extends Fragment {
         buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean isSameCity = false;
+                boolean isCityHasProblem = false;
                 boolean isDateNotAvailable = false;
                 long adult = Long.parseLong(((TextView) parentView.findViewById(R.id.airTicketAdult)).getText().toString());
                 long child = Long.parseLong(((TextView) parentView.findViewById(R.id.airTicketKid)).getText().toString());
@@ -124,50 +123,78 @@ public class MultiCityFragment extends Fragment {
                     TextSwitcher from = flightView.findViewById(R.id.tsMultiCityTripFrom);
                     TextSwitcher to = flightView.findViewById(R.id.tsMultiCityTripTo);
                     TextView date = flightView.findViewById(R.id.tvDepartDate);
-                    TextView cabinClass = flightView.findViewById(R.id.airTicketClass);
+                    TextView errorTV = flightView.findViewById(R.id.errorTV);
+                    TextView flightNumberTV = flightView.findViewById(R.id.flightNumberTV);
+                    clearError(errorTV, flightNumberTV);
                     if ((((TextView) from.getCurrentView()).getText().toString().
                             equalsIgnoreCase(((TextView) to.getCurrentView()).getText().toString())) ||
                             ((TextView) from.getCurrentView()).getText().toString().equals("From") ||
                             ((TextView) to.getCurrentView()).getText().toString().equals("To")) {
 //                        ((TextView) from.getCurrentView()).setError("Same City!!!");
 //                        ((TextView) to.getCurrentView()).setError("Same City!!!");
-                        isSameCity = true;
-                        break;
+                        isCityHasProblem = true;
+                        if (((TextView) from.getCurrentView()).getText().toString().equals("From")) {
+                            setTVError("Please set from", errorTV, flightNumberTV);
+                            break;
+                        } else if (((TextView) to.getCurrentView()).getText().toString().equals("To")) {
+                            setTVError("Please set to", errorTV, flightNumberTV);
+                            break;
+                        } else if ((((TextView) from.getCurrentView()).getText().toString().
+                                equalsIgnoreCase(((TextView) to.getCurrentView()).getText().toString()))) {
+                            setTVError("Both city's are same", errorTV, flightNumberTV);
+                            break;
+                        } else {
+                            setTVError("Unknown error occurred!!!", errorTV, flightNumberTV);
+                            break;
+                        }
                     } else {
 //                        ((TextView) from.getCurrentView()).setError(null);
 //                        ((TextView) to.getCurrentView()).setError(null);
                         segment.setOrigin(((TextView) from.getCurrentView()).getText().toString());
                         segment.setDestination(((TextView) to.getCurrentView()).getText().toString());
-                        isSameCity = false;
+                        isCityHasProblem = false;
                     }
                     if (date.getText().toString().isEmpty() || date.getText().toString().equalsIgnoreCase("Date")) {
 //                        date.setError("Date not Found!!!");
+                        setTVError("Please set date", errorTV, flightNumberTV);
                         isDateNotAvailable = true;
                         break;
                     } else {
 //                        date.setError(null);
-
-
                         segment.setDepartureDateTime(flightDates.get(a));
                         isDateNotAvailable = false;
                     }
                     segment.setCabinClass(((TextView) flightView.findViewById(R.id.airTicketClass)).getText().toString());
                     segments.add(segment);
+
                 }
                 requestAirSearch.setSegments(segments);
-                if (isSameCity || isDateNotAvailable) {
-                    Toast.makeText(getContext(), "Please provide all the data.", Toast.LENGTH_SHORT).show();
+                if (isCityHasProblem || isDateNotAvailable) {
+//                    Toast.makeText(getContext(), "Please provide all the data.", Toast.LENGTH_SHORT).show();
                 } else {
                     AppStorageBox.put(getContext(), AppStorageBox.Key.REQUEST_AIR_SERACH, requestAirSearch);
                     Intent intent = new Intent(getActivity().getApplicationContext(), FlightSearchViewActivity.class);
                     startActivity(intent);
-
                 }
             }
         });
         inflater = getLayoutInflater();
         addAnotherNo();
         addAnotherNo();
+    }
+
+    private void setTVError(String s, TextView textView, TextView flightNumberTV) {
+        textView.setText(s);
+        textView.setTextColor(Color.RED);
+        flightNumberTV.setBackgroundColor(Color.RED);
+        textView.requestFocus();
+        Toast.makeText(getContext(), "It seems you are missing something", Toast.LENGTH_SHORT).show();
+    }
+
+    private void clearError(TextView textView, TextView flightNumberTV) {
+
+        flightNumberTV.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        textView.setText("");
     }
 
     private void addAnotherNo() {

@@ -137,13 +137,13 @@
                             android:id="@+id/tvDepart1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/depart"/>
+                            android:text="Depart"/>
 
                         <TextView
                             android:id="@+id/tvDepartDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/date"
+                            android:text="Date"
                             android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
                     </LinearLayout>
@@ -160,13 +160,13 @@
                             android:id="@+id/tvDepart2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/return_text"/>
+                            android:text="Return"/>
 
                         <TextView
                             android:id="@+id/tvDepartDate2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/date"
+                            android:text="Date"
                             android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
                     </LinearLayout>
@@ -197,7 +197,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:text="@string/class_text"/>
+                            android:text="Class"/>
 
                         <TextView
                             android:id="@+id/airTicketClass"
@@ -221,7 +221,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="@string/passengers"/>
+                            android:text="Passengers"/>
 
                         <LinearLayout
                             android:id="@+id/llPsngr"
