@@ -612,16 +612,16 @@
     <string name="no_search_results">No search results</string>
     <string name="search_again">Search again</string>
     <string name="search">অনুসন্ধান</string>
-    <string name="cancel">Cancel</string>
-    <string name="transaction_log">Transaction Log</string>
+    <string name="cancel">বুকিং বাতিলকরণ</string>
+    <string name="transaction_log">লেনদেন অনুসন্ধান</string>
     <string name="action_search">Serach</string>
-    <string name="title_booking_and_review">Review and Book</string>
-    <string name="baggage_policy_details"><![CDATA[Baggage & Policy Details]]></string>
+    <string name="title_booking_and_review">পর্যালোচনা এবং বুকিং</string>
+    <string name="baggage_policy_details">যাত্রীর মালপত্র এবং নীতি বিবরণ</string>
     <string name="refundable">Refundable</string>
     <string name="non_refundable">No Refundable</string>
     <string name="passport_mandatory">Passport Mandatory</string>
     <string name="passport_not_mandatory">Passport not mandatory</string>
-    <string name="fares_information">Fares information</string>
+    <string name="fares_information">ভাড়া তথ্য</string>
     <string name="roles">Roles</string>
     <string name="title_flightDetails2">Review page 2</string>
     <string name="title_passenger_list">Passenger Info</string>
@@ -641,8 +641,7 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="other">Other</string>
-    <string name="book">বুকিং অবস্থা
-</string>
+    <string name="book">বুকিং অবস্থা</string>
     <string name="title_activity_baggage_and_policies_actiivty">Pollicies &amp;  Fares</string>
 
     <string name="passenger_deleted_message">Passenger info cannot be recovered once deleted. Are you sure you want to delete?</string>
@@ -651,7 +650,7 @@
     <string name="title_all_summary">All Summary</string>
     <string name="lbl_take_camera_picture">Camara</string>
     <string name="lbl_choose_from_gallery">Gallery</string>
-    <string name="lbl_set_profile_photo" />
+    <string name="lbl_set_profile_photo"/>
     <string name="please_add_id_info_for_this_travaler">Please add ID info for this passenger</string>
     <string name="tile_cencel_booking">Cancel Booking</string>
     <string name="tile_cencel_transaction_log">Transaction Log</string>
@@ -678,19 +677,19 @@
     <string name="slycalendar_short" translatable="false">EE, dd</string>
     <string name="slycalendar_short_month" translatable="false">EE, dd MMM</string>
     <string name="slycalendar_dates_period" translatable="false">%1$s – %2$s</string>
-    <string name="continue_text">Continue</string>
-    <string name="details_text">Details</string>
-    <string name="edit">Edit</string>
-    <string name="depart">Depart</string>
-    <string name="date">Date</string>
-    <string name="class_text">Class</string>
+    <string name="continue_text">চালিয়ে যাওয়া</string>
+    <string name="details_text">বিস্তারিত</string>
+    <string name="edit">পরিবর্তন</string>
+    <string name="depart">গমন</string>
+    <string name="date">তারিখ</string>
+    <string name="class_text">শ্রেণী</string>
     <string name="economy">Economy</string>
-    <string name="passengers">Passengers</string>
-    <string name="search_text">Search</string>
-    <string name="airline_code">Airline code: </string>
-    <string name="airless_name">Airless name: </string>
-    <string name="flight_number">Flight number: </string>
-    <string name="booking_class">Booking Class: </string>
+    <string name="passengers">যাত্রী</string>
+    <string name="search_text">অনুসন্ধান</string>
+    <string name="airline_code">এয়ারলাইন কোড: </string>
+    <string name="airless_name">বিমানের নাম: </string>
+    <string name="flight_number">ফ্লাইট নাম্বার: </string>
+    <string name="booking_class">বুকিং শ্রেণী: </string>
     <string name="cabin_class">Cabin class : </string>
     <string name="operating_carrier">Operating carrier: </string>
     <string name="baggage_info">Baggage info</string>
@@ -715,5 +714,27 @@
     <string name="please_select_from_airport">Please select from airport</string>
     <string name="please_select_arrival_airport">Please select arrival airport</string>
     <string name="please_select_depart_date">Please select depart date</string>
+    <string name="total_fare_text">Total Fare</string>
+    <string name="depart_time_">Depart Time:</string>
+    <string name="one_way_menu_title">একমুখী</string>
+    <string name="round_trip_menu_title">দুদিকে টিকট</string>
+    <string name="multi_city_menu_title">বহুমাত্রিক শহর</string>
+    <string name="indian_menu_title">ভারতীয়</string>
+    <string name="search_flights">ফ্লাইট অনুসন্ধান</string>
+    <string name="return_text">ফেরা</string>
+    <string name="airport">বিমানবন্দর</string>
+    <string name="duration_tiime">সময়কাল: </string>
+    <string name="more">আরও</string>
+    <string name="price_details">মূল্য বিবরণ</string>
+    <string name="rules">নীতি বিবরণ: </string>
+    <string name="extra_serviex">অতিরিক্ত সেবা</string>
+    <string name="base_fare">বেস ভাড়া:</string>
+    <string name="tax">শুল্ক</string>
+    <string name="currency">মুদ্রা</string>
+    <string name="othercharges">অন্যান্য চার্জ</string>
+    <string name="discount">কমিশন</string>
+    <string name="paxtype">যাত্রী প্রকার</string>
+    <string name="passenger_count">যাত্রী সংখ্যা</string>
+    <string name="service_fee">সার্ভিস ফ্রি</string>
 
 </resources>

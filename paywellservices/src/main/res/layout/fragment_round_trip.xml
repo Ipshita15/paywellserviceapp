@@ -1,12 +1,12 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:fancy="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.cloudwell.paywell.services.activity.eticket.airticket.RoundTripFragment">
+             xmlns:card_view="http://schemas.android.com/apk/res-auto"
+             xmlns:fancy="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.cloudwell.paywell.services.activity.eticket.airticket.RoundTripFragment">
 
-    <include layout="@layout/background_green" />
+    <include layout="@layout/background_green"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -71,7 +71,7 @@
                         android:layout_gravity="center"
                         android:layout_weight="0.4"
                         android:contentDescription="@string/app_name"
-                        android:src="@drawable/ic_round_trip" />
+                        android:src="@drawable/ic_round_trip"/>
 
                     <LinearLayout
                         android:id="@+id/layoutTo"
@@ -115,7 +115,7 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:background="#c0c0c0" />
+                    android:background="#c0c0c0"/>
 
                 <LinearLayout
                     android:id="@+id/layoutDepart"
@@ -177,7 +177,7 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:background="#c0c0c0" />
+                    android:background="#c0c0c0"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -197,7 +197,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:text="Class" />
+                            android:text="Class"/>
 
                         <TextView
                             android:id="@+id/airTicketClass"
@@ -206,7 +206,7 @@
                             android:layout_weight="2"
                             android:gravity="start"
                             android:text="Economy"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -221,7 +221,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="Passengers" />
+                            android:text="Passengers"/>
 
                         <LinearLayout
                             android:id="@+id/llPsngr"
@@ -241,14 +241,14 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="5dp"
-                                    android:src="@drawable/ic_adult" />
+                                    android:src="@drawable/ic_adult"/>
 
                                 <TextView
                                     android:id="@+id/airTicketAdult"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="1"
-                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
                             </LinearLayout>
 
                             <LinearLayout
@@ -261,14 +261,14 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="5dp"
-                                    android:src="@drawable/ic_kid" />
+                                    android:src="@drawable/ic_kid"/>
 
                                 <TextView
                                     android:id="@+id/airTicketKid"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="0"
-                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
                             </LinearLayout>
 
                             <LinearLayout
@@ -281,14 +281,14 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="5dp"
-                                    android:src="@drawable/ic_infant" />
+                                    android:src="@drawable/ic_infant"/>
 
                                 <TextView
                                     android:id="@+id/airTicketInfant"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="0"
-                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -299,7 +299,7 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:background="#c0c0c0" />
+                    android:background="#c0c0c0"/>
 
                 <mehdi.sakout.fancybuttons.FancyButton
                     android:id="@+id/btn_search"
@@ -312,7 +312,7 @@
                     fancy:fb_iconPosition="left"
                     fancy:fb_radius="2dp"
                     fancy:fb_text="Search"
-                    fancy:fb_textColor="#FFFFFF" />
+                    fancy:fb_textColor="#FFFFFF"/>
             </LinearLayout>
         </android.support.v7.widget.CardView>
 

@@ -32,7 +32,7 @@ import java.util.*
 
 class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragment.OnConfirmListener, FullScreenDialogFragment.OnDiscardListener {
 
-    private val KEY_TAG = OneWayFragment::class.java!!.getName()
+    private val KEY_TAG = OneWayFragment::class.java.getName()
     private val REQ_CODE_FROM = 1
     private val REQ_CODE_TO = 3
 
@@ -55,7 +55,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
         val KEY_REQUEST_FOR_FROM = 1
         val KEY_FROM = "From"
         val KEY_To = "To"
-        val KEY_AIRPORT = "Airport"
+
     }
 
 
@@ -124,11 +124,11 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
         tsToPort.outAnimation = outAnim
 
         tsFrom.setCurrentText(KEY_FROM)
-        tsFromPort.setCurrentText(KEY_AIRPORT)
+        tsFromPort.setCurrentText(activity?.application?.getString(R.string.airport))
 
 
         tsTo.setCurrentText(KEY_To)
-        tsToPort.setCurrentText(KEY_AIRPORT)
+        tsToPort.setCurrentText(activity?.application?.getString(R.string.airport))
 
 
         val textFrom = tsFrom.currentView as TextView

@@ -124,11 +124,11 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
         tsToPort.outAnimation = outAnim
 
         tsFrom.setCurrentText(OneWayFragment.KEY_FROM)
-        tsFromPort.setCurrentText(OneWayFragment.KEY_AIRPORT)
+        tsFromPort.setCurrentText(activity?.application?.getString(R.string.airport))
 
 
         tsTo.setCurrentText(OneWayFragment.KEY_To)
-        tsToPort.setCurrentText(OneWayFragment.KEY_AIRPORT)
+        tsToPort.setCurrentText(activity?.application?.getString(R.string.airport))
 
 
         val textFrom = tsFrom.currentView as TextView

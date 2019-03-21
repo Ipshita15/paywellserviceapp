@@ -604,7 +604,7 @@
     <string name="no_search_results">No search results</string>
     <string name="search_again">Search again</string>
     <string name="search">Search</string>
-    <string name="cancel">Cancel</string>
+    <string name="cancel">Booking cancellation</string>
     <string name="transaction_log">Transaction Log</string>
     <string name="action_search">Serach</string>
     <string name="ettitle_booking_and_review">Review and Book</string>
@@ -648,7 +648,7 @@
     <string name="toast_image_intent_null">Image Intnet Null</string>
     <string name="lbl_take_camera_picture">Camara</string>
     <string name="lbl_choose_from_gallery">Gallery</string>
-    <string name="lbl_set_profile_photo" />
+    <string name="lbl_set_profile_photo"/>
     <string name="please_add_id_info_for_this_travaler">Please add ID info for this passenger</string>
     <string name="tile_cencel_booking">Cancel Booking</string>
     <string name="tile_cencel_transaction_log">Transaction Log</string>
@@ -717,5 +717,27 @@
     <string name="please_select_from_airport">Please select from airport</string>
     <string name="please_select_arrival_airport">Please select arrival airport</string>
     <string name="please_select_depart_date">Please select depart date</string>
+    <string name="total_fare_text">Total Fare</string>
+    <string name="depart_time_">Depart Time:</string>
+    <string name="one_way_menu_title">One-way</string>
+    <string name="round_trip_menu_title">Round-trip</string>
+    <string name="multi_city_menu_title">Multi-City</string>
+    <string name="indian_menu_title">Indian</string>
+    <string name="search_flights">Search Flights</string>
+    <string name="return_text">Return</string>
+    <string name="airport">Airport</string>
+    <string name="duration_tiime">Duration:</string>
+    <string name="more">More</string>
+    <string name="price_details">Price Details</string>
+    <string name="rules">Rules:</string>
+    <string name="extra_serviex">Extra Services</string>
+    <string name="base_fare">Base Fare:</string>
+    <string name="tax">Tax:</string>
+    <string name="currency">Currency</string>
+    <string name="othercharges">Other Charges</string>
+    <string name="discount">Discount</string>
+    <string name="paxtype">PaxType</string>
+    <string name="passenger_count">Passenger Count</string>
+    <string name="service_fee">Service Fee</string>
 
 </resources>

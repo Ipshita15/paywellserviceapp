@@ -37,8 +37,6 @@ import kotlinx.android.synthetic.main.contant_summary.*
 class AllSummaryActivity : AirTricketBaseActivity() {
 
 
-    var totalJourneyinMiliSecound = 0L
-
     private lateinit var mViewModel: AllSummaryActivityViewModel
 
     lateinit var passengerIDS: String
@@ -55,28 +53,18 @@ class AllSummaryActivity : AirTricketBaseActivity() {
 
 
         passengerIDS = AppStorageBox.get(applicationContext, AppStorageBox.Key.SELETED_PASSENGER_IDS) as String
-
 //        passengerIDS = "1"
 
         initializationView()
         initilizationReviewBottomSheet()
-
-
-
-
         initViewModel(passengerIDS)
-//
-//        val parcelable = getIntent().getExtras().getParcelable<Result>("object") as Result
 
-
-        // displayData(results.toList())
 
     }
 
     private fun initilizationReviewBottomSheet() {
 
         val bottomSheetBehavior = BottomSheetBehavior.from(allSummaryBottonSheet)
-
 
         bottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -101,7 +89,6 @@ class AllSummaryActivity : AirTricketBaseActivity() {
             }
         })
 
-
         ivConfirm.setOnClickListener {
             handleConfirm()
         }
@@ -113,7 +100,6 @@ class AllSummaryActivity : AirTricketBaseActivity() {
 
         tvCancel.setOnClickListener {
             handleCancel()
-
         }
 
         ivCancle.setOnClickListener {

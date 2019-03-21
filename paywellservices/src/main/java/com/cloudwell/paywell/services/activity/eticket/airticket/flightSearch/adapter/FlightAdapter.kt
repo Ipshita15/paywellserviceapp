@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.Result
 import com.cloudwell.paywell.services.utils.DateUtils
 import kotlinx.android.synthetic.main.flight_list_item.view.*
@@ -98,7 +99,7 @@ class FlightAdapter(val items: List<Result>, val context: Context) : RecyclerVie
         val durtingJounaryTime = DateUtils.getDurtingJounaryTime(totalJourneyTimeString)
 
 
-        holder.tvDurationAndKilometer.text = "Duration: ${durtingJounaryTime} | $stop"
+        holder.tvDurationAndKilometer.text = context.getString(R.string.duration_tiime) + durtingJounaryTime + " | " + stop
 
 
     }

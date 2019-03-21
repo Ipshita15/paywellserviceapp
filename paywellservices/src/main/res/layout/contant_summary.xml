@@ -116,7 +116,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/country_name"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvCountryCode" />
+            app:layout_constraintTop_toBottomOf="@+id/tvCountryCode"/>
 
         <View
             android:id="@+id/view4"
@@ -224,7 +224,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/flight_number"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvAirlesscode" />
+            app:layout_constraintTop_toBottomOf="@+id/tvAirlesscode"/>
 
         <TextView
             android:id="@+id/tvBookingClass"

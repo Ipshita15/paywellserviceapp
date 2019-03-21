@@ -58,7 +58,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginLeft="24dp"
-                android:text="From"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="@+id/ivClose"
                 app:layout_constraintStart_toEndOf="@+id/ivClose"
