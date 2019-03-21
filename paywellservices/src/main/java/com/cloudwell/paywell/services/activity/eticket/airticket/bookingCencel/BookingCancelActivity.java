@@ -45,7 +45,8 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
     private String PIN_NO = "unknown";
     private ConstraintLayout cancelMainLayout;
     private AppHandler mAppHandler;
-
+    public static String KEY_BOOKING_ID = "Booking_Id";
+    private String bookingCancelId = new String();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +56,9 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
             getSupportActionBar().setTitle(R.string.tile_cencel_booking);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
+        if (getIntent().getStringExtra(KEY_BOOKING_ID) != null) {
+            bookingCancelId = getIntent().getStringExtra(KEY_BOOKING_ID);
+        }
         cd = new ConnectionDetector(getApplicationContext());
         mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
@@ -71,6 +74,7 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
         bookingCancelAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_dropdown_item, cancelReasonList);
         bookingCancelReasonSPNR.setAdapter(bookingCancelAdapter);
+        bookingIdET.setText(bookingCancelId);
         cancelBookingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
