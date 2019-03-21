@@ -66,7 +66,7 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
             tvDepartDate.text = "$nameOfDayOfWeekFirst, $dayFirst $nameOfMonthFirst"
             tvDepart1.setTextColor(Color.BLACK);
 
-            humanReadAbleDateFirst = SimpleDateFormat("YYYY-MM-dd", Locale.ENGLISH).format(firstDate.time)
+            humanReadAbleDateFirst = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(firstDate.time)
 
 
             val nameOfDayOfWeekSecound = SimpleDateFormat("EEE").format(secondDate.time)
@@ -76,7 +76,7 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
             tvDepartDate2.text = "$nameOfDayOfWeekSecound, $daySecound $nameOfMonthSecound"
             tvDepart2.setTextColor(Color.BLACK);
 
-            humanReadAbleDateSecond = SimpleDateFormat("YYYY-MM-dd", Locale.ENGLISH).format(secondDate.time)
+            humanReadAbleDateSecond = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(secondDate.time)
 
         }
 

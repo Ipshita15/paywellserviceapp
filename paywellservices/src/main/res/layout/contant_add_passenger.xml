@@ -42,7 +42,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="8dp"
-                        android:text="Please enter the passenger's name exactly as it appears on their ID. Modifications after submission are often not permitted or may incur an additional fee."
+                        android:text="@string/please_enter_the_passenger_"
                         android:textColor="#313235"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -68,7 +68,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginRight="8dp"
-                        android:text="Lead Passenger"
+                        android:text="@string/lead_passenger"
                         android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/constrainlayoutPricesDetailsView"
@@ -264,7 +264,6 @@
                         android:layout_margin="@dimen/activity_horizontal_margin"
                         android:layout_marginStart="8dp"
                         android:layout_marginLeft="8dp"
-
                         android:layout_marginTop="32dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginRight="8dp"
@@ -275,7 +274,7 @@
                         fancy:fb_defaultColor="#9fd34c"
                         fancy:fb_iconPosition="left"
                         fancy:fb_radius="2dp"
-                        fancy:fb_text="Add"
+                        fancy:fb_text="@string/add_passenger"
                         fancy:fb_textColor="#FFFFFF"/>
 
                     <android.support.design.widget.TextInputLayout
@@ -331,7 +330,7 @@
                             android:id="@+id/etNationalIDNumber"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="National ID"
+                            android:hint="@string/national_id"
                             android:visibility="visible"/>
                     </android.support.design.widget.TextInputLayout>
                 </android.support.constraint.ConstraintLayout>

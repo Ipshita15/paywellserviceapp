@@ -235,7 +235,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
         val myFormat = SimpleDateFormat(date, Locale.ENGLISH).parse(date) as Date
 
 
-        val humanReadAbleDate = SimpleDateFormat("YYYY-mm-dd", Locale.ENGLISH).format(myFormat)
+        val humanReadAbleDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).format(myFormat)
 
         val myFormatOne = "MM/dd/yy" //In which you need put here
         val sdf = SimpleDateFormat(myFormatOne, Locale.ENGLISH)
@@ -335,7 +335,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
                     val androidSystemdate = "${year}-${mMonth}-${day}"
 
                     val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(androidSystemdate) as Date
-                    val humanReadAbleDate = SimpleDateFormat("YYYY-mm-dd", Locale.ENGLISH).format(fdepTimeFormatDate)
+                    val humanReadAbleDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).format(fdepTimeFormatDate)
 
 
                     searchRoundTripModel.departDate = humanReadAbleDate

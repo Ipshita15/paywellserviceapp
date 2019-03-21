@@ -167,18 +167,20 @@ class AllSummaryActivityViewModel : AirTicketBaseViewMode() {
     }
 
     private fun addObject(it: Passenger): FileUploadReqSearchPara {
-        val bm = BitmapFactory.decodeFile(it.passportImagePath)
-        val baos = ByteArrayOutputStream()
-        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos) //bm is the bitmap object
-        val b = baos.toByteArray()
-        val encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
-
-
         val fileUploadReqSearchPara = FileUploadReqSearchPara()
+
+        if (!it.passportImagePath.equals("")) {
+            val bm = BitmapFactory.decodeFile(it.passportImagePath)
+            val baos = ByteArrayOutputStream()
+            bm.compress(Bitmap.CompressFormat.JPEG, 100, baos) //bm is the bitmap object
+            val b = baos.toByteArray()
+            val encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+            fileUploadReqSearchPara.imageContent = encodedImage
+        }
         fileUploadReqSearchPara.fileExtension = it.file_extension
         fileUploadReqSearchPara.passportNumber = it.passportNumber
         fileUploadReqSearchPara.nidNumber = it.nIDnumber
-        fileUploadReqSearchPara.imageContent = encodedImage
+
 
         return fileUploadReqSearchPara
     }
