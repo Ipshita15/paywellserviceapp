@@ -193,12 +193,14 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
         tsToPort.inAnimation = inAnim
         tsToPort.outAnimation = outAnim
 
-        tsFrom.setCurrentText(RoundTripFragment.KEY_FROM)
-        tsFromPort.setCurrentText(RoundTripFragment.KEY_AIRPORT)
+        tsFrom.setCurrentText(activity?.application?.getString(R.string.from))
+        tsFromPort.setCurrentText(activity?.application?.getString(R.string.airport))
+        view.tvHitFrom.visibility = View.INVISIBLE
 
 
-        tsTo.setCurrentText(RoundTripFragment.KEY_To)
-        tsToPort.setCurrentText(RoundTripFragment.KEY_AIRPORT)
+        tsTo.setCurrentText(activity?.application?.getString(R.string.to))
+        tsToPort.setCurrentText(activity?.application?.getString(R.string.airport))
+        view.tvHitTo.visibility = View.INVISIBLE
 
         val textFrom = tsFrom.currentView as TextView
         val textFromPort = tsFromPort.currentView as TextView
@@ -320,6 +322,7 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
 
                     tsRoundTripFrom.setText(get.iata)
                     tsRoundTripFromPort.setText(get.airportName)
+                    tvHitFrom.visibility = View.VISIBLE
                 }
 
                 REQ_CODE_TO -> {
@@ -331,6 +334,8 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
 
                     tsRoundTripTo.setText(get.iata)
                     tsRoundTripToPort.setText(get.airportName)
+
+                    tvHitTo.visibility = View.VISIBLE
                 }
 
 

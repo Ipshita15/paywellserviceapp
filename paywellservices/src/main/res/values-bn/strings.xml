@@ -655,8 +655,8 @@
     <string name="tile_cencel_booking">Cancel Booking</string>
     <string name="tile_cencel_transaction_log">Transaction Log</string>
     <string name="city">City</string>
-    <string name="from">From</string>
-    <string name="to">To</string>
+    <string name="from">ফৰ্ম</string>
+    <string name="to">টু </string>
     <string name="mr">Mr.</string>
     <string name="ms">Ms.</string>
     <string name="mrs">Mrs.</string>
