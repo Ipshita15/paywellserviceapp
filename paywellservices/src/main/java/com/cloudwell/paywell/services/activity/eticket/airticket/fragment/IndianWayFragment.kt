@@ -123,13 +123,14 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
         tsToPort.inAnimation = inAnim
         tsToPort.outAnimation = outAnim
 
-        tsFrom.setCurrentText(OneWayFragment.KEY_FROM)
+        tsFrom.setCurrentText(activity?.application?.getString(R.string.from))
         tsFromPort.setCurrentText(activity?.application?.getString(R.string.airport))
+        view.tvHitFrom.visibility = View.INVISIBLE
 
 
-        tsTo.setCurrentText(OneWayFragment.KEY_To)
+        tsTo.setCurrentText(activity?.application?.getString(R.string.to))
         tsToPort.setCurrentText(activity?.application?.getString(R.string.airport))
-
+        view.tvHitTo.visibility = View.INVISIBLE
 
         val textFrom = tsFrom.currentView as TextView
         val textFromPort = tsFromPort.currentView as TextView
@@ -395,6 +396,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
                     tsOneWayTripFrom.setText(get.iata)
                     tsOneWayTripFromPort.setText(get.airportName)
+                    tvHitFrom.visibility = View.VISIBLE
                 }
 
                 REQ_CODE_TO -> {
@@ -406,6 +408,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
                     tsOneWayTripTo.setText(get.iata)
                     tsOneWayTripToPort.setText(get.airportName)
+                    tvHitTo.visibility = View.VISIBLE
                 }
 
             }
