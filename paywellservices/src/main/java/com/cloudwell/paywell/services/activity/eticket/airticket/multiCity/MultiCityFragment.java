@@ -377,12 +377,14 @@ public class MultiCityFragment extends Fragment {
                 if (isTo) {
                     searchRoundTripModel.setToName(get.getIata());
                     searchRoundTripModel.setToPortName(get.getAirportName());
+                    ((TextView) getActivity().findViewById(android.R.id.content).findViewWithTag(position).findViewById(R.id.toTextTV)).setVisibility(View.VISIBLE);
                     ((TextSwitcher) getActivity().findViewById(android.R.id.content).findViewWithTag(position).findViewById(R.id.tsMultiCityTripTo)).setText(searchRoundTripModel.getToName());
                     ((TextSwitcher) getActivity().findViewById(android.R.id.content).findViewWithTag(position).findViewById(R.id.tsMultiCityTripToPort)).setText(searchRoundTripModel.getToPortName());
 
                 } else {
                     searchRoundTripModel.setFromName(get.getIata());
                     searchRoundTripModel.setFromPortName(get.getAirportName());
+                    ((TextView) getActivity().findViewById(android.R.id.content).findViewWithTag(position).findViewById(R.id.fromTextTV)).setVisibility(View.VISIBLE);
                     ((TextSwitcher) getActivity().findViewById(android.R.id.content).findViewWithTag(position).findViewById(R.id.tsMultiCityTripFrom)).setText(searchRoundTripModel.getFromName());
                     ((TextSwitcher) getActivity().findViewById(android.R.id.content).findViewWithTag(position).findViewById(R.id.tsMultiCityTripFromPort)).setText(searchRoundTripModel.getFromPortName());
                 }
@@ -405,6 +407,7 @@ public class MultiCityFragment extends Fragment {
 
                 TextView switcherTextView = new TextView(getContext());
                 switcherTextView.setTextSize(18);
+                switcherTextView.setTextColor(Color.BLACK);
                 return switcherTextView;
             }
         });
@@ -414,6 +417,7 @@ public class MultiCityFragment extends Fragment {
 
                 TextView switcherTextView = new TextView(getContext());
                 switcherTextView.setTextSize(10);
+                switcherTextView.setTextColor(Color.BLACK);
                 return switcherTextView;
             }
         });
@@ -423,6 +427,7 @@ public class MultiCityFragment extends Fragment {
 
                 TextView switcherTextView = new TextView(getContext());
                 switcherTextView.setTextSize(18);
+                switcherTextView.setTextColor(Color.BLACK);
                 return switcherTextView;
             }
         });
@@ -432,6 +437,7 @@ public class MultiCityFragment extends Fragment {
 
                 TextView switcherTextView = new TextView(getContext());
                 switcherTextView.setTextSize(10);
+                switcherTextView.setTextColor(Color.BLACK);
                 return switcherTextView;
             }
         });
