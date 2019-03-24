@@ -52,14 +52,14 @@ class AdapterForPassengersFinalList(var context: Context, var items: List<Passen
         if (model.passportNumber.equals("")) {
             holder.tvPassport.visibility = View.GONE
         } else {
-            holder.tvPassport.visibility = View.GONE
+            holder.tvPassport.visibility = View.VISIBLE
             holder.tvPassport.text = "Passport ID: " + model.passportNumber
         }
 
         if (model.nIDnumber.equals("")) {
             holder.tvNid.visibility = View.GONE
         } else {
-            holder.tvNid.visibility = View.GONE
+            holder.tvNid.visibility = View.VISIBLE
             holder.tvNid.text = "National ID: " + model.nIDnumber
         }
 

@@ -600,7 +600,7 @@
 
     <string name="one_way">One Way</string>
     <string name="title_activity_air_tricket_menu">Air Ticket</string>
-    <string name="title_serach_view">Search</string>
+    <string name="title_serach_view">Search Flights</string>
     <string name="no_search_results">No search results</string>
     <string name="search_again">Search again</string>
     <string name="search">Search</string>
@@ -712,7 +712,7 @@
     <string name="invalid_last_name">Invalid Last Name</string>
     <string name="invalid_country_name">Invalid Country Name</string>
     <string name="invalid_gender">Invalid Gender</string>
-    <string name="invalid_contact_name">Invalid Contact Name</string>
+    <string name="invalid_contact_name">Invalid Contact number</string>
     <string name="invalid_email">Invalid Email</string>
     <string name="please_select_from_airport">Please select from airport</string>
     <string name="please_select_arrival_airport">Please select arrival airport</string>
@@ -739,5 +739,18 @@
     <string name="paxtype">PaxType</string>
     <string name="passenger_count">Passenger Count</string>
     <string name="service_fee">Service Fee</string>
+    <string name="book_text">Book</string>
+    <string name="select_a_saved_passenger_or_add_a_new_one">Select a saved passenger or add a new one</string>
+    <string name="review">Review</string>
+    <string name="please_enter_the_passenger_">Please enter the passenger\'s name exactly as it appears on their ID. Modifications after submission are often not permitted or may incur an additional fee.</string>
+    <string name="lead_passenger">Lead Passenger</string>
+    <string name="add_edit">Add/Edit</string>
+    <string name="flight_information">ফ্লাইট তথ্য</string>
+    <string name="add_passenger">Add passenger</string>
+    <string name="national_id">National ID</string>
+    <string name="booking_now">Booking Now</string>
+    <string name="ticket_booking">Ticket booking</string>
+    <string name="booking_id">Booking ID</string>
+    <string name="ticket_status">Ticket status :</string>
 
 </resources>

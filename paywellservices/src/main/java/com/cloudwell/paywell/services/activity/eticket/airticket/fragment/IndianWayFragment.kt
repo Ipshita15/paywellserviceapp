@@ -235,7 +235,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
         val myFormat = SimpleDateFormat(date, Locale.ENGLISH).parse(date) as Date
 
 
-        val humanReadAbleDate = SimpleDateFormat("YYYY-mm-dd", Locale.ENGLISH).format(myFormat)
+        val humanReadAbleDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).format(myFormat)
 
         val myFormatOne = "MM/dd/yy" //In which you need put here
         val sdf = SimpleDateFormat(myFormatOne, Locale.ENGLISH)
@@ -277,14 +277,37 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
     fun onAdultPsngrTextChange(text: String) {
         airTicketAdult.setText(text)
+
+        val toInt = text.toInt()
+
+        if (toInt > 0) {
+            airTicketAdult.setTextColor(getResources().getColor(R.color.black33333))
+        } else {
+            airTicketAdult.setTextColor(getResources().getColor(R.color.blackcccccc))
+        }
     }
 
     fun onKidPsngrTextChange(text: String) {
         airTicketKid.setText(text)
+
+        val toInt = text.toInt()
+
+        if (toInt > 0) {
+            airTicketKid.setTextColor(getResources().getColor(R.color.black33333))
+        } else {
+            airTicketKid.setTextColor(getResources().getColor(R.color.blackcccccc))
+        }
     }
 
     fun onInfantPsngrTextChange(text: String) {
         airTicketInfant.setText(text)
+
+        val toInt = text.toInt()
+        if (toInt > 0) {
+            airTicketInfant.setTextColor(getResources().getColor(R.color.black33333))
+        } else {
+            airTicketInfant.setTextColor(getResources().getColor(R.color.blackcccccc))
+        }
     }
 
     private fun handleClass() {
@@ -327,7 +350,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
                     val nameOfMonth = SimpleDateFormat("MMM").format(calendar.getTime())
 
                     tvDepartDate.text = "$nameOfDayOfWeek, $day $nameOfMonth"
-                    tvDepart2.setTextColor(Color.BLACK);
+                    tvDepartDate.setTextColor(Color.BLACK);
 
 
                     val mMonth = month + 1;
@@ -335,7 +358,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
                     val androidSystemdate = "${year}-${mMonth}-${day}"
 
                     val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(androidSystemdate) as Date
-                    val humanReadAbleDate = SimpleDateFormat("YYYY-mm-dd", Locale.ENGLISH).format(fdepTimeFormatDate)
+                    val humanReadAbleDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).format(fdepTimeFormatDate)
 
 
                     searchRoundTripModel.departDate = humanReadAbleDate

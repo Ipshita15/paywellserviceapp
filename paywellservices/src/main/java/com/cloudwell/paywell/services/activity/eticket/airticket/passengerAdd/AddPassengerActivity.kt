@@ -14,7 +14,6 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.Menu
 import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.view.WindowManager
@@ -336,17 +335,6 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         } else {
             isFistTime = false
         }
-    }
-
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(com.cloudwell.paywell.services.R.menu.menu_add_passenger, menu)
-
-        if (isEditFlag == true) {
-            menu?.findItem(com.cloudwell.paywell.services.R.id.add_passenger)?.setTitle("Edit")
-        }
-
-        return super.onCreateOptionsMenu(menu)
     }
 
 

@@ -33,7 +33,7 @@ class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
 
         val date = "$year-$mMonth-$day"
         val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(date) as Date
-        val humanReadAbleDate = SimpleDateFormat("YYYY-mm-dd", Locale.ENGLISH).format(fdepTimeFormatDate)
+        val humanReadAbleDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).format(fdepTimeFormatDate)
 
 
         val split = humanReadAbleDate.split("-")
@@ -52,7 +52,7 @@ class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
 
         val date = "$year-$mMonth-$day"
         val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(date) as Date
-        val humanReadAbleDate = SimpleDateFormat("YYYY-mm-dd", Locale.ENGLISH).format(fdepTimeFormatDate)
+        val humanReadAbleDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).format(fdepTimeFormatDate)
 
 
         mViewModelFlight.onSetDate(isInternetConnection, humanReadAbleDate)

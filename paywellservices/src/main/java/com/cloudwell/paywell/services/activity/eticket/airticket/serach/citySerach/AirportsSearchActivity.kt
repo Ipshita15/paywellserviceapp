@@ -230,7 +230,7 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
     fun onFavoriteItemAdd(airport: Airport) {
 
 
-        com.orhanobut.logger.Logger.e("'" + airport)
+        //  com.orhanobut.logger.Logger.e("'" + airport)
 
         addToRecentSearch(airport)
         backResult(airport)

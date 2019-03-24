@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/reviewBottonSheet"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#cccccc"
-    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:id="@+id/reviewBottonSheet"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+                                             android:background="#cccccc"
+                                             app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
     <ImageView
         android:id="@+id/imageView6"
@@ -19,17 +19,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_tk_symbol_normal" />
+        app:srcCompat="@drawable/ic_tk_symbol_normal"/>
 
     <View
         android:id="@+id/viewReview"
-        android:layout_width="120dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
+
         android:background="#189d49"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/imageView19"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/tvTotalPrice"
@@ -42,7 +43,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageView6"
         app:layout_constraintStart_toEndOf="@+id/imageView6"
         app:layout_constraintTop_toTopOf="@+id/imageView6"
-        tools:text="5000" />
+        tools:text="5000"/>
 
     <TextView
         android:id="@+id/textView22"
@@ -52,12 +53,12 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="8dp"
-        android:text="Review"
+        android:text="@string/review"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
         android:id="@+id/imageView19"
@@ -69,6 +70,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView22"
         app:layout_constraintEnd_toStartOf="@+id/textView22"
         app:layout_constraintTop_toTopOf="@+id/textView22"
-        app:srcCompat="@drawable/ic_review" />
+        app:srcCompat="@drawable/ic_review"/>
 
 </android.support.constraint.ConstraintLayout>

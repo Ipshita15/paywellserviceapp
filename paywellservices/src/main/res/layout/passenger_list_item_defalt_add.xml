@@ -30,7 +30,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
-        android:text="Add/Edit  "
+        android:text="@string/add_edit"
         android:textColor="#189d49"
         app:layout_constraintBottom_toBottomOf="@+id/ivAddPassenger"
         app:layout_constraintEnd_toEndOf="parent"

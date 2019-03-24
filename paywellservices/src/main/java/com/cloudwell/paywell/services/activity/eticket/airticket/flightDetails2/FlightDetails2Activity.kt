@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2
 
-import android.annotation.SuppressLint
 import android.arch.lifecycle.ViewModelProviders
 import android.content.DialogInterface
 import android.content.Intent
@@ -40,7 +39,6 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
 
     lateinit var resposeAirPriceSearch: ResposeAirPriceSearch
 
-    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_flight_details_2)
@@ -48,9 +46,6 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
 
         initializationView()
         initilizationReviewBottomSheet()
-
-
-
         initViewModel()
 
 
@@ -278,8 +273,6 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
             val s = Intent(this.applicationContext, BaggageAndPoliciesActiivty::class.java)
             startActivity(s)
         }
-
-
 
 
     }
