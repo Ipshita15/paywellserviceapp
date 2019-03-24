@@ -14,10 +14,10 @@ import android.text.TextWatcher
 import android.util.DisplayMetrics
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.adapter.HeaderAirportRecyclerViewSection
+import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.adapter.ListAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.Airport
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.viewModel.AirportSerachViewModel
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
@@ -36,7 +36,7 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
     lateinit var sectionAdapter: SectionedRecyclerViewAdapter
     private lateinit var mAirTicketBaseViewMode: AirportSerachViewModel
 
-    lateinit var allAirports: ArrayList<String>
+    lateinit var allAirports: ArrayList<Airport>
     lateinit var allAirportsCity: ArrayList<String>
     var CITY_NAME = "cityName"
     var AIRPORT_NAME = "airport"
@@ -46,6 +46,8 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
     var VALUE_FROM = "from"
     var fromValue = ""
     var isTo = false
+
+    lateinit var adapter: ListAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,16 +86,8 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
             finish()
         }
 
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, allAirports)
-        searchListView.adapter = adapter
-        searchListView.setOnItemClickListener { parent: AdapterView<*>?, view: View?, position: Int, id: Long ->
+//        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, allAirports)
 
-            val airportName = adapter.getItem(position).toString();
-            val single = mAirTicketBaseViewMode.resGetAirports.airports.filter { s -> s.airportName == airportName }.single()
-
-            addToRecentSearch(single)
-            backResult(single)
-        }
 
         etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -180,9 +174,23 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
 
         for (air in allAirportsMap!!.iterator())
             for (name in air.value) {
-                allAirports.add(name.airportName)
+                allAirports.add(name)
                 allAirportsCity.add(name.city)
             }
+
+
+
+        adapter = ListAdapter(this, R.layout.custom_layout, allAirports)
+
+        searchListView.adapter = adapter
+        searchListView.setOnItemClickListener { parent: AdapterView<*>?, view: View?, position: Int, id: Long ->
+
+            val airportName = adapter.getItem(position).toString();
+            val single = mAirTicketBaseViewMode.resGetAirports.airports.filter { s -> s.airportName == airportName }.single()
+
+            addToRecentSearch(single)
+            backResult(single)
+        }
 
 
         val display = this.getWindowManager().getDefaultDisplay()
