@@ -16,6 +16,7 @@
     <!-- Paywell services color -->
     <color name="ivory_black">#292421</color>
     <color name="bg_color">#ffffff</color>
+    <color name="bg_color_trns">#00ffffff</color>
     <color name="white">#ffffff</color>
 
     <!-- bluetooth api -->

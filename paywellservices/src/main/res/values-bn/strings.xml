@@ -625,7 +625,10 @@
     <string name="roles">নীতি</string>
     <string name="title_flightDetails2">Review page 2</string>
     <string name="title_passenger_list">যাত্রী তথ্য</string>
-    <string name="title_add_passenger">যাত্রী তথ্য</string>
+
+    <string name="title_add_passenger">Add Passenger</string>
+    <string name="booking_status_menu">বুকিং স্টেটাস</string>
+
     <string name="add">Add</string>
     <string name="title">পদবি *</string>
     <string name="first_name">নামের প্রথম অংশ *</string>

@@ -55,7 +55,6 @@ public class BankDetailsActivity extends BaseActivity {
     private ConstraintLayout mConstraintLayout;
     private Spinner mSpinnerDistrict, mSpinnerBranch;
     private Button mBtnUpload;
-    //            , mBtnOk;
     private ArrayList<String> district_array, branch_array;
     private boolean districtChangeStatus;
     private ArrayAdapter<String> arrayAdapterBranchSpinner;
@@ -104,13 +103,11 @@ public class BankDetailsActivity extends BaseActivity {
             ((TextView) mConstraintLayout.findViewById(R.id.textViewDistrict)).setTypeface(AppController.getInstance().getOxygenLightFont());
             ((TextView) mConstraintLayout.findViewById(R.id.textViewBranch)).setTypeface(AppController.getInstance().getOxygenLightFont());
             ((Button) mConstraintLayout.findViewById(R.id.btn_upload)).setTypeface(AppController.getInstance().getOxygenLightFont());
-//            ((Button) mConstraintLayout.findViewById(R.id.btn_ok)).setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
             ((TextView) mConstraintLayout.findViewById(R.id.textViewAccountNo)).setTypeface(AppController.getInstance().getAponaLohitFont());
             ((TextView) mConstraintLayout.findViewById(R.id.textViewDistrict)).setTypeface(AppController.getInstance().getAponaLohitFont());
             ((TextView) mConstraintLayout.findViewById(R.id.textViewBranch)).setTypeface(AppController.getInstance().getAponaLohitFont());
             ((Button) mConstraintLayout.findViewById(R.id.btn_upload)).setTypeface(AppController.getInstance().getAponaLohitFont());
-//            ((Button) mConstraintLayout.findViewById(R.id.btn_ok)).setTypeface(AppController.getInstance().getAponaLohitFont());
         }
 
         try {
@@ -185,13 +182,6 @@ public class BankDetailsActivity extends BaseActivity {
                 public void onNothingSelected(AdapterView<?> adapter) {
                 }
             });
-
-//            mBtnOk.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    onSubmitRequest();
-//                }
-//            });
 
             mBtnUpload.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -345,15 +335,11 @@ public class BankDetailsActivity extends BaseActivity {
 
         mRequestRefillBalance.setmImagePath(imageEncoded);
 
-//        mBtnUpload.setText("Uploaded");
         onSubmitRequest();
     }
 
 
     private void onSubmitRequest() {
-//        if (!districtChangeStatus && responseBranchData.getStatus() != 200 || mRequestRefillBalance.getmImagePath() == null) {
-//            onBackPressed();
-//        } else {
         if (districtChangeStatus) {
             mRequestRefillBalance.setmDistrictId(responseDistrictData.getDistrictData().get(mSpinnerDistrict.getSelectedItemPosition()).getId());
             mRequestRefillBalance.setmBranchId(responseDistrictData.getBranch().get(mSpinnerBranch.getSelectedItemPosition()).getId());
@@ -370,7 +356,6 @@ public class BankDetailsActivity extends BaseActivity {
             snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             snackbar.show();
         }
-//        }
     }
 
     private void submitBalanceRequest() {
