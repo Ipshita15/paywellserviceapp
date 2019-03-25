@@ -652,7 +652,7 @@
     <string name="please_add_id_info_for_this_travaler">Please add ID info for this passenger</string>
     <string name="tile_cencel_booking">Cancel Booking</string>
     <string name="tile_cencel_transaction_log">Transaction Log</string>
-    <string name="city">City</string>
+    <string name="airport_search_hit">Airport name or code</string>
     <string name="from">From</string>
     <string name="to">To</string>
     <string name="mr">Mr.</string>

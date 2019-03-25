@@ -95,14 +95,18 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                if (s.length > 0) {
-                    recycviewContryAndAirport.visibility = View.GONE
-                    searchListView.visibility = View.VISIBLE
-                    adapter.filter.filter(s)
-                } else {
-                    recycviewContryAndAirport.visibility = View.VISIBLE
-                    searchListView.visibility = View.GONE
+
+                if (allAirports.size > 0) {
+                    if (s.length > 0) {
+                        recycviewContryAndAirport.visibility = View.GONE
+                        searchListView.visibility = View.VISIBLE
+                        adapter.filter.filter(s)
+                    } else {
+                        recycviewContryAndAirport.visibility = View.VISIBLE
+                        searchListView.visibility = View.GONE
+                    }
                 }
+
             }
 
             override fun afterTextChanged(s: Editable) {
@@ -185,7 +189,7 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
         searchListView.adapter = adapter
         searchListView.setOnItemClickListener { parent: AdapterView<*>?, view: View?, position: Int, id: Long ->
 
-            val airportName = adapter.getItem(position).toString();
+            val airportName = adapter.getItem(position).airportName
             val single = mAirTicketBaseViewMode.resGetAirports.airports.filter { s -> s.airportName == airportName }.single()
 
             addToRecentSearch(single)

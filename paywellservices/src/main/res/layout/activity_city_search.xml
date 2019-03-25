@@ -39,7 +39,7 @@
                 android:background="@drawable/rounded_corner_for_airport_search"
                 android:drawableLeft="@drawable/icon_flight_search_new"
                 android:drawablePadding="10dp"
-                android:hint="@string/city"
+                android:hint="@string/airport_search_hit"
                 android:paddingLeft="10dp"
                 android:ems="10"
                 android:singleLine="true"

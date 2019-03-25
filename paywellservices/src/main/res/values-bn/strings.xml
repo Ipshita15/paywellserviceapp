@@ -654,7 +654,7 @@
     <string name="please_add_id_info_for_this_travaler">Please add ID info for this passenger</string>
     <string name="tile_cencel_booking">বুকিং বাতিল</string>
     <string name="tile_cencel_transaction_log">Transaction Log</string>
-    <string name="city">শহর</string>
+    <string name="airport_search_hit">বিমানবন্দর নাম বা কোড</string>
     <string name="from">ফৰ্ম</string>
     <string name="to">টু </string>
     <string name="mr">Mr.</string>

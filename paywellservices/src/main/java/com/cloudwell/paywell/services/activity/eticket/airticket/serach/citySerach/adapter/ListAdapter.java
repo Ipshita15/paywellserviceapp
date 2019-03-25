@@ -13,6 +13,7 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.Airport;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 24/3/19.
@@ -92,31 +93,54 @@ public class ListAdapter extends ArrayAdapter<Airport> {
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
 
+//            charSequence = charSequence.toString().toLowerCase();
+//
+//            FilterResults filterResults = new FilterResults();
+//
+//            if (charSequence != null && charSequence.toString().length() > 0) {
+//                ArrayList<Airport> arrayList1 = new ArrayList<Airport>();
+//
+//                for (int i = 0, l = MainList.size(); i < l; i++) {
+//                    Airport subject = MainList.get(i);
+//
+//                    if (subject.toString().toLowerCase().contains(charSequence))
+//
+//                        arrayList1.add(subject);
+//                }
+//                filterResults.count = arrayList1.size();
+//
+//                filterResults.values = arrayList1;
+//            } else {
+//                synchronized (this) {
+//                    filterResults.values = MainList;
+//
+//                    filterResults.count = MainList.size();
+//                }
+//            }
+//            return filterResults;
+
             charSequence = charSequence.toString().toLowerCase();
 
-            FilterResults filterResults = new FilterResults();
-
-            if (charSequence != null && charSequence.toString().length() > 0) {
-                ArrayList<Airport> arrayList1 = new ArrayList<Airport>();
-
-                for (int i = 0, l = MainList.size(); i < l; i++) {
-                    Airport subject = MainList.get(i);
-
-                    if (subject.toString().toLowerCase().contains(charSequence))
-
-                        arrayList1.add(subject);
-                }
-                filterResults.count = arrayList1.size();
-
-                filterResults.values = arrayList1;
+            FilterResults results = new FilterResults();
+            // We implement here the filter logic
+            if (charSequence == null || charSequence.length() == 0) {
+                // No filter implemented we return all the list
+                results.values = MainList;
+                results.count = MainList.size();
             } else {
-                synchronized (this) {
-                    filterResults.values = MainList;
+                // We perform filtering operation
+                List<Airport> nPlanetList = new ArrayList<Airport>();
 
-                    filterResults.count = MainList.size();
+                for (Airport p : MainList) {
+                    if (p.getAirportName().toLowerCase().startsWith(charSequence.toString()) || p.getIata().toLowerCase().startsWith(charSequence.toString())) {
+                        nPlanetList.add(p);
+                    }
                 }
+                results.values = nPlanetList;
+                results.count = nPlanetList.size();
             }
-            return filterResults;
+            return results;
+
         }
 
         @SuppressWarnings("unchecked")
