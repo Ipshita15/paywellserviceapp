@@ -129,9 +129,8 @@
         android:id="@+id/tvAction"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Action"
         android:textColor="@color/balck666666"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/tvBookingStatus"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="1"
@@ -139,7 +138,7 @@
         app:layout_constraintTop_toTopOf="@+id/tvBookingStatus"/>
 
     <ImageView
-        android:id="@+id/imageView10"
+        android:id="@+id/ivAction"
         android:layout_width="28dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -149,18 +148,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tvAction"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_action"/>
+        android:background="@drawable/ic_action"/>
 
     <ImageView
-        android:id="@+id/imageView20"
+        android:id="@+id/ivSymbolTicketed"
         android:layout_width="wrap_content"
-        android:layout_height="16dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@drawable/ic_download"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/view11"
-        app:layout_constraintTop_toBottomOf="@+id/tvBookingId"
-        app:srcCompat="@drawable/ic_download"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvBookingId"/>
 
 </android.support.constraint.ConstraintLayout>
