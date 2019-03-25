@@ -1,10 +1,10 @@
 package com.cloudwell.paywell.services.retrofit;
 
 
+import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList;
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.RequestAirPrebookingSearchParams;
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResAirPreBooking;
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResBookingAPI;
-import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList;
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.RequestAirPriceSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.airRules.ResposeAirRules;

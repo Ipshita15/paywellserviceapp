@@ -202,14 +202,14 @@
                             android:text="@string/class_text"/>
 
                         <TextView
-                            android:textColor="@color/black"
+                            android:layout_height="wrap_content"
                             android:id="@+id/airTicketClass"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:text="Economy"
                             android:layout_weight="2"
                             android:gravity="start"
-                            android:text="Economy"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:textColor="@color/black"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -251,8 +251,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="1"
-                                    android:textColor="@color/black"
-                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                    android:textColor="@color/black"/>
                             </LinearLayout>
 
                             <LinearLayout
