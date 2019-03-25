@@ -32,7 +32,7 @@ import java.util.*
 
 class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragment.OnConfirmListener, FullScreenDialogFragment.OnDiscardListener {
 
-    private val KEY_TAG = OneWayFragment::class.java!!.getName()
+    private val KEY_TAG = OneWayFragment::class.java.getName()
     private val REQ_CODE_FROM = 1
     private val REQ_CODE_TO = 3
 
@@ -55,7 +55,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
         val KEY_REQUEST_FOR_FROM = 1
         val KEY_FROM = "From"
         val KEY_To = "To"
-        val KEY_AIRPORT = "Airport"
+
     }
 
 
@@ -123,12 +123,14 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
         tsToPort.inAnimation = inAnim
         tsToPort.outAnimation = outAnim
 
-        tsFrom.setCurrentText(KEY_FROM)
-        tsFromPort.setCurrentText(KEY_AIRPORT)
+        tsFrom.setCurrentText(activity?.application?.getString(R.string.from))
+        tsFromPort.setCurrentText(activity?.application?.getString(R.string.airport))
+        view.tvHitFrom.visibility = View.INVISIBLE
 
 
-        tsTo.setCurrentText(KEY_To)
-        tsToPort.setCurrentText(KEY_AIRPORT)
+        tsTo.setCurrentText(activity?.application?.getString(R.string.to))
+        tsToPort.setCurrentText(activity?.application?.getString(R.string.airport))
+        view.tvHitTo.visibility = View.INVISIBLE
 
 
         val textFrom = tsFrom.currentView as TextView
@@ -231,7 +233,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
         val myFormat = SimpleDateFormat(date, Locale.ENGLISH).parse(date) as Date
 
 
-        val humanReadAbleDate = SimpleDateFormat("YYYY-mm-dd", Locale.ENGLISH).format(myFormat)
+        val humanReadAbleDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).format(myFormat)
 
         val myFormatOne = "MM/dd/yy" //In which you need put here
         val sdf = SimpleDateFormat(myFormatOne, Locale.ENGLISH)
@@ -273,14 +275,35 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
 
     fun onAdultPsngrTextChange(text: String) {
         airTicketAdult.setText(text)
+        val toInt = text.toInt()
+
+        if (toInt > 0) {
+            airTicketAdult.setTextColor(getResources().getColor(R.color.black33333))
+        } else {
+            airTicketAdult.setTextColor(getResources().getColor(R.color.blackcccccc))
+        }
     }
 
     fun onKidPsngrTextChange(text: String) {
         airTicketKid.setText(text)
+        val toInt = text.toInt()
+
+        if (toInt > 0) {
+            airTicketKid.setTextColor(getResources().getColor(R.color.black33333))
+        } else {
+            airTicketKid.setTextColor(getResources().getColor(R.color.blackcccccc))
+        }
     }
 
     fun onInfantPsngrTextChange(text: String) {
         airTicketInfant.setText(text)
+        val toInt = text.toInt()
+
+        if (toInt > 0) {
+            airTicketInfant.setTextColor(getResources().getColor(R.color.black33333))
+        } else {
+            airTicketInfant.setTextColor(getResources().getColor(R.color.blackcccccc))
+        }
     }
 
     private fun handleClass() {
@@ -323,7 +346,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
                     val nameOfMonth = SimpleDateFormat("MMM").format(calendar.getTime())
 
                     tvDepartDate.text = "$nameOfDayOfWeek, $day $nameOfMonth"
-                    tvDepart2.setTextColor(Color.BLACK);
+                    tvDepartDate.setTextColor(Color.BLACK);
 
 
                     val mMonth = month + 1;
@@ -331,7 +354,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
                     val androidSystemdate = "${year}-${mMonth}-${day}"
 
                     val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(androidSystemdate) as Date
-                    val humanReadAbleDate = SimpleDateFormat("YYYY-mm-dd", Locale.ENGLISH).format(fdepTimeFormatDate)
+                    val humanReadAbleDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).format(fdepTimeFormatDate)
 
 
                     searchRoundTripModel.departDate = humanReadAbleDate
@@ -377,36 +400,6 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
         dialogFragment.dismiss()
     }
 
-//    private fun getSourceList() {
-////        showProgressDialog()
-//
-////        val requestDistrict = RequestDistrict()
-////        requestDistrict.setmUsername("" + mAppHandler.getImeiNo())
-////        requestDistrict.setmBankId("" + bankId)
-//
-//        val responseBodyCall = ApiUtils.getAPIService().getAirports(mAppHandler?.getImeiNo(), requestDistrict.getmBankId())
-//
-//        responseBodyCall.enqueue(object : Callback<AirPortsData> {
-//            override fun onResponse(call: Call<AirPortsData>, response: Response<AirPortsData>) {
-////                dismissProgressDialog()
-//                val bundle = Bundle()
-//                bundle.putString("bankId", requestDistrict.getmBankId())
-//
-//                BankDetailsActivity.responseDistrictData = response.body()
-//                startBankDetailsActivity(bundle)
-//            }
-//
-//            override fun onFailure(call: Call<AirPortsData>, t: Throwable) {
-////                dismissProgressDialog()
-//                Log.d(KEY_TAG, "onFailure:")
-//                val snackbar = Snackbar.make(frameLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG)
-//                snackbar.setActionTextColor(Color.parseColor("#ffffff"))
-//                val snackBarView = snackbar.view
-//                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))
-//                snackbar.show()
-//            }
-//        })
-//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
@@ -422,6 +415,8 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
 
                     tsOneWayTripFrom.setText(get.iata)
                     tsOneWayTripFromPort.setText(get.airportName)
+                    tvHitFrom.visibility = View.VISIBLE
+
                 }
 
                 REQ_CODE_TO -> {
@@ -433,6 +428,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
 
                     tsOneWayTripTo.setText(get.iata)
                     tsOneWayTripToPort.setText(get.airportName)
+                    tvHitTo.visibility = View.VISIBLE
                 }
 
             }
@@ -441,19 +437,19 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
 
     private fun handleSearchClick() {
 
-        if (searchRoundTripModel.getFromName().equals(KEY_FROM)) {
-            Toast.makeText(activity?.applicationContext, "Please select from airport", Toast.LENGTH_LONG).show()
+        if (searchRoundTripModel.getFromName().equals(OneWayFragment.KEY_FROM)) {
+            Toast.makeText(activity?.applicationContext, getString(R.string.please_select_from_airport), Toast.LENGTH_LONG).show()
 
             return
         }
 
-        if (searchRoundTripModel.getToName().equals(KEY_To)) {
-            Toast.makeText(activity?.applicationContext, "Please select arrival airport", Toast.LENGTH_LONG).show()
+        if (searchRoundTripModel.getToName().equals(OneWayFragment.KEY_To)) {
+            Toast.makeText(activity?.applicationContext, getString(R.string.please_select_arrival_airport), Toast.LENGTH_LONG).show()
             return
         }
 
         if (searchRoundTripModel.departDate.equals("")) {
-            Toast.makeText(activity?.applicationContext, "Please select depart date", Toast.LENGTH_LONG).show()
+            Toast.makeText(activity?.applicationContext, getString(R.string.please_select_depart_date), Toast.LENGTH_LONG).show()
             return
         }
 

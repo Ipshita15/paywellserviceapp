@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/cancelMainLayout"
-    xmlns:fancy="http://schemas.android.com/apk/res-auto">
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:fancy="http://schemas.android.com/apk/res-auto"
+                                             android:id="@+id/cancelMainLayout"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             android:background="@drawable/cancel_bg">
 
     <EditText
         android:id="@+id/bookingIdET"
-        android:layout_width="284dp"
-        android:layout_height="39dp"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="100dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
         android:ems="10"
-        android:inputType="number"
         android:hint="@string/bookingId"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.19999999"/>
 
     <Spinner
         android:id="@+id/cancelReasonSPNR"
-        android:layout_width="284dp"
-        android:layout_height="39dp"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -34,11 +35,11 @@
         android:layout_marginRight="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bookingIdET" />
+        app:layout_constraintTop_toBottomOf="@+id/bookingIdET"/>
 
     <View
         android:id="@+id/view8"
-        android:layout_width="284dp"
+        android:layout_width="250dp"
         android:layout_height="2dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -48,11 +49,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cancelReasonSPNR" />
+        app:layout_constraintTop_toBottomOf="@+id/cancelReasonSPNR"/>
 
     <mehdi.sakout.fancybuttons.FancyButton
         android:id="@+id/cancelBookingBtn"
-        android:layout_width="284dp"
+        android:layout_width="250dp"
         android:layout_height="35dp"
         android:layout_margin="@dimen/activity_horizontal_margin"
         android:layout_marginStart="8dp"
@@ -68,5 +69,5 @@
         fancy:fb_iconPosition="left"
         fancy:fb_radius="2dp"
         fancy:fb_text="Cancel Booking"
-        fancy:fb_textColor="#FFFFFF" />
+        fancy:fb_textColor="#FFFFFF"/>
 </android.support.constraint.ConstraintLayout>

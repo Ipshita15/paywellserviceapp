@@ -64,9 +64,9 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
             val dayFirst = SimpleDateFormat("dd").format(firstDate.time)
 
             tvDepartDate.text = "$nameOfDayOfWeekFirst, $dayFirst $nameOfMonthFirst"
-            tvDepart1.setTextColor(Color.BLACK);
+            tvDepartDate.setTextColor(Color.BLACK);
 
-            humanReadAbleDateFirst = SimpleDateFormat("YYYY-MM-dd", Locale.ENGLISH).format(firstDate.time)
+            humanReadAbleDateFirst = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(firstDate.time)
 
 
             val nameOfDayOfWeekSecound = SimpleDateFormat("EEE").format(secondDate.time)
@@ -74,9 +74,9 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
             val daySecound = SimpleDateFormat("dd").format(secondDate.time)
 
             tvDepartDate2.text = "$nameOfDayOfWeekSecound, $daySecound $nameOfMonthSecound"
-            tvDepart2.setTextColor(Color.BLACK);
+            tvDepartDate2.setTextColor(Color.BLACK);
 
-            humanReadAbleDateSecond = SimpleDateFormat("YYYY-MM-dd", Locale.ENGLISH).format(secondDate.time)
+            humanReadAbleDateSecond = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(secondDate.time)
 
         }
 
@@ -193,12 +193,14 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
         tsToPort.inAnimation = inAnim
         tsToPort.outAnimation = outAnim
 
-        tsFrom.setCurrentText(RoundTripFragment.KEY_FROM)
-        tsFromPort.setCurrentText(RoundTripFragment.KEY_AIRPORT)
+        tsFrom.setCurrentText(activity?.application?.getString(R.string.from))
+        tsFromPort.setCurrentText(activity?.application?.getString(R.string.airport))
+        view.tvHitFrom.visibility = View.INVISIBLE
 
 
-        tsTo.setCurrentText(RoundTripFragment.KEY_To)
-        tsToPort.setCurrentText(RoundTripFragment.KEY_AIRPORT)
+        tsTo.setCurrentText(activity?.application?.getString(R.string.to))
+        tsToPort.setCurrentText(activity?.application?.getString(R.string.airport))
+        view.tvHitTo.visibility = View.INVISIBLE
 
         val textFrom = tsFrom.currentView as TextView
         val textFromPort = tsFromPort.currentView as TextView
@@ -291,18 +293,44 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
 
     fun onClassTextChange(text: String) {
         tvClass.setText(text)
+
+
     }
 
     fun onAdultPsngrTextChange(text: String) {
         tvAdult.setText(text)
+
+        val toInt = text.toInt()
+
+        if (toInt > 0) {
+            tvAdult.setTextColor(getResources().getColor(R.color.black33333))
+        } else {
+            tvAdult.setTextColor(getResources().getColor(R.color.blackcccccc))
+        }
     }
 
     fun onKidPsngrTextChange(text: String) {
         tvKid.setText(text)
+
+        val toInt = text.toInt()
+
+        if (toInt > 0) {
+            tvKid.setTextColor(getResources().getColor(R.color.black33333))
+        } else {
+            tvKid.setTextColor(getResources().getColor(R.color.blackcccccc))
+        }
     }
 
     fun onInfantPsngrTextChange(text: String) {
         tvInfant.setText(text)
+
+        val toInt = text.toInt()
+
+        if (toInt > 0) {
+            tvInfant.setTextColor(getResources().getColor(R.color.black33333))
+        } else {
+            tvInfant.setTextColor(getResources().getColor(R.color.blackcccccc))
+        }
     }
 
 
@@ -320,6 +348,7 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
 
                     tsRoundTripFrom.setText(get.iata)
                     tsRoundTripFromPort.setText(get.airportName)
+                    tvHitFrom.visibility = View.VISIBLE
                 }
 
                 REQ_CODE_TO -> {
@@ -331,6 +360,8 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
 
                     tsRoundTripTo.setText(get.iata)
                     tsRoundTripToPort.setText(get.airportName)
+
+                    tvHitTo.visibility = View.VISIBLE
                 }
 
 

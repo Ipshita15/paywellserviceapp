@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1
 
-import android.annotation.SuppressLint
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
@@ -35,7 +34,6 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
     private lateinit var mFlightDetails1ViewModel: FlightDetails1ViewModel
 
 
-    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.cloudwell.paywell.services.R.layout.activity_flight_details)
@@ -44,15 +42,10 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
 //        val results = Gson().fromJson(DummayData().multipSegmentData, Array<com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Result>::class.java)
 
+        rootLayout.visibility = View.INVISIBLE
         initializationView()
-
-
         initViewModel()
-//
-//        val parcelable = getIntent().getExtras().getParcelable<Result>("object") as Result
 
-
-        // displayData(results.toList())
 
     }
 
@@ -83,13 +76,6 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         requestAirPriceSearch.resultID = resultID
 
 
-//        val requestAirPriceSearch = RequestAirPriceSearch()
-//        requestAirPriceSearch.searchId = ""
-//        requestAirPriceSearch.resultID = ""
-
-
-        //shimmer_text.startShimmerAnimation()
-
         mFlightDetails1ViewModel.callAirPriceSearch(requestAirSearch = requestAirPriceSearch)
     }
 
@@ -103,14 +89,11 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
             }
 
             if (!it?.noSerachFoundMessage.equals("")) {
-//                shimmer_recycler_view.visibility = View.INVISIBLE
-//                layoutNoSerachFound.visibility = View.VISIBLE
+
                 showSnackMessageWithTextMessage(it?.noSerachFoundMessage)
-                // finish()
+
             } else {
-//                shimmer_recycler_view.visibility = View.VISIBLE
-//                layoutNoSerachFound.visibility = View.INVISIBLE
-                // finish()
+
             }
 
         }
@@ -118,18 +101,18 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
     }
 
     private fun displayData(it: ResposeAirPriceSearch) {
-        val requestAirSearch = RequestAirSearch(journeyType = "local")
+        rootLayout.visibility = View.VISIBLE
+
+        val requestAirSearch = AppStorageBox.get(applicationContext, AppStorageBox.Key.REQUEST_AIR_SERACH) as RequestAirSearch
 
         val result = it.data?.results?.get(0);
 
 
         val segments = result?.segments
         val segment = result?.segments?.get(0)
-//        val result = it.get(0);
 
 
         //generator of segemnt view
-
         segments?.let { it1 -> setupTimelineExpanableView(it1) }
 
         if (segments?.size!! > 1) {
@@ -143,7 +126,6 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
             AppStorageBox.put(applicationContext, AppStorageBox.Key.orignAirportAnddestinationairportCode, orignAirtportCode + " - " + destinationairportCode)
 
 
-
             val outputSegment = segments.get(0);
             val depTime = outputSegment.origin?.depTime?.split("T")
             val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd").parse(depTime?.get(0)) as Date
@@ -155,7 +137,6 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
             val durtingJounaryTime = DateUtils.getDurtingJounaryTime(totalJourneyinMiliSecound)
             tvTotalDepartTime.text = durtingJounaryTime
             AppStorageBox.put(applicationContext, AppStorageBox.Key.totalJourney_time, durtingJounaryTime)
-
 
 
             val orign = segments.get(0);
@@ -198,9 +179,7 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         }
 
         tvTotalFair.text = "${result.totalFare}"
-        tvClass.text = getString(R.string.economy_class) + requestAirSearch.journeyType
-
-
+        tvClass.text = getString(R.string.class_text) + ": " + requestAirSearch.segments.get(0).cabinClass
 
 
 
@@ -214,15 +193,15 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         }
 
         if (result.extraServices == null) {
-            tvExtraService.text = getString(R.string.n_a)
+            tvExtraService.text = getString(R.string.extra_serviex) + ": " + getString(R.string.n_a)
         } else {
-            tvExtraService.text = getString(R.string.n_a) + result.extraServices
+            tvExtraService.text = getString(R.string.extra_serviex) + ": " + getString(R.string.n_a) + result.extraServices
         }
 
         if (result.isRefundable!!) {
-            tvRefunable.text = getString(com.cloudwell.paywell.services.R.string.refundable)
+            tvRefunable.text = getString(R.string.refundable) + ": " + getString(com.cloudwell.paywell.services.R.string.yes)
         } else {
-            tvRefunable.text = getString(com.cloudwell.paywell.services.R.string.non_refundable)
+            tvRefunable.text = getString(R.string.refundable) + ": " + getString(com.cloudwell.paywell.services.R.string.no)
 
         }
 
@@ -446,7 +425,6 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         tvTotalDepartTime.text = DateUtils.getDurtingJounaryTime(totalJourneyinMiliSecound)
 
         AppStorageBox.put(applicationContext, AppStorageBox.Key.totalJourney_time, durtingJounaryTime)
-
 
 
     }

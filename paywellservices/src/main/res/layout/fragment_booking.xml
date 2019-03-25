@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -24,7 +25,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="Tricket booking"
+        android:text="@string/ticket_booking"
         android:textColor="#189d49"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView16"
@@ -33,155 +34,70 @@
         app:layout_constraintTop_toTopOf="@+id/imageView16"/>
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/tvFare"
         android:layout_width="wrap_content"
-        android:layout_height="19dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        tools:text="sdflksjdflkjsldkfjs df sdfkls df "/>
+
+    <TextView
+        android:id="@+id/tvRefunableForBooking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="24dp"
-        android:text="Base Fare: "
-        app:layout_constraintStart_toEndOf="@+id/imageView16"
-        app:layout_constraintTop_toBottomOf="@+id/imageView16"/>
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvFare"
+        tools:text="Yes"/>
 
     <TextView
-        android:id="@+id/tvBookingId"
+        android:id="@+id/tvDepartTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="124dp"
-        android:layout_marginRight="124dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRefunableForBooking"
+        tools:text="2019-20-1"/>
+
+    <TextView
+        android:id="@+id/tvArrivalTIme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/imageView16"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDepartTime"/>
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/tvAirlinesName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:text="Tax: "
-        app:layout_constraintStart_toStartOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"/>
-
-    <TextView
-        android:id="@+id/tvTax"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/tvBookingId"
-        app:layout_constraintTop_toBottomOf="@+id/tvBookingId"/>
-
-    <TextView
-        android:id="@+id/textView18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Currency"
-        app:layout_constraintStart_toStartOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/textView12"/>
-
-    <TextView
-        android:id="@+id/tvCurrency"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/tvTax"
-        app:layout_constraintTop_toBottomOf="@+id/tvTax"/>
-
-    <TextView
-        android:id="@+id/textView21"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="OtherCharges"
-        app:layout_constraintStart_toStartOf="@+id/textView18"
-        app:layout_constraintTop_toBottomOf="@+id/textView18"/>
-
-    <TextView
-        android:id="@+id/tvOhterCharge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/tvCurrency"
-        app:layout_constraintTop_toBottomOf="@+id/tvCurrency"/>
-
-    <TextView
-        android:id="@+id/textView23"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Discount"
-        app:layout_constraintStart_toStartOf="@+id/textView21"
-        app:layout_constraintTop_toBottomOf="@+id/textView21"/>
-
-    <TextView
-        android:id="@+id/textView24"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="PaxType"
-        app:layout_constraintStart_toStartOf="@+id/textView23"
-        app:layout_constraintTop_toBottomOf="@+id/textView23"/>
-
-    <TextView
-        android:id="@+id/textView25"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="PassengerCount"
-        app:layout_constraintStart_toStartOf="@+id/textView24"
-        app:layout_constraintTop_toBottomOf="@+id/textView24"/>
-
-    <TextView
-        android:id="@+id/textView26"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="ServiceFee"
-        app:layout_constraintStart_toStartOf="@+id/textView25"
-        app:layout_constraintTop_toBottomOf="@+id/textView25"/>
-
-    <TextView
-        android:id="@+id/tvDiscount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/tvOhterCharge"
-        app:layout_constraintTop_toBottomOf="@+id/tvOhterCharge"/>
-
-    <TextView
-        android:id="@+id/tvPaxType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/tvDiscount"
-        app:layout_constraintTop_toBottomOf="@+id/tvDiscount"/>
-
-    <TextView
-        android:id="@+id/tvPassengerCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/tvPaxType"
-        app:layout_constraintTop_toBottomOf="@+id/tvPaxType"/>
-
-    <TextView
-        android:id="@+id/tvServiceFee"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/tvPassengerCount"
-        app:layout_constraintTop_toBottomOf="@+id/tvPassengerCount"/>
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="2019-10-29 23: 9:99"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvArrivalTIme"/>
 
     <TextView
         android:id="@+id/textView33"
@@ -205,10 +121,26 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:background="@color/colorPrimary"
-        android:text="Booking"
+        android:text="@string/booking_now"
         android:textAllCaps="false"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView26"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView3"/>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Do you want to book  air ticket?"
+        android:textColor="#189d49"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAirlinesName"/>
+
 </android.support.constraint.ConstraintLayout>

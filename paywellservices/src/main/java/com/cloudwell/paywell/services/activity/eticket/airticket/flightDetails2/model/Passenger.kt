@@ -64,13 +64,20 @@ data class Passenger(val isDefault: Boolean) {
     var country: String = ""
 
 
-    @ColumnInfo(name = "passportNumber")
+    @SerializedName("passport_number")
+    @ColumnInfo(name = "passport_number")
     var passportNumber: String = ""
 
     @ColumnInfo(name = "passportImagePath")
     var passportImagePath: String = ""
 
-    @ColumnInfo(name = "NIDnumber")
+
+    @SerializedName("file_extension")
+    @ColumnInfo(name = "file_extension")
+    var file_extension: String = ""
+
+    @SerializedName("nid_number")
+    @ColumnInfo(name = "nid_number")
     var nIDnumber: String = ""
 
 

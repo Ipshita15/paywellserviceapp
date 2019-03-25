@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
@@ -26,16 +27,17 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.fra
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResAirPreBooking
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.viewModel.AllSummaryActivityViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.viewModel.view.AllSummaryStatus
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger
+import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.AddPassengerActivity
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import kotlinx.android.synthetic.main.all_summaray_bottom_sheet.*
+import kotlinx.android.synthetic.main.contant_summary.*
 
 
 class AllSummaryActivity : AirTricketBaseActivity() {
 
-
-    var totalJourneyinMiliSecound = 0L
 
     private lateinit var mViewModel: AllSummaryActivityViewModel
 
@@ -47,34 +49,24 @@ class AllSummaryActivity : AirTricketBaseActivity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_final_summaray)
+        setContentView(com.cloudwell.paywell.services.R.layout.activity_final_summaray)
+        tvCancel
+        setToolbar(getString(com.cloudwell.paywell.services.R.string.title_all_summary))
 
-        setToolbar(getString(R.string.title_all_summary))
 
-
-//        passengerIDS = AppStorageBox.get(applicationContext, AppStorageBox.Key.SELETED_PASSENGER_IDS) as String
-
-        passengerIDS = "1"
+        passengerIDS = AppStorageBox.get(applicationContext, AppStorageBox.Key.SELETED_PASSENGER_IDS) as String
+//        passengerIDS = "1"
 
         initializationView()
         initilizationReviewBottomSheet()
-
-
-
-
         initViewModel(passengerIDS)
-//
-//        val parcelable = getIntent().getExtras().getParcelable<Result>("object") as Result
 
-
-        // displayData(results.toList())
 
     }
 
     private fun initilizationReviewBottomSheet() {
 
         val bottomSheetBehavior = BottomSheetBehavior.from(allSummaryBottonSheet)
-
 
         bottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -99,7 +91,6 @@ class AllSummaryActivity : AirTricketBaseActivity() {
             }
         })
 
-
         ivConfirm.setOnClickListener {
             handleConfirm()
         }
@@ -111,7 +102,6 @@ class AllSummaryActivity : AirTricketBaseActivity() {
 
         tvCancel.setOnClickListener {
             handleCancel()
-
         }
 
         ivCancle.setOnClickListener {
@@ -123,7 +113,24 @@ class AllSummaryActivity : AirTricketBaseActivity() {
 
     private fun handleCancel() {
 
+        val dialogClickListener = DialogInterface.OnClickListener { dialog, which ->
+            when (which) {
+                DialogInterface.BUTTON_POSITIVE -> {
+                    val intent = Intent(this, AirTicketMenuActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent)
 
+                }
+
+                DialogInterface.BUTTON_NEGATIVE -> {
+                }
+            }//Yes button clicked
+            //No button clicked
+        }
+
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("Are you sure?").setPositiveButton(getString(R.string.yes), dialogClickListener)
+                .setNegativeButton(getString(R.string.no), dialogClickListener).show()
     }
 
     private fun handleConfirm() {
@@ -135,7 +142,7 @@ class AllSummaryActivity : AirTricketBaseActivity() {
 
     private fun askForPin() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle(R.string.pin_no_title_msg)
+        builder.setTitle(com.cloudwell.paywell.services.R.string.pin_no_title_msg)
 
         val pinNoET = EditText(this)
         val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
@@ -145,7 +152,7 @@ class AllSummaryActivity : AirTricketBaseActivity() {
         pinNoET.transformationMethod = PasswordTransformationMethod.getInstance()
         builder.setView(pinNoET)
 
-        builder.setPositiveButton(R.string.okay_btn) { dialogInterface, id ->
+        builder.setPositiveButton(com.cloudwell.paywell.services.R.string.okay_btn) { dialogInterface, id ->
             val inMethMan = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inMethMan.hideSoftInputFromWindow(pinNoET.windowToken, 0)
 
@@ -160,7 +167,7 @@ class AllSummaryActivity : AirTricketBaseActivity() {
                     showNoInternetConnectionFound()
                 }
             } else {
-                showSnackMessageWithTextMessage(getString(R.string.pin_no_error_msg))
+                showSnackMessageWithTextMessage(getString(com.cloudwell.paywell.services.R.string.pin_no_error_msg))
             }
         }
         val alert = builder.create()
@@ -267,11 +274,14 @@ class AllSummaryActivity : AirTricketBaseActivity() {
                 }
                 AppStorageBox.put(applicationContext, AppStorageBox.Key.AIR_PRE_BOOKKING, status.resAirPreBooking)
 
-
                 dialogFragment.show(supportFragmentManager, "dialog")
 
             }
 
+        }
+
+        if (status.test.equals("done")) {
+            mViewModel.callFileUploadAPI()
         }
 
 
@@ -279,6 +289,35 @@ class AllSummaryActivity : AirTricketBaseActivity() {
 
 
     private fun initializationView() {
+        val resposeAirPriceSearch = AppStorageBox.get(applicationContext, AppStorageBox.Key.ResposeAirPriceSearch) as ResposeAirPriceSearch
+        val airline = resposeAirPriceSearch.data?.results?.get(0)?.segments?.get(0)?.airline
+        val airport = resposeAirPriceSearch.data?.results?.get(0)?.segments?.get(0)?.origin?.airport
+
+
+        tvAirportCode.text = getString(com.cloudwell.paywell.services.R.string.airport_code) + " ${airport?.airportCode}"
+        tvAirportName.text = getString(com.cloudwell.paywell.services.R.string.airport_name) + " ${airport?.airportName}"
+        tvTerminal.text = getString(com.cloudwell.paywell.services.R.string.terminal) + " ${airport?.terminal}"
+        tvCityCode.text = getString(com.cloudwell.paywell.services.R.string.city_code) + " ${airport?.cityCode}"
+        tvCityName.text = getString(com.cloudwell.paywell.services.R.string.city_name) + " ${airport?.cityName}"
+        tvCountryCode.text = getString(com.cloudwell.paywell.services.R.string.country_code) + " ${airport?.countryCode}"
+        tvCountryName.text = getString(com.cloudwell.paywell.services.R.string.country_name) + " ${airport?.countryName}"
+
+
+        tvAirlineCode.text = getString(com.cloudwell.paywell.services.R.string.airline_code) + " ${airline?.airlineCode}"
+        tvAirlesscode.text = getString(com.cloudwell.paywell.services.R.string.airport_name) + " ${airline?.airlineName}"
+        tvFlghtNumber.text = getString(com.cloudwell.paywell.services.R.string.flight_number) + " ${airline?.flightNumber}"
+        tvBookingClass.text = getString(com.cloudwell.paywell.services.R.string.booking_class) + " ${airline?.bookingClass}"
+        tvOperatorCarrier.text = getString(com.cloudwell.paywell.services.R.string.operating_carrier) + " ${airline?.operatingCarrier}"
+        tvCabinClass.text = getString(com.cloudwell.paywell.services.R.string.cabin_class) + " ${airline?.cabinClass}"
+
+
+        val split = resposeAirPriceSearch.data?.results?.get(0)?.segments?.get(0)?.origin?.depTime?.split("T")
+
+
+        tvArrivalTime.text = getString(com.cloudwell.paywell.services.R.string.arrival_time) + " ${split?.get(0)}  ${split?.get(1)}"
+
+
+        tvBaggage.text = getString(com.cloudwell.paywell.services.R.string.baggage) + resposeAirPriceSearch.data?.results?.get(0)?.segments?.get(0)?.baggage + getString(com.cloudwell.paywell.services.R.string.kg_per_adult)
 
 
     }

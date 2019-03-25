@@ -24,7 +24,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="Fares information  "
+        android:text="@string/fares_information"
         android:textColor="#189d49"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView16"
@@ -39,12 +39,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="24dp"
-        android:text="Base Fare: "
+        android:text="@string/base_fare"
         app:layout_constraintStart_toEndOf="@+id/imageView16"
         app:layout_constraintTop_toBottomOf="@+id/imageView16"/>
 
     <TextView
-        android:id="@+id/tvBookingId"
+        android:id="@+id/tvFare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
@@ -52,7 +52,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="124dp"
         android:layout_marginRight="124dp"
-        android:text="TextView"
+        android:text="sdf"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView8"
         app:layout_constraintTop_toBottomOf="@+id/imageView16"/>
@@ -62,61 +62,61 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Tax: "
+        android:text="@string/tax"
         app:layout_constraintStart_toStartOf="@+id/textView8"
         app:layout_constraintTop_toBottomOf="@+id/textView8"/>
 
     <TextView
-        android:id="@+id/tvTax"
+        android:id="@+id/tvRefunableForBooking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/tvBookingId"
-        app:layout_constraintTop_toBottomOf="@+id/tvBookingId"/>
+        app:layout_constraintStart_toStartOf="@+id/tvFare"
+        app:layout_constraintTop_toBottomOf="@+id/tvFare"/>
 
     <TextView
         android:id="@+id/textView18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Currency"
+        android:text="@string/currency"
         app:layout_constraintStart_toStartOf="@+id/textView12"
         app:layout_constraintTop_toBottomOf="@+id/textView12"/>
 
     <TextView
-        android:id="@+id/tvCurrency"
+        android:id="@+id/tvDepartTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/tvTax"
-        app:layout_constraintTop_toBottomOf="@+id/tvTax"/>
+        app:layout_constraintStart_toStartOf="@+id/tvRefunableForBooking"
+        app:layout_constraintTop_toBottomOf="@+id/tvRefunableForBooking"/>
 
     <TextView
         android:id="@+id/textView21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="OtherCharges"
+        android:text="@string/othercharges"
         app:layout_constraintStart_toStartOf="@+id/textView18"
         app:layout_constraintTop_toBottomOf="@+id/textView18"/>
 
     <TextView
-        android:id="@+id/tvOhterCharge"
+        android:id="@+id/tvArrivalTIme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/tvCurrency"
-        app:layout_constraintTop_toBottomOf="@+id/tvCurrency"/>
+        app:layout_constraintStart_toStartOf="@+id/tvDepartTime"
+        app:layout_constraintTop_toBottomOf="@+id/tvDepartTime"/>
 
     <TextView
         android:id="@+id/textView23"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Discount"
+        android:text="@string/discount"
         app:layout_constraintStart_toStartOf="@+id/textView21"
         app:layout_constraintTop_toBottomOf="@+id/textView21"/>
 
@@ -125,7 +125,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="PaxType"
+        android:text="@string/passenger_type"
         app:layout_constraintStart_toStartOf="@+id/textView23"
         app:layout_constraintTop_toBottomOf="@+id/textView23"/>
 
@@ -134,7 +134,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="PassengerCount"
+        android:text="@string/passenger_count"
         app:layout_constraintStart_toStartOf="@+id/textView24"
         app:layout_constraintTop_toBottomOf="@+id/textView24"/>
 
@@ -143,18 +143,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="ServiceFee"
+        android:text="@string/service_fee"
         app:layout_constraintStart_toStartOf="@+id/textView25"
         app:layout_constraintTop_toBottomOf="@+id/textView25"/>
 
     <TextView
-        android:id="@+id/tvDiscount"
+        android:id="@+id/tvAirlinesName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/tvOhterCharge"
-        app:layout_constraintTop_toBottomOf="@+id/tvOhterCharge"/>
+        app:layout_constraintStart_toStartOf="@+id/tvArrivalTIme"
+        app:layout_constraintTop_toBottomOf="@+id/tvArrivalTIme"/>
 
     <TextView
         android:id="@+id/tvPaxType"
@@ -162,8 +162,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/tvDiscount"
-        app:layout_constraintTop_toBottomOf="@+id/tvDiscount"/>
+        app:layout_constraintStart_toStartOf="@+id/tvAirlinesName"
+        app:layout_constraintTop_toBottomOf="@+id/tvAirlinesName"/>
 
     <TextView
         android:id="@+id/tvPassengerCount"
@@ -189,7 +189,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
-        android:text="OK"
+        android:text="@string/ok"
         android:textColor="#189d49"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -204,7 +204,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="32dp"
-        android:text="Cancel"
+        android:text="@string/cencel"
         android:textColor="#189d49"
         android:textSize="18sp"
         android:textStyle="bold"
