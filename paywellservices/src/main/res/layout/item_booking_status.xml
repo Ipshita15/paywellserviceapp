@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rootLayout_booking_status"
     android:layout_width="match_parent"
-    android:layout_height="60dp">
+    android:layout_height="68dp">
 
     <TextView
         android:id="@+id/tvSerialNumber"
@@ -42,8 +42,6 @@
         android:id="@+id/tvBookingId"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:text="Booking ID  "
         android:textColor="@color/balck666666"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -60,20 +58,19 @@
         android:layout_height="0dp"
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
         android:background="#008352"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tvDate"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tvBookingId"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/tvDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:text="Date"
         android:textColor="@color/balck666666"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -90,20 +87,19 @@
         android:layout_height="0dp"
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
         android:background="#008352"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tvBookingStatus"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tvDate"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/tvBookingStatus"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:text="Booking Status  "
         android:textColor="@color/balck666666"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -120,22 +116,19 @@
         android:layout_height="0dp"
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
         android:background="#008352"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tvAction"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tvBookingStatus"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/tvAction"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:text="Action"
         android:textColor="@color/balck666666"
         android:visibility="invisible"
@@ -157,5 +150,17 @@
         app:layout_constraintStart_toStartOf="@+id/tvAction"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_action"/>
+
+    <ImageView
+        android:id="@+id/imageView20"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/view11"
+        app:layout_constraintTop_toBottomOf="@+id/tvBookingId"
+        app:srcCompat="@drawable/ic_download"/>
 
 </android.support.constraint.ConstraintLayout>

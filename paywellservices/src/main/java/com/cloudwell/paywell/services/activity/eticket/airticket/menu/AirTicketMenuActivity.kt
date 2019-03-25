@@ -15,6 +15,7 @@ import android.widget.RadioButton
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketMainActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.booking.BookingStatusActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.BookingCancelActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.TranstationLogActivity
@@ -43,7 +44,7 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
     internal var radioButton_fifty: RadioButton? = null
     internal var radioButton_hundred: RadioButton? = null
     internal var radioButton_twoHundred: RadioButton? = null
-    internal var selectedLimit = 5
+    var selectedLimit = 5
     lateinit var cd: ConnectionDetector
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +60,11 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
         cd = ConnectionDetector(AppController.getContext())
         mConstraintLayout = findViewById(R.id.constraintLayoutBookingList)
         mAppHandler = AppHandler.getmInstance(applicationContext)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        selectedLimit = 5
     }
 
     override fun onClick(v: View?) {
@@ -77,7 +83,7 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
             }
 
             R.id.btBooking -> {
-                submitBookingListRequest(10, BOOKING_TAG)
+                submitBookingListRequest(200, BOOKING_TAG)
             }
         }
     }
@@ -97,11 +103,21 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
                 dismissProgressDialog()
 
                 if (response.body()!!.status.compareTo(200) == 0) {
-                    AppStorageBox.put(applicationContext, AppStorageBox.Key.AIRTICKET_BOOKING_RESPONSE, response.body())
+                    if (tag.equals(TRX_TAG)) {
+                        AppStorageBox.put(applicationContext, AppStorageBox.Key.AIRTICKET_BOOKING_RESPONSE, response.body())
 
-                    val intent = Intent(application, TranstationLogActivity::class.java)
-                    intent.putExtra("tag", tag)
-                    startActivity(intent)
+                        val intent = Intent(application, TranstationLogActivity::class.java)
+                        intent.putExtra("tag", tag)
+                        startActivity(intent)
+                    } else {
+                        AppStorageBox.put(applicationContext, AppStorageBox.Key.AIRTICKET_BOOKING_RESPONSE, response.body())
+
+                        val intent = Intent(application, BookingStatusActivity::class.java)
+                        intent.putExtra("tag", tag)
+                        startActivity(intent)
+                    }
+
+
                 } else {
                     showReposeUI(response.body()!!)
                 }

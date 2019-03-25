@@ -14,7 +14,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.B
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import kotlinx.android.synthetic.main.activity_booking_main.*
-import kotlinx.android.synthetic.main.item_booking_status.*
+import kotlinx.android.synthetic.main.item_booking_status_transtionlog.*
 import kotlinx.android.synthetic.main.test.view.*
 import java.text.SimpleDateFormat
 import java.util.*

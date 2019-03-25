@@ -1188,11 +1188,6 @@
             android:label="@string/tile_cencel_booking">
         </activity>
 
-        <activity
-            android:name=".activity.eticket.airticket.transationLog.TransactionLogActivity"
-            android:label="@string/tile_cencel_transaction_log">
-        </activity>
-
 
         <!-- Image Picker activity -->
         <activity android:name=".libaray.imagePickerAndCrop.ImagePickerActivity"/>
@@ -1203,7 +1198,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".activity.eticket.airticket.booking.BookingMainActivity"
+            android:name=".activity.eticket.airticket.booking.BookingStatusActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
 

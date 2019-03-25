@@ -5,7 +5,7 @@
               android:layout_height="match_parent"
 
               android:orientation="vertical"
-              tools:context="com.cloudwell.paywell.services.activity.eticket.airticket.booking.BookingMainActivity">
+              tools:context="com.cloudwell.paywell.services.activity.eticket.airticket.booking.BookingStatusActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
 
         <include
             android:id="@+id/header"
-            layout="@layout/test"/>
+            layout="@layout/header_transtation_log"/>
     </LinearLayout>
 
 
@@ -23,5 +23,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"
-        tools:listitem="@layout/test"/>
+        tools:listitem="@layout/item_booking_status_transtionlog"/>
 </LinearLayout>
