@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.eticket.airticket.booking
+package com.cloudwell.paywell.services.activity.eticket.airticket.transationLog
 
 import android.content.Context
 import android.graphics.Color
@@ -19,15 +19,14 @@ import kotlinx.android.synthetic.main.test.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-
-class BookingMainActivity : AirTricketBaseActivity() {
+class TranstationLogActivity : AirTricketBaseActivity() {
 
     lateinit var responseList: BookingList
     lateinit var tag: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.cloudwell.paywell.services.R.layout.activity_booking_main)
+        setContentView(com.cloudwell.paywell.services.R.layout.activity_transtionlog)
 
         assert(supportActionBar != null)
         if (supportActionBar != null) {
@@ -46,7 +45,7 @@ class BookingMainActivity : AirTricketBaseActivity() {
     }
 
     private fun initViewInitialization() {
-        val customAdapter = MyAdapter(this@BookingMainActivity)
+        val customAdapter = MyAdapterFortranstationLog(this)
         listBookingList.adapter = customAdapter
 
 
@@ -59,6 +58,7 @@ class BookingMainActivity : AirTricketBaseActivity() {
         tvDate.typeface = Typeface.DEFAULT_BOLD
         tvBookingStatus.typeface = Typeface.DEFAULT_BOLD
         tvAction.typeface = Typeface.DEFAULT_BOLD
+        tvAction.text = "Ticket Price"
 
 
     }
@@ -78,9 +78,9 @@ class BookingMainActivity : AirTricketBaseActivity() {
         finish()
     }
 
-    inner class MyAdapter : RecyclerView.Adapter<ViewHolder> {
+    inner class MyAdapterFortranstationLog : RecyclerView.Adapter<ViewHolder> {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val view = mInflater!!.inflate(com.cloudwell.paywell.services.R.layout.item_booking_status, parent, false)
+            val view = mInflater!!.inflate(com.cloudwell.paywell.services.R.layout.item_booking_status_transtionlog, parent, false)
             return ViewHolder(view)
         }
 
@@ -102,34 +102,7 @@ class BookingMainActivity : AirTricketBaseActivity() {
             holder.tvDate.setText(outputDateStr)
             holder.tvBookingStatus.setText(responseList.data.get(position).message)
             holder.tvBookingId.setText(responseList.data.get(position).bookingId)
-//            if (tag.equals("BOOKING")) {
-//
-//                colFive.setBackgroundResource(R.drawable.action_drawable)
-//            } else {
-//                colFive.setText(responseList.data.get(position).totalFare)
-//            }
-
-//            val model = userList.get(position)
-//
-//            holder.tvUserType.setText(model.getSelectedUserType())
-//            holder.tvUserCount.setText("" + model.getSelectedPsngrCount())
-//
-//            holder.ivMinus.setOnClickListener(View.OnClickListener {
-//                val count = model.getSelectedPsngrCount()
-//                if (count.compareTo(0) == 1) {
-//                    val data = model.getSelectedPsngrCount().minus(1)
-//                    model.setSelectedPsngrCount(data)
-//
-//                    updateRecords(userList)
-//                }
-//            })
-//
-//            holder.ivPlus.setOnClickListener(View.OnClickListener {
-//                val data = model.getSelectedPsngrCount().plus(1)
-//                model.setSelectedPsngrCount(data)
-//
-//                updateRecords(userList)
-//            })
+            holder.tvAction.setText(responseList.data.get(position).totalFare)
 
             if (position % 2 == 0)
                 holder.rootLayout_booking_status.setBackgroundColor(Color.parseColor("#d8ead2"))
@@ -168,4 +141,5 @@ class BookingMainActivity : AirTricketBaseActivity() {
         val tvAction = view.tvAction
 
     }
+
 }

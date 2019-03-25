@@ -15,9 +15,9 @@ import android.widget.RadioButton
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketMainActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.booking.BookingMainActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.BookingCancelActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.TranstationLogActivity
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
@@ -99,7 +99,7 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
                 if (response.body()!!.status.compareTo(200) == 0) {
                     AppStorageBox.put(applicationContext, AppStorageBox.Key.AIRTICKET_BOOKING_RESPONSE, response.body())
 
-                    val intent = Intent(application, BookingMainActivity::class.java)
+                    val intent = Intent(application, TranstationLogActivity::class.java)
                     intent.putExtra("tag", tag)
                     startActivity(intent)
                 } else {
