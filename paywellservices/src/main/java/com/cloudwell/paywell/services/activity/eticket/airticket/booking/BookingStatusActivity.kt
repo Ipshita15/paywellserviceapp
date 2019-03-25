@@ -48,8 +48,9 @@ class BookingStatusActivity : AirTricketBaseActivity() {
 
     private fun initViewInitialization() {
         val customAdapter = BookingStatusListAdapter(responseList, this.applicationContext, object : ItemClickListener {
-            override fun onItemClick(position: Datum) {
-                showTricketIntentPopupMessage()
+            override fun onItemClick(datum: Datum) {
+                datum.invoiceUrl = "notify.paywellonline.com\\/haltripFiles\\/HTS19032310529.pdf"
+                showTricketIntentPopupMessage(datum)
             }
 
         })
@@ -69,7 +70,7 @@ class BookingStatusActivity : AirTricketBaseActivity() {
 
     }
 
-    private fun showTricketIntentPopupMessage() {
+    private fun showTricketIntentPopupMessage(datum: Datum) {
         val builder = AlertDialog.Builder(this)
         builder.setMessage(getString(R.string.please_seleted_a_option))
                 .setCancelable(true)

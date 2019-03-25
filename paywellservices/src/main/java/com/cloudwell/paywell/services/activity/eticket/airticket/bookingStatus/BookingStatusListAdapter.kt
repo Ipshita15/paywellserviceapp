@@ -46,20 +46,20 @@ class BookingStatusListAdapter(val responseList: BookingList, val context: Conte
         holder.tvBookingStatus.setText(model.message)
         holder.tvBookingId.setText(model.bookingId)
 
-        if (model.message != null) {
-            if (model.message.equals("Ticketed")) {
-                holder.ivSymbolTicketed.visibility = View.VISIBLE
-            } else {
-                holder.ivSymbolTicketed.visibility = View.INVISIBLE
-            }
-        } else {
-            holder.ivSymbolTicketed.visibility = View.INVISIBLE
-        }
+//        if (model.message != null) {
+//            if (model.message.equals("Ticketed")) {
+//                holder.ivSymbolTicketed.visibility = View.VISIBLE
+//            } else {
+//                holder.ivSymbolTicketed.visibility = View.INVISIBLE
+//            }
+//        } else {
+//            holder.ivSymbolTicketed.visibility = View.INVISIBLE
+//        }
 
         holder.tvBookingId.setOnClickListener {
-            if (model.equals("Ticketed")) {
+            //            if (model.equals("Ticketed")) {
                 itemClickListener.onItemClick(model)
-            }
+//            }
         }
 
         if (position % 2 == 0)

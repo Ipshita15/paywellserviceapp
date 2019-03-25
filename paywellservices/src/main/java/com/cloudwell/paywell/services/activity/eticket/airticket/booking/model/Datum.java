@@ -1,9 +1,9 @@
 
 package com.cloudwell.paywell.services.activity.eticket.airticket.booking.model;
 
-import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 @SuppressWarnings("unused")
 public class Datum {
@@ -68,6 +68,9 @@ public class Datum {
     private String mTotalFare;
     @SerializedName("validating_career")
     private String mValidatingCareer;
+
+    @SerializedName("invoice_url")
+    private String invoiceUrl;
 
     public String getAdultQty() {
         return mAdultQty;
@@ -309,4 +312,11 @@ public class Datum {
         mValidatingCareer = validatingCareer;
     }
 
+    public String getInvoiceUrl() {
+        return invoiceUrl;
+    }
+
+    public void setInvoiceUrl(String invoiceUrl) {
+        this.invoiceUrl = invoiceUrl;
+    }
 }
