@@ -96,15 +96,18 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
 
-                if (allAirports.size > 0) {
-                    if (s.length > 0) {
-                        recycviewContryAndAirport.visibility = View.GONE
-                        searchListView.visibility = View.VISIBLE
+
+                if (s.length > 0) {
+                    recycviewContryAndAirport.visibility = View.GONE
+                    searchListView.visibility = View.VISIBLE
+
+                    if (::adapter.isInitialized) {
                         adapter.filter.filter(s)
-                    } else {
-                        recycviewContryAndAirport.visibility = View.VISIBLE
-                        searchListView.visibility = View.GONE
                     }
+
+                } else {
+                    recycviewContryAndAirport.visibility = View.VISIBLE
+                    searchListView.visibility = View.GONE
                 }
 
             }
