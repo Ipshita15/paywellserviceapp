@@ -10,14 +10,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:background="#d8ead2"
         android:gravity="center"
-        android:text="SL"
         android:textColor="#666666" />
 
     <View
         android:layout_width="1dp"
         android:layout_height="match_parent"
-        android:background="#b0d5a4" />
+        android:background="#008352" />
 
 </LinearLayout>

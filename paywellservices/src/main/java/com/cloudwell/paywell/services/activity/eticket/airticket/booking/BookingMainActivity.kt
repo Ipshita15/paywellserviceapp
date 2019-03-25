@@ -20,6 +20,7 @@ import java.util.*
 class BookingMainActivity : AirTricketBaseActivity() {
 
     lateinit var responseList: BookingList
+    lateinit var tag: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,17 +34,16 @@ class BookingMainActivity : AirTricketBaseActivity() {
             supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#189d49")));
         }
         responseList = AppStorageBox.get(applicationContext, AppStorageBox.Key.AIRTICKET_BOOKING_RESPONSE) as BookingList
-        val bundle = intent.extras
-        if (bundle != null) {
-//            responseList = bundle.getString("list") as BookingList
-            responseList = bundle.getSerializable("list") as BookingList
-        }
 
+        val bundle = intent.extras
+        if (!bundle.isEmpty) {
+            tag = bundle.getString("tag")
+        }
         initViewInitialization()
     }
 
     private fun initViewInitialization() {
-        val customAdapter = MyAdapter(this)
+        val customAdapter = MyAdapter(this@BookingMainActivity)
         listBookingList.adapter = customAdapter
 
         firstCol.findViewById<TextView>(R.id.tvContainer).text = "SL"
@@ -54,10 +54,13 @@ class BookingMainActivity : AirTricketBaseActivity() {
         thirdCol.findViewById<TextView>(R.id.tvContainer).typeface = Typeface.DEFAULT_BOLD
         fourthCol.findViewById<TextView>(R.id.tvContainer).text = "Booking Status"
         fourthCol.findViewById<TextView>(R.id.tvContainer).typeface = Typeface.DEFAULT_BOLD
-//        fifthCol.findViewById<TextView>(R.id.tvContainer).text = "Ticket Status"
-//        fifthCol.findViewById<TextView>(R.id.tvContainer).typeface = Typeface.DEFAULT_BOLD
-        fifthCol.findViewById<TextView>(R.id.tvContainer).text = "Action"
-        fifthCol.findViewById<TextView>(R.id.tvContainer).typeface = Typeface.DEFAULT_BOLD
+        if (tag.equals("BOOKING")) {
+            fifthCol.findViewById<TextView>(R.id.tvContainer).text = "Action"
+            fifthCol.findViewById<TextView>(R.id.tvContainer).typeface = Typeface.DEFAULT_BOLD
+        } else {
+            fifthCol.findViewById<TextView>(R.id.tvContainer).text = "Ticket Price"
+            fifthCol.findViewById<TextView>(R.id.tvContainer).typeface = Typeface.DEFAULT_BOLD
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -95,11 +98,8 @@ class BookingMainActivity : AirTricketBaseActivity() {
             return responseList.data.size
         }
 
-        override fun getView(position: Int, convertView: View, parent: ViewGroup): View {
-//            val v = super.getView(position, convertView, parent) as LinearLayout
-            val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-
-            val view = inflater.inflate(R.layout.list_item_booking_ticket, parent, false)
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+            val view = LayoutInflater.from(context).inflate(R.layout.list_item_booking_ticket, parent, false)
 
             val colOne = view.findViewById<View>(R.id.firstCol).findViewById<TextView>(R.id.tvContainer)
             val colTwo = view.findViewById<View>(R.id.secondCol).findViewById<TextView>(R.id.tvContainer)
@@ -108,13 +108,22 @@ class BookingMainActivity : AirTricketBaseActivity() {
             val colFive = view.findViewById<View>(R.id.fifthCol).findViewById<TextView>(R.id.tvContainer)
 
             val count = position + 1
-            val sdf = SimpleDateFormat("dd/MM/yy", Locale.ENGLISH)
+
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH)
+            val outputFormat = SimpleDateFormat("dd/MM/yy", Locale.ENGLISH)
+            val inputDateStr = responseList.data.get(position).firstRequestDateTime
+            val date = inputFormat.parse(inputDateStr)
+            val outputDateStr = outputFormat.format(date)
 
             colOne.setText("" + count)
             colTwo.setText(responseList.data.get(position).bookingId)
-            colThree.setText(sdf.format(responseList.data.get(position).firstRequestDateTime))
+            colThree.setText(outputDateStr)
             colFour.setText(responseList.data.get(position).message)
-            colFive.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_group, 0, 0, 0)
+            if (tag.equals("BOOKING")) {
+                colFive.setBackgroundResource(R.drawable.action_drawable)
+            } else {
+                colFive.setText(responseList.data.get(position).totalFare)
+            }
 
 //            val model = userList.get(position)
 //
@@ -139,18 +148,11 @@ class BookingMainActivity : AirTricketBaseActivity() {
 //            })
 
             if (position % 2 == 0)
-                convertView.setBackgroundColor(Color.parseColor("#b0d5a4"))
+                view.setBackgroundColor(Color.parseColor("#d8ead2"))
             else
-                convertView.setBackgroundColor(Color.parseColor("#d8ead2"))
-            return convertView
+                view.setBackgroundColor(Color.parseColor("#b0d5a4"))
+            return view
         }
 
-        inner class ViewHolder {
-            var viewOne: View? = null
-            var viewTwo: View? = null
-            var viewThree: View? = null
-            var viewFour: View? = null
-            var viewFive: View? = null
-        }
     }
 }

@@ -46,10 +46,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
-        <activity
-            android:name=".activity.eticket.airticket.flightDetails1.fragment.BaggageAndPoliciesActiivty"
-            android:label="@string/title_activity_baggage_and_policies_actiivty">
-        </activity>
+
 
         <uses-library
             android:name="com.google.android.maps"
@@ -69,7 +66,6 @@
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
@@ -258,6 +254,15 @@
             android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
+
+
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN"/>-->
+            <!--<action android:name="android.intent.action.VIEW"/>-->
+
+
+            <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
@@ -1111,7 +1116,7 @@
         <activity
             android:name=".activity.eticket.airticket.menu.AirTicketMenuActivity"
             android:label="@string/title_activity_air_tricket_menu"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.eticket.airticket.flightSearch.FlightSearchViewActivity"
             android:label="@string/title_activity_air_tricket_menu"
@@ -1133,21 +1138,23 @@
         <activity
             android:name=".activity.eticket.airticket.flightDetails1.FlightDetails1Activity"
             android:label="@string/title_activity_air_tricket_menu">
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN"/>-->
+            <!--<action android:name="android.intent.action.VIEW"/>-->
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN"/> -->
-            <!-- <action android:name="android.intent.action.VIEW"/> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
-            <!-- </intent-filter> -->
+            <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
         </activity>
+
+
         <activity
             android:name=".activity.eticket.airticket.flightDetails2.FlightDetails2Activity"
             android:label="@string/title_flightDetails2"></activity>
+
         <activity
             android:name=".activity.eticket.airticket.passengerList.PassengerListActivity"
             android:label="@string/title_passenger_list"></activity>
+
         <activity
             android:name=".activity.eticket.airticket.passengerAdd.AddPassengerActivity"
             android:label="@string/title_add_passenger">
@@ -1192,6 +1199,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
 
+        <activity
+            android:name=".activity.eticket.airticket.booking.BookingMainActivity"
+            android:screenOrientation="portrait" />
+
         <!-- cache directory file provider paths -->
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -1202,7 +1213,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_provider"/>
         </provider>
-            android:label="@string/title_add_passenger"></activity>
     </application>
 
 </manifest>

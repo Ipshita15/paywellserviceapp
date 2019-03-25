@@ -7,11 +7,15 @@
     android:orientation="vertical"
     tools:context="com.cloudwell.paywell.services.activity.eticket.airticket.booking.BookingMainActivity">
 
-    <include
-        android:id="@+id/header"
-        layout="@layout/list_item_booking_ticket"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="#b0d5a4">
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/list_item_booking_ticket" />
+    </LinearLayout>
 
     <ListView
         android:id="@+id/listBookingList"
