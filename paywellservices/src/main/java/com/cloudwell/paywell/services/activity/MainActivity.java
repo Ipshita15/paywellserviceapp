@@ -1088,21 +1088,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
                 break;
             }
-            case PERMISSIONS_REQUEST_ACCESS_CALL: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was grantedTask
 
-                    Intent intent = new Intent(Intent.ACTION_CALL);
-                    intent.setData(Uri.parse("tel:" + selectedPhnNo));
-                    startActivity(intent);
-
-                } else {
-                    // permission denied
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},
-                            PERMISSIONS_REQUEST_ACCESS_CALL);
-                }
-                break;
-            }
         }
     }
 
@@ -2034,15 +2020,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void call() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, PERMISSIONS_REQUEST_ACCESS_CALL);
-        } else {
-            Intent intent = new Intent(Intent.ACTION_CALL);
 
-            intent.setData(Uri.parse("tel:" + selectedPhnNo));
-            startActivity(intent);
-        }
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:" + selectedPhnNo));
+        startActivity(intent);
+
+
     }
 
     private void goToFacebook() {

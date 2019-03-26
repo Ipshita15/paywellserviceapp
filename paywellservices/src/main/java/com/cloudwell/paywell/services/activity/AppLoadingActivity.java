@@ -121,24 +121,12 @@ public class AppLoadingActivity extends AppCompatActivity {
     }
 
     private boolean checkAndRequestPermissions() {
-        int phnStatePermission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_PHONE_STATE);
-        int readExternalStoragePermission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_EXTERNAL_STORAGE);
-        int writeExternalStoragePermission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        int accessFineLocationPermission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION);
-//        int readSmsPermission = ContextCompat.checkSelfPermission(this,
-//                Manifest.permission.READ_SMS);
-//        int receiveSmsPermission = ContextCompat.checkSelfPermission(this,
-//                Manifest.permission.RECEIVE_SMS);
-        int cameraPermission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.CAMERA);
-        int callPhnPermission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.CALL_PHONE);
-        int readContactsPermission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_CONTACTS);
+        int phnStatePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE);
+        int readExternalStoragePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        int writeExternalStoragePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int accessFineLocationPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        int cameraPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+        int readContactsPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS);
 
         List<String> listPermissionsNeeded = new ArrayList<>();
         if (phnStatePermission != PackageManager.PERMISSION_GRANTED) {
@@ -162,9 +150,9 @@ public class AppLoadingActivity extends AppCompatActivity {
         if (cameraPermission != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.CAMERA);
         }
-        if (callPhnPermission != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.CALL_PHONE);
-        }
+//        if (callPhnPermission != PackageManager.PERMISSION_GRANTED) {
+//            listPermissionsNeeded.add(Manifest.permission.CALL_PHONE);
+//        }
         if (readContactsPermission != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.READ_CONTACTS);
         }

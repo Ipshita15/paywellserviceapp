@@ -27,8 +27,8 @@ android {
         minSdkVersion 16
         //for push notification its 20 otherwise it was 25
         targetSdkVersion 27
-        versionCode 42
-        versionName '10.17.1'
+        versionCode 43
+        versionName '10.17.2'
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
 
