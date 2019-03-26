@@ -16,7 +16,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
@@ -174,6 +173,9 @@ import retrofit2.Response;
 import ss.com.bannerslider.Slider;
 import ss.com.bannerslider.event.OnSlideClickListener;
 
+import static com.cloudwell.paywell.services.utils.LanuageConstant.KEY_BANGLA;
+import static com.cloudwell.paywell.services.utils.LanuageConstant.KEY_ENGLISH;
+
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener, View.OnClickListener {
 
     private static final long KEY_BALANCE_CHECK_INTERVAL = 5000;
@@ -267,7 +269,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         ivBalanceBorder.setOnClickListener(this);
 
         mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         builderNotification = new AlertDialog.Builder(this);
         alertNotification = builderNotification.create();
@@ -536,13 +538,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("bn") || mAppHandler.getAppLanguage().equalsIgnoreCase("unknown")) {
-            Configuration config = new Configuration();
-            config.locale = Locale.FRANCE;
-            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+            switchToCzLocale(new Locale(KEY_BANGLA, ""));
         } else {
-            Configuration config = new Configuration();
-            config.locale = Locale.ENGLISH;
-            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+            switchToCzLocale(new Locale(KEY_ENGLISH, ""));
         }
 
         // mToolbarHeading.setText(getString(R.string.balance) + mAppHandler.getPwBalance() + getString(R.string.tk));

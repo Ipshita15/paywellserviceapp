@@ -58,7 +58,7 @@ public class BusMainActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.home_eticket_bus);
 
-        mAppHandler = new AppHandler(BusMainActivity.this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         mLinearlayout = (LinearLayout) findViewById(R.id.linearLayout);
         llCityFrom = (LinearLayout) findViewById(R.id.llFrom);
@@ -213,7 +213,7 @@ public class BusMainActivity extends BaseActivity {
 
         @Override
         protected void onPreExecute() {
-           showProgressDialog();
+            showProgressDialog();
         }
 
         @Override
@@ -241,7 +241,7 @@ public class BusMainActivity extends BaseActivity {
 
         @Override
         protected void onPostExecute(String result) {
-             dismissProgressDialog();
+            dismissProgressDialog();
             mAppHandler.setSearchBus(result);
             Intent intent = new Intent(BusMainActivity.this, SearchBusActivity.class);
             startActivity(intent);

@@ -80,7 +80,7 @@ public class FromCityListActivity extends AppCompatActivity {
 
     private void initView() {
         mCities = new ArrayList<>();
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mRelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
         mProgressBar = (ProgressBar) findViewById(R.id.progressbar);
 

@@ -27,7 +27,7 @@ public class MYCashMenuActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_mfs_mycash);
         }
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         CardView mCardView = findViewById(R.id.fbCardView);
         if (!mAppHandler.getMYCashBalance().equals("unknown") && !mAppHandler.getMYCashBalance().equals("null") && !mAppHandler.getMYCashBalance().equals("")) {

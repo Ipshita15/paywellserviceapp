@@ -86,7 +86,7 @@ public class ToCityListActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mGridLayoutManager);
 
         mCities = new ArrayList<>();
-        AppHandler mAppHandler = new AppHandler(this);
+        AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             cityIdFrom = extras.getString(CITY_ID_FROM);

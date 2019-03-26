@@ -30,12 +30,12 @@ public class ViewStatementActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mini_statement);
 
-        AppHandler mAppHandler = new AppHandler(this);
+        AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            if(!title.isEmpty()) {
+            if (!title.isEmpty()) {
                 if (title.equalsIgnoreCase("mini")) {
                     getSupportActionBar().setTitle(R.string.home_statement_mini);
                 } else if (title.equalsIgnoreCase("balance")) {
@@ -56,13 +56,13 @@ public class ViewStatementActivity extends BaseActivity {
         mRelativeLayout = findViewById(R.id.relativeLayout);
         mWebView = findViewById(R.id.webView);
 
-        if(mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-            switchToCzLocale(new Locale("en",""));
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            switchToCzLocale(new Locale("en", ""));
         } else {
-            switchToCzLocale(new Locale("fr",""));
+            switchToCzLocale(new Locale("bn", ""));
         }
 
-        if(!title.isEmpty()) {
+        if (!title.isEmpty()) {
             if (title.equalsIgnoreCase("mini")) {
                 setToolbar(getString(R.string.home_statement_mini));
             } else if (title.equalsIgnoreCase("balance")) {
@@ -105,6 +105,7 @@ public class ViewStatementActivity extends BaseActivity {
                 view.loadUrl(url);
                 return true;
             }
+
             public void onLoadResource(WebView view, String url) {
                 if (progressDialog == null) {
                     progressDialog = new ProgressDialog(ViewStatementActivity.this);

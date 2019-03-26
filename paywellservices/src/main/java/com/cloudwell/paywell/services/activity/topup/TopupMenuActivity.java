@@ -35,7 +35,7 @@ public class TopupMenuActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mobileOperatorBtn = findViewById(R.id.btnMobileOperators);
         brilliantBtn = findViewById(R.id.btnBrilliant);
 

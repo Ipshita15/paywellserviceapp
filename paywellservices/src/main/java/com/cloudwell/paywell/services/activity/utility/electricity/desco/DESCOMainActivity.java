@@ -54,7 +54,7 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
 
         mRelativeLayout = findViewById(R.id.relativeLayout);
         cd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         Button btnBill = findViewById(R.id.homeBtnBillPay);
         Button btnInquiry = findViewById(R.id.homeBtnInquiry);
@@ -232,7 +232,7 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
 
         @Override
         protected void onPreExecute() {
-           showProgressDialog();
+            showProgressDialog();
         }
 
 
@@ -263,7 +263,7 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
 
         @Override
         protected void onPostExecute(String result) {
-           dismissProgressDialog();
+            dismissProgressDialog();
             if (result != null) {
                 DESCOInquiryActivity.TRANSLOG_TAG = result;
                 startActivity(new Intent(DESCOMainActivity.this, DESCOInquiryActivity.class));

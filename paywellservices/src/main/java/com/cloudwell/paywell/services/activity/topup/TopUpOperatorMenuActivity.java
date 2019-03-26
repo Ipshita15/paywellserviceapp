@@ -6,8 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
 
-import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 
@@ -46,7 +46,7 @@ public class TopUpOperatorMenuActivity extends BaseActivity {
     }
 
     private void refrashLanguage() {
-        AppHandler mAppHandler = new AppHandler(getApplicationContext());
+        AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             homeBtnGp.setTypeface(AppController.getInstance().getOxygenLightFont());

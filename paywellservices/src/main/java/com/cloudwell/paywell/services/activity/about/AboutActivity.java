@@ -67,7 +67,7 @@ public class AboutActivity extends AppCompatActivity {
 
         private SampleTextListAdapter(Context context) {
             mContext = context;
-            mAppHandler = new AppHandler(context);
+            mAppHandler = AppHandler.getmInstance(getApplicationContext());
             sampleStrings = mContext.getResources().getStringArray(R.array.sampleStrings);
         }
 

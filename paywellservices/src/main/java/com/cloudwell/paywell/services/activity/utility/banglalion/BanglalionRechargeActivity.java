@@ -59,7 +59,7 @@ public class BanglalionRechargeActivity extends BaseActivity implements View.OnC
             getSupportActionBar().setTitle(R.string.home_utility_banglalion_recharge_title);
         }
         cd = new ConnectionDetector(getApplicationContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         initView();
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_BANGLALION_RECHARGE);
@@ -112,7 +112,7 @@ public class BanglalionRechargeActivity extends BaseActivity implements View.OnC
                 if (!cd.isConnectingToInternet()) {
                     AppHandler.showDialog(getSupportFragmentManager());
                 } else {
-                    mSubmitAsync =  new SubmitAsync().execute(getResources().getString(R.string.banglalion_bill_pay),
+                    mSubmitAsync = new SubmitAsync().execute(getResources().getString(R.string.banglalion_bill_pay),
                             mAppHandler.getImeiNo(),
                             accountNo,
                             amount,
@@ -226,7 +226,7 @@ public class BanglalionRechargeActivity extends BaseActivity implements View.OnC
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mSubmitAsync!=null) {
+        if (mSubmitAsync != null) {
             mSubmitAsync.cancel(true);
         }
     }

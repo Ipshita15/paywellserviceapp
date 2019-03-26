@@ -66,7 +66,7 @@ public class NotificationActivity extends BaseActivity {
         }
         mLinearLayout = findViewById(R.id.linearLayout);
         listView = findViewById(R.id.listViewNotification);
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         adapter = new MsgAdapter(this);
         listView.setAdapter(adapter);
@@ -146,7 +146,7 @@ public class NotificationActivity extends BaseActivity {
 
         @Override
         protected void onPostExecute(String result) {
-           dismissProgressDialog();
+            dismissProgressDialog();
             if (result != null) {
                 try {
                     mStatus[position] = "Read";
@@ -172,7 +172,7 @@ public class NotificationActivity extends BaseActivity {
         private final Context mContext;
 
         private MsgAdapter(Context context) {
-            mAppHandler = new AppHandler(context);
+            mAppHandler = AppHandler.getmInstance(getApplicationContext());
             mContext = context;
         }
 

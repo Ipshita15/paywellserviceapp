@@ -55,7 +55,7 @@ public class AjkerDealActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajker_deal);
 
-        AppHandler mAppHandler = new AppHandler(this);
+        AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mCd = new ConnectionDetector(AppController.getContext());
 
         timer = new Timer();
@@ -64,19 +64,19 @@ public class AjkerDealActivity extends BaseActivity {
             @Override
             public void run() {
                 // do your task here
-                mRefreshTokenAsync =  new RefreshTokenAsync().execute(getString(R.string.ajd_refresh_token));
+                mRefreshTokenAsync = new RefreshTokenAsync().execute(getString(R.string.ajd_refresh_token));
             }
         };
 
-        timer.schedule(timerTask,0, period);
+        timer.schedule(timerTask, 0, period);
 
         linearLayout = findViewById(R.id.linearLayout);
         webView = findViewById(R.id.webView);
 
-        if(mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-            switchToCzLocale(new Locale("en",""));
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            switchToCzLocale(new Locale("en", ""));
         } else {
-            switchToCzLocale(new Locale("fr",""));
+            switchToCzLocale(new Locale("bn", ""));
         }
         setToolbar(getString(R.string.home_product_ajker_deal));
 
@@ -128,6 +128,7 @@ public class AjkerDealActivity extends BaseActivity {
                     }
                 }
             }
+
             public void onPageFinished(WebView view, String url) {
                 try {
                     if (progressDialog.isShowing()) {
@@ -212,7 +213,7 @@ public class AjkerDealActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mRefreshTokenAsync =  new RefreshTokenAsync().execute(getString(R.string.ajd_refresh_token));
+        mRefreshTokenAsync = new RefreshTokenAsync().execute(getString(R.string.ajd_refresh_token));
     }
 
     private void connectionError() {
@@ -242,15 +243,15 @@ public class AjkerDealActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mRefreshTokenAsync != null){
+        if (mRefreshTokenAsync != null) {
             mRefreshTokenAsync.cancel(true);
         }
 
-        if (timer!=null){
+        if (timer != null) {
             timer.cancel();
         }
 
-        if (timerTask !=null){
+        if (timerTask != null) {
             timerTask.cancel();
         }
 

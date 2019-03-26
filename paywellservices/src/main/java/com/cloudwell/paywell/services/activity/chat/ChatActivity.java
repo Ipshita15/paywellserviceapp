@@ -39,22 +39,22 @@ public class ChatActivity extends BaseActivity {
         setContentView(R.layout.activity_ajker_deal);
 
         mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         linearLayout = findViewById(R.id.linearLayout);
         webView = findViewById(R.id.webView);
 
-        if(mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-            switchToCzLocale(new Locale("en",""));
+        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+            switchToCzLocale(new Locale("en", ""));
         } else {
-            switchToCzLocale(new Locale("fr",""));
+            switchToCzLocale(new Locale("bn", ""));
         }
         setToolbar(getString(R.string.app_name));
 
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-        if (currentapiVersion >= android.os.Build.VERSION_CODES.JELLY_BEAN){
+        if (currentapiVersion >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
             fixNewAndroid(webView);
         }
         if (!mCd.isConnectingToInternet()) {
@@ -70,7 +70,7 @@ public class ChatActivity extends BaseActivity {
     protected void fixNewAndroid(WebView webView) {
         try {
             webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
-        } catch(Exception e) {
+        } catch (Exception e) {
             Snackbar snackbar = Snackbar.make(linearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
             snackbar.setActionTextColor(Color.parseColor("#ffffff"));
             View snackBarView = snackbar.getView();

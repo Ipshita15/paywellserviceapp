@@ -60,7 +60,7 @@ class NotificationCheckerService : Service() {
 
     private fun callBalanceCheckAPI() {
         isAPICalledRunning = true;
-        val ah = AppHandler(applicationContext);
+        val ah = AppHandler.getmInstance(applicationContext)
         val imeiNo = ah.getImeiNo()
 
 

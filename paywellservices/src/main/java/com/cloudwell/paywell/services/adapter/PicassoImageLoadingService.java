@@ -23,7 +23,7 @@ public class PicassoImageLoadingService implements ImageLoadingService {
 
     public PicassoImageLoadingService(Context context) {
         this.context = context;
-        mAppHandler = new AppHandler(context);
+        mAppHandler = AppHandler.getmInstance(context);
     }
 
     @Override

@@ -33,7 +33,7 @@ public class UtilityMainActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_utility);
         }
-        AppHandler mAppHandler = new AppHandler(this);
+        AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         Button btnDesco = findViewById(R.id.homeBtnDESCO);
         Button btnDpdc = findViewById(R.id.homeBtnDPDC);

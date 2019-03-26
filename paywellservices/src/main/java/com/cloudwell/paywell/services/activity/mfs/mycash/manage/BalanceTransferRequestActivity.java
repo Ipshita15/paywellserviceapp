@@ -68,7 +68,7 @@ public class BalanceTransferRequestActivity extends BaseActivity implements View
 
         _linearLayout = findViewById(R.id.linearLayout);
         cd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         Bundle delivered = getIntent().getExtras();
         if (delivered != null && !delivered.isEmpty()) {

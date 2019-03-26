@@ -56,7 +56,7 @@ public class ManageMenuActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_fund_management_title);
         }
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mCoordinateLayout = findViewById(R.id.coordinateLayout);
         mCd = new ConnectionDetector(AppController.getContext());
 
