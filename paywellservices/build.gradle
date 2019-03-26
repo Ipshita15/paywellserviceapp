@@ -212,6 +212,13 @@ dependencies {
     implementation "com.karumi:dexter:5.0.0"
     implementation 'com.github.yalantis:ucrop:2.2.2'
 
+    // pdf lib
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+    implementation 'com.mindorks.android:prdownloader:0.5.0'
+
+
+
+
 
 }
 // Add to the bottom of the file

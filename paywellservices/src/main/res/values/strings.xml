@@ -755,5 +755,6 @@
     <string name="ticket_status">Ticket status :</string>
     <string name="please_seleted_a_option">please select a option</string>
     <string name="view_tricket">View ticket</string>
+    <string name="title_ticket_viewe">Ticket View</string>
 
 </resources>

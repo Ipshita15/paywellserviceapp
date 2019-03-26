@@ -754,5 +754,6 @@
     <string name="ticket_status">টিকিট অবস্থা: </string>
     <string name="please_seleted_a_option">একটি বিকল্প নির্বাচন করুন"</string>
     <string name="view_tricket">টিকেট দেখুন</string>
+    <string name="title_ticket_viewe">Ticket View</string>
 
 </resources>

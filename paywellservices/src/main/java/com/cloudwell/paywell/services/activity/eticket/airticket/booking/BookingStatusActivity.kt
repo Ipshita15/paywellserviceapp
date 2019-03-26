@@ -10,7 +10,6 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
-import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
@@ -49,7 +48,7 @@ class BookingStatusActivity : AirTricketBaseActivity() {
     private fun initViewInitialization() {
         val customAdapter = BookingStatusListAdapter(responseList, this.applicationContext, object : ItemClickListener {
             override fun onItemClick(datum: Datum) {
-                datum.invoiceUrl = "notify.paywellonline.com\\/haltripFiles\\/HTS19032310529.pdf"
+                datum.invoiceUrl = "https://notify.paywellonline.com/haltripFiles/HTS19032310529.pdf"
                 showTricketIntentPopupMessage(datum)
             }
 
@@ -72,16 +71,48 @@ class BookingStatusActivity : AirTricketBaseActivity() {
 
     private fun showTricketIntentPopupMessage(datum: Datum) {
         val builder = AlertDialog.Builder(this)
-        builder.setMessage(getString(R.string.please_seleted_a_option))
+        builder.setMessage(getString(com.cloudwell.paywell.services.R.string.please_seleted_a_option))
                 .setCancelable(true)
-                .setPositiveButton(getString(R.string.view_tricket), DialogInterface.OnClickListener { dialog, id ->
+                .setPositiveButton(getString(com.cloudwell.paywell.services.R.string.view_tricket), DialogInterface.OnClickListener { dialog, id ->
+
+                    downloadPDFFile(datum)
 
                 })
-                .setNegativeButton(getString(R.string.email), DialogInterface.OnClickListener { dialog, id ->
+                .setNegativeButton(getString(com.cloudwell.paywell.services.R.string.email), DialogInterface.OnClickListener { dialog, id ->
 
                 })
         val alert = builder.create()
         alert.show()
+
+    }
+
+    private fun downloadPDFFile(datum: Datum) {
+//        PRDownloader.initialize(getApplicationContext());
+//
+//
+//        val downloadId = PRDownloader.download(datum.invoiceUrl, dirPath, fileName)
+//                .build()
+//                .setOnStartOrResumeListener { }
+//                .setOnPauseListener { }
+//                .setOnCancelListener(object : OnCancelListener() {
+//                    fun onCancel() {
+//
+//                    }
+//                })
+//                .setOnProgressListener(object : OnProgressListener {
+//                    fun onProgress(progress: Progress) {
+//
+//                    }
+//                })
+//                .start(object : OnDownloadListener {
+//                    override fun onDownloadComplete() {
+//
+//                    }
+//
+//                    fun onError(error: Error) {
+//
+//                    }
+//                })
 
     }
 
