@@ -20,6 +20,8 @@ public class AppUtility {
         } else {
             return context.getApplicationContext().getFilesDir().getAbsolutePath();
         }
+
+
     }
 
     public static String getProgressDisplayLine(long currentBytes, long totalBytes) {
@@ -29,4 +31,6 @@ public class AppUtility {
     private static String getBytesToMBString(long bytes) {
         return String.format(Locale.ENGLISH, "%.2fMb", bytes / (1024.00 * 1024.00));
     }
+
+
 }
