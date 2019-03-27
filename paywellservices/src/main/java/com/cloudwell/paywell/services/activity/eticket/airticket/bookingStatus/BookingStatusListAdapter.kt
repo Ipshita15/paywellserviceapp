@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
+import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.item_booking_status.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -46,20 +47,28 @@ class BookingStatusListAdapter(val responseList: BookingList, val context: Conte
         holder.tvBookingStatus.setText(model.message)
         holder.tvBookingId.setText(model.bookingId)
 
-//        if (model.message != null) {
-//            if (model.message.equals("Ticketed")) {
-//                holder.ivSymbolTicketed.visibility = View.VISIBLE
-//            } else {
-//                holder.ivSymbolTicketed.visibility = View.INVISIBLE
-//            }
-//        } else {
-//            holder.ivSymbolTicketed.visibility = View.INVISIBLE
-//        }
+        if (model.message != null) {
+            if (model.invoiceUrl != null) {
+                holder.ivSymbolTicketed.visibility = View.VISIBLE
+            } else {
+                holder.ivSymbolTicketed.visibility = View.INVISIBLE
+            }
+        } else {
+            holder.ivSymbolTicketed.visibility = View.INVISIBLE
+        }
+
+        holder.ivSymbolTicketed.setOnClickListener {
+            if (model.invoiceUrl != null) {
+                Logger.v("InvoiceURl: " + model.invoiceUrl)
+                itemClickListener.onItemClick(model)
+            }
+        }
 
         holder.tvBookingId.setOnClickListener {
-            //            if (model.equals("Ticketed")) {
+            if (model.invoiceUrl != null) {
+                Logger.v("InvoiceURl: " + model.invoiceUrl)
                 itemClickListener.onItemClick(model)
-//            }
+            }
         }
 
         if (position % 2 == 0)

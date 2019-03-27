@@ -10,7 +10,7 @@
     tools:context="com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity">
 
     <Button
-        android:id="@+id/btSerach"
+        android:id="@+id/btViewTricket"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="60dp"
@@ -55,7 +55,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btSerach"/>
+        app:layout_constraintTop_toBottomOf="@+id/btViewTricket"/>
 
     <Button
         android:id="@+id/btCencel"

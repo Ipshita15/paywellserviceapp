@@ -754,6 +754,9 @@
     <string name="ticket_status">টিকিট অবস্থা: </string>
     <string name="please_seleted_a_option">একটি বিকল্প নির্বাচন করুন"</string>
     <string name="view_tricket">টিকেট দেখুন</string>
-    <string name="title_ticket_viewe">Ticket View</string>
+    <string name="title_ticket_viewer">Ticket View</string>
+    <string name="please_try_again">Please try again</string>
+    <string name="send_email">ইমেইল পাঠান</string>
+
 
 </resources>

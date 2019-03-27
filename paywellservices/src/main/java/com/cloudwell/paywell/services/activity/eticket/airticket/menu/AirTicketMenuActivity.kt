@@ -51,7 +51,7 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_air_tricket_menu)
         setToolbar(getString(R.string.home_eticket_air))
-        btSerach.setOnClickListener(this)
+        btViewTricket.setOnClickListener(this)
         btCencel.setOnClickListener(this)
         btTransationLog.setOnClickListener(this)
 
@@ -69,7 +69,7 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.btSerach -> {
+            R.id.btViewTricket -> {
                 startActivity(Intent(applicationContext, AirTicketMainActivity::class.java))
             }
 

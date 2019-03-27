@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.fragment_flight_fare.view.*
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 4/3/19.
  */
-class FlightFareDialogFragment : DialogFragment() {
+class FlightFareDialogFragment() : DialogFragment() {
 
     companion object {
         var fare = Fare()
