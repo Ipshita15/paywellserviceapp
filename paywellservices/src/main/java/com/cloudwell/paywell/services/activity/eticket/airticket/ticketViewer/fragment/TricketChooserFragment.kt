@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer
+package com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.fragment
 
 import android.os.Bundle
 import android.support.v4.app.DialogFragment

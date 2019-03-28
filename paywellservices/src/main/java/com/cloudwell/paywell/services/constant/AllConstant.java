@@ -18,4 +18,6 @@ public class AllConstant {
     public static final String IS_FLOW_FROM_FAVORITE_AND_WEST_ZONE_BILL_INQUIRY = "IS_FLOW_FROM_FAVORITE_AND_WEST_ZONE_BILL_INQUIRY";
     public static final String IS_FLOW_FROM_FAVORITE_BUS = "IS_FLOW_FROM_FAVORITE_BUS";
     public static final String IS_FLOW_FROM_FAVORITE_AIR = "IS_FLOW_FROM_FAVORITE_AIR";
+
+    public static final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 }

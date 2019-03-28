@@ -28,6 +28,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.mo
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.view.PassgerAddViewStatus
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.viewmodel.AddPassengerViewModel
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
+import com.cloudwell.paywell.services.constant.AllConstant.emailPattern
 import com.cloudwell.paywell.services.libaray.imagePickerAndCrop.ImagePickerActivity
 import com.cloudwell.paywell.services.utils.AssetHelper
 import com.google.gson.Gson
@@ -55,8 +56,6 @@ class AddPassengerActivity : AirTricketBaseActivity() {
     var passportMadatory1 = false
 
 
-    // ui
-    val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
     var isEmailValid = false
     var countryCode = ""
 

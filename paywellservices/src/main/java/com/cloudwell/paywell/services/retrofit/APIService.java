@@ -11,6 +11,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.ResGetAirports;
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.ReposeAirSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch;
+import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.model.ResInvoideEmailAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationReadAPI;
 import com.cloudwell.paywell.services.activity.refill.model.BranchData;
@@ -155,6 +156,13 @@ public interface APIService {
     Call<JsonObject> uploadBookingFiles(@Part("username") String username,
                                         @Part("booking_id") String password,
                                         @Part("params") String fileUploadReqSearchPara);
+
+
+    @POST("PaywelltransactionHaltrip/send_invoice_to_user")
+    @Multipart
+    Call<ResInvoideEmailAPI> callSendInvoiceAPI(@Part("username") String username,
+                                                @Part("booking_id") String bookingId,
+                                                @Part("email_address") String email_address);
 
 
 }

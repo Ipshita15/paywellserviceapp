@@ -757,6 +757,11 @@
     <string name="title_ticket_viewer">Ticket View</string>
     <string name="please_try_again">Please try again</string>
     <string name="send_email">ইমেইল পাঠান</string>
+    <string name="title_email_list">Eamil List</string>
+    <string name="hit_email">Email</string>
+    <string name="email_address_already_exists">Email address already exists</string>
+    <string name="please_select_atleast_one_email_address">Please select atleast one email address</string>
+    <string name="message">Message</string>
 
 
 </resources>

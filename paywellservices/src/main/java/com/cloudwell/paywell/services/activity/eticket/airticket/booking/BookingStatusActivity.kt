@@ -24,7 +24,8 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.D
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.BookingStatusListAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.ItemClickListener
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.TicketViewerActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.TricketChooserFragment
+import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.emailTicket.PassengerEmailSendListActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.fragment.TricketChooserFragment
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -100,6 +101,11 @@ class BookingStatusActivity : AirTricketBaseActivity() {
     }
 
     private fun openSendEmailActivity(datum: Datum) {
+
+        AppStorageBox.put(applicationContext, AppStorageBox.Key.BOOKING_STATUS_ITEM, datum)
+
+        val intent = Intent(this, PassengerEmailSendListActivity::class.java)
+        startActivity(intent)
 
 
     }

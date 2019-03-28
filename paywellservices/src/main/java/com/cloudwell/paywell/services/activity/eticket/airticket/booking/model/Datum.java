@@ -1,4 +1,3 @@
-
 package com.cloudwell.paywell.services.activity.eticket.airticket.booking.model;
 
 import com.google.gson.annotations.SerializedName;
@@ -71,6 +70,7 @@ public class Datum {
 
     @SerializedName("invoice_url")
     private String invoiceUrl;
+
 
     public String getAdultQty() {
         return mAdultQty;
@@ -319,4 +319,6 @@ public class Datum {
     public void setInvoiceUrl(String invoiceUrl) {
         this.invoiceUrl = invoiceUrl;
     }
+
+
 }

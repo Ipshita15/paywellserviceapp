@@ -84,6 +84,7 @@ class BookingStatusListAdapter(val responseList: BookingList, val context: Conte
 interface ItemClickListener {
 
     fun onItemClick(position: Datum)
+
 }
 
 class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

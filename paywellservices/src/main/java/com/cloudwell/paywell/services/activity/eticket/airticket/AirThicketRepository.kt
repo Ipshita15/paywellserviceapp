@@ -15,6 +15,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySera
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.ResGetAirports
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.ReposeAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch
+import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.model.ResInvoideEmailAPI
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.database.DatabaseClient
@@ -193,6 +194,35 @@ class AirThicketRepository(private val mContext: Context) {
 
     }
 
+    fun callInvoiceAPI(bookingID: String, emailString: String): MutableLiveData<ResInvoideEmailAPI> {
+
+        mAppHandler = AppHandler.getmInstance(mContext)
+//        val userName = mAppHandler!!.imeiNo
+        val userName = "cwntcl"
+
+
+        val data = MutableLiveData<ResInvoideEmailAPI>()
+
+
+        val callAirSearch = ApiUtils.getAPIService().callSendInvoiceAPI(userName, bookingID, emailString)
+        callAirSearch.enqueue(object : Callback<ResInvoideEmailAPI> {
+            override fun onResponse(call: Call<ResInvoideEmailAPI>, response: Response<ResInvoideEmailAPI>) {
+                if (response.isSuccessful) {
+//                    data.value = Gson().fromJson(DummayData().mockPreBooking, ResAirPreBooking::class.java)
+                    data.value = response.body()
+                }
+            }
+
+            override fun onFailure(call: Call<ResInvoideEmailAPI>, t: Throwable) {
+                com.orhanobut.logger.Logger.e("" + t.message)
+                data.value = ResInvoideEmailAPI(t)
+
+            }
+        })
+        return data
+
+
+    }
 
     fun callAirBookingAPI(piN_NO: String, requestAirPrebookingSearchParams: RequestAirPrebookingSearchParams): MutableLiveData<ResBookingAPI> {
         mAppHandler = AppHandler.getmInstance(mContext)
