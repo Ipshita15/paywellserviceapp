@@ -3,6 +3,7 @@ package com.cloudwell.paywell.services.activity.eticket.airticket
 import android.arch.lifecycle.MutableLiveData
 import android.content.Context
 import com.cloudwell.paywell.services.activity.eticket.DummayData
+import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.FileUploadReqSearchPara
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.RequestAirPrebookingSearchParams
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResAirPreBooking
@@ -250,6 +251,34 @@ class AirThicketRepository(private val mContext: Context) {
         return data
 
     }
+
+
+    fun callGetBookingStatusAPI(limit: Int): MutableLiveData<BookingList> {
+        mAppHandler = AppHandler.getmInstance(mContext)
+//        val username = mAppHandler!!.imeiNo
+        val username = "cwntcl"
+
+        val data = MutableLiveData<BookingList>()
+
+        val responseBodyCall = ApiUtils.getAPIService().callAirBookingListSearch(username, limit)
+        responseBodyCall.enqueue(object : Callback<BookingList> {
+            override fun onResponse(call: Call<BookingList>, response: Response<BookingList>) {
+
+                if (response.isSuccessful) {
+//                    data.value = Gson().fromJson(DummayData().mockPreBooking, ResAirPreBooking::class.java)
+                    data.value = response.body()
+                }
+            }
+
+            override fun onFailure(call: Call<BookingList>, t: Throwable) {
+                com.orhanobut.logger.Logger.e("" + t.message)
+                data.value = BookingList(throwable = t)
+            }
+        })
+        return data
+
+    }
+
 
     fun getAllPassengers(): MutableLiveData<List<Passenger>> {
         val data = MutableLiveData<List<Passenger>>()

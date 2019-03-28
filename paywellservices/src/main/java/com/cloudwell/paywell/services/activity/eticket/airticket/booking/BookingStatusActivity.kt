@@ -2,6 +2,8 @@ package com.cloudwell.paywell.services.activity.eticket.airticket.booking
 
 import android.Manifest
 import android.app.DownloadManager
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -23,6 +25,9 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.B
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.BookingStatusListAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.ItemClickListener
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.BookingStatuViewStatus
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.viewModel.BookingStatuViewModel
+import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.TicketViewerActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.emailTicket.PassengerEmailSendListActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.fragment.TricketChooserFragment
@@ -39,26 +44,57 @@ import java.io.File
 
 
 class BookingStatusActivity : AirTricketBaseActivity() {
-
-    lateinit var responseList: BookingList
     lateinit var tag: String
+
+    private lateinit var viewMode: BookingStatuViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.cloudwell.paywell.services.R.layout.activity_booking_main)
-
         setToolbar(getString(com.cloudwell.paywell.services.R.string.booking_status_menu))
 
-        responseList = AppStorageBox.get(applicationContext, AppStorageBox.Key.AIRTICKET_BOOKING_RESPONSE) as BookingList
-
         val bundle = intent.extras
-        if (!bundle.isEmpty) {
-            tag = bundle.getString("tag")
-        }
-        initViewInitialization()
+        val limit = bundle.getInt(AirTicketMenuActivity.KEY_LIMIT)
+
+        initViewModel(limit)
     }
 
-    private fun initViewInitialization() {
+
+    private fun initViewModel(limit: Int) {
+
+        viewMode = ViewModelProviders.of(this).get(BookingStatuViewModel::class.java)
+
+        viewMode.baseViewStatus.observe(this, android.arch.lifecycle.Observer {
+            handleViewCommonStatus(it)
+        })
+
+
+        viewMode.mViewStatus.observe(this, Observer {
+            it?.let { it1 -> handleViewStatus(it1) }
+        })
+
+
+        viewMode.responseList.observe(this, Observer {
+            it?.let { it1 -> setupList(it1) }
+        })
+
+
+
+        viewMode.getBookingStatus(isInternetConnection, limit)
+
+
+    }
+
+    private fun handleViewStatus(it: BookingStatuViewStatus) {
+        if (it.isShowProcessIndicatior) {
+            showProgressDialog()
+        } else {
+            dismissProgressDialog()
+        }
+
+    }
+
+    fun setupList(responseList: BookingList) {
         val customAdapter = BookingStatusListAdapter(responseList, this.applicationContext, object : ItemClickListener {
             override fun onItemClick(datum: Datum) {
                 showTricketIntentPopupMessage(datum)
@@ -77,6 +113,11 @@ class BookingStatusActivity : AirTricketBaseActivity() {
         tvDate.typeface = Typeface.DEFAULT_BOLD
         tvBookingStatus.typeface = Typeface.DEFAULT_BOLD
         tvAction.typeface = Typeface.DEFAULT_BOLD
+    }
+
+
+    private fun submitBookingListRequest(limit: Int, tag: String) {
+        showProgressDialog()
 
 
     }
