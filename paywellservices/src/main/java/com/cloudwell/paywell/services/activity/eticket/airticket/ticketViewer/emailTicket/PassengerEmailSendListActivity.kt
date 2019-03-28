@@ -75,13 +75,13 @@ class PassengerEmailSendListActivity : AirTricketBaseActivity(), View.OnClickLis
 
     private fun initilization() {
 
-        datum.passengers.forEach {
+        datum.passengers?.forEach {
             it.isCheckEmail = true
         }
 
         val p = Passenger()
         p.setDefault(true)
-        allPassegnerMutableList = datum.passengers.toMutableList()
+        allPassegnerMutableList = datum.passengers!!.toMutableList()
         allPassegnerMutableList.add(p)
 
 
@@ -195,7 +195,7 @@ class PassengerEmailSendListActivity : AirTricketBaseActivity(), View.OnClickLis
 
     private fun callSendInvoideAPI(emailString: String) {
 
-        viewMode.callSendInvoiceAPI(datum.bookingId, emailString, isInternetConnection)
+        datum.bookingId?.let { viewMode.callSendInvoiceAPI(it, emailString, isInternetConnection) }
 
     }
 

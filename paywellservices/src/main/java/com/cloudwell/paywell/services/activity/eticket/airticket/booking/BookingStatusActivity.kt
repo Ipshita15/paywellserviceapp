@@ -23,14 +23,16 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.BookingCancelActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.BookingStatusListAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.ItemClickListener
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.ThicketActionMenuFragment
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.TricketChooserFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.BookingStatuViewStatus
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.viewModel.BookingStatuViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.TicketViewerActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.emailTicket.PassengerEmailSendListActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.fragment.TricketChooserFragment
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -97,7 +99,12 @@ class BookingStatusActivity : AirTricketBaseActivity() {
     fun setupList(responseList: BookingList) {
         val customAdapter = BookingStatusListAdapter(responseList, this.applicationContext, object : ItemClickListener {
             override fun onItemClick(datum: Datum) {
-                showTricketIntentPopupMessage(datum)
+                showThicketIntentPopupMessage(datum)
+            }
+
+            override fun onActionButtonClick(position: Int, model: Datum) {
+                showActionMenuPopupMessate(model)
+
             }
 
         })
@@ -115,6 +122,28 @@ class BookingStatusActivity : AirTricketBaseActivity() {
         tvAction.typeface = Typeface.DEFAULT_BOLD
     }
 
+    private fun showActionMenuPopupMessate(model: Datum) {
+
+        AppStorageBox.put(applicationContext, AppStorageBox.Key.BOOKING_STATUS_ITEM, model)
+
+
+        val tricketChooserFragment = ThicketActionMenuFragment()
+
+        tricketChooserFragment.setOnClickHandlerTest(object : ThicketActionMenuFragment.OnClickHandler {
+            override fun onClick() {
+                val model = AppStorageBox.get(applicationContext, AppStorageBox.Key.BOOKING_STATUS_ITEM) as Datum
+
+                val intent = Intent(applicationContext, BookingCancelActivity::class.java)
+                intent.putExtra(BookingCancelActivity.KEY_BOOKING_ID, model.bookingId)
+                startActivity(intent)
+
+
+            }
+        })
+
+        tricketChooserFragment.show(supportFragmentManager, "dialog")
+    }
+
 
     private fun submitBookingListRequest(limit: Int, tag: String) {
         showProgressDialog()
@@ -122,7 +151,7 @@ class BookingStatusActivity : AirTricketBaseActivity() {
 
     }
 
-    private fun showTricketIntentPopupMessage(datum: Datum) {
+    private fun showThicketIntentPopupMessage(datum: Datum) {
 
 
         val tricketChooserFragment = TricketChooserFragment()

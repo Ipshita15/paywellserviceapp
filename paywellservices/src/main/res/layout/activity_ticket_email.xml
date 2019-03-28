@@ -10,6 +10,7 @@
 
 
     <android.support.v7.widget.RecyclerView
+        android:background="@color/white"
         android:id="@+id/emailList"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

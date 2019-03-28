@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.fragment
+package com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment
 
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
@@ -24,7 +24,7 @@ class TricketChooserFragment : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_tricket_chooser, container, false)
-        v.btViewTricket.setOnClickListener {
+        v.btCencel.setOnClickListener {
             dismiss()
             onClickHandler.onClick("view")
         }

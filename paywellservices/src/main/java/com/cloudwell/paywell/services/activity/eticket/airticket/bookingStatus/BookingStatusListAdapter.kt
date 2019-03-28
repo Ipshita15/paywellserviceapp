@@ -71,6 +71,11 @@ class BookingStatusListAdapter(val responseList: BookingList, val context: Conte
             }
         }
 
+        holder.tvAction.setOnClickListener {
+            itemClickListener.onActionButtonClick(position, model)
+        }
+
+
         if (position % 2 == 0)
             holder.rootLayout_booking_status.setBackgroundColor(Color.parseColor("#d8ead2"))
         else
@@ -84,6 +89,7 @@ class BookingStatusListAdapter(val responseList: BookingList, val context: Conte
 interface ItemClickListener {
 
     fun onItemClick(position: Datum)
+    fun onActionButtonClick(position: Int, model: Datum);
 
 }
 
