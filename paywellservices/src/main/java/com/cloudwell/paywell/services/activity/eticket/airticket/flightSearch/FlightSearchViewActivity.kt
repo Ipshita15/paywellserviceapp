@@ -32,7 +32,7 @@ class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
 
     override fun onSetNewDate(year: Int, month: Int, day: Int) {
 
-        val mMonth = month + 1;
+        val mMonth = month + 1
 
         val date = "$year-$mMonth-$day"
         val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(date) as Date

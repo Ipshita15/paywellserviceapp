@@ -36,6 +36,7 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
     lateinit var sectionAdapter: SectionedRecyclerViewAdapter
     private lateinit var mAirTicketBaseViewMode: AirportSerachViewModel
 
+
     lateinit var allAirports: ArrayList<Airport>
     lateinit var allAirportsCity: ArrayList<String>
     var CITY_NAME = "cityName"
@@ -164,11 +165,10 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
         }
 
 
-        // if(it.)
-
     }
 
     private fun handleDisplayData(allAirportsMap: MutableMap<String, List<Airport>>?) {
+
 
         sectionAdapter = SectionedRecyclerViewAdapter()
 
@@ -183,9 +183,8 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
             for (name in air.value) {
                 allAirports.add(name)
                 allAirportsCity.add(name.city)
+
             }
-
-
 
         adapter = ListAdapter(this, R.layout.custom_layout, allAirports)
 

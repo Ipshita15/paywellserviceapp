@@ -26,6 +26,7 @@ public class ListAdapter extends ArrayAdapter<Airport> {
 
     public ListAdapter.SubjectDataFilter subjectDataFilter;
 
+
     public ListAdapter(Context context, int id, ArrayList<Airport> subjectArrayList) {
 
         super(context, id, subjectArrayList);
@@ -37,6 +38,7 @@ public class ListAdapter extends ArrayAdapter<Airport> {
         this.MainList = new ArrayList<Airport>();
 
         this.MainList.addAll(subjectArrayList);
+
     }
 
     @Override
@@ -93,31 +95,6 @@ public class ListAdapter extends ArrayAdapter<Airport> {
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
 
-//            charSequence = charSequence.toString().toLowerCase();
-//
-//            FilterResults filterResults = new FilterResults();
-//
-//            if (charSequence != null && charSequence.toString().length() > 0) {
-//                ArrayList<Airport> arrayList1 = new ArrayList<Airport>();
-//
-//                for (int i = 0, l = MainList.size(); i < l; i++) {
-//                    Airport subject = MainList.get(i);
-//
-//                    if (subject.toString().toLowerCase().contains(charSequence))
-//
-//                        arrayList1.add(subject);
-//                }
-//                filterResults.count = arrayList1.size();
-//
-//                filterResults.values = arrayList1;
-//            } else {
-//                synchronized (this) {
-//                    filterResults.values = MainList;
-//
-//                    filterResults.count = MainList.size();
-//                }
-//            }
-//            return filterResults;
 
             charSequence = charSequence.toString().toLowerCase();
 
@@ -132,13 +109,15 @@ public class ListAdapter extends ArrayAdapter<Airport> {
                 List<Airport> nPlanetList = new ArrayList<Airport>();
 
                 for (Airport p : MainList) {
-                    if (p.getAirportName().toLowerCase().startsWith(charSequence.toString()) || p.getIata().toLowerCase().startsWith(charSequence.toString())) {
+                    if (p.getAirportName().toLowerCase().startsWith(charSequence.toString()) || p.getIata().toLowerCase().startsWith(charSequence.toString()) || p.getCountry().toLowerCase().startsWith(charSequence.toString())) {
                         nPlanetList.add(p);
                     }
                 }
                 results.values = nPlanetList;
                 results.count = nPlanetList.size();
             }
+
+
             return results;
 
         }
