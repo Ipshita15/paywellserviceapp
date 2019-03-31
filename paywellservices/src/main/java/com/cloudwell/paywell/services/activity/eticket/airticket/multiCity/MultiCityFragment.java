@@ -28,10 +28,10 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.ClassModel;
 import com.cloudwell.paywell.services.activity.eticket.airticket.PassengerBottomSheetDialog;
 import com.cloudwell.paywell.services.activity.eticket.airticket.SearchRoundTripModel;
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.FlightSearchViewActivity;
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.AirportsSearchActivity;
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.Airport;
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch;
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.Segment;
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.AirportsSearchActivity;
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.Airport;
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch;
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.Segment;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.app.storage.AppStorageBox;
 

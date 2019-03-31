@@ -12,10 +12,10 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.airRules.ResposeAirRules
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.Airport
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.ResGetAirports
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.ReposeAirSearch
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.Airport
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.ResGetAirports
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.ReposeAirSearch
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.model.ResInvoideEmailAPI
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox

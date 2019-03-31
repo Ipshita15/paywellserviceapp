@@ -5,11 +5,11 @@ import android.arch.lifecycle.Observer
 import com.cloudwell.paywell.services.activity.base.newBase.BaseViewState
 import com.cloudwell.paywell.services.activity.base.newBase.SingleLiveEvent
 import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketBaseViewMode
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.ReposeAirSearch
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.Result
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.Segment
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.view.SeachViewStatus
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.ReposeAirSearch
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.Result
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.Segment
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.view.SeachViewStatus
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 19/2/19.
@@ -35,7 +35,6 @@ class FlightSearchViewModel : AirTicketBaseViewMode() {
 //            list.add(segment)
 //
 //            val requestAirSearch = RequestAirSearch(1, 0, 0, "Oneway", list)
-
 
 
             callFlightSearch(requestAirSearch);

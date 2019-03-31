@@ -17,7 +17,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Segment
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.viewModel.FlightDetails1ViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.FlightDetails2Activity
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.utils.DateUtils
 import com.cloudwell.paywell.services.utils.DateUtils.differenceMilliSecond

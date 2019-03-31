@@ -4,7 +4,7 @@ import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger;
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.Airport;
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.Airport;
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
 import com.cloudwell.paywell.services.activity.notification.model.NotificationDetailMessage;
 import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.model.NotificationDetailMessageSync;

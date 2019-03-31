@@ -23,7 +23,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.viewmodel.FlightDetails2ViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.AddPassengerActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerList.PassengerListActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.utils.RecyclerItemClickListener
 import kotlinx.android.synthetic.main.contant_flight_details_2.*

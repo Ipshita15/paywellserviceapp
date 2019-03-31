@@ -1129,7 +1129,7 @@
 
         </activity>
         <activity
-            android:name=".activity.eticket.airticket.serach.citySerach.AirportsSearchActivity"
+            android:name=".activity.eticket.airticket.airportSearch.search.AirportsSearchActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         </activity>
