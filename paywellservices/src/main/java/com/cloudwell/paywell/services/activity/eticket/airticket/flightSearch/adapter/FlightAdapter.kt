@@ -37,6 +37,8 @@ class FlightAdapter(val items: List<Result>, val context: Context) : RecyclerVie
             holder.tvPrices.setTextColor(parseColor)
         } else {
             holder.ivTake.setImageResource(com.cloudwell.paywell.services.R.drawable.ic_tk_symbol_normal)
+            val parseColor = Color.parseColor("#666666")
+            holder.tvPrices.setTextColor(parseColor)
         }
 
         val orign = model.segments.get(0);
@@ -126,7 +128,6 @@ class FlightAdapter(val items: List<Result>, val context: Context) : RecyclerVie
 
 
 class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    // Holds the TextView that will add each animal to
     val tvStringTime = view.tvStringTime
     val tvEndTime = view.tvEndingTime
     val tvPrices = view.tvPrices

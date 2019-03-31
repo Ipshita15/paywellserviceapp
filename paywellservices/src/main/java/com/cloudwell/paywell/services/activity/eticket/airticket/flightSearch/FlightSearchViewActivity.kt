@@ -9,12 +9,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.View
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.FlightDetails1Activity
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.adapter.FlightAdapter
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.viewModel.FlightSearchViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.Result
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.view.SeachViewStatus
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.FlightDetails1Activity
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.adapter.FlightAdapter
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.viewModel.FlightSearchViewModel
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.customView.horizontalDatePicker.commincation.IDatePicker
@@ -46,7 +46,6 @@ class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
 
     }
 
-    //    internal lateinit var myDatePickerTimeline: MyDatePickerTimeline
     private lateinit var mViewModelFlight: FlightSearchViewModel
 
 
