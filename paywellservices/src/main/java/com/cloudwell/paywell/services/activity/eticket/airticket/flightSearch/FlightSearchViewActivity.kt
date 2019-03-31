@@ -27,6 +27,8 @@ import java.util.*
 
 class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
 
+    lateinit var requestAirSearch: RequestAirSearch
+
 
     override fun onSetNewDate(year: Int, month: Int, day: Int) {
 
@@ -42,7 +44,7 @@ class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
         myDateTimelineView.setNewDate(split[0].toInt(), month, split[2].toInt())
         myDateTimelineView.setOnDateChangeLincher(this)
 
-        mViewModelFlight.onSetDate(isInternetConnection, humanReadAbleDate)
+        mViewModelFlight.onSetDate(isInternetConnection, humanReadAbleDate, requestAirSearch)
 
     }
 
@@ -57,7 +59,7 @@ class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
         val humanReadAbleDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).format(fdepTimeFormatDate)
 
 
-        mViewModelFlight.onSetDate(isInternetConnection, humanReadAbleDate)
+        mViewModelFlight.onSetDate(isInternetConnection, humanReadAbleDate, requestAirSearch)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +68,7 @@ class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
 
         setToolbar(getString(com.cloudwell.paywell.services.R.string.title_serach_view))
 
-        val requestAirSearch = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.REQUEST_AIR_SERACH) as RequestAirSearch
+        requestAirSearch = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.REQUEST_AIR_SERACH) as RequestAirSearch
 
         if (requestAirSearch.journeyType.equals("Oneway")) {
             val split = requestAirSearch.segments.get(0).departureDateTime.split("-")

@@ -26,7 +26,7 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
         } else {
 
             mViewStatus.value = AirportSeachStatus(noSerachFoundMessage = "", isShowProcessIndicatior = true)
-            var serachParameter = "BD,IN"
+            var serachParameter = ""
             if (isIndian) {
                 serachParameter = "IN"
             }

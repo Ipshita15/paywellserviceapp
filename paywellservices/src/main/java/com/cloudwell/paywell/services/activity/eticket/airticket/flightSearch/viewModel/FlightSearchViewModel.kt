@@ -28,15 +28,6 @@ class FlightSearchViewModel : AirTicketBaseViewMode() {
         if (!internetConnection) {
             baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
         } else {
-
-//            val list = mutableListOf<Segment>()
-//            val segment = Segment("Economy", "2019-06-20 04:34:35", "DAC", "CXB")
-////            val segment = Segment("Economy", "2019-06-20 04:34:35", "ZYL", "CXB")
-//            list.add(segment)
-//
-//            val requestAirSearch = RequestAirSearch(1, 0, 0, "Oneway", list)
-
-
             callFlightSearch(requestAirSearch);
         }
     }
@@ -56,27 +47,19 @@ class FlightSearchViewModel : AirTicketBaseViewMode() {
         })
     }
 
-    private fun handleRepose(t: ReposeAirSearch?) {
-        t.let {
-            it?.data?.results.let {
-                val sortedListTotalFare = it?.sortedWith(compareBy(Result::totalFare, Result::totalFare))
-                mListMutableLiveDataFlightData.value = sortedListTotalFare
-                mSearchId.value = t?.data?.searchId
-            }
-        }
-    }
 
-    fun onSetDate(internetConnection: Boolean, date: String) {
+    fun onSetDate(internetConnection: Boolean, date: String, requestAirSearch: RequestAirSearch) {
         if (!internetConnection) {
             baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
         } else {
-            val list = mutableListOf<Segment>()
-            val segment = Segment("Economy", date, "DAC", "CXB");
-            list.add(segment)
 
-            val requestAirSearch = RequestAirSearch(1, 0, 0, "Oneway", list)
-
-            callFlightSearch(requestAirSearch);
+            val updateDateSegments = mutableListOf<Segment>()
+            requestAirSearch.segments.forEach {
+                it.departureDateTime = date
+                updateDateSegments.add(it)
+            }
+            requestAirSearch.segments = updateDateSegments
+            callFlightSearch(requestAirSearch)
         }
 
     }
@@ -106,6 +89,16 @@ class FlightSearchViewModel : AirTicketBaseViewMode() {
             return true
         }
         return false
+    }
+
+    private fun handleRepose(t: ReposeAirSearch?) {
+        t.let {
+            it?.data?.results.let {
+                val sortedListTotalFare = it?.sortedWith(compareBy(Result::totalFare, Result::totalFare))
+                mListMutableLiveDataFlightData.value = sortedListTotalFare
+                mSearchId.value = t?.data?.searchId
+            }
+        }
     }
 }
 
