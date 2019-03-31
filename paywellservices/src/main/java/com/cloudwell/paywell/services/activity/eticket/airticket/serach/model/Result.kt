@@ -14,7 +14,7 @@ data class Result(
         var currency: String = "",
 
         @SerializedName("Discount")
-        var discount: Long = 0,
+        var discount: Double = 0.0,
 
         @SerializedName("FareType")
         var fareType: String = "",

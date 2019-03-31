@@ -13,7 +13,7 @@ public class Result {
     @SerializedName("Currency")
     private String mCurrency;
     @SerializedName("Discount")
-    private Long mDiscount;
+    private Double mDiscount;
     @SerializedName("ExtraServices")
     private Object mExtraServices;
     @SerializedName("FareType")
@@ -53,11 +53,11 @@ public class Result {
         mCurrency = currency;
     }
 
-    public Long getDiscount() {
+    public double getDiscount() {
         return mDiscount;
     }
 
-    public void setDiscount(Long discount) {
+    public void setDiscount(Double discount) {
         mDiscount = discount;
     }
 

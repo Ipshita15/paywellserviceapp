@@ -19,6 +19,7 @@ import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.customView.horizontalDatePicker.commincation.IDatePicker
 import com.cloudwell.paywell.services.utils.RecyclerItemClickListener
+import com.facebook.drawee.backends.pipeline.Fresco
 import kotlinx.android.synthetic.main.activity_search_view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -114,6 +115,8 @@ class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
     }
 
     private fun setAdapter(it: List<Result>?) {
+        Fresco.initialize(applicationContext);
+
         shimmer_recycler_view.showShimmerAdapter()
         shimmer_recycler_view.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
         shimmer_recycler_view.adapter = it?.let { it1 ->

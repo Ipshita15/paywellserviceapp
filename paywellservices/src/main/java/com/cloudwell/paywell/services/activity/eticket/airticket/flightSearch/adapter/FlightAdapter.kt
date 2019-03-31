@@ -2,11 +2,11 @@ package com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.a
 
 import android.content.Context
 import android.graphics.Color
+import android.net.Uri
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.Result
 import com.cloudwell.paywell.services.utils.DateUtils
 import kotlinx.android.synthetic.main.flight_list_item.view.*
@@ -24,6 +24,7 @@ class FlightAdapter(val items: List<Result>, val context: Context) : RecyclerVie
         var originAirport = ""
         var destinationAirport = ""
         var airlineName = ""
+        var airlineCode = ""
         var stop = "";
 
         var totalJourneyTimeString = 0L
@@ -45,6 +46,7 @@ class FlightAdapter(val items: List<Result>, val context: Context) : RecyclerVie
         originAirport = model.segments.get(0).origin?.airport?.airportCode!!
 
         airlineName = model.segments.get(0).airline?.airlineName ?: ""
+        airlineCode = model.segments.get(0).airline?.airlineCode ?: ""
 
 
         if (model.segments.size <= 1) {
@@ -99,8 +101,12 @@ class FlightAdapter(val items: List<Result>, val context: Context) : RecyclerVie
         val durtingJounaryTime = DateUtils.getDurtingJounaryTime(totalJourneyTimeString)
 
 
-        holder.tvDurationAndKilometer.text = context.getString(R.string.duration_tiime) + durtingJounaryTime + " | " + stop
+        holder.tvDurationAndKilometer.text = context.getString(com.cloudwell.paywell.services.R.string.duration_tiime) + durtingJounaryTime + " | " + stop
 
+
+        val imageUri = Uri.parse("https://notify.paywellonline.com/airlines/images/${airlineCode}_350_100_r.png")
+
+        holder.airlineSerachIcon.setImageURI(imageUri)
 
     }
 
@@ -130,6 +136,7 @@ class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val tvDurationAndKilometer = view.tvDurationAndKilometer
     val tvAirlinesName = view.tvAirlinesName
     val btDetails = view.btDetails
+    val airlineSerachIcon = view.airlineSerachIcon
 
 
 }
