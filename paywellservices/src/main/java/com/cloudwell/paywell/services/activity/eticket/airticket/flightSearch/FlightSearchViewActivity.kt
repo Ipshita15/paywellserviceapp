@@ -42,6 +42,8 @@ class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
         myDateTimelineView.setNewDate(split[0].toInt(), month, split[2].toInt())
         myDateTimelineView.setOnDateChangeLincher(this)
 
+        mViewModelFlight.onSetDate(isInternetConnection, humanReadAbleDate)
+
     }
 
     //    internal lateinit var myDatePickerTimeline: MyDatePickerTimeline
