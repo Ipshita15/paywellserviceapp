@@ -18,16 +18,16 @@ import java.util.List;
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 24/3/19.
  */
-public class ListAdapter extends ArrayAdapter<Airport> {
+public class AirportSerachAdapter extends ArrayAdapter<Airport> {
 
     public ArrayList<Airport> MainList;
 
     public ArrayList<Airport> SubjectListTemp;
 
-    public ListAdapter.SubjectDataFilter subjectDataFilter;
+    public AirportSerachAdapter.SubjectDataFilter subjectDataFilter;
 
 
-    public ListAdapter(Context context, int id, ArrayList<Airport> subjectArrayList) {
+    public AirportSerachAdapter(Context context, int id, ArrayList<Airport> subjectArrayList) {
 
         super(context, id, subjectArrayList);
 
@@ -46,7 +46,7 @@ public class ListAdapter extends ArrayAdapter<Airport> {
 
         if (subjectDataFilter == null) {
 
-            subjectDataFilter = new ListAdapter.SubjectDataFilter();
+            subjectDataFilter = new AirportSerachAdapter.SubjectDataFilter();
         }
         return subjectDataFilter;
     }
@@ -55,7 +55,7 @@ public class ListAdapter extends ArrayAdapter<Airport> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        ListAdapter.ViewHolder holder = null;
+        AirportSerachAdapter.ViewHolder holder = null;
 
         if (convertView == null) {
 
@@ -63,7 +63,7 @@ public class ListAdapter extends ArrayAdapter<Airport> {
 
             convertView = vi.inflate(R.layout.custom_layout, null);
 
-            holder = new ListAdapter.ViewHolder();
+            holder = new AirportSerachAdapter.ViewHolder();
 
             holder.SubjectName = (TextView) convertView.findViewById(R.id.tvName);
 
@@ -71,7 +71,7 @@ public class ListAdapter extends ArrayAdapter<Airport> {
             convertView.setTag(holder);
 
         } else {
-            holder = (ListAdapter.ViewHolder) convertView.getTag();
+            holder = (AirportSerachAdapter.ViewHolder) convertView.getTag();
         }
 
         Airport subject = SubjectListTemp.get(position);
@@ -109,7 +109,7 @@ public class ListAdapter extends ArrayAdapter<Airport> {
                 List<Airport> nPlanetList = new ArrayList<Airport>();
 
                 for (Airport p : MainList) {
-                    if (p.getAirportName().toLowerCase().startsWith(charSequence.toString()) || p.getIata().toLowerCase().startsWith(charSequence.toString()) || p.getCountry().toLowerCase().startsWith(charSequence.toString())) {
+                    if (p.getAirportName().toLowerCase().startsWith(charSequence.toString()) || p.getIata().toLowerCase().startsWith(charSequence.toString()) || p.getCountry().toLowerCase().startsWith(charSequence.toString()) || p.getCity().toLowerCase().startsWith(charSequence.toString()) || p.getIso().toLowerCase().startsWith(charSequence.toString())) {
                         nPlanetList.add(p);
                     }
                 }

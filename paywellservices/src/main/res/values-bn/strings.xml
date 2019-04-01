@@ -361,11 +361,7 @@
         <item>November</item>
         <item>December</item>
     </string-array>
-    <string-array name="year_array">
-        <item>Select Year</item>
-        <item>2018</item>
-        <item>2019</item>
-    </string-array>
+
     <string-array name="sampleStrings" formatted="false">
         <item>পেওয়েল তথ্য প্রযুক্তি নির্ভর একটি সার্ভিস প্লাটফর্ম যা মোবাইল রিচার্জ, মোবাইল ব্যাংকিং, ইউটিলিটি বিল, পাসপোর্ট, ন্যাশনাল আইডি ফি গ্রহন ও অ্যাসিস্টেড
             রিটেইলসহ নানাবিধ পেমেন্ট সংক্রান্ত সার্ভিস প্রদান করে। পেওয়েল সার্ভিস একটি মানসম্পন্ন ডিস্ট্রিবিউশন প্রক্রিয়ায় ভোক্তার কাছে পৌছায়, যেখানে ডিস্ট্রিবিউটর ও

@@ -106,5 +106,18 @@ object DateUtils {
         return endDate.time - startDate.time
     }
 
+    fun getDynamicTwoYear(): MutableList<String> {
+        val years = mutableListOf<String>()
+
+        val year = Calendar.getInstance().get(Calendar.YEAR)
+        years.add("" + year)
+
+        val today = Calendar.getInstance()
+        today.add(Calendar.YEAR, 1)
+        val nextYear = today.get(Calendar.YEAR)
+        years.add("" + nextYear)
+        return years
+    }
+
 
 }

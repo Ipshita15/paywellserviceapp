@@ -82,7 +82,7 @@ public class SearchTrainActivity extends BaseActivity implements AdapterView.OnI
         mBtnSearchTrain.setOnClickListener(this);
 
         mAppHandler = AppHandler.getmInstance(getApplicationContext());
-        // Creating adapter for spinner
+        // Creating mAdapter for spinner
         assert mSpinnerDestination != null;
         ArrayAdapter<String> destinationAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mAppHandler.getDestinationStations()) {
             @Override
@@ -109,7 +109,7 @@ public class SearchTrainActivity extends BaseActivity implements AdapterView.OnI
         };
         // Drop down layout style - list terms_and_conditions_format with radio button
         destinationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // attaching data adapter to spinner
+        // attaching data mAdapter to spinner
         mSpinnerDestination.setAdapter(destinationAdapter);
 
         assert mSpinnerPassengerType != null;
@@ -138,7 +138,7 @@ public class SearchTrainActivity extends BaseActivity implements AdapterView.OnI
         };
         // Drop down layout style - list terms_and_conditions_format with radio button
         passengerTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // attaching data adapter to spinner
+        // attaching data mAdapter to spinner
         mSpinnerPassengerType.setAdapter(passengerTypeAdapter);
 
         mCd = new ConnectionDetector(AppController.getContext());

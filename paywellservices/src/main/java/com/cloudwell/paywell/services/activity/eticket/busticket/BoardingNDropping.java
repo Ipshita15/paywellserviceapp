@@ -296,7 +296,7 @@ public class BoardingNDropping extends BaseActivity {
                         };
                         // Drop down layout style - list terms_and_conditions_format with radio button
                         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        // attaching data adapter to spinner
+                        // attaching data mAdapter to spinner
                         spinnerBoading.setAdapter(dataAdapter);
                     }
                     _progressBar.setVisibility(View.GONE);

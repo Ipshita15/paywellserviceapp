@@ -103,7 +103,7 @@ class RolesFragment : Fragment() {
 
         listAdapter = ExpandableListAdapter(activity?.applicationContext!!, listDataHeader, listDataChild)
 
-        // setting list adapter
+        // setting list mAdapter
         lvExp.setAdapter(listAdapter)
 
         listAdapter?.notifyDataSetChanged()
