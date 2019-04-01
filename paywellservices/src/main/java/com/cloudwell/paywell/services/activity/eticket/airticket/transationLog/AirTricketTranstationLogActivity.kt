@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.test.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TranstationLogActivity : AirTricketBaseActivity() {
+class AirTricketTranstationLogActivity : AirTricketBaseActivity() {
 
     lateinit var tag: String
 
