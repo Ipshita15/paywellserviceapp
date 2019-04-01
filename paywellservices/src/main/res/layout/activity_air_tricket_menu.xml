@@ -86,7 +86,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="60dp"
         android:layout_marginRight="60dp"
-        android:background="@drawable/serach_roundedbutton_smiliar_red"
+        android:background="@drawable/serach_roundedbutton_smiliar_blue_new"
         android:drawableLeft="@drawable/ic_transtion_log"
 
         android:gravity="center"
