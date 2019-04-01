@@ -20,12 +20,12 @@ class FlightAdapter(val items: List<Result>, val context: Context) : RecyclerVie
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var destinationTime = "";
+        var destinationTime = ""
         var originAirport = ""
         var destinationAirport = ""
         var airlineName = ""
         var airlineCode = ""
-        var stop = "";
+        var stop = ""
 
         var totalJourneyTimeString = 0L
 
