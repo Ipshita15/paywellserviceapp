@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.test.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AirTricketTranstationLogActivity : AirTricketBaseActivity() {
+class AirThicketTranslationLogActivity : AirTricketBaseActivity() {
 
     lateinit var tag: String
 
@@ -69,7 +69,7 @@ class AirTricketTranstationLogActivity : AirTricketBaseActivity() {
 
     private fun setupList(it1: BookingList) {
 
-        val customAdapter = MyAdapterFortranstationLog(this, it1.data)
+        val customAdapter = AirThicketTranslationLogAdatper(this, it1.data)
         listBookingList.adapter = customAdapter
 
 
@@ -111,7 +111,7 @@ class AirTricketTranstationLogActivity : AirTricketBaseActivity() {
         finish()
     }
 
-    inner class MyAdapterFortranstationLog : RecyclerView.Adapter<ViewHolder> {
+    inner class AirThicketTranslationLogAdatper : RecyclerView.Adapter<ViewHolder> {
 
 
         var context: Context? = null

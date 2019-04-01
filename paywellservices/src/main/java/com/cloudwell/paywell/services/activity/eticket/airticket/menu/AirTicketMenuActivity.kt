@@ -15,7 +15,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketMainAc
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.BookingStatusActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.BookingCancelActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.AirTricketTranstationLogActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.AirThicketTranslationLogActivity
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.utils.ConnectionDetector
@@ -133,7 +133,7 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
                     intent.putExtra(KEY_LIMIT, selectedLimit)
                     startActivity(intent)
                 } else if (tag.equals(TRX_TAG)) {
-                    val intent = Intent(application, AirTricketTranstationLogActivity::class.java)
+                    val intent = Intent(application, AirThicketTranslationLogActivity::class.java)
                     intent.putExtra(KEY_LIMIT, selectedLimit)
                     startActivity(intent)
                 }

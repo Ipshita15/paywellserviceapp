@@ -1189,7 +1189,7 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".activity.eticket.airticket.transationLog.AirTricketTranstationLogActivity"
+            android:name=".activity.eticket.airticket.transationLog.AirThicketTranslationLogActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
