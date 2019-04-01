@@ -153,7 +153,9 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
                     dialogInterface.dismiss();
                     PIN_NO = pinNoET.getText().toString();
                     if (cd.isConnectingToInternet()) {
-                        submitCancelRequest("cwntcl", PIN_NO, bookingId, cancelReason, "json");
+
+                        String userName = mAppHandler.getUserName();
+                        submitCancelRequest(userName, PIN_NO, bookingId, cancelReason, "json");
                     } else {
                         Snackbar snackbar = Snackbar.make(cancelMainLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
                         snackbar.setActionTextColor(Color.parseColor("#ffffff"));

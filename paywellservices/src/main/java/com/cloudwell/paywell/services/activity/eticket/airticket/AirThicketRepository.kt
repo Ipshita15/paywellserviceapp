@@ -3,6 +3,10 @@ package com.cloudwell.paywell.services.activity.eticket.airticket
 import android.arch.lifecycle.MutableLiveData
 import android.content.Context
 import com.cloudwell.paywell.services.activity.eticket.DummayData
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.ReposeAirSearch
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.Airport
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.ResGetAirports
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.FileUploadReqSearchPara
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.RequestAirPrebookingSearchParams
@@ -12,10 +16,6 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.airRules.ResposeAirRules
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger
-import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.Airport
-import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.ResGetAirports
-import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.ReposeAirSearch
-import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.model.ResInvoideEmailAPI
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
@@ -255,8 +255,8 @@ class AirThicketRepository(private val mContext: Context) {
 
     fun callGetBookingStatusAPI(limit: Int): MutableLiveData<BookingList> {
         mAppHandler = AppHandler.getmInstance(mContext)
-//        val username = mAppHandler!!.imeiNo
-        val username = "cwntcl"
+        val username = mAppHandler!!.imeiNo
+//        val username = "cwntcl"
 
         val data = MutableLiveData<BookingList>()
 
