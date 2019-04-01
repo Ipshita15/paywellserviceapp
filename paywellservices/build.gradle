@@ -24,7 +24,7 @@ android {
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.cloudwell.paywell.services"
-        minSdkVersion 11
+        minSdkVersion 16
         //for push notification its 20 otherwise it was 25
         targetSdkVersion 27
         versionCode 43
