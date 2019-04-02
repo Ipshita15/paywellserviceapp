@@ -19,7 +19,10 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.A
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.utils.ConnectionDetector
+import com.cloudwell.paywell.services.utils.LanuageConstant.KEY_BANGLA
+import com.cloudwell.paywell.services.utils.LanuageConstant.KEY_ENGLISH
 import kotlinx.android.synthetic.main.activity_air_tricket_menu.*
+import java.util.*
 
 class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
@@ -47,6 +50,15 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        mAppHandler = AppHandler.getmInstance(applicationContext)
+        val isEnglish = mAppHandler?.getAppLanguage().equals("en", ignoreCase = true)
+        if (isEnglish) {
+            switchToCzLocale(Locale(KEY_ENGLISH, ""))
+        } else {
+            switchToCzLocale(Locale(KEY_BANGLA, ""))
+        }
+
         setContentView(R.layout.activity_air_tricket_menu)
         setToolbar(getString(R.string.home_eticket_air))
         btViewTricket.setOnClickListener(this)
@@ -200,5 +212,18 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
                 radioButton_hundred?.setChecked(false)
             }
         }
+    }
+
+    override fun onBackPressed() {
+
+        val isEnglish = mAppHandler?.getAppLanguage().equals("en", ignoreCase = true)
+        if (isEnglish) {
+            switchToCzLocale(Locale(KEY_ENGLISH, ""))
+        } else {
+            switchToCzLocale(Locale(KEY_BANGLA, ""))
+        }
+
+
+        super.onBackPressed()
     }
 }

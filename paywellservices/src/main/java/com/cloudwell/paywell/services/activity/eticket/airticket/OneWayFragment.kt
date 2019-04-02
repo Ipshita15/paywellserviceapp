@@ -15,11 +15,11 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.*
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.FlightSearchViewActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.AirportsSearchActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.Airport
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.Segment
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.AirportsSearchActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.Airport
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.FlightSearchViewActivity
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.franmontiel.fullscreendialog.FullScreenDialogFragment
@@ -41,7 +41,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
     private lateinit var dialogFragment: FullScreenDialogFragment
     val dialogTag = "dialog"
 
-    val myCalendar = Calendar.getInstance()
+    val myCalendar = Calendar.getInstance(Locale.ENGLISH)
 
 
     private lateinit var fromAirport: Airport
@@ -62,6 +62,8 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater!!.inflate(R.layout.fragment_one_way, container, false)
+
+
 
         frameLayout = view.findViewById(R.id.frameLayout)
         val tvDepart = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.tvDepart2)
@@ -326,7 +328,8 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
 
     private fun showDepartDatePicker() {
 
-        val calendar = Calendar.getInstance()
+        val calendar = Calendar.getInstance(Locale.ENGLISH)
+
 
         val year = calendar.get(Calendar.YEAR)
         val thismonth = calendar.get(Calendar.MONTH)
@@ -336,7 +339,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
         val datePickerDialog = DatePickerDialog(context,
                 DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
 
-                    val calendar = Calendar.getInstance()
+                    val calendar = Calendar.getInstance(Locale.ENGLISH)
                     calendar.set(Calendar.YEAR, year)
                     calendar.set(Calendar.MONTH, month)
                     calendar.set(Calendar.DAY_OF_MONTH, day)
