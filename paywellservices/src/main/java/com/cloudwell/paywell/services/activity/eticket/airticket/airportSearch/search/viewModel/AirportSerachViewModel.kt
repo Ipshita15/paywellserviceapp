@@ -6,6 +6,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketBaseVi
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.AirportSeachStatus
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.Airport
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.ResGetAirports
+import com.cloudwell.paywell.services.app.AppHandler
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 25/2/19.
@@ -19,45 +20,80 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
     var allAirportHashMap = SingleLiveEvent<MutableMap<String, List<Airport>>>()
 
 
-    fun getData(internetConnection: Boolean, isIndian: Boolean) {
+    val UPDATE_SOFTWARE_INTERVAL = (24 * 60 * 60).toLong()// 1 day
+
+
+    fun getData(internetConnection: Boolean, isIndian: Boolean, appHandler: AppHandler) {
 
         if (!internetConnection) {
             baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
         } else {
 
             mViewStatus.value = AirportSeachStatus(noSerachFoundMessage = "", isShowProcessIndicatior = true)
+
             var serachParameter = ""
             if (isIndian) {
                 serachParameter = "IN"
             }
 
-            mAirTicketRepository.getAllCity(serachParameter).observeForever {
-                val checkNetworkAndStatusCode = isOkNetworkAndStatusCode(it)
-                if (checkNetworkAndStatusCode) {
+            val checkAirportListUpdateChecker = checkAirportListUpdateChecker(appHandler, internetConnection)
+            if (checkAirportListUpdateChecker == true) {
+                getAirportListForRemoteAPI(serachParameter, appHandler)
+
+            } else {
+
+                mAirTicketRepository.getAllAirportForLocal(serachParameter).observeForever {
+
                     mViewStatus.value = AirportSeachStatus(noSerachFoundMessage = "", isShowProcessIndicatior = false)
 
-                    val recentSearches = mAirTicketRepository.getRecentSearches()
-                    val resGetAirpots = it
+                    val resGetAirports1 = ResGetAirports(null)
+                    resGetAirports1.airports = it!!.toMutableList()
 
-                    handleRespose(resGetAirpots, null)
-
-//                    recentSearches.observeForever {
-//                        if (it != null && it.size > 0) {
-//                            handleRespose(resGetAirpots, it)
-//                        } else {
-//                            handleRespose(resGetAirpots, null)
-//                        }
-//                    }
-
-
-                } else {
+                    handleRespose(resGetAirports1, null)
 
                 }
+            }
+
+        }
+    }
+
+    private fun getAirportListForRemoteAPI(serachParameter: String, appHandler: AppHandler) {
+        mAirTicketRepository.getAirports(serachParameter).observeForever {
+            val checkNetworkAndStatusCode = isOkNetworkAndStatusCode(it)
+            if (checkNetworkAndStatusCode) {
+                mViewStatus.value = AirportSeachStatus(noSerachFoundMessage = "", isShowProcessIndicatior = false)
+
+                val recentSearches = mAirTicketRepository.getRecentSearches()
+                val resGetAirpots = it
+
+                mAirTicketRepository.insertAirportData(resGetAirpots!!.airports)
+
+                handleRespose(resGetAirpots, null)
+
+                appHandler.setAirportListUpdateCheck(System.currentTimeMillis() / 1000)
+
+            } else {
+
             }
         }
     }
 
-    private fun handleRespose(it: ResGetAirports?, it1: List<Airport>?) {
+
+    private fun checkAirportListUpdateChecker(appHandler: AppHandler, isInternetConnection: Boolean): Boolean {
+        if (System.currentTimeMillis() / 1000 >= appHandler.airportListUpdateCheck + UPDATE_SOFTWARE_INTERVAL) {
+            if (isInternetConnection) {
+                return true;
+
+            } else {
+                return false;
+            }
+        } else {
+            appHandler.setAirportListUpdateCheck(System.currentTimeMillis() / 1000)
+            return false;
+        }
+    }
+
+    private fun handleRespose(it: ResGetAirports?, recentList: List<Airport>?) {
 
         it.let {
             resGetAirports = it!!
@@ -72,13 +108,13 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
 
             // add recent search
             var recentAirpot = mutableListOf<Airport>()
-            if (it1 != null) {
+            if (recentList != null) {
                 countries.add("Recent Searches")
 
-                recentAirpot = it1.toMutableList()
+                recentAirpot = recentList.toMutableList()
                 recentAirpot.reverse()
 
-                tempAirportHashMap.put("Recent Searches", it1.toMutableList())
+                tempAirportHashMap.put("Recent Searches", recentList.toMutableList())
             }
 
 

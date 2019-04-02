@@ -20,6 +20,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.s
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.adapter.HeaderAirportRecyclerViewSection
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.Airport
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.viewModel.AirportSerachViewModel
+import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus
 import com.squareup.otto.Subscribe
@@ -152,7 +153,7 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
         })
 
 
-        mAirTicketBaseViewMode.getData(isInternetConnection, isIndian);
+        mAirTicketBaseViewMode.getData(isInternetConnection, isIndian, AppHandler.getmInstance(applicationContext));
 
     }
 

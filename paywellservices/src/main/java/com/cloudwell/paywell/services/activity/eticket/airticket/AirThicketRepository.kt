@@ -36,6 +36,7 @@ class AirThicketRepository(private val mContext: Context) {
 
     private var mAppHandler: AppHandler? = null
 
+
     fun getAirSearchData(requestAirSearch: RequestAirSearch): MutableLiveData<ReposeAirSearch> {
         mAppHandler = AppHandler.getmInstance(mContext)
         val userName = mAppHandler!!.imeiNo
@@ -59,7 +60,7 @@ class AirThicketRepository(private val mContext: Context) {
         return data
     }
 
-    fun getAllCity(iso: String): MutableLiveData<ResGetAirports> {
+    fun getAirports(iso: String): MutableLiveData<ResGetAirports> {
 
         mAppHandler = AppHandler.getmInstance(mContext)
         val userName = mAppHandler!!.imeiNo
@@ -83,6 +84,19 @@ class AirThicketRepository(private val mContext: Context) {
         })
         return data
 
+    }
+
+    private fun getLocalAirportData(): MutableLiveData<List<Airport>> {
+        val data = MutableLiveData<List<Airport>>()
+
+        val airport = DatabaseClient.getInstance(mContext).appDatabase.mAirtricketDab().airport
+        doAsync {
+            uiThread {
+                data.value = airport
+            }
+        }
+
+        return data;
     }
 
     fun airPriceSearch(requestAirSearch: RequestAirPriceSearch): MutableLiveData<ResposeAirPriceSearch> {
@@ -382,6 +396,37 @@ class AirThicketRepository(private val mContext: Context) {
             }
         }
         return data
+    }
+
+    fun getAllAirportForLocal(serachParameter: String): MutableLiveData<List<Airport>> {
+        val data = MutableLiveData<List<Airport>>()
+
+        doAsync {
+            var airport = mutableListOf<Airport>()
+            if (serachParameter.equals("")) {
+                airport = DatabaseClient.getInstance(mContext).appDatabase.mAirtricketDab().airport
+            } else {
+                airport = DatabaseClient.getInstance(mContext).appDatabase.mAirtricketDab().getAirport(serachParameter)
+            }
+            uiThread {
+                data.value = airport
+            }
+        }
+
+
+        return data;
+    }
+
+    fun insertAirportData(airports: List<Airport>) {
+        doAsync {
+
+            DatabaseClient.getInstance(mContext).appDatabase.mAirtricketDab().insertAirportList(airports)
+
+            uiThread {
+
+            }
+        }
+
     }
 
 

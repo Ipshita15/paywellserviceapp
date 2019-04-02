@@ -7,8 +7,8 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.Airport;
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger;
 
 import java.util.List;
 
@@ -28,6 +28,17 @@ public interface AirtricketDab {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Long insert(Passenger passenger);
+
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertAirportList(List<Airport> list);
+
+    @Query("SELECT * FROM Airport ")
+    List<Airport> getAirport();
+
+
+    @Query("SELECT * FROM Airport WHERE iso = (:iso)")
+    List<Airport> getAirport(String iso);
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
