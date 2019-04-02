@@ -12,6 +12,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.m
 import com.cloudwell.paywell.services.utils.DateUtils
 import kotlinx.android.synthetic.main.flight_list_item.view.*
 import java.text.SimpleDateFormat
+import java.util.*
 
 
 /**
@@ -62,6 +63,19 @@ class FlightAdapter(val items: List<Result>, val context: Context) : RecyclerVie
 
             stop = "Nonstop"
 
+
+            val split = model.segments.get(0).origin?.depTime.toString().split("T");
+            val date = split.get(0) + " " + split.get(1)
+            val fistDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss", Locale.ENGLISH).parse(date)
+
+            val split1 = model.segments.get(0).destination?.arrTime.toString().split("T");
+            val date1 = split1.get(0) + " " + split1.get(1)
+            val secondDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss", Locale.ENGLISH).parse(date1)
+
+            val durtingJounaryTimeNew = DateUtils.getDurtingJounaryTimeNew(fistDate, secondDate)
+
+            holder.tvDurationAndKilometer.text = context.getString(R.string.duration_tiime) + durtingJounaryTimeNew + " | " + stop
+
         } else {
 
             val destination = model.segments?.get(model.segments.size - 1);
@@ -75,6 +89,19 @@ class FlightAdapter(val items: List<Result>, val context: Context) : RecyclerVie
                     ?: "")
 
 
+            val split = model.segments.get(0).origin?.depTime.toString().split("T");
+            val date = split.get(0) + " " + split.get(1)
+            val fistDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss", Locale.ENGLISH).parse(date)
+
+            val split1 = model.segments.get(model.segments.size - 1).destination?.arrTime.toString().split("T");
+            val date1 = split1.get(0) + " " + split1.get(1)
+            val secondDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss", Locale.ENGLISH).parse(date1)
+
+            val durtingJounaryTimeNew = DateUtils.getDurtingJounaryTimeNew(fistDate, secondDate)
+
+            holder.tvDurationAndKilometer.text = context.getString(R.string.duration_tiime) + durtingJounaryTimeNew + " | " + stop
+
+
         }
 
         holder.tvStringTime.text = orignTime
@@ -85,26 +112,23 @@ class FlightAdapter(val items: List<Result>, val context: Context) : RecyclerVie
         holder.tvAirlinesName.text = airlineName
 
 
-        model.segments.forEach {
-
-            val split = it.origin?.depTime.toString().split("T");
-            val date = split.get(0) + " " + split.get(1)
-            val fistDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss").parse(date)
-
-            val split1 = it.destination?.arrTime.toString().split("T");
-            val date1 = split1.get(0) + " " + split1.get(1)
-            val secondDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss").parse(date1)
-
-
-            val differenceMilliSecond = DateUtils.differenceMilliSecond(fistDate, secondDate)
-            totalJourneyTimeString = totalJourneyTimeString + differenceMilliSecond
-
-        }
-
-        val durtingJounaryTime = DateUtils.getDurtingJounaryTime(totalJourneyTimeString)
-
-
-        holder.tvDurationAndKilometer.text = context.getString(R.string.duration_tiime) + durtingJounaryTime + " | " + stop
+//        model.segments.forEach {
+//
+//            val split = it.origin?.depTime.toString().split("T");
+//            val date = split.get(0) + " " + split.get(1)
+//            val fistDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss").parse(date)
+//
+//            val split1 = it.destination?.arrTime.toString().split("T");
+//            val date1 = split1.get(0) + " " + split1.get(1)
+//            val secondDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss").parse(date1)
+//
+//
+//            val differenceMilliSecond = DateUtils.differenceMilliSecond(fistDate, secondDate)
+//            totalJourneyTimeString = totalJourneyTimeString + differenceMilliSecond
+//
+//        }
+//
+//        val durtingJounaryTime = DateUtils.getDurtingJounaryTime(totalJourneyTimeString)
 
 
         val imageUri = Uri.parse("https://notify.paywellonline.com/airlines/images/${airlineCode}_350_100_r.png")

@@ -64,7 +64,8 @@ object DateUtils {
     fun getDurtingJounaryTime(millis: Long): String {
         var localMillis = millis
         if (localMillis < 0) {
-            throw IllegalArgumentException("Duration must be greater than zero!")
+//            throw IllegalArgumentException("Duration must be greater than zero!")
+            localMillis = 0
         }
 
         val days = TimeUnit.MILLISECONDS.toDays(localMillis)
@@ -98,7 +99,49 @@ object DateUtils {
         }
 
         return sb.toString()
+    }
 
+
+    fun getDurtingJounaryTimeNew(dateStart: Date, dateStop: Date): String {
+        //HH converts hour in 24 hours format (0-23), day calculation
+        val sb = StringBuilder(64)
+
+        try {
+
+
+            //in milliseconds
+            val diff = dateStop.time - dateStart.time
+
+            val diffSeconds = diff / 1000 % 60
+            val diffMinutes = diff / (60 * 1000) % 60
+            val diffHours = diff / (60 * 60 * 1000) % 24
+            val diffDays = diff / (24 * 60 * 60 * 1000)
+
+            if (diffDays != 0L) {
+                sb.append(diffDays)
+                sb.append("d ")
+            }
+
+            if (diffHours != 0L) {
+                sb.append(diffHours)
+                sb.append("h ")
+            }
+
+            if (diffMinutes != 0L) {
+                sb.append(diffMinutes)
+                sb.append("m ")
+            }
+
+            if (diffSeconds != 0L) {
+                sb.append(diffSeconds)
+                sb.append("s")
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        return sb.toString()
 
     }
 

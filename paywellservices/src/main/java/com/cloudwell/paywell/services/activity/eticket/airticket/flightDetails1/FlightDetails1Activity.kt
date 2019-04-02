@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.View
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.adapter.FlightSequenceAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.AirlessDialogFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.BaggageAndPoliciesActiivty
@@ -17,7 +18,6 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Segment
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.viewModel.FlightDetails1ViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.FlightDetails2Activity
-import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.utils.DateUtils
 import com.cloudwell.paywell.services.utils.DateUtils.differenceMilliSecond
@@ -195,7 +195,7 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         if (result.extraServices == null) {
             tvExtraService.text = getString(R.string.extra_serviex) + ": " + getString(R.string.n_a)
         } else {
-            tvExtraService.text = getString(R.string.extra_serviex) + ": " + getString(R.string.n_a) + result.extraServices
+            tvExtraService.text = getString(R.string.extra_serviex) + ": " + getString(R.string.n_a)
         }
 
         if (result.isRefundable!!) {
