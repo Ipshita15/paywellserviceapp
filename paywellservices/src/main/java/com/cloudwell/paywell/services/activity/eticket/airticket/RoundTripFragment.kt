@@ -5,18 +5,18 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.ContextThemeWrapper
+import android.support.v7.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.*
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.FlightSearchViewActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.AirportsSearchActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.Airport
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.Segment
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.AirportsSearchActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.Airport
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.FlightSearchViewActivity
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.customView.multipDatePicker.SlyCalendarDialog
 import kotlinx.android.synthetic.main.fragment_round_trip.*
@@ -30,7 +30,7 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
 
     private lateinit var fromAirport: Airport
     private lateinit var toAirport: Airport
-    var mClassModel = ClassModel("Economy", "Economy", true)
+
 
     var humanReadAbleDateFirst: String = ""
     var humanReadAbleDateSecond: String = ""
@@ -44,6 +44,13 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
 
     private val REQ_CODE_FROM = 1
     private val REQ_CODE_TO = 3
+
+
+    lateinit var mClassModel: ClassModel
+
+    lateinit var airTicketAdult: TextView
+    lateinit var airTicketKid: TextView
+    lateinit var airTicketInfant: TextView
 
     companion object {
         val KEY_REQUEST_KEY = "KEY_REQUEST_KEY"
@@ -149,6 +156,10 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
         tvInfant = view.findViewById(com.cloudwell.paywell.services.R.id.airTicketInfant)
 
 
+        airTicketInfant = view.findViewById<TextView>(R.id.airTicketInfant)
+        airTicketAdult = view.findViewById<TextView>(R.id.airTicketAdult)
+        airTicketKid = view.findViewById<TextView>(R.id.airTicketKid)
+
 
         tvFrom.setOnClickListener(this)
         layoutTo.setOnClickListener(this)
@@ -164,7 +175,7 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
 
         tsFrom.setFactory {
             TextView(ContextThemeWrapper(context,
-                    com.cloudwell.paywell.services.R.style.TicketFrom), null, 0)
+                    R.style.TicketFrom), null, 0)
         }
         tsFromPort.setFactory {
             TextView(ContextThemeWrapper(context,
@@ -193,14 +204,38 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
         tsToPort.inAnimation = inAnim
         tsToPort.outAnimation = outAnim
 
-        tsFrom.setCurrentText(activity?.application?.getString(R.string.from))
-        tsFromPort.setCurrentText(activity?.application?.getString(R.string.airport))
-        view.tvHitFrom.visibility = View.INVISIBLE
+
+        val fromCacheAirport = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.FROM_CACHE) as Airport?
+        if (fromCacheAirport != null) {
+            view.tsRoundTripFrom.setText(fromCacheAirport.iata)
+            view.tsRoundTripFromPort.setText(fromCacheAirport.airportName)
+            view.tvHitFrom.visibility = View.VISIBLE
+
+            fromAirport = Airport()
+            fromAirport.iata = fromCacheAirport.iata
+
+        } else {
+            view.tsRoundTripFrom.setCurrentText(activity?.application?.getString(R.string.from))
+            view.tsRoundTripFromPort.setCurrentText(activity?.application?.getString(R.string.airport))
+            view.tvHitFrom.visibility = View.INVISIBLE
+        }
 
 
-        tsTo.setCurrentText(activity?.application?.getString(R.string.to))
-        tsToPort.setCurrentText(activity?.application?.getString(R.string.airport))
-        view.tvHitTo.visibility = View.INVISIBLE
+        val toCacheAirport = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.TO_CACHE) as Airport?
+        if (toCacheAirport != null) {
+
+            view.tsRoundTripTo.setText(toCacheAirport.iata)
+            view.tsRoundTripToPort.setText(toCacheAirport.airportName)
+            view.tvHitTo.visibility = View.VISIBLE
+
+            toAirport = Airport()
+            toAirport.iata = toCacheAirport.iata
+
+        } else {
+            view.tsRoundTripTo.setCurrentText(activity?.application?.getString(R.string.to))
+            view.tsRoundTripToPort.setCurrentText(activity?.application?.getString(R.string.airport))
+            view.tvHitTo.visibility = View.INVISIBLE
+        }
 
         val textFrom = tsFrom.currentView as TextView
         val textFromPort = tsFromPort.currentView as TextView
@@ -238,6 +273,43 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
             handlePassengerClick()
         }
 
+//        val crachDepartureDate = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE) as String?
+//        if (crachDepartureDate != null) {
+//            view.tvDepartDate.text = "" + crachDepartureDate
+//            view.tvDepartDate.setTextColor(Color.BLACK)
+//
+//            val departDate = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_API_formate) as String
+//            searchRoundTripModel.departDate = departDate
+//
+//
+//        }
+
+        val classModel = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.CLASS_TYPE) as ClassModel?
+        if (classModel == null) {
+
+            mClassModel = ClassModel("Economy", "Economy", true)
+        } else {
+            mClassModel = classModel
+            view.airTicketClass.setText(classModel.className)
+        }
+
+
+        val infanntPass = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.INFANT_PSNGER) as Int?
+        if (infanntPass != null) {
+            onInfantPsngrTextChange("" + infanntPass)
+        }
+
+
+        val kidPsnGer = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.KID_PSNGER) as Int?
+        if (kidPsnGer != null) {
+            onKidPsngrTextChange("" + kidPsnGer)
+        }
+
+
+        val adulPassger = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.ADUL_PSNGER) as Int?
+        if (adulPassger != null) {
+            onAdultPsngrTextChange("" + adulPassger)
+        }
 
 
         return view
@@ -298,38 +370,40 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
     }
 
     fun onAdultPsngrTextChange(text: String) {
-        tvAdult.setText(text)
-
+        airTicketAdult.setText(text)
         val toInt = text.toInt()
 
+        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.ADUL_PSNGER, toInt)
+
         if (toInt > 0) {
-            tvAdult.setTextColor(getResources().getColor(R.color.black33333))
+            airTicketAdult.setTextColor(getResources().getColor(R.color.black33333))
         } else {
-            tvAdult.setTextColor(getResources().getColor(R.color.blackcccccc))
+            airTicketAdult.setTextColor(getResources().getColor(R.color.blackcccccc))
         }
     }
 
     fun onKidPsngrTextChange(text: String) {
-        tvKid.setText(text)
-
+        airTicketKid.setText(text)
         val toInt = text.toInt()
 
+        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.KID_PSNGER, toInt)
+
         if (toInt > 0) {
-            tvKid.setTextColor(getResources().getColor(R.color.black33333))
+            airTicketKid.setTextColor(getResources().getColor(R.color.black33333))
         } else {
-            tvKid.setTextColor(getResources().getColor(R.color.blackcccccc))
+            airTicketKid.setTextColor(getResources().getColor(R.color.blackcccccc))
         }
     }
 
     fun onInfantPsngrTextChange(text: String) {
-        tvInfant.setText(text)
-
+        airTicketInfant.setText(text)
         val toInt = text.toInt()
+        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.INFANT_PSNGER, toInt)
 
         if (toInt > 0) {
-            tvInfant.setTextColor(getResources().getColor(R.color.black33333))
+            airTicketInfant.setTextColor(getResources().getColor(R.color.black33333))
         } else {
-            tvInfant.setTextColor(getResources().getColor(R.color.blackcccccc))
+            airTicketInfant.setTextColor(getResources().getColor(R.color.blackcccccc))
         }
     }
 
@@ -349,6 +423,9 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
                     tsRoundTripFrom.setText(get.iata)
                     tsRoundTripFromPort.setText(get.airportName)
                     tvHitFrom.visibility = View.VISIBLE
+
+                    AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.FROM_CACHE, fromAirport)
+
                 }
 
                 REQ_CODE_TO -> {
@@ -362,6 +439,8 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
                     tsRoundTripToPort.setText(get.airportName)
 
                     tvHitTo.visibility = View.VISIBLE
+
+                    AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.TO_CACHE, toAirport)
                 }
 
 
