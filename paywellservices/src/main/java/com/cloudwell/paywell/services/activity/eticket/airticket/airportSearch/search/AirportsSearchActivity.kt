@@ -192,7 +192,7 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
         searchListView.setOnItemClickListener { parent: AdapterView<*>?, view: View?, position: Int, id: Long ->
 
             val airportName = mAdapter.getItem(position).airportName
-            val single = mAirTicketBaseViewMode.resGetAirports.airports.filter { s -> s.airportName == airportName }.single()
+            val single = mAirTicketBaseViewMode.resGetAirports.airports.filter { s -> s.airportName == airportName }.first()
 
             addToRecentSearch(single)
             backResult(single)

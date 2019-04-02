@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.adapter;
 
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -8,9 +7,7 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum;
-import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.model.MessageEventMobileNumberChange;
 import com.cloudwell.paywell.services.app.AppController;
-import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus;
 
 import java.util.List;
 
@@ -49,47 +46,25 @@ public class TransitionRVSectionAdapter extends StatelessSection {
         final Datum object = list.get(position);
 
         if (mIsEnglish) {
-            iHolder.accNo.setTypeface(AppController.getInstance().getOxygenLightFont());
-            iHolder.status.setTypeface(AppController.getInstance().getOxygenLightFont());
-            iHolder.tvSMS.setTypeface(AppController.getInstance().getOxygenLightFont());
-            iHolder.tvMobile.setTypeface(AppController.getInstance().getOxygenLightFont());
+            iHolder.tvBookingId.setTypeface(AppController.getInstance().getOxygenLightFont());
+            iHolder.tvTricketPrices.setTypeface(AppController.getInstance().getOxygenLightFont());
+            iHolder.tvStatus.setTypeface(AppController.getInstance().getOxygenLightFont());
 
         } else {
-            iHolder.accNo.setTypeface(AppController.getInstance().getAponaLohitFont());
-            iHolder.status.setTypeface(AppController.getInstance().getAponaLohitFont());
-            iHolder.tvSMS.setTypeface(AppController.getInstance().getAponaLohitFont());
-            iHolder.tvMobile.setTypeface(AppController.getInstance().getAponaLohitFont());
-
+            iHolder.tvBookingId.setTypeface(AppController.getInstance().getAponaLohitFont());
+            iHolder.tvTricketPrices.setTypeface(AppController.getInstance().getAponaLohitFont());
+            iHolder.tvStatus.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
 
+        iHolder.tvBookingId.setText("Booking ID: " + object.getBookingId());
+        iHolder.tvTricketPrices.setText("Price: " + object.getCurrency() + " " + object.getTotalFare());
+        iHolder.tvStatus.setText("Status: " + object.getMessage());
 
-        iHolder.status.setText(object.getStatusName());
-        iHolder.accNo.setText(object.getCustomerAccNo());
-        iHolder.trxId.setText(String.format("%s %s", AppController.getContext().getString(R.string.trx_id_des), object.getTrxId()));
-        iHolder.tvMobile.setText(String.format("%s %s", AppController.getContext().getString(R.string.phone_no_des), object.getCustomerPhn()));
-        iHolder.tvSMS.setText(String.format("%s %s", AppController.getContext().getString(R.string.sms), object.getResponseDetails()));
-
-        if (object.getResponseDetails() != null) {
-            iHolder.tvSMS.setText(object.getResponseDetails());
-            iHolder.tvSMS.setVisibility(View.VISIBLE);
-        } else {
-            iHolder.tvSMS.setVisibility(View.GONE);
-        }
-
-        if (object.getStatusCode().equalsIgnoreCase("200")) {
-            iHolder.status.setTextColor(Color.parseColor("#008000"));
-        } else if (object.getStatusCode().equalsIgnoreCase("100")) {
-            iHolder.status.setTextColor(Color.parseColor("#0099cc"));
-        } else {
-            iHolder.status.setTextColor(Color.parseColor("#ff0000"));
-        }
 
         iHolder.mLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                MessageEventMobileNumberChange messageEvent = new MessageEventMobileNumberChange(position, object);
-                GlobalApplicationBus.getBus().post(messageEvent);
 
             }
         });
@@ -121,9 +96,7 @@ public class TransitionRVSectionAdapter extends StatelessSection {
             super(view);
             tvBookingId = view.findViewById(R.id.tvBookingId);
             tvTricketPrices = view.findViewById(R.id.tvTricketPrices);
-            tvStatus = view.findViewById(R.id.trxId);
-            tvMobile = view.findViewById(R.id.tvMobileNumber);
-            tvSMS = view.findViewById(R.id.tvSMS);
+            tvStatus = view.findViewById(R.id.tvStatus);
             mLinearLayout = view.findViewById(R.id.ivRootLayout);
 
         }
