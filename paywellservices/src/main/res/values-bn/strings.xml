@@ -742,8 +742,8 @@
     <string name="add_edit">Add/Edit</string>
     <string name="flight_information">Flight Information</string>
     <string name="add_passenger">Add passenger</string>
-    <string name="national_id">জাতীয় আইডি</string>
-    <string name="booking_now">এখন বুকিং</string>
+    <string name="national_id">National ID</string>
+    <string name="booking_now">Booking Now</string>
     <string name="ticket_booking">Booking Now</string>
     <string name="booking_id">Booking ID</string>
     <string name="ticket_status">Ticket status :</string>
@@ -760,6 +760,7 @@
     <string name="please_ensure_the_id_is_valid_for_at_least_6_months_after_the_date_of_departure">Please ensure the ID is valid for at least 6 months after the date of departure.</string>
     <string name="ettitle_booking_and_review">Review and Book</string>
     <string name="action_settings">action</string>
+    <string name="booking_instructions_for_children_infants">Booking instructions for children/infants</string>
 
 
 </resources>
