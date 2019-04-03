@@ -222,9 +222,10 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_weight="1"
+                            android:layout_weight="1.2"
                             android:gravity="end"
-                            android:text="@string/passengers"/>
+                            android:text="@string/passengers"
+                            android:textColor="#999999"/>
 
                         <LinearLayout
                             android:id="@+id/llPsngr"
@@ -236,7 +237,7 @@
 
                             <LinearLayout
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:gravity="end">
 
@@ -244,12 +245,14 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="5dp"
+                                    android:layout_gravity="center"
                                     android:src="@drawable/ic_adult"/>
 
                                 <TextView
                                     android:id="@+id/airTicketAdult"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom"
                                     android:text="1"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                                     android:textColor="@color/black"/>
@@ -257,13 +260,14 @@
 
                             <LinearLayout
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:gravity="end">
 
                                 <ImageView
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
                                     android:layout_marginRight="5dp"
                                     android:src="@drawable/ic_kid"/>
 
@@ -272,12 +276,15 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="0"
-                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                                    android:layout_gravity="bottom"
+                                    android:gravity="bottom"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                    android:textColor="@color/blackcccccc"/>
                             </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:gravity="end">
 
@@ -285,6 +292,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="5dp"
+                                    android:layout_gravity="center"
                                     android:src="@drawable/ic_infant"/>
 
                                 <TextView
@@ -292,10 +300,14 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="0"
-                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                                    android:layout_gravity="bottom"
+                                    android:gravity="bottom"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                    android:textColor="@color/blackcccccc"/>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
+
                 </LinearLayout>
 
                 <View
