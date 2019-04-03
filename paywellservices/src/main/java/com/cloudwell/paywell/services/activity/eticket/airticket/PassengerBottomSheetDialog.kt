@@ -155,4 +155,13 @@ class PassengerBottomSheetDialog : BottomSheetDialogFragment() {
             lateinit var ivPlus: ImageView
         }
     }
+
+    override fun onDestroy() {
+
+        mListenerPsngr.onAdultButtonClickListener("" + userType.get(0).getSelectedPsngrCount())
+        mListenerPsngr.onKidButtonClickListener("" + userType.get(1).getSelectedPsngrCount())
+        mListenerPsngr.onInfantButtonClickListener("" + userType.get(2).getSelectedPsngrCount())
+
+        super.onDestroy()
+    }
 }
