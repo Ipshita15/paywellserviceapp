@@ -121,7 +121,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                />
+                >
+
+                <TextView
+                    android:id="@+id/textView20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Please select depart and return date"
+                    android:textColor="@color/colorAccent"/>
+            </FrameLayout>
 
 
             <TextView

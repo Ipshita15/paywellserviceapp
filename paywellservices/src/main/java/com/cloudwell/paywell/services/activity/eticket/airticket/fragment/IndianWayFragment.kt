@@ -142,7 +142,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
         tsToPort.setCurrentText(activity?.application?.getString(R.string.airport))
         view.tvHitTo.visibility = View.INVISIBLE
 
-        val fromCacheAirport = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.FROM_CACHE) as Airport?
+        val fromCacheAirport = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.FROM_CACHE_INDIA) as Airport?
         if (fromCacheAirport != null) {
             view.tsOneWayTripFrom.setText(fromCacheAirport.iata)
             view.tsOneWayTripFromPort.setText(fromCacheAirport.airportName)
@@ -158,7 +158,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
         }
 
 
-        val toCacheAirport = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.TO_CACHE) as Airport?
+        val toCacheAirport = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.TO_CACHE_INDIA) as Airport?
         if (toCacheAirport != null) {
 
             view.tsOneWayTripTo.setText(toCacheAirport.iata)
@@ -203,26 +203,26 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
         fromAirTricket.airportName = searchRoundTripModel.fromPort
         fromAirTricket.iata = searchRoundTripModel.getFromName()
 
-        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.FROM_CACHE, fromAirTricket)
+        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.FROM_CACHE_INDIA, fromAirTricket)
 
 
         val toAirTricket = Airport()
         fromAirTricket.airportName = searchRoundTripModel.toPort
         fromAirTricket.iata = searchRoundTripModel.getToName()
 
-        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.TO_CACHE, fromAirTricket)
+        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.TO_CACHE_INDIA, fromAirTricket)
 
 
-        val crachDepartureDate = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE) as String?
+        val crachDepartureDate = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_INDIA) as String?
         if (crachDepartureDate != null) {
             view.tvDepartDate.text = "" + crachDepartureDate
             view.tvDepartDate.setTextColor(Color.BLACK)
-            val departDate = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_API_formate) as String
+            val departDate = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_API_formate_INDIA) as String
             searchRoundTripModel.departDate = departDate
 
         }
 
-        val classModel = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.CLASS_TYPE) as ClassModel?
+        val classModel = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.CLASS_TYPE_INDIA) as ClassModel?
         if (classModel == null) {
 
             mClassModel = ClassModel("Economy", "Economy", true)
@@ -232,19 +232,19 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
         }
 
 
-        val infanntPass = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.INFANT_PSNGER) as Int?
+        val infanntPass = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.INFANT_PSNGER_INDIA) as Int?
         if (infanntPass != null) {
             onInfantPsngrTextChange("" + infanntPass)
         }
 
 
-        val kidPsnGer = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.KID_PSNGER) as Int?
+        val kidPsnGer = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.KID_PSNGER_INDIA) as Int?
         if (kidPsnGer != null) {
             onKidPsngrTextChange("" + kidPsnGer)
         }
 
 
-        val adulPassger = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.ADUL_PSNGER) as Int?
+        val adulPassger = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.ADUL_PSNGER_INDIA) as Int?
         if (adulPassger != null) {
             onAdultPsngrTextChange("" + adulPassger)
         }
@@ -373,7 +373,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
         airTicketAdult.setText(text)
         val toInt = text.toInt()
 
-        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.ADUL_PSNGER, toInt)
+        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.ADUL_PSNGER_INDIA, toInt)
 
         if (toInt > 0) {
             airTicketAdult.setTextColor(getResources().getColor(R.color.black33333))
@@ -386,7 +386,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
         airTicketKid.setText(text)
         val toInt = text.toInt()
 
-        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.KID_PSNGER, toInt)
+        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.KID_PSNGER_INDIA, toInt)
 
         if (toInt > 0) {
             airTicketKid.setTextColor(getResources().getColor(R.color.black33333))
@@ -398,7 +398,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
     fun onInfantPsngrTextChange(text: String) {
         airTicketInfant.setText(text)
         val toInt = text.toInt()
-        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.INFANT_PSNGER, toInt)
+        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.INFANT_PSNGER_INDIA, toInt)
 
         if (toInt > 0) {
             airTicketInfant.setTextColor(getResources().getColor(R.color.black33333))
@@ -418,7 +418,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
                 airTicketClass.setText(classModel.className)
 
-                AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.CLASS_TYPE, classModel)
+                AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.CLASS_TYPE_INDIA, classModel)
 
             }
 
@@ -452,6 +452,8 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
                     tvDepartDate.text = "$nameOfDayOfWeek, $day $nameOfMonth"
                     tvDepartDate.setTextColor(Color.BLACK);
 
+                    AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_INDIA, "" + "$nameOfDayOfWeek, $day $nameOfMonth")
+
 
                     val mMonth = month + 1;
 
@@ -462,6 +464,8 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
 
                     searchRoundTripModel.departDate = humanReadAbleDate
+
+                    AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_API_formate_INDIA, "" + humanReadAbleDate)
 
 
                 }, year, thismonth, dayOfMonth)
@@ -521,7 +525,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
                     tsOneWayTripFromPort.setText(get.airportName)
                     tvHitFrom.visibility = View.VISIBLE
 
-                    AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.FROM_CACHE, get)
+                    AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.FROM_CACHE_INDIA, get)
 
                 }
 
@@ -536,7 +540,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
                     tsOneWayTripToPort.setText(get.airportName)
                     tvHitTo.visibility = View.VISIBLE
 
-                    AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.TO_CACHE, get)
+                    AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.TO_CACHE_INDIA, get)
 
                 }
 

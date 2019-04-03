@@ -608,8 +608,8 @@
     <string name="no_search_results">No search results</string>
     <string name="search_again">Search again</string>
     <string name="search">সার্চ</string>
-    <string name="cancel">বুকিং ক্যান্সল্যাশন</string>
-    <string name="transaction_log">ট্রানসাকশান লগ</string>
+    <string name="cancel">বুকিং বাতিল</string>
+    <string name="transaction_log">ট্রানজেকশন লগ</string>
     <string name="action_search">Serach</string>
     <string name="title_booking_and_review">Review and Book</string>
     <string name="baggage_policy_details">যাত্রীর মালপত্র এবং নীতি বিবরণ</string>
@@ -639,7 +639,7 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="other">Other</string>
-    <string name="book">বুকিং স্টেটাস</string>
+    <string name="book">বুকিং স্ট্যাটাস</string>
     <string name="title_activity_baggage_and_policies_actiivty">Pollicies &amp;  Fares</string>
 
     <string name="passenger_deleted_message">Passenger info cannot be recovered once deleted. Are you sure you want to delete?sdf.,wPassenger info cannot be recovered once deleted. Are you sure you want to delete?skdf</string>
