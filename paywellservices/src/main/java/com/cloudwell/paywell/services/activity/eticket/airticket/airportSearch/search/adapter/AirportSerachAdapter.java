@@ -66,7 +66,7 @@ public class AirportSerachAdapter extends ArrayAdapter<Airport> {
             holder = new AirportSerachAdapter.ViewHolder();
 
             holder.SubjectName = (TextView) convertView.findViewById(R.id.tvName);
-
+            holder.tvCity = convertView.findViewById(R.id.tvCity);
 
             convertView.setTag(holder);
 
@@ -77,6 +77,7 @@ public class AirportSerachAdapter extends ArrayAdapter<Airport> {
         Airport subject = SubjectListTemp.get(position);
 
         holder.SubjectName.setText(subject.getAirportName());
+        holder.tvCity.setText(subject.getCity() + "/" + subject.getCountry());
 
 //        holder.SubjectFullForm.setText(subject.getSubFullForm());
 
@@ -86,7 +87,7 @@ public class AirportSerachAdapter extends ArrayAdapter<Airport> {
 
     public class ViewHolder {
 
-        TextView SubjectName;
+        TextView SubjectName, tvCity;
         TextView SubjectFullForm;
     }
 
