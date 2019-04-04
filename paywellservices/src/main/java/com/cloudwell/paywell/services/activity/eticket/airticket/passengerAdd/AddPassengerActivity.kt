@@ -162,6 +162,8 @@ class AddPassengerActivity : AirTricketBaseActivity() {
                     }
                 }
 
+                this.countryCode = oldPassenger.countryCode
+
                 btn_add.setText(getString(R.string.edit))
 
 
