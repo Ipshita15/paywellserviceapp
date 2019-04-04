@@ -2,7 +2,6 @@ package com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.a
 
 import android.content.Context
 import android.graphics.Color
-import android.net.Uri
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -112,33 +111,14 @@ class FlightAdapter(val items: List<Result>, val context: Context) : RecyclerVie
         holder.tvDestinationAirportCode.text = destinationAirport
         holder.tvAirlinesName.text = airlineName
 
-        val fares = model.fares.get(0)
+        val fares = model.fares
         val totalPrice = CalculationHelper.getTotalFare(fares)
         holder.tvPrices.text = totalPrice
 
 
-//        model.segments.forEach {
-//
-//            val split = it.origin?.depTime.toString().split("T");
-//            val date = split.get(0) + " " + split.get(1)
-//            val fistDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss").parse(date)
-//
-//            val split1 = it.destination?.arrTime.toString().split("T");
-//            val date1 = split1.get(0) + " " + split1.get(1)
-//            val secondDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss").parse(date1)
-//
-//
-//            val differenceMilliSecond = DateUtils.differenceMilliSecond(fistDate, secondDate)
-//            totalJourneyTimeString = totalJourneyTimeString + differenceMilliSecond
-//
-//        }
-//
-//        val durtingJounaryTime = DateUtils.getDurtingJounaryTime(totalJourneyTimeString)
+//        val imageUri = Uri.parse("https://notify.paywellonline.com/airlines/images/${airlineCode}_350_100_r.png")
 
-
-        val imageUri = Uri.parse("https://notify.paywellonline.com/airlines/images/${airlineCode}_350_100_r.png")
-
-        holder.airlineSerachIcon.setImageURI(imageUri)
+//        holder.airlineSerachIcon.setImageURI(imageUri)
 
     }
 
@@ -167,7 +147,7 @@ class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val tvDurationAndKilometer = view.tvDurationAndKilometer
     val tvAirlinesName = view.tvAirlinesName
     val btDetails = view.btDetails
-    val airlineSerachIcon = view.airlineSerachIcon
+//    val airlineSerachIcon = view.airlineSerachIcon
 
 
 }

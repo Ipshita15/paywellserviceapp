@@ -80,7 +80,7 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
         })
 
 
-        val totalFareDetati = CalculationHelper.getTotalFareDetati(resposeAirPriceSearch.data?.results?.get(0)?.fares?.get(0))
+        val totalFareDetati = CalculationHelper.getTotalFareDetati(resposeAirPriceSearch.data?.results?.get(0)?.fares)
 
         tvTotalPrice.text = totalFareDetati
 

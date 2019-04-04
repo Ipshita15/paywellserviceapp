@@ -2,7 +2,6 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
                                              xmlns:tools="http://schemas.android.com/tools"
-                                             xmlns:fresco="http://schemas.android.com/apk/res-auto"
                                              android:id="@+id/linearLayout7"
                                              android:layout_width="match_parent"
                                              android:layout_marginBottom="8dp"
@@ -10,6 +9,7 @@
                                              android:background="@color/white">
 
     <TextView
+        android:fontFamily="@font/oxygen_light"
         android:id="@+id/tvStringTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,6 +34,7 @@
         android:src="@drawable/ic_path"/>
 
     <TextView
+        android:fontFamily="@font/oxygen_light"
         android:id="@+id/tvEndingTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,6 +48,7 @@
         tools:text="9:30"/>
 
     <TextView
+        android:fontFamily="@font/oxygen_light"
         android:id="@+id/tvSrocesAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -58,6 +60,7 @@
         tools:text="Dhaka"/>
 
     <TextView
+        android:fontFamily="@font/oxygen_light"
         android:id="@+id/tvDestinationAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,6 +71,7 @@
         tools:text="Cox's"/>
 
     <TextView
+        android:fontFamily="@font/oxygen_light"
         android:id="@+id/tvDurationAndKilometer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -79,23 +83,8 @@
         app:layout_constraintTop_toBottomOf="@+id/tvSrocesAddress"
         tools:text="Duration: 35m | Nonstop  "/>
 
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/airlineSerachIcon"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDurationAndKilometer"
-        app:srcCompat="@drawable/ic_green_flights"
-        fresco:failureImage="@drawable/ic_green_flights"/>
-
     <TextView
+        android:fontFamily="@font/oxygen_light"
         android:id="@+id/tvPrices"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -110,16 +99,20 @@
         android:id="@+id/tvAirlinesName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginBottom="16dp"
         android:textColor="#999999"
+
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/airlineSerachIcon"
+        android:fontFamily="@font/oxygen_light"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btDetails"
-        app:layout_constraintStart_toEndOf="@+id/airlineSerachIcon"
-        app:layout_constraintTop_toTopOf="@+id/airlineSerachIcon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDurationAndKilometer"
         tools:text="US Bangla"/>
 
     <ImageView
@@ -140,6 +133,7 @@
         android:layout_marginBottom="16dp"
         android:background="@color/colorPrimary"
         android:text="@string/details_text"
+        android:fontFamily="@font/oxygen_light"
         android:textAllCaps="false"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
