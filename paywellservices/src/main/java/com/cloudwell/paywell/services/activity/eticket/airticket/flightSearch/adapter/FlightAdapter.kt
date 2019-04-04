@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.Result
+import com.cloudwell.paywell.services.utils.CalculationHelper
 import com.cloudwell.paywell.services.utils.DateUtils
 import kotlinx.android.synthetic.main.flight_list_item.view.*
 import java.text.SimpleDateFormat
@@ -106,10 +107,14 @@ class FlightAdapter(val items: List<Result>, val context: Context) : RecyclerVie
 
         holder.tvStringTime.text = orignTime
         holder.tvEndTime.text = destinationTime
-        holder.tvPrices.text = "${model.totalFare}"
+
         holder.tvOriginAirportCode.text = originAirport
         holder.tvDestinationAirportCode.text = destinationAirport
         holder.tvAirlinesName.text = airlineName
+
+        val fares = model.fares.get(0)
+        val totalPrice = CalculationHelper.getTotalFare(fares)
+        holder.tvPrices.text = totalPrice
 
 
 //        model.segments.forEach {

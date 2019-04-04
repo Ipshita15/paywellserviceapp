@@ -154,7 +154,7 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
                     PIN_NO = pinNoET.getText().toString();
                     if (cd.isConnectingToInternet()) {
 
-                        String userName = mAppHandler.getUserName();
+                        String userName = mAppHandler.getImeiNo();
                         submitCancelRequest(userName, PIN_NO, bookingId, cancelReason, "json");
                     } else {
                         Snackbar snackbar = Snackbar.make(cancelMainLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);

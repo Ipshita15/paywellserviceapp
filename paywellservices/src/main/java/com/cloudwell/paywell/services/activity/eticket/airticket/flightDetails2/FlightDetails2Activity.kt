@@ -13,6 +13,7 @@ import android.view.Menu
 import android.view.View
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.AllSummaryActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.BaggageAndPoliciesActiivty
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.FlightFareDialogFragment
@@ -23,8 +24,8 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.viewmodel.FlightDetails2ViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.AddPassengerActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerList.PassengerListActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
+import com.cloudwell.paywell.services.utils.CalculationHelper
 import com.cloudwell.paywell.services.utils.RecyclerItemClickListener
 import kotlinx.android.synthetic.main.contant_flight_details_2.*
 import kotlinx.android.synthetic.main.review_bottom_sheet.*
@@ -79,7 +80,9 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
         })
 
 
-        tvTotalPrice.text = resposeAirPriceSearch.data?.results?.get(0)?.totalFare.toString()
+        val totalFareDetati = CalculationHelper.getTotalFareDetati(resposeAirPriceSearch.data?.results?.get(0)?.fares?.get(0))
+
+        tvTotalPrice.text = totalFareDetati
 
         tvTotalPrice.setOnClickListener {
 

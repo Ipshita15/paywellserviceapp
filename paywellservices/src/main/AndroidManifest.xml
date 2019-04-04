@@ -1119,14 +1119,6 @@
             android:label="@string/title_activity_air_tricket_menu"
             android:screenOrientation="portrait">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN"/> -->
-            <!-- <action android:name="android.intent.action.VIEW"/> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
-            <!-- </intent-filter> -->
-
         </activity>
         <activity
             android:name=".activity.eticket.airticket.airportSearch.search.AirportsSearchActivity"
@@ -1135,50 +1127,45 @@
         </activity>
         <activity
             android:name=".activity.eticket.airticket.flightDetails1.FlightDetails1Activity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_air_tricket_menu">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN"/> -->
-            <!-- <action android:name="android.intent.action.VIEW"/> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
-            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".activity.eticket.airticket.flightDetails2.FlightDetails2Activity"
-            android:label="@string/title_flightDetails2">
+            android:label="@string/title_flightDetails2"
+            android:screenOrientation="portrait"
+            >
         </activity>
         <activity
             android:name=".activity.eticket.airticket.passengerList.PassengerListActivity"
-            android:label="@string/title_passenger_list">
+            android:label="@string/title_passenger_list"
+            android:screenOrientation="portrait"
+            >
         </activity>
         <activity
             android:name=".activity.eticket.airticket.passengerAdd.AddPassengerActivity"
-            android:label="@string/title_add_passenger">
+            android:label="@string/title_add_passenger"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activity.eticket.airticket.finalReview.AllSummaryActivity"
-            android:label="@string/title_all_summary">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN"/> -->
-            <!-- <action android:name="android.intent.action.VIEW"/> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
-            <!-- </intent-filter> -->
-
+            android:label="@string/title_all_summary"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activity.eticket.airticket.flightDetails1.fragment.BaggageAndPoliciesActiivty"
-            android:label="@string/title_activity_baggage_and_policies_actiivty">
+            android:label="@string/title_activity_baggage_and_policies_actiivty"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activity.eticket.airticket.bookingCencel.BookingCancelActivity"
-            android:label="@string/tile_cencel_booking">
-        </activity> <!-- Image Picker activity -->
-        <activity android:name=".libaray.imagePickerAndCrop.ImagePickerActivity"/> <!-- uCrop cropping activity -->
+            android:label="@string/tile_cencel_booking"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".libaray.imagePickerAndCrop.ImagePickerActivity"
+            android:screenOrientation="portrait"
+            /> <!-- uCrop cropping activity -->
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"

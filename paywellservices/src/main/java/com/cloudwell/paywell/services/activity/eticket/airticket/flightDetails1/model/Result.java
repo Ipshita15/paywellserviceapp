@@ -9,7 +9,7 @@ import java.util.List;
 public class Result {
 
     @SerializedName("Availabilty")
-    private Long mAvailabilty;
+    private Double mAvailabilty;
     @SerializedName("Currency")
     private String mCurrency;
     @SerializedName("Discount")
@@ -31,17 +31,17 @@ public class Result {
     @SerializedName("segments")
     private List<Segment> mSegments;
     @SerializedName("TotalFare")
-    private Long mTotalFare;
+    private Double mTotalFare;
     @SerializedName("TotalFareWithAgentMarkup")
-    private Long mTotalFareWithAgentMarkup;
+    private Double mTotalFareWithAgentMarkup;
     @SerializedName("Validatingcarrier")
     private String mValidatingcarrier;
 
-    public Long getAvailabilty() {
+    public Double getAvailabilty() {
         return mAvailabilty;
     }
 
-    public void setAvailabilty(Long availabilty) {
+    public void setAvailabilty(Double availabilty) {
         mAvailabilty = availabilty;
     }
 
@@ -125,19 +125,19 @@ public class Result {
         mSegments = segments;
     }
 
-    public Long getTotalFare() {
+    public Double getTotalFare() {
         return mTotalFare;
     }
 
-    public void setTotalFare(Long totalFare) {
+    public void setTotalFare(Double totalFare) {
         mTotalFare = totalFare;
     }
 
-    public Long getTotalFareWithAgentMarkup() {
+    public Double getTotalFareWithAgentMarkup() {
         return mTotalFareWithAgentMarkup;
     }
 
-    public void setTotalFareWithAgentMarkup(Long totalFareWithAgentMarkup) {
+    public void setTotalFareWithAgentMarkup(Double totalFareWithAgentMarkup) {
         mTotalFareWithAgentMarkup = totalFareWithAgentMarkup;
     }
 

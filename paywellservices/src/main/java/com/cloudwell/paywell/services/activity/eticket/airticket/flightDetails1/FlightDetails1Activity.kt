@@ -19,6 +19,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.viewModel.FlightDetails1ViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.FlightDetails2Activity
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
+import com.cloudwell.paywell.services.utils.CalculationHelper
 import com.cloudwell.paywell.services.utils.DateUtils
 import com.cloudwell.paywell.services.utils.DateUtils.differenceMilliSecond
 import kotlinx.android.synthetic.main.contant_flight_details.*
@@ -128,8 +129,8 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
             val outputSegment = segments.get(0);
             val depTime = outputSegment.origin?.depTime?.split("T")
-            val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd").parse(depTime?.get(0)) as Date
-            val humanReadAbleDate = SimpleDateFormat("EE, MMM DD").format(fdepTimeFormatDate)
+            val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(depTime?.get(0)) as Date
+            val humanReadAbleDate = SimpleDateFormat("EE, MMM DD", Locale.ENGLISH).format(fdepTimeFormatDate)
             tvNameOfDate.text = humanReadAbleDate
             AppStorageBox.put(applicationContext, AppStorageBox.Key.humanReadAbleDate, humanReadAbleDate)
 
@@ -178,7 +179,11 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
         }
 
-        tvTotalFair.text = "${result.totalFare}"
+
+        val fares = result.fares.get(0)
+        val totalPrice = CalculationHelper.getTotalFareDetati(fares)
+
+        tvTotalFair.text = totalPrice
         tvClass.text = getString(R.string.class_text) + ": " + requestAirSearch.segments.get(0).cabinClass
 
 

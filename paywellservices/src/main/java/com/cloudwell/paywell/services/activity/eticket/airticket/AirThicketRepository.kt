@@ -212,8 +212,8 @@ class AirThicketRepository(private val mContext: Context) {
     fun callInvoiceAPI(bookingID: String, emailString: String): MutableLiveData<ResInvoideEmailAPI> {
 
         mAppHandler = AppHandler.getmInstance(mContext)
-//        val userName = mAppHandler!!.imeiNo
-        val userName = "cwntcl"
+        val userName = mAppHandler!!.imeiNo
+//        val userName = "cwntcl"
 
 
         val data = MutableLiveData<ResInvoideEmailAPI>()
