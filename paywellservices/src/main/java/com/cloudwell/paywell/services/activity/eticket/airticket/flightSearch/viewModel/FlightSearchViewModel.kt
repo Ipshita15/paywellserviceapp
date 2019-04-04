@@ -10,6 +10,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.m
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.Result
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.Segment
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.view.SeachViewStatus
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.model.ResCommistionMaping
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 19/2/19.
@@ -22,6 +23,8 @@ class FlightSearchViewModel : AirTicketBaseViewMode() {
 
     val mListMutableLiveDataFlightData = MutableLiveData<List<Result>>()
     val mSearchId = MutableLiveData<String>()
+
+    val mResCommistionMaping = MutableLiveData<ResCommistionMaping>()
 
 
     fun init(internetConnection: Boolean, requestAirSearch: RequestAirSearch) {
@@ -99,6 +102,30 @@ class FlightSearchViewModel : AirTicketBaseViewMode() {
                 mSearchId.value = t?.data?.searchId
             }
         }
+    }
+
+    fun getCommistionMapingAPI(internetConnection: Boolean) {
+        if (!internetConnection) {
+            baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
+        } else {
+            callCommistionMapingAPI();
+        }
+
+    }
+
+    private fun callCommistionMapingAPI() {
+        mViewStatus.value = SeachViewStatus(isShowShimmerView = true, isShowProcessIndicator = true)
+
+        mAirTicketRepository.callCommissionMappingAPI().observeForever { it ->
+
+            mViewStatus.value = SeachViewStatus(isShowShimmerView = false, isShowProcessIndicator = false)
+            if (it?.status.equals("200")) {
+
+            } else {
+                mViewStatus.value = SeachViewStatus(it.toString(), false, isShowProcessIndicator = false)
+            }
+        }
+
     }
 }
 

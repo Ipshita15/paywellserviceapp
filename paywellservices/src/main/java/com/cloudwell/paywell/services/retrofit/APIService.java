@@ -1,6 +1,9 @@
 package com.cloudwell.paywell.services.retrofit;
 
 
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.ReposeAirSearch;
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch;
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.ResGetAirports;
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList;
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.RequestAirPrebookingSearchParams;
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResAirPreBooking;
@@ -8,9 +11,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.mod
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.RequestAirPriceSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.airRules.ResposeAirRules;
-import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.ResGetAirports;
-import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.ReposeAirSearch;
-import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch;
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.model.ResCommistionMaping;
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.model.ResInvoideEmailAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationReadAPI;
@@ -163,6 +164,11 @@ public interface APIService {
     Call<ResInvoideEmailAPI> callSendInvoiceAPI(@Part("username") String username,
                                                 @Part("booking_id") String bookingId,
                                                 @Part("email_address") String email_address);
+
+
+    @POST("PaywelltransactionHaltrip/getCommissionMapping")
+    @Multipart
+    Call<ResCommistionMaping> callGetCommissionMappingAPI(@Part("username") String username);
 
 
 }

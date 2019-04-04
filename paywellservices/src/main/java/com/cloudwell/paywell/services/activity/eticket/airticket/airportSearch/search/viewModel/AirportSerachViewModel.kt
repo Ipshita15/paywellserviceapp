@@ -169,7 +169,7 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
         tempAirportHashMap.clear()
     }
 
-    private fun isOkNetworkAndStatusCode(it: ResGetAirports?): Boolean {
+    fun isOkNetworkAndStatusCode(it: ResGetAirports?): Boolean {
         it?.let {
             if (it.throwable != null) {
                 baseViewStatus.value = it.throwable!!.message.let { it1 ->

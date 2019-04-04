@@ -112,6 +112,7 @@ class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
 
         })
 
+        //  mViewModelFlight.getCommistionMapingAPI(isInternetConnection)
         mViewModelFlight.init(isInternetConnection, requestAirSearch)
 
 

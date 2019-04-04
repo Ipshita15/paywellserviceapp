@@ -16,6 +16,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.airRules.ResposeAirRules
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.model.ResCommistionMaping
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.model.ResInvoideEmailAPI
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
@@ -287,6 +288,31 @@ class AirThicketRepository(private val mContext: Context) {
             override fun onFailure(call: Call<BookingList>, t: Throwable) {
                 com.orhanobut.logger.Logger.e("" + t.message)
                 data.value = BookingList(throwable = t)
+            }
+        })
+        return data
+
+    }
+
+    fun callCommissionMappingAPI(): MutableLiveData<ResCommistionMaping> {
+        mAppHandler = AppHandler.getmInstance(mContext)
+        val username = mAppHandler!!.imeiNo
+
+        val data = MutableLiveData<ResCommistionMaping>()
+
+        val responseBodyCall = ApiUtils.getAPIService().callGetCommissionMappingAPI(username)
+        responseBodyCall.enqueue(object : Callback<ResCommistionMaping> {
+            override fun onResponse(call: Call<ResCommistionMaping>, response: Response<ResCommistionMaping>) {
+
+                if (response.isSuccessful) {
+//                    data.value = Gson().fromJson(DummayData().mockPreBooking, ResAirPreBooking::class.java)
+                    data.value = response.body()
+                }
+            }
+
+            override fun onFailure(call: Call<ResCommistionMaping>, t: Throwable) {
+                com.orhanobut.logger.Logger.e("" + t.message)
+                data.value = ResCommistionMaping(throwable = t)
             }
         })
         return data
