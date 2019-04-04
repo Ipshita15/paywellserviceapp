@@ -612,7 +612,7 @@
     <string name="transaction_log">ট্রানজেকশন লগ</string>
     <string name="action_search">Serach</string>
     <string name="title_booking_and_review">Review and Book</string>
-    <string name="baggage_policy_details">যাত্রীর মালপত্র এবং নীতি বিবরণ</string>
+    <string name="baggage_policy_details"><![CDATA[Baggage & Policy Details]]></string>
     <string name="refundable">" Is refundable"</string>
     <string name="non_refundable">No Refundable</string>
     <string name="passport_mandatory">Passport Mandatory</string>

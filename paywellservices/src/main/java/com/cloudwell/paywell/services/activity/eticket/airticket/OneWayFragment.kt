@@ -467,8 +467,8 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
 
         datePickerDialog.datePicker.minDate = calendar.timeInMillis
 
-        calendar.add(Calendar.MONTH, 6)
-        datePickerDialog.datePicker.maxDate = calendar.timeInMillis
+//        calendar.add(Calendar.MONTH, 6)
+//        datePickerDialog.datePicker.maxDate = calendar.timeInMillis
 
 
         datePickerDialog.show()

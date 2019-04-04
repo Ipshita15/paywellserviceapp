@@ -122,8 +122,8 @@ public class MyDatePickerTimeline extends LinearLayout implements View.OnClickLi
 
         datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
 
-        calendar.add(Calendar.MONTH, 6);
-        datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
+//        calendar.add(Calendar.MONTH, 6);
+//        datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
 
 
         datePickerDialog.show();

@@ -472,8 +472,8 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
         datePickerDialog.datePicker.minDate = calendar.timeInMillis
 
-        calendar.add(Calendar.MONTH, 6)
-        datePickerDialog.datePicker.maxDate = calendar.timeInMillis
+//        calendar.add(Calendar.MONTH, 6)
+//        datePickerDialog.datePicker.maxDate = calendar.timeInMillis
 
 
         datePickerDialog.show()

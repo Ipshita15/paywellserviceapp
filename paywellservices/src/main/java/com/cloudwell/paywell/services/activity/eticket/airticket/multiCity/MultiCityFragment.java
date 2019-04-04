@@ -27,11 +27,11 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.ClassBottomShee
 import com.cloudwell.paywell.services.activity.eticket.airticket.ClassModel;
 import com.cloudwell.paywell.services.activity.eticket.airticket.PassengerBottomSheetDialog;
 import com.cloudwell.paywell.services.activity.eticket.airticket.SearchRoundTripModel;
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.FlightSearchViewActivity;
-import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.AirportsSearchActivity;
-import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.Airport;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.Segment;
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.AirportsSearchActivity;
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.Airport;
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.FlightSearchViewActivity;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.app.storage.AppStorageBox;
 
@@ -352,8 +352,8 @@ public class MultiCityFragment extends Fragment {
             }
         }, year, thismonth, dayOfMonth);
         datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
-        calendar.add(Calendar.MONTH, 6);
-        datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
+//        calendar.add(Calendar.MONTH, 6);
+//        datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
 
         datePickerDialog.show();
 
