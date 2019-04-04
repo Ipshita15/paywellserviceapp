@@ -22,6 +22,8 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
 
     val UPDATE_SOFTWARE_INTERVAL = (24 * 60 * 60).toLong()// 1 day
 
+    var serachParameter = ""
+
 
     fun getData(internetConnection: Boolean, isIndian: Boolean, appHandler: AppHandler) {
 
@@ -31,7 +33,7 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
 
             mViewStatus.value = AirportSeachStatus(noSerachFoundMessage = "", isShowProcessIndicatior = true)
 
-            var serachParameter = ""
+            serachParameter = ""
             if (isIndian) {
                 serachParameter = "IN"
             }
@@ -99,7 +101,7 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
             resGetAirports = it!!
         }
 
-        val tempAirportHashMap = kotlin.collections.mutableMapOf<String, List<Airport>>()
+        val tempAirportHashMap = linkedMapOf<String, List<Airport>>()
 
         it.let {
             val airports = it?.airports;
@@ -143,7 +145,28 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
             }
         }
 
+
+        // move bangladesh in fist list
+        if (serachParameter.equals("")) {
+            val bangladeshAirports = tempAirportHashMap.get("Bangladesh")
+            tempAirportHashMap.remove("Bangladesh")
+
+            val keepDatBox = linkedMapOf<String, List<Airport>>()
+            keepDatBox.putAll(tempAirportHashMap)
+
+            tempAirportHashMap.clear()
+
+            bangladeshAirports?.let { it1 ->
+                tempAirportHashMap.put("Bangladesh", it1)
+                tempAirportHashMap.putAll(keepDatBox)
+                keepDatBox.clear()
+            }
+
+        }
+
+
         allAirportHashMap.value = tempAirportHashMap
+        tempAirportHashMap.clear()
     }
 
     private fun isOkNetworkAndStatusCode(it: ResGetAirports?): Boolean {
