@@ -99,13 +99,25 @@ public class SlyCalendarView extends FrameLayout implements DateSelectListener {
 
     private void showCalendar() {
 
+
         Date selectedEndDate = slyCalendarData.getSelectedEndDate();
         if (selectedEndDate == null) {
+
             findViewById(R.id.txtSave).setAlpha(0.4F);
             findViewById(R.id.txtSave).setEnabled(false);
         } else {
+
             findViewById(R.id.txtSave).setAlpha(1F);
             findViewById(R.id.txtSave).setEnabled(true);
+        }
+
+        // hidden hint message
+        if (slyCalendarData.getSelectedStartDate() == null) {
+            findViewById(R.id.tvHintMessage).setVisibility(GONE);
+        } else if (slyCalendarData.getSelectedEndDate() == null) {
+            findViewById(R.id.tvHintMessage).setVisibility(VISIBLE);
+        } else if (slyCalendarData.getSelectedStartDate() != null || slyCalendarData.getSelectedEndDate() != null) {
+            findViewById(R.id.tvHintMessage).setVisibility(GONE);
         }
 
 
