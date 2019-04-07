@@ -38,41 +38,43 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
                 serachParameter = "IN"
             }
 
-            val checkAirportListUpdateChecker = checkAirportListUpdateChecker(appHandler, internetConnection)
-            if (checkAirportListUpdateChecker == true) {
-                getAirportListForRemoteAPI(serachParameter, appHandler)
+            mAirTicketRepository.getAllAirportForLocal(serachParameter).observeForever {
 
-            } else {
+                mViewStatus.value = AirportSeachStatus(noSerachFoundMessage = "", isShowProcessIndicatior = false)
 
-                mAirTicketRepository.getAllAirportForLocal(serachParameter).observeForever {
+                val resGetAirports1 = ResGetAirports(null)
+                resGetAirports1.airports = it!!.toMutableList()
 
-                    mViewStatus.value = AirportSeachStatus(noSerachFoundMessage = "", isShowProcessIndicatior = false)
+                handleRespose(resGetAirports1, null)
 
-                    val resGetAirports1 = ResGetAirports(null)
-                    resGetAirports1.airports = it!!.toMutableList()
-
-                    handleRespose(resGetAirports1, null)
-
+                val checkAirportListUpdateChecker = checkAirportListUpdateChecker(appHandler, internetConnection)
+                if (checkAirportListUpdateChecker == true || resGetAirports1.airports.size == 0) {
+                    getAirportListForRemoteAPI(serachParameter, appHandler)
                 }
+
             }
 
         }
     }
 
     private fun getAirportListForRemoteAPI(serachParameter: String, appHandler: AppHandler) {
+        mViewStatus.value = AirportSeachStatus(noSerachFoundMessage = "", isShowProcessIndicatior = true)
+
         mAirTicketRepository.getAirports(serachParameter).observeForever {
             val checkNetworkAndStatusCode = isOkNetworkAndStatusCode(it)
             if (checkNetworkAndStatusCode) {
-                mViewStatus.value = AirportSeachStatus(noSerachFoundMessage = "", isShowProcessIndicatior = false)
+
 
                 val recentSearches = mAirTicketRepository.getRecentSearches()
                 val resGetAirpots = it
 
-                mAirTicketRepository.insertAirportData(resGetAirpots!!.airports)
 
-                handleRespose(resGetAirpots, null)
+                mAirTicketRepository.deleteAirportData().observeForever {
 
-                appHandler.setAirportListUpdateCheck(System.currentTimeMillis() / 1000)
+                    mAirTicketRepository.insertAirportData(resGetAirpots!!.airports)
+                    handleRespose(resGetAirpots, null)
+                    appHandler.setAirportListUpdateCheck(System.currentTimeMillis() / 1000)
+                }
 
             } else {
 
@@ -167,6 +169,9 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
 
         allAirportHashMap.value = tempAirportHashMap
         tempAirportHashMap.clear()
+
+        mViewStatus.value = AirportSeachStatus(noSerachFoundMessage = "", isShowProcessIndicatior = false)
+
     }
 
     fun isOkNetworkAndStatusCode(it: ResGetAirports?): Boolean {

@@ -30,7 +30,7 @@ public interface AirtricketDab {
     Long insert(Passenger passenger);
 
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertAirportList(List<Airport> list);
 
     @Query("SELECT * FROM Airport ")
@@ -39,6 +39,10 @@ public interface AirtricketDab {
 
     @Query("SELECT * FROM Airport WHERE iso = (:iso)")
     List<Airport> getAirport(String iso);
+
+
+    @Query("DELETE FROM AIRPORT")
+    void clearAirportsData();
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

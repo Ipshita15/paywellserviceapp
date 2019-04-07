@@ -449,9 +449,28 @@ class AirThicketRepository(private val mContext: Context) {
             DatabaseClient.getInstance(mContext).appDatabase.mAirtricketDab().insertAirportList(airports)
 
             uiThread {
-
+                com.orhanobut.logger.Logger.v("Data insert successfully")
             }
         }
+
+    }
+
+    fun deleteAirportData(): MutableLiveData<Boolean> {
+
+        val data = MutableLiveData<Boolean>()
+
+
+        doAsync {
+
+            DatabaseClient.getInstance(mContext).appDatabase.mAirtricketDab().clearAirportsData()
+
+            uiThread {
+                data.value = true
+                com.orhanobut.logger.Logger.v("Data insert successfully")
+            }
+        }
+
+        return data;
 
     }
 
