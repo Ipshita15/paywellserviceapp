@@ -24,6 +24,6 @@ class Fare : Parcelable {
     @SerializedName("ServiceFee")
     var serviceFee: Double = 0.0
     @SerializedName("Tax")
-    var tax: Float = 0F
+    var tax: Double = 0.0
 
 }

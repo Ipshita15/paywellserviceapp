@@ -97,29 +97,31 @@ class FlightSearchViewModel : AirTicketBaseViewMode() {
     private fun handleRepose(t: ReposeAirSearch?) {
         t.let {
             it?.data?.results.let {
-                val sortedListTotalFare = it?.sortedWith(compareBy(Result::totalFare, Result::totalFare))
-                mListMutableLiveDataFlightData.value = sortedListTotalFare
+                //                val sortedListTotalFare = it?.sortedWith(compareBy(Result::totalFare, Result::totalFare))
+                mListMutableLiveDataFlightData.value = it
                 mSearchId.value = t?.data?.searchId
             }
         }
     }
 
-    fun getCommistionMapingAPI(internetConnection: Boolean) {
+    fun getCommissionMapingAPI(internetConnection: Boolean) {
         if (!internetConnection) {
             baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
         } else {
-            callCommistionMapingAPI();
+            callCommissionMapingAPI();
         }
 
     }
 
-    private fun callCommistionMapingAPI() {
+    private fun callCommissionMapingAPI() {
         mViewStatus.value = SeachViewStatus(isShowShimmerView = true, isShowProcessIndicator = true)
 
         mAirTicketRepository.callCommissionMappingAPI().observeForever { it ->
 
             mViewStatus.value = SeachViewStatus(isShowShimmerView = false, isShowProcessIndicator = false)
             if (it?.status.equals("200")) {
+                mResCommistionMaping.value = it
+                mAirTicketRepository.saveCombustionData(it)
 
             } else {
                 mViewStatus.value = SeachViewStatus(it.toString(), false, isShowProcessIndicator = false)

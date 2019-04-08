@@ -19,7 +19,6 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.viewModel.FlightDetails1ViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.FlightDetails2Activity
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
-import com.cloudwell.paywell.services.utils.CalculationHelper
 import com.cloudwell.paywell.services.utils.DateUtils
 import com.cloudwell.paywell.services.utils.DateUtils.differenceMilliSecond
 import kotlinx.android.synthetic.main.contant_flight_details.*
@@ -181,9 +180,9 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
 
         val fares = result.fares
-        val totalPrice = CalculationHelper.getTotalFareDetati(fares)
+//        val totalPrice = CalculationHelper.getTotalFareDetati(fares)
 
-        tvTotalFair.text = totalPrice
+        tvTotalFair.text = ""
         tvClass.text = getString(R.string.class_text) + ": " + requestAirSearch.segments.get(0).cabinClass
 
 

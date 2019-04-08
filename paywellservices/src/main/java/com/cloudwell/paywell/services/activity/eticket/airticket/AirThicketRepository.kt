@@ -22,6 +22,7 @@ import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.database.DatabaseClient
 import com.cloudwell.paywell.services.retrofit.ApiUtils
+import com.cloudwell.paywell.services.utils.InternalStorageHelper
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import org.jetbrains.anko.doAsync
@@ -29,6 +30,8 @@ import org.jetbrains.anko.uiThread
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
+
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 19/2/19.
@@ -472,6 +475,15 @@ class AirThicketRepository(private val mContext: Context) {
 
         return data;
 
+    }
+
+    fun saveCombustionData(it: ResCommistionMaping?) {
+        val toJson = Gson().toJson(it?.commission)
+        InternalStorageHelper.writeData(toJson, InternalStorageHelper.CombustionfileName)
+    }
+
+    fun readCommissionData(file: File): String {
+        return InternalStorageHelper.readData(InternalStorageHelper.CombustionfileName)
     }
 
 

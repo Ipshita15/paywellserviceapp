@@ -155,6 +155,7 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
 
         mAirTicketBaseViewMode.getData(isInternetConnection, isIndian, AppHandler.getmInstance(applicationContext));
 
+
     }
 
     private fun handleStatus(it: AirportSeachStatus) {
