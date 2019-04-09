@@ -20,7 +20,13 @@ class OutputSegment : Parcelable {
     var journeyDuration: String? = null
     @SerializedName("Origin")
     var origin: Origin? = null
+
     @SerializedName("TripIndicator")
     var tripIndicator: String? = null
+
+
+    @SerializedName("StopQuantity")
+    var stopQuantity: String? = null
+
 
 }

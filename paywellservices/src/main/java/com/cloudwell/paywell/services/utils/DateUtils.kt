@@ -119,22 +119,22 @@ object DateUtils {
 
             if (diffDays != 0L) {
                 sb.append(diffDays)
-                sb.append("d ")
+                sb.append(" day ")
             }
 
             if (diffHours != 0L) {
                 sb.append(diffHours)
-                sb.append("h ")
+                sb.append(" hr ")
             }
 
-            if (diffMinutes != 0L) {
-                sb.append(diffMinutes)
-                sb.append("m ")
-            }
+//            if (diffMinutes != 0L) {
+            sb.append(diffMinutes)
+            sb.append(" min ")
+//            }
 
             if (diffSeconds != 0L) {
                 sb.append(diffSeconds)
-                sb.append("s")
+                sb.append(" s")
             }
 
         } catch (e: Exception) {

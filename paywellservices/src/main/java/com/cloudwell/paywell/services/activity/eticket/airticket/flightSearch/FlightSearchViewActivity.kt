@@ -13,7 +13,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.m
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.Result
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.view.SeachViewStatus
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.FlightDetails1Activity
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.adapter.FlightAdapter
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.adapter.FlightAdapterNew
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.viewModel.FlightSearchViewModel
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
@@ -129,7 +129,7 @@ class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
         shimmer_recycler_view.showShimmerAdapter()
         shimmer_recycler_view.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
         shimmer_recycler_view.adapter = it?.let { it1 ->
-            FlightAdapter(it1, applicationContext)
+            FlightAdapterNew(it1, requestAirSearch, applicationContext)
 
         }
 
