@@ -42,9 +42,9 @@ class BookingFragment : DialogFragment() {
         v.tvFare.text = activity?.getString(R.string.total_fare_text) + ": TK. ${resAirPreBooking.data?.results?.get(0)?.totalFare} "
 
         if (resAirPreBooking.data?.results?.get(0)?.isRefundable!!) {
-            v.tvRefunableForBooking.text = getString(com.cloudwell.paywell.services.R.string.refundable) + ": Yes"
+            v.tvTax.text = getString(com.cloudwell.paywell.services.R.string.refundable) + ": Yes"
         } else {
-            v.tvRefunableForBooking.text = getString(com.cloudwell.paywell.services.R.string.non_refundable) + ": No"
+            v.tvTax.text = getString(com.cloudwell.paywell.services.R.string.non_refundable) + ": No"
         }
 
         if (segments?.size!! > 1) {
@@ -55,8 +55,8 @@ class BookingFragment : DialogFragment() {
             val depTimeSplit = depTime?.split("T")
 
 
-            v.tvDepartTime.text = activity?.getString(R.string.depart_time_) + " " + arrTimeSplit!![0] + "" + arrTimeSplit[1]
-            v.tvArrivalTIme.text = activity?.getString(R.string.arrival_time) + ": " + depTimeSplit!![0] + "" + depTimeSplit[1]
+            v.tvCurrency.text = activity?.getString(R.string.depart_time_) + " " + arrTimeSplit!![0] + "" + arrTimeSplit[1]
+            v.tvOtherCarge.text = activity?.getString(R.string.arrival_time) + ": " + depTimeSplit!![0] + "" + depTimeSplit[1]
 
         } else {
             val arrTime = resAirPreBooking.data?.results?.get(0)!!.segments?.get(0)?.destination?.arrTime
@@ -64,11 +64,11 @@ class BookingFragment : DialogFragment() {
             val arrTimeSplit = arrTime?.split("T")
             val depTimeSplit = depTime?.split("T")
 
-            v.tvDepartTime.text = activity?.getString(R.string.depart_time_) + " " + arrTimeSplit!![0] + "" + arrTimeSplit[1]
-            v.tvArrivalTIme.text = activity?.getString(R.string.arrival_time) + ": " + depTimeSplit!![0] + "" + depTimeSplit[1]
+            v.tvCurrency.text = activity?.getString(R.string.depart_time_) + " " + arrTimeSplit!![0] + "" + arrTimeSplit[1]
+            v.tvOtherCarge.text = activity?.getString(R.string.arrival_time) + ": " + depTimeSplit!![0] + "" + depTimeSplit[1]
         }
 
-        v.tvAirlinesName.text = activity?.getString(R.string.airport_name) + resAirPreBooking.data?.results?.get(0)?.segments?.get(0)?.airline?.airlineName
+        v.tvDiscount.text = activity?.getString(R.string.airport_name) + resAirPreBooking.data?.results?.get(0)?.segments?.get(0)?.airline?.airlineName
 
 
 

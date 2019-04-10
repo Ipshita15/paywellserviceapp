@@ -5,8 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import com.cloudwell.paywell.service.CalculationHelper
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketHelper
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.adapter.FlightSequenceAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.AirlessDialogFragment
@@ -84,7 +86,7 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
             if (it?.isShowProcessIndicator == true) {
                 showProgressDialog()
-                progressDialog.setCancelable(true)
+
             } else {
                 dismissProgressDialog()
             }
@@ -127,12 +129,9 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
             AppStorageBox.put(applicationContext, AppStorageBox.Key.orignAirportAnddestinationairportCode, orignAirtportCode + " - " + destinationairportCode)
 
 
-            val outputSegment = segments.get(0);
-            val depTime = outputSegment.origin?.depTime?.split("T")
-            val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(depTime?.get(0)) as Date
-            val humanReadAbleDate = SimpleDateFormat("EE, MMM DD", Locale.ENGLISH).format(fdepTimeFormatDate)
-            tvNameOfDate.text = humanReadAbleDate
-            AppStorageBox.put(applicationContext, AppStorageBox.Key.humanReadAbleDate, humanReadAbleDate)
+            val date = segments.get(0).origin?.depTime?.let { AirTicketHelper.getFormatDepTime(it) }
+            AppStorageBox.put(applicationContext, AppStorageBox.Key.humanReadAbleDate, date)
+            tvNameOfDate.text = date
 
 
             val durtingJounaryTime = DateUtils.getDurtingJounaryTime(totalJourneyinMiliSecound)
@@ -140,12 +139,12 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
             AppStorageBox.put(applicationContext, AppStorageBox.Key.totalJourney_time, durtingJounaryTime)
 
 
-            val orign = segments.get(0);
-            var orignTime = orign.origin?.depTime.toString().split("T").get(1).toString()
+            val orign = segments.get(0)
+            var orignTime = orign.origin?.depTime.toString().split("T").get(1)
             orignTime = orignTime.substring(0, orignTime.length - 3)
 
-            val destination = segments.get(0);
-            var destinationTime = destination.destination?.arrTime.toString().split("T").get(1).toString()
+            val destination = segments.get(0)
+            var destinationTime = destination.destination?.arrTime.toString().split("T").get(1)
             destinationTime = destinationTime.substring(0, destinationTime.length - 3)
 
 
@@ -181,9 +180,9 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
 
         val fares = result.fares
-//        val totalPrice = CalculationHelper.getTotalFareDetati(fares)
+        val totalPrice = CalculationHelper.getTotalFareDetati(fares)
 
-        tvTotalFair.text = ""
+        tvTotalFair.text = "" + totalPrice
         tvClass.text = getString(R.string.class_text) + ": " + requestAirSearch.segments.get(0).cabinClass
 
 
@@ -228,11 +227,11 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
             // parse journey time
             val split = origin?.depTime.toString().split("T");
             val date = split.get(0) + " " + split.get(1)
-            val fistDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss").parse(date)
+            val fistDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss", Locale.ENGLISH).parse(date)
 
             val split1 = it.destination?.arrTime.toString().split("T");
             val date1 = split1.get(0) + " " + split1.get(1)
-            val secondDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss").parse(date1)
+            val secondDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss", Locale.ENGLISH).parse(date1)
 
             val differenceDate = differenceMilliSecond(fistDate, secondDate)
 
@@ -314,9 +313,9 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         }
 
 
-        ivFareInfo.setOnClickListener {
-            showFareDetailsDialog()
-        }
+//        ivFareInfo.setOnClickListener {
+//            showFareDetailsDialog()
+//        }
 
         tvPriceDetails.setOnClickListener {
             showFareDetailsDialog()
@@ -342,7 +341,7 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
         constrainlayoutPricesDetailsView.setOnClickListener {
 
-            val get = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.data?.results?.get(0)?.fares?.get(0)
+            val get = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.data?.results?.get(0)?.fares
 //            var get = Fare()
 //            get.baseFare = 34344343;
 //            get.tax = 10;
@@ -418,12 +417,11 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
     private fun displayHumanDate(outputSegment: List<Segment>) {
 
-        val outputSegment = outputSegment.get(0);
-        val depTime = outputSegment.origin?.depTime?.split("T")
-        val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd").parse(depTime?.get(0)) as Date
-        val humanReadAbleDate = SimpleDateFormat("EE, MMM DD").format(fdepTimeFormatDate)
-        tvNameOfDate.text = humanReadAbleDate
-        AppStorageBox.put(applicationContext, AppStorageBox.Key.humanReadAbleDate, humanReadAbleDate)
+
+        val date = outputSegment.get(0).origin?.depTime?.let { AirTicketHelper.getFormatDepTime(it) }
+
+        AppStorageBox.put(applicationContext, AppStorageBox.Key.humanReadAbleDate, date)
+        tvNameOfDate.text = date
 
 
         val durtingJounaryTime = DateUtils.getDurtingJounaryTime(totalJourneyinMiliSecound)

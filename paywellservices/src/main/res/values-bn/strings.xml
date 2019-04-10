@@ -617,7 +617,7 @@
     <string name="non_refundable">No Refundable</string>
     <string name="passport_mandatory">Passport Mandatory</string>
     <string name="passport_not_mandatory">Passport not mandatory</string>
-    <string name="fares_information">Fares information</string>
+    <string name="fares_information">Fare information</string>
     <string name="roles">Roles</string>
     <string name="title_flightDetails2">Review page 2</string>
     <string name="title_passenger_list">Passenger Info</string>
@@ -761,6 +761,7 @@
     <string name="ettitle_booking_and_review">Review and Book</string>
     <string name="action_settings">action</string>
     <string name="booking_instructions_for_children_infants">Booking instructions for children/infants</string>
+    <string name="earnings">Earnings</string>
 
 
 </resources>

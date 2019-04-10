@@ -611,7 +611,7 @@
     <string name="passport_not_mandatory">Passport not mandatory</string>
     <string name="title_activity_baggage_and_policies_actiivty">Policies &amp; Fares</string>
     <string name="title_booking_and_review">Review and Book</string>
-    <string name="fares_information">Fares information</string>
+    <string name="fares_information">Fare information</string>
     <string name="roles">Rules</string>
     <string name="title_flightDetails2">Review page 2</string>
     <string name="title_passenger_list">Passenger Info</string>
@@ -755,6 +755,7 @@
     <string name="indian_menu_title">Indian</string>
     <string name="action_settings">action</string>
     <string name="booking_instructions_for_children_infants">Booking instructions for children/infants</string>
+    <string name="earnings">Earnings</string>
 
 
 </resources>

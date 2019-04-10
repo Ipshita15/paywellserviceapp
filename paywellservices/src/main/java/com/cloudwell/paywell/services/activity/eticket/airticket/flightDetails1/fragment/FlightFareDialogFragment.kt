@@ -29,10 +29,10 @@ class FlightFareDialogFragment() : DialogFragment() {
 
         val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_flight_fare, container, false)
         v.tvFare.text = "${fare.baseFare}"
-        v.tvRefunableForBooking.text = "${fare.tax}"
-        v.tvDepartTime.text = "${fare.currency}"
-        v.tvArrivalTIme.text = "${fare.otherCharges}"
-        v.tvAirlinesName.text = "${fare.discount}"
+        v.tvTax.text = "${fare.tax}"
+        v.tvCurrency.text = "${fare.currency}"
+        v.tvOtherCarge.text = "${fare.otherCharges}"
+        v.tvDiscount.text = "${fare.discount}"
         v.tvPaxType.text = "${fare.paxType}"
         v.tvPassengerCount.text = "${fare.passengerCount}"
         v.tvServiceFee.text = "${fare.serviceFee}"
