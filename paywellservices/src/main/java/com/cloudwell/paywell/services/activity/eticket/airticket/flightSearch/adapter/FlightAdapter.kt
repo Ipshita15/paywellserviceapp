@@ -147,7 +147,6 @@ class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val tvDurationAndKilometer = view.tvDurationAndKilometer
     val tvAirlinesName = view.tvAirlinesName
     val btDetails = view.btDetails
-//    val airlineSerachIcon = view.airlineSerachIcon
 
 
 }

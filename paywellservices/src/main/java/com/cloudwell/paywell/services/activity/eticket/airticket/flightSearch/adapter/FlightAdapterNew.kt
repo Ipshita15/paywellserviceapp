@@ -2,6 +2,7 @@ package com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.a
 
 import android.content.Context
 import android.graphics.Color
+import android.net.Uri
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -54,6 +55,15 @@ class FlightAdapterNew(val items: List<Result>, val requestAirSearch: RequestAir
         holder.recyclerView.adapter = FlightRecycleViewAdapter(context, items.get(position).segments, requestAirSearch)
 
 
+        val airlineCode = model.segments.get(0).airline?.airlineCode
+
+
+        val url = "https://notify.paywellonline.com/airlines/images_airline/${airlineCode}_40x35.png"
+        com.orhanobut.logger.Logger.v("Airless logo Url " + url)
+        val imageUri = Uri.parse(url)
+
+        holder.airlineSerachIcon.setImageURI(imageUri)
+
     }
 
 
@@ -79,6 +89,7 @@ class ViewHolderNew(view: View) : RecyclerView.ViewHolder(view) {
     val tvAdult = view.tvAdult
     val tvchildAndInfant = view.tvchildAndInfant
     val recyclerView = view.recyclerView
+    val airlineSerachIcon = view.airlineSerachIcon
 
 
 }

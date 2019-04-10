@@ -56,13 +56,15 @@
     <TextView
         android:id="@+id/tvAirlessName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="17dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:textColor="@android:color/black"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/airlineSerachIcon"
+        app:layout_constraintStart_toEndOf="@+id/airlineSerachIcon"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="US-Bangla Airlines"/>
 
@@ -73,14 +75,12 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-
         app:layout_constraintEnd_toStartOf="@+id/btDetails"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAirlessName"
+        app:layout_constraintTop_toBottomOf="@+id/airlineSerachIcon"
         tools:listitem="@layout/simple_list_item_segment"/>
 
     <TextView
@@ -123,5 +123,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvAdult"
         tools:text="0 Child, 0 Infant "/>
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/airlineSerachIcon"
+        android:layout_width="40dp"
+        android:layout_height="35dp"
+        android:background="@drawable/air_ticket"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>
