@@ -26,7 +26,7 @@ import java.util.Locale;
  */
 public class BaseActivity extends AppCompatActivity {
 
-    private ProgressDialog progressDialog;
+    public ProgressDialog progressDialog;
     boolean isFlowFromFavorite;
     private ConnectionDetector mCd;
 

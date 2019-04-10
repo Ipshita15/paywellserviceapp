@@ -84,6 +84,7 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
             if (it?.isShowProcessIndicator == true) {
                 showProgressDialog()
+                progressDialog.setCancelable(true)
             } else {
                 dismissProgressDialog()
             }

@@ -14,52 +14,43 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class FlightRecycleViewAdapter(val context: Context, val segments: List<OutputSegment>, val requestAirSearch: RequestAirSearch) : RecyclerView.Adapter<FlightRecycleViewAdapter.VHolder>() {
+class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<OutputSegment>, val mRequestAirSearch: RequestAirSearch) : RecyclerView.Adapter<FlightRecycleViewAdapter.VHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHolder {
 
-        val view = LayoutInflater.from(context).inflate(com.cloudwell.paywell.services.R.layout.simple_list_item_segment, parent, false)
+        val view = LayoutInflater.from(mContext).inflate(com.cloudwell.paywell.services.R.layout.simple_list_item_segment, parent, false)
         return VHolder(view)
     }
 
     override fun onBindViewHolder(holder: VHolder, position: Int) {
-
-        if (requestAirSearch.journeyType.equals("Oneway")) {
-
-            displayOneWayData(holder, position)
-
-        } else if (requestAirSearch.journeyType.equals("Return")) {
-            if (position % 2 == 0) {
-                val model = segments.get(0)
-                holder.tvTitle.text = model.tripIndicator
-            } else {
-                holder.tvTitle.text = "InBound"
-            }
-
-        } else if (requestAirSearch.journeyType.equals("MultiStop")) {
-
-            val flightNumber = position + 1
-
-            holder.tvTitle.text = "Flight " + flightNumber
-
-        }
+        displayDataNew(holder, mSegments, position)
     }
 
-    private fun displayOneWayData(holder: VHolder, position: Int) {
-        holder.tvTitle.text = "OutBound"
-        val size = segments.size
-//        if (size > 1) {
-//            // multi-stop
-//
-//
-//            holder.tvDepTime.text = ""
-//
-//            holder.tvOrganAirportCode.text = ""
-//            holder.tvDestinationAirportCode.text = ""
-//            holder.tvOrginTime.text = ""
-//            holder.tvDestinationTime.text = ""
-//
-//        } else {
-        val segment = segments.get(0)
+    private fun displayDataNew(holder: VHolder, segments: List<OutputSegment>, position: Int) {
+        val segment = segments.get(position)
+
+
+        if (mRequestAirSearch.journeyType.equals("MultiStop")) {
+            val counter = position + 1
+            holder.tvTitle.text = "Flight " + counter
+        } else {
+            holder.tvTitle.text = segment.tripIndicator
+        }
+
+
+        // show
+        val split = segments.get(position).origin?.depTime.toString().split("T");
+        val date = split.get(0) + " " + split.get(1)
+        val fistDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss", Locale.ENGLISH).parse(date)
+
+        val split1 = segments.get(position).destination?.arrTime.toString().split("T");
+        val date1 = split1.get(0) + " " + split1.get(1)
+        val secondDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss", Locale.ENGLISH).parse(date1)
+
+        val durtingJounaryTimeNew = DateUtils.getDurtingJounaryTimeNew(fistDate, secondDate)
+
+        holder.tvDurationAndStopCounter.text = durtingJounaryTimeNew
+
 
         val formatDepTime = segment.origin?.depTime?.let { AirTicketHelper.getFormatDepTime(it) }
         holder.tvDepTime.text = formatDepTime
@@ -67,46 +58,26 @@ class FlightRecycleViewAdapter(val context: Context, val segments: List<OutputSe
         holder.tvOrganAirportCode.text = segment.origin?.airport?.airportCode.toString()
         holder.tvDestinationAirportCode.text = segment.destination?.airport?.airportCode.toString()
         holder.tvOrginTime.text = segment.origin?.depTime?.let { AirTicketHelper.getFormatTime(it) }
-        holder.tvDestinationTime.text = segment.destination?.arrTime?.let { AirTicketHelper.getFormatTime(it) }
 
 
-        // show
-        val split = segments.get(0).origin?.depTime.toString().split("T");
-        val date = split.get(0) + " " + split.get(1)
-        val fistDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss", Locale.ENGLISH).parse(date)
-
-        val split1 = segments.get(segments.size - 1).destination?.arrTime.toString().split("T");
-        val date1 = split1.get(0) + " " + split1.get(1)
-        val secondDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss", Locale.ENGLISH).parse(date1)
-
-        val durtingJounaryTimeNew = DateUtils.getDurtingJounaryTimeNew(fistDate, secondDate)
-
-        var stopCount = ""
-        if (segments.size > 1) {
-            stopCount = "" + ((segments.size) - 1)
+        val differenceDays = DateUtils.getDifferenceDays(fistDate, secondDate)
+        var differenceDaysString = ""
+        if (differenceDays == 1 || differenceDays == 0) {
+            differenceDaysString = ""
         } else {
-            stopCount = "0"
-
+            differenceDaysString = " (+" + differenceDays + ")"
         }
-        holder.tvDurationAndStopCounter.text = durtingJounaryTimeNew + " | " + stopCount + " stop"
 
+        holder.tvDestinationTime.text = segment.destination?.arrTime?.let { AirTicketHelper.getFormatTime(it) } + differenceDaysString
 
-//        }
     }
 
 
     override fun getItemCount(): Int {
-
-        if (requestAirSearch.journeyType.equals("Oneway")) {
-            return 1
-        }
-
-        return segments.size
+        return mSegments.size
     }
 
-
     class VHolder(view: View) : RecyclerView.ViewHolder(view) {
-
         val tvTitle = view.tvTitle
         val tvDepTime = view.tvDepTime
         val tvOrganAirportCode = view.tvOrginAirportCode
@@ -114,8 +85,6 @@ class FlightRecycleViewAdapter(val context: Context, val segments: List<OutputSe
         val tvOrginTime = view.tvOrginTime
         val tvDestinationTime = view.tvDestinationTime
         val tvDurationAndStopCounter = view.tvDurationAndStopCounter
-
-
     }
 
 }
