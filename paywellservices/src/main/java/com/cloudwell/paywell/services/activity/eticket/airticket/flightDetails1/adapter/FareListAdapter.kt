@@ -45,8 +45,8 @@ class FareListAdapter(var context: Context, var items: List<Fare>) : RecyclerVie
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         val tvFareBaseFare = v.tvFare
         val tvTax = v.tvTax
-        val tvCurrency = v.tvCurrency
-        val tvOtherCarge = v.tvOtherCarge
+        val tvCurrency = v.tvDepartTime
+        val tvOtherCarge = v.tvArrivalTime
         val tvPaxType = v.tvPaxType
         val tvPassengerCount = v.tvPassengerCount
         val tvServiceFee = v.tvServiceFee

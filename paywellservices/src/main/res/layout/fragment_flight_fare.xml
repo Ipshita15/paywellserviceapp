@@ -85,7 +85,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView12"/>
 
     <TextView
-        android:id="@+id/tvCurrency"
+        android:id="@+id/tvDepartTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -103,13 +103,13 @@
         app:layout_constraintTop_toBottomOf="@+id/textView18"/>
 
     <TextView
-        android:id="@+id/tvOtherCarge"
+        android:id="@+id/tvArrivalTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/tvCurrency"
-        app:layout_constraintTop_toBottomOf="@+id/tvCurrency"/>
+        app:layout_constraintStart_toStartOf="@+id/tvDepartTime"
+        app:layout_constraintTop_toBottomOf="@+id/tvDepartTime"/>
 
     <TextView
         android:id="@+id/textView23"
@@ -148,13 +148,13 @@
         app:layout_constraintTop_toBottomOf="@+id/textView25"/>
 
     <TextView
-        android:id="@+id/tvDiscount"
+        android:id="@+id/tvAirportName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/tvOtherCarge"
-        app:layout_constraintTop_toBottomOf="@+id/tvOtherCarge"/>
+        app:layout_constraintStart_toStartOf="@+id/tvArrivalTime"
+        app:layout_constraintTop_toBottomOf="@+id/tvArrivalTime"/>
 
     <TextView
         android:id="@+id/tvPaxType"
@@ -162,8 +162,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/tvDiscount"
-        app:layout_constraintTop_toBottomOf="@+id/tvDiscount"/>
+        app:layout_constraintStart_toStartOf="@+id/tvAirportName"
+        app:layout_constraintTop_toBottomOf="@+id/tvAirportName"/>
 
     <TextView
         android:id="@+id/tvPassengerCount"

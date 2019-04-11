@@ -5,6 +5,7 @@ import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.cloudwell.paywell.service.CalculationHelper
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResAirPreBooking
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Fare
@@ -16,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_booking.view.*
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 4/3/19.
  */
 
-class BookingFragment : DialogFragment() {
+class BookingStatusFragment : DialogFragment() {
     lateinit var resAirPreBooking: ResAirPreBooking
     lateinit var bookingDialogListener: BookingDialogListener
 
@@ -36,10 +37,19 @@ class BookingFragment : DialogFragment() {
 
         resAirPreBooking = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.AIR_PRE_BOOKKING) as ResAirPreBooking
 
+        val fareType = resAirPreBooking.data?.results?.get(0)?.fareType
+        if (fareType.equals("InstantTicketing")) {
+            v.btBooking.text = getString(R.string.issue_ticket)
+        } else {
+            v.btBooking.text = getString(R.string.booking_now)
+        }
+
 
         val segments = resAirPreBooking.data?.results
 
-        v.tvFare.text = activity?.getString(R.string.total_fare_text) + ": TK. ${resAirPreBooking.data?.results?.get(0)?.totalFare} "
+        val totalFare = resAirPreBooking.data?.results?.get(0)?.fares?.let { CalculationHelper.getTotalFareDetati(it) }
+
+        v.tvFare.text = activity?.getString(R.string.total_fare_text) + ": TK. $" + totalFare
 
         if (resAirPreBooking.data?.results?.get(0)?.isRefundable!!) {
             v.tvTax.text = getString(com.cloudwell.paywell.services.R.string.refundable) + ": Yes"
@@ -54,9 +64,9 @@ class BookingFragment : DialogFragment() {
             val arrTimeSplit = arrTime?.split("T")
             val depTimeSplit = depTime?.split("T")
 
+            v.tvDepartTime.text = activity?.getString(R.string.depart_time_) + " " + depTimeSplit!![0] + " " + depTimeSplit[1]
+            v.tvArrivalTime.text = activity?.getString(R.string.arrival_time) + ": " + arrTimeSplit!![0] + " " + arrTimeSplit[1]
 
-            v.tvCurrency.text = activity?.getString(R.string.depart_time_) + " " + arrTimeSplit!![0] + "" + arrTimeSplit[1]
-            v.tvOtherCarge.text = activity?.getString(R.string.arrival_time) + ": " + depTimeSplit!![0] + "" + depTimeSplit[1]
 
         } else {
             val arrTime = resAirPreBooking.data?.results?.get(0)!!.segments?.get(0)?.destination?.arrTime
@@ -64,11 +74,11 @@ class BookingFragment : DialogFragment() {
             val arrTimeSplit = arrTime?.split("T")
             val depTimeSplit = depTime?.split("T")
 
-            v.tvCurrency.text = activity?.getString(R.string.depart_time_) + " " + arrTimeSplit!![0] + "" + arrTimeSplit[1]
-            v.tvOtherCarge.text = activity?.getString(R.string.arrival_time) + ": " + depTimeSplit!![0] + "" + depTimeSplit[1]
+            v.tvDepartTime.text = activity?.getString(R.string.depart_time_) + " " + depTimeSplit!![0] + " " + depTimeSplit[1]
+            v.tvArrivalTime.text = activity?.getString(R.string.arrival_time) + ": " + arrTimeSplit!![0] + " " + arrTimeSplit[1]
         }
 
-        v.tvDiscount.text = activity?.getString(R.string.airport_name) + resAirPreBooking.data?.results?.get(0)?.segments?.get(0)?.airline?.airlineName
+        v.tvAirportName.text = activity?.getString(R.string.airport_name) + resAirPreBooking.data?.results?.get(0)?.segments?.get(0)?.airline?.airlineName
 
 
 

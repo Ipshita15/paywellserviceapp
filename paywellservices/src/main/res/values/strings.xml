@@ -655,7 +655,7 @@
     <string name="adult">adult</string>
     <string name="child">child</string>
     <string name="infant">Infant</string>
-    <string name="kg_per_adult">KG per adult ticket</string>
+    <string name="kg_per_adult">per adult ticket</string>
     <string name="economy_class">Economy Class: </string>
     <string name="baggage">Baggage :</string>
     <string name="n_a">N/A</string>
@@ -756,6 +756,8 @@
     <string name="action_settings">action</string>
     <string name="booking_instructions_for_children_infants">Booking instructions for children/infants</string>
     <string name="earnings">Earnings</string>
+    <string name="instant_ticketing">Instant Ticketing</string>
+    <string name="issue_ticket">Issue Ticket</string>
 
 
 </resources>

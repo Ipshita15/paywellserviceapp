@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
-import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import kotlinx.android.synthetic.main.activity_baggage_and_policies_actiivty.*
 import java.util.*
@@ -27,10 +26,11 @@ class BaggageAndPoliciesActiivty : AirTricketBaseActivity() {
 
     private fun setupViewPager(viewPager: ViewPager) {
         val adapter = ViewPagerAdapter(supportFragmentManager)
-        adapter.addFragment(RolesFragment(), getString(R.string.roles))
-        adapter.addFragment(FlightFareFragment(), getString(R.string.fares_information))
-        adapter.addFragment(EarningsFragment(), getString(R.string.earnings))
+        adapter.addFragment(RolesFragment(), getString(com.cloudwell.paywell.services.R.string.roles))
+        adapter.addFragment(FlightFareFragment(), getString(com.cloudwell.paywell.services.R.string.fares_information))
+        adapter.addFragment(EarningsFragment(), getString(com.cloudwell.paywell.services.R.string.earnings))
         viewPager.adapter = adapter
+
     }
 
 
@@ -55,6 +55,4 @@ class BaggageAndPoliciesActiivty : AirTricketBaseActivity() {
             return mFragmentTitleList[position]
         }
     }
-
-
 }

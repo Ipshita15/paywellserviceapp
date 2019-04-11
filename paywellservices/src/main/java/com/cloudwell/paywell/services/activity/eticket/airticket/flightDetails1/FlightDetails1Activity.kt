@@ -187,7 +187,7 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
 
 
-        tvBaggage.text = getString(R.string.baggage) + segment?.baggage + getString(R.string.kg_per_adult)
+        tvBaggage.text = getString(R.string.baggage) + segment?.baggage + " " + getString(R.string.kg_per_adult)
 
 
         if (result.passportMadatory!!) {
@@ -257,8 +257,6 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
                 val airline = segments.get(0).airline
 
                 showAirlessInfo(airline)
-
-
             }
         })
 
@@ -271,14 +269,6 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
         val get = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.data?.results?.get(0)?.fares?.get(0)
         AppStorageBox.put(applicationContext, AppStorageBox.Key.Airline_details, airline)
-//        val get = Airline()
-//        get.airlineCode = "Code"
-//        get.airlineCode = "PayWell"
-//        get.bookingClass = "G";
-//        get.cabinClass = "cabinClass"
-//        get.flightNumber = "12334";
-//        get.operatingCarrier = "erdf"
-//        get.operatingCarrier = "operatingCarrier"
 
         val args = Bundle()
         args.putParcelable("object", get)
@@ -313,10 +303,6 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         }
 
 
-//        ivFareInfo.setOnClickListener {
-//            showFareDetailsDialog()
-//        }
-
         tvPriceDetails.setOnClickListener {
             showFareDetailsDialog()
         }
@@ -342,14 +328,6 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         constrainlayoutPricesDetailsView.setOnClickListener {
 
             val get = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.data?.results?.get(0)?.fares
-//            var get = Fare()
-//            get.baseFare = 34344343;
-//            get.tax = 10;
-//            get.currency = "Tk";
-//            get.discount = 33;
-//            get.otherCharges = 2000;
-//            get.serviceFee = 33;
-
 
             AppStorageBox.put(applicationContext, AppStorageBox.Key.FARE_DATA, get)
 
