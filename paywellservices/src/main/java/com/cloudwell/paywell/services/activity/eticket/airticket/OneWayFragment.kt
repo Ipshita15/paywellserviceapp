@@ -68,16 +68,14 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
         val view = inflater!!.inflate(R.layout.fragment_one_way, container, false)
 
 
-
-        frameLayout = view.findViewById(R.id.frameLayout)
-        val tvDepart = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.tvDepart2)
-        val tvDepartDate = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.tvDepartDate)
-        val airTicketClass = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.airTicketClass)
-        val llPassenger = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.llPsngr)
-        val btnSearch = view.findViewById<FancyButton>(com.cloudwell.paywell.services.R.id.btn_search)
-        val tvFrom = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.tvFrom)
-        val layoutTo = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.layoutTo)
-        val layoutDeaprtDate = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.layoutDeaprtDate)
+        val tvDepart = view.findViewById<TextView>(R.id.tvDepart2)
+        val tvDepartDate = view.findViewById<TextView>(R.id.tvDepartDate)
+        val airTicketClass = view.findViewById<TextView>(R.id.airTicketClass)
+        val llPassenger = view.findViewById<LinearLayout>(R.id.llPsngr)
+        val btnSearch = view.findViewById<FancyButton>(R.id.btn_search)
+        val tvFrom = view.findViewById<LinearLayout>(R.id.tvFrom)
+        val layoutTo = view.findViewById<LinearLayout>(R.id.layoutTo)
+        val layoutDeaprtDate = view.findViewById<LinearLayout>(R.id.layoutDeaprtDate)
 
         mAppHandler = AppHandler.getmInstance(context)
 
@@ -137,38 +135,6 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
         tsToPort.inAnimation = inAnim
         tsToPort.outAnimation = outAnim
 
-        val fromCacheAirport = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.FROM_CACHE) as Airport?
-        if (fromCacheAirport != null) {
-            view.tsOneWayTripFrom.setText(fromCacheAirport.iata)
-            view.tsOneWayTripFromPort.setText(fromCacheAirport.airportName)
-            view.tvHitFrom.visibility = View.VISIBLE
-
-            fromAirport = Airport()
-            fromAirport.iata = fromCacheAirport.iata
-
-        } else {
-            tsFrom.setCurrentText(activity?.application?.getString(R.string.from))
-            tsFromPort.setCurrentText(activity?.application?.getString(R.string.airport))
-            view.tvHitFrom.visibility = View.INVISIBLE
-        }
-
-
-        val toCacheAirport = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.TO_CACHE) as Airport?
-        if (toCacheAirport != null) {
-
-            view.tsOneWayTripTo.setText(toCacheAirport.iata)
-            view.tsOneWayTripToPort.setText(toCacheAirport.airportName)
-            view.tvHitTo.visibility = View.VISIBLE
-
-            toAirport = Airport()
-            toAirport.iata = toCacheAirport.iata
-
-        } else {
-            tsTo.setCurrentText(activity?.application?.getString(R.string.to))
-            tsToPort.setCurrentText(activity?.application?.getString(R.string.airport))
-            view.tvHitTo.visibility = View.INVISIBLE
-        }
-
 
         val textFrom = tsFrom.currentView as TextView
         val textFromPort = tsFromPort.currentView as TextView
@@ -206,6 +172,47 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
             AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.TO_CACHE, toAirTricket)
 
 
+        }
+
+        //  inilitzationView(view)
+
+        return view
+    }
+
+    private fun inilitzationView(view: View) {
+
+
+        val fromCacheAirport = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.FROM_CACHE) as Airport?
+        if (fromCacheAirport != null) {
+            view.tsOneWayTripFrom.setText(fromCacheAirport.iata)
+            view.tsOneWayTripFromPort.setText(fromCacheAirport.airportName)
+            view.tvHitFrom.visibility = View.VISIBLE
+
+            fromAirport = Airport()
+            fromAirport.iata = fromCacheAirport.iata
+
+
+        } else {
+            view.tsOneWayTripFrom.setCurrentText(activity?.application?.getString(R.string.from))
+            view.tsOneWayTripFromPort.setCurrentText(activity?.application?.getString(R.string.airport))
+            view.tvHitFrom.visibility = View.INVISIBLE
+        }
+
+
+        val toCacheAirport = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.TO_CACHE) as Airport?
+        if (toCacheAirport != null) {
+
+            view.tsOneWayTripTo.setText(toCacheAirport.iata)
+            view.tsOneWayTripToPort.setText(toCacheAirport.airportName)
+            view.tvHitTo.visibility = View.VISIBLE
+
+            toAirport = Airport()
+            toAirport.iata = toCacheAirport.iata
+
+        } else {
+            view.tsOneWayTripTo.setCurrentText(activity?.application?.getString(R.string.to))
+            view.tsOneWayTripTo.setCurrentText(activity?.application?.getString(R.string.airport))
+            view.tvHitTo.visibility = View.INVISIBLE
         }
 
 
@@ -246,8 +253,6 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
         if (adulPassger != null) {
             onAdultPsngrTextChange("" + adulPassger)
         }
-
-        return view
     }
 
     override fun onClick(v: View?) {
@@ -330,7 +335,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
         val sdf = SimpleDateFormat(myFormatOne, Locale.ENGLISH)
 
 //        tvDepartDate.setText(sdf.format(myCalendar.time))
-        tvDepartDate.setText(humanReadAbleDate.format(myCalendar.time))
+        myViewOneWayNew.tvDepartDate.setText(humanReadAbleDate.format(myCalendar.time))
 
         searchRoundTripModel.departDate = humanReadAbleDate.format(myCalendar.time)
         Log.e("logtag", myFormatOne)
@@ -476,7 +481,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
     }
 
     fun onClassTextChange(text: String) {
-        airTicketClass.setText(text)
+        myViewOneWayNew.airTicketClass.setText(text)
 
     }
 
@@ -572,6 +577,21 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
         val intent = Intent(activity?.applicationContext, FlightSearchViewActivity::class.java)
         startActivity(intent)
     }
+
+//    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+//        super.setUserVisibleHint(isVisibleToUser)
+//        if (isVisibleToUser) {
+//            try {
+//                inilitzationView(myViewOneWayNew)
+//            } catch (e: Exception) {
+//
+//            }
+//
+//
+//        } else {
+//
+//        }
+//    }
 }
 
 
