@@ -185,6 +185,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
         ivSwitchTrip.setOnClickListener {
             tsFrom.setText(searchRoundTripModel.getToName())
             tsTo.setText(searchRoundTripModel.getFromName())
+
             val from = searchRoundTripModel.getFromName()
             searchRoundTripModel.setFromName(searchRoundTripModel.getToName())
             searchRoundTripModel.setToName(from)
@@ -195,6 +196,19 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
             val fromPort = searchRoundTripModel.getFromPortName()
             searchRoundTripModel.setFromPortName(searchRoundTripModel.getToPortName())
             searchRoundTripModel.setToPortName(fromPort)
+
+
+            val fromAirTricket = Airport()
+            fromAirTricket.airportName = searchRoundTripModel.fromPort
+            fromAirTricket.iata = searchRoundTripModel.getFromName()
+            AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.FROM_CACHE_INDIA, fromAirTricket)
+
+
+            val toAirTricket = Airport()
+            toAirTricket.airportName = searchRoundTripModel.toPort
+            toAirTricket.iata = searchRoundTripModel.getToName()
+
+            AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.TO_CACHE_INDIA, toAirTricket)
 
         }
 
