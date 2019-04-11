@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
 import android.view.View
+import com.cloudwell.paywell.service.CalculationHelper
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
@@ -78,9 +79,9 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
         })
 
 
-//        val totalFareDetati = CalculationHelper.getTotalFareDetati(resposeAirPriceSearch.data?.results?.get(0)?.fares)
+        val totalFareDetati = resposeAirPriceSearch.data?.results?.get(0)?.fares?.let { CalculationHelper.getTotalFareDetati(it) }
 
-        tvTotalPrice.text = ""
+        tvTotalPrice.text = totalFareDetati
 
         tvTotalPrice.setOnClickListener {
 
