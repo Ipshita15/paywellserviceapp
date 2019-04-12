@@ -174,7 +174,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
 
         }
 
-        //  inilitzationView(view)
+        inilitzationView(view)
 
         return view
     }
@@ -211,7 +211,7 @@ class OneWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragmen
 
         } else {
             view.tsOneWayTripTo.setCurrentText(activity?.application?.getString(R.string.to))
-            view.tsOneWayTripTo.setCurrentText(activity?.application?.getString(R.string.airport))
+            view.tsOneWayTripToPort.setCurrentText(activity?.application?.getString(R.string.airport))
             view.tvHitTo.visibility = View.INVISIBLE
         }
 
