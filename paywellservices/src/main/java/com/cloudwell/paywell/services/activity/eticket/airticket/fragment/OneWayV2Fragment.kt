@@ -24,6 +24,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.Fl
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.franmontiel.fullscreendialog.FullScreenDialogFragment
+import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.fragment__one_way_v2.*
 import kotlinx.android.synthetic.main.fragment__one_way_v2.view.*
 import mehdi.sakout.fancybuttons.FancyButton
@@ -622,7 +623,7 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
 
             }
         } catch (e: Exception) {
-
+            Logger.v("", "")
         }
 
 

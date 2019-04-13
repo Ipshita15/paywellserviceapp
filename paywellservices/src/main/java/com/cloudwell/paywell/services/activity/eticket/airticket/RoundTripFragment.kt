@@ -140,19 +140,45 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
     }
 
 
+    private var tsFrom: TextSwitcher? = null
+
+    private var tsFromPort: TextSwitcher? = null
+
+    private var tsTo: TextSwitcher? = null
+
+
+    private var tsToPort: TextSwitcher? = null
+
+    private var ivSwitchTrip: ImageView? = null
+    private var tvFrom: LinearLayout? = null
+    private var layoutTo: LinearLayout? = null
+    private var layoutDepart: LinearLayout? = null
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_round_trip, container, false)
 
-        val tsFrom = view.findViewById<TextSwitcher>(R.id.tsRoundTripFrom)
-        val tsFromPort = view.findViewById<TextSwitcher>(R.id.tsRoundTripFromPort)
-        val tsTo = view.findViewById<TextSwitcher>(R.id.tsRoundTripTo)
-        val tsToPort = view.findViewById<TextSwitcher>(R.id.tsRoundTripToPort)
-        val ivSwitchTrip = view.findViewById<ImageView>(R.id.ivRoundTripTextSwitcher)
+        tsFrom = view.findViewById<TextSwitcher>(R.id.tsRoundTripFrom)
+        tsFromPort = view.findViewById<TextSwitcher>(R.id.tsRoundTripFromPort)
+        tsTo = view.findViewById<TextSwitcher>(R.id.tsRoundTripTo)
+        tsToPort = view.findViewById<TextSwitcher>(R.id.tsRoundTripToPort)
+        ivSwitchTrip = view.findViewById<ImageView>(R.id.ivRoundTripTextSwitcher)
 
-        val tvFrom = view.findViewById<LinearLayout>(R.id.tvFrom)
-        val layoutTo = view.findViewById<LinearLayout>(R.id.layoutTo)
-        val layoutDepart = view.findViewById<LinearLayout>(R.id.layoutDepart)
+        tvFrom = view.findViewById<LinearLayout>(R.id.tvFrom)
+        layoutTo = view.findViewById<LinearLayout>(R.id.layoutTo)
+        layoutDepart = view.findViewById<LinearLayout>(R.id.layoutDepart)
+
+
+
+        inilitzationView(view)
+
+
+        return view
+    }
+
+    private fun inilitzationView(view: View) {
+
 
         tvClass = view.findViewById(R.id.airTicketClass)
         llPassenger = view.findViewById(R.id.llPsngr)
@@ -166,9 +192,9 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
         airTicketKid = view.findViewById<TextView>(R.id.airTicketKid)
 
 
-        tvFrom.setOnClickListener(this)
-        layoutTo.setOnClickListener(this)
-        layoutDepart.setOnClickListener(this)
+        tvFrom?.setOnClickListener(this)
+        layoutTo?.setOnClickListener(this)
+        layoutDepart?.setOnClickListener(this)
 
 
         llPassenger.setOnClickListener(this)
@@ -177,48 +203,45 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
         view.btn_search.setOnClickListener(this)
 
 
-
-        tsFrom.setFactory {
-            TextView(ContextThemeWrapper(context,
-                    R.style.TicketFrom), null, 0)
+        tsFrom?.removeAllViews()
+        tsFrom?.setFactory {
+            TextView(ContextThemeWrapper(context, R.style.TicketFrom), null, 0)
         }
-        tsFromPort.setFactory {
-            TextView(ContextThemeWrapper(context,
-                    R.style.TicketFromPort), null, 0)
+        tsFromPort?.removeAllViews()
+        tsFromPort?.setFactory {
+            TextView(ContextThemeWrapper(context, R.style.TicketFromPort), null, 0)
         }
-        tsTo.setFactory {
-            TextView(ContextThemeWrapper(context,
-                    R.style.TicketTo), null, 0)
+        tsTo?.removeAllViews()
+        tsTo?.setFactory {
+            TextView(ContextThemeWrapper(context, R.style.TicketTo), null, 0)
         }
-        tsToPort.setFactory {
-            TextView(ContextThemeWrapper(context,
-                    R.style.TicketToPort), null, 0)
+        tsToPort?.removeAllViews()
+        tsToPort?.setFactory {
+            TextView(ContextThemeWrapper(context, R.style.TicketToPort), null, 0)
         }
-        val inAnim = AnimationUtils.loadAnimation(context,
-                android.R.anim.fade_in)
-        val outAnim = AnimationUtils.loadAnimation(context,
-                android.R.anim.fade_out)
+        val inAnim = AnimationUtils.loadAnimation(context, android.R.anim.fade_in)
+        val outAnim = AnimationUtils.loadAnimation(context, android.R.anim.fade_out)
         inAnim.duration = 200
         outAnim.duration = 200
-        tsFrom.inAnimation = inAnim
-        tsFrom.outAnimation = outAnim
-        tsFromPort.inAnimation = inAnim
-        tsFromPort.outAnimation = outAnim
-        tsTo.inAnimation = inAnim
-        tsTo.outAnimation = outAnim
-        tsToPort.inAnimation = inAnim
-        tsToPort.outAnimation = outAnim
+        tsFrom!!.inAnimation = inAnim
+        tsFrom!!.outAnimation = outAnim
+        tsFromPort!!.inAnimation = inAnim
+        tsFromPort!!.outAnimation = outAnim
+        tsTo!!.inAnimation = inAnim
+        tsTo!!.outAnimation = outAnim
+        tsToPort!!.inAnimation = inAnim
+        tsToPort!!.outAnimation = outAnim
 
-        val textFrom = tsFrom.currentView as TextView
-        val textFromPort = tsFromPort.currentView as TextView
-        val textTo = tsTo.currentView as TextView
-        val textToPort = tsToPort.currentView as TextView
+        val textFrom = tsFrom!!.currentView as TextView
+        val textFromPort = tsFromPort!!.currentView as TextView
+        val textTo = tsTo!!.currentView as TextView
+        val textToPort = tsToPort!!.currentView as TextView
 
 
 
         searchRoundTripModel = SearchRoundTripModel(textFrom.text.toString(), textTo.text.toString(), textFromPort.text.toString(), textToPort.text.toString())
 
-        ivSwitchTrip.setOnClickListener {
+        ivSwitchTrip?.setOnClickListener {
 
 
             searchRoundTripModel.setFromName(textFrom.text.toString())
@@ -229,11 +252,11 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
 
 
             // swift view
-            tsFrom.setText(searchRoundTripModel.getToName())
-            tsTo.setText(searchRoundTripModel.getFromName())
+            tsFrom!!.setText(searchRoundTripModel.getToName())
+            tsTo!!.setText(searchRoundTripModel.getFromName())
 
-            tsFromPort.setText(searchRoundTripModel.getToPortName())
-            tsToPort.setText(searchRoundTripModel.getFromPortName())
+            tsFromPort!!.setText(searchRoundTripModel.getToPortName())
+            tsToPort!!.setText(searchRoundTripModel.getFromPortName())
 
             // swif object value
 
@@ -270,16 +293,6 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
 
             handlePassengerClick()
         }
-
-
-
-        inilitzationView(view)
-
-
-        return view
-    }
-
-    private fun inilitzationView(view: View) {
 
 
         val fromCacheAirport = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.FROM_CACHE) as Airport?
@@ -579,12 +592,18 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
 
     }
 
-//    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-//        super.setUserVisibleHint(isVisibleToUser)
-//        if (isVisibleToUser) {
-//            inilitzationView(myView)
-//        } else {
-//
-//        }
-//    }
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+
+        try {
+            if (isVisibleToUser) {
+                inilitzationView(myView)
+            } else {
+
+            }
+        } catch (e: Exception) {
+            com.orhanobut.logger.Logger.v("", "")
+        }
+
+    }
 }
