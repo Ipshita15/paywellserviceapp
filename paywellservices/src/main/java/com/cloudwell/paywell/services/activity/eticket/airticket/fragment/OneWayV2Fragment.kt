@@ -109,18 +109,22 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
         val tsToPort = view.findViewById<TextSwitcher>(R.id.tsOneWayTripToPort)
         val ivSwitchTrip = view.findViewById<ImageView>(R.id.ivOneWayTripTextSwitcher)
 
+        tsFrom.removeAllViews()
         tsFrom.setFactory {
             TextView(ContextThemeWrapper(context,
                     R.style.TicketFrom), null, 0)
         }
+        tsFromPort.removeAllViews()
         tsFromPort.setFactory {
             TextView(ContextThemeWrapper(context,
                     R.style.TicketFromPort), null, 0)
         }
+        tsTo.removeAllViews()
         tsTo.setFactory {
             TextView(ContextThemeWrapper(context,
                     R.style.TicketTo), null, 0)
         }
+        tsToPort.removeAllViews()
         tsToPort.setFactory {
             TextView(ContextThemeWrapper(context,
                     R.style.TicketToPort), null, 0)
