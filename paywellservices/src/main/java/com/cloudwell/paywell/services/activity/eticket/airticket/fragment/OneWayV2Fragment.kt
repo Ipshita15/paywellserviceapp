@@ -616,13 +616,13 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         try {
-
-        } catch (e: Exception) {
             if (isVisibleToUser) {
                 init(myView)
             } else {
 
             }
+        } catch (e: Exception) {
+
         }
 
 
