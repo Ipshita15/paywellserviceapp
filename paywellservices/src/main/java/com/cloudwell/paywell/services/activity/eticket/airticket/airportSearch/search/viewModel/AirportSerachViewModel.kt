@@ -49,8 +49,7 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
 
                 val checkAirportListUpdateChecker = checkAirportListUpdateChecker(appHandler, internetConnection)
                 if (checkAirportListUpdateChecker == true || resGetAirports1.airports.size == 0) {
-
-                    getAirportListForRemoteAPI("", appHandler)
+                    getAirportListForRemoteAPI(serachParameter, appHandler)
                 }
 
             }
