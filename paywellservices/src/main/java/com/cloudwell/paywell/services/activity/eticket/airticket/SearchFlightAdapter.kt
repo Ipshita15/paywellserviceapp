@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.fragment.IndianWayFragment
+import com.cloudwell.paywell.services.activity.eticket.airticket.fragment.OneWayV2Fragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.multiCity.MultiCityFragment
 import com.cloudwell.paywell.services.app.AppController
 
@@ -13,7 +14,7 @@ class SearchFlightAdapter(fm: FragmentManager?) : FragmentPagerAdapter(fm) {
 
         when (position) {
             0
-            -> return OneWayFragment()
+            -> return OneWayV2Fragment()
             1
             -> return RoundTripFragment()
             2

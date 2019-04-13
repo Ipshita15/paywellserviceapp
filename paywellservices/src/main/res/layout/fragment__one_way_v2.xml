@@ -1,0 +1,323 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:card_view="http://schemas.android.com/apk/res-auto"
+             xmlns:fancy="http://schemas.android.com/apk/res-auto"
+             android:id="@+id/frameLayout"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+    >
+
+    <include layout="@layout/background_green"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/fbCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin_half"
+            android:layout_marginRight="@dimen/activity_horizontal_margin_half"
+            card_view:cardBackgroundColor="@color/card_background"
+            card_view:cardCornerRadius="8dp"
+            card_view:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <LinearLayout
+                        android:id="@+id/tvFrom"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/activity_horizontal_margin"
+                        android:layout_weight="1.3"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvHitFrom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/from"
+                            android:textColor="#999999"/>
+
+                        <TextSwitcher
+                            android:id="@+id/tsOneWayTripFrom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+                        <TextSwitcher
+                            android:id="@+id/tsOneWayTripFromPort"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textSize="12sp"/>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/ivOneWayTripTextSwitcher"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.4"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_one_way"/>
+
+                    <LinearLayout
+                        android:id="@+id/layoutTo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/activity_horizontal_margin"
+                        android:layout_weight="1.3"
+                        android:gravity="end"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvHitTo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_gravity="end"
+                            android:text="@string/to"
+                            android:textColor="#999999"/>
+
+                        <TextSwitcher
+                            android:id="@+id/tsOneWayTripTo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+                        <TextSwitcher
+                            android:id="@+id/tsOneWayTripToPort"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:text=""
+                            android:textSize="12sp"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:background="#c0c0c0"/>
+
+                <LinearLayout
+                    android:id="@+id/layoutDeaprtDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:weightSum="2.6">
+
+                    <LinearLayout
+                        android:id="@+id/llDatePicker"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/activity_horizontal_margin"
+                        android:layout_weight="1.3"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvDepart2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/depart"
+                            android:textColor="#999999"/>
+
+                        <TextView
+                            android:id="@+id/tvDepartDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/date"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:background="#c0c0c0"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.2"
+                            android:text="@string/class_text"/>
+
+                        <TextView
+                            android:id="@+id/airTicketClass"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:gravity="start"
+                            android:text="@string/economy"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1.2"
+                            android:gravity="end"
+                            android:text="@string/passengers"
+                            android:textColor="#999999"/>
+
+                        <LinearLayout
+                            android:id="@+id/llPsngr"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="2"
+                            android:gravity="end|bottom"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="end">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginRight="5dp"
+                                    android:src="@drawable/ic_adult"/>
+
+                                <TextView
+                                    android:id="@+id/airTicketAdult"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom"
+                                    android:text="1"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                    android:textColor="@color/black"/>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="end">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:layout_marginRight="5dp"
+                                    android:src="@drawable/ic_kid"/>
+
+                                <TextView
+                                    android:id="@+id/airTicketKid"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom"
+                                    android:gravity="bottom"
+                                    android:text="0"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                    android:textColor="@color/blackcccccc"/>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="end">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginRight="5dp"
+                                    android:src="@drawable/ic_infant"/>
+
+                                <TextView
+                                    android:id="@+id/airTicketInfant"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom"
+                                    android:gravity="bottom"
+                                    android:text="0"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                    android:textColor="@color/blackcccccc"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:background="#c0c0c0"/>
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/btn_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    fancy:fb_defaultColor="#9fd34c"
+                    fancy:fb_fontIconResource="&#xf002;"
+                    fancy:fb_iconPosition="left"
+                    fancy:fb_radius="2dp"
+                    fancy:fb_text="@string/search_text"
+                    fancy:fb_textColor="#FFFFFF"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin_half"
+            android:layout_marginTop="@dimen/activity_horizontal_margin_half"
+            android:layout_marginRight="@dimen/activity_horizontal_margin_half"
+            card_view:cardBackgroundColor="@color/card_background"
+            card_view:cardCornerRadius="8dp"
+            card_view:cardUseCompatPadding="true"/>
+
+    </LinearLayout>
+</FrameLayout>
