@@ -24,8 +24,8 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.Fl
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.franmontiel.fullscreendialog.FullScreenDialogFragment
-import kotlinx.android.synthetic.main.fragment_india_one_way.*
-import kotlinx.android.synthetic.main.fragment_india_one_way.view.*
+import kotlinx.android.synthetic.main.fragment__one_way_v2.*
+import kotlinx.android.synthetic.main.fragment__one_way_v2.view.*
 import mehdi.sakout.fancybuttons.FancyButton
 import java.text.SimpleDateFormat
 import java.util.*
@@ -68,15 +68,21 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
         // Inflate the layout for this fragment
         val view = inflater!!.inflate(R.layout.fragment__one_way_v2, container, false)
 
-        frameLayout = view.findViewById(R.id.frameLayout)
-        val tvDepart = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.tvDepart2)
-        val tvDepartDate = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.tvDepartDate)
-        val airTicketClass = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.airTicketClass)
-        val llPassenger = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.llPsngr)
-        val btnSearch = view.findViewById<FancyButton>(com.cloudwell.paywell.services.R.id.btn_search)
-        val tvFrom = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.tvFrom)
-        val layoutTo = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.layoutTo)
-        val layoutDeaprtDate = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.layoutDeaprtDate)
+        init(view)
+
+        return view
+    }
+
+    private fun init(view: View) {
+        frameLayout = view.findViewById(R.id.myView)
+        val tvDepart = view.findViewById<TextView>(R.id.tvDepart2)
+        val tvDepartDate = view.findViewById<TextView>(R.id.tvDepartDate)
+        val airTicketClass = view.findViewById<TextView>(R.id.airTicketClass)
+        val llPassenger = view.findViewById<LinearLayout>(R.id.llPsngr)
+        val btnSearch = view.findViewById<FancyButton>(R.id.btn_search)
+        val tvFrom = view.findViewById<LinearLayout>(R.id.tvFrom)
+        val layoutTo = view.findViewById<LinearLayout>(R.id.layoutTo)
+        val layoutDeaprtDate = view.findViewById<LinearLayout>(R.id.layoutDeaprtDate)
 
         mAppHandler = AppHandler.getmInstance(context)
 
@@ -262,8 +268,6 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
         if (adulPassger != null) {
             onAdultPsngrTextChange("" + adulPassger)
         }
-
-        return view
     }
 
     override fun onClick(v: View?) {
@@ -608,6 +612,23 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
         val intent = Intent(activity?.applicationContext, FlightSearchViewActivity::class.java)
         startActivity(intent)
     }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        try {
+
+        } catch (e: Exception) {
+            if (isVisibleToUser) {
+                init(myView)
+            } else {
+
+            }
+        }
+
+
+    }
+
+
 
 }
 
