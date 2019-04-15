@@ -103,6 +103,7 @@
                 android:background="#c0c0c0"
                 app:layout_constraintBottom_toBottomOf="@+id/tvOrginAndDestinationAirportCode"
                 app:layout_constraintStart_toEndOf="@+id/tvOrginAndDestinationAirportCode"
+                android:layout_marginLeft="4dp"
                 app:layout_constraintTop_toTopOf="@+id/tvOrginAndDestinationAirportCode"/>
 
             <TextView

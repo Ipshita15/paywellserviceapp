@@ -42,8 +42,6 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
         setToolbar(getString(com.cloudwell.paywell.services.R.string.title_booking_and_review))
 
-//        val results = Gson().fromJson(DummayData().multipSegmentData, Array<com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Result>::class.java)
-
         rootLayout.visibility = View.INVISIBLE
         initializationView()
         initViewModel()
@@ -348,13 +346,6 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         val dialogFragment = FlightFareDialogFragment()
 
         val get = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.data?.results?.get(0)?.fares?.get(0)
-//        val get = Fare()
-//        get.baseFare = 100;
-//        get.tax = 10;
-//        get.currency = "Tk";
-//        get.discount = 0;
-//        get.otherCharges = 2000;
-//        get.serviceFee = 33;
 
         val args = Bundle()
         args.putParcelable("object", get)
