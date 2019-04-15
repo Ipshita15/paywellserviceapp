@@ -8,6 +8,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.m
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.Airport
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.ResGetAirports
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.ResIssueTicket
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.FileUploadReqSearchPara
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.RequestAirPrebookingSearchParams
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResAirPreBooking
@@ -322,6 +323,29 @@ class AirThicketRepository(private val mContext: Context) {
 
     }
 
+    fun callIssueTicketAPI(pinNumber: String, bookingId: String, ssAcceptedPriceChangeandIssueTicket: Boolean): MutableLiveData<ResIssueTicket> {
+        mAppHandler = AppHandler.getmInstance(mContext)
+        val username = mAppHandler!!.imeiNo
+
+        val data = MutableLiveData<ResIssueTicket>()
+
+        val responseBodyCall = ApiUtils.getAPIService().callIssueTicketAPI(username, pinNumber, bookingId, ssAcceptedPriceChangeandIssueTicket)
+        responseBodyCall.enqueue(object : Callback<ResIssueTicket> {
+            override fun onResponse(call: Call<ResIssueTicket>, response: Response<ResIssueTicket>) {
+
+                if (response.isSuccessful) {
+                    data.value = response.body()
+                }
+            }
+
+            override fun onFailure(call: Call<ResIssueTicket>, t: Throwable) {
+                com.orhanobut.logger.Logger.e("" + t.message)
+                data.value = ResIssueTicket(throwable = t)
+            }
+        })
+        return data
+    }
+
 
     fun getAllPassengers(): MutableLiveData<List<Passenger>> {
         val data = MutableLiveData<List<Passenger>>()
@@ -461,8 +485,6 @@ class AirThicketRepository(private val mContext: Context) {
     fun deleteAirportData(): MutableLiveData<Boolean> {
 
         val data = MutableLiveData<Boolean>()
-
-
         doAsync {
 
             DatabaseClient.getInstance(mContext).appDatabase.mAirtricketDab().clearAirportsData()

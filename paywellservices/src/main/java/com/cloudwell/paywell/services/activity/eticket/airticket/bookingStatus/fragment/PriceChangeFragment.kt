@@ -5,15 +5,21 @@ import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
-import com.cloudwell.paywell.services.app.storage.AppStorageBox
-import kotlinx.android.synthetic.main.fragment_tricket_action_menu.view.*
+import com.cloudwell.paywell.service.CalculationHelper
+import com.cloudwell.paywell.services.R
+import kotlinx.android.synthetic.main.fragment_prices_change.view.*
 
 
-class ThicketActionMenuFragment : DialogFragment() {
+class PriceChangeFragment : DialogFragment() {
 
+
+    companion object {
+
+    }
 
     lateinit var onClickHandler: OnClickHandler
+    lateinit var modelPriceChange: List<com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.Datum>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,29 +31,14 @@ class ThicketActionMenuFragment : DialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_tricket_action_menu, container, false)
+        val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_prices_change, container, false)
 
-
-        val model = AppStorageBox.get(activity, AppStorageBox.Key.BOOKING_STATUS_ITEM) as Datum
-
-        if (model.message.equals("Booked")) {
-            v.btActionIssueTicket.visibility = View.VISIBLE
-
-        } else {
-            v.btActionIssueTicket.visibility = View.GONE
-            setMargins(v.btCencel, 0, 50, 0, 50)
-
-        }
+        v.tvNewPrices.text = getString(R.string.new_ticket_prices) + " " + CalculationHelper.getTotalFareDetati(modelPriceChange.get(0).fares)
 
 
         v.btActionIssueTicket.setOnClickListener {
             dismiss()
-            onClickHandler.onClickIssisTricketButton()
-        }
-
-        v.btCencel.setOnClickListener {
-            dismiss()
-            onClickHandler.onClickCencelButton()
+            onClickHandler.onClickActionIssueTicket()
         }
 
 
@@ -65,8 +56,7 @@ class ThicketActionMenuFragment : DialogFragment() {
 
 
     interface OnClickHandler {
-        fun onClickCencelButton()
-        fun onClickIssisTricketButton()
+        fun onClickActionIssueTicket()
 
     }
 

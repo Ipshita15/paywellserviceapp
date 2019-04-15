@@ -413,4 +413,82 @@ data class DummayData(var multipSegmentData: String = "[\n" +
             "    \"RePriceStatus\": \"NoPriceChange\"\n" +
             "  }\n" +
             "}"
+
+
+    public var airTicketing = "{\n" +
+            "  \"status\": 307,\n" +
+            "  \"message\": \"Price Changed\",\n" +
+            "  \"IsPriceChanged\": true,\n" +
+            "  \"data\": [\n" +
+            "    {\n" +
+            "      \"ResultID\": \"e618b706-dcd4-4574-9133-ed6e90ba886b\",\n" +
+            "      \"IsRefundable\": true,\n" +
+            "      \"Fares\": [\n" +
+            "        {\n" +
+            "          \"BaseFare\": 10515,\n" +
+            "          \"Tax\": 5575,\n" +
+            "          \"Currency\": \"BDT\",\n" +
+            "          \"OtherCharges\": 0,\n" +
+            "          \"Discount\": 1051.4,\n" +
+            "          \"AgentMarkUp\": 0,\n" +
+            "          \"PaxType\": \"Adult\",\n" +
+            "          \"PassengerCount\": 1,\n" +
+            "          \"ServiceFee\": 48.27\n" +
+            "        }\n" +
+            "      ],\n" +
+            "      \"Discount\": 1051.4,\n" +
+            "      \"Validatingcarrier\": \"RX\",\n" +
+            "      \"LastTicketDate\": null,\n" +
+            "      \"segments\": [\n" +
+            "        {\n" +
+            "          \"TripIndicator\": \"OutBound\",\n" +
+            "          \"Origin\": {\n" +
+            "            \"Airport\": {\n" +
+            "              \"AirportCode\": \"DAC\",\n" +
+            "              \"AirportName\": \"Shahjalal intl. Airport\",\n" +
+            "              \"Terminal\": null,\n" +
+            "              \"CityCode\": \"DAC\",\n" +
+            "              \"CityName\": \"Dhaka\",\n" +
+            "              \"CountryCode\": \"BD\",\n" +
+            "              \"CountryName\": \"Bangladesh\"\n" +
+            "            },\n" +
+            "            \"DepTime\": \"2019-05-30T21:00:00\"\n" +
+            "          },\n" +
+            "          \"Destination\": {\n" +
+            "            \"Airport\": {\n" +
+            "              \"AirportCode\": \"SIN\",\n" +
+            "              \"AirportName\": \"Changi\",\n" +
+            "              \"Terminal\": null,\n" +
+            "              \"CityCode\": \"SIN\",\n" +
+            "              \"CityName\": \"Singapore\",\n" +
+            "              \"CountryCode\": \"SG\",\n" +
+            "              \"CountryName\": \"Singapore\"\n" +
+            "            },\n" +
+            "            \"ArrTime\": \"2019-05-31T03:15:00\"\n" +
+            "          },\n" +
+            "          \"Airline\": {\n" +
+            "            \"AirlineCode\": \"RX\",\n" +
+            "            \"AirlineName\": \"Regent Airways\",\n" +
+            "            \"FlightNumber\": \"0788\",\n" +
+            "            \"BookingClass\": \"H\",\n" +
+            "            \"CabinClass\": \"Y\",\n" +
+            "            \"OperatingCarrier\": \"RX\"\n" +
+            "          },\n" +
+            "          \"Baggage\": \"30Kg\",\n" +
+            "          \"JourneyDuration\": \"255\",\n" +
+            "          \"StopQuantity\": \"0\",\n" +
+            "          \"Equipment\": \"737\"\n" +
+            "        }\n" +
+            "      ],\n" +
+            "      \"TotalFare\": 15087,\n" +
+            "      \"TotalFareWithAgentMarkup\": 15087,\n" +
+            "      \"Currency\": \"BDT\",\n" +
+            "      \"Availabilty\": 12,\n" +
+            "      \"FareType\": \"InstantTicketing\"\n" +
+            "    }\n" +
+            "  ],\n" +
+            "  \"api_requested\": null\n" +
+            "}"
+
+
 }

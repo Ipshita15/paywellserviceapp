@@ -5,6 +5,7 @@ import com.cloudwell.paywell.services.activity.base.newBase.SingleLiveEvent
 import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketBaseViewMode
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.BookingStatuViewStatus
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.ResIssueTicket
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 28/3/19.
@@ -32,6 +33,52 @@ class BookingStatuViewModel : AirTicketBaseViewMode() {
 
             }
         }
+    }
+
+
+    fun issueTicket(internetConnection: Boolean, pinNumber: String, bookingId: String, isAcceptedPriceChangeandIssueTicket: Boolean) {
+        if (!internetConnection) {
+            baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
+        } else {
+
+            mViewStatus.value = BookingStatuViewStatus(isShowProcessIndicatior = true)
+
+            mAirTicketRepository.callIssueTicketAPI(pinNumber, bookingId, isAcceptedPriceChangeandIssueTicket).observeForever {
+                mViewStatus.value = BookingStatuViewStatus(isShowProcessIndicatior = false)
+                isOkNetworkAndStatusCode(it)
+
+            }
+        }
+
+    }
+
+    private fun isOkNetworkAndStatusCode(it: ResIssueTicket?) {
+        it?.let {
+            if (it.throwable != null) {
+                baseViewStatus.value = it.throwable!!.message.let { it1 ->
+                    BaseViewState(errorMessage = it1.toString())
+                }
+                val bookingStatuViewStatus = BookingStatuViewStatus(isShowProcessIndicatior = false)
+                mViewStatus.value = bookingStatuViewStatus
+
+
+            } else if (it.status == 313) {
+                baseViewStatus.value = BaseViewState(errorMessage = it.message)
+            } else {
+
+                val bookingStatuViewStatus = BookingStatuViewStatus()
+                if (it.isPriceChanged == null) {
+                    bookingStatuViewStatus.successMessageTricketStatus = it.message
+                    mViewStatus.value = bookingStatuViewStatus
+                } else {
+                    bookingStatuViewStatus.modelPriceChange = it.data
+                    mViewStatus.value = bookingStatuViewStatus
+                }
+            }
+
+        }
+        return
+
     }
 
     fun isOkNetworkAndStatusCode(it: BookingList?): Boolean {

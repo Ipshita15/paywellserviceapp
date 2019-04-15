@@ -5,6 +5,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.m
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.ResGetAirports;
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList;
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.ResIssueTicket;
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.RequestAirPrebookingSearchParams;
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResAirPreBooking;
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResBookingAPI;
@@ -169,6 +170,11 @@ public interface APIService {
     @POST("PaywelltransactionHaltrip/getCommissionMapping")
     @Multipart
     Call<ResCommistionMaping> callGetCommissionMappingAPI(@Part("username") String username);
+
+
+    @POST("PaywelltransactionHaltrip/airTicketIssue")
+    @Multipart
+    Call<ResIssueTicket> callIssueTicketAPI(@Part("username") String username, @Part("password") String password, @Part("BookingID") String BookingID, @Part("IsAcceptedPriceChangeandIssueTicket") boolean ssAcceptedPriceChangeandIssueTicket);
 
 
 }

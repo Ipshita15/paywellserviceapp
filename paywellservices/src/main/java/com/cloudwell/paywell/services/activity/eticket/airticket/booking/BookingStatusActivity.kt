@@ -8,16 +8,25 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Color
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.support.design.widget.Snackbar
 import android.support.v4.content.FileProvider
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
+import android.text.InputType
+import android.text.method.PasswordTransformationMethod
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
@@ -26,6 +35,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.D
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.BookingCancelActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.BookingStatusListAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.ItemClickListener
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.PriceChangeFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.ThicketActionMenuFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.TricketChooserFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.BookingStatuViewStatus
@@ -50,13 +60,17 @@ class BookingStatusActivity : AirTricketBaseActivity() {
 
     private lateinit var viewMode: BookingStatuViewModel
 
+    var pinNumber: String = ""
+    var bookingId: String = ""
+    var limit: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.cloudwell.paywell.services.R.layout.activity_booking_main)
         setToolbar(getString(com.cloudwell.paywell.services.R.string.booking_status_menu))
 
         val bundle = intent.extras
-        val limit = bundle.getInt(AirTicketMenuActivity.KEY_LIMIT)
+        limit = bundle.getInt(AirTicketMenuActivity.KEY_LIMIT)
 
         initViewModel(limit)
     }
@@ -90,10 +104,47 @@ class BookingStatusActivity : AirTricketBaseActivity() {
     private fun handleViewStatus(it: BookingStatuViewStatus) {
         if (it.isShowProcessIndicatior) {
             showProgressDialog()
-        } else {
+        } else if (!it.isShowProcessIndicatior) {
             dismissProgressDialog()
         }
 
+        if (!it.successMessageTricketStatus.equals("")) {
+            showMsg(it.successMessageTricketStatus)
+        }
+
+        if (it.modelPriceChange != null) {
+            showTricketPriceChangeDialog(it.modelPriceChange!!)
+        }
+    }
+
+    private fun showTricketPriceChangeDialog(modelPriceChange: List<com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.Datum>) {
+
+
+        val priceChangeFragment = PriceChangeFragment()
+        priceChangeFragment.modelPriceChange = modelPriceChange
+
+        priceChangeFragment.setOnClickHandlerTest(object : PriceChangeFragment.OnClickHandler {
+            override fun onClickActionIssueTicket() {
+                viewMode.issueTicket(isInternetConnection, pinNumber, bookingId, true)
+            }
+        })
+
+        priceChangeFragment.show(supportFragmentManager, "dialog")
+
+
+    }
+
+
+    private fun showMsg(msg: String) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Message")
+        builder.setMessage(msg)
+        builder.setPositiveButton(R.string.okay_btn) { dialogInterface, id ->
+            viewMode.getBookingStatus(isInternetConnection, limit)
+
+        }
+        val alert = builder.create()
+        alert.show()
     }
 
     fun setupList(responseList: BookingList) {
@@ -130,7 +181,16 @@ class BookingStatusActivity : AirTricketBaseActivity() {
         val tricketChooserFragment = ThicketActionMenuFragment()
 
         tricketChooserFragment.setOnClickHandlerTest(object : ThicketActionMenuFragment.OnClickHandler {
-            override fun onClick() {
+            override fun onClickIssisTricketButton() {
+
+
+                model.bookingId?.let {
+                    bookingId = it
+                    askForPin(it)
+                }
+            }
+
+            override fun onClickCencelButton() {
                 val model = AppStorageBox.get(applicationContext, AppStorageBox.Key.BOOKING_STATUS_ITEM) as Datum
 
                 val intent = Intent(applicationContext, BookingCancelActivity::class.java)
@@ -147,7 +207,6 @@ class BookingStatusActivity : AirTricketBaseActivity() {
 
     private fun submitBookingListRequest(limit: Int, tag: String) {
         showProgressDialog()
-
 
     }
 
@@ -304,6 +363,42 @@ class BookingStatusActivity : AirTricketBaseActivity() {
 
     override fun onBackPressed() {
         finish()
+    }
+
+
+    private fun askForPin(bookingId: String) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(R.string.pin_no_title_msg)
+
+        val pinNoET = EditText(this)
+        val lp = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT)
+        pinNoET.gravity = Gravity.CENTER_HORIZONTAL
+        pinNoET.layoutParams = lp
+        pinNoET.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_TEXT_VARIATION_PASSWORD
+        pinNoET.transformationMethod = PasswordTransformationMethod.getInstance()
+        builder.setView(pinNoET)
+
+        builder.setPositiveButton(R.string.okay_btn) { dialogInterface, id ->
+            val inMethMan = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inMethMan.hideSoftInputFromWindow(pinNoET.windowToken, 0)
+
+            if (pinNoET.text.toString().length != 0) {
+                dialogInterface.dismiss()
+                pinNumber = pinNoET.text.toString().trim()
+                viewMode.issueTicket(isInternetConnection, pinNumber, bookingId, false)
+            } else {
+                val snackbar = Snackbar.make(mCoordinateLayout, R.string.pin_no_error_msg, Snackbar.LENGTH_LONG)
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"))
+                val snackBarView = snackbar.view
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))
+                snackbar.show()
+            }
+        }
+        builder.setNegativeButton(R.string.cancel_btn) { dialogInterface, i -> dialogInterface.dismiss() }
+        val alert = builder.create()
+        alert.show()
     }
 
 

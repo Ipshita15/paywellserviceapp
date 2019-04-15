@@ -635,7 +635,7 @@
     <string name="book">Booking Status</string>
     <string name="passenger_deleted_message">Passenger info cannot be recovered once deleted. Are you sure you want to delete?</string>
     <string name="ok">OK</string>
-    <string name="cencel">CANCEL</string>
+    <string name="cencel">Cancel</string>
     <string name="title_all_summary">All Summary</string>
     <string name="lbl_take_camera_picture">Camara</string>
     <string name="lbl_choose_from_gallery">Gallery</string>
@@ -758,6 +758,8 @@
     <string name="earnings">Earnings</string>
     <string name="instant_ticketing">Instant Ticketing</string>
     <string name="issue_ticket">Issue Ticket</string>
+    <string name="tricking">Issue Ticket</string>
+    <string name="new_ticket_prices">New prices Tk.</string>
 
 
 </resources>
