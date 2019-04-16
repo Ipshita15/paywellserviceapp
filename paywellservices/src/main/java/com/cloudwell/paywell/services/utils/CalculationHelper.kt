@@ -13,58 +13,55 @@ import java.text.NumberFormat
 object CalculationHelper {
 
     fun getTotalFare(fares: List<Fare>): String {
-
-
         val readData = InternalStorageHelper.readData(InternalStorageHelper.CombustionfileName)
         val commission = Gson().fromJson(readData, Commission::class.java)
+
 
         var totalBaseFare = 0.0
         var totalTax = 0.0
         var totalOtherCharges = 0.0
         var totalServiceFee = 0.0
-
-        val total_commission = 0.0
-        var totalRetailerCommission = 0.0
-        val retailer_commission = 0.0
         var totalConvenienceFee = 0.0
+        var totalRetailerCommission = 0.0
+        val total_commission = 0.0
 
-        for (i in fares.indices) {
+        val retailer_commission = 0.0
 
-            val passengerCount = fares[i].passengerCount
-            //console.log("passenger "+passengerCount);
-            val baseFare = (Math.ceil(fares[i].baseFare)) * passengerCount
-            //console.log("baseFare "+baseFare);
-            totalBaseFare += baseFare
-            //console.log("totalBaseFare "+totalBaseFare);
-            val Tax = (Math.ceil(fares[i].tax)) * passengerCount
-            totalTax += Tax
-            val OtherCharges = (Math.ceil(fares.get(i).otherCharges)) * passengerCount
-            totalOtherCharges += OtherCharges
+        for (fare in fares.indices) {
 
-            val ServiceFee = (Math.ceil((fares.get(0).serviceFee))) * passengerCount
-            totalServiceFee += ServiceFee
+            var passengerCount = fares[fare].passengerCount;
+            var baseFare = Math.ceil((fares[fare].baseFare) * passengerCount)
+            totalBaseFare += baseFare;
+            var Tax = Math.ceil(fares[fare].tax) * passengerCount;
+            totalTax += Tax;
 
-            var convenienceFee: Double
+            var OtherCharges = Math.ceil(fares[fare].otherCharges) * passengerCount;
+            totalOtherCharges += OtherCharges;
 
-            val Discount = (fares.get(i).discount) * passengerCount
+            var ServiceFee = Math.ceil(Math.ceil(fares[fare].serviceFee) * passengerCount)
+            totalServiceFee += ServiceFee;
+            var convenienceFee = 0.0;
 
-
-
+            var Discount = fares[fare].discount * passengerCount;
             if (commission.commissionType?.toInt() == 1) {
 
-                val discountOnBasefare = total_commission / 100 * baseFare
-                totalRetailerCommission += retailer_commission / 100 * baseFare
+                var discountOnBasefare = (total_commission / 100) * baseFare;
+                totalRetailerCommission += (retailer_commission / 100) * baseFare;
                 if (Discount < discountOnBasefare) {
-                    convenienceFee = Math.ceil((discountOnBasefare - Discount))
-                    totalConvenienceFee += convenienceFee
+                    convenienceFee = Math.ceil(discountOnBasefare - Discount);
+                    totalConvenienceFee += convenienceFee;
                 }
             }
+            var subTotal = baseFare + Tax + OtherCharges + ServiceFee + convenienceFee;
 
         }
-        val totalCalculated = totalBaseFare + totalTax + totalOtherCharges + totalServiceFee + totalConvenienceFee
 
 
-        return NumberFormat.getInstance().format(totalCalculated)
+        var totalCalculated = totalBaseFare + totalTax + totalOtherCharges + totalServiceFee + totalConvenienceFee;
+
+        val format = NumberFormat.getInstance().format(totalCalculated)
+
+        return format
     }
 
 
@@ -129,12 +126,14 @@ object CalculationHelper {
         var totalBaseFare = 0.0
 
         fare.forEach {
-            totalBaseFare = totalBaseFare + it.baseFare
+            totalBaseFare = totalBaseFare + (it.baseFare * it.passengerCount)
         }
 
-        val totalEarning = totalBaseFare / 100 * (commission.retailerCommission?.toFloat()!!)
+        val totalEarning = (totalBaseFare / 100) * (commission.retailerCommission?.toFloat()!!)
 
-        return NumberFormat.getInstance().format(Math.ceil(totalEarning))
+        val format = NumberFormat.getInstance().format(totalEarning.toInt())
+
+        return format
 
 
     }

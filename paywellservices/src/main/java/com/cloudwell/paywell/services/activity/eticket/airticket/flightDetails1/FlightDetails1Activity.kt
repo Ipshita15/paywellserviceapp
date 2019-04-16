@@ -305,9 +305,9 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
             showFareDetailsDialog()
         }
 
-        tvTotalFair.setOnClickListener {
-            showFareDetailsDialog()
-        }
+//        tvTotalFair.setOnClickListener {
+//            showFareDetailsDialog()
+//        }
 
         tvPersonText.setOnClickListener {
             showFareDetailsDialog()
