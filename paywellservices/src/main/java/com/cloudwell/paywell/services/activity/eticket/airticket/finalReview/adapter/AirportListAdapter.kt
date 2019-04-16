@@ -31,7 +31,7 @@ class AirportListAdapter(var context: Context, var items: List<Airport>) : Recyc
         val airport = items.get(position)
 
         val counter = position + 1
-        holder.tvAirport.text = context.getString(R.string.airport) + "" + counter
+        holder.tvAirport.text = context.getString(R.string.airport) + " " + counter
         holder.tvAirportCode.text = context.getString(com.cloudwell.paywell.services.R.string.airport_code) + " ${airport?.airportCode}"
         holder.tvAirportName.text = context.getString(com.cloudwell.paywell.services.R.string.airport_name) + " ${airport?.airportName}"
         holder.tvTerminal.text = context.getString(com.cloudwell.paywell.services.R.string.terminal) + " ${airport?.terminal}"

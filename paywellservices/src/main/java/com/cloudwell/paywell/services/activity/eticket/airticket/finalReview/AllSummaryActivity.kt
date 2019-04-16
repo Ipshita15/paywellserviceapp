@@ -319,11 +319,13 @@ class AllSummaryActivity : AirTricketBaseActivity() {
         tvOperatorCarrier.text = getString(com.cloudwell.paywell.services.R.string.operating_carrier) + " ${airline?.operatingCarrier}"
         tvCabinClass.text = getString(com.cloudwell.paywell.services.R.string.cabin_class) + " ${airline?.cabinClass}"
 
+        val arrTime = resposeAirPriceSearch.data?.results?.get(0)?.segments?.get(0)?.destination?.arrTime?.split("T")
 
-        val split = resposeAirPriceSearch.data?.results?.get(0)?.segments?.get(0)?.origin?.depTime?.split("T")
+        val depTime = resposeAirPriceSearch.data?.results?.get(0)?.segments?.get(0)?.origin?.depTime?.split("T")
 
 
-        tvArrivalTime.text = getString(com.cloudwell.paywell.services.R.string.arrival_time) + " ${split?.get(0)}  ${split?.get(1)}"
+        tvArrivalTime.text = getString(com.cloudwell.paywell.services.R.string.arrival_time) + " ${arrTime?.get(0)}  ${arrTime?.get(1)}"
+        tveDpartureTime.text = getString(com.cloudwell.paywell.services.R.string.depart_time_) + " ${depTime?.get(0)}  ${depTime?.get(1)}"
 
 
         tvBaggage.text = getString(com.cloudwell.paywell.services.R.string.baggage) + resposeAirPriceSearch.data?.results?.get(0)?.segments?.get(0)?.baggage + " " + getString(com.cloudwell.paywell.services.R.string.kg_per_adult)

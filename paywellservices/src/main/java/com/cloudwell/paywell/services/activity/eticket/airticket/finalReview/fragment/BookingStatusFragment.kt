@@ -49,7 +49,7 @@ class BookingStatusFragment : DialogFragment() {
 
         val totalFare = resAirPreBooking.data?.results?.get(0)?.fares?.let { CalculationHelper.getTotalFareDetati(it) }
 
-        v.tvFare.text = activity?.getString(R.string.total_fare_text) + ": TK. $" + totalFare
+        v.tvFare.text = activity?.getString(R.string.total_fare_text) + ": TK. " + totalFare
 
         if (resAirPreBooking.data?.results?.get(0)?.isRefundable!!) {
             v.tvTax.text = getString(com.cloudwell.paywell.services.R.string.refundable) + ": Yes"

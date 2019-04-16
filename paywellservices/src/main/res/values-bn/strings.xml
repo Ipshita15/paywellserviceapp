@@ -713,7 +713,7 @@
     <string name="please_select_arrival_airport">Please select arrival airport</string>
     <string name="please_select_depart_date">Please select depart date</string>
     <string name="total_fare_text">Total Fare</string>
-    <string name="depart_time_">Depart Time:</string>
+    <string name="depart_time_">Departure: </string>
     <string name="one_way_menu_title">One-way</string>
     <string name="round_trip_menu_title">Round-trip</string>
     <string name="multi_city_menu_title">Multi-City</string>

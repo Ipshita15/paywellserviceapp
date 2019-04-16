@@ -301,17 +301,17 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         }
 
 
-        tvPriceDetails.setOnClickListener {
-            showFareDetailsDialog()
-        }
+//        tvPriceDetails.setOnClickListener {
+//            showFareDetailsDialog()
+//        }
 
 //        tvTotalFair.setOnClickListener {
 //            showFareDetailsDialog()
 //        }
 
-        tvPersonText.setOnClickListener {
-            showFareDetailsDialog()
-        }
+//        tvPersonText.setOnClickListener {
+//            showFareDetailsDialog()
+//        }
 
         btBook.setOnClickListener {
 
