@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.flight_list_item_new.view.*
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 19/2/19.
  */
-class FlightAdapterNew(val items: List<Result>, val requestAirSearch: RequestAirSearch, val context: Context) : RecyclerView.Adapter<ViewHolderNew>() {
+class FlightAdapterNew(val items: List<Result>, val requestAirSearch: RequestAirSearch, val context: Context, val onClickListener: OnClickListener) : RecyclerView.Adapter<ViewHolderNew>() {
 
 
     override fun onBindViewHolder(holder: ViewHolderNew, position: Int) {
@@ -64,6 +64,10 @@ class FlightAdapterNew(val items: List<Result>, val requestAirSearch: RequestAir
 
         holder.airlineSerachIcon.setImageURI(imageUri)
 
+        holder.btDetails.setOnClickListener {
+            onClickListener.onClick(position)
+        }
+
     }
 
 
@@ -77,6 +81,12 @@ class FlightAdapterNew(val items: List<Result>, val requestAirSearch: RequestAir
         return items.size
     }
 
+
+}
+
+interface OnClickListener {
+
+    fun onClick(position: Int)
 }
 
 

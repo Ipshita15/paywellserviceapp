@@ -14,11 +14,11 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.m
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.view.SeachViewStatus
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.FlightDetails1Activity
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.adapter.FlightAdapterNew
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.adapter.OnClickListener
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.viewModel.FlightSearchViewModel
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.customView.horizontalDatePicker.commincation.IDatePicker
-import com.cloudwell.paywell.services.utils.RecyclerItemClickListener
 import com.facebook.drawee.backends.pipeline.Fresco
 import kotlinx.android.synthetic.main.activity_search_view.*
 import java.text.SimpleDateFormat
@@ -129,32 +129,21 @@ class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
         shimmer_recycler_view.showShimmerAdapter()
         shimmer_recycler_view.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
         shimmer_recycler_view.adapter = it?.let { it1 ->
-            FlightAdapterNew(it1, requestAirSearch, applicationContext)
+            FlightAdapterNew(it1, requestAirSearch, applicationContext, object : OnClickListener {
+                override fun onClick(position: Int) {
+                    // do whatever
+                    val get = mViewModelFlight.mListMutableLiveDataFlightData.value?.get(position)
+                    val mSearchId = mViewModelFlight.mSearchId.value
+                    val resultID = get?.resultID
 
+
+                    val intent = Intent(applicationContext, FlightDetails1Activity::class.java)
+                    intent.putExtra("mSearchId", mSearchId)
+                    intent.putExtra("resultID", resultID)
+                    startActivity(intent)
+                }
+            })
         }
-
-        shimmer_recycler_view.addOnItemTouchListener(
-                RecyclerItemClickListener(applicationContext, shimmer_recycler_view, object : RecyclerItemClickListener.OnItemClickListener {
-                    override fun onItemClick(view: View, position: Int) {
-                        // do whatever
-                        val get = mViewModelFlight.mListMutableLiveDataFlightData.value?.get(position)
-                        val mSearchId = mViewModelFlight.mSearchId.value
-                        val resultID = get?.resultID
-
-
-                        val intent = Intent(applicationContext, FlightDetails1Activity::class.java)
-                        intent.putExtra("mSearchId", mSearchId)
-                        intent.putExtra("resultID", resultID)
-                        startActivity(intent)
-
-                    }
-
-                    override fun onLongItemClick(view: View, position: Int) {
-                        // do whatever
-                    }
-                })
-        )
-
     }
 
     private fun handleViewStatus(status: SeachViewStatus?) {
