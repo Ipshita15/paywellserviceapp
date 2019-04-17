@@ -19,7 +19,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:text="passenger "
-        android:textColor="#323232"
+        android:textColor="@color/black33333"
         app:layout_constraintEnd_toStartOf="@+id/ivEdit"
         app:layout_constraintStart_toEndOf="@+id/imageView25"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -40,10 +40,10 @@
         android:id="@+id/view3"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:background="@color/blackcccccc"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -66,10 +66,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Passenger type : "
+        android:textColor="@color/black33333"
         app:layout_constraintStart_toStartOf="@+id/imageView25"
         app:layout_constraintTop_toBottomOf="@+id/imageView25"/>
 
     <TextView
+        android:textColor="@color/black33333"
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -79,6 +81,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvLeadPassenger"/>
 
     <TextView
+        android:textColor="@color/black33333"
         android:id="@+id/tvFirstName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -88,6 +91,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvTitle"/>
 
     <TextView
+        android:textColor="@color/black33333"
         android:id="@+id/tvLastName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -97,6 +101,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvFirstName"/>
 
     <TextView
+        android:textColor="@color/black33333"
         android:id="@+id/tvCountry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -106,6 +111,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvLastName"/>
 
     <TextView
+        android:textColor="@color/black33333"
         android:id="@+id/tvGender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -115,6 +121,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvCountry"/>
 
     <TextView
+        android:textColor="@color/black33333"
         android:id="@+id/tvContactNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -124,6 +131,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvGender"/>
 
     <TextView
+        android:textColor="@color/black33333"
         android:id="@+id/tvEmailAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -133,6 +141,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvContactNumber"/>
 
     <TextView
+        android:textColor="@color/black33333"
         android:id="@+id/tvPasswordFinal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -142,6 +151,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvEmailAddress"/>
 
     <TextView
+        android:textColor="@color/black33333"
         android:id="@+id/tvNid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -153,6 +163,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvPasswordFinal"/>
 
     <TextView
+        android:textColor="@color/black33333"
         android:id="@+id/tvLeadPassenger"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

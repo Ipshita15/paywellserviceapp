@@ -17,17 +17,17 @@ class AirportListAdapter(var context: Context, var items: List<Airport>) : Recyc
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AirportListAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
 
         val view = LayoutInflater.from(context).inflate(R.layout.item_airport_summay, parent, false)
-        return AirportListAdapter.ViewHolder(view)
+        return ViewHolder(view)
 
 
     }
 
 
-    override fun onBindViewHolder(holder: AirportListAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val airport = items.get(position)
 
         val counter = position + 1

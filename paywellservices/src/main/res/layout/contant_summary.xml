@@ -50,6 +50,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvOperatorCarrier"/>
 
         <TextView
+            android:textColor="@color/black33333"
             android:id="@+id/tvArrivalTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -72,6 +73,7 @@
             app:srcCompat="@drawable/ic_airless"/>
 
         <TextView
+            android:textColor="@color/black33333"
             android:id="@+id/textView38"
             android:layout_width="wrap_content"
             android:layout_height="15dp"
@@ -83,6 +85,7 @@
             app:layout_constraintTop_toTopOf="@+id/imageView23"/>
 
         <TextView
+            android:textColor="@color/black33333"
             android:id="@+id/tvAirlineCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -92,6 +95,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView38"/>
 
         <TextView
+            android:textColor="@color/black33333"
             android:id="@+id/tvAirlesscode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -103,6 +107,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvAirlineCode"/>
 
         <TextView
+            android:textColor="@color/black33333"
             android:id="@+id/tvFlghtNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -114,6 +119,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvAirlesscode"/>
 
         <TextView
+            android:textColor="@color/black33333"
             android:id="@+id/tvBookingClass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -125,6 +131,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvFlghtNumber"/>
 
         <TextView
+            android:textColor="@color/black33333"
             android:id="@+id/tvCabinClass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -136,6 +143,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvBookingClass"/>
 
         <TextView
+            android:textColor="@color/black33333"
             android:id="@+id/tvOperatorCarrier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -158,6 +166,7 @@
             app:srcCompat="@drawable/ic_baggage"/>
 
         <TextView
+            android:textColor="@color/black33333"
             android:id="@+id/textView46"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -168,6 +177,7 @@
             app:layout_constraintTop_toTopOf="@+id/imageView24"/>
 
         <TextView
+            android:textColor="@color/black33333"
             android:id="@+id/tvBaggage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -206,6 +216,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            tools:listitem="@layout/passenger_list_item_final"
             app:layout_constraintTop_toBottomOf="@+id/view8"/>
 
         <android.support.v7.widget.RecyclerView
@@ -216,11 +227,13 @@
             android:layout_marginLeft="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
+            tools:listitem="@layout/item_airport_summay"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
+            android:textColor="@color/black33333"
             android:id="@+id/tveDpartureTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

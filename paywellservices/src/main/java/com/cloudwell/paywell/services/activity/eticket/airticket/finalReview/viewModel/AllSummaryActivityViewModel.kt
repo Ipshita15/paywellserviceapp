@@ -92,8 +92,6 @@ class AllSummaryActivityViewModel : AirTicketBaseViewMode() {
                         mViewStatus.value = AllSummaryStatus(noSerachFoundMessage = "", isShowProcessIndicatior = false)
                         val okNetworkAndStatusCode = isOkNetworkAndStatusCode(it)
                         if (okNetworkAndStatusCode) {
-
-
                             mViewStatus.value = it?.let { it1 -> AllSummaryStatus("", false, it1) }
                         }
 
