@@ -760,6 +760,7 @@
     <string name="issue_ticket">Issue Ticket</string>
     <string name="tricking">Issue Ticket</string>
     <string name="new_ticket_prices">New prices Tk.</string>
+    <string name="old_ticket_prices">Old prices Tk.</string>
 
 
 </resources>

@@ -39,6 +39,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.f
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.ThicketActionMenuFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.TricketChooserFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.BookingStatuViewStatus
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.ResIssueTicket
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.viewModel.BookingStatuViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.TicketViewerActivity
@@ -117,7 +118,7 @@ class BookingStatusActivity : AirTricketBaseActivity() {
         }
     }
 
-    private fun showTricketPriceChangeDialog(modelPriceChange: List<com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.Datum>) {
+    private fun showTricketPriceChangeDialog(modelPriceChange: ResIssueTicket) {
 
 
         val priceChangeFragment = PriceChangeFragment()

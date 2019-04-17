@@ -71,7 +71,7 @@ class BookingStatuViewModel : AirTicketBaseViewMode() {
                     bookingStatuViewStatus.successMessageTricketStatus = it.message
                     mViewStatus.value = bookingStatuViewStatus
                 } else {
-                    bookingStatuViewStatus.modelPriceChange = it.data
+                    bookingStatuViewStatus.modelPriceChange = it
                     mViewStatus.value = bookingStatuViewStatus
                 }
             }

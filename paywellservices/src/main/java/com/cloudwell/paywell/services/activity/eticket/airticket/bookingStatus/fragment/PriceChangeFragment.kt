@@ -5,8 +5,8 @@ import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.cloudwell.paywell.service.CalculationHelper
 import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.ResIssueTicket
 import kotlinx.android.synthetic.main.fragment_prices_change.view.*
 
 
@@ -18,7 +18,7 @@ class PriceChangeFragment : DialogFragment() {
     }
 
     lateinit var onClickHandler: OnClickHandler
-    lateinit var modelPriceChange: List<com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.Datum>
+    lateinit var modelPriceChange: ResIssueTicket
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +33,8 @@ class PriceChangeFragment : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_prices_change, container, false)
 
-        v.tvNewPrices.text = getString(R.string.new_ticket_prices) + " " + CalculationHelper.getTotalFareDetati(modelPriceChange.get(0).fares)
+        v.tvOldPrice.text = getString(R.string.old_ticket_prices) + " " + modelPriceChange.total_fare_calculated
+        v.tvNewPrices.text = getString(R.string.new_ticket_prices) + " " + modelPriceChange.total_fare_calculated_new
 
 
         v.btActionIssueTicket.setOnClickListener {
