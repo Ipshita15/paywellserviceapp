@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.net.Uri
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,21 +66,6 @@ class FlightAdapterNew(val items: List<Result>, val requestAirSearch: RequestAir
 
     }
 
-    private fun checkedColumnWidth(context: Context, columnWidth: Int): Int {
-        var columnWidth = columnWidth
-        if (columnWidth <= 0) {
-            /* Set default columnWidth value (48dp here). It is better to move this constant
-        to static constant on top, but we need context to convert it to dp, so can't really
-        do so. */
-            columnWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48f,
-                    context.resources.displayMetrics).toInt()
-        } else {
-            columnWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, columnWidth.toFloat(),
-                    context.resources.displayMetrics).toInt()
-        }
-        return columnWidth
-    }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderNew {
         val view = LayoutInflater.from(context).inflate(com.cloudwell.paywell.services.R.layout.flight_list_item_new, parent, false)
@@ -89,7 +73,6 @@ class FlightAdapterNew(val items: List<Result>, val requestAirSearch: RequestAir
     }
 
 
-    // Gets the number of animals in the list
     override fun getItemCount(): Int {
         return items.size
     }
