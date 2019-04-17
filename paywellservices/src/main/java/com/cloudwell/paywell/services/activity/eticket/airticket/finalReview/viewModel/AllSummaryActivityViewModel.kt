@@ -60,7 +60,12 @@ class AllSummaryActivityViewModel : AirTicketBaseViewMode() {
                     mAirTicketRepository.callAirBookingAPI(piN_NO, requestModel).observeForever {
 
                         resBookingAPI = it!!
-                        mViewStatus.value = AllSummaryStatus(noSerachFoundMessage = "", isShowProcessIndicatior = false, resBookingAPI = it, test = "done")
+                        if (resBookingAPI.status.toString().startsWith("3")) {
+                            mViewStatus.value = AllSummaryStatus(noSerachFoundMessage = "" + resBookingAPI.message, isShowProcessIndicatior = false, resBookingAPI = null, test = "done")
+                        } else {
+                            mViewStatus.value = AllSummaryStatus(noSerachFoundMessage = "", isShowProcessIndicatior = false, resBookingAPI = it, test = "done")
+
+                        }
 
                     }
 
@@ -109,7 +114,7 @@ class AllSummaryActivityViewModel : AirTicketBaseViewMode() {
                     BaseViewState(errorMessage = it1.toString())
                 }
 
-                mViewStatus.value = AllSummaryStatus(noSerachFoundMessage = "No Air Found!!", isShowProcessIndicatior = false);
+                mViewStatus.value = AllSummaryStatus(noSerachFoundMessage = "Please try again", isShowProcessIndicatior = false);
 
                 return false
             } else if (it.status == 313) {

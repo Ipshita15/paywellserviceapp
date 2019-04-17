@@ -13,6 +13,6 @@ class ResBookingAPI(var throwable: Throwable) {
     @SerializedName("message")
     var message: String? = null
     @SerializedName("status")
-    var status: Long? = null
+    var status: Int = 0
 
 }
