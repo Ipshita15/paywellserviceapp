@@ -17,6 +17,19 @@ import java.util.*
 
 class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<OutputSegment>, val mRequestAirSearch: RequestAirSearch) : RecyclerView.Adapter<FlightRecycleViewAdapter.VHolder>() {
 
+    var groupBy: Map<String?, List<OutputSegment>>? = null
+
+    init {
+        if (mRequestAirSearch.journeyType.equals("Return")) {
+
+            groupBy = mSegments.groupBy {
+                it.tripIndicator
+            }
+        }
+
+    }
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHolder {
 
         val view = LayoutInflater.from(mContext).inflate(com.cloudwell.paywell.services.R.layout.simple_list_item_segment, parent, false)
@@ -41,10 +54,69 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
         if (mRequestAirSearch.journeyType.equals("Oneway")) {
             displayOneWay(holder, mSegments, position)
         } else if (mRequestAirSearch.journeyType.equals("Return")) {
-            displayDataNew(holder, mSegments, position)
+            displayRound(holder, groupBy, position)
         } else if (mRequestAirSearch.journeyType.equals("MultiStop")) {
             displayDataNew(holder, mSegments, position)
         }
+
+    }
+
+    private fun displayRound(holder: VHolder, groupingBy: Map<String?, List<OutputSegment>>?, position: Int) {
+        val segments: List<OutputSegment>?
+        if (position == 0) {
+            segments = groupingBy?.get("OutBound")
+        } else {
+            segments = groupingBy?.get("InBound")
+        }
+
+        val firstSegment = segments?.first()
+        val lastSegment = segments?.last()
+
+        var secondDate: Date
+        val split1: MutableList<String>
+        var date1 = ""
+        var durtingJounaryTimeNew = ""
+
+
+        val formatDepTime = firstSegment?.origin?.depTime?.let { AirTicketHelper.getFormatDepTime(it) }
+        holder.tvDepDate.text = formatDepTime
+
+        // show show date
+        val split = firstSegment?.origin?.depTime.toString().split("T");
+        val date = split.get(0) + " " + split.get(1)
+        val fistDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss", Locale.ENGLISH).parse(date)
+
+        split1 = lastSegment?.destination?.arrTime.toString().split("T").toMutableList();
+
+
+        var stopCount = ""
+        if (segments!!.size > 1) {
+            stopCount = "" + ((segments.size) - 1)
+        } else {
+            stopCount = "0"
+        }
+
+        date1 = split1.get(0) + " " + split1.get(1)
+        secondDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss", Locale.ENGLISH).parse(date1)
+        durtingJounaryTimeNew = DateUtils.getDurtingJounaryTimeNew(fistDate, secondDate)
+        holder.tvDurationAndStopCounter.text = durtingJounaryTimeNew + ", $stopCount stop"
+
+
+        val differenceDays = DateUtils.getDifferenceDays(fistDate, secondDate)
+        var differenceDaysString = ""
+        if (differenceDays == 1 || differenceDays == 0) {
+            differenceDaysString = ""
+        } else {
+            differenceDaysString = " (+" + (differenceDays - 1) + ")"
+        }
+
+
+        holder.tvOrganAirportCode.text = firstSegment?.origin?.airport?.airportCode.toString()
+        holder.tvDestinationAirportCode.text = lastSegment?.destination?.airport?.airportCode.toString()
+
+        holder.tvDepTime.text = firstSegment?.origin?.depTime?.let { AirTicketHelper.getFormatTime(it) }
+        holder.tvArrTime.text = lastSegment?.destination?.arrTime?.let { AirTicketHelper.getFormatTime(it) } + "${differenceDaysString}"
+
 
     }
 
@@ -165,8 +237,10 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
 
         if (mRequestAirSearch.journeyType.equals("Oneway")) {
             return 1
-        }
+        } else if (mRequestAirSearch.journeyType.equals("Return")) {
 
+            return 2
+        }
         return mSegments.size
     }
 
