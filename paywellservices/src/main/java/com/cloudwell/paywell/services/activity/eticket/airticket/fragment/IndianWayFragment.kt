@@ -564,13 +564,13 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
     private fun handleSearchClick() {
 
-        if (searchRoundTripModel.getFromName().equals(OneWayFragment.KEY_FROM)) {
+        if (searchRoundTripModel.getFromName().equals(OneWayV2Fragment.KEY_FROM)) {
             Toast.makeText(activity?.applicationContext, getString(R.string.please_select_from_airport), Toast.LENGTH_LONG).show()
 
             return
         }
 
-        if (searchRoundTripModel.getToName().equals(OneWayFragment.KEY_To)) {
+        if (searchRoundTripModel.getToName().equals(OneWayV2Fragment.KEY_To)) {
             Toast.makeText(activity?.applicationContext, getString(R.string.please_select_arrival_airport), Toast.LENGTH_LONG).show()
             return
         }

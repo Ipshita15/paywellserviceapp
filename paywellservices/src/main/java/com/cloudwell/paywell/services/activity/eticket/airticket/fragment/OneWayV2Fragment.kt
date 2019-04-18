@@ -277,11 +277,11 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            com.cloudwell.paywell.services.R.id.tvDepart2 -> {
+            R.id.tvDepart2 -> {
                 showDepartDatePicker()
             }
 
-            com.cloudwell.paywell.services.R.id.tvDepartDate -> {
+            R.id.tvDepartDate -> {
                 showDepartDatePicker()
             }
 
@@ -290,41 +290,23 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
             }
 
 
-            com.cloudwell.paywell.services.R.id.airTicketClass -> {
+            R.id.airTicketClass -> {
 
                 handleClass()
 
             }
 
-            com.cloudwell.paywell.services.R.id.llPsngr -> {
+            R.id.llPsngr -> {
 
                 handlePassengerClick()
             }
 
-            com.cloudwell.paywell.services.R.id.btn_search -> {
+            R.id.btn_search -> {
 
                 handleSearchClick()
             }
 
-//            com.cloudwell.paywell.services.R.id.tvFrom -> {
-//
-//                val intent = Intent(context, AirportsSearchActivity::class.java)
-//                intent.putExtra("from", 1)
-//                intent.putExtra("isTo", false)
-//                intent.putExtra("indian", false)
-//                startActivityForResult(intent, REQ_CODE_FROM)
-//            }
-//
-//            com.cloudwell.paywell.services.R.id.layoutTo -> {
-//
-//                val intent = Intent(context, AirportsSearchActivity::class.java)
-//                intent.putExtra("from", 1)
-//                intent.putExtra("isTo", true)
-//                intent.putExtra("indian", false)
-//                startActivityForResult(intent, REQ_CODE_TO)
-//            }
-
-            com.cloudwell.paywell.services.R.id.tvFrom -> {
+            R.id.tvFrom -> {
 
                 val intent = Intent(context, AirportsSearchActivity::class.java)
                 intent.putExtra("from", 1)
@@ -332,7 +314,7 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
                 startActivityForResult(intent, REQ_CODE_FROM)
             }
 
-            com.cloudwell.paywell.services.R.id.layoutTo -> {
+            R.id.layoutTo -> {
 
                 val intent = Intent(context, AirportsSearchActivity::class.java)
                 intent.putExtra("from", 1)
@@ -341,7 +323,7 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
             }
 
 
-            com.cloudwell.paywell.services.R.id.llDatePicker -> {
+            R.id.llDatePicker -> {
                 DatePickerDialog(context, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show()
@@ -373,7 +355,7 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
         val myFormatOne = "MM/dd/yy" //In which you need put here
         val sdf = SimpleDateFormat(myFormatOne, Locale.ENGLISH)
 
-//        tvDepartDate.setText(sdf.format(myCalendar.time))
+
         tvDepartDate.setText(humanReadAbleDate.format(myCalendar.time))
 
         searchRoundTripModel.departDate = humanReadAbleDate.format(myCalendar.time)
@@ -558,11 +540,13 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
                     fromAirport = get
 
                     searchRoundTripModel.setFromName(get.iata)
-                    searchRoundTripModel.setFromPortName(get.airportName)
+                    searchRoundTripModel.setFromPortName(get.city + "/" + get.airportName)
 
                     tsOneWayTripFrom.setText(get.iata)
-                    tsOneWayTripFromPort.setText(get.airportName)
+                    tsOneWayTripFromPort.setText(get.city + "/" + get.airportName)
                     tvHitFrom.visibility = View.VISIBLE
+
+                    fromAirport.airportName = get.city + "/" + get.airportName
 
                     AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.FROM_CACHE, get)
 
@@ -573,11 +557,13 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
                     toAirport = get
 
                     searchRoundTripModel.setToName(get.iata)
-                    searchRoundTripModel.setToPortName(get.airportName)
+                    searchRoundTripModel.setToPortName(get.city + "/" + get.airportName)
 
                     tsOneWayTripTo.setText(get.iata)
-                    tsOneWayTripToPort.setText(get.airportName)
+                    tsOneWayTripToPort.setText(get.city + "/" + get.airportName)
                     tvHitTo.visibility = View.VISIBLE
+
+                    toAirport.airportName = get.city + "/" + get.airportName
 
                     AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.TO_CACHE, get)
 
@@ -589,13 +575,13 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
 
     private fun handleSearchClick() {
 
-        if (searchRoundTripModel.getFromName().equals(OneWayFragment.KEY_FROM)) {
+        if (searchRoundTripModel.getFromName().equals(OneWayV2Fragment.KEY_FROM)) {
             Toast.makeText(activity?.applicationContext, getString(R.string.please_select_from_airport), Toast.LENGTH_LONG).show()
 
             return
         }
 
-        if (searchRoundTripModel.getToName().equals(OneWayFragment.KEY_To)) {
+        if (searchRoundTripModel.getToName().equals(OneWayV2Fragment.KEY_To)) {
             Toast.makeText(activity?.applicationContext, getString(R.string.please_select_arrival_airport), Toast.LENGTH_LONG).show()
             return
         }
@@ -632,7 +618,6 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
 
 
     }
-
 
 
 }

@@ -16,6 +16,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.m
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.AirportsSearchActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.Airport
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.FlightSearchViewActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.fragment.OneWayV2Fragment
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.customView.multipDatePicker.SlyCalendarDialog
@@ -486,11 +487,14 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
                     fromAirport = get
 
                     searchRoundTripModel.setFromName(get.iata)
-                    searchRoundTripModel.setFromPortName(get.airportName)
+                    searchRoundTripModel.setFromPortName(get.city + "/" + get.airportName)
 
                     tsRoundTripFrom.setText(get.iata)
-                    tsRoundTripFromPort.setText(get.airportName)
+                    tsRoundTripFromPort.setText(get.city + "/" + get.airportName)
                     tvHitFrom.visibility = View.VISIBLE
+
+
+                    fromAirport.airportName = get.city + "/" + get.airportName
 
                     AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.FROM_CACHE, fromAirport)
 
@@ -501,12 +505,14 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
                     toAirport = get
 
                     searchRoundTripModel.setToName(get.iata)
-                    searchRoundTripModel.setToPortName(get.airportName)
+                    searchRoundTripModel.setFromPortName(get.city + "/" + get.airportName)
 
                     tsRoundTripTo.setText(get.iata)
-                    tsRoundTripToPort.setText(get.airportName)
+                    tsRoundTripToPort.setText(get.city + "/" + get.airportName)
 
                     tvHitTo.visibility = View.VISIBLE
+
+                    toAirport.airportName = get.city + "/" + get.airportName
 
                     AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.TO_CACHE, toAirport)
                 }
@@ -517,13 +523,13 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
     }
 
     private fun handleSearchClick() {
-        if (searchRoundTripModel.getFromName().equals(OneWayFragment.KEY_FROM)) {
+        if (searchRoundTripModel.getFromName().equals(OneWayV2Fragment.KEY_FROM)) {
             Toast.makeText(activity?.applicationContext, "Please select from airport", Toast.LENGTH_LONG).show()
 
             return
         }
 
-        if (searchRoundTripModel.getToName().equals(OneWayFragment.KEY_To)) {
+        if (searchRoundTripModel.getToName().equals(OneWayV2Fragment.KEY_To)) {
             Toast.makeText(activity?.applicationContext, "Please select arrival airport", Toast.LENGTH_LONG).show()
             return
         }
