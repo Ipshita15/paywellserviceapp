@@ -40,22 +40,21 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
 
         val segment = mSegments.get(position)
 
-        if (mRequestAirSearch.journeyType.equals("MultiStop")) {
-            val counter = position + 1
-            holder.tvTitle.text = mContext.getString(R.string.flight) + counter
-        } else {
+
+        if (mRequestAirSearch.journeyType.equals("Oneway")) {
+            displayOneWay(holder, mSegments, position)
+        } else if (mRequestAirSearch.journeyType.equals("Return")) {
+
             if (segment.tripIndicator.equals("OutBound")) {
                 holder.tvTitle.text = mContext.getString(R.string.outbound)
             } else {
                 holder.tvTitle.text = mContext.getString(R.string.inbound)
             }
-        }
 
-        if (mRequestAirSearch.journeyType.equals("Oneway")) {
-            displayOneWay(holder, mSegments, position)
-        } else if (mRequestAirSearch.journeyType.equals("Return")) {
             displayRound(holder, groupBy, position)
         } else if (mRequestAirSearch.journeyType.equals("MultiStop")) {
+            val counter = position + 1
+            holder.tvTitle.text = mContext.getString(R.string.flight) + counter
             displayDataNew(holder, mSegments, position)
         }
 
