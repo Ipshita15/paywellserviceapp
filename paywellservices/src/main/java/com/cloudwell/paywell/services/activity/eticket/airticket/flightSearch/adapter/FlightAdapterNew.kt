@@ -26,8 +26,7 @@ class FlightAdapterNew(val items: List<Result>, val requestAirSearch: RequestAir
         val model = items.get(position)
 
         holder.tvAirlessName.text = model.segments.get(0).airline?.airlineName
-
-
+        
         if (position == 0) {
             holder.ivTake.setImageResource(com.cloudwell.paywell.services.R.drawable.ic_tk_symbol_low)
             val parseColor = Color.parseColor("#f15a24")

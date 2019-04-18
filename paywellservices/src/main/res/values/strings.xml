@@ -761,6 +761,9 @@
     <string name="tricking">Issue Ticket</string>
     <string name="new_ticket_prices">New prices Tk.</string>
     <string name="old_ticket_prices">Old prices Tk.</string>
+    <string name="outbound">Outbound</string>
+    <string name="inbound">Inbound</string>
+    <string name="flight">Flight</string>
 
 
 </resources>

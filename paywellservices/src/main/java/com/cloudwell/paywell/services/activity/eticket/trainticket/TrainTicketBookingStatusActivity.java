@@ -63,7 +63,7 @@ public class TrainTicketBookingStatusActivity extends AppCompatActivity {
         TextView tvJourneyDate = (TextView) findViewById(R.id.tvJourneyDate);
         assert tvJourneyDate != null;
         tvJourneyDate.setTypeface(AppController.getInstance().getOxygenLightFont());
-        TextView tvDepartureTime = (TextView) findViewById(R.id.tvDepTime);
+        TextView tvDepartureTime = (TextView) findViewById(R.id.tvDepDate);
         assert tvDepartureTime != null;
         tvDepartureTime.setTypeface(AppController.getInstance().getOxygenLightFont());
         TextView tvTrainNameAndNo = (TextView) findViewById(R.id.tvTrainNameAndNo);
