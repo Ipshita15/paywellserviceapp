@@ -20,7 +20,8 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
     var allAirportHashMap = SingleLiveEvent<MutableMap<String, List<Airport>>>()
 
 
-    val UPDATE_SOFTWARE_INTERVAL = (24 * 60 * 60).toLong()// 1 day
+    val UPDATE_SOFTWARE_INTERVAL = (24 * 60 * 60 * 30).toLong()// 30 day
+
 
     var serachParameter = ""
 
@@ -38,21 +39,24 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
                 serachParameter = "IN"
             }
 
-            mAirTicketRepository.getAllAirportForLocal(serachParameter).observeForever {
+            val checkAirportListUpdateChecker = checkAirportListUpdateChecker(appHandler, internetConnection)
+            if (checkAirportListUpdateChecker == true) {
+                getAirportListForRemoteAPI(serachParameter, appHandler)
+            } else {
 
-                mViewStatus.value = AirportSeachStatus(noSerachFoundMessage = "", isShowProcessIndicatior = false)
+                mAirTicketRepository.getAllAirportForLocal(serachParameter).observeForever {
+                    mViewStatus.value = AirportSeachStatus(noSerachFoundMessage = "", isShowProcessIndicatior = false)
+                    val resGetAirports1 = ResGetAirports(null)
+                    resGetAirports1.airports = it!!.toMutableList()
+                    handleRespose(resGetAirports1, null)
 
-                val resGetAirports1 = ResGetAirports(null)
-                resGetAirports1.airports = it!!.toMutableList()
-
-                handleRespose(resGetAirports1, null)
-
-                val checkAirportListUpdateChecker = checkAirportListUpdateChecker(appHandler, internetConnection)
-                if (checkAirportListUpdateChecker == true || resGetAirports1.airports.size == 0) {
-                    getAirportListForRemoteAPI(serachParameter, appHandler)
+                    // update all airport data list by checking india list
+                    if (it.size < 150) {
+                        getAirportListForRemoteAPI(serachParameter, appHandler)
+                    }
                 }
-
             }
+
 
         }
     }
