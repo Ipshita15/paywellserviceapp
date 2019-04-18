@@ -532,12 +532,22 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
                     fromAirport = get
 
+                    var cityOrStatusName = ""
+                    if (!get.city.equals("")) {
+                        cityOrStatusName = get.city + "/"
+                    } else if (!get.state.equals("")) {
+                        cityOrStatusName = get.state + "/"
+                    }
+
                     searchRoundTripModel.setFromName(get.iata)
-                    searchRoundTripModel.setFromPortName(get.airportName)
+                    searchRoundTripModel.setFromPortName(cityOrStatusName + get.airportName)
 
                     tsOneWayTripFrom.setText(get.iata)
-                    tsOneWayTripFromPort.setText(get.airportName)
+                    tsOneWayTripFromPort.setText(cityOrStatusName + get.airportName)
                     tvHitFrom.visibility = View.VISIBLE
+
+                    fromAirport.airportName = cityOrStatusName + get.airportName
+
 
                     AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.FROM_CACHE_INDIA, get)
 
@@ -547,12 +557,21 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
                     toAirport = get
 
+                    var cityOrStatusName = ""
+                    if (!get.city.equals("")) {
+                        cityOrStatusName = get.city + "/"
+                    } else if (!get.state.equals("")) {
+                        cityOrStatusName = get.state + "/"
+                    }
+
                     searchRoundTripModel.setToName(get.iata)
-                    searchRoundTripModel.setToPortName(get.airportName)
+                    searchRoundTripModel.setToPortName(cityOrStatusName + get.airportName)
 
                     tsOneWayTripTo.setText(get.iata)
-                    tsOneWayTripToPort.setText(get.airportName)
+                    tsOneWayTripToPort.setText(cityOrStatusName + get.airportName)
                     tvHitTo.visibility = View.VISIBLE
+
+                    toAirport.airportName = cityOrStatusName + get.airportName
 
                     AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.TO_CACHE_INDIA, get)
 
