@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.Airport;
+import com.cloudwell.paywell.services.utils.FormatHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,8 +77,8 @@ public class AirportSerachAdapter extends ArrayAdapter<Airport> {
 
         Airport subject = SubjectListTemp.get(position);
 
-        holder.SubjectName.setText(subject.getAirportName());
-        holder.tvCity.setText(subject.getCity() + "/" + subject.getCountry());
+        holder.SubjectName.setText(FormatHelper.formatText(subject.getAirportName()));
+        holder.tvCity.setText((FormatHelper.formatText(subject.getCity() + "/" + subject.getCountry())));
 
 //        holder.SubjectFullForm.setText(subject.getSubFullForm());
 

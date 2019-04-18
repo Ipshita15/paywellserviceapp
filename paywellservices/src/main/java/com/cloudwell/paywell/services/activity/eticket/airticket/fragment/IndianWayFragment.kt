@@ -23,6 +23,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.s
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.FlightSearchViewActivity
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
+import com.cloudwell.paywell.services.utils.FormatHelper
 import com.franmontiel.fullscreendialog.FullScreenDialogFragment
 import kotlinx.android.synthetic.main.fragment_india_one_way.*
 import kotlinx.android.synthetic.main.fragment_india_one_way.view.*
@@ -540,13 +541,13 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
                     }
 
                     searchRoundTripModel.setFromName(get.iata)
-                    searchRoundTripModel.setFromPortName(cityOrStatusName + get.airportName)
+                    searchRoundTripModel.setFromPortName("" + FormatHelper.formatText(cityOrStatusName + get.airportName))
 
                     tsOneWayTripFrom.setText(get.iata)
-                    tsOneWayTripFromPort.setText(cityOrStatusName + get.airportName)
+                    tsOneWayTripFromPort.setText("" + FormatHelper.formatText(cityOrStatusName + get.airportName))
                     tvHitFrom.visibility = View.VISIBLE
 
-                    fromAirport.airportName = cityOrStatusName + get.airportName
+                    fromAirport.airportName = "" + FormatHelper.formatText(cityOrStatusName + get.airportName)
 
 
                     AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.FROM_CACHE_INDIA, get)
@@ -565,13 +566,13 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
                     }
 
                     searchRoundTripModel.setToName(get.iata)
-                    searchRoundTripModel.setToPortName(cityOrStatusName + get.airportName)
+                    searchRoundTripModel.setToPortName("" + FormatHelper.formatText(cityOrStatusName + get.airportName))
 
                     tsOneWayTripTo.setText(get.iata)
-                    tsOneWayTripToPort.setText(cityOrStatusName + get.airportName)
+                    tsOneWayTripToPort.setText("" + FormatHelper.formatText(cityOrStatusName + get.airportName))
                     tvHitTo.visibility = View.VISIBLE
 
-                    toAirport.airportName = cityOrStatusName + get.airportName
+                    toAirport.airportName = "" + FormatHelper.formatText(cityOrStatusName + get.airportName)
 
                     AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.TO_CACHE_INDIA, get)
 

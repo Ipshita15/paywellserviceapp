@@ -34,6 +34,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.s
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.FlightSearchViewActivity;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.app.storage.AppStorageBox;
+import com.cloudwell.paywell.services.utils.FormatHelper;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -368,25 +369,30 @@ public class MultiCityFragment extends Fragment {
                 int position = Integer.parseInt(data.getStringExtra("from"));
                 boolean isTo = data.getBooleanExtra("isTo", false);
                 Airport get = (Airport) AppStorageBox.get(getContext(), AppStorageBox.Key.AIRPORT);
-//                View view = getActivity().findViewById(android.R.id.content).findViewById(position);
-//                view.setBackgroundColor(Color.parseColor("#000000"));
-//                ((TextSwitcher)view.findViewById(R.id.tsOneWayTripFrom)).setText(get.getCity());
-//                ((TextView)mainLayout.getChildAt(position-1).findViewById(R.id.tvFrom)).setText("ttt");
+
+                String cityOrStatusName = "";
+                if (!get.getCity().equals("")) {
+                    cityOrStatusName = get.getCity() + "/";
+                } else if (!get.getState().equals("")) {
+                    cityOrStatusName = get.getStatus() + "/";
+                }
 
 
                 if (isTo) {
                     searchRoundTripModel.setToName(get.getIata());
-                    searchRoundTripModel.setToPortName(get.getAirportName());
+
+
+                    searchRoundTripModel.setToPortName("" + FormatHelper.formatText(cityOrStatusName + get.getAirportName()));
                     ((TextView) getActivity().findViewById(android.R.id.content).findViewWithTag(position).findViewById(R.id.toTextTV)).setVisibility(View.VISIBLE);
                     ((TextSwitcher) getActivity().findViewById(android.R.id.content).findViewWithTag(position).findViewById(R.id.tsMultiCityTripTo)).setText(searchRoundTripModel.getToName());
-                    ((TextSwitcher) getActivity().findViewById(android.R.id.content).findViewWithTag(position).findViewById(R.id.tsMultiCityTripToPort)).setText(searchRoundTripModel.getToPortName());
+                    ((TextSwitcher) getActivity().findViewById(android.R.id.content).findViewWithTag(position).findViewById(R.id.tsMultiCityTripToPort)).setText("" + FormatHelper.formatText(cityOrStatusName + get.getAirportName()));
 
                 } else {
                     searchRoundTripModel.setFromName(get.getIata());
-                    searchRoundTripModel.setFromPortName(get.getAirportName());
+                    searchRoundTripModel.setFromPortName("" + FormatHelper.formatText(cityOrStatusName + get.getAirportName()));
                     ((TextView) getActivity().findViewById(android.R.id.content).findViewWithTag(position).findViewById(R.id.fromTextTV)).setVisibility(View.VISIBLE);
                     ((TextSwitcher) getActivity().findViewById(android.R.id.content).findViewWithTag(position).findViewById(R.id.tsMultiCityTripFrom)).setText(searchRoundTripModel.getFromName());
-                    ((TextSwitcher) getActivity().findViewById(android.R.id.content).findViewWithTag(position).findViewById(R.id.tsMultiCityTripFromPort)).setText(searchRoundTripModel.getFromPortName());
+                    ((TextSwitcher) getActivity().findViewById(android.R.id.content).findViewWithTag(position).findViewById(R.id.tsMultiCityTripFromPort)).setText(FormatHelper.formatText(cityOrStatusName + get.getAirportName()));
                 }
             }
         }

@@ -7,6 +7,7 @@ import android.widget.TextView
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.Airport
 import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus
+import com.cloudwell.paywell.services.utils.FormatHelper
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection
 
 class HeaderAirportRecyclerViewSectionSection() {
@@ -24,7 +25,7 @@ class HeaderAirportRecyclerViewSection(var key: String, var list: List<Airport>)
         val iHolder = holder as AirportItemViewHolder
         val airport = list.get(position)
 
-        iHolder.itemContent.text = airport.airportName
+        iHolder.itemContent.text = FormatHelper.formatText(airport.airportName)
 
         iHolder.layout_airport_name_item.setOnClickListener {
             GlobalApplicationBus.getBus().post(airport)

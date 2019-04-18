@@ -20,6 +20,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.fragment.OneWay
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.customView.multipDatePicker.SlyCalendarDialog
+import com.cloudwell.paywell.services.utils.FormatHelper
 import kotlinx.android.synthetic.main.fragment_round_trip.*
 import kotlinx.android.synthetic.main.fragment_round_trip.view.*
 import mehdi.sakout.fancybuttons.FancyButton
@@ -494,14 +495,14 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
                     }
 
                     searchRoundTripModel.setFromName(get.iata)
-                    searchRoundTripModel.setFromPortName(cityOrStatusName + get.airportName)
+                    searchRoundTripModel.setFromPortName("" + FormatHelper.formatText(cityOrStatusName + get.airportName))
 
                     tsRoundTripFrom.setText(get.iata)
-                    tsRoundTripFromPort.setText(cityOrStatusName + get.airportName)
+                    tsRoundTripFromPort.setText("" + FormatHelper.formatText(cityOrStatusName + get.airportName))
                     tvHitFrom.visibility = View.VISIBLE
 
 
-                    fromAirport.airportName = cityOrStatusName + get.airportName
+                    fromAirport.airportName = "" + FormatHelper.formatText(cityOrStatusName + get.airportName)
 
                     AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.FROM_CACHE, fromAirport)
 
@@ -520,14 +521,14 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
                     }
 
                     searchRoundTripModel.setToName(get.iata)
-                    searchRoundTripModel.setToPortName(cityOrStatusName + get.airportName)
+                    searchRoundTripModel.setToPortName("" + FormatHelper.formatText(cityOrStatusName + get.airportName))
 
                     tsRoundTripTo.setText(get.iata)
-                    tsRoundTripToPort.setText(cityOrStatusName + get.airportName)
+                    tsRoundTripToPort.setText("" + FormatHelper.formatText(cityOrStatusName + get.airportName))
 
                     tvHitTo.visibility = View.VISIBLE
 
-                    toAirport.airportName = cityOrStatusName + get.airportName
+                    toAirport.airportName = "" + FormatHelper.formatText(cityOrStatusName + get.airportName)
 
                     AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.TO_CACHE, toAirport)
                 }
