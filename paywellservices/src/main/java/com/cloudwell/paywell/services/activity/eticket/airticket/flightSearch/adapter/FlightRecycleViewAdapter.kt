@@ -120,6 +120,9 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
     }
 
     private fun displayOneWay(holder: VHolder, segments: List<OutputSegment>, position: Int) {
+
+        holder.tvTitle.text = mContext.getString(R.string.outbound)
+
         val segment = segments.get(position)
         var secondDate: Date = Date()
         var split1 = mutableListOf<String>()

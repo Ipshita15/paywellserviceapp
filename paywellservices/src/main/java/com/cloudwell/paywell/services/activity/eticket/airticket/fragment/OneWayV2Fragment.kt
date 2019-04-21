@@ -454,22 +454,28 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
 
         val calendar = Calendar.getInstance()
 
+        if (!tvDepartDate.text.equals(getString(R.string.date))) {
+            val crachDepartureDate = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE) as String?
+
+            val date = SimpleDateFormat("EEE, dd MMM", Locale.ENGLISH).parse(crachDepartureDate) as Date
+            calendar.setTime(date);
+
+        }
+
         val year = calendar.get(Calendar.YEAR)
         val thismonth = calendar.get(Calendar.MONTH)
         val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
 
-
         val datePickerDialog = DatePickerDialog(context,
                 DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
-
                     val calendar = Calendar.getInstance()
                     calendar.set(Calendar.YEAR, year)
                     calendar.set(Calendar.MONTH, month)
                     calendar.set(Calendar.DAY_OF_MONTH, day)
                     val date = calendar.getTime()
 
-                    val nameOfDayOfWeek = SimpleDateFormat("EEE").format(date)
-                    val nameOfMonth = SimpleDateFormat("MMM").format(calendar.getTime())
+                    val nameOfDayOfWeek = SimpleDateFormat("EEE", Locale.ENGLISH).format(date)
+                    val nameOfMonth = SimpleDateFormat("MMM", Locale.ENGLISH).format(calendar.getTime())
 
                     tvDepartDate.text = "$nameOfDayOfWeek, $day $nameOfMonth"
                     tvDepartDate.setTextColor(Color.BLACK);
@@ -492,13 +498,17 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
 
                 }, year, thismonth, dayOfMonth)
 
-        datePickerDialog.datePicker.minDate = calendar.timeInMillis
+        val calendarMin = Calendar.getInstance()
+        datePickerDialog.datePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
 
-//        calendar.add(Calendar.MONTH, 6)
-//        datePickerDialog.datePicker.maxDate = calendar.timeInMillis
+
+        datePickerDialog.datePicker.minDate = calendarMin.timeInMillis
+
+
 
 
         datePickerDialog.show()
+
 
     }
 
