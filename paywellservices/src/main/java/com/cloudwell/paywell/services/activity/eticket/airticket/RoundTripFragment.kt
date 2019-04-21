@@ -1,6 +1,7 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket
 
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -64,6 +65,8 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
         val KEY_FROM = "From"
         val KEY_To = "To"
         val KEY_AIRPORT = "Airport"
+        val KEY_DEAPRT = "Deaprt"
+        val KEY_RETURN = "Return"
     }
 
     private lateinit var searchRoundTripModel: SearchRoundTripModel
@@ -123,14 +126,42 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
                 startActivityForResult(intent, REQ_CODE_TO)
             }
 
+            R.id.tvDeaprt -> {
+                showDepartDatePicker(KEY_DEAPRT)
+            }
+            R.id.tvDepart1 -> {
+                showDepartDatePicker(KEY_DEAPRT)
+            }
+            R.id.tvDepartDate -> {
+                showDepartDatePicker(KEY_DEAPRT)
+            }
+
+
+            R.id.layoutReturn -> {
+
+                showDepartDatePicker(KEY_RETURN)
+            }
+            R.id.tvDepart2 -> {
+
+                showDepartDatePicker(KEY_RETURN)
+            }
+            R.id.tvDepartDate2 -> {
+
+                showDepartDatePicker(KEY_RETURN)
+            }
+
             R.id.layoutDepart -> {
 
-                val myDate = Date()
-
-                val callback = com.cloudwell.paywell.services.customView.multipDatePicker.SlyCalendarDialog()
-                        .setSingle(false)
-                        .setCallback(this)
-                        .callback.show(activity?.supportFragmentManager, "TAG_SLYCALENDAR")
+//                val myDate = Date()
+//
+//                val callback = com.cloudwell.paywell.services.customView.multipDatePicker.SlyCalendarDialog()
+//                        .setSingle(false)
+//                        .setCallback(this)
+//                        .setEndDate(myDate)
+//                        .setStartDate(myDate)
+//
+//
+//                callback.show(activity?.supportFragmentManager, "TAG_SLYCALENDAR")
 
 
             }
@@ -141,6 +172,59 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
             }
         }
 
+
+    }
+
+    private fun showDepartDatePicker(s: String) {
+        val calendar = Calendar.getInstance()
+
+        val year = calendar.get(Calendar.YEAR)
+        val thismonth = calendar.get(Calendar.MONTH)
+        val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+
+
+        val datePickerDialog = DatePickerDialog(context,
+                DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
+                    if (s.equals(KEY_DEAPRT)) {
+                        val calendar = Calendar.getInstance()
+                        calendar.set(Calendar.YEAR, year)
+                        calendar.set(Calendar.MONTH, month)
+                        calendar.set(Calendar.DAY_OF_MONTH, day)
+                        val date = calendar.getTime()
+
+
+                        val nameOfDayOfWeekFirst = SimpleDateFormat("EEE").format(calendar.time)
+                        val nameOfMonthFirst = SimpleDateFormat("MMM").format(calendar.time)
+                        val dayFirst = SimpleDateFormat("dd").format(calendar.time)
+
+                        tvDepartDate.text = "$nameOfDayOfWeekFirst, $dayFirst $nameOfMonthFirst"
+                        tvDepartDate.setTextColor(Color.BLACK);
+
+                        humanReadAbleDateFirst = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(calendar.time)
+
+
+                        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_FIRST_ROUND, humanReadAbleDateFirst)
+                    } else {
+
+                        val nameOfDayOfWeekSecound = SimpleDateFormat("EEE").format(calendar.time)
+                        val nameOfMonthSecound = SimpleDateFormat("MMM").format(calendar.time)
+                        val daySecound = SimpleDateFormat("dd").format(calendar.time)
+
+                        tvDepartDate2.text = "$nameOfDayOfWeekSecound, $daySecound $nameOfMonthSecound"
+                        tvDepartDate2.setTextColor(Color.BLACK);
+
+                        humanReadAbleDateSecond = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(calendar.time)
+
+                        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_SECOUND_ROUND, humanReadAbleDateSecond)
+                    }
+
+
+                }, year, thismonth, dayOfMonth)
+
+        datePickerDialog.datePicker.minDate = calendar.timeInMillis
+
+
+        datePickerDialog.show()
 
     }
 
@@ -169,6 +253,12 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
         val tvClass = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.airTicketClass)
 
         layoutDepart.setOnClickListener(this)
+        view.tvDeaprt.setOnClickListener(this)
+        view.layoutReturn.setOnClickListener(this)
+        view.tvDepart1.setOnClickListener(this)
+        view.tvDepartDate.setOnClickListener(this)
+        view.tvDepart2.setOnClickListener(this)
+        view.tvDepartDate2.setOnClickListener(this)
 
 
 
