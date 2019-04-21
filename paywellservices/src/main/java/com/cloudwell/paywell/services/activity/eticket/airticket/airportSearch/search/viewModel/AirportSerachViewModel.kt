@@ -17,11 +17,13 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
 
     lateinit var resGetAirports: ResGetAirports
 
+
     var allAirportHashMap = SingleLiveEvent<MutableMap<String, List<Airport>>>()
 
 
     val UPDATE_SOFTWARE_INTERVAL = (24 * 60 * 60 * 30).toLong()// 30 day
 
+    var airports: List<Airport> = mutableListOf()
 
     var serachParameter = ""
 
@@ -110,7 +112,8 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
         val tempAirportHashMap = linkedMapOf<String, List<Airport>>()
 
         it.let {
-            val airports = it?.airports;
+
+            airports = it?.airports!!
 
             val countries = mutableSetOf<String>()
 
@@ -172,7 +175,7 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
 
 
         allAirportHashMap.value = tempAirportHashMap
-        tempAirportHashMap.clear()
+        // tempAirportHashMap.clear()
 
         mViewStatus.value = AirportSeachStatus(noSerachFoundMessage = "", isShowProcessIndicatior = false)
 

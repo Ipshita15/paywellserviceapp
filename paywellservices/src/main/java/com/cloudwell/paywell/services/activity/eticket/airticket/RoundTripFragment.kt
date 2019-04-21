@@ -107,7 +107,7 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
     override fun onClick(v: View?) {
 
         when (v?.id) {
-            com.cloudwell.paywell.services.R.id.tvFrom -> {
+            R.id.tvFrom -> {
 
                 val intent = Intent(context, AirportsSearchActivity::class.java)
                 intent.putExtra("from", 1)
@@ -115,7 +115,7 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
                 startActivityForResult(intent, REQ_CODE_FROM)
             }
 
-            com.cloudwell.paywell.services.R.id.layoutTo -> {
+            R.id.layoutTo -> {
 
                 val intent = Intent(context, AirportsSearchActivity::class.java)
                 intent.putExtra("from", 1)
@@ -123,20 +123,19 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
                 startActivityForResult(intent, REQ_CODE_TO)
             }
 
-            com.cloudwell.paywell.services.R.id.layoutDepart -> {
+            R.id.layoutDepart -> {
 
+                val myDate = Date()
 
                 val callback = com.cloudwell.paywell.services.customView.multipDatePicker.SlyCalendarDialog()
                         .setSingle(false)
                         .setCallback(this)
-
-
-                callback.show(activity?.supportFragmentManager, "TAG_SLYCALENDAR")
+                        .callback.show(activity?.supportFragmentManager, "TAG_SLYCALENDAR")
 
 
             }
 
-            com.cloudwell.paywell.services.R.id.btn_search -> {
+            R.id.btn_search -> {
 
                 handleSearchClick()
             }
@@ -158,16 +157,16 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
 
     private fun inilitzationView(view: View) {
 
-        frameLayout = view.findViewById(R.id.myView)
-        val tvDepart = view.findViewById<TextView>(R.id.tvDepart2)
-        val tvDepartDate = view.findViewById<TextView>(R.id.tvDepartDate)
-        val airTicketClass = view.findViewById<TextView>(R.id.airTicketClass)
-        val llPassenger = view.findViewById<LinearLayout>(R.id.llPassenger)
+        frameLayout = view.findViewById(com.cloudwell.paywell.services.R.id.myView)
+        val tvDepart = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.tvDepart2)
+        val tvDepartDate = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.tvDepartDate)
+        val airTicketClass = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.airTicketClass)
+        val llPassenger = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.llPassenger)
         val btnSearch = view.findViewById<FancyButton>(R.id.btn_search)
         val tvFrom = view.findViewById<LinearLayout>(R.id.tvFrom)
         val layoutTo = view.findViewById<LinearLayout>(R.id.layoutTo)
         val layoutDepart = view.findViewById<LinearLayout>(R.id.layoutDepart)
-        val tvClass = view.findViewById<TextView>(R.id.airTicketClass)
+        val tvClass = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.airTicketClass)
 
         layoutDepart.setOnClickListener(this)
 
@@ -186,35 +185,35 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
         view.btn_search.setOnClickListener(this)
 
 
-        airTicketInfant = view.findViewById<TextView>(R.id.airTicketInfant)
-        airTicketAdult = view.findViewById<TextView>(R.id.airTicketAdult)
-        airTicketKid = view.findViewById<TextView>(R.id.airTicketKid)
+        airTicketInfant = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.airTicketInfant)
+        airTicketAdult = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.airTicketAdult)
+        airTicketKid = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.airTicketKid)
 
-        val tsFrom = view.findViewById<TextSwitcher>(R.id.tsRoundTripFrom)
-        val tsFromPort = view.findViewById<TextSwitcher>(R.id.tsRoundTripFromPort)
-        val tsTo = view.findViewById<TextSwitcher>(R.id.tsRoundTripTo)
-        val tsToPort = view.findViewById<TextSwitcher>(R.id.tsRoundTripToPort)
-        val ivSwitchTrip = view.findViewById<ImageView>(R.id.ivRoundTripTextSwitcher)
+        val tsFrom = view.findViewById<TextSwitcher>(com.cloudwell.paywell.services.R.id.tsRoundTripFrom)
+        val tsFromPort = view.findViewById<TextSwitcher>(com.cloudwell.paywell.services.R.id.tsRoundTripFromPort)
+        val tsTo = view.findViewById<TextSwitcher>(com.cloudwell.paywell.services.R.id.tsRoundTripTo)
+        val tsToPort = view.findViewById<TextSwitcher>(com.cloudwell.paywell.services.R.id.tsRoundTripToPort)
+        val ivSwitchTrip = view.findViewById<ImageView>(com.cloudwell.paywell.services.R.id.ivRoundTripTextSwitcher)
 
         tsFrom.removeAllViews()
         tsFrom.setFactory {
             TextView(android.view.ContextThemeWrapper(context,
-                    R.style.TicketFrom), null, 0)
+                    com.cloudwell.paywell.services.R.style.TicketFrom), null, 0)
         }
         tsFromPort.removeAllViews()
         tsFromPort.setFactory {
             TextView(android.view.ContextThemeWrapper(context,
-                    R.style.TicketFromPort), null, 0)
+                    com.cloudwell.paywell.services.R.style.TicketFromPort), null, 0)
         }
         tsTo.removeAllViews()
         tsTo.setFactory {
             TextView(android.view.ContextThemeWrapper(context,
-                    R.style.TicketTo), null, 0)
+                    com.cloudwell.paywell.services.R.style.TicketTo), null, 0)
         }
         tsToPort.removeAllViews()
         tsToPort.setFactory {
             TextView(android.view.ContextThemeWrapper(context,
-                    R.style.TicketToPort), null, 0)
+                    com.cloudwell.paywell.services.R.style.TicketToPort), null, 0)
         }
         val inAnim = AnimationUtils.loadAnimation(context,
                 android.R.anim.fade_in)
@@ -231,13 +230,13 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
         tsToPort.inAnimation = inAnim
         tsToPort.outAnimation = outAnim
 
-        tsFrom.setCurrentText(activity?.application?.getString(R.string.from))
-        tsFromPort.setCurrentText(activity?.application?.getString(R.string.airport))
+        tsFrom.setCurrentText(activity?.application?.getString(com.cloudwell.paywell.services.R.string.from))
+        tsFromPort.setCurrentText(activity?.application?.getString(com.cloudwell.paywell.services.R.string.airport))
         view.tvHitFrom.visibility = View.INVISIBLE
 
 
-        tsTo.setCurrentText(activity?.application?.getString(R.string.to))
-        tsToPort.setCurrentText(activity?.application?.getString(R.string.airport))
+        tsTo.setCurrentText(activity?.application?.getString(com.cloudwell.paywell.services.R.string.to))
+        tsToPort.setCurrentText(activity?.application?.getString(com.cloudwell.paywell.services.R.string.airport))
         view.tvHitTo.visibility = View.INVISIBLE
 
         val fromCacheAirport = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.FROM_CACHE) as Airport?
@@ -250,8 +249,8 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
             fromAirport.iata = fromCacheAirport.iata
 
         } else {
-            tsFrom.setCurrentText(activity?.application?.getString(R.string.from))
-            tsFromPort.setCurrentText(activity?.application?.getString(R.string.airport))
+            tsFrom.setCurrentText(activity?.application?.getString(com.cloudwell.paywell.services.R.string.from))
+            tsFromPort.setCurrentText(activity?.application?.getString(com.cloudwell.paywell.services.R.string.airport))
             view.tvHitFrom.visibility = View.INVISIBLE
         }
 
@@ -267,8 +266,8 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
             toAirport.iata = toCacheAirport.iata
 
         } else {
-            tsTo.setCurrentText(activity?.application?.getString(R.string.to))
-            tsToPort.setCurrentText(activity?.application?.getString(R.string.airport))
+            tsTo.setCurrentText(activity?.application?.getString(com.cloudwell.paywell.services.R.string.to))
+            tsToPort.setCurrentText(activity?.application?.getString(com.cloudwell.paywell.services.R.string.airport))
             view.tvHitTo.visibility = View.INVISIBLE
         }
 

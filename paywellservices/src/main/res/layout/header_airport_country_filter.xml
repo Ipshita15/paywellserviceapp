@@ -3,10 +3,19 @@
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
                                              android:layout_width="match_parent"
                                              android:layout_height="wrap_content"
-                                             android:background="@color/white">
+                                             android:background="#F5F5F9">
+
+    <View
+        android:id="@+id/view14"
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+        android:background="@drawable/line_new"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
-        android:id="@+id/tvCountryName"
+        android:id="@+id/tvCountryNameFilter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -17,11 +26,12 @@
         android:layout_marginBottom="8dp"
         android:text="Bangladesh"
         android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:textSize="12sp"
+        android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"/>
 </android.support.constraint.ConstraintLayout>

@@ -11,7 +11,7 @@ import com.cloudwell.paywell.services.utils.FormatHelper
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection
 
 
-class HeaderAirportRecyclerViewSection(var key: String, var list: List<Airport>) : StatelessSection(R.layout.header_airport_country, R.layout.item_airport) {
+class HeaderAirportRecyclerViewSectionFilter(var key: String, var list: List<Airport>) : StatelessSection(R.layout.header_airport_country_filter, R.layout.item_airport_filter) {
 
 
     override fun getContentItemsTotal(): Int {
@@ -19,10 +19,12 @@ class HeaderAirportRecyclerViewSection(var key: String, var list: List<Airport>)
     }
 
     override fun onBindItemViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
-        val iHolder = holder as AirportItemViewHolder
+        val iHolder = holder as AirportItemViewHolderFilter
         val airport = list.get(position)
 
-        iHolder.itemContent.text = FormatHelper.formatText(airport.airportName)
+
+        iHolder.SubjectName.text = FormatHelper.formatText(airport.airportName)
+        iHolder.tvCity.text = FormatHelper.formatText(airport.city + "/" + airport.country)
 
         iHolder.layout_airport_name_item.setOnClickListener {
             GlobalApplicationBus.getBus().post(airport)
@@ -32,37 +34,40 @@ class HeaderAirportRecyclerViewSection(var key: String, var list: List<Airport>)
     }
 
     override fun getItemViewHolder(view: View?): RecyclerView.ViewHolder {
-        return AirportItemViewHolder(view!!)
+        return AirportItemViewHolderFilter(view!!)
     }
 
     override fun onBindHeaderViewHolder(holder: RecyclerView.ViewHolder?) {
-        val hHolder = holder as CountryNameHeaderViewHHolder
-        hHolder.tvCountryName.setText(key)
+        val hHolder = holder as CountryNameHeaderViewHHolderFilter
+        hHolder.tvCountryNameFilter.setText(key)
 
     }
 
     override fun getHeaderViewHolder(view: View?): RecyclerView.ViewHolder {
-        return CountryNameHeaderViewHHolder(view!!)
+        return CountryNameHeaderViewHHolderFilter(view!!)
     }
 }
 
 
-class CountryNameHeaderViewHHolder(view: View) : RecyclerView.ViewHolder(view) {
-    var tvCountryName: TextView
+class CountryNameHeaderViewHHolderFilter(view: View) : RecyclerView.ViewHolder(view) {
+    var tvCountryNameFilter: TextView
 
     init {
-        tvCountryName = view.findViewById(R.id.tvCountryName) as TextView
+        tvCountryNameFilter = view.findViewById(R.id.tvCountryNameFilter) as TextView
     }
 }
 
-class AirportItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    var itemContent: TextView
+class AirportItemViewHolderFilter(view: View) : RecyclerView.ViewHolder(view) {
+    var SubjectName: TextView
+    var tvCity: TextView
     var layout_airport_name_item: ConstraintLayout
 
 
     init {
-        itemContent = view.findViewById(R.id.tvAirportName) as TextView
-        layout_airport_name_item = view.findViewById(R.id.layout_airport_name_item) as ConstraintLayout
+        SubjectName = view.findViewById(R.id.tvName) as TextView
+        tvCity = view.findViewById(R.id.tvCity) as TextView
+        layout_airport_name_item = view.findViewById(R.id.layout_airport_name_item_filter) as ConstraintLayout
+
     }
 
 
