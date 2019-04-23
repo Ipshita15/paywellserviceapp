@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -23,6 +22,8 @@ import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity;
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment.CancellationFeeFragment;
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.model.ResCancellationMapping;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -78,10 +79,10 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
         cancelBookingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
-                if (!bookingIdET.getText().toString().isEmpty() &&
-                        !bookingCancelReasonSPNR.getSelectedItem().toString().equals("Select your reason")) {
-                    askForPin(bookingIdET.getText().toString(), bookingCancelReasonSPNR.getSelectedItem().toString());
+
+                if (!bookingIdET.getText().toString().isEmpty() && !bookingCancelReasonSPNR.getSelectedItem().toString().equals("Select your reason")) {
+                    String userName = mAppHandler.getImeiNo();
+                    callCancelMapping(userName, bookingIdET.getText().toString());
                 } else {
                     Snackbar snackbar = Snackbar.make(cancelMainLayout, "Please Enter all the fields first", Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -89,6 +90,7 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
+
             }
         });
 
@@ -127,6 +129,7 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
             }
         });
     }
+
 
     private void askForPin(String bookingId, String cancelReason) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -208,6 +211,57 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
     @Override
     public void onBackPressed() {
         finish();
+    }
+
+
+    private void callCancelMapping(String userName, String bookingId) {
+
+        showProgressDialog();
+
+        ApiUtils.getAPIService().getCancelMap(userName, bookingId).enqueue(new Callback<ResCancellationMapping>() {
+            @Override
+            public void onResponse(Call<ResCancellationMapping> call, Response<ResCancellationMapping> response) {
+                dismissProgressDialog();
+                assert response.body() != null;
+                if (response.body().getStatus() == 200) {
+                    showUserCencelData(response.body());
+
+                } else {
+                    showSnackMessageWithTextMessage(getString(R.string.please_try_again));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResCancellationMapping> call, Throwable t) {
+                dismissProgressDialog();
+
+            }
+
+
+        });
+    }
+
+    private void showUserCencelData(ResCancellationMapping r) {
+
+        CancellationFeeFragment priceChangeFragment = new CancellationFeeFragment();
+        CancellationFeeFragment.resCencelMaping = r;
+
+        priceChangeFragment.setOnClickHandlerTest(new CancellationFeeFragment.OnClickHandler() {
+            @Override
+            public void onClickActionIssueTicket() {
+
+                hiddenSoftKeyboard();
+
+
+                askForPin(bookingIdET.getText().toString(), bookingCancelReasonSPNR.getSelectedItem().toString());
+
+
+            }
+        });
+
+        priceChangeFragment.show(getSupportFragmentManager(), "dialog");
+
+
     }
 
 }

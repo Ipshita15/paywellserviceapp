@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment
+package com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment
 
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
@@ -6,19 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.ResIssueTicket
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.model.ResCancellationMapping
 import kotlinx.android.synthetic.main.fragment_prices_change.view.*
 
 
-class PriceChangeFragment : DialogFragment() {
+class CancellationFeeFragment : DialogFragment() {
 
 
     companion object {
-
+        lateinit var resCencelMaping: ResCancellationMapping
     }
 
     lateinit var onClickHandler: OnClickHandler
-    lateinit var modelPriceChange: ResIssueTicket
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,10 +30,15 @@ class PriceChangeFragment : DialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_prices_change, container, false)
+        val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_cancel_fee, container, false)
 
-        v.tvPrices.text = getString(R.string.old_ticket_prices) + " " + modelPriceChange.total_fare_calculated
-        v.tvFree.text = getString(R.string.new_ticket_prices) + " " + modelPriceChange.total_fare_calculated_new
+        val refund = resCencelMaping.getCancelData().getRefund()
+        val bookingDatum = resCencelMaping.getBookingData().get(0)
+        val cancellationFee = java.lang.Double.parseDouble(refund) * java.lang.Double.parseDouble(bookingDatum.getAdultQty()) + java.lang.Double.parseDouble(bookingDatum.getChildQty()) + java.lang.Double.parseDouble(bookingDatum.getInfantQty())
+
+
+//        v.tvPrices.text = getString(R.string.old_ticket_prices) + " " + modelPriceChange.cancellationFee
+        v.tvFree.text = getString(R.string.cancellation_fee) + " Tk. " + cancellationFee
 
 
         v.btActionIssueTicket.setOnClickListener {

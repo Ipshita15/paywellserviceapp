@@ -5,6 +5,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.m
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.ResGetAirports;
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList;
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.model.ResCancellationMapping;
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.ResIssueTicket;
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.RequestAirPrebookingSearchParams;
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResAirPreBooking;
@@ -152,6 +153,12 @@ public interface APIService {
                                    @Field("BookingID") String bookingId,
                                    @Field("reason") String cancelReason,
                                    @Field("format") String apiFormat);
+
+
+    @POST("PaywelltransactionHaltrip/getCancelMap")
+    @FormUrlEncoded
+    Call<ResCancellationMapping> getCancelMap(@Field("username") String username,
+                                              @Field("booking_id") String bookingId);
 
     @Multipart
     @POST("PaywelltransactionHaltrip/uploadBookingFiles")

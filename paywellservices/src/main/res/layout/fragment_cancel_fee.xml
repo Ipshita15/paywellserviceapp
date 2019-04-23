@@ -20,7 +20,7 @@
         android:gravity="center"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="@string/tricking"
+        android:text="@string/cancel_ticket"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="16sp"
@@ -32,7 +32,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvFree"/>
 
     <TextView
-        android:id="@+id/textView27"
+        android:id="@+id/tvFree"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -40,43 +40,12 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="The ticket price has been changed"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        android:id="@+id/tvFree"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="TextView"
+        android:text="Cancellation fee: 300"
         android:textColor="?attr/colorControlActivated"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPrices"/>
-
-    <TextView
-        android:id="@+id/tvPrices"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="Old Price"
-        android:textColor="?attr/colorControlActivated"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView27"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>
