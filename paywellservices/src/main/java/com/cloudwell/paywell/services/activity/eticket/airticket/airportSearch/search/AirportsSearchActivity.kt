@@ -23,6 +23,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.s
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus
+import com.orhanobut.logger.Logger
 import com.squareup.otto.Subscribe
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_city_search.*
@@ -97,20 +98,19 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
 
-                if (s.length > 0) {
 
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                Logger.v("" + s.toString())
+                if (s.isNotEmpty()) {
+                    Logger.v("---" + s.toString())
                     setupFilterList(s)
 
                 } else {
                     setupAirportList(mAirTicketBaseViewMode.allAirportHashMap.value, false)
 
                 }
-
-
-            }
-
-            override fun afterTextChanged(s: Editable) {
-
             }
         })
     }
@@ -130,6 +130,7 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
             }
 
             uiThread {
+
 
                 setupAirportList(groupBy.toMutableMap(), true)
             }
@@ -240,6 +241,70 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
         sectionHeader.setHasFixedSize(true)
         sectionHeader.setAdapter(sectionAdapter)
         sectionHeader.isNestedScrollingEnabled = false
+        sectionAdapter.notifyDataSetChanged()
+
+
+        val verticalDecoration = DividerItemDecoration(sectionHeader.getContext(), DividerItemDecoration.HORIZONTAL)
+        val verticalDivider = ContextCompat.getDrawable(applicationContext, R.drawable.vertical_divider_new)
+        verticalDecoration.setDrawable(verticalDivider!!)
+
+
+        if (etSearch.text.isEmpty()) {
+            setupAirportListDefalt(mAirTicketBaseViewMode.allAirportHashMap.value)
+
+        }
+
+
+    }
+
+
+    private fun setupAirportListDefalt(allAirportsMap: MutableMap<String, List<Airport>>?) {
+
+        sectionAdapter = SectionedRecyclerViewAdapter()
+
+        var i = 0
+        allAirportsMap?.forEach { (k, v) ->
+
+            val sectionData = HeaderAirportRecyclerViewSection(k, v)
+            sectionAdapter.addSection(sectionData)
+
+            i++
+        }
+
+
+        val display = this.getWindowManager().getDefaultDisplay()
+        val outMetrics = DisplayMetrics()
+        display.getMetrics(outMetrics)
+
+        val density = resources.displayMetrics.density
+        val dpWidth = outMetrics.widthPixels / density
+        var columns: Int;
+        if (dpWidth > 320) {
+            columns = 2
+        } else {
+            columns = 2
+        }
+
+
+        val glm = GridLayoutManager(applicationContext, columns)
+        glm.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                when (sectionAdapter.getSectionItemViewType(position)) {
+                    SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER ->
+                        return columns
+                    else ->
+                        return 1
+                }
+            }
+        }
+
+
+        val sectionHeader = findViewById<RecyclerView>(R.id.recycviewContryAndAirport)
+        sectionHeader.setLayoutManager(glm)
+        sectionHeader.setHasFixedSize(true)
+        sectionHeader.setAdapter(sectionAdapter)
+        sectionHeader.isNestedScrollingEnabled = false
+        sectionAdapter.notifyDataSetChanged()
 
 
         val verticalDecoration = DividerItemDecoration(sectionHeader.getContext(), DividerItemDecoration.HORIZONTAL)
