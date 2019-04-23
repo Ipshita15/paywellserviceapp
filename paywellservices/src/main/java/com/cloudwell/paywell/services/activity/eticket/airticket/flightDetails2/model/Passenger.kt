@@ -68,6 +68,20 @@ data class Passenger(val isDefault: Boolean) {
     @ColumnInfo(name = "passport_number")
     var passportNumber: String = ""
 
+
+    @SerializedName("PassportExpiryDate")
+    @ColumnInfo(name = "PassportExpiryDate")
+    var passportExpiryDate: String = ""
+
+
+    @SerializedName("PassportNationalityCountry")
+    @ColumnInfo(name = "PassportNationalityCountry")
+    var passportNationalityCountryCode: String = ""
+
+    @SerializedName("PassportNationality")
+    @ColumnInfo(name = "PassportNationality")
+    var passportNationality: String = ""
+
     @ColumnInfo(name = "passportImagePath")
     var passportImagePath: String = ""
 

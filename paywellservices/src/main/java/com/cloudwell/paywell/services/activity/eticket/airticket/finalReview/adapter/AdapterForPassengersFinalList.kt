@@ -63,6 +63,21 @@ class AdapterForPassengersFinalList(var context: Context, var items: List<Passen
             holder.tvNid.text = "National ID: " + model.nIDnumber
         }
 
+
+        if (model.passportExpiryDate.equals("")) {
+            holder.tvPassportExpiryDate.visibility = View.GONE
+        } else {
+            holder.tvPassportExpiryDate.visibility = View.VISIBLE
+            holder.tvPassportExpiryDate.text = context.getString(R.string.passport_expiry_date) + ": " + model.passportExpiryDate
+        }
+
+        if (model.passportNationality.equals("")) {
+            holder.tvPassportNationallity.visibility = View.GONE
+        } else {
+            holder.tvPassportNationallity.visibility = View.VISIBLE
+            holder.tvPassportNationallity.text = context.getString(R.string.passport_nationality) + ": " + model.passportNationality
+        }
+
         holder.ivEdit.setOnClickListener {
 
             onClickListener.onEditClick(model, position)
@@ -90,6 +105,8 @@ class AdapterForPassengersFinalList(var context: Context, var items: List<Passen
         val tvEmailAddress = view.tvEmailAddress
         val tvPassport = view.tvPasswordFinal
         val tvNid = view.tvNid
+        val tvPassportExpiryDate = view.tvPassportExpiryDate
+        val tvPassportNationallity = view.tvPassportNationallity
 
 
     }

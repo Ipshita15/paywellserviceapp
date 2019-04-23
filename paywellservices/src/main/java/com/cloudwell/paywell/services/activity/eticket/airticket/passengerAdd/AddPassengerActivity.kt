@@ -2,6 +2,7 @@ package com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd
 
 import android.Manifest
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.DialogInterface
@@ -42,6 +43,8 @@ import com.mukesh.countrypicker.CountryPicker
 import com.mukesh.countrypicker.listeners.OnCountryPickerListener
 import kotlinx.android.synthetic.main.contant_add_passenger.*
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class AddPassengerActivity : AirTricketBaseActivity() {
@@ -58,6 +61,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
     var isEmailValid = false
     var countryCode = ""
+    var passportNationalityCountryCode = ""
 
     var isEditFlag = false
 
@@ -67,12 +71,17 @@ class AddPassengerActivity : AirTricketBaseActivity() {
     var passportMadatory = false
     var isFistTime = true
 
+    companion object {
+        var KEY_PASSPORT_NATIONALITY = "KEY_PASSPORT_NATIONALITY"
+        var KEY_COUNTRY = "KEY_COUNTRY"
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.cloudwell.paywell.services.R.layout.activity_add_passenger)
+        setContentView(R.layout.activity_add_passenger)
 
-        setToolbar(getString(com.cloudwell.paywell.services.R.string.title_add_passenger))
+        setToolbar(getString(R.string.title_add_passenger))
 
         initializationView()
 
@@ -116,6 +125,8 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
         if (passportMadatory1) {
             etNidorPassportNumber.setHint(getString(R.string.hit_passport_number) + "*")
+            etPassportExpiryDate.setHint(getString(R.string.passport_expiry_date) + "*")
+            etpassportNationality.setHint(getString(R.string.passport_nationality_mannotory) + "*")
         }
 
 
@@ -133,6 +144,8 @@ class AddPassengerActivity : AirTricketBaseActivity() {
                 etContactNumber.setText(oldPassenger.contactNumber)
                 etEmail.setText(oldPassenger.email)
                 etNidorPassportNumber.setText(oldPassenger.passportNumber)
+                etPassportExpiryDate.setText(oldPassenger.passportExpiryDate)
+                etpassportNationality.setText(oldPassenger.passportNationality)
 
                 if (!oldPassenger.passportImagePath.equals("")) {
                     passportImagePath = oldPassenger.passportImagePath
@@ -162,7 +175,11 @@ class AddPassengerActivity : AirTricketBaseActivity() {
                     }
                 }
 
+
+
+
                 this.countryCode = oldPassenger.countryCode
+                this.passportNationalityCountryCode = oldPassenger.passportNationalityCountryCode
 
                 btn_add.setText(getString(R.string.edit))
 
@@ -190,11 +207,11 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
 
         etCountry.setOnClickListener {
-            handleCountry()
+            handleCountry(KEY_COUNTRY)
         }
         etCountry.setOnFocusChangeListener(OnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
-                handleCountry()
+                handleCountry(KEY_COUNTRY)
             }
         })
 
@@ -220,8 +237,18 @@ class AddPassengerActivity : AirTricketBaseActivity() {
             }
         })
 
+        etpassportNationality.setOnClickListener {
+            handleCountry(KEY_PASSPORT_NATIONALITY)
+        }
 
-        val email = etEmail.text.toString().trim()
+        etpassportNationality.setOnFocusChangeListener(OnFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
+                handleCountry(KEY_PASSPORT_NATIONALITY)
+            }
+        })
+
+
+
 
 
         etEmail.addTextChangedListener(object : TextWatcher {
@@ -251,6 +278,13 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         ivPassportPageUpload.setOnClickListener {
             showImagePickerOptions()
         }
+
+        etPassportExpiryDate.setOnFocusChangeListener(OnFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
+                showPassportExpiryDate()
+
+            }
+        })
 
 
     }
@@ -293,13 +327,20 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         bottomSheet.show(supportFragmentManager, "genderBottomSheet")
     }
 
-    private fun handleCountry() {
+    private fun handleCountry(key: String) {
         hideUserKeyboard()
         val builder = CountryPicker.Builder().with(applicationContext)
                 .listener(object : OnCountryPickerListener {
                     override fun onSelectCountry(country: Country) {
-                        etCountry.setText("" + country.name)
-                        countryCode = country.code
+                        if (KEY_COUNTRY.equals(key)) {
+                            etCountry.setText("" + country.name)
+                            countryCode = country.code
+                        } else if (KEY_PASSPORT_NATIONALITY.equals(key)) {
+                            etpassportNationality.setText("" + country.name)
+                            passportNationalityCountryCode = country.code
+                        }
+
+
                     }
 
                 })
@@ -349,6 +390,8 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         val contactNumber = this.etContactNumber.text.toString().trim()
         val emailAddress = this.etEmail.text.toString().trim()
         val passportNumber = this.etNidorPassportNumber.text.toString().trim()
+        val passportExpiryDate = this.etPassportExpiryDate.text.toString().trim()
+        val passportNationalityCountry = this.etpassportNationality.text.toString().trim()
         val nationalIDNumber = this.etNationalIDNumber.text.toString().trim()
 
 
@@ -423,13 +466,30 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         }
 
 
+        var passportNationality = ""
+        countries.forEach {
+            if (it.en_short_name.equals(passportNationalityCountry)) {
+                passportNationality = it.nationality
+            }
+        }
 
 
         if (passportMadatory1) {
             if (passportNumber.equals("")) {
-                textInputLayoutPassport.error = "Passport number mandatory"
+                textInputLayoutPassport.error = getString(R.string.Passport_number_mandatory)
                 return
             }
+
+            if (passportExpiryDate.equals("")) {
+                textInputLayoutPassportExpiryDate.error = getString(R.string.passport_expiry_date_mandatory)
+                return
+            }
+
+            if (passportNationalityCountry.equals("")) {
+                textLayoutPassportNationality.error = getString(R.string.passport_expiry_date_mandatory)
+                return
+            }
+
         }
 
 
@@ -445,6 +505,9 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         passenger.contactNumber = contactNumber
         passenger.email = emailAddress
         passenger.passportNumber = passportNumber
+        passenger.passportExpiryDate = passportExpiryDate
+        passenger.passportNationality = passportNationality
+        passenger.passportNationalityCountryCode = passportNationalityCountryCode
         passenger.isPassengerSleted = true
         passenger.passportImagePath = passportImagePath
         passenger.nIDnumber = nationalIDNumber
@@ -459,8 +522,6 @@ class AddPassengerActivity : AirTricketBaseActivity() {
             }
 
         }
-
-
 
         if (isEditFlag) {
             passenger.id = oldPassenger.id
@@ -568,6 +629,45 @@ class AddPassengerActivity : AirTricketBaseActivity() {
                 }
             }
         }
+    }
+
+    private fun showPassportExpiryDate() {
+
+        val calendar = Calendar.getInstance()
+
+
+        val year = calendar.get(Calendar.YEAR)
+        val thismonth = calendar.get(Calendar.MONTH)
+        val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(this,
+                DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
+                    val calendar = Calendar.getInstance()
+                    calendar.set(Calendar.YEAR, year)
+                    calendar.set(Calendar.MONTH, month)
+                    calendar.set(Calendar.DAY_OF_MONTH, day)
+
+                    val mMonth = month + 1
+                    val androidSystemdate = "${year}-${mMonth}-${day}"
+                    val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(androidSystemdate) as Date
+                    val humanReadAbleDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).format(fdepTimeFormatDate)
+                    etPassportExpiryDate.setText(humanReadAbleDate)
+
+
+                }, year, thismonth, dayOfMonth)
+
+        val calendarMin = Calendar.getInstance()
+        datePickerDialog.datePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
+
+
+        datePickerDialog.datePicker.minDate = calendarMin.timeInMillis
+
+
+
+
+        datePickerDialog.show()
+
+
     }
 
 

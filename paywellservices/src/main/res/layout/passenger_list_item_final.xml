@@ -147,16 +147,16 @@
         app:layout_constraintTop_toBottomOf="@+id/tvEmailAddress"/>
 
     <TextView
-        android:textColor="@color/black33333"
         android:id="@+id/tvNid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         android:text="NID"
+        android:textColor="@color/black33333"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tvPasswordFinal"
-        app:layout_constraintTop_toBottomOf="@+id/tvPasswordFinal"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvPassportNationallity"/>
 
     <TextView
         android:textColor="@color/black33333"
@@ -167,5 +167,25 @@
         app:layout_constraintStart_toStartOf="@+id/tvPassengerTypeFinal"
         app:layout_constraintTop_toBottomOf="@+id/tvPassengerTypeFinal"
         tools:text="isLeadPassenger"/>
+
+    <TextView
+        android:id="@+id/tvPassportExpiryDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black33333"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPasswordFinal"
+        tools:text="@string/passport_expiry_date"/>
+
+    <TextView
+        android:id="@+id/tvPassportNationallity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/passport_nationality"
+        android:textColor="@color/black33333"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPassportExpiryDate"/>
 
 </android.support.constraint.ConstraintLayout>

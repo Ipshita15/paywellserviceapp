@@ -766,6 +766,12 @@
     <string name="flight">Flight</string>
     <string name="cancel_ticket">Cancel Ticket</string>
     <string name="cancellation_fee">Cancellation fee:</string>
+    <string name="passport_expiry_date">Passport Expiry Date</string>
+
+    <string name="Passport_number_mandatory">Passport number mandatory</string>
+    <string name="passport_expiry_date_mandatory">Passport expiry date mandatory</string>
+    <string name="passport_nationality">Passport nationality</string>
+    <string name="passport_nationality_mannotory">Passport nationality</string>
 
 
 </resources>
