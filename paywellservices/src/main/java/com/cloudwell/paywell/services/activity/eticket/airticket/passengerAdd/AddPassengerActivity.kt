@@ -338,6 +338,20 @@ class AddPassengerActivity : AirTricketBaseActivity() {
                         } else if (KEY_PASSPORT_NATIONALITY.equals(key)) {
                             etpassportNationality.setText("" + country.name)
                             passportNationalityCountryCode = country.code
+
+
+                            var nationality = "";
+                            val countriesString = AssetHelper().loadJSONFromAsset(applicationContext, "countries.json")
+                            val countries = Gson().fromJson(countriesString, Array<MyCountry>::class.java)
+                            countries.forEach {
+                                if (it.en_short_name.equals(country.name)) {
+                                    nationality = it.nationality
+                                }
+                            }
+
+                            etpassportNationality.setText("" + nationality)
+
+
                         }
 
 
@@ -466,12 +480,12 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         }
 
 
-        var passportNationality = ""
-        countries.forEach {
-            if (it.en_short_name.equals(passportNationalityCountry)) {
-                passportNationality = it.nationality
-            }
-        }
+//        var passportNationality = ""
+//        countries.forEach {
+//            if (it.en_short_name.equals(passportNationalityCountry)) {
+//                passportNationality = it.nationality
+//            }
+//        }
 
 
         if (passportMadatory1) {
@@ -506,7 +520,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         passenger.email = emailAddress
         passenger.passportNumber = passportNumber
         passenger.passportExpiryDate = passportExpiryDate
-        passenger.passportNationality = passportNationality
+        passenger.passportNationality = passportNationalityCountry
         passenger.passportNationalityCountryCode = passportNationalityCountryCode
         passenger.isPassengerSleted = true
         passenger.passportImagePath = passportImagePath
