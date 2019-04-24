@@ -117,14 +117,14 @@
         app:layout_constraintTop_toBottomOf="@+id/tvCountry"/>
 
     <TextView
-        android:textColor="@color/black33333"
         android:id="@+id/tvContactNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Contact Number"
+        android:textColor="@color/black33333"
         app:layout_constraintStart_toStartOf="@+id/tvGender"
-        app:layout_constraintTop_toBottomOf="@+id/tvGender"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvDateOfBirth"/>
 
     <TextView
         android:textColor="@color/black33333"
@@ -187,5 +187,15 @@
         android:textColor="@color/black33333"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPassportExpiryDate"/>
+
+    <TextView
+        android:id="@+id/tvDateOfBirth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Date Of Birth"
+        android:textColor="@color/black33333"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvGender"/>
 
 </android.support.constraint.ConstraintLayout>

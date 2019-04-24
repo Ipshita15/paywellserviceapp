@@ -30,6 +30,11 @@ data class Passenger(val isDefault: Boolean) {
     @SerializedName("FirstName")
     var firstName: String = ""
 
+    @ColumnInfo(name = "DateOfBirth")
+    @SerializedName("DateOfBirth")
+    var dateOfBirth: String = ""
+
+
     @ColumnInfo(name = "Gender")
     @SerializedName("Gender")
     var gender: String = ""
@@ -64,8 +69,8 @@ data class Passenger(val isDefault: Boolean) {
     var country: String = ""
 
 
-    @SerializedName("passport_number")
-    @ColumnInfo(name = "passport_number")
+    @SerializedName("PassportNumber")
+    @ColumnInfo(name = "PassportNumber")
     var passportNumber: String = ""
 
 
@@ -73,10 +78,6 @@ data class Passenger(val isDefault: Boolean) {
     @ColumnInfo(name = "PassportExpiryDate")
     var passportExpiryDate: String = ""
 
-
-    @SerializedName("PassportNationalityCountry")
-    @ColumnInfo(name = "PassportNationalityCountry")
-    var passportNationalityCountryCode: String = ""
 
     @SerializedName("PassportNationality")
     @ColumnInfo(name = "PassportNationality")

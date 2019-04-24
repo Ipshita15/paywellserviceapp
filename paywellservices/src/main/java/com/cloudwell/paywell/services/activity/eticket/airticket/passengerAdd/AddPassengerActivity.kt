@@ -140,6 +140,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
                 etFirstName.setText(oldPassenger.firstName)
                 etLastName.setText(oldPassenger.lastName)
                 etGender.setText(oldPassenger.gender)
+                etDateOfBirth.setText(oldPassenger.dateOfBirth)
                 etCountry.setText(oldPassenger.country)
                 etContactNumber.setText(oldPassenger.contactNumber)
                 etEmail.setText(oldPassenger.email)
@@ -179,7 +180,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
 
                 this.countryCode = oldPassenger.countryCode
-                this.passportNationalityCountryCode = oldPassenger.passportNationalityCountryCode
+
 
                 btn_add.setText(getString(R.string.edit))
 
@@ -249,8 +250,6 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
 
 
-
-
         etEmail.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
 
@@ -279,6 +278,10 @@ class AddPassengerActivity : AirTricketBaseActivity() {
             showImagePickerOptions()
         }
 
+        etPassportExpiryDate.setOnClickListener {
+            showPassportExpiryDate()
+        }
+
         etPassportExpiryDate.setOnFocusChangeListener(OnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
                 showPassportExpiryDate()
@@ -286,6 +289,48 @@ class AddPassengerActivity : AirTricketBaseActivity() {
             }
         })
 
+        etDateOfBirth.setOnClickListener {
+
+            showDateOfBirthDatePicker()
+
+        }
+
+        etDateOfBirth.setOnFocusChangeListener(OnFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
+                showDateOfBirthDatePicker()
+
+            }
+        })
+
+
+    }
+
+    private fun showDateOfBirthDatePicker() {
+        val calendar = Calendar.getInstance()
+
+
+        val year = calendar.get(Calendar.YEAR)
+        val thismonth = calendar.get(Calendar.MONTH)
+        val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(this,
+                DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
+                    val calendar = Calendar.getInstance()
+                    calendar.set(Calendar.YEAR, year)
+                    calendar.set(Calendar.MONTH, month)
+                    calendar.set(Calendar.DAY_OF_MONTH, day)
+
+                    val mMonth = month + 1
+                    val androidSystemdate = "${year}-${mMonth}-${day}"
+                    val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(androidSystemdate) as Date
+                    val humanReadAbleDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).format(fdepTimeFormatDate)
+                    etDateOfBirth.setText(humanReadAbleDate)
+
+
+                }, year, thismonth, dayOfMonth)
+
+
+        datePickerDialog.show()
 
     }
 
@@ -337,7 +382,6 @@ class AddPassengerActivity : AirTricketBaseActivity() {
                             countryCode = country.code
                         } else if (KEY_PASSPORT_NATIONALITY.equals(key)) {
                             etpassportNationality.setText("" + country.name)
-                            passportNationalityCountryCode = country.code
 
 
                             var nationality = "";
@@ -401,6 +445,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         val lastName = this.etLastName.text.toString().trim()
         val country = this.etCountry.text.toString().trim()
         val gender = this.etGender.text.toString().trim()
+        val dateOfBirthDay = this.etDateOfBirth.text.toString().trim()
         val contactNumber = this.etContactNumber.text.toString().trim()
         val emailAddress = this.etEmail.text.toString().trim()
         val passportNumber = this.etNidorPassportNumber.text.toString().trim()
@@ -444,6 +489,13 @@ class AddPassengerActivity : AirTricketBaseActivity() {
             textInputLayoutCountry.error = ""
         }
 
+        if (dateOfBirthDay.equals("")) {
+            textInputLayoutDateOfBirthday.error = getString(R.string.invalid_gender)
+            return
+        } else {
+            textInputLayoutDateOfBirthday.error = ""
+        }
+
         if (gender.equals("")) {
             textInputLayoutGender.error = getString(R.string.invalid_gender)
             return
@@ -480,14 +532,6 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         }
 
 
-//        var passportNationality = ""
-//        countries.forEach {
-//            if (it.en_short_name.equals(passportNationalityCountry)) {
-//                passportNationality = it.nationality
-//            }
-//        }
-
-
         if (passportMadatory1) {
             if (passportNumber.equals("")) {
                 textInputLayoutPassport.error = getString(R.string.Passport_number_mandatory)
@@ -513,6 +557,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         passenger.firstName = firstName
         passenger.lastName = lastName
         passenger.gender = gender
+        passenger.dateOfBirth = dateOfBirthDay
         passenger.countryCode = countryCode
         passenger.nationality = nationality
         passenger.country = country
@@ -521,7 +566,6 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         passenger.passportNumber = passportNumber
         passenger.passportExpiryDate = passportExpiryDate
         passenger.passportNationality = passportNationalityCountry
-        passenger.passportNationalityCountryCode = passportNationalityCountryCode
         passenger.isPassengerSleted = true
         passenger.passportImagePath = passportImagePath
         passenger.nIDnumber = nationalIDNumber

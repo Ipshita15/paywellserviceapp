@@ -48,6 +48,7 @@ class AdapterForPassengersFinalList(var context: Context, var items: List<Passen
         holder.tvGender.text = "Gender: " + model.gender
         holder.tvContactNumber.text = "Contact Number: " + model.contactNumber
         holder.tvEmailAddress.text = "Email: " + model.email
+        holder.tvDateOfBirth.text = "Date Of Birth: " + model.dateOfBirth
 
         if (model.passportNumber.equals("")) {
             holder.tvPassport.visibility = View.GONE
@@ -101,6 +102,7 @@ class AdapterForPassengersFinalList(var context: Context, var items: List<Passen
         val tvLastName = view.tvLastName
         val tvCountry = view.tvCountry
         val tvGender = view.tvGender
+        val tvDateOfBirth = view.tvDateOfBirth
         val tvContactNumber = view.tvContactNumber
         val tvEmailAddress = view.tvEmailAddress
         val tvPassport = view.tvPasswordFinal
