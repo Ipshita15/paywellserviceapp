@@ -97,7 +97,13 @@ class AllSummaryActivityViewModel : AirTicketBaseViewMode() {
                         mViewStatus.value = AllSummaryStatus(noSerachFoundMessage = "", isShowProcessIndicatior = false)
                         val okNetworkAndStatusCode = isOkNetworkAndStatusCode(it)
                         if (okNetworkAndStatusCode) {
-                            mViewStatus.value = it?.let { it1 -> AllSummaryStatus("", false, it1) }
+                            val rePriceStatus = it?.data?.rePriceStatus
+                            if (rePriceStatus.equals("FareUnavailable") || rePriceStatus.equals("ItineraryChanged")) {
+                                mViewStatus.value = it?.let { it1 -> AllSummaryStatus("", false, null, RePriceStatus = rePriceStatus) }
+                            } else {
+                                mViewStatus.value = it?.let { it1 -> AllSummaryStatus("", false, it1, RePriceStatus = "") }
+                            }
+
                         }
 
                     }

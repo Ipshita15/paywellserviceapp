@@ -772,6 +772,8 @@
     <string name="passport_expiry_date_mandatory">Passport expiry date mandatory</string>
     <string name="passport_nationality">Passport nationality</string>
     <string name="passport_nationality_mannotory">Passport nationality</string>
+    <string name="back_to_search">Back To Search</string>
+    <string name="please_search_for_another_flight">Please search for another flight</string>
 
 
 </resources>

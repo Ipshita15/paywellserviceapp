@@ -26,12 +26,14 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.ada
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.adapter.AirportListAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.fragment.BookingStatusFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.fragment.BookingSuccessDialog
+import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.fragment.RePriceStatusFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResAirPreBooking
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.viewModel.AllSummaryActivityViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.viewModel.view.AllSummaryStatus
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Airport
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.FlightSearchViewActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.AddPassengerActivity
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
@@ -276,6 +278,20 @@ class AllSummaryActivity : AirTricketBaseActivity() {
 
                 dialogFragment.show(supportFragmentManager, "dialog")
 
+            } else if (!status.RePriceStatus.equals("")) {
+
+                val rePriceStatusFragment = RePriceStatusFragment()
+                RePriceStatusFragment.rePriceStatus = "" + status.RePriceStatus
+
+                rePriceStatusFragment.bookingDialogListener = object : RePriceStatusFragment.BookingDialogListener {
+                    override fun onClick() {
+                        backToSearchPage()
+
+                    }
+                }
+
+                rePriceStatusFragment.show(supportFragmentManager, "dialog")
+
             }
 
         }
@@ -283,6 +299,14 @@ class AllSummaryActivity : AirTricketBaseActivity() {
         if (status.test.equals("done")) {
             mViewModel.callFileUploadAPI()
         }
+
+
+    }
+
+    private fun backToSearchPage() {
+        val intent = Intent(this, FlightSearchViewActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent)
 
 
     }
