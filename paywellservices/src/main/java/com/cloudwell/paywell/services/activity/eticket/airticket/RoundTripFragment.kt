@@ -193,9 +193,11 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
                         val date = calendar.getTime()
 
 
-                        val nameOfDayOfWeekFirst = SimpleDateFormat("EEE").format(calendar.time)
-                        val nameOfMonthFirst = SimpleDateFormat("MMM").format(calendar.time)
-                        val dayFirst = SimpleDateFormat("dd").format(calendar.time)
+                        val nameOfDayOfWeekFirst = SimpleDateFormat("EEE", Locale.ENGLISH).format(calendar.time)
+                        val nameOfMonthFirst = SimpleDateFormat("MMM", Locale.ENGLISH).format(calendar.time)
+                        val dayFirst = SimpleDateFormat("dd", Locale.ENGLISH).format(calendar.time)
+
+                        val human = "$nameOfDayOfWeekFirst, $dayFirst $nameOfMonthFirst"
 
                         tvDepartDate.text = "$nameOfDayOfWeekFirst, $dayFirst $nameOfMonthFirst"
                         tvDepartDate.setTextColor(Color.BLACK);
@@ -204,18 +206,30 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
 
 
                         AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_FIRST_ROUND, humanReadAbleDateFirst)
+                        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_FIRST_ROUND_Human, human)
+
                     } else {
 
-                        val nameOfDayOfWeekSecound = SimpleDateFormat("EEE").format(calendar.time)
-                        val nameOfMonthSecound = SimpleDateFormat("MMM").format(calendar.time)
-                        val daySecound = SimpleDateFormat("dd").format(calendar.time)
 
+                        val calendar1 = Calendar.getInstance()
+                        calendar1.set(Calendar.YEAR, year)
+                        calendar1.set(Calendar.MONTH, month)
+                        calendar1.set(Calendar.DAY_OF_MONTH, day)
+                        val date = calendar1.getTime()
+
+                        val nameOfDayOfWeekSecound = SimpleDateFormat("EEE").format(calendar1.time)
+                        val nameOfMonthSecound = SimpleDateFormat("MMM").format(calendar1.time)
+                        val daySecound = SimpleDateFormat("dd").format(calendar1.time)
+
+
+                        val human = "$nameOfDayOfWeekSecound, $daySecound $nameOfMonthSecound"
                         tvDepartDate2.text = "$nameOfDayOfWeekSecound, $daySecound $nameOfMonthSecound"
                         tvDepartDate2.setTextColor(Color.BLACK);
 
-                        humanReadAbleDateSecond = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(calendar.time)
+                        humanReadAbleDateSecond = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(calendar1.time)
 
                         AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_SECOUND_ROUND, humanReadAbleDateSecond)
+                        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_SECOUND_ROUND_hyuman, human)
                     }
 
 
@@ -419,13 +433,15 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
             view.tvDepartDate.text = "" + crachDepartureDate
             view.tvDepartDate.setTextColor(Color.BLACK)
 
-            val firstDate = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_FIRST_ROUND) as String
-            humanReadAbleDateFirst = firstDate
+            val firstDate = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_FIRST_ROUND_Human) as String
+            val firstDateAPI = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_FIRST_ROUND) as String
+            humanReadAbleDateFirst = firstDateAPI
             view.tvDepartDate.text = "" + firstDate
             view.tvDepartDate.setTextColor(Color.BLACK)
 
-            val secoundDate = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_SECOUND_ROUND) as String
-            humanReadAbleDateSecond = secoundDate
+            val secoundDate = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_SECOUND_ROUND_hyuman) as String
+            val secoundDateAPI = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_SECOUND_ROUND) as String
+            humanReadAbleDateSecond = secoundDateAPI
             view.tvDepartDate2.text = "" + secoundDate
             view.tvDepartDate2.setTextColor(Color.BLACK)
 

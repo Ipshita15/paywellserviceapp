@@ -336,8 +336,7 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
 
     var date: DatePickerDialog.OnDateSetListener = object : DatePickerDialog.OnDateSetListener {
 
-        override fun onDateSet(view: DatePicker, year: Int, monthOfYear: Int,
-                               dayOfMonth: Int) {
+        override fun onDateSet(view: DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int) {
             myCalendar.set(Calendar.YEAR, year)
             myCalendar.set(Calendar.MONTH, monthOfYear)
             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
