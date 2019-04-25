@@ -162,7 +162,10 @@ object DateUtils {
         return years
     }
 
-    fun getDifferenceDays(d1: Date, d2: Date): Int {
+    fun getDifferenceDays(dateOne: String, dateTwo: String): Int {
+        val d1 = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(dateOne)
+        val d2 = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(dateTwo)
+
         var daysdiff = 0
         val diff = d2.time - d1.time
         val diffDays = diff / (24 * 60 * 60 * 1000) + 1

@@ -101,7 +101,7 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
         holder.tvDurationAndStopCounter.text = durtingJounaryTimeNew + ", $stopCount stop"
 
 
-        val differenceDays = DateUtils.getDifferenceDays(fistDate, secondDate)
+        val differenceDays = DateUtils.getDifferenceDays(split.get(0), split1.get(0))
         var differenceDaysString = ""
         if (differenceDays == 1 || differenceDays == 0) {
             differenceDaysString = ""
@@ -125,8 +125,8 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
 
         val segment = segments.get(position)
         var secondDate: Date = Date()
-        var split1 = mutableListOf<String>()
-        var date1 = ""
+        var arrTimeSplit1 = mutableListOf<String>()
+
         var durtingJounaryTimeNew = ""
 
 
@@ -134,27 +134,27 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
         holder.tvDepDate.text = formatDepTime
 
         // show show date
-        val split = segments.get(0).origin?.depTime.toString().split("T");
-        val date = split.get(0) + " " + split.get(1)
+        val depTimeSplit = segments.get(0).origin?.depTime.toString().split("T");
+        val date = depTimeSplit.get(0) + " " + depTimeSplit.get(1)
         val fistDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss", Locale.ENGLISH).parse(date)
 
-        split1 = segments.get(segments.size - 1).destination?.arrTime.toString().split("T").toMutableList();
 
 
+        arrTimeSplit1 = segments.get(segments.size - 1).destination?.arrTime.toString().split("T").toMutableList();
         var stopCount = ""
         if (segments.size > 1) {
             stopCount = "" + ((segments.size) - 1)
         } else {
             stopCount = "0"
         }
-
-        date1 = split1.get(0) + " " + split1.get(1)
-        secondDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss", Locale.ENGLISH).parse(date1)
+        var secoundDate = ""
+        secoundDate = arrTimeSplit1.get(0) + " " + arrTimeSplit1.get(1)
+        secondDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss", Locale.ENGLISH).parse(secoundDate)
         durtingJounaryTimeNew = DateUtils.getDurtingJounaryTimeNew(fistDate, secondDate)
         holder.tvDurationAndStopCounter.text = durtingJounaryTimeNew + ", $stopCount stop"
 
 
-        val differenceDays = DateUtils.getDifferenceDays(fistDate, secondDate)
+        val differenceDays = DateUtils.getDifferenceDays(depTimeSplit.get(0), arrTimeSplit1.get(0))
         var differenceDaysString = ""
         if (differenceDays == 1 || differenceDays == 0) {
             differenceDaysString = ""
@@ -210,7 +210,7 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
         holder.tvDurationAndStopCounter.text = durtingJounaryTimeNew + ", $stopCount stop"
 
 
-        val differenceDays = DateUtils.getDifferenceDays(fistDate, secondDate)
+        val differenceDays = DateUtils.getDifferenceDays(split.get(0), split1.get(0))
         var differenceDaysString = ""
         if (differenceDays == 1 || differenceDays == 0) {
             differenceDaysString = ""
