@@ -42,7 +42,7 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_flight_details_2)
-        setToolbar(getString(com.cloudwell.paywell.services.R.string.title_booking_and_review))
+        setToolbar(getString(R.string.title_booking_and_review))
 
         initializationView()
         initilizationReviewBottomSheet()
