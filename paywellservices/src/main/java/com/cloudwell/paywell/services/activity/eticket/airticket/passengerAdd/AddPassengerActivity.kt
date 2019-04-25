@@ -109,12 +109,9 @@ class AddPassengerActivity : AirTricketBaseActivity() {
     }
 
     private fun handleViewStatus(it: PassgerAddViewStatus) {
-
         if (it.isPassengerAddSuccessful) {
-
             finish()
         }
-
     }
 
 
@@ -150,10 +147,9 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
                 if (!oldPassenger.passportImagePath.equals("")) {
                     passportImagePath = oldPassenger.passportImagePath
-                    ivPassportPageUpload.setImageResource(R.drawable.ic_passport_unseleted)
+                    ivPassportPageUpload.setImageResource(R.drawable.ic_passport_seleted)
                 } else {
-                    ivPassportPageUpload.visibility = View.GONE
-                    textInputLayoutPassport.visibility = View.GONE
+                    ivPassportPageUpload.setImageResource(R.drawable.ic_passport_unseleted)
                 }
 
                 if (!oldPassenger.nIDnumber.equals("")) {
