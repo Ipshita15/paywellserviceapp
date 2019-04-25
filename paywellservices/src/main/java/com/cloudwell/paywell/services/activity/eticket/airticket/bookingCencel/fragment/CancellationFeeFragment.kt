@@ -36,14 +36,12 @@ class CancellationFeeFragment : DialogFragment() {
         val bookingDatum = resCencelMaping.getBookingData().get(0)
         val cancellationFee = java.lang.Double.parseDouble(refund) * java.lang.Double.parseDouble(bookingDatum.getAdultQty()) + java.lang.Double.parseDouble(bookingDatum.getChildQty()) + java.lang.Double.parseDouble(bookingDatum.getInfantQty())
 
-
-//        v.tvPrices.text = getString(R.string.old_ticket_prices) + " " + modelPriceChange.cancellationFee
         v.tvFree.text = getString(R.string.cancellation_fee) + " Tk. " + cancellationFee
 
 
         v.btActionIssueTicket.setOnClickListener {
             dismiss()
-            onClickHandler.onClickActionIssueTicket()
+            onClickHandler.onClickActionIssueTicket(cancellationFee)
         }
 
 
@@ -61,7 +59,7 @@ class CancellationFeeFragment : DialogFragment() {
 
 
     interface OnClickHandler {
-        fun onClickActionIssueTicket()
+        fun onClickActionIssueTicket(cancellationFee: Double)
 
     }
 

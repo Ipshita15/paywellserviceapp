@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity;
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment.CancellationFeeFragment;
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment.CancellationStatusMessageFragment;
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.model.ResCancellationMapping;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
@@ -48,6 +49,8 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
     private AppHandler mAppHandler;
     public static String KEY_BOOKING_ID = "Booking_Id";
     private String bookingCancelId = new String();
+
+    public Double mCancellationFee = 0.0;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,7 +115,10 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
                         JsonObject jsonObject = response.body();
                         String message = jsonObject.get("message").getAsString();
                         if (jsonObject.get("status").getAsInt() == 200) {
-                            showMsg("Request Successfully Submitted");
+
+                            String userMessage = "Your ticket has been canceled, " + mCancellationFee + " taka has been charged to you as cancelation fee. Thank you.";
+                            showMsg(userMessage);
+
                         } else {
                             showMsg(message);
                         }
@@ -186,17 +192,12 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
     }
 
     private void showMsg(String msg) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Booking Cancel");
-        builder.setMessage(msg);
-        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int id) {
-                finish();
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
+
+        CancellationStatusMessageFragment priceChangeFragment = new CancellationStatusMessageFragment();
+        CancellationStatusMessageFragment.message = msg;
+
+        priceChangeFragment.show(getSupportFragmentManager(), "dialog");
+
     }
 
     @Override
@@ -248,8 +249,8 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
 
         priceChangeFragment.setOnClickHandlerTest(new CancellationFeeFragment.OnClickHandler() {
             @Override
-            public void onClickActionIssueTicket() {
-
+            public void onClickActionIssueTicket(double cancellationFee) {
+                mCancellationFee = cancellationFee;
                 hiddenSoftKeyboard();
 
 
