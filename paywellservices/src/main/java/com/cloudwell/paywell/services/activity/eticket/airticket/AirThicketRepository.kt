@@ -155,7 +155,7 @@ class AirThicketRepository(private val mContext: Context) {
 
     }
 
-    fun callAirPreBookingAPI(piN_NO: String, requestAirPrebookingSearchParams: RequestAirPrebookingSearchParams): MutableLiveData<ResAirPreBooking> {
+    fun callAirPreBookingAPI(requestAirPrebookingSearchParams: RequestAirPrebookingSearchParams): MutableLiveData<ResAirPreBooking> {
         mAppHandler = AppHandler.getmInstance(mContext)
         val userName = mAppHandler!!.imeiNo
 //        val userName = "cwntcl"
@@ -163,7 +163,7 @@ class AirThicketRepository(private val mContext: Context) {
 
         val data = MutableLiveData<ResAirPreBooking>()
 
-        val callAirSearch = ApiUtils.getAPIService().airPreBooking(userName, piN_NO, format, requestAirPrebookingSearchParams)
+        val callAirSearch = ApiUtils.getAPIService().airPreBooking(userName, format, requestAirPrebookingSearchParams)
         callAirSearch.enqueue(object : Callback<ResAirPreBooking> {
             override fun onResponse(call: Call<ResAirPreBooking>, response: Response<ResAirPreBooking>) {
                 if (response.isSuccessful) {

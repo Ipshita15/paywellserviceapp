@@ -137,7 +137,14 @@ class AllSummaryActivity : AirTricketBaseActivity() {
 
     private fun handleConfirm() {
 
-        askForPin()
+        if (isInternetConnection) {
+            // new TopUpAsync().execute();
+            airPreBookingAPI()
+        } else {
+            showNoInternetConnectionFound()
+        }
+
+        // askForPin()
 
 
     }
@@ -162,12 +169,9 @@ class AllSummaryActivity : AirTricketBaseActivity() {
                 dialogInterface.dismiss()
                 userPinNumber = pinNoET.text.toString()
 
-                if (isInternetConnection) {
-                    // new TopUpAsync().execute();
-                    airPreBookingAPI(userPinNumber)
-                } else {
-                    showNoInternetConnectionFound()
-                }
+                mViewModel.callAirBookingAPI(piN_NO = userPinNumber, passengerIDS = passengerIDS, internetConnection1 = isInternetConnection)
+
+
             } else {
                 showSnackMessageWithTextMessage(getString(com.cloudwell.paywell.services.R.string.pin_no_error_msg))
             }
@@ -176,9 +180,9 @@ class AllSummaryActivity : AirTricketBaseActivity() {
         alert.show()
     }
 
-    private fun airPreBookingAPI(piN_NO: String) {
+    private fun airPreBookingAPI() {
 
-        mViewModel.callAirPreBookingAPI(piN_NO, passengerIDS, isInternetConnection)
+        mViewModel.callAirPreBookingAPI(passengerIDS, isInternetConnection)
 
     }
 
@@ -269,7 +273,7 @@ class AllSummaryActivity : AirTricketBaseActivity() {
                     override fun onBooking(resAirPreBooking: ResAirPreBooking) {
 
                         AppStorageBox.put(applicationContext, AppStorageBox.Key.AIR_PRE_BOOKKING, status.resAirPreBooking)
-                        mViewModel.callAirBookingAPI(piN_NO = userPinNumber, passengerIDS = passengerIDS, internetConnection1 = isInternetConnection)
+                        askForPin()
 
                     }
 

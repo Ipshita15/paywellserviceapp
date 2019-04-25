@@ -78,7 +78,7 @@ class AllSummaryActivityViewModel : AirTicketBaseViewMode() {
     }
 
 
-    fun callAirPreBookingAPI(piN_NO: String, passengerIDS: String, internetConnection1: Boolean) {
+    fun callAirPreBookingAPI(passengerIDS: String, internetConnection1: Boolean) {
         if (!internetConnection1) {
             baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
         } else {
@@ -93,7 +93,7 @@ class AllSummaryActivityViewModel : AirTicketBaseViewMode() {
                     requestModel.searchId = resposeAirPriceSearch.data?.searchId
                     requestModel.passengers = it
 
-                    mAirTicketRepository.callAirPreBookingAPI(piN_NO, requestModel).observeForever {
+                    mAirTicketRepository.callAirPreBookingAPI(requestModel).observeForever {
                         mViewStatus.value = AllSummaryStatus(noSerachFoundMessage = "", isShowProcessIndicatior = false)
                         val okNetworkAndStatusCode = isOkNetworkAndStatusCode(it)
                         if (okNetworkAndStatusCode) {

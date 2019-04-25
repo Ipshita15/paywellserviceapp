@@ -137,7 +137,7 @@ public interface APIService {
 
     @Multipart
     @POST("PaywelltransactionHaltrip/airPreBooking")
-    Call<ResAirPreBooking> airPreBooking(@Part("username") String username, @Part("password") String password, @Part("format") String format,
+    Call<ResAirPreBooking> airPreBooking(@Part("username") String username, @Part("format") String format,
                                          @Part("search_params") RequestAirPrebookingSearchParams search_params);
 
 

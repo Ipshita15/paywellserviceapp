@@ -77,10 +77,10 @@ class BookingStatusFragment : DialogFragment() {
             val depTimeSplit = depTime?.split("T")
 
             v.tvDepartTime.text = activity?.getString(R.string.depart_time_) + " " + depTimeSplit!![0] + " " + depTimeSplit[1]
-            v.tvArrivalTime.text = activity?.getString(R.string.arrival_time) + ": " + arrTimeSplit!![0] + " " + arrTimeSplit[1]
+            v.tvArrivalTime.text = activity?.getString(R.string.arrival_time) + arrTimeSplit!![0] + " " + arrTimeSplit[1]
         }
 
-        v.tvAirportName.text = activity?.getString(R.string.airless_name) + resAirPreBooking.data?.results?.get(0)?.segments?.get(0)?.airline?.airlineName
+        v.tvAirportName.text = activity?.getString(R.string.airless_name) + " " + resAirPreBooking.data?.results?.get(0)?.segments?.get(0)?.airline?.airlineName
 
 
 
