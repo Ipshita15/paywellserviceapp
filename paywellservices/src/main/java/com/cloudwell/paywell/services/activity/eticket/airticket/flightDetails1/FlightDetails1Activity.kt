@@ -232,7 +232,7 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
             val differenceDate = differenceMilliSecond(fistDate, secondDate)
 
-            val differenceMilliSecondString = DateUtils.getTimeInformationdifferenceDate(fistDate, secondDate)
+            val differenceMilliSecondString = DateUtils.getDurtingJounaryTimeNew(fistDate, secondDate)
 
             segmentsList.add(FlightSequenceAdapter.MyItem(true, origin?.airport?.airportName!!, depDate, depTime, airlineName, "", differenceMilliSecondString))
 
@@ -299,18 +299,6 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
             handleUpDownClick()
         }
 
-
-//        tvPriceDetails.setOnClickListener {
-//            showFareDetailsDialog()
-//        }
-
-//        tvTotalFair.setOnClickListener {
-//            showFareDetailsDialog()
-//        }
-
-//        tvPersonText.setOnClickListener {
-//            showFareDetailsDialog()
-//        }
 
         btBook.setOnClickListener {
 
@@ -393,7 +381,6 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
 
         val durtingJounaryTime = DateUtils.getDurtingJounaryTime(totalJourneyinMiliSecound)
-//        tvTotalDepartTime.text = DateUtils.getDurtingJounaryTime(totalJourneyinMiliSecound)
 
         AppStorageBox.put(applicationContext, AppStorageBox.Key.totalJourney_time, durtingJounaryTime)
 
