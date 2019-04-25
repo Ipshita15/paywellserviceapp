@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="#FFFFFF"
+             android:paddingLeft="10dp"
+             android:paddingRight="10dp">
+
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/tvLBaseFare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:gravity=""
+            android:text="@string/base_fare"
+            android:textColor="@color/black"
+            />
+
+        <TextView
+            android:id="@+id/tvFare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textColor="@color/black33333"
+            />
+    </TableRow>
+
+    <TableRow
+
+        android:id="@+id/tableRow2"
+        android:padding="5dp">
+
+        <TextView
+
+            android:id="@+id/tvLaTax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="@string/tax"
+            android:textColor="@color/black33333"
+            />
+
+        <TextView
+            android:id="@+id/tvTax"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textColor="@color/black33333"
+            />
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow3"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/tvLCurrency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="@string/currency"
+            android:textColor="@color/black33333"
+            />
+
+        <TextView
+            android:id="@+id/tvDepartTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textColor="@color/black33333"
+            />
+
+    </TableRow>
+
+
+    <TableRow
+        android:id="@+id/tableRow4"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/tvLOtherCharge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="@string/othercharges"
+            android:textColor="@color/black33333"/>
+
+        <TextView
+            android:id="@+id/tvArrivalTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textColor="@color/black33333"
+
+            />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow5"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/tvLPaxType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="@string/paxtype"
+            android:textColor="@color/black33333"
+            />
+
+        <TextView
+            android:id="@+id/tvPaxType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textColor="@color/black33333"
+            />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow6"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/tvLPassengerCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="@string/passenger_count"
+            android:textColor="@color/black33333"
+            />
+
+
+        <TextView
+            android:id="@+id/tvPassengerCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textColor="@color/black33333"
+            />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow7"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/tvLService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="@string/service_fee"
+            android:textColor="@color/black33333"
+            />
+
+        <TextView
+            android:id="@+id/tvServiceFee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textColor="@color/black33333"
+            />
+
+    </TableRow>
+
+
+    <TableRow
+        android:id="@+id/tableRow8"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/tvLconvercencFree"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="Convenience Fee"
+            android:textColor="@color/black33333"
+            />
+
+        <TextView
+            android:id="@+id/tvConvenienceFee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textColor="@color/black33333"
+            />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow9"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/tvLAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Amount"
+            android:textColor="@color/black33333"
+            />
+
+        <TextView
+            android:id="@+id/tvAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textColor="@color/black33333"
+            />
+
+    </TableRow>
+
+
+</TableLayout>

@@ -27,4 +27,11 @@ class Fare : Parcelable {
     @SerializedName("Tax")
     var tax: Double = 0.0
 
+    @SerializedName("ConvenienceFee")
+    var convenienceFee: Double = 0.0
+
+    @SerializedName("Amount")
+    var amount: String = ""
+
+
 }

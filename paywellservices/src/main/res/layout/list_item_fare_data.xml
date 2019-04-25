@@ -4,44 +4,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="16dp">
+    android:layout_marginTop="8dp">
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/tvLBaseFare"
         android:layout_width="wrap_content"
         android:layout_height="19dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
         android:layout_marginTop="8dp"
         android:text="@string/base_fare"
         android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvLaTax"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/tvFare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginLeft="80dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:text="TextView"
         android:textColor="@color/black33333"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintStart_toStartOf="@+id/tvTax"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/tvLaTax"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/tax"
         android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"/>
+        app:layout_constraintStart_toStartOf="@+id/tvLCurrency"
+        app:layout_constraintTop_toBottomOf="@+id/tvLBaseFare"/>
 
     <TextView
         android:id="@+id/tvTax"
@@ -51,18 +44,18 @@
         android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="@+id/tvFare"
+        app:layout_constraintStart_toStartOf="@+id/tvDepartTime"
         app:layout_constraintTop_toBottomOf="@+id/tvFare"/>
 
     <TextView
-        android:id="@+id/textView18"
+        android:id="@+id/tvLCurrency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/currency"
         android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/textView12"/>
+        app:layout_constraintStart_toStartOf="@+id/tvLOtherCharge"
+        app:layout_constraintTop_toBottomOf="@+id/tvLaTax"/>
 
     <TextView
         android:id="@+id/tvDepartTime"
@@ -71,18 +64,18 @@
         android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="@+id/tvTax"
+        app:layout_constraintStart_toStartOf="@+id/tvArrivalTime"
         app:layout_constraintTop_toBottomOf="@+id/tvTax"/>
 
     <TextView
-        android:id="@+id/textView21"
+        android:id="@+id/tvLOtherCharge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/othercharges"
         android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="@+id/textView18"
-        app:layout_constraintTop_toBottomOf="@+id/textView18"/>
+        app:layout_constraintStart_toStartOf="@+id/tvLPaxType"
+        app:layout_constraintTop_toBottomOf="@+id/tvLCurrency"/>
 
     <TextView
         android:id="@+id/tvArrivalTime"
@@ -91,41 +84,39 @@
         android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="@+id/tvDepartTime"
+        app:layout_constraintStart_toStartOf="@+id/tvPaxType"
         app:layout_constraintTop_toBottomOf="@+id/tvDepartTime"/>
 
     <TextView
-        android:id="@+id/textView24"
+        android:id="@+id/tvLPaxType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/paxtype"
         android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="@+id/textView21"
-        app:layout_constraintTop_toBottomOf="@+id/textView21"/>
+        app:layout_constraintStart_toStartOf="@+id/tvLPassengerCounter"
+        app:layout_constraintTop_toBottomOf="@+id/tvLOtherCharge"/>
 
     <TextView
-        android:id="@+id/textView25"
+        android:id="@+id/tvLPassengerCounter"
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/passenger_count"
         android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="@+id/textView24"
-        app:layout_constraintTop_toBottomOf="@+id/textView24"/>
+        app:layout_constraintStart_toStartOf="@+id/tvLService"
+        app:layout_constraintTop_toBottomOf="@+id/tvLPaxType"/>
 
     <TextView
-        android:id="@+id/textView26"
+        android:id="@+id/tvLService"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         android:text="@string/service_fee"
         android:textColor="@color/black33333"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textView25"
-        app:layout_constraintTop_toBottomOf="@+id/textView25"/>
+        app:layout_constraintStart_toStartOf="@+id/tvLconvercencFree"
+        app:layout_constraintTop_toBottomOf="@+id/tvLPassengerCounter"/>
 
     <TextView
         android:id="@+id/tvPaxType"
@@ -134,7 +125,7 @@
         android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="@+id/tvArrivalTime"
+        app:layout_constraintStart_toStartOf="@+id/tvPassengerCount"
         app:layout_constraintTop_toBottomOf="@+id/tvArrivalTime"/>
 
     <TextView
@@ -144,7 +135,7 @@
         android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="@+id/tvPaxType"
+        app:layout_constraintStart_toStartOf="@+id/tvServiceFee"
         app:layout_constraintTop_toBottomOf="@+id/tvPaxType"/>
 
     <TextView
@@ -152,11 +143,60 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textColor="@color/black33333"
+        app:layout_constraintStart_toStartOf="@+id/tvConvenienceFee"
+        app:layout_constraintTop_toBottomOf="@+id/tvPassengerCount"/>
+
+    <TextView
+        android:id="@+id/tvLconvercencFree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Convenience Fee"
+        android:textColor="@color/black33333"
+        app:layout_constraintStart_toStartOf="@+id/tvLAmount"
+        app:layout_constraintTop_toBottomOf="@+id/tvLService"/>
+
+    <TextView
+        android:id="@+id/tvConvenienceFee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textColor="@color/black33333"
+        app:layout_constraintStart_toStartOf="@+id/tvAmount"
+        app:layout_constraintTop_toBottomOf="@+id/tvServiceFee"/>
+
+    <TextView
+        android:id="@+id/tvLAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Amount"
+        android:textColor="@color/black33333"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvAmount"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLconvercencFree"/>
+
+    <TextView
+        android:id="@+id/tvAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:text="TextView"
         android:textColor="@color/black33333"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tvPassengerCount"
-        app:layout_constraintTop_toBottomOf="@+id/tvPassengerCount"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvLAmount"
+        app:layout_constraintTop_toBottomOf="@+id/tvConvenienceFee"
+        app:layout_constraintVertical_bias="0.0"/>
 
 </android.support.constraint.ConstraintLayout>

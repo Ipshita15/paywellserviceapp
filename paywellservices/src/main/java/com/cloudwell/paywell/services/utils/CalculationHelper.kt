@@ -64,6 +64,56 @@ object CalculationHelper {
         return format
     }
 
+    fun getFare(fares: com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Fare): com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Fare {
+        val readData = InternalStorageHelper.readData(InternalStorageHelper.CombustionfileName)
+        val commission = Gson().fromJson(readData, Commission::class.java)
+
+
+        var totalBaseFare = 0.0
+        var totalTax = 0.0
+        var totalOtherCharges = 0.0
+        var totalServiceFee = 0.0
+        var totalConvenienceFee = 0.0
+        var totalRetailerCommission = 0.0
+        val total_commission = 0.0
+
+        val retailer_commission = 0.0
+
+
+        val passengerCount = fares.passengerCount;
+        val baseFare = Math.ceil((fares.baseFare) * passengerCount)
+        totalBaseFare += baseFare;
+        val Tax = Math.ceil(fares.tax) * passengerCount;
+        totalTax += Tax;
+
+        val OtherCharges = Math.ceil(fares.otherCharges) * passengerCount;
+        totalOtherCharges += OtherCharges;
+
+        val ServiceFee = Math.ceil(Math.ceil(fares.serviceFee) * passengerCount)
+        totalServiceFee += ServiceFee;
+        var convenienceFee = 0.0;
+
+        val Discount = fares.discount * passengerCount;
+        if (commission.commissionType?.toInt() == 1) {
+
+            val discountOnBasefare = (total_commission / 100) * baseFare;
+            totalRetailerCommission += (retailer_commission / 100) * baseFare;
+            if (Discount < discountOnBasefare) {
+                convenienceFee = Math.ceil(discountOnBasefare - Discount);
+                totalConvenienceFee += convenienceFee;
+            }
+        }
+        var subTotal = baseFare + Tax + OtherCharges + ServiceFee + convenienceFee;
+
+
+        val totalCalculated = totalBaseFare + totalTax + totalOtherCharges + totalServiceFee + totalConvenienceFee;
+
+        fares.amount = "" + totalCalculated
+        fares.convenienceFee = convenienceFee
+
+        return fares
+    }
+
 
     fun getTotalFareDetati(fares: List<com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Fare>): String {
         val readData = InternalStorageHelper.readData(InternalStorageHelper.CombustionfileName)

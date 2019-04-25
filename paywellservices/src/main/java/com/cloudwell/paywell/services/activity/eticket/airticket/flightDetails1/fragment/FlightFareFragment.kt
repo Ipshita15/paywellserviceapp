@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.cloudwell.paywell.service.CalculationHelper
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.adapter.FareListAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Fare
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
@@ -26,7 +27,6 @@ class FlightFareFragment() : Fragment() {
 
         fare = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.FARE_DATA) as MutableList<Fare>
 
-
         val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_flight_fare_fragment, container, false)
 
 
@@ -37,7 +37,20 @@ class FlightFareFragment() : Fragment() {
         v.rvFareList.setItemAnimator(DefaultItemAnimator())
 
 
-        val recyclerListAdapter = FareListAdapter(activity?.applicationContext!!, fare)
+        val temp = mutableListOf<Fare>()
+
+        for (fare in fare) {
+            val calculatorFare = CalculationHelper.getFare(fare)
+            temp.add(calculatorFare)
+        }
+
+
+        val total = CalculationHelper.getTotalFareDetati(fare)
+        val fare1 = Fare()
+        fare1.amount = total
+        temp.add(fare1)
+
+        val recyclerListAdapter = FareListAdapter(activity?.applicationContext!!, temp)
         v.rvFareList.adapter = recyclerListAdapter
 
         val dividerItemDecoration = DividerItemDecoration(v.rvFareList.getContext(), mLayoutManager.getOrientation())
