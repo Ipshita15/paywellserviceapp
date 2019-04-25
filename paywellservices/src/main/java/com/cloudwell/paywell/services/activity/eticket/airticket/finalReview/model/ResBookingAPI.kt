@@ -12,6 +12,8 @@ class ResBookingAPI(var throwable: Throwable) {
     var data: Data? = null
     @SerializedName("message")
     var message: String? = null
+    @SerializedName("message_details")
+    var messageDetails: String? = null
     @SerializedName("status")
     var status: Int = 0
 

@@ -43,16 +43,13 @@ class BookingSuccessDialog : DialogFragment() {
 
         v.tvFare.text = resBookingAPI.bookingID
         v.tvMessage.text = resBookingAPI.message
+        v.tvMessageDetails.text = resBookingAPI.messageDetails
 
         v.tvFare.setOnClickListener {
             val cm = activity?.application?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             cm.setText(v.tvFare.getText())
             Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_SHORT).show()
         }
-
-
-
-
 
         v.btBooking.setOnClickListener {
             val intent = Intent(activity, AirTicketMainActivity::class.java)

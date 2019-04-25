@@ -744,7 +744,7 @@
     <string name="national_id">National ID Or Student ID</string>
     <string name="booking_now">Booking Now</string>
     <string name="ticket_booking">Booking Now</string>
-    <string name="booking_id">Booking ID</string>
+    <string name="booking_id">Booking ID: </string>
     <string name="ticket_status">Ticket status :</string>
     <string name="please_seleted_a_option">please select a option</string>
     <string name="view_tricket">View Ticket</string>
