@@ -737,7 +737,7 @@
     <string name="add_edit">Add/Edit</string>
     <string name="flight_information">Flight Information</string>
     <string name="add_passenger">Add passenger</string>
-    <string name="national_id">National ID</string>
+    <string name="national_id">National ID Or Student ID</string>
     <string name="booking_now">Booking Now</string>
     <string name="ticket_booking">Ticket booking</string>
     <string name="booking_id">Booking ID</string>

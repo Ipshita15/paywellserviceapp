@@ -38,9 +38,8 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.cloudwell.paywell.services.R.layout.activity_flight_details)
-
-        setToolbar(getString(com.cloudwell.paywell.services.R.string.title_booking_and_review))
+        setContentView(R.layout.activity_flight_details)
+        setToolbar(getString(R.string.title_booking_and_review))
 
         rootLayout.visibility = View.INVISIBLE
         initializationView()
@@ -133,7 +132,7 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
 
             val durtingJounaryTime = DateUtils.getDurtingJounaryTime(totalJourneyinMiliSecound)
-            tvTotalDepartTime.text = durtingJounaryTime
+//            tvTotalDepartTime.text = durtingJounaryTime
             AppStorageBox.put(applicationContext, AppStorageBox.Key.totalJourney_time, durtingJounaryTime)
 
 
@@ -394,7 +393,7 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
 
         val durtingJounaryTime = DateUtils.getDurtingJounaryTime(totalJourneyinMiliSecound)
-        tvTotalDepartTime.text = DateUtils.getDurtingJounaryTime(totalJourneyinMiliSecound)
+//        tvTotalDepartTime.text = DateUtils.getDurtingJounaryTime(totalJourneyinMiliSecound)
 
         AppStorageBox.put(applicationContext, AppStorageBox.Key.totalJourney_time, durtingJounaryTime)
 

@@ -72,17 +72,6 @@
                 app:layout_constraintTop_toTopOf="@+id/tvDepart2"
                 tools:text="Thu, Jan 24"/>
 
-            <View
-                android:id="@+id/view"
-                android:layout_width="1dp"
-                android:layout_height="12dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
-                android:background="#c0c0c0"
-                app:layout_constraintBottom_toBottomOf="@+id/tvNameOfDate"
-                app:layout_constraintStart_toEndOf="@+id/tvNameOfDate"
-                app:layout_constraintTop_toTopOf="@+id/tvNameOfDate"/>
-
             <TextView
                 android:id="@+id/tvOrginAndDestinationAirportCode"
                 android:layout_width="wrap_content"
@@ -127,16 +116,13 @@
                 android:id="@+id/tvTotalDepartTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:textColor="@color/black33333"
                 android:textStyle="bold"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/tvNameOfDate"
-                app:layout_constraintEnd_toStartOf="@+id/ivUpDown"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/view"
+                app:layout_constraintStart_toEndOf="@+id/tvNameOfDate"
                 app:layout_constraintTop_toTopOf="@+id/tvNameOfDate"
                 tools:text="1H55m"/>
 
