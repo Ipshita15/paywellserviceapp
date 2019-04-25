@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.cloudwell.paywell.services.R
-import kotlinx.android.synthetic.main.fragment_booking.view.btBooking
 import kotlinx.android.synthetic.main.fragment_re_prices_status.view.*
 
 

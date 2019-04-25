@@ -1,5 +1,6 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
@@ -31,17 +32,18 @@ class BookingStatusFragment : DialogFragment() {
     }
 
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_booking, container, false)
+        val v = inflater.inflate(R.layout.fragment_booking, container, false)
 
         resAirPreBooking = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.AIR_PRE_BOOKKING) as ResAirPreBooking
 
         val fareType = resAirPreBooking.data?.results?.get(0)?.fareType
         if (fareType.equals("InstantTicketing")) {
-            v.btBooking.text = getString(R.string.issue_ticket)
+            v.btBooking2.text = getString(R.string.issue_ticket)
         } else {
-            v.btBooking.text = getString(R.string.booking_now)
+            v.btBooking2.text = getString(R.string.booking_now)
         }
 
 
@@ -52,7 +54,7 @@ class BookingStatusFragment : DialogFragment() {
         v.tvFare.text = activity?.getString(R.string.total_fare_text) + ": TK. " + totalFare
 
         if (resAirPreBooking.data?.results?.get(0)?.isRefundable!!) {
-            v.tvTax.text = getString(com.cloudwell.paywell.services.R.string.refundable) + ": Yes"
+            v.tvTax.text = getString(R.string.refundable) + ": Yes"
         } else {
             v.tvTax.text = getString(com.cloudwell.paywell.services.R.string.non_refundable) + ": No"
         }
@@ -65,7 +67,7 @@ class BookingStatusFragment : DialogFragment() {
             val depTimeSplit = depTime?.split("T")
 
             v.tvDepartTime.text = activity?.getString(R.string.depart_time_) + " " + depTimeSplit!![0] + " " + depTimeSplit[1]
-            v.tvArrivalTime.text = activity?.getString(R.string.arrival_time) + ": " + arrTimeSplit!![0] + " " + arrTimeSplit[1]
+            v.tvArrivalTime.text = activity?.getString(R.string.arrival_time) + arrTimeSplit!![0] + " " + arrTimeSplit[1]
 
 
         } else {
@@ -78,14 +80,18 @@ class BookingStatusFragment : DialogFragment() {
             v.tvArrivalTime.text = activity?.getString(R.string.arrival_time) + ": " + arrTimeSplit!![0] + " " + arrTimeSplit[1]
         }
 
-        v.tvAirportName.text = activity?.getString(R.string.airport_name) + resAirPreBooking.data?.results?.get(0)?.segments?.get(0)?.airline?.airlineName
+        v.tvAirportName.text = activity?.getString(R.string.airless_name) + resAirPreBooking.data?.results?.get(0)?.segments?.get(0)?.airline?.airlineName
 
 
 
-        v.btBooking.setOnClickListener {
+        v.btCancel.setOnClickListener {
+            dismiss()
+        }
+        v.btBooking2.setOnClickListener {
             bookingDialogListener.onBooking(resAirPreBooking)
             dismiss()
         }
+
 
         return v
     }

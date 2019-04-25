@@ -605,7 +605,7 @@
     <string name="action_search">Serach</string>
     <string name="ettitle_booking_and_review">Review and Book</string>
     <string name="baggage_policy_details"><![CDATA[Baggage & Policy Details]]></string>
-    <string name="refundable"> Is refundable</string>
+    <string name="refundable">Refundable</string>
     <string name="non_refundable">No Refundable</string>
     <string name="passport_mandatory">Passport Mandatory</string>
     <string name="passport_not_mandatory">Passport not mandatory</string>
@@ -681,7 +681,7 @@
     <string name="passengers">Passengers</string>
     <string name="search_text">Search</string>
     <string name="airline_code">Airline code: </string>
-    <string name="airless_name">Airless name: </string>
+    <string name="airless_name">Airless Name: </string>
     <string name="flight_number">Flight number: </string>
     <string name="booking_class">Booking Class: </string>
     <string name="cabin_class">Cabin class :</string>
@@ -709,7 +709,7 @@
     <string name="please_select_arrival_airport">Please select arrival airport</string>
     <string name="please_select_depart_date">Please select depart date</string>
     <string name="total_fare_text">Total Fare</string>
-    <string name="depart_time_">Departure: </string>
+    <string name="depart_time_">Departure Time: </string>
     <string name="one_way_menu_title">One-way</string>
     <string name="round_trip_menu_title">Round-trip</string>
     <string name="multi_city_menu_title">Multi-City</string>
