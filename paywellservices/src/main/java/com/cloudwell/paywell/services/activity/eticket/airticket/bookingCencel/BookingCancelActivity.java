@@ -87,6 +87,9 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
                     String userName = mAppHandler.getImeiNo();
                     callCancelMapping(userName, bookingIdET.getText().toString());
                 } else {
+
+                    hideUserKeyboard();
+
                     Snackbar snackbar = Snackbar.make(cancelMainLayout, "Please Enter all the fields first", Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
@@ -228,13 +231,14 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
                     showUserCencelData(response.body());
 
                 } else {
-                    showSnackMessageWithTextMessage(getString(R.string.please_try_again));
+                    showSnackMessageWithTextMessage(response.body().getMessage());
                 }
             }
 
             @Override
             public void onFailure(Call<ResCancellationMapping> call, Throwable t) {
                 dismissProgressDialog();
+                showSnackMessageWithTextMessage(getString(R.string.please_try_again));
 
             }
 
