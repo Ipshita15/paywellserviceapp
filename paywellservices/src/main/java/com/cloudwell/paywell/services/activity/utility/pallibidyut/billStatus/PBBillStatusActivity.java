@@ -100,12 +100,10 @@ public class PBBillStatusActivity extends BaseActivity implements View.OnClickLi
         spnr_year.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    year = 0;
-                } else {
-                    String year_str = String.valueOf(spnr_year.getSelectedItem());
-                    year = Integer.parseInt(year_str);
-                }
+
+                String year_str = String.valueOf(spnr_year.getSelectedItem());
+                year = Integer.parseInt(year_str);
+
             }
 
             @Override
