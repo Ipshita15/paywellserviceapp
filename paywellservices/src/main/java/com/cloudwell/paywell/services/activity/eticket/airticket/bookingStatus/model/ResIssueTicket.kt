@@ -14,6 +14,9 @@ class ResIssueTicket(var throwable: Throwable) {
     @SerializedName("message")
     var message: String = ""
 
+    @SerializedName("message_details")
+    var messageDetails: String = ""
+
     @SerializedName("status")
     var status: Int = 0
 

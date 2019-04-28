@@ -138,7 +138,7 @@
         app:layout_constraintTop_toTopOf="@+id/tvBookingStatus"/>
 
     <ImageView
-        android:id="@+id/ivAction"
+        android:id="@+id/ivActionTrans"
         android:layout_width="28dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

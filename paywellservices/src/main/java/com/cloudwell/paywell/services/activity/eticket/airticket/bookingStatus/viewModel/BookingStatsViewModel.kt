@@ -10,7 +10,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.m
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 28/3/19.
  */
-class BookingStatuViewModel : AirTicketBaseViewMode() {
+class BookingStatsViewModel : AirTicketBaseViewMode() {
 
     var responseList = SingleLiveEvent<BookingList>()
     val mViewStatus = SingleLiveEvent<BookingStatuViewStatus>()
@@ -68,7 +68,7 @@ class BookingStatuViewModel : AirTicketBaseViewMode() {
 
                 val bookingStatuViewStatus = BookingStatuViewStatus()
                 if (it.isPriceChanged == null) {
-                    bookingStatuViewStatus.successMessageTricketStatus = it.message
+                    bookingStatuViewStatus.successMessageTricketStatus = it.messageDetails
                     mViewStatus.value = bookingStatuViewStatus
                 } else {
                     bookingStatuViewStatus.modelPriceChange = it
