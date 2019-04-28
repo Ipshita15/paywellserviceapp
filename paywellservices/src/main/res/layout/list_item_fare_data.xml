@@ -1,202 +1,248 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="8dp">
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:background="#FFFFFF"
+             android:paddingLeft="10dp"
+             android:paddingRight="10dp"
+             android:stretchColumns="2">
 
-    <TextView
-        android:id="@+id/tvLBaseFare"
-        android:layout_width="wrap_content"
-        android:layout_height="19dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/base_fare"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@+id/tvLaTax"
-        app:layout_constraintTop_toTopOf="parent"/>
+    <TableRow
+        android:id="@+id/tableRow1"
+        >
 
-    <TextView
-        android:id="@+id/tvFare"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="@+id/tvTax"
-        app:layout_constraintTop_toTopOf="parent"/>
+        <TextView
+            android:id="@+id/tvLBaseFare"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="@string/base_fare"
+            android:textColor="@color/black"
+            />
 
-    <TextView
-        android:id="@+id/tvLaTax"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/tax"
-        android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="@+id/tvLCurrency"
-        app:layout_constraintTop_toBottomOf="@+id/tvLBaseFare"/>
+        <TextView
+            android:id="@+id/tvFare"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textColor="@color/black33333"
+            />
+    </TableRow>
 
-    <TextView
-        android:id="@+id/tvTax"
+    <TableRow
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="@+id/tvDepartTime"
-        app:layout_constraintTop_toBottomOf="@+id/tvFare"/>
+        android:id="@+id/tableRow2"
+        >
 
-    <TextView
-        android:id="@+id/tvLCurrency"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/currency"
-        android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="@+id/tvLOtherCharge"
-        app:layout_constraintTop_toBottomOf="@+id/tvLaTax"/>
+        <TextView
 
-    <TextView
-        android:id="@+id/tvDepartTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="@+id/tvArrivalTime"
-        app:layout_constraintTop_toBottomOf="@+id/tvTax"/>
+            android:id="@+id/tvLaTax"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="@string/tax"
+            android:textColor="@color/black33333"
+            />
 
-    <TextView
-        android:id="@+id/tvLOtherCharge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/othercharges"
-        android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="@+id/tvLPaxType"
-        app:layout_constraintTop_toBottomOf="@+id/tvLCurrency"/>
+        <TextView
+            android:id="@+id/tvTax"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textColor="@color/black33333"
+            />
+    </TableRow>
 
-    <TextView
-        android:id="@+id/tvArrivalTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="@+id/tvPaxType"
-        app:layout_constraintTop_toBottomOf="@+id/tvDepartTime"/>
+    <TableRow
+        android:id="@+id/tableRow3"
+        >
 
-    <TextView
-        android:id="@+id/tvLPaxType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/paxtype"
-        android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="@+id/tvLPassengerCounter"
-        app:layout_constraintTop_toBottomOf="@+id/tvLOtherCharge"/>
+        <TextView
+            android:id="@+id/tvLCurrency"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="@string/currency"
+            android:textColor="@color/black33333"
+            />
 
-    <TextView
-        android:id="@+id/tvLPassengerCounter"
+        <TextView
+            android:id="@+id/tvDepartTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textColor="@color/black33333"
+            />
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/passenger_count"
-        android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="@+id/tvLService"
-        app:layout_constraintTop_toBottomOf="@+id/tvLPaxType"/>
+    </TableRow>
 
-    <TextView
-        android:id="@+id/tvLService"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/service_fee"
-        android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="@+id/tvLconvercencFree"
-        app:layout_constraintTop_toBottomOf="@+id/tvLPassengerCounter"/>
 
-    <TextView
-        android:id="@+id/tvPaxType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="@+id/tvPassengerCount"
-        app:layout_constraintTop_toBottomOf="@+id/tvArrivalTime"/>
+    <TableRow
+        android:id="@+id/tableRow4"
+        >
 
-    <TextView
-        android:id="@+id/tvPassengerCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="@+id/tvServiceFee"
-        app:layout_constraintTop_toBottomOf="@+id/tvPaxType"/>
+        <TextView
+            android:id="@+id/tvLOtherCharge"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="@string/othercharges"
+            android:textColor="@color/black33333"/>
 
-    <TextView
-        android:id="@+id/tvServiceFee"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="@+id/tvConvenienceFee"
-        app:layout_constraintTop_toBottomOf="@+id/tvPassengerCount"/>
+        <TextView
+            android:id="@+id/tvArrivalTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textColor="@color/black33333"
 
-    <TextView
-        android:id="@+id/tvLconvercencFree"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Convenience Fee"
-        android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="@+id/tvLAmount"
-        app:layout_constraintTop_toBottomOf="@+id/tvLService"/>
+            />
 
-    <TextView
-        android:id="@+id/tvConvenienceFee"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="@+id/tvAmount"
-        app:layout_constraintTop_toBottomOf="@+id/tvServiceFee"/>
+    </TableRow>
 
-    <TextView
-        android:id="@+id/tvLAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Amount"
-        android:textColor="@color/black33333"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tvAmount"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvLconvercencFree"/>
+    <TableRow
+        android:id="@+id/tableRow5"
+        >
 
-    <TextView
-        android:id="@+id/tvAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="TextView"
-        android:textColor="@color/black33333"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tvLAmount"
-        app:layout_constraintTop_toBottomOf="@+id/tvConvenienceFee"
-        app:layout_constraintVertical_bias="0.0"/>
+        <TextView
+            android:id="@+id/tvLPaxType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="@string/paxtype"
+            android:textColor="@color/black33333"
+            />
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/tvPaxType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textColor="@color/black33333"
+            />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow6"
+        >
+
+        <TextView
+            android:id="@+id/tvLPassengerCounter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="@string/passenger_count"
+            android:textColor="@color/black33333"
+            />
+
+
+        <TextView
+            android:id="@+id/tvPassengerCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textColor="@color/black33333"
+            />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow7"
+        >
+
+        <TextView
+            android:id="@+id/tvLService"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="@string/service_fee"
+            android:textColor="@color/black33333"
+            />
+
+        <TextView
+            android:id="@+id/tvServiceFee"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textColor="@color/black33333"
+            />
+
+    </TableRow>
+
+
+    <TableRow
+        android:id="@+id/tableRow8"
+        >
+
+        <TextView
+            android:id="@+id/tvLconvercencFree"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="Convenience Fee"
+            android:textColor="@color/black33333"
+            />
+
+        <TextView
+            android:id="@+id/tvConvenienceFee"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textColor="@color/black33333"
+            />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow9"
+        >
+
+        <TextView
+            android:id="@+id/tvLAmount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="@string/amount"
+            android:textColor="@color/black33333"/>
+
+        <TextView
+            android:id="@+id/tvAmount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textColor="@color/black33333"
+            />
+
+    </TableRow>
+
+
+</TableLayout>

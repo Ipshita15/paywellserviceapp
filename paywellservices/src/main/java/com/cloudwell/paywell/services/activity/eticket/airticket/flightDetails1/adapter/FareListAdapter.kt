@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Fare
-import kotlinx.android.synthetic.main.layout_test.view.*
+import kotlinx.android.synthetic.main.list_item_fare_data.view.*
 
 class FareListAdapter(var context: Context, var items: List<Fare>) : RecyclerView.Adapter<FareListAdapter.ViewHolder>() {
 
@@ -18,17 +18,17 @@ class FareListAdapter(var context: Context, var items: List<Fare>) : RecyclerVie
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FareListAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
 
-        val view = LayoutInflater.from(context).inflate(R.layout.layout_test, parent, false)
-        return FareListAdapter.ViewHolder(view)
+        val view = LayoutInflater.from(context).inflate(R.layout.list_item_fare_data, parent, false)
+        return ViewHolder(view)
 
 
     }
 
 
-    override fun onBindViewHolder(holder: FareListAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val model = items.get(position)
 
         holder.tvFareBaseFare.text = "" + model.baseFare
@@ -42,14 +42,21 @@ class FareListAdapter(var context: Context, var items: List<Fare>) : RecyclerVie
         holder.tvAmount.text = "" + model.amount
 
 
+
+        holder.tableRow1.visibility = View.VISIBLE
+        holder.tableRow2.visibility = View.VISIBLE
+        holder.tableRow3.visibility = View.VISIBLE
+        holder.tableRow4.visibility = View.VISIBLE
+        holder.tableRow5.visibility = View.VISIBLE
+        holder.tableRow6.visibility = View.VISIBLE
+        holder.tableRow7.visibility = View.VISIBLE
+        holder.tableRow8.visibility = View.VISIBLE
+
+        holder.tvLAmount.visibility = View.VISIBLE
+
         if (items.lastIndex == position) {
-            holder.tvLAmount.text = "Total Amount"
-            holder.tvLAmount.setTypeface(null, Typeface.BOLD);
-            holder.tvAmount.text = "" + model.amount
-            holder.tvAmount.setTypeface(null, Typeface.BOLD);
 
-
-            holder.tableRow1.visibility = View.GONE
+            holder.tableRow9.visibility = View.GONE
             holder.tableRow2.visibility = View.GONE
             holder.tableRow3.visibility = View.GONE
             holder.tableRow4.visibility = View.GONE
@@ -58,26 +65,11 @@ class FareListAdapter(var context: Context, var items: List<Fare>) : RecyclerVie
             holder.tableRow7.visibility = View.GONE
             holder.tableRow8.visibility = View.GONE
 
+            holder.tvLBaseFare.text = context.getString(R.string.total_amount)
+            holder.tvLBaseFare.setTypeface(null, Typeface.BOLD);
 
-//            holder.tvLBaseFare.visibility = View.GONE
-//            holder.tvLaTax.visibility = View.GONE
-//            holder.tvLCurrency.visibility = View.GONE
-//            holder.tvLOtherCharge.visibility = View.GONE
-//            holder.tvLPaxType.visibility = View.GONE
-//            holder.tvLPassengerCounter.visibility = View.GONE
-//            holder.tvLService.visibility = View.GONE
-//            holder.tvLconvercencFree.visibility = View.GONE
-//
-//
-//
-//            holder.tvFareBaseFare.visibility = View.GONE
-//            holder.tvTax.visibility = View.GONE
-//            holder.tvCurrency.visibility = View.GONE
-//            holder.tvOtherCarge.visibility = View.GONE
-//            holder.tvPaxType.visibility = View.GONE
-//            holder.tvPassengerCount.visibility = View.GONE
-//            holder.tvServiceFee.visibility = View.GONE
-//            holder.tvConvenienceFee.visibility = View.GONE
+            holder.tvFareBaseFare.text = model.amount
+            holder.tvFareBaseFare.setTypeface(null, Typeface.BOLD);
 
 
         }
@@ -99,13 +91,6 @@ class FareListAdapter(var context: Context, var items: List<Fare>) : RecyclerVie
 
 
         val tvLBaseFare = v.tvLBaseFare
-        val tvLaTax = v.tvLaTax
-        val tvLCurrency = v.tvLCurrency
-        val tvLOtherCharge = v.tvLOtherCharge
-        val tvLPaxType = v.tvLPaxType
-        val tvLPassengerCounter = v.tvLPassengerCounter
-        val tvLService = v.tvLService
-        val tvLconvercencFree = v.tvLconvercencFree
         val tvLAmount = v.tvLAmount
 
 

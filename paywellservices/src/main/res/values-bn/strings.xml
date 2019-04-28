@@ -725,8 +725,8 @@
     <string name="price_details">Price Details</string>
     <string name="rules">Rules:</string>
     <string name="extra_serviex">Extra Services</string>
-    <string name="base_fare">Base Fare:</string>
-    <string name="tax">Tax:</string>
+    <string name="base_fare">Base Fare</string>
+    <string name="tax">Tax</string>
     <string name="currency">Currency</string>
     <string name="othercharges">Other Charges</string>
     <string name="discount">Discount</string>
@@ -780,6 +780,8 @@
     <string name="back_to_search">Back To Search</string>
     <string name="please_search_for_another_flight">Please search for another flight</string>
     <string name="date_of_birth">Date Of Birth *</string>
+    <string name="total_amount">Total Amount</string>
+    <string name="amount">Amount</string>
 
 
 </resources>
