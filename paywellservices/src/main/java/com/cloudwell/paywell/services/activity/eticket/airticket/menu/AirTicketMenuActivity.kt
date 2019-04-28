@@ -116,7 +116,12 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
 
     private fun showLimitPrompt(tag: String) {
         val dialog = AppCompatDialog(this)
-        dialog.setTitle(R.string.log_limit_title_msg)
+        if (tag.equals(BOOKING_TAG)) {
+            dialog.setTitle(R.string.book)
+        } else if (tag.equals(TRX_TAG)) {
+            dialog.setTitle(R.string.log_limit_title_msg)
+        }
+
         dialog.setContentView(R.layout.dialog_trx_limit)
 
         val btn_okay = dialog.findViewById<Button>(R.id.buttonOk)
