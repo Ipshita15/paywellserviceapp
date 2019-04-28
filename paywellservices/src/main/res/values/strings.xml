@@ -726,7 +726,7 @@
     <string name="currency">Currency</string>
     <string name="othercharges">Other Charges</string>
     <string name="discount">Discount</string>
-    <string name="paxtype">PaxType</string>
+    <string name="paxtype">Pax Type</string>
     <string name="passenger_count">Passenger Count</string>
     <string name="service_fee">Service Fee</string>
     <string name="book_text">Book</string>
