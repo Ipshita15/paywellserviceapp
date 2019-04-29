@@ -28,20 +28,12 @@ public class PicassoImageLoadingService implements ImageLoadingService {
 
     @Override
     public void loadImage(String url, ImageView imageView) {
-        if ((System.currentTimeMillis() / 1000) >= (mAppHandler.getImgCacheCleanUpdateCheck() + UPDATE_IMG_CACHE_CLEAN_INTERVAL)) {
-            mAppHandler.setImgCacheCleanUpdateCheck(System.currentTimeMillis() / 1000);
-            Picasso.get()
-                    .load(url)
-                    .fit()
-                    .memoryPolicy(MemoryPolicy.NO_CACHE)
-                    .networkPolicy(NetworkPolicy.NO_CACHE)
-                    .into(imageView);
-        } else {
-            Picasso.get()
-                    .load(url)
-                    .fit()
-                    .into(imageView);
-        }
+
+        Picasso.get()
+                .load(url)
+                .fit()
+                .into(imageView);
+
 
     }
 
