@@ -600,8 +600,8 @@
     <string name="no_search_results">No search results</string>
     <string name="search_again">Search again</string>
     <string name="search">Search</string>
-    <string name="cancel">Booking cancellation</string>
-    <string name="transaction_log">Transaction Log</string>
+    <string name="cancel">Booking Cancellation</string>
+    <string name="transaction_log">Booking Log</string>
     <string name="action_search">Serach</string>
     <string name="ettitle_booking_and_review">Review and Book</string>
     <string name="baggage_policy_details"><![CDATA[Baggage & Policy Details]]></string>
