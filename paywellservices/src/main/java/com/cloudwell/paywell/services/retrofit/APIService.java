@@ -74,7 +74,8 @@ public interface APIService {
                                                  @Field("bankId") String bankId,
                                                  @Field("districtId") String districtId,
                                                  @Field("branchId") String branchId,
-                                                 @Field("depositslip") String depositslip);
+                                                 @Field("depositslip") String depositslip,
+                                                 @Field("Amount") String amount);
 
     @POST("PaywelltransactionPollyBiddyut/pollyBiddyutBillStatusQuery")
     @FormUrlEncoded

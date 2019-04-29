@@ -778,6 +778,7 @@
     <string name="total_amount">Total Amount</string>
     <string name="amount">Amount</string>
     <string name="booking_log_limit_title_msg">Booking Log Limit</string>
+    <string name="amount_optional">Amount(optional)</string>
 
 
 </resources>
