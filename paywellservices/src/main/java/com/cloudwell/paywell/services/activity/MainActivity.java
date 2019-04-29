@@ -982,7 +982,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 isBalaceCheckProcessRunning = false;
 
                 if (response.isSuccessful()) {
-                    if ((response.body() != null ? response.body().getStatus() : null) == 200) {
+                    if (((response.body() != null) ? response.body().getStatus() : null) != 200) {
+
+                        showSnackMessageWithTextMessage(getString(R.string.try_again_msg));
+
+                    } else {
                         String balance = Objects.requireNonNull(response.body()).getBalanceData().getBalance();
 
                         BigDecimal a = new BigDecimal(balance);
@@ -993,10 +997,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                         String strBalance = mAppHandler.getPwBalance();
                         mToolbarHeading.setText(strBalance);
-
-                    } else {
-
-                        showSnackMessageWithTextMessage(getString(R.string.try_again_msg));
 
                     }
 
