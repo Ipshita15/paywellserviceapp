@@ -782,6 +782,7 @@
     <string name="date_of_birth">Date Of Birth *</string>
     <string name="total_amount">Total Amount</string>
     <string name="amount">Amount</string>
+    <string name="booking_log_limit_title_msg">Booking Log Limit</string>
 
 
 </resources>

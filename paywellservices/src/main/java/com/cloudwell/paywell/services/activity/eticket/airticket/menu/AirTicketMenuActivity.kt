@@ -119,7 +119,7 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
         if (tag.equals(BOOKING_TAG)) {
             dialog.setTitle(R.string.book)
         } else if (tag.equals(TRX_TAG)) {
-            dialog.setTitle(R.string.log_limit_title_msg)
+            dialog.setTitle(R.string.booking_log_limit_title_msg)
         }
 
         dialog.setContentView(R.layout.dialog_trx_limit)
