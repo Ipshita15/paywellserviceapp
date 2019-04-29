@@ -161,6 +161,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -980,19 +981,28 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 mToolbarHeading.setVisibility(View.VISIBLE);
                 isBalaceCheckProcessRunning = false;
 
-                assert response.body() != null;
-                if (response.body().getStatus() == 200) {
-                    String balance = response.body().getBalanceData().getBalance();
+                if (response.isSuccessful()) {
+                    if ((response.body() != null ? response.body().getStatus() : null) == 200) {
+                        String balance = Objects.requireNonNull(response.body()).getBalanceData().getBalance();
 
-                    BigDecimal a = new BigDecimal(balance);
-                    BigDecimal roundOff = a.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                        BigDecimal a = new BigDecimal(balance);
+                        BigDecimal roundOff = a.setScale(2, BigDecimal.ROUND_HALF_EVEN);
 
 
-                    mAppHandler.setPWBalance("" + roundOff);
+                        mAppHandler.setPWBalance("" + roundOff);
 
-                    String strBalance = mAppHandler.getPwBalance();
-                    mToolbarHeading.setText(strBalance);
+                        String strBalance = mAppHandler.getPwBalance();
+                        mToolbarHeading.setText(strBalance);
 
+                    } else {
+
+                        showSnackMessageWithTextMessage(getString(R.string.try_again_msg));
+
+                    }
+
+                } else {
+
+                    showSnackMessageWithTextMessage(getString(R.string.try_again_msg));
 
                 }
             }
@@ -1004,11 +1014,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 isBalaceCheckProcessRunning = false;
 
 
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
+                showSnackMessageWithTextMessage(getString(R.string.try_again_msg));
+
+
             }
         });
     }
