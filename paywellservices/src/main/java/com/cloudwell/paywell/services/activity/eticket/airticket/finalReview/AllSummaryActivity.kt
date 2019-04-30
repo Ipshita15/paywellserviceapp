@@ -218,6 +218,9 @@ class AllSummaryActivity : AirTricketBaseActivity() {
         val glm = GridLayoutManager(applicationContext, columns)
         recyclerView.layoutManager = glm
 
+        recyclerView.layoutManager = glm
+        recyclerView.isNestedScrollingEnabled = true
+
 
         val recyclerListAdapter = AdapterForPassengersFinalList(this, it, object : AdapterForPassengersFinalList.OnClickListener {
 
@@ -236,10 +239,8 @@ class AllSummaryActivity : AirTricketBaseActivity() {
 
         })
 
-
-        recyclerView.layoutManager = glm
         recyclerView.adapter = recyclerListAdapter;
-        recyclerView.isNestedScrollingEnabled = false;
+
 
     }
 
@@ -329,6 +330,7 @@ class AllSummaryActivity : AirTricketBaseActivity() {
         }
 
         recyclerViewAirports.setNestedScrollingEnabled(false)
+        recyclerViewAirports.setHasFixedSize(true)
         val mLayoutManager = LinearLayoutManager(applicationContext)
         recyclerViewAirports.setLayoutManager(mLayoutManager)
         recyclerViewAirports.setItemAnimator(DefaultItemAnimator())
