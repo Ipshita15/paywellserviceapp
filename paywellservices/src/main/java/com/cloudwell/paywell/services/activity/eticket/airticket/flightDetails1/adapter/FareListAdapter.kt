@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Fare
 import kotlinx.android.synthetic.main.list_item_fare_data.view.*
+import java.text.NumberFormat
 
 class FareListAdapter(var context: Context, var items: List<Fare>) : RecyclerView.Adapter<FareListAdapter.ViewHolder>() {
 
@@ -31,15 +32,15 @@ class FareListAdapter(var context: Context, var items: List<Fare>) : RecyclerVie
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val model = items.get(position)
 
-        holder.tvFareBaseFare.text = "" + model.baseFare
-        holder.tvTax.text = "" + model.tax
+        holder.tvFareBaseFare.text = "" + NumberFormat.getInstance().format(model.baseFare)
+        holder.tvTax.text = "" + NumberFormat.getInstance().format(model.tax)
         holder.tvCurrency.text = "" + model.currency
-        holder.tvOtherCarge.text = "" + model.otherCharges
+        holder.tvOtherCarge.text = "" + NumberFormat.getInstance().format(model.otherCharges)
         holder.tvPaxType.text = "" + model.paxType
-        holder.tvPassengerCount.text = "" + model.passengerCount
-        holder.tvServiceFee.text = "" + model.serviceFee
-        holder.tvConvenienceFee.text = "" + model.convenienceFee
-        holder.tvAmount.text = "" + model.amount
+        holder.tvPassengerCount.text = "" + NumberFormat.getInstance().format(model.passengerCount)
+        holder.tvServiceFee.text = "" + NumberFormat.getInstance().format(model.serviceFee)
+        holder.tvConvenienceFee.text = "" + NumberFormat.getInstance().format(model.convenienceFee)
+        holder.tvAmount.text = "" + NumberFormat.getInstance().format((model.amount.toDouble()))
 
 
 
@@ -68,7 +69,7 @@ class FareListAdapter(var context: Context, var items: List<Fare>) : RecyclerVie
             holder.tvLBaseFare.text = context.getString(R.string.total_amount)
             holder.tvLBaseFare.setTypeface(null, Typeface.BOLD);
 
-            holder.tvFareBaseFare.text = model.amount
+            holder.tvFareBaseFare.text = "" + model.amount
             holder.tvFareBaseFare.setTypeface(null, Typeface.BOLD);
 
 

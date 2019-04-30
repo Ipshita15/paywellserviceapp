@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_flight_fare_fragment.view.*
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 4/3/19.
  */
 
-class FlightFareFragment() : Fragment() {
+class FlightFareFragment : Fragment() {
     var fare = mutableListOf<Fare>()
 
 

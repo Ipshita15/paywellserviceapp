@@ -29,16 +29,16 @@ object CalculationHelper {
 
         for (fare in fares.indices) {
 
-            var passengerCount = fares[fare].passengerCount;
-            var baseFare = Math.ceil((fares[fare].baseFare) * passengerCount)
+            val passengerCount = fares[fare].passengerCount;
+            val baseFare = Math.ceil((fares[fare].baseFare) * passengerCount)
             totalBaseFare += baseFare;
-            var Tax = Math.ceil(fares[fare].tax) * passengerCount;
+            val Tax = Math.ceil(fares[fare].tax) * passengerCount;
             totalTax += Tax;
 
-            var OtherCharges = Math.ceil(fares[fare].otherCharges) * passengerCount;
+            val OtherCharges = Math.ceil(fares[fare].otherCharges) * passengerCount;
             totalOtherCharges += OtherCharges;
 
-            var ServiceFee = Math.ceil(Math.ceil(fares[fare].serviceFee) * passengerCount)
+            val ServiceFee = Math.ceil(Math.ceil(fares[fare].serviceFee) * passengerCount)
             totalServiceFee += ServiceFee;
             var convenienceFee = 0.0;
 
@@ -76,31 +76,39 @@ object CalculationHelper {
         var totalConvenienceFee = 0.0
         var totalRetailerCommission = 0.0
         val total_commission = 0.0
-
         val retailer_commission = 0.0
 
 
         val passengerCount = fares.passengerCount;
+        fares.baseFare = Math.ceil((fares.baseFare))
         val baseFare = Math.ceil((fares.baseFare) * passengerCount)
         totalBaseFare += baseFare;
+
+        fares.tax = Math.ceil(fares.tax)
         val Tax = Math.ceil(fares.tax) * passengerCount;
+
         totalTax += Tax;
 
+        fares.otherCharges = Math.ceil(fares.otherCharges)
         val OtherCharges = Math.ceil(fares.otherCharges) * passengerCount;
+
         totalOtherCharges += OtherCharges;
 
+        fares.serviceFee = Math.ceil(Math.ceil(fares.serviceFee))
         val ServiceFee = Math.ceil(Math.ceil(fares.serviceFee) * passengerCount)
-        totalServiceFee += ServiceFee;
+
+        totalServiceFee += ServiceFee
         var convenienceFee = 0.0;
 
-        val Discount = fares.discount * passengerCount;
+        val Discount = fares.discount * passengerCount
         if (commission.commissionType?.toInt() == 1) {
 
             val discountOnBasefare = (total_commission / 100) * baseFare;
             totalRetailerCommission += (retailer_commission / 100) * baseFare;
             if (Discount < discountOnBasefare) {
                 convenienceFee = Math.ceil(discountOnBasefare - Discount);
-                totalConvenienceFee += convenienceFee;
+                fares.convenienceFee = Math.ceil(discountOnBasefare - Discount)
+                totalConvenienceFee += convenienceFee
             }
         }
         var subTotal = baseFare + Tax + OtherCharges + ServiceFee + convenienceFee;
@@ -109,7 +117,8 @@ object CalculationHelper {
         val totalCalculated = totalBaseFare + totalTax + totalOtherCharges + totalServiceFee + totalConvenienceFee;
 
         fares.amount = "" + totalCalculated
-        fares.convenienceFee = convenienceFee
+
+
 
         return fares
     }
