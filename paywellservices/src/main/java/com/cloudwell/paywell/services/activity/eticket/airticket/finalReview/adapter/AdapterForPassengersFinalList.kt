@@ -30,10 +30,13 @@ class AdapterForPassengersFinalList(var context: Context, var items: List<Passen
     override fun onBindViewHolder(holder: AdapterForPassengersFinalList.ViewHolder, position: Int) {
         val model = items.get(position)
 
-        var number = position + 1
+        val number = position + 1
         holder.tvShortFirstNameLastName.text = "Passenger No: " + number
 
-        holder.tvPassengerType.text = "Passenger type: " + model.paxType
+
+        val paxType = model.paxType
+        val capPaxType = paxType.substring(0, 1).toUpperCase() + paxType.substring(1)
+        holder.tvPassengerType.text = "Passenger type: " + capPaxType
 
         if (model.isLeadPassenger) {
             holder.tvLeadPassenger.text = "Lead passenger: Yes"

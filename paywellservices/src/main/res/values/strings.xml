@@ -652,8 +652,8 @@
     <string name="miss">Miss</string>
     <string name="name_title">Title</string>
     <string name="passenger_type">Passenger type *</string>
-    <string name="adult">adult</string>
-    <string name="child">child</string>
+    <string name="adult">Adult</string>
+    <string name="child">Child</string>
     <string name="infant">Infant</string>
     <string name="kg_per_adult">per adult ticket</string>
     <string name="economy_class">Economy Class: </string>

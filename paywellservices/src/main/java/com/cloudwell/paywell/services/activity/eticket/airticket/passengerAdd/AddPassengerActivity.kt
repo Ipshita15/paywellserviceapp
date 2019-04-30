@@ -132,7 +132,10 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
             if (isEditFlag) {
                 oldPassenger = AppStorageBox.get(applicationContext, AppStorageBox.Key.AIRTRICKET_EDIT_PASSENGER) as Passenger
-                etPassengerType.setText(oldPassenger.paxType)
+
+                val paxType = oldPassenger.paxType
+                val capPaxType = paxType.substring(0, 1).toUpperCase() + paxType.substring(1);
+                etPassengerType.setText(capPaxType)
                 etTitle.setText(oldPassenger.title)
                 etFirstName.setText(oldPassenger.firstName)
                 etLastName.setText(oldPassenger.lastName)
@@ -435,7 +438,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
 
     private fun addPassenger() {
-        val passengerType = this.etPassengerType.text.toString().trim()
+        val passengerType = this.etPassengerType.text.toString().trim().toLowerCase()
         val title = this.etTitle.text.toString().trim()
         val firstName = this.etFirstName.text.toString().trim()
         val lastName = this.etLastName.text.toString().trim()
