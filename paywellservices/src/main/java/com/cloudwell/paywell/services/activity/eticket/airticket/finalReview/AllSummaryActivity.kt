@@ -36,6 +36,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.Fl
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.AddPassengerActivity
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
+import com.cloudwell.paywell.services.utils.DateUtils
 import kotlinx.android.synthetic.main.all_summaray_bottom_sheet.*
 import kotlinx.android.synthetic.main.contant_summary.*
 
@@ -242,10 +243,6 @@ class AllSummaryActivity : AirTricketBaseActivity() {
 
         recyclerView.adapter = recyclerListAdapter;
 
-//        val layoutParams = recyclerView.getLayoutParams();
-//        layoutParams.height =;
-//        recyclerView.setLayoutParams(layoutParams);
-
 
     }
 
@@ -354,13 +351,34 @@ class AllSummaryActivity : AirTricketBaseActivity() {
         tvOperatorCarrier.text = getString(com.cloudwell.paywell.services.R.string.operating_carrier) + " ${airline?.operatingCarrier}"
         tvCabinClass.text = getString(com.cloudwell.paywell.services.R.string.cabin_class) + " ${airline?.cabinClass}"
 
-        val arrTime = resposeAirPriceSearch.data?.results?.get(0)?.segments?.get(0)?.destination?.arrTime?.split("T")
+        val segments = resposeAirPriceSearch.data?.results?.get(0)?.segments
+        if (segments!!.size!! > 1) {
+            val arrTime = segments?.get(0)?.destination?.arrTime
+            val depTime = segments?.get(segments.size - 1)?.origin?.depTime
 
-        val depTime = resposeAirPriceSearch.data?.results?.get(0)?.segments?.get(0)?.origin?.depTime?.split("T")
+            val arrTimeSplit = arrTime?.split("T")
+            val depTimeSplit = depTime?.split("T")
+
+            val departDate = DateUtils.getFormatDate(depTimeSplit!![0])
+            val arrivalDate = DateUtils.getFormatDate(arrTimeSplit!![0])
+
+            tveDpartureTime.text = getString(R.string.depart_time_) + " " + departDate + ", " + depTimeSplit[1]
+            tvArrivalTime.text = getString(R.string.arrival_time) + " " + arrivalDate + ", " + arrTimeSplit[1]
+        } else {
 
 
-        tvArrivalTime.text = getString(com.cloudwell.paywell.services.R.string.arrival_time) + " ${arrTime?.get(0)}  ${arrTime?.get(1)}"
-        tveDpartureTime.text = getString(com.cloudwell.paywell.services.R.string.depart_time_) + " ${depTime?.get(0)}  ${depTime?.get(1)}"
+            val arrTime = segments?.get(0)?.destination?.arrTime
+            val depTime = segments?.get(0)?.origin?.depTime
+            val arrTimeSplit = arrTime?.split("T")
+            val depTimeSplit = depTime?.split("T")
+
+            val departDate = DateUtils.getFormatDate(depTimeSplit!![0])
+            val arrivalDate = DateUtils.getFormatDate(arrTimeSplit!![0])
+
+            tveDpartureTime.text = getString(R.string.depart_time_) + " " + departDate + ", " + depTimeSplit[1]
+            tvArrivalTime.text = getString(R.string.arrival_time) + " " + arrivalDate + ", " + arrTimeSplit[1]
+
+        }
 
 
         tvBaggage.text = getString(com.cloudwell.paywell.services.R.string.baggage) + resposeAirPriceSearch.data?.results?.get(0)?.segments?.get(0)?.baggage + " " + getString(com.cloudwell.paywell.services.R.string.kg_per_adult)

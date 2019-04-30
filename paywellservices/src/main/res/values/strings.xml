@@ -680,8 +680,8 @@
     <string name="economy">Economy</string>
     <string name="passengers">Passengers</string>
     <string name="search_text">Search</string>
-    <string name="airline_code">Airline code: </string>
-    <string name="airless_name">Airless Name: </string>
+    <string name="airline_code">Airlines code: </string>
+    <string name="airless_name">Airlines Name: </string>
     <string name="flight_number">Flight number: </string>
     <string name="booking_class">Booking Class: </string>
     <string name="cabin_class">Cabin class :</string>

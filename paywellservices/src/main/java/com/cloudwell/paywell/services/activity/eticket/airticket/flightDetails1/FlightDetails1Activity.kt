@@ -8,7 +8,6 @@ import android.view.View
 import com.cloudwell.paywell.service.CalculationHelper
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketHelper
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.adapter.FlightSequenceAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.AirlessDialogFragment
@@ -126,7 +125,7 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
             AppStorageBox.put(applicationContext, AppStorageBox.Key.orignAirportAnddestinationairportCode, orignAirtportCode + " - " + destinationairportCode)
 
 
-            val date = segments.get(0).origin?.depTime?.let { AirTicketHelper.getFormatDepTime(it) }
+            val date = segments.get(0).origin?.depTime?.let { DateUtils.getFormatDepTime(it) }
             AppStorageBox.put(applicationContext, AppStorageBox.Key.humanReadAbleDate, date)
             tvNameOfDate.text = date
 
@@ -374,7 +373,7 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
     private fun displayHumanDate(outputSegment: List<Segment>) {
 
 
-        val date = outputSegment.get(0).origin?.depTime?.let { AirTicketHelper.getFormatDepTime(it) }
+        val date = outputSegment.get(0).origin?.depTime?.let { DateUtils.getFormatDepTime(it) }
 
         AppStorageBox.put(applicationContext, AppStorageBox.Key.humanReadAbleDate, date)
         tvNameOfDate.text = date

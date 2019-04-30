@@ -11,6 +11,7 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResAirPreBooking
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Fare
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
+import com.cloudwell.paywell.services.utils.DateUtils
 import kotlinx.android.synthetic.main.fragment_booking.view.*
 
 
@@ -66,8 +67,11 @@ class BookingStatusFragment : DialogFragment() {
             val arrTimeSplit = arrTime?.split("T")
             val depTimeSplit = depTime?.split("T")
 
-            v.tvDepartTime.text = activity?.getString(R.string.depart_time_) + " " + depTimeSplit!![0] + " " + depTimeSplit[1]
-            v.tvArrivalTime.text = activity?.getString(R.string.arrival_time) + arrTimeSplit!![0] + " " + arrTimeSplit[1]
+            val departDate = DateUtils.getFormatDate(depTimeSplit!![0])
+            val arrivalDate = DateUtils.getFormatDate(arrTimeSplit!![0])
+
+            v.tvDepartTime.text = activity?.getString(R.string.depart_time_) + " " + departDate + ", " + depTimeSplit[1]
+            v.tvArrivalTime.text = activity?.getString(R.string.arrival_time) + " " + arrivalDate + ", " + arrTimeSplit[1]
 
 
         } else {
@@ -76,8 +80,11 @@ class BookingStatusFragment : DialogFragment() {
             val arrTimeSplit = arrTime?.split("T")
             val depTimeSplit = depTime?.split("T")
 
-            v.tvDepartTime.text = activity?.getString(R.string.depart_time_) + " " + depTimeSplit!![0] + " " + depTimeSplit[1]
-            v.tvArrivalTime.text = activity?.getString(R.string.arrival_time) + arrTimeSplit!![0] + " " + arrTimeSplit[1]
+            val departDate = DateUtils.getFormatDate(depTimeSplit!![0])
+            val arrivalDate = DateUtils.getFormatDate(arrTimeSplit!![0])
+
+            v.tvDepartTime.text = activity?.getString(R.string.depart_time_) + " " + departDate + ", " + depTimeSplit[1]
+            v.tvArrivalTime.text = activity?.getString(R.string.arrival_time) + " " + arrivalDate + ", " + arrTimeSplit[1]
         }
 
         v.tvAirportName.text = activity?.getString(R.string.airless_name) + " " + resAirPreBooking.data?.results?.get(0)?.segments?.get(0)?.airline?.airlineName

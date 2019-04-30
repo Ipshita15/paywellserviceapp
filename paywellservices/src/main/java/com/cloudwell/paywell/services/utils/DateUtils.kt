@@ -173,5 +173,23 @@ object DateUtils {
         return daysdiff
     }
 
+    fun getFormatDepTime(date: String): String {
+        val APIDateString = date.split("T").get(0)
+        val fdepTimeFormatDate = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(APIDateString) as Date
+        val nameOfDayOfWeek = SimpleDateFormat("EEE, dd MMM yyyy", Locale.ENGLISH).format(fdepTimeFormatDate)
+        return nameOfDayOfWeek
+    }
+
+    fun getFormatDate(date: String): String {
+        val fdepTimeFormatDate = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(date) as Date
+        val nameOfDayOfWeek = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH).format(fdepTimeFormatDate)
+        return nameOfDayOfWeek
+    }
+
+    fun getFormatTime(date: String): String {
+        val APIDateString = date.split("T").get(1)
+        return APIDateString.substring(0, APIDateString.length - 3)
+    }
+
 
 }

@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketHelper
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.OutputSegment
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.utils.DateUtils
@@ -73,7 +72,7 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
         var durtingJounaryTimeNew = ""
 
 
-        val formatDepTime = firstSegment?.origin?.depTime?.let { AirTicketHelper.getFormatDepTime(it) }
+        val formatDepTime = firstSegment?.origin?.depTime?.let { DateUtils.getFormatDepTime(it) }
         holder.tvDepDate.text = formatDepTime
 
         // show show date
@@ -109,8 +108,8 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
         holder.tvOrganAirportCode.text = firstSegment?.origin?.airport?.airportCode.toString()
         holder.tvDestinationAirportCode.text = lastSegment?.destination?.airport?.airportCode.toString()
 
-        holder.tvDepTime.text = firstSegment?.origin?.depTime?.let { AirTicketHelper.getFormatTime(it) }
-        holder.tvArrTime.text = lastSegment?.destination?.arrTime?.let { AirTicketHelper.getFormatTime(it) } + "${differenceDaysString}"
+        holder.tvDepTime.text = firstSegment?.origin?.depTime?.let { DateUtils.getFormatTime(it) }
+        holder.tvArrTime.text = lastSegment?.destination?.arrTime?.let { DateUtils.getFormatTime(it) } + "${differenceDaysString}"
 
 
     }
@@ -126,7 +125,7 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
         var durtingJounaryTimeNew = ""
 
 
-        val formatDepTime = segment.origin?.depTime?.let { AirTicketHelper.getFormatDepTime(it) }
+        val formatDepTime = segment.origin?.depTime?.let { DateUtils.getFormatDepTime(it) }
         holder.tvDepDate.text = formatDepTime
 
         // show show date
@@ -162,8 +161,8 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
             holder.tvOrganAirportCode.text = segments.get(0).origin?.airport?.airportCode.toString()
             holder.tvDestinationAirportCode.text = segments.get(segments.size - 1).destination?.airport?.airportCode.toString()
 
-            holder.tvDepTime.text = segments.get(0).origin?.depTime?.let { AirTicketHelper.getFormatTime(it) }
-            holder.tvArrTime.text = segments.get(segments.size - 1).destination?.arrTime?.let { AirTicketHelper.getFormatTime(it) } + "${differenceDaysString}"
+            holder.tvDepTime.text = segments.get(0).origin?.depTime?.let { DateUtils.getFormatTime(it) }
+            holder.tvArrTime.text = segments.get(segments.size - 1).destination?.arrTime?.let { DateUtils.getFormatTime(it) } + "${differenceDaysString}"
         }
 
     }
@@ -177,7 +176,7 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
         var durtingJounaryTimeNew = ""
 
 
-        val formatDepTime = segment.origin?.depTime?.let { AirTicketHelper.getFormatDepTime(it) }
+        val formatDepTime = segment.origin?.depTime?.let { DateUtils.getFormatDepTime(it) }
         holder.tvDepDate.text = formatDepTime
 
 
@@ -218,14 +217,14 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
             holder.tvOrganAirportCode.text = segments.get(0).origin?.airport?.airportCode.toString()
             holder.tvDestinationAirportCode.text = segments.get(segments.size - 1).destination?.airport?.airportCode.toString()
 
-            holder.tvDepTime.text = segments.get(0).origin?.depTime?.let { AirTicketHelper.getFormatTime(it) }
-            holder.tvArrTime.text = segments.get(segments.size - 1).destination?.arrTime?.let { AirTicketHelper.getFormatTime(it) } + "${differenceDaysString}"
+            holder.tvDepTime.text = segments.get(0).origin?.depTime?.let { DateUtils.getFormatTime(it) }
+            holder.tvArrTime.text = segments.get(segments.size - 1).destination?.arrTime?.let { DateUtils.getFormatTime(it) } + "${differenceDaysString}"
 
         } else {
             holder.tvOrganAirportCode.text = segment.origin?.airport?.airportCode.toString()
             holder.tvDestinationAirportCode.text = segment.destination?.airport?.airportCode.toString()
-            holder.tvDepTime.text = segment.origin?.depTime?.let { AirTicketHelper.getFormatTime(it) }
-            holder.tvArrTime.text = segment.origin?.depTime?.let { AirTicketHelper.getFormatTime(it) } + "${differenceDaysString}"
+            holder.tvDepTime.text = segment.origin?.depTime?.let { DateUtils.getFormatTime(it) }
+            holder.tvArrTime.text = segment.origin?.depTime?.let { DateUtils.getFormatTime(it) } + "${differenceDaysString}"
         }
 
 
