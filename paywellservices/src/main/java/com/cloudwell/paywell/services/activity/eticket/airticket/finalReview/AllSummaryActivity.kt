@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.InputType
@@ -211,15 +210,17 @@ class AllSummaryActivity : AirTricketBaseActivity() {
 
     private fun handlePassengerList(it: MutableList<Passenger>) {
         val recyclerView = findViewById(com.cloudwell.paywell.services.R.id.recycleviewForPassenger) as RecyclerView
-        recyclerView.setHasFixedSize(true)
 
-        val columns = 1;
 
-        val glm = GridLayoutManager(applicationContext, columns)
+        val glm = LinearLayoutManager(applicationContext)
+        recyclerView.layoutManager = glm
+        glm.isAutoMeasureEnabled = true
+
         recyclerView.layoutManager = glm
 
-        recyclerView.layoutManager = glm
-        recyclerView.isNestedScrollingEnabled = true
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setNestedScrollingEnabled(true);
 
 
         val recyclerListAdapter = AdapterForPassengersFinalList(this, it, object : AdapterForPassengersFinalList.OnClickListener {
@@ -240,6 +241,10 @@ class AllSummaryActivity : AirTricketBaseActivity() {
         })
 
         recyclerView.adapter = recyclerListAdapter;
+
+//        val layoutParams = recyclerView.getLayoutParams();
+//        layoutParams.height =;
+//        recyclerView.setLayoutParams(layoutParams);
 
 
     }
