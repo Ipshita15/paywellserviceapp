@@ -57,7 +57,7 @@
     <TextView
         android:id="@+id/tvAirlessName"
         android:layout_width="wrap_content"
-        android:layout_height="17dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:textColor="@android:color/black"
