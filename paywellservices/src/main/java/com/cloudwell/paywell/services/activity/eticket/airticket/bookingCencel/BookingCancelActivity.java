@@ -71,7 +71,7 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
         bookingCancelReasonSPNR = findViewById(R.id.cancelReasonSPNR);
         cancelBookingBtn = findViewById(R.id.cancelBookingBtn);
         cancelReasonList.add("Select your reason");
-        cancelReasonList.add("have another work");
+        cancelReasonList.add("Have another work");
         cancelReasonList.add("Travelling reason accomplished");
         cancelReasonList.add("Have to travel another city");
         cancelReasonList.add("Other");
