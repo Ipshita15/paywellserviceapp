@@ -20,6 +20,7 @@ import android.view.View.OnFocusChangeListener
 import android.view.WindowManager
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.fragment.GenderBottomSheetDialog
@@ -71,6 +72,8 @@ class AddPassengerActivity : AirTricketBaseActivity() {
     var passportMadatory = false
     var isFistTime = true
 
+    var isValidation = false
+
     companion object {
         var KEY_PASSPORT_NATIONALITY = "KEY_PASSPORT_NATIONALITY"
         var KEY_COUNTRY = "KEY_COUNTRY"
@@ -83,6 +86,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
         setToolbar(getString(R.string.title_add_passenger))
 
+        isValidation = intent.extras.getBoolean("isValidation", false)
         initializationView()
 
 
@@ -174,8 +178,6 @@ class AddPassengerActivity : AirTricketBaseActivity() {
                         isLeadPassenger.isChecked = false
                     }
                 }
-
-
 
 
                 this.countryCode = oldPassenger.countryCode
@@ -438,6 +440,8 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
 
     private fun addPassenger() {
+
+
         val passengerType = this.etPassengerType.text.toString().trim().toLowerCase()
         val title = this.etTitle.text.toString().trim()
         val firstName = this.etFirstName.text.toString().trim()
@@ -565,10 +569,18 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         passenger.passportNumber = passportNumber
         passenger.passportExpiryDate = passportExpiryDate
         passenger.passportNationality = passportNationalityCountry
-        passenger.isPassengerSleted = true
+
         passenger.passportImagePath = passportImagePath
         passenger.nIDnumber = nationalIDNumber
         passenger.isLeadPassenger = isLeadPassenger.isChecked
+
+
+
+        if (isValidation) {
+            passenger.isPassengerSleted = true
+        } else {
+            passenger.isPassengerSleted = false
+        }
 
 
         if (!passportImagePath.equals("")) {
@@ -585,6 +597,27 @@ class AddPassengerActivity : AirTricketBaseActivity() {
             viewMode.updatePassenger(passenger)
         } else {
             viewMode.addPassenger(passenger)
+        }
+
+    }
+
+    fun checkValidation(): Boolean {
+        var totalSeletedCounter = 0
+        var totalPassenger = 0
+        var passengerString = ""
+
+        val requestAirSearch = AppStorageBox.get(applicationContext, AppStorageBox.Key.REQUEST_AIR_SERACH) as RequestAirSearch
+
+
+        totalPassenger = (requestAirSearch.adultQuantity + requestAirSearch.childQuantity + requestAirSearch.infantQuantity).toInt();
+
+
+
+
+        if (totalSeletedCounter < totalPassenger) {
+            return true
+        } else {
+            return false
         }
 
     }

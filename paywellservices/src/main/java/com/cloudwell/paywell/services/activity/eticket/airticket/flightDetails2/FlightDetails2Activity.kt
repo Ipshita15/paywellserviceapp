@@ -36,8 +36,8 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
     private lateinit var viewMode: FlightDetails2ViewModel
     lateinit var touchHelper: ItemTouchHelper
     lateinit var adapterForPassengers: AdapterForPassengers
-
     lateinit var resposeAirPriceSearch: ResposeAirPriceSearch
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,32 +98,63 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
 
         viewReview.setOnClickListener {
 
-            var totalSeletedCounter = 0
-            var totalPassenger = 0
-            var passengerString = ""
-
-            val requestAirSearch = AppStorageBox.get(applicationContext, AppStorageBox.Key.REQUEST_AIR_SERACH) as RequestAirSearch
+            handleLReviewButton()
+        }
 
 
-            totalPassenger = (requestAirSearch.adultQuantity + requestAirSearch.childQuantity + requestAirSearch.infantQuantity).toInt();
+    }
+
+    private fun handleLReviewButton() {
+        var totalSeletedCounter = 0
+        var totalPassenger = 0
+        var passengerString = ""
+
+        val requestAirSearch = AppStorageBox.get(applicationContext, AppStorageBox.Key.REQUEST_AIR_SERACH) as RequestAirSearch
 
 
-            viewMode.mListMutableLiveDPassengers.value?.forEach {
-                val passengerSleted = it.isPassengerSleted
-                if (passengerSleted) {
-                    passengerString = "$passengerString +${it.id},"
-                    totalSeletedCounter = totalSeletedCounter + 1;
-                }
-            }
+        totalPassenger = (requestAirSearch.adultQuantity + requestAirSearch.childQuantity + requestAirSearch.infantQuantity).toInt();
 
-            if (totalSeletedCounter == totalPassenger) {
-                AppStorageBox.put(applicationContext, AppStorageBox.Key.SELETED_PASSENGER_IDS, passengerString)
-                startActivity(Intent(applicationContext, AllSummaryActivity::class.java))
-            } else {
-                showWarringForMissMax(requestAirSearch)
+
+        viewMode.mListMutableLiveDPassengers.value?.forEach {
+            val passengerSleted = it.isPassengerSleted
+            if (passengerSleted) {
+                passengerString = "$passengerString +${it.id},"
+                totalSeletedCounter = totalSeletedCounter + 1;
             }
         }
 
+        if (totalSeletedCounter == totalPassenger) {
+            AppStorageBox.put(applicationContext, AppStorageBox.Key.SELETED_PASSENGER_IDS, passengerString)
+            startActivity(Intent(applicationContext, AllSummaryActivity::class.java))
+        } else {
+            showWarringForMissMax(requestAirSearch)
+        }
+    }
+
+    fun checkValidation(): Boolean {
+        var totalSeletedCounter = 0
+        var totalPassenger = 0
+        var passengerString = ""
+
+        val requestAirSearch = AppStorageBox.get(applicationContext, AppStorageBox.Key.REQUEST_AIR_SERACH) as RequestAirSearch
+
+
+        totalPassenger = (requestAirSearch.adultQuantity + requestAirSearch.childQuantity + requestAirSearch.infantQuantity).toInt();
+
+
+        viewMode.mListMutableLiveDPassengers.value?.forEach {
+            val passengerSleted = it.isPassengerSleted
+            if (passengerSleted) {
+                passengerString = "$passengerString +${it.id},"
+                totalSeletedCounter = totalSeletedCounter + 1;
+            }
+        }
+
+        if (totalSeletedCounter < totalPassenger) {
+            return true
+        } else {
+            return false
+        }
 
     }
 
@@ -206,17 +237,30 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
 
                             val get1 = AppStorageBox.get(applicationContext, AppStorageBox.Key.COUNTER_PASSENGER)
                             if (get1 == null) {
-                                startActivity(Intent(applicationContext, AddPassengerActivity::class.java))
+                                val intent = Intent(applicationContext, AddPassengerActivity::class.java)
+                                intent.putExtra("isValidation", checkValidation())
+                                startActivity(intent)
                             } else {
-                                startActivity(Intent(applicationContext, PassengerListActivity::class.java))
+                                val intent = Intent(applicationContext, PassengerListActivity::class.java)
+                                intent.putExtra("isValidation", checkValidation())
+                                startActivity(intent)
                             }
                         } else {
 
-                            if (get.isPassengerSleted) {
 
+                            if (get.isPassengerSleted) {
                                 get.isPassengerSleted = false
 
                             } else {
+
+                                val checkValidation = checkValidation()
+                                if (!checkValidation) {
+                                    val requestAirSearch = AppStorageBox.get(applicationContext, AppStorageBox.Key.REQUEST_AIR_SERACH) as RequestAirSearch
+                                    showWarringForMissMax(requestAirSearch)
+                                    return
+                                }
+
+
                                 get.isPassengerSleted = true
                             }
 
