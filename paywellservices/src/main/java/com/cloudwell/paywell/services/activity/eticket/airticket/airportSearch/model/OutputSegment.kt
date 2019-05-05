@@ -17,7 +17,7 @@ class OutputSegment : Parcelable {
     @SerializedName("Equipment")
     var equipment: String? = null
     @SerializedName("JourneyDuration")
-    var journeyDuration: String? = null
+    var journeyDuration: String = "0"
     @SerializedName("Origin")
     var origin: Origin? = null
 

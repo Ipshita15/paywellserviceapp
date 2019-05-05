@@ -1,5 +1,6 @@
 package com.cloudwell.paywell.services.utils
 
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.OutputSegment
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -115,12 +116,12 @@ object DateUtils {
             val diffSeconds = diff / 1000 % 60
             val diffMinutes = diff / (60 * 1000) % 60
             val diffHours = diff / (60 * 60 * 1000) % 24
-            val diffDays = diff / (24 * 60 * 60 * 1000)
+//            val diffDays = diff / (24 * 60 * 60 * 1000)
 
-            if (diffDays != 0L) {
-                sb.append(diffDays)
-                sb.append(" day ")
-            }
+//            if (diffDays != 0L) {
+//                sb.append(diffDays)
+//                sb.append(" day ")
+//            }
 
             if (diffHours != 0L) {
                 sb.append(diffHours)
@@ -141,9 +142,47 @@ object DateUtils {
             e.printStackTrace()
         }
 
+
+
+
         return sb.toString()
 
     }
+
+
+    fun getDurtingJounaryTimeNew(duration: List<OutputSegment>): String {
+        //HH converts hour in 24 hours format (0-23), day calculation
+        val sb = StringBuilder(64)
+
+
+        var diffMinutes = 0
+        var diffHours = 0
+
+        var durationInt = 0
+
+        duration.forEach {
+            durationInt = durationInt + it.journeyDuration.toInt()
+        }
+
+
+        diffHours = (durationInt / 60)
+        diffMinutes = (durationInt % 60)
+
+
+        if (diffHours != 0) {
+            sb.append(diffHours)
+            sb.append("h ")
+        }
+
+        if (diffMinutes != 0) {
+            sb.append(diffMinutes)
+            sb.append("m")
+        }
+
+        return sb.toString()
+
+    }
+
 
     fun differenceMilliSecond(startDate: Date, endDate: Date): Long {
         return endDate.time - startDate.time
