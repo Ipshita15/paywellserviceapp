@@ -183,7 +183,7 @@ object DateUtils {
 
     }
 
-    fun getDurtingJounaryTimeNew(duration: OutputSegment): String {
+    fun getDartingJanuaryTimeNew(duration: OutputSegment): String {
         val sb = StringBuilder(64)
 
 

@@ -10,8 +10,6 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.m
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.utils.DateUtils
 import kotlinx.android.synthetic.main.simple_list_item_segment.view.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<OutputSegment>, val mRequestAirSearch: RequestAirSearch) : RecyclerView.Adapter<FlightRecycleViewAdapter.VHolder>() {
@@ -124,8 +122,6 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
         val date = depTimeSplit.get(0) + " " + depTimeSplit.get(1)
 
 
-
-
         arrTimeSplit1 = segments.get(segments.size - 1).destination?.arrTime.toString().split("T").toMutableList();
         var stopCount = ""
         if (segments.size > 1) {
@@ -133,6 +129,7 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
         } else {
             stopCount = "0"
         }
+
         var durtingJounaryTimeNew = ""
         durtingJounaryTimeNew = DateUtils.getDurtingJounaryTimeNew(segments)
         holder.tvDurationAndStopCounter.text = durtingJounaryTimeNew + ", $stopCount stop"
@@ -160,7 +157,6 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
     private fun displayDataNew(holder: VHolder, segments: List<OutputSegment>, position: Int) {
         val segment = segments.get(position)
         var split1 = mutableListOf<String>()
-        var date1 = ""
         var durtingJounaryTimeNew = ""
 
 
@@ -169,15 +165,12 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
 
 
         // show show date
-        val split = segments.get(0).origin?.depTime.toString().split("T");
+        val split = segments.get(position).origin?.depTime.toString().split("T");
         val date = split.get(0) + " " + split.get(1)
-        val fistDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss", Locale.ENGLISH).parse(date)
 
-        if (mRequestAirSearch.journeyType.equals("Oneway")) {
-            split1 = segments.get(segments.size - 1).destination?.arrTime.toString().split("T").toMutableList();
-        } else {
-            split1 = segments.get(position).destination?.arrTime.toString().split("T").toMutableList();
-        }
+
+        split1 = segments.get(position).destination?.arrTime.toString().split("T").toMutableList();
+
 
         var stopCount = ""
         if (segment.stopQuantity == null) {
@@ -187,7 +180,7 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
 
         }
 
-        durtingJounaryTimeNew = DateUtils.getDurtingJounaryTimeNew(segment)
+        durtingJounaryTimeNew = DateUtils.getDartingJanuaryTimeNew(segment)
         holder.tvDurationAndStopCounter.text = durtingJounaryTimeNew + ", $stopCount stop"
 
 
@@ -199,19 +192,11 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
             differenceDaysString = " (+" + (differenceDays - 1) + ")"
         }
 
-        if (mRequestAirSearch.journeyType.equals("Oneway")) {
-            holder.tvOrganAirportCode.text = segments.get(0).origin?.airport?.airportCode.toString()
-            holder.tvDestinationAirportCode.text = segments.get(segments.size - 1).destination?.airport?.airportCode.toString()
 
-            holder.tvDepTime.text = segments.get(0).origin?.depTime?.let { DateUtils.getFormatTime(it) }
-            holder.tvArrTime.text = segments.get(segments.size - 1).destination?.arrTime?.let { DateUtils.getFormatTime(it) } + "${differenceDaysString}"
-
-        } else {
-            holder.tvOrganAirportCode.text = segment.origin?.airport?.airportCode.toString()
-            holder.tvDestinationAirportCode.text = segment.destination?.airport?.airportCode.toString()
-            holder.tvDepTime.text = segment.origin?.depTime?.let { DateUtils.getFormatTime(it) }
-            holder.tvArrTime.text = segment.origin?.depTime?.let { DateUtils.getFormatTime(it) } + "${differenceDaysString}"
-        }
+        holder.tvOrganAirportCode.text = segment.origin?.airport?.airportCode.toString()
+        holder.tvDestinationAirportCode.text = segment.destination?.airport?.airportCode.toString()
+        holder.tvDepTime.text = segment.origin?.depTime?.let { DateUtils.getFormatTime(it) }
+        holder.tvArrTime.text = segment.destination?.arrTime?.let { DateUtils.getFormatTime(it) } + "${differenceDaysString}"
 
 
     }
