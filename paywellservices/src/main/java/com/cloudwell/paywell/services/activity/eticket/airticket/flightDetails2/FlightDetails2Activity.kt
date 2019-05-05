@@ -244,14 +244,17 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
         try {
             resposeAirPriceSearch = AppStorageBox.get(applicationContext, AppStorageBox.Key.ResposeAirPriceSearch) as ResposeAirPriceSearch
 
-            val shortDepartArriveTime = AppStorageBox.get(applicationContext, AppStorageBox.Key.ShortDepartArriveTime)
-            val orignAirportAnddestinationairportCode = AppStorageBox.get(applicationContext, AppStorageBox.Key.orignAirportAnddestinationairportCode) as String
-            val totalJourney_time = AppStorageBox.get(applicationContext, AppStorageBox.Key.totalJourney_time) as String
-            val humanReadAbleDate = AppStorageBox.get(applicationContext, AppStorageBox.Key.humanReadAbleDate) as String
+            var allAirportCodeString = ""
 
-            tvNameOfDate.text = humanReadAbleDate + " " + shortDepartArriveTime
-            tvOrginAndDestinationAirportCode.text = orignAirportAnddestinationairportCode
-            tvShortDepartArriveTime.text = totalJourney_time
+            resposeAirPriceSearch.data?.results?.get(0)?.segments?.forEach {
+                val airportCode = it.origin.airport.airportCode
+                val airportCode1 = it.destination.airport.airportCode
+
+                allAirportCodeString = allAirportCodeString + "" + airportCode + " - " + airportCode1 + "\n"
+            }
+
+            tvNameOfDate.text = allAirportCodeString.trim()
+
 
         } catch (e: Exception) {
 
