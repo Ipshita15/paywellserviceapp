@@ -66,9 +66,7 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
         val firstSegment = segments?.first()
         val lastSegment = segments?.last()
 
-        var secondDate: Date
         val split1: MutableList<String>
-        var date1 = ""
         var durtingJounaryTimeNew = ""
 
 
@@ -77,8 +75,6 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
 
         // show show date
         val split = firstSegment?.origin?.depTime.toString().split("T");
-        val date = split.get(0) + " " + split.get(1)
-        val fistDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss", Locale.ENGLISH).parse(date)
 
         split1 = lastSegment?.destination?.arrTime.toString().split("T").toMutableList();
 
@@ -90,10 +86,7 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
             stopCount = "0"
         }
 
-        date1 = split1.get(0) + " " + split1.get(1)
-        secondDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss", Locale.ENGLISH).parse(date1)
-//        durtingJounaryTimeNew = DateUtils.getDurtingJounaryTimeNew(fistDate, secondDate)
-        durtingJounaryTimeNew = ""
+        durtingJounaryTimeNew = DateUtils.getDurtingJounaryTimeNew(segments)
         holder.tvDurationAndStopCounter.text = durtingJounaryTimeNew + ", $stopCount stop"
 
 
