@@ -25,7 +25,7 @@ class EarningsFragment() : Fragment() {
         val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_earnings, container, false)
 
 
-        val retailerEaring = CalculationHelper.retailerEaring(fare)
+        val retailerEaring = CalculationHelper.retailerEarning(fare)
 
 
         v.tvEarning.text = retailerEaring
