@@ -47,7 +47,7 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
             displayRound(holder, groupBy, position)
         } else if (mRequestAirSearch.journeyType.equals("MultiStop")) {
             val counter = position + 1
-            holder.tvTitle.text = mContext.getString(R.string.flight) + counter
+            holder.tvTitle.text = mContext.getString(R.string.flight) + " " + counter
             displayDataNew(holder, mSegments, position)
         }
 
@@ -159,7 +159,6 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
 
     private fun displayDataNew(holder: VHolder, segments: List<OutputSegment>, position: Int) {
         val segment = segments.get(position)
-        var secondDate: Date = Date()
         var split1 = mutableListOf<String>()
         var date1 = ""
         var durtingJounaryTimeNew = ""
@@ -181,17 +180,14 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
         }
 
         var stopCount = ""
-        if (segments.size > 1) {
-            stopCount = "" + ((segments.size) - 1)
-        } else {
+        if (segment.stopQuantity == null) {
             stopCount = "0"
+        } else {
+            stopCount = "" + segment.stopQuantity
+
         }
 
-
-        date1 = split1.get(0) + " " + split1.get(1)
-        secondDate = SimpleDateFormat("yyyy-mm-dd HH:mm:ss", Locale.ENGLISH).parse(date1)
-
-        durtingJounaryTimeNew = DateUtils.getDurtingJounaryTimeNew(segments)
+        durtingJounaryTimeNew = DateUtils.getDurtingJounaryTimeNew(segment)
         holder.tvDurationAndStopCounter.text = durtingJounaryTimeNew + ", $stopCount stop"
 
 

@@ -183,6 +183,38 @@ object DateUtils {
 
     }
 
+    fun getDurtingJounaryTimeNew(duration: OutputSegment): String {
+        val sb = StringBuilder(64)
+
+
+        var diffMinutes = 0
+        var diffHours = 0
+
+        var durationInt = 0
+
+
+        durationInt = durationInt + duration.journeyDuration.toInt()
+
+
+
+        diffHours = (durationInt / 60)
+        diffMinutes = (durationInt % 60)
+
+
+        if (diffHours != 0) {
+            sb.append(diffHours)
+            sb.append("h ")
+        }
+
+        if (diffMinutes != 0) {
+            sb.append(diffMinutes)
+            sb.append("m")
+        }
+
+        return sb.toString()
+
+    }
+
 
     fun differenceMilliSecond(startDate: Date, endDate: Date): Long {
         return endDate.time - startDate.time
