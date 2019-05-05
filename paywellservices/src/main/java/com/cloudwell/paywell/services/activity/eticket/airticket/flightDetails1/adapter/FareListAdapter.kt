@@ -40,7 +40,7 @@ class FareListAdapter(var context: Context, var items: List<Fare>) : RecyclerVie
         holder.tvPassengerCount.text = "" + NumberFormat.getInstance().format(model.passengerCount)
         holder.tvServiceFee.text = "" + NumberFormat.getInstance().format(model.serviceFee)
         holder.tvConvenienceFee.text = "" + NumberFormat.getInstance().format(model.convenienceFee)
-        holder.tvAmount.text = "" + NumberFormat.getInstance().format((model.amount.toDouble()))
+        holder.tvAmount.text = "" + model.amount
 
 
 

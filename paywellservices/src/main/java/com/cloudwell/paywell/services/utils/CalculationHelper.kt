@@ -116,7 +116,9 @@ object CalculationHelper {
 
         val totalCalculated = totalBaseFare + totalTax + totalOtherCharges + totalServiceFee + totalConvenienceFee;
 
-        fares.amount = "" + totalCalculated
+
+
+        fares.amount = "" + NumberFormat.getInstance().format(totalCalculated)
 
 
 
