@@ -27,7 +27,7 @@ class BaggageAndPoliciesActiivty : AirTricketBaseActivity() {
     private fun setupViewPager(viewPager: ViewPager) {
         val adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(RolesFragment(), getString(com.cloudwell.paywell.services.R.string.roles))
-        adapter.addFragment(FlightFareFragment(), getString(com.cloudwell.paywell.services.R.string.fares_information))
+        adapter.addFragment(FlightFareFragment(), getString(com.cloudwell.paywell.services.R.string.fares))
         adapter.addFragment(EarningsFragment(), getString(com.cloudwell.paywell.services.R.string.earnings))
         viewPager.adapter = adapter
 

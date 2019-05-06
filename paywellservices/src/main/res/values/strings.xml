@@ -612,6 +612,7 @@
     <string name="title_activity_baggage_and_policies_actiivty">Air Rules &amp; Fare</string>
     <string name="title_booking_and_review">Review and Book</string>
     <string name="fares_information">Fare Information</string>
+    <string name="fares">Fare</string>
     <string name="roles">Air Rules</string>
     <string name="title_flightDetails2">Review page 2</string>
     <string name="title_passenger_list">Passenger Info</string>
