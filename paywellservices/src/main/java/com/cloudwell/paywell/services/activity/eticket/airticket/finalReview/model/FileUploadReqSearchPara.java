@@ -14,6 +14,13 @@ public class FileUploadReqSearchPara {
     @SerializedName("passport_number")
     private String mPassportNumber;
 
+
+    @SerializedName("visa_extension")
+    private String visaExtension;
+
+    @SerializedName("visa_content")
+    private String visaContent;
+
     public String getFileExtension() {
         return mFileExtension;
     }
@@ -46,4 +53,19 @@ public class FileUploadReqSearchPara {
         mPassportNumber = passportNumber;
     }
 
+    public String getVisaContent() {
+        return visaContent;
+    }
+
+    public void setVisaContent(String visaContent) {
+        this.visaContent = visaContent;
+    }
+
+    public String getVisaExtension() {
+        return visaExtension;
+    }
+
+    public void setVisaExtension(String visaExtension) {
+        this.visaExtension = visaExtension;
+    }
 }

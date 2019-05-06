@@ -739,7 +739,7 @@
     <string name="flight_information">Flight Information</string>
     <string name="add_passenger">Add passenger</string>
     <string name="national_id">National ID Or Student ID</string>
-    <string name="booking_now">Booking Now</string>
+    <string name="booking_now">Book Now</string>
     <string name="ticket_booking">Ticket booking</string>
     <string name="booking_id">Booking ID: </string>
     <string name="ticket_status">Ticket status :</string>
@@ -780,6 +780,8 @@
     <string name="amount">Amount</string>
     <string name="booking_log_limit_title_msg">Booking Log Limit</string>
     <string name="amount_optional">Amount(optional)</string>
+    <string name="passport_image_mandatory">passport image mandatory</string>
+    <string name="visa_image_mandatory">Visa image mandatory</string>
 
 
 </resources>

@@ -160,6 +160,9 @@ class AllSummaryActivityViewModel : AirTicketBaseViewMode() {
             } else if (!it.passportImagePath.equals("")) {
                 val addObject = addObject(it)
                 data.add(addObject)
+            } else if (!it.visa_content.equals("")) {
+                val addObject = addObject(it)
+                data.add(addObject)
             }
         }
 
@@ -190,6 +193,16 @@ class AllSummaryActivityViewModel : AirTicketBaseViewMode() {
         fileUploadReqSearchPara.passportNumber = it.passportNumber
         fileUploadReqSearchPara.nidNumber = it.nIDnumber
 
+
+        if (!it.visa_content.equals("")) {
+            val bm = BitmapFactory.decodeFile(it.visa_content)
+            val baos = ByteArrayOutputStream()
+            bm.compress(Bitmap.CompressFormat.JPEG, 100, baos) //bm is the bitmap object
+            val b = baos.toByteArray()
+            val encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+            fileUploadReqSearchPara.visaContent = encodedImage
+            fileUploadReqSearchPara.visaExtension = it.visa_extension
+        }
 
         return fileUploadReqSearchPara
     }

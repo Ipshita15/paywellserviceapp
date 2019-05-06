@@ -278,6 +278,44 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView15">
 
+                    <LinearLayout
+                        android:id="@+id/linearLayout14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+
+                        <ImageView
+                            android:id="@+id/ivPassportPageUpload"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginBottom="8dp"
+
+                            android:background="@drawable/ic_passport_unseleted"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <ImageView
+                            android:id="@+id/ivVisaPageUpload"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:background="@drawable/ic_passport_unseleted"
+                            />
+                    </LinearLayout>
+
                     <mehdi.sakout.fancybuttons.FancyButton
                         android:id="@+id/btn_add"
                         android:layout_width="match_parent"
@@ -307,7 +345,7 @@
                         android:visibility="visible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/ivPassportPageUpload">
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout14">
 
                         <com.cloudwell.paywell.services.customView.clearableEditText.ClearableEditText
                             android:id="@+id/etNidorPassportNumber"
@@ -316,20 +354,6 @@
                             android:hint="@string/hit_passport_number"/>
                     </android.support.design.widget.TextInputLayout>
 
-                    <ImageView
-                        android:id="@+id/ivPassportPageUpload"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-
-                        android:layout_marginStart="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="24dp"
-                        android:layout_marginRight="24dp"
-                        android:background="@drawable/ic_passport_unseleted"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/textInputLayoutNId"
@@ -396,6 +420,7 @@
                             android:editable="false"
                             android:hint="@string/passport_nationality_mannotory"/>
                     </android.support.design.widget.TextInputLayout>
+
                 </android.support.constraint.ConstraintLayout>
 
 

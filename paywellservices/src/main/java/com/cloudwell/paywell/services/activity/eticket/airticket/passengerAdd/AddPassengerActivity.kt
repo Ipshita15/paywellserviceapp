@@ -57,26 +57,28 @@ class AddPassengerActivity : AirTricketBaseActivity() {
     lateinit var touchHelper: ItemTouchHelper
 
     lateinit var resposeAirPriceSearch: ResposeAirPriceSearch
-    var passportMadatory1 = false
+    var passportMadatory = false
 
 
     var isEmailValid = false
     var countryCode = ""
-    var passportNationalityCountryCode = ""
 
     var isEditFlag = false
 
 
     private lateinit var oldPassenger: Passenger
     private var passportImagePath = ""
-    var passportMadatory = false
+    private var visaImagePath = ""
     var isFistTime = true
 
     var isValidation = false
+    var isPassortClick = false
 
     companion object {
         var KEY_PASSPORT_NATIONALITY = "KEY_PASSPORT_NATIONALITY"
         var KEY_COUNTRY = "KEY_COUNTRY"
+        var TAG_PASSPORT = "TAG_PASSPORT"
+        var TAG_VISA = "TAG_VISA"
     }
 
 
@@ -122,12 +124,15 @@ class AddPassengerActivity : AirTricketBaseActivity() {
     private fun initializationView() {
 
         resposeAirPriceSearch = AppStorageBox.get(applicationContext, AppStorageBox.Key.ResposeAirPriceSearch) as ResposeAirPriceSearch
-        passportMadatory1 = resposeAirPriceSearch.data?.results?.get(0)?.passportMadatory!!
+        passportMadatory = resposeAirPriceSearch.data?.results?.get(0)?.passportMadatory!!
 
-        if (passportMadatory1) {
+        if (passportMadatory) {
             etNidorPassportNumber.setHint(getString(R.string.hit_passport_number) + "*")
             etPassportExpiryDate.setHint(getString(R.string.passport_expiry_date) + "*")
             etpassportNationality.setHint(getString(R.string.passport_nationality_mannotory) + "*")
+            ivVisaPageUpload.visibility = View.VISIBLE
+        } else {
+            ivVisaPageUpload.visibility = View.GONE
         }
 
 
@@ -158,6 +163,14 @@ class AddPassengerActivity : AirTricketBaseActivity() {
                 } else {
                     ivPassportPageUpload.setImageResource(R.drawable.ic_passport_unseleted)
                 }
+
+                if (!oldPassenger.visa_content.equals("")) {
+                    visaImagePath = oldPassenger.visa_content
+                    ivVisaPageUpload.setImageResource(R.drawable.visa_eanble)
+                } else {
+                    ivVisaPageUpload.setImageResource(R.drawable.visa_disable)
+                }
+
 
                 if (!oldPassenger.nIDnumber.equals("")) {
                     etNationalIDNumber.setText(oldPassenger.nIDnumber)
@@ -276,6 +289,12 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
 
         ivPassportPageUpload.setOnClickListener {
+            isPassortClick = true
+            showImagePickerOptions()
+        }
+
+        ivVisaPageUpload.setOnClickListener {
+            isPassortClick = false
             showImagePickerOptions()
         }
 
@@ -535,7 +554,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         }
 
 
-        if (passportMadatory1) {
+        if (passportMadatory) {
             if (passportNumber.equals("")) {
                 textInputLayoutPassport.error = getString(R.string.Passport_number_mandatory)
                 return
@@ -548,6 +567,16 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
             if (passportNationalityCountry.equals("")) {
                 textLayoutPassportNationality.error = getString(R.string.passport_expiry_date_mandatory)
+                return
+            }
+
+            if (passportImagePath.equals("")) {
+                showPassportAddDilog(getString(R.string.passport_image_mandatory))
+                return
+            }
+
+            if (visaImagePath.equals("")) {
+                showPassportAddDilog(getString(R.string.visa_image_mandatory))
                 return
             }
 
@@ -571,11 +600,12 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         passenger.passportNationality = passportNationalityCountry
 
         passenger.passportImagePath = passportImagePath
+        passenger.visa_content = visaImagePath
         passenger.nIDnumber = nationalIDNumber
         passenger.isLeadPassenger = isLeadPassenger.isChecked
 
 
-
+        // for auto seletion in passenger list
         if (isValidation) {
             passenger.isPassengerSleted = true
         } else {
@@ -589,8 +619,16 @@ class AddPassengerActivity : AirTricketBaseActivity() {
                 val extension = passportImagePath.substring(lastIndexOf + 1);
                 passenger.file_extension = extension
             }
-
         }
+
+        if (!visaImagePath.equals("")) {
+            val lastIndexOf = visaImagePath.lastIndexOf('.')
+            if (lastIndexOf > 0) {
+                val extension = visaImagePath.substring(lastIndexOf + 1);
+                passenger.visa_extension = extension
+            }
+        }
+
 
         if (isEditFlag) {
             passenger.id = oldPassenger.id
@@ -622,9 +660,9 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
     }
 
-    private fun showPassportAddDilog() {
+    private fun showPassportAddDilog(message: String) {
         val builder = AlertDialog.Builder(this)
-        builder.setMessage(getString(R.string.please_add_id_info_for_this_travaler))
+        builder.setMessage(message)
                 .setCancelable(true)
                 .setPositiveButton(getString(R.string.ok), DialogInterface.OnClickListener { dialog, id ->
 
@@ -661,11 +699,11 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         ImagePickerActivity.showImagePickerOptions(this, object : ImagePickerActivity.PickerOptionListener {
             override fun onChooseGallerySelected() {
 
-                launchGalleryIntent();
+                launchGalleryIntent()
             }
 
             override fun onTakeCameraSelected() {
-                launchCameraIntent();
+                launchCameraIntent()
 
             }
         })
@@ -708,11 +746,15 @@ class AddPassengerActivity : AirTricketBaseActivity() {
                 try {
                     // You can update this bitmap to your server
                     var bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                    if (isPassortClick) {
+                        passportImagePath = uri.path
+                        // loading profile image from local cache
+                        ivPassportPageUpload.setImageResource(R.drawable.ic_passport_seleted)
+                    } else {
+                        visaImagePath = uri.path
+                        ivVisaPageUpload.setImageResource(R.drawable.visa_eanble)
+                    }
 
-
-                    passportImagePath = uri.path
-                    // loading profile image from local cache
-                    ivPassportPageUpload.setImageResource(R.drawable.ic_passport_seleted)
                     //loadProfile(uri.toString());
                 } catch (e: IOException) {
                     e.printStackTrace();

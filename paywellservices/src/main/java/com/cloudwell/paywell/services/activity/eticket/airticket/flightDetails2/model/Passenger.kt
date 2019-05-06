@@ -91,6 +91,14 @@ data class Passenger(val isDefault: Boolean) {
     @ColumnInfo(name = "file_extension")
     var file_extension: String = ""
 
+    @SerializedName("visa_extension")
+    @ColumnInfo(name = "visa_extension")
+    var visa_extension: String = ""
+
+    @SerializedName("visa_content")
+    @ColumnInfo(name = "visa_content")
+    var visa_content: String = ""
+
     @SerializedName("nid_number")
     @ColumnInfo(name = "nid_number")
     var nIDnumber: String = ""

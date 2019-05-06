@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "7601a66bc1acf7d1aa87e229979dde83",
+    "identityHash": "c9db3bf46d2fc4528fb1a47b2633edf9",
     "entities": [
       {
         "tableName": "FavoriteMenu",
@@ -224,7 +224,7 @@
       },
       {
         "tableName": "Passenger",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `ContactNumber` TEXT NOT NULL, `CountryCode` TEXT NOT NULL, `Email` TEXT NOT NULL, `FirstName` TEXT NOT NULL, `DateOfBirth` TEXT NOT NULL, `Gender` TEXT NOT NULL, `IsLeadPassenger` INTEGER NOT NULL, `LastName` TEXT NOT NULL, `Nationality` TEXT NOT NULL, `PaxType` TEXT NOT NULL, `Title` TEXT NOT NULL, `isPassengerSleted` INTEGER NOT NULL, `Country` TEXT NOT NULL, `PassportNumber` TEXT NOT NULL, `PassportExpiryDate` TEXT NOT NULL, `PassportNationality` TEXT NOT NULL, `passportImagePath` TEXT NOT NULL, `file_extension` TEXT NOT NULL, `nid_number` TEXT NOT NULL, `isDefault` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `ContactNumber` TEXT NOT NULL, `CountryCode` TEXT NOT NULL, `Email` TEXT NOT NULL, `FirstName` TEXT NOT NULL, `DateOfBirth` TEXT NOT NULL, `Gender` TEXT NOT NULL, `IsLeadPassenger` INTEGER NOT NULL, `LastName` TEXT NOT NULL, `Nationality` TEXT NOT NULL, `PaxType` TEXT NOT NULL, `Title` TEXT NOT NULL, `isPassengerSleted` INTEGER NOT NULL, `Country` TEXT NOT NULL, `PassportNumber` TEXT NOT NULL, `PassportExpiryDate` TEXT NOT NULL, `PassportNationality` TEXT NOT NULL, `passportImagePath` TEXT NOT NULL, `file_extension` TEXT NOT NULL, `visa_extension` TEXT NOT NULL, `visa_content` TEXT NOT NULL, `nid_number` TEXT NOT NULL, `isDefault` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -341,6 +341,18 @@
             "notNull": true
           },
           {
+            "fieldPath": "visa_extension",
+            "columnName": "visa_extension",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "visa_content",
+            "columnName": "visa_content",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "nIDnumber",
             "columnName": "nid_number",
             "affinity": "TEXT",
@@ -365,7 +377,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"7601a66bc1acf7d1aa87e229979dde83\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"c9db3bf46d2fc4528fb1a47b2633edf9\")"
     ]
   }
 }
