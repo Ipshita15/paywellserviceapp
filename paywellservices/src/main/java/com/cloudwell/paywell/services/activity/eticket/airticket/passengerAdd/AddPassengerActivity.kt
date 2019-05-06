@@ -5,13 +5,11 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.annotation.Nullable
-import android.support.v7.app.AlertDialog
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.text.Editable
 import android.text.TextWatcher
@@ -349,7 +347,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
                 }, year, thismonth, dayOfMonth)
 
-
+        datePickerDialog.datePicker.setMaxDate(System.currentTimeMillis());
         datePickerDialog.show()
 
     }
@@ -571,12 +569,12 @@ class AddPassengerActivity : AirTricketBaseActivity() {
             }
 
             if (passportImagePath.equals("")) {
-                showPassportAddDilog(getString(R.string.passport_image_mandatory))
+                showDialogMesssage(getString(R.string.passport_image_mandatory))
                 return
             }
 
             if (visaImagePath.equals("")) {
-                showPassportAddDilog(getString(R.string.visa_image_mandatory))
+                showDialogMesssage(getString(R.string.visa_image_mandatory))
                 return
             }
 
@@ -657,21 +655,6 @@ class AddPassengerActivity : AirTricketBaseActivity() {
         } else {
             return false
         }
-
-    }
-
-    private fun showPassportAddDilog(message: String) {
-        val builder = AlertDialog.Builder(this)
-        builder.setMessage(message)
-                .setCancelable(true)
-                .setPositiveButton(getString(R.string.ok), DialogInterface.OnClickListener { dialog, id ->
-
-                    dialog.dismiss()
-                })
-
-        val alert = builder.create()
-        alert.show()
-
 
     }
 
@@ -779,11 +762,21 @@ class AddPassengerActivity : AirTricketBaseActivity() {
                     calendar.set(Calendar.MONTH, month)
                     calendar.set(Calendar.DAY_OF_MONTH, day)
 
-                    val mMonth = month + 1
-                    val androidSystemdate = "${year}-${mMonth}-${day}"
-                    val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(androidSystemdate) as Date
-                    val humanReadAbleDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).format(fdepTimeFormatDate)
-                    etPassportExpiryDate.setText(humanReadAbleDate)
+
+                    val a = calendar.time //your input date here
+
+                    val b = Date() // today date
+                    b.setMonth(b.getMonth() + 6);  //subtract 6 month from current date
+
+                    if (a < b) {
+                        showDialogMesssage("Passport Expiry Date should have more than 6 months for passenger ");
+                    } else {
+                        val mMonth = month + 1
+                        val androidSystemdate = "${year}-${mMonth}-${day}"
+                        val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(androidSystemdate) as Date
+                        val humanReadAbleDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).format(fdepTimeFormatDate)
+                        etPassportExpiryDate.setText(humanReadAbleDate)
+                    }
 
 
                 }, year, thismonth, dayOfMonth)

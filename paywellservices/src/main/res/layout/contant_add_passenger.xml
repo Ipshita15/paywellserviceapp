@@ -131,6 +131,8 @@
                             android:id="@+id/etFirstName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ _"
+                            android:lines="1"
                             android:hint="@string/first_name"/>
                     </android.support.design.widget.TextInputLayout>
 
@@ -149,6 +151,8 @@
                             android:id="@+id/etLastName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ _"
+                            android:lines="1"
                             android:hint="@string/last_name"/>
                     </android.support.design.widget.TextInputLayout>
 
@@ -207,7 +211,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/contact_number"
                             android:inputType="phone"
-                            android:maxLength="11"/>
+                            android:maxLength="15"/>
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -350,6 +354,7 @@
                         <com.cloudwell.paywell.services.customView.clearableEditText.ClearableEditText
                             android:id="@+id/etNidorPassportNumber"
                             android:layout_width="match_parent"
+                            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ _0123456789"
                             android:layout_height="wrap_content"
                             android:hint="@string/hit_passport_number"/>
                     </android.support.design.widget.TextInputLayout>
@@ -397,6 +402,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:editable="false"
+                            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ _0123456789"
+
                             android:hint="@string/passport_expiry_date"/>
                     </android.support.design.widget.TextInputLayout>
 
@@ -418,6 +425,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:editable="false"
+                            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ _0123456789"
                             android:hint="@string/passport_nationality_mannotory"/>
                     </android.support.design.widget.TextInputLayout>
 
