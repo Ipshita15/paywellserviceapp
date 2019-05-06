@@ -24,6 +24,7 @@ class HeaderAirportRecyclerViewSectionFilter(var key: String, var list: List<Air
 
 
         iHolder.SubjectName.text = FormatHelper.formatText(airport.airportName)
+
         iHolder.tvCity.text = FormatHelper.formatText(airport.city + "/" + airport.country)
 
         iHolder.layout_airport_name_item.setOnClickListener {

@@ -22,7 +22,14 @@ class HeaderAirportRecyclerViewSection(var key: String, var list: List<Airport>)
         val iHolder = holder as AirportItemViewHolder
         val airport = list.get(position)
 
-        iHolder.itemContent.text = FormatHelper.formatText(airport.airportName)
+        var nextLevel = ""
+        if (!airport.city.equals("")) {
+            nextLevel = ", " + airport.city
+        } else if (!airport.state.equals("")) {
+            nextLevel = ", " + airport.state
+        }
+
+        iHolder.itemContent.text = FormatHelper.formatText(airport.airportName + nextLevel)
 
         iHolder.layout_airport_name_item.setOnClickListener {
             GlobalApplicationBus.getBus().post(airport)
