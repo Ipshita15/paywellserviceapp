@@ -231,7 +231,7 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
             val differenceDate = differenceMilliSecond(fistDate, secondDate)
 
-            val differenceMilliSecondString = DateUtils.getDurtingJounaryTimeNew(fistDate, secondDate)
+            val differenceMilliSecondString = DateUtils.getDartingJanuaryTimeNew(it)
 
             segmentsList.add(FlightSequenceAdapter.MyItem(true, origin?.airport?.airportName!!, depDate, depTime, airlineName, "", differenceMilliSecondString))
 
