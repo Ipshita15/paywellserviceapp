@@ -137,6 +137,10 @@ class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
                     val resultID = get?.resultID
 
 
+                    AppStorageBox.put(applicationContext, AppStorageBox.Key.SERACH_ID, mSearchId)
+                    AppStorageBox.put(applicationContext, AppStorageBox.Key.Request_ID, resultID)
+
+
                     val intent = Intent(applicationContext, FlightDetails1Activity::class.java)
                     intent.putExtra("mSearchId", mSearchId)
                     intent.putExtra("resultID", resultID)

@@ -61,7 +61,7 @@ class AllSummaryActivityViewModel : AirTicketBaseViewMode() {
 
                         resBookingAPI = it!!
                         if (resBookingAPI.status.toString().startsWith("3")) {
-                            mViewStatus.value = AllSummaryStatus(noSerachFoundMessage = "" + resBookingAPI.message, isShowProcessIndicatior = false, resBookingAPI = null, test = "done")
+                            mViewStatus.value = AllSummaryStatus(noSerachFoundMessage = "" + resBookingAPI.message, isShowProcessIndicatior = false, resBookingAPI = null, test = "")
                         } else {
                             mViewStatus.value = AllSummaryStatus(noSerachFoundMessage = "", isShowProcessIndicatior = false, resBookingAPI = it, test = "done")
 

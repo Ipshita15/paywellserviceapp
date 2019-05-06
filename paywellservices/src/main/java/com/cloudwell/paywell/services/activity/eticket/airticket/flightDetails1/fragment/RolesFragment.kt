@@ -13,6 +13,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.RequestAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.airRules.Datum
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.viewModel.FlightDetails1ViewModel
+import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import kotlinx.android.synthetic.main.fragment_roles.view.*
 
 
@@ -62,9 +63,14 @@ class RolesFragment : Fragment() {
 
         })
 
+        val serachId = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.SERACH_ID) as String
+        val requestID = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.Request_ID) as String
+
+
         val requestAirPriceSearch = RequestAirPriceSearch()
-//        requestAirPriceSearch.searchId = "effd3517-ee7c-4363-87ad-59333cd5f365"
-//        requestAirPriceSearch.resultID = "3e55bbb0-2897-49ad-bbf2-f04b465d0b05"
+        requestAirPriceSearch.resultID = requestID
+        requestAirPriceSearch.searchId = serachId
+
 
         mFlightDetails1ViewModel.callAirRolesAPI(requestAirPriceSearch)
 

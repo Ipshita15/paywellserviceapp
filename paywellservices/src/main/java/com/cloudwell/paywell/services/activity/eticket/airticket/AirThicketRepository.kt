@@ -2,7 +2,6 @@ package com.cloudwell.paywell.services.activity.eticket.airticket
 
 import android.arch.lifecycle.MutableLiveData
 import android.content.Context
-import com.cloudwell.paywell.services.activity.eticket.DummayData
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.ReposeAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.Airport
@@ -139,9 +138,9 @@ class AirThicketRepository(private val mContext: Context) {
             override fun onResponse(call: Call<ResposeAirRules>, response: Response<ResposeAirRules>) {
                 if (response.isSuccessful) {
 
-                    val mock = Gson().fromJson(DummayData().airRues, ResposeAirRules::class.java)
+//                    val mock = Gson().fromJson(DummayData().airRues, ResposeAirRules::class.java)
 
-                    data.value = mock
+                    data.value = response.body()
                 }
             }
 
