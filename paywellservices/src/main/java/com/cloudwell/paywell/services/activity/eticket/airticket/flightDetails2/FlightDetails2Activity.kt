@@ -8,7 +8,6 @@ import android.support.design.widget.BottomSheetBehavior
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
 import android.view.View
 import com.cloudwell.paywell.service.CalculationHelper
@@ -34,7 +33,6 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
 
 
     private lateinit var viewMode: FlightDetails2ViewModel
-    lateinit var touchHelper: ItemTouchHelper
     lateinit var adapterForPassengers: AdapterForPassengers
     lateinit var resposeAirPriceSearch: ResposeAirPriceSearch
 
@@ -116,12 +114,20 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
 
 
         viewMode.mListMutableLiveDPassengers.value?.forEach {
-            val passengerSleted = it.isPassengerSleted
+            val model = it
+            val passengerSleted = model.isPassengerSleted
             if (passengerSleted) {
                 passengerString = "$passengerString +${it.id},"
-                totalSeletedCounter = totalSeletedCounter + 1;
+                totalSeletedCounter = totalSeletedCounter + 1
             }
+
+            if (!validationCheckPassportMandatory(model)) {
+                return
+            }
+
+            // check is passport mandatory and and passport and visa image have or not
         }
+
 
         if (totalSeletedCounter == totalPassenger) {
             AppStorageBox.put(applicationContext, AppStorageBox.Key.SELETED_PASSENGER_IDS, passengerString)
@@ -129,6 +135,28 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
         } else {
             showWarringForMissMax(requestAirSearch)
         }
+    }
+
+    private fun validationCheckPassportMandatory(model: Passenger): Boolean {
+        if (resposeAirPriceSearch.data?.results?.get(0)?.passportMadatory == true && !model.isDefault) {
+            if (model.passportImagePath.equals("")) {
+                showDialogMesssageWithEditBoutton("You selected passenger has no passport image, Please edit your passenger information.", model)
+                return false
+            }
+            if (model.visa_content.equals("")) {
+                showDialogMesssageWithEditBoutton("You selected passenger has no VISA image, Please edit your passenger information.", model)
+                return false
+            }
+            if (model.passportExpiryDate.equals("")) {
+                showDialogMesssageWithEditBoutton("You selected passenger has no passport expiry date, Please edit your passenger information.", model)
+                return false
+            }
+            if (model.passportNationality.equals("")) {
+                showDialogMesssageWithEditBoutton("You selected passenger has no passport nationality, Please edit your passenger information.", model)
+                return false
+            }
+        }
+        return true
     }
 
     fun checkValidation(): Boolean {
@@ -251,6 +279,13 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
                             if (get.isPassengerSleted) {
                                 get.isPassengerSleted = false
 
+                                viewMode.updatePassenger(get)
+                                viewMode.mListMutableLiveDPassengers.value?.set(position, get)
+                                adapterForPassengers.notifyDataSetChanged()
+
+                                return
+
+
                             } else {
 
                                 val checkValidation = checkValidation()
@@ -260,13 +295,17 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
                                     return
                                 }
 
-
-                                get.isPassengerSleted = true
                             }
 
+                            //validationCheckPassportMandatory
+                            if (!validationCheckPassportMandatory(get)) {
+                                return
+                            }
+
+
+                            get.isPassengerSleted = true
+
                             viewMode.updatePassenger(get)
-
-
                             viewMode.mListMutableLiveDPassengers.value?.set(position, get)
                             adapterForPassengers.notifyDataSetChanged()
 
@@ -281,6 +320,25 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
         )
 
 
+    }
+
+    private fun showDialogMesssageWithEditBoutton(message: String, model: Passenger) {
+
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage(message)
+                .setCancelable(true)
+                .setPositiveButton(getString(R.string.edit), DialogInterface.OnClickListener { dialog, which ->
+                    dialog.dismiss()
+
+                    AppStorageBox.put(applicationContext, AppStorageBox.Key.AIRTRICKET_EDIT_PASSENGER, model)
+                    val intent = Intent(applicationContext, AddPassengerActivity::class.java)
+                    intent.putExtra("isEditFlag", true)
+                    startActivity(intent)
+
+                })
+
+
+        builder.show()
     }
 
 
@@ -308,14 +366,6 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
         tvPoliciesAndBaggageAllowance.setOnClickListener {
 
             val get = resposeAirPriceSearch.data?.results?.get(0)?.fares
-//            var get = Fare()
-//            get.baseFare = 34344343;
-//            get.tax = 10;
-//            get.currency = "Tk";
-//            get.discount = 33;
-//            get.otherCharges = 2000;
-//            get.serviceFee = 33;
-
 
             AppStorageBox.put(applicationContext, AppStorageBox.Key.FARE_DATA, get)
 
