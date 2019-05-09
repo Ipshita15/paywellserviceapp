@@ -119,7 +119,7 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
                         String message = jsonObject.get("message").getAsString();
                         if (jsonObject.get("status").getAsInt() == 200) {
 
-                            String userMessage = "Your ticket has been canceled, " + mCancellationFee + " taka has been charged to you as cancelation fee. Thank you.";
+                            String userMessage = "Your ticket has been canceled, " + mCancellationFee + " taka has been charged to you as cancellation fee. Thank you.";
                             showMsg(userMessage);
 
                         } else {

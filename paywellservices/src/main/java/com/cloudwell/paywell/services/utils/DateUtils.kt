@@ -184,22 +184,96 @@ object DateUtils {
 
     }
 
-    fun getDartingJanuaryTimeNew(duration: OutputSegment): String {
+    fun getDurtingJounaryTimeNewTest(duration: List<OutputSegment>): String {
+        //HH converts hour in 24 hours format (0-23), day calculation
+
+        val SECOND = 1000
+        val MINUTE = 60 * SECOND;
+        val HOUR = 60 * MINUTE;
+        val DAY = 24 * HOUR;
+
+
         val sb = StringBuilder(64)
 
 
-        val diffMinutes: Int
-        val diffHours: Int
+        var diffMinutes = 0
+        var diffHours = 0
 
-        var durationInt = 0
-
-
-        durationInt = durationInt + duration.journeyDuration.toInt()
+        var totalDiffent = 0L
 
 
+        duration.forEachIndexed { index, it ->
+            val depTimeAPI = it.origin?.depTime?.split("T")
+            val arrTimeAPI = it.destination?.arrTime?.split("T")
+            val date = "yyyy-MM-dd HH:mm:ss"
+            val depTime = SimpleDateFormat(date, Locale.ENGLISH).parse(depTimeAPI?.get(0) + " " + depTimeAPI?.get(1)) as Date
+            val arrTime = SimpleDateFormat(date, Locale.ENGLISH).parse(arrTimeAPI?.get(0) + " " + arrTimeAPI?.get(1)) as Date
+            val diff = arrTime.time - depTime.time
 
-        diffHours = (durationInt / 60)
-        diffMinutes = (durationInt % 60)
+            totalDiffent += diff
+
+            if (index != duration.lastIndex) {
+                val nextDepTimeAPI = duration.get(index + 1).origin?.depTime?.split("T")
+                val nextDepTime = SimpleDateFormat(date, Locale.ENGLISH).parse(nextDepTimeAPI?.get(0) + " " + nextDepTimeAPI?.get(1)) as Date
+                val transtionTimeDiff = nextDepTime.time - arrTime.time
+
+                totalDiffent += transtionTimeDiff
+            }
+
+            com.orhanobut.logger.Logger.v("")
+        }
+
+
+        diffMinutes = (totalDiffent / (1000 * 60) % 60).toInt()
+        diffHours = (totalDiffent / (1000 * 60 * 60) % 24).toInt()
+
+
+        if (diffHours != 0) {
+            sb.append(diffHours)
+            sb.append("h ")
+        }
+
+        if (diffMinutes != 0) {
+            sb.append(diffMinutes)
+            sb.append("m")
+        }
+
+        return sb.toString()
+
+    }
+
+
+    fun getDartingJanuaryTimeNewTest(duration: OutputSegment): String {
+        //HH converts hour in 24 hours format (0-23), day calculation
+
+        val SECOND = 1000
+        val MINUTE = 60 * SECOND;
+        val HOUR = 60 * MINUTE;
+        val DAY = 24 * HOUR;
+
+
+        val sb = StringBuilder(64)
+
+
+        var diffMinutes = 0
+        var diffHours = 0
+
+        var totalDiffent = 0L
+
+
+        val depTimeAPI = duration.origin?.depTime?.split("T")
+        val arrTimeAPI = duration.destination?.arrTime?.split("T")
+        val date = "yyyy-MM-dd HH:mm:ss"
+        val depTime = SimpleDateFormat(date, Locale.ENGLISH).parse(depTimeAPI?.get(0) + " " + depTimeAPI?.get(1)) as Date
+        val arrTime = SimpleDateFormat(date, Locale.ENGLISH).parse(arrTimeAPI?.get(0) + " " + arrTimeAPI?.get(1)) as Date
+        val diff = arrTime.time - depTime.time
+
+        totalDiffent += diff
+
+
+
+        diffMinutes = (totalDiffent / (1000 * 60) % 60).toInt()
+        diffHours = (totalDiffent / (1000 * 60 * 60) % 24).toInt()
 
 
         if (diffHours != 0) {

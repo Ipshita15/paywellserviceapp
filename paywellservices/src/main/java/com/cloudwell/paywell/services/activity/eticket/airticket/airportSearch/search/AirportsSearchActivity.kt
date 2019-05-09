@@ -83,13 +83,9 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
 
     private fun initViewInitialization() {
 
-
         ivClose.setOnClickListener {
             finish()
         }
-
-//        val mAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, allAirports)
-
 
         etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {

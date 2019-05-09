@@ -84,7 +84,7 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
             stopCount = "0"
         }
 
-        durtingJounaryTimeNew = DateUtils.getDurtingJounaryTimeNew(segments)
+        durtingJounaryTimeNew = DateUtils.getDurtingJounaryTimeNewTest(segments)
         holder.tvDurationAndStopCounter.text = durtingJounaryTimeNew + ", $stopCount stop"
 
 
@@ -131,7 +131,8 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
         }
 
         var durtingJounaryTimeNew = ""
-        durtingJounaryTimeNew = DateUtils.getDurtingJounaryTimeNew(segments)
+        durtingJounaryTimeNew = DateUtils.getDurtingJounaryTimeNewTest(segments)
+
         holder.tvDurationAndStopCounter.text = durtingJounaryTimeNew + ", $stopCount stop"
 
 
@@ -180,7 +181,8 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
 
         }
 
-        durtingJounaryTimeNew = DateUtils.getDartingJanuaryTimeNew(segment)
+
+        durtingJounaryTimeNew = DateUtils.getDartingJanuaryTimeNewTest(segment)
         holder.tvDurationAndStopCounter.text = durtingJounaryTimeNew + ", $stopCount stop"
 
 

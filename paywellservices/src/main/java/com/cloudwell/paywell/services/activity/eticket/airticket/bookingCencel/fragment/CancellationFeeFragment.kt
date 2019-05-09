@@ -32,16 +32,17 @@ class CancellationFeeFragment : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_cancel_fee, container, false)
 
-        val refund = resCencelMaping.getCancelData().getRefund()
-        val bookingDatum = resCencelMaping.getBookingData().get(0)
-        val cancellationFee = java.lang.Double.parseDouble(refund) * java.lang.Double.parseDouble(bookingDatum.getAdultQty()) + java.lang.Double.parseDouble(bookingDatum.getChildQty()) + java.lang.Double.parseDouble(bookingDatum.getInfantQty())
+        val void = resCencelMaping.getCancelData().void.toDouble()
+        val count = resCencelMaping.bookingData.get(0).passengers.count()
+        val totalFee = void * count
 
-        v.tvFree.text = getString(R.string.cancellation_fee) + " Tk. " + cancellationFee
+
+        v.tvFree.text = getString(R.string.cancellation_fee) + " Tk. " + totalFee
 
 
         v.btActionIssueTicket.setOnClickListener {
             dismiss()
-            onClickHandler.onClickActionIssueTicket(cancellationFee)
+            onClickHandler.onClickActionIssueTicket(totalFee)
         }
 
 
