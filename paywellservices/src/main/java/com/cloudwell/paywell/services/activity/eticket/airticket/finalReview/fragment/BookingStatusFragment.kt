@@ -57,7 +57,7 @@ class BookingStatusFragment : DialogFragment() {
         if (resAirPreBooking.data?.results?.get(0)?.isRefundable!!) {
             v.tvTax.text = getString(R.string.refundable) + ": Yes"
         } else {
-            v.tvTax.text = getString(com.cloudwell.paywell.services.R.string.non_refundable) + ": No"
+            v.tvTax.text = getString(R.string.refundable) + ": No"
         }
 
         if (segments?.size!! > 1) {
