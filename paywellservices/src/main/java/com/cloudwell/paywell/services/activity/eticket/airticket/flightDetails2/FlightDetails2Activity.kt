@@ -151,6 +151,10 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
                 showDialogMesssageWithEditBoutton("You selected passenger has no passport expiry date, Please edit your passenger information.", model)
                 return false
             }
+            if (model.passportNumber.equals("")) {
+                showDialogMesssageWithEditBoutton("You selected passenger has no passport number, Please edit your passenger information.", model)
+                return false
+            }
             if (model.passportNationality.equals("")) {
                 showDialogMesssageWithEditBoutton("You selected passenger has no passport nationality, Please edit your passenger information.", model)
                 return false
