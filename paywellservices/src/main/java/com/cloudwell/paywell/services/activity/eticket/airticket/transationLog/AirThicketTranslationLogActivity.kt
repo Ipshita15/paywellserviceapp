@@ -28,7 +28,7 @@ class AirThicketTranslationLogActivity : TransitionLogBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transtionlog)
 
-        setToolbar(getString(com.cloudwell.paywell.services.R.string.transaction_log))
+        setToolbar(getString(R.string.transaction_log))
 
 
         val bundle = intent.extras

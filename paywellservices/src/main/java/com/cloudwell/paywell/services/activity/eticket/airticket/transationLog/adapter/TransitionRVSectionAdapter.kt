@@ -5,12 +5,11 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
 import com.cloudwell.paywell.services.app.AppController
+import com.cloudwell.paywell.services.constant.AllConstant
 import com.orhanobut.logger.Logger
-
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection
 
 /**
@@ -71,6 +70,13 @@ class TransitionRVSectionAdapter(private val title: String, private val list: Li
                 Logger.v("InvoiceURl: " + model.invoiceUrl)
                 onActionButtonClick!!.onItemClick(model)
             }
+        }
+
+        val m = model.message
+        if (m.equals(AllConstant.CancelInProcess) || m.equals(AllConstant.Expired) || m.equals(AllConstant.Cancelled) || m.equals(AllConstant.InProcess) || m.equals(AllConstant.Pending) || m.equals(AllConstant.UnConfirmed)) {
+            iHolder.tvAction.visibility = View.GONE
+        } else {
+            iHolder.tvAction.visibility = View.VISIBLE
         }
 
         iHolder.tvAction.setOnClickListener { v -> onActionButtonClick!!.onActionButtonClick(position, model) }

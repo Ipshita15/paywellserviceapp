@@ -32,6 +32,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.m
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.viewModel.BookingStatsViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.TicketViewerActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.emailTicket.PassengerEmailSendListActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.reschedule.RescheduleActivity
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -55,6 +56,7 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
 
 
     fun showActionMenuPopupMessate(model: Datum) {
+        model.message = "Ticketed"
 
         AppStorageBox.put(applicationContext, AppStorageBox.Key.BOOKING_STATUS_ITEM, model)
 
@@ -62,16 +64,29 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
         val tricketChooserFragment = ThicketActionMenuFragment()
 
         tricketChooserFragment.setOnClickHandlerTest(object : ThicketActionMenuFragment.OnClickHandler {
-            override fun onClickIssisTricketButton() {
+            override fun onReschedule(item: Datum) {
 
+                val newIntent = RescheduleActivity.newIntent(applicationContext, item = item)
+                startActivity(newIntent)
 
+            }
+
+            override fun onRefound(item: Datum) {
+
+            }
+
+            override fun onReissue(item: Datum) {
+
+            }
+
+            override fun onClickIsisThicketButton() {
                 model.bookingId?.let {
                     bookingId = it
                     askForPin(it)
                 }
             }
 
-            override fun onClickCencelButton() {
+            override fun onClickCancelButton() {
                 val model = AppStorageBox.get(applicationContext, AppStorageBox.Key.BOOKING_STATUS_ITEM) as Datum
 
                 val intent = Intent(applicationContext, BookingCancelActivity::class.java)

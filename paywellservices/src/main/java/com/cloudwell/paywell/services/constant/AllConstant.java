@@ -20,4 +20,10 @@ public class AllConstant {
     public static final String IS_FLOW_FROM_FAVORITE_AIR = "IS_FLOW_FROM_FAVORITE_AIR";
 
     public static final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    public static final String CancelInProcess = "CancelInProcess";
+    public static final String Expired = "Expired";
+    public static final String Cancelled = "Cancelled";
+    public static final String InProcess = "InProcess";
+    public static final String Pending = "Pending";
+    public static final String UnConfirmed = "UnConfirmed";
 }
