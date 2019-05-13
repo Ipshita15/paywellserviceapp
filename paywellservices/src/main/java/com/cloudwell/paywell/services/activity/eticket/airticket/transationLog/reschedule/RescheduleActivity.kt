@@ -5,6 +5,8 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import com.cloudwell.paywell.services.R
@@ -12,7 +14,8 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.base.Transition
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.BookingStatuViewStatus
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.viewModel.BookingStatsViewModel
-import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.adapter.ItemClickListener as ItemClickListener1
+import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.reschedule.adapter.ReschedulerRecycleViewAdapter
+
 
 class RescheduleActivity : TransitionLogBaseActivity() {
 
@@ -38,7 +41,21 @@ class RescheduleActivity : TransitionLogBaseActivity() {
     }
 
     private fun setAdapter(item: Datum) {
+        val recyclerView = findViewById(R.id.recyclerViewReschuduler) as RecyclerView
+        recyclerView.setHasFixedSize(true)
 
+        val columns = 1;
+
+        val glm = GridLayoutManager(applicationContext, columns)
+        recyclerView.layoutManager = glm
+
+
+        val recyclerListAdapter = ReschedulerRecycleViewAdapter(this, item);
+
+
+        recyclerView.layoutManager = glm
+        recyclerView.adapter = recyclerListAdapter;
+        recyclerView.isNestedScrollingEnabled = false;
 
     }
 

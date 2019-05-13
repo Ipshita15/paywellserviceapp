@@ -17,7 +17,6 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketM
 import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.adapter.TransitionRVSectionAdapter
 import com.cloudwell.paywell.services.app.AppHandler
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
-import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.adapter.ItemClickListener as ItemClickListener1
 
 class AirThicketTranslationLogActivity : TransitionLogBaseActivity() {
 
