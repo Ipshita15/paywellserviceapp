@@ -976,35 +976,39 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         responseBodyCall.enqueue(new Callback<APIResBalanceCheck>() {
             @Override
             public void onResponse(Call<APIResBalanceCheck> call, Response<APIResBalanceCheck> response) {
+                try {
+                    pb_dot.setVisibility(View.GONE);
+                    mToolbarHeading.setVisibility(View.VISIBLE);
+                    isBalaceCheckProcessRunning = false;
 
-                pb_dot.setVisibility(View.GONE);
-                mToolbarHeading.setVisibility(View.VISIBLE);
-                isBalaceCheckProcessRunning = false;
+                    if (response.isSuccessful()) {
+                        if (((response.body() != null) ? response.body().getStatus() : null) != 200) {
 
-                if (response.isSuccessful()) {
-                    if (((response.body() != null) ? response.body().getStatus() : null) != 200) {
+                            showSnackMessageWithTextMessage(getString(R.string.try_again_msg));
+
+                        } else {
+                            String balance = Objects.requireNonNull(response.body()).getBalanceData().getBalance();
+
+                            BigDecimal a = new BigDecimal(balance);
+                            BigDecimal roundOff = a.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+
+
+                            mAppHandler.setPWBalance("" + roundOff);
+
+                            String strBalance = mAppHandler.getPwBalance();
+                            mToolbarHeading.setText(strBalance);
+
+                        }
+
+                    } else {
 
                         showSnackMessageWithTextMessage(getString(R.string.try_again_msg));
 
-                    } else {
-                        String balance = Objects.requireNonNull(response.body()).getBalanceData().getBalance();
-
-                        BigDecimal a = new BigDecimal(balance);
-                        BigDecimal roundOff = a.setScale(2, BigDecimal.ROUND_HALF_EVEN);
-
-
-                        mAppHandler.setPWBalance("" + roundOff);
-
-                        String strBalance = mAppHandler.getPwBalance();
-                        mToolbarHeading.setText(strBalance);
-
                     }
-
-                } else {
-
+                } catch (Exception ignored) {
                     showSnackMessageWithTextMessage(getString(R.string.try_again_msg));
-
                 }
+
             }
 
             @Override
