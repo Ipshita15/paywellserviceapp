@@ -788,6 +788,7 @@
     <string name="passport_image_mandatory">passport image mandatory</string>
     <string name="visa_image_mandatory">Visa image mandatory</string>
     <string name="titel_reschedule">Reschedule</string>
+    <string name="booking_info">Booking Info</string>
 
 
 </resources>

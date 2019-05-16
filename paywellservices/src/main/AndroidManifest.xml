@@ -47,6 +47,7 @@
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
 
+
         <uses-library
             android:name="com.google.android.maps"
             android:required="false"/>
@@ -1118,7 +1119,6 @@
             android:name=".activity.eticket.airticket.flightSearch.FlightSearchViewActivity"
             android:label="@string/title_activity_air_tricket_menu"
             android:screenOrientation="portrait">
-
         </activity>
         <activity
             android:name=".activity.eticket.airticket.airportSearch.search.AirportsSearchActivity"
@@ -1127,20 +1127,18 @@
         </activity>
         <activity
             android:name=".activity.eticket.airticket.flightDetails1.FlightDetails1Activity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_air_tricket_menu">
+            android:label="@string/title_activity_air_tricket_menu"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activity.eticket.airticket.flightDetails2.FlightDetails2Activity"
             android:label="@string/title_flightDetails2"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activity.eticket.airticket.passengerList.PassengerListActivity"
             android:label="@string/title_passenger_list"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activity.eticket.airticket.passengerAdd.AddPassengerActivity"
@@ -1164,8 +1162,7 @@
         </activity>
         <activity
             android:name=".libaray.imagePickerAndCrop.ImagePickerActivity"
-            android:screenOrientation="portrait"
-            /> <!-- uCrop cropping activity -->
+            android:screenOrientation="portrait"/> <!-- uCrop cropping activity -->
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
@@ -1185,7 +1182,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
-
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN"/> -->
             <!-- <action android:name="android.intent.action.VIEW"/> -->
@@ -1194,17 +1190,20 @@
             <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
             <!-- </intent-filter> -->
 
-        </activity><!-- cache directory file provider paths -->
-
+        </activity> <!-- cache directory file provider paths -->
         <activity
             android:name=".activity.eticket.airticket.ticketViewer.emailTicket.PassengerEmailSendListActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activity.eticket.airticket.transationLog.reschedule.RescheduleActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
         <activity
-            android:name=".activity.eticket.airticket.transationLog.reschedule.RescheduleActivity"
+            android:name=".activity.eticket.airticket.transationLog.viewBookingInfo.ViewBookingInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             >

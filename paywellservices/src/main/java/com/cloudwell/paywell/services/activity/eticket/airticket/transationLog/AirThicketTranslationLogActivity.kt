@@ -15,6 +15,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.m
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.viewModel.BookingStatsViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.adapter.TransitionRVSectionAdapter
+import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.viewBookingInfo.ViewBookingInfoActivity
 import com.cloudwell.paywell.services.app.AppHandler
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 
@@ -74,6 +75,13 @@ class AirThicketTranslationLogActivity : TransitionLogBaseActivity() {
         groupBy.forEach {
             val transitionRVSectionAdapter = TransitionRVSectionAdapter(it.key.toString(), it.value, isEnglish)
             transitionRVSectionAdapter.setOnActionButtonClick(object : TransitionRVSectionAdapter.ItemClickListener {
+                override fun onRootViewClick(datum: Datum) {
+
+                    val newIntent = ViewBookingInfoActivity.newIntent(applicationContext, item = datum)
+                    startActivity(newIntent)
+
+                }
+
                 override fun onItemClick(datum: Datum) {
                     showThicketIntentPopupMessage(datum)
                 }

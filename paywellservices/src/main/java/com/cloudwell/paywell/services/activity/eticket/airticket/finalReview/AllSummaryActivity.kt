@@ -210,7 +210,7 @@ class AllSummaryActivity : AirTricketBaseActivity() {
     }
 
     private fun handlePassengerList(it: MutableList<Passenger>) {
-        val recyclerView = findViewById(com.cloudwell.paywell.services.R.id.recycleviewForPassenger) as RecyclerView
+        val recyclerView = findViewById(R.id.recycleviewForPassenger) as RecyclerView
 
 
         val glm = LinearLayoutManager(applicationContext)

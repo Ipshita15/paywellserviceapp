@@ -51,7 +51,7 @@ class TransitionRVSectionAdapter(private val title: String, private val list: Li
         iHolder.tvStatus.text = "Status: " + model.message!!
 
 
-        iHolder.mLinearLayout.setOnClickListener { }
+
 
 
         if (`model`.message != null) {
@@ -80,6 +80,10 @@ class TransitionRVSectionAdapter(private val title: String, private val list: Li
         }
 
         iHolder.tvAction.setOnClickListener { v -> onActionButtonClick!!.onActionButtonClick(position, model) }
+        iHolder.ivRootLayout.setOnClickListener {
+
+            onActionButtonClick?.onRootViewClick(datum = model)
+        }
 
 
     }
@@ -99,19 +103,19 @@ class TransitionRVSectionAdapter(private val title: String, private val list: Li
     }
 
     private inner class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        internal var ivRootLayout: LinearLayout
         internal var tvBookingId: TextView
         internal var tvTricketPrices: TextView
         internal var tvStatus: TextView
-        internal var mLinearLayout: LinearLayout
         internal var ivSymbolTicketed: ImageView
         internal var tvAction: ImageView
 
 
         init {
+            ivRootLayout = view.findViewById(R.id.ivRootLayout)
             tvBookingId = view.findViewById(R.id.tvBookingId)
             tvTricketPrices = view.findViewById(R.id.tvTricketPrices)
             tvStatus = view.findViewById(R.id.tvStatus)
-            mLinearLayout = view.findViewById(R.id.ivRootLayout)
             ivSymbolTicketed = view.findViewById(R.id.ivSymbolTicketed)
             tvAction = view.findViewById(R.id.ivActionTrans)
 
@@ -129,8 +133,8 @@ class TransitionRVSectionAdapter(private val title: String, private val list: Li
     interface ItemClickListener {
 
         fun onItemClick(datum: Datum)
-
         fun onActionButtonClick(position: Int, model: Datum)
+        fun onRootViewClick(datum: Datum)
 
     }
 
