@@ -40,9 +40,6 @@ class ViewBookingInfoActivity : AirTricketBaseActivity() {
     private fun initializationView() {
         val trips = item.trips
 
-//        val airline = resposeAirPriceSearch.data?.results?.get(0)?.segments?.get(0)?.airline
-
-
         val airportList = mutableSetOf<Airport>()
 
         trips.forEach {
@@ -55,15 +52,12 @@ class ViewBookingInfoActivity : AirTricketBaseActivity() {
             originAirport.cityName = it.originCity
             airportList.add(originAirport)
 
-
             val destinationAirport = Airport()
             destinationAirport.airportCode = it.destinationAirportCode
             destinationAirport.airportName = it.destinationAirportName
             destinationAirport.terminal = it.destinationTerminal
             destinationAirport.countryName = it.destinationCountry
             destinationAirport.cityName = it.destinationCity
-
-
 
             airportList.add(destinationAirport)
         }
@@ -78,11 +72,7 @@ class ViewBookingInfoActivity : AirTricketBaseActivity() {
         val recyclerListAdapter = AirportListBookingInfoAdapter(applicationContext, airportList.toList())
         recyclerViewAirports.adapter = recyclerListAdapter
 
-
-
-
         item.passengers?.toMutableList()?.let { handlePassengerList(it) }
-
 
         tvBaggage.text = getString(R.string.baggage) + trips[0].baggage + " " + getString(R.string.kg_per_adult)
 
@@ -104,14 +94,12 @@ class ViewBookingInfoActivity : AirTricketBaseActivity() {
         tveDpartureTime.text = "" + text
         val trip = item.trips[0]
 
-
         tvAirlineCode.text = getString(R.string.airline_code) + " ${trip.airlineCode}"
         tvAirlesscode.text = getString(R.string.airport_name) + " ${trip.airlineName}"
         tvFlghtNumber.text = getString(R.string.flight_number) + " ${trip.flightNumber}"
         tvBookingClass.text = getString(R.string.booking_class) + " ${trip.bookingClass}"
         tvOperatorCarrier.text = getString(R.string.operating_carrier) + " ${trip.operatingCareer}"
         tvCabinClass.text = getString(R.string.cabin_class) + " ${trip.cabinClass}"
-
 
     }
 
