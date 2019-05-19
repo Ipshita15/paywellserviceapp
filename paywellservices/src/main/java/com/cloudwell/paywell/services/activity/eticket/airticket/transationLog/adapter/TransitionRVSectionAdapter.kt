@@ -51,9 +51,6 @@ class TransitionRVSectionAdapter(private val title: String, private val list: Li
         iHolder.tvStatus.text = "Status: " + model.message!!
 
 
-
-
-
         if (`model`.message != null) {
             if (`model`.invoiceUrl != null) {
                 iHolder.ivSymbolTicketed.visibility = View.VISIBLE
@@ -80,6 +77,11 @@ class TransitionRVSectionAdapter(private val title: String, private val list: Li
         }
 
         iHolder.tvAction.setOnClickListener { v -> onActionButtonClick!!.onActionButtonClick(position, model) }
+        iHolder.viewBackgroudAction.setOnClickListener {
+            onActionButtonClick!!.onActionButtonClick(position, model)
+        }
+
+
         iHolder.ivRootLayout.setOnClickListener {
 
             onActionButtonClick?.onRootViewClick(datum = model)
@@ -109,6 +111,7 @@ class TransitionRVSectionAdapter(private val title: String, private val list: Li
         internal var tvStatus: TextView
         internal var ivSymbolTicketed: ImageView
         internal var tvAction: ImageView
+        internal var viewBackgroudAction: View
 
 
         init {
@@ -118,6 +121,7 @@ class TransitionRVSectionAdapter(private val title: String, private val list: Li
             tvStatus = view.findViewById(R.id.tvStatus)
             ivSymbolTicketed = view.findViewById(R.id.ivSymbolTicketed)
             tvAction = view.findViewById(R.id.ivActionTrans)
+            viewBackgroudAction = view.findViewById(R.id.viewBackgroudAction1)
 
         }
     }
