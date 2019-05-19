@@ -784,6 +784,7 @@
     <string name="visa_image_mandatory">Visa image mandatory</string>
     <string name="titel_reschedule">Reschedule</string>
     <string name="booking_info">Booking Info</string>
+    <string name="ticket_cancel">Ticket Cancel</string>
 
 
 </resources>

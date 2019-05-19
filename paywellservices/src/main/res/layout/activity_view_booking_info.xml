@@ -192,12 +192,11 @@
             android:id="@+id/tvBaggage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
             android:text="@string/baggage"
             android:textColor="@color/black33333"
-            app:layout_constraintStart_toEndOf="@+id/textView46"
-            app:layout_constraintTop_toTopOf="@+id/textView46"/>
+            app:layout_constraintStart_toStartOf="@+id/imageView24"
+            app:layout_constraintTop_toBottomOf="@+id/textView46"/>
 
         <View
             android:id="@+id/view8"

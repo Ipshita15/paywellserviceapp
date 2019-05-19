@@ -10,7 +10,7 @@ import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import kotlinx.android.synthetic.main.fragment_tricket_action_menu.view.*
 
 
-class ThicketActionMenuFragment : DialogFragment() {
+class TicketActionMenuFragment : DialogFragment() {
 
 
     lateinit var onClickHandler: OnClickHandler
@@ -26,7 +26,7 @@ class ThicketActionMenuFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_tricket_action_menu, container, false)
-        val model = AppStorageBox.get(activity, AppStorageBox.Key.BOOKING_STATUS_ITEM) as Datum
+        val model = AppStorageBox.get(requireActivity(), AppStorageBox.Key.BOOKING_STATUS_ITEM) as Datum
 
         val m = model.message
         if (m.equals("Booked")) {
@@ -36,11 +36,15 @@ class ThicketActionMenuFragment : DialogFragment() {
             v.btActionReschedule.visibility = View.GONE
             v.btActionRefund.visibility = View.GONE
             v.btActionReissue.visibility = View.GONE
+            v.btTicketCancel.visibility = View.GONE
 
         } else if (m.equals("Ticketed")) {
+
             v.btActionReschedule.visibility = View.VISIBLE
             v.btActionRefund.visibility = View.VISIBLE
             v.btActionReissue.visibility = View.VISIBLE
+            v.btTicketCancel.visibility = View.VISIBLE
+
 
             v.btActionIssueTicket.visibility = View.GONE
             v.btCencel.visibility = View.GONE

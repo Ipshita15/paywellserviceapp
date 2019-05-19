@@ -25,7 +25,7 @@ import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.BookingCancelActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.PriceChangeFragment
-import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.ThicketActionMenuFragment
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.TicketActionMenuFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.TricketChooserFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.TricketingStatusFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.ResIssueTicket
@@ -56,14 +56,14 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
 
 
     fun showActionMenuPopupMessate(model: Datum) {
-        model.message = "Ticketed"
+//        model.message = "Ticketed"
 
         AppStorageBox.put(applicationContext, AppStorageBox.Key.BOOKING_STATUS_ITEM, model)
 
 
-        val tricketChooserFragment = ThicketActionMenuFragment()
+        val tricketChooserFragment = TicketActionMenuFragment()
 
-        tricketChooserFragment.setOnClickHandlerTest(object : ThicketActionMenuFragment.OnClickHandler {
+        tricketChooserFragment.setOnClickHandlerTest(object : TicketActionMenuFragment.OnClickHandler {
             override fun onReschedule(item: Datum) {
 
                 val newIntent = RescheduleActivity.newIntent(applicationContext, item = item)

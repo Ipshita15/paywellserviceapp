@@ -41,7 +41,7 @@ class AirThicketTranslationLogActivity : TransitionLogBaseActivity() {
 
         mViewMode = ViewModelProviders.of(this).get(BookingStatsViewModel::class.java)
 
-        mViewMode.baseViewStatus.observe(this, android.arch.lifecycle.Observer {
+        mViewMode.baseViewStatus.observe(this, Observer {
             handleViewCommonStatus(it)
         })
 
