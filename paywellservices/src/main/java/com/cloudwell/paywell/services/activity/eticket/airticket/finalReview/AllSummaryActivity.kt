@@ -36,7 +36,6 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.Fl
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.AddPassengerActivity
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
-import com.cloudwell.paywell.services.utils.DateUtils
 import kotlinx.android.synthetic.main.all_summaray_bottom_sheet.*
 import kotlinx.android.synthetic.main.contant_summary.*
 
@@ -53,9 +52,8 @@ class AllSummaryActivity : AirTricketBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.cloudwell.paywell.services.R.layout.activity_final_summaray)
-        tvCancel
-        setToolbar(getString(com.cloudwell.paywell.services.R.string.title_all_summary))
+        setContentView(R.layout.activity_final_summaray)
+        setToolbar(getString(R.string.title_all_summary))
 
         passengerIDS = AppStorageBox.get(applicationContext, AppStorageBox.Key.SELETED_PASSENGER_IDS) as String
 
@@ -119,7 +117,7 @@ class AllSummaryActivity : AirTricketBaseActivity() {
             when (which) {
                 DialogInterface.BUTTON_POSITIVE -> {
                     val intent = Intent(this, AirTicketMenuActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
 
                 }
@@ -151,7 +149,7 @@ class AllSummaryActivity : AirTricketBaseActivity() {
 
     private fun askForPin() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle(com.cloudwell.paywell.services.R.string.pin_no_title_msg)
+        builder.setTitle(R.string.pin_no_title_msg)
 
         val pinNoET = EditText(this)
         val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
@@ -189,7 +187,7 @@ class AllSummaryActivity : AirTricketBaseActivity() {
     private fun initViewModel(passengerIDS: String) {
         mViewModel = ViewModelProviders.of(this).get(AllSummaryActivityViewModel::class.java)
 
-        mViewModel.baseViewStatus.observe(this, android.arch.lifecycle.Observer {
+        mViewModel.baseViewStatus.observe(this, Observer {
             handleViewCommonStatus(it)
         })
 
@@ -326,10 +324,31 @@ class AllSummaryActivity : AirTricketBaseActivity() {
 
         val airportList = mutableListOf<Airport>()
 
-        resposeAirPriceSearch.data?.results?.get(0)?.segments?.forEach {
-            airportList.add(it.origin.airport)
-            airportList.add(it.destination.airport)
+
+        var text = ""
+
+        val toList = resposeAirPriceSearch.data?.results?.get(0)?.segments?.toList()
+
+        for ((i, value) in toList?.withIndex()!!) {
+            airportList.add(value.origin.airport)
+            airportList.add(value.destination.airport)
+
+            val arrivalTime = value.destination.arrTime
+            val departureTime = value.origin.depTime
+
+            val arrTimeSplit = arrivalTime?.split("T")
+            val departureTimeSplit = departureTime?.split("T")
+
+
+            text = text + "Departure Time " + (i + 1) + ": " + arrTimeSplit!!.get(0) + " " + arrTimeSplit.get(1) + "\n"
+            text = text + "Arrival Time " + (i + 1) + ": " + departureTimeSplit!!.get(0) + " " + departureTimeSplit!!.get(1) + "\n\n"
         }
+
+        text = text.substring(0, text.length - 2)
+        tveDpartureTime.text = "" + text
+
+
+
 
         recyclerViewAirports.setNestedScrollingEnabled(false)
         recyclerViewAirports.setHasFixedSize(true)
@@ -351,34 +370,34 @@ class AllSummaryActivity : AirTricketBaseActivity() {
         tvOperatorCarrier.text = getString(com.cloudwell.paywell.services.R.string.operating_carrier) + " ${airline?.operatingCarrier}"
         tvCabinClass.text = getString(com.cloudwell.paywell.services.R.string.cabin_class) + " ${airline?.cabinClass}"
 
-        val segments = resposeAirPriceSearch.data?.results?.get(0)?.segments
-        if (segments!!.size!! > 1) {
-            val arrTime = segments?.get(0)?.destination?.arrTime
-            val depTime = segments?.get(segments.size - 1)?.origin?.depTime
-
-            val arrTimeSplit = arrTime?.split("T")
-            val depTimeSplit = depTime?.split("T")
-
-            val departDate = DateUtils.getFormatDate(depTimeSplit!![0])
-            val arrivalDate = DateUtils.getFormatDate(arrTimeSplit!![0])
-
-            tveDpartureTime.text = getString(R.string.depart_time_) + " " + departDate + ", " + depTimeSplit[1]
-            tvArrivalTime.text = getString(R.string.arrival_time) + " " + arrivalDate + ", " + arrTimeSplit[1]
-        } else {
-
-
-            val arrTime = segments?.get(0)?.destination?.arrTime
-            val depTime = segments?.get(0)?.origin?.depTime
-            val arrTimeSplit = arrTime?.split("T")
-            val depTimeSplit = depTime?.split("T")
-
-            val departDate = DateUtils.getFormatDate(depTimeSplit!![0])
-            val arrivalDate = DateUtils.getFormatDate(arrTimeSplit!![0])
-
-            tveDpartureTime.text = getString(R.string.depart_time_) + " " + departDate + ", " + depTimeSplit[1]
-            tvArrivalTime.text = getString(R.string.arrival_time) + " " + arrivalDate + ", " + arrTimeSplit[1]
-
-        }
+//        val segments = resposeAirPriceSearch.data?.results?.get(0)?.segments
+//        if (segments!!.size!! > 1) {
+//            val arrTime = segments?.get(0)?.destination?.arrTime
+//            val depTime = segments?.get(segments.size - 1)?.origin?.depTime
+//
+//            val arrTimeSplit = arrTime?.split("T")
+//            val depTimeSplit = depTime?.split("T")
+//
+//            val departDate = DateUtils.getFormatDate(depTimeSplit!![0])
+//            val arrivalDate = DateUtils.getFormatDate(arrTimeSplit!![0])
+//
+//            tveDpartureTime.text = getString(R.string.depart_time_) + " " + departDate + ", " + depTimeSplit[1]
+//            tvArrivalTime.text = getString(R.string.arrival_time) + " " + arrivalDate + ", " + arrTimeSplit[1]
+//        } else {
+//
+//
+//            val arrTime = segments?.get(0)?.destination?.arrTime
+//            val depTime = segments?.get(0)?.origin?.depTime
+//            val arrTimeSplit = arrTime?.split("T")
+//            val depTimeSplit = depTime?.split("T")
+//
+//            val departDate = DateUtils.getFormatDate(depTimeSplit!![0])
+//            val arrivalDate = DateUtils.getFormatDate(arrTimeSplit!![0])
+//
+//            tveDpartureTime.text = getString(R.string.depart_time_) + " " + departDate + ", " + depTimeSplit[1]
+//            tvArrivalTime.text = getString(R.string.arrival_time) + " " + arrivalDate + ", " + arrTimeSplit[1]
+//
+//        }
 
 
         tvBaggage.text = getString(com.cloudwell.paywell.services.R.string.baggage) + resposeAirPriceSearch.data?.results?.get(0)?.segments?.get(0)?.baggage + " " + getString(com.cloudwell.paywell.services.R.string.kg_per_adult)

@@ -89,11 +89,10 @@ class ViewBookingInfoActivity : AirTricketBaseActivity() {
         }
 
         text = text.substring(0, text.length - 2)
-
-
         tveDpartureTime.text = "" + text
-        val trip = item.trips[0]
 
+
+        val trip = item.trips[0]
         tvAirlineCode.text = getString(R.string.airline_code) + " ${trip.airlineCode}"
         tvAirlesscode.text = getString(R.string.airport_name) + " ${trip.airlineName}"
         tvFlghtNumber.text = getString(R.string.flight_number) + " ${trip.flightNumber}"

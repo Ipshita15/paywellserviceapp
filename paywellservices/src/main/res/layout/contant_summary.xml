@@ -38,13 +38,14 @@
             android:layout_height="1dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:background="@color/blackcccccc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvArrivalTime"/>
+            app:layout_constraintTop_toBottomOf="@+id/tveDpartureTime"/>
 
         <View
             android:id="@+id/view7"
@@ -60,18 +61,6 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvOperatorCarrier"/>
-
-        <TextView
-            android:id="@+id/tvArrivalTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/arrival_time"
-            android:textColor="@color/black33333"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tveDpartureTime"/>
 
         <ImageView
             android:id="@+id/imageView23"
