@@ -1,5 +1,6 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.viewBookingInfo
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -35,6 +36,7 @@ class ViewBookingInfoActivity : AirTricketBaseActivity() {
         initializationView()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initializationView() {
         val trips = item.trips
 
@@ -66,11 +68,11 @@ class ViewBookingInfoActivity : AirTricketBaseActivity() {
             airportList.add(destinationAirport)
         }
 
-        recyclerViewAirports.setNestedScrollingEnabled(false)
+        recyclerViewAirports.isNestedScrollingEnabled = false
         recyclerViewAirports.setHasFixedSize(true)
         val mLayoutManager = LinearLayoutManager(applicationContext)
-        recyclerViewAirports.setLayoutManager(mLayoutManager)
-        recyclerViewAirports.setItemAnimator(DefaultItemAnimator())
+        recyclerViewAirports.layoutManager = mLayoutManager
+        recyclerViewAirports.itemAnimator = DefaultItemAnimator()
 
 
         val recyclerListAdapter = AirportListBookingInfoAdapter(applicationContext, airportList.toList())
@@ -82,10 +84,10 @@ class ViewBookingInfoActivity : AirTricketBaseActivity() {
         item.passengers?.toMutableList()?.let { handlePassengerList(it) }
 
 
-        tvBaggage.text = getString(R.string.baggage) + trips.get(0).baggage + " " + getString(R.string.kg_per_adult)
+        tvBaggage.text = getString(R.string.baggage) + trips[0].baggage + " " + getString(R.string.kg_per_adult)
 
         var text = ""
-//        var textdepartureTime = ""
+
 
         for ((i, value) in trips.withIndex()) {
             val arrivalTime = value.arrivalTime
@@ -100,21 +102,21 @@ class ViewBookingInfoActivity : AirTricketBaseActivity() {
 
 
         tveDpartureTime.text = "" + text
-        val trip = item.trips.get(0)
-       
+        val trip = item.trips[0]
 
-        tvAirlineCode.text = getString(com.cloudwell.paywell.services.R.string.airline_code) + " ${trip.airlineCode}"
-        tvAirlesscode.text = getString(com.cloudwell.paywell.services.R.string.airport_name) + " ${trip.airlineName}"
-        tvFlghtNumber.text = getString(com.cloudwell.paywell.services.R.string.flight_number) + " ${trip.flightNumber}"
-        tvBookingClass.text = getString(com.cloudwell.paywell.services.R.string.booking_class) + " ${trip.bookingClass}"
-        tvOperatorCarrier.text = getString(com.cloudwell.paywell.services.R.string.operating_carrier) + " ${trip.operatingCareer}"
-        tvCabinClass.text = getString(com.cloudwell.paywell.services.R.string.cabin_class) + " ${trip.cabinClass}"
+
+        tvAirlineCode.text = getString(R.string.airline_code) + " ${trip.airlineCode}"
+        tvAirlesscode.text = getString(R.string.airport_name) + " ${trip.airlineName}"
+        tvFlghtNumber.text = getString(R.string.flight_number) + " ${trip.flightNumber}"
+        tvBookingClass.text = getString(R.string.booking_class) + " ${trip.bookingClass}"
+        tvOperatorCarrier.text = getString(R.string.operating_carrier) + " ${trip.operatingCareer}"
+        tvCabinClass.text = getString(R.string.cabin_class) + " ${trip.cabinClass}"
 
 
     }
 
     private fun handlePassengerList(it: MutableList<Passenger>) {
-        val recyclerView = findViewById(R.id.recycleviewForPassenger) as RecyclerView
+        val recyclerView = findViewById<RecyclerView>(R.id.recycleviewForPassenger)
 
 
         val glm = LinearLayoutManager(applicationContext)
@@ -124,8 +126,8 @@ class ViewBookingInfoActivity : AirTricketBaseActivity() {
         recyclerView.layoutManager = glm
 
 
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setNestedScrollingEnabled(true);
+        recyclerView.setHasFixedSize(true)
+        recyclerView.isNestedScrollingEnabled = true
 
 
         val recyclerListAdapter = AdapterForPassengersBookingInfo(this, it)
