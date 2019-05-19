@@ -2,11 +2,9 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/layout_white_round_bg"
-    tools:layout_editor_absoluteX="8dp">
+    >
 
     <ImageView
         android:id="@+id/imageView22"
@@ -29,7 +27,6 @@
         app:layout_constraintTop_toTopOf="@+id/imageView22"/>
 
     <TextView
-
         android:id="@+id/tvAirportCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,7 +36,6 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView22"/>
 
     <TextView
-
         android:id="@+id/tvAirportName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -49,7 +45,6 @@
         app:layout_constraintTop_toBottomOf="@+id/tvAirportCode"/>
 
     <TextView
-
         android:id="@+id/tvTerminal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -59,52 +54,28 @@
         app:layout_constraintTop_toBottomOf="@+id/tvAirportName"/>
 
     <TextView
-        android:id="@+id/tvCityCode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/city_code"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTerminal"
-        tools:visibility="gone"/>
-
-    <TextView
-
         android:id="@+id/tvCityName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/city_name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCityCode"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvTerminal"/>
 
     <TextView
-
-        android:id="@+id/tvCountryCode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/country_code"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCityName"
-        tools:visibility="gone"/>
-
-    <TextView
-
         android:id="@+id/tvCountryName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/country_name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCountryCode"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvCityName"/>
 
     <View
         android:id="@+id/view8"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginTop="8dp"
-        android:background="@color/blackcccccc"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

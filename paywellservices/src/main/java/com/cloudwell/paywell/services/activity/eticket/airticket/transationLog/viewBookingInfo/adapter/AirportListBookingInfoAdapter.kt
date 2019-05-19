@@ -40,9 +40,8 @@ class AirportListBookingInfoAdapter(var context: Context, var items: List<Airpor
         holder.tvAirportCode.text = context.getString(com.cloudwell.paywell.services.R.string.airport_code) + " ${airport?.airportCode}"
         holder.tvAirportName.text = context.getString(com.cloudwell.paywell.services.R.string.airport_name) + " ${airport?.airportName}"
         holder.tvTerminal.text = context.getString(com.cloudwell.paywell.services.R.string.terminal) + " ${airport?.terminal}"
-//        holder.tvCityCode.text = context.getString(com.cloudwell.paywell.services.R.string.city_code) + " ${airport?.cityCode}"
         holder.tvCityName.text = context.getString(com.cloudwell.paywell.services.R.string.city_name) + " ${airport?.cityName}"
-//        holder.tvCountryCode.text = context.getString(com.cloudwell.paywell.services.R.string.country_code) + " ${airport?.countryCode}"
+
         holder.tvCountryName.text = context.getString(com.cloudwell.paywell.services.R.string.country_name) + " ${airport?.countryName}"
 
 

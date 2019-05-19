@@ -118,22 +118,15 @@ class ViewBookingInfoActivity : AirTricketBaseActivity() {
     private fun handlePassengerList(it: MutableList<Passenger>) {
         val recyclerView = findViewById<RecyclerView>(R.id.recycleviewForPassenger)
 
+        val recyclerListAdapter = AdapterForPassengersBookingInfo(this, it)
 
         val glm = LinearLayoutManager(applicationContext)
         recyclerView.layoutManager = glm
-        glm.isAutoMeasureEnabled = true
-
+        recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.layoutManager = glm
-
-
         recyclerView.setHasFixedSize(true)
         recyclerView.isNestedScrollingEnabled = true
-
-
-        val recyclerListAdapter = AdapterForPassengersBookingInfo(this, it)
-
         recyclerView.adapter = recyclerListAdapter
-
 
     }
 
