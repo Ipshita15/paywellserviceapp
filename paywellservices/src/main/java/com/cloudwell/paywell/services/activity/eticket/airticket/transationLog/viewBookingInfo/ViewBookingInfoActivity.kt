@@ -81,48 +81,35 @@ class ViewBookingInfoActivity : AirTricketBaseActivity() {
 
         item.passengers?.toMutableList()?.let { handlePassengerList(it) }
 
-//
-//
-//
-//
-//        tvAirlineCode.text = getString(com.cloudwell.paywell.services.R.string.airline_code) + " ${airline?.airlineCode}"
-//        tvAirlesscode.text = getString(com.cloudwell.paywell.services.R.string.airport_name) + " ${airline?.airlineName}"
-//        tvFlghtNumber.text = getString(com.cloudwell.paywell.services.R.string.flight_number) + " ${airline?.flightNumber}"
-//        tvBookingClass.text = getString(com.cloudwell.paywell.services.R.string.booking_class) + " ${airline?.bookingClass}"
-//        tvOperatorCarrier.text = getString(com.cloudwell.paywell.services.R.string.operating_carrier) + " ${airline?.operatingCarrier}"
-//        tvCabinClass.text = getString(com.cloudwell.paywell.services.R.string.cabin_class) + " ${airline?.cabinClass}"
-//
-//        val segments = resposeAirPriceSearch.data?.results?.get(0)?.segments
-//        if (segments!!.size!! > 1) {
-//            val arrTime = segments?.get(0)?.destination?.arrTime
-//            val depTime = segments?.get(segments.size - 1)?.origin?.depTime
-//
-//            val arrTimeSplit = arrTime?.split("T")
-//            val depTimeSplit = depTime?.split("T")
-//
-//            val departDate = DateUtils.getFormatDate(depTimeSplit!![0])
-//            val arrivalDate = DateUtils.getFormatDate(arrTimeSplit!![0])
-//
-//            tveDpartureTime.text = getString(R.string.depart_time_) + " " + departDate + ", " + depTimeSplit[1]
-//            tvArrivalTime.text = getString(R.string.arrival_time) + " " + arrivalDate + ", " + arrTimeSplit[1]
-//        } else {
-//
-//
-//            val arrTime = segments?.get(0)?.destination?.arrTime
-//            val depTime = segments?.get(0)?.origin?.depTime
-//            val arrTimeSplit = arrTime?.split("T")
-//            val depTimeSplit = depTime?.split("T")
-//
-//            val departDate = DateUtils.getFormatDate(depTimeSplit!![0])
-//            val arrivalDate = DateUtils.getFormatDate(arrTimeSplit!![0])
-//
-//            tveDpartureTime.text = getString(R.string.depart_time_) + " " + departDate + ", " + depTimeSplit[1]
-//            tvArrivalTime.text = getString(R.string.arrival_time) + " " + arrivalDate + ", " + arrTimeSplit[1]
-//
-//        }
-//
-//
-//        tvBaggage.text = getString(com.cloudwell.paywell.services.R.string.baggage) + resposeAirPriceSearch.data?.results?.get(0)?.segments?.get(0)?.baggage + " " + getString(com.cloudwell.paywell.services.R.string.kg_per_adult)
+
+        tvBaggage.text = getString(R.string.baggage) + trips.get(0).baggage + " " + getString(R.string.kg_per_adult)
+
+        var text = ""
+//        var textdepartureTime = ""
+
+        for ((i, value) in trips.withIndex()) {
+            val arrivalTime = value.arrivalTime
+            val departureTime = value.departureTime
+
+            text = text + "Departure Time " + (i + 1) + ": " + departureTime + "\n"
+            text = text + "Arrival Time " + (i + 1) + ": " + arrivalTime + "\n\n"
+
+        }
+
+        text = text.substring(0, text.length - 2)
+
+
+        tveDpartureTime.text = "" + text
+        val trip = item.trips.get(0)
+       
+
+        tvAirlineCode.text = getString(com.cloudwell.paywell.services.R.string.airline_code) + " ${trip.airlineCode}"
+        tvAirlesscode.text = getString(com.cloudwell.paywell.services.R.string.airport_name) + " ${trip.airlineName}"
+        tvFlghtNumber.text = getString(com.cloudwell.paywell.services.R.string.flight_number) + " ${trip.flightNumber}"
+        tvBookingClass.text = getString(com.cloudwell.paywell.services.R.string.booking_class) + " ${trip.bookingClass}"
+        tvOperatorCarrier.text = getString(com.cloudwell.paywell.services.R.string.operating_carrier) + " ${trip.operatingCareer}"
+        tvCabinClass.text = getString(com.cloudwell.paywell.services.R.string.cabin_class) + " ${trip.cabinClass}"
+
 
     }
 

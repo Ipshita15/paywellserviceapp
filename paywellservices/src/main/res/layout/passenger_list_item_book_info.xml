@@ -2,7 +2,6 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
@@ -25,12 +24,14 @@
         android:id="@+id/view3"
         android:layout_width="0dp"
         android:layout_height="1dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:background="@color/blackcccccc"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvNid"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvPasswordFinal"/>
 
     <ImageView
         android:id="@+id/imageView25"
@@ -59,7 +60,7 @@
         android:text="Title : "
         android:textColor="@color/black33333"
         app:layout_constraintStart_toStartOf="@+id/tvPassengerTypeFinal"
-        app:layout_constraintTop_toBottomOf="@+id/tvLeadPassenger"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvPassengerTypeFinal"/>
 
     <TextView
         android:id="@+id/tvFirstName"
@@ -130,48 +131,6 @@
         android:textColor="@color/black33333"
         app:layout_constraintStart_toStartOf="@+id/tvEmailAddress"
         app:layout_constraintTop_toBottomOf="@+id/tvEmailAddress"/>
-
-    <TextView
-        android:id="@+id/tvNid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
-        android:text="NID"
-        android:textColor="@color/black33333"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tvPasswordFinal"
-        app:layout_constraintTop_toBottomOf="@+id/tvPassportNationallity"/>
-
-    <TextView
-        android:id="@+id/tvLeadPassenger"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="@+id/tvPassengerTypeFinal"
-        app:layout_constraintTop_toBottomOf="@+id/tvPassengerTypeFinal"
-        tools:text="isLeadPassenger"/>
-
-    <TextView
-        android:id="@+id/tvPassportExpiryDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPasswordFinal"
-        tools:text="@string/passport_expiry_date"/>
-
-    <TextView
-        android:id="@+id/tvPassportNationallity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/passport_nationality"
-        android:textColor="@color/black33333"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPassportExpiryDate"/>
 
     <TextView
         android:id="@+id/tvDateOfBirth"

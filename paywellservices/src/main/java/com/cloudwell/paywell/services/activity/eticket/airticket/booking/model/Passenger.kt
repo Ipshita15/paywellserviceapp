@@ -40,7 +40,7 @@ class Passenger {
     @SerializedName("passport_nationality")
     var passportNationality: Any? = null
     @SerializedName("passport_number")
-    var passportNumber: Any? = null
+    var passportNumber: String = ""
     @SerializedName("pax_index")
     var paxIndex: String? = null
     @SerializedName("pax_type")
