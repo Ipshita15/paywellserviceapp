@@ -17,17 +17,17 @@ class AdapterForPassengersFinalList(var context: Context, var items: List<Passen
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterForPassengersFinalList.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
 
         val view = LayoutInflater.from(context).inflate(R.layout.passenger_list_item_final, parent, false)
-        return AdapterForPassengersFinalList.ViewHolder(view)
+        return ViewHolder(view)
 
 
     }
 
 
-    override fun onBindViewHolder(holder: AdapterForPassengersFinalList.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val model = items.get(position)
 
         val number = position + 1
@@ -87,6 +87,10 @@ class AdapterForPassengersFinalList(var context: Context, var items: List<Passen
             onClickListener.onEditClick(model, position)
         }
 
+        holder.viewBackgoud.setOnClickListener {
+            onClickListener.onEditClick(model, position)
+        }
+
 
     }
 
@@ -112,6 +116,7 @@ class AdapterForPassengersFinalList(var context: Context, var items: List<Passen
         val tvNid = view.tvNid
         val tvPassportExpiryDate = view.tvPassportExpiryDate
         val tvPassportNationallity = view.tvPassportNationallity
+        val viewBackgoud = view.viewBackgoud
 
 
     }

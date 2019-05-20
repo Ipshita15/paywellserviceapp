@@ -1,5 +1,6 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.finalReview
 
+import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
@@ -16,9 +17,11 @@ import android.text.method.PasswordTransformationMethod
 import android.view.Gravity
 import android.view.Menu
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.TextView
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.adapter.AdapterForPassengersFinalList
@@ -37,7 +40,19 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketM
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.AddPassengerActivity
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import kotlinx.android.synthetic.main.all_summaray_bottom_sheet.*
-import kotlinx.android.synthetic.main.contant_summary.*
+import kotlinx.android.synthetic.main.contant_summary.tvAirlesscode
+import kotlinx.android.synthetic.main.contant_summary.tvAirlineCode
+import kotlinx.android.synthetic.main.contant_summary.tvBaggage
+import kotlinx.android.synthetic.main.contant_summary.tvBookingClass
+import kotlinx.android.synthetic.main.contant_summary.tvCabinClass
+import kotlinx.android.synthetic.main.contant_summary.tvFlghtNumber
+import kotlinx.android.synthetic.main.contant_summary.tvOperatorCarrier
+import kotlinx.android.synthetic.main.contant_summary.tveDpartureTime
+import kotlinx.android.synthetic.main.contant_summary_contant.*
+import kotlinx.android.synthetic.main.contant_view_booking_info.*
+import su.j2e.rvjoiner.JoinableAdapter
+import su.j2e.rvjoiner.JoinableLayout
+import su.j2e.rvjoiner.RvJoiner
 
 
 class AllSummaryActivity : AirTricketBaseActivity() {
@@ -49,19 +64,104 @@ class AllSummaryActivity : AirTricketBaseActivity() {
 
     var userPinNumber = ""
 
+    lateinit var rvJoiner: RvJoiner
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_final_summaray)
+        setContentView(R.layout.activity_final_summaray_new)
         setToolbar(getString(R.string.title_all_summary))
 
         passengerIDS = AppStorageBox.get(applicationContext, AppStorageBox.Key.SELETED_PASSENGER_IDS) as String
 
-        initializationView()
+
         initilizationReviewBottomSheet()
-        initViewModel(passengerIDS)
+        initViewModel()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        rvJoiner = RvJoiner(true)//auto update ON, stable ids ON
+        initializationViewNew()
+        mViewModel.init(passengerIDS)
+
+    }
+
+    private fun initializationViewNew() {
+        val resposeAirPriceSearch = AppStorageBox.get(applicationContext, AppStorageBox.Key.ResposeAirPriceSearch) as ResposeAirPriceSearch
+        val airline = resposeAirPriceSearch.data?.results?.get(0)?.segments?.get(0)?.airline
 
 
+        val airportList = mutableListOf<Airport>()
+
+
+        var text = ""
+
+        val toList = resposeAirPriceSearch.data?.results?.get(0)?.segments?.toList()
+
+        for ((i, value) in toList?.withIndex()!!) {
+            airportList.add(value.origin.airport)
+            airportList.add(value.destination.airport)
+
+            val arrivalTime = value.destination.arrTime
+            val departureTime = value.origin.depTime
+
+            val arrTimeSplit = arrivalTime?.split("T")
+            val departureTimeSplit = departureTime?.split("T")
+
+
+            text = text + "Departure Time " + (i + 1) + ": " + arrTimeSplit!!.get(0) + " " + arrTimeSplit.get(1) + "\n"
+            text = text + "Arrival Time " + (i + 1) + ": " + departureTimeSplit!!.get(0) + " " + departureTimeSplit!!.get(1) + "\n\n"
+        }
+
+        text = text.substring(0, text.length - 2)
+
+        val recycler_view = findViewById<View>(R.id.recycler_view) as RecyclerView
+        setLinearLayoutManager(recycler_view)
+
+
+        val recyclerListAdapter = AirportListAdapter(this, airportList)
+        rvJoiner.add(JoinableAdapter(recyclerListAdapter))
+
+
+        rvJoiner.add(JoinableLayout(R.layout.contant_summary, object : JoinableLayout.Callback {
+            @SuppressLint("SetTextI18n")
+            override fun onInflateComplete(view: View?, parent: ViewGroup?) {
+                val tvAirlineCode = view?.findViewById(R.id.tvAirlineCode) as TextView
+                val tvAirlesscode = view?.findViewById(R.id.tvAirlesscode) as TextView
+                val tvFlghtNumber = view?.findViewById(R.id.tvFlghtNumber) as TextView
+                val tvBookingClass = view?.findViewById(R.id.tvBookingClass) as TextView
+                val tvOperatorCarrier = view?.findViewById(R.id.tvOperatorCarrier) as TextView
+                val tvCabinClass = view?.findViewById(R.id.tvCabinClass) as TextView
+                val tveDpartureTime = view?.findViewById(R.id.tveDpartureTime) as TextView
+                val tvBaggage = view?.findViewById(R.id.tvBaggage) as TextView
+
+
+                tvAirlineCode.text = getString(R.string.airline_code) + " ${airline?.airlineCode}"
+                tvAirlesscode.text = getString(R.string.airport_name) + " ${airline?.airlineName}"
+                tvFlghtNumber.text = getString(R.string.flight_number) + " ${airline?.flightNumber}"
+                tvBookingClass.text = getString(R.string.booking_class) + " ${airline?.bookingClass}"
+                tvOperatorCarrier.text = getString(R.string.operating_carrier) + " ${airline?.operatingCarrier}"
+                tvCabinClass.text = getString(R.string.cabin_class) + " ${airline?.cabinClass}"
+
+
+
+
+                tvBaggage.text = getString(R.string.baggage) + resposeAirPriceSearch.data?.results?.get(0)?.segments?.get(0)?.baggage + " " + getString(com.cloudwell.paywell.services.R.string.kg_per_adult)
+
+
+                tveDpartureTime.text = "" + text
+            }
+
+        }))
+
+
+    }
+
+    private fun setLinearLayoutManager(recyclerView: RecyclerView) {
+        recyclerView.layoutManager = LinearLayoutManager(this)
     }
 
     private fun initilizationReviewBottomSheet() {
@@ -184,7 +284,7 @@ class AllSummaryActivity : AirTricketBaseActivity() {
 
     }
 
-    private fun initViewModel(passengerIDS: String) {
+    private fun initViewModel() {
         mViewModel = ViewModelProviders.of(this).get(AllSummaryActivityViewModel::class.java)
 
         mViewModel.baseViewStatus.observe(this, Observer {
@@ -201,28 +301,11 @@ class AllSummaryActivity : AirTricketBaseActivity() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        mViewModel.init(passengerIDS)
-
-    }
 
     private fun handlePassengerList(it: MutableList<Passenger>) {
-        val recyclerView = findViewById(R.id.recycleviewForPassenger) as RecyclerView
 
 
-        val glm = LinearLayoutManager(applicationContext)
-        recyclerView.layoutManager = glm
-        glm.isAutoMeasureEnabled = true
-
-        recyclerView.layoutManager = glm
-
-
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setNestedScrollingEnabled(true);
-
-
-        val recyclerListAdapter = AdapterForPassengersFinalList(this, it, object : AdapterForPassengersFinalList.OnClickListener {
+        val adapterForPassengersFinalList = AdapterForPassengersFinalList(this, it, object : AdapterForPassengersFinalList.OnClickListener {
 
             override fun onDeleted(model: Passenger, position: Int) {
 
@@ -239,8 +322,8 @@ class AllSummaryActivity : AirTricketBaseActivity() {
 
         })
 
-        recyclerView.adapter = recyclerListAdapter;
-
+        rvJoiner.add(JoinableAdapter(adapterForPassengersFinalList))
+        recycler_view.adapter = rvJoiner.adapter
 
     }
 
@@ -363,12 +446,12 @@ class AllSummaryActivity : AirTricketBaseActivity() {
 
 
 
-        tvAirlineCode.text = getString(com.cloudwell.paywell.services.R.string.airline_code) + " ${airline?.airlineCode}"
-        tvAirlesscode.text = getString(com.cloudwell.paywell.services.R.string.airport_name) + " ${airline?.airlineName}"
-        tvFlghtNumber.text = getString(com.cloudwell.paywell.services.R.string.flight_number) + " ${airline?.flightNumber}"
-        tvBookingClass.text = getString(com.cloudwell.paywell.services.R.string.booking_class) + " ${airline?.bookingClass}"
-        tvOperatorCarrier.text = getString(com.cloudwell.paywell.services.R.string.operating_carrier) + " ${airline?.operatingCarrier}"
-        tvCabinClass.text = getString(com.cloudwell.paywell.services.R.string.cabin_class) + " ${airline?.cabinClass}"
+        tvAirlineCode.text = getString(R.string.airline_code) + " ${airline?.airlineCode}"
+        tvAirlesscode.text = getString(R.string.airport_name) + " ${airline?.airlineName}"
+        tvFlghtNumber.text = getString(R.string.flight_number) + " ${airline?.flightNumber}"
+        tvBookingClass.text = getString(R.string.booking_class) + " ${airline?.bookingClass}"
+        tvOperatorCarrier.text = getString(R.string.operating_carrier) + " ${airline?.operatingCarrier}"
+        tvCabinClass.text = getString(R.string.cabin_class) + " ${airline?.cabinClass}"
 
 //        val segments = resposeAirPriceSearch.data?.results?.get(0)?.segments
 //        if (segments!!.size!! > 1) {
@@ -400,7 +483,7 @@ class AllSummaryActivity : AirTricketBaseActivity() {
 //        }
 
 
-        tvBaggage.text = getString(com.cloudwell.paywell.services.R.string.baggage) + resposeAirPriceSearch.data?.results?.get(0)?.segments?.get(0)?.baggage + " " + getString(com.cloudwell.paywell.services.R.string.kg_per_adult)
+        tvBaggage.text = getString(R.string.baggage) + resposeAirPriceSearch.data?.results?.get(0)?.segments?.get(0)?.baggage + " " + getString(com.cloudwell.paywell.services.R.string.kg_per_adult)
 
 
     }
