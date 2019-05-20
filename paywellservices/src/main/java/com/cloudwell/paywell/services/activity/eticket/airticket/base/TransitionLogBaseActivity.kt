@@ -22,6 +22,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketMainActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.BookingCancelActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.PriceChangeFragment
@@ -57,7 +58,7 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
 
 
     fun showActionMenuPopupMessate(model: Datum) {
-//        model.message = "Ticketed"
+        model.message = "Ticketed"
 
         AppStorageBox.put(applicationContext, AppStorageBox.Key.BOOKING_STATUS_ITEM, model)
 
@@ -76,10 +77,7 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
 
             override fun onReissue(item: Datum) {
 
-                ActionRequestTicketActivity.model = item
-                val intent = Intent(applicationContext, ActionRequestTicketActivity::class.java)
-                intent.putExtra(ActionRequestTicketActivity.KEY_TITLE, AllConstant.Action_Reissue_or_Reschedule)
-                startActivity(intent)
+                handleReissueFlow(item)
             }
 
             override fun onClickIsisThicketButton() {
@@ -101,6 +99,33 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
         })
 
         tricketChooserFragment.show(supportFragmentManager, "dialog")
+    }
+
+    private fun handleReissueFlow(item: Datum) {
+
+        val newIntent = AirTicketMainActivity.newIntent(applicationContext, item = item)
+        startActivity(newIntent)
+
+
+//        if (item.journeyType.equals("Oneway")) {
+//
+//
+//        } else if (item.journeyType.equals("Oneway")) {
+//
+//
+//        } else if (item.journeyType.equals("Return")) {
+//
+//
+//        } else if (item.journeyType.equals("MultiStop")) {
+//
+//
+//        }
+
+
+//        ActionRequestTicketActivity.model = item
+//        val intent = Intent(applicationContext, ActionRequestTicketActivity::class.java)
+//        intent.putExtra(ActionRequestTicketActivity.KEY_TITLE, AllConstant.Action_Reissue_or_Reschedule)
+//        startActivity(intent)
     }
 
 
