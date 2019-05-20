@@ -49,13 +49,13 @@ class Datum {
     @SerializedName("passengers")
     var passengers: List<Passenger>? = null
     @SerializedName("result_id")
-    var resultId: String? = null
+    var resultId: String = ""
     @SerializedName("retailer_commission")
     var retailerCommission: String? = null
     @SerializedName("retailer_id")
     var retailerId: String? = null
     @SerializedName("search_id")
-    var searchId: String? = null
+    var searchId: String = ""
     @SerializedName("status_code")
     var statusCode: String? = null
     @SerializedName("ticket_date_time")

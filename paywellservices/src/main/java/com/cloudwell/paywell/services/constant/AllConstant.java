@@ -26,4 +26,11 @@ public class AllConstant {
     public static final String InProcess = "InProcess";
     public static final String Pending = "Pending";
     public static final String UnConfirmed = "UnConfirmed";
+
+
+    public static final String Action_IsisThicket = "Action_IsisThicket";
+    public static final String Action_reIssueTicket = "reIssueTicket";
+    public static final String Action_Ticket_Cancel = "Ticket Cancel";
+    public static final String Action_Reissue_or_Reschedule = "Reissue/Reschedule";
+
 }

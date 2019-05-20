@@ -246,7 +246,6 @@ class AirThicketRepository(private val mContext: Context) {
     fun callAirBookingAPI(piN_NO: String, requestAirPrebookingSearchParams: RequestAirPrebookingSearchParams): MutableLiveData<ResBookingAPI> {
         mAppHandler = AppHandler.getmInstance(mContext)
         val userName = mAppHandler!!.imeiNo
-//        val userName = "cwntcl"
         val format = "json"
 
         val data = MutableLiveData<ResBookingAPI>()

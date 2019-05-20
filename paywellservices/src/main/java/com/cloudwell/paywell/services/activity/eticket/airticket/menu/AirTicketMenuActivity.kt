@@ -12,7 +12,6 @@ import android.widget.RadioButton
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketMainActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.booking.BookingStatusActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.BookingCancelActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.AirThicketTranslationLogActivity
@@ -145,15 +144,15 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
         btn_okay!!.setOnClickListener {
             dialog.dismiss()
             if (isInternetConnection) {
-                if (tag.equals(BOOKING_TAG)) {
-                    val intent = Intent(application, BookingStatusActivity::class.java)
-                    intent.putExtra(KEY_LIMIT, selectedLimit)
-                    startActivity(intent)
-                } else if (tag.equals(TRX_TAG)) {
-                    val intent = Intent(application, AirThicketTranslationLogActivity::class.java)
-                    intent.putExtra(KEY_LIMIT, selectedLimit)
-                    startActivity(intent)
-                }
+//                if (tag.equals(BOOKING_TAG)) {
+//                    val intent = Intent(application, BookingStatusActivity::class.java)
+//                    intent.putExtra(KEY_LIMIT, selectedLimit)
+//                    startActivity(intent)
+//                } else if (tag.equals(TRX_TAG)) {
+                val intent = Intent(application, AirThicketTranslationLogActivity::class.java)
+                intent.putExtra(KEY_LIMIT, selectedLimit)
+                startActivity(intent)
+//                }
             } else {
                 showNoInternetConnectionFound()
             }

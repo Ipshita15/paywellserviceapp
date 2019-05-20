@@ -30,10 +30,11 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.f
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.TricketingStatusFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.ResIssueTicket
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.viewModel.BookingStatsViewModel
+import com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.ActionRequestTicketActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.TicketViewerActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.emailTicket.PassengerEmailSendListActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.reschedule.RescheduleActivity
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
+import com.cloudwell.paywell.services.constant.AllConstant
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -64,25 +65,27 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
         val tricketChooserFragment = TicketActionMenuFragment()
 
         tricketChooserFragment.setOnClickHandlerTest(object : TicketActionMenuFragment.OnClickHandler {
-            override fun onReschedule(item: Datum) {
+            override fun onTicketCancel(item: Datum) {
 
-                val newIntent = RescheduleActivity.newIntent(applicationContext, item = item)
-                startActivity(newIntent)
-
-            }
-
-            override fun onRefound(item: Datum) {
+                ActionRequestTicketActivity.model = item
+                val intent = Intent(applicationContext, ActionRequestTicketActivity::class.java)
+                intent.putExtra(ActionRequestTicketActivity.KEY_TITLE, AllConstant.Action_Ticket_Cancel)
+                startActivity(intent)
 
             }
 
             override fun onReissue(item: Datum) {
 
+                ActionRequestTicketActivity.model = item
+                val intent = Intent(applicationContext, ActionRequestTicketActivity::class.java)
+                intent.putExtra(ActionRequestTicketActivity.KEY_TITLE, AllConstant.Action_Reissue_or_Reschedule)
+                startActivity(intent)
             }
 
             override fun onClickIsisThicketButton() {
                 model.bookingId?.let {
                     bookingId = it
-                    askForPin(it)
+                    askForPin(it, AllConstant.Action_IsisThicket)
                 }
             }
 
@@ -267,7 +270,7 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
     }
 
 
-    private fun askForPin(bookingId: String) {
+    private fun askForPin(bookingId: String, action: String) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.pin_no_title_msg)
 
@@ -288,7 +291,14 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
             if (pinNoET.text.toString().length != 0) {
                 dialogInterface.dismiss()
                 pinNumber = pinNoET.text.toString().trim()
-                mViewMode.issueTicket(isInternetConnection, pinNumber, bookingId, false)
+
+                if (action.equals(AllConstant.Action_IsisThicket)) {
+                    mViewMode.issueTicket(isInternetConnection, pinNumber, bookingId, false)
+                } else if (action.equals(AllConstant.Action_reIssueTicket)) {
+                    mViewMode.issueTicket(isInternetConnection, pinNumber, bookingId, false)
+                }
+
+
             } else {
                 val snackbar = Snackbar.make(mCoordinateLayout, R.string.pin_no_error_msg, Snackbar.LENGTH_LONG)
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"))

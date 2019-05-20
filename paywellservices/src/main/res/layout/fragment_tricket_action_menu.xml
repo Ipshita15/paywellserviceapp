@@ -26,42 +26,11 @@
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
         android:background="#5AC121"
-        android:gravity="center"
-        android:text="Reissue"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:visibility="visible"
-        />
-
-    <Button
-        android:id="@+id/btActionRefund"
-        android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="8dp"
-
-        android:background="#5AC121"
-
-        android:gravity="center"
-
-        android:text="Refund "
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:visibility="visible"
-        />
-
-    <Button
-        android:id="@+id/btActionReschedule"
-        android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="8dp"
-        android:background="#5AC121"
 
         android:gravity="center"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="Reschedule"
+        android:text="@string/reissue_reschedule"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="16sp"

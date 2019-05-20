@@ -785,6 +785,7 @@
     <string name="titel_reschedule">Reschedule</string>
     <string name="booking_info">Booking Info</string>
     <string name="ticket_cancel">Ticket Cancel</string>
+    <string name="reissue_reschedule">Reissue/Reschedule</string>
 
 
 </resources>

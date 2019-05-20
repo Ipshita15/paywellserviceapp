@@ -156,6 +156,26 @@ public interface APIService {
                                    @Field("format") String apiFormat);
 
 
+    @POST("PaywelltransactionHaltrip/cancelTicket")
+    @FormUrlEncoded
+    Call<JsonObject> cancelTicket(@Field("username") String username,
+                                  @Field("password") String password,
+                                  @Field("BookingID") String bookingId,
+                                  @Field("reason") String cancelReason,
+                                  @Field("format") String apiFormat);
+
+
+    @POST("/PaywelltransactionHaltrip/reIssueTicket")
+    @FormUrlEncoded
+    Call<JsonObject> reIssueTicket(@Field("username") String username,
+                                   @Field("password") String password,
+                                   @Field("BookingID") String bookingId,
+                                   @Field("reason") String cancelReason,
+                                   @Field("SearchId") String searchId,
+                                   @Field("ResultID") String resultID,
+                                   @Field("format") String apiFormat);
+
+
     @POST("PaywelltransactionHaltrip/getCancelMap")
     @FormUrlEncoded
     Call<ResCancellationMapping> getCancelMap(@Field("username") String username,

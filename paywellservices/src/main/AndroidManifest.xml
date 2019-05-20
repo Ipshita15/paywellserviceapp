@@ -1181,29 +1181,21 @@
             android:name=".activity.eticket.airticket.ticketViewer.TicketViewerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN"/> -->
-            <!-- <action android:name="android.intent.action.VIEW"/> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
-            <!-- </intent-filter> -->
-
-        </activity> <!-- cache directory file provider paths -->
+        </activity>
         <activity
             android:name=".activity.eticket.airticket.ticketViewer.emailTicket.PassengerEmailSendListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".activity.eticket.airticket.transationLog.reschedule.RescheduleActivity"
+            android:name=".activity.eticket.airticket.transationLog.viewBookingInfo.ViewBookingInfoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            >
         </activity>
 
         <activity
-            android:name=".activity.eticket.airticket.transationLog.viewBookingInfo.ViewBookingInfoActivity"
+            android:name=".activity.eticket.airticket.reIssueTicket.ActionRequestTicketActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             >

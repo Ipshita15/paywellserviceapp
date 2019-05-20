@@ -14,7 +14,7 @@ public class ResCancellationMapping {
     @SerializedName("message")
     private String mMessage;
     @SerializedName("status")
-    private Long mStatus;
+    private int mStatus;
 
     public List<BookingDatum> getBookingData() {
         return mBookingData;
@@ -40,11 +40,11 @@ public class ResCancellationMapping {
         mMessage = message;
     }
 
-    public Long getStatus() {
+    public int getStatus() {
         return mStatus;
     }
 
-    public void setStatus(Long status) {
+    public void setStatus(int status) {
         mStatus = status;
     }
 
