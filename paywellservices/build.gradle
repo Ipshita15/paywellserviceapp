@@ -212,6 +212,8 @@ dependencies {
     implementation "com.karumi:dexter:5.0.0"
     implementation 'com.github.yalantis:ucrop:2.2.2'
 
+    implementation 'su.j2e:rv-joiner:1.0.9'
+
 
 }
 // Add to the bottom of the file
