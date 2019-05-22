@@ -34,13 +34,14 @@ class TicketActionMenuFragment : DialogFragment() {
             v.btCencel.visibility = View.VISIBLE
 
             v.btActionReissue.visibility = View.GONE
-            v.btActionReissue.visibility = View.GONE
             v.btTicketCancel.visibility = View.GONE
+            v.btActionReissue.visibility = View.GONE
+            v.btActionReschedule.visibility = View.GONE
 
         } else if (m.equals("Ticketed")) {
 
             v.btActionReissue.visibility = View.VISIBLE
-            v.btActionReissue.visibility = View.VISIBLE
+            v.btActionReschedule.visibility = View.VISIBLE
             v.btTicketCancel.visibility = View.VISIBLE
 
 
@@ -59,6 +60,11 @@ class TicketActionMenuFragment : DialogFragment() {
         v.btActionReissue.setOnClickListener {
             dismiss()
             onClickHandler.onReissue(model)
+        }
+
+        v.btActionReschedule.setOnClickListener {
+            dismiss()
+            onClickHandler.onReschedule(model)
         }
 
         v.btCencel.setOnClickListener {
@@ -88,6 +94,7 @@ class TicketActionMenuFragment : DialogFragment() {
         fun onClickCancelButton()
         fun onClickIsisThicketButton()
         fun onReissue(item: Datum)
+        fun onReschedule(item: Datum)
         fun onTicketCancel(item: Datum)
 
     }

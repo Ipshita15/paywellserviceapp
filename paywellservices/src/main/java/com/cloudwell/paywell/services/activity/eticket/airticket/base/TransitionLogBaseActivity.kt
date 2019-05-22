@@ -66,6 +66,11 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
         val tricketChooserFragment = TicketActionMenuFragment()
 
         tricketChooserFragment.setOnClickHandlerTest(object : TicketActionMenuFragment.OnClickHandler {
+            override fun onReschedule(item: Datum) {
+                handleRescheduleFlow(item)
+
+            }
+
             override fun onTicketCancel(item: Datum) {
 
                 ActionRequestTicketActivity.model = item
@@ -77,7 +82,7 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
 
             override fun onReissue(item: Datum) {
 
-                handleReissueFlow(item)
+
             }
 
             override fun onClickIsisThicketButton() {
@@ -101,31 +106,9 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
         tricketChooserFragment.show(supportFragmentManager, "dialog")
     }
 
-    private fun handleReissueFlow(item: Datum) {
-
+    private fun handleRescheduleFlow(item: Datum) {
         val newIntent = AirTicketMainActivity.newIntent(applicationContext, item = item)
         startActivity(newIntent)
-
-
-//        if (item.journeyType.equals("Oneway")) {
-//
-//
-//        } else if (item.journeyType.equals("Oneway")) {
-//
-//
-//        } else if (item.journeyType.equals("Return")) {
-//
-//
-//        } else if (item.journeyType.equals("MultiStop")) {
-//
-//
-//        }
-
-
-//        ActionRequestTicketActivity.model = item
-//        val intent = Intent(applicationContext, ActionRequestTicketActivity::class.java)
-//        intent.putExtra(ActionRequestTicketActivity.KEY_TITLE, AllConstant.Action_Reissue_or_Reschedule)
-//        startActivity(intent)
     }
 
 

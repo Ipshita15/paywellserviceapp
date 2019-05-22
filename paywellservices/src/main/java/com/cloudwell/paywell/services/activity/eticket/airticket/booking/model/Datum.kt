@@ -69,6 +69,10 @@ class Datum {
     var invoiceUrl: String = ""
 
 
+    @SerializedName("search_log")
+    var mSearchLog: List<SearchLog> = mutableListOf()
+
+
     @SerializedName("trips")
     var trips: List<Trip> = mutableListOf()
 

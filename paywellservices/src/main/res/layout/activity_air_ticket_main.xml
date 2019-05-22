@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketMainActivity">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketMainActivity">
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout_main"
@@ -15,14 +15,15 @@
         app:tabIndicatorColor="@color/tab_indicator"
         app:tabIndicatorHeight="3dp"
         app:tabMode="fixed"
+        android:background="@color/tab_background"
         app:tabSelectedTextColor="@color/white"
         app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-        app:tabTextColor="@color/white" />
+        app:tabTextColor="@color/white"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout_main" />
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout_main"/>
 
 </LinearLayout>

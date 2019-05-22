@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_air_ticket_main.*
 open class AirTicketMainActivity : AirTricketBaseActivity() {
 
     companion object {
-        lateinit var item: Datum
+        var item: Datum = Datum()
         fun newIntent(context: Context, item: Datum): Intent {
             val intent = Intent(context, AirTicketMainActivity::class.java)
             this.item = item
@@ -54,6 +54,8 @@ open class AirTicketMainActivity : AirTricketBaseActivity() {
     }
 
     override fun onBackPressed() {
+        item = Datum()
         finish()
+        super.onBackPressed()
     }
 }
