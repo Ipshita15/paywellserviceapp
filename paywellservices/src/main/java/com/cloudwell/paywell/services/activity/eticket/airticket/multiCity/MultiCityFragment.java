@@ -382,17 +382,17 @@ public class MultiCityFragment extends Fragment {
                     searchRoundTripModel.setToName(get.getIata());
 
 
-                    searchRoundTripModel.setToPortName("" + FormatHelper.formatText(cityOrStatusName + get.getAirportName()));
+                    searchRoundTripModel.setToPortName("" + FormatHelper.INSTANCE.formatText(cityOrStatusName + get.getAirportName()));
                     ((TextView) getActivity().findViewById(android.R.id.content).findViewWithTag(position).findViewById(R.id.toTextTV)).setVisibility(View.VISIBLE);
                     ((TextSwitcher) getActivity().findViewById(android.R.id.content).findViewWithTag(position).findViewById(R.id.tsMultiCityTripTo)).setText(searchRoundTripModel.getToName());
-                    ((TextSwitcher) getActivity().findViewById(android.R.id.content).findViewWithTag(position).findViewById(R.id.tsMultiCityTripToPort)).setText("" + FormatHelper.formatText(cityOrStatusName + get.getAirportName()));
+                    ((TextSwitcher) getActivity().findViewById(android.R.id.content).findViewWithTag(position).findViewById(R.id.tsMultiCityTripToPort)).setText("" + FormatHelper.INSTANCE.formatText(cityOrStatusName + get.getAirportName()));
 
                 } else {
                     searchRoundTripModel.setFromName(get.getIata());
-                    searchRoundTripModel.setFromPortName("" + FormatHelper.formatText(cityOrStatusName + get.getAirportName()));
+                    searchRoundTripModel.setFromPortName("" + FormatHelper.INSTANCE.formatText(cityOrStatusName + get.getAirportName()));
                     ((TextView) getActivity().findViewById(android.R.id.content).findViewWithTag(position).findViewById(R.id.fromTextTV)).setVisibility(View.VISIBLE);
                     ((TextSwitcher) getActivity().findViewById(android.R.id.content).findViewWithTag(position).findViewById(R.id.tsMultiCityTripFrom)).setText(searchRoundTripModel.getFromName());
-                    ((TextSwitcher) getActivity().findViewById(android.R.id.content).findViewWithTag(position).findViewById(R.id.tsMultiCityTripFromPort)).setText(FormatHelper.formatText(cityOrStatusName + get.getAirportName()));
+                    ((TextSwitcher) getActivity().findViewById(android.R.id.content).findViewWithTag(position).findViewById(R.id.tsMultiCityTripFromPort)).setText(FormatHelper.INSTANCE.formatText(cityOrStatusName + get.getAirportName()));
                 }
             }
         }

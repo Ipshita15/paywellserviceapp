@@ -25,6 +25,7 @@ import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.utils.FormatHelper
+import com.cloudwell.paywell.services.utils.FormatHelper.getPortLevelText
 import com.franmontiel.fullscreendialog.FullScreenDialogFragment
 import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.fragment__one_way_v2.*
@@ -355,15 +356,6 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
         }
     }
 
-    private fun getPortLevelText(it: Airport?): String {
-        var cityOrStatusName = ""
-        if (!it?.city.equals("")) {
-            cityOrStatusName = it?.city + "/"
-        } else if (!it?.state.equals("")) {
-            cityOrStatusName = it?.state + "/"
-        }
-        return "" + FormatHelper.formatText(cityOrStatusName + it?.airportName)
-    }
 
     override fun onClick(v: View?) {
         when (v?.id) {

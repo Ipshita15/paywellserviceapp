@@ -18,10 +18,12 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.s
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.Airport
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.FlightSearchViewActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.fragment.OneWayV2Fragment
+import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.customView.multipDatePicker.SlyCalendarDialog
 import com.cloudwell.paywell.services.utils.FormatHelper
+import com.cloudwell.paywell.services.utils.FormatHelper.getPortLevelText
 import kotlinx.android.synthetic.main.fragment_round_trip.*
 import kotlinx.android.synthetic.main.fragment_round_trip.view.*
 import mehdi.sakout.fancybuttons.FancyButton
@@ -70,7 +72,7 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
     }
 
     private lateinit var searchRoundTripModel: SearchRoundTripModel
-
+    var isReSchuduler = false
 
     override fun onDataSelected(firstDate: Calendar?, secondDate: Calendar?, hours: Int, minutes: Int) {
         if (firstDate != null && secondDate != null) {
@@ -487,6 +489,86 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
             handlePassengerClick()
         }
 
+
+        // only run when reschedule
+
+        if (AirTicketMainActivity.item.mSearchLog.size != 0) {
+            isReSchuduler = true
+
+            val mSearchLog = AirTicketMainActivity.item.mSearchLog.get(0)
+
+            val originPort = mSearchLog.originPort
+            val destinationPort = mSearchLog.destinationPort
+            val cabinClass = mSearchLog.cabinClass
+            val adultQty = mSearchLog.adultQty
+            val childQty = mSearchLog.childQty
+            val infantQty = mSearchLog.infantQty
+
+
+            tsFrom.setCurrentText(originPort)
+            AirThicketRepository(AppController.getContext()).getAirportBy(originPort).observeForever {
+                tsFromPort.setCurrentText(getPortLevelText(it))
+                tsFromPort.isEnabled = false
+                tsFromPort.alpha = 0.5f
+                tvFrom.isEnabled = false
+                tvFrom.alpha = 0.5f
+
+                searchRoundTripModel.setFromName(originPort)
+                fromAirport.iata = originPort
+
+
+            }
+
+            tsTo.setCurrentText(destinationPort)
+            AirThicketRepository(AppController.getContext()).getAirportBy(destinationPort).observeForever {
+                tsToPort.setCurrentText(getPortLevelText(it))
+                tsToPort.isEnabled = false
+                tsToPort.alpha = 0.5f
+
+                layoutTo.isEnabled = false
+                layoutTo.alpha = 0.5f
+
+                searchRoundTripModel.setToName(destinationPort)
+                toAirport.iata = destinationPort
+
+            }
+
+            view.tvDepartDate.setText(getString(R.string.date))
+            humanReadAbleDateFirst = ""
+
+
+
+            view.tvDepartDate2.setText("" + getString(R.string.date))
+            humanReadAbleDateSecond = ""
+
+
+            mClassModel = ClassModel(cabinClass, cabinClass, true)
+            view.airTicketClass.setText(mClassModel.className)
+            view.airTicketClass.isEnabled = false
+            view.airTicketClass.alpha = 0.5f
+
+            onAdultPsngrTextChange("" + adultQty)
+            airTicketAdult.isEnabled = false
+            airTicketAdult.alpha = 0.5f
+
+            onKidPsngrTextChange("" + childQty)
+            airTicketKid.isEnabled = false
+            airTicketKid.alpha = 0.5f
+
+
+            onInfantPsngrTextChange("" + infantQty)
+            airTicketInfant.isEnabled = false
+            airTicketInfant.alpha = 0.5f
+
+            llPassenger.isEnabled = false
+            llPassenger.alpha = 0.5f
+
+
+            view.btn_search.setText("Reschedule search")
+
+
+        }
+
     }
 
 
@@ -677,9 +759,10 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
 
 
         AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.REQUEST_AIR_SERACH, requestAirSearch)
-
+        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.REQUEST_API_reschedule, AirTicketMainActivity.item)
 
         val intent = Intent(activity?.applicationContext, FlightSearchViewActivity::class.java)
+        intent.putExtra("isReSchuduler", isReSchuduler)
         startActivity(intent)
 
     }

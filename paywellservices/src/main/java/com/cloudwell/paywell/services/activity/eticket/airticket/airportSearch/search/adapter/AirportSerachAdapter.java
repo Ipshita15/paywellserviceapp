@@ -77,8 +77,8 @@ public class AirportSerachAdapter extends ArrayAdapter<Airport> {
 
         Airport subject = SubjectListTemp.get(position);
 
-        holder.SubjectName.setText(FormatHelper.formatText(subject.getAirportName()));
-        holder.tvCity.setText((FormatHelper.formatText(subject.getCity() + "/" + subject.getCountry())));
+        holder.SubjectName.setText(FormatHelper.INSTANCE.formatText(subject.getAirportName()));
+        holder.tvCity.setText((FormatHelper.INSTANCE.formatText(subject.getCity() + "/" + subject.getCountry())));
 
 //        holder.SubjectFullForm.setText(subject.getSubFullForm());
 
