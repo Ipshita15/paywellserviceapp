@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.flight_list_item_new.view.*
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 19/2/19.
  */
-class FlightAdapterNew(val items: List<Result>, val requestAirSearch: RequestAirSearch, val context: Context, val onClickListener: OnClickListener) : RecyclerView.Adapter<ViewHolderNew>() {
+class FlightAdapterNew(val items: List<Result>, val requestAirSearch: RequestAirSearch, val context: Context, var isReSchuduler: Boolean, val onClickListener: OnClickListener) : RecyclerView.Adapter<ViewHolderNew>() {
 
 
     override fun onBindViewHolder(holder: ViewHolderNew, position: Int) {
@@ -63,8 +63,21 @@ class FlightAdapterNew(val items: List<Result>, val requestAirSearch: RequestAir
 
         holder.airlineSerachIcon.setImageURI(imageUri)
 
+        if (isReSchuduler) {
+            holder.btDetails.text = "Request"
+            holder.tvPrices.visibility = View.GONE
+            holder.ivTake.visibility = View.GONE
+            holder.tvTotalPrices.visibility = View.GONE
+        }
+
         holder.btDetails.setOnClickListener {
-            onClickListener.onClick(position)
+            if (isReSchuduler) {
+                onClickListener.onClickRequestForReSchuder(model)
+
+            } else {
+                onClickListener.onClick(position)
+            }
+
         }
 
     }
@@ -86,10 +99,12 @@ class FlightAdapterNew(val items: List<Result>, val requestAirSearch: RequestAir
 interface OnClickListener {
 
     fun onClick(position: Int)
+    fun onClickRequestForReSchuder(result: Result)
 }
 
 
 class ViewHolderNew(view: View) : RecyclerView.ViewHolder(view) {
+    val tvTotalPrices = view.tvTotalPrices
     val tvAirlessName = view.tvAirlessName
     val tvPrices = view.tvPrices
     val btDetails = view.btDetails

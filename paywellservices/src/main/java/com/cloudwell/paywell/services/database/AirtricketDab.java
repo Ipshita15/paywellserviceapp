@@ -41,6 +41,10 @@ public interface AirtricketDab {
     List<Airport> getAirport(String iso);
 
 
+    @Query("SELECT * FROM Airport WHERE iata = (:iata)")
+    Airport getAirportBy(String iata);
+
+
     @Query("DELETE FROM AIRPORT")
     void clearAirportsData();
 

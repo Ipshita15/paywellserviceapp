@@ -21,6 +21,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.m
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.AirportsSearchActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.Airport
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.FlightSearchViewActivity
+import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.utils.FormatHelper
@@ -56,6 +57,9 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
     lateinit var airTicketAdult: TextView
     lateinit var airTicketKid: TextView
     lateinit var airTicketInfant: TextView
+
+
+    var isReSchuduler = false
 
 
     companion object {
@@ -274,6 +278,91 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
         if (adulPassger != null) {
             onAdultPsngrTextChange("" + adulPassger)
         }
+
+
+        // only run when reschedule
+
+        if (AirTicketMainActivity.item.mSearchLog.size != 0) {
+            isReSchuduler = true
+
+            val mSearchLog = AirTicketMainActivity.item.mSearchLog.get(0)
+
+            val originPort = mSearchLog.originPort
+            val destinationPort = mSearchLog.destinationPort
+            val cabinClass = mSearchLog.cabinClass
+            val adultQty = mSearchLog.adultQty
+            val childQty = mSearchLog.childQty
+            val infantQty = mSearchLog.infantQty
+
+
+            tsFrom.setCurrentText(originPort)
+            AirThicketRepository(AppController.getContext()).getAirportBy(originPort).observeForever {
+                tsFromPort.setCurrentText(getPortLevelText(it))
+                tsFromPort.isEnabled = false
+                tsFromPort.alpha = 0.5f
+                tvFrom.isEnabled = false
+                tvFrom.alpha = 0.5f
+
+                searchRoundTripModel.setFromName(originPort)
+                fromAirport.iata = originPort
+
+
+            }
+
+            tsTo.setCurrentText(destinationPort)
+            AirThicketRepository(AppController.getContext()).getAirportBy(destinationPort).observeForever {
+                tsToPort.setCurrentText(getPortLevelText(it))
+                tsToPort.isEnabled = false
+                tsToPort.alpha = 0.5f
+
+                layoutTo.isEnabled = false
+                layoutTo.alpha = 0.5f
+
+                searchRoundTripModel.setToName(destinationPort)
+                toAirport.iata = destinationPort
+
+            }
+
+            tvDepartDate.setText(getString(R.string.date))
+            searchRoundTripModel.departDate = ""
+
+
+            mClassModel = ClassModel(cabinClass, cabinClass, true)
+            view.airTicketClass.setText(mClassModel.className)
+            view.airTicketClass.isEnabled = false
+            view.airTicketClass.alpha = 0.5f
+
+            onAdultPsngrTextChange("" + adultQty)
+            airTicketAdult.isEnabled = false
+            airTicketAdult.alpha = 0.5f
+
+            onKidPsngrTextChange("" + childQty)
+            airTicketKid.isEnabled = false
+            airTicketKid.alpha = 0.5f
+
+
+            onInfantPsngrTextChange("" + infantQty)
+            airTicketInfant.isEnabled = false
+            airTicketInfant.alpha = 0.5f
+
+            llPassenger.isEnabled = false
+            llPassenger.alpha = 0.5f
+
+
+            view.btn_search.setText("Reschedule search")
+
+
+        }
+    }
+
+    private fun getPortLevelText(it: Airport?): String {
+        var cityOrStatusName = ""
+        if (!it?.city.equals("")) {
+            cityOrStatusName = it?.city + "/"
+        } else if (!it?.state.equals("")) {
+            cityOrStatusName = it?.state + "/"
+        }
+        return "" + FormatHelper.formatText(cityOrStatusName + it?.airportName)
     }
 
     override fun onClick(v: View?) {
@@ -624,8 +713,12 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
         val requestAirSearch = RequestAirSearch(airTicketAdult.text.toString().toLong(), airTicketKid.text.toString().toLong(), airTicketInfant.text.toString().toLong(), "Oneway", list)
 
         AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.REQUEST_AIR_SERACH, requestAirSearch)
+        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.REQUEST_API_reschedule, AirTicketMainActivity.item)
+
 
         val intent = Intent(activity?.applicationContext, FlightSearchViewActivity::class.java)
+        intent.putExtra("isReSchuduler", isReSchuduler)
+
         startActivity(intent)
     }
 

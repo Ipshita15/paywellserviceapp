@@ -165,7 +165,7 @@ public interface APIService {
                                   @Field("format") String apiFormat);
 
 
-    @POST("/PaywelltransactionHaltrip/reIssueTicket")
+    @POST("/PaywelltransactionHaltrip/reScheduleTicket")
     @FormUrlEncoded
     Call<JsonObject> reIssueTicket(@Field("username") String username,
                                    @Field("password") String password,

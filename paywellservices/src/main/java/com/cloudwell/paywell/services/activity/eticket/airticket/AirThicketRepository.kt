@@ -506,5 +506,20 @@ class AirThicketRepository(private val mContext: Context) {
         return InternalStorageHelper.readData(InternalStorageHelper.CombustionfileName)
     }
 
+    fun getAirportBy(iac: String?): MutableLiveData<Airport> {
+        val data = MutableLiveData<Airport>()
+        doAsync {
+
+            val airportBy = DatabaseClient.getInstance(mContext).appDatabase.mAirtricketDab().getAirportBy(iac)
+
+            uiThread {
+                data.value = airportBy
+            }
+        }
+
+        return data
+
+    }
+
 
 }
