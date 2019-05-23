@@ -31,7 +31,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.f
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.TricketingStatusFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.ResIssueTicket
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.viewModel.BookingStatsViewModel
-import com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.ActionRequestTicketActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.ticketCencel.TricketCencelActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.TicketViewerActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.emailTicket.PassengerEmailSendListActivity
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
@@ -73,9 +73,9 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
 
             override fun onTicketCancel(item: Datum) {
 
-                ActionRequestTicketActivity.model = item
-                val intent = Intent(applicationContext, ActionRequestTicketActivity::class.java)
-                intent.putExtra(ActionRequestTicketActivity.KEY_TITLE, AllConstant.Action_Ticket_Cancel)
+                TricketCencelActivity.model = item
+                val intent = Intent(applicationContext, TricketCencelActivity::class.java)
+                intent.putExtra(TricketCencelActivity.KEY_TITLE, AllConstant.Action_Ticket_Cancel)
                 startActivity(intent)
 
             }

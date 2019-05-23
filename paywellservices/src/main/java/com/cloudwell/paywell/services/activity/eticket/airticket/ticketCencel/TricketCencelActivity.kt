@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket
+package com.cloudwell.paywell.services.activity.eticket.airticket.ticketCencel
 
 import android.content.Context
 import android.graphics.Color
@@ -27,7 +27,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 
-class ActionRequestTicketActivity : AirTricketBaseActivity() {
+class TricketCencelActivity : AirTricketBaseActivity() {
     private var bookingCancelAdapter: ArrayAdapter<*>? = null
     private val cancelReasonList = ArrayList<String>()
     private var bookingIdET: EditText? = null
@@ -124,7 +124,7 @@ class ActionRequestTicketActivity : AirTricketBaseActivity() {
             }
 
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                Toast.makeText(this@ActionRequestTicketActivity, "Network error!!!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@TricketCencelActivity, "Network error!!!", Toast.LENGTH_SHORT).show()
                 progressDialog.hide()
             }
         })
@@ -206,7 +206,7 @@ class ActionRequestTicketActivity : AirTricketBaseActivity() {
             }
 
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                Toast.makeText(this@ActionRequestTicketActivity, "Network error!!!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@TricketCencelActivity, "Network error!!!", Toast.LENGTH_SHORT).show()
                 dismissProgressDialog()
             }
         })
