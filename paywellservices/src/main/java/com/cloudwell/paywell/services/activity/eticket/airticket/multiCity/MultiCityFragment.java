@@ -3,9 +3,11 @@ package com.cloudwell.paywell.services.activity.eticket.airticket.multiCity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -23,6 +25,8 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.eticket.airticket.AirThicketRepository;
+import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketMainActivity;
 import com.cloudwell.paywell.services.activity.eticket.airticket.ClassBottomSheetDialog;
 import com.cloudwell.paywell.services.activity.eticket.airticket.ClassModel;
 import com.cloudwell.paywell.services.activity.eticket.airticket.PassengerBottomSheetDialog;
@@ -31,7 +35,9 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.m
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.Segment;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.AirportsSearchActivity;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.Airport;
+import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.SearchLog;
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.FlightSearchViewActivity;
+import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.app.storage.AppStorageBox;
 import com.cloudwell.paywell.services.utils.FormatHelper;
@@ -67,6 +73,8 @@ public class MultiCityFragment extends Fragment {
     private SearchRoundTripModel searchRoundTripModel;
     String value = "1";
     private HashMap<Integer, String> flightDates = new HashMap<>();
+
+    public boolean isReSchuduler = false;
 
 
     @Override
@@ -174,14 +182,53 @@ public class MultiCityFragment extends Fragment {
 //                    Toast.makeText(getContext(), "Please provide all the data.", Toast.LENGTH_SHORT).show();
                 } else {
                     AppStorageBox.put(getContext(), AppStorageBox.Key.REQUEST_AIR_SERACH, requestAirSearch);
+                    AppStorageBox.put(getActivity().getApplicationContext(), AppStorageBox.Key.REQUEST_API_reschedule, AirTicketMainActivity.Companion.getItem());
                     Intent intent = new Intent(getActivity().getApplicationContext(), FlightSearchViewActivity.class);
+                    intent.putExtra("isReSchuduler", isReSchuduler);
                     startActivity(intent);
                 }
             }
         });
         inflater = getLayoutInflater();
-        addAnotherNo();
-        addAnotherNo();
+
+
+        if (AirTicketMainActivity.Companion.getItem().getMSearchLog().size() != 0) {
+            isReSchuduler = true;
+
+            for (int i = 0; i < AirTicketMainActivity.Companion.getItem().getMSearchLog().size(); i++) {
+                SearchLog searchLog = AirTicketMainActivity.Companion.getItem().getMSearchLog().get(i);
+                addAnotherNo(searchLog);
+            }
+
+            SearchLog searchLog = AirTicketMainActivity.Companion.getItem().getMSearchLog().get(0);
+            String adultQty = searchLog.getAdultQty();
+            String childQty = searchLog.getChildQty();
+            String infantQty = searchLog.getInfantQty();
+
+            TextView airTicketAdult = parentView.findViewById(R.id.airTicketAdult);
+            TextView airTicketKid = parentView.findViewById(R.id.airTicketKid);
+            TextView airTicketInfant = parentView.findViewById(R.id.airTicketInfant);
+
+            airTicketAdult.setText(adultQty);
+            airTicketAdult.setEnabled(false);
+            airTicketAdult.setAlpha(0.5f);
+
+            airTicketKid.setText(childQty);
+            airTicketKid.setEnabled(false);
+            airTicketKid.setAlpha(0.5f);
+
+            airTicketInfant.setText(infantQty);
+            airTicketInfant.setEnabled(false);
+            airTicketInfant.setAlpha(0.5f);
+
+        } else {
+            for (int i = 0; i < 2; i++) {
+                addAnotherNo();
+
+            }
+        }
+
+
     }
 
     private void setTVError(String s, TextView textView, TextView flightNumberTV) {
@@ -294,6 +341,104 @@ public class MultiCityFragment extends Fragment {
         flightView.setAnimation(slideInAnim);
     }
 
+    private void addAnotherNo(SearchLog searchLog) {
+
+        ++addNoFlag;
+        View flightView = inflater.inflate(R.layout.multi_city_list_item_view, null);
+        ImageView removeBtn = flightView.findViewById(R.id.flightCancelIV);
+        removeBtn.setEnabled(false);
+        removeBtn.setAlpha(0.5f);
+
+        LinearLayout passengerClassLL = flightView.findViewById(R.id.passengerClassLL);
+        LinearLayout departViewLL = flightView.findViewById(R.id.departViewLL);
+        LinearLayout fromLL = flightView.findViewById(R.id.llFrom);
+
+        LinearLayout toLL = flightView.findViewById(R.id.toLL);
+        TextView tvDepartDate = flightView.findViewById(R.id.tvDepartDate);
+        TextView flightNumberTV = flightView.findViewById(R.id.flightNumberTV);
+
+        initChildView(flightView);
+
+        flightView.setId(addNoFlag);
+        flightView.setTag(addNoFlag);
+        flightViewList.add(flightView);
+
+        removeBtn.setVisibility(View.GONE);
+
+        departViewLL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDatePicker(tvDepartDate, (int) flightView.getTag());
+            }
+        });
+
+
+        flightView.findViewById(R.id.fromTextTV).setVisibility(View.VISIBLE);
+        TextView fromTextTV = (TextView) flightView.findViewById(R.id.fromTextTV);
+        fromTextTV.setVisibility(View.VISIBLE);
+
+        flightView.findViewById(R.id.fromTextTV).setVisibility(View.VISIBLE);
+
+        String originPort = searchLog.getOriginPort();
+        String destinationPort = searchLog.getDestinationPort();
+        String cabinClass = searchLog.getCabinClass();
+
+
+        TextSwitcher tsMultiCityTripFrom = flightView.findViewById(R.id.tsMultiCityTripFrom);
+        tsMultiCityTripFrom.setText(originPort);
+        tsMultiCityTripFrom.setEnabled(false);
+        tsMultiCityTripFrom.setAlpha(0.5f);
+
+
+        new AirThicketRepository(AppController.getContext()).getAirportBy(originPort).observeForever(new Observer<Airport>() {
+            @Override
+            public void onChanged(@Nullable Airport airport) {
+
+                TextSwitcher tsMultiCityTripFromPort = flightView.findViewById(R.id.tsMultiCityTripFromPort);
+                tsMultiCityTripFromPort.setText((FormatHelper.INSTANCE.getPortLevelText(airport)));
+                tsMultiCityTripFromPort.setEnabled(false);
+                tsMultiCityTripFromPort.setAlpha(0.5f);
+
+            }
+        });
+
+        TextSwitcher tsMultiCityTripTo = flightView.findViewById(R.id.tsMultiCityTripTo);
+        tsMultiCityTripTo.setText(destinationPort);
+        tsMultiCityTripTo.setEnabled(false);
+        tsMultiCityTripTo.setAlpha(0.5f);
+
+
+        new AirThicketRepository(AppController.getContext()).getAirportBy(destinationPort).observeForever(new Observer<Airport>() {
+            @Override
+            public void onChanged(@Nullable Airport airport) {
+
+                TextSwitcher tsMultiCityTripToPort = flightView.findViewById(R.id.tsMultiCityTripToPort);
+                tsMultiCityTripToPort.setText((FormatHelper.INSTANCE.getPortLevelText(airport)));
+                tsMultiCityTripToPort.setEnabled(false);
+                tsMultiCityTripToPort.setAlpha(0.5f);
+
+
+            }
+        });
+
+        TextView airTicketClass = passengerClassLL.findViewById(R.id.airTicketClass);
+
+        airTicketClass.setText(cabinClass);
+        airTicketClass.setEnabled(false);
+        airTicketClass.setAlpha(0.5f);
+
+
+        TextView tvClassL = flightView.findViewById(R.id.tvClassL);
+        tvClassL.setEnabled(false);
+        tvClassL.setAlpha(0.5f);
+
+
+        mainLayout.addView(flightView);
+        flightView.setAnimation(slideInAnim);
+
+
+    }
+
 
     private void handlePassengerClick(View view) {
         Bundle b = new Bundle();
@@ -328,7 +473,7 @@ public class MultiCityFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
 
         int year = calendar.get(Calendar.YEAR);
-        int thismonth = calendar.get(Calendar.MONTH) + 1;
+        int thismonth = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
 
@@ -353,9 +498,11 @@ public class MultiCityFragment extends Fragment {
             }
         }, year, thismonth, dayOfMonth);
         datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
-//        calendar.add(Calendar.MONTH, 6);
-//        datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
 
+        Calendar calendarMin = Calendar.getInstance();
+
+
+        datePickerDialog.getDatePicker().setMinDate(calendarMin.getTimeInMillis());
         datePickerDialog.show();
 
     }
