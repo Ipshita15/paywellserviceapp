@@ -17,7 +17,6 @@ import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment.CancellationStatusMessageFragment
 import com.cloudwell.paywell.services.app.AppHandler
-import com.cloudwell.paywell.services.constant.AllConstant
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.ConnectionDetector
 import com.google.gson.JsonObject
@@ -155,11 +154,9 @@ class TricketCencelActivity : AirTricketBaseActivity() {
                 if (cd!!.isConnectingToInternet) {
                     val userName = mAppHandler!!.imeiNo
 
-                    if (title.equals(AllConstant.Action_Ticket_Cancel)) {
-                        submitCancelTicketRequest(userName, PIN_NO, bookingId, cancelReason, "json")
-                    } else if (title.equals(AllConstant.Action_Reissue_or_Reschedule)) {
-                        submitReissueAndReschedule(userName, PIN_NO, bookingId, cancelReason, model.searchId, model.resultId, "json")
-                    }
+
+                    submitCancelTicketRequest(userName, PIN_NO, bookingId, cancelReason, "json")
+
 
                 } else {
                     val snackbar = Snackbar.make(cancelMainLayout!!, R.string.connection_error_msg, Snackbar.LENGTH_LONG)
@@ -181,37 +178,37 @@ class TricketCencelActivity : AirTricketBaseActivity() {
         alert.show()
     }
 
-    private fun submitReissueAndReschedule(userName: String, pass: String, bookingId: String, cancelReason: String, searchId: String, resultID: String, apiFormat: String) {
-        showProgressDialog()
-
-
-        ApiUtils.getAPIService().reIssueTicket(userName, pass, bookingId, cancelReason, searchId, resultID, apiFormat).enqueue(object : Callback<JsonObject> {
-            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                dismissProgressDialog()
-
-                if (response.isSuccessful) {
-
-                    if (response.isSuccessful) {
-                        val jsonObject = response.body()
-                        val message = jsonObject!!.get("message_details").asString
-                        if (jsonObject.get("status").asInt == 200) {
-                            showMsg(message)
-                        } else {
-                            showMsg(message)
-                        }
-
-                    }
-                }
-
-            }
-
-            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                Toast.makeText(this@TricketCencelActivity, "Network error!!!", Toast.LENGTH_SHORT).show()
-                dismissProgressDialog()
-            }
-        })
-
-    }
+//    private fun submitReissueAndReschedule(userName: String, pass: String, bookingId: String, cancelReason: String, searchId: String, resultID: String, apiFormat: String) {
+//        showProgressDialog()
+//
+//
+//        ApiUtils.getAPIService().reIssueTicket(userName, pass, bookingId, cancelReason, searchId, resultID, apiFormat).enqueue(object : Callback<JsonObject> {
+//            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+//                dismissProgressDialog()
+//
+//                if (response.isSuccessful) {
+//
+//                    if (response.isSuccessful) {
+//                        val jsonObject = response.body()
+//                        val message = jsonObject!!.get("message_details").asString
+//                        if (jsonObject.get("status").asInt == 200) {
+//                            showMsg(message)
+//                        } else {
+//                            showMsg(message)
+//                        }
+//
+//                    }
+//                }
+//
+//            }
+//
+//            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+//                Toast.makeText(this@TricketCencelActivity, "Network error!!!", Toast.LENGTH_SHORT).show()
+//                dismissProgressDialog()
+//            }
+//        })
+//
+//    }
 
     private fun showMsg(msg: String) {
 

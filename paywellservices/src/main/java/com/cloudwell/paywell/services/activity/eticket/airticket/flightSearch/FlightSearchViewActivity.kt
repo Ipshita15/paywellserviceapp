@@ -307,7 +307,7 @@ class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
         showProgressDialog()
 
 
-        ApiUtils.getAPIService().reIssueTicket(userName, pass, bookingId, cancelReason, searchId, resultID, apiFormat).enqueue(object : Callback<JsonObject> {
+        ApiUtils.getAPIService().reScheduleTicket(userName, pass, bookingId, cancelReason, searchId, resultID, apiFormat).enqueue(object : Callback<JsonObject> {
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 dismissProgressDialog()
 

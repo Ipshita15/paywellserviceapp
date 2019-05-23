@@ -120,6 +120,7 @@ import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.service.notificaiton.model.EventNewNotificaiton;
 import com.cloudwell.paywell.services.utils.AppHelper;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.CountryUtility;
 import com.cloudwell.paywell.services.utils.LocationUtility;
 import com.cloudwell.paywell.services.utils.ResorceHelper;
 import com.cloudwell.paywell.services.utils.UpdateChecker;
@@ -255,6 +256,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         changeStatusBarColor();
         setContentView(R.layout.activity_main);
 
+
+        String bd = CountryUtility.getCountryCode("BD");
 
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);

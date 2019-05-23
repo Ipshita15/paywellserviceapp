@@ -16,7 +16,7 @@ class Passenger {
     @SerializedName("country_code")
     var countryCode: String? = null
     @SerializedName("date_of_birth")
-    var dateOfBirth: Any? = null
+    var dateOfBirth: String = ""
     @SerializedName("email")
     var email: String = ""
     @SerializedName("ff_airline")
@@ -36,9 +36,9 @@ class Passenger {
     @SerializedName("nationality")
     var nationality: String? = null
     @SerializedName("passport_expiry_date")
-    var passportExpiryDate: Any? = null
+    var passportExpiryDate: String = ""
     @SerializedName("passport_nationality")
-    var passportNationality: Any? = null
+    var passportNationality: String = ""
     @SerializedName("passport_number")
     var passportNumber: String = ""
     @SerializedName("pax_index")
@@ -49,6 +49,10 @@ class Passenger {
     var ticketNo: String? = null
     @SerializedName("ticket_url")
     var ticketUrl: Any? = null
+
+
+    @SerializedName("country")
+    var country: String = ""
 
 
     var isCheckEmail = false

@@ -28,6 +28,7 @@ import com.cloudwell.paywell.services.app.model.APIResposeGenerateToken;
 import com.cloudwell.paywell.services.service.notificaiton.model.APIResNoCheckNotification;
 import com.google.gson.JsonObject;
 
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -167,13 +168,21 @@ public interface APIService {
 
     @POST("/PaywelltransactionHaltrip/reScheduleTicket")
     @FormUrlEncoded
-    Call<JsonObject> reIssueTicket(@Field("username") String username,
-                                   @Field("password") String password,
-                                   @Field("BookingID") String bookingId,
-                                   @Field("reason") String cancelReason,
-                                   @Field("SearchId") String searchId,
-                                   @Field("ResultID") String resultID,
-                                   @Field("format") String apiFormat);
+    Call<JsonObject> reScheduleTicket(@Field("username") String username,
+                                      @Field("password") String password,
+                                      @Field("BookingID") String bookingId,
+                                      @Field("reason") String cancelReason,
+                                      @Field("SearchId") String searchId,
+                                      @Field("ResultID") String resultID,
+                                      @Field("format") String apiFormat);
+
+    @POST("/PaywelltransactionHaltrip/reIssueTicket")
+    @Multipart
+    Call<JsonObject> reIssueTicket(@Part("username") String username,
+                                   @Part("password") String password,
+                                   @Part("BookingID") String bookingId,
+                                   @Part("reason") String cancelReason,
+                                   @Part("passengers") List<com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Passenger> searchId);
 
 
     @POST("PaywelltransactionHaltrip/getCancelMap")

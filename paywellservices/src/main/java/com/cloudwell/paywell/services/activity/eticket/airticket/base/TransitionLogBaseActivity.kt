@@ -31,6 +31,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.f
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.TricketingStatusFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.ResIssueTicket
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.viewModel.BookingStatsViewModel
+import com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.ReIssueTicketActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketCencel.TricketCencelActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.TicketViewerActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.emailTicket.PassengerEmailSendListActivity
@@ -82,6 +83,8 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
 
             override fun onReissue(item: Datum) {
 
+                val newIntent = ReIssueTicketActivity.newIntent(this@TransitionLogBaseActivity, item)
+                startActivity(newIntent)
 
             }
 

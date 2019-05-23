@@ -791,6 +791,7 @@
     <string name="booking_info">Booking Info</string>
     <string name="ticket_cancel">Ticket Cancel</string>
     <string name="reissue_reschedule">Reissue/Reschedule</string>
+    <string name="title_reissue">Tricket Reissue</string>
 
 
 </resources>
