@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Passenger
+import com.cloudwell.paywell.services.utils.CountryUtility
 import kotlinx.android.synthetic.main.passenger_list_item_final.view.*
 
 /**
@@ -43,7 +44,11 @@ class AdapterForPassengersBookingInfo(var context: Context, var items: List<Pass
         holder.tvTitle.text = "Title: " + model.nameTitle
         holder.tvFirstName.text = "First Name: " + model.firstName
         holder.tvLastName.text = "Last Name: " + model.lastName
-        holder.tvCountry.text = "Country: " + model.countryCode
+
+        val countryCode1 = CountryUtility.getCountryCode(model.countryCode)
+
+
+        holder.tvCountry.text = "Country: " + countryCode1
         holder.tvGender.text = "Gender: " + model.gender
         holder.tvContactNumber.text = "Contact Number: " + model.contactNumber
         holder.tvEmailAddress.text = "Email: " + model.email
