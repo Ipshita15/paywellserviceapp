@@ -8,9 +8,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.cloudwell.paywell.service.CalculationHelper
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.Result
+import com.cloudwell.paywell.services.utils.CalculationHelper
 import kotlinx.android.synthetic.main.flight_list_item_new.view.*
 
 

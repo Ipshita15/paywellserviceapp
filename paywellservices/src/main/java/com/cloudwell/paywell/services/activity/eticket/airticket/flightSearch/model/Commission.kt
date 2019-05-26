@@ -39,7 +39,7 @@ class Commission {
     @SerializedName("prefix")
     var prefix: Any? = null
     @SerializedName("retailer_commission")
-    var retailerCommission: String? = null
+    var retailerCommission = 0.0
     @SerializedName("service_id")
     var serviceId: String? = null
     @SerializedName("stock")
@@ -51,7 +51,7 @@ class Commission {
     @SerializedName("sub_service_short_name")
     var subServiceShortName: String? = null
     @SerializedName("total_commission")
-    var totalCommission: String? = null
+    var totalCommission = 0.0
     @SerializedName("used_stock")
     var usedStock: String? = null
 
