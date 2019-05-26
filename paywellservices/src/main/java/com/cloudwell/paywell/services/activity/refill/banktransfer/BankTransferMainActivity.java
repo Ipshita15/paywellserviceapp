@@ -101,19 +101,19 @@ public class BankTransferMainActivity extends BaseActivity {
                 getDistrictList("1", btnBrac.getText().toString());
                 break;
             case R.id.homeBtnDbbl:
-                getDistrictList("1", btnDbbl.getText().toString());
+                getDistrictList("2", btnDbbl.getText().toString());
                 break;
             case R.id.homeBtnIbbl:
-                getDistrictList("1", btnIbbl.getText().toString());
+                getDistrictList("3", btnIbbl.getText().toString());
                 break;
             case R.id.homeBtnPbl:
-                getDistrictList("1", btnPbl.getText().toString());
+                getDistrictList("4", btnPbl.getText().toString());
                 break;
             case R.id.homeBtnScb:
-                getDistrictList("1", btnScb.getText().toString());
+                getDistrictList("5", btnScb.getText().toString());
                 break;
             case R.id.homeBtnCity:
-                getDistrictList("1", btnCity.getText().toString());
+                getDistrictList("6", btnCity.getText().toString());
                 break;
             default:
                 break;
