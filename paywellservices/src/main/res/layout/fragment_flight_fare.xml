@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="@+id/imageView16"/>
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/tvLBaseFare"
         android:layout_width="wrap_content"
         android:layout_height="19dp"
         android:layout_marginStart="8dp"
@@ -54,20 +54,20 @@
         android:layout_marginRight="124dp"
         android:text="sdf"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintStart_toEndOf="@+id/tvLBaseFare"
         app:layout_constraintTop_toBottomOf="@+id/imageView16"/>
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/tvLaTax"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/tax"
-        app:layout_constraintStart_toStartOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"/>
+        app:layout_constraintStart_toStartOf="@+id/tvLBaseFare"
+        app:layout_constraintTop_toBottomOf="@+id/tvLBaseFare"/>
 
     <TextView
-        android:id="@+id/tvRefunableForBooking"
+        android:id="@+id/tvTax"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -76,13 +76,13 @@
         app:layout_constraintTop_toBottomOf="@+id/tvFare"/>
 
     <TextView
-        android:id="@+id/textView18"
+        android:id="@+id/tvLCurrency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/currency"
-        app:layout_constraintStart_toStartOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/textView12"/>
+        app:layout_constraintStart_toStartOf="@+id/tvLaTax"
+        app:layout_constraintTop_toBottomOf="@+id/tvLaTax"/>
 
     <TextView
         android:id="@+id/tvDepartTime"
@@ -90,20 +90,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/tvRefunableForBooking"
-        app:layout_constraintTop_toBottomOf="@+id/tvRefunableForBooking"/>
+        app:layout_constraintStart_toStartOf="@+id/tvTax"
+        app:layout_constraintTop_toBottomOf="@+id/tvTax"/>
 
     <TextView
-        android:id="@+id/textView21"
+        android:id="@+id/tvLOtherCharge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/othercharges"
-        app:layout_constraintStart_toStartOf="@+id/textView18"
-        app:layout_constraintTop_toBottomOf="@+id/textView18"/>
+        app:layout_constraintStart_toStartOf="@+id/tvLCurrency"
+        app:layout_constraintTop_toBottomOf="@+id/tvLCurrency"/>
 
     <TextView
-        android:id="@+id/tvArrivalTIme"
+        android:id="@+id/tvArrivalTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -117,11 +117,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/discount"
-        app:layout_constraintStart_toStartOf="@+id/textView21"
-        app:layout_constraintTop_toBottomOf="@+id/textView21"/>
+        app:layout_constraintStart_toStartOf="@+id/tvLOtherCharge"
+        app:layout_constraintTop_toBottomOf="@+id/tvLOtherCharge"/>
 
     <TextView
-        android:id="@+id/textView24"
+        android:id="@+id/tvLPaxType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -130,31 +130,31 @@
         app:layout_constraintTop_toBottomOf="@+id/textView23"/>
 
     <TextView
-        android:id="@+id/textView25"
+        android:id="@+id/tvLPassengerCounter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/passenger_count"
-        app:layout_constraintStart_toStartOf="@+id/textView24"
-        app:layout_constraintTop_toBottomOf="@+id/textView24"/>
+        app:layout_constraintStart_toStartOf="@+id/tvLPaxType"
+        app:layout_constraintTop_toBottomOf="@+id/tvLPaxType"/>
 
     <TextView
-        android:id="@+id/textView26"
+        android:id="@+id/tvLService"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/service_fee"
-        app:layout_constraintStart_toStartOf="@+id/textView25"
-        app:layout_constraintTop_toBottomOf="@+id/textView25"/>
+        app:layout_constraintStart_toStartOf="@+id/tvLPassengerCounter"
+        app:layout_constraintTop_toBottomOf="@+id/tvLPassengerCounter"/>
 
     <TextView
-        android:id="@+id/tvAirlinesName"
+        android:id="@+id/tvAirportName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/tvArrivalTIme"
-        app:layout_constraintTop_toBottomOf="@+id/tvArrivalTIme"/>
+        app:layout_constraintStart_toStartOf="@+id/tvArrivalTime"
+        app:layout_constraintTop_toBottomOf="@+id/tvArrivalTime"/>
 
     <TextView
         android:id="@+id/tvPaxType"
@@ -162,8 +162,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/tvAirlinesName"
-        app:layout_constraintTop_toBottomOf="@+id/tvAirlinesName"/>
+        app:layout_constraintStart_toStartOf="@+id/tvAirportName"
+        app:layout_constraintTop_toBottomOf="@+id/tvAirportName"/>
 
     <TextView
         android:id="@+id/tvPassengerCount"
@@ -209,7 +209,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView26"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvLService"/>
 
     <TextView
         android:id="@+id/textView33"

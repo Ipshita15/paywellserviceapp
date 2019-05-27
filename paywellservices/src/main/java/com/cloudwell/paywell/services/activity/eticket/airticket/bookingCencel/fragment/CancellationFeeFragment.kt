@@ -1,0 +1,67 @@
+package com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment
+
+import android.os.Bundle
+import android.support.v4.app.DialogFragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.model.ResCancellationMapping
+import kotlinx.android.synthetic.main.fragment_prices_change.view.*
+
+
+class CancellationFeeFragment : DialogFragment() {
+
+
+    companion object {
+        lateinit var resCencelMaping: ResCancellationMapping
+    }
+
+    lateinit var onClickHandler: OnClickHandler
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
+
+    fun setOnClickHandlerTest(onClickHandler: OnClickHandler) {
+        this.onClickHandler = onClickHandler
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_cancel_fee, container, false)
+
+        val void = resCencelMaping.getCancelData().void.toDouble()
+        val count = resCencelMaping.bookingData.get(0).passengers.count()
+        val totalFee = void * count
+
+
+        v.tvFree.text = getString(R.string.cancellation_fee) + " Tk. " + totalFee
+
+
+        v.btActionIssueTicket.setOnClickListener {
+            dismiss()
+            onClickHandler.onClickActionIssueTicket(totalFee)
+        }
+
+
+
+        return v
+    }
+
+    private fun setMargins(view: View, left: Int, top: Int, right: Int, bottom: Int) {
+        if (view.layoutParams is ViewGroup.MarginLayoutParams) {
+            val p = view.layoutParams as ViewGroup.MarginLayoutParams
+            p.setMargins(left, top, right, bottom)
+            view.requestLayout()
+        }
+    }
+
+
+    interface OnClickHandler {
+        fun onClickActionIssueTicket(cancellationFee: Double)
+
+    }
+
+}

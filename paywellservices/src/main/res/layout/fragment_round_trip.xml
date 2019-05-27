@@ -3,6 +3,7 @@
              xmlns:fancy="http://schemas.android.com/apk/res-auto"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
+             android:id="@+id/myView"
              android:layout_height="match_parent"
              tools:context="com.cloudwell.paywell.services.activity.eticket.airticket.RoundTripFragment">
 
@@ -151,6 +152,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layoutReturn"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/activity_horizontal_margin"
@@ -222,12 +224,13 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_weight="1"
+                            android:layout_weight="1.2"
                             android:gravity="end"
-                            android:text="@string/passengers"/>
+                            android:text="@string/passengers"
+                            android:textColor="#999999"/>
 
                         <LinearLayout
-                            android:id="@+id/llPsngr"
+                            android:id="@+id/llPassenger"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="2"
@@ -236,13 +239,14 @@
 
                             <LinearLayout
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:gravity="end">
 
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
                                     android:layout_marginRight="5dp"
                                     android:src="@drawable/ic_adult"/>
 
@@ -250,6 +254,7 @@
                                     android:id="@+id/airTicketAdult"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom"
                                     android:text="1"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                                     android:textColor="@color/black"/>
@@ -257,13 +262,14 @@
 
                             <LinearLayout
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:gravity="end">
 
                                 <ImageView
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
                                     android:layout_marginRight="5dp"
                                     android:src="@drawable/ic_kid"/>
 
@@ -271,19 +277,23 @@
                                     android:id="@+id/airTicketKid"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom"
+                                    android:gravity="bottom"
                                     android:text="0"
-                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                    android:textColor="@color/blackcccccc"/>
                             </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:gravity="end">
 
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
                                     android:layout_marginRight="5dp"
                                     android:src="@drawable/ic_infant"/>
 
@@ -291,11 +301,15 @@
                                     android:id="@+id/airTicketInfant"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom"
+                                    android:gravity="bottom"
                                     android:text="0"
-                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                    android:textColor="@color/blackcccccc"/>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
+
                 </LinearLayout>
 
                 <View

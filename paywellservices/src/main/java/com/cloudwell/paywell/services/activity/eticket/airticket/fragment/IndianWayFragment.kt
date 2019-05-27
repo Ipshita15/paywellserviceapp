@@ -16,13 +16,14 @@ import android.view.animation.AnimationUtils
 import android.widget.*
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.*
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.Segment
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.AirportsSearchActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.Airport
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.FlightSearchViewActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.AirportsSearchActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.Airport
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.Segment
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
+import com.cloudwell.paywell.services.utils.FormatHelper
 import com.franmontiel.fullscreendialog.FullScreenDialogFragment
 import kotlinx.android.synthetic.main.fragment_india_one_way.*
 import kotlinx.android.synthetic.main.fragment_india_one_way.view.*
@@ -33,7 +34,7 @@ import java.util.*
 
 class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFragment.OnConfirmListener, FullScreenDialogFragment.OnDiscardListener {
 
-    private val KEY_TAG = OneWayFragment::class.java!!.getName()
+    private val KEY_TAG = IndianWayFragment::class.java!!.getName()
     private val REQ_CODE_FROM = 1
     private val REQ_CODE_TO = 3
 
@@ -49,7 +50,12 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
     private lateinit var toAirport: Airport
 
     private lateinit var searchRoundTripModel: SearchRoundTripModel
-    var mClassModel = ClassModel("Economy", "Economy", true)
+    lateinit var mClassModel: ClassModel
+
+    lateinit var airTicketAdult: TextView
+    lateinit var airTicketKid: TextView
+    lateinit var airTicketInfant: TextView
+
 
     companion object {
         val KEY_REQUEST_KEY = "KEY_REQUEST_KEY"
@@ -85,6 +91,11 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
         layoutDeaprtDate.setOnClickListener(this)
 
         view.btn_search.setOnClickListener(this)
+
+
+        airTicketInfant = view.findViewById<TextView>(R.id.airTicketInfant)
+        airTicketAdult = view.findViewById<TextView>(R.id.airTicketAdult)
+        airTicketKid = view.findViewById<TextView>(R.id.airTicketKid)
 
         val tsFrom = view.findViewById<TextSwitcher>(R.id.tsOneWayTripFrom)
         val tsFromPort = view.findViewById<TextSwitcher>(R.id.tsOneWayTripFromPort)
@@ -132,6 +143,39 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
         tsToPort.setCurrentText(activity?.application?.getString(R.string.airport))
         view.tvHitTo.visibility = View.INVISIBLE
 
+        val fromCacheAirport = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.FROM_CACHE_INDIA) as Airport?
+        if (fromCacheAirport != null) {
+            view.tsOneWayTripFrom.setText(fromCacheAirport.iata)
+            view.tsOneWayTripFromPort.setText(fromCacheAirport.airportName)
+            view.tvHitFrom.visibility = View.VISIBLE
+
+            fromAirport = Airport()
+            fromAirport.iata = fromCacheAirport.iata
+
+        } else {
+            tsFrom.setCurrentText(activity?.application?.getString(R.string.from))
+            tsFromPort.setCurrentText(activity?.application?.getString(R.string.airport))
+            view.tvHitFrom.visibility = View.INVISIBLE
+        }
+
+
+        val toCacheAirport = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.TO_CACHE_INDIA) as Airport?
+        if (toCacheAirport != null) {
+
+            view.tsOneWayTripTo.setText(toCacheAirport.iata)
+            view.tsOneWayTripToPort.setText(toCacheAirport.airportName)
+            view.tvHitTo.visibility = View.VISIBLE
+
+            toAirport = Airport()
+            toAirport.iata = toCacheAirport.iata
+
+        } else {
+            tsTo.setCurrentText(activity?.application?.getString(R.string.to))
+            tsToPort.setCurrentText(activity?.application?.getString(R.string.airport))
+            view.tvHitTo.visibility = View.INVISIBLE
+        }
+
+
         val textFrom = tsFrom.currentView as TextView
         val textFromPort = tsFromPort.currentView as TextView
         val textTo = tsTo.currentView as TextView
@@ -142,6 +186,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
         ivSwitchTrip.setOnClickListener {
             tsFrom.setText(searchRoundTripModel.getToName())
             tsTo.setText(searchRoundTripModel.getFromName())
+
             val from = searchRoundTripModel.getFromName()
             searchRoundTripModel.setFromName(searchRoundTripModel.getToName())
             searchRoundTripModel.setToName(from)
@@ -153,6 +198,70 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
             searchRoundTripModel.setFromPortName(searchRoundTripModel.getToPortName())
             searchRoundTripModel.setToPortName(fromPort)
 
+
+            val fromAirTricket = Airport()
+            fromAirTricket.airportName = searchRoundTripModel.fromPort
+            fromAirTricket.iata = searchRoundTripModel.getFromName()
+            AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.FROM_CACHE_INDIA, fromAirTricket)
+
+
+            val toAirTricket = Airport()
+            toAirTricket.airportName = searchRoundTripModel.toPort
+            toAirTricket.iata = searchRoundTripModel.getToName()
+
+            AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.TO_CACHE_INDIA, toAirTricket)
+
+        }
+
+
+        val fromAirTricket = Airport()
+        fromAirTricket.airportName = searchRoundTripModel.fromPort
+        fromAirTricket.iata = searchRoundTripModel.getFromName()
+
+        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.FROM_CACHE_INDIA, fromAirTricket)
+
+
+        val toAirTricket = Airport()
+        fromAirTricket.airportName = searchRoundTripModel.toPort
+        fromAirTricket.iata = searchRoundTripModel.getToName()
+
+        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.TO_CACHE_INDIA, fromAirTricket)
+
+
+        val crachDepartureDate = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_INDIA) as String?
+        if (crachDepartureDate != null) {
+            view.tvDepartDate.text = "" + crachDepartureDate
+            view.tvDepartDate.setTextColor(Color.BLACK)
+            val departDate = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_API_formate_INDIA) as String
+            searchRoundTripModel.departDate = departDate
+
+        }
+
+        val classModel = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.CLASS_TYPE_INDIA) as ClassModel?
+        if (classModel == null) {
+
+            mClassModel = ClassModel("Economy", "Economy", true)
+        } else {
+            mClassModel = classModel
+            view.airTicketClass.setText(classModel.className)
+        }
+
+
+        val infanntPass = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.INFANT_PSNGER_INDIA) as Int?
+        if (infanntPass != null) {
+            onInfantPsngrTextChange("" + infanntPass)
+        }
+
+
+        val kidPsnGer = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.KID_PSNGER_INDIA) as Int?
+        if (kidPsnGer != null) {
+            onKidPsngrTextChange("" + kidPsnGer)
+        }
+
+
+        val adulPassger = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.ADUL_PSNGER_INDIA) as Int?
+        if (adulPassger != null) {
+            onAdultPsngrTextChange("" + adulPassger)
         }
 
         return view
@@ -277,8 +386,9 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
     fun onAdultPsngrTextChange(text: String) {
         airTicketAdult.setText(text)
-
         val toInt = text.toInt()
+
+        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.ADUL_PSNGER_INDIA, toInt)
 
         if (toInt > 0) {
             airTicketAdult.setTextColor(getResources().getColor(R.color.black33333))
@@ -289,8 +399,9 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
     fun onKidPsngrTextChange(text: String) {
         airTicketKid.setText(text)
-
         val toInt = text.toInt()
+
+        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.KID_PSNGER_INDIA, toInt)
 
         if (toInt > 0) {
             airTicketKid.setTextColor(getResources().getColor(R.color.black33333))
@@ -301,8 +412,9 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
     fun onInfantPsngrTextChange(text: String) {
         airTicketInfant.setText(text)
-
         val toInt = text.toInt()
+        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.INFANT_PSNGER_INDIA, toInt)
+
         if (toInt > 0) {
             airTicketInfant.setTextColor(getResources().getColor(R.color.black33333))
         } else {
@@ -320,6 +432,9 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
                 mClassModel = classModel
 
                 airTicketClass.setText(classModel.className)
+
+                AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.CLASS_TYPE_INDIA, classModel)
+
             }
 
         })
@@ -352,6 +467,8 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
                     tvDepartDate.text = "$nameOfDayOfWeek, $day $nameOfMonth"
                     tvDepartDate.setTextColor(Color.BLACK);
 
+                    AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_INDIA, "" + "$nameOfDayOfWeek, $day $nameOfMonth")
+
 
                     val mMonth = month + 1;
 
@@ -363,13 +480,15 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
                     searchRoundTripModel.departDate = humanReadAbleDate
 
+                    AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_API_formate_INDIA, "" + humanReadAbleDate)
+
 
                 }, year, thismonth, dayOfMonth)
 
         datePickerDialog.datePicker.minDate = calendar.timeInMillis
 
-        calendar.add(Calendar.MONTH, 6)
-        datePickerDialog.datePicker.maxDate = calendar.timeInMillis
+//        calendar.add(Calendar.MONTH, 6)
+//        datePickerDialog.datePicker.maxDate = calendar.timeInMillis
 
 
         datePickerDialog.show()
@@ -414,24 +533,49 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
                     fromAirport = get
 
+                    var cityOrStatusName = ""
+                    if (!get.city.equals("")) {
+                        cityOrStatusName = get.city + "/"
+                    } else if (!get.state.equals("")) {
+                        cityOrStatusName = get.state + "/"
+                    }
+
                     searchRoundTripModel.setFromName(get.iata)
-                    searchRoundTripModel.setFromPortName(get.airportName)
+                    searchRoundTripModel.setFromPortName("" + FormatHelper.formatText(cityOrStatusName + get.airportName))
 
                     tsOneWayTripFrom.setText(get.iata)
-                    tsOneWayTripFromPort.setText(get.airportName)
+                    tsOneWayTripFromPort.setText("" + FormatHelper.formatText(cityOrStatusName + get.airportName))
                     tvHitFrom.visibility = View.VISIBLE
+
+                    fromAirport.airportName = "" + FormatHelper.formatText(cityOrStatusName + get.airportName)
+
+
+                    AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.FROM_CACHE_INDIA, get)
+
                 }
 
                 REQ_CODE_TO -> {
 
                     toAirport = get
 
+                    var cityOrStatusName = ""
+                    if (!get.city.equals("")) {
+                        cityOrStatusName = get.city + "/"
+                    } else if (!get.state.equals("")) {
+                        cityOrStatusName = get.state + "/"
+                    }
+
                     searchRoundTripModel.setToName(get.iata)
-                    searchRoundTripModel.setToPortName(get.airportName)
+                    searchRoundTripModel.setToPortName("" + FormatHelper.formatText(cityOrStatusName + get.airportName))
 
                     tsOneWayTripTo.setText(get.iata)
-                    tsOneWayTripToPort.setText(get.airportName)
+                    tsOneWayTripToPort.setText("" + FormatHelper.formatText(cityOrStatusName + get.airportName))
                     tvHitTo.visibility = View.VISIBLE
+
+                    toAirport.airportName = "" + FormatHelper.formatText(cityOrStatusName + get.airportName)
+
+                    AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.TO_CACHE_INDIA, get)
+
                 }
 
             }
@@ -440,13 +584,13 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
     private fun handleSearchClick() {
 
-        if (searchRoundTripModel.getFromName().equals(OneWayFragment.KEY_FROM)) {
+        if (searchRoundTripModel.getFromName().equals(OneWayV2Fragment.KEY_FROM)) {
             Toast.makeText(activity?.applicationContext, getString(R.string.please_select_from_airport), Toast.LENGTH_LONG).show()
 
             return
         }
 
-        if (searchRoundTripModel.getToName().equals(OneWayFragment.KEY_To)) {
+        if (searchRoundTripModel.getToName().equals(OneWayV2Fragment.KEY_To)) {
             Toast.makeText(activity?.applicationContext, getString(R.string.please_select_arrival_airport), Toast.LENGTH_LONG).show()
             return
         }

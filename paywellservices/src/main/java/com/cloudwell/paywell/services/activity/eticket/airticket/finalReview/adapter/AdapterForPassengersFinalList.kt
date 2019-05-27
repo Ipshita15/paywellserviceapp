@@ -17,23 +17,26 @@ class AdapterForPassengersFinalList(var context: Context, var items: List<Passen
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterForPassengersFinalList.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
 
         val view = LayoutInflater.from(context).inflate(R.layout.passenger_list_item_final, parent, false)
-        return AdapterForPassengersFinalList.ViewHolder(view)
+        return ViewHolder(view)
 
 
     }
 
 
-    override fun onBindViewHolder(holder: AdapterForPassengersFinalList.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val model = items.get(position)
 
-        var number = position + 1
+        val number = position + 1
         holder.tvShortFirstNameLastName.text = "Passenger No: " + number
 
-        holder.tvPassengerType.text = "Passenger type: " + model.paxType
+
+        val paxType = model.paxType
+        val capPaxType = paxType.substring(0, 1).toUpperCase() + paxType.substring(1)
+        holder.tvPassengerType.text = "Passenger type: " + capPaxType
 
         if (model.isLeadPassenger) {
             holder.tvLeadPassenger.text = "Lead passenger: Yes"
@@ -48,6 +51,7 @@ class AdapterForPassengersFinalList(var context: Context, var items: List<Passen
         holder.tvGender.text = "Gender: " + model.gender
         holder.tvContactNumber.text = "Contact Number: " + model.contactNumber
         holder.tvEmailAddress.text = "Email: " + model.email
+        holder.tvDateOfBirth.text = "Date Of Birth: " + model.dateOfBirth
 
         if (model.passportNumber.equals("")) {
             holder.tvPassport.visibility = View.GONE
@@ -63,8 +67,27 @@ class AdapterForPassengersFinalList(var context: Context, var items: List<Passen
             holder.tvNid.text = "National ID: " + model.nIDnumber
         }
 
+
+        if (model.passportExpiryDate.equals("")) {
+            holder.tvPassportExpiryDate.visibility = View.GONE
+        } else {
+            holder.tvPassportExpiryDate.visibility = View.VISIBLE
+            holder.tvPassportExpiryDate.text = context.getString(R.string.passport_expiry_date) + ": " + model.passportExpiryDate
+        }
+
+        if (model.passportNationality.equals("")) {
+            holder.tvPassportNationallity.visibility = View.GONE
+        } else {
+            holder.tvPassportNationallity.visibility = View.VISIBLE
+            holder.tvPassportNationallity.text = context.getString(R.string.passport_nationality) + ": " + model.passportNationality
+        }
+
         holder.ivEdit.setOnClickListener {
 
+            onClickListener.onEditClick(model, position)
+        }
+
+        holder.viewBackgoud.setOnClickListener {
             onClickListener.onEditClick(model, position)
         }
 
@@ -86,10 +109,14 @@ class AdapterForPassengersFinalList(var context: Context, var items: List<Passen
         val tvLastName = view.tvLastName
         val tvCountry = view.tvCountry
         val tvGender = view.tvGender
+        val tvDateOfBirth = view.tvDateOfBirth
         val tvContactNumber = view.tvContactNumber
         val tvEmailAddress = view.tvEmailAddress
         val tvPassport = view.tvPasswordFinal
         val tvNid = view.tvNid
+        val tvPassportExpiryDate = view.tvPassportExpiryDate
+        val tvPassportNationallity = view.tvPassportNationallity
+        val viewBackgoud = view.viewBackgoud
 
 
     }

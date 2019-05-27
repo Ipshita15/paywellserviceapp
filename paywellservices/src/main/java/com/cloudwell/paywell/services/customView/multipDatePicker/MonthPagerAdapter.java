@@ -56,13 +56,10 @@ public class MonthPagerAdapter extends PagerAdapter {
         LayoutInflater inflater = LayoutInflater.from(container.getContext());
         final ViewGroup view = (ViewGroup) inflater.inflate(R.layout.slycalendar_calendar, container, false);
 
-        final GridAdapter adapter = new GridAdapter(container.getContext(), slyCalendarData, indexShift, listener, new GridChangeListener() {
-            @Override
-            public void gridChanged() {
-                tags.add(TAG_PREFIX + (position + 1));
-                tags.add(TAG_PREFIX + (position - 1));
-                notifyDataSetChanged();
-            }
+        final GridAdapter adapter = new GridAdapter(container.getContext(), slyCalendarData, indexShift, listener, () -> {
+            tags.add(TAG_PREFIX + (position + 1));
+            tags.add(TAG_PREFIX + (position - 1));
+            notifyDataSetChanged();
         });
         ((GridView) view.findViewById(R.id.calendarGrid)).setAdapter(adapter);
 

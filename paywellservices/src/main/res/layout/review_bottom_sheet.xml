@@ -23,7 +23,7 @@
 
     <View
         android:id="@+id/viewReview"
-        android:layout_width="0dp"
+        android:layout_width="136dp"
         android:layout_height="50dp"
 
         android:background="#189d49"

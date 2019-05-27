@@ -5,11 +5,12 @@ import android.arch.lifecycle.Observer
 import com.cloudwell.paywell.services.activity.base.newBase.BaseViewState
 import com.cloudwell.paywell.services.activity.base.newBase.SingleLiveEvent
 import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketBaseViewMode
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.ReposeAirSearch
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.Result
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.Segment
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.view.SeachViewStatus
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.ReposeAirSearch
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.Result
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.Segment
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.view.SeachViewStatus
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.model.ResCommistionMaping
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 19/2/19.
@@ -23,21 +24,13 @@ class FlightSearchViewModel : AirTicketBaseViewMode() {
     val mListMutableLiveDataFlightData = MutableLiveData<List<Result>>()
     val mSearchId = MutableLiveData<String>()
 
+    val mResCommistionMaping = MutableLiveData<ResCommistionMaping>()
+
 
     fun init(internetConnection: Boolean, requestAirSearch: RequestAirSearch) {
         if (!internetConnection) {
             baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
         } else {
-
-//            val list = mutableListOf<Segment>()
-//            val segment = Segment("Economy", "2019-06-20 04:34:35", "DAC", "CXB")
-////            val segment = Segment("Economy", "2019-06-20 04:34:35", "ZYL", "CXB")
-//            list.add(segment)
-//
-//            val requestAirSearch = RequestAirSearch(1, 0, 0, "Oneway", list)
-
-
-
             callFlightSearch(requestAirSearch);
         }
     }
@@ -57,27 +50,19 @@ class FlightSearchViewModel : AirTicketBaseViewMode() {
         })
     }
 
-    private fun handleRepose(t: ReposeAirSearch?) {
-        t.let {
-            it?.data?.results.let {
-                val sortedListTotalFare = it?.sortedWith(compareBy(Result::totalFare, Result::totalFare))
-                mListMutableLiveDataFlightData.value = sortedListTotalFare
-                mSearchId.value = t?.data?.searchId
-            }
-        }
-    }
 
-    fun onSetDate(internetConnection: Boolean, date: String) {
+    fun onSetDate(internetConnection: Boolean, date: String, requestAirSearch: RequestAirSearch) {
         if (!internetConnection) {
             baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
         } else {
-            val list = mutableListOf<Segment>()
-            val segment = Segment("Economy", date, "DAC", "CXB");
-            list.add(segment)
 
-            val requestAirSearch = RequestAirSearch(1, 0, 0, "Oneway", list)
-
-            callFlightSearch(requestAirSearch);
+            val updateDateSegments = mutableListOf<Segment>()
+            requestAirSearch.segments.forEach {
+                it.departureDateTime = date
+                updateDateSegments.add(it)
+            }
+            requestAirSearch.segments = updateDateSegments
+            callFlightSearch(requestAirSearch)
         }
 
     }
@@ -107,6 +92,42 @@ class FlightSearchViewModel : AirTicketBaseViewMode() {
             return true
         }
         return false
+    }
+
+    private fun handleRepose(t: ReposeAirSearch?) {
+        t.let {
+            it?.data?.results.let {
+                //                val sortedListTotalFare = it?.sortedWith(compareBy(Result::totalFare, Result::totalFare))
+                mListMutableLiveDataFlightData.value = it
+                mSearchId.value = t?.data?.searchId
+            }
+        }
+    }
+
+    fun getCommissionMapingAPI(internetConnection: Boolean) {
+        if (!internetConnection) {
+            baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
+        } else {
+            callCommissionMapingAPI();
+        }
+
+    }
+
+    private fun callCommissionMapingAPI() {
+        mViewStatus.value = SeachViewStatus(isShowShimmerView = true, isShowProcessIndicator = true)
+
+        mAirTicketRepository.callCommissionMappingAPI().observeForever { it ->
+
+            mViewStatus.value = SeachViewStatus(isShowShimmerView = false, isShowProcessIndicator = false)
+            if (it?.status.equals("200")) {
+                mResCommistionMaping.value = it
+                mAirTicketRepository.saveCombustionData(it)
+
+            } else {
+                mViewStatus.value = SeachViewStatus(it.toString(), false, isShowProcessIndicator = false)
+            }
+        }
+
     }
 }
 

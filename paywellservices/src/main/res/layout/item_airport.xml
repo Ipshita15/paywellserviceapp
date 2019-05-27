@@ -3,13 +3,13 @@
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
                                              android:id="@+id/layout_airport_name_item"
                                              android:layout_width="match_parent"
-                                             android:layout_height="60dp"
+                                             android:layout_height="wrap_content"
                                              android:layout_margin="4dp"
                                              android:background="#f6f5fa">
 
     <TextView
         android:id="@+id/tvAirportName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"

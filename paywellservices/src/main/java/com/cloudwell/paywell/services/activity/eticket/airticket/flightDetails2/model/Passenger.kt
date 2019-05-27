@@ -30,6 +30,11 @@ data class Passenger(val isDefault: Boolean) {
     @SerializedName("FirstName")
     var firstName: String = ""
 
+    @ColumnInfo(name = "DateOfBirth")
+    @SerializedName("DateOfBirth")
+    var dateOfBirth: String = ""
+
+
     @ColumnInfo(name = "Gender")
     @SerializedName("Gender")
     var gender: String = ""
@@ -64,9 +69,19 @@ data class Passenger(val isDefault: Boolean) {
     var country: String = ""
 
 
-    @SerializedName("passport_number")
-    @ColumnInfo(name = "passport_number")
+    @SerializedName("PassportNumber")
+    @ColumnInfo(name = "PassportNumber")
     var passportNumber: String = ""
+
+
+    @SerializedName("PassportExpiryDate")
+    @ColumnInfo(name = "PassportExpiryDate")
+    var passportExpiryDate: String = ""
+
+
+    @SerializedName("PassportNationality")
+    @ColumnInfo(name = "PassportNationality")
+    var passportNationality: String = ""
 
     @ColumnInfo(name = "passportImagePath")
     var passportImagePath: String = ""
@@ -75,6 +90,14 @@ data class Passenger(val isDefault: Boolean) {
     @SerializedName("file_extension")
     @ColumnInfo(name = "file_extension")
     var file_extension: String = ""
+
+    @SerializedName("visa_extension")
+    @ColumnInfo(name = "visa_extension")
+    var visa_extension: String = ""
+
+    @SerializedName("visa_content")
+    @ColumnInfo(name = "visa_content")
+    var visa_content: String = ""
 
     @SerializedName("nid_number")
     @ColumnInfo(name = "nid_number")

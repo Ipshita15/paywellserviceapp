@@ -27,6 +27,9 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.DateUtils;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -89,19 +92,18 @@ public class PBBillStatusActivity extends BaseActivity implements View.OnClickLi
             }
         });
 
-        ArrayAdapter<CharSequence> year_adapter = ArrayAdapter.createFromResource(this,
-                R.array.year_array, android.R.layout.simple_spinner_item);
+        List<String> dynamicTwoYear = DateUtils.INSTANCE.getDynamicTwoYear();
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter year_adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, dynamicTwoYear);
         year_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnr_year.setAdapter(year_adapter);
         spnr_year.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    year = 0;
-                } else {
-                    String year_str = String.valueOf(spnr_year.getSelectedItem());
-                    year = Integer.parseInt(year_str);
-                }
+
+                String year_str = String.valueOf(spnr_year.getSelectedItem());
+                year = Integer.parseInt(year_str);
+
             }
 
             @Override

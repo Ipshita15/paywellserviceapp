@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -23,6 +22,7 @@ import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity;
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment.CancellationStatusMessageFragment;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -48,6 +48,8 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
     public static String KEY_BOOKING_ID = "Booking_Id";
     private String bookingCancelId = new String();
 
+    public Double mCancellationFee = 0.0;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cencel_booking);
@@ -67,7 +69,7 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
         bookingCancelReasonSPNR = findViewById(R.id.cancelReasonSPNR);
         cancelBookingBtn = findViewById(R.id.cancelBookingBtn);
         cancelReasonList.add("Select your reason");
-        cancelReasonList.add("have another work");
+        cancelReasonList.add("Have another work");
         cancelReasonList.add("Travelling reason accomplished");
         cancelReasonList.add("Have to travel another city");
         cancelReasonList.add("Other");
@@ -78,17 +80,24 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
         cancelBookingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
-                if (!bookingIdET.getText().toString().isEmpty() &&
-                        !bookingCancelReasonSPNR.getSelectedItem().toString().equals("Select your reason")) {
+
+                if (!bookingIdET.getText().toString().isEmpty() && !bookingCancelReasonSPNR.getSelectedItem().toString().equals("Select your reason")) {
+                    String userName = mAppHandler.getImeiNo();
+
                     askForPin(bookingIdET.getText().toString(), bookingCancelReasonSPNR.getSelectedItem().toString());
+
+                    //callCancelMapping(userName, bookingIdET.getText().toString());
                 } else {
+
+                    hideUserKeyboard();
+
                     Snackbar snackbar = Snackbar.make(cancelMainLayout, "Please Enter all the fields first", Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
+
             }
         });
 
@@ -108,9 +117,9 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
 
                     if (response.isSuccessful()) {
                         JsonObject jsonObject = response.body();
-                        String message = jsonObject.get("message").getAsString();
+                        String message = jsonObject.get("message_details").getAsString();
                         if (jsonObject.get("status").getAsInt() == 200) {
-                            showMsg("Request Successfully Submitted");
+                            showMsg(message);
                         } else {
                             showMsg(message);
                         }
@@ -127,6 +136,7 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
             }
         });
     }
+
 
     private void askForPin(String bookingId, String cancelReason) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -153,7 +163,9 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
                     dialogInterface.dismiss();
                     PIN_NO = pinNoET.getText().toString();
                     if (cd.isConnectingToInternet()) {
-                        submitCancelRequest("cwntcl", PIN_NO, bookingId, cancelReason, "json");
+
+                        String userName = mAppHandler.getImeiNo();
+                        submitCancelRequest(userName, PIN_NO, bookingId, cancelReason, "json");
                     } else {
                         Snackbar snackbar = Snackbar.make(cancelMainLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
                         snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -181,17 +193,12 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
     }
 
     private void showMsg(String msg) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Booking Cancel");
-        builder.setMessage(msg);
-        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int id) {
-                finish();
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
+
+        CancellationStatusMessageFragment priceChangeFragment = new CancellationStatusMessageFragment();
+        CancellationStatusMessageFragment.message = msg;
+
+        priceChangeFragment.show(getSupportFragmentManager(), "dialog");
+
     }
 
     @Override
@@ -207,5 +214,57 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
     public void onBackPressed() {
         finish();
     }
+
+
+//    private void callCancelMapping(String userName, String bookingId) {
+//
+//        showProgressDialog();
+//
+//        ApiUtils.getAPIService().getCancelMap(userName, bookingId).enqueue(new Callback<ResCancellationMapping>() {
+//            @Override
+//            public void onResponse(Call<ResCancellationMapping> call, Response<ResCancellationMapping> response) {
+//                dismissProgressDialog();
+//                assert response.body() != null;
+//                if (response.body().getStatus() == 200) {
+//                    showUserCencelData(response.body());
+//
+//                } else {
+//                    showSnackMessageWithTextMessage(response.body().getMessage());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResCancellationMapping> call, Throwable t) {
+//                dismissProgressDialog();
+//                showSnackMessageWithTextMessage(getString(R.string.please_try_again));
+//
+//            }
+//
+//
+//        });
+//    }
+
+//    private void showUserCencelData(ResCancellationMapping r) {
+//
+//        CancellationFeeFragment priceChangeFragment = new CancellationFeeFragment();
+//        CancellationFeeFragment.resCencelMaping = r;
+//
+//        priceChangeFragment.setOnClickHandlerTest(new CancellationFeeFragment.OnClickHandler() {
+//            @Override
+//            public void onClickActionIssueTicket(double cancellationFee) {
+//                mCancellationFee = cancellationFee;
+//                hiddenSoftKeyboard();
+//
+//
+//                askForPin(bookingIdET.getText().toString(), bookingCancelReasonSPNR.getSelectedItem().toString());
+//
+//
+//            }
+//        });
+//
+//        priceChangeFragment.show(getSupportFragmentManager(), "dialog");
+//
+//
+//    }
 
 }

@@ -27,12 +27,16 @@ class PassengerListActivity : AirTricketBaseActivity() {
     private lateinit var viewMode: PassengerListViewModel
     lateinit var touchHelper: ItemTouchHelper
 
+    var isValidation = false
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.cloudwell.paywell.services.R.layout.activity_passenger_list_activity)
 
         setToolbar(getString(com.cloudwell.paywell.services.R.string.title_passenger_list))
+
+        isValidation = intent.extras.getBoolean("isValidation", false)
 
         initializationView()
 
@@ -94,6 +98,7 @@ class PassengerListActivity : AirTricketBaseActivity() {
                 AppStorageBox.put(applicationContext, AppStorageBox.Key.AIRTRICKET_EDIT_PASSENGER, model)
                 val intent = Intent(applicationContext, AddPassengerActivity::class.java)
                 intent.putExtra("isEditFlag", true)
+                intent.putExtra("isValidation", isValidation)
                 startActivity(intent)
 
             }
@@ -129,7 +134,9 @@ class PassengerListActivity : AirTricketBaseActivity() {
 
     private fun initializationView() {
         layoutAddPassenger.setOnClickListener {
-            startActivity(Intent(applicationContext, AddPassengerActivity::class.java))
+            val intent = Intent(applicationContext, AddPassengerActivity::class.java)
+            intent.putExtra("isValidation", isValidation)
+            startActivity(intent)
         }
 
     }

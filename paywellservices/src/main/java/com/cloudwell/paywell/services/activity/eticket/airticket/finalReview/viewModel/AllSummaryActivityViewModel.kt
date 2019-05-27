@@ -60,7 +60,12 @@ class AllSummaryActivityViewModel : AirTicketBaseViewMode() {
                     mAirTicketRepository.callAirBookingAPI(piN_NO, requestModel).observeForever {
 
                         resBookingAPI = it!!
-                        mViewStatus.value = AllSummaryStatus(noSerachFoundMessage = "", isShowProcessIndicatior = false, resBookingAPI = it, test = "done")
+                        if (resBookingAPI.status.toString().startsWith("3")) {
+                            mViewStatus.value = AllSummaryStatus(noSerachFoundMessage = "" + resBookingAPI.message, isShowProcessIndicatior = false, resBookingAPI = null, test = "")
+                        } else {
+                            mViewStatus.value = AllSummaryStatus(noSerachFoundMessage = "", isShowProcessIndicatior = false, resBookingAPI = it, test = "done")
+
+                        }
 
                     }
 
@@ -73,7 +78,7 @@ class AllSummaryActivityViewModel : AirTicketBaseViewMode() {
     }
 
 
-    fun callAirPreBookingAPI(piN_NO: String, passengerIDS: String, internetConnection1: Boolean) {
+    fun callAirPreBookingAPI(passengerIDS: String, internetConnection1: Boolean) {
         if (!internetConnection1) {
             baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
         } else {
@@ -88,13 +93,17 @@ class AllSummaryActivityViewModel : AirTicketBaseViewMode() {
                     requestModel.searchId = resposeAirPriceSearch.data?.searchId
                     requestModel.passengers = it
 
-                    mAirTicketRepository.callAirPreBookingAPI(piN_NO, requestModel).observeForever {
+                    mAirTicketRepository.callAirPreBookingAPI(requestModel).observeForever {
                         mViewStatus.value = AllSummaryStatus(noSerachFoundMessage = "", isShowProcessIndicatior = false)
                         val okNetworkAndStatusCode = isOkNetworkAndStatusCode(it)
                         if (okNetworkAndStatusCode) {
+                            val rePriceStatus = it?.data?.rePriceStatus
+                            if (rePriceStatus.equals("FareUnavailable") || rePriceStatus.equals("ItineraryChanged")) {
+                                mViewStatus.value = it?.let { it1 -> AllSummaryStatus("", false, null, RePriceStatus = rePriceStatus) }
+                            } else {
+                                mViewStatus.value = it?.let { it1 -> AllSummaryStatus("", false, it1, RePriceStatus = "") }
+                            }
 
-
-                            mViewStatus.value = it?.let { it1 -> AllSummaryStatus("", false, it1) }
                         }
 
                     }
@@ -111,7 +120,7 @@ class AllSummaryActivityViewModel : AirTicketBaseViewMode() {
                     BaseViewState(errorMessage = it1.toString())
                 }
 
-                mViewStatus.value = AllSummaryStatus(noSerachFoundMessage = "No Air Found!!", isShowProcessIndicatior = false);
+                mViewStatus.value = AllSummaryStatus(noSerachFoundMessage = "Please try again", isShowProcessIndicatior = false);
 
                 return false
             } else if (it.status == 313) {
@@ -151,6 +160,9 @@ class AllSummaryActivityViewModel : AirTicketBaseViewMode() {
             } else if (!it.passportImagePath.equals("")) {
                 val addObject = addObject(it)
                 data.add(addObject)
+            } else if (!it.visa_content.equals("")) {
+                val addObject = addObject(it)
+                data.add(addObject)
             }
         }
 
@@ -181,6 +193,16 @@ class AllSummaryActivityViewModel : AirTicketBaseViewMode() {
         fileUploadReqSearchPara.passportNumber = it.passportNumber
         fileUploadReqSearchPara.nidNumber = it.nIDnumber
 
+
+        if (!it.visa_content.equals("")) {
+            val bm = BitmapFactory.decodeFile(it.visa_content)
+            val baos = ByteArrayOutputStream()
+            bm.compress(Bitmap.CompressFormat.JPEG, 100, baos) //bm is the bitmap object
+            val b = baos.toByteArray()
+            val encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+            fileUploadReqSearchPara.visaContent = encodedImage
+            fileUploadReqSearchPara.visaExtension = it.visa_extension
+        }
 
         return fileUploadReqSearchPara
     }

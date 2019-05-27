@@ -18,8 +18,7 @@ class PassengerBottomSheetDialog : BottomSheetDialogFragment() {
     lateinit var mListenerPsngr: PsngrBottomSheetListener
     lateinit var userType: ArrayList<UserTypeModel>
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val adultNumber: String = arguments!!.getString("myAdult")
         val kidNumber: String = arguments!!.getString("myKid")
         val infantNumber: String = arguments!!.getString("myInfant")
@@ -154,5 +153,14 @@ class PassengerBottomSheetDialog : BottomSheetDialogFragment() {
             lateinit var tvUserCount: TextView
             lateinit var ivPlus: ImageView
         }
+    }
+
+    override fun onDestroy() {
+
+        mListenerPsngr.onAdultButtonClickListener("" + userType.get(0).getSelectedPsngrCount())
+        mListenerPsngr.onKidButtonClickListener("" + userType.get(1).getSelectedPsngrCount())
+        mListenerPsngr.onInfantButtonClickListener("" + userType.get(2).getSelectedPsngrCount())
+
+        super.onDestroy()
     }
 }

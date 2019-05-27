@@ -25,6 +25,7 @@ import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.DateUtils;
 import com.github.chrisbanes.photoview.PhotoView;
 
 import org.apache.http.NameValuePair;
@@ -122,7 +123,7 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
                 R.array.month_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         month_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
+        // Apply the mAdapter to the spinner
         spnr_month.setAdapter(month_adapter);
         spnr_month.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -136,22 +137,21 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
             }
         });
 
+
+        List<String> dynamicTwoYear = DateUtils.INSTANCE.getDynamicTwoYear();
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> year_adapter = ArrayAdapter.createFromResource(this,
-                R.array.year_array, android.R.layout.simple_spinner_item);
+        ArrayAdapter year_adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, dynamicTwoYear);
         // Specify the layout to use when the list of choices appears
         year_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
+        // Apply the mAdapter to the spinner
         spnr_year.setAdapter(year_adapter);
         spnr_year.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    year = 0;
-                } else {
-                    String year_str = String.valueOf(spnr_year.getSelectedItem());
-                    year = Integer.parseInt(year_str);
-                }
+
+                String year_str = String.valueOf(spnr_year.getSelectedItem());
+                year = Integer.parseInt(year_str);
+
             }
 
             @Override

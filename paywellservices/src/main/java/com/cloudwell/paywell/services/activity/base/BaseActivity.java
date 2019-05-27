@@ -2,11 +2,13 @@ package com.cloudwell.paywell.services.activity.base;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +28,7 @@ import java.util.Locale;
  */
 public class BaseActivity extends AppCompatActivity {
 
-    private ProgressDialog progressDialog;
+    public ProgressDialog progressDialog;
     boolean isFlowFromFavorite;
     private ConnectionDetector mCd;
 
@@ -143,4 +145,21 @@ public class BaseActivity extends AppCompatActivity {
     public void hiddenSoftKeyboard() {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
+
+    public void showDialogMesssage(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message)
+                .setCancelable(true)
+                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+
+        builder.show();
+
+    }
+
 }

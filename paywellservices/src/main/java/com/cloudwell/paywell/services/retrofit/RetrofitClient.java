@@ -1,12 +1,13 @@
 package com.cloudwell.paywell.services.retrofit;
 
 
+import com.cloudwell.paywell.services.BuildConfig;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
@@ -20,24 +21,31 @@ public class RetrofitClient {
     public static Retrofit getClient(String baseUrl) {
         if (retrofit == null) {
 
-            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-            OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
-                    .addInterceptor(logging)
+            OkHttpClient.Builder okHttpClient = new OkHttpClient().newBuilder()
                     .connectTimeout(100, TimeUnit.SECONDS)
                     .readTimeout(100, TimeUnit.SECONDS)
                     .writeTimeout(100, TimeUnit.SECONDS)
-                    .authenticator(new TokenAuthenticator())
-                    .build();
+                    .authenticator(new TokenAuthenticator());
+
+
+            if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+                logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+                okHttpClient.addInterceptor(logging);
+
+//                okHttpClient.addInterceptor(new TimberLoggingInterceptor());
+
+            }
+
+            OkHttpClient build = okHttpClient.build();
 
 
             retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .client(okHttpClient)
+//                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .client(build)
                     .build();
         }
         return retrofit;

@@ -1,16 +1,20 @@
 package com.cloudwell.paywell.services.retrofit;
 
 
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.ReposeAirSearch;
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch;
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.ResGetAirports;
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList;
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.model.ResCancellationMapping;
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.ResIssueTicket;
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.RequestAirPrebookingSearchParams;
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResAirPreBooking;
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResBookingAPI;
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.RequestAirPriceSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.airRules.ResposeAirRules;
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.citySerach.model.ResGetAirports;
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.ReposeAirSearch;
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch;
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.model.ResCommistionMaping;
+import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.model.ResInvoideEmailAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationReadAPI;
 import com.cloudwell.paywell.services.activity.refill.model.BranchData;
@@ -24,6 +28,7 @@ import com.cloudwell.paywell.services.app.model.APIResposeGenerateToken;
 import com.cloudwell.paywell.services.service.notificaiton.model.APIResNoCheckNotification;
 import com.google.gson.JsonObject;
 
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -70,7 +75,8 @@ public interface APIService {
                                                  @Field("bankId") String bankId,
                                                  @Field("districtId") String districtId,
                                                  @Field("branchId") String branchId,
-                                                 @Field("depositslip") String depositslip);
+                                                 @Field("depositslip") String depositslip,
+                                                 @Field("Amount") String amount);
 
     @POST("PaywelltransactionPollyBiddyut/pollyBiddyutBillStatusQuery")
     @FormUrlEncoded
@@ -133,7 +139,7 @@ public interface APIService {
 
     @Multipart
     @POST("PaywelltransactionHaltrip/airPreBooking")
-    Call<ResAirPreBooking> airPreBooking(@Part("username") String username, @Part("password") String password, @Part("format") String format,
+    Call<ResAirPreBooking> airPreBooking(@Part("username") String username, @Part("format") String format,
                                          @Part("search_params") RequestAirPrebookingSearchParams search_params);
 
 
@@ -150,11 +156,62 @@ public interface APIService {
                                    @Field("reason") String cancelReason,
                                    @Field("format") String apiFormat);
 
+
+    @POST("PaywelltransactionHaltrip/cancelTicket")
+    @FormUrlEncoded
+    Call<JsonObject> cancelTicket(@Field("username") String username,
+                                  @Field("password") String password,
+                                  @Field("BookingID") String bookingId,
+                                  @Field("reason") String cancelReason,
+                                  @Field("format") String apiFormat);
+
+
+    @POST("/PaywelltransactionHaltrip/reScheduleTicket")
+    @FormUrlEncoded
+    Call<JsonObject> reScheduleTicket(@Field("username") String username,
+                                      @Field("password") String password,
+                                      @Field("BookingID") String bookingId,
+                                      @Field("reason") String cancelReason,
+                                      @Field("SearchId") String searchId,
+                                      @Field("ResultID") String resultID,
+                                      @Field("format") String apiFormat);
+
+    @POST("/PaywelltransactionHaltrip/reIssueTicket")
+    @Multipart
+    Call<JsonObject> reIssueTicket(@Part("username") String username,
+                                   @Part("password") String password,
+                                   @Part("BookingID") String bookingId,
+                                   @Part("reason") String cancelReason,
+                                   @Part("passengers") List<com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Passenger> searchId);
+
+
+    @POST("PaywelltransactionHaltrip/getCancelMap")
+    @FormUrlEncoded
+    Call<ResCancellationMapping> getCancelMap(@Field("username") String username,
+                                              @Field("booking_id") String bookingId);
+
     @Multipart
     @POST("PaywelltransactionHaltrip/uploadBookingFiles")
     Call<JsonObject> uploadBookingFiles(@Part("username") String username,
                                         @Part("booking_id") String password,
                                         @Part("params") String fileUploadReqSearchPara);
+
+
+    @POST("PaywelltransactionHaltrip/send_invoice_to_user")
+    @Multipart
+    Call<ResInvoideEmailAPI> callSendInvoiceAPI(@Part("username") String username,
+                                                @Part("booking_id") String bookingId,
+                                                @Part("email_address") String email_address);
+
+
+    @POST("PaywelltransactionHaltrip/getCommissionMapping")
+    @Multipart
+    Call<ResCommistionMaping> callGetCommissionMappingAPI(@Part("username") String username);
+
+
+    @POST("PaywelltransactionHaltrip/airTicketIssue")
+    @Multipart
+    Call<ResIssueTicket> callIssueTicketAPI(@Part("username") String username, @Part("password") String password, @Part("BookingID") String BookingID, @Part("IsAcceptedPriceChangeandIssueTicket") boolean ssAcceptedPriceChangeandIssueTicket);
 
 
 }

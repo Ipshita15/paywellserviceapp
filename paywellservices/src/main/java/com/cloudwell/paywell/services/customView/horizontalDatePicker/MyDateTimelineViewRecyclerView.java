@@ -289,7 +289,6 @@ public class MyDateTimelineViewRecyclerView extends RecyclerView {
         }
 
 
-
     }
 
     public void setLastDate(int endYear, int endMonth, int endDay) {
@@ -401,7 +400,7 @@ public class MyDateTimelineViewRecyclerView extends RecyclerView {
                 public void onClick(View view) {
 //                    selectedPosition = position;
                     onDateSelected(position, year, month, day);
-                    Log.e(TAG, "onClick: ");
+                    Log.e(TAG, "onClickActionIssueTicket: ");
                 }
             });
         }

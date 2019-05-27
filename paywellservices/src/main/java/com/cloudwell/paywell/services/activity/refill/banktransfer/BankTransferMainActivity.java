@@ -34,6 +34,7 @@ public class BankTransferMainActivity extends BaseActivity {
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
     private CoordinatorLayout mCoordinateLayout;
+    Button btnBrac, btnDbbl, btnIbbl, btnPbl, btnScb, btnCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +50,12 @@ public class BankTransferMainActivity extends BaseActivity {
         mCd = new ConnectionDetector(AppController.getContext());
 
         TextView textView = findViewById(R.id.detailsText);
-        Button btnBrac = findViewById(R.id.homeBtnBrac);
-        Button btnDbbl = findViewById(R.id.homeBtnDbbl);
-        Button btnIbbl = findViewById(R.id.homeBtnIbbl);
-        Button btnPbl = findViewById(R.id.homeBtnPbl);
-        Button btnScb = findViewById(R.id.homeBtnScb);
-        Button btnCity = findViewById(R.id.homeBtnCity);
+        btnBrac = findViewById(R.id.homeBtnBrac);
+        btnDbbl = findViewById(R.id.homeBtnDbbl);
+        btnIbbl = findViewById(R.id.homeBtnIbbl);
+        btnPbl = findViewById(R.id.homeBtnPbl);
+        btnScb = findViewById(R.id.homeBtnScb);
+        btnCity = findViewById(R.id.homeBtnCity);
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             textView.setTypeface(AppController.getInstance().getOxygenLightFont());
@@ -97,29 +98,29 @@ public class BankTransferMainActivity extends BaseActivity {
     public void onButtonClicker(View v) {
         switch (v.getId()) {
             case R.id.homeBtnBrac:
-                getDistrictList("1");
+                getDistrictList("1", btnBrac.getText().toString());
                 break;
             case R.id.homeBtnDbbl:
-                getDistrictList("2");
+                getDistrictList("2", btnDbbl.getText().toString());
                 break;
             case R.id.homeBtnIbbl:
-                getDistrictList("3");
+                getDistrictList("3", btnIbbl.getText().toString());
                 break;
             case R.id.homeBtnPbl:
-                getDistrictList("4");
+                getDistrictList("4", btnPbl.getText().toString());
                 break;
             case R.id.homeBtnScb:
-                getDistrictList("5");
+                getDistrictList("5", btnScb.getText().toString());
                 break;
             case R.id.homeBtnCity:
-                getDistrictList("6");
+                getDistrictList("6", btnCity.getText().toString());
                 break;
             default:
                 break;
         }
     }
 
-    private void getDistrictList(String bankId) {
+    private void getDistrictList(String bankId, String bankName) {
         showProgressDialog();
 
         final RequestDistrict requestDistrict = new RequestDistrict();
@@ -134,6 +135,7 @@ public class BankTransferMainActivity extends BaseActivity {
                 dismissProgressDialog();
                 Bundle bundle = new Bundle();
                 bundle.putString("bankId", requestDistrict.getmBankId());
+                bundle.putString("bankName", bankName);
 
                 BankDetailsActivity.responseDistrictData = response.body();
                 startBankDetailsActivity(bundle);

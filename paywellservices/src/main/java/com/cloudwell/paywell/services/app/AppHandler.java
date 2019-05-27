@@ -42,6 +42,7 @@ public class AppHandler {
     public static final String TRX_TYPE = "recharge_not_received";
     public static final int MULTIPLE_TOPUP_LIMIT = 5;
     private static final String UPDATE_CHECK = "LastUpdateCheck";
+    private static final String AIRPORT_LIST_UPDATE_CHECKER = "AIRPORT_LIST_UPDATE_CHECKER";
     private static final String PIN = "pin";
     private static final String PW_BALANCE = "pwBalance";
     private static final String PW_RID = "pwRID";
@@ -252,8 +253,17 @@ public class AppHandler {
         return mPref.getLong(UPDATE_CHECK, PRIVATE_MODE);
     }
 
+    public long getAirportListUpdateCheck() {
+        return mPref.getLong(AIRPORT_LIST_UPDATE_CHECKER, PRIVATE_MODE);
+    }
+
     public void setUpdateCheck(long times) {
         editor.putLong(UPDATE_CHECK, times);
+        editor.commit();
+    }
+
+    public void setAirportListUpdateCheck(long times) {
+        editor.putLong(AIRPORT_LIST_UPDATE_CHECKER, times);
         editor.commit();
     }
 

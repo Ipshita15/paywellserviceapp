@@ -35,13 +35,6 @@ public class SequenceStep(context: Context?, attrs: AttributeSet?)
                 0,
                 R.style.SequenceStep)
 
-//        setupAnchor(attributes)
-//        setupAnchorTextAppearance(attributes)
-//        setupTitle(attributes)
-//        setupTitleTextAppearance(attributes)
-//        setupSubtitle(attributes)
-//        setupSubtitleTextAppearance(attributes)
-//        setupActive(attributes)
 
         attributes.recycle()
     }

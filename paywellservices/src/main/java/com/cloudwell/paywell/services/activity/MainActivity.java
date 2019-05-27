@@ -63,6 +63,7 @@ import com.cloudwell.paywell.services.activity.about.AboutActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.chat.ChatActivity;
 import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
+import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity;
 import com.cloudwell.paywell.services.activity.mfs.MFSMainActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.MyFavoriteMenuActivity;
@@ -119,6 +120,7 @@ import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.service.notificaiton.model.EventNewNotificaiton;
 import com.cloudwell.paywell.services.utils.AppHelper;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.CountryUtility;
 import com.cloudwell.paywell.services.utils.LocationUtility;
 import com.cloudwell.paywell.services.utils.ResorceHelper;
 import com.cloudwell.paywell.services.utils.UpdateChecker;
@@ -160,6 +162,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -253,6 +256,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         changeStatusBarColor();
         setContentView(R.layout.activity_main);
 
+
+        String bd = CountryUtility.getCountryCode("BD");
 
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -974,26 +979,39 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         responseBodyCall.enqueue(new Callback<APIResBalanceCheck>() {
             @Override
             public void onResponse(Call<APIResBalanceCheck> call, Response<APIResBalanceCheck> response) {
+                try {
+                    pb_dot.setVisibility(View.GONE);
+                    mToolbarHeading.setVisibility(View.VISIBLE);
+                    isBalaceCheckProcessRunning = false;
 
-                pb_dot.setVisibility(View.GONE);
-                mToolbarHeading.setVisibility(View.VISIBLE);
-                isBalaceCheckProcessRunning = false;
+                    if (response.isSuccessful()) {
+                        if (((response.body() != null) ? response.body().getStatus() : null) != 200) {
 
-                assert response.body() != null;
-                if (response.body().getStatus() == 200) {
-                    String balance = response.body().getBalanceData().getBalance();
+                            showSnackMessageWithTextMessage(getString(R.string.try_again_msg));
 
-                    BigDecimal a = new BigDecimal(balance);
-                    BigDecimal roundOff = a.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                        } else {
+                            String balance = Objects.requireNonNull(response.body()).getBalanceData().getBalance();
 
-
-                    mAppHandler.setPWBalance("" + roundOff);
-
-                    String strBalance = mAppHandler.getPwBalance();
-                    mToolbarHeading.setText(strBalance);
+                            BigDecimal a = new BigDecimal(balance);
+                            BigDecimal roundOff = a.setScale(2, BigDecimal.ROUND_HALF_EVEN);
 
 
+                            mAppHandler.setPWBalance("" + roundOff);
+
+                            String strBalance = mAppHandler.getPwBalance();
+                            mToolbarHeading.setText(strBalance);
+
+                        }
+
+                    } else {
+
+                        showSnackMessageWithTextMessage(getString(R.string.try_again_msg));
+
+                    }
+                } catch (Exception ignored) {
+                    showSnackMessageWithTextMessage(getString(R.string.try_again_msg));
                 }
+
             }
 
             @Override
@@ -1003,11 +1021,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 isBalaceCheckProcessRunning = false;
 
 
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
+                showSnackMessageWithTextMessage(getString(R.string.try_again_msg));
+
+
             }
         });
     }
@@ -2330,7 +2346,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.string.home_eticket_air:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_ETICKET_AIR);
 
-                intent = new Intent(getApplicationContext(), ETicketMainActivity.class);
+                intent = new Intent(getApplicationContext(), AirTicketMenuActivity.class);
                 intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AIR, true);
                 startActivityWithFlag(intent);
                 break;

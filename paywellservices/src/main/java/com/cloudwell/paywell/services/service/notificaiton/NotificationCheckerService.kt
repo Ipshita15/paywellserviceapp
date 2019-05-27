@@ -75,22 +75,28 @@ class NotificationCheckerService : Service() {
             }
 
             override fun onResponse(call: Call<APIResNoCheckNotification>, response: Response<APIResNoCheckNotification>) {
-                Logger.v(response.toString())
-                isAPICalledRunning = false;
-                val unread = response.body()?.unread;
-                val parseInt = Integer.parseInt(unread);
-                GlobalApplicationBus.getBus().post(EventNewNotificaiton(parseInt))
+                try {
+                    Logger.v("" + response.toString())
+                    isAPICalledRunning = false;
+                    val unread = response.body()?.unread;
+                    val parseInt = Integer.parseInt(unread);
+                    GlobalApplicationBus.getBus().post(EventNewNotificaiton(parseInt))
 
-                val detail_message = response.body()?.detail_message;
-                if (detail_message != null) {
-                    if (detail_message.size > 0) {
-                        doAsync {
-                            val notificationRepogitory = NotificationRepogitory(applicationContext);
-                            notificationRepogitory.insertLocalData(detail_message)
+                    val detail_message = response.body()?.detail_message;
+                    if (detail_message != null) {
+                        if (detail_message.size > 0) {
+                            doAsync {
+                                val notificationRepogitory = NotificationRepogitory(applicationContext);
+                                notificationRepogitory.insertLocalData(detail_message)
+                            }
+
                         }
-
                     }
+                } catch (e: Exception) {
+                   
                 }
+
+
             }
 
         })

@@ -1,13 +1,10 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.menu
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatDialog
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.CompoundButton
@@ -15,24 +12,23 @@ import android.widget.RadioButton
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketMainActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.booking.BookingMainActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.BookingCancelActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.AirThicketTranslationLogActivity
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
-import com.cloudwell.paywell.services.app.storage.AppStorageBox
-import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.ConnectionDetector
+import com.cloudwell.paywell.services.utils.LanuageConstant.KEY_BANGLA
+import com.cloudwell.paywell.services.utils.LanuageConstant.KEY_ENGLISH
 import kotlinx.android.synthetic.main.activity_air_tricket_menu.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import java.util.*
 
 class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
-    private val KEY_TAG = AirTicketMenuActivity::class.java.getName()
-    private val BOOKING_TAG = "BOOKING"
-    private val TRX_TAG = "TRX_LOG"
+    val KEY_TAG = AirTicketMenuActivity::class.java.getName()
+    val BOOKING_TAG = "BOOKING"
+    val TRX_TAG = "TRX_LOG"
+
 
     lateinit var mConstraintLayout: ConstraintLayout
 
@@ -43,27 +39,45 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
     internal var radioButton_fifty: RadioButton? = null
     internal var radioButton_hundred: RadioButton? = null
     internal var radioButton_twoHundred: RadioButton? = null
-    internal var selectedLimit = 5
+    var selectedLimit = 5
     lateinit var cd: ConnectionDetector
+
+
+    companion object {
+        val KEY_LIMIT = "LIMIT"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        mAppHandler = AppHandler.getmInstance(applicationContext)
+        val isEnglish = mAppHandler?.getAppLanguage().equals("en", ignoreCase = true)
+        if (isEnglish) {
+            switchToCzLocale(Locale(KEY_ENGLISH, ""))
+        } else {
+            switchToCzLocale(Locale(KEY_BANGLA, ""))
+        }
+
         setContentView(R.layout.activity_air_tricket_menu)
         setToolbar(getString(R.string.home_eticket_air))
-        btSerach.setOnClickListener(this)
+        btViewTricket.setOnClickListener(this)
         btCencel.setOnClickListener(this)
         btTransationLog.setOnClickListener(this)
 
-        btBooking.setOnClickListener(this)
 
         cd = ConnectionDetector(AppController.getContext())
         mConstraintLayout = findViewById(R.id.constraintLayoutBookingList)
         mAppHandler = AppHandler.getmInstance(applicationContext)
     }
 
+    override fun onResume() {
+        super.onResume()
+        selectedLimit = 5
+    }
+
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.btSerach -> {
+            R.id.btViewTricket -> {
                 startActivity(Intent(applicationContext, AirTicketMainActivity::class.java))
             }
 
@@ -72,57 +86,24 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
             }
 
             R.id.btTransationLog -> {
-                showLimitPrompt()
-//                startActivity(Intent(applicationContext, TransactionLogActivity::class.java))
+                showLimitPrompt(TRX_TAG)
+
             }
 
             R.id.btBooking -> {
-                submitBookingListRequest(10, BOOKING_TAG)
+
+                showLimitPrompt(BOOKING_TAG)
+
+
             }
         }
     }
 
-    private fun submitBookingListRequest(limit: Int, tag: String) {
-        showProgressDialog()
-
-//        val username = mAppHandler!!.imeiNo
-        val username = "cwntcl"
-
-        Log.e("logTag", username + " " + limit)
-
-        val responseBodyCall = ApiUtils.getAPIService().callAirBookingListSearch(username, limit)
-
-        responseBodyCall.enqueue(object : Callback<BookingList> {
-            override fun onResponse(call: Call<BookingList>, response: Response<BookingList>) {
-                dismissProgressDialog()
-
-                if (response.body()!!.status.compareTo(200) == 0) {
-                    AppStorageBox.put(applicationContext, AppStorageBox.Key.AIRTICKET_BOOKING_RESPONSE, response.body())
-
-                    val intent = Intent(application, BookingMainActivity::class.java)
-                    intent.putExtra("tag", tag)
-                    startActivity(intent)
-                } else {
-                    showReposeUI(response.body()!!)
-                }
-            }
-
-            override fun onFailure(call: Call<BookingList>, t: Throwable) {
-                dismissProgressDialog()
-                Log.d(KEY_TAG, "onFailure:")
-                val snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG)
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"))
-                val snackBarView = snackbar.view
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))
-                snackbar.show()
-            }
-        })
-    }
 
     private fun showReposeUI(response: BookingList) {
         val builder = AlertDialog.Builder(this@AirTicketMenuActivity)
         builder.setTitle("Result")
-        builder.setMessage(response.getMessage())
+        builder.setMessage(response.message)
         builder.setPositiveButton(R.string.okay_btn) { dialogInterface, id ->
             dialogInterface.dismiss()
 //            onBackPressed()
@@ -132,9 +113,14 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
 
     }
 
-    private fun showLimitPrompt() {
+    private fun showLimitPrompt(tag: String) {
         val dialog = AppCompatDialog(this)
-        dialog.setTitle(R.string.log_limit_title_msg)
+        if (tag.equals(BOOKING_TAG)) {
+            dialog.setTitle(R.string.book)
+        } else if (tag.equals(TRX_TAG)) {
+            dialog.setTitle(R.string.booking_log_limit_title_msg)
+        }
+
         dialog.setContentView(R.layout.dialog_trx_limit)
 
         val btn_okay = dialog.findViewById<Button>(R.id.buttonOk)
@@ -157,15 +143,21 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
         assert(btn_okay != null)
         btn_okay!!.setOnClickListener {
             dialog.dismiss()
-            if (cd.isConnectingToInternet()) {
-                submitBookingListRequest(selectedLimit, TRX_TAG)
+            if (isInternetConnection) {
+//                if (tag.equals(BOOKING_TAG)) {
+//                    val intent = Intent(application, BookingStatusActivity::class.java)
+//                    intent.putExtra(KEY_LIMIT, selectedLimit)
+//                    startActivity(intent)
+//                } else if (tag.equals(TRX_TAG)) {
+                val intent = Intent(application, AirThicketTranslationLogActivity::class.java)
+                intent.putExtra(KEY_LIMIT, selectedLimit)
+                startActivity(intent)
+//                }
             } else {
-                val snackbar = Snackbar.make(mConstraintLayout, resources.getString(R.string.connection_error_msg), Snackbar.LENGTH_LONG)
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"))
-                val snackBarView = snackbar.view
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))
-                snackbar.show()
+                showNoInternetConnectionFound()
             }
+
+
         }
         assert(btn_cancel != null)
         btn_cancel!!.setOnClickListener { dialog.dismiss() }
@@ -224,5 +216,18 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
                 radioButton_hundred?.setChecked(false)
             }
         }
+    }
+
+    override fun onBackPressed() {
+
+        val isEnglish = mAppHandler?.getAppLanguage().equals("en", ignoreCase = true)
+        if (isEnglish) {
+            switchToCzLocale(Locale(KEY_ENGLISH, ""))
+        } else {
+            switchToCzLocale(Locale(KEY_BANGLA, ""))
+        }
+
+
+        super.onBackPressed()
     }
 }

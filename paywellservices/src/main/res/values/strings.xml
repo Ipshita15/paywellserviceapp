@@ -363,11 +363,7 @@
         <item>November</item>
         <item>December</item>
     </string-array>
-    <string-array name="year_array">
-        <item>Select Year</item>
-        <item>2018</item>
-        <item>2019</item>
-    </string-array>
+
 
     <string-array name="sampleStrings" formatted="false">
         <item>"PayWell is an organized retail approach by CloudWell Limited, focusing on providing convenient payments and value added services to major consumer service organizations in the utility, telecoms, healthcare, financial services, transport, retail, e-commerce, gaming and public sectors in Bangladesh.\nPayWell intends to deliver payments and services through a uniquely strong combination of local shops, internet and mobile distribution channels. The company follows standard distribution architecture, where layers of channel partners are involved i.e distributor &amp; retailers in its value chain.\n\nWe are located in:\nSkill House (L-7), KA-53/2, Shahajadpur, Gulshan, Dhaka-1212.\nPhone: 09666773333\nemail: contact@cloudwell.co"</item>
@@ -604,24 +600,20 @@
     <string name="no_search_results">No search results</string>
     <string name="search_again">Search again</string>
     <string name="search">Search</string>
-    <string name="cancel">Booking cancellation</string>
-    <string name="transaction_log">Transaction Log</string>
+    <string name="cancel">Booking Cancellation</string>
+    <string name="transaction_log">Booking Log</string>
     <string name="action_search">Serach</string>
     <string name="ettitle_booking_and_review">Review and Book</string>
     <string name="baggage_policy_details"><![CDATA[Baggage & Policy Details]]></string>
-    <string name="refundable"> Is refundable</string>
+    <string name="refundable">Refundable</string>
     <string name="non_refundable">No Refundable</string>
     <string name="passport_mandatory">Passport Mandatory</string>
     <string name="passport_not_mandatory">Passport not mandatory</string>
-    <string name="title_activity_baggage_and_policies_actiivty">Pollicies &amp;  Fares</string>
+    <string name="title_activity_baggage_and_policies_actiivty">Air Rules &amp; Fare</string>
     <string name="title_booking_and_review">Review and Book</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="tab_text_3">Tab 3</string>
-    <string name="action_settings">Settings</string>
-    <string name="section_format">Hello World from section: %1$d</string>
-    <string name="fares_information">Fares information</string>
-    <string name="roles">Roles</string>
+    <string name="fares_information">Fare Information</string>
+    <string name="fares">Fare</string>
+    <string name="roles">Air Rules</string>
     <string name="title_flightDetails2">Review page 2</string>
     <string name="title_passenger_list">Passenger Info</string>
     <string name="title_add_passenger">Add Passenger</string>
@@ -644,16 +636,15 @@
     <string name="book">Booking Status</string>
     <string name="passenger_deleted_message">Passenger info cannot be recovered once deleted. Are you sure you want to delete?</string>
     <string name="ok">OK</string>
-    <string name="cencel">CANCEL</string>
+    <string name="cencel">Cancel</string>
     <string name="title_all_summary">All Summary</string>
-    <string name="toast_image_intent_null">Image Intnet Null</string>
     <string name="lbl_take_camera_picture">Camara</string>
     <string name="lbl_choose_from_gallery">Gallery</string>
     <string name="lbl_set_profile_photo"/>
     <string name="please_add_id_info_for_this_travaler">Please add ID info for this passenger</string>
     <string name="tile_cencel_booking">Cancel Booking</string>
     <string name="tile_cencel_transaction_log">Transaction Log</string>
-    <string name="city">City</string>
+    <string name="airport_search_hit">Airport name or code or country name </string>
     <string name="from">From</string>
     <string name="to">To</string>
     <string name="mr">Mr.</string>
@@ -662,10 +653,10 @@
     <string name="miss">Miss</string>
     <string name="name_title">Title</string>
     <string name="passenger_type">Passenger type *</string>
-    <string name="adult">adult</string>
-    <string name="child">child</string>
+    <string name="adult">Adult</string>
+    <string name="child">Child</string>
     <string name="infant">Infant</string>
-    <string name="kg_per_adult">KG per adult ticket</string>
+    <string name="kg_per_adult">per adult ticket</string>
     <string name="economy_class">Economy Class: </string>
     <string name="baggage">Baggage :</string>
     <string name="n_a">N/A</string>
@@ -690,8 +681,8 @@
     <string name="economy">Economy</string>
     <string name="passengers">Passengers</string>
     <string name="search_text">Search</string>
-    <string name="airline_code">Airline code: </string>
-    <string name="airless_name">Airless name: </string>
+    <string name="airline_code">Airlines code: </string>
+    <string name="airless_name">Airlines Name: </string>
     <string name="flight_number">Flight number: </string>
     <string name="booking_class">Booking Class: </string>
     <string name="cabin_class">Cabin class :</string>
@@ -719,11 +710,10 @@
     <string name="please_select_arrival_airport">Please select arrival airport</string>
     <string name="please_select_depart_date">Please select depart date</string>
     <string name="total_fare_text">Total Fare</string>
-    <string name="depart_time_">Depart Time:</string>
+    <string name="depart_time_">Departure Time: </string>
     <string name="one_way_menu_title">One-way</string>
     <string name="round_trip_menu_title">Round-trip</string>
     <string name="multi_city_menu_title">Multi-City</string>
-    <string name="indian_menu_title">Indian</string>
     <string name="search_flights">Search Flights</string>
     <string name="return_text">Return</string>
     <string name="airport">Airport</string>
@@ -732,12 +722,12 @@
     <string name="price_details">Price Details</string>
     <string name="rules">Rules:</string>
     <string name="extra_serviex">Extra Services</string>
-    <string name="base_fare">Base Fare:</string>
-    <string name="tax">Tax:</string>
+    <string name="base_fare">Base Fare</string>
+    <string name="tax">Tax</string>
     <string name="currency">Currency</string>
     <string name="othercharges">Other Charges</string>
     <string name="discount">Discount</string>
-    <string name="paxtype">PaxType</string>
+    <string name="paxtype">Pax Type</string>
     <string name="passenger_count">Passenger Count</string>
     <string name="service_fee">Service Fee</string>
     <string name="book_text">Book</string>
@@ -746,12 +736,58 @@
     <string name="please_enter_the_passenger_">Please enter the passenger\'s name exactly as it appears on their ID. Modifications after submission are often not permitted or may incur an additional fee.</string>
     <string name="lead_passenger">Lead Passenger</string>
     <string name="add_edit">Add/Edit</string>
-    <string name="flight_information">ফ্লাইট তথ্য</string>
+    <string name="flight_information">Flight Information</string>
     <string name="add_passenger">Add passenger</string>
-    <string name="national_id">National ID</string>
-    <string name="booking_now">Booking Now</string>
+    <string name="national_id">National ID Or Student ID</string>
+    <string name="booking_now">Book Now</string>
     <string name="ticket_booking">Ticket booking</string>
-    <string name="booking_id">Booking ID</string>
+    <string name="booking_id">Booking ID: </string>
     <string name="ticket_status">Ticket status :</string>
+    <string name="please_seleted_a_option">please select a option</string>
+    <string name="view_tricket">View Ticket</string>
+    <string name="title_ticket_viewer">Ticket View</string>
+    <string name="please_try_again">Please try again</string>
+    <string name="send_email">Send Email</string>
+    <string name="title_email_list">Email List</string>
+    <string name="hit_email">Email</string>
+    <string name="email_address_already_exists">Email address already exists</string>
+    <string name="please_select_atleast_one_email_address">Please select atleast one email address</string>
+    <string name="message">Message</string>
+    <string name="indian_menu_title">Indian</string>
+    <string name="action_settings">action</string>
+    <string name="booking_instructions_for_children_infants">Booking instructions for children/infants</string>
+    <string name="earnings">Earnings</string>
+    <string name="instant_ticketing">Instant Ticketing</string>
+    <string name="issue_ticket">Issue Ticket</string>
+    <string name="tricking">Issue Ticket</string>
+    <string name="new_ticket_prices">New prices Tk.</string>
+    <string name="old_ticket_prices">Old prices Tk.</string>
+    <string name="outbound">Outbound</string>
+    <string name="inbound">Inbound</string>
+    <string name="flight">Flight</string>
+    <string name="cancel_ticket">Cancel Ticket</string>
+    <string name="cancellation_fee">Cancellation fee:</string>
+    <string name="passport_expiry_date">Passport Expiry Date</string>
+
+    <string name="Passport_number_mandatory">Passport number mandatory</string>
+    <string name="passport_expiry_date_mandatory">Passport expiry date mandatory</string>
+    <string name="passport_nationality">Passport nationality</string>
+    <string name="passport_nationality_mannotory">Passport Nationality</string>
+    <string name="back_to_search">Back To Search</string>
+    <string name="please_search_for_another_flight">Please search for another flight</string>
+    <string name="date_of_birth">Date Of Birth *</string>
+    <string name="total_amount">Total Amount</string>
+    <string name="amount">Amount</string>
+    <string name="booking_log_limit_title_msg">Booking Log Limit</string>
+    <string name="amount_optional">Amount(optional)</string>
+    <string name="passport_image_mandatory">passport image mandatory</string>
+    <string name="visa_image_mandatory">Visa image mandatory</string>
+    <string name="titel_reschedule">Reschedule</string>
+    <string name="booking_info">Booking Info</string>
+    <string name="ticket_cancel">Ticket Cancel</string>
+    <string name="reissue_reschedule">Reissue/Reschedule</string>
+    <string name="title_reissue">Tricket Reissue</string>
+    <string name="reschedule">Reschedule</string>
+
 
 </resources>

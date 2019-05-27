@@ -8,23 +8,22 @@ import android.support.design.widget.BottomSheetBehavior
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
 import android.view.View
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.AllSummaryActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.BaggageAndPoliciesActiivty
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.FlightFareDialogFragment
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Fare
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.adapter.AdapterForPassengers
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.viewmodel.FlightDetails2ViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.AddPassengerActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerList.PassengerListActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.serach.model.RequestAirSearch
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
+import com.cloudwell.paywell.services.utils.CalculationHelper
 import com.cloudwell.paywell.services.utils.RecyclerItemClickListener
 import kotlinx.android.synthetic.main.contant_flight_details_2.*
 import kotlinx.android.synthetic.main.review_bottom_sheet.*
@@ -34,15 +33,14 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
 
 
     private lateinit var viewMode: FlightDetails2ViewModel
-    lateinit var touchHelper: ItemTouchHelper
     lateinit var adapterForPassengers: AdapterForPassengers
-
     lateinit var resposeAirPriceSearch: ResposeAirPriceSearch
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_flight_details_2)
-        setToolbar(getString(com.cloudwell.paywell.services.R.string.title_booking_and_review))
+        setToolbar(getString(R.string.title_booking_and_review))
 
         initializationView()
         initilizationReviewBottomSheet()
@@ -79,7 +77,9 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
         })
 
 
-        tvTotalPrice.text = resposeAirPriceSearch.data?.results?.get(0)?.totalFare.toString()
+        val totalFareDetati = resposeAirPriceSearch.data?.results?.get(0)?.fares?.let { CalculationHelper.getTotalFareDetati(it) }
+
+        tvTotalPrice.text = totalFareDetati
 
         tvTotalPrice.setOnClickListener {
 
@@ -96,32 +96,97 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
 
         viewReview.setOnClickListener {
 
-            var totalSeletedCounter = 0
-            var totalPassenger = 0
-            var passengerString = ""
-
-            val requestAirSearch = AppStorageBox.get(applicationContext, AppStorageBox.Key.REQUEST_AIR_SERACH) as RequestAirSearch
+            handleLReviewButton()
+        }
 
 
-            totalPassenger = (requestAirSearch.adultQuantity + requestAirSearch.childQuantity + requestAirSearch.infantQuantity).toInt();
+    }
+
+    private fun handleLReviewButton() {
+        var totalSeletedCounter = 0
+        var totalPassenger = 0
+        var passengerString = ""
+
+        val requestAirSearch = AppStorageBox.get(applicationContext, AppStorageBox.Key.REQUEST_AIR_SERACH) as RequestAirSearch
 
 
-            viewMode.mListMutableLiveDPassengers.value?.forEach {
-                val passengerSleted = it.isPassengerSleted
-                if (passengerSleted) {
-                    passengerString = "$passengerString +${it.id},"
-                    totalSeletedCounter = totalSeletedCounter + 1;
-                }
+        totalPassenger = (requestAirSearch.adultQuantity + requestAirSearch.childQuantity + requestAirSearch.infantQuantity).toInt();
+
+
+        viewMode.mListMutableLiveDPassengers.value?.forEach {
+            val model = it
+            val passengerSleted = model.isPassengerSleted
+            if (passengerSleted) {
+                passengerString = "$passengerString +${it.id},"
+                totalSeletedCounter = totalSeletedCounter + 1
             }
 
-            if (totalSeletedCounter == totalPassenger) {
-                AppStorageBox.put(applicationContext, AppStorageBox.Key.SELETED_PASSENGER_IDS, passengerString)
-                startActivity(Intent(applicationContext, AllSummaryActivity::class.java))
-            } else {
-                showWarringForMissMax(requestAirSearch)
+            if (!validationCheckPassportMandatory(model)) {
+                return
+            }
+
+            // check is passport mandatory and and passport and visa image have or not
+        }
+
+
+        if (totalSeletedCounter == totalPassenger) {
+            AppStorageBox.put(applicationContext, AppStorageBox.Key.SELETED_PASSENGER_IDS, passengerString)
+            startActivity(Intent(applicationContext, AllSummaryActivity::class.java))
+        } else {
+            showWarringForMissMax(requestAirSearch)
+        }
+    }
+
+    private fun validationCheckPassportMandatory(model: Passenger): Boolean {
+        if (resposeAirPriceSearch.data?.results?.get(0)?.passportMadatory == true && !model.isDefault) {
+            if (model.passportImagePath.equals("")) {
+                showDialogMesssageWithEditBoutton("You selected passenger has no passport image, Please edit your passenger information.", model)
+                return false
+            }
+            if (model.visa_content.equals("")) {
+                showDialogMesssageWithEditBoutton("You selected passenger has no VISA image, Please edit your passenger information.", model)
+                return false
+            }
+            if (model.passportExpiryDate.equals("")) {
+                showDialogMesssageWithEditBoutton("You selected passenger has no passport expiry date, Please edit your passenger information.", model)
+                return false
+            }
+            if (model.passportNumber.equals("")) {
+                showDialogMesssageWithEditBoutton("You selected passenger has no passport number, Please edit your passenger information.", model)
+                return false
+            }
+            if (model.passportNationality.equals("")) {
+                showDialogMesssageWithEditBoutton("You selected passenger has no passport nationality, Please edit your passenger information.", model)
+                return false
+            }
+        }
+        return true
+    }
+
+    fun checkValidation(): Boolean {
+        var totalSeletedCounter = 0
+        var totalPassenger = 0
+        var passengerString = ""
+
+        val requestAirSearch = AppStorageBox.get(applicationContext, AppStorageBox.Key.REQUEST_AIR_SERACH) as RequestAirSearch
+
+
+        totalPassenger = (requestAirSearch.adultQuantity + requestAirSearch.childQuantity + requestAirSearch.infantQuantity).toInt();
+
+
+        viewMode.mListMutableLiveDPassengers.value?.forEach {
+            val passengerSleted = it.isPassengerSleted
+            if (passengerSleted) {
+                passengerString = "$passengerString +${it.id},"
+                totalSeletedCounter = totalSeletedCounter + 1;
             }
         }
 
+        if (totalSeletedCounter < totalPassenger) {
+            return true
+        } else {
+            return false
+        }
 
     }
 
@@ -204,23 +269,47 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
 
                             val get1 = AppStorageBox.get(applicationContext, AppStorageBox.Key.COUNTER_PASSENGER)
                             if (get1 == null) {
-                                startActivity(Intent(applicationContext, AddPassengerActivity::class.java))
+                                val intent = Intent(applicationContext, AddPassengerActivity::class.java)
+                                intent.putExtra("isValidation", checkValidation())
+                                startActivity(intent)
                             } else {
-                                startActivity(Intent(applicationContext, PassengerListActivity::class.java))
+                                val intent = Intent(applicationContext, PassengerListActivity::class.java)
+                                intent.putExtra("isValidation", checkValidation())
+                                startActivity(intent)
                             }
                         } else {
 
-                            if (get.isPassengerSleted) {
 
+                            if (get.isPassengerSleted) {
                                 get.isPassengerSleted = false
 
+                                viewMode.updatePassenger(get)
+                                viewMode.mListMutableLiveDPassengers.value?.set(position, get)
+                                adapterForPassengers.notifyDataSetChanged()
+
+                                return
+
+
                             } else {
-                                get.isPassengerSleted = true
+
+                                val checkValidation = checkValidation()
+                                if (!checkValidation) {
+                                    val requestAirSearch = AppStorageBox.get(applicationContext, AppStorageBox.Key.REQUEST_AIR_SERACH) as RequestAirSearch
+                                    showWarringForMissMax(requestAirSearch)
+                                    return
+                                }
+
                             }
 
+                            //validationCheckPassportMandatory
+                            if (!validationCheckPassportMandatory(get)) {
+                                return
+                            }
+
+
+                            get.isPassengerSleted = true
+
                             viewMode.updatePassenger(get)
-
-
                             viewMode.mListMutableLiveDPassengers.value?.set(position, get)
                             adapterForPassengers.notifyDataSetChanged()
 
@@ -237,19 +326,41 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
 
     }
 
+    private fun showDialogMesssageWithEditBoutton(message: String, model: Passenger) {
+
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage(message)
+                .setCancelable(true)
+                .setPositiveButton(getString(R.string.edit), DialogInterface.OnClickListener { dialog, which ->
+                    dialog.dismiss()
+
+                    AppStorageBox.put(applicationContext, AppStorageBox.Key.AIRTRICKET_EDIT_PASSENGER, model)
+                    val intent = Intent(applicationContext, AddPassengerActivity::class.java)
+                    intent.putExtra("isEditFlag", true)
+                    startActivity(intent)
+
+                })
+
+
+        builder.show()
+    }
+
 
     private fun initializationView() {
         try {
             resposeAirPriceSearch = AppStorageBox.get(applicationContext, AppStorageBox.Key.ResposeAirPriceSearch) as ResposeAirPriceSearch
 
-            val shortDepartArriveTime = AppStorageBox.get(applicationContext, AppStorageBox.Key.ShortDepartArriveTime)
-            val orignAirportAnddestinationairportCode = AppStorageBox.get(applicationContext, AppStorageBox.Key.orignAirportAnddestinationairportCode) as String
-            val totalJourney_time = AppStorageBox.get(applicationContext, AppStorageBox.Key.totalJourney_time) as String
-            val humanReadAbleDate = AppStorageBox.get(applicationContext, AppStorageBox.Key.humanReadAbleDate) as String
+            var allAirportCodeString = ""
 
-            tvNameOfDate.text = humanReadAbleDate + " " + shortDepartArriveTime
-            tvOrginAndDestinationAirportCode.text = orignAirportAnddestinationairportCode
-            tvShortDepartArriveTime.text = totalJourney_time
+            resposeAirPriceSearch.data?.results?.get(0)?.segments?.forEach {
+                val airportCode = it.origin.airport.airportCode
+                val airportCode1 = it.destination.airport.airportCode
+
+                allAirportCodeString = allAirportCodeString + "" + airportCode + " - " + airportCode1 + "\n"
+            }
+
+            tvNameOfDate.text = allAirportCodeString.trim()
+
 
         } catch (e: Exception) {
 
@@ -258,15 +369,7 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
 
         tvPoliciesAndBaggageAllowance.setOnClickListener {
 
-            val get = resposeAirPriceSearch.data?.results?.get(0)?.fares?.get(0) as Fare
-//            var get = Fare()
-//            get.baseFare = 34344343;
-//            get.tax = 10;
-//            get.currency = "Tk";
-//            get.discount = 33;
-//            get.otherCharges = 2000;
-//            get.serviceFee = 33;
-
+            val get = resposeAirPriceSearch.data?.results?.get(0)?.fares
 
             AppStorageBox.put(applicationContext, AppStorageBox.Key.FARE_DATA, get)
 

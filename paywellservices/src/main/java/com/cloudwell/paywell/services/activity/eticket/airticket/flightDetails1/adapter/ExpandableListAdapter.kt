@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 
 import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.utils.FormatHelper
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 6/3/19.
@@ -38,7 +39,7 @@ class ExpandableListAdapter(private val _context: Context, private val _listData
 
         val txtListChild = convertView!!.findViewById<View>(R.id.lblListItem) as TextView
 
-        txtListChild.text = childText
+        txtListChild.text = FormatHelper.formatText(childText)
         return convertView
     }
 
@@ -68,7 +69,7 @@ class ExpandableListAdapter(private val _context: Context, private val _listData
 
         val lblListHeader = convertView!!.findViewById<View>(R.id.tvQuestion) as TextView
         lblListHeader.setTypeface(null, Typeface.BOLD)
-        lblListHeader.text = headerTitle
+        lblListHeader.text = FormatHelper.formatText(headerTitle)
 
 
         val img = convertView.findViewById<ImageView>(R.id.imgDropDown)

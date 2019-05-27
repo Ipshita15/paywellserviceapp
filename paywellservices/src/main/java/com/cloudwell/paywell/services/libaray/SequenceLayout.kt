@@ -110,7 +110,7 @@ public class SequenceLayout(context: Context?, attrs: AttributeSet?, defStyleAtt
     }
 
     /**
-     * Replaces all contained [com.transferwise.sequencelayout.SequenceStep]s with those provided and bound by the adapter
+     * Replaces all contained [com.transferwise.sequencelayout.SequenceStep]s with those provided and bound by the mAdapter
      */
     public fun <T> setAdapter(adapter: SequenceAdapter<T>) where T : Any {
         stop()

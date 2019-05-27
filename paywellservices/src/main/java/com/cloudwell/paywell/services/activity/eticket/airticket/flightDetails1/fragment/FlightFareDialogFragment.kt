@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.fragment_flight_fare.view.*
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 4/3/19.
  */
-class FlightFareDialogFragment : DialogFragment() {
+class FlightFareDialogFragment() : DialogFragment() {
 
     companion object {
         var fare = Fare()
@@ -29,10 +29,10 @@ class FlightFareDialogFragment : DialogFragment() {
 
         val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_flight_fare, container, false)
         v.tvFare.text = "${fare.baseFare}"
-        v.tvRefunableForBooking.text = "${fare.tax}"
+        v.tvTax.text = "${fare.tax}"
         v.tvDepartTime.text = "${fare.currency}"
-        v.tvArrivalTIme.text = "${fare.otherCharges}"
-        v.tvAirlinesName.text = "${fare.discount}"
+        v.tvArrivalTime.text = "${fare.otherCharges}"
+        v.tvAirportName.text = "${fare.discount}"
         v.tvPaxType.text = "${fare.paxType}"
         v.tvPassengerCount.text = "${fare.passengerCount}"
         v.tvServiceFee.text = "${fare.serviceFee}"

@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -60,6 +61,7 @@ public class BankDetailsActivity extends BaseActivity {
     private ArrayAdapter<String> arrayAdapterBranchSpinner;
     private RequestRefillBalance mRequestRefillBalance;
     private BranchData responseBranchData;
+    private EditText etAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +69,7 @@ public class BankDetailsActivity extends BaseActivity {
         setContentView(R.layout.activity_bank_details);
 
         assert getSupportActionBar() != null;
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_refill_bank);
-        }
+
 
         mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mCd = new ConnectionDetector(AppController.getContext());
@@ -81,6 +80,12 @@ public class BankDetailsActivity extends BaseActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             mRequestRefillBalance.setmBankId("" + bundle.getString("bankId"));
+            String bankName = bundle.getString("bankName");
+
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setTitle(bankName);
+            }
         }
 
         initializeData();
@@ -97,22 +102,45 @@ public class BankDetailsActivity extends BaseActivity {
         mBtnUpload = findViewById(R.id.btn_upload);
 
         TextView textViewAccountNum = findViewById(R.id.textViewAccountNo);
+        TextView textBranchName = findViewById(R.id.tvBranchName);
+        TextView textAccountName = findViewById(R.id.tvAccountName);
+        etAmount = findViewById(R.id.etAmount);
+
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             ((TextView) mConstraintLayout.findViewById(R.id.textViewAccountNo)).setTypeface(AppController.getInstance().getOxygenLightFont());
             ((TextView) mConstraintLayout.findViewById(R.id.textViewDistrict)).setTypeface(AppController.getInstance().getOxygenLightFont());
             ((TextView) mConstraintLayout.findViewById(R.id.textViewBranch)).setTypeface(AppController.getInstance().getOxygenLightFont());
             ((Button) mConstraintLayout.findViewById(R.id.btn_upload)).setTypeface(AppController.getInstance().getOxygenLightFont());
+
+            textViewAccountNum.setTypeface(AppController.getInstance().getOxygenLightFont());
+            textBranchName.setTypeface(AppController.getInstance().getOxygenLightFont());
+            textAccountName.setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
             ((TextView) mConstraintLayout.findViewById(R.id.textViewAccountNo)).setTypeface(AppController.getInstance().getAponaLohitFont());
             ((TextView) mConstraintLayout.findViewById(R.id.textViewDistrict)).setTypeface(AppController.getInstance().getAponaLohitFont());
             ((TextView) mConstraintLayout.findViewById(R.id.textViewBranch)).setTypeface(AppController.getInstance().getAponaLohitFont());
             ((Button) mConstraintLayout.findViewById(R.id.btn_upload)).setTypeface(AppController.getInstance().getAponaLohitFont());
+
+            textViewAccountNum.setTypeface(AppController.getInstance().getAponaLohitFont());
+            textBranchName.setTypeface(AppController.getInstance().getAponaLohitFont());
+            textAccountName.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
 
+
         try {
+
+            String branchName = "Branch Name: " + responseDistrictData.getBankInfo().getBranchName();
+            textBranchName.setText(branchName);
+
+            String accountName = "Account Name: " + responseDistrictData.getBankInfo().getAccountName();
+            textAccountName.setText(accountName);
+
+
             String text = "Account No: " + responseDistrictData.getBankInfo().getAccountNumber();
             textViewAccountNum.setText(text);
+
+
             district_array = new ArrayList<>();
             branch_array = new ArrayList<>();
             for (int i = 0; i < responseDistrictData.getDistrictData().size(); i++) {
@@ -364,7 +392,7 @@ public class BankDetailsActivity extends BaseActivity {
         Call<RefillRequestData> responseBodyCall = ApiUtils.getAPIService().callBalanceRefillAPI(mRequestRefillBalance.getmUsername(),
                 mRequestRefillBalance.getmBankId(), mRequestRefillBalance.getmDistrictId(),
                 mRequestRefillBalance.getmBranchId(),
-                mRequestRefillBalance.getmImagePath());
+                mRequestRefillBalance.getmImagePath(), etAmount.getText().toString());
 
         responseBodyCall.enqueue(new Callback<RefillRequestData>() {
             @Override

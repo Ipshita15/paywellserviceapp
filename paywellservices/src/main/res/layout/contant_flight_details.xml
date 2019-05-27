@@ -72,17 +72,6 @@
                 app:layout_constraintTop_toTopOf="@+id/tvDepart2"
                 tools:text="Thu, Jan 24"/>
 
-            <View
-                android:id="@+id/view"
-                android:layout_width="1dp"
-                android:layout_height="12dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
-                android:background="#c0c0c0"
-                app:layout_constraintBottom_toBottomOf="@+id/tvNameOfDate"
-                app:layout_constraintStart_toEndOf="@+id/tvNameOfDate"
-                app:layout_constraintTop_toTopOf="@+id/tvNameOfDate"/>
-
             <TextView
                 android:id="@+id/tvOrginAndDestinationAirportCode"
                 android:layout_width="wrap_content"
@@ -103,6 +92,7 @@
                 android:background="#c0c0c0"
                 app:layout_constraintBottom_toBottomOf="@+id/tvOrginAndDestinationAirportCode"
                 app:layout_constraintStart_toEndOf="@+id/tvOrginAndDestinationAirportCode"
+                android:layout_marginLeft="4dp"
                 app:layout_constraintTop_toTopOf="@+id/tvOrginAndDestinationAirportCode"/>
 
             <TextView
@@ -126,16 +116,13 @@
                 android:id="@+id/tvTotalDepartTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:textColor="@color/black33333"
                 android:textStyle="bold"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/tvNameOfDate"
-                app:layout_constraintEnd_toStartOf="@+id/ivUpDown"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/view"
+                app:layout_constraintStart_toEndOf="@+id/tvNameOfDate"
                 app:layout_constraintTop_toTopOf="@+id/tvNameOfDate"
                 tools:text="1H55m"/>
 
@@ -236,61 +223,53 @@
 
                 <ImageView
                     android:id="@+id/imageView7"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvTotalFair"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvPriceDetails"
+                    app:layout_constraintTop_toTopOf="@+id/tvTotalFair"
                     app:srcCompat="@drawable/ic_taka_small"/>
 
                 <TextView
                     android:id="@+id/tvTotalFair"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:textColor="#189d49"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView7"
-                    app:layout_constraintStart_toEndOf="@+id/imageView7"
-                    app:layout_constraintTop_toTopOf="@+id/imageView7"
-                    tools:text="2000"/>
-
-                <TextView
-                    android:id="@+id/tvPersonText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_marginLeft="4dp"
-                    android:text="/person"
-                    android:textColor="@color/black33333"
-                    app:layout_constraintStart_toEndOf="@+id/tvTotalFair"
-                    app:layout_constraintTop_toTopOf="@+id/tvTotalFair"/>
+                    android:layout_marginTop="4dp"
+                    android:textColor="#189d49"
+                    android:textSize="22sp"
+                    app:layout_constraintBottom_toTopOf="@+id/tvClass"
+                    app:layout_constraintStart_toEndOf="@+id/imageView7"
+                    app:layout_constraintTop_toBottomOf="@+id/tvPriceDetails"
+                    tools:text="2000"/>
 
                 <TextView
                     android:id="@+id/tvClass"
                     android:layout_width="wrap_content"
-                    android:layout_height="22dp"
+                    android:layout_height="22sp"
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:textColor="@color/black33333"
+                    android:layout_marginTop="4dp"
 
+                    android:textColor="@color/black33333"
                     android:textSize="16dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView7"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTotalFair"
                     tools:text="Economy Class"/>
 
                 <ImageView
                     android:id="@+id/ivFareInfo"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/tvPersonText"
-                    app:layout_constraintStart_toEndOf="@+id/tvPersonText"
-                    app:layout_constraintTop_toTopOf="@+id/tvPersonText"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvTotalFair"
+                    app:layout_constraintStart_toEndOf="@+id/tvTotalFair"
+                    app:layout_constraintTop_toTopOf="@+id/tvTotalFair"
+                    app:layout_constraintVertical_bias="0.545"
                     app:srcCompat="@drawable/ic_prices_details"/>
 
                 <TextView

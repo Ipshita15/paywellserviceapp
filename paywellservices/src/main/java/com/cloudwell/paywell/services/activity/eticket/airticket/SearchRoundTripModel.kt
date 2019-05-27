@@ -15,35 +15,35 @@ class SearchRoundTripModel {
     }
 
     fun getFromName(): String {
-        return from
+        return this.from
     }
 
     fun setFromName(name: String) {
-        from = name
+        this.from = name
     }
 
     fun getFromPortName(): String {
-        return fromPort
+        return this.fromPort
     }
 
     fun setFromPortName(portName: String) {
-        fromPort = portName
+        this.fromPort = portName
     }
 
     fun getToName(): String {
-        return to
+        return this.to
     }
 
     fun setToName(name: String) {
-        to = name
+        this.to = name
     }
 
     fun getToPortName(): String {
-        return toPort
+        return this.toPort
     }
 
     fun setToPortName(portName: String) {
-        toPort = portName
+        this.toPort = portName
     }
 
 
