@@ -1,10 +1,9 @@
-
 package com.cloudwell.paywell.services.app.model;
 
 import com.google.gson.annotations.SerializedName;
 
 
-public class APIResposeGenerateToken {
+public class Token {
 
     @SerializedName("ack_timestamp")
     private String mAckTimestamp;
@@ -46,6 +45,5 @@ public class APIResposeGenerateToken {
     public void setTokenType(String tokenType) {
         mTokenType = tokenType;
     }
-
 
 }

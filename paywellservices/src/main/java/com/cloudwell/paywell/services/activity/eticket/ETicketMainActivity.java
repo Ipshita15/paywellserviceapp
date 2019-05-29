@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketMenuActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
@@ -87,9 +88,9 @@ public class ETicketMainActivity extends AppCompatActivity {
 
         switch (v.getId()) {
             case R.id.homeBtnBusTicket:
-//                startActivity(new Intent(this, BusMainActivity.class));
+                startActivity(new Intent(this, BusTicketMenuActivity.class));
 //                finish();
-                showCommingSoonMesage();
+//                showCommingSoonMesage();
                 break;
             case R.id.homeBtnTrainTicket:
 //                startActivity(new Intent(this, TrainMainActivity.class));

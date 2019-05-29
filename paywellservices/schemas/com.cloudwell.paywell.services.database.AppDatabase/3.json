@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "c9db3bf46d2fc4528fb1a47b2633edf9",
+    "identityHash": "df1607effb0bb894910e7b3447a2ea09",
     "entities": [
       {
         "tableName": "FavoriteMenu",
@@ -373,11 +373,43 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "Bus",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `busid` TEXT NOT NULL, `busname` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "Id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "busid",
+            "columnName": "busid",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "busname",
+            "columnName": "busname",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "Id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"c9db3bf46d2fc4528fb1a47b2633edf9\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"df1607effb0bb894910e7b3447a2ea09\")"
     ]
   }
 }

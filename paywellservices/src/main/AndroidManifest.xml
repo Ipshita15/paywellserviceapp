@@ -20,8 +20,6 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
-
-
     <uses-permission
         android:name="android.permission.RECEIVE_SMS"
         tools:node="remove"/>
@@ -49,11 +47,9 @@
     <uses-permission
         android:name="android.permission.PROCESS_OUTGOING_CALLS"
         tools:node="remove"/>
-
     <uses-permission
         android:name="android.permission.CALL_PHONE"
         tools:node="remove"/>
-
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -79,7 +75,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
-
+        <activity android:name=".activity.eticket.busticketNew.search.BusSearchActivity">
+        </activity>
 
         <uses-library
             android:name="com.google.android.maps"
@@ -1223,30 +1220,33 @@
         <activity
             android:name=".activity.eticket.airticket.transationLog.viewBookingInfo.ViewBookingInfoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
-
         <activity
             android:name=".activity.eticket.airticket.ticketCencel.TricketCencelActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
-
         <activity
             android:name=".activity.eticket.airticket.reIssueTicket.ReIssueTicketActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
-
-
         <activity
             android:name=".activity.eticket.airticket.reIssueTicket.editReissuePassengerActivity.EditReissuePassengerActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activity.eticket.busticketNew.BusTicketMenuActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN"/>-->
+            <!--<action android:name="android.intent.action.VIEW"/>-->
+
+            <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
         </activity>
 
         <provider

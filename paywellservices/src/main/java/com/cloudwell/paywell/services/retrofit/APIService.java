@@ -31,6 +31,7 @@ import com.google.gson.JsonObject;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
@@ -49,7 +50,7 @@ import retrofit2.http.Url;
 public interface APIService {
 
 
-    @POST("paywellapi/PaywellAuthentication/GenerateToken")
+    @POST()
     @FormUrlEncoded
     Call<APIResposeGenerateToken> callGenerateToken(@Url String ur, @Header("Authorization") String AuthorizationKey, @FieldMap Map<String, String> params);
 
@@ -212,6 +213,11 @@ public interface APIService {
     @POST("PaywelltransactionHaltrip/airTicketIssue")
     @Multipart
     Call<ResIssueTicket> callIssueTicketAPI(@Part("username") String username, @Part("password") String password, @Part("BookingID") String BookingID, @Part("IsAcceptedPriceChangeandIssueTicket") boolean ssAcceptedPriceChangeandIssueTicket);
+
+
+    @POST("paywellapi/index.php/PaywellParibahanService/getBusListData")
+    @FormUrlEncoded
+    Call<ResponseBody> getBusListData(@Field("username") String username, @Field("skey") String skey);
 
 
 }
