@@ -50,4 +50,13 @@ public class BusTricketBaseActivity extends MVVMBaseActivity {
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+
+    }
+
+
 }
