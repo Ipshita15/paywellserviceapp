@@ -3,8 +3,10 @@ package com.cloudwell.paywell.services.database;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
+import android.arch.persistence.room.Query;
 
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Bus;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BusLocalDB;
 
 import java.util.List;
 
@@ -19,4 +21,9 @@ public interface BusTicketDab {
     long[] insert(List<Bus> passenger);
 
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    long[] insertLocalBus(List<BusLocalDB> busLocalDBS);
+
+    @Query("DELETE FROM BusLocalDB")
+    public void clearData();
 }

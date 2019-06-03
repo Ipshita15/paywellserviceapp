@@ -12,6 +12,10 @@ public class ApiUtils {
     private static final String BASE_URL = AllUrl.BASE_URL;
     private static final String BASE_URL_PHP7 = AllUrl.BASE_URL_PHP_7;
 
+
+    public static final String KEY_SKEY = "fLdjl3VX_OPOx6zvadOGuCvq2Ay0civ6v-HUQeiLVRg";
+
+
     public static APIService getAPIService() {
         return RetrofitClient.INSTANCE.getClient(BASE_URL).create(APIService.class);
     }

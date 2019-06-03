@@ -30,9 +30,10 @@ class TokenAuthenticator : Authenticator {
 
             val mAppHandler = AppHandler.getmInstance(AppController.getContext())
 
+
             val params = HashMap<String, String>()
-            params["sKey"] = "fLdjl3VX_OPOx6zvadOGuCvq2Ay0civ6v-HUQeiLVRg"
-            params["username"] = "" + mAppHandler.rid
+            params["sKey"] = ApiUtils.KEY_SKEY
+            params["username"] = "" + mAppHandler.imeiNo
             params["retailer_code"] = "" + mAppHandler.rid
 
 

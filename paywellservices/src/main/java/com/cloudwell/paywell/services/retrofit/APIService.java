@@ -15,6 +15,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.airRules.ResposeAirRules;
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.model.ResCommistionMaping;
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.model.ResInvoideEmailAPI;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResGetBusListData;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationReadAPI;
 import com.cloudwell.paywell.services.activity.refill.model.BranchData;
@@ -217,7 +218,12 @@ public interface APIService {
 
     @POST("paywellapi/index.php/PaywellParibahanService/getBusListData")
     @FormUrlEncoded
-    Call<ResponseBody> getBusListData(@Field("username") String username, @Field("skey") String skey);
+    Call<ResGetBusListData> getBusListData(@Field("username") String username, @Field("skey") String skey);
+
+
+    @POST("paywellapi/index.php/PaywellParibahanService/getBusSchedule?")
+    @FormUrlEncoded
+    Call<ResponseBody> getBusSchedule(@Field("username") String username, @Field("transport_id") String transport_id, @Field("skey") String skey, @Field("accessKey") String accessKey);
 
 
 }
