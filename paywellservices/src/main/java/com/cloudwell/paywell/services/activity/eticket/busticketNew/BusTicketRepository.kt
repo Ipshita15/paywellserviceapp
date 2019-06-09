@@ -10,7 +10,7 @@ import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.database.DatabaseClient
 import com.cloudwell.paywell.services.retrofit.ApiUtils
-import com.orhanobut.logger.Logger
+import com.cloudwell.paywell.services.utils.StringUtility
 import okhttp3.ResponseBody
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -178,13 +178,33 @@ class BusTicketRepository(private val mContext: Context) {
                 val fromKey = it
                 val schedules = to.getJSONObject(fromKey).getJSONObject("schedules")
                 schedules.keys().forEach {
-                    val schedulesKey = it
+                    val scheduleId = it
 
-                    val model = schedules.getJSONObject(schedulesKey)
+                    val model = schedules.getJSONObject(scheduleId)
                     val schedule_time = model.getString("schedule_time")
                     val bus_id = model.getString("bus_id")
+                    val coach_no = model.getString("coach_no")
+                    val schedule_type = model.getString("schedule_type")
+                    val validity_date = model.getString("validity_date")
 
-                    Logger.v("", "")
+
+                    val priceObject = model.getJSONObject("ticket_price")
+                    val dateKey = priceObject.keys()
+                    dateKey.forEach {
+                        val ticket_price = priceObject.get(it)
+                    }
+
+                    var allowedSeatStoreString = ""
+                    val allowedSeatNumbersObject = model.getJSONObject("allowed_seat_numbers")
+                    val allowedSeatNumbersObjectKeys = allowedSeatNumbersObject.keys()
+                    allowedSeatNumbersObjectKeys.forEach {
+                        val seatNumber = it
+                        val seatName = allowedSeatNumbersObject.get(seatNumber)
+                        allowedSeatStoreString = allowedSeatStoreString + seatNumber + ":" + seatName + ","
+
+                    }
+                    allowedSeatStoreString = StringUtility.removeLastChar(allowedSeatStoreString)
+
 
                 }
 
