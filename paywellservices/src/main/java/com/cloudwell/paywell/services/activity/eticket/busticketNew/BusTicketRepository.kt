@@ -3,9 +3,7 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew
 import android.arch.lifecycle.MutableLiveData
 import android.content.Context
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.Airport
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Bus
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BusLocalDB
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResGetBusListData
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.database.DatabaseClient
@@ -98,10 +96,13 @@ class BusTicketRepository(private val mContext: Context) {
 
         doAsync {
 
-            val inseredIds = DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().clearData()
+            val inseredIds = DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().clearLocalBusDB()
+            DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().clearSchedule()
+            DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().clearTripScheduleInfo()
+            DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().clearBoothInfo()
 
             uiThread {
-                insertBusScdulaerData(string)
+                insertBusScullerData(string)
 
             }
         }
@@ -110,7 +111,7 @@ class BusTicketRepository(private val mContext: Context) {
     }
 
 
-    private fun insertBusScdulaerData(string: String) {
+    private fun insertBusScullerData(string: String) {
         val jsonObject = JSONObject(string)
         val dataObject = jsonObject.getJSONObject("data")
         val busInfoObject = dataObject.getJSONObject("bus_info")
@@ -166,7 +167,15 @@ class BusTicketRepository(private val mContext: Context) {
             }
         }
 
+
 //////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        val allScheduleData = mutableListOf<Schedule>()
+        val allTripScheduleInfo = mutableListOf<TripScheduleInfo>()
+        val allBoothInfo = mutableListOf<BoothInfo>()
+
+
         val keys1 = scheduleInfoObject.keys()
         keys1.forEach {
             val toKey = it
@@ -180,6 +189,11 @@ class BusTicketRepository(private val mContext: Context) {
                 schedules.keys().forEach {
                     val scheduleId = it
 
+
+                    val tripScheduleInfo = TripScheduleInfo(toKey, fromKey, scheduleId)
+                    allTripScheduleInfo.add(tripScheduleInfo)
+
+
                     val model = schedules.getJSONObject(scheduleId)
                     val schedule_time = model.getString("schedule_time")
                     val bus_id = model.getString("bus_id")
@@ -189,9 +203,11 @@ class BusTicketRepository(private val mContext: Context) {
 
 
                     val priceObject = model.getJSONObject("ticket_price")
+
+                    var ticket_price = ""
                     val dateKey = priceObject.keys()
                     dateKey.forEach {
-                        val ticket_price = priceObject.get(it)
+                        ticket_price = "" + priceObject.get(it)
                     }
 
                     var allowedSeatStoreString = ""
@@ -206,8 +222,28 @@ class BusTicketRepository(private val mContext: Context) {
                     allowedSeatStoreString = StringUtility.removeLastChar(allowedSeatStoreString)
 
 
+                    val boothDepartureInfo = model.getJSONObject("booth_departure_info")
+                    boothDepartureInfo.keys().forEach {
+                        val boothId = it
+                        val boothObject = boothDepartureInfo.get(it) as JSONObject
+                        val boothName = boothObject.getString("booth_name")
+                        val boothDepartureTime = boothObject.getString("booth_departure_time")
+
+                        allBoothInfo.add(BoothInfo(boothId, scheduleId, boothName, boothDepartureTime))
+                    }
+
+
+                    val schedule = Schedule(scheduleId, schedule_time, bus_id, coach_no, schedule_type, validity_date, ticket_price, dateKey.toString(), allowedSeatStoreString)
+                    allScheduleData.add(schedule)
                 }
 
+
+
+                doAsync {
+                    DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().insertTripScheduleInfo(allTripScheduleInfo)
+                    DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().insertSchedule(allScheduleData)
+                    DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().insertBoothInfo(allBoothInfo)
+                }
             }
 
         }
