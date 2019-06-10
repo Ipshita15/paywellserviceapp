@@ -2,7 +2,6 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew
 
 import android.arch.lifecycle.MutableLiveData
 import android.content.Context
-import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.Airport
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
@@ -25,40 +24,36 @@ class BusTicketRepository(private val mContext: Context) {
 
     private var mAppHandler: AppHandler? = null
 
+    val isFinshedDataLoad = MutableLiveData<Boolean>()
 
-    fun getBusListData(): MutableLiveData<ResGetBusListData> {
+    fun getBusListData(): MutableLiveData<Boolean> {
         mAppHandler = AppHandler.getmInstance(mContext)
         val userName = mAppHandler!!.imeiNo
         val skey = ApiUtils.KEY_SKEY
 
-        val data = MutableLiveData<ResGetBusListData>()
-
         ApiUtils.getAPIServicePHP7().getBusListData(userName, skey).enqueue(object : Callback<ResGetBusListData> {
             override fun onResponse(call: Call<ResGetBusListData>, response: Response<ResGetBusListData>) {
                 if (response.isSuccessful) {
-//                    data.value = response.body()
                     val body = response.body()
                     body.let {
                         val accessKey = it?.accessKey
                         AppStorageBox.put(mContext, AppStorageBox.Key.ACCESS_KEY, accessKey)
 
+                        it?.data?.data?.let { it1 -> saveBuss(it1) }
 
                         getBusScheduleDate()
                     }
 
                     com.orhanobut.logger.Logger.v("" + body)
-
                 }
             }
 
             override fun onFailure(call: Call<ResGetBusListData>, t: Throwable) {
                 com.orhanobut.logger.Logger.e("" + t.message)
-                //data.value = ResGetBusListData(t)
             }
         })
-        return data
+        return isFinshedDataLoad
     }
-
 
     fun getBusScheduleDate(): MutableLiveData<ResGetBusListData> {
         mAppHandler = AppHandler.getmInstance(mContext)
@@ -73,14 +68,12 @@ class BusTicketRepository(private val mContext: Context) {
         ApiUtils.getAPIServicePHP7().getBusSchedule(userName, "37", skey, accessKey).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-//                    data.value = response.body()
                     val body = response.body()
                     body.let {
 
                         it?.string()?.let { it1 -> handleResponse(it1) }
                     }
                     com.orhanobut.logger.Logger.v("" + body)
-
                 }
             }
 
@@ -92,7 +85,6 @@ class BusTicketRepository(private val mContext: Context) {
     }
 
     private fun handleResponse(string: String) {
-
 
         doAsync {
 
@@ -248,23 +240,10 @@ class BusTicketRepository(private val mContext: Context) {
 
         }
 
-    }
-
-
-    fun getAirportBy(iac: String?): MutableLiveData<Airport> {
-        val data = MutableLiveData<Airport>()
-        doAsync {
-
-            val airportBy = DatabaseClient.getInstance(mContext).appDatabase.mAirtricketDab().getAirportBy(iac)
-
-            uiThread {
-                data.value = airportBy
-            }
-        }
-
-        return data
+        this.isFinshedDataLoad.value = true
 
     }
+
 
     fun saveBuss(Buss: List<Bus>): MutableLiveData<LongArray> {
 
@@ -272,6 +251,7 @@ class BusTicketRepository(private val mContext: Context) {
         val data = MutableLiveData<LongArray>()
         doAsync {
 
+            DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().clearBus()
             val inseredIds = DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().insert(Buss)
 
             uiThread {
@@ -282,6 +262,53 @@ class BusTicketRepository(private val mContext: Context) {
         return data
 
     }
+
+//    fun loadAPIData() {
+//
+//        mAppHandler = AppHandler.getmInstance(mContext)
+//        val userName = mAppHandler!!.imeiNo
+//        val skey = ApiUtils.KEY_SKEY
+//        var accessKey = AppStorageBox.get(mContext, AppStorageBox.Key.ACCESS_KEY) as? String
+//        if (accessKey == null) {
+//            accessKey = ""
+//        }
+//
+//        val busListDataObservable = ApiUtils.getAPIServicePHP7().getBusListData(userName, skey)
+//        val busScheduleObservable = ApiUtils.getAPIServicePHP7().getBusSchedule(userName, "37", skey, accessKey)
+//
+//        Observable.zip(busListDataObservable.subscribeOn(Schedulers.io()), busScheduleObservable.subscribeOn(Schedulers.io()), BiFunction<ResGetBusListData, ResponseBody, BusLoadData> { resGetBusListData: ResGetBusListData, responseBody: ResponseBody ->
+//
+//
+//            BusLoadData(resGetBusListData, responseBody)
+//
+//        }).subscribe(object : Observer<BusLoadData> {
+//            override fun onComplete() {
+//
+//
+//            }
+//
+//            override fun onSubscribe(d: Disposable) {
+//
+//            }
+//
+//            override fun onNext(t: BusLoadData) {
+//                if (t.responseBody.string().equals("")) {
+//                    loadAPIData()
+//                } else {
+//                    val accessKey = t.resGetBusListData.accessKey
+//                    AppStorageBox.put(mContext, AppStorageBox.Key.ACCESS_KEY, accessKey)
+//                    BusTicketRepository(mContext).saveBuss(t.resGetBusListData.data.data)
+//                    handleResponse(t.responseBody.string())
+//                }
+//            }
+//
+//            override fun onError(e: Throwable) {
+//
+//            }
+//
+//        })
+//
+//    }
 
 
 }

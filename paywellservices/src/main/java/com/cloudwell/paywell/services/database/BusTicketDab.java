@@ -24,6 +24,10 @@ public interface BusTicketDab {
     long[] insert(List<Bus> passenger);
 
 
+    @Query("DELETE FROM Bus")
+    public void clearBus();
+
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long[] insertLocalBus(List<BusLocalDB> busLocalDBS);
 

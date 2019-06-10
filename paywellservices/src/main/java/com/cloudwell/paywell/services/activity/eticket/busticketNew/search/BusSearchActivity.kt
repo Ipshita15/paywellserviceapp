@@ -14,27 +14,19 @@ class BusSearchActivity : BusTricketBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bus_search)
 
-        BusTicketRepository(this).getBusListData().observeForever {
-            val b: Boolean = it?.status == 200
-            if (b) {
-                val data = it?.data?.data
-                data?.let { it1 -> BusTicketRepository(this).saveBuss(it1) }
-            } else {
 
+//        BusTicketRepository(this).loadAPIData();
+
+
+        showProgressDialog()
+
+        BusTicketRepository(this).getBusListData().observeForever {
+
+            if (it == true) {
+                dismissProgressDialog()
             }
         }
 
-
-
-        BusTicketRepository(this).getBusListData().observeForever {
-            val b: Boolean = it?.status == 200
-            if (b) {
-                val data = it?.data?.data
-                data?.let { it1 -> BusTicketRepository(this).saveBuss(it1) }
-            } else {
-
-            }
-        }
 
     }
 
