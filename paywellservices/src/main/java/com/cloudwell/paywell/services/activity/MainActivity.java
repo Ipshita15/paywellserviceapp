@@ -912,7 +912,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             imageUrl[len] = "https://api.paywellonline.com/retailerPromotionImage/retailer_pic_" + len + ".jpg";
         }
 
-        Slider.init(new PicassoImageLoadingService());
+        String imageUpdateVersionString = mAppHandler.getDisplayPictureCount() + mAppHandler.getPictureArrayImageLink();
+
+        Slider.init(new PicassoImageLoadingService(imageUpdateVersionString));
 
         viewPager.setAdapter(new MainSliderAdapter(getApplicationContext(), imageUrl));
         viewPager.setInterval(2000);

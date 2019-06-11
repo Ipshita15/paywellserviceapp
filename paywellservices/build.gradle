@@ -214,6 +214,13 @@ dependencies {
 
     implementation 'su.j2e:rv-joiner:1.0.9'
 
+    dependencies {
+        implementation("com.github.bumptech.glide:glide:4.9.0") {
+            exclude group: "com.android.support"
+        }
+
+    }
+
 
 }
 // Add to the bottom of the file

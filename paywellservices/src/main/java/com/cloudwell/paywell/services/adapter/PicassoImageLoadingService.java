@@ -2,9 +2,9 @@ package com.cloudwell.paywell.services.adapter;
 
 import android.widget.ImageView;
 
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.ObjectKey;
+import com.cloudwell.paywell.services.app.AppController;
 
 import ss.com.bannerslider.ImageLoadingService;
 
@@ -14,42 +14,40 @@ import ss.com.bannerslider.ImageLoadingService;
  */
 
 public class PicassoImageLoadingService implements ImageLoadingService {
+    private String mImageUpdateVersionString;
 
+    public PicassoImageLoadingService(String imageUpdateVersionString) {
 
-    public PicassoImageLoadingService() {
-
+        mImageUpdateVersionString = imageUpdateVersionString;
     }
 
     @Override
     public void loadImage(String url, ImageView imageView) {
 
-        Picasso.get()
-                .load(url)
-                .fit()
-                .memoryPolicy(MemoryPolicy.NO_CACHE)
-                .networkPolicy(NetworkPolicy.NO_CACHE)
-                .into(imageView);
 
+        Glide.with(AppController.getContext())
+                .load(url)
+                .signature(new ObjectKey(mImageUpdateVersionString))
+                .into(imageView);
 
     }
 
     @Override
-    public void loadImage(int id, ImageView imageView) {
-        Picasso.get()
-                .load(id)
-                .fit()
-                .memoryPolicy(MemoryPolicy.NO_CACHE)
-                .networkPolicy(NetworkPolicy.NO_CACHE)
+    public void loadImage(int url, ImageView imageView) {
+        Glide.with(AppController.getContext())
+                .load(url)
+                .signature(new StringSignature(mImageUpdateVersionString))
                 .into(imageView);
     }
 
     @Override
     public void loadImage(String url, int placeHolder, int errorDrawable, ImageView imageView) {
-        Picasso.get()
+
+
+        Glide.with(AppController.getContext())
                 .load(url)
-                .fit()
-                .memoryPolicy(MemoryPolicy.NO_CACHE)
-                .networkPolicy(NetworkPolicy.NO_CACHE)
+                .signature(new StringSignature(mImageUpdateVersionString))
                 .into(imageView);
+
     }
 }
