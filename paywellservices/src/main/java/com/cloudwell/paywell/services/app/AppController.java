@@ -13,7 +13,6 @@ import com.cloudwell.paywell.services.utils.AppVersionUtility;
 import com.cloudwell.paywell.services.utils.MyHttpClient;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
-import com.facebook.stetho.Stetho;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.orhanobut.logger.AndroidLogAdapter;
@@ -73,8 +72,8 @@ public class AppController extends Application {
 //            refWatcher = LeakCanary.install(this);
 
 
-            Stetho.initializeWithDefaults(this);
-
+//            Stetho.initializeWithDefaults(this);
+//
 
         }
 
