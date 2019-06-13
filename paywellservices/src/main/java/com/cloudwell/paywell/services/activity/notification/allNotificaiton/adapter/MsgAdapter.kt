@@ -10,6 +10,8 @@ import android.widget.TextView
 import com.cloudwell.paywell.services.activity.notification.model.NotificationDetailMessage
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
+import org.apache.commons.lang3.StringEscapeUtils
+import org.json.JSONObject
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 14/2/19.
@@ -65,6 +67,29 @@ class MsgAdapter(private val mContext: Context, val t: List<NotificationDetailMe
             viewHolder.date!!.typeface = AppController.getInstance().aponaLohitFont
             viewHolder.msg!!.typeface = AppController.getInstance().aponaLohitFont
         }
+
+
+        var testmessage = "" + model.message
+        testmessage = StringEscapeUtils.unescapeJava(testmessage)
+        testmessage = testmessage.replace("/", "")
+        testmessage = testmessage.replace("'\'", "")
+
+        if (testmessage.contains("notification_action_type")) {
+            // air ticket flow
+            try {
+                val jsonObject = JSONObject(testmessage)
+                val notification_action_type = jsonObject.getString("notification_action_type")
+                val original_message = jsonObject.getString("original_message")
+
+                viewHolder.msg!!.text = original_message
+            } catch (e: Exception) {
+
+            }
+
+        } else {
+
+        }
+
         return convertView
     }
 
