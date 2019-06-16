@@ -3,9 +3,8 @@ package com.cloudwell.paywell.services;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
-import com.orhanobut.logger.Logger;
+import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.NotificationFullViewActivity;
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 2019-06-13.
@@ -14,14 +13,11 @@ public class ActionReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
-        Toast.makeText(context, "recieved", Toast.LENGTH_SHORT).show();
-
         String action = intent.getStringExtra("action");
-        if (action.equals("action1")) {
-            performAction1();
-        } else if (action.equals("action2")) {
-            performAction2();
+        if (action.equals("Accept")) {
+            performAction1(context);
+        } else if (action.equals("Reject")) {
+            performAction2(context);
 
         }
         //This is used to close the notification tray
@@ -29,12 +25,16 @@ public class ActionReceiver extends BroadcastReceiver {
         context.sendBroadcast(it);
     }
 
-    public void performAction1() {
-        Logger.v("performAction1");
+    public void performAction1(Context context) {
+        Intent intentActionAccept = new Intent(context, NotificationFullViewActivity.class);
+        intentActionAccept.putExtra("action", "Accept");
+        context.startActivity(intentActionAccept);
     }
 
-    public void performAction2() {
-        Logger.v("performAction2");
+    public void performAction2(Context context) {
+        Intent intentActionAccept = new Intent(context, NotificationFullViewActivity.class);
+        intentActionAccept.putExtra("action", "Reject");
+        context.startActivity(intentActionAccept);
 
     }
 }

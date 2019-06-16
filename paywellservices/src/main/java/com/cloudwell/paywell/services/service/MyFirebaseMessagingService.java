@@ -14,6 +14,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
+import com.cloudwell.paywell.services.ActionReceiver;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.NotificationFullViewActivity;
 import com.cloudwell.paywell.services.app.AppController;
@@ -292,11 +293,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         bigText.setBigContentTitle(title);
 
         //This is the intent of PendingIntent
-        Intent intentAction = new Intent(getApplicationContext(), NotificationFullViewActivity.class);
+        Intent intentActionAccept = new Intent(getApplicationContext(), ActionReceiver.class);
+        intentActionAccept.putExtra("action", "Accept");
+        PendingIntent pIntentActionAccept = PendingIntent.getBroadcast(getApplicationContext(), 1, intentActionAccept, PendingIntent.FLAG_UPDATE_CURRENT);
 
-//This is optional if you have more than one buttons and want to differentiate between two
-        intentAction.putExtra("action", "actionName");
-        PendingIntent pIntentlogin = PendingIntent.getBroadcast(getApplicationContext(), 1, intentAction, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Intent intentActionReject = new Intent(getApplicationContext(), ActionReceiver.class);
+        intentActionReject.putExtra("action", "Accept");
+        PendingIntent pIntentActionReject = PendingIntent.getBroadcast(getApplicationContext(), 1, intentActionAccept, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
@@ -308,13 +312,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent)
                 .setStyle(bigText)
-
                 .setPriority(Notification.PRIORITY_MAX);
 
-        if (isAction) {
-            builder.addAction(R.drawable.pw_notification_bar, "Accept", pIntentlogin);
-            builder.addAction(R.drawable.pw_notification_bar, "Reject", pIntentlogin);
-        }
+//        if (isAction) {
+//            builder.addAction(R.drawable.pw_notification_bar, "Accept", pIntentActionAccept);
+//            builder.addAction(R.drawable.pw_notification_bar, "Reject", pIntentActionReject);
+//
+//        }
 
         if (notificationManager != null) {
             notificationManager.notify(requestID, builder.build());

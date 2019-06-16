@@ -182,23 +182,11 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
                 btDecline.visibility = View.VISIBLE
                 btAccept.setOnClickListener {
 
-                    showProgressDialog()
-                    viewModel.callReScheduleNotificationAccept(id, 1).observeForever {
-                        dismissProgressDialog()
-                        if (it != null) {
-                            showDialogMesssage(it.message)
-                        }
-                    }
+                    callAccept(id)
                 }
 
                 btDecline.setOnClickListener {
-                    showProgressDialog()
-                    viewModel.callReScheduleNotificationAccept(id, 2).observeForever {
-                        dismissProgressDialog()
-                        if (it != null) {
-                            showDialogMesssage(it.message)
-                        }
-                    }
+                    callReject(id)
 
                 }
 
@@ -207,8 +195,44 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
                 btDecline.visibility = View.GONE
 
             }
+
+            try {
+                //automatic call to API
+                val action = intent.extras.getString("action", "")
+                if (!action.equals("")) {
+                    if (action.equals("Accept")) {
+                        callAccept(id)
+                    } else {
+                        callReject(id)
+                    }
+                }
+            } catch (e: Exception) {
+
+            }
+
+
         } catch (e: JSONException) {
             e.printStackTrace()
+        }
+    }
+
+    private fun callReject(id: Int) {
+        showProgressDialog()
+        viewModel.callReScheduleNotificationAccept(id, 2).observeForever {
+            dismissProgressDialog()
+            if (it != null) {
+                showDialogMesssage(it.message)
+            }
+        }
+    }
+
+    private fun callAccept(id: Int) {
+        showProgressDialog()
+        viewModel.callReScheduleNotificationAccept(id, 1).observeForever {
+            dismissProgressDialog()
+            if (it != null) {
+                showDialogMesssage(it.message)
+            }
         }
     }
 
