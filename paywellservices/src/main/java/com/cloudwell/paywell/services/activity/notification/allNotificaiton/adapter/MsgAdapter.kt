@@ -10,7 +10,6 @@ import android.widget.TextView
 import com.cloudwell.paywell.services.activity.notification.model.NotificationDetailMessage
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
-import org.apache.commons.lang3.StringEscapeUtils
 import org.json.JSONObject
 
 /**
@@ -70,9 +69,10 @@ class MsgAdapter(private val mContext: Context, val t: List<NotificationDetailMe
 
 
         var testmessage = "" + model.message
-        testmessage = StringEscapeUtils.unescapeJava(testmessage)
-        testmessage = testmessage.replace("/", "")
-        testmessage = testmessage.replace("'\'", "")
+        testmessage = testmessage.replace("\\", "")
+        testmessage = testmessage.replace("\\\\".toRegex(), "")
+        testmessage = testmessage.replace("\\\\\\\\".toRegex(), "")
+        testmessage = testmessage.replace("\\\\\\\\\\\\".toRegex(), "")
 
         if (testmessage.contains("notification_action_type")) {
             // air ticket flow

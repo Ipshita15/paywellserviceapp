@@ -31,6 +31,7 @@ import com.facebook.imagepipeline.image.CloseableImage;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.orhanobut.logger.Logger;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.JSONException;
@@ -69,14 +70,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //        String testmessage = "{\"notification_action_type\":\"AirTicketReScheduleConfirmation\",\"id\":14,\"original_message\":\"Dear retailer, Please accept the message. if you accept the message, your request will be processed. otherwise request will be declined soon.\"}";
         String testmessage = message;
 
-        testmessage = StringEscapeUtils.unescapeJava(testmessage);
-        testmessage = testmessage.replace("/", "");
-        testmessage = testmessage.replace("'\'", "");
 
+//
 
         if (testmessage.contains("notification_action_type")) {
             // air ticket flow
             try {
+
+                testmessage = StringEscapeUtils.unescapeJava(testmessage);
+
+                testmessage = testmessage.replace("\\", "");
+                testmessage = testmessage.replaceAll("\\\\", "");
+                testmessage = testmessage.replaceAll("\\\\\\\\", "");
+                testmessage = testmessage.replaceAll("\\\\\\\\\\\\", "");
+
                 JSONObject jsonObject = new JSONObject(testmessage);
                 String notification_action_type = jsonObject.getString("notification_action_type");
                 String original_message = jsonObject.getString("original_message");
@@ -93,7 +100,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 }
 
             } catch (JSONException e) {
-                e.printStackTrace();
+                Logger.e("" + e.getLocalizedMessage());
             }
         } else {
             // normal

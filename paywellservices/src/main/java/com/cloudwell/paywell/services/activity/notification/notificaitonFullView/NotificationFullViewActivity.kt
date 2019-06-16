@@ -23,6 +23,7 @@ import com.cloudwell.paywell.services.analytics.AnalyticsParameters
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.utils.AppHelper.startNotificationSyncService
+import com.orhanobut.logger.Logger
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_notification_full_view.*
@@ -104,9 +105,13 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
         val imageUrl = it?.imageUrl
 
         var testmessage = "" + message
+        Logger.v(testmessage)
         testmessage = StringEscapeUtils.unescapeJava(testmessage)
-        testmessage = testmessage.replace("/", "")
-        testmessage = testmessage.replace("'\'", "")
+
+        testmessage = testmessage.replace("\\", "")
+        testmessage = testmessage.replace("\\\\".toRegex(), "")
+        testmessage = testmessage.replace("\\\\\\\\".toRegex(), "")
+        testmessage = testmessage.replace("\\\\\\\\\\\\".toRegex(), "")
 
         if (testmessage.contains("notification_action_type")) {
             // air ticket flow
@@ -207,7 +212,7 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
                     }
                 }
             } catch (e: Exception) {
-
+                Logger.e("" + e.message)
             }
 
 
