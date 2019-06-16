@@ -647,10 +647,9 @@
     <string name="airport_search_hit">Airport name or code or country name </string>
     <string name="from">From</string>
     <string name="to">To</string>
-    <string name="mr">Mr.</string>
-    <string name="ms">Ms.</string>
-    <string name="mrs">Mrs.</string>
-    <string name="miss">Miss</string>
+    <string name="mr">Mr</string>
+    <string name="ms">Ms</string>
+    <string name="mrs">Mrs</string>
     <string name="name_title">Title</string>
     <string name="passenger_type">Passenger type *</string>
     <string name="adult">Adult</string>

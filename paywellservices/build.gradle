@@ -84,7 +84,6 @@ ext {
     timberVersion = '4.6.0'
     retrofitVersion = '2.3.0'
     rxJava = '2.1.6'
-    room_version = "2.1.0-alpha03"
 
     room_version = "1.1.1"
 }
