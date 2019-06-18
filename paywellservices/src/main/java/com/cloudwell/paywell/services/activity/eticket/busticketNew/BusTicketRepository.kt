@@ -184,16 +184,15 @@ class BusTicketRepository(private val mContext: Context) {
                     val scheduleId = it
 
 
-                    val tripScheduleInfo = TripScheduleInfo(toKey, fromKey, scheduleId)
-                    allTripScheduleInfo.add(tripScheduleInfo)
-
-
                     val model = schedules.getJSONObject(scheduleId)
                     val schedule_time = model.getString("schedule_time")
                     val bus_id = model.getString("bus_id")
                     val coach_no = model.getString("coach_no")
                     val schedule_type = model.getString("schedule_type")
                     val validity_date = model.getString("validity_date")
+
+                    val tripScheduleInfo = TripScheduleInfo(toKey, fromKey, scheduleId, validity_date)
+                    allTripScheduleInfo.add(tripScheduleInfo)
 
 
                     val priceObject = model.getJSONObject("ticket_price")
@@ -313,6 +312,15 @@ class BusTicketRepository(private val mContext: Context) {
 
     fun searchTransport(requestBusSearch: RequestBusSearch) {
 
+        doAsync {
+
+
+            DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().search(requestBusSearch.to, requestBusSearch.from)
+
+            uiThread {
+
+            }
+        }
 
     }
 

@@ -4,6 +4,7 @@ import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 
+
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 2019-06-09.
  */
@@ -17,10 +18,10 @@ class TripScheduleInfo(
         var from: String = "",
 
         @ColumnInfo(name = "schedule_Id")
-        var coachNo: String = ""
+        var coachNo: String = "",
 
-
-) {
+        @ColumnInfo(name = "validity_date")
+        var validity_date: String = "") {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "Id")

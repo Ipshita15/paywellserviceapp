@@ -58,4 +58,8 @@ public interface BusTicketDab {
 
     @Query("SELECT * FROM  TripScheduleInfo where to_location = :toLocation   AND from_location = :fromLocation;")
     public List<TripScheduleInfo> searchTrip(String toLocation, String fromLocation);
+
+    @Query("SELECT * FROM BusSchedule INNER JOIN TripScheduleInfo ON BusSchedule.schedule_Id = TripScheduleInfo.schedule_Id Where TripScheduleInfo.to_location = :to AND TripScheduleInfo.from_location = :from")
+
+    public void search(String to, String from);
 }

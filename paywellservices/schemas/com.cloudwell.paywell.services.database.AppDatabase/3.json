@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "ee13c55cee655f7073db87df6abab100",
+    "identityHash": "52bd22b48461baf993c3cdfb9855b9a9",
     "entities": [
       {
         "tableName": "FavoriteMenu",
@@ -580,7 +580,7 @@
       },
       {
         "tableName": "TripScheduleInfo",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `to_location` TEXT NOT NULL, `from_location` TEXT NOT NULL, `schedule_Id` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `to_location` TEXT NOT NULL, `from_location` TEXT NOT NULL, `schedule_Id` TEXT NOT NULL, `validity_date` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -603,6 +603,12 @@
           {
             "fieldPath": "coachNo",
             "columnName": "schedule_Id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "validity_date",
+            "columnName": "validity_date",
             "affinity": "TEXT",
             "notNull": true
           }
@@ -663,7 +669,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"ee13c55cee655f7073db87df6abab100\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"52bd22b48461baf993c3cdfb9855b9a9\")"
     ]
   }
 }
