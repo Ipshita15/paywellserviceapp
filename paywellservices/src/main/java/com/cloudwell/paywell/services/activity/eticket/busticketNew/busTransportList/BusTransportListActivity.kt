@@ -1,15 +1,10 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
 import android.view.Gravity
@@ -21,20 +16,17 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.Result
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.view.SeachViewStatus
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment.CancellationStatusMessageFragment
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.FlightDetails1Activity
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.adapter.FlightAdapterNew
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.adapter.OnClickListener
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.viewModel.FlightSearchViewModel
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketRepository
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.customView.horizontalDatePicker.commincation.IDatePicker
 import com.cloudwell.paywell.services.retrofit.ApiUtils
-import com.facebook.drawee.backends.pipeline.Fresco
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_search_view.*
 import retrofit2.Call
@@ -46,7 +38,7 @@ import java.util.*
 
 class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker {
 
-    lateinit var requestAirSearch: RequestAirSearch
+    lateinit var requestBusSearch: RequestBusSearch
     var isReSchuduler = false
 
     override fun onSetNewDate(year: Int, month: Int, day: Int) {
@@ -63,7 +55,7 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker {
         myDateTimelineView.setNewDate(split[0].toInt(), month, split[2].toInt())
         myDateTimelineView.setOnDateChangeLincher(this)
 
-        mViewModelFlight.onSetDate(isInternetConnection, humanReadAbleDate, requestAirSearch)
+        // mViewModelFlight.onSetDate(isInternetConnection, humanReadAbleDate, requestBusSearch)
 
     }
 
@@ -78,7 +70,7 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker {
         val humanReadAbleDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).format(fdepTimeFormatDate)
 
 
-        mViewModelFlight.onSetDate(isInternetConnection, humanReadAbleDate, requestAirSearch)
+        // mViewModelFlight.onSetDate(isInternetConnection, humanReadAbleDate, requestBusSearch)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,93 +79,64 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker {
 
         setToolbar(getString(R.string.title_bus_transtport_list), resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
 
-//        requestAirSearch = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.REQUEST_AIR_SERACH) as RequestAirSearch
-//
-//        if (requestAirSearch.journeyType.equals("Oneway")) {
-//            val split = requestAirSearch.segments.get(0).departureDateTime.split("-")
-//            val month = split[1].toInt() - 1
-//            myDateTimelineView.setFirstDate(split[0].toInt(), month, split[2].toInt())
-//            myDateTimelineView.setOnDateChangeLincher(this)
-//        } else {
-//            myDateTimelineView.visibility = View.GONE
-//        }
-//
-////        myDatePickerTimeline = findViewById<View>(com.cloudwell.paywell.services.R.id.myDateTimelineView) as MyDatePickerTimeline
-//
-//        isReSchuduler = intent.getBooleanExtra("isReSchuduler", false)
-//
-//        initializationView();
-//        initViewModel(requestAirSearch)
+//        requestBusSearch = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.REQUEST_AIR_SERACH) as RequestBusSearch
+
+        requestBusSearch.to = "Dhaka"
+        requestBusSearch.from = "Kolkata"
+        requestBusSearch.date = "2019-07-01"
+        initializationView();
+
+        callLocalSearch(requestBusSearch)
+
+
+    }
+
+    private fun callLocalSearch(requestBusSearch: RequestBusSearch) {
+
+        BusTicketRepository(this).searchTransport(requestBusSearch)
+
 
     }
 
     private fun initializationView() {
-        btSerachAgain.setOnClickListener {
-            finish()
-        }
+//        btSerachAgain.setOnClickListener {
+//            finish()
+//        }
 
     }
 
 
-    private fun initViewModel(requestAirSearch: RequestAirSearch) {
-        mViewModelFlight = ViewModelProviders.of(this).get(FlightSearchViewModel::class.java)
-
-        mViewModelFlight.baseViewStatus.observe(this, Observer {
-            handleViewCommonStatus(it)
-        })
-
-        mViewModelFlight.mViewStatus.observe(this, Observer {
-            handleViewStatus(it)
-        })
-
-
-        mViewModelFlight.mListMutableLiveDataFlightData.observe(this, Observer {
-            setAdapter(it)
-
-        })
-
-        mViewModelFlight.mResCommistionMaping.observe(this, Observer {
-            mViewModelFlight.init(isInternetConnection, requestAirSearch)
-
-        })
-
-        mViewModelFlight.getCommissionMapingAPI(isInternetConnection)
-//        mViewModelFlight.init(isInternetConnection, mRequestAirSearch)
-
-
-    }
-
-    private fun setAdapter(it: List<Result>?) {
-        Fresco.initialize(applicationContext);
-
-        shimmer_recycler_view.showShimmerAdapter()
-        shimmer_recycler_view.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
-        shimmer_recycler_view.adapter = it?.let { it1 ->
-            FlightAdapterNew(it1, requestAirSearch, applicationContext, isReSchuduler, object : OnClickListener {
-
-                override fun onClickRequestForReSchuder(result: Result) {
-                    handleRequestForReSchuder(result)
-                }
-
-                override fun onClick(position: Int) {
-                    // do whatever
-                    val get = mViewModelFlight.mListMutableLiveDataFlightData.value?.get(position)
-                    val mSearchId = mViewModelFlight.mSearchId.value
-                    val resultID = get?.resultID
-
-
-                    AppStorageBox.put(applicationContext, AppStorageBox.Key.SERACH_ID, mSearchId)
-                    AppStorageBox.put(applicationContext, AppStorageBox.Key.Request_ID, resultID)
-
-
-                    val intent = Intent(applicationContext, FlightDetails1Activity::class.java)
-                    intent.putExtra("mSearchId", mSearchId)
-                    intent.putExtra("resultID", resultID)
-                    startActivity(intent)
-                }
-            })
-        }
-    }
+//    private fun setAdapter(it: List<Result>?) {
+//        Fresco.initialize(applicationContext);
+//
+//        shimmer_recycler_view.showShimmerAdapter()
+//        shimmer_recycler_view.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
+//        shimmer_recycler_view.adapter = it?.let { it1 ->
+//            FlightAdapterNew(it1, requestAirSearch, applicationContext, isReSchuduler, object : OnClickListener {
+//
+//                override fun onClickRequestForReSchuder(result: Result) {
+//                    handleRequestForReSchuder(result)
+//                }
+//
+//                override fun onClick(position: Int) {
+//                    // do whatever
+//                    val get = mViewModelFlight.mListMutableLiveDataFlightData.value?.get(position)
+//                    val mSearchId = mViewModelFlight.mSearchId.value
+//                    val resultID = get?.resultID
+//
+//
+//                    AppStorageBox.put(applicationContext, AppStorageBox.Key.SERACH_ID, mSearchId)
+//                    AppStorageBox.put(applicationContext, AppStorageBox.Key.Request_ID, resultID)
+//
+//
+//                    val intent = Intent(applicationContext, FlightDetails1Activity::class.java)
+//                    intent.putExtra("mSearchId", mSearchId)
+//                    intent.putExtra("resultID", resultID)
+//                    startActivity(intent)
+//                }
+//            })
+//        }
+//    }
 
     private fun handleRequestForReSchuder(result: Result) {
 

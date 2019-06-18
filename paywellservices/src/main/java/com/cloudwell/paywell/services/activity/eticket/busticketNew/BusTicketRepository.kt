@@ -165,7 +165,7 @@ class BusTicketRepository(private val mContext: Context) {
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 
-        val allScheduleData = mutableListOf<Schedule>()
+        val allScheduleData = mutableListOf<BusSchedule>()
         val allTripScheduleInfo = mutableListOf<TripScheduleInfo>()
         val allBoothInfo = mutableListOf<BoothInfo>()
 
@@ -227,7 +227,7 @@ class BusTicketRepository(private val mContext: Context) {
                     }
 
 
-                    val schedule = Schedule(scheduleId, schedule_time, bus_id, coach_no, schedule_type, validity_date, ticket_price, dateKey.toString(), allowedSeatStoreString)
+                    val schedule = BusSchedule(scheduleId, schedule_time, bus_id, coach_no, schedule_type, validity_date, ticket_price, dateKey.toString(), allowedSeatStoreString)
                     allScheduleData.add(schedule)
                 }
 
@@ -308,6 +308,11 @@ class BusTicketRepository(private val mContext: Context) {
 
     private fun handleResponseseatCheck(it1: String) {
         Logger.v("", "")
+
+    }
+
+    fun searchTransport(requestBusSearch: RequestBusSearch) {
+
 
     }
 

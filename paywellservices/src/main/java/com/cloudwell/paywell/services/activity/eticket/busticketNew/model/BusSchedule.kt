@@ -9,9 +9,9 @@ import android.arch.persistence.room.PrimaryKey
  */
 
 @Entity
-class Schedule(
+class BusSchedule(
 
-        @ColumnInfo(name = "schedule_time_id")
+        @ColumnInfo(name = "schedule_Id")
         var schedule_time_id: String = "",
 
         @ColumnInfo(name = "schedule_time")

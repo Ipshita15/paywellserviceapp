@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "5b69c4aa45528f1ee4d2b3138bbf6b98",
+    "identityHash": "ee13c55cee655f7073db87df6abab100",
     "entities": [
       {
         "tableName": "FavoriteMenu",
@@ -505,8 +505,8 @@
         "foreignKeys": []
       },
       {
-        "tableName": "Schedule",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `schedule_time_id` TEXT NOT NULL, `schedule_time` TEXT NOT NULL, `bus_id` TEXT NOT NULL, `coach_no` TEXT NOT NULL, `schedule_type` TEXT NOT NULL, `validity_date` TEXT NOT NULL, `ticket_price` TEXT NOT NULL, `ticket_price_validity_date` TEXT NOT NULL, `allowed_seat_numbers` TEXT NOT NULL)",
+        "tableName": "BusSchedule",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `schedule_Id` TEXT NOT NULL, `schedule_time` TEXT NOT NULL, `bus_id` TEXT NOT NULL, `coach_no` TEXT NOT NULL, `schedule_type` TEXT NOT NULL, `validity_date` TEXT NOT NULL, `ticket_price` TEXT NOT NULL, `ticket_price_validity_date` TEXT NOT NULL, `allowed_seat_numbers` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -516,7 +516,7 @@
           },
           {
             "fieldPath": "schedule_time_id",
-            "columnName": "schedule_time_id",
+            "columnName": "schedule_Id",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -663,7 +663,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"5b69c4aa45528f1ee4d2b3138bbf6b98\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"ee13c55cee655f7073db87df6abab100\")"
     ]
   }
 }
