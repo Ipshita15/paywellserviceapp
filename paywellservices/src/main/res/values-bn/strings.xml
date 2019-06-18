@@ -793,6 +793,7 @@
     <string name="reissue_reschedule">Reissue/Reschedule</string>
     <string name="title_reissue">Tricket Reissue</string>
     <string name="reschedule">Reschedule</string>
+    <string name="title_bus_tickets">Search bus tickets</string>
 
 
 </resources>
