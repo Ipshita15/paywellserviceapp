@@ -6,7 +6,7 @@
     android:id="@+id/constraintLayoutBookingList"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_air"
+    android:background="@drawable/bus_menu_bg"
     tools:context=".activity.eticket.busticketNew.BusTicketMenuActivity">
 
     <Button

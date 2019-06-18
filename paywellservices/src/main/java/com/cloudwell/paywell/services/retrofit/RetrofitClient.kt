@@ -82,7 +82,6 @@ object RetrofitClient {
             if (BuildConfig.DEBUG) {
                 val logging = HttpLoggingInterceptor()
                 logging.setLevel(HttpLoggingInterceptor.Level.BODY)
-                logging.setLevel(HttpLoggingInterceptor.Level.HEADERS)
                 httpClient.addInterceptor(logging)
                 httpClient.addNetworkInterceptor(StethoInterceptor())
             }

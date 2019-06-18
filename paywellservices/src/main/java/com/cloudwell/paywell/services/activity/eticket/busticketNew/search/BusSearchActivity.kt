@@ -1,9 +1,11 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew.search
 
+import android.content.Intent
 import android.os.Bundle
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketRepository
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.seatLayout.SeatLayoutActivity
 import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus
 import com.cloudwell.paywell.services.eventBus.model.MessageToBottom
 import com.squareup.otto.Subscribe
@@ -14,16 +16,19 @@ class BusSearchActivity : BusTricketBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bus_search)
 
+        setToolbar(getString(R.string.title_bus_tickets), resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
 
-//        BusTicketRepository(this).loadAPIData();
 
 
         showProgressDialog()
 
-        BusTicketRepository(this).getBusListData().observeForever {
 
+
+        BusTicketRepository(this).getBusListData().observeForever {
             if (it == true) {
                 dismissProgressDialog()
+                startActivity(Intent(this, SeatLayoutActivity::class.java))
+
             }
         }
 

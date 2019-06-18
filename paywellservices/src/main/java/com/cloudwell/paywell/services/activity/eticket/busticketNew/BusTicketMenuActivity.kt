@@ -23,6 +23,7 @@ import com.cloudwell.paywell.services.utils.LanuageConstant.KEY_ENGLISH
 import kotlinx.android.synthetic.main.activity_air_tricket_menu.*
 import java.util.*
 
+
 class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     val KEY_TAG = BusTicketMenuActivity::class.java.getName()
@@ -32,7 +33,7 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
 
     lateinit var mConstraintLayout: ConstraintLayout
 
-    private var mAppHandler: AppHandler? = null
+
     internal var radioButton_five: RadioButton? = null
     internal var radioButton_ten: RadioButton? = null
     internal var radioButton_twenty: RadioButton? = null
@@ -49,17 +50,11 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        mAppHandler = AppHandler.getmInstance(applicationContext)
-        val isEnglish = mAppHandler?.getAppLanguage().equals("en", ignoreCase = true)
-        if (isEnglish) {
-            switchToCzLocale(Locale(KEY_ENGLISH, ""))
-        } else {
-            switchToCzLocale(Locale(KEY_BANGLA, ""))
-        }
-
         setContentView(R.layout.activity_bus_tricket_menu)
-        setToolbar(getString(R.string.home_eticket_bus))
+
+        setToolbar(getString(R.string.home_eticket_bus), resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
+
+
         btViewTricket.setOnClickListener(this)
         btCencel.setOnClickListener(this)
         btTransationLog.setOnClickListener(this)
@@ -69,6 +64,7 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
         mConstraintLayout = findViewById(R.id.constraintLayoutBookingList)
         mAppHandler = AppHandler.getmInstance(applicationContext)
     }
+
 
     override fun onResume() {
         super.onResume()

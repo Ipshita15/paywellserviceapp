@@ -8,6 +8,7 @@ import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.database.DatabaseClient
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.StringUtility
+import com.orhanobut.logger.Logger
 import okhttp3.ResponseBody
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -95,6 +96,7 @@ class BusTicketRepository(private val mContext: Context) {
 
             uiThread {
                 insertBusScullerData(string)
+
 
             }
         }
@@ -260,6 +262,52 @@ class BusTicketRepository(private val mContext: Context) {
         }
 
         return data
+
+    }
+
+    fun getSeatCheck(transport_id: String, route: String, bus_id: String, departure_id: String, departure_date: String, seat_ids: String): MutableLiveData<ResGetBusListData> {
+
+        mAppHandler = AppHandler.getmInstance(mContext)
+
+        val userName = mAppHandler!!.imeiNo
+        val skey = ApiUtils.KEY_SKEY
+
+        val accessKey = AppStorageBox.get(mContext, AppStorageBox.Key.ACCESS_KEY) as String
+
+        val data = MutableLiveData<ResGetBusListData>()
+
+        ApiUtils.getAPIServicePHP7().seatCheck(
+                userName,
+                skey,
+                accessKey,
+                transport_id,
+                route,
+                bus_id,
+                departure_id,
+                departure_date,
+                seat_ids
+        ).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    body.let {
+                        it?.string()?.let { it1 -> handleResponseseatCheck(it1) }
+                    }
+                    com.orhanobut.logger.Logger.v("" + body)
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                com.orhanobut.logger.Logger.e("" + t.message)
+            }
+        })
+        return data
+
+
+    }
+
+    private fun handleResponseseatCheck(it1: String) {
+        Logger.v("", "")
 
     }
 

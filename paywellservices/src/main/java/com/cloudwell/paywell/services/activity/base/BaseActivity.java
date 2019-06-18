@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -39,13 +42,25 @@ public class BaseActivity extends AppCompatActivity {
         mCd = new ConnectionDetector(AppController.getContext());
     }
 
+    public void setToolbar(String title, int color) {
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            SpannableString spannablerTitle = new SpannableString(title);
+            spannablerTitle.setSpan(new ForegroundColorSpan(color), 0, spannablerTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            getSupportActionBar().setTitle(spannablerTitle);
+        }
+    }
+
     public void setToolbar(String title) {
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(title);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         }
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

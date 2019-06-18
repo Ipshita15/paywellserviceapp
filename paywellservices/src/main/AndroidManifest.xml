@@ -75,8 +75,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
-        <activity android:name=".activity.eticket.busticketNew.search.BusSearchActivity">
-        </activity>
+
 
         <uses-library
             android:name="com.google.android.maps"
@@ -1241,12 +1240,16 @@
             android:name=".activity.eticket.busticketNew.BusTicketMenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN"/>-->
-            <!--<action android:name="android.intent.action.VIEW"/>-->
+        </activity>
 
-            <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-            <!--</intent-filter>-->
+        <activity
+            android:name=".activity.eticket.busticketNew.seatLayout.SeatLayoutActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activity.eticket.busticketNew.search.BusSearchActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            >
         </activity>
 
         <provider
