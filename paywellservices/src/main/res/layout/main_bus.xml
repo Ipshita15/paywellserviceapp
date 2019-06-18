@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.cloudwell.paywell.services.customView.horizontalDatePicker.MyDateTimelineViewRecyclerViewForBus
+        <com.cloudwell.paywell.services.customView.horizontalDatePicker.MyDateTimelineViewRecyclerView
             android:id="@+id/myDateTimelineViewRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,9 +30,7 @@
             app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.45"
-            tools:listitem="@layout/mti_item_day_new">
-
-        </com.cloudwell.paywell.services.customView.horizontalDatePicker.MyDateTimelineViewRecyclerViewForBus>
+            tools:listitem="@layout/mti_item_day_new"/>
     </LinearLayout>
 
     <LinearLayout
@@ -52,16 +50,17 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:layout_weight="1"
-            android:background="@drawable/ic_calendar"/>
+            android:background="@drawable/more_bus_icon"/>
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/more"/>
+            android:text="@string/more"
+            android:textSize="12sp"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

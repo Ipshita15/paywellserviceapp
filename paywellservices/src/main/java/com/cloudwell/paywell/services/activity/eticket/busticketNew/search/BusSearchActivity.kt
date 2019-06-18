@@ -5,7 +5,7 @@ import android.os.Bundle
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketRepository
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.seatLayout.SeatLayoutActivity
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.BusTransportListActivity
 import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus
 import com.cloudwell.paywell.services.eventBus.model.MessageToBottom
 import com.squareup.otto.Subscribe
@@ -27,7 +27,10 @@ class BusSearchActivity : BusTricketBaseActivity() {
         BusTicketRepository(this).getBusListData().observeForever {
             if (it == true) {
                 dismissProgressDialog()
-                startActivity(Intent(this, SeatLayoutActivity::class.java))
+//                startActivity(Intent(this, SeatLayoutActivity::class.java))
+
+                startActivity(Intent(this, BusTransportListActivity::class.java))
+
 
             }
         }
