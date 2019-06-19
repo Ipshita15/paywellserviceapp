@@ -235,12 +235,10 @@ class ReIssueTicketActivity : AirTricketBaseActivity(), ShowMessageFragment.MyIn
         showMessageFragment.mListener = object : ShowMessageFragment.MyInterface {
             override fun onOkButtonClick() {
                 if (status == 200) {
-                    finish();
+                    finish()
                 }
             }
-
         }
-
         showMessageFragment.show(supportFragmentManager, "dialog")
 
     }
