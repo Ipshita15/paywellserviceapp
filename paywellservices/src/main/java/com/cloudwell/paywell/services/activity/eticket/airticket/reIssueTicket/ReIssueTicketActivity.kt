@@ -21,7 +21,7 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Passenger
-import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment.CancellationStatusMessageFragment
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment.ShowMessageFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.adapter.AdapterForPassengersReIssue
 import com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.editReissuePassengerActivity.EditReissuePassengerActivity
 import com.cloudwell.paywell.services.app.AppHandler
@@ -35,7 +35,10 @@ import retrofit2.Response
 import su.j2e.rvjoiner.RvJoiner
 import kotlinx.android.synthetic.main.flight_list_item_new.recyclerView as recyclerView1
 
-class ReIssueTicketActivity : AirTricketBaseActivity() {
+class ReIssueTicketActivity : AirTricketBaseActivity(), ShowMessageFragment.MyInterface {
+    override fun onOkButtonClick() {
+
+    }
 
     private val rvJoiner = RvJoiner(true)//auto update ON, stable ids ON
 
@@ -204,10 +207,12 @@ class ReIssueTicketActivity : AirTricketBaseActivity() {
                     if (response.isSuccessful) {
                         val jsonObject = response.body()
                         val message = jsonObject!!.get("message_details").asString
-                        if (jsonObject.get("status").asInt == 200) {
-                            showMsg(message)
+                        val status = jsonObject.get("status").asInt
+
+                        if (status == 200) {
+                            showMsg(message, status)
                         } else {
-                            showMsg(message)
+                            showMsg(message, status)
                         }
 
                     }
@@ -223,12 +228,20 @@ class ReIssueTicketActivity : AirTricketBaseActivity() {
 
     }
 
-    private fun showMsg(msg: String) {
+    private fun showMsg(msg: String, status: Int) {
 
-        val priceChangeFragment = CancellationStatusMessageFragment()
-        CancellationStatusMessageFragment.message = msg
+        val showMessageFragment = ShowMessageFragment()
+        ShowMessageFragment.message = msg
+        showMessageFragment.mListener = object : ShowMessageFragment.MyInterface {
+            override fun onOkButtonClick() {
+                if (status == 200) {
+                    finish();
+                }
+            }
 
-        priceChangeFragment.show(supportFragmentManager, "dialog")
+        }
+
+        showMessageFragment.show(supportFragmentManager, "dialog")
 
     }
 
