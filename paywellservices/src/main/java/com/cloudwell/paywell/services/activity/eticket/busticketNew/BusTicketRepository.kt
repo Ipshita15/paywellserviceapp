@@ -7,7 +7,6 @@ import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.database.DatabaseClient
 import com.cloudwell.paywell.services.retrofit.ApiUtils
-import com.cloudwell.paywell.services.utils.StringUtility
 import com.orhanobut.logger.Logger
 import okhttp3.ResponseBody
 import org.jetbrains.anko.doAsync
@@ -205,14 +204,14 @@ class BusTicketRepository(private val mContext: Context) {
 
                     var allowedSeatStoreString = ""
                     val allowedSeatNumbersObject = model.getJSONObject("allowed_seat_numbers")
-                    val allowedSeatNumbersObjectKeys = allowedSeatNumbersObject.keys()
-                    allowedSeatNumbersObjectKeys.forEach {
-                        val seatNumber = it
-                        val seatName = allowedSeatNumbersObject.get(seatNumber)
-                        allowedSeatStoreString = allowedSeatStoreString + seatNumber + ":" + seatName + ","
-
-                    }
-                    allowedSeatStoreString = StringUtility.removeLastChar(allowedSeatStoreString)
+//                    val allowedSeatNumbersObjectKeys = allowedSeatNumbersObject.keys()
+//                    allowedSeatNumbersObjectKeys.forEach {
+//                        val seatNumber = it
+//                        val seatName = allowedSeatNumbersObject.get(seatNumber)
+//                        allowedSeatStoreString = allowedSeatStoreString + seatNumber + ":" + seatName + ","
+//
+//                    }
+                    allowedSeatStoreString = allowedSeatNumbersObject.toString()
 
 
                     val boothDepartureInfo = model.getJSONObject("booth_departure_info")
@@ -264,7 +263,7 @@ class BusTicketRepository(private val mContext: Context) {
 
     }
 
-    fun getSeatCheck(transport_id: String, route: String, bus_id: String, departure_id: String, departure_date: String, seat_ids: String): MutableLiveData<ResGetBusListData> {
+    fun getSeatCheck(transport_id: String, route: String, bus_id: String, departure_id: String, departure_date: String, seat_ids: String): MutableLiveData<ResSeatInfo> {
 
         mAppHandler = AppHandler.getmInstance(mContext)
 
@@ -273,7 +272,7 @@ class BusTicketRepository(private val mContext: Context) {
 
         val accessKey = AppStorageBox.get(mContext, AppStorageBox.Key.ACCESS_KEY) as String
 
-        val data = MutableLiveData<ResGetBusListData>()
+        val data = MutableLiveData<ResSeatInfo>()
 
         ApiUtils.getAPIServicePHP7().seatCheck(
                 userName,
@@ -290,7 +289,21 @@ class BusTicketRepository(private val mContext: Context) {
                 if (response.isSuccessful) {
                     val body = response.body()
                     body.let {
-                        it?.string()?.let { it1 -> handleResponseseatCheck(it1) }
+                        val allBusSeat = mutableListOf<BusSeat>()
+                        var tototalAvailableSeat = 0
+                        val jsonObject = JSONObject(it?.string())
+                        if (jsonObject.getInt("status") == 200) {
+                            val seatInfo = jsonObject.getJSONObject("seatInfo")
+                            val keys = seatInfo.keys()
+                            keys.forEach {
+                                val o = seatInfo.get(it) as JSONObject
+                                if (o.getString("status").equals("Available")) {
+                                    tototalAvailableSeat = tototalAvailableSeat + 1
+                                }
+                                allBusSeat.add(BusSeat(o.getString("seat_lbls"), o.getString("status"), o.getInt("value")))
+                            }
+                            data.value = ResSeatInfo(tototalAvailableSeat, allBusSeat)
+                        }
                     }
                     com.orhanobut.logger.Logger.v("" + body)
                 }
@@ -310,19 +323,20 @@ class BusTicketRepository(private val mContext: Context) {
 
     }
 
-    fun searchTransport(requestBusSearch: RequestBusSearch) {
+    fun searchTransport(requestBusSearch: RequestBusSearch): MutableLiveData<List<TripScheduleInfoAndBusSchedule>> {
+
+        val data = MutableLiveData<List<TripScheduleInfoAndBusSchedule>>()
 
         doAsync {
-
-
-            DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().search(requestBusSearch.to, requestBusSearch.from)
-
+            val search = DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().search(requestBusSearch.to, requestBusSearch.from)
             uiThread {
-
+                data.value = search
             }
         }
+        return data
 
     }
+
 
 //    fun loadAPIData() {
 //

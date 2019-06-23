@@ -1,10 +1,13 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
 import android.view.Gravity
@@ -20,13 +23,19 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.m
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.view.SeachViewStatus
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment.CancellationStatusMessageFragment
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.FlightDetails1Activity
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.viewModel.FlightSearchViewModel
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketRepository
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.adapter.BusTripListAdapter
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.adapter.OnClickListener
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatInfo
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.customView.horizontalDatePicker.commincation.IDatePicker
 import com.cloudwell.paywell.services.retrofit.ApiUtils
+import com.facebook.drawee.backends.pipeline.Fresco
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_search_view.*
 import retrofit2.Call
@@ -40,6 +49,10 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker {
 
     lateinit var requestBusSearch: RequestBusSearch
     var isReSchuduler = false
+
+    var items = mutableListOf<TripScheduleInfoAndBusSchedule>()
+
+    var busTripListAdapter: BusTripListAdapter? = null
 
     override fun onSetNewDate(year: Int, month: Int, day: Int) {
 
@@ -81,6 +94,7 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker {
 
 //        requestBusSearch = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.REQUEST_AIR_SERACH) as RequestBusSearch
 
+        requestBusSearch = RequestBusSearch()
         requestBusSearch.to = "Dhaka"
         requestBusSearch.from = "Kolkata"
         requestBusSearch.date = "2019-07-01"
@@ -93,7 +107,11 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker {
 
     private fun callLocalSearch(requestBusSearch: RequestBusSearch) {
 
-        BusTicketRepository(this).searchTransport(requestBusSearch)
+
+        BusTicketRepository(this).searchTransport(requestBusSearch).observeForever {
+            it?.let { it1 -> setAdapter(it1) }
+
+        }
 
 
     }
@@ -106,81 +124,49 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker {
     }
 
 
-//    private fun setAdapter(it: List<Result>?) {
-//        Fresco.initialize(applicationContext);
-//
-//        shimmer_recycler_view.showShimmerAdapter()
-//        shimmer_recycler_view.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
-//        shimmer_recycler_view.adapter = it?.let { it1 ->
-//            FlightAdapterNew(it1, requestAirSearch, applicationContext, isReSchuduler, object : OnClickListener {
-//
-//                override fun onClickRequestForReSchuder(result: Result) {
-//                    handleRequestForReSchuder(result)
-//                }
-//
-//                override fun onClick(position: Int) {
-//                    // do whatever
-//                    val get = mViewModelFlight.mListMutableLiveDataFlightData.value?.get(position)
-//                    val mSearchId = mViewModelFlight.mSearchId.value
-//                    val resultID = get?.resultID
-//
-//
-//                    AppStorageBox.put(applicationContext, AppStorageBox.Key.SERACH_ID, mSearchId)
-//                    AppStorageBox.put(applicationContext, AppStorageBox.Key.Request_ID, resultID)
-//
-//
-//                    val intent = Intent(applicationContext, FlightDetails1Activity::class.java)
-//                    intent.putExtra("mSearchId", mSearchId)
-//                    intent.putExtra("resultID", resultID)
-//                    startActivity(intent)
-//                }
-//            })
-//        }
-//    }
+    private fun setAdapter(it: List<TripScheduleInfoAndBusSchedule>) {
+        Fresco.initialize(applicationContext);
 
-    private fun handleRequestForReSchuder(result: Result) {
+        items = it.toMutableList()
 
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Reschedule Reason")
-
-        val pinNoET = EditText(this)
-        val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
-        pinNoET.gravity = Gravity.CENTER_HORIZONTAL
-        pinNoET.layoutParams = lp
-        builder.setView(pinNoET)
-
-        builder.setPositiveButton(R.string.okay_btn) { dialogInterface, id ->
-            val inMethMan = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inMethMan.hideSoftInputFromWindow(pinNoET.windowToken, 0)
-
-            if (pinNoET.text.toString().length != 0) {
-                dialogInterface.dismiss()
-                var resoun = pinNoET.text.toString()
-                if (isInternetConnection) {
+        shimmer_recycler_view.showShimmerAdapter()
+        shimmer_recycler_view.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
+        shimmer_recycler_view.adapter = it.let { it1 ->
 
 
-                    askForPin(resoun, result)
+            val busTicketRepository = BusTicketRepository(this)
 
-                } else {
-                    val snackbar = Snackbar.make(linearLayout3, R.string.connection_error_msg, Snackbar.LENGTH_LONG)
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"))
-                    val snackBarView = snackbar.view
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))
-                    snackbar.show()
+            busTripListAdapter = BusTripListAdapter(it1, applicationContext, requestBusSearch, busTicketRepository, object : OnClickListener {
+                override fun onUpdateData(position: Int, resSeatInfo: ResSeatInfo) {
+
+                    val get = items.get(position)
+                    get.resSeatInfo = resSeatInfo
+                    items.set(position, get)
+                    busTripListAdapter?.notifyItemChanged(position)
                 }
-            } else {
-                val snackbar = Snackbar.make(linearLayout3, "Enter reschedule reason", Snackbar.LENGTH_LONG)
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"))
-                val snackBarView = snackbar.view
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))
-                snackbar.show()
-            }
-        }
-        builder.setNegativeButton(R.string.cancel_btn) { dialogInterface, i -> dialogInterface.dismiss() }
-        val alert = builder.create()
-        alert.show()
 
+
+                override fun onClick(position: Int) {
+                    // do whatever
+                    val get = mViewModelFlight.mListMutableLiveDataFlightData.value?.get(position)
+                    val mSearchId = mViewModelFlight.mSearchId.value
+                    val resultID = get?.resultID
+
+
+                    AppStorageBox.put(applicationContext, AppStorageBox.Key.SERACH_ID, mSearchId)
+                    AppStorageBox.put(applicationContext, AppStorageBox.Key.Request_ID, resultID)
+
+
+                    val intent = Intent(applicationContext, FlightDetails1Activity::class.java)
+                    intent.putExtra("mSearchId", mSearchId)
+                    intent.putExtra("resultID", resultID)
+                    startActivity(intent)
+                }
+            })
+            busTripListAdapter
+        }
     }
+
 
     private fun handleViewStatus(status: SeachViewStatus?) {
 

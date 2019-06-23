@@ -61,6 +61,7 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
 
         BusTicketRepository(this).getSeatCheck(transport_id, route, bus_id, departure_id, departure_date, seat_ids).observeForever {
 
+
         }
 
 

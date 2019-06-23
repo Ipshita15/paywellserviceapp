@@ -10,6 +10,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Bus;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BusLocalDB;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BusSchedule;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfo;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule;
 
 import java.util.List;
 
@@ -59,7 +60,6 @@ public interface BusTicketDab {
     @Query("SELECT * FROM  TripScheduleInfo where to_location = :toLocation   AND from_location = :fromLocation;")
     public List<TripScheduleInfo> searchTrip(String toLocation, String fromLocation);
 
-    @Query("SELECT * FROM BusSchedule INNER JOIN TripScheduleInfo ON BusSchedule.schedule_Id = TripScheduleInfo.schedule_Id Where TripScheduleInfo.to_location = :to AND TripScheduleInfo.from_location = :from")
-
-    public void search(String to, String from);
+    @Query("SELECT BusSchedule.*, BusLocalDB.* FROM BusSchedule INNER JOIN TripScheduleInfo ON BusSchedule._schedule_Id = TripScheduleInfo.schedule_Id INNER JOIN BusLocalDB ON BusLocalDB.busID = BusSchedule.bus_id Where TripScheduleInfo.to_location = :to AND TripScheduleInfo.from_location = :from")
+    List<TripScheduleInfoAndBusSchedule> search(String to, String from);
 }

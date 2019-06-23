@@ -18,12 +18,12 @@ class TripScheduleInfo(
         var from: String = "",
 
         @ColumnInfo(name = "schedule_Id")
-        var coachNo: String = "",
+        var schedule_Id: String = "",
 
         @ColumnInfo(name = "validity_date")
         var validity_date: String = "") {
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "Id")
+    @ColumnInfo(name = "TripScheduleInfo_Id")
     var id: Long = 0
 }
