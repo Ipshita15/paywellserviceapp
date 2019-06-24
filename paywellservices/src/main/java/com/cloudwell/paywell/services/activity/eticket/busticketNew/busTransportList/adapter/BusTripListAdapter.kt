@@ -38,7 +38,6 @@ class BusTripListAdapter(val items: List<TripScheduleInfoAndBusSchedule>, val co
         holder.tvPrices.text = ":" + model.busSchedule?.ticketPrice
         holder.tvCoachNo.text = ": " + model.busSchedule?.coachNo
         holder.tvDepartureTime.text = ": " + (model.busSchedule?.scheduleTime ?: "")
-        holder.tvAvailableSeat.text = ": "
 
 
         val transportID = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.TRANSPORT_ID) as String
@@ -52,11 +51,12 @@ class BusTripListAdapter(val items: List<TripScheduleInfoAndBusSchedule>, val co
         val departure_date = requestBusSearch.date
         val seat_ids = model.busSchedule?.allowedSeatNumbers ?: ""
 
-        if (model.resSeatInfo?.tototalAvailableSeat ?: 0 == 0) {
+        if (model.resSeatInfo?.tototalAvailableSeat ?: -1 == -1) {
             holder.progressBar.visibility = View.VISIBLE
-            BusTicketRepository(mContext = context).getSeatCheck(transport_id, route, bus_id, departure_id, departure_date, seat_ids).observeForever {
+            BusTicketRepository().getSeatCheck(transport_id, route, bus_id, departure_id, departure_date, seat_ids).observeForever {
                 holder.progressBar.visibility = View.INVISIBLE
-                holder.tvAvailableSeat.text = ":" + (it?.tototalAvailableSeat ?: 0)
+                val prices = it?.tototalAvailableSeat ?: 0
+                holder.tvAvailableSeat.text = ": " + prices
 
                 if (it != null) {
                     onClickListener.onUpdateData(position, it)
@@ -64,10 +64,8 @@ class BusTripListAdapter(val items: List<TripScheduleInfoAndBusSchedule>, val co
 
             }
         } else {
-            holder.progressBar.visibility = View.GONE
-
+            holder.progressBar.visibility = View.INVISIBLE
         }
-
 
     }
 

@@ -145,7 +145,6 @@
 
     <TextView
         android:id="@+id/tvCoachNo"
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=": 902-B-A/B-2"
@@ -161,6 +160,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintStart_toStartOf="@+id/tvAvailableSeat"
-        app:layout_constraintTop_toTopOf="@+id/tvAvailableSeat"/>
+        app:layout_constraintTop_toTopOf="@+id/tvAvailableSeat"
+        tools:visibility="invisible"/>
 
 </android.support.constraint.ConstraintLayout>

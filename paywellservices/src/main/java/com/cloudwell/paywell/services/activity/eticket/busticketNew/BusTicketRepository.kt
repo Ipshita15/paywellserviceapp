@@ -3,6 +3,7 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew
 import android.arch.lifecycle.MutableLiveData
 import android.content.Context
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
+import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.database.DatabaseClient
@@ -20,9 +21,14 @@ import retrofit2.Response
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 19/2/19.
  */
-class BusTicketRepository(private val mContext: Context) {
+class BusTicketRepository() {
 
     private var mAppHandler: AppHandler? = null
+    private var mContext: Context? = null
+
+    init {
+        mContext = AppController.getContext()
+    }
 
     val isFinshedDataLoad = MutableLiveData<Boolean>()
 
@@ -31,17 +37,24 @@ class BusTicketRepository(private val mContext: Context) {
         val userName = mAppHandler!!.imeiNo
         val skey = ApiUtils.KEY_SKEY
 
+
         ApiUtils.getAPIServicePHP7().getBusListData(userName, skey).enqueue(object : Callback<ResGetBusListData> {
             override fun onResponse(call: Call<ResGetBusListData>, response: Response<ResGetBusListData>) {
                 if (response.isSuccessful) {
                     val body = response.body()
                     body.let {
-                        val accessKey = it?.accessKey
-                        AppStorageBox.put(mContext, AppStorageBox.Key.ACCESS_KEY, accessKey)
 
-                        it?.data?.data?.let { it1 -> saveBuss(it1) }
+                        if (it?.status ?: 0 == 200) {
+                            val accessKey = it?.accessKey
+                            AppStorageBox.put(mContext, AppStorageBox.Key.ACCESS_KEY, accessKey)
 
-                        getBusScheduleDate()
+                            it?.data?.data?.let { it1 -> saveBuss(it1) }
+                            getBusScheduleDate()
+
+                        } else {
+                            isFinshedDataLoad.value = false
+                        }
+
                     }
 
                     com.orhanobut.logger.Logger.v("" + body)
@@ -49,7 +62,8 @@ class BusTicketRepository(private val mContext: Context) {
             }
 
             override fun onFailure(call: Call<ResGetBusListData>, t: Throwable) {
-                com.orhanobut.logger.Logger.e("" + t.message)
+                isFinshedDataLoad.value = false
+
             }
         })
         return isFinshedDataLoad
@@ -70,33 +84,36 @@ class BusTicketRepository(private val mContext: Context) {
                 if (response.isSuccessful) {
                     val body = response.body()
                     body.let {
+                        val jsonObject = JSONObject(it?.string())
+                        if (jsonObject.getInt("status") == 200) {
+                            handleResponse(jsonObject)
+                        } else {
+                            isFinshedDataLoad.value = false
+                        }
 
-                        it?.string()?.let { it1 -> handleResponse(it1) }
                     }
-                    com.orhanobut.logger.Logger.v("" + body)
                 }
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                com.orhanobut.logger.Logger.e("" + t.message)
+
+                isFinshedDataLoad.value = false
+
             }
         })
         return data
     }
 
-    private fun handleResponse(string: String) {
+    private fun handleResponse(jsonObject: JSONObject) {
 
         doAsync {
-
             val inseredIds = DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().clearLocalBusDB()
             DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().clearSchedule()
             DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().clearTripScheduleInfo()
             DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().clearBoothInfo()
 
             uiThread {
-                insertBusScullerData(string)
-
-
+                insertBusScullerData(jsonObject)
             }
         }
 
@@ -104,8 +121,7 @@ class BusTicketRepository(private val mContext: Context) {
     }
 
 
-    private fun insertBusScullerData(string: String) {
-        val jsonObject = JSONObject(string)
+    private fun insertBusScullerData(jsonObject: JSONObject) {
         val dataObject = jsonObject.getJSONObject("data")
         val busInfoObject = dataObject.getJSONObject("bus_info")
         val scheduleInfoObject = dataObject.getJSONObject("schedule_info")
@@ -240,7 +256,7 @@ class BusTicketRepository(private val mContext: Context) {
 
         }
 
-        this.isFinshedDataLoad.value = true
+        isFinshedDataLoad.value = true
 
     }
 

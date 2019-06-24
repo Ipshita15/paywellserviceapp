@@ -80,7 +80,12 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btViewTricket -> {
-                startActivity(Intent(applicationContext, BusSearchActivity::class.java))
+
+                if (isInternetConnection) {
+                    startActivity(Intent(applicationContext, BusSearchActivity::class.java))
+                } else {
+                    showNoInternetConnectionFound()
+                }
             }
 
             R.id.btCencel -> {

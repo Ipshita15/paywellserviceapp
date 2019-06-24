@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.cloudwell.paywell.services.customView.horizontalDatePicker.MyDateTimelineViewRecyclerView
+        <com.cloudwell.paywell.services.customView.horizontalDatePicker.MyDateTimelineViewRecyclerViewForBus
             android:id="@+id/myDateTimelineViewRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

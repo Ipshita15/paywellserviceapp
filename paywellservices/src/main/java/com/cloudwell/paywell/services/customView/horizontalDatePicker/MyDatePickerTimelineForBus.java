@@ -19,14 +19,14 @@ import java.util.Calendar;
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 27/12/18.
  */
-public class MyDatePickerTimelineForBus extends LinearLayout implements View.OnClickListener, MyDateTimelineViewRecyclerView.OnDateSelectedListener {
+public class MyDatePickerTimelineForBus extends LinearLayout implements View.OnClickListener, MyDateTimelineViewRecyclerViewForBus.OnDateSelectedListener {
     IDatePicker iDatePicker;
 
     //
     int startYear;
     int startMonth;
     int startDay;
-    private MyDateTimelineViewRecyclerView myDateTimelineViewRecyclerView;
+    private MyDateTimelineViewRecyclerViewForBus myDateTimelineViewRecyclerView;
 
 
     public MyDatePickerTimelineForBus(Context context) {
