@@ -770,7 +770,7 @@
     <string name="inbound">Inbound</string>
     <string name="flight">Flight</string>
     <string name="cancel_ticket">Cancel Ticket</string>
-    <string name="cancellation_fee">Cancellation fee:</string>
+    <string name="cancellation_fee">Fee:</string>
     <string name="passport_expiry_date">Passport Expiry Date</string>
 
     <string name="Passport_number_mandatory">Passport number mandatory</string>

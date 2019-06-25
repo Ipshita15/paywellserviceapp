@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity.*
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.model.ResCancellationMapping
 import kotlinx.android.synthetic.main.fragment_prices_change.view.*
 
@@ -15,6 +16,7 @@ class CancellationFeeFragment : DialogFragment() {
 
     companion object {
         lateinit var resCencelMaping: ResCancellationMapping
+        lateinit var type: String
     }
 
     lateinit var onClickHandler: OnClickHandler
@@ -30,19 +32,33 @@ class CancellationFeeFragment : DialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_cancel_fee, container, false)
+        val v = inflater.inflate(R.layout.fragment_cancel_fee, container, false)
+        v.btActionIssueTicket.text = type
 
         val void = resCencelMaping.getCancelData().void.toDouble()
         val count = resCencelMaping.bookingData.get(0).passengers.count()
-        val totalFee = void * count
+        val reIssue = resCencelMaping.cancelData.reIssue.toDouble()
+        val reSchedule = resCencelMaping.cancelData.reSchedule.toDouble()
+        val refund = resCencelMaping.cancelData.refund.toDouble()
 
+        var totalFee = 0.0
+        if (type.equals(KEY_CANCEL)) {
+            totalFee = void * count
+
+        } else if (type.equals(KEY_ReIssue)) {
+
+        } else if (type.equals(KEY_ReIssue)) {
+
+        } else if (type.equals(KEY_ReSchedule)) {
+
+
+        }
 
         v.tvFree.text = getString(R.string.cancellation_fee) + " Tk. " + totalFee
 
-
         v.btActionIssueTicket.setOnClickListener {
             dismiss()
-            onClickHandler.onClickActionIssueTicket(totalFee)
+            onClickHandler.onClickActionIssueTicket(totalFee, type)
         }
 
 
@@ -60,7 +76,7 @@ class CancellationFeeFragment : DialogFragment() {
 
 
     interface OnClickHandler {
-        fun onClickActionIssueTicket(cancellationFee: Double)
+        fun onClickActionIssueTicket(cancellationFee: Double, type: String)
 
     }
 

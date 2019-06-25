@@ -281,7 +281,7 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
     }
 
 
-    private fun askForPin(bookingId: String, action: String) {
+    override fun askForPin(bookingId: String, action: String) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.pin_no_title_msg)
 
