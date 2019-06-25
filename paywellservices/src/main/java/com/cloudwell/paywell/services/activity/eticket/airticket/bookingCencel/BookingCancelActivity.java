@@ -12,6 +12,7 @@ import android.widget.Spinner;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity;
+import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
@@ -70,7 +71,7 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
 
                     // askForPin(bookingIdET.getText().toString(), bookingCancelReasonSPNR.getSelectedItem().toString());
 
-                    callCancelMapping(userName, bookingIdET.getText().toString(), reason, KEY_CANCEL);
+                    callCancelMapping(userName, bookingIdET.getText().toString(), reason, Companion.getKEY_BookingCANCEL(), new Datum());
                 } else {
 
                     hideUserKeyboard();

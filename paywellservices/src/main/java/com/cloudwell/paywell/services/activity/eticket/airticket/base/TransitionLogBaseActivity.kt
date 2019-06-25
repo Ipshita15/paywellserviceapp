@@ -22,7 +22,6 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketMainActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.BookingCancelActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.PriceChangeFragment
@@ -31,10 +30,10 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.f
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.TricketingStatusFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.ResIssueTicket
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.viewModel.BookingStatsViewModel
-import com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.ReIssueTicketActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.ticketCencel.TricketCencelActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.ticketCencel.TricketCancelActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.TicketViewerActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.emailTicket.PassengerEmailSendListActivity
+import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.constant.AllConstant
 import com.karumi.dexter.Dexter
@@ -68,24 +67,25 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
 
         tricketChooserFragment.setOnClickHandlerTest(object : TicketActionMenuFragment.OnClickHandler {
             override fun onReschedule(item: Datum) {
-                handleRescheduleFlow(item)
+                val mAppHandler = AppHandler.getmInstance(applicationContext)
+                val userName = mAppHandler.imeiNo
+                callCancelMapping(userName, item.bookingId!!, "", KEY_ReSchedule, item)
 
             }
 
             override fun onTicketCancel(item: Datum) {
 
-                TricketCencelActivity.model = item
-                val intent = Intent(applicationContext, TricketCencelActivity::class.java)
-                intent.putExtra(TricketCencelActivity.KEY_TITLE, AllConstant.Action_Ticket_Cancel)
+                TricketCancelActivity.model = item
+                val intent = Intent(applicationContext, TricketCancelActivity::class.java)
+                intent.putExtra(TricketCancelActivity.KEY_TITLE, AllConstant.Action_Ticket_Cancel)
                 startActivity(intent)
 
             }
 
             override fun onReissue(item: Datum) {
-
-                val newIntent = ReIssueTicketActivity.newIntent(this@TransitionLogBaseActivity, item)
-                startActivity(newIntent)
-
+                val mAppHandler = AppHandler.getmInstance(applicationContext)
+                val userName = mAppHandler.imeiNo
+                callCancelMapping(userName, item.bookingId!!, "", KEY_ReIssue, item)
             }
 
             override fun onClickIsisThicketButton() {
@@ -110,8 +110,7 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
     }
 
     private fun handleRescheduleFlow(item: Datum) {
-        val newIntent = AirTicketMainActivity.newIntent(applicationContext, item = item)
-        startActivity(newIntent)
+
     }
 
 
@@ -281,7 +280,7 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
     }
 
 
-    override fun askForPin(bookingId: String, action: String) {
+    fun askForPin(bookingId: String, action: String) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.pin_no_title_msg)
 
