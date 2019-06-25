@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/eticketRelativeLayout"
+                android:id="@+id/RelativeLayoutEKShope"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/ic_background_card"
@@ -37,9 +37,9 @@
                 <Button
                     android:id="@+id/et_shop_visit"
                     style="@style/HomeButtonNew"
-                    android:drawableTop="@drawable/ic_bus_ticket"
+                    android:drawableTop="@drawable/ic_ek_shope_visit"
                     android:onClick="onButtonClicker"
-                    android:text="@string/home_eticket_bus"
+                    android:text="@string/visit"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
 
@@ -53,9 +53,9 @@
                 <Button
                     android:id="@+id/et_ek_shop_report"
                     style="@style/HomeButtonNew"
-                    android:drawableTop="@drawable/air_ticket"
+                    android:drawableTop="@drawable/ic_ek_report"
                     android:onClick="onButtonClicker"
-                    android:text="@string/home_eticket_air"
+                    android:text="@string/report"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
 
@@ -67,6 +67,7 @@
                     android:gravity="center"/>
 
             </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

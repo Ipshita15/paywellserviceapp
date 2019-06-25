@@ -39,8 +39,8 @@ public class ETicketMainActivity extends AppCompatActivity {
 
         relativeLayout = findViewById(R.id.eticketRelativeLayout);
 
-        home_bus = findViewById(R.id.homeBtnBusTicket);
-        home_train = findViewById(R.id.homeBtnTrainTicket);
+        home_bus = findViewById(R.id.et_shop_visit);
+        home_train = findViewById(R.id.et_ek_shop_report);
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             home_bus.setTypeface(AppController.getInstance().getOxygenLightFont());
@@ -86,12 +86,12 @@ public class ETicketMainActivity extends AppCompatActivity {
     public void onButtonClicker(View v) {
 
         switch (v.getId()) {
-            case R.id.homeBtnBusTicket:
+            case R.id.et_shop_visit:
 //                startActivity(new Intent(this, BusMainActivity.class));
 //                finish();
                 showCommingSoonMesage();
                 break;
-            case R.id.homeBtnTrainTicket:
+            case R.id.et_ek_shop_report:
 //                startActivity(new Intent(this, TrainMainActivity.class));
 //                finish();
 //                showCommingSoonMesage();

@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.product.ekShop.EkShopeMenuActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
@@ -93,6 +94,11 @@ public class ProductMenuActivity extends BaseActivity {
                 serviceType = TAG_WHOLESALE;
                 checkPermission();
                 break;
+
+            case R.id.homeBtnEkShope:
+                startActivity(new Intent(this, EkShopeMenuActivity.class));
+                break;
+
             default:
                 break;
         }
