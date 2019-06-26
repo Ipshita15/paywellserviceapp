@@ -1228,7 +1228,7 @@
         </activity>
 
         <activity
-            android:name=".activity.eticket.airticket.ticketCencel.TricketCencelActivity"
+            android:name=".activity.eticket.airticket.ticketCencel.TricketCancelActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             >
@@ -1248,6 +1248,10 @@
             android:theme="@style/AppTheme.NoActionBar"
             >
         </activity>
+
+        <receiver android:name=".ActionReceiver">
+
+        </receiver>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
