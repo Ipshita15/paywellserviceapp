@@ -69,7 +69,7 @@ import com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.MyFavoriteMenuActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
 import com.cloudwell.paywell.services.activity.notification.allNotificaiton.NotificationAllActivity;
-import com.cloudwell.paywell.services.activity.product.ProductMenuBaseActivity;
+import com.cloudwell.paywell.services.activity.product.ProductMenuActivity;
 import com.cloudwell.paywell.services.activity.product.productHelper.ProductHelper;
 import com.cloudwell.paywell.services.activity.refill.RefillBalanceMainActivity;
 import com.cloudwell.paywell.services.activity.refill.banktransfer.BankTransferMainActivity;
@@ -845,7 +845,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 if (!mCd.isConnectingToInternet()) {
                     AppHandler.showDialog(getSupportFragmentManager());
                 } else {
-                    startActivity(new Intent(MainActivity.this, ProductMenuBaseActivity.class));
+                    startActivity(new Intent(MainActivity.this, ProductMenuActivity.class));
                 }
             } else {
                 Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.wait_msg, Snackbar.LENGTH_LONG);
@@ -1231,7 +1231,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_PRODUCT_MENU);
 
                 if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("true")) {
-                    startActivity(new Intent(MainActivity.this, ProductMenuBaseActivity.class));
+                    startActivity(new Intent(MainActivity.this, ProductMenuActivity.class));
                 } else {
                     showNotAllowMessage();
                 }
