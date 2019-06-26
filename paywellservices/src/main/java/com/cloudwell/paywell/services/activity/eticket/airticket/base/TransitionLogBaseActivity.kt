@@ -58,7 +58,7 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
 
 
     fun showActionMenuPopupMessate(model: Datum) {
-//        model.message = "Ticketed"
+        model.message = "Ticketed"
 
         AppStorageBox.put(applicationContext, AppStorageBox.Key.BOOKING_STATUS_ITEM, model)
 
@@ -107,10 +107,6 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
         })
 
         tricketChooserFragment.show(supportFragmentManager, "dialog")
-    }
-
-    private fun handleRescheduleFlow(item: Datum) {
-
     }
 
 

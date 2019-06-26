@@ -105,9 +105,7 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
 
                 hiddenSoftKeyboard()
 
-                if (typeOfRequest == KEY_BookingCANCEL) {
-                    askForPin(bookingId, reason, typeOfRequest)
-                } else if (typeOfRequest == KEY_ticket_cancel) {
+                if (typeOfRequest == KEY_ticket_cancel) {
                     askForPin(bookingId, reason, typeOfRequest)
                 } else if (typeOfRequest == KEY_ReIssue) {
                     val newIntent = ReIssueTicketActivity.newIntent(applicationContext, item)
@@ -150,9 +148,7 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
                 if (isInternetConnection) {
 
                     val userName = AppHandler.getmInstance(applicationContext).imeiNo
-                    if (typeOfRequest == KEY_BookingCANCEL) {
-                        submitCancelRequest(userName, PIN_NO, bookingId, cancelReason, "json")
-                    } else if (typeOfRequest == KEY_ticket_cancel) {
+                    if (typeOfRequest == KEY_ticket_cancel) {
                         submitCancelTicketRequest(userName, PIN_NO, bookingId, cancelReason, "json")
                     }
 
@@ -246,11 +242,9 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
     }
 
     companion object {
-
-        var KEY_BookingCANCEL = "Booking Cancel Request"
         var KEY_ticket_cancel = "Ticket Cancel Request"
-        var KEY_ReIssue = "ReIssue Request"
-        var KEY_ReSchedule = "ReSchedule Request"
+        var KEY_ReIssue = "Reissue Request"
+        var KEY_ReSchedule = "Reschedule Request"
     }
 
 
