@@ -58,7 +58,7 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
 
 
     fun showActionMenuPopupMessate(model: Datum) {
-        model.message = "Ticketed"
+//        model.message = "Ticketed"
 
         AppStorageBox.put(applicationContext, AppStorageBox.Key.BOOKING_STATUS_ITEM, model)
 
