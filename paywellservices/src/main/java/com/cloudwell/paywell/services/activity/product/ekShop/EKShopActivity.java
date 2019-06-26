@@ -104,7 +104,7 @@ public class EKShopActivity extends BaseActivity {
         } else {
             switchToCzLocale(new Locale("bn", ""));
         }
-        setToolbar(getString(R.string.home_product_ajker_deal));
+        setToolbar(getString(R.string.home_title_ek_shope));
 
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
@@ -121,7 +121,7 @@ public class EKShopActivity extends BaseActivity {
             return;
 
         }
-        // showProgressDialog();
+        showProgressDialog();
 
         AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
@@ -133,7 +133,7 @@ public class EKShopActivity extends BaseActivity {
         ekshopToken.enqueue(new Callback<ResEkShopToken>() {
             @Override
             public void onResponse(Call<ResEkShopToken> call, Response<ResEkShopToken> response) {
-                // dismissProgressDialog();
+                dismissProgressDialog();
 
                 if (response.isSuccessful()) {
                     if (response.body().getStatus() == 200) {
@@ -158,7 +158,7 @@ public class EKShopActivity extends BaseActivity {
 
             @Override
             public void onFailure(Call<ResEkShopToken> call, Throwable t) {
-                //dismissProgressDialog();
+                dismissProgressDialog();
 
                 Snackbar snackbar = Snackbar.make(relativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));

@@ -567,6 +567,7 @@
 
     <string name="ek_shope_token">http://sandbox.paywellonline.com/ekshop/get_token</string>
     <string name="ek_redirect">http://sandbox.paywellonline.com/ekshop/redirect?</string>
+    <string name="ek_report">http://sandbox.paywellonline.com/ekshop/report</string>
 
 
     <string name="b2b_token">https://wholesale.paywellonline.com/Home/CreateToken?</string>
@@ -798,10 +799,10 @@
     <string name="reissue_reschedule">Reissue/Reschedule</string>
     <string name="title_reissue">Tricket Reissue</string>
     <string name="reschedule">Reschedule</string>
-    <string name="ekshop">Ekshop</string>
-    <string name="visit">Visit</string>
-    <string name="report">Report</string>
-    <string name="home_title_ek_shope">Ekshop</string>
+    <string name="ekshop">এক-শপ</string>
+    <string name="visit">প্রবেশ</string>
+    <string name="report">প্রতিবেদন</string>
+    <string name="home_title_ek_shope">এক-শপ</string>
 
 
 </resources>

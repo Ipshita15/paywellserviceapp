@@ -13,8 +13,9 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.base.ProductEecommerceBaseActivity;
 import com.cloudwell.paywell.services.activity.product.ekShop.model.ResEkShopToken;
+import com.cloudwell.paywell.services.activity.product.ekShop.report.ReportBaseActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppHandler;
@@ -33,7 +34,7 @@ import retrofit2.Response;
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 2019-06-24.
  */
-public class EkShopeMenuActivity extends BaseActivity {
+public class EkShopeMenuBaseActivity extends ProductEecommerceBaseActivity {
 
     private static final int PERMISSIONS_REQUEST_WRITE_STORAGE = 100;
     String URL;
@@ -61,6 +62,7 @@ public class EkShopeMenuActivity extends BaseActivity {
                 startActivity(new Intent(getApplicationContext(), EKShopActivity.class));
                 break;
             case R.id.et_ek_shop_report:
+                startActivity(new Intent(getApplicationContext(), ReportBaseActivity.class));
                 break;
 
             default:

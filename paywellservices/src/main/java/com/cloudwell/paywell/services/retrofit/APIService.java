@@ -17,6 +17,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.mo
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.model.ResInvoideEmailAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationReadAPI;
+import com.cloudwell.paywell.services.activity.product.ekShop.model.ResEKReport;
 import com.cloudwell.paywell.services.activity.product.ekShop.model.ResEkShopToken;
 import com.cloudwell.paywell.services.activity.refill.model.BranchData;
 import com.cloudwell.paywell.services.activity.refill.model.DistrictData;
@@ -218,6 +219,10 @@ public interface APIService {
     @POST()
     @Multipart
     Call<ResEkShopToken> getEkshopToken(@Url String url, @Part("uid") String rid, @Part("utype") String utype);
+
+    @POST()
+    @Multipart
+    Call<ResEKReport> getReport(@Url String url, @Part("uid") String rid, @Part("start_date") String start_date, @Part("end_date") String end_date, @Part("order_code") String order_code);
 }
 
 

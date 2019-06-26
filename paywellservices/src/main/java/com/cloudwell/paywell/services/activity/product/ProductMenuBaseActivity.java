@@ -17,8 +17,8 @@ import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
-import com.cloudwell.paywell.services.activity.base.BaseActivity;
-import com.cloudwell.paywell.services.activity.product.ekShop.EkShopeMenuActivity;
+import com.cloudwell.paywell.services.activity.base.ProductEecommerceBaseActivity;
+import com.cloudwell.paywell.services.activity.product.ekShop.EkShopeMenuBaseActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
@@ -31,7 +31,7 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 
-public class ProductMenuActivity extends BaseActivity {
+public class ProductMenuBaseActivity extends ProductEecommerceBaseActivity {
     RelativeLayout relativeLayout;
     private static final int PERMISSIONS_REQUEST_WRITE_STORAGE = 100;
     private AppHandler mAppHandler;
@@ -76,7 +76,7 @@ public class ProductMenuActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(ProductMenuActivity.this, MainActivity.class);
+        Intent intent = new Intent(ProductMenuBaseActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
@@ -96,7 +96,7 @@ public class ProductMenuActivity extends BaseActivity {
                 break;
 
             case R.id.homeBtnEkShope:
-                startActivity(new Intent(this, EkShopeMenuActivity.class));
+                startActivity(new Intent(this, EkShopeMenuBaseActivity.class));
                 break;
 
             default:
@@ -184,11 +184,11 @@ public class ProductMenuActivity extends BaseActivity {
                     dismissProgressDialog();
                     if (serviceType == TAG_AJKER_DEAL) {
                         AjkerDealActivity.token = result;
-                        startActivity(new Intent(ProductMenuActivity.this, AjkerDealActivity.class));
+                        startActivity(new Intent(ProductMenuBaseActivity.this, AjkerDealActivity.class));
                     } else {
                         JSONObject jsonObject = new JSONObject(result);
                         WholesaleActivity.token = jsonObject.getString("Data");
-                        startActivity(new Intent(ProductMenuActivity.this, WholesaleActivity.class));
+                        startActivity(new Intent(ProductMenuBaseActivity.this, WholesaleActivity.class));
                     }
                 } else {
                     Snackbar snackbar = Snackbar.make(relativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);

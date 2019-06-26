@@ -7,7 +7,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/ic_background_card"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:context=".activity.product.ProductMenuActivity">
+                tools:context=".activity.product.ProductMenuBaseActivity">
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -82,7 +82,7 @@
 
                     android:id="@+id/homeBtnEkShope"
                     style="@style/HomeButtonNew"
-                    android:drawableTop="@drawable/ic_ek_shope_menu"
+                    android:drawableTop="@drawable/ic_ekshop"
                     android:onClick="onButtonClicker"
                     android:text="@string/ekshop"
                     android:textAllCaps="false"

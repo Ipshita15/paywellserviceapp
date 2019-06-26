@@ -37,7 +37,7 @@
                 <Button
                     android:id="@+id/et_shop_visit"
                     style="@style/HomeButtonNew"
-                    android:drawableTop="@drawable/ic_ek_shope_visit"
+                    android:drawableTop="@drawable/ic_visit"
                     android:onClick="onButtonClicker"
                     android:text="@string/visit"
                     android:textAllCaps="false"
@@ -53,7 +53,7 @@
                 <Button
                     android:id="@+id/et_ek_shop_report"
                     style="@style/HomeButtonNew"
-                    android:drawableTop="@drawable/ic_ek_report"
+                    android:drawableTop="@drawable/ic_report"
                     android:onClick="onButtonClicker"
                     android:text="@string/report"
                     android:textAllCaps="false"
