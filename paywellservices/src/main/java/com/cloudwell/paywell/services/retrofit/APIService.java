@@ -54,7 +54,7 @@ import retrofit2.http.Url;
 public interface APIService {
 
 
-    @POST("paywellapi/PaywellAuthentication/GenerateToken")
+    @POST()
     @FormUrlEncoded
     Call<APIResposeGenerateToken> callGenerateToken(@Url String ur, @Header("Authorization") String AuthorizationKey, @FieldMap Map<String, String> params);
 
@@ -231,6 +231,7 @@ public interface APIService {
     @POST()
     @Multipart
     Call<ResEKReport> getReport(@Url String url, @Part("uid") String rid, @Part("start_date") String start_date, @Part("end_date") String end_date, @Part("order_code") String order_code);
+
     @POST("paywellapi/index.php/PaywellParibahanService/getBusListData")
     @FormUrlEncoded
     Call<ResGetBusListData> getBusListData(@Field("username") String username, @Field("skey") String skey);
