@@ -17,6 +17,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.mo
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.model.ResInvoideEmailAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationReadAPI;
+import com.cloudwell.paywell.services.activity.notification.model.ResposeReScheduleNotificationAccept;
 import com.cloudwell.paywell.services.activity.product.ekShop.model.ResEKReport;
 import com.cloudwell.paywell.services.activity.product.ekShop.model.ResEkShopToken;
 import com.cloudwell.paywell.services.activity.refill.model.BranchData;
@@ -214,6 +215,11 @@ public interface APIService {
     @POST("PaywelltransactionHaltrip/airTicketIssue")
     @Multipart
     Call<ResIssueTicket> callIssueTicketAPI(@Part("username") String username, @Part("password") String password, @Part("BookingID") String BookingID, @Part("IsAcceptedPriceChangeandIssueTicket") boolean ssAcceptedPriceChangeandIssueTicket);
+
+
+    @POST("PaywelltransactionHaltrip/reScheduleNotificationAccept")
+    @Multipart
+    Call<ResposeReScheduleNotificationAccept> reScheduleNotificationAccept(@Part("username") String username, @Part("id") int id, @Part("accept_status") int accept_status);
 
 
     @POST()

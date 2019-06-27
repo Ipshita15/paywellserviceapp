@@ -84,7 +84,6 @@ ext {
     timberVersion = '4.6.0'
     retrofitVersion = '2.3.0'
     rxJava = '2.1.6'
-    room_version = "2.1.0-alpha03"
 
     room_version = "1.1.1"
 }
@@ -213,6 +212,13 @@ dependencies {
     implementation 'com.github.yalantis:ucrop:2.2.2'
 
     implementation 'su.j2e:rv-joiner:1.0.9'
+
+    dependencies {
+        implementation("com.github.bumptech.glide:glide:4.9.0") {
+            exclude group: "com.android.support"
+        }
+
+    }
 
 
 }

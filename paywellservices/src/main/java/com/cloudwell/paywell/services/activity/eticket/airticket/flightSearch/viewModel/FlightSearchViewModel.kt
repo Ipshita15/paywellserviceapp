@@ -11,6 +11,8 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.m
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.Segment
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.view.SeachViewStatus
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.model.ResCommistionMaping
+import com.cloudwell.paywell.services.utils.CalculationHelper
+import java.util.*
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 19/2/19.
@@ -97,7 +99,23 @@ class FlightSearchViewModel : AirTicketBaseViewMode() {
     private fun handleRepose(t: ReposeAirSearch?) {
         t.let {
             it?.data?.results.let {
-                //                val sortedListTotalFare = it?.sortedWith(compareBy(Result::totalFare, Result::totalFare))
+                //                val sortedList = it?.sortedBy {
+//                    CalculationHelper.getTotalFare(it.fares)
+//                }
+
+                Collections.sort(it) { car1, car2 ->
+                    val a = CalculationHelper.getTotalFare(car1.fares).replace(",", "").toDouble()
+                    val b = CalculationHelper.getTotalFare(car2.fares).replace(",", "").toDouble()
+
+                    if (a < b) {
+                        -1
+                    } else if (a > b) {
+                        1
+                    } else {
+                        0
+                    }
+
+                }
                 mListMutableLiveDataFlightData.value = it
                 mSearchId.value = t?.data?.searchId
             }

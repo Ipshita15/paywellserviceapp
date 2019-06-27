@@ -48,7 +48,6 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
     public static String KEY_BOOKING_ID = "Booking_Id";
     private String bookingCancelId = new String();
 
-    public Double mCancellationFee = 0.0;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,10 +82,11 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
 
                 if (!bookingIdET.getText().toString().isEmpty() && !bookingCancelReasonSPNR.getSelectedItem().toString().equals("Select your reason")) {
                     String userName = mAppHandler.getImeiNo();
+                    String reason = bookingCancelReasonSPNR.getSelectedItem().toString();
 
                     askForPin(bookingIdET.getText().toString(), bookingCancelReasonSPNR.getSelectedItem().toString());
 
-                    //callCancelMapping(userName, bookingIdET.getText().toString());
+//                    callCancelMapping(userName, bookingIdET.getText().toString(), reason, Companion.getKEY_BookingCANCEL(), new Datum());
                 } else {
 
                     hideUserKeyboard();
@@ -192,14 +192,6 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
         alert.show();
     }
 
-    private void showMsg(String msg) {
-
-        CancellationStatusMessageFragment priceChangeFragment = new CancellationStatusMessageFragment();
-        CancellationStatusMessageFragment.message = msg;
-
-        priceChangeFragment.show(getSupportFragmentManager(), "dialog");
-
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -216,55 +208,12 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
     }
 
 
-//    private void callCancelMapping(String userName, String bookingId) {
-//
-//        showProgressDialog();
-//
-//        ApiUtils.getAPIService().getCancelMap(userName, bookingId).enqueue(new Callback<ResCancellationMapping>() {
-//            @Override
-//            public void onResponse(Call<ResCancellationMapping> call, Response<ResCancellationMapping> response) {
-//                dismissProgressDialog();
-//                assert response.body() != null;
-//                if (response.body().getStatus() == 200) {
-//                    showUserCencelData(response.body());
-//
-//                } else {
-//                    showSnackMessageWithTextMessage(response.body().getMessage());
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResCancellationMapping> call, Throwable t) {
-//                dismissProgressDialog();
-//                showSnackMessageWithTextMessage(getString(R.string.please_try_again));
-//
-//            }
-//
-//
-//        });
-//    }
+    private void showMsg(String msg) {
 
-//    private void showUserCencelData(ResCancellationMapping r) {
-//
-//        CancellationFeeFragment priceChangeFragment = new CancellationFeeFragment();
-//        CancellationFeeFragment.resCencelMaping = r;
-//
-//        priceChangeFragment.setOnClickHandlerTest(new CancellationFeeFragment.OnClickHandler() {
-//            @Override
-//            public void onClickActionIssueTicket(double cancellationFee) {
-//                mCancellationFee = cancellationFee;
-//                hiddenSoftKeyboard();
-//
-//
-//                askForPin(bookingIdET.getText().toString(), bookingCancelReasonSPNR.getSelectedItem().toString());
-//
-//
-//            }
-//        });
-//
-//        priceChangeFragment.show(getSupportFragmentManager(), "dialog");
-//
-//
-//    }
+        CancellationStatusMessageFragment priceChangeFragment = new CancellationStatusMessageFragment();
+        CancellationStatusMessageFragment.message = msg;
+        priceChangeFragment.show(getSupportFragmentManager(), "dialog");
+
+    }
 
 }
