@@ -92,5 +92,5 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView18"
         app:layout_constraintStart_toEndOf="@+id/textView18"
         app:layout_constraintTop_toTopOf="@+id/textView18"
-        app:srcCompat="@drawable/prices_changed_icon"/>
+        app:srcCompat="@drawable/prices_changed_icon" />
 </android.support.constraint.ConstraintLayout>

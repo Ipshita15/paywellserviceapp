@@ -7,8 +7,7 @@
              android:paddingRight="10dp"
              android:stretchColumns="2">
 
-    <TableRow
-        android:id="@+id/tableRow5"
+    <TableRow android:id="@+id/tableRow5"
         >
 
         <TextView
@@ -33,8 +32,7 @@
 
     </TableRow>
 
-    <TableRow
-        android:id="@+id/tableRow6"
+    <TableRow android:id="@+id/tableRow6"
         >
 
         <TextView
@@ -86,8 +84,7 @@
 
     </TableRow>
 
-    <TableRow
-        android:id="@+id/tableRow1"
+    <TableRow android:id="@+id/tableRow1"
         >
 
         <TextView
@@ -97,8 +94,7 @@
             android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:text="@string/base_fare"
-            android:textColor="@color/black"
-            />
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/tvFare"
@@ -139,8 +135,7 @@
     </TableRow>
 
 
-    <TableRow
-        android:id="@+id/tableRow4"
+    <TableRow android:id="@+id/tableRow4"
         >
 
         <TextView
@@ -150,7 +145,7 @@
             android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:text="@string/othercharges"
-            android:textColor="@color/black33333"/>
+            android:textColor="@color/black33333" />
 
         <TextView
             android:id="@+id/tvArrivalTime"
