@@ -58,4 +58,11 @@ public interface BusTicketDab {
 
     @Query("SELECT * FROM  TripScheduleInfo where to_location = :toLocation   AND from_location = :fromLocation;")
     public List<TripScheduleInfo> searchTrip(String toLocation, String fromLocation);
+
+//    @Query("SELECT DISTINCT to_location FROM  TripScheduleInfo where to_location LIKE :cityName;")
+//    @Query("SELECT to_location + from_location AS city_list FROM  TripScheduleInfo;")
+//    public List<String> searchAvailableCityForBus();
+    @Query("SELECT from_location as city_list FROM TripScheduleInfo UNION " +
+            "SELECT to_location as city_list FROM TripScheduleInfo ;")
+    public List<String> searchAvailableCityForBus();
 }
