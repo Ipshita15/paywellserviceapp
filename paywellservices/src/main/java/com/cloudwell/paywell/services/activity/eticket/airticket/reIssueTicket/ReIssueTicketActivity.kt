@@ -33,7 +33,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import su.j2e.rvjoiner.RvJoiner
-import kotlinx.android.synthetic.main.flight_list_item_new.recyclerView as recyclerView1
 
 class ReIssueTicketActivity : AirTricketBaseActivity(), ShowMessageFragment.MyInterface {
     override fun onOkButtonClick() {

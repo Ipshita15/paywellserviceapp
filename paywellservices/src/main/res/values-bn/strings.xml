@@ -564,6 +564,12 @@
     <string name="ajd_refresh_token">http://ajkerdeal.paywellonline.com/MetaData/PingServer</string>
     <string name="ajd_share">http://ajkerdeal.paywellonline.com</string>
 
+
+    <string name="ek_shope_token">http://sandbox.paywellonline.com/ekshop/get_token</string>
+    <string name="ek_redirect">http://sandbox.paywellonline.com/ekshop/redirect?</string>
+    <string name="ek_report">http://sandbox.paywellonline.com/ekshop/report</string>
+
+
     <string name="b2b_token">https://wholesale.paywellonline.com/Home/CreateToken?</string>
     <string name="b2b_login">https://wholesale.paywellonline.com/Home/CheckLoginByToken?</string>
     <string name="b2b_refresh_token">https://wholesale.paywellonline.com/Retailer/MetaData/PingServer</string>
@@ -792,6 +798,17 @@
     <string name="reissue_reschedule">Reissue/Reschedule</string>
     <string name="title_reissue">Tricket Reissue</string>
     <string name="reschedule">Reschedule</string>
+    <string name="ekshop">এক-শপ</string>
+    <string name="visit">প্রবেশ</string>
+    <string name="report">প্রতিবেদন</string>
+    <string name="home_title_ek_shope">এক-শপ</string>
+    <string name="invalid_date">ভুল তারিখ</string>
+    <string name="start_date">শুরুর তারিখ</string>
+    <string name="end_date">শেষ তারিখ</string>
+    <string name="or">অথবা</string>
+    <string name="order_code">অর্ডার কোড</string>
+    <string name="optional">ঐচ্ছিক</string>
+    <string name="search_report">অনুসন্ধান রিপোর্ট</string>
 
 
 </resources>
