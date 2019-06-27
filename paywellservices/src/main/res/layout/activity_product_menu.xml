@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/relativeLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/ic_background_card"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:context=".activity.product.ProductMenuActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_background_card"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activity.product.ProductMenuActivity">
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -30,7 +30,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/homeBtnAjkerDeal"
@@ -40,12 +40,12 @@
                     android:onClick="onButtonClicker"
                     android:text="@string/home_product_ajker_deal"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/homeBtnWholesale"
@@ -55,12 +55,12 @@
                     android:onClick="onButtonClicker"
                     android:text="@string/home_product_pw_wholesale"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
 
             </LinearLayout>
 
@@ -76,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:gravity="center"/>
+                    android:gravity="center" />
 
                 <Button
 
@@ -86,14 +86,14 @@
                     android:onClick="onButtonClicker"
                     android:text="@string/ekshop"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:gravity="center"/>
+                    android:gravity="center" />
 
                 <Button
                     style="@style/HomeButtonNew"
@@ -102,14 +102,14 @@
                     android:text="@string/home_eticket_air"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible" />
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:gravity="center"/>
+                    android:gravity="center" />
 
             </LinearLayout>
         </LinearLayout>

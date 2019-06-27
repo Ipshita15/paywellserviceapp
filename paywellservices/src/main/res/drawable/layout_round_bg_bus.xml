@@ -7,8 +7,7 @@
         android:top="0dp">
 
         <!-- Insert your shape here: -->
-        <color android:color="#00a89b">
-        </color>
+        <color android:color="#00a89b"></color>
 
 
     </item>
