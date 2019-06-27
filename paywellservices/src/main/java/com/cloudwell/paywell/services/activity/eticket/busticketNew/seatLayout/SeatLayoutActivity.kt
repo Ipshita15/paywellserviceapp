@@ -55,11 +55,12 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
         val bus_id = "71"
         val departure_id = "457"
         val departure_date = "2019-06-20"
-        val seat_ids = ""
-//        val seat_ids = getString(R.string.jsonData)
+//        val seat_ids = ""
+        val seat_ids = getString(R.string.jsonData)
 
 
-        BusTicketRepository(this).getSeatCheck(transport_id, route, bus_id, departure_id, departure_date, seat_ids).observeForever {
+        BusTicketRepository().getSeatCheck(transport_id, route, bus_id, departure_id, departure_date, seat_ids).observeForever {
+
 
         }
 

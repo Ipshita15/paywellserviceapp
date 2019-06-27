@@ -5,33 +5,29 @@ import android.os.Bundle
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketRepository
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.seatLayout.SeatLayoutActivity
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.BusTransportListActivity
 import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus
 import com.cloudwell.paywell.services.eventBus.model.MessageToBottom
 import com.squareup.otto.Subscribe
 
 class BusSearchActivity : BusTricketBaseActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bus_search)
-
         setToolbar(getString(R.string.title_bus_tickets), resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
-
 
 
         showProgressDialog()
 
-
-
-        BusTicketRepository(this).getBusListData().observeForever {
+        BusTicketRepository().getBusListData().observeForever {
             if (it == true) {
                 dismissProgressDialog()
-                startActivity(Intent(this, SeatLayoutActivity::class.java))
-
+                startActivity(Intent(this, BusTransportListActivity::class.java))
+            } else {
+                dismissProgressDialog()
+                showSnackMessageWithTextMessage(getString(R.string.please_try_again))
             }
         }
-
 
     }
 

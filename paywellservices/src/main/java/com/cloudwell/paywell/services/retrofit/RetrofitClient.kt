@@ -91,6 +91,7 @@ object RetrofitClient {
             val okHttpClient = httpClient.build()
             retrofitPHP7 = Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create()).client(okHttpClient)
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .addConverterFactory(ScalarsConverterFactory.create())
                     .build()
         }
         return retrofitPHP7

@@ -3,11 +3,11 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew
 import android.arch.lifecycle.MutableLiveData
 import android.content.Context
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
+import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.database.DatabaseClient
 import com.cloudwell.paywell.services.retrofit.ApiUtils
-import com.cloudwell.paywell.services.utils.StringUtility
 import com.orhanobut.logger.Logger
 import okhttp3.ResponseBody
 import org.jetbrains.anko.doAsync
@@ -21,9 +21,14 @@ import retrofit2.Response
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 19/2/19.
  */
-class BusTicketRepository(private val mContext: Context) {
+class BusTicketRepository() {
 
     private var mAppHandler: AppHandler? = null
+    private var mContext: Context? = null
+
+    init {
+        mContext = AppController.getContext()
+    }
 
     val isFinshedDataLoad = MutableLiveData<Boolean>()
 
@@ -32,17 +37,24 @@ class BusTicketRepository(private val mContext: Context) {
         val userName = mAppHandler!!.imeiNo
         val skey = ApiUtils.KEY_SKEY
 
+
         ApiUtils.getAPIServicePHP7().getBusListData(userName, skey).enqueue(object : Callback<ResGetBusListData> {
             override fun onResponse(call: Call<ResGetBusListData>, response: Response<ResGetBusListData>) {
                 if (response.isSuccessful) {
                     val body = response.body()
                     body.let {
-                        val accessKey = it?.accessKey
-                        AppStorageBox.put(mContext, AppStorageBox.Key.ACCESS_KEY, accessKey)
 
-                        it?.data?.data?.let { it1 -> saveBuss(it1) }
+                        if (it?.status ?: 0 == 200) {
+                            val accessKey = it?.accessKey
+                            AppStorageBox.put(mContext, AppStorageBox.Key.ACCESS_KEY, accessKey)
 
-                        getBusScheduleDate()
+                            it?.data?.data?.let { it1 -> saveBuss(it1) }
+                            getBusScheduleDate()
+
+                        } else {
+                            isFinshedDataLoad.value = false
+                        }
+
                     }
 
                     com.orhanobut.logger.Logger.v("" + body)
@@ -50,7 +62,8 @@ class BusTicketRepository(private val mContext: Context) {
             }
 
             override fun onFailure(call: Call<ResGetBusListData>, t: Throwable) {
-                com.orhanobut.logger.Logger.e("" + t.message)
+                isFinshedDataLoad.value = false
+
             }
         })
         return isFinshedDataLoad
@@ -71,33 +84,36 @@ class BusTicketRepository(private val mContext: Context) {
                 if (response.isSuccessful) {
                     val body = response.body()
                     body.let {
+                        val jsonObject = JSONObject(it?.string())
+                        if (jsonObject.getInt("status") == 200) {
+                            handleResponse(jsonObject)
+                        } else {
+                            isFinshedDataLoad.value = false
+                        }
 
-                        it?.string()?.let { it1 -> handleResponse(it1) }
                     }
-                    com.orhanobut.logger.Logger.v("" + body)
                 }
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                com.orhanobut.logger.Logger.e("" + t.message)
+
+                isFinshedDataLoad.value = false
+
             }
         })
         return data
     }
 
-    private fun handleResponse(string: String) {
+    private fun handleResponse(jsonObject: JSONObject) {
 
         doAsync {
-
             val inseredIds = DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().clearLocalBusDB()
             DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().clearSchedule()
             DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().clearTripScheduleInfo()
             DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().clearBoothInfo()
 
             uiThread {
-                insertBusScullerData(string)
-
-
+                insertBusScullerData(jsonObject)
             }
         }
 
@@ -105,8 +121,7 @@ class BusTicketRepository(private val mContext: Context) {
     }
 
 
-    private fun insertBusScullerData(string: String) {
-        val jsonObject = JSONObject(string)
+    private fun insertBusScullerData(jsonObject: JSONObject) {
         val dataObject = jsonObject.getJSONObject("data")
         val busInfoObject = dataObject.getJSONObject("bus_info")
         val scheduleInfoObject = dataObject.getJSONObject("schedule_info")
@@ -165,7 +180,7 @@ class BusTicketRepository(private val mContext: Context) {
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 
-        val allScheduleData = mutableListOf<Schedule>()
+        val allScheduleData = mutableListOf<BusSchedule>()
         val allTripScheduleInfo = mutableListOf<TripScheduleInfo>()
         val allBoothInfo = mutableListOf<BoothInfo>()
 
@@ -184,16 +199,15 @@ class BusTicketRepository(private val mContext: Context) {
                     val scheduleId = it
 
 
-                    val tripScheduleInfo = TripScheduleInfo(toKey, fromKey, scheduleId)
-                    allTripScheduleInfo.add(tripScheduleInfo)
-
-
                     val model = schedules.getJSONObject(scheduleId)
                     val schedule_time = model.getString("schedule_time")
                     val bus_id = model.getString("bus_id")
                     val coach_no = model.getString("coach_no")
                     val schedule_type = model.getString("schedule_type")
                     val validity_date = model.getString("validity_date")
+
+                    val tripScheduleInfo = TripScheduleInfo(toKey, fromKey, scheduleId, validity_date)
+                    allTripScheduleInfo.add(tripScheduleInfo)
 
 
                     val priceObject = model.getJSONObject("ticket_price")
@@ -206,14 +220,14 @@ class BusTicketRepository(private val mContext: Context) {
 
                     var allowedSeatStoreString = ""
                     val allowedSeatNumbersObject = model.getJSONObject("allowed_seat_numbers")
-                    val allowedSeatNumbersObjectKeys = allowedSeatNumbersObject.keys()
-                    allowedSeatNumbersObjectKeys.forEach {
-                        val seatNumber = it
-                        val seatName = allowedSeatNumbersObject.get(seatNumber)
-                        allowedSeatStoreString = allowedSeatStoreString + seatNumber + ":" + seatName + ","
-
-                    }
-                    allowedSeatStoreString = StringUtility.removeLastChar(allowedSeatStoreString)
+//                    val allowedSeatNumbersObjectKeys = allowedSeatNumbersObject.keys()
+//                    allowedSeatNumbersObjectKeys.forEach {
+//                        val seatNumber = it
+//                        val seatName = allowedSeatNumbersObject.get(seatNumber)
+//                        allowedSeatStoreString = allowedSeatStoreString + seatNumber + ":" + seatName + ","
+//
+//                    }
+                    allowedSeatStoreString = allowedSeatNumbersObject.toString()
 
 
                     val boothDepartureInfo = model.getJSONObject("booth_departure_info")
@@ -227,7 +241,7 @@ class BusTicketRepository(private val mContext: Context) {
                     }
 
 
-                    val schedule = Schedule(scheduleId, schedule_time, bus_id, coach_no, schedule_type, validity_date, ticket_price, dateKey.toString(), allowedSeatStoreString)
+                    val schedule = BusSchedule(scheduleId, schedule_time, bus_id, coach_no, schedule_type, validity_date, ticket_price, dateKey.toString(), allowedSeatStoreString)
                     allScheduleData.add(schedule)
                 }
 
@@ -242,7 +256,7 @@ class BusTicketRepository(private val mContext: Context) {
 
         }
 
-        this.isFinshedDataLoad.value = true
+        isFinshedDataLoad.value = true
 
     }
 
@@ -265,7 +279,7 @@ class BusTicketRepository(private val mContext: Context) {
 
     }
 
-    fun getSeatCheck(transport_id: String, route: String, bus_id: String, departure_id: String, departure_date: String, seat_ids: String): MutableLiveData<ResGetBusListData> {
+    fun getSeatCheck(transport_id: String, route: String, bus_id: String, departure_id: String, departure_date: String, seat_ids: String): MutableLiveData<ResSeatInfo> {
 
         mAppHandler = AppHandler.getmInstance(mContext)
 
@@ -274,7 +288,7 @@ class BusTicketRepository(private val mContext: Context) {
 
         val accessKey = AppStorageBox.get(mContext, AppStorageBox.Key.ACCESS_KEY) as String
 
-        val data = MutableLiveData<ResGetBusListData>()
+        val data = MutableLiveData<ResSeatInfo>()
 
         ApiUtils.getAPIServicePHP7().seatCheck(
                 userName,
@@ -291,7 +305,21 @@ class BusTicketRepository(private val mContext: Context) {
                 if (response.isSuccessful) {
                     val body = response.body()
                     body.let {
-                        it?.string()?.let { it1 -> handleResponseseatCheck(it1) }
+                        val allBusSeat = mutableListOf<BusSeat>()
+                        var tototalAvailableSeat = 0
+                        val jsonObject = JSONObject(it?.string())
+                        if (jsonObject.getInt("status") == 200) {
+                            val seatInfo = jsonObject.getJSONObject("seatInfo")
+                            val keys = seatInfo.keys()
+                            keys.forEach {
+                                val o = seatInfo.get(it) as JSONObject
+                                if (o.getString("status").equals("Available")) {
+                                    tototalAvailableSeat = tototalAvailableSeat + 1
+                                }
+                                allBusSeat.add(BusSeat(o.getString("seat_lbls"), o.getString("status"), o.getInt("value")))
+                            }
+                            data.value = ResSeatInfo(tototalAvailableSeat, allBusSeat)
+                        }
                     }
                     com.orhanobut.logger.Logger.v("" + body)
                 }
@@ -310,6 +338,21 @@ class BusTicketRepository(private val mContext: Context) {
         Logger.v("", "")
 
     }
+
+    fun searchTransport(requestBusSearch: RequestBusSearch): MutableLiveData<List<TripScheduleInfoAndBusSchedule>> {
+
+        val data = MutableLiveData<List<TripScheduleInfoAndBusSchedule>>()
+
+        doAsync {
+            val search = DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().search(requestBusSearch.to, requestBusSearch.from)
+            uiThread {
+                data.value = search
+            }
+        }
+        return data
+
+    }
+
 
 //    fun loadAPIData() {
 //
