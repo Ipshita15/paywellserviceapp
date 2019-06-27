@@ -2,7 +2,6 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -36,8 +35,9 @@
         android:layout_height="1dp"
         android:layout_marginTop="8dp"
         android:background="#404040"
-        app:layout_constraintTop_toBottomOf="@+id/tvOrderPrices"
-        tools:layout_editor_absoluteX="0dp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_order"/>
 
     <TextView
         android:id="@+id/tvOrderPrices"
@@ -49,5 +49,19 @@
         android:text="price"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvOrderCode"/>
+
+    <ImageView
+        android:id="@+id/iv_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvOrderPrices"
+        app:srcCompat="@drawable/air_ticket"/>
 
 </android.support.constraint.ConstraintLayout>

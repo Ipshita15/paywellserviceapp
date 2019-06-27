@@ -798,6 +798,12 @@
     <string name="report">Report</string>
     <string name="home_title_ek_shope">Ekshop</string>
     <string name="invalid_date">Invalid date</string>
+    <string name="start_date">Start date</string>
+    <string name="end_date">End date</string>
+    <string name="or">OR</string>
+    <string name="order_code">Order code</string>
+    <string name="optional">Optional</string>
+    <string name="search_report">Search report</string>
 
 
 </resources>

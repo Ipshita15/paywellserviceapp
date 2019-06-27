@@ -58,11 +58,11 @@
                             android:paddingLeft="2dp"
                             android:paddingEnd="2dp"
                             android:paddingRight="2dp"
-                            android:text="Start date"
+                            android:text="@string/start_date"
                             android:textAppearance="?android:attr/textAppearanceMedium"/>
                     </LinearLayout>
 
-                    <EditText
+                    <com.cloudwell.paywell.services.customView.clearableEditText.ClearableEditText
                         android:id="@+id/etStartDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -99,11 +99,11 @@
                             android:paddingLeft="2dp"
                             android:paddingEnd="2dp"
                             android:paddingRight="2dp"
-                            android:text="End date"
+                            android:text="@string/end_date"
                             android:textAppearance="?android:attr/textAppearanceMedium"/>
                     </LinearLayout>
 
-                    <EditText
+                    <com.cloudwell.paywell.services.customView.clearableEditText.ClearableEditText
                         android:id="@+id/etEndDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -118,6 +118,15 @@
                         android:maxLength="20"
                         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/or"
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -127,12 +136,6 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-
-                            android:textColor="#FF4719"/>
-
-                        <TextView
                             android:id="@+id/tvKarnaphuliPhn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -140,7 +143,7 @@
                             android:paddingLeft="2dp"
                             android:paddingEnd="2dp"
                             android:paddingRight="2dp"
-                            android:text="Order code"
+                            android:text="@string/order_code"
                             android:textAppearance="?android:attr/textAppearanceMedium"/>
                     </LinearLayout>
 
@@ -153,11 +156,8 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="@dimen/activity_horizontal_margin"
                         android:layout_marginBottom="@dimen/activity_horizontal_margin"
-
-                        android:hint="Optional"
+                        android:hint="@string/optional"
                         android:imeOptions="actionDone"
-                        android:inputType="number"
-                        android:maxLength="11"
                         android:textAppearance="?android:attr/textAppearanceMedium"/>
                 </LinearLayout>
 
@@ -174,7 +174,7 @@
                 android:shadowDx="1"
                 android:shadowDy="1"
                 android:shadowRadius="2"
-                android:text="Search report"
+                android:text="@string/search_report"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorText"/>
         </LinearLayout>
