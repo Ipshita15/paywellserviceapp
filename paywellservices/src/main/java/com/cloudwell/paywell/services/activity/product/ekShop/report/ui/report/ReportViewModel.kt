@@ -13,7 +13,9 @@ class ReportViewModel(
         if (!internetConnection) {
             iView?.noInternetConnectionFOund()
         } else {
+            iView?.showProgressBar()
             aKShopRepo.getReportList(startDate, endDate, order_code).observeForever {
+                iView?.hiddenProgressBar()
                 if (it == null) {
                     iView?.showMessage("Please try again!!")
                 } else {
