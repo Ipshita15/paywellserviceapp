@@ -107,6 +107,7 @@ public class AppHandler {
     private static final String UNKNOWN_SOURCE_STATION_CODE = "unknownSourceStationCode";
     private static final String UNKNOWN_MOBILE_NUMBER = "UNKNOWN_MOBILE_NUMBER";
     private static final String MOBILE_NUMBER = "MOBILE_NUMBER";
+    private static final String PictureArrayImageLink = "PictureArrayImageLink";
 
     private static final String REG_DISTRICT_ARRAY = "district_array";
     public static Boolean REG_FLAG_ONE = false;
@@ -696,6 +697,15 @@ public class AppHandler {
 
     public String getMobileNumber() {
         return mPref.getString(MOBILE_NUMBER, UNKNOWN_MOBILE_NUMBER);
+    }
+
+    public String getPictureArrayImageLink() {
+        return mPref.getString(PictureArrayImageLink, "");
+    }
+
+    public void setPictureArrayImageLink(String toString) {
+        editor.putString(PictureArrayImageLink, toString);
+        editor.commit();
     }
 
     public static class MyDialogFragment extends DialogFragment {

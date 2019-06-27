@@ -15,9 +15,9 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.B
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.BookingCancelActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.AirThicketTranslationLogActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.search.BusCitySearchActivity
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.search.BusSearchActivity
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.utils.ConnectionDetector
 import com.cloudwell.paywell.services.utils.LanuageConstant.KEY_BANGLA
 import com.cloudwell.paywell.services.utils.LanuageConstant.KEY_ENGLISH
@@ -64,6 +64,11 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
         cd = ConnectionDetector(AppController.getContext())
         mConstraintLayout = findViewById(R.id.constraintLayoutBookingList)
         mAppHandler = AppHandler.getmInstance(applicationContext)
+
+        AppStorageBox.put(AppController.getContext(), AppStorageBox.Key.TRANSPORT_ID, "37")
+        AppStorageBox.put(AppController.getContext(), AppStorageBox.Key.DEPARTURE_ID, "457")
+
+
     }
 
 

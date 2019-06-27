@@ -27,6 +27,8 @@
     <color name="blackShade_trans70">#70363b34</color>
     <!-- Paywell utility color -->
 
+    <color name="color_red">#E00201</color>
+
     <!-- Paywell dialg color -->
     <color name="foreground">#ff355689</color>
 

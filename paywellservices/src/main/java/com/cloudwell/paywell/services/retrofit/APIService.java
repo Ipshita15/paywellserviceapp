@@ -18,6 +18,9 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.mo
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResGetBusListData;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationReadAPI;
+import com.cloudwell.paywell.services.activity.notification.model.ResposeReScheduleNotificationAccept;
+import com.cloudwell.paywell.services.activity.product.ekShop.model.ResEKReport;
+import com.cloudwell.paywell.services.activity.product.ekShop.model.ResEkShopToken;
 import com.cloudwell.paywell.services.activity.refill.model.BranchData;
 import com.cloudwell.paywell.services.activity.refill.model.DistrictData;
 import com.cloudwell.paywell.services.activity.refill.model.RefillRequestData;
@@ -216,6 +219,19 @@ public interface APIService {
     Call<ResIssueTicket> callIssueTicketAPI(@Part("username") String username, @Part("password") String password, @Part("BookingID") String BookingID, @Part("IsAcceptedPriceChangeandIssueTicket") boolean ssAcceptedPriceChangeandIssueTicket);
 
 
+    @POST("PaywelltransactionHaltrip/reScheduleNotificationAccept")
+    @Multipart
+    Call<ResposeReScheduleNotificationAccept> reScheduleNotificationAccept(@Part("username") String username, @Part("id") int id, @Part("accept_status") int accept_status);
+
+
+    @POST()
+    @Multipart
+    Call<ResEkShopToken> getEkshopToken(@Url String url, @Part("uid") String rid, @Part("utype") String utype);
+
+    @POST()
+    @Multipart
+    Call<ResEKReport> getReport(@Url String url, @Part("uid") String rid, @Part("start_date") String start_date, @Part("end_date") String end_date, @Part("order_code") String order_code);
+
     @POST("paywellapi/index.php/PaywellParibahanService/getBusListData")
     @FormUrlEncoded
     Call<ResGetBusListData> getBusListData(@Field("username") String username, @Field("skey") String skey);
@@ -226,8 +242,8 @@ public interface APIService {
     Call<ResponseBody> getBusSchedule(@Field("username") String username, @Field("transport_id") String transport_id, @Field("skey") String skey, @Field("accessKey") String accessKey);
 
 
-    @POST("paywellapi/index.php/PaywellParibahanService/seatCheck")
     @FormUrlEncoded
+    @POST("paywellapi/index.php/PaywellParibahanService/seatCheck")
     Call<ResponseBody> seatCheck(@Field("username") String username, @Field("skey") String skey, @Field("accessKey") String accessKey, @Field("transport_id") String transport_id, @Field("route") String route, @Field("bus_id") String bus_id, @Field("departure_id") String departure_id, @Field("departure_date") String departure_date, @Field("seat_ids") String seat_ids);
 
 

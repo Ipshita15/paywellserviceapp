@@ -4,8 +4,8 @@ import android.app.DatePickerDialog;
 import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.View;
 import android.view.animation.Animation;
@@ -164,7 +164,12 @@ public class BusCitySearchActivity extends AppCompatActivity implements FullScre
         });
 
 
+    }
 
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 
     @Override
@@ -180,8 +185,4 @@ public class BusCitySearchActivity extends AppCompatActivity implements FullScre
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        finish();
-    }
 }

@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import com.cloudwell.paywell.services.activity.base.newBase.SingleLiveEvent
 import com.cloudwell.paywell.services.activity.notification.BaseNotifcationViewModel
 import com.cloudwell.paywell.services.activity.notification.model.NotificationDetailMessage
+import com.cloudwell.paywell.services.activity.notification.model.ResposeReScheduleNotificationAccept
 import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.model.NotificationDetailMessageSync
 import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.view.NotificationFullViewStatus
 import com.google.gson.Gson
@@ -62,5 +63,12 @@ class NotificationFullNotifcationViewModel : BaseNotifcationViewModel() {
                 mViewStatus.value = NotificationFullViewStatus.START_NOTIFICATION_SERVICE
             }
         }
+    }
+
+    fun callReScheduleNotificationAccept(id: Int, accept_status: Int): MutableLiveData<ResposeReScheduleNotificationAccept> {
+
+
+        return mNotificationRepository.callReScheduleNotificationAccept(id, accept_status)
+
     }
 }

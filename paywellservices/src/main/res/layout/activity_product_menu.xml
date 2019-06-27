@@ -63,6 +63,55 @@
                     android:layout_weight="1" />
 
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:orientation="horizontal"
+                android:weightSum="5">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center" />
+
+                <Button
+
+                    android:id="@+id/homeBtnEkShope"
+                    style="@style/HomeButtonNew"
+                    android:drawableTop="@drawable/ic_ekshop"
+                    android:onClick="onButtonClicker"
+                    android:text="@string/ekshop"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center" />
+
+                <Button
+                    style="@style/HomeButtonNew"
+                    android:drawableTop="@drawable/air_ticket"
+                    android:onClick="onButtonClicker"
+                    android:text="@string/home_eticket_air"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:visibility="invisible" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center" />
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

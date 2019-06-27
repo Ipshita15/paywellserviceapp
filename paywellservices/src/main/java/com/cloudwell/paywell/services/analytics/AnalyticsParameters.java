@@ -46,7 +46,6 @@ public class AnalyticsParameters {
     public static final String KEY_MYCASH_CHANGE_PIN_NUMBER = "MyCashChangePinNumber";
 
 
-
     public static final String KEY_PRODUCT_MENU = "ProductMenu";
     public static final String KEY_STATEMENT_MENU = "StatementsMenu";
     public static final String KEY_STATEMENT_VIEW = "StatementsView";
@@ -125,6 +124,8 @@ public class AnalyticsParameters {
     public static final String KEY_MFS_MYCASH_MENU = "MfsMycashMenu";
     public static final String KEY_PRODUCT_AJKER_DEAL_MENU = "ProductAjkerDealMenu";
     public static final String KEY_PRODUCT_AJKER_DEAL_PAGE = "ProductAjkerDealPage";
+    public static final String KEY_PRODUCT_EKSHOPE_DEAL_PAGE = "ProductAjkerEkshop";
+
     public static final String KEY_PRODUCT_WHOLESALE_MENU = "ProductWholesaleMenu";
     public static final String KEY_PRODUCT_WHOLESALE_PAGE = "ProductWholesalePage";
     public static final String KEY_STATEMENT_MINI_MENU = "StatementMiniMenu";
@@ -167,8 +168,6 @@ public class AnalyticsParameters {
     public static final String KEY_REGISTRATION_THIRD_PAGE = "RegistrationThirdPage";
     public static final String KEY_REGISTRATION_FORTH_PAGE = "RegistrationForthPage";
     public static final String KEY_PENDING = "Pending";
-
-
 
 
 }

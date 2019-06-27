@@ -32,7 +32,6 @@ class NameTitleSheetDialog : BottomSheetDialogFragment() {
         data.add(Gender(getString(R.string.mr), false))
         data.add(Gender(getString(R.string.ms), false))
         data.add(Gender(getString(R.string.mrs), false))
-        data.add(Gender(getString(R.string.miss), false))
 
 
         data.get(getClassNamePosition(className)).setClassSelectedStatus(true)

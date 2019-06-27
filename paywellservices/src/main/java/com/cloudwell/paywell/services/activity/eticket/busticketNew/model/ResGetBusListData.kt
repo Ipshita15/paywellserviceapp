@@ -14,4 +14,5 @@ class ResGetBusListData {
     @SerializedName("status")
     var status: Int = 0
 
+
 }

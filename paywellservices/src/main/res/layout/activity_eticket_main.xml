@@ -35,7 +35,7 @@
                     android:gravity="center" />
 
                 <Button
-                    android:id="@+id/homeBtnBusTicket"
+                    android:id="@+id/et_shop_visit"
                     style="@style/HomeButtonNew"
                     android:drawableTop="@drawable/ic_bus_ticket"
                     android:onClick="onButtonClicker"
@@ -51,7 +51,7 @@
                     android:gravity="center" />
 
                 <Button
-                    android:id="@+id/homeBtnTrainTicket"
+                    android:id="@+id/et_ek_shop_report"
                     style="@style/HomeButtonNew"
                     android:drawableTop="@drawable/air_ticket"
                     android:onClick="onButtonClicker"

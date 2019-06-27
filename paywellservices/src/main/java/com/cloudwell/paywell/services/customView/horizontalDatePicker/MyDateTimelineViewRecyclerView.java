@@ -192,10 +192,7 @@ public class MyDateTimelineViewRecyclerView extends RecyclerView {
     public void setOnDateSelectedListener(OnDateSelectedListener onDateSelectedListener) {
         this.onDateSelectedListener = onDateSelectedListener;
     }
-//
-//    public void setDateLabelAdapter(@Nullable MonthView.DateLabelAdapter dateLabelAdapter) {
-//        this.dateLabelAdapter = dateLabelAdapter;
-//    }
+
 
     public void setDayLabelColor(int lblDayColor) {
         this.lblDayColor = lblDayColor;
@@ -285,10 +282,7 @@ public class MyDateTimelineViewRecyclerView extends RecyclerView {
         if (adapter != null) {
             adapter.notifyDataSetChanged();
             onDateSelected(selectedPosition, startYear, startMonth, startDay);
-
         }
-
-
     }
 
     public void setLastDate(int endYear, int endMonth, int endDay) {
@@ -364,7 +358,6 @@ public class MyDateTimelineViewRecyclerView extends RecyclerView {
 
             holder.bind(position, year, month, day, dayOfWeek, "", position == selectedPosition, isToday);
 
-//            holder.bind(1,2018,12,30,dayOfWeek,"card_background_1", true,false);
         }
 
         @Override
@@ -391,14 +384,10 @@ public class MyDateTimelineViewRecyclerView extends RecyclerView {
             tvMinValue = (TextView) root.findViewById(R.id.tvMinValue);
             linearLayout = root.findViewById(R.id.linearLayout);
 
-//            lblDay.setTextColor(lblDayColor);
-//            lblDate.setTextColor(lblDateColor);
-//            lblValue.setTextColor(lblLabelColor);
 
             root.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    selectedPosition = position;
                     onDateSelected(position, year, month, day);
                     Log.e(TAG, "onClickActionIssueTicket: ");
                 }
@@ -418,12 +407,6 @@ public class MyDateTimelineViewRecyclerView extends RecyclerView {
             tvDay.setText(s);
             tvDate.setText(String.valueOf(day));
             tvMinValue.setText(m);
-
-
-            //selectedPosition = position;
-//            tvDay.setBackgroundResource(selected ? R.drawable.mti_bg_lbl_date_selected : (isToday ? R.drawable.mti_bg_lbl_date_today : 0));
-//            lblDate.setTextColor(selected || isToday ? lblDateSelectedColor : lblDateColor);
-
         }
     }
 
