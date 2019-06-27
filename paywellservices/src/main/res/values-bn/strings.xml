@@ -803,6 +803,7 @@
     <string name="visit">প্রবেশ</string>
     <string name="report">প্রতিবেদন</string>
     <string name="home_title_ek_shope">এক-শপ</string>
+    <string name="invalid_date">ভুল তারিখ</string>
 
 
 </resources>

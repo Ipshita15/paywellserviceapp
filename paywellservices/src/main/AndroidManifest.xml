@@ -431,13 +431,19 @@
         </activity>
 
         <activity
-            android:name=".activity.product.ekShop.report.ReportBaseActivity"
+            android:name=".activity.product.ekShop.report.ReportMainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
         </activity>
 
         <activity
-            android:name=".activity.product.ekShop.report.ReportListBaseActivity"
+            android:name=".activity.product.ekShop.report.ReportListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+
+        <activity
+            android:name=".activity.product.ekShop.report.ReportDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
         </activity>

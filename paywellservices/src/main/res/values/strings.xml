@@ -797,6 +797,7 @@
     <string name="visit">Visit</string>
     <string name="report">Report</string>
     <string name="home_title_ek_shope">Ekshop</string>
+    <string name="invalid_date">Invalid date</string>
 
 
 </resources>

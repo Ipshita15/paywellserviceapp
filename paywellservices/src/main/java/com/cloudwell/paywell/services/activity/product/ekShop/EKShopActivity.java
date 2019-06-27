@@ -2,22 +2,14 @@ package com.cloudwell.paywell.services.activity.product.ekShop;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.webkit.ConsoleMessage;
 import android.webkit.JavascriptInterface;
@@ -46,7 +38,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -169,15 +160,7 @@ public class EKShopActivity extends BaseActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.ajker_deal_action_bar_menu, menu);
 
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @SuppressWarnings("deprecation")
     private void startWebView(String url) {
         Logger.v("startWebView: " + url);
         webView.setWebViewClient(new WebViewClient() {
@@ -252,32 +235,6 @@ public class EKShopActivity extends BaseActivity {
         webView.loadUrl(url);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-        } else if (item.getItemId() == R.id.action_share) {
-            String sharerUrl = getString(R.string.ajd_share);
-            Intent shareIntent = new Intent(Intent.ACTION_SEND);
-            shareIntent.setType("text/plain");
-            shareIntent.putExtra(Intent.EXTRA_TEXT, sharerUrl);
-            PackageManager pm = getPackageManager();
-            List<ResolveInfo> activityList = pm.queryIntentActivities(shareIntent, 0);
-            for (final ResolveInfo app : activityList) {
-                if ((app.activityInfo.name).contains("facebook")) {
-                    final ActivityInfo activity = app.activityInfo;
-                    final ComponentName name = new ComponentName(activity.applicationInfo.packageName, activity.name);
-                    shareIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-                    shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                    shareIntent.setComponent(name);
-                    startActivity(shareIntent);
-                    break;
-                }
-            }
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void onBackPressed() {

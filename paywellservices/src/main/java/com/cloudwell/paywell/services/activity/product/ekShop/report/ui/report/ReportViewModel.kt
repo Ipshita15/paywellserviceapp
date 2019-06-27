@@ -34,12 +34,19 @@ class ReportViewModel(
     fun search(internetConnection: Boolean, startDate: String, endDate: String, orderCode: String) {
         if (startDate.equals("")) {
             this.iView?.showStartDateError()
-
-        } else if (endDate.equals("")) {
-            this.iView?.showEndDateError()
+            return
         } else {
-            getReportList(internetConnection, startDate, endDate, orderCode)
+            this.iView?.clearStartDateError()
         }
+
+        if (endDate.equals("")) {
+            this.iView?.showEndDateError()
+            return
+        } else {
+            this.iView?.clearEndDateError()
+        }
+
+        getReportList(internetConnection, startDate, endDate, orderCode)
     }
 
     interface IReportView {
@@ -51,5 +58,7 @@ class ReportViewModel(
         fun showMessage(message: String)
         fun showStartDateError()
         fun showEndDateError()
+        fun clearStartDateError()
+        fun clearEndDateError()
     }
 }

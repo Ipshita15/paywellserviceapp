@@ -2,6 +2,7 @@ package com.cloudwell.paywell.services.activity.product.ekShop.report
 
 import android.app.DatePickerDialog
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,26 +12,41 @@ import com.cloudwell.paywell.services.activity.product.ekShop.model.Data
 import com.cloudwell.paywell.services.activity.product.ekShop.report.ui.report.AKShopRepo
 import com.cloudwell.paywell.services.activity.product.ekShop.report.ui.report.ReportViewModel
 import com.cloudwell.paywell.services.retrofit.ApiUtils
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.report_activity.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ReportBaseActivity : ProductEecommerceBaseActivity(), ReportViewModel.IReportView {
-    override fun showStartDateError() {
+class ReportMainActivity : ProductEecommerceBaseActivity(), ReportViewModel.IReportView {
+    override fun clearStartDateError() {
+        etStartDate.setError(null)
 
     }
 
-    override fun showEndDateError() {
+    override fun clearEndDateError() {
+        etEndDate.setError(null)
+    }
 
+    override fun showStartDateError() {
+        etStartDate.setError(getString(R.string.invalid_date))
+    }
+
+    override fun showEndDateError() {
+        etEndDate.setError(getString(R.string.invalid_date))
     }
 
     override fun showMessage(message: String) {
 
+        showSnackMessageWithTextMessage(message)
 
     }
 
     override fun setupAdapter(data: List<Data>) {
+        val toJson = Gson().toJson(data)
 
+        val intent = Intent(this, ReportListActivity::class.java)
+        intent.putExtra("data", toJson)
+        startActivity(intent)
 
     }
 
@@ -64,8 +80,13 @@ class ReportBaseActivity : ProductEecommerceBaseActivity(), ReportViewModel.IRep
         viewModel = ViewModelProviders.of(this, factory).get(ReportViewModel::class.java)
 
         viewModel.setView(this)
-        viewModel.getReportList(isInternetConnection, "2019-06-23", "2019-06-23", "BDPC8850")
 
+
+        btSearchReport.setOnClickListener {
+
+
+            viewModel.search(isInternetConnection, etStartDate.text.toString(), etEndDate.text.toString(), etOrderCode.text.toString())
+        }
 
         etStartDate.setOnClickListener {
 
@@ -88,12 +109,6 @@ class ReportBaseActivity : ProductEecommerceBaseActivity(), ReportViewModel.IRep
                 handleEndDate()
             }
         })
-
-        btSearchReport.setOnClickListener {
-
-
-            viewModel.search(isInternetConnection, etStartDate.text.toString(), etEndDate.text.toString(), etOrderCode.text.toString())
-        }
 
 
     }
@@ -164,6 +179,5 @@ class ReportBaseActivity : ProductEecommerceBaseActivity(), ReportViewModel.IRep
         datePickerDialog.show()
 
     }
-
 
 }

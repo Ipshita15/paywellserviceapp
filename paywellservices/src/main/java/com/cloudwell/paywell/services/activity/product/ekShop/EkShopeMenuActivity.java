@@ -7,7 +7,7 @@ import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.ProductEecommerceBaseActivity;
-import com.cloudwell.paywell.services.activity.product.ekShop.report.ReportBaseActivity;
+import com.cloudwell.paywell.services.activity.product.ekShop.report.ReportMainActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 
@@ -39,7 +39,7 @@ public class EkShopeMenuActivity extends ProductEecommerceBaseActivity {
                 startActivity(new Intent(getApplicationContext(), EKShopActivity.class));
                 break;
             case R.id.et_ek_shop_report:
-                startActivity(new Intent(getApplicationContext(), ReportBaseActivity.class));
+                startActivity(new Intent(getApplicationContext(), ReportMainActivity.class));
                 break;
 
             default:
