@@ -1,12 +1,10 @@
 package com.cloudwell.paywell.services.adapter;
 
-import android.content.Context;
 import android.widget.ImageView;
 
-import com.cloudwell.paywell.services.app.AppHandler;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.ObjectKey;
+import com.cloudwell.paywell.services.app.AppController;
 
 import ss.com.bannerslider.ImageLoadingService;
 
@@ -16,60 +14,40 @@ import ss.com.bannerslider.ImageLoadingService;
  */
 
 public class PicassoImageLoadingService implements ImageLoadingService {
-    public Context context;
-    private static final long UPDATE_IMG_CACHE_CLEAN_INTERVAL = 7 * 24 * 60 * 60;// 7 day
-    private AppHandler mAppHandler;
+    private String mImageUpdateVersionString;
 
+    public PicassoImageLoadingService(String imageUpdateVersionString) {
 
-    public PicassoImageLoadingService(Context context) {
-        this.context = context;
-        mAppHandler = AppHandler.getmInstance(context);
+        mImageUpdateVersionString = imageUpdateVersionString;
     }
 
     @Override
     public void loadImage(String url, ImageView imageView) {
 
-        Picasso.get()
-                .load(url)
-                .fit()
-                .into(imageView);
 
+        Glide.with(AppController.getContext())
+                .load(url)
+                .signature(new ObjectKey(mImageUpdateVersionString))
+                .into(imageView);
 
     }
 
     @Override
-    public void loadImage(int resource, ImageView imageView) {
-        if ((System.currentTimeMillis() / 1000) >= (mAppHandler.getImgCacheCleanUpdateCheck() + UPDATE_IMG_CACHE_CLEAN_INTERVAL)) {
-            mAppHandler.setImgCacheCleanUpdateCheck(System.currentTimeMillis() / 1000);
-            Picasso.get()
-                    .load(resource)
-                    .fit()
-                    .memoryPolicy(MemoryPolicy.NO_CACHE)
-                    .networkPolicy(NetworkPolicy.NO_CACHE)
-                    .into(imageView);
-        } else {
-            Picasso.get()
-                    .load(resource)
-                    .fit()
-                    .into(imageView);
-        }
+    public void loadImage(int url, ImageView imageView) {
+        Glide.with(AppController.getContext())
+                .load(url)
+                .signature(new StringSignature(mImageUpdateVersionString))
+                .into(imageView);
     }
 
     @Override
     public void loadImage(String url, int placeHolder, int errorDrawable, ImageView imageView) {
-        if ((System.currentTimeMillis() / 1000) >= (mAppHandler.getImgCacheCleanUpdateCheck() + UPDATE_IMG_CACHE_CLEAN_INTERVAL)) {
-            mAppHandler.setImgCacheCleanUpdateCheck(System.currentTimeMillis() / 1000);
-            Picasso.get()
-                    .load(url)
-                    .fit()
-                    .memoryPolicy(MemoryPolicy.NO_CACHE)
-                    .networkPolicy(NetworkPolicy.NO_CACHE)
-                    .into(imageView);
-        } else {
-            Picasso.get()
-                    .load(url)
-                    .fit()
-                    .into(imageView);
-        }
+
+
+        Glide.with(AppController.getContext())
+                .load(url)
+                .signature(new StringSignature(mImageUpdateVersionString))
+                .into(imageView);
+
     }
 }

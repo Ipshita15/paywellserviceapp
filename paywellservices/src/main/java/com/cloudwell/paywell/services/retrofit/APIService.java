@@ -18,6 +18,9 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.mo
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResGetBusListData;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationReadAPI;
+import com.cloudwell.paywell.services.activity.notification.model.ResposeReScheduleNotificationAccept;
+import com.cloudwell.paywell.services.activity.product.ekShop.model.ResEKReport;
+import com.cloudwell.paywell.services.activity.product.ekShop.model.ResEkShopToken;
 import com.cloudwell.paywell.services.activity.refill.model.BranchData;
 import com.cloudwell.paywell.services.activity.refill.model.DistrictData;
 import com.cloudwell.paywell.services.activity.refill.model.RefillRequestData;
@@ -51,7 +54,7 @@ import retrofit2.http.Url;
 public interface APIService {
 
 
-    @POST()
+    @POST("paywellapi/PaywellAuthentication/GenerateToken")
     @FormUrlEncoded
     Call<APIResposeGenerateToken> callGenerateToken(@Url String ur, @Header("Authorization") String AuthorizationKey, @FieldMap Map<String, String> params);
 
@@ -216,6 +219,18 @@ public interface APIService {
     Call<ResIssueTicket> callIssueTicketAPI(@Part("username") String username, @Part("password") String password, @Part("BookingID") String BookingID, @Part("IsAcceptedPriceChangeandIssueTicket") boolean ssAcceptedPriceChangeandIssueTicket);
 
 
+    @POST("PaywelltransactionHaltrip/reScheduleNotificationAccept")
+    @Multipart
+    Call<ResposeReScheduleNotificationAccept> reScheduleNotificationAccept(@Part("username") String username, @Part("id") int id, @Part("accept_status") int accept_status);
+
+
+    @POST()
+    @Multipart
+    Call<ResEkShopToken> getEkshopToken(@Url String url, @Part("uid") String rid, @Part("utype") String utype);
+
+    @POST()
+    @Multipart
+    Call<ResEKReport> getReport(@Url String url, @Part("uid") String rid, @Part("start_date") String start_date, @Part("end_date") String end_date, @Part("order_code") String order_code);
     @POST("paywellapi/index.php/PaywellParibahanService/getBusListData")
     @FormUrlEncoded
     Call<ResGetBusListData> getBusListData(@Field("username") String username, @Field("skey") String skey);

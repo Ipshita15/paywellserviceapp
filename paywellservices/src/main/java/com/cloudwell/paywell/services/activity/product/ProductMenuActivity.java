@@ -17,7 +17,8 @@ import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
-import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.base.ProductEecommerceBaseActivity;
+import com.cloudwell.paywell.services.activity.product.ekShop.EkShopeMenuActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
@@ -30,7 +31,7 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 
-public class ProductMenuActivity extends BaseActivity {
+public class ProductMenuActivity extends ProductEecommerceBaseActivity {
     RelativeLayout relativeLayout;
     private static final int PERMISSIONS_REQUEST_WRITE_STORAGE = 100;
     private AppHandler mAppHandler;
@@ -93,6 +94,11 @@ public class ProductMenuActivity extends BaseActivity {
                 serviceType = TAG_WHOLESALE;
                 checkPermission();
                 break;
+
+            case R.id.homeBtnEkShope:
+                startActivity(new Intent(this, EkShopeMenuActivity.class));
+                break;
+
             default:
                 break;
         }

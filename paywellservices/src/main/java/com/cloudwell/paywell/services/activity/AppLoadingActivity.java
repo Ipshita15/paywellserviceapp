@@ -271,6 +271,8 @@ public class AppLoadingActivity extends AppCompatActivity {
 
                         mAppHandler.displayPictureArray = new String[Integer.parseInt(displayPictureCount)];
                         JSONArray pictureArrayJson = jsonObject.getJSONArray("imageLink");
+                        mAppHandler.setPictureArrayImageLink(pictureArrayJson.toString());
+
                         for (int i = 0; i < pictureArrayJson.length(); i++) {
                             String disImglink = pictureArrayJson.getString(i);
                             if (disImglink.isEmpty()) {
@@ -405,6 +407,9 @@ public class AppLoadingActivity extends AppCompatActivity {
 
                         mAppHandler.displayPictureArray = new String[Integer.parseInt(displayPictureCount)];
                         JSONArray pictureArrayJson = jsonObject.getJSONArray("imageLink");
+
+                        mAppHandler.setPictureArrayImageLink(pictureArrayJson.toString());
+
                         for (int i = 0; i < pictureArrayJson.length(); i++) {
                             String disImglink = pictureArrayJson.getString(i);
                             if (disImglink.isEmpty()) {
