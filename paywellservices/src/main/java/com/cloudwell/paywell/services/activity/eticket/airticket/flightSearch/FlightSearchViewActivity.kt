@@ -25,7 +25,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.m
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.Result
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.view.SeachViewStatus
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
-import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment.CancellationStatusMessageFragment
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment.ShowMessageFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.FlightDetails1Activity
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.adapter.FlightAdapterNew
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.adapter.OnClickListener
@@ -316,10 +316,12 @@ class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
                     if (response.isSuccessful) {
                         val jsonObject = response.body()
                         val message = jsonObject!!.get("message_details").asString
-                        if (jsonObject.get("status").asInt == 200) {
-                            showMsg(message)
+                        val status = jsonObject.get("status").asInt
+
+                        if (status == 200) {
+                            showMsg(message, status)
                         } else {
-                            showMsg(message)
+                            showMsg(message, status)
                         }
 
                     }
@@ -335,12 +337,18 @@ class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
 
     }
 
-    private fun showMsg(msg: String) {
+    private fun showMsg(msg: String, status: Int) {
+        val showMessageFragment = ShowMessageFragment()
+        ShowMessageFragment.message = msg
+        showMessageFragment.mListener = object : ShowMessageFragment.MyInterface {
+            override fun onOkButtonClick() {
+                if (status == 200) {
+                    finish()
+                }
+            }
 
-        val priceChangeFragment = CancellationStatusMessageFragment()
-        CancellationStatusMessageFragment.message = msg
-
-        priceChangeFragment.show(supportFragmentManager, "dialog")
+        }
+        showMessageFragment.show(supportFragmentManager, "dialog")
 
     }
 }

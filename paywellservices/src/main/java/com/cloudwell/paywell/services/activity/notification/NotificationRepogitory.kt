@@ -7,6 +7,7 @@ import android.content.Context
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.notification.model.NotificationDetailMessage
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI
+import com.cloudwell.paywell.services.activity.notification.model.ResposeReScheduleNotificationAccept
 import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.model.NotificationDetailMessageSync
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
@@ -111,6 +112,31 @@ class NotificationRepogitory(private val mContext: Context) {
 
     fun deletedNotificationData(notificationExpireList: List<NotificationDetailMessage>) {
         DatabaseClient.getInstance(mContext).appDatabase.mNotificationDab().deleteData(notificationExpireList)
+
+    }
+
+    fun callReScheduleNotificationAccept(id: Int, accept_status: Int): MutableLiveData<ResposeReScheduleNotificationAccept> {
+        mAppHandler = AppHandler.getmInstance(mContext)
+        val url = mContext.getString(R.string.notif_url)
+        val userName = mAppHandler!!.imeiNo
+        val data = MutableLiveData<ResposeReScheduleNotificationAccept>()
+        val resNotificationAPICall = ApiUtils.getAPIService().reScheduleNotificationAccept(userName, id, accept_status)
+        resNotificationAPICall.enqueue(object : Callback<ResposeReScheduleNotificationAccept> {
+            override fun onResponse(call: Call<ResposeReScheduleNotificationAccept>, response: Response<ResposeReScheduleNotificationAccept>) {
+
+                if (response.isSuccessful) {
+                    data.value = response.body()
+                } else {
+                    data.value = null
+                }
+            }
+
+            override fun onFailure(call: Call<ResposeReScheduleNotificationAccept>, t: Throwable) {
+                data.value = null
+
+            }
+        })
+        return data
 
     }
 
