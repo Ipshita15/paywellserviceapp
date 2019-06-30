@@ -5,7 +5,6 @@ import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.View;
 import android.view.animation.Animation;
@@ -19,6 +18,8 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity;
+import com.cloudwell.paywell.services.app.storage.AppStorageBox;
 
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
@@ -26,7 +27,7 @@ import java.util.Calendar;
 
 import mehdi.sakout.fancybuttons.FancyButton;
 
-public class BusCitySearchActivity extends AppCompatActivity implements FullScreenDialogBus.OnCitySet {
+public class BusCitySearchActivity extends BusTricketBaseActivity implements FullScreenDialogBus.OnCitySet {
 
 
     TextSwitcher fromTS,toTS;
@@ -34,12 +35,13 @@ public class BusCitySearchActivity extends AppCompatActivity implements FullScre
     private ImageView textSwitchIV;
     private FancyButton searchButton;
     public static final String FullSCREEN_DIALOG_HEADER="header";
-    public static final String TO_STRING_="To";
-    public static final String FROM_STRING="From";
+    public static final String TO_STRING_ = "Going To";
+    public static final String FROM_STRING = "Leaving From";
     private LinearLayout dateLinearLayout,fromLL,toLL;
     private Calendar myCalender;
     private TextView dateTV,monthTV,dayTV;
     private SimpleDateFormat simpleDateFormat;
+    private String dateString = new String();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +65,8 @@ public class BusCitySearchActivity extends AppCompatActivity implements FullScre
         toTS=findViewById(R.id.busToCityTS);
         fromLL=findViewById(R.id.fromLL);
         toLL=findViewById(R.id.toLL);
-        simpleDateFormat=new SimpleDateFormat("dd MMM yyyy");
+        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        AppStorageBox.put(this, AppStorageBox.Key.BUS_JOURNEY_DATE, simpleDateFormat.format(myCalender.getTimeInMillis()));
         dateTV.setText(String.valueOf(myCalender.get(Calendar.DAY_OF_MONTH)));
         monthTV.setText(new DateFormatSymbols().getMonths()[myCalender.get(Calendar.MONTH)]);
         dayTV.setText(new DateFormatSymbols().getWeekdays()[myCalender.get(Calendar.DAY_OF_WEEK)]);
@@ -77,8 +80,26 @@ public class BusCitySearchActivity extends AppCompatActivity implements FullScre
                 return switcherTextView;
             }
         });
-        fromString="Leaving From";
-        fromTS.setText(fromString);
+        if ((String.valueOf(AppStorageBox.get(this, AppStorageBox.Key.BUS_LEAVING_FROM_CITY)) != null)
+                && !(String.valueOf(AppStorageBox.get(this, AppStorageBox.Key.BUS_LEAVING_FROM_CITY)).isEmpty())) {
+            fromString = String.valueOf(AppStorageBox.get(this, AppStorageBox.Key.BUS_LEAVING_FROM_CITY));
+        } else {
+            fromString = "Leaving From";
+        }
+
+        if ((String.valueOf(AppStorageBox.get(this, AppStorageBox.Key.BUS_GOING_TO_CITY)) != null)
+                && !(String.valueOf(AppStorageBox.get(this, AppStorageBox.Key.BUS_GOING_TO_CITY)).isEmpty())) {
+            toString = String.valueOf(AppStorageBox.get(this, AppStorageBox.Key.BUS_GOING_TO_CITY));
+        } else {
+            toString = "Going To";
+        }
+        String fromData = (String) AppStorageBox.get(this, AppStorageBox.Key.BUS_LEAVING_FROM_CITY);
+        String toData = (String) AppStorageBox.get(this, AppStorageBox.Key.BUS_GOING_TO_CITY);
+        if (fromData != null && !(fromData.isEmpty())) {
+            fromTS.setText(fromData);
+        } else {
+            fromTS.setText(fromString);
+        }
         toTS.setFactory(new ViewSwitcher.ViewFactory() {
             @Override
             public View makeView() {
@@ -89,8 +110,11 @@ public class BusCitySearchActivity extends AppCompatActivity implements FullScre
                 return switcherTextView;
             }
         });
-        toString="Going To";
-        toTS.setText(toString);
+        if (toData != null && !(toData.isEmpty())) {
+            toTS.setText(toData);
+        } else {
+            toTS.setText(toString);
+        }
 
         Animation inAnim = AnimationUtils.loadAnimation(this,
                 android.R.anim.fade_in);
@@ -116,7 +140,15 @@ public class BusCitySearchActivity extends AppCompatActivity implements FullScre
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String from = ((TextView) fromTS.getCurrentView()).getText().toString();
+                String to = ((TextView) toTS.getCurrentView()).getText().toString();
+                if (!(from.isEmpty() && !(from.equals(FROM_STRING))) && !(to.isEmpty() && !(to.equals(TO_STRING_)))) {
 
+                    Toast.makeText(BusCitySearchActivity.this, "Service will available soon", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(BusCitySearchActivity.this, "Please Enter All the data first", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -153,6 +185,8 @@ public class BusCitySearchActivity extends AppCompatActivity implements FullScre
                         dateTV.setText(String.valueOf(myCalender.get(Calendar.DAY_OF_MONTH)));
                         monthTV.setText(new DateFormatSymbols().getMonths()[myCalender.get(Calendar.MONTH)]);
                         dayTV.setText(new DateFormatSymbols().getWeekdays()[myCalender.get(Calendar.DAY_OF_WEEK)]);
+                        AppStorageBox.put(BusCitySearchActivity.this, AppStorageBox.Key.BUS_JOURNEY_DATE, simpleDateFormat.format(myCalender.getTimeInMillis()));
+
                     }
                 },myCalender.get(Calendar.YEAR),
                         myCalender.get(Calendar.MONTH),
