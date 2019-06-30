@@ -60,8 +60,8 @@ public interface BusTicketDab {
     //    @Query("SELECT * FROM  TripScheduleInfo where to_location = :toLocation   AND from_location = :fromLocation;")
 //    public List<TripScheduleInfo> searchTrip(String toLocation, String fromLocation);
 //
-    @Query("SELECT BusSchedule.*, BusLocalDB.* FROM BusSchedule INNER JOIN TripScheduleInfo ON BusSchedule._schedule_Id = TripScheduleInfo.schedule_Id INNER JOIN BusLocalDB ON BusLocalDB.busID = BusSchedule.bus_id Where TripScheduleInfo.to_location = :to AND TripScheduleInfo.from_location = :from")
-    List<TripScheduleInfoAndBusSchedule> search(String to, String from);
+    @Query("SELECT BusSchedule.*, BusLocalDB.* FROM BusSchedule INNER JOIN TripScheduleInfo ON BusSchedule._schedule_Id = TripScheduleInfo.schedule_Id INNER JOIN BusLocalDB ON BusLocalDB.busID = BusSchedule.bus_id Where TripScheduleInfo.to_location = :to AND TripScheduleInfo.from_location = :from  AND TripScheduleInfo.validity_date >= :date")
+    List<TripScheduleInfoAndBusSchedule> search(String to, String from, String date);
 
     @Query("SELECT from_location as city_list FROM TripScheduleInfo UNION " +
             "SELECT to_location as city_list FROM TripScheduleInfo ;")

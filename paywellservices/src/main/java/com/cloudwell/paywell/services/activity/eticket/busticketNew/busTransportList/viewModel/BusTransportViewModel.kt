@@ -35,4 +35,9 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
 
     }
 
+    fun cancelAllRequest() {
+
+
+    }
+
 }

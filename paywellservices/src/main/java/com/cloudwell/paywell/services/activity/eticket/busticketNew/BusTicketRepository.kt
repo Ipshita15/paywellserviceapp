@@ -348,7 +348,7 @@ class BusTicketRepository() {
         val data = MutableLiveData<List<TripScheduleInfoAndBusSchedule>>()
 
         doAsync {
-            val search = DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().search(requestBusSearch.to, requestBusSearch.from)
+            val search = DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().search(requestBusSearch.to, requestBusSearch.from, requestBusSearch.date)
             uiThread {
                 data.value = search
             }

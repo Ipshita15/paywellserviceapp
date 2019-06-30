@@ -2,6 +2,7 @@ package com.cloudwell.paywell.services.retrofit
 
 
 import com.cloudwell.paywell.services.BuildConfig
+import com.cloudwell.paywell.services.app.AppController
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -54,7 +55,7 @@ object RetrofitClient {
             val httpClient = OkHttpClient.Builder()
             httpClient.connectTimeout(100, TimeUnit.SECONDS).readTimeout(100, TimeUnit.SECONDS).writeTimeout(100, TimeUnit.SECONDS)
 
-            httpClient.addInterceptor(HeaderTokenInterceptor())
+            httpClient.addInterceptor(HeaderTokenInterceptor(AppController.getContext()))
 
 //            httpClient.addNetworkInterceptor(object : Interceptor {
 //                @Throws(IOException::class)

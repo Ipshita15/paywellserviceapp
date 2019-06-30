@@ -44,6 +44,8 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
 
     override fun setAdapter(it: List<TripScheduleInfoAndBusSchedule>) {
 
+        viewMode.cancelAllRequest()
+
         Fresco.initialize(applicationContext);
 
         items = it.toMutableList()
@@ -127,7 +129,6 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
 
     override fun onSetDate(year: Int, month: Int, day: Int) {
         val mMonth = month + 1;
-
         val date = "$year-$mMonth-$day"
         val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(date) as Date
         val humanReadAbleDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).format(fdepTimeFormatDate)
@@ -159,7 +160,7 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
         requestBusSearch = RequestBusSearch()
         requestBusSearch.to = "Dhaka"
         requestBusSearch.from = "Coxs Bazar"
-        requestBusSearch.date = "2019-07-01"
+        requestBusSearch.date = "2019-06-30"
 
         val split = requestBusSearch.date.split("-")
         val month = split[1].toInt() - 1
@@ -176,7 +177,7 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(com.cloudwell.paywell.services.R.menu.airticket_menu, menu)
+        menuInflater.inflate(R.menu.airticket_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
