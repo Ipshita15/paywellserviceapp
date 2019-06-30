@@ -69,6 +69,43 @@ class BusTicketRepository() {
         return isFinshedDataLoad
     }
 
+    fun getBusList(): MutableLiveData<List<Bus>> {
+        mAppHandler = AppHandler.getmInstance(mContext)
+        val userName = mAppHandler!!.imeiNo
+        val skey = ApiUtils.KEY_SKEY
+
+        val data = MutableLiveData<List<Bus>>()
+
+        ApiUtils.getAPIServicePHP7().getBusListData(userName, skey).enqueue(object : Callback<ResGetBusListData> {
+            override fun onResponse(call: Call<ResGetBusListData>, response: Response<ResGetBusListData>) {
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    body.let {
+
+                        if (it?.status ?: 0 == 200) {
+                            val accessKey = it?.accessKey
+                            AppStorageBox.put(mContext, AppStorageBox.Key.ACCESS_KEY, accessKey)
+
+                            it?.data?.data?.let { it1 ->
+                                saveBuss(it1)
+                                data.value = it1
+                            }
+                        }
+
+                    }
+
+                    com.orhanobut.logger.Logger.v("" + body)
+                }
+            }
+
+            override fun onFailure(call: Call<ResGetBusListData>, t: Throwable) {
+                data.value = null
+            }
+        })
+        return data
+    }
+
+
     fun getBusScheduleDate(): MutableLiveData<ResGetBusListData> {
         mAppHandler = AppHandler.getmInstance(mContext)
 

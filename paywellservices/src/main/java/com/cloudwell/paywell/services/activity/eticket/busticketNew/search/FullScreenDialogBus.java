@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.CityName;
+import com.cloudwell.paywell.services.app.storage.AppStorageBox;
 import com.cloudwell.paywell.services.database.DatabaseClient;
 
 import java.util.ArrayList;
@@ -192,58 +193,80 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
         switch (view.getId()){
             case R.id.dhakaCityTV:
                 onCitySet.setCityData(CityName.DHAKA_CITY,toOrFrom);
+                setCityDataToSP(toOrFrom, CityName.DHAKA_CITY);
                 dismiss();
                 break;
             case R.id.coxBazarCityTV:
                 onCitySet.setCityData(CityName.COXBAZAR_CITY,toOrFrom);
+                setCityDataToSP(toOrFrom, CityName.COXBAZAR_CITY);
                 dismiss();
                 break;
             case R.id.jessorCityTV:
                 onCitySet.setCityData(CityName.JESSOR_CITY,toOrFrom);
+                setCityDataToSP(toOrFrom, CityName.JESSOR_CITY);
                 dismiss();
                 break;
             case R.id.khulnaCityTV:
                 onCitySet.setCityData(CityName.KHULNA_CITY,toOrFrom);
+                setCityDataToSP(toOrFrom, CityName.KHULNA_CITY);
                 dismiss();
                 break;
             case R.id.chittagongCityTV:
                 onCitySet.setCityData(CityName.CHITTAGONG_CITY,toOrFrom);
+                setCityDataToSP(toOrFrom, CityName.CHITTAGONG_CITY);
                 dismiss();
                 break;
             case R.id.lalmonirhatCityTV:
                 onCitySet.setCityData(CityName.LALMONIRhat_CITY,toOrFrom);
+                setCityDataToSP(toOrFrom, CityName.LALMONIRhat_CITY);
                 dismiss();
                 break;
             case R.id.saidpurCityTV:
                 onCitySet.setCityData(CityName.SAIDPUR_CITY,toOrFrom);
+                setCityDataToSP(toOrFrom, CityName.SAIDPUR_CITY);
                 dismiss();
                 break;
             case R.id.mymensingCityTV:
                 onCitySet.setCityData(CityName.MYMENSING_CITY,toOrFrom);
+                setCityDataToSP(toOrFrom, CityName.MYMENSING_CITY);
                 dismiss();
                 break;
             case R.id.rangpurCityTV:
                 onCitySet.setCityData(CityName.RANGPUR_CITY,toOrFrom);
+                setCityDataToSP(toOrFrom, CityName.RANGPUR_CITY);
                 dismiss();
                 break;
             case R.id.thakurgaonCityTV:
                 onCitySet.setCityData(CityName.THAKURGAON_CITY,toOrFrom);
+                setCityDataToSP(toOrFrom, CityName.THAKURGAON_CITY);
                 dismiss();
                 break;
             case R.id.barisalCityTV:
                 onCitySet.setCityData(CityName.BARISAL_CITY,toOrFrom);
+                setCityDataToSP(toOrFrom, CityName.BARISAL_CITY);
                 dismiss();
                 break;
             case R.id.sylheytCityTV:
                 onCitySet.setCityData(CityName.SYLHET_CITY,toOrFrom);
+                setCityDataToSP(toOrFrom, CityName.SYLHET_CITY);
                 dismiss();
                 break;
             case R.id.comillaCityTV:
                 onCitySet.setCityData(CityName.COMILLA_CITY,toOrFrom);
+                setCityDataToSP(toOrFrom, CityName.COMILLA_CITY);
                 dismiss();
                 break;
         }
     }
+
+    private void setCityDataToSP(String toOrFrom, String city) {
+        if (toOrFrom.equals(BusCitySearchActivity.FROM_STRING)) {
+            AppStorageBox.put(getActivity(), AppStorageBox.Key.BUS_LEAVING_FROM_CITY, city);
+        } else {
+            AppStorageBox.put(getActivity(), AppStorageBox.Key.BUS_GOING_TO_CITY, city);
+        }
+    }
+
     public interface OnCitySet {
         void setCityData(String cityName, String toOrFrom);
     }
@@ -278,6 +301,7 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
                 @Override
                 public void onClick(View view) {
                     onCitySet.setCityData(holder.textView.getText().toString(),toOrFrom);
+                    setCityDataToSP(toOrFrom, holder.textView.getText().toString());
                     fullScreenDialogBus.dismiss();
                 }
             });
@@ -343,6 +367,14 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
                     notifyDataSetChanged();
                 }
             };
+        }
+
+        private void setCityDataToSP(String toOrFrom, String city) {
+            if (toOrFrom.equals(BusCitySearchActivity.FROM_STRING)) {
+                AppStorageBox.put(context, AppStorageBox.Key.BUS_LEAVING_FROM_CITY, city);
+            } else {
+                AppStorageBox.put(context, AppStorageBox.Key.BUS_GOING_TO_CITY, city);
+            }
         }
     }
 
