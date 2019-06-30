@@ -77,7 +77,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
-        <activity android:name=".activity.eticket.busticketNew.search.BusCitySearchActivity"></activity>
+        <activity android:name=".activity.eticket.busticketNew.search.BusSelectActivity"></activity>
+        <activity android:name=".activity.eticket.busticketNew.search.BusCitySearchActivity"/>
 
         <uses-library
             android:name="com.google.android.maps"
@@ -92,12 +93,12 @@
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN"/>-->
-            <!--<action android:name="android.intent.action.VIEW"/>-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.VIEW"/>
 
-            <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-            <!--</intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
 
         <meta-data
@@ -1258,15 +1259,7 @@
 
         <activity
             android:name=".activity.eticket.busticketNew.busTransportList.BusTransportListActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <action android:name="android.intent.action.VIEW"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <receiver android:name=".ActionReceiver">
 

@@ -14,7 +14,7 @@ import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.BookingCancelActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.AirThicketTranslationLogActivity
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.search.BusCitySearchActivity
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.search.BusSelectActivity
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
@@ -65,8 +65,6 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
         mConstraintLayout = findViewById(R.id.constraintLayoutBookingList)
         mAppHandler = AppHandler.getmInstance(applicationContext)
 
-        val userName = mAppHandler!!.imeiNo
-
         AppStorageBox.put(AppController.getContext(), AppStorageBox.Key.TRANSPORT_ID, "37")
         AppStorageBox.put(AppController.getContext(), AppStorageBox.Key.DEPARTURE_ID, "457")
 
@@ -82,11 +80,7 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btViewTricket -> {
-                startActivity(Intent(applicationContext, BusCitySearchActivity::class.java))
-
-//                val intent = Intent(applicationContext, BusTransportListActivity::class.java)
-//                startActivity(intent)
-
+                startActivity(Intent(applicationContext, BusSelectActivity::class.java))
             }
 
             R.id.btCencel -> {
