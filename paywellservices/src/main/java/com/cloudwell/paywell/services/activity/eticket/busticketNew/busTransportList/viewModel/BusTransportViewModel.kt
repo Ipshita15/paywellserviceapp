@@ -4,6 +4,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketBas
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketRepository
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
+import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.google.gson.Gson
 
 /**
@@ -36,6 +37,9 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
     }
 
     fun cancelAllRequest() {
+        if (ApiUtils.getClient() != null) {
+            ApiUtils.getClient().dispatcher.cancelAll()
+        }
 
 
     }

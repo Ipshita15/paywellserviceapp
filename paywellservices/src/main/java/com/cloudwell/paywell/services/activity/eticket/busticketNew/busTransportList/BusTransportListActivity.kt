@@ -159,7 +159,7 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
 
         requestBusSearch = RequestBusSearch()
         requestBusSearch.to = "Dhaka"
-        requestBusSearch.from = "Coxs Bazar"
+        requestBusSearch.from = "Kolkata"
         requestBusSearch.date = "2019-06-30"
 
         val split = requestBusSearch.date.split("-")

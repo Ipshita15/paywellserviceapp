@@ -17,8 +17,10 @@ import java.util.concurrent.TimeUnit
  */
 object RetrofitClient {
 
+    private var okHttpClient: OkHttpClient? = null
     private var retrofit: Retrofit? = null
     private var retrofitPHP7: Retrofit? = null
+
 
     fun getClient(baseUrl: String): Retrofit? {
         if (retrofit == null) {
@@ -89,12 +91,16 @@ object RetrofitClient {
             httpClient.authenticator(TokenAuthenticator())
 
 
-            val okHttpClient = httpClient.build()
+            okHttpClient = httpClient.build()
             retrofitPHP7 = Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create()).client(okHttpClient)
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .build()
         }
         return retrofitPHP7
+    }
+
+    fun getClient(): OkHttpClient? {
+        return okHttpClient
     }
 }
