@@ -65,6 +65,8 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
         mConstraintLayout = findViewById(R.id.constraintLayoutBookingList)
         mAppHandler = AppHandler.getmInstance(applicationContext)
 
+        val userName = mAppHandler!!.imeiNo
+
         AppStorageBox.put(AppController.getContext(), AppStorageBox.Key.TRANSPORT_ID, "37")
         AppStorageBox.put(AppController.getContext(), AppStorageBox.Key.DEPARTURE_ID, "457")
 
@@ -81,6 +83,10 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
         when (v?.id) {
             R.id.btViewTricket -> {
                 startActivity(Intent(applicationContext, BusCitySearchActivity::class.java))
+
+//                val intent = Intent(applicationContext, BusTransportListActivity::class.java)
+//                startActivity(intent)
+
             }
 
             R.id.btCencel -> {

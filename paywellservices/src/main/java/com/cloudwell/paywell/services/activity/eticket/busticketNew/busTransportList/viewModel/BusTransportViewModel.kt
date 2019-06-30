@@ -4,6 +4,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketBas
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketRepository
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
+import com.google.gson.Gson
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 2019-06-24.
@@ -23,6 +24,7 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
                 if (it.size == 0) {
                     view?.showNoTripFoundUI()
                 } else {
+                    com.orhanobut.logger.Logger.json("" + Gson().toJson(it1))
                     view?.setAdapter(it1)
                 }
                 view?.hiddenProgress()

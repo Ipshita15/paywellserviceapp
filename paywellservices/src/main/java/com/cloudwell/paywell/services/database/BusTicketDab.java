@@ -57,9 +57,9 @@ public interface BusTicketDab {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long[] insertTripScheduleInfo(List<TripScheduleInfo> all);
 
-    @Query("SELECT * FROM  TripScheduleInfo where to_location = :toLocation   AND from_location = :fromLocation;")
-    public List<TripScheduleInfo> searchTrip(String toLocation, String fromLocation);
-
+    //    @Query("SELECT * FROM  TripScheduleInfo where to_location = :toLocation   AND from_location = :fromLocation;")
+//    public List<TripScheduleInfo> searchTrip(String toLocation, String fromLocation);
+//
     @Query("SELECT BusSchedule.*, BusLocalDB.* FROM BusSchedule INNER JOIN TripScheduleInfo ON BusSchedule._schedule_Id = TripScheduleInfo.schedule_Id INNER JOIN BusLocalDB ON BusLocalDB.busID = BusSchedule.bus_id Where TripScheduleInfo.to_location = :to AND TripScheduleInfo.from_location = :from")
     List<TripScheduleInfoAndBusSchedule> search(String to, String from);
 

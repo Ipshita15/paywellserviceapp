@@ -2,10 +2,10 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew.search;
 
 import android.app.DatePickerDialog;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.View;
 import android.view.animation.Animation;
@@ -19,6 +19,7 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity;
 
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
@@ -26,19 +27,19 @@ import java.util.Calendar;
 
 import mehdi.sakout.fancybuttons.FancyButton;
 
-public class BusCitySearchActivity extends AppCompatActivity implements FullScreenDialogBus.OnCitySet {
+public class BusCitySearchActivity extends BusTricketBaseActivity implements FullScreenDialogBus.OnCitySet {
 
 
-    TextSwitcher fromTS,toTS;
-    private String fromString,toString;
+    public static final String FullSCREEN_DIALOG_HEADER = "header";
+    public static final String TO_STRING_ = "To";
     private ImageView textSwitchIV;
     private FancyButton searchButton;
-    public static final String FullSCREEN_DIALOG_HEADER="header";
-    public static final String TO_STRING_="To";
-    public static final String FROM_STRING="From";
-    private LinearLayout dateLinearLayout,fromLL,toLL;
+    public static final String FROM_STRING = "From";
+    TextSwitcher fromTS, toTS;
+    private String fromString, toString;
+    private LinearLayout dateLinearLayout, fromLL, toLL;
     private Calendar myCalender;
-    private TextView dateTV,monthTV,dayTV;
+    private TextView dateTV, monthTV, dayTV;
     private SimpleDateFormat simpleDateFormat;
 
     @Override
@@ -52,18 +53,18 @@ public class BusCitySearchActivity extends AppCompatActivity implements FullScre
             getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.color_tab_background_bus)));
         }
 
-        dateTV=findViewById(R.id.dateTV);
-        monthTV=findViewById(R.id.monthTV);
-        dayTV=findViewById(R.id.dayTV);
-        myCalender=Calendar.getInstance();
-        dateLinearLayout=findViewById(R.id.dateLL);
-        searchButton=findViewById(R.id.btn_search);
-        textSwitchIV =findViewById(R.id.textSwitchIV);
-        fromTS=findViewById(R.id.busFromCityTS);
-        toTS=findViewById(R.id.busToCityTS);
-        fromLL=findViewById(R.id.fromLL);
-        toLL=findViewById(R.id.toLL);
-        simpleDateFormat=new SimpleDateFormat("dd MMM yyyy");
+        dateTV = findViewById(R.id.dateTV);
+        monthTV = findViewById(R.id.monthTV);
+        dayTV = findViewById(R.id.dayTV);
+        myCalender = Calendar.getInstance();
+        dateLinearLayout = findViewById(R.id.dateLL);
+        searchButton = findViewById(R.id.btn_search);
+        textSwitchIV = findViewById(R.id.textSwitchIV);
+        fromTS = findViewById(R.id.busFromCityTS);
+        toTS = findViewById(R.id.busToCityTS);
+        fromLL = findViewById(R.id.fromLL);
+        toLL = findViewById(R.id.toLL);
+        simpleDateFormat = new SimpleDateFormat("dd MMM yyyy");
         dateTV.setText(String.valueOf(myCalender.get(Calendar.DAY_OF_MONTH)));
         monthTV.setText(new DateFormatSymbols().getMonths()[myCalender.get(Calendar.MONTH)]);
         dayTV.setText(new DateFormatSymbols().getWeekdays()[myCalender.get(Calendar.DAY_OF_WEEK)]);
@@ -77,7 +78,7 @@ public class BusCitySearchActivity extends AppCompatActivity implements FullScre
                 return switcherTextView;
             }
         });
-        fromString="Leaving From";
+        fromString = "Leaving From";
         fromTS.setText(fromString);
         toTS.setFactory(new ViewSwitcher.ViewFactory() {
             @Override
@@ -89,7 +90,7 @@ public class BusCitySearchActivity extends AppCompatActivity implements FullScre
                 return switcherTextView;
             }
         });
-        toString="Going To";
+        toString = "Going To";
         toTS.setText(toString);
 
         Animation inAnim = AnimationUtils.loadAnimation(this,
@@ -107,15 +108,17 @@ public class BusCitySearchActivity extends AppCompatActivity implements FullScre
             public void onClick(View view) {
                 toTS.setText(fromString);
                 fromTS.setText(toString);
-                String from=toString;
-                toString=fromString;
-                fromString=from;
+                String from = toString;
+                toString = fromString;
+                fromString = from;
             }
         });
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), BusSearchActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -124,8 +127,8 @@ public class BusCitySearchActivity extends AppCompatActivity implements FullScre
             @Override
             public void onClick(View view) {
                 FullScreenDialogBus dialog = new FullScreenDialogBus();
-                Bundle b=new Bundle();
-                b.putString(FullSCREEN_DIALOG_HEADER,FROM_STRING);
+                Bundle b = new Bundle();
+                b.putString(FullSCREEN_DIALOG_HEADER, FROM_STRING);
                 dialog.setArguments(b);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 dialog.show(ft, FullScreenDialogBus.TAG);
@@ -135,8 +138,8 @@ public class BusCitySearchActivity extends AppCompatActivity implements FullScre
             @Override
             public void onClick(View view) {
                 FullScreenDialogBus dialog = new FullScreenDialogBus();
-                Bundle b=new Bundle();
-                b.putString(FullSCREEN_DIALOG_HEADER,TO_STRING_);
+                Bundle b = new Bundle();
+                b.putString(FullSCREEN_DIALOG_HEADER, TO_STRING_);
                 dialog.setArguments(b);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 dialog.show(ft, FullScreenDialogBus.TAG);
@@ -146,15 +149,15 @@ public class BusCitySearchActivity extends AppCompatActivity implements FullScre
         dateLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatePickerDialog datePickerDialog=new DatePickerDialog(BusCitySearchActivity.this,R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(BusCitySearchActivity.this, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        myCalender.set(i,i1,i2);
+                        myCalender.set(i, i1, i2);
                         dateTV.setText(String.valueOf(myCalender.get(Calendar.DAY_OF_MONTH)));
                         monthTV.setText(new DateFormatSymbols().getMonths()[myCalender.get(Calendar.MONTH)]);
                         dayTV.setText(new DateFormatSymbols().getWeekdays()[myCalender.get(Calendar.DAY_OF_WEEK)]);
                     }
-                },myCalender.get(Calendar.YEAR),
+                }, myCalender.get(Calendar.YEAR),
                         myCalender.get(Calendar.MONTH),
                         myCalender.get(Calendar.DAY_OF_MONTH));
                 datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
@@ -174,13 +177,13 @@ public class BusCitySearchActivity extends AppCompatActivity implements FullScre
 
     @Override
     public void setCityData(String cityName, String toOrFrom) {
-        if (toOrFrom.equals(TO_STRING_)){
+        if (toOrFrom.equals(TO_STRING_)) {
             toTS.setText(cityName);
-            toString=cityName;
-        }else if (toOrFrom.equals(FROM_STRING)){
+            toString = cityName;
+        } else if (toOrFrom.equals(FROM_STRING)) {
             fromTS.setText(cityName);
-            fromString=cityName;
-        }else {
+            fromString = cityName;
+        } else {
             Toast.makeText(BusCitySearchActivity.this, "Internal Error Occurred!!!", Toast.LENGTH_SHORT).show();
         }
     }
