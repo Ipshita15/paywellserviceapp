@@ -10,6 +10,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketRep
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatInfo
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule
+import com.cloudwell.paywell.services.utils.BusCalculationHelper
 import kotlinx.android.synthetic.main.bus_trip_item_list.view.*
 
 
@@ -18,10 +19,7 @@ import kotlinx.android.synthetic.main.bus_trip_item_list.view.*
  */
 class BusTripListAdapter(val items: List<TripScheduleInfoAndBusSchedule>, val context: Context, val requestBusSearch: RequestBusSearch, val transportID: String, val onClickListener: OnClickListener) : RecyclerView.Adapter<ViewHolderNew>() {
 
-
     override fun onBindViewHolder(holder: ViewHolderNew, position: Int) {
-
-
         val model = items.get(position)
 
         var isAc = ""
@@ -33,11 +31,14 @@ class BusTripListAdapter(val items: List<TripScheduleInfoAndBusSchedule>, val co
 
         holder.tvTransportNameAndType.text = (model.busLocalDB?.name?.toUpperCase()
                 ?: "") + ", " + isAc
-        holder.tvPrices.text = ":" + model.busSchedule?.ticketPrice
         holder.tvCoachNo.text = ": " + model.busSchedule?.coachNo
         holder.tvDepartureTime.text = ": " + (model.busSchedule?.scheduleTime ?: "")
 
 
+        val prices = BusCalculationHelper.getPrices(model.busSchedule?.ticketPrice, requestBusSearch.date)
+        holder.tvPrices.text = prices
+
+        
         // val departureId = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.DEPARTURE_ID) as String
 
 

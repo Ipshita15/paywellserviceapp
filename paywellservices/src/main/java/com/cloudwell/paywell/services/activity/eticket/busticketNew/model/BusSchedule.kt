@@ -32,9 +32,6 @@ class BusSchedule(
         @ColumnInfo(name = "ticket_price")
         var ticketPrice: String = "",
 
-        @ColumnInfo(name = "ticket_price_validity_date")
-        var ticketPriceValidityDate: String = "",
-
         @ColumnInfo(name = "allowed_seat_numbers")
         var allowedSeatNumbers: String = ""
 

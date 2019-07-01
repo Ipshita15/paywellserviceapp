@@ -210,12 +210,8 @@ class BusTicketRepository() {
 
 
                     val priceObject = model.getJSONObject("ticket_price")
+                    val ticket_price = priceObject.toString();
 
-                    var ticket_price = ""
-                    val dateKey = priceObject.keys()
-                    dateKey.forEach {
-                        ticket_price = "" + priceObject.get(it)
-                    }
 
                     var allowedSeatStoreString = ""
                     val allowedSeatNumbersObject = model.getJSONObject("allowed_seat_numbers")
@@ -233,7 +229,7 @@ class BusTicketRepository() {
                     }
 
 
-                    val schedule = BusSchedule(scheduleId, schedule_time, bus_id, coach_no, schedule_type, validity_date, ticket_price, dateKey.toString(), allowedSeatStoreString)
+                    val schedule = BusSchedule(scheduleId, schedule_time, bus_id, coach_no, schedule_type, validity_date, ticket_price, allowedSeatStoreString)
                     allScheduleData.add(schedule)
                 }
 

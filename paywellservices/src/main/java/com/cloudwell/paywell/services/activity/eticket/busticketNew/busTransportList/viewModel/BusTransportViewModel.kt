@@ -26,6 +26,12 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
                     view?.showNoTripFoundUI()
                 } else {
                     com.orhanobut.logger.Logger.json("" + Gson().toJson(it1))
+                    
+
+
+
+
+
                     view?.setAdapter(it1)
                 }
                 view?.hiddenProgress()
