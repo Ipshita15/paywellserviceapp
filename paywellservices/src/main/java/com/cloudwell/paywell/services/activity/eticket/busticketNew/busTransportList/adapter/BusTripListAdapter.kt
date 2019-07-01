@@ -42,7 +42,7 @@ class BusTripListAdapter(val items: List<TripScheduleInfoAndBusSchedule>, val co
 
 
         val transport_id = transportID
-        val route = requestBusSearch.to + "-" + requestBusSearch.from
+        val route = requestBusSearch.from + "-" + requestBusSearch.to
         val bus_id = "" + (model.busLocalDB?.busID ?: "")
         val departure_id = model.busSchedule!!.schedule_time_id
         val departure_date = requestBusSearch.date

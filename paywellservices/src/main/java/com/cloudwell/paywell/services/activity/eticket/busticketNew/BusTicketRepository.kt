@@ -331,7 +331,6 @@ class BusTicketRepository() {
                             data.value = ResSeatInfo(tototalAvailableSeat, allBusSeat)
                         }
                     }
-                    com.orhanobut.logger.Logger.v("" + body)
                 }
             }
 
