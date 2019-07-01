@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bus_menu_bg"
-    tools:context=".activity.eticket.busticketNew.BusTicketMenuActivity">
+    tools:context=".activity.eticket.busticketNew.menu.BusTicketMenuActivity">
 
     <Button
         android:id="@+id/btViewTricket"

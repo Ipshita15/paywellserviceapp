@@ -221,11 +221,6 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
 
 
     @Override
-    public void onBackPressed() {
-        finish();
-    }
-
-    @Override
     public void setCityData(String cityName, String toOrFrom) {
         if (toOrFrom.equals(TO_STRING_)) {
             toTS.setText(cityName);

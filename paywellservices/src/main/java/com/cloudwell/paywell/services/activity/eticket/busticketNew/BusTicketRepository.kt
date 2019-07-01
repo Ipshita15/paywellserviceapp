@@ -77,10 +77,6 @@ class BusTicketRepository() {
         val skey = ApiUtils.KEY_SKEY
 
         val accessKey = AppStorageBox.get(mContext, AppStorageBox.Key.ACCESS_KEY) as String
-
-
-
-
         ApiUtils.getAPIServicePHP7().getBusSchedule(userName, transport_id, skey, accessKey).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
@@ -198,9 +194,6 @@ class BusTicketRepository() {
                 val toKey = it
                 val schedules = to.getJSONObject(toKey).getJSONObject("schedules")
 
-
-
-
                 schedules.keys().forEach {
                     val scheduleId = it
 
@@ -226,13 +219,6 @@ class BusTicketRepository() {
 
                     var allowedSeatStoreString = ""
                     val allowedSeatNumbersObject = model.getJSONObject("allowed_seat_numbers")
-//                    val allowedSeatNumbersObjectKeys = allowedSeatNumbersObject.keys()
-//                    allowedSeatNumbersObjectKeys.forEach {
-//                        val seatNumber = it
-//                        val seatName = allowedSeatNumbersObject.get(seatNumber)
-//                        allowedSeatStoreString = allowedSeatStoreString + seatNumber + ":" + seatName + ","
-//
-//                    }
                     allowedSeatStoreString = allowedSeatNumbersObject.toString()
 
 
@@ -251,20 +237,22 @@ class BusTicketRepository() {
                     allScheduleData.add(schedule)
                 }
 
-
-
-                doAsync {
-                    DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().insertTripScheduleInfo(allTripScheduleInfo)
-                    DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().insertSchedule(allScheduleData)
-                    DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().insertBoothInfo(allBoothInfo)
-
-                    uiThread {
-                        isFinshedDataLoad.value = true
-                    }
-                }
-
             }
 
+        }
+
+
+        doAsync {
+            DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().insertTripScheduleInfo(allTripScheduleInfo)
+            DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().insertSchedule(allScheduleData)
+            DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().insertBoothInfo(allBoothInfo)
+
+            Logger.v("doAsync")
+
+            uiThread {
+                Logger.v("Local data insert successful")
+                isFinshedDataLoad.value = true
+            }
         }
 
 

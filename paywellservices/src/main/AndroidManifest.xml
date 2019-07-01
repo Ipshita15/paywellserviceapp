@@ -77,9 +77,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
-        <activity android:name=".activity.eticket.busticketNew.search.BusSelectActivity"></activity>
-        <activity android:name=".activity.eticket.busticketNew.search.BusCitySearchActivity"/>
-
         <uses-library
             android:name="com.google.android.maps"
             android:required="false"/>
@@ -1248,6 +1245,17 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
+        <activity
+            android:name=".activity.eticket.busticketNew.search.BusSelectActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activity.eticket.busticketNew.search.BusCitySearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".activity.eticket.airticket.ticketCencel.TricketCancelActivity"
             android:screenOrientation="portrait"
@@ -1264,17 +1272,20 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".activity.eticket.busticketNew.BusTicketMenuActivity"
+            android:name=".activity.eticket.busticketNew.menu.BusTicketMenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
         <activity
             android:name=".activity.eticket.busticketNew.seatLayout.SeatLayoutActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            >
         </activity>
         <activity
             android:name=".activity.eticket.busticketNew.busTransportList.BusTransportListActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 

@@ -17,6 +17,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Bus;
 import com.cloudwell.paywell.services.app.storage.AppStorageBox;
 import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus;
 import com.cloudwell.paywell.services.eventBus.model.MessageToBottom;
+import com.orhanobut.logger.Logger;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -106,21 +107,40 @@ public class BusSelectActivity extends BusTricketBaseActivity {
 
         String trasnportID = (String) AppStorageBox.get(BusSelectActivity.this, AppStorageBox.Key.BUS_ID);
         showProgressDialog();
-        mBusTicketRepository.getBusScheduleDate(trasnportID).observeForever(aBoolean -> {
-            dismissProgressDialog();
-            if (aBoolean) {
-                startActivity(new Intent(getApplicationContext(), BusCitySearchActivity.class));
+//        mBusTicketRepository.getBusScheduleDate(trasnportID).observeForever(aBoolean -> {
+//            dismissProgressDialog();
+//            if (aBoolean) {
+//                mBusTicketRepository.getBusScheduleDate(trasnportID).removeObservers(this);
+//
+//                this.runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Logger.v("run");
+//
+//                        Intent intent = new Intent(getApplicationContext(), BusCitySearchActivity.class);
+//                        startActivity(intent);
+//                    }
+//                });
+//
+//            }
+//        });
+
+        mBusTicketRepository.getBusScheduleDate(trasnportID).observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                dismissProgressDialog();
+                if (aBoolean) {
+                    Logger.v("run");
+                    Intent intent = new Intent(getApplicationContext(), BusCitySearchActivity.class);
+                    startActivity(intent);
+
+                }
             }
         });
 
 
     }
 
-
-    @Override
-    public void onBackPressed() {
-        finish();
-    }
 
     @Subscribe
     public void getAuthError(MessageToBottom messageToBottom) {
