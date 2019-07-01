@@ -10,7 +10,6 @@ import android.view.View
 import android.widget.Toast
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketRepository
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.adapter.BusTripListAdapter
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.adapter.OnClickListener
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
@@ -37,13 +36,42 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
 
     var busTripListAdapter: BusTripListAdapter? = null
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_bus_transport_list)
+        setToolbar(getString(R.string.title_bus_transtport_list), resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
+
+        requestBusSearch = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.REQUEST_AIR_SERACH) as RequestBusSearch
+
+//        requestBusSearch = RequestBusSearch()
+//        requestBusSearch.to = "Dhaka"
+//        requestBusSearch.from = "Kolkata"
+//        requestBusSearch.date = "2019-07-01"
+
+        val split = requestBusSearch.date.split("-")
+        val month = split[1].toInt() - 1
+        myDateTimelineViewBus.setFirstDate(split[0].toInt(), month, split[2].toInt())
+        myDateTimelineViewBus.setOnDateChangeLincher(this)
+
+        initViewModel()
+        viewMode.callLocalSearch(requestBusSearch)
+
+
+        btSerachAgain.setOnClickListener {
+            finish()
+        }
+
+
+    }
+
     override fun showNoTripFoundUI() {
         shimmer_recycler_view.visibility = View.INVISIBLE
         layoutNoSerachFound.visibility = View.VISIBLE
     }
 
     override fun setAdapter(it: List<TripScheduleInfoAndBusSchedule>) {
-
+        layoutNoSerachFound.visibility = View.INVISIBLE
         viewMode.cancelAllRequest()
 
         Fresco.initialize(applicationContext);
@@ -55,7 +83,6 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
         shimmer_recycler_view.adapter = it.let { it1 ->
 
 
-            val busTicketRepository = BusTicketRepository()
             val transportID = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.TRANSPORT_ID) as String
 
             busTripListAdapter = BusTripListAdapter(it1, applicationContext, requestBusSearch, transportID, object : OnClickListener {
@@ -145,32 +172,6 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
 
         viewMode = ViewModelProviders.of(this).get(BusTransportViewModel::class.java)
         viewMode.setIbusTransportListView(this)
-
-
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_bus_transport_list)
-
-        setToolbar(getString(R.string.title_bus_transtport_list), resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
-
-//        requestBusSearch = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.REQUEST_AIR_SERACH) as RequestBusSearch
-
-        requestBusSearch = RequestBusSearch()
-        requestBusSearch.to = "Dhaka"
-        requestBusSearch.from = "Kolkata"
-        requestBusSearch.date = "2019-06-30"
-
-        val split = requestBusSearch.date.split("-")
-        val month = split[1].toInt() - 1
-        myDateTimelineViewBus.setFirstDate(split[0].toInt(), month, split[2].toInt())
-        myDateTimelineViewBus.setOnDateChangeLincher(this)
-
-
-        initViewModel()
-
-        viewMode.callLocalSearch(requestBusSearch)
 
 
     }

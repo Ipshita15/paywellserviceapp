@@ -22,7 +22,7 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
         view?.showProgress()
         BusTicketRepository().searchTransport(requestBusSearch).observeForever {
             it?.let { it1 ->
-                if (it.size == 0) {
+                if (it1.size == 0) {
                     view?.showNoTripFoundUI()
                 } else {
                     com.orhanobut.logger.Logger.json("" + Gson().toJson(it1))

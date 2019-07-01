@@ -814,5 +814,6 @@
     <string name="coach_no">Coach no</string>
     <string name="departure">Departure</string>
     <string name="available_seat">Available Seat</string>
+    <string name="please_select_a_transport">Please select a transport</string>
 
 </resources>

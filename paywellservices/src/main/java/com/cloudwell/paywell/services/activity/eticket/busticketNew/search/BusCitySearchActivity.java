@@ -2,6 +2,7 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew.search;
 
 import android.app.DatePickerDialog;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -19,6 +20,9 @@ import android.widget.ViewSwitcher;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.BusTransportListActivity;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch;
+import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.storage.AppStorageBox;
 
 import java.text.DateFormatSymbols;
@@ -143,6 +147,21 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
                 String from = ((TextView) fromTS.getCurrentView()).getText().toString();
                 String to = ((TextView) toTS.getCurrentView()).getText().toString();
                 if (!(from.isEmpty() && !(from.equals(FROM_STRING))) && !(to.isEmpty() && !(to.equals(TO_STRING_)))) {
+
+
+                    String date = (String) AppStorageBox.get(getApplicationContext(), AppStorageBox.Key.BUS_JOURNEY_DATE);
+
+
+                    RequestBusSearch requestBusSearch = new RequestBusSearch();
+                    requestBusSearch.setFrom(from);
+                    requestBusSearch.setTo(to);
+                    requestBusSearch.setDate(date);
+
+                    AppStorageBox.put(AppController.getContext(), AppStorageBox.Key.REQUEST_AIR_SERACH, requestBusSearch);
+
+                    Intent intent = new Intent(getApplicationContext(), BusTransportListActivity.class);
+                    startActivity(intent);
+
 
                     Toast.makeText(BusCitySearchActivity.this, "Service will available soon", Toast.LENGTH_SHORT).show();
 

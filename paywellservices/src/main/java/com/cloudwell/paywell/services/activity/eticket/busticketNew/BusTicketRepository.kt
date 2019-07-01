@@ -32,42 +32,6 @@ class BusTicketRepository() {
 
     val isFinshedDataLoad = MutableLiveData<Boolean>()
 
-    fun getBusListData(): MutableLiveData<Boolean> {
-        mAppHandler = AppHandler.getmInstance(mContext)
-        val userName = mAppHandler!!.imeiNo
-        val skey = ApiUtils.KEY_SKEY
-
-
-        ApiUtils.getAPIServicePHP7().getBusListData(userName, skey).enqueue(object : Callback<ResGetBusListData> {
-            override fun onResponse(call: Call<ResGetBusListData>, response: Response<ResGetBusListData>) {
-                if (response.isSuccessful) {
-                    val body = response.body()
-                    body.let {
-
-                        if (it?.status ?: 0 == 200) {
-                            val accessKey = it?.accessKey
-                            AppStorageBox.put(mContext, AppStorageBox.Key.ACCESS_KEY, accessKey)
-
-                            it?.data?.data?.let { it1 -> saveBuss(it1) }
-                            getBusScheduleDate()
-
-                        } else {
-                            isFinshedDataLoad.value = false
-                        }
-
-                    }
-
-                    com.orhanobut.logger.Logger.v("" + body)
-                }
-            }
-
-            override fun onFailure(call: Call<ResGetBusListData>, t: Throwable) {
-                isFinshedDataLoad.value = false
-
-            }
-        })
-        return isFinshedDataLoad
-    }
 
     fun getBusList(): MutableLiveData<List<Bus>> {
         mAppHandler = AppHandler.getmInstance(mContext)
@@ -106,7 +70,7 @@ class BusTicketRepository() {
     }
 
 
-    fun getBusScheduleDate(): MutableLiveData<ResGetBusListData> {
+    public fun getBusScheduleDate(transport_id: String): MutableLiveData<Boolean> {
         mAppHandler = AppHandler.getmInstance(mContext)
 
         val userName = mAppHandler!!.imeiNo
@@ -114,9 +78,10 @@ class BusTicketRepository() {
 
         val accessKey = AppStorageBox.get(mContext, AppStorageBox.Key.ACCESS_KEY) as String
 
-        val data = MutableLiveData<ResGetBusListData>()
 
-        ApiUtils.getAPIServicePHP7().getBusSchedule(userName, "37", skey, accessKey).enqueue(object : Callback<ResponseBody> {
+
+
+        ApiUtils.getAPIServicePHP7().getBusSchedule(userName, transport_id, skey, accessKey).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     val body = response.body()
@@ -138,7 +103,7 @@ class BusTicketRepository() {
 
             }
         })
-        return data
+        return isFinshedDataLoad
     }
 
     private fun handleResponse(jsonObject: JSONObject) {
@@ -224,14 +189,14 @@ class BusTicketRepository() {
 
         val keys1 = scheduleInfoObject.keys()
         keys1.forEach {
-            val toKey = it
-            val to = scheduleInfoObject.getJSONObject(toKey)
+            val FormKey = it
+            val to = scheduleInfoObject.getJSONObject(FormKey)
 
             val fromKeys = to.keys()
 
             fromKeys.forEach {
-                val fromKey = it
-                val schedules = to.getJSONObject(fromKey).getJSONObject("schedules")
+                val toKey = it
+                val schedules = to.getJSONObject(toKey).getJSONObject("schedules")
 
 
 
@@ -247,7 +212,7 @@ class BusTicketRepository() {
                     val schedule_type = model.getString("schedule_type")
                     val validity_date = model.getString("validity_date")
 
-                    val tripScheduleInfo = TripScheduleInfo(toKey, fromKey, scheduleId, validity_date)
+                    val tripScheduleInfo = TripScheduleInfo(FormKey, toKey, scheduleId, validity_date)
                     allTripScheduleInfo.add(tripScheduleInfo)
 
 
@@ -292,12 +257,16 @@ class BusTicketRepository() {
                     DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().insertTripScheduleInfo(allTripScheduleInfo)
                     DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().insertSchedule(allScheduleData)
                     DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().insertBoothInfo(allBoothInfo)
+
+                    uiThread {
+                        isFinshedDataLoad.value = true
+                    }
                 }
+
             }
 
         }
 
-        isFinshedDataLoad.value = true
 
     }
 
