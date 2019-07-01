@@ -10,15 +10,13 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketRep
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatInfo
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule
-import com.cloudwell.paywell.services.app.AppController
-import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import kotlinx.android.synthetic.main.bus_trip_item_list.view.*
 
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 19/2/19.
  */
-class BusTripListAdapter(val items: List<TripScheduleInfoAndBusSchedule>, val context: Context, val requestBusSearch: RequestBusSearch, val busTicketRepository: BusTicketRepository, val onClickListener: OnClickListener) : RecyclerView.Adapter<ViewHolderNew>() {
+class BusTripListAdapter(val items: List<TripScheduleInfoAndBusSchedule>, val context: Context, val requestBusSearch: RequestBusSearch, val transportID: String, val onClickListener: OnClickListener) : RecyclerView.Adapter<ViewHolderNew>() {
 
 
     override fun onBindViewHolder(holder: ViewHolderNew, position: Int) {
@@ -40,31 +38,43 @@ class BusTripListAdapter(val items: List<TripScheduleInfoAndBusSchedule>, val co
         holder.tvDepartureTime.text = ": " + (model.busSchedule?.scheduleTime ?: "")
 
 
-        val transportID = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.TRANSPORT_ID) as String
-        val departureId = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.DEPARTURE_ID) as String
+        // val departureId = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.DEPARTURE_ID) as String
 
 
         val transport_id = transportID
-        val route = requestBusSearch.to + "-" + requestBusSearch.from
+        val route = requestBusSearch.from + "-" + requestBusSearch.to
         val bus_id = "" + (model.busLocalDB?.busID ?: "")
-        val departure_id = departureId
+        val departure_id = model.busSchedule!!.schedule_time_id
         val departure_date = requestBusSearch.date
         val seat_ids = model.busSchedule?.allowedSeatNumbers ?: ""
 
-        if (model.resSeatInfo?.tototalAvailableSeat ?: -1 == -1) {
+
+        if (model.resSeatInfo == null) {
+            holder.tvAvailableSeat.text = ": 0"
+
             holder.progressBar.visibility = View.VISIBLE
             BusTicketRepository().getSeatCheck(transport_id, route, bus_id, departure_id, departure_date, seat_ids).observeForever {
                 holder.progressBar.visibility = View.INVISIBLE
-                val prices = it?.tototalAvailableSeat ?: 0
-                holder.tvAvailableSeat.text = ": " + prices
+                val tototalAvailableSeat = it?.tototalAvailableSeat ?: 0
+                holder.tvAvailableSeat.text = ": " + tototalAvailableSeat
+
 
                 if (it != null) {
                     onClickListener.onUpdateData(position, it)
                 }
 
+
             }
+
         } else {
             holder.progressBar.visibility = View.INVISIBLE
+            holder.tvAvailableSeat.text = ": " + model.resSeatInfo?.tototalAvailableSeat
+        }
+
+
+
+        holder.ivSelect.setOnClickListener {
+            onClickListener.onClick(position)
         }
 
     }

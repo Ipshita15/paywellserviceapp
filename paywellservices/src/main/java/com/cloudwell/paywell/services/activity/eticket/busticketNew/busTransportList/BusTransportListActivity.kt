@@ -7,11 +7,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.View
+import android.widget.Toast
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.FlightDetails1Activity
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.viewModel.FlightSearchViewModel
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketRepository
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.adapter.BusTripListAdapter
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.adapter.OnClickListener
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
@@ -19,6 +17,8 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransport
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatInfo
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.seatLayout.SeatLayoutActivity
+import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.customView.horizontalDatePicker.commincation.IDatePicker
 import com.facebook.drawee.backends.pipeline.Fresco
@@ -36,12 +36,43 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
 
     var busTripListAdapter: BusTripListAdapter? = null
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_bus_transport_list)
+        setToolbar(getString(R.string.title_bus_transtport_list), resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
+
+        requestBusSearch = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.REQUEST_AIR_SERACH) as RequestBusSearch
+
+//        requestBusSearch = RequestBusSearch()
+//        requestBusSearch.to = "Dhaka"
+//        requestBusSearch.from = "Kolkata"
+//        requestBusSearch.date = "2019-07-01"
+
+        val split = requestBusSearch.date.split("-")
+        val month = split[1].toInt() - 1
+        myDateTimelineViewBus.setFirstDate(split[0].toInt(), month, split[2].toInt())
+        myDateTimelineViewBus.setOnDateChangeLincher(this)
+
+        initViewModel()
+        viewMode.callLocalSearch(requestBusSearch)
+
+
+        btSerachAgain.setOnClickListener {
+            finish()
+        }
+
+
+    }
+
     override fun showNoTripFoundUI() {
         shimmer_recycler_view.visibility = View.INVISIBLE
         layoutNoSerachFound.visibility = View.VISIBLE
     }
 
     override fun setAdapter(it: List<TripScheduleInfoAndBusSchedule>) {
+        layoutNoSerachFound.visibility = View.INVISIBLE
+        viewMode.cancelAllRequest()
 
         Fresco.initialize(applicationContext);
 
@@ -52,33 +83,36 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
         shimmer_recycler_view.adapter = it.let { it1 ->
 
 
-            val busTicketRepository = BusTicketRepository()
+            val transportID = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.TRANSPORT_ID) as String
 
-            busTripListAdapter = BusTripListAdapter(it1, applicationContext, requestBusSearch, busTicketRepository, object : OnClickListener {
+            busTripListAdapter = BusTripListAdapter(it1, applicationContext, requestBusSearch, transportID, object : OnClickListener {
                 override fun onUpdateData(position: Int, resSeatInfo: ResSeatInfo) {
 
                     val get = items.get(position)
                     get.resSeatInfo = resSeatInfo
                     items.set(position, get)
-                    busTripListAdapter?.notifyItemChanged(position)
+                    busTripListAdapter?.notifyItemRangeChanged(position, items.size);
+                    busTripListAdapter?.notifyDataSetChanged()
+
                 }
 
 
                 override fun onClick(position: Int) {
                     // do whatever
-                    val get = mViewModelFlight.mListMutableLiveDataFlightData.value?.get(position)
-                    val mSearchId = mViewModelFlight.mSearchId.value
-                    val resultID = get?.resultID
+
+                    val model = items.get(position)
+
+                    if (model.resSeatInfo == null) {
+                        Toast.makeText(applicationContext, "PLease wailt..", Toast.LENGTH_LONG).show()
+                    } else if (model.resSeatInfo?.tototalAvailableSeat == 0) {
+                        showDialogMesssage("seat not available")
+                    } else {
+                        val intent = Intent(applicationContext, SeatLayoutActivity::class.java)
+                        startActivity(intent)
+                    }
+                    // AppStorageBox.put(applicationContext, AppStorageBox.Key.SERACH_ID, mSearchId)
 
 
-                    AppStorageBox.put(applicationContext, AppStorageBox.Key.SERACH_ID, mSearchId)
-                    AppStorageBox.put(applicationContext, AppStorageBox.Key.Request_ID, resultID)
-
-
-                    val intent = Intent(applicationContext, FlightDetails1Activity::class.java)
-                    intent.putExtra("mSearchId", mSearchId)
-                    intent.putExtra("resultID", resultID)
-                    startActivity(intent)
                 }
             })
             busTripListAdapter
@@ -109,23 +143,28 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
 
         val split = humanReadAbleDate.split("-")
         val month = split[1].toInt() - 1
-        myDateTimelineView.setNewDate(split[0].toInt(), month, split[2].toInt())
-        // myDateTimelineView.setOnDateChangeLincher(this)
+        myDateTimelineViewBus.setNewDate(split[0].toInt(), month, split[2].toInt())
+        myDateTimelineViewBus.setOnDateChangeLincher(this)
 
-        // mViewModelFlight.onSetDate(isInternetConnection, humanReadAbleDate, requestBusSearch)
+        requestBusSearch.date = humanReadAbleDate
+
+        viewMode.callLocalSearch(requestBusSearch)
 
 
     }
 
-    private lateinit var mViewModelFlight: FlightSearchViewModel
-
 
     override fun onSetDate(year: Int, month: Int, day: Int) {
         val mMonth = month + 1;
-
         val date = "$year-$mMonth-$day"
         val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(date) as Date
         val humanReadAbleDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).format(fdepTimeFormatDate)
+        myDateTimelineViewBus.setOnDateChangeLincher(this)
+
+
+        requestBusSearch.date = humanReadAbleDate
+
+        viewMode.callLocalSearch(requestBusSearch)
 
     }
 
@@ -137,29 +176,9 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
 
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_bus_transport_list)
-
-        setToolbar(getString(R.string.title_bus_transtport_list), resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
-
-//        requestBusSearch = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.REQUEST_AIR_SERACH) as RequestBusSearch
-
-        requestBusSearch = RequestBusSearch()
-        requestBusSearch.to = "Dhaka"
-        requestBusSearch.from = "Kolkata"
-        requestBusSearch.date = "2019-07-01"
-
-        initViewModel()
-
-        viewMode.callLocalSearch(requestBusSearch)
-
-
-    }
-
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(com.cloudwell.paywell.services.R.menu.airticket_menu, menu)
+        menuInflater.inflate(R.menu.airticket_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 

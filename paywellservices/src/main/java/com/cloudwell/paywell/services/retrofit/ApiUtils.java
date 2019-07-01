@@ -2,6 +2,8 @@ package com.cloudwell.paywell.services.retrofit;
 
 import com.cloudwell.paywell.services.activity.utility.AllUrl;
 
+import okhttp3.OkHttpClient;
+
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 7/29/18.
  */
@@ -23,5 +25,9 @@ public class ApiUtils {
 
     public static APIService getAPIServicePHP7() {
         return RetrofitClient.INSTANCE.getClientPHP(BASE_URL_PHP7).create(APIService.class);
+    }
+
+    public static OkHttpClient getClient() {
+        return RetrofitClient.INSTANCE.getClient();
     }
 }
