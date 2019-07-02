@@ -2,6 +2,7 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew.search;
 
 import android.app.DatePickerDialog;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.ViewSwitcher;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.passengerInformation.PassengerInformationActivity;
 import com.cloudwell.paywell.services.app.storage.AppStorageBox;
 
 import java.text.DateFormatSymbols;
@@ -136,7 +138,9 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
                 String to = ((TextView) toTS.getCurrentView()).getText().toString();
                 if (!(from.isEmpty() && !(from.equals(FROM_STRING))) && !(to.isEmpty() && !(to.equals(TO_STRING_)))) {
 
-                    Toast.makeText(BusCitySearchActivity.this, "Service will available soon", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(BusCitySearchActivity.this, "Service will available soon", Toast.LENGTH_SHORT).show();
+
+                    startActivity(new Intent(BusCitySearchActivity.this, PassengerInformationActivity.class));
 
                 } else {
                     Toast.makeText(BusCitySearchActivity.this, "Please Enter All the data first", Toast.LENGTH_SHORT).show();

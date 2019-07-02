@@ -39,6 +39,7 @@ public class BusSelectActivity extends BusTricketBaseActivity {
         busListSpinner.setAdapter(busListAdapter);
         ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Please wait...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
         new BusTicketRepository().getBusList().observeForever(new Observer<List<Bus>>() {
             @Override

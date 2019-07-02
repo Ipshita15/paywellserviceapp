@@ -75,7 +75,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
-        <activity android:name=".activity.eticket.busticketNew.search.BusSelectActivity"></activity>
+        <activity android:name=".activity.eticket.busticketNew.passengerInformation.PassengerInformationActivity">
+
+        </activity>
+        <activity android:name=".activity.eticket.busticketNew.search.BusSelectActivity" />
         <activity android:name=".activity.eticket.busticketNew.search.BusCitySearchActivity" />
 
         <uses-library
@@ -1253,7 +1256,7 @@
             android:name=".activity.eticket.busticketNew.busTransportList.BusTransportListActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <receiver android:name=".ActionReceiver"></receiver>
+        <receiver android:name=".ActionReceiver" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
