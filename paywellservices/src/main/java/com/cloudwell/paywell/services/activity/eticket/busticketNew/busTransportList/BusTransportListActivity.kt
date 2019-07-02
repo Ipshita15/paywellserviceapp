@@ -22,6 +22,7 @@ import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.customView.horizontalDatePicker.commincation.IDatePicker
 import com.facebook.drawee.backends.pipeline.Fresco
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_bus_transport_list.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -107,7 +108,10 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
                     } else if (model.resSeatInfo?.tototalAvailableSeat == 0) {
                         showDialogMesssage("seat not available")
                     } else {
+
+                        val toJson = Gson().toJson(model)
                         val intent = Intent(applicationContext, SeatLayoutActivity::class.java)
+                        intent.putExtra("jsonData", toJson)
                         startActivity(intent)
                     }
                     // AppStorageBox.put(applicationContext, AppStorageBox.Key.SERACH_ID, mSearchId)
