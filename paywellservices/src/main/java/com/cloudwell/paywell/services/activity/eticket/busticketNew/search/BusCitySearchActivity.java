@@ -35,7 +35,7 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
 
 
     public static final String FullSCREEN_DIALOG_HEADER = "header";
-    public static final String TO_STRING_ = "Going To";
+    public static final String TO_STRING = "Going To";
     TextSwitcher fromTS, toTS;
     private ImageView textSwitchIV;
     public static final String FROM_STRING = "Leaving From";
@@ -84,22 +84,14 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
                 return switcherTextView;
             }
         });
-        if ((String.valueOf(AppStorageBox.get(this, AppStorageBox.Key.BUS_LEAVING_FROM_CITY)) != null)
-                && !(String.valueOf(AppStorageBox.get(this, AppStorageBox.Key.BUS_LEAVING_FROM_CITY)).isEmpty())) {
-            fromString = String.valueOf(AppStorageBox.get(this, AppStorageBox.Key.BUS_LEAVING_FROM_CITY));
-        } else {
-            fromString = "Leaving From";
-        }
 
-        if ((String.valueOf(AppStorageBox.get(this, AppStorageBox.Key.BUS_GOING_TO_CITY)) != null)
-                && !(String.valueOf(AppStorageBox.get(this, AppStorageBox.Key.BUS_GOING_TO_CITY)).isEmpty())) {
-            toString = String.valueOf(AppStorageBox.get(this, AppStorageBox.Key.BUS_GOING_TO_CITY));
-        } else {
-            toString = "Going To";
-        }
+        fromString = FROM_STRING;
+        toString = TO_STRING;
+
         String fromData = (String) AppStorageBox.get(this, AppStorageBox.Key.BUS_LEAVING_FROM_CITY);
         String toData = (String) AppStorageBox.get(this, AppStorageBox.Key.BUS_GOING_TO_CITY);
-        if (fromData != null && !(fromData.isEmpty())) {
+
+        if (fromData != null && !(fromData.isEmpty()) && !fromData.equals("null")) {
             fromTS.setText(fromData);
         } else {
             fromTS.setText(fromString);
@@ -114,7 +106,7 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
                 return switcherTextView;
             }
         });
-        if (toData != null && !(toData.isEmpty())) {
+        if (toData != null && !(toData.isEmpty()) && !toData.equals("null")) {
             toTS.setText(toData);
         } else {
             toTS.setText(toString);
@@ -146,7 +138,7 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
             public void onClick(View view) {
                 String from = ((TextView) fromTS.getCurrentView()).getText().toString();
                 String to = ((TextView) toTS.getCurrentView()).getText().toString();
-                if (!(from.isEmpty() && !(from.equals(FROM_STRING))) && !(to.isEmpty() && !(to.equals(TO_STRING_)))) {
+                if (!from.isEmpty() && !(from.equals(FROM_STRING)) && !to.isEmpty() && !(to.equals(TO_STRING))) {
 
 
                     String date = (String) AppStorageBox.get(getApplicationContext(), AppStorageBox.Key.BUS_JOURNEY_DATE);
@@ -161,10 +153,6 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
 
                     Intent intent = new Intent(getApplicationContext(), BusTransportListActivity.class);
                     startActivity(intent);
-
-
-                    Toast.makeText(BusCitySearchActivity.this, "Service will available soon", Toast.LENGTH_SHORT).show();
-
                 } else {
                     Toast.makeText(BusCitySearchActivity.this, "Please Enter All the data first", Toast.LENGTH_SHORT).show();
                 }
@@ -187,7 +175,7 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
             public void onClick(View view) {
                 FullScreenDialogBus dialog = new FullScreenDialogBus();
                 Bundle b = new Bundle();
-                b.putString(FullSCREEN_DIALOG_HEADER, TO_STRING_);
+                b.putString(FullSCREEN_DIALOG_HEADER, TO_STRING);
                 dialog.setArguments(b);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 dialog.show(ft, FullScreenDialogBus.TAG);
@@ -222,7 +210,7 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
 
     @Override
     public void setCityData(String cityName, String toOrFrom) {
-        if (toOrFrom.equals(TO_STRING_)) {
+        if (toOrFrom.equals(TO_STRING)) {
             toTS.setText(cityName);
             toString = cityName;
         } else if (toOrFrom.equals(FROM_STRING)) {

@@ -13,6 +13,7 @@ object BusCalculationHelper {
     fun getPrices(ticketPrice: String?, userDate: String): String {
         val jsonObject = JSONObject(ticketPrice)
         val dateKey = jsonObject.keys()
+        val dateKeyDefalt = jsonObject.keys()
 
         dateKey.forEach {
             val price = jsonObject.get(it).toString()
@@ -22,8 +23,20 @@ object BusCalculationHelper {
             if (userDate.before(date2) || userDate.equals(date2)) {
                 return price
             }
+
         }
-        return ""
+
+        var i = 0
+        var next = "";
+        while (dateKeyDefalt.hasNext()) {
+            i++
+            next = dateKeyDefalt.next()
+        }
+        if (i == 1) {
+            return jsonObject.get(next).toString()
+        }
+
+        return "0.0"
     }
 }
 
