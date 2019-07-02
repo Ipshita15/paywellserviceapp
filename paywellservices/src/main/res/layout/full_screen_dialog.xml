@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -21,7 +21,8 @@
         android:background="#d1e5e1"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <include layout="@layout/tab_background_bus" />
+        <include layout="@layout/tab_background_bus"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -55,19 +56,20 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ivClose" />
+                app:layout_constraintTop_toBottomOf="@+id/ivClose"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:visibility="visible"
-                    android:id="@+id/preDefinedDataTL"
-                    android:layout_margin="10dp"
-                    android:background="@color/white">
+                             android:id="@+id/preDefinedDataTL"
+                             android:layout_width="fill_parent"
+                             android:layout_height="wrap_content"
+                             android:layout_margin="10dp"
+                             android:background="@color/white"
+                             android:padding="10dp"
+                             android:visibility="visible">
 
                     <TableRow
                         android:layout_width="fill_parent"
@@ -81,7 +83,7 @@
                             android:paddingBottom="10dp"
                             android:text="Choose City"
                             android:textColor="@color/color_tab_background_bus"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"/>
 
                     </TableRow>
 
@@ -97,7 +99,7 @@
                             android:background="@drawable/border_available"
                             android:textColor="@color/black"
                             android:padding="5dp"
-                            android:text="Dhaka" />
+                            android:text="Dhaka"/>
 
                         <TextView
                             android:id="@+id/coxBazarCityTV"
@@ -109,7 +111,7 @@
                             android:background="@drawable/border_available"
                             android:textColor="@color/black"
                             android:padding="5dp"
-                            android:text="Cox Bazar" />
+                            android:text="Coxs Bazar"/>
 
                         <TextView
                             android:id="@+id/jessorCityTV"
@@ -121,7 +123,7 @@
                             android:background="@drawable/border_available"
                             android:textColor="@color/black"
                             android:padding="5dp"
-                            android:text="Jessor" />
+                            android:text="Jessor"/>
                     </TableRow>
 
                     <TableRow>
@@ -136,7 +138,7 @@
                             android:background="@drawable/border_available"
                             android:textColor="@color/black"
                             android:padding="5dp"
-                            android:text="Khulna" />
+                            android:text="Khulna"/>
 
                         <TextView
                             android:id="@+id/chittagongCityTV"
@@ -148,7 +150,7 @@
                             android:background="@drawable/border_available"
                             android:textColor="@color/black"
                             android:padding="5dp"
-                            android:text="Chittagong" />
+                            android:text="Chittagong"/>
 
                         <TextView
                             android:id="@+id/lalmonirhatCityTV"
@@ -160,7 +162,7 @@
                             android:background="@drawable/border_available"
                             android:textColor="@color/black"
                             android:padding="5dp"
-                            android:text="Lalmonirhat" />
+                            android:text="Lalmonirhat"/>
                     </TableRow>
 
                     <TableRow>
@@ -175,7 +177,7 @@
                             android:background="@drawable/border_available"
                             android:textColor="@color/black"
                             android:padding="5dp"
-                            android:text="Saidpur" />
+                            android:text="Saidpur"/>
 
                         <TextView
                             android:id="@+id/mymensingCityTV"
@@ -187,7 +189,7 @@
                             android:background="@drawable/border_available"
                             android:textColor="@color/black"
                             android:padding="5dp"
-                            android:text="Mymensing" />
+                            android:text="Mymensing"/>
 
                         <TextView
                             android:id="@+id/rangpurCityTV"
@@ -199,7 +201,7 @@
                             android:background="@drawable/border_available"
                             android:textColor="@color/black"
                             android:padding="5dp"
-                            android:text="Rangpur" />
+                            android:text="Rangpur"/>
                     </TableRow>
 
                     <TableRow>
@@ -214,7 +216,7 @@
                             android:background="@drawable/border_available"
                             android:textColor="@color/black"
                             android:padding="5dp"
-                            android:text="Thakurgaon" />
+                            android:text="Thakurgaon"/>
 
                         <TextView
                             android:id="@+id/barisalCityTV"
@@ -226,7 +228,7 @@
                             android:background="@drawable/border_available"
                             android:textColor="@color/black"
                             android:padding="5dp"
-                            android:text="Barisal" />
+                            android:text="Barisal"/>
 
                         <TextView
                             android:id="@+id/sylheytCityTV"
@@ -238,8 +240,9 @@
                             android:background="@drawable/border_available"
                             android:textColor="@color/black"
                             android:padding="5dp"
-                            android:text="Sylhet" />
+                            android:text="Sylhet"/>
                     </TableRow>
+
                     <TableRow>
 
                         <TextView
@@ -252,7 +255,7 @@
                             android:background="@drawable/border_available"
                             android:textColor="@color/black"
                             android:padding="5dp"
-                            android:text="Comilla" />
+                            android:text="Comilla"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -260,7 +263,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/border_available"
                             android:padding="5dp"
-                            android:width="0dp" />
+                            android:width="0dp"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -268,11 +271,12 @@
                             android:layout_weight="1"
                             android:background="@drawable/border_available"
                             android:padding="5dp"
-                            android:width="0dp" />
+                            android:width="0dp"/>
                     </TableRow>
 
 
                 </TableLayout>
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/cityRecyclerView"
                     android:layout_width="match_parent"

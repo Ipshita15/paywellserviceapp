@@ -77,6 +77,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
+        <activity android:name=".activity.eticket.busticketNew.passengerInformation.PassengerInformationActivity">
+        </activity>
+
+
         <uses-library
             android:name="com.google.android.maps"
             android:required="false"/>
@@ -280,16 +284,6 @@
             android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <action android:name="android.intent.action.VIEW"/>
-
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-
-
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -1289,10 +1283,7 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
-        <receiver android:name=".ActionReceiver">
-
-        </receiver>
-
+        <receiver android:name=".ActionReceiver"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"

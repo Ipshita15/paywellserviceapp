@@ -142,8 +142,8 @@
 
     <style name="FullScreenDialogStyle" parent="Theme.AppCompat.Dialog">
         <item name="android:windowNoTitle">true</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/bus_ticket_toolbar_title_text_color</item>
+        <item name="colorPrimary">@color/bus_ticket_status_color</item>
 
         <!-- Set this to true if you want Full Screen without status bar -->
         <item name="android:windowFullscreen">false</item>
@@ -157,6 +157,11 @@
     </style>
     <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/bus_button_color</item>
+    </style>
+
+    <style name="BusAppTheme" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorAccent">@color/bus_ticket_status_color</item>
     </style>
 
 </resources>
