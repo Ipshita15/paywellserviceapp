@@ -1,0 +1,820 @@
+<resources>
+    <string name="app_name">PayWell Services</string>
+    <string name="rid">RID:&#160;</string>
+    <string name="tk">&#160;Tk.</string>
+
+
+    <!-- Menu Names -->
+    <string name="home_topup">Topup</string>
+    <string name="home_topup_offer_title">Bundle &amp; Pack</string>
+    <string name="home_utility">Utility</string>
+    <string name="home_eticket">eTicket</string>
+    <string name="home_mfs">Mobile\nBanking</string>
+    <string name="home_mfs_fav">Mobile Banking</string>
+    <string name="nav_mfs">Mobile Banking</string>
+    <string name="home_product_catalog">Product\nCatalog</string>
+    <string name="nav_product_catalog">Product Catalog</string>
+    <string name="nav_check_balance">Check Balance</string>
+    <string name="nav_terms_and_conditions">Terms &amp; Conditions</string>
+    <string name="nav_terms_and_conditions_title">Terms and Conditions</string>
+    <string name="nav_policy_statement">Privacy Statement</string>
+    <string name="nav_about">About</string>
+    <string name="nav_more_title">More&#8230;</string>
+    <string name="home_statement">Statement</string>
+    <string name="home_refill_balance">Refill\nBalance</string>
+    <string name="home_refill_balance_title">Refill Balance</string>
+    <string name="home_settings">Settings</string>
+    <string name="home_chat">Chat With Us</string>
+    <string name="home_statement_mini">Mini Statement</string>
+    <string name="home_statement_balance">Balance Statement</string>
+    <string name="home_statement_sales">Sales Statement</string>
+    <string name="home_statement_transaction">Transaction Statement</string>
+    `
+    <!-- Sub Menu Names -->
+    <string name="home_topup_trx_log">Trx. Log</string>
+    <string name="home_utility_pollibiddut">Polli Biddut</string>
+    <string name="home_utility_pollibiddut_registion">Polli Biddut\nReg.</string>
+    <string name="home_utility_pollibiddut_bill_pay_favorite">Polli Biddut\nBill Pay</string>
+    <string name="home_utility_ivac">IVAC</string>
+    <string name="home_utility_banglalion">Banglalion</string>
+    <string name="home_utility_karnaphuli">Karnaphuli</string>
+    <string name="home_utility_karnaphuli_bill_pay">Karnaphuli \nBill Pay</string>
+    <string name="home_utility_karnaphuli_inquiry">Karnaphuli \nInquiry</string>
+    <string name="home_utility_pb_reg">Registration</string>
+    <string name="home_utility_pb_billpay">Bill Pay</string>
+    <string name="home_utility_pb_billpay_title">Polli Biddut Bill Pay</string>
+    <string name="home_utility_pb_reg_statu_inquery_title">Polli Biddut Bill Status Inquiry</string>
+    <string name="home_utility_pb_reg_inq">Registration\nInquiry</string>
+    <string name="home_utility_pb_reg_title">Polli Biddut Registration</string>
+    <string name="home_utility_pollibiddut_reg_inquiry">Polli Biddut\nRegistration\nInquiry</string>
+    <string name="home_utility_pollibiddut_bill_inquiry">Polli Biddut\nBill Inquiry</string>
+    <string name="home_utility_pb_bill_change_number">Polli Biddut\nNumber Change</string>
+    <string name="home_utility_pb_bill_ing">Bill Pay\nInquiry</string>
+    <string name="home_utility_pb_phone_number_inquiry">Polli Biddut \nNumber Change \nInquiry</string>
+    <string name="home_utility_pb_request_inquiry">Polli Biddut\nBill Status</string>
+    <string name="home_utility_pb_bill_statu_inquery">Polli Biddut\n Bill Status \nInquiry</string>
+    <string name="home_utility_qubee_inq_title">Recharge Inquiry</string>
+    <string name="home_utility_ivac_fee_pay">Fee Pay</string>
+    <string name="home_utility_ivac_free_pay_favorite">IVAC \nFee Pay</string>
+    <string name="home_utility_ivac_inquiry">IVAC \nInquiry</string>
+    <string name="home_payment_bkash">Payments\nFrom bKash</string>
+    <string name="home_bkash_payment_confirm">Payment\nConfirm</string>
+    <string name="home_bkash_payment_confirm_title">Payment Confirmation</string>
+    <string name="home_bkash_bank_trns_req">Bank\nTransfer</string>
+    <string name="home_bkash_bank_trns_req_title">Bank Transfer</string>
+    <string name="home_bkash_cash_req">For Cash</string>
+    <string name="home_bkash_cash_req_title">For Cash</string>
+    <string name="home_eticket_bus">Bus Ticket</string>
+    <string name="home_eticket_air">Air Ticket</string>
+    <string name="home_product_ajker_deal">Ajker Deal</string>
+    <string name="home_product_pw_wholesale">PayWell\nWholesale</string>
+    <string name="home_product_pw_wholesale_title">PayWell Wholesale</string>
+    <string name="home_settings_reset_pin">Reset PIN</string>
+    <string name="home_settings_change_pin">Change PIN</string>
+    <string name="home_settings_upgrade">Upgrade</string>
+    <string name="home_settings_change_language">Change\nLanguage</string>
+    <string name="home_refill_sda_info">SDA\nInformation</string>
+    <string name="home_refill_bank">Bank Deposit</string>
+    <string name="home_refill_card">Card</string>
+    <string name="home_bank_brac">BRAC Bank</string>
+    <string name="home_bank_dbbl">Dutch Bangla\nBank</string>
+    <string name="home_bank_ibbl">Islami Bank\nBangladesh Ltd</string>
+    <string name="home_bank_pbl">Pubali Bank\nLimited</string>
+    <string name="home_bank_scb">Standard\nChartered Bank</string>
+    <string name="home_bank_city">City Bank</string>
+    <string name="home_mfs_mycash">MYCash</string>
+    <string name="home_fund_management">Fund\nManage</string>
+    <string name="home_fund_management_title">Fund Manage</string>
+    <string name="home_cash_in_out">Cash In\nOut</string>
+    <string name="home_cash_in_out_title">Cash In/Out</string>
+    <string name="home_mycash_balance">MYCash\nBalance</string>
+    <string name="home_mycash_balance_title">MYCash Balance</string>
+    <string name="home_customer_registration">Customer\nRegistration</string>
+    <string name="home_customer_registration_title">Customer Registration</string>
+    <string name="home_generate_otp">Generate\nOTP</string>
+    <string name="home_generate_otp_title">Generate OTP</string>
+    <string name="home_mycash_change_pin">Change\nMYCash PIN</string>
+    <string name="home_mycash_change_pin_title">Change MYCash PIN</string>
+    <string name="home_inquiry">Inquiry</string>
+    <string name="home_paywell_to_mycash">PayWell To\nMYCash</string>
+    <string name="home_paywell_to_mycash_title">PayWell To MYCash</string>
+    <string name="home_mycash_to_paywell">MYCash To\nPayWell</string>
+    <string name="home_mycash_to_paywell_title">MYCash To PayWell</string>
+    <string name="home_cash_in">Cash In</string>
+    <string name="home_cash_out">Cash Out</string>
+    <string name="home_activity_log">Activity Log</string>
+    <string name="home_notification">Notification</string>
+    <string name="home_notification_details">Details</string>
+    <string name="home_notification_img_view">Image View</string>
+    <string name="home_scan">Scan</string>
+    <string name="home_utility_desco">DESCO</string>
+    <string name="home_utility_desco_pay">Desco \nBill Pay</string>
+    <string name="home_utility_desco_pay_inquiry">Desco \nBill Inquiry</string>
+    <string name="home_utility_desco_pay_title">Desco Bill Pay</string>
+    <string name="home_utility_desco_inquary_title">Desco Bill Inquiry</string>
+    <string name="home_utility_dpdc">DPDC</string>
+    <string name="home_utility_dpdc_bill_title">DPDC Bill Pay</string>
+    <string name="home_utility_dpdc_inquary_title">DPDC Bill Inquiry</string>
+    <string name="home_utility_dpdc_bill_pay_inquiry">DPDC Bill Inquiry</string>
+    <string name="home_utility_wasa">WASA</string>
+    <string name="home_utility_wasa_pay">WASA-Pay</string>
+    <string name="home_utility_wasa_inquiry">WASA Bill Inquiry</string>
+    <string name="home_utility_west_zone">West Zone</string>
+    <string name="home_utility_west_zone_pay">West Zone\nPay</string>
+    <string name="home_utility_west_zone_pay_inquiry">West Zone\nBill Inquiry</string>
+    <string name="home_scan_qr_code">PayWell RID</string>
+    <string name="home_settings_help">Help</string>
+    <string name="home_utility_polli_biddut_bill_pay">Polli Biddut\nBill Pay</string>
+    <string name="home_utility_polli_request_mobile_number_change_title">Polli Biddut Number Change</string>
+    <string name="home_utility_polli_home_bill_status">Polli Biddut Bill Status</string>
+    <string name="home_utility_dpdc_bill_pay">DPDC\nBill Pay</string>
+    <string name="home_all_service">All\nServices</string>
+    <string name="home_utility_postpaid_bill_pay">Postpaid\nBill Pay</string>
+    <string name="home_utility_postpaid_bill_inq">Postpaid\nBill Inquiry</string>
+    <string name="home_utility_banglalion_recharge">Banglalion\nRecharge</string>
+    <string name="home_utility_banglalion_recharge_inquiry">Banglalion\nInquiry</string>
+    <string name="home_utility_banglalion_recharge_title">Banglalion Recharge</string>
+    <string name="banglalion_acc_no">Customer ID/Customer Number/MSISDN</string>
+
+    <string name="home_gp">GP</string>
+    <string name="home_skitto">Skitto</string>
+    <string name="home_bl">Banglalink</string>
+    <string name="home_at">Airtel</string>
+    <string name="home_rb">Robi</string>
+    <string name="home_tt">TeleTalk</string>
+
+    <!-- Messages -->
+    <string name="exit">Press again to exit PayWell Services</string>
+    <string name="no_update_msg">No update available</string>
+    <string name="no_notification_msg">No new notification</string>
+    <string name="version_upgrade">Version Upgrade</string>
+    <string name="upgrade_msg">There is a new version available.
+        Please upgrade immediately.</string>
+    <string name="conn_timeout_msg">Connection time out, please try again!</string>
+    <string name="try_again_msg">Please try again!</string>
+    <string name="try_again_correct_msg">Please try again correctly!</string>
+    <string name="connection_error_msg">Unable to connect to the Internet, please try again</string>
+    <string name="phone_no_title_msg">Phone Number</string>
+    <string name="phone_no_error_msg">Enter valid phone number</string>
+    <string name="amount_error_msg">Enter at least 1 digit</string>
+    <string name="pin_no_error_msg">Enter PIN number</string>
+    <string name="pb_acc_error_msg">Enter at least 8 digits</string>
+    <string name="pb_acc_mismatch_error_msg">Account number do not match</string>
+    <string name="pb_full_name_error_msg">Enter full name</string>
+    <string name="banglalion_acc_error_msg">Enter at least 4 digits</string>
+    <string name="selection_error_msg">Please fill up all the fields</string>
+    <string name="journey_date_select_error_msg">Select your journey date</string>
+    <string name="route_select_error_msg">Bus routes are not available</string>
+    <string name="seat_select_error_msg">Please select your seat</string>
+    <string name="seat_limit_select_error_msg">Select maximum 4 seats at a time</string>
+    <string name="ticket_name_error_msg">Enter name</string>
+    <string name="ticket_destination_error_msg">Enter 1st 3 characters</string>
+    <string name="old_pin_error_msg">Enter old pin</string>
+    <string name="new_pin_error_msg">Enter correct new pin</string>
+    <string name="bill_no_error_msg">Enter bill number</string>
+    <string name="consumer_no_error_msg">Enter consumer number</string>
+    <string name="mycash_pin_error_msg">Enter MYCash pin number</string>
+    <string name="location_error_msg">Enter location</string>
+    <string name="otp_error_msg">Enter OTP</string>
+    <string name="cust_pin_msg">Enter Customer Pin</string>
+    <string name="select_month_msg">Select Month</string>
+    <string name="select_year_msg">Select Year</string>
+    <string name="mycash_acc_error_msg">Enter at least 12 digits</string>
+    <string name="serial_no_error_msg">Enter serial number</string>
+    <string name="loading_msg">Loading. Please wait&#8230;</string>
+    <string name="log_limit_title_msg">Transaction Log Limit</string>
+    <string name="reg_log_limit_title_msg">Registration Log Limit</string>
+    <string name="activity_log_limit_title_msg">Activity Log Limit</string>
+    <string name="add_number_amount_msg">Please add number and amount first</string>
+    <string name="pin_no_title_msg">PIN Number</string>
+    <string name="services_alert_msg">Currently you are not authorized for this service</string>
+    <string name="services_off_msg">You are not authorized to access this service</string>
+    <string name="conf_topup_title_msg">Topup Requested</string>
+    <string name="auto_date_time_msg">To use this app, you must enable automatic date &amp; time.</string>
+    <string name="access_denied_msg">Permission denied</string>
+    <string name="topup_limit_msg">Currently this is the limit of our support</string>
+    <string name="phone_no_msg">Phone Number</string>
+    <string name="amount_msg">Amount</string>
+    <string name="prepaid_msg">Prepaid</string>
+    <string name="postpaid_msg">Postpaid</string>
+    <string name="confirm_title_msg">Confirmation</string>
+    <string name="alert_confirm_msg">Did you receive cash?</string>
+    <string name="from_city_msg">From City</string>
+    <string name="to_city_msg">To City</string>
+    <string name="select_city_ticket_msg">Enter City</string>
+    <string name="calendar_ticket_msg">Calendar</string>
+    <string name="bus_list_ticket_msg">Bus List</string>
+    <string name="all_list_ticket_msg">All</string>
+    <string name="ac_list_ticket_msg">A/C</string>
+    <string name="non_ac_list_ticket_msg">Non A/C</string>
+    <string name="seat_list_ticket_msg">Seat List</string>
+    <string name="purchase_ticket_msg">Purchase Ticket</string>
+    <string name="tk_with_charge_msg">Tk.(including charge)</string>
+    <string name="journey_date_title_ticket_msg">Select Your Journey Date</string>
+    <string name="personal_info_msg">Personal Information</string>
+    <string name="agree_statement_msg">I agree with the terms and conditions</string>
+    <string name="three_char_msg">1st three characters</string>
+    <string name="hint_source_msg">**Type 1st 3 characters for destination</string>
+    <string name="reset_pin_msg">Are you sure, you want to reset PIN?</string>
+    <string name="today_msg">Today</string>
+    <string name="change_pin_status_msg">Your PIN changed successfully</string>
+    <string name="bank_transfer_header_msg">Please press any of the logos below to find out our bank account details and
+        also upload deposit slip</string>
+    <string name="unread_first_msg">You have</string>
+    <string name="unread_second_msg">new notification(s)</string>
+    <string name="language_title_msg">Select Language</string>
+    <string name="wait_msg">Please wait for a moment</string>
+    <string name="bell_msg">bell</string>
+    <string name="internet_connection_title_msg">Internet Connection</string>
+    <string name="no_data_msg">No data found</string>
+    <string name="offer_combo_msg">Combo</string>
+    <string name="offer_talk_time_msg">Talk Time</string>
+    <string name="offer_internet_msg">Internet</string>
+    <string name="offer_other_msg">Other</string>
+    <string name="merchant_type_error_msg">Select merchant type</string>
+    <string name="business_type_error_msg">Select business type</string>
+    <string name="center_error_msg">Select center</string>
+    <string name="input_error_msg">Enter properly</string>
+    <string name="please_type_in_english">Please type in English</string>
+    <string name="info_collect_title">Important Information Collection</string>
+    <string name="phn_num_hint">Please enter your current phone number</string>
+    <string name="verify_quote">You will receive a PIN in the above phone number and your phone number will verify
+        automatically.</string>
+    <string name="allow_error_msg">Not allowed. Change the Pin first</string>
+    <string name="select_phn_title_msg">Choose a number</string>
+    <string name="amount_transfer_msg">Amount transfer successful</string>
+    <string name="success_msg">Successful</string>
+    <string name="request_failed_msg">Failed</string>
+    <string name="coming_soon_msg">Coming Soon</string>
+    <string name="data_error_msg">Unable to get data properly</string>
+    <string name="permission_error_msg">You need to click on the allow buttons in order to let PayWell app function properly</string>
+    <string name="internet_connection_error_msg">Sorry, no internet connection is available. Please reconnect and try again.</string>
+    <string name="error_correct_operator_msg">Please select correct operator</string>
+
+    <!-- Button Description -->
+    <string name="auto_date_time_btn">Automatic date &amp; time</string>
+    <string name="okay_btn">OK</string>
+    <string name="confirm_btn">Confirm</string>
+    <string name="cancel_btn">Cancel</string>
+    <string name="next_btn">Next</string>
+    <string name="skip_btn">Skip</string>
+    <string name="got_it_btn">Got It</string>
+    <string name="retry_btn">Retry</string>
+    <string name="play_btn">Play Store</string>
+    <string name="pw_btn">PayWell</string>
+
+    <!-- Content Description -->
+    <string name="pin_no_des">PIN Number:</string>
+    <string name="pw_pin_no_des">PayWell PIN Number:</string>
+    <string name="phone_no_des">Phone Number:</string>
+    <string name="amount_des">Amount:</string>
+    <string name="trx_id_des">TRX ID:</string>
+    <string name="status_des">Status:</string>
+    <string name="sms">SMS:</string>
+    <string name="acc_no_des">Account Number:</string>
+    <string name="bill_no_des">Bill Number:</string>
+    <string name="conf_acc_des">Confirm Account Number:</string>
+    <string name="cust_name_des">Full Name:</string>
+    <string name="package_type_des">Package Type:</string>
+    <string name="date_des">Date:</string>
+    <string name="time_des">Time:</string>
+    <string name="using_paywell_des">THANKS FOR USING PAYWELL</string>
+    <string name="hotline_des">HOTLINE:</string>
+    <string name="tbps_charge_des">TBPS Charge:</string>
+    <string name="total_des">Total Amount:</string>
+    <string name="tk_des">Tk</string>
+    <string name="from_city_ticket_des">From:</string>
+    <string name="to_city_ticket_des">To:</string>
+    <string name="journey_date_ticket_des">Journey Date:</string>
+    <string name="selected_seat_des">Selected Seat:</string>
+    <string name="coach_des">Coach Type:</string>
+    <string name="ticket_des">Ticket:</string>
+    <string name="boarding_des">Boarding:</string>
+    <string name="droping_des">Dropping:</string>
+    <string name="passenger_name_des">Passenger Name:</string>
+    <string name="coach_number_des">Coach Number:</string>
+    <string name="seat_type_des">Seat Type:</string>
+    <string name="purchase_date_des">Purchase Date:</string>
+    <string name="passenger_type_des">Passenger Type:</string>
+    <string name="no_of_passenger_des">No. of Passenger:</string>
+    <string name="age_of_passenger_des">Age of Passenger:</string>
+    <string name="select_train_des">Select Train:</string>
+    <string name="select_class_des">Select Class:</string>
+    <string name="train_name_and_number_des">Train Name/No:</string>
+    <string name="service_carge_des">Service Charge:</string>
+    <string name="total_fare_des">Total Fare:</string>
+    <string name="collect_before_des">Collect Before:</string>
+    <string name="old_pin_des">Old PIN Number:</string>
+    <string name="new_pin_des">New PIN Number:</string>
+    <string name="mycash_balance_des">MYCash Balance:</string>
+    <string name="mycash_pin_des">MYCash PIN Number:</string>
+    <string name="payer_phone_number_des">Payer Phone Number:</string>
+    <string name="location_des">Location:</string>
+    <string name="otp_des">MYCash OTP:</string>
+    <string name="mycash_wallet_des">Customer Wallet:</string>
+    <string name="form_serial_des">Form Serial No:</string>
+    <string name="mycash_old_pin_des">MYCash Old PIN:</string>
+    <string name="mycash_new_pin_des">MYCash New PIN:</string>
+    <string name="mycash_cust_no_des">Customer Number In Bill:</string>
+    <string name="ret_com_des">OTF Commission:</string>
+    <string name="offer_details_des">Offer Details:</string>
+    <string name="consumer_no_des">Consumer Number:</string>
+    <string name="merchant_type_retail">Retail Merchant</string>
+    <string name="merchant_type_des">Merchant Type:</string>
+    <string name="business_type_des">Business Type:</string>
+    <string name="center_des">Center:</string>
+    <string name="web_file_des">Web File No:</string>
+    <string name="passport_des">Passport No:</string>
+    <string name="banglalion_trx_id_des">Banglalion TRX ID :</string>
+    <string name="retail_commission_des">Retailer Commission:</string>
+
+    <string name="pre_paid_str">prepaid</string>
+    <string name="post_paid_str">postpaid</string>
+    <string name="image_city_str">City</string>
+
+    <string name="star_sign">*</string>
+
+
+    <!-- Paywell Services string level -->
+    <string name="paywell_reg">পেওয়েল নিবন্ধন</string>
+    <string name="paywell_reg_missing">অনুপস্থিত তথ্য</string>
+    <string name="search_hint">Search hint</string>
+    <string name="search_label">search label</string>
+    <string name="search_global_description">search global description</string>
+    <string name="date_format">EEE dd-MMM-yyyy</string>
+    <string name="time_format">"yyyy-MM-dd</string>
+    <string name="paywell_footer">https://www.paywellonline.com</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!--paywell string arrays-->
+    <string-array name="month_array">
+        <item>Select Month</item>
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
+
+    <string-array name="sampleStrings" formatted="false">
+        <item>"PayWell is an organized retail approach by CloudWell Limited, focusing on providing convenient payments and value added services to major consumer service organizations in the utility, telecoms, healthcare, financial services, transport, retail, e-commerce, gaming and public sectors in Bangladesh.\nPayWell intends to deliver payments and services through a uniquely strong combination of local shops, internet and mobile distribution channels. The company follows standard distribution architecture, where layers of channel partners are involved i.e distributor &amp; retailers in its value chain.\n\nWe are located in:\nSkill House (L-7), KA-53/2, Shahajadpur, Gulshan, Dhaka-1212.\nPhone: 09666773333\nemail: contact@cloudwell.co"</item>
+    </string-array>
+    <string-array name="train_destination_array">
+        <item>ABDULPUR</item>
+        <item>AGIMNAGAR</item>
+        <item>AHASANGONJ</item>
+        <item>AKHAURA</item>
+        <item>AKKELPUR</item>
+        <item>ASHGONJ</item>
+        <item>AZAMPUR</item>
+        <item>BAHADURABAD</item>
+        <item>BAJITPUR</item>
+        <item>BAMANDANGA</item>
+        <item>BARAL BRIDGE</item>
+        <item>BHAIRAB BAZAR</item>
+        <item>BHANUGACH</item>
+        <item>BHARAMARA</item>
+        <item>BIRAMPUR</item>
+        <item>BOGRA</item>
+        <item>BOJRA</item>
+        <item>BONARPARA</item>
+        <item>BRAHMAN BARIA</item>
+        <item>CHANDPUR</item>
+        <item>CHANDPUR COURT</item>
+        <item>CHATMOHOR</item>
+        <item>CHITOSI ROAD</item>
+        <item>CHITTAGONG</item>
+        <item>CHOUMUHANI</item>
+        <item>CHUADANGA</item>
+        <item>COMILLA</item>
+        <item>DEWANGANJBAZAR</item>
+        <item>DHAKA BIMAN BANDAR</item>
+        <item>DHAKA KAMALAPUR</item>
+        <item>DINAJPUR</item>
+        <item>FENI</item>
+        <item>GACHIHATA</item>
+        <item>GAFORGAON</item>
+        <item>GAIBANDHA</item>
+        <item>HAJIGANJ</item>
+        <item>HARASHPUR</item>
+        <item>IBRAHIMABAD</item>
+        <item>ISHARDHI</item>
+        <item>ISLAMPUR BAZAR</item>
+        <item>JAMALPUR TOWN</item>
+        <item>JAMTOIL</item>
+        <item>JAYDEBPUR</item>
+        <item>JESSORE</item>
+        <item>JOYPURHAT</item>
+        <item>KAUNIA</item>
+        <item>KHULNA</item>
+        <item>KISHORGANJ</item>
+        <item>KULAURA</item>
+        <item>KULIARCHAR</item>
+        <item>LAKSHAM</item>
+        <item>LALMONIR HAT</item>
+        <item>MAIJDI COURT</item>
+        <item>MAIJGAON</item>
+        <item>MALANDHA BAZAR</item>
+        <item>MANIKHALI</item>
+        <item>MEHER</item>
+        <item>MIRZAPUR</item>
+        <item>MONTALA</item>
+        <item>MUKUNDUPUR</item>
+        <item>MYMENSINGH</item>
+        <item>NANDINA</item>
+        <item>NANGAL KOT</item>
+        <item>NARSINGDI</item>
+        <item>NATHAR PATUA</item>
+        <item>NATOR</item>
+        <item>NILPHAMARI</item>
+        <item>NOAKHALI</item>
+        <item>NOAPARA</item>
+        <item>NOAYPARA</item>
+        <item>PANCHBIBI</item>
+        <item>PARBATIPUR</item>
+        <item>PHULBURI</item>
+        <item>PIRGACHA</item>
+        <item>PORADAHA</item>
+        <item>QOSBA</item>
+        <item>RAJSHAHI</item>
+        <item>SADANANDAPUR</item>
+        <item>SANTAHAR</item>
+        <item>SARARCHAR</item>
+        <item>SARISHABARI</item>
+        <item>SAYEDPUR</item>
+        <item>SHAHAGI BAZAR</item>
+        <item>SHAISTAGONJ</item>
+        <item>SHAMSHERNAGAR</item>
+        <item>SHORDHA ROAD</item>
+        <item>SONAIMURI</item>
+        <item>SONATALA</item>
+        <item>SRIMONGAL</item>
+        <item>SYLHET</item>
+        <item>TANGAIL</item>
+        <item>TARAKANDI</item>
+        <item>ULLAH PARA</item>
+    </string-array>
+
+    <!-- paywell apis -->
+    <string name="pw_auth">https://api.paywellonline.com/PaywelltransactionRetailer/TabUserServiceProfiling?</string>
+    <string name="notif_url">https://www.paywellonline.com/default/api/notification_check_android.php?</string>
+    <string name="notification_token_url">https://www.paywellonline.com/paywellapi/setUserFCMToken.php</string>
+
+    <string name="app_next_version_no">vten_seventeen</string>
+    <string name="update_check">https://app.paywellonline.com/apk/PaywellServices_v10_18.apk</string>
+    <string name="check_version">https://app.paywellonline.com/version_update_info/paywellservice_update.txt</string>
+
+    <string name="update_location">https://api.paywellonline.com/PaywellRetailerInformation/doUpdateRetailersCurrentLocation</string>
+
+    <!-- Registration -->
+    <string name="business_type_url">https://api.paywellonline.com/Android/userSubBusinessType</string>
+    <string name="district_info_url">https://www.paywellonline.com/crs3291/android/sales_manager/district_info_bangladesh.php</string>
+    <string name="final_reg_url">https://www.paywellonline.com/crs3291/android/sales_manager/getRetailerInformationForRegistration.php</string>
+    <string name="missing_reg_url">https://www.paywellonline.com/crs3291/android/sales_manager/getUnverifiedData.php</string>
+
+    <!-- Topup -->
+    <string name="inq_top">https://www.paywellonline.com/default/api/enquiry.php?</string>
+    <string name="trx_log">https://www.paywellonline.com/crs3291/live/view_log.php?</string>
+    <string name="topup_offer">https://api.paywellonline.com/Android/GetRechargeOffer?</string>
+    <string name="operator"> অপারেটর</string>
+    <string name="mobileOperator">Mobile Operators</string>
+    <string name="brilliant">Brilliant</string>
+    <string name="brilliant_topup">Brilliant Topup</string>
+    <string name="paywell_trx_id">PayWell TRX ID :</string>
+    <string name="brilliant_trx_id">Brilliant TRX ID:</string>
+    <string name="brilliant_num">Brilliant Number:</string>
+    <string name="brilliant_trx_log">Brilliant Trx Log</string>
+
+    <!-- Utility -->
+    <string name="pb_reg">https://www.paywellonline.com/default/api/polli/polli_regs.php?</string>
+    <string name="pb_reg_with_otp">https://www.paywellonline.com/default/api/polli/polli_reg_otp.php</string>
+    <string name="pb_bill_pay">https://www.paywellonline.com/default/api/polli/polli.php?</string>
+    <string name="pb_bill_pay_pollyBiddyutPhoneNoChange">https://api.paywellonline.com/PaywelltransactionPollyBiddyut/pollyBiddyutPhoneNoChange?</string>
+
+    <string name="desco_bill_enq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
+    <string name="desco_bill_pay">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
+
+    <string name="dpdc_postpaid_bill_inq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DPDC</string>
+    <string name="dpdc_postpaid_bill_pay">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DPDC</string>
+
+    <string name="wasa_bill">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_WASA</string>
+
+    <string name="west_zone_bill">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_WZPDCL</string>
+
+    <string name="utility_multi_trx_inq">https://api.paywellonline.com/PaywellTransactionReport/TransactionReport?</string>
+
+    <string name="utility_ivac_get_center">https://api.paywellonline.com/PaywelltransactionIVAC/getIvacCenter</string>
+    <string name="utility_ivac_fee_pay">https://api.paywellonline.com/PaywelltransactionIVAC/IVACRequest</string>
+    <string name="utility_ivac_fee_pay_inq">https://api.paywellonline.com/PaywelltransactionIVAC/getIvacTrxList</string>
+    <string name="utility_ivac_fee_pay_inq_with_web_file_no">https://api.paywellonline.com/PaywelltransactionIVAC/getIvacTrxByWebFileNo</string>
+
+    <string name="banglalion_bill_pay">https://api.paywellonline.com/PayWellInternateBillPay/banglalionBillPay</string>
+    <string name="banglalion_bill_inquiry">https://api.paywellonline.com/PayWellInternateBillPay/banglalionEnquiry</string>
+
+    <string name="karnaphuli_bill">https://api.paywellonline.com/PaywelltransactionMYCash/kgdcl_billinfo</string>
+
+    <!-- Eticket -->
+    <string name="bus_ticket_url">https://www.paywellonline.com/final/BdTickets/BdBusTicket.php?</string>
+    <string name="train_source_url">https://www.paywellonline.com/banglalink_services/train.php?</string>
+
+    <!-- Payment -->
+    <string name="bkash_balance_check">https://bkapi.paywellonline.com/retailer/userBalanceCheck.php?</string>
+
+    <!-- MFS -->
+    <string name="mycash_generate_otp">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/GenerateOTP?</string>
+    <string name="mycash_balance_check">https://api.paywellonline.com/PaywelltransactionMYCash/GetMYCashRetailerPayWellBalance?</string>
+    <string name="mycash_cash_in">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/CashIn?</string>
+    <string name="mycash_management">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/Fund_Management?</string>
+    <string name="mycash_customer_reg">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/Customer_Registration?</string>
+    <string name="mycash_statement">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/Mini_Statement?</string>
+    <string name="mycash_balance_inq">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/Balance_Enquiry?</string>
+    <string name="mycash_trx_inq">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/lastTransactionList?</string>
+    <string name="mycash_cashout_inq">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/lastSuccessfulCashOutList?</string>
+    <string name="mycash_change_pin">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/PIN_Change?</string>
+    <string name="mycash_balance_transfer">https://api.paywellonline.com/PaywelltransactionMYCash/DoMyCahsToCashOrBankTransfer?</string>
+    <string name="mycash_balance_transfer_confirm_pending">https://api.paywellonline.com/PaywelltransactionMYCash/CheckMyCashPendingCashRequest?</string>
+    <string name="mycash_balance_transfer_confirm">https://api.paywellonline.com/PaywelltransactionMYCash/MyCashPendingCashRequestConfirmation?</string>
+
+    <!-- Refill -->
+    <string name="refill_sda_info">https://api.paywellonline.com/Android/SDAinformation?</string>
+    <string name="refill_mfs_info">https://api.paywellonline.com/Android/paymentInfo?</string>
+
+    <!-- Product -->
+    <string name="ajd_token">http://ajkerdeal.paywellonline.com/api/Paywell/CreateToken?</string>
+    <string name="ajd_login">http://ajkerdeal.paywellonline.com/Home/CheckLoginByToken?</string>
+    <string name="ajd_refresh_token">http://ajkerdeal.paywellonline.com/MetaData/PingServer</string>
+    <string name="ajd_share">http://ajkerdeal.paywellonline.com</string>
+
+
+    <string name="ek_shope_token">http://sandbox.paywellonline.com/ekshop/get_token</string>
+    <string name="ek_redirect">http://sandbox.paywellonline.com/ekshop/redirect?</string>
+    <string name="ek_report">http://sandbox.paywellonline.com/ekshop/report</string>
+
+    <string name="b2b_token">https://wholesale.paywellonline.com/Retailer/Home/CreateToken?</string>
+    <string name="b2b_login">https://wholesale.paywellonline.com/Retailer/Home/CheckLoginByToken?</string>
+    <string name="b2b_refresh_token">https://wholesale.paywellonline.com/Retailer/MetaData/PingServer</string>
+    <string name="b2b_share">https://wholesale.paywellonline.com</string>
+
+    <!-- Settings -->
+    <string name="pin">https://www.paywellonline.com/crs3291/live/change_password.php?</string>
+    <string name="reset_pin">https://api.paywellonline.com/paywellSetting/passwordChange?</string>
+
+    <!-- Verification -->
+    <string name="otp_for_phn_num">https://api.paywellonline.com/PaywelltransactionRetailer/GetRetailerPhoneNumberVerificationOTP</string>
+    <string name="conf_phn_num">https://api.paywellonline.com/PaywelltransactionRetailer/ConfirmRetaileOTPForPhoneNumberVerification</string>
+    <string name="conf_merchant_type">https://api.paywellonline.com/PaywelltransactionRetailer/UpdateMarchentAndBusinessType</string>
+
+    <!-- Chat -->
+    <string name="chat">https://www.paywellonline.com/chatting-retailer/?</string>
+
+    <string name="merchant_balance_return_url">https://api.paywellonline.com/PaywelltransactionSDA/SDAToMerchentBalanceReturn</string>
+    <string name="title_activity_my_favorite_menu">My Favorites</string>
+    <string name="can_not_add_more_than">Can\'t add more than 8 menu</string>
+    <string name="Added">Added:</string>
+    <string name="add_fav">Add</string>
+    <string name="balance_pre_text">Balance</string>
+    <string name="home_utility_pb_bill_status_inquiry_title">Polli Biddut Number Change Inquiry</string>
+    <string name="home_utility_bill_inquiry_title">Polli Biddut Bill Inquiry</string>
+    <string name="home_utility_pb_reg_inq_log_title">Polli Biddut Registration Inquiry</string>
+    <string name="home_utility_wasa_billpay_title">WASA Bill Pay</string>
+    <string name="home_utility_wasa_bill_inquary_title">WASA Bill Inquiry</string>
+    <string name="home_utility_west_zone_pay_title">West Zone Bill Pay</string>
+    <string name="home_wast_zone_inquiry_title">West Zone Bill Inquiry</string>
+    <string name="home_utility_ivac_fee_pay_title">IVAC Fee Pay</string>
+    <string name="home_utility_ivac_inquiry_title">IVAC Fee Inquiry</string>
+    <string name="home_karnaphuli_bill_title">Karnaphuli Bill Pay</string>
+    <string name="home_karnaphuli_inquiryl_title">Karnaphuli Bill Inquiry</string>
+    <string name="details">Details:</string>
+    <string name="home_utility_pb_request_inquiry_bt">Bill Status</string>
+    <string name="home_utility_pb_bill_statu_inquery_bt">Bill Status \nInquiry</string>
+    <string name="home_utility_pb_bill_change_number_bt">Number Change</string>
+    <string name="home_utility_pb_phone_number_inquiry_bt">Number Change \nInquiry</string>
+
+    <string name="one_way">One Way</string>
+    <string name="title_activity_air_tricket_menu">Air Ticket</string>
+    <string name="title_serach_view">Search Flights</string>
+    <string name="no_search_results">No search results</string>
+    <string name="search_again">Search again</string>
+    <string name="search">Search</string>
+    <string name="cancel">Booking Cancellation</string>
+    <string name="transaction_log">Booking Log</string>
+    <string name="action_search">Serach</string>
+    <string name="ettitle_booking_and_review">Review and Book</string>
+    <string name="baggage_policy_details"><![CDATA[Baggage & Policy Details]]></string>
+    <string name="refundable">Refundable</string>
+    <string name="non_refundable">No Refundable</string>
+    <string name="passport_mandatory">Passport Mandatory</string>
+    <string name="passport_not_mandatory">Passport not mandatory</string>
+    <string name="title_activity_baggage_and_policies_actiivty">Air Rules &amp; Fare</string>
+    <string name="title_booking_and_review">Review and Book</string>
+    <string name="fares_information">Fare Information</string>
+    <string name="fares">Fare</string>
+    <string name="roles">Air Rules</string>
+    <string name="title_flightDetails2">Review page 2</string>
+    <string name="title_passenger_list">Passenger Info</string>
+    <string name="title_add_passenger">Add Passenger</string>
+    <string name="booking_status_menu">Booking Status</string>
+    <string name="add">Add</string>
+    <string name="title">Title *</string>
+    <string name="first_name">First Name *</string>
+    <string name="last_name">Last Name *</string>
+    <string name="gender">Gender *</string>
+    <string name="country">Country *</string>
+    <string name="contact_number">Contact Number *</string>
+    <string name="email">Email *</string>
+    <string name="please_ensure_the_id_is_valid_for_at_least_6_months_after_the_date_of_departure">Please ensure the ID is valid for at least 6 months after the date of departure.</string>
+    <string name="add_id">Add ID</string>
+    <string name="passport_id">Passport/ID</string>
+    <string name="hit_passport_number">Passport Number</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="other">Other</string>
+    <string name="book">Booking Status</string>
+    <string name="passenger_deleted_message">Passenger info cannot be recovered once deleted. Are you sure you want to delete?</string>
+    <string name="ok">OK</string>
+    <string name="cencel">Cancel</string>
+    <string name="title_all_summary">All Summary</string>
+    <string name="lbl_take_camera_picture">Camara</string>
+    <string name="lbl_choose_from_gallery">Gallery</string>
+    <string name="lbl_set_profile_photo" />
+    <string name="please_add_id_info_for_this_travaler">Please add ID info for this passenger</string>
+    <string name="tile_cencel_booking">Cancel Booking</string>
+    <string name="tile_cencel_transaction_log">Transaction Log</string>
+    <string name="airport_search_hit">Airport name or code or country name </string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="mr">Mr</string>
+    <string name="ms">Ms</string>
+    <string name="mrs">Mrs</string>
+    <string name="name_title">Title</string>
+    <string name="passenger_type">Passenger type *</string>
+    <string name="adult">Adult</string>
+    <string name="child">Child</string>
+    <string name="infant">Infant</string>
+    <string name="kg_per_adult">per adult ticket</string>
+    <string name="economy_class">Economy Class: </string>
+    <string name="baggage">Baggage :</string>
+    <string name="n_a">N/A</string>
+    <string name="slycalendar_save">Save</string>
+    <string name="slycalendar_cancel">Cancel</string>
+    <string name="slycalendar_next">Next</string>
+    <string name="slycalendar_singledate" translatable="false">EE, dd MMMM</string>
+    <string name="slycalendar_short" translatable="false">EE, dd</string>
+    <string name="slycalendar_short_month" translatable="false">EE, dd MMM</string>
+    <string name="slycalendar_dates_period" translatable="false">%1$s – %2$s</string>
+    <string name="continue_text">Continue</string>
+    <string name="details_text">Details</string>
+    <string name="edit">Edit</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="multicity_limit_msg">Currently we are accepting only 5 requests</string>
+    <string name="bookingId">Booking Id</string>
+    <string name="depart">Depart</string>
+    <string name="date">Date</string>
+    <string name="class_text">Class</string>
+    <string name="economy">Economy</string>
+    <string name="passengers">Passengers</string>
+    <string name="search_text">Search</string>
+    <string name="airline_code">Airlines code: </string>
+    <string name="airless_name">Airlines Name: </string>
+    <string name="flight_number">Flight number: </string>
+    <string name="booking_class">Booking Class: </string>
+    <string name="cabin_class">Cabin class :</string>
+    <string name="operating_carrier">Operating carrier: </string>
+    <string name="baggage_info">Baggage info</string>
+    <string name="airport_code">Airport Code: </string>
+    <string name="airport_name">Airport Name: </string>
+    <string name="terminal">Terminal:</string>
+    <string name="city_code">City Code: </string>
+    <string name="city_name">City Name: </string>
+    <string name="country_code">Country code: </string>
+    <string name="country_name">Country name: </string>
+    <string name="arrival_time">Arrival Time: </string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="invalid_passenger_type">Invalid passenger type</string>
+    <string name="invalid_title">Invalid Title</string>
+    <string name="invalid_first_name">Invalid First Name</string>
+    <string name="invalid_last_name">Invalid Last Name</string>
+    <string name="invalid_country_name">Invalid Country Name</string>
+    <string name="invalid_gender">Invalid Gender</string>
+    <string name="invalid_contact_name">Invalid Contact number</string>
+    <string name="invalid_email">Invalid Email</string>
+    <string name="please_select_from_airport">Please select from airport</string>
+    <string name="please_select_arrival_airport">Please select arrival airport</string>
+    <string name="please_select_depart_date">Please select depart date</string>
+    <string name="total_fare_text">Total Fare</string>
+    <string name="depart_time_">Departure Time: </string>
+    <string name="one_way_menu_title">One-way</string>
+    <string name="round_trip_menu_title">Round-trip</string>
+    <string name="multi_city_menu_title">Multi-City</string>
+    <string name="search_flights">Search Flights</string>
+    <string name="return_text">Return</string>
+    <string name="airport">Airport</string>
+    <string name="duration_tiime">Duration:</string>
+    <string name="more">More</string>
+    <string name="price_details">Price Details</string>
+    <string name="rules">Rules:</string>
+    <string name="extra_serviex">Extra Services</string>
+    <string name="base_fare">Base Fare</string>
+    <string name="tax">Tax</string>
+    <string name="currency">Currency</string>
+    <string name="othercharges">Other Charges</string>
+    <string name="discount">Discount</string>
+    <string name="paxtype">Pax Type</string>
+    <string name="passenger_count">Passenger Count</string>
+    <string name="service_fee">Service Fee</string>
+    <string name="book_text">Book</string>
+    <string name="select_a_saved_passenger_or_add_a_new_one">Select a saved passenger or add a new one</string>
+    <string name="review">Review</string>
+    <string name="please_enter_the_passenger_">Please enter the passenger\'s name exactly as it appears on their ID. Modifications after submission are often not permitted or may incur an additional fee.</string>
+    <string name="lead_passenger">Lead Passenger</string>
+    <string name="add_edit">Add/Edit</string>
+    <string name="flight_information">Flight Information</string>
+    <string name="add_passenger">Add passenger</string>
+    <string name="national_id">National ID Or Student ID</string>
+    <string name="booking_now">Book Now</string>
+    <string name="ticket_booking">Ticket booking</string>
+    <string name="booking_id">Booking ID: </string>
+    <string name="ticket_status">Ticket status :</string>
+    <string name="please_seleted_a_option">please select a option</string>
+    <string name="view_tricket">View Ticket</string>
+    <string name="title_ticket_viewer">Ticket View</string>
+    <string name="please_try_again">Please try again</string>
+    <string name="send_email">Send Email</string>
+    <string name="title_email_list">Email List</string>
+    <string name="hit_email">Email</string>
+    <string name="email_address_already_exists">Email address already exists</string>
+    <string name="please_select_atleast_one_email_address">Please select atleast one email address</string>
+    <string name="message">Message</string>
+    <string name="indian_menu_title">Indian</string>
+    <string name="action_settings">action</string>
+    <string name="booking_instructions_for_children_infants">Booking instructions for children/infants</string>
+    <string name="earnings">Earnings</string>
+    <string name="instant_ticketing">Instant Ticketing</string>
+    <string name="issue_ticket">Issue Ticket</string>
+    <string name="tricking">Issue Ticket</string>
+    <string name="new_ticket_prices">New prices Tk.</string>
+    <string name="old_ticket_prices">Old prices Tk.</string>
+    <string name="outbound">Outbound</string>
+    <string name="inbound">Inbound</string>
+    <string name="flight">Flight</string>
+    <string name="cancel_ticket">Cancel Ticket</string>
+    <string name="cancellation_fee">Fee:</string>
+    <string name="passport_expiry_date">Passport Expiry Date</string>
+
+    <string name="Passport_number_mandatory">Passport number mandatory</string>
+    <string name="passport_expiry_date_mandatory">Passport expiry date mandatory</string>
+    <string name="passport_nationality">Passport nationality</string>
+    <string name="passport_nationality_mannotory">Passport Nationality</string>
+    <string name="back_to_search">Back To Search</string>
+    <string name="please_search_for_another_flight">Please search for another flight</string>
+    <string name="date_of_birth">Date Of Birth *</string>
+    <string name="total_amount">Total Amount</string>
+    <string name="amount">Amount</string>
+    <string name="booking_log_limit_title_msg">Booking Log Limit</string>
+    <string name="amount_optional">Amount(optional)</string>
+    <string name="passport_image_mandatory">passport image mandatory</string>
+    <string name="visa_image_mandatory">Visa image mandatory</string>
+    <string name="titel_reschedule">Reschedule</string>
+    <string name="booking_info">Booking Info</string>
+    <string name="ticket_cancel">Ticket Cancel</string>
+    <string name="reissue_reschedule">Reissue/Reschedule</string>
+    <string name="title_reissue">Tricket Reissue</string>
+    <string name="reschedule">Reschedule</string>
+    <string name="ekshop">Ekshop</string>
+    <string name="visit">Visit</string>
+    <string name="report">Report</string>
+    <string name="home_title_ek_shope">Ekshop</string>
+    <string name="invalid_date">Invalid date</string>
+    <string name="start_date">Start date</string>
+    <string name="end_date">End date</string>
+    <string name="or">OR</string>
+    <string name="order_code">Order code</string>
+    <string name="optional">Optional</string>
+    <string name="search_report">Search report</string>
+
+    <string name="title_bus_tickets">Search bus tickets</string>
+    <string name="search_bus">Search Bus Ticket</string>
+
+    <string name="jsonData">
+        { "1": "A1", "2": "A2", "3": "A3", "4": "B1", "5": "B2", "6": "B3", "7": "C1", "8": "C2", "9": "C3", "10": "D1", "11": "D2", "12": "D3", "13": "E1", "14": "E2", "15": "E3", "16": "F1", "17": "F2", "18": "F3", "19": "G1", "20": "G2", "21": "G3", "22": "H1", "23": "H2", "24": "H3", "25": "I1", "26": "I2", "27": "I3" }
+    </string>
+    <string name="title_bus_transtport_list">Search transport</string>
+    <string name="coach_no">Coach no</string>
+    <string name="departure">Departure</string>
+    <string name="available_seat">Available Seat</string>
+    <string name="please_select_a_transport">Please select a transport</string>
+    <string name="continue_booking">Continue Booking</string>
+
+</resources>

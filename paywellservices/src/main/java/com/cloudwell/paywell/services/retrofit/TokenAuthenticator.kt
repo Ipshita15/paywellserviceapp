@@ -5,7 +5,6 @@ import android.util.Log
 import com.cloudwell.paywell.services.activity.utility.AllUrl
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
-import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus
 import com.cloudwell.paywell.services.eventBus.model.MessageToBottom
 import okhttp3.Authenticator
@@ -44,8 +43,8 @@ class TokenAuthenticator : Authenticator {
             if (apiResposeGenerateToken!!.status == 200) {
 
                 val securityToken = apiResposeGenerateToken.token!!.securityToken
+                AppHandler.getmInstance(AppController.getContext()).setToken(securityToken)
 
-                AppStorageBox.put(AppController.getContext(), AppStorageBox.Key.SECURITY_TOKEN, securityToken)
 
                 return response.request.newBuilder()
                         .header("Authorization", "Bearer $securityToken")

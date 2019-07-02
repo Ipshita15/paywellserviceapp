@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity;
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketMenuActivity;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;

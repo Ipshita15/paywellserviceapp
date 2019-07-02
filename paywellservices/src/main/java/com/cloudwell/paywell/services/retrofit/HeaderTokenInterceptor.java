@@ -1,9 +1,9 @@
 package com.cloudwell.paywell.services.retrofit;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.cloudwell.paywell.services.app.AppController;
-import com.cloudwell.paywell.services.app.storage.AppStorageBox;
+import com.cloudwell.paywell.services.app.AppHandler;
 
 import java.io.IOException;
 
@@ -16,10 +16,18 @@ import okhttp3.Response;
  */
 public class HeaderTokenInterceptor implements Interceptor {
 
+    private Context mContext;
+
+    HeaderTokenInterceptor(Context context) {
+
+        mContext = context;
+    }
+
     @NonNull
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
-        String token = (String) AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.SECURITY_TOKEN);
+
+        String token = AppHandler.getmInstance(mContext).getToken();
         Request newRequest = chain.request().newBuilder()
                 .addHeader("Authorization", "Bearer " + token)
                 .build();

@@ -11,19 +11,23 @@ import android.arch.persistence.room.PrimaryKey
 
 @Entity
 class TripScheduleInfo(
-        @ColumnInfo(name = "to_location")
-        var To: String = "",
 
         @ColumnInfo(name = "from_location")
         var from: String = "",
 
+        @ColumnInfo(name = "to_location")
+        var To: String = "",
+
+        @PrimaryKey(autoGenerate = false)
         @ColumnInfo(name = "schedule_Id")
         var schedule_Id: String = "",
 
         @ColumnInfo(name = "validity_date")
-        var validity_date: String = "") {
+        var validity_date: String = "")
 
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "TripScheduleInfo_Id")
-    var id: Long = 0
-}
+//{
+//
+//    @PrimaryKey(autoGenerate = true)
+//    @ColumnInfo(name = "TripScheduleInfo_Id")
+//    var id: Long = 0
+//}

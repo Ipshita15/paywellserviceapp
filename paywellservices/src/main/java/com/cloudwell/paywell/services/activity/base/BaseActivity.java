@@ -177,4 +177,21 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
+    public void showDialogMesssageWithFinished(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        finish();
+                    }
+                });
+
+
+        builder.show();
+
+    }
+
 }

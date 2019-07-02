@@ -10,7 +10,7 @@ import android.arch.persistence.room.PrimaryKey
 
 @Entity
 class BusSchedule(
-
+        @PrimaryKey(autoGenerate = false)
         @ColumnInfo(name = "_schedule_Id")
         var schedule_time_id: String = "",
 
@@ -32,15 +32,7 @@ class BusSchedule(
         @ColumnInfo(name = "ticket_price")
         var ticketPrice: String = "",
 
-        @ColumnInfo(name = "ticket_price_validity_date")
-        var ticketPriceValidityDate: String = "",
-
         @ColumnInfo(name = "allowed_seat_numbers")
         var allowedSeatNumbers: String = ""
 
-) {
-
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "BusSchedule_Id")
-    var id: Long = 0
-}
+)
