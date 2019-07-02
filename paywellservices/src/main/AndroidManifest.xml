@@ -77,6 +77,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
+        <activity android:name=".activity.eticket.busticketNew.passengerInformation.PassengerInformationActivity">
+        </activity>
+
+
         <uses-library
             android:name="com.google.android.maps"
             android:required="false"/>
@@ -1279,10 +1283,7 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
-        <receiver android:name=".ActionReceiver">
-
-        </receiver>
-
+        <receiver android:name=".ActionReceiver"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"

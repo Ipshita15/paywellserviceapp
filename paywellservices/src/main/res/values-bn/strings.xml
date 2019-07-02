@@ -819,5 +819,6 @@
     <string name="departure">Departure</string>
     <string name="available_seat">Available Seat</string>
     <string name="please_select_a_transport">Please select a transport</string>
+    <string name="continue_booking">Continue Booking</string>
 
 </resources>

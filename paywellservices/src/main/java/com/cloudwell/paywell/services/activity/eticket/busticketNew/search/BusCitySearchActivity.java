@@ -84,22 +84,14 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
                 return switcherTextView;
             }
         });
-        if ((String.valueOf(AppStorageBox.get(this, AppStorageBox.Key.BUS_LEAVING_FROM_CITY)) != null)
-                && !(String.valueOf(AppStorageBox.get(this, AppStorageBox.Key.BUS_LEAVING_FROM_CITY)).isEmpty())) {
-            fromString = String.valueOf(AppStorageBox.get(this, AppStorageBox.Key.BUS_LEAVING_FROM_CITY));
-        } else {
-            fromString = "Leaving From";
-        }
 
-        if ((String.valueOf(AppStorageBox.get(this, AppStorageBox.Key.BUS_GOING_TO_CITY)) != null)
-                && !(String.valueOf(AppStorageBox.get(this, AppStorageBox.Key.BUS_GOING_TO_CITY)).isEmpty())) {
-            toString = String.valueOf(AppStorageBox.get(this, AppStorageBox.Key.BUS_GOING_TO_CITY));
-        } else {
-            toString = "Going To";
-        }
+        fromString = "Leaving From";
+        toString = "Going To";
+
         String fromData = (String) AppStorageBox.get(this, AppStorageBox.Key.BUS_LEAVING_FROM_CITY);
         String toData = (String) AppStorageBox.get(this, AppStorageBox.Key.BUS_GOING_TO_CITY);
-        if (fromData != null && !(fromData.isEmpty())) {
+
+        if (fromData != null && !(fromData.isEmpty()) && !fromData.equals("null")) {
             fromTS.setText(fromData);
         } else {
             fromTS.setText(fromString);
@@ -114,7 +106,7 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
                 return switcherTextView;
             }
         });
-        if (toData != null && !(toData.isEmpty())) {
+        if (toData != null && !(toData.isEmpty()) && !toData.equals("null")) {
             toTS.setText(toData);
         } else {
             toTS.setText(toString);
