@@ -135,6 +135,7 @@ public class EKShopActivity extends BaseActivity {
                         if (!mCd.isConnectingToInternet()) {
                             connectionError();
                         } else {
+                            isFirstTime = true;
                             startWebView(getString(R.string.ek_redirect) + "token=" + token);
                         }
 
