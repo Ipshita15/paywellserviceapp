@@ -15,6 +15,7 @@ import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BusSeat
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule
 import com.google.gson.Gson
+import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.bottom_seat_layout.*
 import org.json.JSONObject
 import java.util.*
@@ -38,7 +39,7 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
     internal var selectedIds = ""
     //    internal lateinit var allSeatkey: ArrayList<String>
 //    internal lateinit var allSeatValue: ArrayList<String>
-    var allBusSeat: List<BusSeat>? = null
+    var allBusSeat: List<BusSeat> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +51,8 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
 
         val stringExtra = intent.getStringExtra("jsonData")
         val model = Gson().fromJson(stringExtra, TripScheduleInfoAndBusSchedule::class.java)
+        Logger.v("seat data" + Gson().toJson(model))
+
         val busLocalDB = model.busLocalDB
         val busSchedule = model.busSchedule
 
@@ -61,17 +64,17 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
 
         var indexCounter = 0
 
-        allBusSeat = model.resSeatInfo?.allBusSeat
+        allBusSeat = model.resSeatInfo?.allBusSeat!!
 
 
         var i = 0
-        while (i < allBusSeat!!.size) {
+        while (i < allBusSeat.size) {
 
             seatsPattenStr = seatsPattenStr + "/"
 
             for (j in 0 until indexTotalColumes) {
 
-                if (allBusSeat!!.size != totalMatrix) {
+                if (allBusSeat.size != totalMatrix) {
                     if (indexCounter >= allBusSeat!!.size - 1) {
                         break
                     }
@@ -80,22 +83,22 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
                 indexCounter = indexCounter + j
 
                 if (indexTotalColumes == 1) {
-                    seatsPattenStr = seatsPattenStr + "A_"
+                    seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(i)
                 } else if (indexTotalColumes == 3 && j == 0 && columnsInRightInt == 2) {
-                    seatsPattenStr = seatsPattenStr + "A_"
+                    seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(i)
 
                     // for right columns 4  ## ##
                     //                      ## ##
                 } else if (indexTotalColumes == 4 && j == 1 && columnsInRightInt == 2) {
-                    seatsPattenStr = seatsPattenStr + "A_"
+                    seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(i)
                 } else if (indexTotalColumes == 9 && j == 0 && columnsInRightInt == 4) {
-                    seatsPattenStr = seatsPattenStr + "A_"
+                    seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(i)
                 } else if (indexTotalColumes == 9 && j == 4 && columnsInRightInt == 4) {
-                    seatsPattenStr = seatsPattenStr + "A_"
+                    seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(i)
                 } else if (indexTotalColumes == 9 && j == 8 && columnsInRightInt == 4) {
-                    seatsPattenStr = seatsPattenStr + "A_"
+                    seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(i)
                 } else {
-                    seatsPattenStr = seatsPattenStr + "A"
+                    seatsPattenStr = seatsPattenStr + getSeatSymbolWithoutSpace(i)
                 }
 
             }
@@ -104,12 +107,12 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
 
         }
 
-        //miss mass matrix than remove last row and add row seat with extra set...
-        if (totalMatrix != allBusSeat!!.size) {
+//        //miss mass matrix than remove last row and add row seat with extra set...
+        if (totalMatrix != allBusSeat.size) {
             val removeCharaterNumber = indexTotalColumes + 1
             seatsPattenStr = seatsPattenStr.substring(0, seatsPattenStr.length - removeCharaterNumber)
             for (i in 0 until indexTotalColumes) {
-                seatsPattenStr = seatsPattenStr + "A"
+                seatsPattenStr = seatsPattenStr + getSeatSymbolWithoutSpace(i)
             }
         }
 
@@ -117,6 +120,43 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
             displaySeatPatten()
         }
 
+    }
+
+    private fun getSeatSymbolWithSpace(i: Int): String {
+        var data = "";
+        if (allBusSeat.get(i).value == 0) {
+            // available seats
+            data = "A_"
+        } else if (allBusSeat.get(i).value == 1) {
+            //Temp booked
+            data = "R_"
+        } else if (allBusSeat.get(i).value == 2) {
+            //Temp booked
+            data = "U_"
+        } else {
+            //Temp booked
+            data = "U_"
+        }
+
+        return data
+    }
+
+    private fun getSeatSymbolWithoutSpace(i: Int): String {
+        var data = "";
+        if (allBusSeat.get(i).value == 0) {
+            // available seats
+            data = "A"
+        } else if (allBusSeat.get(i).value == 1) {
+            //Temp booked
+            data = "R"
+        } else if (allBusSeat.get(i).value == 2) {
+            //Temp booked
+            data = "U"
+        } else {
+            data = "U"
+        }
+
+        return data
     }
 
     private fun initilizationReviewBottomSheet() {
@@ -168,7 +208,7 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
                 layout.orientation = LinearLayout.HORIZONTAL
                 layoutSeat.addView(layout)
             } else if (seatsPattenStr.get(index) == 'U') {
-                val value = allBusSeat?.get(count)
+                val value = allBusSeat.get(count)
                 count++
                 val view = TextView(this)
                 val layoutParams = LinearLayout.LayoutParams(seatSize, seatSize)
@@ -180,7 +220,7 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
                 view.setBackgroundResource(R.drawable.ic_seats_booked)
                 view.setTextColor(Color.WHITE)
                 view.tag = STATUS_BOOKED
-                view.setText(value?.seatLbls)
+                view.setText(value.seatLbls)
                 view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 9f)
                 layout!!.addView(view)
                 seatViewList.add(view)
@@ -196,7 +236,7 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
                 view.id = count
                 view.gravity = Gravity.CENTER
                 view.setBackgroundResource(R.drawable.ic_seats_book)
-                view.setText(value?.seatLbls)
+                view.setText(value.seatLbls)
                 view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 9f)
                 view.setTextColor(Color.BLACK)
                 view.tag = STATUS_AVAILABLE
@@ -214,7 +254,7 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
                 view.id = count
                 view.gravity = Gravity.CENTER
                 view.setBackgroundResource(R.drawable.ic_seats_reserved)
-                view.setText(value?.seatLbls)
+                view.setText(value.seatLbls)
                 view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 9f)
                 view.setTextColor(Color.WHITE)
                 view.tag = STATUS_RESERVED

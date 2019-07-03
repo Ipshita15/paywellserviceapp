@@ -53,7 +53,7 @@ open class BusTricketBaseActivity : MVVMBaseActivity() {
         if (isEnglish) {
             setTheme(R.style.EnglishAppTheme)
         } else {
-            setTheme(R.style.EnglishAppTheme)
+            setTheme(R.style.BanglaAppTheme)
         }
     }
 
