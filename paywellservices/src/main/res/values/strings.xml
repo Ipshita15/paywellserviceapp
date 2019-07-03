@@ -803,6 +803,8 @@
     <string name="order_code">Order code</string>
     <string name="optional">Optional</string>
     <string name="search_report">Search report</string>
+    <string name="is_center_lock">Lock</string>
+    <string name="is_center_unlock">Unlock</string>
 
 
 </resources>

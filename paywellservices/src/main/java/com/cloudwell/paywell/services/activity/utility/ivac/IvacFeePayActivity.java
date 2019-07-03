@@ -12,10 +12,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -45,7 +47,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IvacFeePayActivity extends BaseActivity {
+public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnItemSelectedListener, View.OnTouchListener {
 
     public static String TAG_CENTER_DETAILS = "centerDetails";
     private ConnectionDetector mCd;
@@ -57,6 +59,7 @@ public class IvacFeePayActivity extends BaseActivity {
     private String str_centerId = "", str_amount = "", password = "", webFile = "", passportNo = "", phnNum = "";
     private TextView textViewAmount;
     private EditText editTextPassword, editTextWebFile, editTextPassport, editTextPhnNum;
+    Boolean isCenterUserLock = false;
 
     private static String TAG_RESPONSE_IVAC_CENTER_ID = "center_id";
     private static String TAG_RESPONSE_IVAC_CENTER_NAME = "center_name";
@@ -73,6 +76,7 @@ public class IvacFeePayActivity extends BaseActivity {
 
     private AsyncTask<String, Integer, String> mTransactionLogAsync;
     private AsyncTask<String, String, String> mConfirmFeePayAsync;
+    private CheckBox checkBoxForCenterLock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,10 +109,10 @@ public class IvacFeePayActivity extends BaseActivity {
 
     }
 
-
     private void initializeData() {
         mConstraintLayout = findViewById(R.id.constrainLayout);
         spnr_center = findViewById(R.id.spinner_center);
+        spnr_center.setOnTouchListener(this);
 
         TextView _mPin = findViewById(R.id.tvIvacPin);
         TextView _mCenter = findViewById(R.id.tvIvacCenter);
@@ -117,6 +121,7 @@ public class IvacFeePayActivity extends BaseActivity {
         TextView _mPassport = findViewById(R.id.tvIvacPassport);
         TextView _mPhn = findViewById(R.id.tvIvacPhn);
         Button _mBtn = findViewById(R.id.btnIvacSubmit);
+        checkBoxForCenterLock = findViewById(R.id.checkBoxForCenterLock);
 
         editTextPassword = findViewById(R.id.etPassword);
         textViewAmount = findViewById(R.id.tvFeeAmount);
@@ -183,6 +188,46 @@ public class IvacFeePayActivity extends BaseActivity {
         });
 
 
+        handleCenterLockCheckBox();
+
+
+    }
+
+    private void handleCenterLockCheckBox() {
+        boolean ivacCenterLock = mAppHandler.isIVACCenterLock();
+        if (ivacCenterLock) {
+            checkBoxForCenterLock.setChecked(true);
+            centerLock();
+        } else {
+            checkBoxForCenterLock.setChecked(false);
+            centerUnlock();
+        }
+
+
+        checkBoxForCenterLock.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                centerLock();
+            } else {
+                centerUnlock();
+            }
+
+        });
+    }
+
+    private void centerUnlock() {
+        isCenterUserLock = false;
+        mAppHandler.setIVACCenterLock(isCenterUserLock);
+        checkBoxForCenterLock.setText(R.string.is_center_unlock);
+        spnr_center.setBackgroundColor(getResources().getColor(R.color.white));
+        spnr_center.setEnabled(true);
+        spnr_center.setOnItemSelectedListener(this);
+    }
+
+    private void centerLock() {
+        checkBoxForCenterLock.setText(R.string.is_center_lock);
+        spnr_center.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        isCenterUserLock = true;
+        mAppHandler.setIVACCenterLock(isCenterUserLock);
     }
 
     private void setupCenterDetailsSpiner() {
@@ -209,34 +254,7 @@ public class IvacFeePayActivity extends BaseActivity {
 
             arrayAdapter_center = new ArrayAdapter<>(IvacFeePayActivity.this, android.R.layout.simple_spinner_dropdown_item, center_name_array);
             spnr_center.setAdapter(arrayAdapter_center);
-            spnr_center.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                    try {
-                        str_centerId = "";
-                        str_centerId = center_id_array.get(position);
-                        str_amount = center_amount_array.get(position);
-                        String amountText = getString(R.string.tk_des) + " " + str_amount;
-
-                        // store selected position
-                        mAppHandler.setCenterDropDownPogistion(position);
-
-                        textViewAmount.setText(amountText);
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                        Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
-
-                }
-            });
+            spnr_center.setOnItemSelectedListener(this);
         } catch (Exception ex) {
             ex.printStackTrace();
             Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
@@ -355,6 +373,42 @@ public class IvacFeePayActivity extends BaseActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if (!isCenterUserLock) {
+            try {
+                str_centerId = "";
+                str_centerId = center_id_array.get(position);
+                str_amount = center_amount_array.get(position);
+                String amountText = getString(R.string.tk_des) + " " + str_amount;
+
+                // store selected position
+                mAppHandler.setCenterDropDownPogistion(position);
+
+                textViewAmount.setText(amountText);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
+            }
+        }
+
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        return isCenterUserLock;
     }
 
     private class TransactionLogAsync extends AsyncTask<String, Integer, String> {
