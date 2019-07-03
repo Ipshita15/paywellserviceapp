@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -105,16 +104,13 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
 
     private void submitCancelRequest(String userName, String pass, String bookingId, String cancelReason, String apiFormat) {
 
-        final ProgressDialog progressDialog = new ProgressDialog(BookingCancelActivity.this);
-        progressDialog.setMessage("Loading!!! Please wait..");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+        showProgressDialog();
 
         ApiUtils.getAPIService().cancelBooking(userName, pass, bookingId, cancelReason, apiFormat).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                dismissProgressDialog();
                 if (response.isSuccessful()) {
-
                     if (response.isSuccessful()) {
                         JsonObject jsonObject = response.body();
                         String message = jsonObject.get("message_details").getAsString();
@@ -123,16 +119,14 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
                         } else {
                             showMsg(message);
                         }
-
                     }
                 }
-                progressDialog.hide();
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Toast.makeText(BookingCancelActivity.this, "Network error!!!", Toast.LENGTH_SHORT).show();
-                progressDialog.hide();
+                dismissProgressDialog();
             }
         });
     }
