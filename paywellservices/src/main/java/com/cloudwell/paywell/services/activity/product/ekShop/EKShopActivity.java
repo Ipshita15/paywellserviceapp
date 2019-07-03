@@ -59,6 +59,9 @@ public class EKShopActivity extends BaseActivity {
     private Timer timer;
     private TimerTask timerTask;
     private String pendingUrl;
+    private boolean flag;
+
+    private boolean isFirstTime = true;
 
 
     @Override
@@ -168,6 +171,7 @@ public class EKShopActivity extends BaseActivity {
 
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
+
                 return true;
             }
 
@@ -192,10 +196,12 @@ public class EKShopActivity extends BaseActivity {
             }
 
             public void onPageFinished(WebView view, String url) {
-                Logger.v("" + url);
-                if (!url.equals(pendingUrl)) {
-                    Log.d("", "Detected HTTP redirect " + pendingUrl + "->" + url);
-                    pendingUrl = null;
+                if (url.equals("https://ekshop.gov.bd/ekshop_integration/api/paywell-auth-check")) {
+                    if (isFirstTime) {
+                        isFirstTime = false;
+                    } else {
+                        finish();
+                    }
                 }
 
                 try {
