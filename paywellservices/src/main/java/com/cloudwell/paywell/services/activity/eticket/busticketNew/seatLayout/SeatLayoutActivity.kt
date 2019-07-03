@@ -67,58 +67,63 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
         allBusSeat = model.resSeatInfo?.allBusSeat!!
 
 
-        var i = 0
-        while (i < allBusSeat.size) {
+        try {
+            var i = 0
+            while (i < allBusSeat.size) {
 
-            seatsPattenStr = seatsPattenStr + "/"
+                seatsPattenStr = seatsPattenStr + "/"
 
-            for (j in 0 until indexTotalColumes) {
+                for (j in 0 until indexTotalColumes) {
 
-                if (allBusSeat.size != totalMatrix) {
-                    if (indexCounter >= allBusSeat!!.size - 1) {
-                        break
+                    if (allBusSeat.size != totalMatrix) {
+                        if (indexCounter >= allBusSeat!!.size - 1) {
+                            break
+                        }
                     }
+
+                    indexCounter = indexCounter + j
+
+                    if (indexTotalColumes == 1) {
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(indexCounter)
+                    } else if (indexTotalColumes == 3 && j == 0 && columnsInRightInt == 2) {
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(indexCounter)
+
+                        // for right columns 4  ## ##
+                        //                      ## ##
+                    } else if (indexTotalColumes == 4 && j == 1 && columnsInRightInt == 2) {
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(indexCounter)
+                    } else if (indexTotalColumes == 9 && j == 0 && columnsInRightInt == 4) {
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(indexCounter)
+                    } else if (indexTotalColumes == 9 && j == 4 && columnsInRightInt == 4) {
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(indexCounter)
+                    } else if (indexTotalColumes == 9 && j == 8 && columnsInRightInt == 4) {
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(indexCounter)
+                    } else {
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithoutSpace(indexCounter)
+                    }
+
                 }
+                i = i + indexTotalColumes
 
-                indexCounter = indexCounter + j
-
-                if (indexTotalColumes == 1) {
-                    seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(i)
-                } else if (indexTotalColumes == 3 && j == 0 && columnsInRightInt == 2) {
-                    seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(i)
-
-                    // for right columns 4  ## ##
-                    //                      ## ##
-                } else if (indexTotalColumes == 4 && j == 1 && columnsInRightInt == 2) {
-                    seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(i)
-                } else if (indexTotalColumes == 9 && j == 0 && columnsInRightInt == 4) {
-                    seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(i)
-                } else if (indexTotalColumes == 9 && j == 4 && columnsInRightInt == 4) {
-                    seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(i)
-                } else if (indexTotalColumes == 9 && j == 8 && columnsInRightInt == 4) {
-                    seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(i)
-                } else {
-                    seatsPattenStr = seatsPattenStr + getSeatSymbolWithoutSpace(i)
-                }
 
             }
-            i = i + indexTotalColumes
-
-
-        }
 
 //        //miss mass matrix than remove last row and add row seat with extra set...
-        if (totalMatrix != allBusSeat.size) {
-            val removeCharaterNumber = indexTotalColumes + 1
-            seatsPattenStr = seatsPattenStr.substring(0, seatsPattenStr.length - removeCharaterNumber)
-            for (i in 0 until indexTotalColumes) {
-                seatsPattenStr = seatsPattenStr + getSeatSymbolWithoutSpace(i)
+            if (totalMatrix != allBusSeat.size) {
+                val removeCharaterNumber = indexTotalColumes + 1
+                seatsPattenStr = seatsPattenStr.substring(0, seatsPattenStr.length - removeCharaterNumber)
+                for (i in 0 until indexTotalColumes) {
+                    seatsPattenStr = seatsPattenStr + getSeatSymbolWithoutSpace(i)
+                }
             }
+
+            run {
+                displaySeatPatten()
+            }
+        } catch (e: Exception) {
+
         }
 
-        run {
-            displaySeatPatten()
-        }
 
     }
 
