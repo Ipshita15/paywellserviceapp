@@ -46,15 +46,15 @@ class CancellationFeeFragment : DialogFragment() {
         var totalFee = 0.0
         if (type.equals(KEY_ReIssue)) {
             totalFee = reIssue
-            v.tvFree.text = "Admin charges tk. ${totalFee} and other charges will be applicable for the reissue process."
+            v.tvFree.text = "Admin charge tk. ${totalFee} will be applicable for the reissue process."
 
         } else if (type.equals(KEY_ReSchedule)) {
             totalFee = reSchedule
-            v.tvFree.text = "Admin charges tk. ${totalFee} and other charges will be applicable for the reschedule process."
+            v.tvFree.text = "Admin charge tk. ${totalFee} will be applicable for the reschedule process."
 
         } else if (type.equals(KEY_ticket_cancel)) {
             totalFee = refund
-            v.tvFree.text = "Admin charges tk. ${totalFee} and other charges will be applicable for the ticket cancellation process."
+            v.tvFree.text = "Admin charge tk. ${totalFee}  will be applicable for the ticket cancellation process."
 
         }
 
