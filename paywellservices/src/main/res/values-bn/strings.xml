@@ -809,6 +809,8 @@
     <string name="order_code">অর্ডার কোড</string>
     <string name="optional">ঐচ্ছিক</string>
     <string name="search_report">অনুসন্ধান রিপোর্ট</string>
+    <string name="is_center_lock">লক</string>
+    <string name="is_center_unlock">আনলক</string>
 
 
 </resources>

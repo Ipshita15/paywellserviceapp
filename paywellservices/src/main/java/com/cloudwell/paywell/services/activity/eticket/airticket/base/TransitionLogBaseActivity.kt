@@ -67,9 +67,15 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
 
         tricketChooserFragment.setOnClickHandlerTest(object : TicketActionMenuFragment.OnClickHandler {
             override fun onReschedule(item: Datum) {
-                val mAppHandler = AppHandler.getmInstance(applicationContext)
-                val userName = mAppHandler.imeiNo
-                callCancelMapping(userName, item.bookingId!!, "", KEY_ReSchedule, item)
+
+                if (item.journeyType.equals("MultiStop")) {
+                    showDialogMesssage("MultiStop reschedule request can't accept")
+                } else {
+                    val mAppHandler = AppHandler.getmInstance(applicationContext)
+                    val userName = mAppHandler.imeiNo
+                    callCancelMapping(userName, item.bookingId!!, "", KEY_ReSchedule, item)
+                }
+
 
             }
 
@@ -83,9 +89,14 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
             }
 
             override fun onReissue(item: Datum) {
-                val mAppHandler = AppHandler.getmInstance(applicationContext)
-                val userName = mAppHandler.imeiNo
-                callCancelMapping(userName, item.bookingId!!, "", KEY_ReIssue, item)
+
+                if (item.journeyType.equals("MultiStop")) {
+                    showDialogMesssage("MultiStop reissue request can't accept")
+                } else {
+                    val mAppHandler = AppHandler.getmInstance(applicationContext)
+                    val userName = mAppHandler.imeiNo
+                    callCancelMapping(userName, item.bookingId!!, "", KEY_ReIssue, item)
+                }
             }
 
             override fun onClickIsisThicketButton() {

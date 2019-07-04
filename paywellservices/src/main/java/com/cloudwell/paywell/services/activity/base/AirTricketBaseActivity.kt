@@ -212,7 +212,7 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
 
                     if (response.isSuccessful) {
                         val jsonObject = response.body()
-                        val message = jsonObject!!.get("message").asString
+                        val message = jsonObject!!.get("message_details").asString
                         if (jsonObject.get("status").asInt == 200) {
                             showMsg(message)
 

@@ -44,7 +44,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.util.Patterns;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -1423,29 +1422,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public void onNewnotificationcomming(EventNewNotificaiton eventNewNotificaiton) {
         int counter = eventNewNotificaiton.getCounter();
         mNumOfNotification = counter;
-
         if (mNumOfNotification > 0) {
             notificationCount(counter);
-            builderNotification = new AlertDialog.Builder(MainActivity.this);
-            builderNotification.setTitle(R.string.home_notification);
-            builderNotification.setMessage(getString(R.string.unread_first_msg) + " " + counter + " " + getString(R.string.unread_second_msg));
-            builderNotification.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int id) {
-                    AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CEHCK_NEW_NOTIFICATION);
-                    dialogInterface.dismiss();
-                    checkNotificationFlag = true;
-                    checkNotificationFlag = false;
-                    mNumOfNotification = 0;
-                    Intent intent = new Intent(MainActivity.this, NotificationAllActivity.class);
-                    intent.putExtra(KEY_COMMING_NEW_NOTIFICATION, true);
-                    startActivity(intent);
-                }
-            });
-            alertNotification = builderNotification.create();
-            alertNotification.show();
-            TextView messageText = alertNotification.findViewById(android.R.id.message);
-            messageText.setGravity(Gravity.CENTER);
         } else {
             notificationCount(counter);
         }

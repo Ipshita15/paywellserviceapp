@@ -65,9 +65,7 @@ class FlightAdapterNew(val items: List<Result>, val requestAirSearch: RequestAir
 
         if (isReSchuduler) {
             holder.btDetails.text = "Request"
-            holder.tvPrices.visibility = View.GONE
-            holder.ivTake.visibility = View.GONE
-            holder.tvTotalPrices.visibility = View.GONE
+
         }
 
         holder.btDetails.setOnClickListener {

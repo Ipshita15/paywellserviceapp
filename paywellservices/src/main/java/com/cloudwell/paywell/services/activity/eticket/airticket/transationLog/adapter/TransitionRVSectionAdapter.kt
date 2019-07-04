@@ -47,7 +47,7 @@ class TransitionRVSectionAdapter(private val title: String, private val list: Li
         }
 
         iHolder.tvBookingId.text = "Booking ID: " + model.bookingId!!
-        iHolder.tvTricketPrices.text = "Price: " + model.currency + " " + `model`.totalFare
+        iHolder.tvTricketPrices.text = "Price: " + model.currency + " " + model.total_fare_calculated
         iHolder.tvStatus.text = "Status: " + model.message!!
 
 

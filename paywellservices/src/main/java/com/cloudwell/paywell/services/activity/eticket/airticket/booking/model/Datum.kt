@@ -76,5 +76,8 @@ class Datum {
     @SerializedName("trips")
     var trips: List<Trip> = mutableListOf()
 
+    @SerializedName("total_fare_calculated")
+    var total_fare_calculated: String = ""
+
 
 }
