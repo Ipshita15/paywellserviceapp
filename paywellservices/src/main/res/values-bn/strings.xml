@@ -795,8 +795,8 @@
     <string name="titel_reschedule">Reschedule</string>
     <string name="booking_info">Booking Info</string>
     <string name="ticket_cancel">Ticket Cancel</string>
-    <string name="reissue_reschedule">Reissue/Reschedule</string>
-    <string name="title_reissue">Tricket Reissue</string>
+    <string name="reissue_reschedule">Re-issue/Reschedule</string>
+    <string name="title_reissue">Tricket Re-issue</string>
     <string name="reschedule">Reschedule</string>
     <string name="ekshop">এক-শপ</string>
     <string name="visit">প্রবেশ</string>

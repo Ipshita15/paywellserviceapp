@@ -150,6 +150,10 @@ class EditReissuePassengerActivity : AirTricketBaseActivity() {
         etCountry.setText("" + countryCode1.toString())
 
 
+        countryCode = "" + oldPassenger.countryCode
+
+
+
         btn_add.setText(getString(R.string.edit))
 
         btn_add.setOnClickListener {
@@ -403,7 +407,7 @@ class EditReissuePassengerActivity : AirTricketBaseActivity() {
     private fun addPassenger() {
 
 
-        val passengerType = this.etPassengerType.text.toString().trim().toLowerCase()
+        val passengerType = this.etPassengerType.text.toString()
         val title = this.etTitle.text.toString().trim()
         val firstName = this.etFirstName.text.toString().trim()
         val lastName = this.etLastName.text.toString().trim()

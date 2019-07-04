@@ -24,11 +24,12 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.P
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment.ShowMessageFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.adapter.AdapterForPassengersReIssue
 import com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.editReissuePassengerActivity.EditReissuePassengerActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.model.ReissuePassenger
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
+import com.google.gson.Gson
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_reissue_ticket.*
-import kotlinx.android.synthetic.main.activity_search_view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -97,15 +98,15 @@ class ReIssueTicketActivity : AirTricketBaseActivity(), ShowMessageFragment.MyIn
 
         btReissueRequest.setOnClickListener {
 
-            handleRequestForReSchuder()
+            handleReissueRequest()
 
         }
 
     }
 
-    private fun handleRequestForReSchuder() {
+    private fun handleReissueRequest() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Reschedule Reason")
+        builder.setTitle("Re-issue  Reason")
 
         val pinNoET = EditText(this)
         val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
@@ -175,14 +176,14 @@ class ReIssueTicketActivity : AirTricketBaseActivity(), ShowMessageFragment.MyIn
 
 
                 } else {
-                    val snackbar = Snackbar.make(linearLayout3!!, R.string.connection_error_msg, Snackbar.LENGTH_LONG)
+                    val snackbar = Snackbar.make(linearLayout12, R.string.connection_error_msg, Snackbar.LENGTH_LONG)
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"))
                     val snackBarView = snackbar.view
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))
                     snackbar.show()
                 }
             } else {
-                val snackbar = Snackbar.make(linearLayout3!!, R.string.pin_no_error_msg, Snackbar.LENGTH_LONG)
+                val snackbar = Snackbar.make(linearLayout12, R.string.pin_no_error_msg, Snackbar.LENGTH_LONG)
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"))
                 val snackBarView = snackbar.view
                 snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))
@@ -198,7 +199,27 @@ class ReIssueTicketActivity : AirTricketBaseActivity(), ShowMessageFragment.MyIn
         showProgressDialog()
 
 
-        ApiUtils.getAPIService().reIssueTicket(userName, pass, bookingId, cancelReason, passengers).enqueue(object : Callback<JsonObject> {
+        val apiNameReissuePassenger = mutableListOf<ReissuePassenger>()
+        passengers.forEach {
+            val p = ReissuePassenger()
+            p.title = it.nameTitle
+            p.paxtype = it.paxType
+            p.firstname = it.firstName
+            p.lastname = it.lastName
+            p.gender = it.gender
+            p.contactnumber = it.contactNumber
+            p.countrycode = it.countryCode
+            p.dateofbirth = it.dateOfBirth
+            p.email = it.email
+            p.nationality = it.nationality
+            p.passportExpiryDate = it.passportExpiryDate
+            p.passportNationality = it.passportNationality
+            p.passportNumber = it.passportNumber
+            apiNameReissuePassenger.add(p)
+        }
+
+
+        ApiUtils.getAPIService().reIssueTicket(userName, pass, bookingId, cancelReason, Gson().toJson(apiNameReissuePassenger)).enqueue(object : Callback<JsonObject> {
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 dismissProgressDialog()
 

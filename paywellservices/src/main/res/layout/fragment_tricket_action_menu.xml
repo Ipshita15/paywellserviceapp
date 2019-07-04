@@ -30,7 +30,7 @@
         android:gravity="center"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="Reissue"
+        android:text="Re-issue"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="16sp"
