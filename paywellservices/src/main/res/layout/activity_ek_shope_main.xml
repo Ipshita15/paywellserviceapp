@@ -39,7 +39,7 @@
                     style="@style/HomeButtonNew"
                     android:drawableTop="@drawable/ic_visit"
                     android:onClick="onButtonClicker"
-                    android:text="@string/visit"
+                    android:text="@string/ekshop"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
 
