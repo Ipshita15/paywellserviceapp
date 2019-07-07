@@ -46,7 +46,7 @@ class CancellationFeeFragment : DialogFragment() {
         var totalFee = 0.0
         if (type.equals(KEY_ReIssue)) {
             totalFee = reIssue
-            v.tvFree.text = "Admin charge tk. ${totalFee} will be applicable for the reissue process."
+            v.tvFree.text = "Admin charge tk. ${totalFee} will be applicable for the re-issue process."
 
         } else if (type.equals(KEY_ReSchedule)) {
             totalFee = reSchedule

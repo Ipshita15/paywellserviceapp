@@ -91,7 +91,7 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
             override fun onReissue(item: Datum) {
 
                 if (item.journeyType.equals("MultiStop")) {
-                    showDialogMesssage("MultiStop reissue request can't accept")
+                    showDialogMesssage("MultiStop re-issue request can't accept")
                 } else {
                     val mAppHandler = AppHandler.getmInstance(applicationContext)
                     val userName = mAppHandler.imeiNo
