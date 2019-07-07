@@ -23,7 +23,7 @@ object BusCalculationHelper {
             if (userDate.before(date2) || userDate.equals(date2)) {
                 return price
             }
-            
+
         }
 
         var i = 0

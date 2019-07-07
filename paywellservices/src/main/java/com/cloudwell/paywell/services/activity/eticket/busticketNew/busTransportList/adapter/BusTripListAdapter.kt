@@ -38,7 +38,7 @@ class BusTripListAdapter(val items: List<TripScheduleInfoAndBusSchedule>, val co
         val prices = BusCalculationHelper.getPrices(model.busSchedule?.ticketPrice, requestBusSearch.date)
         holder.tvPrices.text = prices
 
-        
+
         // val departureId = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.DEPARTURE_ID) as String
 
 
