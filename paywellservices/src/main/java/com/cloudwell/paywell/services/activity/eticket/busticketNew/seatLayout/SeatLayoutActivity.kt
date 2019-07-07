@@ -41,10 +41,11 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
 //    internal lateinit var allSeatValue: ArrayList<String>
     var allBusSeat: List<BusSeat> = mutableListOf()
 
+    var seatCounter = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seat_layout)
-
 
         initilizationReviewBottomSheet()
         layout = findViewById<ViewGroup>(R.id.layoutSeat)
@@ -73,6 +74,7 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
 
                 seatsPattenStr = seatsPattenStr + "/"
 
+
                 for (j in 0 until indexTotalColumes) {
 
                     if (allBusSeat.size != totalMatrix) {
@@ -84,27 +86,26 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
                     indexCounter = indexCounter + j
 
                     if (indexTotalColumes == 1) {
-                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(indexCounter)
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(seatCounter)
                     } else if (indexTotalColumes == 3 && j == 0 && columnsInRightInt == 2) {
-                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(indexCounter)
-
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(seatCounter)
                         // for right columns 4  ## ##
                         //                      ## ##
                     } else if (indexTotalColumes == 4 && j == 1 && columnsInRightInt == 2) {
-                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(indexCounter)
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(seatCounter)
                     } else if (indexTotalColumes == 9 && j == 0 && columnsInRightInt == 4) {
-                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(indexCounter)
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(seatCounter)
                     } else if (indexTotalColumes == 9 && j == 4 && columnsInRightInt == 4) {
-                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(indexCounter)
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(seatCounter)
                     } else if (indexTotalColumes == 9 && j == 8 && columnsInRightInt == 4) {
-                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(indexCounter)
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(seatCounter)
                     } else {
-                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithoutSpace(indexCounter)
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithoutSpace(seatCounter)
                     }
+
 
                 }
                 i = i + indexTotalColumes
-
 
             }
 
@@ -116,50 +117,53 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
                     seatsPattenStr = seatsPattenStr + getSeatSymbolWithoutSpace(i)
                 }
             }
-
             run {
                 displaySeatPatten()
             }
         } catch (e: Exception) {
-
+            Logger.v("" + e.localizedMessage)
         }
-
-
     }
 
     private fun getSeatSymbolWithSpace(i: Int): String {
         var data = "";
-        if (allBusSeat.get(i).value == 0) {
+        if (allBusSeat.get(seatCounter).value == 0) {
             // available seats
             data = "A_"
-        } else if (allBusSeat.get(i).value == 1) {
+        } else if (allBusSeat.get(seatCounter).value == 1) {
             //Temp booked
             data = "R_"
-        } else if (allBusSeat.get(i).value == 2) {
+        } else if (allBusSeat.get(seatCounter).value == 2) {
             //Temp booked
             data = "U_"
         } else {
             //Temp booked
             data = "U_"
         }
+        seatCounter = seatCounter + 1
+        Logger.v("ICounter" + seatCounter)
 
         return data
     }
 
     private fun getSeatSymbolWithoutSpace(i: Int): String {
+        Logger.v("ICounter" + i)
         var data = "";
-        if (allBusSeat.get(i).value == 0) {
+        if (allBusSeat.get(seatCounter).value == 0) {
             // available seats
             data = "A"
-        } else if (allBusSeat.get(i).value == 1) {
+        } else if (allBusSeat.get(seatCounter).value == 1) {
             //Temp booked
             data = "R"
-        } else if (allBusSeat.get(i).value == 2) {
+        } else if (allBusSeat.get(seatCounter).value == 2) {
             //Temp booked
             data = "U"
         } else {
             data = "U"
         }
+
+        seatCounter = seatCounter + 1
+        Logger.v("ICounter" + seatCounter)
 
         return data
     }
