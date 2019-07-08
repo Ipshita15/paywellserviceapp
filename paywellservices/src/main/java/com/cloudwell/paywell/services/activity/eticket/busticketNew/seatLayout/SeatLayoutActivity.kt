@@ -40,6 +40,8 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
     //    internal lateinit var allSeatkey: ArrayList<String>
 //    internal lateinit var allSeatValue: ArrayList<String>
     var allBusSeat: List<BusSeat> = mutableListOf()
+    var lastSeatBusSeat: List<BusSeat> = mutableListOf()
+
 
     var seatCounter = 0
 
@@ -113,8 +115,12 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
             if (totalMatrix != allBusSeat.size) {
                 val removeCharaterNumber = indexTotalColumes + 1
                 seatsPattenStr = seatsPattenStr.substring(0, seatsPattenStr.length - removeCharaterNumber)
-                for (i in 0 until indexTotalColumes) {
-                    seatsPattenStr = seatsPattenStr + getSeatSymbolWithoutSpace(i)
+
+                lastSeatBusSeat = allBusSeat.subList((allBusSeat.size - removeCharaterNumber), (allBusSeat.size - 1))
+
+
+                for (i in 0 until lastSeatBusSeat.size) {
+                    seatsPattenStr = seatsPattenStr + getSeatSymbolWithoutSpaceForLastLayout(i)
                 }
             }
             run {
@@ -123,6 +129,23 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
         } catch (e: Exception) {
             Logger.v("" + e.localizedMessage)
         }
+    }
+
+    private fun getSeatSymbolWithoutSpaceForLastLayout(i: Int): Any? {
+        var data = "";
+        if (lastSeatBusSeat.get(i).value == 0) {
+            // available seats
+            data = "A"
+        } else if (lastSeatBusSeat.get(i).value == 1) {
+            //Temp booked
+            data = "R"
+        } else if (lastSeatBusSeat.get(i).value == 2) {
+            //Temp booked
+            data = "U"
+        } else {
+            data = "U"
+        }
+        return data
     }
 
     private fun getSeatSymbolWithSpace(i: Int): String {

@@ -29,8 +29,8 @@ class BusTripListAdapter(val items: List<TripScheduleInfoAndBusSchedule>, val co
             isAc = "NON AC"
         }
 
-        holder.tvTransportNameAndType.text = (model.busLocalDB?.name?.toUpperCase()
-                ?: "") + ", " + isAc
+//        holder.tvTransportNameAndType.text = (model.busLocalDB?.name?.toUpperCase() ?: "") + ", " + isAc
+        holder.tvTransportNameAndType.text = "" + (model.resSeatInfo?.allBusSeat?.size ?: 0)
         holder.tvCoachNo.text = ": " + model.busSchedule?.coachNo
         holder.tvDepartureTime.text = ": " + (model.busSchedule?.scheduleTime ?: "")
 
@@ -38,7 +38,7 @@ class BusTripListAdapter(val items: List<TripScheduleInfoAndBusSchedule>, val co
         val prices = BusCalculationHelper.getPrices(model.busSchedule?.ticketPrice, requestBusSearch.date)
         holder.tvPrices.text = prices
 
-        
+
         // val departureId = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.DEPARTURE_ID) as String
 
 
@@ -50,6 +50,7 @@ class BusTripListAdapter(val items: List<TripScheduleInfoAndBusSchedule>, val co
         val seat_ids = model.busSchedule?.allowedSeatNumbers ?: ""
 
 
+
         if (model.resSeatInfo == null) {
             holder.tvAvailableSeat.text = ": 0"
 
@@ -58,7 +59,6 @@ class BusTripListAdapter(val items: List<TripScheduleInfoAndBusSchedule>, val co
                 holder.progressBar.visibility = View.INVISIBLE
                 val tototalAvailableSeat = it?.tototalAvailableSeat ?: 0
                 holder.tvAvailableSeat.text = ": " + tototalAvailableSeat
-
 
                 if (it != null) {
                     onClickListener.onUpdateData(position, it)
