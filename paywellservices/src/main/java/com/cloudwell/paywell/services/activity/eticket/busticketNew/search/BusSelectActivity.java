@@ -29,11 +29,9 @@ public class BusSelectActivity extends BusTricketBaseActivity {
     private ArrayAdapter<String> busListAdapter;
     private ArrayList<String> busNameList = new ArrayList<>();
     private ArrayList<Bus> busList = new ArrayList<>();
-    private BusTicketRepository mBusTicketRepository;
-
     CardView cardLayout;
     mehdi.sakout.fancybuttons.FancyButton btn_next;
-
+    private BusTicketRepository mBusTicketRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -28,7 +28,7 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
                     view?.showNoTripFoundUI()
                 } else {
                     com.orhanobut.logger.Logger.json("" + Gson().toJson(it1))
-                    
+
                     Collections.sort(it1) { car1, car2 ->
                         val a = BusCalculationHelper.getPrices(car1.busSchedule?.ticketPrice, requestBusSearch.date).toDouble()
                         val b = BusCalculationHelper.getPrices(car2.busSchedule?.ticketPrice, requestBusSearch.date).toDouble()

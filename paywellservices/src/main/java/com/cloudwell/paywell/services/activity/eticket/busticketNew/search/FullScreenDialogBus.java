@@ -40,8 +40,7 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
     private static final int TRIGGER_AUTO_COMPLETE = 100;
     private static final long AUTO_COMPLETE_DELAY = 300;
     public static String TAG = "FullScreenDialog";
-    private TextView dhakaCityTV,coxBazarCityTV,jessorCityTV,khulnaCityTV,chittagong, lalmonirhat,
-            saidpur,mymensing,rangpur,thakurgaon,barisal,sylhet,comilla;
+    private TextView dhakaCityTV, coxBazarCityTV, benapoleCityTV, kolkataCityTV, chittagong, sylhetCityTV;
     private RecyclerView cityRecyclerView;
 
     OnCitySet onCitySet;
@@ -71,30 +70,16 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         dhakaCityTV=view.findViewById(R.id.dhakaCityTV);
         coxBazarCityTV=view.findViewById(R.id.coxBazarCityTV);
-        jessorCityTV=view.findViewById(R.id.jessorCityTV);
-        khulnaCityTV=view.findViewById(R.id.khulnaCityTV);
+        benapoleCityTV = view.findViewById(R.id.benapoleCityTV);
+        kolkataCityTV = view.findViewById(R.id.kolkataCityTV);
         chittagong=view.findViewById(R.id.chittagongCityTV);
-        lalmonirhat=view.findViewById(R.id.lalmonirhatCityTV);
-        saidpur=view.findViewById(R.id.saidpurCityTV);
-        mymensing=view.findViewById(R.id.mymensingCityTV);
-        rangpur=view.findViewById(R.id.rangpurCityTV);
-        thakurgaon=view.findViewById(R.id.thakurgaonCityTV);
-        barisal=view.findViewById(R.id.barisalCityTV);
-        sylhet=view.findViewById(R.id.sylheytCityTV);
-        comilla=view.findViewById(R.id.comillaCityTV);
+        sylhetCityTV = view.findViewById(R.id.sylhetCityTV);
         dhakaCityTV.setOnClickListener(this);
         coxBazarCityTV.setOnClickListener(this);
-        jessorCityTV.setOnClickListener(this);
-        khulnaCityTV.setOnClickListener(this);
+        benapoleCityTV.setOnClickListener(this);
+        kolkataCityTV.setOnClickListener(this);
         chittagong.setOnClickListener(this);
-        lalmonirhat.setOnClickListener(this);
-        saidpur.setOnClickListener(this);
-        mymensing.setOnClickListener(this);
-        rangpur.setOnClickListener(this);
-        thakurgaon.setOnClickListener(this);
-        barisal.setOnClickListener(this);
-        sylhet.setOnClickListener(this);
-        comilla.setOnClickListener(this);
+        sylhetCityTV.setOnClickListener(this);
         toolbar.setNavigationIcon(R.drawable.close);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,14 +186,14 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
                 setCityDataToSP(toOrFrom, CityName.COXBAZAR_CITY);
                 dismiss();
                 break;
-            case R.id.jessorCityTV:
-                onCitySet.setCityData(CityName.JESSOR_CITY,toOrFrom);
-                setCityDataToSP(toOrFrom, CityName.JESSOR_CITY);
+            case R.id.benapoleCityTV:
+                onCitySet.setCityData(CityName.BENAPOLE_CITY, toOrFrom);
+                setCityDataToSP(toOrFrom, CityName.BENAPOLE_CITY);
                 dismiss();
                 break;
-            case R.id.khulnaCityTV:
-                onCitySet.setCityData(CityName.KHULNA_CITY,toOrFrom);
-                setCityDataToSP(toOrFrom, CityName.KHULNA_CITY);
+            case R.id.kolkataCityTV:
+                onCitySet.setCityData(CityName.KOLKATA_CITY, toOrFrom);
+                setCityDataToSP(toOrFrom, CityName.KOLKATA_CITY);
                 dismiss();
                 break;
             case R.id.chittagongCityTV:
@@ -216,44 +201,9 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
                 setCityDataToSP(toOrFrom, CityName.CHITTAGONG_CITY);
                 dismiss();
                 break;
-            case R.id.lalmonirhatCityTV:
-                onCitySet.setCityData(CityName.LALMONIRhat_CITY,toOrFrom);
-                setCityDataToSP(toOrFrom, CityName.LALMONIRhat_CITY);
-                dismiss();
-                break;
-            case R.id.saidpurCityTV:
-                onCitySet.setCityData(CityName.SAIDPUR_CITY,toOrFrom);
-                setCityDataToSP(toOrFrom, CityName.SAIDPUR_CITY);
-                dismiss();
-                break;
-            case R.id.mymensingCityTV:
-                onCitySet.setCityData(CityName.MYMENSING_CITY,toOrFrom);
-                setCityDataToSP(toOrFrom, CityName.MYMENSING_CITY);
-                dismiss();
-                break;
-            case R.id.rangpurCityTV:
-                onCitySet.setCityData(CityName.RANGPUR_CITY,toOrFrom);
-                setCityDataToSP(toOrFrom, CityName.RANGPUR_CITY);
-                dismiss();
-                break;
-            case R.id.thakurgaonCityTV:
-                onCitySet.setCityData(CityName.THAKURGAON_CITY,toOrFrom);
-                setCityDataToSP(toOrFrom, CityName.THAKURGAON_CITY);
-                dismiss();
-                break;
-            case R.id.barisalCityTV:
-                onCitySet.setCityData(CityName.BARISAL_CITY,toOrFrom);
-                setCityDataToSP(toOrFrom, CityName.BARISAL_CITY);
-                dismiss();
-                break;
-            case R.id.sylheytCityTV:
-                onCitySet.setCityData(CityName.SYLHET_CITY,toOrFrom);
+            case R.id.sylhetCityTV:
+                onCitySet.setCityData(CityName.SYLHET_CITY, toOrFrom);
                 setCityDataToSP(toOrFrom, CityName.SYLHET_CITY);
-                dismiss();
-                break;
-            case R.id.comillaCityTV:
-                onCitySet.setCityData(CityName.COMILLA_CITY,toOrFrom);
-                setCityDataToSP(toOrFrom, CityName.COMILLA_CITY);
                 dismiss();
                 break;
         }

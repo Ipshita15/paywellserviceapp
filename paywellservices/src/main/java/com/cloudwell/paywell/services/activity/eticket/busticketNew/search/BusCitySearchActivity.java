@@ -35,11 +35,11 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
 
 
     public static final String FullSCREEN_DIALOG_HEADER = "header";
-    public static final String TO_STRING_ = "Going To";
-    private ImageView textSwitchIV;
-    private FancyButton searchButton;
-    public static final String FROM_STRING = "Leaving From";
+    public static final String TO_STRING = "Going To";
     TextSwitcher fromTS, toTS;
+    private ImageView textSwitchIV;
+    public static final String FROM_STRING = "Leaving From";
+    private FancyButton searchButton;
     private String fromString, toString;
     private LinearLayout dateLinearLayout, fromLL, toLL;
     private Calendar myCalender;
@@ -85,8 +85,8 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
             }
         });
 
-        fromString = "Leaving From";
-        toString = "Going To";
+        fromString = FROM_STRING;
+        toString = TO_STRING;
 
         String fromData = (String) AppStorageBox.get(this, AppStorageBox.Key.BUS_LEAVING_FROM_CITY);
         String toData = (String) AppStorageBox.get(this, AppStorageBox.Key.BUS_GOING_TO_CITY);
@@ -138,7 +138,7 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
             public void onClick(View view) {
                 String from = ((TextView) fromTS.getCurrentView()).getText().toString();
                 String to = ((TextView) toTS.getCurrentView()).getText().toString();
-                if (!(from.isEmpty() && !(from.equals(FROM_STRING))) && !(to.isEmpty() && !(to.equals(TO_STRING_)))) {
+                if (!from.isEmpty() && !(from.equals(FROM_STRING)) && !to.isEmpty() && !(to.equals(TO_STRING))) {
 
 
                     String date = (String) AppStorageBox.get(getApplicationContext(), AppStorageBox.Key.BUS_JOURNEY_DATE);
@@ -153,10 +153,6 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
 
                     Intent intent = new Intent(getApplicationContext(), BusTransportListActivity.class);
                     startActivity(intent);
-
-
-                    Toast.makeText(BusCitySearchActivity.this, "Service will available soon", Toast.LENGTH_SHORT).show();
-
                 } else {
                     Toast.makeText(BusCitySearchActivity.this, "Please Enter All the data first", Toast.LENGTH_SHORT).show();
                 }
@@ -179,7 +175,7 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
             public void onClick(View view) {
                 FullScreenDialogBus dialog = new FullScreenDialogBus();
                 Bundle b = new Bundle();
-                b.putString(FullSCREEN_DIALOG_HEADER, TO_STRING_);
+                b.putString(FullSCREEN_DIALOG_HEADER, TO_STRING);
                 dialog.setArguments(b);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 dialog.show(ft, FullScreenDialogBus.TAG);
@@ -214,7 +210,7 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
 
     @Override
     public void setCityData(String cityName, String toOrFrom) {
-        if (toOrFrom.equals(TO_STRING_)) {
+        if (toOrFrom.equals(TO_STRING)) {
             toTS.setText(cityName);
             toString = cityName;
         } else if (toOrFrom.equals(FROM_STRING)) {
