@@ -1,5 +1,6 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew.seatLayout
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
@@ -13,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusPassengerBoothDepartureActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Bus
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BusSeat
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
@@ -54,6 +56,9 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
 
     var seatCounter = 0
 
+    var seatLevel = ""
+    var totalPrices = 0.0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seat_layout)
@@ -90,9 +95,6 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
         val totalRowsInt = Integer.parseInt(busLocalDB?.totalRows)
         val totalMatrix = totalRowsInt * indexTotalColumes
         val columnsInRightInt = Integer.parseInt(busLocalDB?.columnsInRight)
-
-
-
 
         allBusSeat = model.resSeatInfo?.allBusSeat!! as MutableList<BusSeat>
 
@@ -247,6 +249,17 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
 
         btNext.setOnClickListener {
 
+
+            val toJson = Gson().toJson(model)
+            val requestBusSearchJson = Gson().toJson(requestBusSearch)
+
+
+            val intent = Intent(this, BusPassengerBoothDepartureActivity::class.java)
+            intent.putExtra("requestBusSearch", requestBusSearchJson)
+            intent.putExtra("jsonData", toJson)
+            intent.putExtra("seatLevel", seatLevel)
+            intent.putExtra("totalPrices", "" + totalPrices)
+            startActivity(intent)
         }
 
 
@@ -382,24 +395,21 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
     }
 
     private fun updatePriceLayuout() {
-        var level = ""
-        var totatlPrices = 0.0
+        seatLevel = ""
+        totalPrices = 0.0
 
         allBusSeat.forEach {
             if (it.isUserSeleted) {
-                level = level + it.seatLbls + ","
-
+                seatLevel = seatLevel + it.seatLbls + ","
                 val toDouble = BusCalculationHelper.getPrices(model.busSchedule?.ticketPrice, requestBusSearch.date).toDouble()
-
-                totatlPrices = totatlPrices + toDouble
-
+                totalPrices = totalPrices + toDouble
             }
         }
-        if (!level.equals("")) {
-            level = removeLastChar(level)
+        if (!seatLevel.equals("")) {
+            seatLevel = removeLastChar(seatLevel)
             showButtonSheet()
-            tvSelectedSeat.text = level
-            tvTotalTotalPrices.text = "" + totatlPrices
+            tvSelectedSeat.text = seatLevel
+            tvTotalTotalPrices.text = "" + totalPrices
         } else {
             hideenButtonSheet()
         }

@@ -108,8 +108,6 @@ class BusTicketRepository() {
             val inseredIds = DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().clearLocalBusDB()
             DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().clearSchedule()
             DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().clearTripScheduleInfo()
-            DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().clearBoothInfo()
-
             uiThread {
                 insertBusScullerData(jsonObject)
             }
@@ -219,17 +217,17 @@ class BusTicketRepository() {
 
 
                     val boothDepartureInfo = model.getJSONObject("booth_departure_info")
-                    boothDepartureInfo.keys().forEach {
-                        val boothId = it
-                        val boothObject = boothDepartureInfo.get(it) as JSONObject
-                        val boothName = boothObject.getString("booth_name")
-                        val boothDepartureTime = boothObject.getString("booth_departure_time")
+//                    boothDepartureInfo.keys().forEach {
+//                        val boothId = it
+//                        val boothObject = boothDepartureInfo.get(it) as JSONObject
+//                        val boothName = boothObject.getString("booth_name")
+//                        val boothDepartureTime = boothObject.getString("booth_departure_time")
+//
+//                        allBoothInfo.add(BoothInfo(boothId, scheduleId, boothName, boothDepartureTime))
+//                    }
 
-                        allBoothInfo.add(BoothInfo(boothId, scheduleId, boothName, boothDepartureTime))
-                    }
 
-
-                    val schedule = BusSchedule(scheduleId, schedule_time, bus_id, coach_no, schedule_type, validity_date, ticket_price, allowedSeatStoreString)
+                    val schedule = BusSchedule(scheduleId, schedule_time, bus_id, coach_no, schedule_type, validity_date, ticket_price, allowedSeatStoreString, boothDepartureInfo.toString())
                     allScheduleData.add(schedule)
                 }
 
@@ -241,7 +239,6 @@ class BusTicketRepository() {
         doAsync {
             DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().insertTripScheduleInfo(allTripScheduleInfo)
             DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().insertSchedule(allScheduleData)
-            DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().insertBoothInfo(allBoothInfo)
 
             Logger.v("doAsync")
 

@@ -5,7 +5,6 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BoothInfo;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Bus;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BusLocalDB;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BusSchedule;
@@ -43,23 +42,15 @@ public interface BusTicketDab {
     @Query("DELETE FROM TripScheduleInfo")
     public void clearTripScheduleInfo();
 
-    @Query("DELETE FROM BoothInfo")
-    public void clearBoothInfo();
-
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long[] insertSchedule(List<BusSchedule> all);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long[] insertBoothInfo(List<BoothInfo> all);
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long[] insertTripScheduleInfo(List<TripScheduleInfo> all);
 
-    //    @Query("SELECT * FROM  TripScheduleInfo where to_location = :toLocation   AND from_location = :fromLocation;")
-//    public List<TripScheduleInfo> searchTrip(String toLocation, String fromLocation);
-//
+
     @Query("SELECT BusSchedule.*, BusLocalDB.* FROM BusSchedule INNER JOIN TripScheduleInfo ON BusSchedule._schedule_Id = TripScheduleInfo.schedule_Id INNER JOIN BusLocalDB ON BusLocalDB.busID = BusSchedule.bus_id Where TripScheduleInfo.to_location = :to AND TripScheduleInfo.from_location = :from  AND TripScheduleInfo.validity_date >= :date")
     List<TripScheduleInfoAndBusSchedule> search(String to, String from, String date);
 

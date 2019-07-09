@@ -23,7 +23,7 @@ import com.squareup.otto.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BusSelectActivity extends BusTricketBaseActivity {
+public class BusSelectActivity extends BusTricketBaseActivity implements View.OnClickListener {
 
     private Spinner busListSpinner;
     private ArrayAdapter<String> busListAdapter;
@@ -43,8 +43,9 @@ public class BusSelectActivity extends BusTricketBaseActivity {
 
         cardLayout = findViewById(R.id.cardLayout);
         btn_next = findViewById(R.id.btn_next);
+        btn_next.setOnClickListener(this);
 
-        busListSpinner = findViewById(R.id.busListSP);
+        busListSpinner = findViewById(R.id.boothList);
         busListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, busNameList);
         busListSpinner.setAdapter(busListAdapter);
 
@@ -102,32 +103,15 @@ public class BusSelectActivity extends BusTricketBaseActivity {
 
     }
 
-    public void goToSearchBusTicket(View view) {
+    public void goToSearchBusTicket() {
 
 
         AppStorageBox.put(BusSelectActivity.this, AppStorageBox.Key.SELETED_BUS_INFO, busList.get(busListSpinner.getSelectedItemPosition()));
 
-        String trasnportID = (String) AppStorageBox.get(BusSelectActivity.this, AppStorageBox.Key.BUS_ID);
-        showProgressDialog();
-//        mBusTicketRepository.getBusScheduleDate(trasnportID).observeForever(aBoolean -> {
-//            dismissProgressDialog();
-//            if (aBoolean) {
-//                mBusTicketRepository.getBusScheduleDate(trasnportID).removeObservers(this);
-//
-//                this.runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Logger.v("run");
-//
-//                        Intent intent = new Intent(getApplicationContext(), BusCitySearchActivity.class);
-//                        startActivity(intent);
-//                    }
-//                });
-//
-//            }
-//        });
+        Bus bus = (Bus) AppStorageBox.get(getApplicationContext(), AppStorageBox.Key.SELETED_BUS_INFO);
 
-        mBusTicketRepository.getBusScheduleDate(trasnportID).observe(this, new Observer<Boolean>() {
+        showProgressDialog();
+        mBusTicketRepository.getBusScheduleDate(bus.getBusid()).observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
                 dismissProgressDialog();
@@ -158,5 +142,10 @@ public class BusSelectActivity extends BusTricketBaseActivity {
         });
 
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        goToSearchBusTicket();
     }
 }

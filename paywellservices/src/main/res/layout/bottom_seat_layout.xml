@@ -92,5 +92,5 @@
         app:layout_constraintBottom_toBottomOf="@+id/tvTotalTotalPrices"
         app:layout_constraintStart_toEndOf="@+id/tvTotalTotalPrices"
         app:layout_constraintTop_toTopOf="@+id/tvTotalTotalPrices"
-        app:srcCompat="@drawable/prices_changed_icon"/>
+        android:background="@drawable/prices_changed_icon"/>
 </android.support.constraint.ConstraintLayout>

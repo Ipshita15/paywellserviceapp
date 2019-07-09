@@ -645,7 +645,7 @@
     <string name="title_all_summary">All Summary</string>
     <string name="lbl_take_camera_picture">Camara</string>
     <string name="lbl_choose_from_gallery">Gallery</string>
-    <string name="lbl_set_profile_photo" />
+    <string name="lbl_set_profile_photo"/>
     <string name="please_add_id_info_for_this_travaler">Please add ID info for this passenger</string>
     <string name="tile_cencel_booking">Cancel Booking</string>
     <string name="tile_cencel_transaction_log">Transaction Log</string>
@@ -816,5 +816,6 @@
     <string name="available_seat">Available Seat</string>
     <string name="please_select_a_transport">Please select a transport</string>
     <string name="continue_booking">Continue Booking</string>
+    <string name="title_bus_passenger_booth"><![CDATA[Passenger information & boarding point]]></string>
 
 </resources>
