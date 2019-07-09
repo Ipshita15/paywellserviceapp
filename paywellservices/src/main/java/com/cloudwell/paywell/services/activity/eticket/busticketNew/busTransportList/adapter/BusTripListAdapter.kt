@@ -22,12 +22,7 @@ class BusTripListAdapter(val items: List<TripScheduleInfoAndBusSchedule>, val co
     override fun onBindViewHolder(holder: ViewHolderNew, position: Int) {
         val model = items.get(position)
 
-        var isAc = ""
-        if (model.busLocalDB?.busIsAc.equals("1")) {
-            isAc = "AC"
-        } else {
-            isAc = "NON AC"
-        }
+        val isAc = BusCalculationHelper.getACType(model)
 
 //        holder.tvTransportNameAndType.text = (model.busLocalDB?.name?.toUpperCase() ?: "") + ", " + isAc
         holder.tvTransportNameAndType.text = "" + (model.resSeatInfo?.allBusSeat?.size ?: 0)

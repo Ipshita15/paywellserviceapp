@@ -110,8 +110,12 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
                     } else {
 
                         val toJson = Gson().toJson(model)
+                        val requestBusSearchJson = Gson().toJson(requestBusSearch)
+
+
                         val intent = Intent(applicationContext, SeatLayoutActivity::class.java)
                         intent.putExtra("jsonData", toJson)
+                        intent.putExtra("requestBusSearch", requestBusSearchJson)
                         startActivity(intent)
                     }
                     // AppStorageBox.put(applicationContext, AppStorageBox.Key.SERACH_ID, mSearchId)

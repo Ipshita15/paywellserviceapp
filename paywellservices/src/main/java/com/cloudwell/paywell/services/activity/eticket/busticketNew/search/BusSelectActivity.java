@@ -61,7 +61,8 @@ public class BusSelectActivity extends BusTricketBaseActivity {
         busListSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                AppStorageBox.put(BusSelectActivity.this, AppStorageBox.Key.BUS_ID, busList.get(i).getBusid());
+                AppStorageBox.put(BusSelectActivity.this, AppStorageBox.Key.SELETED_BUS_INFO, busList.get(i));
+
             }
 
             @Override
@@ -104,6 +105,9 @@ public class BusSelectActivity extends BusTricketBaseActivity {
     }
 
     public void goToSearchBusTicket(View view) {
+
+
+        AppStorageBox.put(BusSelectActivity.this, AppStorageBox.Key.SELETED_BUS_INFO, busList.get(busListSpinner.getSelectedItemPosition()));
 
         String trasnportID = (String) AppStorageBox.get(BusSelectActivity.this, AppStorageBox.Key.BUS_ID);
         showProgressDialog();

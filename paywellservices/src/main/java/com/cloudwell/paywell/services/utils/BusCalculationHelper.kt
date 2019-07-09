@@ -1,5 +1,6 @@
 package com.cloudwell.paywell.services.utils
 
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
@@ -23,7 +24,7 @@ object BusCalculationHelper {
             if (userDate.before(date2) || userDate.equals(date2)) {
                 return price
             }
-            
+
         }
 
         var i = 0
@@ -38,6 +39,18 @@ object BusCalculationHelper {
 
         return "0.0"
     }
+
+    public fun getACType(model: TripScheduleInfoAndBusSchedule): String {
+        var isAc = ""
+        if (model.busLocalDB?.busIsAc.equals("1")) {
+            isAc = "AC"
+        } else {
+            isAc = "NON AC"
+        }
+        return isAc
+    }
+
+
 }
 
 
