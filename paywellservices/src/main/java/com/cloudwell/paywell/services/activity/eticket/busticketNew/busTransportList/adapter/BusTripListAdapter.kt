@@ -25,8 +25,9 @@ class BusTripListAdapter(val items: List<TripScheduleInfoAndBusSchedule>, val co
 
         val isAc = BusCalculationHelper.getACType(model)
 
-//        holder.tvTransportNameAndType.text = (model.busLocalDB?.name?.toUpperCase() ?: "") + ", " + isAc
-        holder.tvTransportNameAndType.text = "" + (model.resSeatInfo?.allBusSeat?.size ?: 0)
+        holder.tvTransportNameAndType.text = (model.busLocalDB?.name?.toUpperCase()
+                ?: "") + ", " + isAc
+        holder.tvTransportNameAndType.text = "" + (model.resSeatInfo?.allBusSeat?.size ?: "")
         holder.tvCoachNo.text = ": " + model.busSchedule?.coachNo
         holder.tvDepartureTime.text = ": " + (model.busSchedule?.scheduleTime ?: "")
 
