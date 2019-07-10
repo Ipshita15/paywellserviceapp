@@ -283,7 +283,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cloudwell.paywell.services.activity.MainActivity"/>
-        </activity> <!-- Bus ticket activities -->
+        </activity> <!-- Transport ticket activities -->
         <activity
             android:name=".activity.eticket.busticket.JourneyDateActivity"
             android:parentActivityName=".activity.eticket.busticket.BusMainActivity"

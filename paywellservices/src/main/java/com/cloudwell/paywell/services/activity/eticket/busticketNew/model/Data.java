@@ -9,15 +9,15 @@ public class Data {
 
 
     @SerializedName("data")
-    private List<Bus> mData;
+    private List<Transport> mData;
     @SerializedName("status")
     private Long mStatus;
 
-    public List<Bus> getData() {
+    public List<Transport> getData() {
         return mData;
     }
 
-    public void setData(List<Bus> data) {
+    public void setData(List<Transport> data) {
         mData = data;
     }
 

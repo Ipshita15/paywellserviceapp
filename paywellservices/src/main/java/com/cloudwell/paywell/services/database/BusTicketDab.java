@@ -5,9 +5,9 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Bus;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BusLocalDB;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BusSchedule;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Transport;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfo;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule;
 
@@ -21,10 +21,10 @@ import java.util.List;
 public interface BusTicketDab {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long[] insert(List<Bus> passenger);
+    long[] insert(List<Transport> passenger);
 
 
-    @Query("DELETE FROM Bus")
+    @Query("DELETE FROM Transport")
     public void clearBus();
 
 

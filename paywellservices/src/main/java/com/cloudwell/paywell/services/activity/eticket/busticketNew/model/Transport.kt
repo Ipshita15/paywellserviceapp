@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
 
 
 @Entity
-class Bus {
+class Transport {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "Id")
     var id: Long = 0
@@ -20,5 +20,9 @@ class Bus {
     @ColumnInfo(name = "busname")
     @SerializedName("busname")
     var busname: String = ""
+
+    @ColumnInfo(name = "extraCharge")
+    @SerializedName("extraCharge")
+    var extraCharge: Double = 0.0
 
 }

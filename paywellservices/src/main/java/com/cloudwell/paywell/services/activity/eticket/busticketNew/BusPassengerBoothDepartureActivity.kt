@@ -1,11 +1,14 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew
 
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.viewModel.BusTransportViewModel
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BoothInfo
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_bus_booth_departure.*
@@ -17,8 +20,14 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity() {
     private val allBoothInfo = mutableListOf<BoothInfo>()
     private val allBoothNameInfo = mutableListOf<String>()
 
-    internal lateinit var model: TripScheduleInfoAndBusSchedule
+
     private lateinit var boothList: Spinner
+
+    lateinit var viewMode: BusTransportViewModel
+    internal lateinit var model: TripScheduleInfoAndBusSchedule
+    internal lateinit var requestBusSearch: RequestBusSearch
+    var seatLevel = ""
+    var seatId = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,16 +37,21 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity() {
 
 
         val stringExtra = intent.getStringExtra("jsonData")
-        val seatLevel = intent.getStringExtra("seatLevel")
+        val requestBusSearchJson = intent.getStringExtra("requestBusSearch")
+        seatLevel = intent.getStringExtra("seatLevel")
+        seatId = intent.getStringExtra("seatId")
         val totalPrices = intent.getStringExtra("totalPrices")
 
 
+
+        requestBusSearch = Gson().fromJson(requestBusSearchJson, RequestBusSearch::class.java)
         model = Gson().fromJson(stringExtra, TripScheduleInfoAndBusSchedule::class.java)
 
         val boothDepartureInfo = model.busSchedule?.booth_departure_info
 
 
-        busSeatsTV.text = seatLevel + " | TK." + totalPrices
+        busSeatsTV.text = seatLevel
+        tvTotalPrice.text = "TK." + totalPrices
 
 
         val jsonObject = JSONObject(boothDepartureInfo)
@@ -53,6 +67,57 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity() {
         boothList = findViewById<Spinner>(R.id.boothList)
         busListAdapter = ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, allBoothNameInfo)
         this.boothList.setAdapter(busListAdapter as ArrayAdapter<String>)
+
+
+        hiddenSoftKeyboard()
+
+        initViewModel()
+
+        btn_search.setOnClickListener {
+            handleBookingContinueBooking()
+        }
+
+
+    }
+
+    private fun initViewModel() {
+        viewMode = ViewModelProviders.of(this).get(BusTransportViewModel::class.java)
+
+    }
+
+    private fun handleBookingContinueBooking() {
+        val fullName = fullNameTV.text.toString()
+        val mobileNumber = mobileNumberTV.text.toString()
+        val age = ageTV.text.toString()
+
+        if (fullName.equals("")) {
+            textInputLayoutFirstName.error = "Invalid full name"
+            return
+        } else {
+            textInputLayoutFirstName.error = null
+        }
+
+
+        if (mobileNumber.equals("")) {
+            textInputLayoutmobileNumber.error = "Invalid mobile number"
+            return
+        } else {
+            textInputLayoutmobileNumber.error = null
+        }
+
+        if (age.equals("")) {
+            textInputLayoutAge.error = "Invalid age"
+            return
+        } else {
+            textInputLayoutAge.error = null
+        }
+
+        val boothInfo = allBoothInfo.get(boothList.selectedItemPosition)
+
+
+
+        viewMode.seatCheck(isInternetConnection, model, requestBusSearch, boothInfo, seatLevel, seatId)
+
 
     }
 }

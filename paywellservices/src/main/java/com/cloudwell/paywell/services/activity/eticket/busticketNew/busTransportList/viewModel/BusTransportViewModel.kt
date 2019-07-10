@@ -1,9 +1,13 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.viewModel
 
+import android.util.Log
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketBaseViewMode
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketRepository
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BoothInfo
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Transport
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.BusCalculationHelper
 import com.google.gson.Gson
@@ -20,7 +24,7 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
         this.view = ibusTransportListView
     }
 
-    fun callLocalSearch(requestBusSearch: RequestBusSearch) {
+    fun callLocalSearch(requestBusSearch: RequestBusSearch, transport: Transport) {
         view?.showProgress()
         BusTicketRepository().searchTransport(requestBusSearch).observeForever {
             it?.let { it1 ->
@@ -30,8 +34,8 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
                     com.orhanobut.logger.Logger.json("" + Gson().toJson(it1))
 
                     Collections.sort(it1) { car1, car2 ->
-                        val a = BusCalculationHelper.getPrices(car1.busSchedule?.ticketPrice, requestBusSearch.date).toDouble()
-                        val b = BusCalculationHelper.getPrices(car2.busSchedule?.ticketPrice, requestBusSearch.date).toDouble()
+                        val a = BusCalculationHelper.getPrices(car1.busSchedule?.ticketPrice, requestBusSearch.date, transport).toDouble()
+                        val b = BusCalculationHelper.getPrices(car2.busSchedule?.ticketPrice, requestBusSearch.date, transport).toDouble()
 
                         if (a < b) {
                             -1
@@ -61,4 +65,15 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
 
     }
 
+    fun seatCheck(internetConnection: Boolean, model: TripScheduleInfoAndBusSchedule, requestBusSearch: RequestBusSearch, boothInfo: BoothInfo, seatLevel: String, seatId: String) {
+        if (!internetConnection) {
+            view?.showNoInternetConnectionFound()
+        } else {
+            BusTicketRepository().callBookingAPI(model, requestBusSearch, boothInfo, seatLevel, seatId).observeForever {
+
+                Log.e("", "")
+            }
+        }
+
+    }
 }

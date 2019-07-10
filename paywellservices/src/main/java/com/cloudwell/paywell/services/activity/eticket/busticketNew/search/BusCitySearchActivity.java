@@ -53,7 +53,7 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
         setContentView(R.layout.activity_bus_city_search);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(Html.fromHtml("<font color='#268472'>Search Bus Ticket</font>"));
+            getSupportActionBar().setTitle(Html.fromHtml("<font color='#268472'>Search Transport Ticket</font>"));
             getSupportActionBar().setElevation(0f);
             getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.color_tab_background_bus)));
         }

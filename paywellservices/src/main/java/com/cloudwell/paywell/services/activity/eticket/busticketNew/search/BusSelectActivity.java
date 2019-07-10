@@ -13,7 +13,7 @@ import android.widget.Spinner;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketRepository;
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Bus;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Transport;
 import com.cloudwell.paywell.services.app.storage.AppStorageBox;
 import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus;
 import com.cloudwell.paywell.services.eventBus.model.MessageToBottom;
@@ -28,7 +28,7 @@ public class BusSelectActivity extends BusTricketBaseActivity implements View.On
     private Spinner busListSpinner;
     private ArrayAdapter<String> busListAdapter;
     private ArrayList<String> busNameList = new ArrayList<>();
-    private ArrayList<Bus> busList = new ArrayList<>();
+    private ArrayList<Transport> mTransportList = new ArrayList<>();
     CardView cardLayout;
     mehdi.sakout.fancybuttons.FancyButton btn_next;
     private BusTicketRepository mBusTicketRepository;
@@ -60,7 +60,7 @@ public class BusSelectActivity extends BusTricketBaseActivity implements View.On
         busListSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                AppStorageBox.put(BusSelectActivity.this, AppStorageBox.Key.SELETED_BUS_INFO, busList.get(i));
+                AppStorageBox.put(BusSelectActivity.this, AppStorageBox.Key.SELETED_BUS_INFO, mTransportList.get(i));
 
             }
 
@@ -87,13 +87,13 @@ public class BusSelectActivity extends BusTricketBaseActivity implements View.On
 
     private void callGetBusListAPI() {
         mBusTicketRepository = new BusTicketRepository();
-        mBusTicketRepository.getBusList().observeForever(new Observer<List<Bus>>() {
+        mBusTicketRepository.getBusList().observeForever(new Observer<List<Transport>>() {
             @Override
-            public void onChanged(@Nullable List<Bus> buses) {
-                busList = (ArrayList<Bus>) buses;
-                if (buses != null && buses.size() > 0) {
-                    for (int a = 0; a < buses.size(); a++) {
-                        busNameList.add(buses.get(a).getBusname());
+            public void onChanged(@Nullable List<Transport> transports) {
+                mTransportList = (ArrayList<Transport>) transports;
+                if (transports != null && transports.size() > 0) {
+                    for (int a = 0; a < transports.size(); a++) {
+                        busNameList.add(transports.get(a).getBusname());
                     }
                     busListAdapter.notifyDataSetChanged();
                     dismissProgressDialog();
@@ -106,12 +106,12 @@ public class BusSelectActivity extends BusTricketBaseActivity implements View.On
     public void goToSearchBusTicket() {
 
 
-        AppStorageBox.put(BusSelectActivity.this, AppStorageBox.Key.SELETED_BUS_INFO, busList.get(busListSpinner.getSelectedItemPosition()));
+        AppStorageBox.put(BusSelectActivity.this, AppStorageBox.Key.SELETED_BUS_INFO, mTransportList.get(busListSpinner.getSelectedItemPosition()));
 
-        Bus bus = (Bus) AppStorageBox.get(getApplicationContext(), AppStorageBox.Key.SELETED_BUS_INFO);
+        Transport transport = (Transport) AppStorageBox.get(getApplicationContext(), AppStorageBox.Key.SELETED_BUS_INFO);
 
         showProgressDialog();
-        mBusTicketRepository.getBusScheduleDate(bus.getBusid()).observe(this, new Observer<Boolean>() {
+        mBusTicketRepository.getBusScheduleDate(transport.getBusid()).observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
                 dismissProgressDialog();

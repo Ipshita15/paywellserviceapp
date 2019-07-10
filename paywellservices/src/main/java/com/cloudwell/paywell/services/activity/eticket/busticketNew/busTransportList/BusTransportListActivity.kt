@@ -16,6 +16,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransport
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.viewModel.BusTransportViewModel
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatInfo
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Transport
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.seatLayout.SeatLayoutActivity
 import com.cloudwell.paywell.services.app.AppController
@@ -36,7 +37,7 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
     var items = mutableListOf<TripScheduleInfoAndBusSchedule>()
 
     var busTripListAdapter: BusTripListAdapter? = null
-
+    lateinit var transport: Transport
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +57,9 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
         myDateTimelineViewBus.setOnDateChangeLincher(this)
 
         initViewModel()
-        viewMode.callLocalSearch(requestBusSearch)
+        transport = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.SELETED_BUS_INFO) as Transport
+
+        viewMode.callLocalSearch(requestBusSearch, transport)
 
 
         btSerachAgain.setOnClickListener {
@@ -83,10 +86,7 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
         shimmer_recycler_view.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
         shimmer_recycler_view.adapter = it.let { it1 ->
 
-
-            val transportID = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.TRANSPORT_ID) as String
-
-            busTripListAdapter = BusTripListAdapter(it1, applicationContext, requestBusSearch, transportID, object : OnClickListener {
+            busTripListAdapter = BusTripListAdapter(it1, applicationContext, requestBusSearch, transport, object : OnClickListener {
                 override fun onUpdateData(position: Int, resSeatInfo: ResSeatInfo) {
 
                     val get = items.get(position)
@@ -156,7 +156,7 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
 
         requestBusSearch.date = humanReadAbleDate
 
-        viewMode.callLocalSearch(requestBusSearch)
+        viewMode.callLocalSearch(requestBusSearch, transport)
 
 
     }
@@ -172,7 +172,7 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
 
         requestBusSearch.date = humanReadAbleDate
 
-        viewMode.callLocalSearch(requestBusSearch)
+        viewMode.callLocalSearch(requestBusSearch, transport)
 
     }
 

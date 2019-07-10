@@ -9,6 +9,7 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketRepository
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatInfo
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Transport
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule
 import com.cloudwell.paywell.services.utils.BusCalculationHelper
 import kotlinx.android.synthetic.main.bus_trip_item_list.view.*
@@ -17,7 +18,7 @@ import kotlinx.android.synthetic.main.bus_trip_item_list.view.*
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 19/2/19.
  */
-class BusTripListAdapter(val items: List<TripScheduleInfoAndBusSchedule>, val context: Context, val requestBusSearch: RequestBusSearch, val transportID: String, val onClickListener: OnClickListener) : RecyclerView.Adapter<ViewHolderNew>() {
+class BusTripListAdapter(val items: List<TripScheduleInfoAndBusSchedule>, val context: Context, val requestBusSearch: RequestBusSearch, val transport: Transport, val onClickListener: OnClickListener) : RecyclerView.Adapter<ViewHolderNew>() {
 
     override fun onBindViewHolder(holder: ViewHolderNew, position: Int) {
         val model = items.get(position)
@@ -30,14 +31,14 @@ class BusTripListAdapter(val items: List<TripScheduleInfoAndBusSchedule>, val co
         holder.tvDepartureTime.text = ": " + (model.busSchedule?.scheduleTime ?: "")
 
 
-        val prices = BusCalculationHelper.getPrices(model.busSchedule?.ticketPrice, requestBusSearch.date)
-        holder.tvPrices.text = prices
+        val prices = BusCalculationHelper.getPrices(model.busSchedule?.ticketPrice, requestBusSearch.date, transport)
+        holder.tvPrices.text = "" + prices
 
 
         // val departureId = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.DEPARTURE_ID) as String
 
 
-        val transport_id = transportID
+        val transport_id = transport.busid
         val route = requestBusSearch.from + "-" + requestBusSearch.to
         val bus_id = "" + (model.busLocalDB?.busID ?: "")
         val departure_id = model.busSchedule!!.schedule_time_id

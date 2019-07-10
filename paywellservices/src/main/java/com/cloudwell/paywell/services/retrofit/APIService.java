@@ -247,6 +247,23 @@ public interface APIService {
     Call<ResponseBody> seatCheck(@Field("username") String username, @Field("skey") String skey, @Field("accessKey") String accessKey, @Field("transport_id") String transport_id, @Field("route") String route, @Field("bus_id") String bus_id, @Field("departure_id") String departure_id, @Field("departure_date") String departure_date, @Field("seat_ids") String seat_ids);
 
 
+    @FormUrlEncoded
+    @POST("paywellapi/index.php/PaywellParibahanService/seatCheckAndBlock")
+    Call<ResponseBody> seatCheckAndBlock(@Field("username") String username,
+                                         @Field("skey") String skey,
+                                         @Field("accessKey") String accessKey,
+                                         @Field("transport_id") String transport_id,
+                                         @Field("transport_lbls") String transport_lbls,
+                                         @Field("route") String route,
+                                         @Field("bus_id") String bus_id,
+                                         @Field("bus_lbls") String bus_lbls,
+                                         @Field("coach_no") String coach_no,
+                                         @Field("departure_id") String departure_id,
+                                         @Field("departure_time") String departure_time,
+                                         @Field("boarding_point_id") String boarding_point_id,
+                                         @Field("boarding_point_name") String boarding_point_name,
+                                         @Field("seat_ids") String seat_ids,
+                                         @Field("seat_lbls") String seat_lbls);
 }
 
 

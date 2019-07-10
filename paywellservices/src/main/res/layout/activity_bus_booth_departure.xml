@@ -15,7 +15,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <android.support.v7.widget.CardView
@@ -33,12 +33,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="15dp">
+                    android:paddingLeft="15dp"
+                    android:paddingTop="15dp"
+                    android:paddingRight="15dp"
+                    >
 
-                    <android.support.constraint.ConstraintLayout
+
+                    <LinearLayout
                         android:id="@+id/linearLayout16"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="wrap_content"
                         card_view:layout_constraintBottom_toTopOf="@+id/busSeatsTV"
                         card_view:layout_constraintTop_toTopOf="@+id/busSeatsTV">
 
@@ -46,85 +50,116 @@
                             android:id="@+id/textView3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="28dp"
-                            android:layout_marginLeft="28dp"
-                            android:layout_marginEnd="52dp"
-                            android:layout_marginRight="52dp"
-                            android:padding="10dp"
-                            android:text="Your seats"
-                            android:textSize="19sp"
-                            card_view:layout_constraintBaseline_toBaselineOf="@+id/busSeatsTV"
-                            card_view:layout_constraintEnd_toStartOf="@+id/imageView21"
-                            card_view:layout_constraintStart_toStartOf="parent"/>
+                            android:text="@string/your_seats"
+                            android:textSize="14sp"
+                            />
 
                         <TextView
                             android:id="@+id/busSeatsTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="138dp"
-                            android:layout_marginLeft="138dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
                             android:text="A1,A2"
                             android:textColor="@color/bus_button_color"
-                            android:textSize="20sp"
-                            card_view:layout_constraintBottom_toBottomOf="parent"
-                            card_view:layout_constraintEnd_toStartOf="@+id/imageView21"
-                            card_view:layout_constraintStart_toStartOf="parent"
-                            card_view:layout_constraintTop_toTopOf="@+id/imageView21"/>
+                            android:textSize="18sp"
+                            />
 
-                        <ImageView
-                            android:id="@+id/imageView21"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginRight="8dp"
-                            android:src="@drawable/prices_changed_icon"
-                            card_view:layout_constraintBottom_toBottomOf="parent"
-                            card_view:layout_constraintEnd_toEndOf="parent"
-                            card_view:layout_constraintStart_toEndOf="@+id/busSeatsTV"
-                            card_view:layout_constraintTop_toTopOf="parent"/>
-                    </android.support.constraint.ConstraintLayout>
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        card_view:layout_constraintBottom_toTopOf="@+id/busSeatsTV"
+                        card_view:layout_constraintTop_toTopOf="@+id/busSeatsTV">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/total_price"
+                            android:textSize="14sp"
+                            />
+
+                        <TextView
+                            android:id="@+id/tvTotalPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginBottom="10dp"
+                            android:text="500"
+                            android:textColor="@color/bus_button_color"
+                            android:textSize="18sp"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
                         android:layout_weight="4"
                         android:orientation="vertical"
-                        android:padding="20dp">
+                        android:padding="08dp">
 
-                        <EditText
-                            android:id="@+id/fullNameTV"
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/textInputLayoutFirstName"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:drawableLeft="@drawable/human_avatar"
-                            android:drawablePadding="10dp"
-                            android:hint="Full Name"
-                            android:padding="10dp"
-                            android:textSize="19sp"
-                            android:theme="@style/BusAppTheme"/>
+                            android:layout_height="wrap_content">
 
-                        <EditText
-                            android:id="@+id/mobileNumberTV"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:drawableLeft="@drawable/mobile_bus"
-                            android:drawablePadding="12dp"
-                            android:hint="Mobile Number"
-                            android:padding="10dp"
-                            android:textSize="19sp"
-                            android:theme="@style/BusAppTheme"/>
+                            <com.cloudwell.paywell.services.customView.clearableEditText.ClearableEditText
+                                android:id="@+id/fullNameTV"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/human_avatar"
+                                android:drawableLeft="@drawable/human_avatar"
+                                android:drawablePadding="10dp"
+                                android:hint="@string/full_name"
+                                android:lines="1"
+                                android:padding="10dp"
+                                android:textSize="19sp"
+                                android:theme="@style/BusAppTheme"/>
+                        </android.support.design.widget.TextInputLayout>
 
-                        <EditText
-                            android:id="@+id/ageTV"
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/textInputLayoutmobileNumber"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:drawableLeft="@drawable/age_bus"
-                            android:drawablePadding="10dp"
-                            android:hint="Age"
-                            android:padding="10dp"
-                            android:textSize="19sp"
-                            android:theme="@style/BusAppTheme"/>
+                            android:layout_height="wrap_content">
+
+                            <com.cloudwell.paywell.services.customView.clearableEditText.ClearableEditText
+                                android:id="@+id/mobileNumberTV"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/mobile_bus"
+                                android:drawableLeft="@drawable/mobile_bus"
+                                android:drawablePadding="12dp"
+                                android:hint="@string/mobile_number"
+                                android:lines="1"
+                                android:padding="10dp"
+                                android:textSize="19sp"
+                                android:theme="@style/BusAppTheme"/>
+
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/textInputLayoutAge"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.cloudwell.paywell.services.customView.clearableEditText.ClearableEditText
+                                android:id="@+id/ageTV"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/age_bus"
+                                android:drawableLeft="@drawable/age_bus"
+                                android:drawablePadding="10dp"
+                                android:hint="@string/age"
+                                android:inputType="number"
+                                android:lines="1"
+                                android:padding="10dp"
+                                android:textSize="19sp"
+                                android:theme="@style/BusAppTheme"/>
+                        </android.support.design.widget.TextInputLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -138,9 +173,10 @@
                                 android:layout_marginRight="10dp"
                                 android:gravity="center"
                                 android:padding="5dp"
-                                android:text="Gender"
+                                android:layout_marginEnd="10dp"
                                 android:textColor="@color/bus_button_color"
-                                android:textSize="19dp"/>
+                                android:text="@string/bus_info_gender"
+                                android:textSize="19sp"/>
 
                             <RadioGroup
                                 android:layout_width="wrap_content"
@@ -151,14 +187,15 @@
                                     android:id="@+id/maleRB"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Male"
+                                    android:checked="true"
+                                    android:text="@string/male"
                                     android:theme="@style/BusAppTheme"/>
 
                                 <RadioButton
                                     android:id="@+id/femaleRB"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Female"
+                                    android:text="@string/female"
                                     android:theme="@style/BusAppTheme"/>
 
                             </RadioGroup>
@@ -199,8 +236,9 @@
                         android:layout_marginEnd="8dp"
                         android:layout_marginRight="8dp"
                         android:padding="10dp"
-                        android:text="@string/please_select_a_transport"
-                        android:textColor="@color/color_tab_background_bus"
+                        android:text="@string/boarding_point"
+
+                        android:textColor="@color/bus_button_color"
                         android:textSize="20sp"
                         card_view:layout_constraintEnd_toEndOf="parent"
                         card_view:layout_constraintStart_toStartOf="parent"
@@ -210,7 +248,6 @@
                         android:id="@+id/boothList"
                         android:layout_width="280dp"
                         android:layout_height="30dp"
-
                         android:layout_marginStart="8dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="8dp"

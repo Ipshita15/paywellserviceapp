@@ -4,5 +4,6 @@ interface BaseView {
 
     fun showProgress()
     fun hiddenProgress()
+    fun showNoInternetConnectionFound()
 
 }

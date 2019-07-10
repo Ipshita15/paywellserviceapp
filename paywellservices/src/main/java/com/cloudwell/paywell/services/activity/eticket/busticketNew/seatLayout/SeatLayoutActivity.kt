@@ -15,10 +15,11 @@ import android.widget.Toast
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusPassengerBoothDepartureActivity
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Bus
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BusSeat
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Transport
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule
+import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.utils.BusCalculationHelper
 import com.google.gson.Gson
@@ -52,11 +53,12 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
     internal lateinit var model: TripScheduleInfoAndBusSchedule;
     internal lateinit var requestBusSearch: RequestBusSearch;
 
-    var bus = Bus()
+    var bus = Transport()
 
     var seatCounter = 0
 
     var seatLevel = ""
+    var seatIds = ""
     var totalPrices = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,7 +71,7 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
         val stringExtra2 = intent.getStringExtra("requestBusSearch")
         requestBusSearch = Gson().fromJson(stringExtra2, RequestBusSearch::class.java)
 
-        bus = AppStorageBox.get(applicationContext, AppStorageBox.Key.SELETED_BUS_INFO) as Bus
+        bus = AppStorageBox.get(applicationContext, AppStorageBox.Key.SELETED_BUS_INFO) as Transport
 
         val title = bus.busname + " " + BusCalculationHelper.getACType(model) + "/" + (model.busSchedule?.scheduleTime
                 ?: "")
@@ -258,6 +260,7 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
             intent.putExtra("requestBusSearch", requestBusSearchJson)
             intent.putExtra("jsonData", toJson)
             intent.putExtra("seatLevel", seatLevel)
+            intent.putExtra("seatId", seatIds)
             intent.putExtra("totalPrices", "" + totalPrices)
             startActivity(intent)
         }
@@ -397,12 +400,18 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
     private fun updatePriceLayuout() {
         seatLevel = ""
         totalPrices = 0.0
+        seatIds = ""
 
         allBusSeat.forEach {
             if (it.isUserSeleted) {
                 seatLevel = seatLevel + it.seatLbls + ","
-                val toDouble = BusCalculationHelper.getPrices(model.busSchedule?.ticketPrice, requestBusSearch.date).toDouble()
+                seatIds = seatIds + it.seatId
+                var transport = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.SELETED_BUS_INFO) as Transport
+
+
+                val toDouble = BusCalculationHelper.getPrices(model.busSchedule?.ticketPrice, requestBusSearch.date, transport = transport).toDouble()
                 totalPrices = totalPrices + toDouble
+
             }
         }
         if (!seatLevel.equals("")) {

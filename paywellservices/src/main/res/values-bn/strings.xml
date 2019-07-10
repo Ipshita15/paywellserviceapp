@@ -821,5 +821,13 @@
     <string name="please_select_a_transport">Please select a transport</string>
     <string name="continue_booking">Continue Booking</string>
     <string name="title_bus_passenger_booth"><![CDATA[Passenger information & boarding point]]></string>
+    <string name="boarding_point">Boarding Point</string>
+    <string name="full_name">Full Name</string>
+    <string name="your_seats">Your seats:</string>
+    <string name="total_price">Total price:</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="age">Age</string>
+    <string name="bus_info_gender">Gender</string>
+
 
 </resources>

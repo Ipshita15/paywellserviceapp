@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 4,
-    "identityHash": "0e59f8291998349d6b6d9ca0225f4085",
+    "identityHash": "6ff71ec6773f8b1df333833b16ad921b",
     "entities": [
       {
         "tableName": "FavoriteMenu",
@@ -375,8 +375,8 @@
         "foreignKeys": []
       },
       {
-        "tableName": "Bus",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `busid` TEXT NOT NULL, `busname` TEXT NOT NULL)",
+        "tableName": "Transport",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `busid` TEXT NOT NULL, `busname` TEXT NOT NULL, `extraCharge` REAL NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -394,6 +394,12 @@
             "fieldPath": "busname",
             "columnName": "busname",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "extraCharge",
+            "columnName": "extraCharge",
+            "affinity": "REAL",
             "notNull": true
           }
         ],
@@ -607,7 +613,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"0e59f8291998349d6b6d9ca0225f4085\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"6ff71ec6773f8b1df333833b16ad921b\")"
     ]
   }
 }
