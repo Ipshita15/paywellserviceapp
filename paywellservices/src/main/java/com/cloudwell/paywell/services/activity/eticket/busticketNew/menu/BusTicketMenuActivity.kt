@@ -14,6 +14,7 @@ import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.BookingCancelActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.AirThicketTranslationLogActivity
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransactionLog.BusTransactionLogActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.search.BusSelectActivity
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
@@ -88,7 +89,8 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
             }
 
             R.id.btTransationLog -> {
-                showLimitPrompt(TRX_TAG)
+//                showLimitPrompt(TRX_TAG)
+                startActivity(Intent(applicationContext, BusTransactionLogActivity::class.java))
 
             }
 
