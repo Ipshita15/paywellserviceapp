@@ -310,7 +310,7 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
                 view.setPadding(0, 0, 0, 2 * seatGaping)
                 view.id = count
                 view.gravity = Gravity.CENTER
-                view.setBackgroundResource(R.drawable.ic_seats_booked)
+                view.setBackgroundResource(R.drawable.ic_seat_booked)
                 view.setTextColor(Color.WHITE)
                 view.tag = count
                 view.setText(model.seatLbls)
@@ -328,7 +328,7 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
                 view.setPadding(0, 0, 0, 2 * seatGaping)
                 view.id = count
                 view.gravity = Gravity.CENTER
-                view.setBackgroundResource(R.drawable.ic_seats_book)
+                view.setBackgroundResource(R.drawable.ic_seat_avaliable)
                 view.setText(model.seatLbls)
                 view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 9f)
                 view.setTextColor(Color.BLACK)
@@ -346,7 +346,7 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
                 view.setPadding(0, 0, 0, 2 * seatGaping)
                 view.id = count
                 view.gravity = Gravity.CENTER
-                view.setBackgroundResource(R.drawable.ic_seats_reserved)
+                view.setBackgroundResource(R.drawable.ic_seat_booked)
                 view.setText(model.seatLbls)
                 view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 9f)
                 view.setTextColor(Color.WHITE)
@@ -372,22 +372,22 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
 
         if (model.status.equals("Available")) {
             if (!model.isUserSeleted) {
-                view.setBackgroundResource(R.drawable.ic_seats_selected)
+                view.setBackgroundResource(R.drawable.ic_seat_seleted)
 
                 val get = allBusSeat.get(view.tag as Int)
                 get.isUserSeleted = true
                 allBusSeat.set(view.tag as Int, get)
                 updateSeatLayuout()
-                Toast.makeText(this, "Seat " + view.id + " is Booked", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Seat " + model.seatLbls + " is selected", Toast.LENGTH_SHORT).show()
             } else {
-                view.setBackgroundResource(R.drawable.ic_seats_book)
+                view.setBackgroundResource(R.drawable.ic_seat_avaliable)
                 val get = allBusSeat.get(view.tag as Int)
                 get.isUserSeleted = false
                 allBusSeat.set(view.tag as Int, get)
                 updateSeatLayuout()
             }
         } else {
-            Toast.makeText(this, "Seat " + view.id + " already Booked", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Seat " + model.seatLbls + " already booked", Toast.LENGTH_SHORT).show()
         }
     }
 
