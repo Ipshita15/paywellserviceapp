@@ -271,6 +271,19 @@ public interface APIService {
                                                     @Field("ticket_price") Double ticket_price,
                                                     @Field("total_amount") String total_amount);
 
+    @FormUrlEncoded
+    @POST("paywellapi/index.php/PaywellParibahanService/confirmPayment")
+    Call<ResBusSeatCheckAndBlock> confirmPayment(@Field("username") String username,
+                                                 @Field("skey") String skey,
+                                                 @Field("accessKey") String accessKey,
+                                                 @Field("transactionId") String transactionId,
+                                                 @Field("customerName") String customerName,
+                                                 @Field("customerPhone") String customerPhone,
+                                                 @Field("customerAddress") String customerAddress,
+                                                 @Field("customerEmail") String customerEmail,
+                                                 @Field("customerAge") String customerAge,
+                                                 @Field("password") String password);
+
 }
 
 

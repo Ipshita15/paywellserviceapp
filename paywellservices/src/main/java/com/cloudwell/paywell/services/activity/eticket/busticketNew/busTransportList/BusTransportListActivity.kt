@@ -14,10 +14,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransport
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.adapter.OnClickListener
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.viewModel.BusTransportViewModel
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatInfo
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Transport
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.seatLayout.SeatLayoutActivity
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
@@ -30,6 +27,10 @@ import java.util.*
 
 
 class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTransportListView {
+    override fun showSeatCheckAndBookingRepose(it: ResBusSeatCheckAndBlock) {
+
+    }
+
     override fun showErrorMessage(meassage: String) {
 
 

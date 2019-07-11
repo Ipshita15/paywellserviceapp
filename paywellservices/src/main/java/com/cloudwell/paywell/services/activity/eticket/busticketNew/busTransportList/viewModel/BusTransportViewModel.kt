@@ -76,7 +76,7 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
                     view?.showErrorMessage("message")
                 } else {
                     if (it.status == 200) {
-
+                        view?.showSeatCheckAndBookingRepose(it)
                     } else {
                         it.meassage.let { it1 -> view?.showErrorMessage(it.meassage) }
                     }

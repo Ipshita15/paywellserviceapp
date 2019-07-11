@@ -10,12 +10,17 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransport
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.viewModel.BusTransportViewModel
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BoothInfo
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResBusSeatCheckAndBlock
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_bus_booth_departure.*
 import org.json.JSONObject
 
 class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTransportListView {
+    override fun showSeatCheckAndBookingRepose(it: ResBusSeatCheckAndBlock) {
+
+    }
+
     override fun showErrorMessage(meassage: String) {
 
         showDialogMesssage(meassage)
