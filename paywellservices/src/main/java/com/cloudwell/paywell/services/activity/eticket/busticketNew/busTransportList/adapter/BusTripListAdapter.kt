@@ -13,6 +13,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Transp
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule
 import com.cloudwell.paywell.services.utils.BusCalculationHelper
 import kotlinx.android.synthetic.main.bus_trip_item_list.view.*
+import java.text.DecimalFormat
 
 
 /**
@@ -32,8 +33,8 @@ class BusTripListAdapter(val items: List<TripScheduleInfoAndBusSchedule>, val co
         holder.tvDepartureTime.text = ": " + (model.busSchedule?.scheduleTime ?: "")
 
 
-        val prices = BusCalculationHelper.getPrices(model.busSchedule?.ticketPrice, requestBusSearch.date, transport)
-        holder.tvPrices.text = "" + prices
+        val prices = BusCalculationHelper.getPricesWithExtraAmount(model.busSchedule?.ticketPrice, requestBusSearch.date, transport, true)
+        holder.tvPrices.text = DecimalFormat("#").format(prices)
 
 
         // val departureId = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.DEPARTURE_ID) as String

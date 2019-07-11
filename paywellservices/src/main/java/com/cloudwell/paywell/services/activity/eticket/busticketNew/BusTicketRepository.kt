@@ -8,6 +8,7 @@ import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.database.DatabaseClient
 import com.cloudwell.paywell.services.retrofit.ApiUtils
+import com.cloudwell.paywell.services.utils.BusCalculationHelper
 import com.orhanobut.logger.Logger
 import okhttp3.ResponseBody
 import org.jetbrains.anko.doAsync
@@ -337,15 +338,15 @@ class BusTicketRepository() {
 
     }
 
-    fun callBookingAPI(model: TripScheduleInfoAndBusSchedule, requestBusSearch: RequestBusSearch, boothInfo: BoothInfo, seatLevel: String, seatId: String): MutableLiveData<ResponseBody> {
+    fun callBookingAPI(model: TripScheduleInfoAndBusSchedule, requestBusSearch: RequestBusSearch, boothInfo: BoothInfo, seatLevel: String, seatId: String, totalAPIValuePrices: String): MutableLiveData<ResBusSeatCheckAndBlock> {
 
         mAppHandler = AppHandler.getmInstance(mContext)
         val userName = mAppHandler!!.imeiNo
         val skey = ApiUtils.KEY_SKEY
         val accessKey = AppStorageBox.get(mContext, AppStorageBox.Key.ACCESS_KEY) as String
 
-
-        val data = MutableLiveData<ResponseBody>()
+        val transport = AppStorageBox.get(mContext, AppStorageBox.Key.SELETED_BUS_INFO) as Transport
+        val data = MutableLiveData<ResBusSeatCheckAndBlock>()
 
         ApiUtils.getAPIServicePHP7().seatCheckAndBlock(
                 userName,
@@ -361,19 +362,24 @@ class BusTicketRepository() {
                 requestBusSearch.date,
                 boothInfo.boothDepartureTime,
                 boothInfo.boothID,
+                boothInfo.boothName,
                 seatId,
-                seatLevel).enqueue(object : Callback<ResponseBody> {
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                data.value = null
+                seatLevel,
+                model.busLocalDB?.busIsAc,
+                transport.extraCharge,
+                BusCalculationHelper.getPricesWithExtraAmount(model.busSchedule?.ticketPrice, requestBusSearch.date, transport = transport, isExtraAmount = false),
+                totalAPIValuePrices)
+                .enqueue(object : Callback<ResBusSeatCheckAndBlock> {
+                    override fun onFailure(call: Call<ResBusSeatCheckAndBlock>, t: Throwable) {
+                        data.value = null
+                    }
 
-            }
-
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if (response.isSuccessful) {
-                    data.value = response.body()
-                }
-            }
-        })
+                    override fun onResponse(call: Call<ResBusSeatCheckAndBlock>, response: Response<ResBusSeatCheckAndBlock>) {
+                        if (response.isSuccessful) {
+                            data.value = response.body()
+                        }
+                    }
+                })
 
 
         return data

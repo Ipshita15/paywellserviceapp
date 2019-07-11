@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.viewModel
 
-import android.util.Log
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketBaseViewMode
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketRepository
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
@@ -34,8 +33,8 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
                     com.orhanobut.logger.Logger.json("" + Gson().toJson(it1))
 
                     Collections.sort(it1) { car1, car2 ->
-                        val a = BusCalculationHelper.getPrices(car1.busSchedule?.ticketPrice, requestBusSearch.date, transport).toDouble()
-                        val b = BusCalculationHelper.getPrices(car2.busSchedule?.ticketPrice, requestBusSearch.date, transport).toDouble()
+                        val a = BusCalculationHelper.getPricesWithExtraAmount(car1.busSchedule?.ticketPrice, requestBusSearch.date, transport, true).toDouble()
+                        val b = BusCalculationHelper.getPricesWithExtraAmount(car2.busSchedule?.ticketPrice, requestBusSearch.date, transport, true).toDouble()
 
                         if (a < b) {
                             -1
@@ -65,13 +64,23 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
 
     }
 
-    fun seatCheck(internetConnection: Boolean, model: TripScheduleInfoAndBusSchedule, requestBusSearch: RequestBusSearch, boothInfo: BoothInfo, seatLevel: String, seatId: String) {
+    fun seatCheck(internetConnection: Boolean, model: TripScheduleInfoAndBusSchedule, requestBusSearch: RequestBusSearch, boothInfo: BoothInfo, seatLevel: String, seatId: String, totalAPIValuePrices: String) {
         if (!internetConnection) {
             view?.showNoInternetConnectionFound()
         } else {
-            BusTicketRepository().callBookingAPI(model, requestBusSearch, boothInfo, seatLevel, seatId).observeForever {
 
-                Log.e("", "")
+            view?.showProgress()
+            BusTicketRepository().callBookingAPI(model, requestBusSearch, boothInfo, seatLevel, seatId, totalAPIValuePrices).observeForever {
+                view?.hiddenProgress()
+                if (it == null) {
+                    view?.showErrorMessage("message")
+                } else {
+                    if (it.status == 200) {
+
+                    } else {
+                        it.meassage.let { it1 -> view?.showErrorMessage(it.meassage) }
+                    }
+                }
             }
         }
 

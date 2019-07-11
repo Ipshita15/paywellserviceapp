@@ -26,6 +26,7 @@ import com.google.gson.Gson
 import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.bottom_seat_layout.*
 import org.json.JSONObject
+import java.text.DecimalFormat
 import java.util.*
 
 class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
@@ -255,6 +256,23 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
             val toJson = Gson().toJson(model)
             val requestBusSearchJson = Gson().toJson(requestBusSearch)
 
+            var counter = 0;
+
+            allBusSeat.forEach {
+                if (it.isUserSeleted) {
+                    counter++;
+                }
+            }
+
+            val transport = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.SELETED_BUS_INFO) as Transport
+
+
+            val busBaseTicketPrices = BusCalculationHelper.getPricesWithExtraAmount(model.busSchedule?.ticketPrice, requestBusSearch.date, transport = transport, isExtraAmount = false).toDouble()
+            val totalAPIValuePrices = busBaseTicketPrices.times(counter)
+
+
+
+            seatIds = "1"
 
             val intent = Intent(this, BusPassengerBoothDepartureActivity::class.java)
             intent.putExtra("requestBusSearch", requestBusSearchJson)
@@ -262,6 +280,7 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
             intent.putExtra("seatLevel", seatLevel)
             intent.putExtra("seatId", seatIds)
             intent.putExtra("totalPrices", "" + totalPrices)
+            intent.putExtra("totalAPIValuePrices", "" + totalAPIValuePrices)
             startActivity(intent)
         }
 
@@ -405,11 +424,11 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
         allBusSeat.forEach {
             if (it.isUserSeleted) {
                 seatLevel = seatLevel + it.seatLbls + ","
-                seatIds = seatIds + it.seatId
+                seatIds = seatIds + it.seatId + ","
                 var transport = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.SELETED_BUS_INFO) as Transport
 
 
-                val toDouble = BusCalculationHelper.getPrices(model.busSchedule?.ticketPrice, requestBusSearch.date, transport = transport).toDouble()
+                val toDouble = BusCalculationHelper.getPricesWithExtraAmount(model.busSchedule?.ticketPrice, requestBusSearch.date, transport = transport, isExtraAmount = true).toDouble()
                 totalPrices = totalPrices + toDouble
 
             }
@@ -418,9 +437,13 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
             seatLevel = removeLastChar(seatLevel)
             showButtonSheet()
             tvSelectedSeat.text = seatLevel
-            tvTotalTotalPrices.text = "" + totalPrices
+            tvTotalTotalPrices.text = DecimalFormat("#").format(totalPrices)
         } else {
             hideenButtonSheet()
+        }
+
+        if (!seatIds.equals("")) {
+            seatIds = removeLastChar(seatIds)
         }
 
 

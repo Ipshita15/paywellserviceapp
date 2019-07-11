@@ -12,7 +12,7 @@ import java.util.*
  */
 object BusCalculationHelper {
 
-    fun getPrices(ticketPrice: String?, userDate: String, transport: Transport): Double {
+    fun getPricesWithExtraAmount(ticketPrice: String?, userDate: String, transport: Transport, isExtraAmount: Boolean): Double {
         var totalPrices = ""
 
         val jsonObject = JSONObject(ticketPrice)
@@ -40,7 +40,12 @@ object BusCalculationHelper {
             totalPrices = jsonObject.get(next).toString()
         }
 
-        var toatlPriceDouble = totalPrices.toDouble() + transport.extraCharge
+        var toatlPriceDouble: Double
+        if (isExtraAmount) {
+            toatlPriceDouble = totalPrices.toDouble() + transport.extraCharge
+        } else {
+            toatlPriceDouble = totalPrices.toDouble()
+        }
 
         return toatlPriceDouble
     }

@@ -30,6 +30,11 @@ import java.util.*
 
 
 class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTransportListView {
+    override fun showErrorMessage(meassage: String) {
+
+
+    }
+
     lateinit var viewMode: BusTransportViewModel
     lateinit var requestBusSearch: RequestBusSearch
     var isReSchuduler = false

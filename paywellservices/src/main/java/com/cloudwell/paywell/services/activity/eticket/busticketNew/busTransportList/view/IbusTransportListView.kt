@@ -9,4 +9,5 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripSc
 interface IbusTransportListView : BaseView {
     fun showNoTripFoundUI()
     fun setAdapter(it1: List<TripScheduleInfoAndBusSchedule>)
+    fun showErrorMessage(meassage: String)
 }

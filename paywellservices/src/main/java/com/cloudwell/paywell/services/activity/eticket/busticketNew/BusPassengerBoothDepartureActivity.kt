@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.viewModel.BusTransportViewModel
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BoothInfo
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
@@ -14,7 +15,29 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_bus_booth_departure.*
 import org.json.JSONObject
 
-class BusPassengerBoothDepartureActivity : BusTricketBaseActivity() {
+class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTransportListView {
+    override fun showErrorMessage(meassage: String) {
+
+        showDialogMesssage(meassage)
+    }
+
+    override fun showNoTripFoundUI() {
+
+
+    }
+
+    override fun setAdapter(it1: List<TripScheduleInfoAndBusSchedule>) {
+
+    }
+
+    override fun showProgress() {
+        showProgressDialog()
+
+    }
+
+    override fun hiddenProgress() {
+        dismissProgressDialog()
+    }
 
     private lateinit var busListAdapter: Any
     private val allBoothInfo = mutableListOf<BoothInfo>()
@@ -26,6 +49,7 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity() {
     lateinit var viewMode: BusTransportViewModel
     internal lateinit var model: TripScheduleInfoAndBusSchedule
     internal lateinit var requestBusSearch: RequestBusSearch
+    internal var totalAPIValuePrices: String = ""
     var seatLevel = ""
     var seatId = ""
 
@@ -41,6 +65,7 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity() {
         seatLevel = intent.getStringExtra("seatLevel")
         seatId = intent.getStringExtra("seatId")
         val totalPrices = intent.getStringExtra("totalPrices")
+        totalAPIValuePrices = intent.getStringExtra("totalAPIValuePrices")
 
 
 
@@ -82,6 +107,7 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity() {
 
     private fun initViewModel() {
         viewMode = ViewModelProviders.of(this).get(BusTransportViewModel::class.java)
+        viewMode.setIbusTransportListView(this)
 
     }
 
@@ -116,7 +142,7 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity() {
 
 
 
-        viewMode.seatCheck(isInternetConnection, model, requestBusSearch, boothInfo, seatLevel, seatId)
+        viewMode.seatCheck(isInternetConnection, model, requestBusSearch, boothInfo, seatLevel, seatId, totalAPIValuePrices)
 
 
     }
