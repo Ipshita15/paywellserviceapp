@@ -3,6 +3,7 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:id="@+id/ivRootLayout"
+              android:background="@color/white"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical">
@@ -55,6 +56,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Status"/>
+
+            <View
+                android:id="@+id/viewPdfView"
+                android:layout_width="75dp"
+                android:layout_height="0dp"
+                android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/viewBackgroudAction1"
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <ImageView
                 android:id="@+id/ivSymbolTicketed"

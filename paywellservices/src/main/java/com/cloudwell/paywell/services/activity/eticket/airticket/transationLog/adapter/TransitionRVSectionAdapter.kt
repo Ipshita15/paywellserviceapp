@@ -54,11 +54,14 @@ class TransitionRVSectionAdapter(private val title: String, private val list: Li
         if (`model`.message != null) {
             if (`model`.invoiceUrl != null) {
                 iHolder.ivSymbolTicketed.visibility = View.VISIBLE
+                iHolder.viewPdfView.visibility = View.VISIBLE
             } else {
                 iHolder.ivSymbolTicketed.visibility = View.INVISIBLE
+                iHolder.viewPdfView.visibility = View.INVISIBLE
             }
         } else {
             iHolder.ivSymbolTicketed.visibility = View.INVISIBLE
+            iHolder.viewPdfView.visibility = View.INVISIBLE
         }
 
 
@@ -69,6 +72,12 @@ class TransitionRVSectionAdapter(private val title: String, private val list: Li
             }
         }
 
+        iHolder.viewPdfView.setOnClickListener {
+            if (`model`.invoiceUrl != null) {
+                Logger.v("InvoiceURl: " + model.invoiceUrl)
+                onActionButtonClick!!.onItemClick(model)
+            }
+        }
         val m = model.message
         if (m.equals(AllConstant.CancelInProcess) || m.equals(AllConstant.Expired) || m.equals(AllConstant.Cancelled) || m.equals(AllConstant.InProcess) || m.equals(AllConstant.Pending) || m.equals(AllConstant.UnConfirmed)) {
             iHolder.tvAction.visibility = View.GONE
@@ -112,6 +121,7 @@ class TransitionRVSectionAdapter(private val title: String, private val list: Li
         internal var ivSymbolTicketed: ImageView
         internal var tvAction: ImageView
         internal var viewBackgroudAction: View
+        internal var viewPdfView: View
 
 
         init {
@@ -122,6 +132,7 @@ class TransitionRVSectionAdapter(private val title: String, private val list: Li
             ivSymbolTicketed = view.findViewById(R.id.ivSymbolTicketed)
             tvAction = view.findViewById(R.id.ivActionTrans)
             viewBackgroudAction = view.findViewById(R.id.viewBackgroudAction1)
+            viewPdfView = view.findViewById(R.id.viewPdfView)
 
         }
     }
