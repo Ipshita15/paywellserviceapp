@@ -1,24 +1,64 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew
 
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
+import android.support.design.widget.Snackbar
+import android.support.v7.app.AlertDialog
+import android.text.InputType
+import android.text.method.PasswordTransformationMethod
+import android.view.Gravity
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
+import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Spinner
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.viewModel.BusTransportViewModel
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.BusTicketConfirmFragment
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.BusTicketStatusFragment
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.MyClickListener
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.OnClickListener
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BoothInfo
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResBusSeatCheckAndBlock
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule
+import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_bus_booth_departure.*
 import org.json.JSONObject
 
 class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTransportListView {
     override fun showSeatCheckAndBookingRepose(it: ResBusSeatCheckAndBlock) {
+
+
+        val t = BusTicketConfirmFragment()
+        it.ticketInfo?.seats = seatLevel
+        BusTicketConfirmFragment.ticketInfo = it.ticketInfo!!
+        t.show(supportFragmentManager, "dialog")
+        t.setOnClickListener(object : MyClickListener, OnClickListener {
+            override fun onClick() {
+
+                askForPin()
+            }
+        })
+
+        val transId = "1234"
+        viewMode.callconfirmPayment(isInternetConnection,
+                transId,
+                fullNameTV.text.toString(),
+                mobileNumberTV.text.toString(),
+                etAddress.text.toString(),
+                etEmail.text.toString(),
+                ageTV.text.toString(),
+                password
+
+        )
 
     }
 
@@ -61,6 +101,7 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTranspo
     internal var totalAPIValuePrices: String = ""
     var seatLevel = ""
     var seatId = ""
+    var password = "";
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -153,6 +194,54 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTranspo
 
         viewMode.seatCheck(isInternetConnection, model, requestBusSearch, boothInfo, seatLevel, seatId, totalAPIValuePrices)
 
+    }
 
+    private fun askForPin() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(R.string.pin_no_title_msg)
+
+        val pinNoET = EditText(this)
+        val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
+        pinNoET.gravity = Gravity.CENTER_HORIZONTAL
+        pinNoET.layoutParams = lp
+        pinNoET.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_TEXT_VARIATION_PASSWORD
+        pinNoET.transformationMethod = PasswordTransformationMethod.getInstance()
+        builder.setView(pinNoET)
+
+        builder.setPositiveButton(R.string.okay_btn) { dialogInterface, id ->
+            val inMethMan = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inMethMan.hideSoftInputFromWindow(pinNoET.windowToken, 0)
+
+            if (pinNoET.text.toString().length != 0) {
+                dialogInterface.dismiss()
+                val PIN_NO = pinNoET.text.toString()
+                if (isInternetConnection) {
+
+                    val mAppHandler = AppHandler.getmInstance(application)
+                    val userName = mAppHandler.imeiNo
+
+                    val datum = AppStorageBox.get(applicationContext, AppStorageBox.Key.REQUEST_API_reschedule) as Datum
+
+//                    submitRescheduleAPI(userName, PIN_NO, datum.bookingId, cancelReason, mViewModelFlight.mSearchId.value, result.resultID, "json")
+
+
+                } else {
+                    val snackbar = Snackbar.make(rootLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG)
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"))
+                    val snackBarView = snackbar.view
+                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))
+                    snackbar.show()
+                }
+            } else {
+                val snackbar = Snackbar.make(rootLayout, R.string.pin_no_error_msg, Snackbar.LENGTH_LONG)
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"))
+                val snackBarView = snackbar.view
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))
+                snackbar.show()
+            }
+        }
+        builder.setNegativeButton(R.string.cancel_btn) { dialogInterface, i -> dialogInterface.dismiss() }
+        val alert = builder.create()
+        alert.show()
     }
 }

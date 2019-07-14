@@ -1,19 +1,22 @@
-package com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment
+package com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment
 
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TicketInfo
 import kotlinx.android.synthetic.main.fragment_prices_change.view.*
 
 
-class CancellationStatusMessageFragment : DialogFragment() {
-
+class BusTicketConfirmFragment : DialogFragment() {
 
     companion object {
-        lateinit var message: String
+        lateinit var ticketInfo: TicketInfo
     }
+
+    private var onClicklistener: MyClickListener? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,16 +24,18 @@ class CancellationStatusMessageFragment : DialogFragment() {
 
     }
 
+    fun setOnClickListener(MyClickListener: OnClickListener) {
+        this.onClicklistener = onClicklistener
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_status_cencelation, container, false)
-
-        v.tvYourSeats.text = message
-
+        val v = inflater.inflate(R.layout.fragment_bus_ticket_confirm_fragment, container, false)
+        v.tvYourSeats.text = "Your Seat : " + ticketInfo.seats
+        v.tvPrices.text = "ticket price: " + ticketInfo.paidAmount
 
         v.btActionIssueTicket.setOnClickListener {
             dismiss()
-
+            onClicklistener?.onClick()
         }
 
         return v
@@ -46,3 +51,10 @@ class CancellationStatusMessageFragment : DialogFragment() {
 
 
 }
+
+interface MyClickListener {
+    fun onClick()
+
+}
+
+

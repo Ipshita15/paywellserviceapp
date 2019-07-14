@@ -4,7 +4,18 @@ import com.google.gson.annotations.SerializedName
 
 class TicketInfo {
 
-    @SerializedName("status")
-    var status: Long? = null
+    var seats: String = ""
+    @SerializedName("ticket_gen_id")
+    var ticketId: String = ""
+
+    @SerializedName("ticket_price")
+    var ticketPrice: String = ""
+
+    @SerializedName("paid_amount")
+    var paidAmount: String = ""
+
+    @SerializedName("msg")
+    var msg: String = ""
+
 
 }

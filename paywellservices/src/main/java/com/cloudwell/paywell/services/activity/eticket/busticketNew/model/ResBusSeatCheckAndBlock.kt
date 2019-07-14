@@ -3,7 +3,7 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew.model
 
 import com.google.gson.annotations.SerializedName
 
-class ResBusSeatCheckAndBlock {
+class ResBusSeatCheckAndBlock() {
 
     @SerializedName("meassage")
     var meassage: String = ""
@@ -12,6 +12,6 @@ class ResBusSeatCheckAndBlock {
     @SerializedName("ticketInfo")
     var ticketInfo: TicketInfo? = null
     @SerializedName("trans_id")
-    var transId: String? = null
+    var transId: String = ""
 
 }

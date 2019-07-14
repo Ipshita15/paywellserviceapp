@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -21,23 +22,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView18"/>
 
-    <Button
+    <mehdi.sakout.fancybuttons.FancyButton
         android:id="@+id/btActionIssueTicket"
-        android:layout_width="250dp"
+        android:layout_width="200dp"
         android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/activity_horizontal_margin"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="24dp"
         android:background="#00a89b"
         android:drawablePadding="-20dp"
         android:gravity="center"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:text="@string/ok"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:text="Buy"
         android:textAllCaps="false"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/white"
         android:textSize="16sp"
         android:visibility="visible"
@@ -45,7 +49,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvYourSeats"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView30"
+        fancy:fb_defaultColor="@color/bus_button_color"
+        fancy:fb_fontIconResource="&#xf002;"
+        fancy:fb_iconPosition="left"
+        fancy:fb_iconResource="@drawable/ic_bus_ticket_buy"
+        fancy:fb_radius="5dp"
+        fancy:fb_textColor="#FFFFFF"/>
 
     <TextView
         android:id="@+id/tvYourSeats"
@@ -57,12 +67,13 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:gravity="center"
+
         android:textColor="#00a89b"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView18"
-        tools:text="Not enough balance"/>
+        tools:text="Your Seat : A1, A2, A3"/>
 
     <TextView
         android:id="@+id/textView18"
@@ -75,5 +86,36 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvTotalPrices"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:gravity="center"
+        android:text="ticket price: 400"
+        android:textColor="#00a89b"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvYourSeats"/>
+
+    <TextView
+        android:id="@+id/textView30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Do you want to buy this ticket?"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTotalPrices"/>
 
 </android.support.constraint.ConstraintLayout>

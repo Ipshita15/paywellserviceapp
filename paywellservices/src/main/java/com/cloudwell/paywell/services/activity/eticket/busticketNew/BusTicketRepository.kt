@@ -385,4 +385,35 @@ class BusTicketRepository() {
 
     }
 
+    fun confirmPaymentAPI(transId: String, fullNameTV: String, mobileNumber: String, address: String, etEmail: String, age: String, password: String) {
+        mAppHandler = AppHandler.getmInstance(mContext)
+        val userName = mAppHandler!!.imeiNo
+        val skey = ApiUtils.KEY_SKEY
+        val accessKey = AppStorageBox.get(mContext, AppStorageBox.Key.ACCESS_KEY) as String
+
+        val data = MutableLiveData<ResBusSeatCheckAndBlock>()
+
+        ApiUtils.getAPIServicePHP7().confirmPayment(
+                userName,
+                skey,
+                accessKey,
+                transId,
+                fullNameTV,
+                mobileNumber,
+                address,
+                etEmail,
+                age,
+                password).enqueue(object : Callback<ResBusSeatCheckAndBlock> {
+            override fun onFailure(call: Call<ResBusSeatCheckAndBlock>, t: Throwable) {
+                data.value = null
+            }
+
+            override fun onResponse(call: Call<ResBusSeatCheckAndBlock>, response: Response<ResBusSeatCheckAndBlock>) {
+                if (response.isSuccessful) {
+                    data.value = response.body()
+                }
+            }
+        })
+    }
+
 }

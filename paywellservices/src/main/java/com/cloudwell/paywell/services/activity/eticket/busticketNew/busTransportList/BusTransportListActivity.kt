@@ -29,6 +29,7 @@ import java.util.*
 class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTransportListView {
     override fun showSeatCheckAndBookingRepose(it: ResBusSeatCheckAndBlock) {
 
+
     }
 
     override fun showErrorMessage(meassage: String) {

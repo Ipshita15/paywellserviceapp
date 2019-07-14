@@ -28,10 +28,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvFree"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvYourSeats"/>
 
     <TextView
-        android:id="@+id/tvFree"
+        android:id="@+id/tvYourSeats"
         android:gravity="center"
         android:padding="8dp"
         android:layout_width="wrap_content"

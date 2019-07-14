@@ -29,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvFree"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvYourSeats"/>
 
     <TextView
         android:id="@+id/textView27"
@@ -47,7 +47,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/tvFree"
+        android:id="@+id/tvYourSeats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

@@ -29,7 +29,7 @@ class BusTicketStatusFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_bus_status_fragment, container, false)
-        v.tvFree.text = message
+        v.tvYourSeats.text = message
 
         v.btActionIssueTicket.setOnClickListener {
             dismiss()
