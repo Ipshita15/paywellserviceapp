@@ -287,7 +287,6 @@ class BusTicketRepository() {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
 
-                    val toString = call.request().body.toString()
 
                     val body = response.body()
                     body.let {

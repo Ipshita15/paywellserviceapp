@@ -8,6 +8,7 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.viewModel.BusTransportViewModel
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.BusTicketStatusFragment
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BoothInfo
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResBusSeatCheckAndBlock
@@ -23,7 +24,10 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTranspo
 
     override fun showErrorMessage(meassage: String) {
 
-        showDialogMesssage(meassage)
+        val t = BusTicketStatusFragment()
+        BusTicketStatusFragment.message = "Not enough balance"
+        t.show(supportFragmentManager, "dialog")
+
     }
 
     override fun showNoTripFoundUI() {
