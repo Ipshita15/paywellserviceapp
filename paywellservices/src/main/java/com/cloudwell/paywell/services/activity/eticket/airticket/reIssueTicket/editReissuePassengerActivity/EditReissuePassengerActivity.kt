@@ -88,7 +88,7 @@ class EditReissuePassengerActivity : AirTricketBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_passenger_edit_reissue_passenger)
 
-        setToolbar(getString(R.string.title_add_passenger))
+        setToolbar(getString(R.string.title_edit_passenger))
 
         id = intent.extras.getInt("id", 0)
         val get = ReIssueTicketActivity.passengers.get(id)

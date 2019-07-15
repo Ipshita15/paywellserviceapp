@@ -790,7 +790,7 @@
     <string name="booking_info">Booking Info</string>
     <string name="ticket_cancel">Cancel Ticket</string>
     <string name="reissue_reschedule">Re-issue/Reschedule</string>
-    <string name="title_reissue">Tricket Re-issue</string>
+    <string name="title_reissue">Ticket Re-issue</string>
     <string name="reschedule">Reschedule</string>
     <string name="ekshop">Ekshop</string>
     <string name="visit">Visit</string>
@@ -808,6 +808,7 @@
     <string name="cencel">Cancel</string>
     <string name="text_accept">Accept</string>
     <string name="text_decline">Decline</string>
+    <string name="title_edit_passenger">Edit Passenger Info</string>
 
 
 </resources>

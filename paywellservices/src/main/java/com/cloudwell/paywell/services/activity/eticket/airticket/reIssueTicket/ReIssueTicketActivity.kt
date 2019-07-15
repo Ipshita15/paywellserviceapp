@@ -106,7 +106,7 @@ class ReIssueTicketActivity : AirTricketBaseActivity(), ShowMessageFragment.MyIn
 
     private fun handleReissueRequest() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Re-issue  Reason")
+        builder.setTitle("Re-issue Reason")
 
         val pinNoET = EditText(this)
         val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
