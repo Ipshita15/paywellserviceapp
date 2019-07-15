@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_prices_change.view.*
 
 
-class TricketingStatusFragment : DialogFragment() {
+class TicketStatusFragment : DialogFragment() {
 
 
     companion object {

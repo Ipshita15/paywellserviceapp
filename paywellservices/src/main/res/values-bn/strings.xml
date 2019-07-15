@@ -813,6 +813,8 @@
     <string name="is_center_lock">লক</string>
     <string name="is_center_unlock">আনলক</string>
     <string name="cencel">Cancel</string>
+    <string name="text_accept">Accept</string>
+    <string name="text_decline">Decline</string>
 
 
 </resources>

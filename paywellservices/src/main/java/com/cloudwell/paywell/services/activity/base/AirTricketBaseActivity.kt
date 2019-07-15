@@ -17,8 +17,8 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.newBase.MVVMBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketMainActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
-import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment.CancellationFeeFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment.CancellationStatusMessageFragment
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment.UserAcceptDialogFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.model.ResCancellationMapping
 import com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.ReIssueTicketActivity
 import com.cloudwell.paywell.services.app.AppHandler
@@ -94,11 +94,11 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
 
     private fun showUserCancelData(bookingId: String, reason: String, r: ResCancellationMapping?, typeOfRequest: String, item: Datum) {
 
-        val priceChangeFragment = CancellationFeeFragment()
-        CancellationFeeFragment.resCencelMaping = r!!
-        CancellationFeeFragment.type = typeOfRequest
+        val priceChangeFragment = UserAcceptDialogFragment()
+        UserAcceptDialogFragment.resCencelMaping = r!!
+        UserAcceptDialogFragment.type = typeOfRequest
 
-        priceChangeFragment.setOnClickHandlerTest(object : CancellationFeeFragment.OnClickHandler {
+        priceChangeFragment.setOnClickHandlerTest(object : UserAcceptDialogFragment.OnClickHandler {
             override fun onClickActionIssueTicket(cancellationFee: Double, type: String) {
 
                 mCancellationFee = cancellationFee

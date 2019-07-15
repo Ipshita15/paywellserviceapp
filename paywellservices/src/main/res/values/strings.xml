@@ -806,6 +806,8 @@
     <string name="is_center_lock">Lock</string>
     <string name="is_center_unlock">Unlock</string>
     <string name="cencel">Cancel</string>
+    <string name="text_accept">Accept</string>
+    <string name="text_decline">Decline</string>
 
 
 </resources>
