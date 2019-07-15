@@ -459,7 +459,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
     private fun addPassenger() {
 
 
-        val passengerType = this.etPassengerType.text.toString().trim().toLowerCase()
+        val passengerType = this.etPassengerType.text.toString().trim()
         val title = this.etTitle.text.toString().trim()
         val firstName = this.etFirstName.text.toString().trim()
         val lastName = this.etLastName.text.toString().trim()
