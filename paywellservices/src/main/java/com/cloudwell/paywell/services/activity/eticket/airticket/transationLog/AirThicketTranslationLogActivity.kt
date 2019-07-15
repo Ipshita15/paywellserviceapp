@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.base.TransitionLogBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList
@@ -18,6 +19,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.a
 import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.viewBookingInfo.ViewBookingInfoActivity
 import com.cloudwell.paywell.services.app.AppHandler
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
+import kotlinx.android.synthetic.main.activity_transtionlog.*
 
 class AirThicketTranslationLogActivity : TransitionLogBaseActivity() {
 
@@ -52,7 +54,7 @@ class AirThicketTranslationLogActivity : TransitionLogBaseActivity() {
 
 
         mViewMode.responseList.observe(this, Observer {
-            it?.let { it1 -> setupList(it1) }
+            setupList(it)
         })
 
 
@@ -62,47 +64,57 @@ class AirThicketTranslationLogActivity : TransitionLogBaseActivity() {
 
     }
 
-    private fun setupList(it1: BookingList) {
+    private fun setupList(it1: BookingList?) {
 
-        val groupBy = it1.data.groupBy {
-            it.firstRequestDateTime?.split(" ")?.get(0)
+
+        if (it1 == null) {
+            ivForNodataFound.visibility = View.VISIBLE
+            tvNoDataFound.visibility = View.VISIBLE
+        } else {
+            ivForNodataFound.visibility = View.GONE
+            tvNoDataFound.visibility = View.GONE
+
+
+            val groupBy = it1!!.data.groupBy {
+                it.firstRequestDateTime?.split(" ")?.get(0)
+            }
+
+            val isEnglish = AppHandler.getmInstance(applicationContext)?.getAppLanguage().equals("en", ignoreCase = true)
+
+            val sectionAdapter = SectionedRecyclerViewAdapter()
+
+            groupBy.forEach {
+                val transitionRVSectionAdapter = TransitionRVSectionAdapter(it.key.toString(), it.value, isEnglish)
+                transitionRVSectionAdapter.setOnActionButtonClick(object : TransitionRVSectionAdapter.ItemClickListener {
+                    override fun onRootViewClick(datum: Datum) {
+
+                        val newIntent = ViewBookingInfoActivity.newIntent(applicationContext, item = datum)
+                        startActivity(newIntent)
+
+                    }
+
+                    override fun onItemClick(datum: Datum) {
+                        showThicketIntentPopupMessage(datum)
+                    }
+
+                    override fun onActionButtonClick(position: Int, model: Datum) {
+                        showActionMenuPopupMessate(model)
+                    }
+
+
+                })
+                sectionAdapter.addSection(transitionRVSectionAdapter)
+
+            }
+
+            val linearLayoutManager = LinearLayoutManager(this)
+
+            val sectionHeader = findViewById<RecyclerView>(R.id.listviewLog) as RecyclerView
+            sectionHeader.setLayoutManager(linearLayoutManager)
+            sectionHeader.setHasFixedSize(true)
+            sectionHeader.setAdapter(sectionAdapter)
+            sectionHeader.isNestedScrollingEnabled = false;
         }
-
-        val isEnglish = AppHandler.getmInstance(applicationContext)?.getAppLanguage().equals("en", ignoreCase = true)
-
-        val sectionAdapter = SectionedRecyclerViewAdapter()
-
-        groupBy.forEach {
-            val transitionRVSectionAdapter = TransitionRVSectionAdapter(it.key.toString(), it.value, isEnglish)
-            transitionRVSectionAdapter.setOnActionButtonClick(object : TransitionRVSectionAdapter.ItemClickListener {
-                override fun onRootViewClick(datum: Datum) {
-
-                    val newIntent = ViewBookingInfoActivity.newIntent(applicationContext, item = datum)
-                    startActivity(newIntent)
-
-                }
-
-                override fun onItemClick(datum: Datum) {
-                    showThicketIntentPopupMessage(datum)
-                }
-
-                override fun onActionButtonClick(position: Int, model: Datum) {
-                    showActionMenuPopupMessate(model)
-                }
-
-
-            })
-            sectionAdapter.addSection(transitionRVSectionAdapter)
-
-        }
-
-        val linearLayoutManager = LinearLayoutManager(this)
-
-        val sectionHeader = findViewById<RecyclerView>(R.id.listviewLog) as RecyclerView
-        sectionHeader.setLayoutManager(linearLayoutManager)
-        sectionHeader.setHasFixedSize(true)
-        sectionHeader.setAdapter(sectionAdapter)
-        sectionHeader.isNestedScrollingEnabled = false;
 
 
     }

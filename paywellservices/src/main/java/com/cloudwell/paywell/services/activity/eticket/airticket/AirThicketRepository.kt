@@ -273,7 +273,6 @@ class AirThicketRepository(private val mContext: Context) {
     fun callGetBookingStatusAPI(limit: Int): MutableLiveData<BookingList> {
         mAppHandler = AppHandler.getmInstance(mContext)
         val username = mAppHandler!!.imeiNo
-//        val username = "cwntcl"
 
         val data = MutableLiveData<BookingList>()
 
@@ -282,7 +281,6 @@ class AirThicketRepository(private val mContext: Context) {
             override fun onResponse(call: Call<BookingList>, response: Response<BookingList>) {
 
                 if (response.isSuccessful) {
-//                    data.value = Gson().fromJson(DummayData().mockPreBooking, ResAirPreBooking::class.java)
                     data.value = response.body()
                 }
             }
@@ -307,7 +305,6 @@ class AirThicketRepository(private val mContext: Context) {
             override fun onResponse(call: Call<ResCommistionMaping>, response: Response<ResCommistionMaping>) {
 
                 if (response.isSuccessful) {
-//                    data.value = Gson().fromJson(DummayData().mockPreBooking, ResAirPreBooking::class.java)
                     data.value = response.body()
                 }
             }
