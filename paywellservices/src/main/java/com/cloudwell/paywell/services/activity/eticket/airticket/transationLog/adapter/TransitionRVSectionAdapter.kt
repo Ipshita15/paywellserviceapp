@@ -11,6 +11,7 @@ import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.constant.AllConstant
 import com.orhanobut.logger.Logger
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection
+import java.text.NumberFormat
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 17/1/19.
@@ -47,7 +48,7 @@ class TransitionRVSectionAdapter(private val title: String, private val list: Li
         }
 
         iHolder.tvBookingId.text = "Booking ID: " + model.bookingId!!
-        iHolder.tvTricketPrices.text = "Price: " + model.currency + " " + model.total_fare_calculated
+        iHolder.tvTricketPrices.text = model.currency + " " + NumberFormat.getInstance().format(model.total_fare_calculated.toDouble())
         iHolder.tvStatus.text = "Status: " + model.message!!
 
 

@@ -26,11 +26,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:padding="2dp"
                 android:textStyle="bold"
                 tools:text="Account number "/>
 
             <TextView
+                android:layout_marginRight="16dp"
                 android:id="@+id/tvTricketPrices"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -115,6 +115,6 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#404040"/>
+            android:background="#e6e6e6"/>
     </LinearLayout>
 </LinearLayout>
