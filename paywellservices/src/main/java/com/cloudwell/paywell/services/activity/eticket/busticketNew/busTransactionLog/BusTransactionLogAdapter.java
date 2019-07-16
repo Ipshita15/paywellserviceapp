@@ -96,11 +96,11 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
                                         customerNameTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getCustomerName());
                                         customerGenderTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getCustomerGender());
                                         departureTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getDepartureDate());
-                                        seatNumTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getSeatNo().get(0));
-                                        coachNumTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getCouchNo());
-                                        transportNameTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getTransportName());
-                                        journeyFromTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getJourneyFrom());
-                                        journeyToTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getJourneyTo());
+                                        seatNumTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getSeatNum());
+                                        coachNumTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getCoachNum());
+                                        transportNameTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getBusName());
+                                        journeyFromTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getTravellingTo());
+                                        journeyToTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getTravellingFrom());
 
                                         toolbar.setNavigationIcon(R.drawable.close);
                                         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
