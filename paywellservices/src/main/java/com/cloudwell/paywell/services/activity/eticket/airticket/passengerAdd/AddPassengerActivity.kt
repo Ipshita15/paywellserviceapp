@@ -129,9 +129,22 @@ class AddPassengerActivity : AirTricketBaseActivity() {
             etNidorPassportNumber.setHint(getString(R.string.hit_passport_number) + "*")
             etPassportExpiryDate.setHint(getString(R.string.passport_expiry_date) + "*")
             etpassportNationality.setHint(getString(R.string.passport_nationality_mannotory) + "*")
+
             ivVisaPageUpload.visibility = View.VISIBLE
         } else {
+            ivPassportPageUpload.visibility = View.VISIBLE
             ivVisaPageUpload.visibility = View.GONE
+
+            etNidorPassportNumber.visibility = View.GONE
+            textInputLayoutPassport.visibility = View.GONE
+
+            etPassportExpiryDate.visibility = View.GONE
+            textInputLayoutPassportExpiryDate.visibility = View.GONE
+
+            etpassportNationality.visibility = View.GONE
+            textLayoutPassportNationality.visibility = View.GONE
+
+
         }
 
 
