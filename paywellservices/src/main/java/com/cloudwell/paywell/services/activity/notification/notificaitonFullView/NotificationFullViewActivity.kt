@@ -121,7 +121,7 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
             // normal
 
             btAccept.visibility = View.GONE
-            btDecline.visibility = View.GONE
+            btTicketCancel.visibility = View.GONE
 
             handleNormal(message, messageSub, imageUrl)
         }
@@ -184,20 +184,20 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
 
             if (notification_action_type == "AirTicketReScheduleConfirmation") {
                 btAccept.visibility = View.VISIBLE
-                btDecline.visibility = View.VISIBLE
+                btTicketCancel.visibility = View.VISIBLE
                 btAccept.setOnClickListener {
 
                     callAccept(id)
                 }
 
-                btDecline.setOnClickListener {
+                btTicketCancel.setOnClickListener {
                     callReject(id)
 
                 }
 
             } else {
                 btAccept.visibility = View.GONE
-                btDecline.visibility = View.GONE
+                btTicketCancel.visibility = View.GONE
 
             }
 

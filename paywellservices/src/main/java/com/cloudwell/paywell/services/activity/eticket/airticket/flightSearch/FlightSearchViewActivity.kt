@@ -30,6 +30,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.adapter.FlightAdapterNew
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.adapter.OnClickListener
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.viewModel.FlightSearchViewModel
+import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.AirThicketTranslationLogActivity
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
@@ -343,6 +344,10 @@ class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
         showMessageFragment.mListener = object : ShowMessageFragment.MyInterface {
             override fun onOkButtonClick() {
                 if (status == 200) {
+                    val intent = Intent(applicationContext, AirThicketTranslationLogActivity::class.java);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                    startActivity(intent)
                     finish()
                 }
             }

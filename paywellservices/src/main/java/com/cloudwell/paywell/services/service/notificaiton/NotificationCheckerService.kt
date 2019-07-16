@@ -93,7 +93,8 @@ class NotificationCheckerService : Service() {
                         }
                     }
                 } catch (e: Exception) {
-                   
+                    Logger.e("" + e.message)
+
                 }
 
 

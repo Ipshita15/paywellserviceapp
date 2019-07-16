@@ -610,6 +610,7 @@
     <string name="home_utility_pb_bill_change_number_bt">নম্বর পরিবর্তন</string>
     <string name="home_utility_pb_phone_number_inquiry_bt">নম্বর পরিবর্তন \n অনুসন্ধান</string>
     <string name="one_way">One Way</string>
+    <string name="title_activity_air_tricket_menu">Air Ticket</string>
     <string name="title_serach_view">Search Flights</string>
     <string name="no_search_results">No search results</string>
     <string name="search_again">Search again</string>
@@ -650,7 +651,7 @@
     <string name="title_activity_baggage_and_policies_actiivty">Air Rules &amp; Fare</string>
     <string name="passenger_deleted_message">Passenger info cannot be recovered once deleted. Are you sure you want to delete?sdf.,wPassenger info cannot be recovered once deleted. Are you sure you want to delete?skdf</string>
     <string name="ok">OK</string>
-    <string name="cencel">Cancel</string>
+    <string name="cancel_booking">Cancel Booking</string>
     <string name="title_all_summary">All Summary</string>
     <string name="lbl_take_camera_picture">Camara</string>
     <string name="lbl_choose_from_gallery">Gallery</string>
@@ -794,9 +795,9 @@
     <string name="visa_image_mandatory">Visa image mandatory</string>
     <string name="titel_reschedule">Reschedule</string>
     <string name="booking_info">Booking Info</string>
-    <string name="ticket_cancel">Ticket Cancel</string>
+    <string name="ticket_cancel">Cancel Ticket</string>
     <string name="reissue_reschedule">Re-issue/Reschedule</string>
-    <string name="title_reissue">Tricket Re-issue</string>
+    <string name="title_reissue">Ticket Re-issue</string>
     <string name="reschedule">Reschedule</string>
     <string name="ekshop">এক-শপ</string>
     <string name="visit">প্রবেশ</string>
@@ -811,6 +812,10 @@
     <string name="search_report">অনুসন্ধান রিপোর্ট</string>
     <string name="is_center_lock">লক</string>
     <string name="is_center_unlock">আনলক</string>
+    <string name="cencel">Cancel</string>
+    <string name="text_accept">Accept</string>
+    <string name="text_decline">Decline</string>
+    <string name="title_edit_passenger">Edit Passenger Info</string>
 
 
 </resources>

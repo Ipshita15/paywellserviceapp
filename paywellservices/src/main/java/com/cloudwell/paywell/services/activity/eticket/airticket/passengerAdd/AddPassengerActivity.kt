@@ -31,6 +31,7 @@ import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.constant.AllConstant.emailPattern
 import com.cloudwell.paywell.services.libaray.imagePickerAndCrop.ImagePickerActivity
 import com.cloudwell.paywell.services.utils.AssetHelper
+import com.cloudwell.paywell.services.utils.CountryUtility
 import com.google.gson.Gson
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -128,9 +129,22 @@ class AddPassengerActivity : AirTricketBaseActivity() {
             etNidorPassportNumber.setHint(getString(R.string.hit_passport_number) + "*")
             etPassportExpiryDate.setHint(getString(R.string.passport_expiry_date) + "*")
             etpassportNationality.setHint(getString(R.string.passport_nationality_mannotory) + "*")
+
             ivVisaPageUpload.visibility = View.VISIBLE
         } else {
+            ivPassportPageUpload.visibility = View.VISIBLE
             ivVisaPageUpload.visibility = View.GONE
+
+            etNidorPassportNumber.visibility = View.GONE
+            textInputLayoutPassport.visibility = View.GONE
+
+            etPassportExpiryDate.visibility = View.GONE
+            textInputLayoutPassportExpiryDate.visibility = View.GONE
+
+            etpassportNationality.visibility = View.GONE
+            textLayoutPassportNationality.visibility = View.GONE
+
+
         }
 
 
@@ -191,6 +205,8 @@ class AddPassengerActivity : AirTricketBaseActivity() {
                 }
 
 
+                val countryCode1 = CountryUtility.getCountryCode(oldPassenger.countryCode)
+                etCountry.setText("" + countryCode1.toString())
                 this.countryCode = oldPassenger.countryCode
 
 
@@ -199,7 +215,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
             }
         } catch (e: Exception) {
-
+            com.orhanobut.logger.Logger.e("" + e.message)
         }
 
         btn_add.setOnClickListener {
@@ -459,7 +475,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
     private fun addPassenger() {
 
 
-        val passengerType = this.etPassengerType.text.toString().trim().toLowerCase()
+        val passengerType = this.etPassengerType.text.toString().trim()
         val title = this.etTitle.text.toString().trim()
         val firstName = this.etFirstName.text.toString().trim()
         val lastName = this.etLastName.text.toString().trim()

@@ -3,14 +3,11 @@ package com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.
 import android.Manifest
 import android.app.Activity
 import android.app.DatePickerDialog
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.annotation.Nullable
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -19,13 +16,11 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Passenger
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.fragment.GenderBottomSheetDialog
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.fragment.NameTitleSheetDialog
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.fragment.PassengerTypeSheetDialog
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.model.MyCountry
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.view.PassgerAddViewStatus
-import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.viewmodel.AddPassengerViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.ReIssueTicketActivity
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.constant.AllConstant.emailPattern
@@ -41,7 +36,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.mukesh.countrypicker.Country
 import com.mukesh.countrypicker.CountryPicker
 import com.mukesh.countrypicker.listeners.OnCountryPickerListener
-import kotlinx.android.synthetic.main.contant_add_passenger.*
+import kotlinx.android.synthetic.main.contant_reissue_containt.*
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -52,17 +47,12 @@ class EditReissuePassengerActivity : AirTricketBaseActivity() {
 
     val REQUEST_IMAGE = 100
 
-    private lateinit var viewMode: AddPassengerViewModel
-    lateinit var touchHelper: ItemTouchHelper
 
-    lateinit var resposeAirPriceSearch: ResposeAirPriceSearch
     var passportMadatory = false
 
 
     var isEmailValid = false
     var countryCode = ""
-
-    var isEditFlag = false
 
 
     private lateinit var oldPassenger: Passenger
@@ -70,7 +60,6 @@ class EditReissuePassengerActivity : AirTricketBaseActivity() {
     private var visaImagePath = ""
     var isFistTime = true
 
-    var isValidation = false
     var isPassortClick = false
 
 
@@ -88,32 +77,20 @@ class EditReissuePassengerActivity : AirTricketBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_passenger_edit_reissue_passenger)
 
-        setToolbar(getString(R.string.title_add_passenger))
+        setToolbar(getString(R.string.title_edit_passenger))
 
         id = intent.extras.getInt("id", 0)
         val get = ReIssueTicketActivity.passengers.get(id)
 
+        if (ReIssueTicketActivity.item.trip_type.equals("Local")) {
+            passportMadatory = false
+        } else {
+            passportMadatory = true
+        }
+
         initializationView(get)
 
-
-//        initViewModel()
-
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-
-
-    }
-
-    private fun initViewModel() {
-        viewMode = ViewModelProviders.of(this).get(AddPassengerViewModel::class.java)
-
-        viewMode.baseViewStatus.observe(this, android.arch.lifecycle.Observer {
-            handleViewCommonStatus(it)
-        })
-
-
-        viewMode.mViewStatus.observe(this, Observer {
-            it?.let { it1 -> handleViewStatus(it1) }
-        })
 
 
     }
@@ -126,8 +103,6 @@ class EditReissuePassengerActivity : AirTricketBaseActivity() {
 
 
     private fun initializationView(get: Passenger) {
-
-
         oldPassenger = get
 
         val paxType = oldPassenger.paxType
@@ -153,6 +128,22 @@ class EditReissuePassengerActivity : AirTricketBaseActivity() {
         countryCode = "" + oldPassenger.countryCode
 
 
+        if (passportMadatory) {
+            etNidorPassportNumber.setHint(getString(R.string.hit_passport_number) + "*")
+            etPassportExpiryDate.setHint(getString(R.string.passport_expiry_date) + "*")
+            etpassportNationality.setHint(getString(R.string.passport_nationality_mannotory) + "*")
+
+        } else {
+            etNidorPassportNumber.visibility = View.GONE
+            textInputLayoutPassport.visibility = View.GONE
+
+            etPassportExpiryDate.visibility = View.GONE
+            textInputLayoutPassportExpiryDate.visibility = View.GONE
+
+            etpassportNationality.visibility = View.GONE
+            textLayoutPassportNationality.visibility = View.GONE
+
+        }
 
         btn_add.setText(getString(R.string.edit))
 

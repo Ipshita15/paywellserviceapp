@@ -10,10 +10,12 @@ import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity.Compa
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity.Companion.KEY_ReSchedule
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity.Companion.KEY_ticket_cancel
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.model.ResCancellationMapping
-import kotlinx.android.synthetic.main.fragment_prices_change.view.*
+import kotlinx.android.synthetic.main.fragment_cancel_fee.view.*
+import kotlinx.android.synthetic.main.fragment_prices_change.view.btActionIssueTicket
+import kotlinx.android.synthetic.main.fragment_prices_change.view.tvFree
 
 
-class CancellationFeeFragment : DialogFragment() {
+class UserAcceptDialogFragment : DialogFragment() {
 
 
     companion object {
@@ -35,7 +37,8 @@ class CancellationFeeFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_cancel_fee, container, false)
-        v.btActionIssueTicket.text = type
+        v.btActionIssueTicket.text = getString(R.string.text_accept)
+        v.btDecline.text = getString(R.string.text_decline)
 
         val void = resCencelMaping.getCancelData().void.toDouble()
         val count = resCencelMaping.bookingData.get(0).passengers.count()
@@ -61,6 +64,10 @@ class CancellationFeeFragment : DialogFragment() {
         v.btActionIssueTicket.setOnClickListener {
             dismiss()
             onClickHandler.onClickActionIssueTicket(totalFee, type)
+        }
+
+        v.btDecline.setOnClickListener {
+            dismiss()
         }
 
 

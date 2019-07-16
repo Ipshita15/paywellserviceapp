@@ -7,7 +7,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.s
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList;
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.model.ResCancellationMapping;
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.ResIssueTicket;
-import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.RequestAirPrebookingSearchParams;
+import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.RequestAirPrebookingSearchParamsForServer;
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResAirPreBooking;
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResBookingAPI;
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.RequestAirPriceSearch;
@@ -141,14 +141,17 @@ public interface APIService {
 
     @Multipart
     @POST("PaywelltransactionHaltrip/airPreBooking")
-    Call<ResAirPreBooking> airPreBooking(@Part("username") String username, @Part("format") String format,
-                                         @Part("search_params") RequestAirPrebookingSearchParams search_params);
+    Call<ResAirPreBooking> airPreBooking(@Part("username") String username,
+                                         @Part("format") String format,
+                                         @Part("search_params") RequestAirPrebookingSearchParamsForServer search_params);
 
 
     @Multipart
     @POST("PaywelltransactionHaltrip/airBooking")
-    Call<ResBookingAPI> airBooking(@Part("username") String username, @Part("password") String password, @Part("format") String format,
-                                   @Part("search_params") RequestAirPrebookingSearchParams search_params);
+    Call<ResBookingAPI> airBooking(@Part("username") String username,
+                                   @Part("password") String password,
+                                   @Part("format") String format,
+                                   @Part("search_params") RequestAirPrebookingSearchParamsForServer search_params);
 
     @POST("PaywelltransactionHaltrip/cancelBooking")
     @FormUrlEncoded
