@@ -8,10 +8,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.s
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.ResGetAirports
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.ResIssueTicket
-import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.FileUploadReqSearchPara
-import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.RequestAirPrebookingSearchParams
-import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResAirPreBooking
-import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResBookingAPI
+import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.*
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.RequestAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.airRules.ResposeAirRules
@@ -162,7 +159,33 @@ class AirThicketRepository(private val mContext: Context) {
 
         val data = MutableLiveData<ResAirPreBooking>()
 
-        val callAirSearch = ApiUtils.getAPIService().airPreBooking(userName, format, requestAirPrebookingSearchParams)
+        val apiNameReissuePassenger = mutableListOf<PassengerForAPI>()
+        requestAirPrebookingSearchParams.passengers.forEach {
+            val p = PassengerForAPI()
+            p.title = it.title
+            p.paxtype = it.paxType
+            p.firstname = it.firstName
+            p.lastname = it.lastName
+            p.gender = it.gender
+            p.isLeadPassenger = it.isLeadPassenger
+            p.contactnumber = it.contactNumber
+            p.countrycode = it.countryCode
+            p.dateofbirth = it.dateOfBirth
+            p.email = it.email
+            p.nationality = it.nationality
+            p.passportExpiryDate = it.passportExpiryDate
+            p.passportNationality = it.passportNationality
+            p.passportNumber = it.passportNumber
+            apiNameReissuePassenger.add(p)
+        }
+
+        val model = RequestAirPrebookingSearchParamsForServer()
+        model.passengers = apiNameReissuePassenger
+        model.searchId = requestAirPrebookingSearchParams.searchId
+        model.resultID = requestAirPrebookingSearchParams.resultID
+
+
+        val callAirSearch = ApiUtils.getAPIService().airPreBooking(userName, format, model)
         callAirSearch.enqueue(object : Callback<ResAirPreBooking> {
             override fun onResponse(call: Call<ResAirPreBooking>, response: Response<ResAirPreBooking>) {
                 if (response.isSuccessful) {
@@ -250,11 +273,36 @@ class AirThicketRepository(private val mContext: Context) {
 
         val data = MutableLiveData<ResBookingAPI>()
 
-        val callAirSearch = ApiUtils.getAPIService().airBooking(userName, piN_NO, format, requestAirPrebookingSearchParams)
+
+        val apiNameReissuePassenger = mutableListOf<PassengerForAPI>()
+        requestAirPrebookingSearchParams.passengers.forEach {
+            val p = PassengerForAPI()
+            p.title = it.title
+            p.paxtype = it.paxType
+            p.firstname = it.firstName
+            p.lastname = it.lastName
+            p.gender = it.gender
+            p.contactnumber = it.contactNumber
+            p.countrycode = it.countryCode
+            p.dateofbirth = it.dateOfBirth
+            p.isLeadPassenger = it.isLeadPassenger
+            p.email = it.email
+            p.nationality = it.nationality
+            p.passportExpiryDate = it.passportExpiryDate
+            p.passportNationality = it.passportNationality
+            p.passportNumber = it.passportNumber
+            apiNameReissuePassenger.add(p)
+        }
+
+        val model = RequestAirPrebookingSearchParamsForServer()
+        model.passengers = apiNameReissuePassenger
+        model.searchId = requestAirPrebookingSearchParams.searchId
+        model.resultID = requestAirPrebookingSearchParams.resultID
+
+        val callAirSearch = ApiUtils.getAPIService().airBooking(userName, piN_NO, format, model)
         callAirSearch.enqueue(object : Callback<ResBookingAPI> {
             override fun onResponse(call: Call<ResBookingAPI>, response: Response<ResBookingAPI>) {
                 if (response.isSuccessful) {
-//                    data.value = Gson().fromJson(DummayData().mockPreBooking, ResAirPreBooking::class.java)
                     data.value = response.body()
                 }
             }

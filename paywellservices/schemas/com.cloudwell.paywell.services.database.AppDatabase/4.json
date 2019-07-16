@@ -224,35 +224,29 @@
       },
       {
         "tableName": "Passenger",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `ContactNumber` TEXT NOT NULL, `CountryCode` TEXT NOT NULL, `Email` TEXT NOT NULL, `FirstName` TEXT NOT NULL, `DateOfBirth` TEXT NOT NULL, `Gender` TEXT NOT NULL, `IsLeadPassenger` INTEGER NOT NULL, `LastName` TEXT NOT NULL, `Nationality` TEXT NOT NULL, `PaxType` TEXT NOT NULL, `Title` TEXT NOT NULL, `isPassengerSleted` INTEGER NOT NULL, `Country` TEXT NOT NULL, `PassportNumber` TEXT NOT NULL, `PassportExpiryDate` TEXT NOT NULL, `PassportNationality` TEXT NOT NULL, `passportImagePath` TEXT NOT NULL, `file_extension` TEXT NOT NULL, `visa_extension` TEXT NOT NULL, `visa_content` TEXT NOT NULL, `nid_number` TEXT NOT NULL, `isDefault` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Title` TEXT NOT NULL, `FirstName` TEXT NOT NULL, `LastName` TEXT NOT NULL, `PaxType` TEXT NOT NULL, `DateOfBirth` TEXT NOT NULL, `Gender` TEXT NOT NULL, `PassportNumber` TEXT NOT NULL, `PassportExpiryDate` TEXT NOT NULL, `PassportNationality` TEXT NOT NULL, `CountryCode` TEXT NOT NULL, `Nationality` TEXT NOT NULL, `ContactNumber` TEXT NOT NULL, `Email` TEXT NOT NULL, `IsLeadPassenger` INTEGER NOT NULL, `Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `isPassengerSleted` INTEGER NOT NULL, `Country` TEXT NOT NULL, `passportImagePath` TEXT NOT NULL, `file_extension` TEXT NOT NULL, `visa_extension` TEXT NOT NULL, `visa_content` TEXT NOT NULL, `nid_number` TEXT NOT NULL, `isDefault` INTEGER NOT NULL)",
         "fields": [
           {
-            "fieldPath": "id",
-            "columnName": "Id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "contactNumber",
-            "columnName": "ContactNumber",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "countryCode",
-            "columnName": "CountryCode",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "email",
-            "columnName": "Email",
+            "fieldPath": "title",
+            "columnName": "Title",
             "affinity": "TEXT",
             "notNull": true
           },
           {
             "fieldPath": "firstName",
             "columnName": "FirstName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastName",
+            "columnName": "LastName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "paxType",
+            "columnName": "PaxType",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -265,48 +259,6 @@
           {
             "fieldPath": "gender",
             "columnName": "Gender",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "isLeadPassenger",
-            "columnName": "IsLeadPassenger",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "lastName",
-            "columnName": "LastName",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "nationality",
-            "columnName": "Nationality",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "paxType",
-            "columnName": "PaxType",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "title",
-            "columnName": "Title",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "isPassengerSleted",
-            "columnName": "isPassengerSleted",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "country",
-            "columnName": "Country",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -325,6 +277,54 @@
           {
             "fieldPath": "passportNationality",
             "columnName": "PassportNationality",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "countryCode",
+            "columnName": "CountryCode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nationality",
+            "columnName": "Nationality",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "contactNumber",
+            "columnName": "ContactNumber",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "email",
+            "columnName": "Email",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isLeadPassenger",
+            "columnName": "IsLeadPassenger",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "Id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isPassengerSleted",
+            "columnName": "isPassengerSleted",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "country",
+            "columnName": "Country",
             "affinity": "TEXT",
             "notNull": true
           },

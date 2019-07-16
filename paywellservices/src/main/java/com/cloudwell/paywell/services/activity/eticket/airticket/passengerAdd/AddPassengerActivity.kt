@@ -31,6 +31,7 @@ import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.constant.AllConstant.emailPattern
 import com.cloudwell.paywell.services.libaray.imagePickerAndCrop.ImagePickerActivity
 import com.cloudwell.paywell.services.utils.AssetHelper
+import com.cloudwell.paywell.services.utils.CountryUtility
 import com.google.gson.Gson
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -191,6 +192,8 @@ class AddPassengerActivity : AirTricketBaseActivity() {
                 }
 
 
+                val countryCode1 = CountryUtility.getCountryCode(oldPassenger.countryCode)
+                etCountry.setText("" + countryCode1.toString())
                 this.countryCode = oldPassenger.countryCode
 
 
@@ -199,7 +202,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
             }
         } catch (e: Exception) {
-
+            com.orhanobut.logger.Logger.e("" + e.message)
         }
 
         btn_add.setOnClickListener {

@@ -2,6 +2,7 @@ package com.cloudwell.paywell.services.retrofit;
 
 
 import com.cloudwell.paywell.services.BuildConfig;
+import com.itkacher.okhttpprofiler.OkHttpProfilerInterceptor;
 
 import java.util.concurrent.TimeUnit;
 
@@ -32,8 +33,7 @@ public class RetrofitClient {
                 HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
                 logging.setLevel(HttpLoggingInterceptor.Level.BODY);
                 okHttpClient.addInterceptor(logging);
-
-//                okHttpClient.addInterceptor(new TimberLoggingInterceptor());
+                okHttpClient.addInterceptor(new OkHttpProfilerInterceptor());
 
             }
 
