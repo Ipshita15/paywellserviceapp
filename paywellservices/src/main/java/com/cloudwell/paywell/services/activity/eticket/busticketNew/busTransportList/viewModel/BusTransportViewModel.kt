@@ -58,7 +58,7 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
 
     fun cancelAllRequest() {
         if (ApiUtils.getClient() != null) {
-            ApiUtils.getClient().dispatcher.cancelAll()
+            ApiUtils.getClient().dispatcher().cancelAll()
         }
 
 
@@ -87,23 +87,23 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
     }
 
     fun callconfirmPayment(internetConnection: Boolean, transId: String, fullNameTV: String, mobileNumber: String, address: String, etEmail: String, age: String, password: String) {
-//        if (!internetConnection) {
-//            view?.showNoInternetConnectionFound()
-//        } else {
-//            view?.showProgress()
-//            BusTicketRepository().confirmPaymentAPI(transId, fullNameTV, mobileNumber, address, etEmail, age, password) {
-//                view?.hiddenProgress()
-////                if (it == null) {
-////                    view?.showErrorMessage("message")
-////                } else {
-////                    if (it.status == 200 || it.status == 100) {
-////                        view?.showSeatCheckAndBookingRepose(it)
-////                    } else {
-////                        it.meassage.let { it1 -> view?.showErrorMessage(it.meassage) }
-////                    }
-////                }
-//            }
-//        }
+        if (!internetConnection) {
+            view?.showNoInternetConnectionFound()
+        } else {
+            view?.showProgress()
+            BusTicketRepository().confirmPaymentAPI(transId, fullNameTV, mobileNumber, address, etEmail, age, password).observeForever {
+                if (it == null) {
+                    view?.showErrorMessage("message")
+                } else {
+                    if (it.status == 200 || it.status == 100) {
+                        view?.showShowConfirmDialog(it)
+                    } else {
+                        it.meassage.let { it1 -> view?.showErrorMessage(it.meassage) }
+                    }
+                }
+
+            }
+        }
 
     }
 }

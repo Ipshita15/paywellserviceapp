@@ -12,4 +12,5 @@ interface IbusTransportListView : BaseView {
     fun setAdapter(it1: List<TripScheduleInfoAndBusSchedule>)
     fun showErrorMessage(meassage: String)
     fun showSeatCheckAndBookingRepose(it: ResBusSeatCheckAndBlock)
+    fun showShowConfirmDialog(it: ResBusSeatCheckAndBlock)
 }

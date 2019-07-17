@@ -385,7 +385,7 @@ class BusTicketRepository() {
 
     }
 
-    fun confirmPaymentAPI(transId: String, fullNameTV: String, mobileNumber: String, address: String, etEmail: String, age: String, password: String) {
+    fun confirmPaymentAPI(transId: String, fullNameTV: String, mobileNumber: String, address: String, etEmail: String, age: String, password: String): MutableLiveData<ResBusSeatCheckAndBlock> {
         mAppHandler = AppHandler.getmInstance(mContext)
         val userName = mAppHandler!!.imeiNo
         val skey = ApiUtils.KEY_SKEY
@@ -414,6 +414,8 @@ class BusTicketRepository() {
                 }
             }
         })
+
+        return data
     }
 
 }

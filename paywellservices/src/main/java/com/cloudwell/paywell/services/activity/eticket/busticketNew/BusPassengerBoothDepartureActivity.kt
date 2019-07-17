@@ -16,7 +16,6 @@ import android.widget.LinearLayout
 import android.widget.Spinner
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.viewModel.BusTransportViewModel
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.BusTicketConfirmFragment
@@ -28,14 +27,16 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Reques
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResBusSeatCheckAndBlock
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule
 import com.cloudwell.paywell.services.app.AppHandler
-import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_bus_booth_departure.*
 import org.json.JSONObject
 
 class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTransportListView {
-    override fun showSeatCheckAndBookingRepose(it: ResBusSeatCheckAndBlock) {
+    override fun showShowConfirmDialog(it: ResBusSeatCheckAndBlock) {
 
+    }
+
+    override fun showSeatCheckAndBookingRepose(it: ResBusSeatCheckAndBlock) {
 
         val t = BusTicketConfirmFragment()
         it.ticketInfo?.seats = seatLevel
@@ -43,7 +44,6 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTranspo
         t.show(supportFragmentManager, "dialog")
         t.setOnClickListener(object : MyClickListener, OnClickListener {
             override fun onClick() {
-
                 askForPin()
             }
         })
@@ -220,9 +220,7 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTranspo
                     val mAppHandler = AppHandler.getmInstance(application)
                     val userName = mAppHandler.imeiNo
 
-                    val datum = AppStorageBox.get(applicationContext, AppStorageBox.Key.REQUEST_API_reschedule) as Datum
-
-//                    submitRescheduleAPI(userName, PIN_NO, datum.bookingId, cancelReason, mViewModelFlight.mSearchId.value, result.resultID, "json")
+//                    viewMode.callconfirmPayment()
 
 
                 } else {
