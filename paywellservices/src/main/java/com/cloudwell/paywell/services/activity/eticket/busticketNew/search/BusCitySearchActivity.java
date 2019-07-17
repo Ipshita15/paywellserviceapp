@@ -221,4 +221,5 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
         }
     }
 
+
 }
