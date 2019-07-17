@@ -3,6 +3,7 @@ package com.cloudwell.paywell.services.utils;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +33,7 @@ public class FullScreenDialogPayWell extends DialogFragment {
         Bundle args = new Bundle();
         args.putInt(THEME_KEY, themeResourceId);
         args.putString(TITLE_KEY, title);
-        args.putSerializable(DIALOG_KEY, onSetFullScreenDialogView);
+        args.putParcelable(DIALOG_KEY, onSetFullScreenDialogView);
         frag.setArguments(args);
         return frag;
     }
@@ -42,7 +43,7 @@ public class FullScreenDialogPayWell extends DialogFragment {
         super.onCreate(savedInstanceState);
         themeId = getArguments().getInt(THEME_KEY);
         title = getArguments().getString(TITLE_KEY);
-        onSetFullScreenDialogView = (OnSetFullScreenDialogView) getArguments().getSerializable(DIALOG_KEY);
+        onSetFullScreenDialogView = (OnSetFullScreenDialogView) getArguments().getParcelable(DIALOG_KEY);
         setStyle(DialogFragment.STYLE_NORMAL, themeId);
     }
 
@@ -53,7 +54,7 @@ public class FullScreenDialogPayWell extends DialogFragment {
         return onSetFullScreenDialogView.setView(inflater, container, getDialog());
     }
 
-    public interface OnSetFullScreenDialogView extends Serializable {
+    public interface OnSetFullScreenDialogView extends Parcelable {
         View setView(LayoutInflater inflater, ViewGroup container, Dialog dialog);
     }
 }
