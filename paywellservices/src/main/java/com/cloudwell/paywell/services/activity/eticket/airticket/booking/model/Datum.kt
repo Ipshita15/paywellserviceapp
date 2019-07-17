@@ -68,6 +68,9 @@ class Datum {
     @SerializedName("invoice_url")
     var invoiceUrl: String = ""
 
+    @SerializedName("trip_type")
+    var trip_type: String = ""
+
 
     @SerializedName("search_log")
     var mSearchLog: List<SearchLog> = mutableListOf()
@@ -75,6 +78,9 @@ class Datum {
 
     @SerializedName("trips")
     var trips: List<Trip> = mutableListOf()
+
+    @SerializedName("total_fare_calculated")
+    var total_fare_calculated: String = ""
 
 
 }

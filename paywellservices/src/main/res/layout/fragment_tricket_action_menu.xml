@@ -2,15 +2,20 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:paddingLeft="16dp"
+    android:paddingTop="16dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="16dp">
 
     <Button
         android:id="@+id/btActionIssueTicket"
         android:layout_width="250dp"
         android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:background="#5AC121"
         android:gravity="center"
         android:text="@string/tricking"
@@ -21,16 +26,16 @@
         />
 
     <Button
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:id="@+id/btActionReissue"
         android:layout_width="250dp"
         android:layout_height="40dp"
-        android:layout_marginTop="8dp"
         android:background="#5AC121"
-
         android:gravity="center"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="Reissue"
+        android:text="Re-issue"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="16sp"
@@ -38,10 +43,11 @@
         />
 
     <Button
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:id="@+id/btActionReschedule"
         android:layout_width="250dp"
         android:layout_height="40dp"
-        android:layout_marginTop="8dp"
         android:background="#5AC121"
         android:gravity="center"
         android:paddingLeft="20dp"
@@ -54,28 +60,27 @@
         />
 
     <Button
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:id="@+id/btCencel"
         android:layout_width="250dp"
         android:layout_height="40dp"
-        android:layout_marginTop="8dp"
-
         android:background="#f36743"
-
         android:gravity="center"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="@string/cencel"
+        android:text="@string/cancel_booking"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="16sp"
         />
 
     <Button
-
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:id="@+id/btTicketCancel"
         android:layout_width="250dp"
         android:layout_height="40dp"
-        android:layout_marginTop="8dp"
         android:background="#f36743"
         android:gravity="center"
         android:paddingLeft="20dp"

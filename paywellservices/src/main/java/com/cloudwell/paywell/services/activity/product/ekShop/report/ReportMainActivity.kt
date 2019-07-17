@@ -51,16 +51,16 @@ class ReportMainActivity : ProductEecommerceBaseActivity(), ReportViewModel.IRep
     }
 
     override fun noInternetConnectionFOund() {
-        Log.v("", "")
+        showNoInternetConnectionFound()
 
     }
 
     override fun showProgressBar() {
-        Log.v("", "")
+        showProgressDialog()
     }
 
     override fun hiddenProgressBar() {
-        Log.v("", "")
+        dismissProgressDialog()
     }
 
     override fun showNoReportFound() {

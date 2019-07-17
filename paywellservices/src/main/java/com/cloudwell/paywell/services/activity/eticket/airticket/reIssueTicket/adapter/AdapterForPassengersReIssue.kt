@@ -106,7 +106,6 @@ class AdapterForPassengersReIssue(var context: Context, var items: List<Passenge
 
     interface OnClickListener {
         fun onEditClick(model: Passenger, position: Int)
-
         fun onDeleted(model: Passenger, position: Int)
     }
 

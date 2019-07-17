@@ -641,7 +641,7 @@
     <string name="book">Booking Status</string>
     <string name="passenger_deleted_message">Passenger info cannot be recovered once deleted. Are you sure you want to delete?</string>
     <string name="ok">OK</string>
-    <string name="cencel">Cancel</string>
+    <string name="cancel_booking">Cancel Booking</string>
     <string name="title_all_summary">All Summary</string>
     <string name="lbl_take_camera_picture">Camara</string>
     <string name="lbl_choose_from_gallery">Gallery</string>
@@ -788,9 +788,9 @@
     <string name="visa_image_mandatory">Visa image mandatory</string>
     <string name="titel_reschedule">Reschedule</string>
     <string name="booking_info">Booking Info</string>
-    <string name="ticket_cancel">Ticket Cancel</string>
-    <string name="reissue_reschedule">Reissue/Reschedule</string>
-    <string name="title_reissue">Tricket Reissue</string>
+    <string name="ticket_cancel">Cancel Ticket</string>
+    <string name="reissue_reschedule">Re-issue/Reschedule</string>
+    <string name="title_reissue">Ticket Re-issue</string>
     <string name="reschedule">Reschedule</string>
     <string name="ekshop">Ekshop</string>
     <string name="visit">Visit</string>
@@ -803,6 +803,12 @@
     <string name="order_code">Order code</string>
     <string name="optional">Optional</string>
     <string name="search_report">Search report</string>
+    <string name="is_center_lock">Lock</string>
+    <string name="is_center_unlock">Unlock</string>
+    <string name="cencel">Cancel</string>
+    <string name="text_accept">Accept</string>
+    <string name="text_decline">Decline</string>
+    <string name="title_edit_passenger">Edit Passenger Info</string>
 
     <string name="title_bus_tickets">Search bus tickets</string>
     <string name="search_bus">Search Bus Ticket</string>

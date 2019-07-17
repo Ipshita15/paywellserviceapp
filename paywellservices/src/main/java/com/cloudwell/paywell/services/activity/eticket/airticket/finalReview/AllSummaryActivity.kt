@@ -431,8 +431,6 @@ class AllSummaryActivity : AirTricketBaseActivity() {
         tveDpartureTime.text = "" + text
 
 
-
-
         recyclerViewAirports.setNestedScrollingEnabled(false)
         recyclerViewAirports.setHasFixedSize(true)
         val mLayoutManager = LinearLayoutManager(applicationContext)
@@ -444,43 +442,12 @@ class AllSummaryActivity : AirTricketBaseActivity() {
         recyclerViewAirports.adapter = recyclerListAdapter
 
 
-
-
         tvAirlineCode.text = getString(R.string.airline_code) + " ${airline?.airlineCode}"
         tvAirlesscode.text = getString(R.string.airport_name) + " ${airline?.airlineName}"
         tvFlghtNumber.text = getString(R.string.flight_number) + " ${airline?.flightNumber}"
         tvBookingClass.text = getString(R.string.booking_class) + " ${airline?.bookingClass}"
         tvOperatorCarrier.text = getString(R.string.operating_carrier) + " ${airline?.operatingCarrier}"
         tvCabinClass.text = getString(R.string.cabin_class) + " ${airline?.cabinClass}"
-
-//        val segments = resposeAirPriceSearch.data?.results?.get(0)?.segments
-//        if (segments!!.size!! > 1) {
-//            val arrTime = segments?.get(0)?.destination?.arrTime
-//            val depTime = segments?.get(segments.size - 1)?.origin?.depTime
-//
-//            val arrTimeSplit = arrTime?.split("T")
-//            val depTimeSplit = depTime?.split("T")
-//
-//            val departDate = DateUtils.getFormatDate(depTimeSplit!![0])
-//            val arrivalDate = DateUtils.getFormatDate(arrTimeSplit!![0])
-//
-//            tveDpartureTime.text = getString(R.string.depart_time_) + " " + departDate + ", " + depTimeSplit[1]
-//            tvArrivalTime.text = getString(R.string.arrival_time) + " " + arrivalDate + ", " + arrTimeSplit[1]
-//        } else {
-//
-//
-//            val arrTime = segments?.get(0)?.destination?.arrTime
-//            val depTime = segments?.get(0)?.origin?.depTime
-//            val arrTimeSplit = arrTime?.split("T")
-//            val depTimeSplit = depTime?.split("T")
-//
-//            val departDate = DateUtils.getFormatDate(depTimeSplit!![0])
-//            val arrivalDate = DateUtils.getFormatDate(arrTimeSplit!![0])
-//
-//            tveDpartureTime.text = getString(R.string.depart_time_) + " " + departDate + ", " + depTimeSplit[1]
-//            tvArrivalTime.text = getString(R.string.arrival_time) + " " + arrivalDate + ", " + arrTimeSplit[1]
-//
-//        }
 
 
         tvBaggage.text = getString(R.string.baggage) + resposeAirPriceSearch.data?.results?.get(0)?.segments?.get(0)?.baggage + " " + getString(com.cloudwell.paywell.services.R.string.kg_per_adult)
