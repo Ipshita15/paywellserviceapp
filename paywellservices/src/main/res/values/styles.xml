@@ -158,6 +158,7 @@
         <item name="android:windowEnterAnimation">@anim/slide_up</item>
         <item name="android:windowExitAnimation">@anim/slide_down</item>
     </style>
+
     <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/bus_button_color</item>
     </style>
@@ -165,6 +166,10 @@
     <style name="BusAppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorAccent">@color/bus_ticket_status_color</item>
+    </style>
+
+    <style name="BusEditInputLayout" parent="AppTheme">
+        <item name="colorAccent">#00a89b</item>
     </style>
 
 </resources>

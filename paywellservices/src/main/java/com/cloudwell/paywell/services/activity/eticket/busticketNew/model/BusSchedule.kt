@@ -33,6 +33,9 @@ class BusSchedule(
         var ticketPrice: String = "",
 
         @ColumnInfo(name = "allowed_seat_numbers")
-        var allowedSeatNumbers: String = ""
+        var allowedSeatNumbers: String = "",
+
+        @ColumnInfo(name = "booth_departure_info")
+        var booth_departure_info: String = ""
 
 )

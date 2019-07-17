@@ -23,9 +23,10 @@ public class BusTransactionModel {
     private String travellingTo;
     private String travellingFrom;
 
-    public BusTransactionModel(){}
+    public BusTransactionModel() {
+    }
 
-    public BusTransactionModel(String transactionDate, String bookingId, String bookingStatus, String webBookingId, String ticketPrice, String customerName, String customerGender,String customerPhone,String ticketNum,String boardingPoint, String departureDate, String departureTime, String seatNum, String coachNum, String busName, String travellingTo, String travellingFrom) {
+    public BusTransactionModel(String transactionDate, String bookingId, String bookingStatus, String webBookingId, String ticketPrice, String customerName, String customerGender, String customerPhone, String ticketNum, String boardingPoint, String departureDate, String departureTime, String seatNum, String coachNum, String busName, String travellingTo, String travellingFrom) {
         this.transactionDate = transactionDate;
         this.bookingId = bookingId;
         this.bookingStatus = bookingStatus;

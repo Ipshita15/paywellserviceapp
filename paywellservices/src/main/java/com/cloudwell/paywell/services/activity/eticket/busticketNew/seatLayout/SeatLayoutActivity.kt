@@ -1,9 +1,10 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew.seatLayout
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
 import android.support.design.widget.BottomSheetBehavior
-import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
@@ -13,18 +14,27 @@ import android.widget.TextView
 import android.widget.Toast
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketRepository
-import com.cloudwell.paywell.services.utils.AssetHelper
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusPassengerBoothDepartureActivity
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BusSeat
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Transport
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule
+import com.cloudwell.paywell.services.app.AppController
+import com.cloudwell.paywell.services.app.storage.AppStorageBox
+import com.cloudwell.paywell.services.utils.BusCalculationHelper
+import com.google.gson.Gson
+import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.bottom_seat_layout.*
-import org.json.JSONException
 import org.json.JSONObject
+import java.text.DecimalFormat
 import java.util.*
 
 class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
 
-    internal lateinit var layout: ViewGroup
+    lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
+    lateinit var layout: ViewGroup
 
-    internal lateinit var rootJsonObject: JSONObject
+    lateinit var rootJsonObject: JSONObject
 
 
     internal var seatsPattenStr = ""
@@ -37,171 +47,185 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
     internal var STATUS_BOOKED = 2
     internal var STATUS_RESERVED = 3
     internal var selectedIds = ""
-    internal lateinit var allSeatkey: ArrayList<String>
-    internal lateinit var allSeatValue: ArrayList<String>
+    var allBusSeat = mutableListOf<BusSeat>()
+    var lastSeatBusSeat = mutableListOf<BusSeat>()
 
+
+    internal lateinit var model: TripScheduleInfoAndBusSchedule;
+    internal lateinit var requestBusSearch: RequestBusSearch;
+
+    var bus = Transport()
+
+    var seatCounter = 0
+
+    var seatLevel = ""
+    var seatIds = ""
+    var totalPrices = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seat_layout)
+
+        val stringExtra = intent.getStringExtra("jsonData")
+        model = Gson().fromJson(stringExtra, TripScheduleInfoAndBusSchedule::class.java)
+
+        val stringExtra2 = intent.getStringExtra("requestBusSearch")
+        requestBusSearch = Gson().fromJson(stringExtra2, RequestBusSearch::class.java)
+
+        bus = AppStorageBox.get(applicationContext, AppStorageBox.Key.SELETED_BUS_INFO) as Transport
+
+        val title = bus.busname + " " + BusCalculationHelper.getACType(model) + "/" + (model.busSchedule?.scheduleTime
+                ?: "")
+        setToolbar(title, resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
+
 
         initilizationReviewBottomSheet()
 
         layout = findViewById<ViewGroup>(R.id.layoutSeat)
 
 
-        val transport_id = "37"
-        val route = "Dhaka-Kolkata"
-        val bus_id = "71"
-        val departure_id = "457"
-        val departure_date = "2019-06-20"
-//        val seat_ids = ""
-        val seat_ids = getString(R.string.jsonData)
+
+        Logger.v("seat data" + Gson().toJson(model))
+
+        displaySeatLayout()
+    }
+
+    private fun displaySeatLayout() {
+        val busLocalDB = model.busLocalDB
+        val busSchedule = model.busSchedule
+
+        val indexTotalColumes = Integer.parseInt(busLocalDB?.totalColumns)
+        val totalRowsInt = Integer.parseInt(busLocalDB?.totalRows)
+        val totalMatrix = totalRowsInt * indexTotalColumes
+        val columnsInRightInt = Integer.parseInt(busLocalDB?.columnsInRight)
+
+        allBusSeat = model.resSeatInfo?.allBusSeat!! as MutableList<BusSeat>
 
 
-        BusTicketRepository().getSeatCheck(transport_id, route, bus_id, departure_id, departure_date, seat_ids).observeForever {
-
-
-        }
-
-
+        var indexCounter = 0
         try {
+            var i = 0
+            while (i < allBusSeat.size) {
 
-            allSeatkey = ArrayList<String>()
-            allSeatValue = ArrayList<String>()
-
-            val s = AssetHelper().loadJSONFromAsset(applicationContext, "countriestest.json")
-
-            rootJsonObject = JSONObject(s)
-
-            // total_seat = 40 , total_columns = 10, columns_in_right = 2
-            val source = "Teknaf"
-            val destination = "Coxs Bazar"
-            val schedulesID = "28487"
-            val busId = "72"
+                seatsPattenStr = seatsPattenStr + "/"
 
 
-            // total_seat 34, total_columns = 11, columns_in_right = 2
-            //            String source = "Dhaka";
-            //            String destination = "Sylhet";
-            //            String schedulesID = "24252";
-            //            String busId = "86";
+                for (j in 0 until indexTotalColumes) {
 
-            // total_seat 126, total_columns = 9, columns_in_right = 4
-            //            String source = "Dhaka";
-            //            String destination = "Kolkata";
-            //            String schedulesID = "80000";
-            //            String busId = "80";
-
-
-            val allowedSeatNumbers = rootJsonObject.getJSONObject("data").getJSONObject("schedule_info").getJSONObject(source).getJSONObject(destination).getJSONObject("schedules").getJSONObject(schedulesID).getJSONObject("allowed_seat_numbers")
-
-            val busObject = rootJsonObject.getJSONObject("data").getJSONObject("bus_info").getJSONObject(busId)
-            val totalSeats = busObject.getString("total_seats")
-            val totalRows = busObject.getString("total_rows")
-            val totalColumns = busObject.getString("total_columns")
-            val structureType = busObject.getString("structure_type")
-            val seatStructure = busObject.getString("seat_structure")
-            val emptyRowsInRight = busObject.getString("empty_rows_in_right")
-            val emptyRowsInLeft = busObject.getString("empty_rows_in_left")
-            val columnsInRight = busObject.getString("columns_in_right")
-            val busIsAc = busObject.getString("bus_is_ac")
-            val busColInMiddle = busObject.getString("bus_col_in_middle")
-
-
-            val indexTotalColumes = Integer.parseInt(totalColumns)
-            val totalRowsInt = Integer.parseInt(totalRows)
-            val totalMatrix = totalRowsInt * indexTotalColumes
-
-            val columnsInRightInt = Integer.parseInt(columnsInRight)
-            val totalSeatsInt = Integer.parseInt(totalSeats)
-
-            val seatkeys = allowedSeatNumbers.keys()
-            while (seatkeys.hasNext()) {
-                val seatkey = seatkeys.next()
-                allSeatkey.add(seatkey)
-
-                val seatValue = allowedSeatNumbers.getString(seatkey)
-                allSeatValue.add(seatValue)
-
-
-                Log.e("", "")
-            }
-
-
-            var indexCounter = 0
-
-            val message = ""
-
-            run {
-                var i = 0
-                while (i < allSeatkey.size) {
-
-                    seatsPattenStr = seatsPattenStr + "/"
-
-
-                    for (j in 0 until indexTotalColumes) {
-
-                        try {
-
-                            if (allSeatkey.size != totalMatrix) {
-                                if (indexCounter >= allSeatkey.size - 1) {
-                                    break
-                                }
-                            }
-
-                            indexCounter = indexCounter + j
-
-                            if (indexTotalColumes == 1) {
-                                seatsPattenStr = seatsPattenStr + "A_"
-                            } else if (indexTotalColumes == 3 && j == 0 && columnsInRightInt == 2) {
-                                seatsPattenStr = seatsPattenStr + "A_"
-
-                                // for right columns 4  ## ##
-                                //                      ## ##
-                            } else if (indexTotalColumes == 4 && j == 1 && columnsInRightInt == 2) {
-                                seatsPattenStr = seatsPattenStr + "A_"
-                            } else if (indexTotalColumes == 9 && j == 0 && columnsInRightInt == 4) {
-                                seatsPattenStr = seatsPattenStr + "A_"
-                            } else if (indexTotalColumes == 9 && j == 4 && columnsInRightInt == 4) {
-                                seatsPattenStr = seatsPattenStr + "A_"
-                            } else if (indexTotalColumes == 9 && j == 8 && columnsInRightInt == 4) {
-                                seatsPattenStr = seatsPattenStr + "A_"
-                            } else {
-                                seatsPattenStr = seatsPattenStr + "A"
-                            }// for right columns 4  # #### ####
-                            //                      # #### ####
-                            // for right columns 3  # ##
-                            //                      # ##
-
-                        } catch (ignored: Exception) {
+                    if (allBusSeat.size != totalMatrix) {
+                        if (indexCounter >= allBusSeat!!.size - 1) {
                             break
                         }
-
                     }
-                    i = i + indexTotalColumes
+
+                    indexCounter = indexCounter + j
+
+                    if (indexTotalColumes == 1) {
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(seatCounter)
+                    } else if (indexTotalColumes == 3 && j == 0 && columnsInRightInt == 2) {
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(seatCounter)
+                        // for right columns 4  ## ##
+                        //                      ## ##
+                    } else if (indexTotalColumes == 4 && j == 1 && columnsInRightInt == 2) {
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(seatCounter)
+                    } else if (indexTotalColumes == 9 && j == 0 && columnsInRightInt == 4) {
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(seatCounter)
+                    } else if (indexTotalColumes == 9 && j == 4 && columnsInRightInt == 4) {
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(seatCounter)
+                    } else if (indexTotalColumes == 9 && j == 8 && columnsInRightInt == 4) {
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(seatCounter)
+                    } else {
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithoutSpace(seatCounter)
+                    }
+
+
                 }
+                i = i + indexTotalColumes
+
             }
 
-            // miss mass matrix than remove last row and add row seat with extra set...
-            if (totalMatrix != allSeatkey.size) {
+            //        //miss mass matrix than remove last row and add row seat with extra set...
+            if (totalMatrix != allBusSeat.size) {
                 val removeCharaterNumber = indexTotalColumes + 1
                 seatsPattenStr = seatsPattenStr.substring(0, seatsPattenStr.length - removeCharaterNumber)
-                for (i in 0 until indexTotalColumes) {
-                    seatsPattenStr = seatsPattenStr + "A"
+
+                lastSeatBusSeat = allBusSeat.subList((allBusSeat.size - removeCharaterNumber), (allBusSeat.size - 1))
+
+
+                for (i in 0 until lastSeatBusSeat.size) {
+                    seatsPattenStr = seatsPattenStr + getSeatSymbolWithoutSpaceForLastLayout(i)
                 }
             }
+            run {
+                displaySeatPatten()
+            }
+        } catch (e: Exception) {
+            Logger.v("" + e.localizedMessage)
+        }
+    }
 
-        } catch (e: JSONException) {
-            e.printStackTrace()
+    private fun getSeatSymbolWithoutSpaceForLastLayout(i: Int): Any? {
+        var data = "";
+        if (lastSeatBusSeat.get(i).value == 0) {
+            // available seats
+            data = "A"
+        } else if (lastSeatBusSeat.get(i).value == 1) {
+            //Temp booked
+            data = "R"
+        } else if (lastSeatBusSeat.get(i).value == 2) {
+            //Temp booked
+            data = "U"
+        } else {
+            data = "U"
+        }
+        return data
+    }
+
+    private fun getSeatSymbolWithSpace(i: Int): String {
+        var data = "";
+        if (allBusSeat.get(seatCounter).value == 0) {
+            // available seats
+            data = "A_"
+        } else if (allBusSeat.get(seatCounter).value == 1) {
+            //Temp booked
+            data = "R_"
+        } else if (allBusSeat.get(seatCounter).value == 2) {
+            //Temp booked
+            data = "U_"
+        } else {
+            //Temp booked
+            data = "U_"
+        }
+        seatCounter = seatCounter + 1
+        Logger.v("ICounter" + seatCounter)
+
+        return data
+    }
+
+    private fun getSeatSymbolWithoutSpace(i: Int): String {
+        Logger.v("ICounter" + i)
+        var data = "";
+        if (allBusSeat.get(seatCounter).value == 0) {
+            // available seats
+            data = "A"
+        } else if (allBusSeat.get(seatCounter).value == 1) {
+            //Temp booked
+            data = "R"
+        } else if (allBusSeat.get(seatCounter).value == 2) {
+            //Temp booked
+            data = "U"
+        } else {
+            data = "U"
         }
 
+        seatCounter = seatCounter + 1
+        Logger.v("ICounter" + seatCounter)
 
-        displaySeatPatten()
+        return data
     }
 
     private fun initilizationReviewBottomSheet() {
-        val bottomSheetBehavior = BottomSheetBehavior.from(seatLayoutBottonSheet)
+        bottomSheetBehavior = BottomSheetBehavior.from(seatLayoutBottonSheet)
 
         bottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -226,7 +250,54 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
             }
         })
 
+        btNext.setOnClickListener {
 
+
+            val toJson = Gson().toJson(model)
+            val requestBusSearchJson = Gson().toJson(requestBusSearch)
+
+            var counter = 0;
+
+            allBusSeat.forEach {
+                if (it.isUserSeleted) {
+                    counter++;
+                }
+            }
+
+            val transport = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.SELETED_BUS_INFO) as Transport
+
+
+            val busBaseTicketPrices = BusCalculationHelper.getPricesWithExtraAmount(model.busSchedule?.ticketPrice, requestBusSearch.date, transport = transport, isExtraAmount = false).toDouble()
+            val totalAPIValuePrices = busBaseTicketPrices.times(counter)
+
+
+
+            seatIds = "1"
+
+            val intent = Intent(this, BusPassengerBoothDepartureActivity::class.java)
+            intent.putExtra("requestBusSearch", requestBusSearchJson)
+            intent.putExtra("jsonData", toJson)
+            intent.putExtra("seatLevel", seatLevel)
+            intent.putExtra("seatId", seatIds)
+            intent.putExtra("totalPrices", "" + totalPrices)
+            intent.putExtra("totalAPIValuePrices", "" + totalAPIValuePrices)
+            startActivity(intent)
+        }
+
+
+        hideenButtonSheet()
+
+
+    }
+
+    private fun hideenButtonSheet() {
+        bottomSheetBehavior.setHideable(true);//Important to add
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+    }
+
+    private fun showButtonSheet() {
+        bottomSheetBehavior.setHideable(false);//Important to add
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
     private fun displaySeatPatten() {
@@ -249,8 +320,8 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
                 layout.orientation = LinearLayout.HORIZONTAL
                 layoutSeat.addView(layout)
             } else if (seatsPattenStr.get(index) == 'U') {
-                val value = allSeatValue.get(count)
-                count++
+                val model = allBusSeat.get(count)
+
                 val view = TextView(this)
                 val layoutParams = LinearLayout.LayoutParams(seatSize, seatSize)
                 layoutParams.setMargins(seatGaping, seatGaping, seatGaping, seatGaping)
@@ -258,17 +329,17 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
                 view.setPadding(0, 0, 0, 2 * seatGaping)
                 view.id = count
                 view.gravity = Gravity.CENTER
-                view.setBackgroundResource(R.drawable.ic_seats_booked)
+                view.setBackgroundResource(R.drawable.ic_seat_booked)
                 view.setTextColor(Color.WHITE)
-                view.tag = STATUS_BOOKED
-                view.setText(value)
+                view.tag = count
+                view.setText(model.seatLbls)
                 view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 9f)
                 layout!!.addView(view)
                 seatViewList.add(view)
+                count++
                 view.setOnClickListener(this)
             } else if (seatsPattenStr.get(index) == 'A') {
-                val value = allSeatValue.get(count)
-                count++
+                val model = allBusSeat?.get(count)
                 val view = TextView(this)
                 val layoutParams = LinearLayout.LayoutParams(seatSize, seatSize)
                 layoutParams.setMargins(seatGaping, seatGaping, seatGaping, seatGaping)
@@ -276,17 +347,17 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
                 view.setPadding(0, 0, 0, 2 * seatGaping)
                 view.id = count
                 view.gravity = Gravity.CENTER
-                view.setBackgroundResource(R.drawable.ic_seats_book)
-                view.setText(value)
+                view.setBackgroundResource(R.drawable.ic_seat_avaliable)
+                view.setText(model.seatLbls)
                 view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 9f)
                 view.setTextColor(Color.BLACK)
-                view.tag = STATUS_AVAILABLE
+                view.tag = count
                 layout!!.addView(view)
                 seatViewList.add(view)
                 view.setOnClickListener(this)
-            } else if (seatsPattenStr.get(index) == 'R') {
-                val value = allSeatValue.get(count)
                 count++
+            } else if (seatsPattenStr.get(index) == 'R') {
+                val model = allBusSeat?.get(count)
                 val view = TextView(this)
                 val layoutParams = LinearLayout.LayoutParams(seatSize, seatSize)
                 layoutParams.setMargins(seatGaping, seatGaping, seatGaping, seatGaping)
@@ -294,14 +365,15 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
                 view.setPadding(0, 0, 0, 2 * seatGaping)
                 view.id = count
                 view.gravity = Gravity.CENTER
-                view.setBackgroundResource(R.drawable.ic_seats_reserved)
-                view.setText(value)
+                view.setBackgroundResource(R.drawable.ic_seat_booked)
+                view.setText(model.seatLbls)
                 view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 9f)
                 view.setTextColor(Color.WHITE)
-                view.tag = STATUS_RESERVED
+                view.tag = count
                 layout!!.addView(view)
                 seatViewList.add(view)
                 view.setOnClickListener(this)
+                count++
             } else if (seatsPattenStr.get(index) == '_') {
                 val view = TextView(this)
                 val layoutParams = LinearLayout.LayoutParams(seatSize, seatSize)
@@ -315,19 +387,72 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
     }
 
     override fun onClick(view: View) {
-        if (view.tag as Int == STATUS_AVAILABLE) {
-            if (selectedIds.contains(view.id.toString() + ",")) {
-                selectedIds = selectedIds.replace((+view.id).toString() + ",", "")
-                view.setBackgroundResource(R.drawable.ic_seats_book)
+        val model = allBusSeat.get(view.tag as Int)
+
+        if (model.status.equals("Available")) {
+            if (!model.isUserSeleted) {
+                view.setBackgroundResource(R.drawable.ic_seat_seleted)
+
+                val get = allBusSeat.get(view.tag as Int)
+                get.isUserSeleted = true
+                allBusSeat.set(view.tag as Int, get)
+                updateSeatLayuout()
+                Toast.makeText(this, "Seat " + model.seatLbls + " is selected", Toast.LENGTH_SHORT).show()
             } else {
-                selectedIds = selectedIds + view.id + ","
-                view.setBackgroundResource(R.drawable.ic_seats_selected)
+                view.setBackgroundResource(R.drawable.ic_seat_avaliable)
+                val get = allBusSeat.get(view.tag as Int)
+                get.isUserSeleted = false
+                allBusSeat.set(view.tag as Int, get)
+                updateSeatLayuout()
             }
-        } else if (view.tag as Int == STATUS_BOOKED) {
-            Toast.makeText(this, "Seat " + view.id + " is Booked", Toast.LENGTH_SHORT).show()
-        } else if (view.tag as Int == STATUS_RESERVED) {
-            Toast.makeText(this, "Seat " + view.id + " is Reserved", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Seat " + model.seatLbls + " already booked", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun updateSeatLayuout() {
+        displaySeatLayout()
+        updatePriceLayuout()
+
+    }
+
+    private fun updatePriceLayuout() {
+        seatLevel = ""
+        totalPrices = 0.0
+        seatIds = ""
+
+        allBusSeat.forEach {
+            if (it.isUserSeleted) {
+                seatLevel = seatLevel + it.seatLbls + ","
+                seatIds = seatIds + it.seatId + ","
+                var transport = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.SELETED_BUS_INFO) as Transport
+
+
+                val toDouble = BusCalculationHelper.getPricesWithExtraAmount(model.busSchedule?.ticketPrice, requestBusSearch.date, transport = transport, isExtraAmount = true).toDouble()
+                totalPrices = totalPrices + toDouble
+
+            }
+        }
+        if (!seatLevel.equals("")) {
+            seatLevel = removeLastChar(seatLevel)
+            showButtonSheet()
+            tvSelectedSeat.text = seatLevel
+            tvTotalTotalPrices.text = DecimalFormat("#").format(totalPrices)
+        } else {
+            hideenButtonSheet()
+        }
+
+        if (!seatIds.equals("")) {
+            seatIds = removeLastChar(seatIds)
+        }
+
+
+    }
+
+    fun removeLastChar(s: String): String {
+        return if (s.length == 0) {
+            s
+        } else s.substring(0, s.length - 1)
     }
 
 }

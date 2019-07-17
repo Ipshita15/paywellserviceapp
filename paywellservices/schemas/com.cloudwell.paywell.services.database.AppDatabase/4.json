@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 4,
-    "identityHash": "b1f7c05f0d17efb5c90d9ada05c6e102",
+    "identityHash": "6ff71ec6773f8b1df333833b16ad921b",
     "entities": [
       {
         "tableName": "FavoriteMenu",
@@ -375,8 +375,8 @@
         "foreignKeys": []
       },
       {
-        "tableName": "Bus",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `busid` TEXT NOT NULL, `busname` TEXT NOT NULL)",
+        "tableName": "Transport",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `busid` TEXT NOT NULL, `busname` TEXT NOT NULL, `extraCharge` REAL NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -394,6 +394,12 @@
             "fieldPath": "busname",
             "columnName": "busname",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "extraCharge",
+            "columnName": "extraCharge",
+            "affinity": "REAL",
             "notNull": true
           }
         ],
@@ -500,7 +506,7 @@
       },
       {
         "tableName": "BusSchedule",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_schedule_Id` TEXT NOT NULL, `schedule_time` TEXT NOT NULL, `bus_id` TEXT NOT NULL, `coach_no` TEXT NOT NULL, `schedule_type` TEXT NOT NULL, `_validity_date` TEXT NOT NULL, `ticket_price` TEXT NOT NULL, `allowed_seat_numbers` TEXT NOT NULL, PRIMARY KEY(`_schedule_Id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_schedule_Id` TEXT NOT NULL, `schedule_time` TEXT NOT NULL, `bus_id` TEXT NOT NULL, `coach_no` TEXT NOT NULL, `schedule_type` TEXT NOT NULL, `_validity_date` TEXT NOT NULL, `ticket_price` TEXT NOT NULL, `allowed_seat_numbers` TEXT NOT NULL, `booth_departure_info` TEXT NOT NULL, PRIMARY KEY(`_schedule_Id`))",
         "fields": [
           {
             "fieldPath": "schedule_time_id",
@@ -547,6 +553,12 @@
           {
             "fieldPath": "allowedSeatNumbers",
             "columnName": "allowed_seat_numbers",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "booth_departure_info",
+            "columnName": "booth_departure_info",
             "affinity": "TEXT",
             "notNull": true
           }
@@ -597,55 +609,11 @@
         },
         "indices": [],
         "foreignKeys": []
-      },
-      {
-        "tableName": "BoothInfo",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `boothID` TEXT NOT NULL, `schedule_time_id` TEXT NOT NULL, `booth_name` TEXT NOT NULL, `booth_departure_time` TEXT NOT NULL)",
-        "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "Id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "boothID",
-            "columnName": "boothID",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "schedule_time_id",
-            "columnName": "schedule_time_id",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "boothName",
-            "columnName": "booth_name",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "boothDepartureTime",
-            "columnName": "booth_departure_time",
-            "affinity": "TEXT",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "Id"
-          ],
-          "autoGenerate": true
-        },
-        "indices": [],
-        "foreignKeys": []
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"b1f7c05f0d17efb5c90d9ada05c6e102\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"6ff71ec6773f8b1df333833b16ad921b\")"
     ]
   }
 }

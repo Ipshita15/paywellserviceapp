@@ -14,20 +14,29 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransport
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.adapter.OnClickListener
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.viewModel.BusTransportViewModel
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatInfo
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.seatLayout.SeatLayoutActivity
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.customView.horizontalDatePicker.commincation.IDatePicker
 import com.facebook.drawee.backends.pipeline.Fresco
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_bus_transport_list.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTransportListView {
+    override fun showSeatCheckAndBookingRepose(it: ResBusSeatCheckAndBlock) {
+
+
+    }
+
+    override fun showErrorMessage(meassage: String) {
+
+
+    }
+
     lateinit var viewMode: BusTransportViewModel
     lateinit var requestBusSearch: RequestBusSearch
     var isReSchuduler = false
@@ -35,7 +44,7 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
     var items = mutableListOf<TripScheduleInfoAndBusSchedule>()
 
     var busTripListAdapter: BusTripListAdapter? = null
-
+    lateinit var transport: Transport
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +64,9 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
         myDateTimelineViewBus.setOnDateChangeLincher(this)
 
         initViewModel()
-        viewMode.callLocalSearch(requestBusSearch)
+        transport = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.SELETED_BUS_INFO) as Transport
+
+        viewMode.callLocalSearch(requestBusSearch, transport)
 
 
         btSerachAgain.setOnClickListener {
@@ -82,10 +93,7 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
         shimmer_recycler_view.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
         shimmer_recycler_view.adapter = it.let { it1 ->
 
-
-            val transportID = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.TRANSPORT_ID) as String
-
-            busTripListAdapter = BusTripListAdapter(it1, applicationContext, requestBusSearch, transportID, object : OnClickListener {
+            busTripListAdapter = BusTripListAdapter(it1, applicationContext, requestBusSearch, transport, object : OnClickListener {
                 override fun onUpdateData(position: Int, resSeatInfo: ResSeatInfo) {
 
                     val get = items.get(position)
@@ -107,7 +115,14 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
                     } else if (model.resSeatInfo?.tototalAvailableSeat == 0) {
                         showDialogMesssage("seat not available")
                     } else {
+
+                        val toJson = Gson().toJson(model)
+                        val requestBusSearchJson = Gson().toJson(requestBusSearch)
+
+
                         val intent = Intent(applicationContext, SeatLayoutActivity::class.java)
+                        intent.putExtra("jsonData", toJson)
+                        intent.putExtra("requestBusSearch", requestBusSearchJson)
                         startActivity(intent)
                     }
                     // AppStorageBox.put(applicationContext, AppStorageBox.Key.SERACH_ID, mSearchId)
@@ -148,7 +163,7 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
 
         requestBusSearch.date = humanReadAbleDate
 
-        viewMode.callLocalSearch(requestBusSearch)
+        viewMode.callLocalSearch(requestBusSearch, transport)
 
 
     }
@@ -164,7 +179,7 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
 
         requestBusSearch.date = humanReadAbleDate
 
-        viewMode.callLocalSearch(requestBusSearch)
+        viewMode.callLocalSearch(requestBusSearch, transport)
 
     }
 

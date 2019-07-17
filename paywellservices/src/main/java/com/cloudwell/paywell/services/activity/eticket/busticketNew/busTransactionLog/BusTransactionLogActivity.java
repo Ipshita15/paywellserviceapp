@@ -3,7 +3,6 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransact
 import android.app.ProgressDialog;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -14,13 +13,11 @@ import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BusTransactionModel;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.transactionLog.Datum;
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.transactionLog.TestModel;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.transactionLog.TransactionLogDetailsModel;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,9 +27,9 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
 
     RecyclerView busTransactionRV;
     ArrayList allDataArrayList = new ArrayList();
-    private String date = "";
     BusTransactionLogAdapter adapter;
-    int limit=0;
+    int limit = 0;
+    private String date = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,55 +43,55 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
             getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.color_tab_background_bus)));
         }
 
-        limit=getIntent().getIntExtra(BusTicketMenuActivity.Companion.getKEY_LIMIT(),-1);
+        limit = getIntent().getIntExtra(BusTicketMenuActivity.Companion.getKEY_LIMIT(), -1);
         busTransactionRV = findViewById(R.id.busTransactionLogRV);
         busTransactionRV.setLayoutManager(new LinearLayoutManager(this));
-        adapter=new BusTransactionLogAdapter(allDataArrayList, BusTransactionLogActivity.this);
+        adapter = new BusTransactionLogAdapter(allDataArrayList, BusTransactionLogActivity.this);
         busTransactionRV.setAdapter(adapter);
         String userName = AppHandler.getmInstance(this).getImeiNo();
         String skey = ApiUtils.KEY_SKEY;
-        if (limit>0){
-            getTransactionLog(userName,skey,String.valueOf(limit));
-        }else {
+        if (limit > 0) {
+            getTransactionLog(userName, skey, String.valueOf(limit));
+        } else {
             Toast.makeText(this, "Internal error!!! limit can't be less than 5", Toast.LENGTH_SHORT).show();
         }
     }
 
-    void getTransactionLog(String userName,String skey,String limit){
+    void getTransactionLog(String userName, String skey, String limit) {
 
-        ProgressDialog progressDialog=new ProgressDialog(this);
+        ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Please wait...");
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        ApiUtils.getAPIServicePHP7().getBusTransactionLogFromServer(userName,skey,limit).enqueue(new Callback<TransactionLogDetailsModel>() {
+        ApiUtils.getAPIServicePHP7().getBusTransactionLogFromServer(userName, skey, limit).enqueue(new Callback<TransactionLogDetailsModel>() {
             @Override
             public void onResponse(Call<TransactionLogDetailsModel> call, Response<TransactionLogDetailsModel> response) {
-                if (response.isSuccessful()){
-                    TransactionLogDetailsModel transactionLogDetailsModel=response.body();
-                    if (transactionLogDetailsModel.getStatus()==200){
-                        for (Datum datum:transactionLogDetailsModel.getData()) {
-                            String transactionDate=datum.getTransactionDateTime().split(" ")[0];
+                if (response.isSuccessful()) {
+                    TransactionLogDetailsModel transactionLogDetailsModel = response.body();
+                    if (transactionLogDetailsModel.getStatus() == 200) {
+                        for (Datum datum : transactionLogDetailsModel.getData()) {
+                            String transactionDate = datum.getTransactionDateTime().split(" ")[0];
                             if (!date.equals(transactionDate)) {
                                 date = transactionDate;
                                 allDataArrayList.add(date);
                             }
-                            BusTransactionModel busTransactionModel=new BusTransactionModel(
-                                    transactionDate,datum.getTicketInfo().getBookingInfoId(),
-                                    datum.getStatusMessage(),datum.getTicketInfo().getWebBookingInfoId(),
+                            BusTransactionModel busTransactionModel = new BusTransactionModel(
+                                    transactionDate, datum.getTicketInfo().getBookingInfoId(),
+                                    datum.getStatusMessage(), datum.getTicketInfo().getWebBookingInfoId(),
                                     datum.getTicketInfo().getTotalAmount(),
                                     String.valueOf(datum.getCustomerInfo().getCustomerName()),
-                                    "Not available",String.valueOf(datum.getCustomerInfo().getCustomerPhone()),
-                                    datum.getTicketInfo().getTicketNo(),datum.getTicketInfo().getBoardingPointName(),
+                                    "Not available", String.valueOf(datum.getCustomerInfo().getCustomerPhone()),
+                                    datum.getTicketInfo().getTicketNo(), datum.getTicketInfo().getBoardingPointName(),
                                     String.valueOf(datum.getTicketInfo().getDepartureDate()),
-                                    datum.getTicketInfo().getDepartureTime(),datum.getTicketInfo().getSeatLbls(),
-                                    datum.getBusInfo().getCoachNo(),datum.getBusInfo().getBusName(),
+                                    datum.getTicketInfo().getDepartureTime(), datum.getTicketInfo().getSeatLbls(),
+                                    datum.getBusInfo().getCoachNo(), datum.getBusInfo().getBusName(),
                                     datum.getTicketInfo().getJourneyRoute().split("-")[0],
                                     datum.getTicketInfo().getJourneyRoute().split("-")[1]);
                             allDataArrayList.add(busTransactionModel);
                             adapter.notifyDataSetChanged();
                         }
-                    }else {
+                    } else {
                         Toast.makeText(BusTransactionLogActivity.this, "No data found.", Toast.LENGTH_SHORT).show();
                     }
                 }

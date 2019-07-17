@@ -15,9 +15,8 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.airRules.ResposeAirRules;
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.model.ResCommistionMaping;
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.model.ResInvoideEmailAPI;
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BusTransactionModel;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResBusSeatCheckAndBlock;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResGetBusListData;
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.transactionLog.TestModel;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.transactionLog.TransactionLogDetailsModel;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationReadAPI;
@@ -253,6 +252,42 @@ public interface APIService {
     @POST("paywellapi/index.php/PaywellParibahanService/getTransactionData")
     Call<TransactionLogDetailsModel> getBusTransactionLogFromServer(@Field("username") String username, @Field("skey") String skey, @Field("limit") String limit);
 
+
+    @FormUrlEncoded
+    @POST("paywellapi/index.php/PaywellParibahanService/seatCheckAndBlock")
+    Call<ResBusSeatCheckAndBlock> seatCheckAndBlock(@Field("userName") String username,
+                                                    @Field("skey") String skey,
+                                                    @Field("accessKey") String accessKey,
+                                                    @Field("transport_id") String transport_id,
+                                                    @Field("transport_lbls") String transport_lbls,
+                                                    @Field("route") String route,
+                                                    @Field("bus_id") String bus_id,
+                                                    @Field("bus_lbls") String bus_lbls,
+                                                    @Field("coach_no") String coach_no,
+                                                    @Field("departure_id") String departure_id,
+                                                    @Field("departure_date") String departure_date,
+                                                    @Field("departure_time") String departure_time,
+                                                    @Field("boarding_point_id") String boarding_point_id,
+                                                    @Field("boarding_point_name") String boarding_point_name,
+                                                    @Field("seat_ids") String seat_ids,
+                                                    @Field("seat_lbls") String seat_lbls,
+                                                    @Field("bus_is_ac") String bus_is_ac,
+                                                    @Field("extra_charge") Double extra_charge,
+                                                    @Field("ticket_price") Double ticket_price,
+                                                    @Field("total_amount") String total_amount);
+
+    @FormUrlEncoded
+    @POST("paywellapi/index.php/PaywellParibahanService/confirmPayment")
+    Call<ResBusSeatCheckAndBlock> confirmPayment(@Field("username") String username,
+                                                 @Field("skey") String skey,
+                                                 @Field("accessKey") String accessKey,
+                                                 @Field("transactionId") String transactionId,
+                                                 @Field("customerName") String customerName,
+                                                 @Field("customerPhone") String customerPhone,
+                                                 @Field("customerAddress") String customerAddress,
+                                                 @Field("customerEmail") String customerEmail,
+                                                 @Field("customerAge") String customerAge,
+                                                 @Field("password") String password);
 
 }
 

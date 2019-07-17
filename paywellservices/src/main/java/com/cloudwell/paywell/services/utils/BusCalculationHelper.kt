@@ -1,5 +1,7 @@
 package com.cloudwell.paywell.services.utils
 
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Transport
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
@@ -10,7 +12,9 @@ import java.util.*
  */
 object BusCalculationHelper {
 
-    fun getPrices(ticketPrice: String?, userDate: String): String {
+    fun getPricesWithExtraAmount(ticketPrice: String?, userDate: String, transport: Transport, isExtraAmount: Boolean): Double {
+        var totalPrices = ""
+
         val jsonObject = JSONObject(ticketPrice)
         val dateKey = jsonObject.keys()
         val dateKeyDefalt = jsonObject.keys()
@@ -21,7 +25,7 @@ object BusCalculationHelper {
             val userDate = sdf.parse(userDate)
             val date2 = sdf.parse(it)
             if (userDate.before(date2) || userDate.equals(date2)) {
-                return price
+                totalPrices = price
             }
 
         }
@@ -33,11 +37,30 @@ object BusCalculationHelper {
             next = dateKeyDefalt.next()
         }
         if (i == 1) {
-            return jsonObject.get(next).toString()
+            totalPrices = jsonObject.get(next).toString()
         }
 
-        return "0.0"
+        var toatlPriceDouble: Double
+        if (isExtraAmount) {
+            toatlPriceDouble = totalPrices.toDouble() + transport.extraCharge
+        } else {
+            toatlPriceDouble = totalPrices.toDouble()
+        }
+
+        return toatlPriceDouble
     }
+
+    public fun getACType(model: TripScheduleInfoAndBusSchedule): String {
+        var isAc = ""
+        if (model.busLocalDB?.busIsAc.equals("1")) {
+            isAc = "AC"
+        } else {
+            isAc = "NON AC"
+        }
+        return isAc
+    }
+
+
 }
 
 

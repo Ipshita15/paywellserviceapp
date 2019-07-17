@@ -9,45 +9,44 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketRepository
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatInfo
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Transport
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule
 import com.cloudwell.paywell.services.utils.BusCalculationHelper
 import kotlinx.android.synthetic.main.bus_trip_item_list.view.*
+import java.text.DecimalFormat
 
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 19/2/19.
  */
-class BusTripListAdapter(val items: List<TripScheduleInfoAndBusSchedule>, val context: Context, val requestBusSearch: RequestBusSearch, val transportID: String, val onClickListener: OnClickListener) : RecyclerView.Adapter<ViewHolderNew>() {
+class BusTripListAdapter(val items: List<TripScheduleInfoAndBusSchedule>, val context: Context, val requestBusSearch: RequestBusSearch, val transport: Transport, val onClickListener: OnClickListener) : RecyclerView.Adapter<ViewHolderNew>() {
 
     override fun onBindViewHolder(holder: ViewHolderNew, position: Int) {
         val model = items.get(position)
 
-        var isAc = ""
-        if (model.busLocalDB?.busIsAc.equals("1")) {
-            isAc = "AC"
-        } else {
-            isAc = "NON AC"
-        }
+        val isAc = BusCalculationHelper.getACType(model)
 
         holder.tvTransportNameAndType.text = (model.busLocalDB?.name?.toUpperCase()
                 ?: "") + ", " + isAc
+        holder.tvTransportNameAndType.text = "" + (model.resSeatInfo?.allBusSeat?.size ?: "")
         holder.tvCoachNo.text = ": " + model.busSchedule?.coachNo
         holder.tvDepartureTime.text = ": " + (model.busSchedule?.scheduleTime ?: "")
 
 
-        val prices = BusCalculationHelper.getPrices(model.busSchedule?.ticketPrice, requestBusSearch.date)
-        holder.tvPrices.text = prices
+        val prices = BusCalculationHelper.getPricesWithExtraAmount(model.busSchedule?.ticketPrice, requestBusSearch.date, transport, true)
+        holder.tvPrices.text = DecimalFormat("#").format(prices)
 
 
         // val departureId = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.DEPARTURE_ID) as String
 
 
-        val transport_id = transportID
+        val transport_id = transport.busid
         val route = requestBusSearch.from + "-" + requestBusSearch.to
         val bus_id = "" + (model.busLocalDB?.busID ?: "")
         val departure_id = model.busSchedule!!.schedule_time_id
         val departure_date = requestBusSearch.date
         val seat_ids = model.busSchedule?.allowedSeatNumbers ?: ""
+
 
 
         if (model.resSeatInfo == null) {
@@ -58,7 +57,6 @@ class BusTripListAdapter(val items: List<TripScheduleInfoAndBusSchedule>, val co
                 holder.progressBar.visibility = View.INVISIBLE
                 val tototalAvailableSeat = it?.tototalAvailableSeat ?: 0
                 holder.tvAvailableSeat.text = ": " + tototalAvailableSeat
-
 
                 if (it != null) {
                     onClickListener.onUpdateData(position, it)

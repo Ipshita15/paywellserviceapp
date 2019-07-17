@@ -1,9 +1,8 @@
-
 package com.cloudwell.paywell.services.activity.eticket.busticketNew.model.transactionLog;
 
-import java.util.List;
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 @SuppressWarnings("unused")
 public class TransactionLogDetailsModel {
