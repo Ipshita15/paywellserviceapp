@@ -64,11 +64,13 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
                 break;
             case TYPE_ITEM:
                 TextView bookingId = holder.itemView.findViewById(R.id.bookingIdTV);
+                TextView webBookingId = holder.itemView.findViewById(R.id.webBookingId);
                 TextView amount = holder.itemView.findViewById(R.id.priceTV);
                 TextView status = holder.itemView.findViewById(R.id.statusTV);
                 bookingId.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getBookingId());
                 amount.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getTicketPrice());
                 status.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getBookingStatus());
+                webBookingId.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getWebBookingId());
                 LinearLayout linearLayout = holder.itemView.findViewById(R.id.mainClickLL);
                 linearLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -80,27 +82,37 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
                                         View view1 = inflater.inflate(R.layout.transaction_details_dialog, container, false);
                                         Toolbar toolbar = view1.findViewById(R.id.toolbar);
                                         TextView bookingId = view1.findViewById(R.id.bookingIdTV);
+                                        TextView webBookingId = view1.findViewById(R.id.webBookingIdTV);
                                         TextView travelDateTV = view1.findViewById(R.id.travelDateTV);
                                         TextView priceTv = view1.findViewById(R.id.priceTV);
                                         TextView customerNameTV = view1.findViewById(R.id.customerNameTV);
                                         TextView customerGenderTV = view1.findViewById(R.id.customerGenderTV);
-                                        TextView departureTV = view1.findViewById(R.id.departureTimeTV);
+                                        TextView customerMobileTV = view1.findViewById(R.id.mobileNumTV);
+                                        TextView ticketNum = view1.findViewById(R.id.ticketNumTV);
+                                        TextView boardingPoint = view1.findViewById(R.id.boardingPointTV);
+                                        TextView departureDateTV = view1.findViewById(R.id.departureDateTV);
+                                        TextView departureTimeTV = view1.findViewById(R.id.departureTimeTV);
                                         TextView seatNumTV = view1.findViewById(R.id.seatNumTV);
                                         TextView coachNumTV = view1.findViewById(R.id.coachNumTV);
                                         TextView transportNameTV = view1.findViewById(R.id.transportNameTV);
                                         TextView journeyFromTV = view1.findViewById(R.id.journeyFromTV);
                                         TextView journeyToTV = view1.findViewById(R.id.journeyToTV);
                                         bookingId.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getBookingId());
+                                        webBookingId.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getWebBookingId());
                                         travelDateTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getDepartureDate());
                                         priceTv.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getTicketPrice());
                                         customerNameTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getCustomerName());
                                         customerGenderTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getCustomerGender());
-                                        departureTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getDepartureDate());
+                                        departureTimeTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getDepartureTime());
                                         seatNumTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getSeatNum());
                                         coachNumTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getCoachNum());
                                         transportNameTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getBusName());
                                         journeyFromTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getTravellingTo());
                                         journeyToTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getTravellingFrom());
+                                        customerMobileTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getCustomerPhone());
+                                        ticketNum.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getTicketNum());
+                                        boardingPoint.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getBoardingPoint());
+                                        departureDateTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getDepartureDate());
 
                                         toolbar.setNavigationIcon(R.drawable.close);
                                         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

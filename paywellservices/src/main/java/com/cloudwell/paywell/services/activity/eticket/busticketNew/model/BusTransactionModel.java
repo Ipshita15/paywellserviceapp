@@ -12,6 +12,9 @@ public class BusTransactionModel {
     private String ticketPrice;
     private String customerName;
     private String customerGender;
+    private String customerPhone;
+    private String ticketNum;
+    private String boardingPoint;
     private String departureDate;
     private String departureTime;
     private String seatNum;
@@ -20,7 +23,9 @@ public class BusTransactionModel {
     private String travellingTo;
     private String travellingFrom;
 
-    public BusTransactionModel(String transactionDate, String bookingId, String bookingStatus, String webBookingId, String ticketPrice, String customerName, String customerGender, String departureDate, String departureTime, String seatNum, String coachNum, String busName, String travellingTo, String travellingFrom) {
+    public BusTransactionModel(){}
+
+    public BusTransactionModel(String transactionDate, String bookingId, String bookingStatus, String webBookingId, String ticketPrice, String customerName, String customerGender,String customerPhone,String ticketNum,String boardingPoint, String departureDate, String departureTime, String seatNum, String coachNum, String busName, String travellingTo, String travellingFrom) {
         this.transactionDate = transactionDate;
         this.bookingId = bookingId;
         this.bookingStatus = bookingStatus;
@@ -35,6 +40,9 @@ public class BusTransactionModel {
         this.busName = busName;
         this.travellingTo = travellingTo;
         this.travellingFrom = travellingFrom;
+        this.customerPhone = customerPhone;
+        this.ticketNum = ticketNum;
+        this.boardingPoint = boardingPoint;
     }
 
     public String getTransactionDate() {
@@ -133,6 +141,14 @@ public class BusTransactionModel {
         this.travellingTo = travellingTo;
     }
 
+    public String getCustomerPhone() {
+        return customerPhone;
+    }
+
+    public void setCustomerPhone(String customerPhone) {
+        this.customerPhone = customerPhone;
+    }
+
     public String getTravellingFrom() {
         return travellingFrom;
     }
@@ -147,5 +163,21 @@ public class BusTransactionModel {
 
     public void setBookingStatus(String bookingStatus) {
         this.bookingStatus = bookingStatus;
+    }
+
+    public String getTicketNum() {
+        return ticketNum;
+    }
+
+    public void setTicketNum(String ticketNum) {
+        this.ticketNum = ticketNum;
+    }
+
+    public String getBoardingPoint() {
+        return boardingPoint;
+    }
+
+    public void setBoardingPoint(String boardingPoint) {
+        this.boardingPoint = boardingPoint;
     }
 }

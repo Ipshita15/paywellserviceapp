@@ -89,8 +89,7 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
             }
 
             R.id.btTransationLog -> {
-//                showLimitPrompt(TRX_TAG)
-                startActivity(Intent(applicationContext, BusTransactionLogActivity::class.java))
+                showLimitPrompt(TRX_TAG)
 
             }
 
@@ -153,7 +152,7 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
 //                    intent.putExtra(KEY_LIMIT, selectedLimit)
 //                    startActivity(intent)
 //                } else if (tag.equals(TRX_TAG)) {
-                val intent = Intent(application, AirThicketTranslationLogActivity::class.java)
+                val intent = Intent(application, BusTransactionLogActivity::class.java)
                 intent.putExtra(KEY_LIMIT, selectedLimit)
                 startActivity(intent)
 //                }

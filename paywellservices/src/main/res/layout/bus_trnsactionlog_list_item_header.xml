@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#e6e6e6"
+    android:padding="5dp"
     android:orientation="horizontal">
 
     <ImageView
@@ -21,7 +22,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:text="Header"
-        android:textColor="#000000"
+        android:textColor="#4ca896"
         android:textStyle="bold" />
 
 </LinearLayout>
