@@ -3,6 +3,7 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransact
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.FragmentTransaction;
+import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -124,6 +125,14 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
                                         toolbar.setBackgroundColor(context.getResources().getColor(R.color.color_tab_background_bus));
                                         toolbar.setTitle("Transaction Details");
                                         return view1;
+                                    }
+                                    @Override
+                                    public int describeContents() {
+                                        return 0;
+                                    }
+
+                                    @Override
+                                    public void writeToParcel(Parcel parcel, int i) {
                                     }
                                 });
                         FragmentTransaction ft = context.getFragmentManager().beginTransaction();
