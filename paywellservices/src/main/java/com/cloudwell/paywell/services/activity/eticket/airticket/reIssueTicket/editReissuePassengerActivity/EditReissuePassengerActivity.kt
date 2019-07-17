@@ -3,14 +3,11 @@ package com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.
 import android.Manifest
 import android.app.Activity
 import android.app.DatePickerDialog
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.annotation.Nullable
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -19,13 +16,11 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Passenger
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.fragment.GenderBottomSheetDialog
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.fragment.NameTitleSheetDialog
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.fragment.PassengerTypeSheetDialog
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.model.MyCountry
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.view.PassgerAddViewStatus
-import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.viewmodel.AddPassengerViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.ReIssueTicketActivity
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.constant.AllConstant.emailPattern
@@ -41,7 +36,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.mukesh.countrypicker.Country
 import com.mukesh.countrypicker.CountryPicker
 import com.mukesh.countrypicker.listeners.OnCountryPickerListener
-import kotlinx.android.synthetic.main.contant_add_passenger.*
+import kotlinx.android.synthetic.main.contant_reissue_containt.*
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -52,17 +47,12 @@ class EditReissuePassengerActivity : AirTricketBaseActivity() {
 
     val REQUEST_IMAGE = 100
 
-    private lateinit var viewMode: AddPassengerViewModel
-    lateinit var touchHelper: ItemTouchHelper
 
-    lateinit var resposeAirPriceSearch: ResposeAirPriceSearch
     var passportMadatory = false
 
 
     var isEmailValid = false
     var countryCode = ""
-
-    var isEditFlag = false
 
 
     private lateinit var oldPassenger: Passenger
@@ -70,7 +60,6 @@ class EditReissuePassengerActivity : AirTricketBaseActivity() {
     private var visaImagePath = ""
     var isFistTime = true
 
-    var isValidation = false
     var isPassortClick = false
 
 
@@ -88,32 +77,20 @@ class EditReissuePassengerActivity : AirTricketBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_passenger_edit_reissue_passenger)
 
-        setToolbar(getString(R.string.title_add_passenger))
+        setToolbar(getString(R.string.title_edit_passenger))
 
         id = intent.extras.getInt("id", 0)
         val get = ReIssueTicketActivity.passengers.get(id)
 
+        if (ReIssueTicketActivity.item.trip_type.equals("Local")) {
+            passportMadatory = false
+        } else {
+            passportMadatory = true
+        }
+
         initializationView(get)
 
-
-//        initViewModel()
-
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-
-
-    }
-
-    private fun initViewModel() {
-        viewMode = ViewModelProviders.of(this).get(AddPassengerViewModel::class.java)
-
-        viewMode.baseViewStatus.observe(this, android.arch.lifecycle.Observer {
-            handleViewCommonStatus(it)
-        })
-
-
-        viewMode.mViewStatus.observe(this, Observer {
-            it?.let { it1 -> handleViewStatus(it1) }
-        })
 
 
     }
@@ -126,8 +103,6 @@ class EditReissuePassengerActivity : AirTricketBaseActivity() {
 
 
     private fun initializationView(get: Passenger) {
-
-
         oldPassenger = get
 
         val paxType = oldPassenger.paxType
@@ -149,77 +124,45 @@ class EditReissuePassengerActivity : AirTricketBaseActivity() {
         val countryCode1 = CountryUtility.getCountryCode(oldPassenger.countryCode)
         etCountry.setText("" + countryCode1.toString())
 
-//        val countriesString = AssetHelper().loadJSONFromAsset(applicationContext, "countries.json")
-//        val countries = Gson().fromJson(countriesString, Array<MyCountry>::class.java)
-//        countries.forEach {
-//            if (it.en_short_name.equals(oldPassenger.countryCode)) {
-//                country = it.nationality
-//            }
-//        }
+
+        countryCode = "" + oldPassenger.countryCode
 
 
-//
-//                if (!oldPassenger.passportImagePath.equals("")) {
-//                    passportImagePath = oldPassenger.passportImagePath
-//                    ivPassportPageUpload.setImageResource(R.drawable.ic_passport_seleted)
-//                } else {
-//                    ivPassportPageUpload.setImageResource(R.drawable.ic_passport_unseleted)
-//                }
-//
-//                if (!oldPassenger.visa_content.equals("")) {
-//                    visaImagePath = oldPassenger.visa_content
-//                    ivVisaPageUpload.setImageResource(R.drawable.visa_eanble)
-//                } else {
-//                    ivVisaPageUpload.setImageResource(R.drawable.visa_disable)
-//                }
-//
-//
-//        if (!oldPassenger.nIDnumber.equals("")) {
-//            etNationalIDNumber.setText(oldPassenger.nIDnumber)
-//        } else {
-//            textInputLayoutNId.visibility = View.GONE
-//        }
-//
-//                if (oldPassenger.isLeadPassenger) {
-//                    isLeadPassenger.isChecked = true
-//                    isLeadPassenger.visibility = View.VISIBLE
-//
-//                } else {
-//                    if (oldPassenger.paxType.equals(getString(R.string.adult))) {
-//                        isLeadPassenger.visibility = View.VISIBLE
-//                        isLeadPassenger.isChecked = false
-//                    } else {
-//                        isLeadPassenger.visibility = View.GONE
-//                        isLeadPassenger.isChecked = false
-//                    }
-//                }
-//
-//
-//                this.countryCode = oldPassenger.countryCode
-//
-//
+        if (passportMadatory) {
+            etNidorPassportNumber.setHint(getString(R.string.hit_passport_number) + "*")
+            etPassportExpiryDate.setHint(getString(R.string.passport_expiry_date) + "*")
+            etpassportNationality.setHint(getString(R.string.passport_nationality_mannotory) + "*")
+
+        } else {
+            etNidorPassportNumber.visibility = View.GONE
+            textInputLayoutPassport.visibility = View.GONE
+
+            etPassportExpiryDate.visibility = View.GONE
+            textInputLayoutPassportExpiryDate.visibility = View.GONE
+
+            etpassportNationality.visibility = View.GONE
+            textLayoutPassportNationality.visibility = View.GONE
+
+        }
+
         btn_add.setText(getString(R.string.edit))
-//
-//
-//
-//
+
         btn_add.setOnClickListener {
             addPassenger()
         }
-//
-//
+
         etPassengerType.setOnClickListener {
 
             handlePassengerType()
         }
-//
+
         etPassengerType.setOnFocusChangeListener(View.OnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
                 handlePassengerType()
             }
         })
 
-//
+
         etCountry.setOnClickListener {
             handleCountry(KEY_COUNTRY)
         }
@@ -439,14 +382,6 @@ class EditReissuePassengerActivity : AirTricketBaseActivity() {
             val bottomSheet = PassengerTypeSheetDialog()
             bottomSheet.setOnClassListener(object : PassengerTypeSheetDialog.ClassBottomSheetListener {
                 override fun onButtonClickListener(text: String) {
-//                    if (text.equals(getString(R.string.adult))) {
-//                        isLeadPassenger.visibility = View.VISIBLE
-//                        isLeadPassenger.isChecked = true
-//                    } else {
-//                        isLeadPassenger.visibility = View.GONE
-//                        isLeadPassenger.isChecked = false
-//                    }
-
                     etPassengerType.setText(text)
                 }
 
@@ -463,7 +398,7 @@ class EditReissuePassengerActivity : AirTricketBaseActivity() {
     private fun addPassenger() {
 
 
-        val passengerType = this.etPassengerType.text.toString().trim().toLowerCase()
+        val passengerType = this.etPassengerType.text.toString()
         val title = this.etTitle.text.toString().trim()
         val firstName = this.etFirstName.text.toString().trim()
         val lastName = this.etLastName.text.toString().trim()
@@ -572,16 +507,6 @@ class EditReissuePassengerActivity : AirTricketBaseActivity() {
                 return
             }
 
-//            if (passportImagePath.equals("")) {
-//                showDialogMesssage(getString(R.string.passport_image_mandatory))
-//                return
-//            }
-//
-//            if (visaImagePath.equals("")) {
-//                showDialogMesssage(getString(R.string.visa_image_mandatory))
-//                return
-//            }
-
         }
 
 
@@ -601,43 +526,6 @@ class EditReissuePassengerActivity : AirTricketBaseActivity() {
         passenger.passportExpiryDate = passportExpiryDate
         passenger.passportNationality = passportNationalityCountry
 
-//        passenger.passportImagePath = passportImagePath
-//        passenger.visa_content = visaImagePath
-//        passenger.nIDnumber = nationalIDNumber
-//        passenger.isLeadPassenger = isLeadPassenger.isChecked
-
-
-        // for auto seletion in passenger list
-//        if (isValidation) {
-//            passenger.isPassengerSleted = true
-//        } else {
-//            passenger.isPassengerSleted = false
-//        }
-
-
-//        if (!passportImagePath.equals("")) {
-//            val lastIndexOf = passportImagePath.lastIndexOf('.')
-//            if (lastIndexOf > 0) {
-//                val extension = passportImagePath.substring(lastIndexOf + 1);
-//                passenger.file_extension = extension
-//            }
-//        }
-//
-//        if (!visaImagePath.equals("")) {
-//            val lastIndexOf = visaImagePath.lastIndexOf('.')
-//            if (lastIndexOf > 0) {
-//                val extension = visaImagePath.substring(lastIndexOf + 1);
-//                passenger.visa_extension = extension
-//            }
-//        }
-
-
-//        if (isEditFlag) {
-//            passenger.id = oldPassenger.id
-//            viewMode.updatePassenger(passenger)
-//        } else {
-//            viewMode.addPassenger(passenger)
-//        }
         ReIssueTicketActivity.passengers.set(id, passenger)
         finish()
 

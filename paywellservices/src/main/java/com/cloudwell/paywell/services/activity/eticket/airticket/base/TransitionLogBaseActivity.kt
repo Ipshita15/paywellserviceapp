@@ -26,8 +26,8 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.D
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.BookingCancelActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.PriceChangeFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.TicketActionMenuFragment
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.TicketStatusFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.TricketChooserFragment
-import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.TricketingStatusFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.ResIssueTicket
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.viewModel.BookingStatsViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketCencel.TricketCancelActivity
@@ -67,9 +67,15 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
 
         tricketChooserFragment.setOnClickHandlerTest(object : TicketActionMenuFragment.OnClickHandler {
             override fun onReschedule(item: Datum) {
-                val mAppHandler = AppHandler.getmInstance(applicationContext)
-                val userName = mAppHandler.imeiNo
-                callCancelMapping(userName, item.bookingId!!, "", KEY_ReSchedule, item)
+
+                if (item.journeyType.equals("MultiStop")) {
+                    showDialogMesssage("MultiStop reschedule request can't accept")
+                } else {
+                    val mAppHandler = AppHandler.getmInstance(applicationContext)
+                    val userName = mAppHandler.imeiNo
+                    callCancelMapping(userName, item.bookingId!!, "", KEY_ReSchedule, item)
+                }
+
 
             }
 
@@ -83,9 +89,14 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
             }
 
             override fun onReissue(item: Datum) {
-                val mAppHandler = AppHandler.getmInstance(applicationContext)
-                val userName = mAppHandler.imeiNo
-                callCancelMapping(userName, item.bookingId!!, "", KEY_ReIssue, item)
+
+                if (item.journeyType.equals("MultiStop")) {
+                    showDialogMesssage("MultiStop re-issue request can't accept")
+                } else {
+                    val mAppHandler = AppHandler.getmInstance(applicationContext)
+                    val userName = mAppHandler.imeiNo
+                    callCancelMapping(userName, item.bookingId!!, "", KEY_ReIssue, item)
+                }
             }
 
             override fun onClickIsisThicketButton() {
@@ -251,8 +262,8 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
 
 
     public fun showMsg(msg: String) {
-        val t = TricketingStatusFragment()
-        TricketingStatusFragment.message = msg
+        val t = TicketStatusFragment()
+        TicketStatusFragment.message = msg
         t.show(supportFragmentManager, "dialog")
 
 

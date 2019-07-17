@@ -19,7 +19,7 @@ class AKShopRepo(val aPIService: APIService) {
         val data = MutableLiveData<ResEKReport>()
 
         val mAppHandler = AppHandler.getmInstance(AppController.getContext())
-        val rid = "cwntcl"
+        val rid = mAppHandler.rid
         val url = AppController.getContext().getString(R.string.ek_report)
 
 

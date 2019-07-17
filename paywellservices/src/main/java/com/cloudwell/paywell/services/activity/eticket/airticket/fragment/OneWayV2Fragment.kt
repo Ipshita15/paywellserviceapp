@@ -352,6 +352,9 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
 
             view.btn_search.setText("Reschedule search")
 
+            view.tsOneWayTripFromPort.visibility = View.INVISIBLE
+            view.tsOneWayTripToPort.visibility = View.INVISIBLE
+
 
         }
     }

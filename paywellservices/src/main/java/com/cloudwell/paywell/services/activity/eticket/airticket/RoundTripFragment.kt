@@ -567,6 +567,9 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
 
             view.btn_search.setText("Reschedule search")
 
+            view.tsRoundTripFromPort.visibility = View.INVISIBLE
+            view.tsRoundTripToPort.visibility = View.INVISIBLE
+
 
         }
 

@@ -18,12 +18,8 @@ class AdapterForPassengersFinalList(var context: Context, var items: List<Passen
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
-
         val view = LayoutInflater.from(context).inflate(R.layout.passenger_list_item_final, parent, false)
         return ViewHolder(view)
-
-
     }
 
 
@@ -67,7 +63,6 @@ class AdapterForPassengersFinalList(var context: Context, var items: List<Passen
             holder.tvNid.text = "National ID: " + model.nIDnumber
         }
 
-
         if (model.passportExpiryDate.equals("")) {
             holder.tvPassportExpiryDate.visibility = View.GONE
         } else {
@@ -97,7 +92,6 @@ class AdapterForPassengersFinalList(var context: Context, var items: List<Passen
     public fun setOnClickListener(onClickListener: OnClickListener) {
         this.onClickListener = onClickListener
     }
-
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvShortFirstNameLastName = view.tvShortFirstNameLastName

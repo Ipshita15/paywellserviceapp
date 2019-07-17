@@ -29,6 +29,8 @@ class BookingStatsViewModel : AirTicketBaseViewMode() {
                 if (checkNetworkAndStatusCode) {
                     mViewStatus.value = BookingStatuViewStatus(isShowProcessIndicatior = false)
                     responseList.value = it
+                } else {
+                    responseList.value = null
                 }
 
             }

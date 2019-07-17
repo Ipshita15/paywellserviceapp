@@ -11,6 +11,7 @@ import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.constant.AllConstant
 import com.orhanobut.logger.Logger
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection
+import java.text.NumberFormat
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 17/1/19.
@@ -47,18 +48,21 @@ class TransitionRVSectionAdapter(private val title: String, private val list: Li
         }
 
         iHolder.tvBookingId.text = "Booking ID: " + model.bookingId!!
-        iHolder.tvTricketPrices.text = "Price: " + model.currency + " " + `model`.totalFare
+        iHolder.tvTricketPrices.text = model.currency + " " + NumberFormat.getInstance().format(model.total_fare_calculated.toDouble())
         iHolder.tvStatus.text = "Status: " + model.message!!
 
 
         if (`model`.message != null) {
             if (`model`.invoiceUrl != null) {
                 iHolder.ivSymbolTicketed.visibility = View.VISIBLE
+                iHolder.viewPdfView.visibility = View.VISIBLE
             } else {
                 iHolder.ivSymbolTicketed.visibility = View.INVISIBLE
+                iHolder.viewPdfView.visibility = View.INVISIBLE
             }
         } else {
             iHolder.ivSymbolTicketed.visibility = View.INVISIBLE
+            iHolder.viewPdfView.visibility = View.INVISIBLE
         }
 
 
@@ -69,6 +73,12 @@ class TransitionRVSectionAdapter(private val title: String, private val list: Li
             }
         }
 
+        iHolder.viewPdfView.setOnClickListener {
+            if (`model`.invoiceUrl != null) {
+                Logger.v("InvoiceURl: " + model.invoiceUrl)
+                onActionButtonClick!!.onItemClick(model)
+            }
+        }
         val m = model.message
         if (m.equals(AllConstant.CancelInProcess) || m.equals(AllConstant.Expired) || m.equals(AllConstant.Cancelled) || m.equals(AllConstant.InProcess) || m.equals(AllConstant.Pending) || m.equals(AllConstant.UnConfirmed)) {
             iHolder.tvAction.visibility = View.GONE
@@ -112,6 +122,7 @@ class TransitionRVSectionAdapter(private val title: String, private val list: Li
         internal var ivSymbolTicketed: ImageView
         internal var tvAction: ImageView
         internal var viewBackgroudAction: View
+        internal var viewPdfView: View
 
 
         init {
@@ -122,6 +133,7 @@ class TransitionRVSectionAdapter(private val title: String, private val list: Li
             ivSymbolTicketed = view.findViewById(R.id.ivSymbolTicketed)
             tvAction = view.findViewById(R.id.ivActionTrans)
             viewBackgroudAction = view.findViewById(R.id.viewBackgroudAction1)
+            viewPdfView = view.findViewById(R.id.viewPdfView)
 
         }
     }

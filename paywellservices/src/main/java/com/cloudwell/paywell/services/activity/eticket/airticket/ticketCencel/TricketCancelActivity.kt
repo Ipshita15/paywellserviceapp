@@ -77,7 +77,6 @@ class TricketCancelActivity : AirTricketBaseActivity() {
 
                 val reason = bookingCancelReasonSPNR!!.selectedItem.toString()
 
-//                askForPin(bookingIdET!!.text.toString(), bookingCancelReasonSPNR!!.selectedItem.toString(), title)
                 callCancelMapping(userName, bookingIdET.getText().toString(), reason, AirTricketBaseActivity.KEY_ticket_cancel, Datum())
 
 
@@ -95,38 +94,6 @@ class TricketCancelActivity : AirTricketBaseActivity() {
 
     }
 
-
-//    private fun submitReissueAndReschedule(userName: String, pass: String, bookingId: String, cancelReason: String, searchId: String, resultID: String, apiFormat: String) {
-//        showProgressDialog()
-//
-//
-//        ApiUtils.getAPIService().reIssueTicket(userName, pass, bookingId, cancelReason, searchId, resultID, apiFormat).enqueue(object : Callback<JsonObject> {
-//            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-//                dismissProgressDialog()
-//
-//                if (response.isSuccessful) {
-//
-//                    if (response.isSuccessful) {
-//                        val jsonObject = response.body()
-//                        val message = jsonObject!!.get("message_details").asString
-//                        if (jsonObject.get("status").asInt == 200) {
-//                            showMsg(message)
-//                        } else {
-//                            showMsg(message)
-//                        }
-//
-//                    }
-//                }
-//
-//            }
-//
-//            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-//                Toast.makeText(this@TricketCancelActivity, "Network error!!!", Toast.LENGTH_SHORT).show()
-//                dismissProgressDialog()
-//            }
-//        })
-//
-//    }
 
     private fun showMsg(msg: String) {
 
@@ -148,55 +115,6 @@ class TricketCancelActivity : AirTricketBaseActivity() {
     override fun onBackPressed() {
         finish()
     }
-
-
-//    private fun callCancelMapping(userName: String, bookingId: String) {
-//
-//        showProgressDialog()
-//
-//        ApiUtils.getAPIService().getCancelMap(userName, bookingId).enqueue(object : Callback<ResCancellationMapping> {
-//            override fun onResponse(call: Call<ResCancellationMapping>, response: Response<ResCancellationMapping>) {
-//                dismissProgressDialog()
-//                assert(response.body() != null)
-//                if (response.body()!!.status == 200) {
-//                    showUserCencelData(response.body())
-//
-//                } else {
-//                    showSnackMessageWithTextMessage(response.body()!!.message)
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<ResCancellationMapping>, t: Throwable) {
-//                dismissProgressDialog()
-//                showSnackMessageWithTextMessage(getString(R.string.please_try_again))
-//
-//            }
-//
-//
-//        })
-//    }
-//
-//    private fun showUserCencelData(r: ResCancellationMapping?) {
-//
-//        val priceChangeFragment = CancellationFeeFragment()
-//        CancellationFeeFragment.resCencelMaping = r!!
-//
-//        priceChangeFragment.setOnClickHandlerTest(object : CancellationFeeFragment.OnClickHandler {
-//            override fun onClickActionIssueTicket(cancellationFee: Double) {
-//                mCancellationFee = cancellationFee
-//                hiddenSoftKeyboard()
-//
-//
-//                askForPin(bookingIdET!!.text.toString(), bookingCancelReasonSPNR!!.selectedItem.toString())
-//
-//
-//            }
-//        })
-//
-//        priceChangeFragment.show(supportFragmentManager, "dialog")
-//
-//
-//    }
 
     companion object {
         var KEY_BOOKING_ID = "Booking_Id"

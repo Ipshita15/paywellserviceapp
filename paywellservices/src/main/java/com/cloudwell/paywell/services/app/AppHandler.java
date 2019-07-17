@@ -158,6 +158,7 @@ public class AppHandler {
     private static final String SECUTIRY_TOEKN = "SECUTIRY_TOEKN";
 
     public static final int MULTI_CITY_LIMIT = 5;
+    public static final String IVAC_CENTER_LOCK = "IVAC_CENTER_LOCK";
 
 
     public AppHandler() {
@@ -707,6 +708,15 @@ public class AppHandler {
 
     public void setPictureArrayImageLink(String toString) {
         editor.putString(PictureArrayImageLink, toString);
+        editor.commit();
+    }
+
+    public boolean isIVACCenterLock() {
+        return mPref.getBoolean(IVAC_CENTER_LOCK, false);
+    }
+
+    public void setIVACCenterLock(Boolean check) {
+        editor.putBoolean(IVAC_CENTER_LOCK, check);
         editor.commit();
     }
 
