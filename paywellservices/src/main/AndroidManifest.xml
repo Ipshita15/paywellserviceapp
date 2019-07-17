@@ -47,9 +47,11 @@
     <uses-permission
         android:name="android.permission.PROCESS_OUTGOING_CALLS"
         tools:node="remove"/>
+
     <uses-permission
         android:name="android.permission.CALL_PHONE"
         tools:node="remove"/>
+
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -278,12 +280,11 @@
             android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
-
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cloudwell.paywell.services.activity.MainActivity"/>
-        </activity> <!-- Transport ticket activities -->
+        </activity> <!-- Bus ticket activities -->
         <activity
             android:name=".activity.eticket.busticket.JourneyDateActivity"
             android:parentActivityName=".activity.eticket.busticket.BusMainActivity"
@@ -387,12 +388,6 @@
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
-            <!-- <intent-filter> -->
-            <!-- <action android:name="com.cloudwell.paywell.services.MESSAGE" /> -->
-            <!-- &lt;!&ndash; <action android:name="android.intent.action.VIEW"/> &ndash;&gt; -->
-            <!-- <category android:name="android.intent.category.DEFAULT" /> -->
-            <!-- </intent-filter> -->
-            <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cloudwell.paywell.services.activity.MainActivity"/>
@@ -1151,43 +1146,56 @@
         <activity
             android:name=".activity.eticket.airticket.menu.AirTicketMenuActivity"
             android:label="@string/title_activity_air_tricket_menu"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name=".activity.eticket.airticket.flightSearch.FlightSearchViewActivity"
             android:label="@string/title_activity_air_tricket_menu"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name=".activity.eticket.airticket.airportSearch.search.AirportsSearchActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+
+        </activity>
         <activity
             android:name=".activity.eticket.airticket.flightDetails1.FlightDetails1Activity"
             android:label="@string/title_activity_air_tricket_menu"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name=".activity.eticket.airticket.flightDetails2.FlightDetails2Activity"
             android:label="@string/title_flightDetails2"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name=".activity.eticket.airticket.passengerList.PassengerListActivity"
             android:label="@string/title_passenger_list"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name=".activity.eticket.airticket.passengerAdd.AddPassengerActivity"
             android:label="@string/title_add_passenger"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name=".activity.eticket.airticket.finalReview.AllSummaryActivity"
             android:label="@string/title_all_summary"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:name=".activity.eticket.airticket.flightDetails1.fragment.BaggageAndPoliciesActiivty"
             android:label="@string/title_activity_baggage_and_policies_actiivty"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:name=".activity.eticket.airticket.bookingCencel.BookingCancelActivity"
             android:label="@string/tile_cencel_booking"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name=".libaray.imagePickerAndCrop.ImagePickerActivity"
             android:screenOrientation="portrait"/> <!-- uCrop cropping activity -->
@@ -1198,51 +1206,77 @@
         <activity
             android:name=".activity.eticket.airticket.booking.BookingStatusActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
         <activity
             android:name=".activity.eticket.airticket.transationLog.AirThicketTranslationLogActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
         <activity
             android:name=".activity.eticket.airticket.ticketViewer.TicketViewerActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
         <activity
             android:name=".activity.eticket.airticket.ticketViewer.emailTicket.PassengerEmailSendListActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
         <activity
             android:name=".activity.eticket.airticket.transationLog.viewBookingInfo.ViewBookingInfoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
         <activity
             android:name=".activity.eticket.busticketNew.search.BusSelectActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
         <activity
             android:name=".activity.eticket.busticketNew.search.BusCitySearchActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
         <activity
             android:name=".activity.eticket.airticket.ticketCencel.TricketCancelActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
         <activity
             android:name=".activity.eticket.airticket.reIssueTicket.ReIssueTicketActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
         <activity
             android:name=".activity.eticket.airticket.reIssueTicket.editReissuePassengerActivity.EditReissuePassengerActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
         <activity
             android:name=".activity.eticket.busticketNew.menu.BusTicketMenuActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
         <activity
             android:name=".activity.eticket.busticketNew.seatLayout.SeatLayoutActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
         <activity
             android:name=".activity.eticket.busticketNew.busTransportList.BusTransportListActivity"
             android:screenOrientation="portrait"
@@ -1257,6 +1291,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
+        <activity
+            android:name=".activity.eticket.busticketNew.busTransactionLog.BusTransactionLogActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
 
         <receiver android:name=".ActionReceiver"/>
 

@@ -154,6 +154,9 @@
         <item name="android:windowBackground">@color/white</item>
 
         <!-- Additionally if you want animations when dialog opening -->
+
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
     </style>
 
     <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
