@@ -9,7 +9,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
 import android.support.v7.app.AlertDialog
-import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.InputType
@@ -40,16 +39,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketM
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.AddPassengerActivity
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import kotlinx.android.synthetic.main.all_summaray_bottom_sheet.*
-import kotlinx.android.synthetic.main.contant_summary.tvAirlesscode
-import kotlinx.android.synthetic.main.contant_summary.tvAirlineCode
-import kotlinx.android.synthetic.main.contant_summary.tvBaggage
-import kotlinx.android.synthetic.main.contant_summary.tvBookingClass
-import kotlinx.android.synthetic.main.contant_summary.tvCabinClass
-import kotlinx.android.synthetic.main.contant_summary.tvFlghtNumber
-import kotlinx.android.synthetic.main.contant_summary.tvOperatorCarrier
-import kotlinx.android.synthetic.main.contant_summary.tveDpartureTime
 import kotlinx.android.synthetic.main.contant_summary_contant.*
-import kotlinx.android.synthetic.main.contant_view_booking_info.*
 import su.j2e.rvjoiner.JoinableAdapter
 import su.j2e.rvjoiner.JoinableLayout
 import su.j2e.rvjoiner.RvJoiner
@@ -398,63 +388,6 @@ class AllSummaryActivity : AirTricketBaseActivity() {
 
 
     }
-
-
-    private fun initializationView() {
-        val resposeAirPriceSearch = AppStorageBox.get(applicationContext, AppStorageBox.Key.ResposeAirPriceSearch) as ResposeAirPriceSearch
-        val airline = resposeAirPriceSearch.data?.results?.get(0)?.segments?.get(0)?.airline
-
-
-        val airportList = mutableListOf<Airport>()
-
-
-        var text = ""
-
-        val toList = resposeAirPriceSearch.data?.results?.get(0)?.segments?.toList()
-
-        for ((i, value) in toList?.withIndex()!!) {
-            airportList.add(value.origin.airport)
-            airportList.add(value.destination.airport)
-
-            val arrivalTime = value.destination.arrTime
-            val departureTime = value.origin.depTime
-
-            val arrTimeSplit = arrivalTime?.split("T")
-            val departureTimeSplit = departureTime?.split("T")
-
-
-            text = text + "Departure Time " + (i + 1) + ": " + arrTimeSplit!!.get(0) + " " + arrTimeSplit.get(1) + "\n"
-            text = text + "Arrival Time " + (i + 1) + ": " + departureTimeSplit!!.get(0) + " " + departureTimeSplit!!.get(1) + "\n\n"
-        }
-
-        text = text.substring(0, text.length - 2)
-        tveDpartureTime.text = "" + text
-
-
-        recyclerViewAirports.setNestedScrollingEnabled(false)
-        recyclerViewAirports.setHasFixedSize(true)
-        val mLayoutManager = LinearLayoutManager(applicationContext)
-        recyclerViewAirports.setLayoutManager(mLayoutManager)
-        recyclerViewAirports.setItemAnimator(DefaultItemAnimator())
-
-
-        val recyclerListAdapter = AirportListAdapter(applicationContext, airportList)
-        recyclerViewAirports.adapter = recyclerListAdapter
-
-
-        tvAirlineCode.text = getString(R.string.airline_code) + " ${airline?.airlineCode}"
-        tvAirlesscode.text = getString(R.string.airport_name) + " ${airline?.airlineName}"
-        tvFlghtNumber.text = getString(R.string.flight_number) + " ${airline?.flightNumber}"
-        tvBookingClass.text = getString(R.string.booking_class) + " ${airline?.bookingClass}"
-        tvOperatorCarrier.text = getString(R.string.operating_carrier) + " ${airline?.operatingCarrier}"
-        tvCabinClass.text = getString(R.string.cabin_class) + " ${airline?.cabinClass}"
-
-
-        tvBaggage.text = getString(R.string.baggage) + resposeAirPriceSearch.data?.results?.get(0)?.segments?.get(0)?.baggage + " " + getString(com.cloudwell.paywell.services.R.string.kg_per_adult)
-
-
-    }
-
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(com.cloudwell.paywell.services.R.menu.airticket_menu, menu)
