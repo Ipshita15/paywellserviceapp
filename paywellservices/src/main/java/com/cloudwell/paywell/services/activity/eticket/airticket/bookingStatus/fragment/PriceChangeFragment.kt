@@ -37,7 +37,7 @@ class PriceChangeFragment : DialogFragment() {
         v.tvYourSeats.text = getString(R.string.new_ticket_prices) + " " + modelPriceChange.total_fare_calculated_new
 
 
-        v.btActionIssueTicket.setOnClickListener {
+        v.btAction.setOnClickListener {
             dismiss()
             onClickHandler.onClickActionIssueTicket()
         }

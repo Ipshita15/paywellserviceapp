@@ -27,14 +27,14 @@ import java.util.*
 
 
 class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTransportListView {
+    override fun showSeatCheckAndBookingRepose(it: ResSeatCheckBookAPI) {
+
+    }
+
     override fun showShowConfirmDialog(it: ResBusSeatCheckAndBlock) {
 
     }
 
-    override fun showSeatCheckAndBookingRepose(it: ResBusSeatCheckAndBlock) {
-
-
-    }
 
     override fun showErrorMessage(meassage: String) {
 

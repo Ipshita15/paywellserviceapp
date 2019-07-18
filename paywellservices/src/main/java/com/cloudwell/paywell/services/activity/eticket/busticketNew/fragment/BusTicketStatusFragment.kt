@@ -31,7 +31,7 @@ class BusTicketStatusFragment : DialogFragment() {
         val v = inflater.inflate(R.layout.fragment_bus_status_fragment, container, false)
         v.tvYourSeats.text = message
 
-        v.btActionIssueTicket.setOnClickListener {
+        v.btAction.setOnClickListener {
             dismiss()
             onClicklistener?.onClick()
         }

@@ -35,7 +35,7 @@ class BusStatusMessageDialogFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_cancel_fee, container, false)
-        v.btActionIssueTicket.text = type
+        v.btAction.text = type
 
         val void = resCencelMaping.getCancelData().void.toDouble()
         val count = resCencelMaping.bookingData.get(0).passengers.count()
@@ -58,7 +58,7 @@ class BusStatusMessageDialogFragment : DialogFragment() {
 
         }
 
-        v.btActionIssueTicket.setOnClickListener {
+        v.btAction.setOnClickListener {
             dismiss()
             onClickHandler.onClickActionIssueTicket(totalFee, type)
         }

@@ -6,14 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TicketInfo
-import kotlinx.android.synthetic.main.fragment_prices_change.view.*
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TicketInfoSeatBookAndCheck
+import kotlinx.android.synthetic.main.fragment_bus_ticket_confirm_fragment.view.*
+import kotlinx.android.synthetic.main.fragment_prices_change.view.tvYourSeats
 
 
 class BusTicketConfirmFragment : DialogFragment() {
 
     companion object {
-        lateinit var ticketInfo: TicketInfo
+        lateinit var ticketInfo: TicketInfoSeatBookAndCheck
     }
 
     private var onClicklistener: MyClickListener? = null
@@ -24,16 +25,16 @@ class BusTicketConfirmFragment : DialogFragment() {
 
     }
 
-    fun setOnClickListener(MyClickListener: OnClickListener) {
+    fun setOnClickListener(MyClickListener: MyClickListener) {
         this.onClicklistener = onClicklistener
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_bus_ticket_confirm_fragment, container, false)
         v.tvYourSeats.text = "Your Seat : " + ticketInfo.seats
-        v.tvPrices.text = "ticket price: " + ticketInfo.paidAmount
+        v.tvTotalPrices.text = "ticket price: " + ticketInfo.paidAmount
 
-        v.btActionIssueTicket.setOnClickListener {
+        v.btAction.setOnClickListener {
             dismiss()
             onClicklistener?.onClick()
         }

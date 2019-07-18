@@ -64,7 +64,7 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
 
     }
 
-    fun seatCheck(internetConnection: Boolean, model: TripScheduleInfoAndBusSchedule, requestBusSearch: RequestBusSearch, boothInfo: BoothInfo, seatLevel: String, seatId: String, totalAPIValuePrices: String) {
+    fun bookingAPI(internetConnection: Boolean, model: TripScheduleInfoAndBusSchedule, requestBusSearch: RequestBusSearch, boothInfo: BoothInfo, seatLevel: String, seatId: String, totalAPIValuePrices: String) {
         if (!internetConnection) {
             view?.showNoInternetConnectionFound()
         } else {
@@ -86,7 +86,7 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
 
     }
 
-    fun callconfirmPayment(internetConnection: Boolean, transId: String, fullNameTV: String, mobileNumber: String, address: String, etEmail: String, age: String, password: String) {
+    fun callConfirmPayment(internetConnection: Boolean, transId: String, fullNameTV: String, mobileNumber: String, address: String, etEmail: String, age: String, password: String) {
         if (!internetConnection) {
             view?.showNoInternetConnectionFound()
         } else {

@@ -337,7 +337,7 @@ class BusTicketRepository() {
 
     }
 
-    fun callBookingAPI(model: TripScheduleInfoAndBusSchedule, requestBusSearch: RequestBusSearch, boothInfo: BoothInfo, seatLevel: String, seatId: String, totalAPIValuePrices: String): MutableLiveData<ResBusSeatCheckAndBlock> {
+    fun callBookingAPI(model: TripScheduleInfoAndBusSchedule, requestBusSearch: RequestBusSearch, boothInfo: BoothInfo, seatLevel: String, seatId: String, totalAPIValuePrices: String): MutableLiveData<ResSeatCheckBookAPI> {
 
         mAppHandler = AppHandler.getmInstance(mContext)
         val userName = mAppHandler!!.imeiNo
@@ -345,7 +345,7 @@ class BusTicketRepository() {
         val accessKey = AppStorageBox.get(mContext, AppStorageBox.Key.ACCESS_KEY) as String
 
         val transport = AppStorageBox.get(mContext, AppStorageBox.Key.SELETED_BUS_INFO) as Transport
-        val data = MutableLiveData<ResBusSeatCheckAndBlock>()
+        val data = MutableLiveData<ResSeatCheckBookAPI>()
 
         ApiUtils.getAPIServicePHP7().seatCheckAndBlock(
                 userName,
@@ -368,12 +368,12 @@ class BusTicketRepository() {
                 transport.extraCharge,
                 BusCalculationHelper.getPricesWithExtraAmount(model.busSchedule?.ticketPrice, requestBusSearch.date, transport = transport, isExtraAmount = false),
                 totalAPIValuePrices)
-                .enqueue(object : Callback<ResBusSeatCheckAndBlock> {
-                    override fun onFailure(call: Call<ResBusSeatCheckAndBlock>, t: Throwable) {
+                .enqueue(object : Callback<ResSeatCheckBookAPI> {
+                    override fun onFailure(call: Call<ResSeatCheckBookAPI>, t: Throwable) {
                         data.value = null
                     }
 
-                    override fun onResponse(call: Call<ResBusSeatCheckAndBlock>, response: Response<ResBusSeatCheckAndBlock>) {
+                    override fun onResponse(call: Call<ResSeatCheckBookAPI>, response: Response<ResSeatCheckBookAPI>) {
                         if (response.isSuccessful) {
                             data.value = response.body()
                         }

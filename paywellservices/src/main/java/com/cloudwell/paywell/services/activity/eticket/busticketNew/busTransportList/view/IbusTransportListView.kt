@@ -2,6 +2,7 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew.busTranspor
 
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.base.BaseView
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResBusSeatCheckAndBlock
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatCheckBookAPI
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule
 
 /**
@@ -11,6 +12,6 @@ interface IbusTransportListView : BaseView {
     fun showNoTripFoundUI()
     fun setAdapter(it1: List<TripScheduleInfoAndBusSchedule>)
     fun showErrorMessage(meassage: String)
-    fun showSeatCheckAndBookingRepose(it: ResBusSeatCheckAndBlock)
+    fun showSeatCheckAndBookingRepose(it: ResSeatCheckBookAPI)
     fun showShowConfirmDialog(it: ResBusSeatCheckAndBlock)
 }

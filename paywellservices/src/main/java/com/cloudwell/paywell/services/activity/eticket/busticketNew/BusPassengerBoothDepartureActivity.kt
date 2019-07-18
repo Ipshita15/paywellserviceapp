@@ -21,46 +21,50 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransport
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.BusTicketConfirmFragment
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.BusTicketStatusFragment
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.MyClickListener
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.OnClickListener
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BoothInfo
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResBusSeatCheckAndBlock
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule
-import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
 import com.google.gson.Gson
+import com.orhanobut.logger.Logger
+import kotlinx.android.synthetic.main.activity_boarding_droping.*
 import kotlinx.android.synthetic.main.activity_bus_booth_departure.*
+import kotlinx.android.synthetic.main.activity_bus_booth_departure.etEmail
+import kotlinx.android.synthetic.main.activity_bus_booth_departure.textInputLayoutFirstName
+import kotlinx.android.synthetic.main.activity_search_train.*
+import kotlinx.android.synthetic.main.contant_add_passenger.*
 import org.json.JSONObject
 
 class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTransportListView {
-    override fun showShowConfirmDialog(it: ResBusSeatCheckAndBlock) {
+    override fun showSeatCheckAndBookingRepose(it: ResSeatCheckBookAPI) {
 
-    }
-
-    override fun showSeatCheckAndBookingRepose(it: ResBusSeatCheckAndBlock) {
-
+        Logger.v("", "")
         val t = BusTicketConfirmFragment()
-        it.ticketInfo?.seats = seatLevel
-        BusTicketConfirmFragment.ticketInfo = it.ticketInfo!!
+        it.ticketInfoSeatBookAndCheck?.seats = seatLevel
+        BusTicketConfirmFragment.ticketInfo = it.ticketInfoSeatBookAndCheck!!
         t.show(supportFragmentManager, "dialog")
-        t.setOnClickListener(object : MyClickListener, OnClickListener {
+        t.setOnClickListener(object : MyClickListener {
             override fun onClick() {
-                askForPin()
+                askForPin(it)
             }
         })
 
-        val transId = "1234"
-        viewMode.callconfirmPayment(isInternetConnection,
-                transId,
-                fullNameTV.text.toString(),
-                mobileNumberTV.text.toString(),
-                etAddress.text.toString(),
-                etEmail.text.toString(),
-                ageTV.text.toString(),
-                password
-
-        )
+//        val transId = "1234"
+//        viewMode.callConfirmPayment(isInternetConnection,
+//                transId,
+//                fullNameTV.text.toString(),
+//                mobileNumberTV.text.toString(),
+//                etAddress.text.toString(),
+//                etEmail.text.toString(),
+//                ageTV.text.toString(),
+//                password
+//
+//        )
 
     }
+
+    override fun showShowConfirmDialog(it: ResBusSeatCheckAndBlock) {
+
+
+    }
+
 
     override fun showErrorMessage(meassage: String) {
 
@@ -192,11 +196,11 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTranspo
 
 
 
-        viewMode.seatCheck(isInternetConnection, model, requestBusSearch, boothInfo, seatLevel, seatId, totalAPIValuePrices)
+        viewMode.bookingAPI(isInternetConnection, model, requestBusSearch, boothInfo, seatLevel, seatId, totalAPIValuePrices)
 
     }
 
-    private fun askForPin() {
+    private fun askForPin(it: ResSeatCheckBookAPI) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.pin_no_title_msg)
 
@@ -217,10 +221,16 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTranspo
                 val PIN_NO = pinNoET.text.toString()
                 if (isInternetConnection) {
 
-                    val mAppHandler = AppHandler.getmInstance(application)
-                    val userName = mAppHandler.imeiNo
 
-//                    viewMode.callconfirmPayment()
+                    viewMode.callConfirmPayment(isInternetConnection,
+                            it.transId,
+                            etFirstName.text.toString(),
+                            etMobileNo.getText().toString(),
+                            etAddress.text.toString(),
+                            etEmail.text.toString(),
+                            etPassengerAge.text.toString(),
+                            PIN_NO
+                    )
 
 
                 } else {
