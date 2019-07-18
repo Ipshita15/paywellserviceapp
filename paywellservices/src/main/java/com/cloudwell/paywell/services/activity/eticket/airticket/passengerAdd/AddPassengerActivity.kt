@@ -131,8 +131,10 @@ class AddPassengerActivity : AirTricketBaseActivity() {
             etpassportNationality.setHint(getString(R.string.passport_nationality_mannotory) + "*")
 
             ivVisaPageUpload.visibility = View.VISIBLE
-        } else {
             ivPassportPageUpload.visibility = View.VISIBLE
+
+        } else {
+            ivPassportPageUpload.visibility = View.GONE
             ivVisaPageUpload.visibility = View.GONE
 
             etNidorPassportNumber.visibility = View.GONE

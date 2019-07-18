@@ -8,13 +8,13 @@
 
     <Button
         android:id="@+id/btActionIssueTicket"
-        android:layout_width="250dp"
+        android:layout_width="200dp"
         android:layout_height="40dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
         android:layout_marginBottom="50dp"
         android:background="#5AC121"
         android:drawablePadding="-20dp"
