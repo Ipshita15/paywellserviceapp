@@ -24,12 +24,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.MyC
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
 import com.google.gson.Gson
 import com.orhanobut.logger.Logger
-import kotlinx.android.synthetic.main.activity_boarding_droping.*
 import kotlinx.android.synthetic.main.activity_bus_booth_departure.*
-import kotlinx.android.synthetic.main.activity_bus_booth_departure.etEmail
-import kotlinx.android.synthetic.main.activity_bus_booth_departure.textInputLayoutFirstName
-import kotlinx.android.synthetic.main.activity_search_train.*
-import kotlinx.android.synthetic.main.contant_add_passenger.*
 import org.json.JSONObject
 
 class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTransportListView {
@@ -46,17 +41,6 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTranspo
             }
         })
 
-//        val transId = "1234"
-//        viewMode.callConfirmPayment(isInternetConnection,
-//                transId,
-//                fullNameTV.text.toString(),
-//                mobileNumberTV.text.toString(),
-//                etAddress.text.toString(),
-//                etEmail.text.toString(),
-//                ageTV.text.toString(),
-//                password
-//
-//        )
 
     }
 
@@ -224,11 +208,11 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTranspo
 
                     viewMode.callConfirmPayment(isInternetConnection,
                             it.transId,
-                            etFirstName.text.toString(),
-                            etMobileNo.getText().toString(),
+                            fullNameTV.text.toString(),
+                            mobileNumberTV.getText().toString(),
                             etAddress.text.toString(),
                             etEmail.text.toString(),
-                            etPassengerAge.text.toString(),
+                            ageTV.text.toString(),
                             PIN_NO
                     )
 

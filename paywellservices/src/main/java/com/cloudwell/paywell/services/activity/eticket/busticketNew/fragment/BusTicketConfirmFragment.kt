@@ -25,7 +25,7 @@ class BusTicketConfirmFragment : DialogFragment() {
 
     }
 
-    fun setOnClickListener(MyClickListener: MyClickListener) {
+    fun setOnClickListener(onClicklistener: MyClickListener) {
         this.onClicklistener = onClicklistener
     }
 
@@ -37,6 +37,9 @@ class BusTicketConfirmFragment : DialogFragment() {
         v.btAction.setOnClickListener {
             dismiss()
             onClicklistener?.onClick()
+        }
+        v.btCancel.setOnClickListener {
+            dismiss()
         }
 
         return v

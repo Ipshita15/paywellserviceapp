@@ -301,7 +301,7 @@ class BusTicketRepository() {
                                 if (o.getString("status").equals("Available")) {
                                     tototalAvailableSeat = tototalAvailableSeat + 1
                                 }
-                                allBusSeat.add(BusSeat(o.getString("seat_lbls"), o.getString("status"), o.getInt("value")))
+                                allBusSeat.add(BusSeat(o.getInt("seat_id"), o.getString("seat_lbls"), o.getString("status"), o.getInt("value")))
                             }
                             data.value = ResSeatInfo(tototalAvailableSeat, allBusSeat)
                         }
