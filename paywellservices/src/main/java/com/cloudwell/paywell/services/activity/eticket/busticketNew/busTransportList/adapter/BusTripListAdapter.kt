@@ -28,16 +28,12 @@ class BusTripListAdapter(val items: List<TripScheduleInfoAndBusSchedule>, val co
 
         holder.tvTransportNameAndType.text = (model.busLocalDB?.name?.toUpperCase()
                 ?: "") + ", " + isAc
-        holder.tvTransportNameAndType.text = "" + (model.resSeatInfo?.allBusSeat?.size ?: "")
         holder.tvCoachNo.text = ": " + model.busSchedule?.coachNo
         holder.tvDepartureTime.text = ": " + (model.busSchedule?.scheduleTime ?: "")
 
 
         val prices = BusCalculationHelper.getPricesWithExtraAmount(model.busSchedule?.ticketPrice, requestBusSearch.date, transport, true)
         holder.tvPrices.text = DecimalFormat("#").format(prices)
-
-
-        // val departureId = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.DEPARTURE_ID) as String
 
 
         val transport_id = transport.busid

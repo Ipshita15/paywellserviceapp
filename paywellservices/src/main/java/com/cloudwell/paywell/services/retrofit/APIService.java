@@ -16,7 +16,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.model.ResCommistionMaping;
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.model.ResInvoideEmailAPI;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResGetBusListData;
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResPaymentAPI;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResPaymentBookingAPI;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatCheckBookAPI;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.transactionLog.TransactionLogDetailsModel;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI;
@@ -289,16 +289,16 @@ public interface APIService {
 
     @FormUrlEncoded
     @POST("paywellapi/index.php/PaywellParibahanService/confirmPayment")
-    Call<ResPaymentAPI> confirmPayment(@Field("username") String username,
-                                       @Field("skey") String skey,
-                                       @Field("accessKey") String accessKey,
-                                       @Field("transactionId") String transactionId,
-                                       @Field("customerName") String customerName,
-                                       @Field("customerPhone") String customerPhone,
-                                       @Field("customerAddress") String customerAddress,
-                                       @Field("customerEmail") String customerEmail,
-                                       @Field("customerAge") String customerAge,
-                                       @Field("password") String password);
+    Call<ResPaymentBookingAPI> confirmPayment(@Field("username") String username,
+                                              @Field("skey") String skey,
+                                              @Field("accessKey") String accessKey,
+                                              @Field("transactionId") String transactionId,
+                                              @Field("customerName") String customerName,
+                                              @Field("customerPhone") String customerPhone,
+                                              @Field("customerAddress") String customerAddress,
+                                              @Field("customerEmail") String customerEmail,
+                                              @Field("customerAge") String customerAge,
+                                              @Field("password") String password);
 
 }
 

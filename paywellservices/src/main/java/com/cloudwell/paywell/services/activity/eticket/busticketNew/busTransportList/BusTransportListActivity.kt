@@ -31,7 +31,7 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
 
     }
 
-    override fun showShowConfirmDialog(it: ResBusSeatCheckAndBlock) {
+    override fun showShowConfirmDialog(it: ResPaymentBookingAPI) {
 
     }
 
@@ -57,10 +57,6 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
 
         requestBusSearch = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.REQUEST_AIR_SERACH) as RequestBusSearch
 
-//        requestBusSearch = RequestBusSearch()
-//        requestBusSearch.to = "Dhaka"
-//        requestBusSearch.from = "Kolkata"
-//        requestBusSearch.date = "2019-07-01"
 
         val split = requestBusSearch.date.split("-")
         val month = split[1].toInt() - 1

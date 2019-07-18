@@ -30,8 +30,12 @@ class BusTicketConfirmSuccessfulMessageFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_bus_ticket_confirm_successfull_fragment, container, false)
+
+        isCancelable = false
+
         v.tvMessage.text = model.meassage
-        v.tvInfoTicketNo.text = model.ticketInfo?.ticketNo
+        v.tvTranstionId.text = model.transId
+        v.tvTicketNoINfo.text = model.ticketInfo?.ticketNo
         v.tvBoardingPointName.text = model.ticketInfo?.boardingPointName
         v.tvTotalAmount.text = model.ticketInfo?.totalAmount
         v.tvWebBookingId.text = model.ticketInfo?.webBookingInfoId

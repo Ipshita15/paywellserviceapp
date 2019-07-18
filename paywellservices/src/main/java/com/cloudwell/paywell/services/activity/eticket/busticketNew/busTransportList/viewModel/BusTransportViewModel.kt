@@ -92,6 +92,7 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
         } else {
             view?.showProgress()
             BusTicketRepository().confirmPaymentAPI(transId, fullNameTV, mobileNumber, address, etEmail, age, password).observeForever {
+                view?.hiddenProgress()
                 if (it == null) {
                     view?.showErrorMessage("message")
                 } else {

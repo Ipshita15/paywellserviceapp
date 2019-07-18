@@ -34,7 +34,7 @@ class BusTicketConfirmFragment : DialogFragment() {
         v.tvYourSeats.text = "Your Seat : " + ticketInfo.seats
         v.tvTotalPrices.text = "ticket price: " + ticketInfo.paidAmount
 
-        v.btAction.setOnClickListener {
+        v.tvOk.setOnClickListener {
             dismiss()
             onClicklistener?.onClick()
         }

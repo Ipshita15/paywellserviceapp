@@ -6,12 +6,12 @@ import com.google.gson.annotations.SerializedName
 class ResPaymentBookingAPI {
 
     @SerializedName("meassage")
-    var meassage: String? = null
+    var meassage: String = ""
     @SerializedName("status")
-    var status: Long? = null
+    var status: Int = 0
     @SerializedName("ticketInfo")
     var ticketInfo: TicketInfoResPaymentBookingAPI? = null
     @SerializedName("trans_id")
-    var transId: String? = null
+    var transId: String = ""
 
 }

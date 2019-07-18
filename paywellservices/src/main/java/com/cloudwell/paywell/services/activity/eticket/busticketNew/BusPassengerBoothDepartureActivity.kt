@@ -2,6 +2,7 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew
 
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -22,6 +23,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.Bus
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.BusTicketConfirmSuccessfulMessageFragment
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.BusTicketStatusFragment
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.MyClickListener
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
 import com.google.gson.Gson
 import com.orhanobut.logger.Logger
@@ -29,9 +31,21 @@ import kotlinx.android.synthetic.main.activity_bus_booth_departure.*
 import org.json.JSONObject
 
 class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTransportListView {
-    override fun showShowConfirmDialog(it: ResBusSeatCheckAndBlock) {
+    override fun showShowConfirmDialog(it: ResPaymentBookingAPI) {
+        val t = BusTicketConfirmSuccessfulMessageFragment()
+        BusTicketConfirmSuccessfulMessageFragment.model = it
+        t.show(supportFragmentManager, "dialog")
+        t.setOnClickListener(object : BusTicketConfirmSuccessfulMessageFragment.MyClickListener {
+            override fun onClick() {
+                val intent = Intent(applicationContext, BusTicketMenuActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent)
+
+            }
+        })
 
     }
+
 
     override fun showSeatCheckAndBookingRepose(it: ResSeatCheckBookAPI) {
 
@@ -47,22 +61,6 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTranspo
         })
 
 
-    }
-
-    override fun showShowConfirmDialog(it: ResPaymentBookingAPI) {
-
-        val t = BusTicketConfirmSuccessfulMessageFragment()
-        BusTicketConfirmSuccessfulMessageFragment.model = it
-        t.show(supportFragmentManager, "dialog")
-        t.setOnClickListener(object : BusTicketConfirmSuccessfulMessageFragment.MyClickListener {
-            override fun onClick() {
-
-//                val intent = Intent(this, BusTicketMenuActivity::class.java)
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                startActivity(intent)
-
-            }
-        })
     }
 
 

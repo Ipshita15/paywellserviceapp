@@ -12,7 +12,6 @@ import android.widget.RadioButton
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList
-import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.BookingCancelActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransactionLog.BusTransactionLogActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.search.BusSelectActivity
 import com.cloudwell.paywell.services.app.AppController
@@ -56,16 +55,12 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
 
 
         btViewTricket.setOnClickListener(this)
-        btCencel.setOnClickListener(this)
         btTransationLog.setOnClickListener(this)
 
 
         cd = ConnectionDetector(AppController.getContext())
         mConstraintLayout = findViewById(R.id.constraintLayoutBookingList)
         mAppHandler = AppHandler.getmInstance(applicationContext)
-
-//        AppStorageBox.put(AppController.getContext(), AppStorageBox.Key.TRANSPORT_ID, "37")
-//        AppStorageBox.put(AppController.getContext(), AppStorageBox.Key.DEPARTURE_ID, "457")
 
 
     }
@@ -82,9 +77,6 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
                 startActivity(Intent(applicationContext, BusSelectActivity::class.java))
             }
 
-            R.id.btCencel -> {
-                startActivity(Intent(applicationContext, BookingCancelActivity::class.java))
-            }
 
             R.id.btTransationLog -> {
                 showLimitPrompt(TRX_TAG)
@@ -107,7 +99,6 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
         builder.setMessage(response.message)
         builder.setPositiveButton(R.string.okay_btn) { dialogInterface, id ->
             dialogInterface.dismiss()
-//            onBackPressed()
         }
         val alert = builder.create()
         alert.show()
@@ -145,15 +136,11 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
         btn_okay!!.setOnClickListener {
             dialog.dismiss()
             if (isInternetConnection) {
-//                if (tag.equals(BOOKING_TAG)) {
-//                    val intent = Intent(application, BookingStatusActivity::class.java)
-//                    intent.putExtra(KEY_LIMIT, selectedLimit)
-//                    startActivity(intent)
-//                } else if (tag.equals(TRX_TAG)) {
+
                 val intent = Intent(application, BusTransactionLogActivity::class.java)
                 intent.putExtra(KEY_LIMIT, selectedLimit)
                 startActivity(intent)
-//                }
+
             } else {
                 showNoInternetConnectionFound()
             }
