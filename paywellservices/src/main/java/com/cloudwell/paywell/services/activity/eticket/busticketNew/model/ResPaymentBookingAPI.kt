@@ -1,17 +1,17 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew.model
 
-
 import com.google.gson.annotations.SerializedName
 
-class ResBusSeatCheckAndBlock() {
+
+class ResPaymentBookingAPI {
 
     @SerializedName("meassage")
-    var meassage: String = ""
+    var meassage: String? = null
     @SerializedName("status")
-    var status: Int = 0
+    var status: Long? = null
     @SerializedName("ticketInfo")
-    var ticketInfo: TicketInfo? = null
+    var ticketInfo: TicketInfoResPaymentBookingAPI? = null
     @SerializedName("trans_id")
-    var transId: String = ""
+    var transId: String? = null
 
 }

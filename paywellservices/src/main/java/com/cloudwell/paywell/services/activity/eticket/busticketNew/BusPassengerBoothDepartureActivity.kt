@@ -19,6 +19,7 @@ import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.viewModel.BusTransportViewModel
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.BusTicketConfirmFragment
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.BusTicketConfirmSuccessfulMessageFragment
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.BusTicketStatusFragment
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.MyClickListener
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
@@ -28,6 +29,10 @@ import kotlinx.android.synthetic.main.activity_bus_booth_departure.*
 import org.json.JSONObject
 
 class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTransportListView {
+    override fun showShowConfirmDialog(it: ResBusSeatCheckAndBlock) {
+
+    }
+
     override fun showSeatCheckAndBookingRepose(it: ResSeatCheckBookAPI) {
 
         Logger.v("", "")
@@ -44,16 +49,27 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTranspo
 
     }
 
-    override fun showShowConfirmDialog(it: ResBusSeatCheckAndBlock) {
+    override fun showShowConfirmDialog(it: ResPaymentBookingAPI) {
 
+        val t = BusTicketConfirmSuccessfulMessageFragment()
+        BusTicketConfirmSuccessfulMessageFragment.model = it
+        t.show(supportFragmentManager, "dialog")
+        t.setOnClickListener(object : BusTicketConfirmSuccessfulMessageFragment.MyClickListener {
+            override fun onClick() {
 
+//                val intent = Intent(this, BusTicketMenuActivity::class.java)
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(intent)
+
+            }
+        })
     }
 
 
     override fun showErrorMessage(meassage: String) {
 
         val t = BusTicketStatusFragment()
-        BusTicketStatusFragment.message = "Not enough balance"
+        BusTicketStatusFragment.message = meassage
         t.show(supportFragmentManager, "dialog")
 
     }

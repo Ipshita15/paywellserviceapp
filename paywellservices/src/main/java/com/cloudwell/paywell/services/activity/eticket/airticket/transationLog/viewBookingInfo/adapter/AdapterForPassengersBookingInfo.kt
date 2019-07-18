@@ -75,7 +75,7 @@ class AdapterForPassengersBookingInfo(var context: Context, var items: List<Pass
         val tvFirstName = view.tvFirstName
         val tvLastName = view.tvLastName
         val tvCountry = view.tvCountry
-        val tvGender = view.tvGender
+        val tvGender = view.tvBoardingPointName
         val tvDateOfBirth = view.tvDateOfBirth
         val tvContactNumber = view.tvContactNumber
         val tvEmailAddress = view.tvEmailAddress
