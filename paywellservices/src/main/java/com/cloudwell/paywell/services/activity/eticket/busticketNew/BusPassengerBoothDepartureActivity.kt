@@ -7,7 +7,9 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
+import android.text.Editable
 import android.text.InputType
+import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
 import android.view.Gravity
 import android.view.inputmethod.InputMethodManager
@@ -22,6 +24,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.Bus
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.MyClickListener
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
+import com.cloudwell.paywell.services.constant.AllConstant
 import com.google.gson.Gson
 import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_bus_booth_departure.*
@@ -148,6 +151,29 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTranspo
 
         initViewModel()
 
+
+        etEmail.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+
+                if (s.matches(AllConstant.emailPattern.toRegex()) && s.length > 0) {
+                    textInputLayoutmobilEmail.error = ""
+
+                } else {
+                    textInputLayoutAddress.error = getString(R.string.invalid_address)
+                }
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                // other stuffs
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                // other stuffs
+            }
+        })
+
+
         btn_search.setOnClickListener {
             handleBookingContinueBooking()
         }
@@ -162,12 +188,14 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTranspo
     }
 
     private fun handleBookingContinueBooking() {
-        val fullName = fullNameTV.text.toString()
-        val mobileNumber = mobileNumberTV.text.toString()
-        val age = ageTV.text.toString()
+        val fullName = fullNameTV.text.toString().trim()
+        val mobileNumber = mobileNumberTV.text.toString().trim()
+        val age = ageTV.text.toString().trim()
+        val address = etAddress.text.toString().trim()
+        val email = etEmail.text.toString().trim()
 
         if (fullName.equals("")) {
-            textInputLayoutFirstName.error = "Invalid full name"
+            textInputLayoutFirstName.error = getString(R.string.invalid_full_name)
             return
         } else {
             textInputLayoutFirstName.error = null
@@ -175,17 +203,35 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTranspo
 
 
         if (mobileNumber.equals("")) {
-            textInputLayoutmobileNumber.error = "Invalid mobile number"
+            textInputLayoutmobileNumber.error = getString(R.string.Invalid_mobile_number)
             return
         } else {
             textInputLayoutmobileNumber.error = null
         }
 
         if (age.equals("")) {
-            textInputLayoutAge.error = "Invalid age"
+            textInputLayoutAge.error = getString(R.string.invalid_age)
             return
         } else {
             textInputLayoutAge.error = null
+        }
+
+        if (address.equals("")) {
+            textInputLayoutAddress.error = getString(R.string.invalid_address)
+            return
+        } else {
+            textInputLayoutAddress.error = null
+        }
+
+
+        if (!email.equals("")) {
+            if (email.matches(AllConstant.emailPattern.toRegex()) && email.length > 0) {
+                textInputLayoutmobilEmail.error = ""
+
+            } else {
+                textInputLayoutmobilEmail.error = getString(R.string.invalid_email)
+                return
+            }
         }
 
         val boothInfo = allBoothInfo.get(boothList.selectedItemPosition)
