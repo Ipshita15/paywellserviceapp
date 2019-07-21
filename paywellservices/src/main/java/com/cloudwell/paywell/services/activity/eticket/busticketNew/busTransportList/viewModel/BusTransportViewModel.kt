@@ -73,7 +73,7 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
             BusTicketRepository().callBookingAPI(model, requestBusSearch, boothInfo, seatLevel, seatId, totalAPIValuePrices).observeForever {
                 view?.hiddenProgress()
                 if (it == null) {
-                    view?.showErrorMessage("message")
+                    view?.showErrorMessage("Server error please try again later")
                 } else {
                     if (it.status == 200 || it.status == 100) {
                         view?.showSeatCheckAndBookingRepose(it)
@@ -94,7 +94,7 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
             BusTicketRepository().confirmPaymentAPI(transId, fullNameTV, mobileNumber, address, etEmail, age, gender, password).observeForever {
                 view?.hiddenProgress()
                 if (it == null) {
-                    view?.showErrorMessage("message")
+                    view?.showErrorMessage("Server error please try again later")
                 } else {
                     if (it.status == 200 || it.status == 100) {
                         view?.showShowConfirmDialog(it)

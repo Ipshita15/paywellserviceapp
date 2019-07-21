@@ -154,13 +154,17 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTranspo
 
         etEmail.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
+                if (!s.toString().equals("")) {
+                    if (s.matches(AllConstant.emailPattern.toRegex()) && s.length > 0) {
+                        textInputLayoutmobilEmail.error = ""
 
-                if (s.matches(AllConstant.emailPattern.toRegex()) && s.length > 0) {
-                    textInputLayoutmobilEmail.error = ""
-
+                    } else {
+                        textInputLayoutmobilEmail.error = getString(R.string.invalid_address)
+                    }
                 } else {
-                    textInputLayoutAddress.error = getString(R.string.invalid_address)
+                    textInputLayoutmobilEmail.error = ""
                 }
+
 
             }
 
