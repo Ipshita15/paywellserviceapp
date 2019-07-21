@@ -174,6 +174,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
+                    android:text="Address"
+                    android:textColor="@color/balck666666"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="Email"
+                    android:textColor="@color/balck666666"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
                     android:text="Ticket No."
                     android:textColor="@color/balck666666"/>
 
@@ -294,6 +308,20 @@
                     android:padding="5dp"
                     android:text=":"
                     android:textColor="@color/balck666666"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text=":"
+                    android:textColor="@color/balck666666"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text=":"
+                    android:textColor="@color/balck666666"/>
             </LinearLayout>
 
             <LinearLayout
@@ -317,11 +345,28 @@
                     android:padding="5dp"
                     android:textColor="#268472"/>
 
+
                 <TextView
                     android:id="@+id/mobileNumTV"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Mobile Num"
+                    android:padding="5dp"
+                    android:textColor="#268472"/>
+
+                <TextView
+                    android:id="@+id/addressTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Addresss"
+                    android:padding="5dp"
+                    android:textColor="#268472"/>
+
+                <TextView
+                    android:id="@+id/emailTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email"
                     android:padding="5dp"
                     android:textColor="#268472"/>
 

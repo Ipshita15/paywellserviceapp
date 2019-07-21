@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
               android:id="@+id/mainClickLL"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
@@ -22,7 +23,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="3">
+                android:layout_weight="3"
+                tools:visibility="@string/visa_image_mandatory">
 
                 <TextView
                     android:id="@+id/bookingIdStringTV"
@@ -43,11 +45,14 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llWebBooking"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="3">
+                android:layout_weight="3"
+                tools:visibility="visible">
 
                 <TextView
+                    android:id="@+id/WebBookingIDTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
@@ -104,6 +109,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/llStatusBooking"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3">

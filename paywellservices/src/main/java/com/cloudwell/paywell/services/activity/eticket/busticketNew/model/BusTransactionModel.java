@@ -22,11 +22,13 @@ public class BusTransactionModel {
     private String busName;
     private String travellingTo;
     private String travellingFrom;
+    private String customerAddress;
+    private String customerEmail;
 
     public BusTransactionModel() {
     }
 
-    public BusTransactionModel(String transactionDate, String bookingId, String bookingStatus, String webBookingId, String ticketPrice, String customerName, String customerGender, String customerPhone, String ticketNum, String boardingPoint, String departureDate, String departureTime, String seatNum, String coachNum, String busName, String travellingTo, String travellingFrom) {
+    public BusTransactionModel(String transactionDate, String bookingId, String bookingStatus, String webBookingId, String ticketPrice, String customerName, String customerGender, String customerPhone, String customerAddress, String customerEmail, String ticketNum, String boardingPoint, String departureDate, String departureTime, String seatNum, String coachNum, String busName, String travellingTo, String travellingFrom) {
         this.transactionDate = transactionDate;
         this.bookingId = bookingId;
         this.bookingStatus = bookingStatus;
@@ -42,6 +44,8 @@ public class BusTransactionModel {
         this.travellingTo = travellingTo;
         this.travellingFrom = travellingFrom;
         this.customerPhone = customerPhone;
+        this.customerAddress = customerAddress;
+        this.customerEmail = customerEmail;
         this.ticketNum = ticketNum;
         this.boardingPoint = boardingPoint;
     }
@@ -181,4 +185,21 @@ public class BusTransactionModel {
     public void setBoardingPoint(String boardingPoint) {
         this.boardingPoint = boardingPoint;
     }
+
+    public String getCustomerAddress() {
+        return customerAddress;
+    }
+
+    public void setCustomerAddress(String customerAddress) {
+        this.customerAddress = customerAddress;
+    }
+
+    public String getCustomerEmail() {
+        return customerEmail;
+    }
+
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
+    }
+
 }

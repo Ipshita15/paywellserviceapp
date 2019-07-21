@@ -3,6 +3,7 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransact
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.FragmentTransaction;
+import android.graphics.Color;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -64,14 +65,36 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
                 header.setText((String) busTransactionModelArrayList.get(position));
                 break;
             case TYPE_ITEM:
-                TextView bookingId = holder.itemView.findViewById(R.id.bookingIdTV);
-                TextView webBookingId = holder.itemView.findViewById(R.id.webBookingId);
+                TextView tvBookingId = holder.itemView.findViewById(R.id.bookingIdTV);
+                TextView tvbookingIdStringTV = holder.itemView.findViewById(R.id.bookingIdStringTV);
+                TextView tvWebBookingId = holder.itemView.findViewById(R.id.webBookingId);
+                TextView tvWebBookingIDTV = holder.itemView.findViewById(R.id.WebBookingIDTV);
                 TextView amount = holder.itemView.findViewById(R.id.priceTV);
                 TextView status = holder.itemView.findViewById(R.id.statusTV);
-                bookingId.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getBookingId());
+                LinearLayout llStatusBooking = holder.itemView.findViewById(R.id.llStatusBooking);
+                LinearLayout llWebBooking = holder.itemView.findViewById(R.id.llWebBooking);
+
+                String bookingId = ((BusTransactionModel) busTransactionModelArrayList.get(position)).getBookingId();
+                if (bookingId.equals("")) {
+                    tvbookingIdStringTV.setText("Status: ");
+                    tvBookingId.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getBookingStatus());
+                    tvBookingId.setTextColor(Color.parseColor("#4ca896"));
+                    llStatusBooking.setVisibility(View.GONE);
+                    llWebBooking.setVisibility(View.GONE);
+
+                } else {
+                    llStatusBooking.setVisibility(View.VISIBLE);
+                    llWebBooking.setVisibility(View.VISIBLE);
+                    tvBookingId.setVisibility(View.VISIBLE);
+                    tvbookingIdStringTV.setVisibility(View.VISIBLE);
+                    tvBookingId.setVisibility(View.VISIBLE);
+                    tvWebBookingIDTV.setVisibility(View.VISIBLE);
+                    tvBookingId.setText(bookingId);
+                }
+
                 amount.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getTicketPrice());
                 status.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getBookingStatus());
-                webBookingId.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getWebBookingId());
+                tvWebBookingId.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getWebBookingId());
                 LinearLayout linearLayout = holder.itemView.findViewById(R.id.mainClickLL);
                 linearLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -98,20 +121,68 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
                                         TextView transportNameTV = view1.findViewById(R.id.transportNameTV);
                                         TextView journeyFromTV = view1.findViewById(R.id.journeyFromTV);
                                         TextView journeyToTV = view1.findViewById(R.id.journeyToTV);
-                                        bookingId.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getBookingId());
-                                        webBookingId.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getWebBookingId());
+                                        TextView addressTv = view1.findViewById(R.id.addressTv);
+                                        TextView emailTv = view1.findViewById(R.id.emailTv);
+
+                                        BusTransactionModel model = (BusTransactionModel) busTransactionModelArrayList.get(position);
+
+                                        if (model.getBookingId() == null) {
+                                            bookingId.setText(context.getString(R.string.not_available));
+                                        } else {
+                                            bookingId.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getBookingId());
+                                        }
+
+                                        if (model.getWebBookingId() == null) {
+                                            webBookingId.setText(context.getString(R.string.not_available));
+                                        } else {
+                                            webBookingId.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getWebBookingId());
+                                        }
+
+                                        if (model.getCustomerName() == null) {
+                                            customerNameTV.setText(context.getString(R.string.not_available));
+                                        } else {
+                                            customerNameTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getCustomerName());
+                                        }
+
+                                        if (model.getCustomerGender() == null) {
+                                            customerGenderTV.setText(context.getString(R.string.not_available));
+                                        } else {
+                                            customerGenderTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getCustomerGender());
+                                        }
+
+                                        if (model.getCustomerPhone() == null) {
+                                            customerMobileTV.setText(context.getString(R.string.not_available));
+                                        } else {
+                                            customerMobileTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getCustomerPhone());
+                                        }
+
+                                        if (model.getTicketNum() == null) {
+                                            ticketNum.setText(context.getString(R.string.not_available));
+                                        } else {
+                                            ticketNum.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getTicketNum());
+                                        }
+
+                                        if (model.getCustomerAddress() == null) {
+                                            addressTv.setText(context.getString(R.string.not_available));
+                                        } else {
+                                            addressTv.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getCustomerAddress());
+                                        }
+
+                                        if (model.getCustomerAddress() == null) {
+                                            emailTv.setText(context.getString(R.string.not_available));
+                                        } else {
+                                            emailTv.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getCustomerEmail());
+                                        }
+
+
                                         travelDateTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getDepartureDate());
                                         priceTv.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getTicketPrice());
-                                        customerNameTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getCustomerName());
-                                        customerGenderTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getCustomerGender());
                                         departureTimeTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getDepartureTime());
                                         seatNumTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getSeatNum());
                                         coachNumTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getCoachNum());
                                         transportNameTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getBusName());
                                         journeyFromTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getTravellingTo());
                                         journeyToTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getTravellingFrom());
-                                        customerMobileTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getCustomerPhone());
-                                        ticketNum.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getTicketNum());
                                         boardingPoint.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getBoardingPoint());
                                         departureDateTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getDepartureDate());
 
@@ -126,6 +197,7 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
                                         toolbar.setTitle("Transaction Details");
                                         return view1;
                                     }
+
                                     @Override
                                     public int describeContents() {
                                         return 0;

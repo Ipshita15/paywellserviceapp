@@ -88,15 +88,23 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
                                 allDataArrayList.add(date);
                             }
                             BusTransactionModel busTransactionModel = new BusTransactionModel(
-                                    transactionDate, datum.getTicketInfo().getBookingInfoId(),
-                                    datum.getStatusMessage(), datum.getTicketInfo().getWebBookingInfoId(),
+                                    transactionDate,
+                                    datum.getTicketInfo().getBookingInfoId(),
+                                    datum.getStatusMessage(),
+                                    datum.getTicketInfo().getWebBookingInfoId(),
                                     datum.getTicketInfo().getTotalAmount(),
-                                    String.valueOf(datum.getCustomerInfo().getCustomerName()),
-                                    "Not available", String.valueOf(datum.getCustomerInfo().getCustomerPhone()),
-                                    datum.getTicketInfo().getTicketNo(), datum.getTicketInfo().getBoardingPointName(),
-                                    String.valueOf(datum.getTicketInfo().getDepartureDate()),
-                                    datum.getTicketInfo().getDepartureTime(), datum.getTicketInfo().getSeatLbls(),
-                                    datum.getBusInfo().getCoachNo(), datum.getBusInfo().getBusName(),
+                                    datum.getCustomerInfo().getCustomerName(),
+                                    datum.getCustomerInfo().getCusTomerGenger(),
+                                    datum.getCustomerInfo().getCustomerPhone(),
+                                    datum.getCustomerInfo().getCustomerAddress(),
+                                    datum.getCustomerInfo().getCustomerEmail(),
+                                    datum.getTicketInfo().getTicketNo(),
+                                    datum.getTicketInfo().getBoardingPointName(),
+                                    datum.getTicketInfo().getDepartureDate(),
+                                    datum.getTicketInfo().getDepartureTime(),
+                                    datum.getTicketInfo().getSeatLbls(),
+                                    datum.getBusInfo().getCoachNo(),
+                                    datum.getBusInfo().getBusName(),
                                     datum.getTicketInfo().getJourneyRoute().split("-")[0],
                                     datum.getTicketInfo().getJourneyRoute().split("-")[1]);
                             allDataArrayList.add(busTransactionModel);

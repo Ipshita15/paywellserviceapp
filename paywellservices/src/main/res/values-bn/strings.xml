@@ -839,5 +839,6 @@
     <string name="bus_info_gender">Gender</string>
     <string name="et_email">Email</string>
     <string name="bus_address">Address</string>
+    <string name="not_available">Not available</string>
 
 </resources>
