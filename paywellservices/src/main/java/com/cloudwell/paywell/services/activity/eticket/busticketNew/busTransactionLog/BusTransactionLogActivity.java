@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
@@ -70,6 +73,14 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
                 if (response.isSuccessful()) {
                     TransactionLogDetailsModel transactionLogDetailsModel = response.body();
                     if (transactionLogDetailsModel.getStatus() == 200) {
+                        if (transactionLogDetailsModel.getData().size() != 0) {
+                            ImageView imageView = findViewById(R.id.ivForNodataFoundBusTrans);
+                            imageView.setVisibility(View.GONE);
+                            TextView textView = findViewById(R.id.tvNoDataFoundBusTrans);
+                            textView.setVisibility(View.GONE);
+                        }
+
+
                         for (Datum datum : transactionLogDetailsModel.getData()) {
                             String transactionDate = datum.getTransactionDateTime().split(" ")[0];
                             if (!date.equals(transactionDate)) {
@@ -92,6 +103,10 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
                             adapter.notifyDataSetChanged();
                         }
                     } else {
+                        ImageView imageView = findViewById(R.id.ivForNodataFoundBusTrans);
+                        imageView.setVisibility(View.VISIBLE);
+                        TextView textView = findViewById(R.id.tvNoDataFoundBusTrans);
+                        textView.setVisibility(View.VISIBLE);
                         Toast.makeText(BusTransactionLogActivity.this, "No data found.", Toast.LENGTH_SHORT).show();
                     }
                 }

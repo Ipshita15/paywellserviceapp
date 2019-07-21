@@ -86,12 +86,12 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
 
     }
 
-    fun callConfirmPayment(internetConnection: Boolean, transId: String, fullNameTV: String, mobileNumber: String, address: String, etEmail: String, age: String, password: String) {
+    fun callConfirmPayment(internetConnection: Boolean, transId: String, fullNameTV: String, mobileNumber: String, address: String, etEmail: String, age: String, gender: String, password: String) {
         if (!internetConnection) {
             view?.showNoInternetConnectionFound()
         } else {
             view?.showProgress()
-            BusTicketRepository().confirmPaymentAPI(transId, fullNameTV, mobileNumber, address, etEmail, age, password).observeForever {
+            BusTicketRepository().confirmPaymentAPI(transId, fullNameTV, mobileNumber, address, etEmail, age, gender, password).observeForever {
                 view?.hiddenProgress()
                 if (it == null) {
                     view?.showErrorMessage("message")

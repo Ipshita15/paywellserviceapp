@@ -385,7 +385,7 @@ class BusTicketRepository() {
 
     }
 
-    fun confirmPaymentAPI(transId: String, fullNameTV: String, mobileNumber: String, address: String, etEmail: String, age: String, password: String): MutableLiveData<ResPaymentBookingAPI> {
+    fun confirmPaymentAPI(transId: String, fullNameTV: String, mobileNumber: String, address: String, etEmail: String, age: String, gender: String, password: String): MutableLiveData<ResPaymentBookingAPI> {
         mAppHandler = AppHandler.getmInstance(mContext)
         val userName = mAppHandler!!.imeiNo
         val skey = ApiUtils.KEY_SKEY
@@ -403,6 +403,7 @@ class BusTicketRepository() {
                 address,
                 etEmail,
                 age,
+                gender,
                 password).enqueue(object : Callback<ResPaymentBookingAPI> {
             override fun onFailure(call: Call<ResPaymentBookingAPI>, t: Throwable) {
                 data.value = null

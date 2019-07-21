@@ -11,10 +11,7 @@ import android.text.InputType
 import android.text.method.PasswordTransformationMethod
 import android.view.Gravity
 import android.view.inputmethod.InputMethodManager
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.Spinner
+import android.widget.*
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
@@ -29,6 +26,7 @@ import com.google.gson.Gson
 import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_bus_booth_departure.*
 import org.json.JSONObject
+
 
 class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTransportListView {
     override fun showShowConfirmDialog(it: ResPaymentBookingAPI) {
@@ -220,6 +218,12 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTranspo
                 if (isInternetConnection) {
 
 
+                    // get selected radio button from radioGroup
+                    val selectedId = radioGroup.getCheckedRadioButtonId()
+
+                    // find the radiobutton by returned id
+                    val radioButton = findViewById<RadioButton>(selectedId) as RadioButton
+
                     viewMode.callConfirmPayment(isInternetConnection,
                             it.transId,
                             fullNameTV.text.toString(),
@@ -227,6 +231,7 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTranspo
                             etAddress.text.toString(),
                             etEmail.text.toString(),
                             ageTV.text.toString(),
+                            radioButton.text.toString(),
                             PIN_NO
                     )
 
