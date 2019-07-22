@@ -110,6 +110,7 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
                                         Toolbar toolbar = view1.findViewById(R.id.toolbar);
                                         TextView bookingId = view1.findViewById(R.id.bookingIdTV);
                                         TextView webBookingId = view1.findViewById(R.id.webBookingIdTV);
+                                        TextView busTrasLogId = view1.findViewById(R.id.busTrasLogId);
                                         TextView travelDateTV = view1.findViewById(R.id.travelDateTV);
                                         TextView priceTv = view1.findViewById(R.id.priceTV);
                                         TextView customerNameTV = view1.findViewById(R.id.customerNameTV);
@@ -177,7 +178,7 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
                                             emailTv.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getCustomerEmail());
                                         }
 
-
+                                        busTrasLogId.setText(model.getTransactioID());
                                         travelDateTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getDepartureDate());
                                         priceTv.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getTicketPrice());
                                         departureTimeTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getDepartureTime());
