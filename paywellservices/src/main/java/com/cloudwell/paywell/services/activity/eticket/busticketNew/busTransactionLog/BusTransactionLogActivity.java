@@ -89,6 +89,7 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
                             }
                             BusTransactionModel busTransactionModel = new BusTransactionModel(
                                     transactionDate,
+                                    datum.getTrxId(),
                                     datum.getTicketInfo().getBookingInfoId(),
                                     datum.getStatusMessage(),
                                     datum.getTicketInfo().getWebBookingInfoId(),

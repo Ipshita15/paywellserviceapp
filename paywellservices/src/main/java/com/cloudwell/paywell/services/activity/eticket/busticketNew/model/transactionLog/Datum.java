@@ -20,6 +20,9 @@ public class Datum {
     @SerializedName("transactionDateTime")
     private String transactionDateTime;
 
+    @SerializedName("trxId")
+    private String trxId;
+
     public BusInfo getBusInfo() {
         return busInfo;
     }
@@ -76,4 +79,11 @@ public class Datum {
         this.transactionDateTime = transactionDateTime;
     }
 
+    public String getTrxId() {
+        return trxId;
+    }
+
+    public void setTrxId(String trxId) {
+        this.trxId = trxId;
+    }
 }

@@ -3,7 +3,6 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransact
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.FragmentTransaction;
-import android.graphics.Color;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
@@ -66,36 +64,41 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
                 break;
             case TYPE_ITEM:
                 TextView tvBookingId = holder.itemView.findViewById(R.id.bookingIdTV);
+                TextView tvTransactionId = holder.itemView.findViewById(R.id.tvTransactionId);
                 TextView tvbookingIdStringTV = holder.itemView.findViewById(R.id.bookingIdStringTV);
                 TextView tvWebBookingId = holder.itemView.findViewById(R.id.webBookingId);
                 TextView tvWebBookingIDTV = holder.itemView.findViewById(R.id.WebBookingIDTV);
                 TextView amount = holder.itemView.findViewById(R.id.priceTV);
                 TextView status = holder.itemView.findViewById(R.id.statusTV);
-                LinearLayout llStatusBooking = holder.itemView.findViewById(R.id.llStatusBooking);
-                LinearLayout llWebBooking = holder.itemView.findViewById(R.id.llWebBooking);
 
-                String bookingId = ((BusTransactionModel) busTransactionModelArrayList.get(position)).getBookingId();
-                if (bookingId.equals("")) {
-                    tvbookingIdStringTV.setText("Status: ");
-                    tvBookingId.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getBookingStatus());
-                    tvBookingId.setTextColor(Color.parseColor("#4ca896"));
-                    llStatusBooking.setVisibility(View.GONE);
-                    llWebBooking.setVisibility(View.GONE);
 
-                } else {
-                    llStatusBooking.setVisibility(View.VISIBLE);
-                    llWebBooking.setVisibility(View.VISIBLE);
+                BusTransactionModel model = (BusTransactionModel) busTransactionModelArrayList.get(position);
+
+                status.setText(model.getBookingStatus());
+                tvTransactionId.setText(model.getTransactioID());
+                amount.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getTicketPrice());
+
+
+                if (!model.getBookingId().equals("")) {
                     tvBookingId.setVisibility(View.VISIBLE);
                     tvbookingIdStringTV.setVisibility(View.VISIBLE);
-                    tvBookingId.setVisibility(View.VISIBLE);
-                    tvWebBookingIDTV.setVisibility(View.VISIBLE);
-                    tvBookingId.setText(bookingId);
+                    tvBookingId.setText(model.getBookingId());
+                } else {
+                    tvBookingId.setVisibility(View.GONE);
+                    tvbookingIdStringTV.setVisibility(View.GONE);
                 }
 
-                amount.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getTicketPrice());
-                status.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getBookingStatus());
-                tvWebBookingId.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getWebBookingId());
-                LinearLayout linearLayout = holder.itemView.findViewById(R.id.mainClickLL);
+                if (!model.getWebBookingId().equals("")) {
+                    tvWebBookingId.setVisibility(View.VISIBLE);
+                    tvWebBookingIDTV.setVisibility(View.VISIBLE);
+
+                    tvWebBookingId.setText(model.getWebBookingId());
+                } else {
+                    tvWebBookingId.setVisibility(View.GONE);
+                    tvWebBookingIDTV.setVisibility(View.GONE);
+                }
+
+                android.support.constraint.ConstraintLayout linearLayout = holder.itemView.findViewById(R.id.mainClickLL);
                 linearLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -126,13 +129,13 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
 
                                         BusTransactionModel model = (BusTransactionModel) busTransactionModelArrayList.get(position);
 
-                                        if (model.getBookingId() == null) {
+                                        if (model.getBookingId().equals("")) {
                                             bookingId.setText(context.getString(R.string.not_available));
                                         } else {
                                             bookingId.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getBookingId());
                                         }
 
-                                        if (model.getWebBookingId() == null) {
+                                        if (model.getWebBookingId().equals("")) {
                                             webBookingId.setText(context.getString(R.string.not_available));
                                         } else {
                                             webBookingId.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getWebBookingId());
@@ -156,7 +159,7 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
                                             customerMobileTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getCustomerPhone());
                                         }
 
-                                        if (model.getTicketNum() == null) {
+                                        if (model.getTicketNum().equals("")) {
                                             ticketNum.setText(context.getString(R.string.not_available));
                                         } else {
                                             ticketNum.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getTicketNum());
