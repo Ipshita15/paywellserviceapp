@@ -33,7 +33,7 @@ class BusTicketConfirmSuccessfulMessageFragment : DialogFragment() {
 
         isCancelable = false
 
-        v.tvMessage.text = model.meassage
+        v.tvMessage.text = model.message
         v.tvTranstionId.text = model.transId
         v.tvTicketNoINfo.text = model.ticketInfo?.ticketNo
         v.tvBoardingPointName.text = model.ticketInfo?.boardingPointName

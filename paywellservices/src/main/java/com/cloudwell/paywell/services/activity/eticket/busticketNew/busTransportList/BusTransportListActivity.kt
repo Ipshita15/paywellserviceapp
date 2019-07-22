@@ -36,7 +36,7 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
     }
 
 
-    override fun showErrorMessage(meassage: String) {
+    override fun showErrorMessage(message: String) {
 
 
     }

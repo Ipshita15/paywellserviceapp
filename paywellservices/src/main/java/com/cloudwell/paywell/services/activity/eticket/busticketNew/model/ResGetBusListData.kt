@@ -9,8 +9,8 @@ class ResGetBusListData {
     var accessKey: String = ""
     @SerializedName("data")
     var data: Data = Data()
-    @SerializedName("meassage")
-    var meassage: String = ""
+    @SerializedName("message")
+    var message: String = ""
     @SerializedName("status")
     var status: Int = 0
 

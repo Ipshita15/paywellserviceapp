@@ -78,7 +78,7 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
                     if (it.status == 200 || it.status == 100) {
                         view?.showSeatCheckAndBookingRepose(it)
                     } else {
-                        it.meassage.let { it1 -> view?.showErrorMessage(it.meassage) }
+                        it.message.let { it1 -> view?.showErrorMessage(it.message) }
                     }
                 }
             }
@@ -99,7 +99,7 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
                     if (it.status == 200 || it.status == 100) {
                         view?.showShowConfirmDialog(it)
                     } else {
-                        it.meassage.let { it1 -> view?.showErrorMessage(it.meassage) }
+                        it.message.let { it1 -> view?.showErrorMessage(it.message) }
                     }
                 }
 

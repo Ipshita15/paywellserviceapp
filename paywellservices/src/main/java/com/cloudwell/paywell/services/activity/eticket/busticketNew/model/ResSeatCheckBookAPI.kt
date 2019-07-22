@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 class ResSeatCheckBookAPI {
 
     @SerializedName("message")
-    var meassage: String = ""
+    var message: String = ""
     @SerializedName("status")
     var status: Int = 0
     @SerializedName("ticketInfo")

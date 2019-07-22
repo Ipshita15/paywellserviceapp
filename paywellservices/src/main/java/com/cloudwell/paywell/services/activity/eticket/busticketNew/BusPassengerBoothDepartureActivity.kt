@@ -65,10 +65,10 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTranspo
     }
 
 
-    override fun showErrorMessage(meassage: String) {
+    override fun showErrorMessage(message: String) {
 
         val t = BusTicketStatusFragment()
-        BusTicketStatusFragment.message = meassage
+        BusTicketStatusFragment.message = message
         t.show(supportFragmentManager, "dialog")
 
     }
