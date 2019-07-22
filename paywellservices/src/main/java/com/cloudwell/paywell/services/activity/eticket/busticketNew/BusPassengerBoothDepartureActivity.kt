@@ -159,7 +159,7 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTranspo
                         textInputLayoutmobilEmail.error = ""
 
                     } else {
-                        textInputLayoutmobilEmail.error = getString(R.string.invalid_address)
+                        textInputLayoutmobilEmail.error = getString(R.string.invalid_email)
                     }
                 } else {
                     textInputLayoutmobilEmail.error = ""
@@ -204,8 +204,6 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTranspo
         } else {
             textInputLayoutFirstName.error = null
         }
-
-
         if (mobileNumber.equals("")) {
             textInputLayoutmobileNumber.error = getString(R.string.Invalid_mobile_number)
             return

@@ -32,7 +32,7 @@ class BusTicketConfirmFragment : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_bus_ticket_confirm_fragment, container, false)
         v.tvYourSeats.text = "Your Seat : " + ticketInfo.seats
-        v.tvTotalPrices.text = "ticket price: " + ticketInfo.paidAmount
+        v.tvTotalPrices.text = "Total Price : " + ticketInfo.paidAmount
 
         v.tvOk.setOnClickListener {
             dismiss()
