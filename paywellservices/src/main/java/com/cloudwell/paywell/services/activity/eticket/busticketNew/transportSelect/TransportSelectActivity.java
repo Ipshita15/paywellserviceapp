@@ -1,6 +1,7 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew.transportSelect;
 
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,18 +14,20 @@ import android.widget.Spinner;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketRepository;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.BusTicketStatusFragment;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Transport;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.search.BusCitySearchActivity;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.transportSelect.view.IBusSeletedView;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.transportSelect.viewmodel.BusSelectedViewModel;
 import com.cloudwell.paywell.services.app.storage.AppStorageBox;
 import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus;
 import com.cloudwell.paywell.services.eventBus.model.MessageToBottom;
-import com.orhanobut.logger.Logger;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TransportSelectActivity extends BusTricketBaseActivity implements View.OnClickListener {
+public class TransportSelectActivity extends BusTricketBaseActivity implements View.OnClickListener, IBusSeletedView {
 
     private Spinner busListSpinner;
     private ArrayAdapter<String> busListAdapter;
@@ -33,6 +36,7 @@ public class TransportSelectActivity extends BusTricketBaseActivity implements V
     CardView cardLayout;
     mehdi.sakout.fancybuttons.FancyButton btn_next;
     private BusTicketRepository mBusTicketRepository;
+    private BusSelectedViewModel viewMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +73,14 @@ public class TransportSelectActivity extends BusTricketBaseActivity implements V
             }
         });
 
+        initViewModel();
+
+    }
+
+    private void initViewModel() {
+        viewMode = ViewModelProviders.of(this).get(BusSelectedViewModel.class);
+        viewMode.setView(this);
+
     }
 
     @Override
@@ -103,25 +115,10 @@ public class TransportSelectActivity extends BusTricketBaseActivity implements V
     }
 
     public void goToSearchBusTicket() {
-
-
         AppStorageBox.put(TransportSelectActivity.this, AppStorageBox.Key.SELETED_BUS_INFO, mTransportList.get(busListSpinner.getSelectedItemPosition()));
-
         Transport transport = (Transport) AppStorageBox.get(getApplicationContext(), AppStorageBox.Key.SELETED_BUS_INFO);
 
-        showProgressDialog();
-        mBusTicketRepository.getBusScheduleDate(transport.getBusid()).observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
-                dismissProgressDialog();
-                if (aBoolean) {
-                    Logger.v("run");
-                    Intent intent = new Intent(getApplicationContext(), BusCitySearchActivity.class);
-                    startActivity(intent);
-
-                }
-            }
-        });
+        viewMode.getSchudle(isInternetConnection(), transport);
 
 
     }
@@ -146,5 +143,33 @@ public class TransportSelectActivity extends BusTricketBaseActivity implements V
     @Override
     public void onClick(View v) {
         goToSearchBusTicket();
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    @Override
+    public void openNextActivity() {
+        Intent intent = new Intent(getApplicationContext(), BusCitySearchActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void showErrorMessage(@org.jetbrains.annotations.Nullable String status) {
+        BusTicketStatusFragment busTicketStatusFragment = new BusTicketStatusFragment();
+        BusTicketStatusFragment.message = status;
+        busTicketStatusFragment.show(getSupportFragmentManager(), "dialog");
+    }
+
+    @Override
+    public void showProgress() {
+        showProgressDialog();
+    }
+
+    @Override
+    public void hiddenProgress() {
+        dismissProgressDialog();
     }
 }

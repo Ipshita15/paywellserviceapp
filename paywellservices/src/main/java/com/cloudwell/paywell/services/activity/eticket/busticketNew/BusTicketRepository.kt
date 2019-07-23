@@ -2,6 +2,8 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew
 
 import android.arch.lifecycle.MutableLiveData
 import android.content.Context
+import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.activity.base.newBase.SingleLiveEvent
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
@@ -31,7 +33,7 @@ class BusTicketRepository() {
         mContext = AppController.getContext()
     }
 
-    val isFinshedDataLoad = MutableLiveData<Boolean>()
+    val statusOfDateInserted = SingleLiveEvent<String>()
 
 
     fun getBusList(): MutableLiveData<List<Transport>> {
@@ -71,7 +73,7 @@ class BusTicketRepository() {
     }
 
 
-    public fun getBusScheduleDate(transport_id: String): MutableLiveData<Boolean> {
+    public fun getBusScheduleDate(transport_id: String): MutableLiveData<String> {
         mAppHandler = AppHandler.getmInstance(mContext)
 
         val userName = mAppHandler!!.imeiNo
@@ -87,7 +89,9 @@ class BusTicketRepository() {
                         if (jsonObject.getInt("status") == 200) {
                             handleResponse(jsonObject)
                         } else {
-                            isFinshedDataLoad.value = false
+                            statusOfDateInserted.postValue(jsonObject.getString("message"))
+
+
                         }
 
                     }
@@ -96,11 +100,11 @@ class BusTicketRepository() {
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
 
-                isFinshedDataLoad.value = false
+                statusOfDateInserted.postValue(mContext?.getString(R.string.network_error))
 
             }
         })
-        return isFinshedDataLoad
+        return statusOfDateInserted
     }
 
     private fun handleResponse(jsonObject: JSONObject) {
@@ -236,7 +240,7 @@ class BusTicketRepository() {
 
             uiThread {
                 Logger.v("Local data insert successful")
-                isFinshedDataLoad.value = true
+                statusOfDateInserted.postValue("done")
             }
         }
 

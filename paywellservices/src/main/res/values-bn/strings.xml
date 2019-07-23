@@ -845,5 +845,6 @@
     <string name="invalid_age">Invalid age</string>
     <string name="invalid_address">Invalid address</string>
     <string name="no_data_found">No data found.</string>
+    <string name="network_error">Network error!!!</string>
 
 </resources>
