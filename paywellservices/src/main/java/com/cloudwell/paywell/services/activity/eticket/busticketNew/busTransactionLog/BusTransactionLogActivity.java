@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransactionLog;
 
-import android.app.ProgressDialog;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,7 +40,7 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(Html.fromHtml("<font color='#268472'>Search Bus Ticket</font>"));
+            getSupportActionBar().setTitle(Html.fromHtml("<font color='#268472'>Booking Log</font>"));
             getSupportActionBar().setElevation(0f);
             getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.color_tab_background_bus)));
         }
@@ -62,10 +61,7 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
 
     void getTransactionLog(String userName, String skey, String limit) {
 
-        ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Please wait...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+        showProgressDialog();
 
         ApiUtils.getAPIServicePHP7().getBusTransactionLogFromServer(userName, skey, limit).enqueue(new Callback<TransactionLogDetailsModel>() {
             @Override
@@ -116,17 +112,17 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
                         imageView.setVisibility(View.VISIBLE);
                         TextView textView = findViewById(R.id.tvNoDataFoundBusTrans);
                         textView.setVisibility(View.VISIBLE);
-                        Toast.makeText(BusTransactionLogActivity.this, "No data found.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BusTransactionLogActivity.this, R.string.no_data_found, Toast.LENGTH_SHORT).show();
                     }
                 }
-                progressDialog.dismiss();
+                dismissProgressDialog();
             }
 
             @Override
             public void onFailure(Call<TransactionLogDetailsModel> call, Throwable t) {
                 t.printStackTrace();
                 Toast.makeText(BusTransactionLogActivity.this, "Network error!!!", Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
+                dismissProgressDialog();
             }
         });
 

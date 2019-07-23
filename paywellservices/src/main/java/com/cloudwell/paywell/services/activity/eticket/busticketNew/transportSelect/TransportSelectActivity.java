@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.eticket.busticketNew.search;
+package com.cloudwell.paywell.services.activity.eticket.busticketNew.transportSelect;
 
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
@@ -14,6 +14,7 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketRepository;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Transport;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.search.BusCitySearchActivity;
 import com.cloudwell.paywell.services.app.storage.AppStorageBox;
 import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus;
 import com.cloudwell.paywell.services.eventBus.model.MessageToBottom;
@@ -23,7 +24,7 @@ import com.squareup.otto.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BusSelectActivity extends BusTricketBaseActivity implements View.OnClickListener {
+public class TransportSelectActivity extends BusTricketBaseActivity implements View.OnClickListener {
 
     private Spinner busListSpinner;
     private ArrayAdapter<String> busListAdapter;
@@ -37,9 +38,7 @@ public class BusSelectActivity extends BusTricketBaseActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_select);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        setToolbar("Transport");
 
         cardLayout = findViewById(R.id.cardLayout);
         btn_next = findViewById(R.id.btn_next);
@@ -60,7 +59,7 @@ public class BusSelectActivity extends BusTricketBaseActivity implements View.On
         busListSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                AppStorageBox.put(BusSelectActivity.this, AppStorageBox.Key.SELETED_BUS_INFO, mTransportList.get(i));
+                AppStorageBox.put(TransportSelectActivity.this, AppStorageBox.Key.SELETED_BUS_INFO, mTransportList.get(i));
 
             }
 
@@ -106,7 +105,7 @@ public class BusSelectActivity extends BusTricketBaseActivity implements View.On
     public void goToSearchBusTicket() {
 
 
-        AppStorageBox.put(BusSelectActivity.this, AppStorageBox.Key.SELETED_BUS_INFO, mTransportList.get(busListSpinner.getSelectedItemPosition()));
+        AppStorageBox.put(TransportSelectActivity.this, AppStorageBox.Key.SELETED_BUS_INFO, mTransportList.get(busListSpinner.getSelectedItemPosition()));
 
         Transport transport = (Transport) AppStorageBox.get(getApplicationContext(), AppStorageBox.Key.SELETED_BUS_INFO);
 

@@ -838,6 +838,7 @@
     <string name="Invalid_mobile_number">Invalid mobile number</string>
     <string name="invalid_age">Invalid age</string>
     <string name="invalid_address">Invalid address</string>
+    <string name="no_data_found">No data found.</string>
 
 
 </resources>

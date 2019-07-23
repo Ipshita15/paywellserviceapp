@@ -1235,7 +1235,7 @@
         </activity>
 
         <activity
-            android:name=".activity.eticket.busticketNew.search.BusSelectActivity"
+            android:name=".activity.eticket.busticketNew.transportSelect.TransportSelectActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 

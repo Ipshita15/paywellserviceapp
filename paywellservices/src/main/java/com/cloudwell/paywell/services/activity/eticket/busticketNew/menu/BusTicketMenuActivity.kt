@@ -13,7 +13,7 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransactionLog.BusTransactionLogActivity
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.search.BusSelectActivity
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.transportSelect.TransportSelectActivity
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.utils.ConnectionDetector
@@ -74,7 +74,7 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btViewTricket -> {
-                startActivity(Intent(applicationContext, BusSelectActivity::class.java))
+                startActivity(Intent(applicationContext, TransportSelectActivity::class.java))
             }
 
 
