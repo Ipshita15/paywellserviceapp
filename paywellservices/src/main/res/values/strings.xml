@@ -840,6 +840,7 @@
     <string name="invalid_address">Invalid address</string>
     <string name="no_data_found">No data found.</string>
     <string name="network_error">Network error!!!</string>
+    <string name="popular_city">Popular City</string>
 
 
 </resources>
