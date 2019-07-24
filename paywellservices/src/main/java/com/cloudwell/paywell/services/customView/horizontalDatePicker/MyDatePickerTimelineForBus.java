@@ -110,22 +110,16 @@ public class MyDatePickerTimelineForBus extends LinearLayout implements View.OnC
         calendar.set(year, thismonth, dayOfMonth);
 
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                        if (iDatePicker != null) {
-                            iDatePicker.onSetNewDate(year, month, day);
-                        }
-                    }
-                }, year, thismonth, dayOfMonth);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                if (iDatePicker != null) {
+                    iDatePicker.onSetNewDate(year, month, day);
+                }
+            }
+        }, year, thismonth, dayOfMonth);
 
         datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
-
-//        calendar.add(Calendar.MONTH, 6);
-//        datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
-
-
         datePickerDialog.show();
     }
 
