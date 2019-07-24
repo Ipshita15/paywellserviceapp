@@ -42,7 +42,9 @@ public class TransportSelectActivity extends BusTricketBaseActivity implements V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_select);
-        setToolbar("Transport");
+
+        setToolbar(getString(R.string.transport), getApplicationContext().getResources().getColor(R.color.bus_ticket_toolbar_title_text_color));
+
 
         cardLayout = findViewById(R.id.cardLayout);
         btn_next = findViewById(R.id.btn_next);

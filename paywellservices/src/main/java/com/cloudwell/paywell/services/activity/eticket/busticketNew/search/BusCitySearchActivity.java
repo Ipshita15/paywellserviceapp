@@ -54,6 +54,9 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_city_search);
+
+        setToolbar(getString(R.string.search_transport_ticket), getApplicationContext().getResources().getColor(R.color.bus_ticket_toolbar_title_text_color));
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(Html.fromHtml("<font color='#268472'>Search Transport Ticket</font>"));
