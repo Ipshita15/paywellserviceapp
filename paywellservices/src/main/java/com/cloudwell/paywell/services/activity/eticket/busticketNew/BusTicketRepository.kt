@@ -28,6 +28,7 @@ class BusTicketRepository() {
 
     private var mAppHandler: AppHandler? = null
     private var mContext: Context? = null
+    private var mValidityDate = ""
 
     init {
         mContext = AppController.getContext()
@@ -207,6 +208,8 @@ class BusTicketRepository() {
                     val coach_no = model.getString("coach_no")
                     val schedule_type = model.getString("schedule_type")
                     val validity_date = model.getString("validity_date")
+                    mValidityDate = validity_date
+
 
                     val tripScheduleInfo = TripScheduleInfo(FormKey, toKey, scheduleId, validity_date)
                     allTripScheduleInfo.add(tripScheduleInfo)
@@ -231,6 +234,7 @@ class BusTicketRepository() {
 
         }
 
+        AppStorageBox.put(mContext, AppStorageBox.Key.BUS_VALIDATE_DATE, mValidityDate)
 
         doAsync {
             DatabaseClient.getInstance(mContext).appDatabase.mBusTicketDab().insertTripScheduleInfo(allTripScheduleInfo)

@@ -26,8 +26,11 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.storage.AppStorageBox;
 
 import java.text.DateFormatSymbols;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import mehdi.sakout.fancybuttons.FancyButton;
 
@@ -183,6 +186,18 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
                     myCalender.get(Calendar.MONTH),
                     myCalender.get(Calendar.DAY_OF_MONTH));
             datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                String validateDate = (String) AppStorageBox.get(getApplicationContext(), AppStorageBox.Key.BUS_VALIDATE_DATE);
+
+                Date date = null;
+                date = sdf.parse(validateDate);
+                long millis = date.getTime();
+                datePickerDialog.getDatePicker().setMaxDate(millis);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             datePickerDialog.show();
 
         });
