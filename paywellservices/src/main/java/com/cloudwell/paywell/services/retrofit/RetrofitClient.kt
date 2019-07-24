@@ -4,6 +4,7 @@ package com.cloudwell.paywell.services.retrofit
 import com.cloudwell.paywell.services.BuildConfig
 import com.cloudwell.paywell.services.app.AppController
 import com.facebook.stetho.okhttp3.StethoInterceptor
+import com.itkacher.okhttpprofiler.OkHttpProfilerInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -59,34 +60,12 @@ object RetrofitClient {
 
             httpClient.addInterceptor(HeaderTokenInterceptor(AppController.getContext()))
 
-//            httpClient.addNetworkInterceptor(object : Interceptor {
-//                @Throws(IOException::class)
-//                override fun intercept(chain: Interceptor.Chain): Response {
-//                    val request = chain.request()
-//                    chain.proceed(request).use { response ->
-//                        val jsonObject: JsonObject
-//                        try {
-//                            val root = JSONObject(Objects.requireNonNull<ResponseBody>(response.body).string().toString())
-//                            val status = root.getInt("status")
-//                            if (status.toString().startsWith("3")) {
-//                                Logger.v("" + status)
-//
-//                            }
-//                        } catch (e: JSONException) {
-//                            e.printStackTrace()
-//                        }
-//
-//                        return response
-//                    }
-//                }
-//            })
-
-
             if (BuildConfig.DEBUG) {
                 val logging = HttpLoggingInterceptor()
                 logging.setLevel(HttpLoggingInterceptor.Level.BODY)
                 httpClient.addInterceptor(logging)
                 httpClient.addNetworkInterceptor(StethoInterceptor())
+                httpClient.addInterceptor(OkHttpProfilerInterceptor())
             }
             httpClient.authenticator(TokenAuthenticator())
 

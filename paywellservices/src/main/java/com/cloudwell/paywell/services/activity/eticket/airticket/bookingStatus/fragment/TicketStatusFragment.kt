@@ -28,7 +28,7 @@ class TicketStatusFragment : DialogFragment() {
         v.tvYourSeats.text = message
 
 
-        v.btActionIssueTicket.setOnClickListener {
+        v.btAction.setOnClickListener {
             dismiss()
 
         }

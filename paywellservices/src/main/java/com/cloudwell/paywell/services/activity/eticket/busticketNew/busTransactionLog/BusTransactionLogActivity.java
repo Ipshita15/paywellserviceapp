@@ -1,11 +1,13 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransactionLog;
 
-import android.app.ProgressDialog;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
@@ -38,7 +40,7 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(Html.fromHtml("<font color='#268472'>Search Bus Ticket</font>"));
+            getSupportActionBar().setTitle(Html.fromHtml("<font color='#268472'>Booking Log</font>"));
             getSupportActionBar().setElevation(0f);
             getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.color_tab_background_bus)));
         }
@@ -59,10 +61,7 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
 
     void getTransactionLog(String userName, String skey, String limit) {
 
-        ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Please wait...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+        showProgressDialog();
 
         ApiUtils.getAPIServicePHP7().getBusTransactionLogFromServer(userName, skey, limit).enqueue(new Callback<TransactionLogDetailsModel>() {
             @Override
@@ -70,6 +69,14 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
                 if (response.isSuccessful()) {
                     TransactionLogDetailsModel transactionLogDetailsModel = response.body();
                     if (transactionLogDetailsModel.getStatus() == 200) {
+                        if (transactionLogDetailsModel.getData().size() != 0) {
+                            ImageView imageView = findViewById(R.id.ivForNodataFoundBusTrans);
+                            imageView.setVisibility(View.GONE);
+                            TextView textView = findViewById(R.id.tvNoDataFoundBusTrans);
+                            textView.setVisibility(View.GONE);
+                        }
+
+
                         for (Datum datum : transactionLogDetailsModel.getData()) {
                             String transactionDate = datum.getTransactionDateTime().split(" ")[0];
                             if (!date.equals(transactionDate)) {
@@ -77,32 +84,45 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
                                 allDataArrayList.add(date);
                             }
                             BusTransactionModel busTransactionModel = new BusTransactionModel(
-                                    transactionDate, datum.getTicketInfo().getBookingInfoId(),
-                                    datum.getStatusMessage(), datum.getTicketInfo().getWebBookingInfoId(),
+                                    transactionDate,
+                                    datum.getTrxId(),
+                                    datum.getTicketInfo().getBookingInfoId(),
+                                    datum.getStatusMessage(),
+                                    datum.getTicketInfo().getWebBookingInfoId(),
                                     datum.getTicketInfo().getTotalAmount(),
-                                    String.valueOf(datum.getCustomerInfo().getCustomerName()),
-                                    "Not available", String.valueOf(datum.getCustomerInfo().getCustomerPhone()),
-                                    datum.getTicketInfo().getTicketNo(), datum.getTicketInfo().getBoardingPointName(),
-                                    String.valueOf(datum.getTicketInfo().getDepartureDate()),
-                                    datum.getTicketInfo().getDepartureTime(), datum.getTicketInfo().getSeatLbls(),
-                                    datum.getBusInfo().getCoachNo(), datum.getBusInfo().getBusName(),
+                                    datum.getCustomerInfo().getCustomerName(),
+                                    datum.getCustomerInfo().getCusTomerGenger(),
+                                    datum.getCustomerInfo().getCustomerPhone(),
+                                    datum.getCustomerInfo().getCustomerAddress(),
+                                    datum.getCustomerInfo().getCustomerEmail(),
+                                    datum.getTicketInfo().getTicketNo(),
+                                    datum.getTicketInfo().getBoardingPointName(),
+                                    datum.getTicketInfo().getDepartureDate(),
+                                    datum.getTicketInfo().getDepartureTime(),
+                                    datum.getTicketInfo().getSeatLbls(),
+                                    datum.getBusInfo().getCoachNo(),
+                                    datum.getBusInfo().getBusName(),
                                     datum.getTicketInfo().getJourneyRoute().split("-")[0],
                                     datum.getTicketInfo().getJourneyRoute().split("-")[1]);
                             allDataArrayList.add(busTransactionModel);
                             adapter.notifyDataSetChanged();
                         }
                     } else {
-                        Toast.makeText(BusTransactionLogActivity.this, "No data found.", Toast.LENGTH_SHORT).show();
+                        ImageView imageView = findViewById(R.id.ivForNodataFoundBusTrans);
+                        imageView.setVisibility(View.VISIBLE);
+                        TextView textView = findViewById(R.id.tvNoDataFoundBusTrans);
+                        textView.setVisibility(View.VISIBLE);
+                        Toast.makeText(BusTransactionLogActivity.this, R.string.no_data_found, Toast.LENGTH_SHORT).show();
                     }
                 }
-                progressDialog.dismiss();
+                dismissProgressDialog();
             }
 
             @Override
             public void onFailure(Call<TransactionLogDetailsModel> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(BusTransactionLogActivity.this, "Network error!!!", Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
+                Toast.makeText(BusTransactionLogActivity.this, getString(R.string.network_error), Toast.LENGTH_SHORT).show();
+                dismissProgressDialog();
             }
         });
 

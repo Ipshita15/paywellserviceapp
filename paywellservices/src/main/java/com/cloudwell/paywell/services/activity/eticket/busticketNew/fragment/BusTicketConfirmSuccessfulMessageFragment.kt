@@ -6,15 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TicketInfoSeatBookAndCheck
-import kotlinx.android.synthetic.main.fragment_bus_ticket_confirm_fragment.view.*
-import kotlinx.android.synthetic.main.fragment_prices_change.view.tvYourSeats
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResPaymentBookingAPI
+import kotlinx.android.synthetic.main.fragment_bus_ticket_confirm_successfull_fragment.view.*
 
 
-class BusTicketConfirmFragment : DialogFragment() {
+class BusTicketConfirmSuccessfulMessageFragment : DialogFragment() {
 
     companion object {
-        lateinit var ticketInfo: TicketInfoSeatBookAndCheck
+        lateinit var model: ResPaymentBookingAPI
     }
 
     private var onClicklistener: MyClickListener? = null
@@ -30,17 +29,23 @@ class BusTicketConfirmFragment : DialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val v = inflater.inflate(R.layout.fragment_bus_ticket_confirm_fragment, container, false)
-        v.tvYourSeats.text = "Your Seat : " + ticketInfo.seats
-        v.tvTotalPrices.text = "Total Price : " + ticketInfo.paidAmount
+        val v = inflater.inflate(R.layout.fragment_bus_ticket_confirm_successfull_fragment, container, false)
+
+        isCancelable = false
+
+        v.tvMessage.text = model.message
+        v.tvTranstionId.text = model.transId
+        v.tvTicketNoINfo.text = model.ticketInfo?.ticketNo
+        v.tvBoardingPointName.text = model.ticketInfo?.boardingPointName
+        v.tvTotalAmount.text = model.ticketInfo?.totalAmount
+        v.tvWebBookingId.text = model.ticketInfo?.webBookingInfoId
+        v.tvBookingId.text = model.ticketInfo?.bookingInfoId
+
 
         v.tvOk.setOnClickListener {
-            dismiss()
             onClicklistener?.onClick()
         }
-        v.btCancel.setOnClickListener {
-            dismiss()
-        }
+
 
         return v
     }
@@ -53,12 +58,14 @@ class BusTicketConfirmFragment : DialogFragment() {
         }
     }
 
+    interface MyClickListener {
+        fun onClick()
+
+    }
+
 
 }
 
-interface MyClickListener {
-    fun onClick()
 
-}
 
 

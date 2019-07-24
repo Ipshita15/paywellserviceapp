@@ -27,12 +27,16 @@ import java.util.*
 
 
 class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTransportListView {
-    override fun showSeatCheckAndBookingRepose(it: ResBusSeatCheckAndBlock) {
-
+    override fun showSeatCheckAndBookingRepose(it: ResSeatCheckBookAPI) {
 
     }
 
-    override fun showErrorMessage(meassage: String) {
+    override fun showShowConfirmDialog(it: ResPaymentBookingAPI) {
+
+    }
+
+
+    override fun showErrorMessage(message: String) {
 
 
     }
@@ -53,10 +57,6 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
 
         requestBusSearch = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.REQUEST_AIR_SERACH) as RequestBusSearch
 
-//        requestBusSearch = RequestBusSearch()
-//        requestBusSearch.to = "Dhaka"
-//        requestBusSearch.from = "Kolkata"
-//        requestBusSearch.date = "2019-07-01"
 
         val split = requestBusSearch.date.split("-")
         val month = split[1].toInt() - 1

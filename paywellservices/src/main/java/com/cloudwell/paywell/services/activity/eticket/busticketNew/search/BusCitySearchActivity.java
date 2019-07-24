@@ -93,6 +93,7 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
 
         if (fromData != null && !(fromData.isEmpty()) && !fromData.equals("null")) {
             fromTS.setText(fromData);
+            fromString = fromData;
         } else {
             fromTS.setText(fromString);
         }
@@ -108,6 +109,7 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
         });
         if (toData != null && !(toData.isEmpty()) && !toData.equals("null")) {
             toTS.setText(toData);
+            toString = toData;
         } else {
             toTS.setText(toString);
         }
@@ -139,20 +141,7 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
                 String from = ((TextView) fromTS.getCurrentView()).getText().toString();
                 String to = ((TextView) toTS.getCurrentView()).getText().toString();
                 if (!from.isEmpty() && !(from.equals(FROM_STRING)) && !to.isEmpty() && !(to.equals(TO_STRING))) {
-
-
-                    String date = (String) AppStorageBox.get(getApplicationContext(), AppStorageBox.Key.BUS_JOURNEY_DATE);
-
-
-                    RequestBusSearch requestBusSearch = new RequestBusSearch();
-                    requestBusSearch.setFrom(from);
-                    requestBusSearch.setTo(to);
-                    requestBusSearch.setDate(date);
-
-                    AppStorageBox.put(AppController.getContext(), AppStorageBox.Key.REQUEST_AIR_SERACH, requestBusSearch);
-
-                    Intent intent = new Intent(getApplicationContext(), BusTransportListActivity.class);
-                    startActivity(intent);
+                    openTripListActivity(from, to);
                 } else {
                     Toast.makeText(BusCitySearchActivity.this, "Please Enter All the data first", Toast.LENGTH_SHORT).show();
                 }
@@ -170,41 +159,49 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
                 dialog.show(ft, FullScreenDialogBus.TAG);
             }
         });
-        toLL.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FullScreenDialogBus dialog = new FullScreenDialogBus();
-                Bundle b = new Bundle();
-                b.putString(FullSCREEN_DIALOG_HEADER, TO_STRING);
-                dialog.setArguments(b);
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                dialog.show(ft, FullScreenDialogBus.TAG);
-            }
+        toLL.setOnClickListener(view -> {
+            FullScreenDialogBus dialog = new FullScreenDialogBus();
+            Bundle b = new Bundle();
+            b.putString(FullSCREEN_DIALOG_HEADER, TO_STRING);
+            dialog.setArguments(b);
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            dialog.show(ft, FullScreenDialogBus.TAG);
         });
 
-        dateLinearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(BusCitySearchActivity.this, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        myCalender.set(i, i1, i2);
-                        dateTV.setText(String.valueOf(myCalender.get(Calendar.DAY_OF_MONTH)));
-                        monthTV.setText(new DateFormatSymbols().getMonths()[myCalender.get(Calendar.MONTH)]);
-                        dayTV.setText(new DateFormatSymbols().getWeekdays()[myCalender.get(Calendar.DAY_OF_WEEK)]);
-                        AppStorageBox.put(BusCitySearchActivity.this, AppStorageBox.Key.BUS_JOURNEY_DATE, simpleDateFormat.format(myCalender.getTimeInMillis()));
+        dateLinearLayout.setOnClickListener(view -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(BusCitySearchActivity.this, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                    myCalender.set(i, i1, i2);
+                    dateTV.setText(String.valueOf(myCalender.get(Calendar.DAY_OF_MONTH)));
+                    monthTV.setText(new DateFormatSymbols().getMonths()[myCalender.get(Calendar.MONTH)]);
+                    dayTV.setText(new DateFormatSymbols().getWeekdays()[myCalender.get(Calendar.DAY_OF_WEEK)]);
+                    AppStorageBox.put(BusCitySearchActivity.this, AppStorageBox.Key.BUS_JOURNEY_DATE, simpleDateFormat.format(myCalender.getTimeInMillis()));
 
-                    }
-                }, myCalender.get(Calendar.YEAR),
-                        myCalender.get(Calendar.MONTH),
-                        myCalender.get(Calendar.DAY_OF_MONTH));
-                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
-                datePickerDialog.show();
+                }
+            }, myCalender.get(Calendar.YEAR),
+                    myCalender.get(Calendar.MONTH),
+                    myCalender.get(Calendar.DAY_OF_MONTH));
+            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+            datePickerDialog.show();
 
-            }
         });
 
 
+    }
+
+    private void openTripListActivity(String from, String to) {
+        String date = (String) AppStorageBox.get(getApplicationContext(), AppStorageBox.Key.BUS_JOURNEY_DATE);
+
+        RequestBusSearch requestBusSearch = new RequestBusSearch();
+        requestBusSearch.setFrom(from);
+        requestBusSearch.setTo(to);
+        requestBusSearch.setDate(date);
+
+        AppStorageBox.put(AppController.getContext(), AppStorageBox.Key.REQUEST_AIR_SERACH, requestBusSearch);
+
+        Intent intent = new Intent(getApplicationContext(), BusTransportListActivity.class);
+        startActivity(intent);
     }
 
 

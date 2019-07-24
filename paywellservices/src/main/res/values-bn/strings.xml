@@ -839,5 +839,12 @@
     <string name="bus_info_gender">Gender</string>
     <string name="et_email">Email</string>
     <string name="bus_address">Address</string>
+    <string name="not_available">Not available</string>
+    <string name="invalid_full_name">Invalid full name</string>
+    <string name="Invalid_mobile_number">Invalid mobile number</string>
+    <string name="invalid_age">Invalid age</string>
+    <string name="invalid_address">Invalid address</string>
+    <string name="no_data_found">No data found.</string>
+    <string name="network_error">Network error!!!</string>
 
 </resources>

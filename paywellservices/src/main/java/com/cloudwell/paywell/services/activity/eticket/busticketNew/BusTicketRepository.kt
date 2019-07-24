@@ -2,6 +2,8 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew
 
 import android.arch.lifecycle.MutableLiveData
 import android.content.Context
+import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.activity.base.newBase.SingleLiveEvent
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
@@ -31,7 +33,7 @@ class BusTicketRepository() {
         mContext = AppController.getContext()
     }
 
-    val isFinshedDataLoad = MutableLiveData<Boolean>()
+    val statusOfDateInserted = SingleLiveEvent<String>()
 
 
     fun getBusList(): MutableLiveData<List<Transport>> {
@@ -71,7 +73,7 @@ class BusTicketRepository() {
     }
 
 
-    public fun getBusScheduleDate(transport_id: String): MutableLiveData<Boolean> {
+    public fun getBusScheduleDate(transport_id: String): MutableLiveData<String> {
         mAppHandler = AppHandler.getmInstance(mContext)
 
         val userName = mAppHandler!!.imeiNo
@@ -87,7 +89,9 @@ class BusTicketRepository() {
                         if (jsonObject.getInt("status") == 200) {
                             handleResponse(jsonObject)
                         } else {
-                            isFinshedDataLoad.value = false
+                            statusOfDateInserted.postValue(jsonObject.getString("message"))
+
+
                         }
 
                     }
@@ -96,11 +100,11 @@ class BusTicketRepository() {
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
 
-                isFinshedDataLoad.value = false
+                statusOfDateInserted.postValue(mContext?.getString(R.string.network_error))
 
             }
         })
-        return isFinshedDataLoad
+        return statusOfDateInserted
     }
 
     private fun handleResponse(jsonObject: JSONObject) {
@@ -236,7 +240,7 @@ class BusTicketRepository() {
 
             uiThread {
                 Logger.v("Local data insert successful")
-                isFinshedDataLoad.value = true
+                statusOfDateInserted.postValue("done")
             }
         }
 
@@ -301,7 +305,7 @@ class BusTicketRepository() {
                                 if (o.getString("status").equals("Available")) {
                                     tototalAvailableSeat = tototalAvailableSeat + 1
                                 }
-                                allBusSeat.add(BusSeat(o.getString("seat_lbls"), o.getString("status"), o.getInt("value")))
+                                allBusSeat.add(BusSeat(o.getInt("seat_id"), o.getString("seat_lbls"), o.getString("status"), o.getInt("value")))
                             }
                             data.value = ResSeatInfo(tototalAvailableSeat, allBusSeat)
                         }
@@ -337,7 +341,7 @@ class BusTicketRepository() {
 
     }
 
-    fun callBookingAPI(model: TripScheduleInfoAndBusSchedule, requestBusSearch: RequestBusSearch, boothInfo: BoothInfo, seatLevel: String, seatId: String, totalAPIValuePrices: String): MutableLiveData<ResBusSeatCheckAndBlock> {
+    fun callBookingAPI(model: TripScheduleInfoAndBusSchedule, requestBusSearch: RequestBusSearch, boothInfo: BoothInfo, seatLevel: String, seatId: String, totalAPIValuePrices: String): MutableLiveData<ResSeatCheckBookAPI> {
 
         mAppHandler = AppHandler.getmInstance(mContext)
         val userName = mAppHandler!!.imeiNo
@@ -345,7 +349,7 @@ class BusTicketRepository() {
         val accessKey = AppStorageBox.get(mContext, AppStorageBox.Key.ACCESS_KEY) as String
 
         val transport = AppStorageBox.get(mContext, AppStorageBox.Key.SELETED_BUS_INFO) as Transport
-        val data = MutableLiveData<ResBusSeatCheckAndBlock>()
+        val data = MutableLiveData<ResSeatCheckBookAPI>()
 
         ApiUtils.getAPIServicePHP7().seatCheckAndBlock(
                 userName,
@@ -368,12 +372,12 @@ class BusTicketRepository() {
                 transport.extraCharge,
                 BusCalculationHelper.getPricesWithExtraAmount(model.busSchedule?.ticketPrice, requestBusSearch.date, transport = transport, isExtraAmount = false),
                 totalAPIValuePrices)
-                .enqueue(object : Callback<ResBusSeatCheckAndBlock> {
-                    override fun onFailure(call: Call<ResBusSeatCheckAndBlock>, t: Throwable) {
+                .enqueue(object : Callback<ResSeatCheckBookAPI> {
+                    override fun onFailure(call: Call<ResSeatCheckBookAPI>, t: Throwable) {
                         data.value = null
                     }
 
-                    override fun onResponse(call: Call<ResBusSeatCheckAndBlock>, response: Response<ResBusSeatCheckAndBlock>) {
+                    override fun onResponse(call: Call<ResSeatCheckBookAPI>, response: Response<ResSeatCheckBookAPI>) {
                         if (response.isSuccessful) {
                             data.value = response.body()
                         }
@@ -385,13 +389,13 @@ class BusTicketRepository() {
 
     }
 
-    fun confirmPaymentAPI(transId: String, fullNameTV: String, mobileNumber: String, address: String, etEmail: String, age: String, password: String) {
+    fun confirmPaymentAPI(transId: String, fullNameTV: String, mobileNumber: String, address: String, etEmail: String, age: String, gender: String, password: String): MutableLiveData<ResPaymentBookingAPI> {
         mAppHandler = AppHandler.getmInstance(mContext)
         val userName = mAppHandler!!.imeiNo
         val skey = ApiUtils.KEY_SKEY
         val accessKey = AppStorageBox.get(mContext, AppStorageBox.Key.ACCESS_KEY) as String
 
-        val data = MutableLiveData<ResBusSeatCheckAndBlock>()
+        val data = MutableLiveData<ResPaymentBookingAPI>()
 
         ApiUtils.getAPIServicePHP7().confirmPayment(
                 userName,
@@ -403,17 +407,20 @@ class BusTicketRepository() {
                 address,
                 etEmail,
                 age,
-                password).enqueue(object : Callback<ResBusSeatCheckAndBlock> {
-            override fun onFailure(call: Call<ResBusSeatCheckAndBlock>, t: Throwable) {
+                gender,
+                password).enqueue(object : Callback<ResPaymentBookingAPI> {
+            override fun onFailure(call: Call<ResPaymentBookingAPI>, t: Throwable) {
                 data.value = null
             }
 
-            override fun onResponse(call: Call<ResBusSeatCheckAndBlock>, response: Response<ResBusSeatCheckAndBlock>) {
+            override fun onResponse(call: Call<ResPaymentBookingAPI>, response: Response<ResPaymentBookingAPI>) {
                 if (response.isSuccessful) {
                     data.value = response.body()
                 }
             }
         })
+
+        return data
     }
 
 }

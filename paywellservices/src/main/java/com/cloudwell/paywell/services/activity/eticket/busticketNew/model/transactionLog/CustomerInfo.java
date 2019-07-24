@@ -6,44 +6,61 @@ import com.google.gson.annotations.SerializedName;
 public class CustomerInfo {
 
     @SerializedName("customerAge")
-    private Object customerAge;
+    private String customerAge;
     @SerializedName("customerEmail")
-    private Object customerEmail;
+    private String customerEmail;
     @SerializedName("customerName")
-    private Object customerName;
+    private String customerName;
     @SerializedName("customerPhone")
-    private Object customerPhone;
+    private String customerPhone;
 
-    public Object getCustomerAge() {
+    @SerializedName("customerGender")
+    private String customerGender;
+    @SerializedName("customerAddress")
+    private String customerAddress;
+
+
+    public String getCustomerAge() {
         return customerAge;
     }
 
-    public void setCustomerAge(Object customerAge) {
+    public void setCustomerAge(String customerAge) {
         this.customerAge = customerAge;
     }
 
-    public Object getCustomerEmail() {
+    public String getCustomerEmail() {
         return customerEmail;
     }
 
-    public void setCustomerEmail(Object customerEmail) {
+    public void setCustomerEmail(String customerEmail) {
         this.customerEmail = customerEmail;
     }
 
-    public Object getCustomerName() {
+    public String getCustomerName() {
         return customerName;
     }
 
-    public void setCustomerName(Object customerName) {
+    public void setCustomerName(String customerName) {
         this.customerName = customerName;
     }
 
-    public Object getCustomerPhone() {
+    public String getCustomerPhone() {
         return customerPhone;
     }
 
-    public void setCustomerPhone(Object customerPhone) {
+    public void setCustomerPhone(String customerPhone) {
         this.customerPhone = customerPhone;
     }
 
+    public String getCusTomerGenger() {
+        return customerGender;
+    }
+
+    public String getCustomerAddress() {
+        return customerAddress;
+    }
+
+    public void setCustomerAddress(String customerAddress) {
+        this.customerAddress = customerAddress;
+    }
 }

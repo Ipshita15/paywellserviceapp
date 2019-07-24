@@ -6,7 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.cloudwell.paywell.services.R
-import kotlinx.android.synthetic.main.fragment_prices_change.view.*
+import kotlinx.android.synthetic.main.fragment_bus_status_fragment.view.*
+import kotlinx.android.synthetic.main.fragment_prices_change.view.tvYourSeats
 
 
 class BusTicketStatusFragment : DialogFragment() {
@@ -31,7 +32,7 @@ class BusTicketStatusFragment : DialogFragment() {
         val v = inflater.inflate(R.layout.fragment_bus_status_fragment, container, false)
         v.tvYourSeats.text = message
 
-        v.btActionIssueTicket.setOnClickListener {
+        v.tvOk.setOnClickListener {
             dismiss()
             onClicklistener?.onClick()
         }

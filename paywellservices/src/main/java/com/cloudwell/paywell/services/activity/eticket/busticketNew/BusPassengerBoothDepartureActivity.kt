@@ -2,70 +2,73 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew
 
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
+import android.text.Editable
 import android.text.InputType
+import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
 import android.view.Gravity
 import android.view.inputmethod.InputMethodManager
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.Spinner
+import android.widget.*
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.viewModel.BusTransportViewModel
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.BusTicketConfirmFragment
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.BusTicketConfirmSuccessfulMessageFragment
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.BusTicketStatusFragment
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.MyClickListener
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.OnClickListener
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BoothInfo
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResBusSeatCheckAndBlock
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule
-import com.cloudwell.paywell.services.app.AppHandler
-import com.cloudwell.paywell.services.app.storage.AppStorageBox
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
+import com.cloudwell.paywell.services.constant.AllConstant
 import com.google.gson.Gson
+import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_bus_booth_departure.*
 import org.json.JSONObject
 
+
 class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTransportListView {
-    override fun showSeatCheckAndBookingRepose(it: ResBusSeatCheckAndBlock) {
-
-
-        val t = BusTicketConfirmFragment()
-        it.ticketInfo?.seats = seatLevel
-        BusTicketConfirmFragment.ticketInfo = it.ticketInfo!!
+    override fun showShowConfirmDialog(it: ResPaymentBookingAPI) {
+        val t = BusTicketConfirmSuccessfulMessageFragment()
+        BusTicketConfirmSuccessfulMessageFragment.model = it
         t.show(supportFragmentManager, "dialog")
-        t.setOnClickListener(object : MyClickListener, OnClickListener {
+        t.setOnClickListener(object : BusTicketConfirmSuccessfulMessageFragment.MyClickListener {
             override fun onClick() {
+                val intent = Intent(applicationContext, BusTicketMenuActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent)
 
-                askForPin()
             }
         })
 
-        val transId = "1234"
-        viewMode.callconfirmPayment(isInternetConnection,
-                transId,
-                fullNameTV.text.toString(),
-                mobileNumberTV.text.toString(),
-                etAddress.text.toString(),
-                etEmail.text.toString(),
-                ageTV.text.toString(),
-                password
+    }
 
-        )
+
+    override fun showSeatCheckAndBookingRepose(it: ResSeatCheckBookAPI) {
+
+        Logger.v("", "")
+        val t = BusTicketConfirmFragment()
+        it.ticketInfoSeatBookAndCheck?.seats = seatLevel
+        BusTicketConfirmFragment.ticketInfo = it.ticketInfoSeatBookAndCheck!!
+        t.show(supportFragmentManager, "dialog")
+        t.setOnClickListener(object : MyClickListener {
+            override fun onClick() {
+                askForPin(it)
+            }
+        })
+
 
     }
 
-    override fun showErrorMessage(meassage: String) {
+
+    override fun showErrorMessage(message: String) {
 
         val t = BusTicketStatusFragment()
-        BusTicketStatusFragment.message = "Not enough balance"
+        BusTicketStatusFragment.message = message
         t.show(supportFragmentManager, "dialog")
 
     }
@@ -148,6 +151,33 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTranspo
 
         initViewModel()
 
+
+        etEmail.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+                if (!s.toString().equals("")) {
+                    if (s.matches(AllConstant.emailPattern.toRegex()) && s.length > 0) {
+                        textInputLayoutmobilEmail.error = ""
+
+                    } else {
+                        textInputLayoutmobilEmail.error = getString(R.string.invalid_email)
+                    }
+                } else {
+                    textInputLayoutmobilEmail.error = ""
+                }
+
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                // other stuffs
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                // other stuffs
+            }
+        })
+
+
         btn_search.setOnClickListener {
             handleBookingContinueBooking()
         }
@@ -162,41 +192,59 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTranspo
     }
 
     private fun handleBookingContinueBooking() {
-        val fullName = fullNameTV.text.toString()
-        val mobileNumber = mobileNumberTV.text.toString()
-        val age = ageTV.text.toString()
+        val fullName = fullNameTV.text.toString().trim()
+        val mobileNumber = mobileNumberTV.text.toString().trim()
+        val age = ageTV.text.toString().trim()
+        val address = etAddress.text.toString().trim()
+        val email = etEmail.text.toString().trim()
 
         if (fullName.equals("")) {
-            textInputLayoutFirstName.error = "Invalid full name"
+            textInputLayoutFirstName.error = getString(R.string.invalid_full_name)
             return
         } else {
             textInputLayoutFirstName.error = null
         }
-
-
         if (mobileNumber.equals("")) {
-            textInputLayoutmobileNumber.error = "Invalid mobile number"
+            textInputLayoutmobileNumber.error = getString(R.string.Invalid_mobile_number)
             return
         } else {
             textInputLayoutmobileNumber.error = null
         }
 
         if (age.equals("")) {
-            textInputLayoutAge.error = "Invalid age"
+            textInputLayoutAge.error = getString(R.string.invalid_age)
             return
         } else {
             textInputLayoutAge.error = null
+        }
+
+        if (address.equals("")) {
+            textInputLayoutAddress.error = getString(R.string.invalid_address)
+            return
+        } else {
+            textInputLayoutAddress.error = null
+        }
+
+
+        if (!email.equals("")) {
+            if (email.matches(AllConstant.emailPattern.toRegex()) && email.length > 0) {
+                textInputLayoutmobilEmail.error = ""
+
+            } else {
+                textInputLayoutmobilEmail.error = getString(R.string.invalid_email)
+                return
+            }
         }
 
         val boothInfo = allBoothInfo.get(boothList.selectedItemPosition)
 
 
 
-        viewMode.seatCheck(isInternetConnection, model, requestBusSearch, boothInfo, seatLevel, seatId, totalAPIValuePrices)
+        viewMode.bookingAPI(isInternetConnection, model, requestBusSearch, boothInfo, seatLevel, seatId, totalAPIValuePrices)
 
     }
 
-    private fun askForPin() {
+    private fun askForPin(it: ResSeatCheckBookAPI) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.pin_no_title_msg)
 
@@ -217,12 +265,23 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTranspo
                 val PIN_NO = pinNoET.text.toString()
                 if (isInternetConnection) {
 
-                    val mAppHandler = AppHandler.getmInstance(application)
-                    val userName = mAppHandler.imeiNo
 
-                    val datum = AppStorageBox.get(applicationContext, AppStorageBox.Key.REQUEST_API_reschedule) as Datum
+                    // get selected radio button from radioGroup
+                    val selectedId = radioGroup.getCheckedRadioButtonId()
 
-//                    submitRescheduleAPI(userName, PIN_NO, datum.bookingId, cancelReason, mViewModelFlight.mSearchId.value, result.resultID, "json")
+                    // find the radiobutton by returned id
+                    val radioButton = findViewById<RadioButton>(selectedId) as RadioButton
+
+                    viewMode.callConfirmPayment(isInternetConnection,
+                            it.transId,
+                            fullNameTV.text.toString(),
+                            mobileNumberTV.getText().toString(),
+                            etAddress.text.toString(),
+                            etEmail.text.toString(),
+                            ageTV.text.toString(),
+                            radioButton.text.toString(),
+                            PIN_NO
+                    )
 
 
                 } else {

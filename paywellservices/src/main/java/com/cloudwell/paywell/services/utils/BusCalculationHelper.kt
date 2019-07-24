@@ -19,28 +19,29 @@ object BusCalculationHelper {
         val dateKey = jsonObject.keys()
         val dateKeyDefalt = jsonObject.keys()
 
-        dateKey.forEach {
-            val price = jsonObject.get(it).toString()
-            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-            val userDate = sdf.parse(userDate)
-            val date2 = sdf.parse(it)
-            if (userDate.before(date2) || userDate.equals(date2)) {
-                totalPrices = price
-            }
 
-        }
-
-        var i = 0
+        var counter = 0
         var next = "";
         while (dateKeyDefalt.hasNext()) {
-            i++
+            counter++
             next = dateKeyDefalt.next()
         }
-        if (i == 1) {
+        if (counter == 1) {
             totalPrices = jsonObject.get(next).toString()
+        } else {
+            dateKey.forEach {
+                val price = jsonObject.get(it).toString()
+                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+                val userDate = sdf.parse(userDate)
+                val date2 = sdf.parse(it)
+                if (userDate.compareTo(date2) > 0 || userDate.compareTo(date2) == 0) {
+                    totalPrices = price
+                }
+            }
         }
 
-        var toatlPriceDouble: Double
+
+        val toatlPriceDouble: Double
         if (isExtraAmount) {
             toatlPriceDouble = totalPrices.toDouble() + transport.extraCharge
         } else {

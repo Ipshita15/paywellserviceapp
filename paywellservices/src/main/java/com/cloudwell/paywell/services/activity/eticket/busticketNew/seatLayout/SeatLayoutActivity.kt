@@ -271,9 +271,6 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
             val totalAPIValuePrices = busBaseTicketPrices.times(counter)
 
 
-
-            seatIds = "1"
-
             val intent = Intent(this, BusPassengerBoothDepartureActivity::class.java)
             intent.putExtra("requestBusSearch", requestBusSearchJson)
             intent.putExtra("jsonData", toJson)
@@ -285,12 +282,12 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
         }
 
 
-        hideenButtonSheet()
+        hiddenButtonSheet()
 
 
     }
 
-    private fun hideenButtonSheet() {
+    private fun hiddenButtonSheet() {
         bottomSheetBehavior.setHideable(true);//Important to add
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
     }
@@ -424,7 +421,7 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
         allBusSeat.forEach {
             if (it.isUserSeleted) {
                 seatLevel = seatLevel + it.seatLbls + ","
-                seatIds = seatIds + it.seatId + ","
+                seatIds = seatIds + it.seatid + ","
                 var transport = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.SELETED_BUS_INFO) as Transport
 
 
@@ -439,7 +436,7 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
             tvSelectedSeat.text = seatLevel
             tvTotalTotalPrices.text = DecimalFormat("#").format(totalPrices)
         } else {
-            hideenButtonSheet()
+            hiddenButtonSheet()
         }
 
         if (!seatIds.equals("")) {
