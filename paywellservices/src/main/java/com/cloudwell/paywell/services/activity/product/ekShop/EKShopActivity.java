@@ -201,7 +201,7 @@ public class EKShopActivity extends BaseActivity {
                     if (isFirstTime) {
                         isFirstTime = false;
                     } else {
-                        finish();
+                        // finish();
                     }
                 }
 
