@@ -21,7 +21,7 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
 
     var view: IbusTransportListView? = null
 
-    var mistOfSchedule: List<TripScheduleInfoAndBusSchedule> = mutableListOf()
+    var mistOfSchedule = mutableListOf<TripScheduleInfoAndBusSchedule>()
     lateinit var mRequestBusSearch: RequestBusSearch
     lateinit var mTransport: Transport
 
@@ -77,7 +77,7 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
                         }
                     }
 
-                    mistOfSchedule = listOfSchudleData
+                    mistOfSchedule = listOfSchudleData.toMutableList()
                     mRequestBusSearch = requestBusSearch
                     mTransport = transport
 
@@ -177,10 +177,10 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
 
     }
 
-    fun onSort(lowPrice: SortType) {
+    fun onSort(lowPrice: SortType, list: List<TripScheduleInfoAndBusSchedule>) {
         view?.showProgress()
         if (lowPrice.name.equals(SortType.LOW_PRICE.name)) {
-            Collections.sort(mistOfSchedule) { car1, car2 ->
+            Collections.sort(list) { car1, car2 ->
                 val a = BusCalculationHelper.getPricesWithExtraAmount(car1.busSchedule?.ticketPrice, mRequestBusSearch.date, mTransport, true).toDouble()
                 val b = BusCalculationHelper.getPricesWithExtraAmount(car2.busSchedule?.ticketPrice, mRequestBusSearch.date, mTransport, true).toDouble()
 
@@ -194,7 +194,7 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
             }
 
         } else if (lowPrice.name.equals(SortType.HIGHT_PRICE.name)) {
-            Collections.sort(mistOfSchedule) { car1, car2 ->
+            Collections.sort(list) { car1, car2 ->
                 val a = BusCalculationHelper.getPricesWithExtraAmount(car1.busSchedule?.ticketPrice, mRequestBusSearch.date, mTransport, true).toDouble()
                 val b = BusCalculationHelper.getPricesWithExtraAmount(car2.busSchedule?.ticketPrice, mRequestBusSearch.date, mTransport, true).toDouble()
 
@@ -208,7 +208,7 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
             }
 
         } else if (lowPrice.name.equals(SortType.LOW_DEPARTURE_TIME.name)) {
-            Collections.sort(mistOfSchedule) { car1, car2 ->
+            Collections.sort(list) { car1, car2 ->
 
                 val a = SimpleDateFormat("HH:mm").parse(car1.busSchedule?.scheduleTime).time
                 val b = SimpleDateFormat("HH:mm").parse(car2.busSchedule?.scheduleTime).time
@@ -223,7 +223,7 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
             }
 
         } else if (lowPrice.name.equals(SortType.HIGH_DEPARTURE_TIME.name)) {
-            Collections.sort(mistOfSchedule) { car1, car2 ->
+            Collections.sort(list) { car1, car2 ->
                 val a = SimpleDateFormat("HH:mm").parse(car1.busSchedule?.scheduleTime).time
                 val b = SimpleDateFormat("HH:mm").parse(car2.busSchedule?.scheduleTime).time
 
@@ -237,7 +237,7 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
             }
 
         } else if (lowPrice.name.equals(SortType.LOW_AVAILABLE_SEAT.name)) {
-            Collections.sort(mistOfSchedule) { car1, car2 ->
+            Collections.sort(list) { car1, car2 ->
                 val a = car1.resSeatInfo?.tototalAvailableSeat ?: 0
                 val b = car2.resSeatInfo?.tototalAvailableSeat ?: 0
 
@@ -251,7 +251,7 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
             }
 
         } else if (lowPrice.name.equals(SortType.HIGH_AVAILABLE_SEAT.name)) {
-            Collections.sort(mistOfSchedule) { car1, car2 ->
+            Collections.sort(list) { car1, car2 ->
                 val a = car1.resSeatInfo?.tototalAvailableSeat ?: 0
                 val b = car2.resSeatInfo?.tototalAvailableSeat ?: 0
 
@@ -266,7 +266,7 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
 
         }
 
-        view?.setAdapter(mistOfSchedule)
+        view?.setAdapter(list)
         view?.hiddenProgress()
 
     }

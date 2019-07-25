@@ -52,7 +52,6 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
     lateinit var requestBusSearch: RequestBusSearch
     var isReSchuduler = false
 
-    var items = mutableListOf<TripScheduleInfoAndBusSchedule>()
 
     var busTripListAdapter: BusTripListAdapter? = null
     lateinit var transport: Transport
@@ -94,19 +93,18 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
 
         Fresco.initialize(applicationContext);
 
-        items = it.toMutableList()
 
         shimmer_recycler_view.visibility = View.VISIBLE
         shimmer_recycler_view.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
-        shimmer_recycler_view.adapter = it.let { it1 ->
+        shimmer_recycler_view.adapter = viewMode.mistOfSchedule.let { it1 ->
 
             busTripListAdapter = BusTripListAdapter(it1, applicationContext, requestBusSearch, transport, object : OnClickListener {
                 override fun onUpdateData(position: Int, resSeatInfo: ResSeatInfo) {
 
-                    val get = items.get(position)
+                    val get = viewMode.mistOfSchedule.get(position)
                     get.resSeatInfo = resSeatInfo
-                    items.set(position, get)
-                    busTripListAdapter?.notifyItemRangeChanged(position, items.size);
+                    viewMode.mistOfSchedule.set(position, get)
+                    busTripListAdapter?.notifyItemRangeChanged(position, viewMode.mistOfSchedule.size);
                     busTripListAdapter?.notifyDataSetChanged()
 
                 }
@@ -115,7 +113,7 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
                 override fun onClick(position: Int) {
                     // do whatever
 
-                    val model = items.get(position)
+                    val model = viewMode.mistOfSchedule.get(position)
 
                     if (model.resSeatInfo == null) {
                         Toast.makeText(applicationContext, "PLease wailt..", Toast.LENGTH_LONG).show()
@@ -210,29 +208,29 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
                 val busTicketStatusFragment = SortFragmentDialog()
                 busTicketStatusFragment.setOnClickListener(object : SortFragmentDialog.OnSortClickListener {
                     override fun buttonLowPrice() {
-                        viewMode.onSort(SortType.LOW_PRICE)
+                        viewMode.onSort(SortType.LOW_PRICE, viewMode.mistOfSchedule);
                     }
 
                     override fun buttonHeightPrice() {
-                        viewMode.onSort(SortType.HIGHT_PRICE)
+                        viewMode.onSort(SortType.HIGHT_PRICE, viewMode.mistOfSchedule)
                     }
 
                     override fun buttonLowDepartureTime() {
-                        viewMode.onSort(SortType.LOW_DEPARTURE_TIME)
+                        viewMode.onSort(SortType.LOW_DEPARTURE_TIME, viewMode.mistOfSchedule)
                     }
 
                     override fun buttonHeightDepartureTime() {
-                        viewMode.onSort(SortType.HIGH_DEPARTURE_TIME)
+                        viewMode.onSort(SortType.HIGH_DEPARTURE_TIME, viewMode.mistOfSchedule)
 
                     }
 
                     override fun buttonHeightAvailableSeat() {
-                        viewMode.onSort(SortType.HIGH_AVAILABLE_SEAT)
+                        viewMode.onSort(SortType.HIGH_AVAILABLE_SEAT, viewMode.mistOfSchedule)
 
                     }
 
                     override fun buttonLowtAvailableSeat() {
-                        viewMode.onSort(SortType.LOW_AVAILABLE_SEAT)
+                        viewMode.onSort(SortType.LOW_AVAILABLE_SEAT, viewMode.mistOfSchedule)
                     }
 
                 })
