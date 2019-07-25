@@ -846,6 +846,7 @@
     <string name="bus_validation_message">Please enter all the data first</string>
     <string name="no_boarding_point_found">No boarding point found!!!</string>
     <string name="boardingPoint">All</string>
+    <string name="sort">Sort</string>
 
 
 </resources>

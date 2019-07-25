@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.cloudwell.paywell.services.R
@@ -14,6 +15,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransport
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.adapter.OnClickListener
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.viewModel.BusTransportViewModel
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.SortFragmentDialog
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.seatLayout.SeatLayoutActivity
 import com.cloudwell.paywell.services.app.AppController
@@ -198,8 +200,49 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.airticket_menu, menu)
+        menuInflater.inflate(R.menu.bus_transport_list_menu, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            R.id.sort -> {
+                val busTicketStatusFragment = SortFragmentDialog()
+                busTicketStatusFragment.setOnClickListener(object : SortFragmentDialog.OnSortClickListener {
+                    override fun buttonLowPrice() {
+                        viewMode.onSort(SortType.LOW_PRICE)
+                    }
+
+                    override fun buttonHeightPrice() {
+                        viewMode.onSort(SortType.HIGHT_PRICE)
+                    }
+
+                    override fun buttonLowDepartureTime() {
+                        viewMode.onSort(SortType.LOW_DEPARTURE_TIME)
+                    }
+
+                    override fun buttonHeightDepartureTime() {
+                        viewMode.onSort(SortType.HIGH_DEPARTURE_TIME)
+
+                    }
+
+                    override fun buttonHeightAvailableSeat() {
+                        viewMode.onSort(SortType.HIGH_AVAILABLE_SEAT)
+
+                    }
+
+                    override fun buttonLowtAvailableSeat() {
+                        viewMode.onSort(SortType.LOW_AVAILABLE_SEAT)
+                    }
+
+                })
+                busTicketStatusFragment.show(supportFragmentManager, "dialog")
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+
+
     }
 
 

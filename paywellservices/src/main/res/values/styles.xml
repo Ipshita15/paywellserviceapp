@@ -39,6 +39,22 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+
+    <style name="BanglaAppThemeBus" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/apona_lohit</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:actionMenuTextColor">@color/bus_action_menu_text_color</item>
+    </style>
+
+    <style name="EnglishAppThemeBus" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/oxygen_light</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:actionMenuTextColor">@color/bus_action_menu_text_color</item>
+
+    </style>
+
     <!-- For Lollipop only -->
 
     <!-- Search Activity theme. -->

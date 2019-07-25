@@ -3,14 +3,12 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew.busTranspor
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketBaseViewMode
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketRepository
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BoothInfo
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Transport
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.BusCalculationHelper
 import com.google.gson.Gson
 import org.json.JSONObject
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -22,6 +20,10 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
     private val allBoothNameInfo = mutableSetOf<String>()
 
     var view: IbusTransportListView? = null
+
+    var mistOfSchedule: List<TripScheduleInfoAndBusSchedule> = mutableListOf()
+    lateinit var mRequestBusSearch: RequestBusSearch
+    lateinit var mTransport: Transport
 
     fun setIbusTransportListView(ibusTransportListView: IbusTransportListView) {
         this.view = ibusTransportListView
@@ -74,6 +76,11 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
                             0
                         }
                     }
+
+                    mistOfSchedule = listOfSchudleData
+                    mRequestBusSearch = requestBusSearch
+                    mTransport = transport
+
 
                     view?.setAdapter(listOfSchudleData)
                 }
@@ -167,6 +174,100 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
 
             }
         }
+
+    }
+
+    fun onSort(lowPrice: SortType) {
+        view?.showProgress()
+        if (lowPrice.name.equals(SortType.LOW_PRICE.name)) {
+            Collections.sort(mistOfSchedule) { car1, car2 ->
+                val a = BusCalculationHelper.getPricesWithExtraAmount(car1.busSchedule?.ticketPrice, mRequestBusSearch.date, mTransport, true).toDouble()
+                val b = BusCalculationHelper.getPricesWithExtraAmount(car2.busSchedule?.ticketPrice, mRequestBusSearch.date, mTransport, true).toDouble()
+
+                if (a < b) {
+                    -1
+                } else if (a > b) {
+                    1
+                } else {
+                    0
+                }
+            }
+
+        } else if (lowPrice.name.equals(SortType.HIGHT_PRICE.name)) {
+            Collections.sort(mistOfSchedule) { car1, car2 ->
+                val a = BusCalculationHelper.getPricesWithExtraAmount(car1.busSchedule?.ticketPrice, mRequestBusSearch.date, mTransport, true).toDouble()
+                val b = BusCalculationHelper.getPricesWithExtraAmount(car2.busSchedule?.ticketPrice, mRequestBusSearch.date, mTransport, true).toDouble()
+
+                if (a > b) {
+                    -1
+                } else if (a < b) {
+                    1
+                } else {
+                    0
+                }
+            }
+
+        } else if (lowPrice.name.equals(SortType.LOW_DEPARTURE_TIME.name)) {
+            Collections.sort(mistOfSchedule) { car1, car2 ->
+
+                val a = SimpleDateFormat("HH:mm").parse(car1.busSchedule?.scheduleTime).time
+                val b = SimpleDateFormat("HH:mm").parse(car2.busSchedule?.scheduleTime).time
+
+                if (a > b) {
+                    1
+                } else if (a < b) {
+                    -1
+                } else {
+                    0
+                }
+            }
+
+        } else if (lowPrice.name.equals(SortType.HIGH_DEPARTURE_TIME.name)) {
+            Collections.sort(mistOfSchedule) { car1, car2 ->
+                val a = SimpleDateFormat("HH:mm").parse(car1.busSchedule?.scheduleTime).time
+                val b = SimpleDateFormat("HH:mm").parse(car2.busSchedule?.scheduleTime).time
+
+                if (a > b) {
+                    -1
+                } else if (a < b) {
+                    1
+                } else {
+                    0
+                }
+            }
+
+        } else if (lowPrice.name.equals(SortType.LOW_AVAILABLE_SEAT.name)) {
+            Collections.sort(mistOfSchedule) { car1, car2 ->
+                val a = car1.resSeatInfo?.tototalAvailableSeat ?: 0
+                val b = car2.resSeatInfo?.tototalAvailableSeat ?: 0
+
+                if (a > b) {
+                    1
+                } else if (a < b) {
+                    -1
+                } else {
+                    0
+                }
+            }
+
+        } else if (lowPrice.name.equals(SortType.HIGH_AVAILABLE_SEAT.name)) {
+            Collections.sort(mistOfSchedule) { car1, car2 ->
+                val a = car1.resSeatInfo?.tototalAvailableSeat ?: 0
+                val b = car2.resSeatInfo?.tototalAvailableSeat ?: 0
+
+                if (a > b) {
+                    -1
+                } else if (a < b) {
+                    1
+                } else {
+                    0
+                }
+            }
+
+        }
+
+        view?.setAdapter(mistOfSchedule)
+        view?.hiddenProgress()
 
     }
 }

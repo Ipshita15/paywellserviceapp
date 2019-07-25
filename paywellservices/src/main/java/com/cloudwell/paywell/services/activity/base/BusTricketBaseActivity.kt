@@ -51,9 +51,9 @@ open class BusTricketBaseActivity : MVVMBaseActivity() {
     private fun changeAppTheme() {
         val isEnglish = mAppHandler.appLanguage.equals("en", ignoreCase = true)
         if (isEnglish) {
-            setTheme(R.style.EnglishAppTheme)
+            setTheme(R.style.EnglishAppThemeBus)
         } else {
-            setTheme(R.style.EnglishAppTheme)
+            setTheme(R.style.EnglishAppThemeBus)
         }
     }
 
