@@ -30,7 +30,8 @@
             app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.45"
-            tools:listitem="@layout/mti_item_day_new"></com.cloudwell.paywell.services.customView.horizontalDatePicker.MyDateTimelineViewRecyclerView>
+            tools:listitem="@layout/mti_item_day_new">
+        </com.cloudwell.paywell.services.customView.horizontalDatePicker.MyDateTimelineViewRecyclerView>
     </LinearLayout>
 
     <LinearLayout
