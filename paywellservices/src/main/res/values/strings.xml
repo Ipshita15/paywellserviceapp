@@ -843,6 +843,9 @@
     <string name="popular_city">Popular City</string>
     <string name="transport">Transport</string>
     <string name="search_transport_ticket">Search Transport Ticket</string>
+    <string name="bus_validation_message">Please enter all the data first</string>
+    <string name="no_boarding_point_found">No boarding point found!!!</string>
+    <string name="boardingPoint">All</string>
 
 
 </resources>

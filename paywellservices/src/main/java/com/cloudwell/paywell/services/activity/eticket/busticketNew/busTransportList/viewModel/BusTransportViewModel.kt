@@ -10,12 +10,16 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripSc
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.BusCalculationHelper
 import com.google.gson.Gson
+import org.json.JSONObject
 import java.util.*
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 2019-06-24.
  */
 class BusTransportViewModel : BusTicketBaseViewMode() {
+
+    private val allBoothInfo = mutableSetOf<BoothInfo>()
+    private val allBoothNameInfo = mutableSetOf<String>()
 
     var view: IbusTransportListView? = null
 
@@ -31,8 +35,34 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
                     view?.showNoTripFoundUI()
                 } else {
                     com.orhanobut.logger.Logger.json("" + Gson().toJson(it1))
+                    val listOfSchudleData: List<TripScheduleInfoAndBusSchedule>
 
-                    Collections.sort(it1) { car1, car2 ->
+                    if (!requestBusSearch.boadingPoint.equals("All")) {
+                        // filter of boadingpoint match data
+                        var isFound = false
+                        listOfSchudleData = it1.filter {
+                            val jsonObject = JSONObject(it.busSchedule?.booth_departure_info)
+                            jsonObject.keys().forEach {
+                                val model = jsonObject.get(it) as JSONObject
+                                val boothName = model.getString("booth_name")
+
+                                if (boothName.equals(requestBusSearch.boadingPoint)) {
+                                    isFound = true
+
+                                } else {
+                                    isFound = false
+                                }
+                            }
+                            isFound
+
+                        }
+
+                    } else {
+                        // all data
+                        listOfSchudleData = it1
+                    }
+
+                    Collections.sort(listOfSchudleData) { car1, car2 ->
                         val a = BusCalculationHelper.getPricesWithExtraAmount(car1.busSchedule?.ticketPrice, requestBusSearch.date, transport, true).toDouble()
                         val b = BusCalculationHelper.getPricesWithExtraAmount(car2.busSchedule?.ticketPrice, requestBusSearch.date, transport, true).toDouble()
 
@@ -43,18 +73,50 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
                         } else {
                             0
                         }
-
                     }
 
-                    view?.setAdapter(it1)
+                    view?.setAdapter(listOfSchudleData)
+                }
+                view?.hiddenProgress()
+            }
+
+        }
+    }
+
+    fun getBoardingPoint(requestBusSearch: RequestBusSearch, transport: Transport) {
+        view?.showProgress()
+        BusTicketRepository().searchTransport(requestBusSearch).observeForever {
+            it?.let { it1 ->
+                if (it1.size == 0) {
+                    view?.showNoTripFoundUI()
+                } else {
+                    com.orhanobut.logger.Logger.json("" + Gson().toJson(it1))
+
+                    allBoothInfo.clear()
+                    allBoothNameInfo.clear()
+                    allBoothNameInfo.add("All")
+                    it1.forEach {
+
+
+                        val jsonObject = JSONObject(it.busSchedule?.booth_departure_info)
+                        jsonObject.keys().forEach {
+                            val model = jsonObject.get(it) as JSONObject
+                            val boothName = model.getString("booth_name")
+                            val boothDepartureTime = model.getString("booth_departure_time")
+                            allBoothInfo.add(BoothInfo(it, boothName, boothDepartureTime))
+                            allBoothNameInfo.add(boothName)
+                        }
+                    }
+
+                    view?.setBoardingPoint(allBoothNameInfo)
                 }
                 view?.hiddenProgress()
             }
 
         }
 
-
     }
+
 
     fun cancelAllRequest() {
         if (ApiUtils.getClient() != null) {

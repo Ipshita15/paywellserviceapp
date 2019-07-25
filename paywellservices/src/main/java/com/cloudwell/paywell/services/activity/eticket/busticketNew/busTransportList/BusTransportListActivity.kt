@@ -27,6 +27,11 @@ import java.util.*
 
 
 class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTransportListView {
+    override fun setBoardingPoint(allBoothNameInfo: MutableSet<String>) {
+
+
+    }
+
     override fun showSeatCheckAndBookingRepose(it: ResSeatCheckBookAPI) {
 
     }

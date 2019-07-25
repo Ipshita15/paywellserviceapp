@@ -2,6 +2,7 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew.search;
 
 import android.app.DatePickerDialog;
 import android.app.FragmentTransaction;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -10,9 +11,12 @@ import android.text.Html;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,20 +25,30 @@ import android.widget.ViewSwitcher;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.BusTransportListActivity;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.viewModel.BusTransportViewModel;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResPaymentBookingAPI;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatCheckBookAPI;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Transport;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.storage.AppStorageBox;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import mehdi.sakout.fancybuttons.FancyButton;
 
-public class BusCitySearchActivity extends BusTricketBaseActivity implements FullScreenDialogBus.OnCitySet {
+public class BusCitySearchActivity extends BusTricketBaseActivity implements FullScreenDialogBus.OnCitySet, IbusTransportListView, AdapterView.OnItemSelectedListener {
 
 
     public static final String FullSCREEN_DIALOG_HEADER = "header";
@@ -49,6 +63,10 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
     private TextView dateTV, monthTV, dayTV;
     private SimpleDateFormat simpleDateFormat;
     private String dateString = new String();
+    Spinner boothList;
+    TextView boaringPointLevel;
+    View viewBoardingPoint;
+    private BusTransportViewModel viewMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +93,15 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
         toTS = findViewById(R.id.busToCityTS);
         fromLL = findViewById(R.id.fromLL);
         toLL = findViewById(R.id.toLL);
-        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        boothList = findViewById(R.id.boothList);
+        boaringPointLevel = findViewById(R.id.boaringPointLevel);
+        viewBoardingPoint = findViewById(R.id.viewBoardingPoint);
+
+        boothList.setOnItemSelectedListener(this);
+
+
+        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         AppStorageBox.put(this, AppStorageBox.Key.BUS_JOURNEY_DATE, simpleDateFormat.format(myCalender.getTimeInMillis()));
         dateTV.setText(String.valueOf(myCalender.get(Calendar.DAY_OF_MONTH)));
         monthTV.setText(new DateFormatSymbols().getMonths()[myCalender.get(Calendar.MONTH)]);
@@ -138,6 +164,10 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
                 String from = toString;
                 toString = fromString;
                 fromString = from;
+
+                getBoardingPoint();
+
+
             }
         });
 
@@ -147,9 +177,18 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
                 String from = ((TextView) fromTS.getCurrentView()).getText().toString();
                 String to = ((TextView) toTS.getCurrentView()).getText().toString();
                 if (!from.isEmpty() && !(from.equals(FROM_STRING)) && !to.isEmpty() && !(to.equals(TO_STRING))) {
-                    openTripListActivity(from, to);
+
+                    if (!from.equals(TO_STRING) && (!to.equals(FROM_STRING))) {
+
+                        if (boothList.getSelectedItem().toString().equals("All")) {
+                            openTripListActivity(from, to, "All");
+                        } else {
+                            openTripListActivity(from, to, boothList.getSelectedItem().toString());
+                        }
+                    }
+
                 } else {
-                    Toast.makeText(BusCitySearchActivity.this, "Please Enter All the data first", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BusCitySearchActivity.this, getApplicationContext().getResources().getString(R.string.bus_validation_message), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -205,16 +244,33 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
 
         });
 
+        initViewModel();
+
+        getBoardingPoint();
+
 
     }
 
-    private void openTripListActivity(String from, String to) {
+    private void tryToOldBoardingPointSeletion() {
+        Integer o = (Integer) AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.BOARDING_POGISTION);
+        if (o != null) {
+            boothList.setSelection(o);
+        }
+    }
+
+    private void initViewModel() {
+        viewMode = ViewModelProviders.of(this).get(BusTransportViewModel.class);
+        viewMode.setIbusTransportListView(this);
+    }
+
+    private void openTripListActivity(String from, String to, String boardingPoint) {
         String date = (String) AppStorageBox.get(getApplicationContext(), AppStorageBox.Key.BUS_JOURNEY_DATE);
 
         RequestBusSearch requestBusSearch = new RequestBusSearch();
         requestBusSearch.setFrom(from);
         requestBusSearch.setTo(to);
         requestBusSearch.setDate(date);
+        requestBusSearch.setBoadingPoint(boardingPoint);
 
         AppStorageBox.put(AppController.getContext(), AppStorageBox.Key.REQUEST_AIR_SERACH, requestBusSearch);
 
@@ -231,10 +287,111 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
         } else if (toOrFrom.equals(FROM_STRING)) {
             fromTS.setText(cityName);
             fromString = cityName;
+
         } else {
-            Toast.makeText(BusCitySearchActivity.this, "Internal Error Occurred!!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(BusCitySearchActivity.this, getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
         }
+
+        getBoardingPoint();
+
+    }
+
+    private void getBoardingPoint() {
+
+        String from = ((TextView) fromTS.getCurrentView()).getText().toString();
+        String to = ((TextView) toTS.getCurrentView()).getText().toString();
+        if (!from.isEmpty() && !(from.equals(FROM_STRING)) && !to.isEmpty() && !(to.equals(TO_STRING))) {
+            if (!from.equals(TO_STRING) && (!to.equals(FROM_STRING))) {
+
+                String date = (String) AppStorageBox.get(getApplicationContext(), AppStorageBox.Key.BUS_JOURNEY_DATE);
+
+
+                Transport transport = (Transport) AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.SELETED_BUS_INFO);
+                RequestBusSearch requestBusSearch = new RequestBusSearch();
+                requestBusSearch.setFrom(from);
+                requestBusSearch.setTo(to);
+                requestBusSearch.setDate(date);
+
+                viewMode.getBoardingPoint(requestBusSearch, transport);
+            } else {
+                boardingViewStatusChange(View.GONE);
+            }
+
+        } else {
+            boardingViewStatusChange(View.GONE);
+            Toast.makeText(BusCitySearchActivity.this, getApplicationContext().getResources().getString(R.string.bus_validation_message), Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 
+    @Override
+    public void showNoTripFoundUI() {
+        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.no_boarding_point_found), Toast.LENGTH_LONG).show();
+        boardingViewStatusChange(View.GONE);
+    }
+
+    private void boardingViewStatusChange(int gone) {
+        boothList.setVisibility(gone);
+        boaringPointLevel.setVisibility(gone);
+        viewBoardingPoint.setVisibility(gone);
+
+    }
+
+    @Override
+    public void setAdapter(@NotNull List<TripScheduleInfoAndBusSchedule> it1) {
+
+
+    }
+
+    @Override
+    public void showErrorMessage(@NotNull String message) {
+
+    }
+
+    @Override
+    public void showSeatCheckAndBookingRepose(@NotNull ResSeatCheckBookAPI it) {
+
+    }
+
+    @Override
+    public void showShowConfirmDialog(@NotNull ResPaymentBookingAPI it) {
+
+    }
+
+    @Override
+    public void showProgress() {
+        showProgressDialog();
+    }
+
+    @Override
+    public void hiddenProgress() {
+        dismissProgressDialog();
+    }
+
+    @Override
+    public void setBoardingPoint(@NotNull Set<String> allBoothNameInfo) {
+
+        String[] strings = allBoothNameInfo.toArray(new String[allBoothNameInfo.size()]);
+
+
+        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_dropdown_item_1line, strings);
+        boothList.setAdapter(stringArrayAdapter);
+        boardingViewStatusChange(View.VISIBLE);
+
+
+        tryToOldBoardingPointSeletion();
+
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        AppStorageBox.put(AppController.getContext(), AppStorageBox.Key.BOARDING_POGISTION, position);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }
