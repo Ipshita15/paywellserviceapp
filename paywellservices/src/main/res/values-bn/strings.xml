@@ -837,7 +837,7 @@
     <string name="mobile_number">Mobile Number *</string>
     <string name="age">Age *</string>
     <string name="bus_info_gender">Gender</string>
-    <string name="et_email">Email</string>
+    <string name="et_email">Email (Optional)</string>
     <string name="bus_address">Address</string>
     <string name="not_available">Not available</string>
     <string name="invalid_full_name">Invalid full name</string>
@@ -846,5 +846,11 @@
     <string name="invalid_address">Invalid address</string>
     <string name="no_data_found">No data found.</string>
     <string name="network_error">Network error!!!</string>
+    <string name="popular_city">Popular City</string>
+    <string name="transport">Transport</string>
+    <string name="search_transport_ticket">Search Transport Ticket</string>
+    <string name="bus_validation_message">Please enter all the data first</string>
+    <string name="no_boarding_point_found">No boarding point found!!!</string>
+    <string name="sort">Sort</string>
 
 </resources>

@@ -11,9 +11,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.app.storage.AppStorageBox;
 import com.cloudwell.paywell.services.customView.horizontalDatePicker.commincation.IDatePicker;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 
 /**
@@ -62,8 +67,6 @@ public class MyDatePickerTimelineForBus extends LinearLayout implements View.OnC
         ivMore.setOnClickListener(this);
 
         view.findViewById(R.id.imageView).setOnClickListener(this);
-
-        // setOrientation(VERTICAL);
 
 
     }
@@ -120,6 +123,20 @@ public class MyDatePickerTimelineForBus extends LinearLayout implements View.OnC
         }, year, thismonth, dayOfMonth);
 
         datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+            String validateDate = (String) AppStorageBox.get(getContext(), AppStorageBox.Key.BUS_VALIDATE_DATE);
+
+            Date date = null;
+            date = sdf.parse(validateDate);
+            long millis = date.getTime();
+            datePickerDialog.getDatePicker().setMaxDate(millis);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        datePickerDialog.show();
+
         datePickerDialog.show();
     }
 

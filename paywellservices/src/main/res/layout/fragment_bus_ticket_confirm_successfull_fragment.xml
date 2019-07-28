@@ -69,7 +69,11 @@
         android:id="@+id/linearLayout17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="5dp"
@@ -77,161 +81,243 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvMessage">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/linearLayout20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/textView36"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:padding="5dp"
                 android:text="Transaction ID"
-                android:textColor="@color/balck666666"/>
+                android:textColor="@color/balck666666"
+                app:layout_constraintEnd_toStartOf="@+id/textView43"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/textView37"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="Boarding Point Name"
-                android:textColor="@color/balck666666"/>
+                android:text="Boarding Point"
+                android:textColor="@color/balck666666"
+                app:layout_constraintEnd_toStartOf="@+id/textView44"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView44"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/textView39"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="Total Amount"
-                android:textColor="@color/balck666666"/>
+                android:textColor="@color/balck666666"
+                app:layout_constraintEnd_toStartOf="@+id/textView45"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView45"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/textView40"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="Ticket No."
-                android:textColor="@color/balck666666"/>
+                android:textColor="@color/balck666666"
+                app:layout_constraintEnd_toStartOf="@+id/textView47"
+                app:layout_constraintHorizontal_bias="0.021"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView39"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/textView41"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="Web Booking Info ID"
-                android:textColor="@color/balck666666"/>
+                android:text="Web Booking ID"
+                android:textColor="@color/balck666666"
+                app:layout_constraintEnd_toStartOf="@+id/textView49"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView49"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/textView42"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="Booking Info ID"
-                android:textColor="@color/balck666666"/>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+                android:text="Booking ID"
+                android:textColor="@color/balck666666"
+                app:layout_constraintEnd_toStartOf="@+id/textView48"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView48"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/textView43"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="5dp"
+                android:text=":"
+                android:textColor="@color/balck666666"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/textView44"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text=":"
-                android:textColor="@color/balck666666"/>
+                android:textColor="@color/balck666666"
+                app:layout_constraintEnd_toEndOf="@+id/textView43"
+                app:layout_constraintStart_toStartOf="@+id/textView43"
+                app:layout_constraintTop_toBottomOf="@+id/tvTranstionId"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/textView45"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text=":"
-                android:textColor="@color/balck666666"/>
+                android:textColor="@color/balck666666"
+                app:layout_constraintEnd_toEndOf="@+id/textView44"
+                app:layout_constraintStart_toStartOf="@+id/textView44"
+                app:layout_constraintTop_toBottomOf="@+id/tvBoardingPointName"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/textView47"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text=":"
-                android:textColor="@color/balck666666"/>
+                android:textColor="@color/balck666666"
+                app:layout_constraintEnd_toEndOf="@+id/textView45"
+                app:layout_constraintStart_toStartOf="@+id/textView45"
+                app:layout_constraintTop_toBottomOf="@+id/tvTotalAmount"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/textView48"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text=":"
-                android:textColor="@color/balck666666"/>
+                android:textColor="@color/balck666666"
+                app:layout_constraintEnd_toEndOf="@+id/textView47"
+                app:layout_constraintHorizontal_bias="0.501"
+                app:layout_constraintStart_toStartOf="@+id/textView47"
+                app:layout_constraintTop_toBottomOf="@+id/tvTicketNoINfo"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/textView49"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text=":"
-                android:textColor="@color/balck666666"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text=":"
-                android:textColor="@color/balck666666"/>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+                android:textColor="@color/balck666666"
+                app:layout_constraintEnd_toEndOf="@+id/textView48"
+                app:layout_constraintStart_toStartOf="@+id/textView48"
+                app:layout_constraintTop_toBottomOf="@+id/tvBookingId"/>
 
             <TextView
                 android:id="@+id/tvTranstionId"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:hint=""
                 android:padding="5dp"
-                android:textColor="#268472"/>
+                android:textColor="#268472"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/textView43"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="PRB20793893758973289475PRB20793893758973289475"/>
 
             <TextView
                 android:id="@+id/tvBoardingPointName"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:hint=""
                 android:padding="5dp"
-                android:textColor="#268472"/>
+                android:textColor="#268472"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView44"
+                app:layout_constraintTop_toTopOf="@+id/textView44"
+                tools:text="ARAMBAGH-4 "/>
 
             <TextView
                 android:id="@+id/tvTotalAmount"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:hint=""
                 android:padding="5dp"
-                android:textColor="#268472"/>
+                android:text="1270"
+                android:textColor="#268472"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView45"
+                app:layout_constraintTop_toTopOf="@+id/textView45"/>
 
             <TextView
                 android:id="@+id/tvTicketNoINfo"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:hint=""
                 android:padding="5dp"
-                android:textColor="#268472"/>
+                android:textColor="#268472"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView47"
+                app:layout_constraintTop_toTopOf="@+id/textView47"
+                tools:text="G/1223232323"/>
 
             <TextView
                 android:id="@+id/tvWebBookingId"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:hint=""
                 android:padding="5dp"
-                android:textColor="#268472"/>
+                android:textColor="#268472"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/textView49"
+                app:layout_constraintTop_toTopOf="@+id/textView49"
+                tools:text="497888347834"/>
 
             <TextView
                 android:id="@+id/tvBookingId"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:hint=""
                 android:padding="5dp"
-                android:textColor="#268472"/>
+                android:textColor="#268472"
+                app:layout_constraintStart_toEndOf="@+id/textView48"
+                app:layout_constraintTop_toTopOf="@+id/textView48"
+                tools:text="73038490834983490"/>
 
 
-        </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
+
 
     </LinearLayout>
 

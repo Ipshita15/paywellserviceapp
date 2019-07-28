@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.cloudwell.paywell.services.R
@@ -14,6 +15,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransport
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.adapter.OnClickListener
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.viewModel.BusTransportViewModel
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.SortFragmentDialog
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.seatLayout.SeatLayoutActivity
 import com.cloudwell.paywell.services.app.AppController
@@ -27,6 +29,11 @@ import java.util.*
 
 
 class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTransportListView {
+    override fun setBoardingPoint(allBoothNameInfo: MutableSet<String>) {
+
+
+    }
+
     override fun showSeatCheckAndBookingRepose(it: ResSeatCheckBookAPI) {
 
     }
@@ -45,7 +52,6 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
     lateinit var requestBusSearch: RequestBusSearch
     var isReSchuduler = false
 
-    var items = mutableListOf<TripScheduleInfoAndBusSchedule>()
 
     var busTripListAdapter: BusTripListAdapter? = null
     lateinit var transport: Transport
@@ -87,19 +93,18 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
 
         Fresco.initialize(applicationContext);
 
-        items = it.toMutableList()
 
         shimmer_recycler_view.visibility = View.VISIBLE
         shimmer_recycler_view.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
-        shimmer_recycler_view.adapter = it.let { it1 ->
+        shimmer_recycler_view.adapter = viewMode.mistOfSchedule.let { it1 ->
 
             busTripListAdapter = BusTripListAdapter(it1, applicationContext, requestBusSearch, transport, object : OnClickListener {
                 override fun onUpdateData(position: Int, resSeatInfo: ResSeatInfo) {
 
-                    val get = items.get(position)
+                    val get = viewMode.mistOfSchedule.get(position)
                     get.resSeatInfo = resSeatInfo
-                    items.set(position, get)
-                    busTripListAdapter?.notifyItemRangeChanged(position, items.size);
+                    viewMode.mistOfSchedule.set(position, get)
+                    busTripListAdapter?.notifyItemRangeChanged(position, viewMode.mistOfSchedule.size);
                     busTripListAdapter?.notifyDataSetChanged()
 
                 }
@@ -108,7 +113,7 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
                 override fun onClick(position: Int) {
                     // do whatever
 
-                    val model = items.get(position)
+                    val model = viewMode.mistOfSchedule.get(position)
 
                     if (model.resSeatInfo == null) {
                         Toast.makeText(applicationContext, "PLease wailt..", Toast.LENGTH_LONG).show()
@@ -193,8 +198,49 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.airticket_menu, menu)
+        menuInflater.inflate(R.menu.bus_transport_list_menu, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            R.id.sort -> {
+                val busTicketStatusFragment = SortFragmentDialog()
+                busTicketStatusFragment.setOnClickListener(object : SortFragmentDialog.OnSortClickListener {
+                    override fun buttonLowPrice() {
+                        viewMode.onSort(SortType.LOW_PRICE, viewMode.mistOfSchedule);
+                    }
+
+                    override fun buttonHeightPrice() {
+                        viewMode.onSort(SortType.HIGHT_PRICE, viewMode.mistOfSchedule)
+                    }
+
+                    override fun buttonLowDepartureTime() {
+                        viewMode.onSort(SortType.LOW_DEPARTURE_TIME, viewMode.mistOfSchedule)
+                    }
+
+                    override fun buttonHeightDepartureTime() {
+                        viewMode.onSort(SortType.HIGH_DEPARTURE_TIME, viewMode.mistOfSchedule)
+
+                    }
+
+                    override fun buttonHeightAvailableSeat() {
+                        viewMode.onSort(SortType.HIGH_AVAILABLE_SEAT, viewMode.mistOfSchedule)
+
+                    }
+
+                    override fun buttonLowtAvailableSeat() {
+                        viewMode.onSort(SortType.LOW_AVAILABLE_SEAT, viewMode.mistOfSchedule)
+                    }
+
+                })
+                busTicketStatusFragment.show(supportFragmentManager, "dialog")
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+
+
     }
 
 

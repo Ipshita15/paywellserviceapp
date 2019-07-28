@@ -172,7 +172,7 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
                                             addressTv.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getCustomerAddress());
                                         }
 
-                                        if (model.getCustomerAddress() == null) {
+                                        if (model.getCustomerEmail().equals("")) {
                                             emailTv.setText(context.getString(R.string.not_available));
                                         } else {
                                             emailTv.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getCustomerEmail());

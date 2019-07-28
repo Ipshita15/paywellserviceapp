@@ -32,6 +32,11 @@ import org.json.JSONObject
 
 
 class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTransportListView {
+    override fun setBoardingPoint(allBoothNameInfo: MutableSet<String>) {
+
+
+    }
+
     override fun showShowConfirmDialog(it: ResPaymentBookingAPI) {
         val t = BusTicketConfirmSuccessfulMessageFragment()
         BusTicketConfirmSuccessfulMessageFragment.model = it

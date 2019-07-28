@@ -50,7 +50,7 @@
                 android:layout_marginBottom="120dp"
                 android:padding="10dp"
                 android:text="@string/please_select_a_transport"
-                android:textColor="@color/color_tab_background_bus"
+                android:textColor="#4ca896"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

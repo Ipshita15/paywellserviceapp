@@ -14,4 +14,5 @@ interface IbusTransportListView : BaseView {
     fun showErrorMessage(message: String)
     fun showSeatCheckAndBookingRepose(it: ResSeatCheckBookAPI)
     fun showShowConfirmDialog(it: ResPaymentBookingAPI)
+    fun setBoardingPoint(allBoothNameInfo: MutableSet<String>)
 }
