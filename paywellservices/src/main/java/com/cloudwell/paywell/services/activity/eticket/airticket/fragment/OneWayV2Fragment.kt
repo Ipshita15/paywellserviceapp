@@ -227,6 +227,11 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
 
             AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.TO_CACHE, toAirTricket)
 
+
+
+            toAirport.iata = toAirTricket.iata
+            fromAirport.iata = fromAirTricket.iata
+
         }
 
 
