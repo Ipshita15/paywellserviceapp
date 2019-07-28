@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.eticket.airticket
+package com.cloudwell.paywell.services.activity.eticket.airticket.fragment
 
 import android.app.Activity
 import android.app.DatePickerDialog
@@ -12,12 +12,12 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.*
 import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.activity.eticket.airticket.*
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.Segment
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.AirportsSearchActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.Airport
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.FlightSearchViewActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.fragment.OneWayV2Fragment
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
@@ -412,6 +412,9 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
             toAirTricket.iata = searchRoundTripModel.getToName()
 
             AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.TO_CACHE, toAirTricket)
+
+            toAirport.iata = toAirTricket.iata
+            fromAirport.iata = fromAirTricket.iata
 
         }
 

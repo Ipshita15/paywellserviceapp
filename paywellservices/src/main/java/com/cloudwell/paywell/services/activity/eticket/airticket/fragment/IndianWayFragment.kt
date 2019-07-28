@@ -211,6 +211,10 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
             AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.TO_CACHE_INDIA, toAirTricket)
 
+
+
+            toAirport.iata = toAirTricket.iata
+            fromAirport.iata = fromAirTricket.iata
         }
 
 
