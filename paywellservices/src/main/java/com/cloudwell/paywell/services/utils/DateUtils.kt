@@ -21,48 +21,6 @@ object DateUtils {
             return cal.time.toString()
         }
 
-    fun getTimeInformationdifferenceDate(startDate: Date, endDate: Date): String {
-        //milliseconds
-        var different = endDate.time - startDate.time
-
-        val secondsInMilli: Long = 1000
-        val minutesInMilli = secondsInMilli * 60
-        val hoursInMilli = minutesInMilli * 60
-        val daysInMilli = hoursInMilli * 24
-
-        val elapsedDays = different / daysInMilli
-        different = different % daysInMilli
-
-        val elapsedHours = different / hoursInMilli
-        different = different % hoursInMilli
-
-        val elapsedMinutes = different / minutesInMilli
-        different = different % minutesInMilli
-
-
-        val elapsedSeconds = different / secondsInMilli
-
-        var date = "";
-        if (elapsedDays != 0L) {
-            date = "$elapsedDays d "
-        }
-
-        if (elapsedSeconds != 0L) {
-            date = "$elapsedHours h "
-        }
-
-
-        if (elapsedMinutes != 0L) {
-            date = "$elapsedMinutes m "
-        }
-
-        if (elapsedSeconds != 0L) {
-            date = "$elapsedSeconds s "
-        }
-
-        return date;
-    }
-
     fun getDurtingJounaryTime(millis: Long): String {
         var localMillis = millis
         if (localMillis < 0) {
