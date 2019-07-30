@@ -62,30 +62,49 @@ object DateUtils {
     }
 
 
+//    fun getDurtingJounaryTimeNewTest(duration: List<OutputSegment>): String {
+//
+//        val first = duration.first()
+//        val depTimeAPIFirst = first.origin?.depTime?.split("T")
+//        val arrTimeAPIFirst = first.destination?.arrTime?.split("T")
+//        val date = "yyyy-MM-dd HH:mm:ss"
+//        val depTimeFirst = SimpleDateFormat(date, Locale.ENGLISH).parse(depTimeAPIFirst?.get(0) + " " + depTimeAPIFirst?.get(1)) as Date
+//        val arrTimeFirst = SimpleDateFormat(date, Locale.ENGLISH).parse(arrTimeAPIFirst?.get(0) + " " + arrTimeAPIFirst?.get(1)) as Date
+//
+//
+//        val last = duration.last()
+//
+//        val depTimeAPILast = last.origin?.depTime?.split("T")
+//        val arrTimeAPILast = last.destination?.arrTime?.split("T")
+//        val depTimeFirstLast = SimpleDateFormat(date, Locale.ENGLISH).parse(depTimeAPILast?.get(0) + " " + depTimeAPILast?.get(1)) as Date
+//        val arrTimeFirstLast = SimpleDateFormat(date, Locale.ENGLISH).parse(arrTimeAPILast?.get(0) + " " + arrTimeAPILast?.get(1)) as Date
+//
+//        var totalDiffent = arrTimeFirstLast.time - depTimeFirst.time
+//        val durationBreakdown = getDurationBreakdown(totalDiffent)
+//
+//
+//        return durationBreakdown
+//
+//    }
+
+
     fun getDurtingJounaryTimeNewTest(duration: List<OutputSegment>): String {
 
-        val first = duration.first()
-        val depTimeAPIFirst = first.origin?.depTime?.split("T")
-        val arrTimeAPIFirst = first.destination?.arrTime?.split("T")
-        val date = "yyyy-MM-dd HH:mm:ss"
-        val depTimeFirst = SimpleDateFormat(date, Locale.ENGLISH).parse(depTimeAPIFirst?.get(0) + " " + depTimeAPIFirst?.get(1)) as Date
-        val arrTimeFirst = SimpleDateFormat(date, Locale.ENGLISH).parse(arrTimeAPIFirst?.get(0) + " " + arrTimeAPIFirst?.get(1)) as Date
 
+        var totalDuration = 0L
+        duration.forEach {
+            totalDuration = totalDuration + it.journeyDuration.toString().toInt()
+        }
 
-        val last = duration.last()
+        val toMillis = TimeUnit.MINUTES.toMillis(totalDuration)
 
-        val depTimeAPILast = last.origin?.depTime?.split("T")
-        val arrTimeAPILast = last.destination?.arrTime?.split("T")
-        val depTimeFirstLast = SimpleDateFormat(date, Locale.ENGLISH).parse(depTimeAPILast?.get(0) + " " + depTimeAPILast?.get(1)) as Date
-        val arrTimeFirstLast = SimpleDateFormat(date, Locale.ENGLISH).parse(arrTimeAPILast?.get(0) + " " + arrTimeAPILast?.get(1)) as Date
-
-        var totalDiffent = arrTimeFirstLast.time - depTimeFirst.time
-        val durationBreakdown = getDurationBreakdown(totalDiffent)
+        val durationBreakdown = getDurationBreakdown(toMillis)
 
 
         return durationBreakdown
 
     }
+
 
     fun getDurationBreakdown(millis: Long): String {
         var millis = millis
