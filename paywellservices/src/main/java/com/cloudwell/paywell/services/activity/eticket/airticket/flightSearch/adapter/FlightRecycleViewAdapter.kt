@@ -41,12 +41,11 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
         if (mRequestAirSearch.journeyType.equals("Oneway")) {
             displayOneWay(holder, mSegments, position)
         } else if (mRequestAirSearch.journeyType.equals("Return")) {
-
             displayRound(holder, groupBy, position)
         } else if (mRequestAirSearch.journeyType.equals("MultiStop")) {
             val counter = position + 1
             holder.tvTitle.text = mContext.getString(R.string.flight) + " " + counter
-            displayDataNew(holder, mSegments, position)
+            displayMultiCityData(holder, mSegments, position)
         }
 
     }
@@ -84,7 +83,7 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
             stopCount = "0"
         }
 
-        durtingJounaryTimeNew = DateUtils.getDurtingJounaryTimeNewTest(segments)
+        durtingJounaryTimeNew = DateUtils.getTotalDurationWithTransiteTime(segments)
         holder.tvDurationAndStopCounter.text = durtingJounaryTimeNew + ", $stopCount stop"
 
 
@@ -131,7 +130,7 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
         }
 
         var durtingJounaryTimeNew = ""
-        durtingJounaryTimeNew = DateUtils.getDurtingJounaryTimeNewTest(segments)
+        durtingJounaryTimeNew = DateUtils.getTotalDurationWithTransiteTime(segments)
 
         holder.tvDurationAndStopCounter.text = durtingJounaryTimeNew + ", $stopCount stop"
 
@@ -155,7 +154,7 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
     }
 
 
-    private fun displayDataNew(holder: VHolder, segments: List<OutputSegment>, position: Int) {
+    private fun displayMultiCityData(holder: VHolder, segments: List<OutputSegment>, position: Int) {
         val segment = segments.get(position)
         var split1 = mutableListOf<String>()
         var durtingJounaryTimeNew = ""
@@ -182,7 +181,7 @@ class FlightRecycleViewAdapter(val mContext: Context, val mSegments: List<Output
         }
 
 
-        durtingJounaryTimeNew = DateUtils.getDartingJanuaryTimeNewTest(segment)
+        durtingJounaryTimeNew = DateUtils.getTotalDurationTime(segment)
         holder.tvDurationAndStopCounter.text = durtingJounaryTimeNew + ", $stopCount stop"
 
 
