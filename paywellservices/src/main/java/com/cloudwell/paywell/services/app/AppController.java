@@ -88,7 +88,7 @@ public class AppController extends Application {
                 MyFavoriteHelper.Companion.insertData(getApplicationContext());
                 break;
             case FIRST_TIME_VERSION:
-                MyFavoriteHelper.Companion.insertData(getApplicationContext());
+                // MyFavoriteHelper.Companion.insertData(getApplicationContext());
                 break;
         }
     }
