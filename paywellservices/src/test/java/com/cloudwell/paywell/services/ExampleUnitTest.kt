@@ -17,23 +17,45 @@ class ExampleUnitTest {
     fun addition_isCorrect() {
 
 
-        val data = "[{\"Airline\":{\"AirlineCode\":\"QR\",\"AirlineName\":\"Qatar Airways\",\"BookingClass\":\"K\",\"CabinClass\":\"M\",\"FlightNumber\":\"641\",\"OperatingCarrier\":\"QR\"},\"Baggage\":\"30 K\",\"Destination\":{\"Airport\":{\"AirportCode\":\"DOH\",\"AirportName\":\"Doha\",\"CityCode\":\"DOH\",\"CityName\":\"Doha\",\"CountryCode\":\"QA\",\"CountryName\":\"Qatar\"},\"ArrTime\":\"2019-09-01T13:50:00\"},\"Equipment\":\"77W\",\"JourneyDuration\":\"260\",\"Origin\":{\"Airport\":{\"AirportCode\":\"DAC\",\"AirportName\":\"Shahjalal intl. Airport\",\"CityCode\":\"DAC\",\"CityName\":\"Dhaka\",\"CountryCode\":\"BD\",\"CountryName\":\"Bangladesh\"},\"DepTime\":\"2019-09-01T11:30:00\"},\"StopQuantity\":\"0\",\"TripIndicator\":\"OutBound\"},{\"Airline\":{\"AirlineCode\":\"QR\",\"AirlineName\":\"Qatar Airways\",\"BookingClass\":\"K\",\"CabinClass\":\"M\",\"FlightNumber\":\"127\",\"OperatingCarrier\":\"QR\"},\"Baggage\":\"30 K\",\"Destination\":{\"Airport\":{\"AirportCode\":\"MXP\",\"AirportName\":\"Malpensa\",\"CityCode\":\"MIL\",\"CityName\":\"Milan\",\"CountryCode\":\"IT\",\"CountryName\":\"Italy\",\"Terminal\":\"1\"},\"ArrTime\":\"2019-09-02T13:10:00\"},\"Equipment\":\"77W\",\"JourneyDuration\":\"490\",\"Origin\":{\"Airport\":{\"AirportCode\":\"DOH\",\"AirportName\":\"Doha\",\"CityCode\":\"DOH\",\"CityName\":\"Doha\",\"CountryCode\":\"QA\",\"CountryName\":\"Qatar\"},\"DepTime\":\"2019-09-02T08:00:00\"},\"StopQuantity\":\"0\",\"TripIndicator\":\"OutBound\"}]"
+//        val data = "[{\"Airline\":{\"AirlineCode\":\"QR\",\"AirlineName\":\"Qatar Airways\",\"BookingClass\":\"K\",\"CabinClass\":\"M\",\"FlightNumber\":\"641\",\"OperatingCarrier\":\"QR\"},\"Baggage\":\"30 K\",\"Destination\":{\"Airport\":{\"AirportCode\":\"DOH\",\"AirportName\":\"Doha\",\"CityCode\":\"DOH\",\"CityName\":\"Doha\",\"CountryCode\":\"QA\",\"CountryName\":\"Qatar\"},\"ArrTime\":\"2019-09-01T13:50:00\"},\"Equipment\":\"77W\",\"JourneyDuration\":\"260\",\"Origin\":{\"Airport\":{\"AirportCode\":\"DAC\",\"AirportName\":\"Shahjalal intl. Airport\",\"CityCode\":\"DAC\",\"CityName\":\"Dhaka\",\"CountryCode\":\"BD\",\"CountryName\":\"Bangladesh\"},\"DepTime\":\"2019-09-01T11:30:00\"},\"StopQuantity\":\"0\",\"TripIndicator\":\"OutBound\"},{\"Airline\":{\"AirlineCode\":\"QR\",\"AirlineName\":\"Qatar Airways\",\"BookingClass\":\"K\",\"CabinClass\":\"M\",\"FlightNumber\":\"127\",\"OperatingCarrier\":\"QR\"},\"Baggage\":\"30 K\",\"Destination\":{\"Airport\":{\"AirportCode\":\"MXP\",\"AirportName\":\"Malpensa\",\"CityCode\":\"MIL\",\"CityName\":\"Milan\",\"CountryCode\":\"IT\",\"CountryName\":\"Italy\",\"Terminal\":\"1\"},\"ArrTime\":\"2019-09-02T13:10:00\"},\"Equipment\":\"77W\",\"JourneyDuration\":\"490\",\"Origin\":{\"Airport\":{\"AirportCode\":\"DOH\",\"AirportName\":\"Doha\",\"CityCode\":\"DOH\",\"CityName\":\"Doha\",\"CountryCode\":\"QA\",\"CountryName\":\"Qatar\"},\"DepTime\":\"2019-09-02T08:00:00\"},\"StopQuantity\":\"0\",\"TripIndicator\":\"OutBound\"}]"
 
+        val data = "[{\"TripIndicator\":\"OutBound\",\"Origin\":{\"Airport\":{\"AirportCode\":\"DAC\",\"AirportName\":\"Shahjalal intl. Airport\",\"Terminal\":null,\"CityCode\":\"DAC\",\"CityName\":\"Dhaka\",\"CountryCode\":\"BD\",\"CountryName\":\"Bangladesh\"},\"DepTime\":\"2019-09-01T15:00:00\"},\"Destination\":{\"Airport\":{\"AirportCode\":\"CXB\",\"AirportName\":\"Cox's Bazar Airport\",\"Terminal\":null,\"CityCode\":\"CXB\",\"CityName\":\"Coxs Bazar\",\"CountryCode\":\"BD\",\"CountryName\":\"Bangladesh\"},\"ArrTime\":\"2019-09-01T16:05:00\"},\"Airline\":{\"AirlineCode\":\"VQ\",\"AirlineName\":\"Novoair\",\"FlightNumber\":\"939\",\"BookingClass\":\"\",\"CabinClass\":\"Y\",\"OperatingCarrier\":\"VQ\"},\"Baggage\":\"20K\",\"JourneyDuration\":\"65\",\"StopQuantity\":\"0\",\"Equipment\":null}]"
         val countries = Gson().fromJson(data, Array<OutputSegment>::class.java)
-        getTotalJounaryTime(countries)
-        getTransitiveCalculation(countries)
+        val transitiveCalculation = getTransitiveCalculation(countries.toList())
+        val transitiveString = getDurationBreakdown(transitiveCalculation)
+
+
+        val totalDurationTime = getTotalDurationTime(countries.toList())
+        val totalDurationString = getDurationBreakdown(totalDurationTime)
+
+
+        var total = transitiveCalculation + totalDurationTime
+        val durationBreakdown = getDurationBreakdown(total)
+
+        Logger.v("", "")
 
 
     }
 
-    private fun getTransitiveCalculation(data: Array<OutputSegment>) {
+    fun getTotalDurationTime(duration: List<OutputSegment>): Long {
+
+
+        var totalDuration = 0L
+        duration.forEach {
+            totalDuration = totalDuration + it.journeyDuration.toString().toInt()
+        }
+
+        val toMillis = TimeUnit.MINUTES.toMillis(totalDuration)
+        return toMillis
+
+    }
+
+
+    private fun getTransitiveCalculation(data: List<OutputSegment>): Long {
+        var totalTransiteTime = 0L
 
         if (data.size > 1) {
-
-            var totalTransiteTime = 0L
             var previousArrTime: Date? = null
-
-
             data.forEachIndexed { index, it ->
                 val depTimeAPI = it.origin?.depTime?.split("T")
                 val arrTimeAPI = it.destination?.arrTime?.split("T")
@@ -42,44 +64,16 @@ class ExampleUnitTest {
                 val arrTime = SimpleDateFormat(date, Locale.ENGLISH).parse(arrTimeAPI?.get(0) + " " + arrTimeAPI?.get(1)) as Date
 
                 if (previousArrTime != null) {
-
                     val journeyTransitTime = depTime.time - previousArrTime!!.time
-
                     totalTransiteTime = totalTransiteTime + journeyTransitTime
                 }
                 previousArrTime = arrTime
 
             }
-
-            val durationBreakdown = getDurationBreakdown(totalTransiteTime)
-            Logger.v("")
-
-
+            return totalTransiteTime
+        } else {
+            return totalTransiteTime
         }
-
-    }
-
-    private fun getTotalJounaryTime(toList: Array<OutputSegment>) {
-
-        val first = toList.first()
-        val depTimeAPIFirst = first.origin?.depTime?.split("T")
-        val arrTimeAPIFirst = first.destination?.arrTime?.split("T")
-        val date = "yyyy-MM-dd HH:mm:ss"
-        val depTimeFirst = SimpleDateFormat(date, Locale.ENGLISH).parse(depTimeAPIFirst?.get(0) + " " + depTimeAPIFirst?.get(1)) as Date
-        val arrTimeFirst = SimpleDateFormat(date, Locale.ENGLISH).parse(arrTimeAPIFirst?.get(0) + " " + arrTimeAPIFirst?.get(1)) as Date
-
-
-        val last = toList.last()
-
-        val depTimeAPILast = last.origin?.depTime?.split("T")
-        val arrTimeAPILast = last.destination?.arrTime?.split("T")
-        val depTimeFirstLast = SimpleDateFormat(date, Locale.ENGLISH).parse(depTimeAPILast?.get(0) + " " + depTimeAPILast?.get(1)) as Date
-        val arrTimeFirstLast = SimpleDateFormat(date, Locale.ENGLISH).parse(arrTimeAPILast?.get(0) + " " + arrTimeAPILast?.get(1)) as Date
-
-        var diff = arrTimeFirstLast.time - depTimeFirst.time
-
-        getDurationBreakdown(diff)
-
 
     }
 
