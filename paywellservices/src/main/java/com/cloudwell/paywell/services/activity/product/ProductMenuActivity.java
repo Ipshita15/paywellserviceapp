@@ -18,7 +18,6 @@ import android.widget.RelativeLayout;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
 import com.cloudwell.paywell.services.activity.base.ProductEecommerceBaseActivity;
-import com.cloudwell.paywell.services.activity.product.ekShop.EkShopeMenuActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
@@ -96,12 +95,23 @@ public class ProductMenuActivity extends ProductEecommerceBaseActivity {
                 break;
 
             case R.id.homeBtnEkShope:
-                startActivity(new Intent(this, EkShopeMenuActivity.class));
+
+                showCommingSoonMesage();
+
+//                startActivity(new Intent(this, EkShopeMenuActivity.class));
                 break;
 
             default:
                 break;
         }
+    }
+
+    private void showCommingSoonMesage() {
+        Snackbar snackbar = Snackbar.make(relativeLayout, R.string.coming_soon_msg, Snackbar.LENGTH_LONG);
+        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+        View snackBarView = snackbar.getView();
+        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+        snackbar.show();
     }
 
 
