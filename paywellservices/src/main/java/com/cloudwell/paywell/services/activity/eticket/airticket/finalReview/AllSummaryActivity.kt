@@ -73,7 +73,7 @@ class AllSummaryActivity : AirTricketBaseActivity() {
     override fun onResume() {
         super.onResume()
 
-        rvJoiner = RvJoiner(true)//auto update ON, stable ids ON
+        rvJoiner = RvJoiner(false)//auto update ON, stable ids ON
         initializationViewNew()
         mViewModel.init(passengerIDS)
 
