@@ -66,7 +66,7 @@ class MyFavoriteMenuActivity : AppCompatActivity(), StartDragListener {
     }
 
     override fun requestDrag(viewHolder: RecyclerView.ViewHolder?) {
-        touchHelper.startDrag(viewHolder)
+        viewHolder?.let { touchHelper.startDrag(it) }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

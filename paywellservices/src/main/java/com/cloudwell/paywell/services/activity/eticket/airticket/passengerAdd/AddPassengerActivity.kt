@@ -9,7 +9,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.support.annotation.Nullable
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.text.Editable
 import android.text.TextWatcher
@@ -739,11 +738,10 @@ class AddPassengerActivity : AirTricketBaseActivity() {
     }
 
 
-    @Override
-    override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_IMAGE) {
             if (resultCode == Activity.RESULT_OK) {
-                val uri: Uri = data.getParcelableExtra("path");
+                val uri: Uri = data!!.getParcelableExtra("path");
                 try {
                     // You can update this bitmap to your server
                     var bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
