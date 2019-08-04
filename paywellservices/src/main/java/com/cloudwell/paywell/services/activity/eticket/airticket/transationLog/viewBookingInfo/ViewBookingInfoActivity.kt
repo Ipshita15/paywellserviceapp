@@ -3,14 +3,14 @@ package com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
@@ -20,7 +20,6 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.v
 import su.j2e.rvjoiner.JoinableAdapter
 import su.j2e.rvjoiner.JoinableLayout
 import su.j2e.rvjoiner.RvJoiner
-import kotlinx.android.synthetic.main.flight_list_item_new.recyclerView as recyclerView1
 
 class ViewBookingInfoActivity : AirTricketBaseActivity() {
 

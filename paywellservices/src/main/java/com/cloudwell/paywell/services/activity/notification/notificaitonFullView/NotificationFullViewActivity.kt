@@ -1,7 +1,5 @@
 package com.cloudwell.paywell.services.activity.notification.notificaitonFullView
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.graphics.Point
 import android.media.RingtoneManager
@@ -10,6 +8,8 @@ import android.text.SpannableString
 import android.text.util.Linkify
 import android.view.MenuItem
 import android.view.View
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.newBase.MVVMBaseActivity
 import com.cloudwell.paywell.services.activity.notification.ImageViewActivity

@@ -1,11 +1,11 @@
 package com.cloudwell.paywell.services.activity.product.ekShop.report.adapter
 
 
-import android.support.constraint.ConstraintLayout
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.RecyclerView
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.product.ekShop.model.Data
 import com.cloudwell.paywell.services.activity.product.ekShop.model.OrderDetail

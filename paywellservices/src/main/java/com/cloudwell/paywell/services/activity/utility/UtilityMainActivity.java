@@ -2,7 +2,6 @@ package com.cloudwell.paywell.services.activity.utility;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +20,8 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class UtilityMainActivity extends AppCompatActivity {
 

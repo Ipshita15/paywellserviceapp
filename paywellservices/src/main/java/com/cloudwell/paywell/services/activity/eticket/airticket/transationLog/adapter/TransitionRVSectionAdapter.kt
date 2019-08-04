@@ -1,10 +1,10 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.adapter
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
 import com.cloudwell.paywell.services.app.AppController

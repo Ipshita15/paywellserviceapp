@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout18"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/ic_background_card"
-    android:weightSum="3"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activity.MainActivity"
-    tools:showIn="@layout/app_bar_main">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:id="@+id/linearLayout18"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   android:background="@drawable/ic_background_card"
+                                                   android:weightSum="3"
+                                                   app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                                                   tools:context=".activity.MainActivity"
+                                                   tools:showIn="@layout/app_bar_main">
 
     <LinearLayout
         android:id="@+id/rootLayout"
@@ -21,7 +21,7 @@
             android:id="@+id/view_pager_auto"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,14 +45,14 @@
                     android:onClick="onButtonClicker"
                     android:text="@string/home_topup"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:gravity="center" />
+                    android:gravity="center"/>
 
                 <Button
                     android:id="@+id/homeBtnUtility"
@@ -62,14 +62,14 @@
                     android:onClick="onButtonClicker"
                     android:text="@string/home_utility"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:gravity="center" />
+                    android:gravity="center"/>
 
                 <Button
                     android:id="@+id/homeBtnEticket"
@@ -79,7 +79,7 @@
                     android:onClick="onButtonClicker"
                     android:text="@string/home_eticket"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
             </LinearLayout>
 
             <LinearLayout
@@ -99,14 +99,14 @@
                     android:paddingTop="10dp"
                     android:text="@string/home_mfs"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:gravity="center" />
+                    android:gravity="center"/>
 
                 <Button
                     android:id="@+id/homeBtnProductCategory"
@@ -117,14 +117,14 @@
                     android:paddingTop="10dp"
                     android:text="@string/home_product_catalog"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:gravity="center" />
+                    android:gravity="center"/>
 
                 <Button
                     android:id="@+id/homeBtnRefillBalance"
@@ -135,7 +135,7 @@
                     android:paddingTop="10dp"
                     android:text="@string/home_refill_balance"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
 
 
             </LinearLayout>
@@ -156,7 +156,7 @@
                     android:onClick="onButtonClicker"
                     android:text="@string/home_statement"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
 
 
                 <LinearLayout
@@ -164,7 +164,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:gravity="center" />
+                    android:gravity="center"/>
 
                 <Button
                     android:id="@+id/homeBtnSettings"
@@ -174,7 +174,7 @@
                     android:onClick="onButtonClicker"
                     android:text="@string/home_settings"
                     android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -198,7 +198,7 @@
                     android:background="#3eaa4d"
                     android:contentDescription="@string/app_name"
                     android:onClick="onButtonClicker"
-                    android:src="@drawable/ic_chat" />
+                    android:src="@drawable/ic_chat"/>
             </LinearLayout>
 
             <LinearLayout
@@ -214,7 +214,7 @@
                     android:background="#3eaa4d"
                     android:contentDescription="@string/app_name"
                     android:onClick="onButtonClicker"
-                    android:src="@drawable/ic_call" />
+                    android:src="@drawable/ic_call"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -231,7 +231,7 @@
         app:layout_constraintHorizontal_bias="0.65"
         app:layout_constraintStart_toEndOf="@+id/rootLayout"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/open_arrow" />
+        app:srcCompat="@drawable/open_arrow"/>
 
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

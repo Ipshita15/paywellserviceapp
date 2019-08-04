@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/relativeLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/layout_background"
-    tools:context=".activity.eticket.trainticket.TrainTicketBookingActivity">
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/relativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/layout_background"
+                tools:context=".activity.eticket.trainticket.TrainTicketBookingActivity">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/star_sign"
-                    android:textColor="#FF4719" />
+                    android:textColor="#FF4719"/>
 
                 <TextView
                     android:id="@+id/tvSelectTrain"
@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="2dp"
                     android:text="@string/select_train_des"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
             </LinearLayout>
 
             <LinearLayout
@@ -58,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:visibility="visible" />
+                    android:visibility="visible"/>
             </LinearLayout>
 
             <LinearLayout
@@ -71,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/star_sign"
-                    android:textColor="#FF4719" />
+                    android:textColor="#FF4719"/>
 
                 <TextView
                     android:id="@+id/tvSelectClass"
@@ -79,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="2dp"
                     android:text="@string/select_class_des"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
             </LinearLayout>
 
             <LinearLayout
@@ -93,7 +93,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:visibility="visible" />
+                    android:visibility="visible"/>
             </LinearLayout>
 
             <LinearLayout
@@ -106,7 +106,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/star_sign"
-                    android:textColor="#FF4719" />
+                    android:textColor="#FF4719"/>
 
                 <TextView
                     android:id="@+id/tvMobileNo"
@@ -114,7 +114,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="2dp"
                     android:text="@string/phone_no_des"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
             </LinearLayout>
 
             <LinearLayout
@@ -125,12 +125,12 @@
                 android:padding="3dp">
 
                 <!--<TextView-->
-                    <!--android:id="@+id/tvDialCode"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:gravity="center_vertical"-->
-                    <!--android:text="@string/dialing_code"-->
-                    <!--android:textAppearance="?android:attr/textAppearanceMedium" />-->
+                <!--android:id="@+id/tvDialCode"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:text="@string/dialing_code"-->
+                <!--android:textAppearance="?android:attr/textAppearanceMedium" />-->
 
                 <EditText
                     android:id="@+id/etMobileNo"
@@ -140,11 +140,11 @@
                     android:layout_marginStart="5dp"
                     android:inputType="number"
                     android:maxLength="11"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
             </LinearLayout>
 
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/btnSearchSeat"
@@ -163,5 +163,5 @@
         android:shadowRadius="2"
         android:text="@string/confirm_btn"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/colorText" />
+        android:textColor="@color/colorText"/>
 </RelativeLayout>

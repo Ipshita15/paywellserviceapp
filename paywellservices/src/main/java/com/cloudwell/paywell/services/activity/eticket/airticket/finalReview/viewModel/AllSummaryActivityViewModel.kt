@@ -1,9 +1,9 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.viewModel
 
-import android.arch.lifecycle.MutableLiveData
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
+import androidx.lifecycle.MutableLiveData
 import com.cloudwell.paywell.services.activity.base.newBase.BaseViewState
 import com.cloudwell.paywell.services.activity.base.newBase.SingleLiveEvent
 import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketBaseViewMode

@@ -3,8 +3,6 @@ package com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
@@ -28,9 +26,11 @@ import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.DateUtils;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
+import androidx.appcompat.app.AlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

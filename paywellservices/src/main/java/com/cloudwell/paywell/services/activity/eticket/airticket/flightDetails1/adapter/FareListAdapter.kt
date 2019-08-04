@@ -2,10 +2,10 @@ package com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1
 
 import android.content.Context
 import android.graphics.Typeface
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Fare
 import kotlinx.android.synthetic.main.list_item_fare_data.view.*

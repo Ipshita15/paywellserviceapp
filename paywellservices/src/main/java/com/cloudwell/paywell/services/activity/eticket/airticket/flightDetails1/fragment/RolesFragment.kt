@@ -1,13 +1,13 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ExpandableListView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.FlightDetails1Status
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.adapter.ExpandableListAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.RequestAirPriceSearch
@@ -45,7 +45,7 @@ class RolesFragment : Fragment() {
         // preparing list data
         lvExp = v.lvExp as ExpandableListView
 
-        mFlightDetails1ViewModel.baseViewStatus.observe(this, android.arch.lifecycle.Observer {
+        mFlightDetails1ViewModel.baseViewStatus.observe(this, androidx.lifecycle.Observer {
             val baggageAndPoliciesActiivty = activity as BaggageAndPoliciesActiivty
             baggageAndPoliciesActiivty.handleViewCommonStatus(it)
 
@@ -57,7 +57,7 @@ class RolesFragment : Fragment() {
         })
 
 
-        mFlightDetails1ViewModel.mListMutableLiveDataAirRules.observe(this, android.arch.lifecycle.Observer {
+        mFlightDetails1ViewModel.mListMutableLiveDataAirRules.observe(this, androidx.lifecycle.Observer {
 
             it?.let { it1 -> displayData(it1) }
 

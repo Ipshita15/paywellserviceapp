@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.adapter;
 
 import android.graphics.Color;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,6 +13,7 @@ import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus;
 
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 
 /**

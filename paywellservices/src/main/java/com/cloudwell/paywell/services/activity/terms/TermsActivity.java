@@ -2,7 +2,6 @@ package com.cloudwell.paywell.services.activity.terms;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.webkit.WebView;
 
@@ -12,6 +11,8 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 
 import java.io.InputStream;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class TermsActivity extends AppCompatActivity {
 

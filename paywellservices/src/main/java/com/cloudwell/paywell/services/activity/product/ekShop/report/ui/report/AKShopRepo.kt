@@ -1,6 +1,6 @@
 package com.cloudwell.paywell.services.activity.product.ekShop.report.ui.report
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.product.ekShop.model.ResEKReport
 import com.cloudwell.paywell.services.app.AppController

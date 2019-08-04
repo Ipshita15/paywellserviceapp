@@ -2,14 +2,13 @@ package com.cloudwell.paywell.services.activity.myFavorite
 
 import android.graphics.Color
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.DisplayMetrics
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.myFavorite.adapter.AdapterForFavList
 import com.cloudwell.paywell.services.activity.myFavorite.adapter.HeaderRecyclerViewSection
@@ -28,6 +27,7 @@ import com.cloudwell.paywell.services.database.DatabaseClient
 import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus
 import com.cloudwell.paywell.services.preference.FavoritePreference
 import com.cloudwell.paywell.services.utils.ResorceHelper
+import com.google.android.material.snackbar.Snackbar
 import com.orhanobut.logger.Logger
 import com.squareup.otto.Subscribe
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter

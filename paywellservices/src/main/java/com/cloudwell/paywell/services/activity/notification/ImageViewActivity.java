@@ -2,7 +2,6 @@ package com.cloudwell.paywell.services.activity.notification;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.MenuItem;
 
 import com.bumptech.glide.Glide;
@@ -20,6 +19,8 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
+
+import androidx.annotation.Nullable;
 
 public class ImageViewActivity extends BaseActivity {
 

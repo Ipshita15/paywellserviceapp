@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:fancy="http://schemas.android.com/apk/res-auto"
-                                             android:id="@+id/cancelMainLayout"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent"
-                                             android:background="@drawable/cancel_bg">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:fancy="http://schemas.android.com/apk/res-auto"
+                                                   android:id="@+id/cancelMainLayout"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   android:background="@drawable/cancel_bg">
 
     <EditText
         android:id="@+id/bookingIdET"
@@ -71,4 +71,4 @@
         fancy:fb_radius="2dp"
         fancy:fb_text="Cancel Booking"
         fancy:fb_textColor="#FFFFFF"/>
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

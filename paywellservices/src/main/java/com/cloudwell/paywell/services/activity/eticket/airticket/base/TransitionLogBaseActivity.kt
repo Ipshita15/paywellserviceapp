@@ -10,9 +10,6 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
-import android.support.design.widget.Snackbar
-import android.support.v4.content.FileProvider
-import android.support.v7.app.AlertDialog
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
 import android.view.Gravity
@@ -20,6 +17,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.FileProvider
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
@@ -36,6 +35,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.em
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.constant.AllConstant
+import com.google.android.material.snackbar.Snackbar
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken

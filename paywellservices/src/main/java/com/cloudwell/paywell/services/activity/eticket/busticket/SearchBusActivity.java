@@ -3,17 +3,18 @@ package com.cloudwell.paywell.services.activity.eticket.busticket;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.eticket.busticket.fragment.ACFragment;
 import com.cloudwell.paywell.services.activity.eticket.busticket.fragment.AllFragment;
 import com.cloudwell.paywell.services.activity.eticket.busticket.fragment.NonACFragment;
 import com.cloudwell.paywell.services.app.AppHandler;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 @SuppressLint("NewApi")
 public class SearchBusActivity extends AppCompatActivity {

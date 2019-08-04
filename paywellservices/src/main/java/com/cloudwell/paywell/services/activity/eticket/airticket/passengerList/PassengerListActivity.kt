@@ -1,16 +1,16 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.passengerList
 
 import android.annotation.SuppressLint
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
+import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger
@@ -54,7 +54,7 @@ class PassengerListActivity : AirTricketBaseActivity() {
     private fun initViewModel() {
         viewMode = ViewModelProviders.of(this).get(PassengerListViewModel::class.java)
 
-        viewMode.baseViewStatus.observe(this, android.arch.lifecycle.Observer {
+        viewMode.baseViewStatus.observe(this, androidx.lifecycle.Observer {
             handleViewCommonStatus(it)
         })
 
@@ -62,7 +62,7 @@ class PassengerListActivity : AirTricketBaseActivity() {
             it?.let { it1 -> handleViewStatus(it1) }
         })
 
-        viewMode.mListMutableLiveDPassengers.observe(this, android.arch.lifecycle.Observer {
+        viewMode.mListMutableLiveDPassengers.observe(this, androidx.lifecycle.Observer {
             it?.let { it1 -> handlePassgegerList(it1) }
         })
 
