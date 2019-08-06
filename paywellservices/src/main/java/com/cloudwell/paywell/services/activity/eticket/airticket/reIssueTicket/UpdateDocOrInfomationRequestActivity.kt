@@ -35,7 +35,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import su.j2e.rvjoiner.RvJoiner
 
-class ReIssueTicketActivity : AirTricketBaseActivity(), ShowMessageFragment.MyInterface {
+class UpdateDocOrInfomationRequestActivity : AirTricketBaseActivity(), ShowMessageFragment.MyInterface {
     override fun onOkButtonClick() {
 
     }
@@ -46,7 +46,7 @@ class ReIssueTicketActivity : AirTricketBaseActivity(), ShowMessageFragment.MyIn
         lateinit var item: Datum
         lateinit var passengers: MutableList<Passenger>
         fun newIntent(context: Context, item: Datum): Intent {
-            val intent = Intent(context, ReIssueTicketActivity::class.java)
+            val intent = Intent(context, UpdateDocOrInfomationRequestActivity::class.java)
             this.item = item
             this.passengers = item.passengers as MutableList<Passenger>
             return intent
@@ -241,7 +241,7 @@ class ReIssueTicketActivity : AirTricketBaseActivity(), ShowMessageFragment.MyIn
             }
 
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                Toast.makeText(this@ReIssueTicketActivity, "Network error!!!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@UpdateDocOrInfomationRequestActivity, "Network error!!!", Toast.LENGTH_SHORT).show()
                 dismissProgressDialog()
             }
         })

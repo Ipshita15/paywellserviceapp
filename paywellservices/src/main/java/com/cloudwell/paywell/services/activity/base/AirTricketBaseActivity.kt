@@ -19,7 +19,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.D
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment.CancellationStatusMessageFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment.UserAcceptDialogFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.model.ResCancellationMapping
-import com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.ReIssueTicketActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.UpdateDocOrInfomationRequestActivity
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.constant.AllConstant
 import com.cloudwell.paywell.services.retrofit.ApiUtils
@@ -104,7 +104,7 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
 
                 if (typeOfRequest == AllConstant.Action_DOCS_UPDATE) {
 
-                    val newIntent = ReIssueTicketActivity.newIntent(applicationContext, item)
+                    val newIntent = UpdateDocOrInfomationRequestActivity.newIntent(applicationContext, item)
                     startActivity(newIntent)
 
                 } else if (typeOfRequest == AllConstant.Action_REfund) {

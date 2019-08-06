@@ -21,7 +21,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.fr
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.fragment.PassengerTypeSheetDialog
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.model.MyCountry
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.view.PassgerAddViewStatus
-import com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.ReIssueTicketActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.UpdateDocOrInfomationRequestActivity
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.constant.AllConstant.emailPattern
 import com.cloudwell.paywell.services.libaray.imagePickerAndCrop.ImagePickerActivity
@@ -80,9 +80,9 @@ class EditReissuePassengerActivity : AirTricketBaseActivity() {
         setToolbar(getString(R.string.title_edit_passenger))
 
         id = intent.extras.getInt("id", 0)
-        val get = ReIssueTicketActivity.passengers.get(id)
+        val get = UpdateDocOrInfomationRequestActivity.passengers.get(id)
 
-        if (ReIssueTicketActivity.item.trip_type.equals("Local")) {
+        if (UpdateDocOrInfomationRequestActivity.item.trip_type.equals("Local")) {
             passportMadatory = false
         } else {
             passportMadatory = true
@@ -534,7 +534,7 @@ class EditReissuePassengerActivity : AirTricketBaseActivity() {
         passenger.passportExpiryDate = passportExpiryDate
         passenger.passportNationality = passportNationalityCountry
 
-        ReIssueTicketActivity.passengers.set(id, passenger)
+        UpdateDocOrInfomationRequestActivity.passengers.set(id, passenger)
         finish()
 
     }

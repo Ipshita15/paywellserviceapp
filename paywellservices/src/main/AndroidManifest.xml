@@ -1256,7 +1256,7 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".activity.eticket.airticket.reIssueTicket.ReIssueTicketActivity"
+            android:name=".activity.eticket.airticket.reIssueTicket.UpdateDocOrInfomationRequestActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
