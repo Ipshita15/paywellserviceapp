@@ -54,7 +54,7 @@ class TicketActionMenuFragment : DialogFragment() {
 
         v.btActionIssueTicket.setOnClickListener {
             dismiss()
-            onClickHandler.onClickIsisThicketButton()
+            onClickHandler.onIsisThicket()
         }
 
 
@@ -66,12 +66,12 @@ class TicketActionMenuFragment : DialogFragment() {
 
         v.btActionReissue.setOnClickListener {
             dismiss()
-            onClickHandler.onReschedule(model)
+            onClickHandler.onReissue(model)
         }
 
         v.btCencel.setOnClickListener {
             dismiss()
-            onClickHandler.onClickCancelButton()
+            onClickHandler.onBookingCancel()
         }
 
         v.btTicketRefund.setOnClickListener {
@@ -99,10 +99,10 @@ class TicketActionMenuFragment : DialogFragment() {
 
 
     interface OnClickHandler {
-        fun onClickCancelButton()
-        fun onClickIsisThicketButton()
+        fun onBookingCancel()
+        fun onIsisThicket()
         fun onDocsUpdate(item: Datum)
-        fun onReschedule(item: Datum)
+        fun onReissue(item: Datum)
         fun onTicketRefund(item: Datum)
         fun onTicketVoid(item: Datum)
 

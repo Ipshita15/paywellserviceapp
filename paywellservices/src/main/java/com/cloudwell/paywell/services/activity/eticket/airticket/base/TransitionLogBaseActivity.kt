@@ -67,14 +67,13 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
 
         tricketChooserFragment.setOnClickHandlerTest(object : TicketActionMenuFragment.OnClickHandler {
 
-            override fun onReschedule(item: Datum) {
-                if (item.journeyType.equals("MultiStop")) {
-                    showDialogMesssage("MultiStop reschedule request can't accept")
-                } else {
-                    val mAppHandler = AppHandler.getmInstance(applicationContext)
-                    val userName = mAppHandler.imeiNo
-                    // callCancelMapping(userName, item.bookingId!!, "", KEY_ReSchedule, item)
-                }
+            override fun onReissue(item: Datum) {
+
+                TicketCancelActivity.model = item
+                val intent = Intent(applicationContext, TicketCancelActivity::class.java)
+                intent.putExtra(TicketCancelActivity.KEY_TITLE, AllConstant.Action_reIssueTicket)
+                startActivity(intent)
+
 
             }
 
@@ -102,14 +101,14 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
                 callCancelMapping(userName, item.bookingId!!, "", AllConstant.Action_DOCS_UPDATE, item)
             }
 
-            override fun onClickIsisThicketButton() {
+            override fun onIsisThicket() {
                 model.bookingId?.let {
                     bookingId = it
                     askForPin(it, AllConstant.Action_IsisThicket)
                 }
             }
 
-            override fun onClickCancelButton() {
+            override fun onBookingCancel() {
                 val model = AppStorageBox.get(applicationContext, AppStorageBox.Key.BOOKING_STATUS_ITEM) as Datum
 
                 val intent = Intent(applicationContext, BookingCancelActivity::class.java)
@@ -272,7 +271,7 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
 
     }
 
-    fun showTricketPriceChangeDialog(modelPriceChange: ResIssueTicket) {
+    fun showTicketPriceChangeDialog(modelPriceChange: ResIssueTicket) {
 
 
         val priceChangeFragment = PriceChangeFragment()

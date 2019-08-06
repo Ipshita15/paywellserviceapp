@@ -111,6 +111,8 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
                     askForPin(bookingId, reason, typeOfRequest)
                 } else if (typeOfRequest == AllConstant.Action_Void) {
                     askForPin(bookingId, reason, typeOfRequest)
+                } else if (typeOfRequest == AllConstant.Action_reIssueTicket) {
+                    askForPin(bookingId, reason, typeOfRequest)
                 }
 
 
@@ -152,6 +154,8 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
                         submitCancelTicketRequest(userName, PIN_NO, bookingId, cancelReason, "Void", "json")
                     } else if (typeOfRequest == AllConstant.Action_REfund) {
                         submitCancelTicketRequest(userName, PIN_NO, bookingId, cancelReason, "Refund", "json")
+                    } else if (typeOfRequest == AllConstant.Action_reIssueTicket) {
+                        reIssueTicket(userName, PIN_NO, bookingId, cancelReason)
                     }
                 } else {
                     val snackbar = Snackbar.make(findViewById(android.R.id.content), R.string.connection_error_msg, Snackbar.LENGTH_LONG)
@@ -171,6 +175,36 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
         builder.setNegativeButton(R.string.cancel_btn) { dialogInterface, i -> dialogInterface.dismiss() }
         val alert = builder.create()
         alert.show()
+    }
+
+    private fun reIssueTicket(userName: String, pass: String, bookingId: String, cancelReason: String) {
+        showProgressDialog()
+
+        ApiUtils.getAPIService().reIssueTicket(userName, pass, bookingId, cancelReason).enqueue(object : Callback<JsonObject> {
+            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                dismissProgressDialog()
+                if (response.isSuccessful) {
+
+                    if (response.isSuccessful) {
+                        val jsonObject = response.body()
+                        val message = jsonObject!!.get("message_details").asString
+                        if (jsonObject.get("status").asInt == 200) {
+                            showMsg(message)
+                        } else {
+                            showMsg(message)
+                        }
+
+                    }
+                }
+
+            }
+
+            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                Toast.makeText(applicationContext, "Network error!!!", Toast.LENGTH_SHORT).show()
+                dismissProgressDialog()
+            }
+        })
+
     }
 
     private fun submitCancelRequest(userName: String, pass: String, bookingId: String, cancelReason: String, apiFormat: String) {

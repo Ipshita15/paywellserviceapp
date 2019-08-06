@@ -171,6 +171,13 @@ public interface APIService {
                                   @Field("cancel_type") String cancel_type,
                                   @Field("format") String apiFormat);
 
+    @POST("PaywelltransactionHaltrip/reIssueTicket")
+    @FormUrlEncoded
+    Call<JsonObject> reIssueTicket(@Field("username") String username,
+                                   @Field("password") String password,
+                                   @Field("BookingID") String bookingId,
+                                   @Field("reason") String cancelReason);
+
 
     @POST("/PaywelltransactionHaltrip/reScheduleTicket")
     @FormUrlEncoded
