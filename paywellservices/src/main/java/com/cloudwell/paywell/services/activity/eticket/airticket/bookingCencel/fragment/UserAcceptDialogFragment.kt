@@ -55,6 +55,10 @@ class UserAcceptDialogFragment : DialogFragment() {
 
             v.tvFree.text = refund
 
+        } else if (type.equals(AllConstant.Action_DOCS_UPDATE)) {
+
+            v.tvFree.text = infoUpdate
+
         }
 
         v.btActionIssueTicket.setOnClickListener {

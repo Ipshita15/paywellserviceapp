@@ -97,14 +97,9 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
             }
 
             override fun onDocsUpdate(item: Datum) {
-
-                if (item.journeyType.equals("MultiStop")) {
-                    showDialogMesssage("MultiStop re-issue request can't accept")
-                } else {
-                    val mAppHandler = AppHandler.getmInstance(applicationContext)
-                    val userName = mAppHandler.imeiNo
-                    //callCancelMapping(userName, item.bookingId!!, "", KEY_ReIssue, item)
-                }
+                val mAppHandler = AppHandler.getmInstance(applicationContext)
+                val userName = mAppHandler.imeiNo
+                callCancelMapping(userName, item.bookingId!!, "", AllConstant.Action_DOCS_UPDATE, item)
             }
 
             override fun onClickIsisThicketButton() {

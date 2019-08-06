@@ -29,7 +29,7 @@ import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import kotlinx.android.synthetic.main.activity_reissue_ticket.*
+import kotlinx.android.synthetic.main.activity_docs_update_ticket.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -55,8 +55,8 @@ class ReIssueTicketActivity : AirTricketBaseActivity(), ShowMessageFragment.MyIn
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_reissue_ticket)
-        setToolbar(getString(R.string.title_reissue))
+        setContentView(R.layout.activity_docs_update_ticket)
+        setToolbar(getString(R.string.title_docs_update))
 
 
     }
@@ -106,7 +106,7 @@ class ReIssueTicketActivity : AirTricketBaseActivity(), ShowMessageFragment.MyIn
 
     private fun handleReissueRequest() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Re-issue Reason")
+        builder.setTitle("Reason")
 
         val pinNoET = EditText(this)
         val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
@@ -133,7 +133,7 @@ class ReIssueTicketActivity : AirTricketBaseActivity(), ShowMessageFragment.MyIn
                     snackbar.show()
                 }
             } else {
-                val snackbar = Snackbar.make(linearLayout12, "Enter reschedule reason", Snackbar.LENGTH_LONG)
+                val snackbar = Snackbar.make(linearLayout12, "Please enter a reason", Snackbar.LENGTH_LONG)
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"))
                 val snackBarView = snackbar.view
                 snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))

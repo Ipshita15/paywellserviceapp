@@ -268,6 +268,14 @@ class EditReissuePassengerActivity : AirTricketBaseActivity() {
         ivVisaPageUpload.visibility = View.GONE
 
 
+        // disable field
+        etPassengerType.isEnabled = false
+        etTitle.isEnabled = false
+        etFirstName.isEnabled = false
+        etLastName.isEnabled = false
+        etGender.isEnabled = false
+
+
     }
 
     private fun showDateOfBirthDatePicker() {

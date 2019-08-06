@@ -182,7 +182,7 @@ public interface APIService {
                                       @Field("ResultID") String resultID,
                                       @Field("format") String apiFormat);
 
-    @POST("/PaywelltransactionHaltrip/reIssueTicket")
+    @POST("/PaywelltransactionHaltrip/infoUpdateTicket")
     @Multipart
     Call<JsonObject> reIssueTicket(@Part("username") String username,
                                    @Part("password") String password,

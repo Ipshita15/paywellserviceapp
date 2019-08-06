@@ -102,13 +102,15 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
 
                 hiddenSoftKeyboard()
 
-                if (typeOfRequest == AllConstant.Action_REfund) {
+                if (typeOfRequest == AllConstant.Action_DOCS_UPDATE) {
+
+                    val newIntent = ReIssueTicketActivity.newIntent(applicationContext, item)
+                    startActivity(newIntent)
+
+                } else if (typeOfRequest == AllConstant.Action_REfund) {
                     askForPin(bookingId, reason, typeOfRequest)
                 } else if (typeOfRequest == AllConstant.Action_Void) {
                     askForPin(bookingId, reason, typeOfRequest)
-                } else if (typeOfRequest == AllConstant.Action_reIssueTicket) {
-                    val newIntent = ReIssueTicketActivity.newIntent(applicationContext, item)
-                    startActivity(newIntent)
                 }
 
 
