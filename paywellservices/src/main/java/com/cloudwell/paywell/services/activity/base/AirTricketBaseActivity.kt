@@ -15,13 +15,13 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.newBase.MVVMBaseActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketMainActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment.CancellationStatusMessageFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment.UserAcceptDialogFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.model.ResCancellationMapping
 import com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.ReIssueTicketActivity
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.constant.AllConstant
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.google.gson.JsonObject
 import retrofit2.Call
@@ -34,7 +34,6 @@ import java.util.*
  */
 open class AirTricketBaseActivity : MVVMBaseActivity() {
 
-    var mCancellationFee: Double? = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,21 +98,20 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
         UserAcceptDialogFragment.type = typeOfRequest
 
         priceChangeFragment.setOnClickHandlerTest(object : UserAcceptDialogFragment.OnClickHandler {
-            override fun onClickActionIssueTicket(cancellationFee: Double, type: String) {
-
-                mCancellationFee = cancellationFee
+            override fun onClickActionIssueTicket(type: String) {
 
                 hiddenSoftKeyboard()
 
-                if (typeOfRequest == KEY_ticket_cancel) {
+                if (typeOfRequest == AllConstant.Action_REfund) {
                     askForPin(bookingId, reason, typeOfRequest)
-                } else if (typeOfRequest == KEY_ReIssue) {
+                } else if (typeOfRequest == AllConstant.Action_Void) {
+                    askForPin(bookingId, reason, typeOfRequest)
+                } else if (typeOfRequest == AllConstant.Action_reIssueTicket) {
                     val newIntent = ReIssueTicketActivity.newIntent(applicationContext, item)
                     startActivity(newIntent)
-                } else if (typeOfRequest == KEY_ReSchedule) {
-                    val newIntent = AirTicketMainActivity.newIntent(applicationContext, item = item)
-                    startActivity(newIntent)
                 }
+
+
             }
 
         })
@@ -148,10 +146,11 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
                 if (isInternetConnection) {
 
                     val userName = AppHandler.getmInstance(applicationContext).imeiNo
-                    if (typeOfRequest == KEY_ticket_cancel) {
-                        submitCancelTicketRequest(userName, PIN_NO, bookingId, cancelReason, "json")
+                    if (typeOfRequest == AllConstant.Action_Void) {
+                        submitCancelTicketRequest(userName, PIN_NO, bookingId, cancelReason, "Void", "json")
+                    } else if (typeOfRequest == AllConstant.Action_REfund) {
+                        submitCancelTicketRequest(userName, PIN_NO, bookingId, cancelReason, "Refund", "json")
                     }
-
                 } else {
                     val snackbar = Snackbar.make(findViewById(android.R.id.content), R.string.connection_error_msg, Snackbar.LENGTH_LONG)
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"))
@@ -202,10 +201,10 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
     }
 
 
-    public fun submitCancelTicketRequest(userName: String, pass: String, bookingId: String, cancelReason: String, apiFormat: String) {
+    public fun submitCancelTicketRequest(userName: String, pass: String, bookingId: String, cancelReason: String, cancelType: String, apiFormat: String) {
         showProgressDialog()
 
-        ApiUtils.getAPIService().cancelTicket(userName, pass, bookingId, cancelReason, apiFormat).enqueue(object : Callback<JsonObject> {
+        ApiUtils.getAPIService().cancelTicket(userName, pass, bookingId, cancelReason, cancelType, apiFormat).enqueue(object : Callback<JsonObject> {
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 dismissProgressDialog()
                 if (response.isSuccessful) {
@@ -239,12 +238,6 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
 
         priceChangeFragment.show(supportFragmentManager, "dialog")
 
-    }
-
-    companion object {
-        var KEY_ticket_cancel = "Ticket Cancel Request"
-        var KEY_ReIssue = "Reissue Request"
-        var KEY_ReSchedule = "Reschedule Request"
     }
 
 

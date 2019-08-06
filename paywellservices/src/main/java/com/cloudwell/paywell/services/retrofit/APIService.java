@@ -168,6 +168,7 @@ public interface APIService {
                                   @Field("password") String password,
                                   @Field("BookingID") String bookingId,
                                   @Field("reason") String cancelReason,
+                                  @Field("cancel_type") String cancel_type,
                                   @Field("format") String apiFormat);
 
 

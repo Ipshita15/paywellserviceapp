@@ -30,7 +30,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.f
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.TricketChooserFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.ResIssueTicket
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.viewModel.BookingStatsViewModel
-import com.cloudwell.paywell.services.activity.eticket.airticket.ticketCencel.TricketCancelActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.ticketCencel.TicketCancelActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.TicketViewerActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.emailTicket.PassengerEmailSendListActivity
 import com.cloudwell.paywell.services.app.AppHandler
@@ -66,36 +66,44 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
         val tricketChooserFragment = TicketActionMenuFragment()
 
         tricketChooserFragment.setOnClickHandlerTest(object : TicketActionMenuFragment.OnClickHandler {
-            override fun onReschedule(item: Datum) {
 
+            override fun onReschedule(item: Datum) {
                 if (item.journeyType.equals("MultiStop")) {
                     showDialogMesssage("MultiStop reschedule request can't accept")
                 } else {
                     val mAppHandler = AppHandler.getmInstance(applicationContext)
                     val userName = mAppHandler.imeiNo
-                    callCancelMapping(userName, item.bookingId!!, "", KEY_ReSchedule, item)
+                    // callCancelMapping(userName, item.bookingId!!, "", KEY_ReSchedule, item)
                 }
-
 
             }
 
-            override fun onTicketCancel(item: Datum) {
-
-                TricketCancelActivity.model = item
-                val intent = Intent(applicationContext, TricketCancelActivity::class.java)
-                intent.putExtra(TricketCancelActivity.KEY_TITLE, AllConstant.Action_Ticket_Cancel)
+            override fun onTicketRefund(item: Datum) {
+                TicketCancelActivity.model = item
+                val intent = Intent(applicationContext, TicketCancelActivity::class.java)
+                intent.putExtra(TicketCancelActivity.KEY_TITLE, AllConstant.Action_REfund)
                 startActivity(intent)
 
             }
 
-            override fun onReissue(item: Datum) {
+
+            override fun onTicketVoid(item: Datum) {
+
+                TicketCancelActivity.model = item
+                val intent = Intent(applicationContext, TicketCancelActivity::class.java)
+                intent.putExtra(TicketCancelActivity.KEY_TITLE, AllConstant.Action_Void)
+                startActivity(intent)
+
+            }
+
+            override fun onDocsUpdate(item: Datum) {
 
                 if (item.journeyType.equals("MultiStop")) {
                     showDialogMesssage("MultiStop re-issue request can't accept")
                 } else {
                     val mAppHandler = AppHandler.getmInstance(applicationContext)
                     val userName = mAppHandler.imeiNo
-                    callCancelMapping(userName, item.bookingId!!, "", KEY_ReIssue, item)
+                    //callCancelMapping(userName, item.bookingId!!, "", KEY_ReIssue, item)
                 }
             }
 

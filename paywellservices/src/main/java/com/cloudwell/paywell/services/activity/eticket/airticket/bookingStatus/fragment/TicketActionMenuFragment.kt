@@ -33,16 +33,18 @@ class TicketActionMenuFragment : DialogFragment() {
             v.btActionIssueTicket.visibility = View.VISIBLE
             v.btCencel.visibility = View.VISIBLE
 
+            v.btActionDocsInfoUpdate.visibility = View.GONE
+            v.btTicketRefund.visibility = View.GONE
+            v.btTicketVoid.visibility = View.GONE
+            v.btActionDocsInfoUpdate.visibility = View.GONE
             v.btActionReissue.visibility = View.GONE
-            v.btTicketCancel.visibility = View.GONE
-            v.btActionReissue.visibility = View.GONE
-            v.btActionReschedule.visibility = View.GONE
 
         } else if (m.equals("Ticketed")) {
 
+            v.btActionDocsInfoUpdate.visibility = View.VISIBLE
             v.btActionReissue.visibility = View.VISIBLE
-            v.btActionReschedule.visibility = View.VISIBLE
-            v.btTicketCancel.visibility = View.VISIBLE
+            v.btTicketRefund.visibility = View.VISIBLE
+            v.btTicketVoid.visibility = View.VISIBLE
 
 
             v.btActionIssueTicket.visibility = View.GONE
@@ -57,12 +59,12 @@ class TicketActionMenuFragment : DialogFragment() {
 
 
 
-        v.btActionReissue.setOnClickListener {
+        v.btActionDocsInfoUpdate.setOnClickListener {
             dismiss()
-            onClickHandler.onReissue(model)
+            onClickHandler.onDocsUpdate(model)
         }
 
-        v.btActionReschedule.setOnClickListener {
+        v.btActionReissue.setOnClickListener {
             dismiss()
             onClickHandler.onReschedule(model)
         }
@@ -72,9 +74,15 @@ class TicketActionMenuFragment : DialogFragment() {
             onClickHandler.onClickCancelButton()
         }
 
-        v.btTicketCancel.setOnClickListener {
+        v.btTicketRefund.setOnClickListener {
             dismiss()
-            onClickHandler.onTicketCancel(model)
+            onClickHandler.onTicketRefund(model)
+        }
+
+
+        v.btTicketVoid.setOnClickListener {
+            dismiss()
+            onClickHandler.onTicketVoid(model)
         }
 
 
@@ -93,9 +101,10 @@ class TicketActionMenuFragment : DialogFragment() {
     interface OnClickHandler {
         fun onClickCancelButton()
         fun onClickIsisThicketButton()
-        fun onReissue(item: Datum)
+        fun onDocsUpdate(item: Datum)
         fun onReschedule(item: Datum)
-        fun onTicketCancel(item: Datum)
+        fun onTicketRefund(item: Datum)
+        fun onTicketVoid(item: Datum)
 
     }
 

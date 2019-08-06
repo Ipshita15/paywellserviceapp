@@ -6,13 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity.Companion.KEY_ReIssue
-import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity.Companion.KEY_ReSchedule
-import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity.Companion.KEY_ticket_cancel
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.model.ResCancellationMapping
+import com.cloudwell.paywell.services.constant.AllConstant
 import kotlinx.android.synthetic.main.fragment_cancel_fee.view.*
 import kotlinx.android.synthetic.main.fragment_prices_change.view.btActionIssueTicket
-import kotlinx.android.synthetic.main.fragment_prices_change.view.tvFree
 
 
 class UserAcceptDialogFragment : DialogFragment() {
@@ -40,36 +37,34 @@ class UserAcceptDialogFragment : DialogFragment() {
         v.btActionIssueTicket.text = getString(R.string.text_accept)
         v.btDecline.text = getString(R.string.text_decline)
 
-        val void = resCencelMaping.getCancelData().void.toDouble()
         val count = resCencelMaping.bookingData.get(0).passengers.count()
-        val reIssue = resCencelMaping.cancelData.reIssue.toDouble()
-        val reSchedule = resCencelMaping.cancelData.reSchedule.toDouble()
-        val refund = resCencelMaping.cancelData.refund.toDouble()
+        val void = resCencelMaping.getCancelData().void
+        val reIssue = resCencelMaping.cancelData.reIssue
+        val infoUpdate = resCencelMaping.cancelData.infoUpdate
+        val refund = resCencelMaping.cancelData.refund
 
-        var totalFee = 0.0
-        if (type.equals(KEY_ReIssue)) {
-            totalFee = reIssue
-            v.tvFree.text = "Admin charge tk. ${totalFee} will be applicable for the re-issue process."
+        if (type.equals(AllConstant.Action_reIssueTicket)) {
 
-        } else if (type.equals(KEY_ReSchedule)) {
-            totalFee = reSchedule
-            v.tvFree.text = "Admin charge tk. ${totalFee} will be applicable for the reschedule process."
+            v.tvFree.text = reIssue
 
-        } else if (type.equals(KEY_ticket_cancel)) {
-            totalFee = refund
-            v.tvFree.text = "Admin charge tk. ${totalFee}  will be applicable for the ticket cancellation process."
+        } else if (type.equals(AllConstant.Action_Void)) {
+
+            v.tvFree.text = void
+
+        } else if (type.equals(AllConstant.Action_REfund)) {
+
+            v.tvFree.text = refund
 
         }
 
         v.btActionIssueTicket.setOnClickListener {
             dismiss()
-            onClickHandler.onClickActionIssueTicket(totalFee, type)
+            onClickHandler.onClickActionIssueTicket(type)
         }
 
         v.btDecline.setOnClickListener {
             dismiss()
         }
-
 
 
         return v
@@ -85,7 +80,7 @@ class UserAcceptDialogFragment : DialogFragment() {
 
 
     interface OnClickHandler {
-        fun onClickActionIssueTicket(cancellationFee: Double, type: String)
+        fun onClickActionIssueTicket(type: String)
 
     }
 

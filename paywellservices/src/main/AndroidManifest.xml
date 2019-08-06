@@ -1251,7 +1251,7 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".activity.eticket.airticket.ticketCencel.TricketCancelActivity"
+            android:name=".activity.eticket.airticket.ticketCencel.TicketCancelActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>

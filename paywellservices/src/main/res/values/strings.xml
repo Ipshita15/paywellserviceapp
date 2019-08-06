@@ -810,6 +810,10 @@
     <string name="text_accept">Accept</string>
     <string name="text_decline">Decline</string>
     <string name="title_edit_passenger">Edit Passenger Info</string>
+    <string name="docs_info_update">Docs-Info Update</string>
+    <string name="ticket_refund">Ticket Refund</string>
+    <string name="re_issue">Re-issue</string>
+    <string name="ticket_void">Ticket Void</string>
 
 
 </resources>
