@@ -1209,7 +1209,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".activity.eticket.airticket.flightDetails1.fragment.BaggageAndPoliciesActiivty"
+            android:name=".activity.eticket.airticket.flightDetails1.BaggageAndPoliciesActiivty"
             android:label="@string/title_activity_baggage_and_policies_actiivty"
             android:screenOrientation="portrait">
         </activity>
