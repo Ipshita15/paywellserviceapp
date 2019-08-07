@@ -76,8 +76,8 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
             }
         })
 
-
-        val totalFareDetati = resposeAirPriceSearch.data?.results?.get(0)?.fares?.let { CalculationHelper.getTotalFareDetati(it) }
+        val AIRLINE_CODE = AppStorageBox.get(applicationContext, AppStorageBox.Key.AIRLINE_CODE) as String
+        val totalFareDetati = resposeAirPriceSearch.data?.results?.get(0)?.fares?.let { CalculationHelper.getTotalFareDetati(it, AIRLINE_CODE) }
 
         tvTotalPrice.text = totalFareDetati
 

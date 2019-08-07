@@ -176,7 +176,8 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
 
         val fares = result.fares
-        val totalPrice = CalculationHelper.getTotalFareDetati(fares)
+        val AIRLINE_CODE = AppStorageBox.get(applicationContext, AppStorageBox.Key.AIRLINE_CODE) as String
+        val totalPrice = CalculationHelper.getTotalFareDetati(fares, AIRLINE_CODE)
 
         tvTotalFair.text = "" + totalPrice
         tvClass.text = getString(R.string.class_text) + ": " + requestAirSearch.segments.get(0).cabinClass
@@ -311,8 +312,11 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
         constrainlayoutPricesDetailsView.setOnClickListener {
 
-            val get = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.data?.results?.get(0)?.fares
+            val airlineCode = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.data?.results?.get(0)?.segments?.get(0)?.airline?.airlineCode
+            AppStorageBox.put(applicationContext, AppStorageBox.Key.AIRLINE_CODE, airlineCode)
 
+
+            val get = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.data?.results?.get(0)?.fares
             AppStorageBox.put(applicationContext, AppStorageBox.Key.FARE_DATA, get)
 
             val s = Intent(this.applicationContext, BaggageAndPoliciesActiivty::class.java)
