@@ -236,7 +236,7 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
         viewModel.callReScheduleNotificationAccept(id, 1).observeForever {
             dismissProgressDialog()
             if (it != null) {
-                showdialogmessagewithfisished(it.message)
+                showdialogMessageWithFinishedActivity(it.message)
             }
         }
     }

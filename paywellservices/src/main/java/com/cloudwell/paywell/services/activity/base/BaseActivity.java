@@ -162,7 +162,7 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
-    public void showdialogmessagewithfisished(String message) {
+    public void showdialogMessageWithFinishedActivity(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message)
                 .setCancelable(true)
