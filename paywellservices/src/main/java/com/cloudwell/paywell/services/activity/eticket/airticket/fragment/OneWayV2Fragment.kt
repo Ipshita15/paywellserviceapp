@@ -593,7 +593,7 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
         datePickerDialog.datePicker.minDate = calendarMin.timeInMillis
 
 
-
+        datePickerDialog.updateDate(year, thismonth, dayOfMonth)
 
         datePickerDialog.show()
 

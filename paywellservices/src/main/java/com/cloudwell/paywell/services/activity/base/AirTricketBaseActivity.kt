@@ -188,10 +188,11 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
                     if (response.isSuccessful) {
                         val jsonObject = response.body()
                         val message = jsonObject!!.get("message_details").asString
-                        if (jsonObject.get("status").asInt == 200) {
-                            showMsg(message)
+                        val status = jsonObject.get("status").asInt
+                        if (status == 200) {
+                            showMsg(message, status)
                         } else {
-                            showMsg(message)
+                            showMsg(message, status)
                         }
 
                     }
@@ -218,10 +219,11 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
                     if (response.isSuccessful) {
                         val jsonObject = response.body()
                         val message = jsonObject!!.get("message_details").asString
-                        if (jsonObject.get("status").asInt == 200) {
-                            showMsg(message)
+                        val status = jsonObject.get("status").asInt
+                        if (status == 200) {
+                            showMsg(message, status)
                         } else {
-                            showMsg(message)
+                            showMsg(message, status)
                         }
 
                     }
@@ -248,11 +250,12 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
                     if (response.isSuccessful) {
                         val jsonObject = response.body()
                         val message = jsonObject!!.get("message_details").asString
-                        if (jsonObject.get("status").asInt == 200) {
-                            showMsg(message)
+                        val status = jsonObject.get("status").asInt
 
+                        if (status == 200) {
+                            showMsg(message, status)
                         } else {
-                            showMsg(message)
+                            showMsg(message, status)
                         }
 
                     }
@@ -267,10 +270,19 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
         })
     }
 
-    private fun showMsg(msg: String) {
+    private fun showMsg(msg: String, status: Int) {
 
         val priceChangeFragment = CancellationStatusMessageFragment()
         CancellationStatusMessageFragment.message = msg
+        CancellationStatusMessageFragment.status = status
+        priceChangeFragment.setHandleOnClick(object : CancellationStatusMessageFragment.HandleOnClick {
+            override fun onOkClick(status: Int) {
+                if (status == 200) {
+                    finish()
+                }
+            }
+
+        })
 
         priceChangeFragment.show(supportFragmentManager, "dialog")
 
