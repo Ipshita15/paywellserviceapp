@@ -131,7 +131,6 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
 
             val durtingJounaryTime = DateUtils.getDurtingJounaryTime(totalJourneyinMiliSecound)
-//            tvTotalDepartTime.text = durtingJounaryTime
             AppStorageBox.put(applicationContext, AppStorageBox.Key.totalJourney_time, durtingJounaryTime)
 
 
@@ -204,6 +203,13 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         } else {
             tvRefunable.text = getString(R.string.refundable) + ": " + getString(com.cloudwell.paywell.services.R.string.no)
 
+        }
+
+        val fareType = it.data?.results?.get(0)?.fareType
+        if (fareType.equals("InstantTicketing")) {
+            btBook.text = getString(R.string.issue_ticket)
+        } else {
+            btBook.text = getString(R.string.booking_now)
         }
 
 
@@ -313,7 +319,6 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         constrainlayoutPricesDetailsView.setOnClickListener {
 
             val airlineCode = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.data?.results?.get(0)?.segments?.get(0)?.airline?.airlineCode
-            AppStorageBox.put(applicationContext, AppStorageBox.Key.AIRLINE_CODE, airlineCode)
 
 
             val get = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.data?.results?.get(0)?.fares
@@ -391,7 +396,7 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(com.cloudwell.paywell.services.R.menu.airticket_menu, menu)
+        menuInflater.inflate(R.menu.airticket_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 }
