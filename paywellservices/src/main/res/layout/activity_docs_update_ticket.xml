@@ -6,7 +6,7 @@
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
                                              android:background="@color/white"
-                                             tools:context=".activity.eticket.airticket.reIssueTicket.ReIssueTicketActivity">
+                                             tools:context=".activity.eticket.airticket.reIssueTicket.UpdateDocOrInfomationRequestActivity">
 
 
     <android.support.v7.widget.RecyclerView
@@ -29,7 +29,7 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:background="#5AC121"
-        android:text="Reissue Request"
+        android:text="@string/update_request"
         android:textAllCaps="false"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"

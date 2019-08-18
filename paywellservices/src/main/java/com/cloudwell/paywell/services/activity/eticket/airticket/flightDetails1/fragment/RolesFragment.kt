@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ExpandableListView
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.BaggageAndPoliciesActiivty
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.FlightDetails1Status
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.adapter.ExpandableListAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.RequestAirPriceSearch
@@ -24,7 +25,6 @@ class RolesFragment : Fragment() {
 
     // view
     var listAdapter: ExpandableListAdapter? = null
-    var expListView: ExpandableListView? = null
     var listDataHeader = mutableListOf<String>()
     var listDataChild = mutableMapOf<String, ArrayList<String>>()
     lateinit var lvExp: ExpandableListView
@@ -36,8 +36,7 @@ class RolesFragment : Fragment() {
         mFlightDetails1ViewModel = ViewModelProviders.of(activity!!).get(FlightDetails1ViewModel::class.java!!)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_roles, container, false)
 
@@ -45,7 +44,7 @@ class RolesFragment : Fragment() {
         // preparing list data
         lvExp = v.lvExp as ExpandableListView
 
-        mFlightDetails1ViewModel.baseViewStatus.observe(this, android.arch.lifecycle.Observer {
+        mFlightDetails1ViewModel.baseViewStatus.observe(this, Observer {
             val baggageAndPoliciesActiivty = activity as BaggageAndPoliciesActiivty
             baggageAndPoliciesActiivty.handleViewCommonStatus(it)
 
@@ -57,7 +56,7 @@ class RolesFragment : Fragment() {
         })
 
 
-        mFlightDetails1ViewModel.mListMutableLiveDataAirRules.observe(this, android.arch.lifecycle.Observer {
+        mFlightDetails1ViewModel.mListMutableLiveDataAirRules.observe(this, Observer {
 
             it?.let { it1 -> displayData(it1) }
 
@@ -72,7 +71,10 @@ class RolesFragment : Fragment() {
         requestAirPriceSearch.searchId = serachId
 
 
-        mFlightDetails1ViewModel.callAirRolesAPI(requestAirPriceSearch)
+        if (listDataHeader.size == 0) {
+            mFlightDetails1ViewModel.callAirRolesAPI(requestAirPriceSearch)
+        }
+
 
 
         return v
@@ -93,11 +95,12 @@ class RolesFragment : Fragment() {
 
     private fun displayData(it1: List<Datum>) {
 
+        listDataHeader.clear()
+        listDataChild.clear()
 
         it1.forEach {
 
             listDataHeader.add(it.ruleType)
-//            val ruleDetails = mutableListOf<String>().add(it.ruleDetails)
             val arrayListOf = arrayListOf<String>()
             arrayListOf.add(it.ruleDetails)
 
@@ -113,21 +116,6 @@ class RolesFragment : Fragment() {
         lvExp.setAdapter(listAdapter)
 
         listAdapter?.notifyDataSetChanged()
-
-    }
-
-    private fun prepareListData() {
-
-
-        // Adding child data
-        (listDataHeader as ArrayList<String>).add("Top 250")
-        // Adding child data
-        val top250 = ArrayList<String>()
-        top250.add("The Shawshank Redemption")
-
-
-
-        listDataChild!![listDataHeader.get(0)] = top250 // Header, Child data
 
     }
 

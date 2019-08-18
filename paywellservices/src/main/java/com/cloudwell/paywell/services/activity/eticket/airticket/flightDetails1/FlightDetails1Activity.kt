@@ -10,7 +10,6 @@ import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.adapter.FlightSequenceAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.AirlessDialogFragment
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.BaggageAndPoliciesActiivty
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.FlightFareDialogFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Airline
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.RequestAirPriceSearch
@@ -131,7 +130,6 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
 
             val durtingJounaryTime = DateUtils.getDurtingJounaryTime(totalJourneyinMiliSecound)
-//            tvTotalDepartTime.text = durtingJounaryTime
             AppStorageBox.put(applicationContext, AppStorageBox.Key.totalJourney_time, durtingJounaryTime)
 
 
@@ -176,7 +174,8 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
 
         val fares = result.fares
-        val totalPrice = CalculationHelper.getTotalFareDetati(fares)
+        val AIRLINE_CODE = AppStorageBox.get(applicationContext, AppStorageBox.Key.AIRLINE_CODE) as String
+        val totalPrice = CalculationHelper.getTotalFareDetati(fares, AIRLINE_CODE)
 
         tvTotalFair.text = "" + totalPrice
         tvClass.text = getString(R.string.class_text) + ": " + requestAirSearch.segments.get(0).cabinClass
@@ -203,6 +202,13 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
         } else {
             tvRefunable.text = getString(R.string.refundable) + ": " + getString(com.cloudwell.paywell.services.R.string.no)
 
+        }
+
+        val fareType = it.data?.results?.get(0)?.fareType
+        if (fareType.equals("InstantTicketing")) {
+            btBook.text = getString(R.string.issue_ticket)
+        } else {
+            btBook.text = getString(R.string.booking_now)
         }
 
 
@@ -311,8 +317,10 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
         constrainlayoutPricesDetailsView.setOnClickListener {
 
-            val get = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.data?.results?.get(0)?.fares
+            val airlineCode = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.data?.results?.get(0)?.segments?.get(0)?.airline?.airlineCode
 
+
+            val get = mFlightDetails1ViewModel.mListMutableLiveDataResults.value?.data?.results?.get(0)?.fares
             AppStorageBox.put(applicationContext, AppStorageBox.Key.FARE_DATA, get)
 
             val s = Intent(this.applicationContext, BaggageAndPoliciesActiivty::class.java)
@@ -387,7 +395,7 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(com.cloudwell.paywell.services.R.menu.airticket_menu, menu)
+        menuInflater.inflate(R.menu.airticket_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 }

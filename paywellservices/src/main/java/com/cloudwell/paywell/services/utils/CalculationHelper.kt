@@ -1,5 +1,6 @@
 package com.cloudwell.paywell.services.utils
 
+import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.Airline
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.Fare
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.model.Commission
 import com.google.gson.Gson
@@ -11,7 +12,35 @@ import java.text.NumberFormat
  */
 object CalculationHelper {
 
-    fun getTotalFare(fares: List<Fare>): String {
+
+    val allLocalAirline = mutableListOf<Airline>()
+
+    init {
+        allLocalAirline.clear()
+        val bangladesh = Airline();
+        bangladesh.airlineCode = "BG"
+        allLocalAirline.add(bangladesh)
+
+        val UnitedAirways = Airline();
+        UnitedAirways.airlineCode = "UAB"
+        allLocalAirline.add(UnitedAirways)
+
+        val NovoairAirlines = Airline();
+        NovoairAirlines.airlineCode = "VQ"
+        allLocalAirline.add(NovoairAirlines)
+
+
+        val RegentAirways = Airline();
+        RegentAirways.airlineCode = "RX"
+        allLocalAirline.add(RegentAirways)
+
+        val USBanglaAirlines = Airline();
+        USBanglaAirlines.airlineCode = "BS"
+        allLocalAirline.add(USBanglaAirlines)
+
+    }
+
+    fun getTotalFare(fares: List<Fare>, airlineCode: String?): String {
         val readData = InternalStorageHelper.readData(InternalStorageHelper.CombustionfileName)
         val commission = Gson().fromJson(readData, Commission::class.java)
         val retailerCommission = commission.retailerCommission
@@ -23,6 +52,9 @@ object CalculationHelper {
         var totalServiceFee = 0.0
         var totalConvenienceFee = 0.0
         var totalRetailerCommission = 0.0
+
+        var isLocalAirless = false
+        isLocalAirless = checkIsLocalAirlines(airlineCode, isLocalAirless)
 
 
         for (fare in fares.indices) {
@@ -38,8 +70,11 @@ object CalculationHelper {
 
             val ServiceFee = Math.ceil(fares[fare].serviceFee * passengerCount)
             totalServiceFee += ServiceFee;
-            var convenienceFee = 0.0
+            if (isLocalAirless) {
+                totalServiceFee = 0.0
+            }
 
+            var convenienceFee = 0.0
             val Discount = (fares[fare].discount) * passengerCount
             if (commission.commissionType?.toInt() == 1) {
 
@@ -62,7 +97,18 @@ object CalculationHelper {
         return format
     }
 
-    fun getFare(fares: com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Fare): com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Fare {
+    private fun checkIsLocalAirlines(airlineCode: String?, isAirlines: Boolean): Boolean {
+        var isAirlines1 = isAirlines
+        allLocalAirline.forEach {
+            if (it.airlineCode.equals(airlineCode)) {
+                isAirlines1 = true
+
+            }
+        }
+        return isAirlines1
+    }
+
+    fun getFare(fares: com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Fare, airlineCode: String): com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Fare {
         val readData = InternalStorageHelper.readData(InternalStorageHelper.CombustionfileName)
         val commission = Gson().fromJson(readData, Commission::class.java)
         val retailerCommission = commission.retailerCommission
@@ -74,6 +120,10 @@ object CalculationHelper {
         var totalServiceFee = 0.0
         var totalConvenienceFee = 0.0
         var totalRetailerCommission = 0.0
+
+
+        var isLocalAirless = false
+        isLocalAirless = checkIsLocalAirlines(airlineCode, isLocalAirless)
 
 
         val passengerCount = fares.passengerCount;
@@ -91,11 +141,17 @@ object CalculationHelper {
         fares.otherCharges = OtherCharges
         totalOtherCharges += OtherCharges;
 
+
         val ServiceFee = Math.ceil(fares.serviceFee * passengerCount)
         fares.serviceFee = ServiceFee
-
         totalServiceFee += ServiceFee
-        var convenienceFee = 0.0;
+
+        if (isLocalAirless) {
+            totalServiceFee = 0.0
+            fares.serviceFee = 0.0
+        }
+
+        var convenienceFee = 0.0
 
         val Discount = fares.discount * passengerCount
         if (commission.commissionType?.toInt() == 1) {
@@ -122,7 +178,7 @@ object CalculationHelper {
     }
 
 
-    fun getTotalFareDetati(fares: List<com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Fare>): String {
+    fun getTotalFareDetati(fares: List<com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Fare>, airlineCode: String): String {
         val readData = InternalStorageHelper.readData(InternalStorageHelper.CombustionfileName)
         val commission = Gson().fromJson(readData, Commission::class.java)
         val retailerCommission = commission.retailerCommission
@@ -134,6 +190,10 @@ object CalculationHelper {
         var totalServiceFee = 0.0
         var totalConvenienceFee = 0.0
         var totalRetailerCommission = 0.0
+
+
+        var isLocalAirless = false
+        isLocalAirless = checkIsLocalAirlines(airlineCode, isLocalAirless)
 
 
         for (fare in fares.indices) {
@@ -149,6 +209,11 @@ object CalculationHelper {
 
             val ServiceFee = Math.ceil(fares[fare].serviceFee * passengerCount)
             totalServiceFee += ServiceFee
+
+            if (isLocalAirless) {
+                totalServiceFee = 0.0
+            }
+
             var convenienceFee = 0.0;
 
             val Discount = fares[fare].discount * passengerCount;

@@ -15,7 +15,10 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.*
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.eticket.airticket.*
+import com.cloudwell.paywell.services.activity.eticket.airticket.ClassBottomSheetDialog
+import com.cloudwell.paywell.services.activity.eticket.airticket.ClassModel
+import com.cloudwell.paywell.services.activity.eticket.airticket.PassengerBottomSheetDialog
+import com.cloudwell.paywell.services.activity.eticket.airticket.SearchRoundTripModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.Segment
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.AirportsSearchActivity
@@ -70,14 +73,14 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
         val view = inflater!!.inflate(R.layout.fragment_india_one_way, container, false)
 
         frameLayout = view.findViewById(R.id.frameLayout)
-        val tvDepart = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.tvDepart2)
-        val tvDepartDate = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.tvDepartDate)
-        val airTicketClass = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.airTicketClass)
-        val llPassenger = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.llPsngr)
-        val btnSearch = view.findViewById<FancyButton>(com.cloudwell.paywell.services.R.id.btn_search)
-        val tvFrom = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.tvFrom)
-        val layoutTo = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.layoutTo)
-        val layoutDeaprtDate = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.layoutDeaprtDate)
+        val tvDepart = view.findViewById<TextView>(R.id.tvDepart2)
+        val tvDepartDate = view.findViewById<TextView>(R.id.tvDepartDate)
+        val airTicketClass = view.findViewById<TextView>(R.id.airTicketClass)
+        val llPassenger = view.findViewById<LinearLayout>(R.id.llPsngr)
+        val btnSearch = view.findViewById<FancyButton>(R.id.btn_search)
+        val tvFrom = view.findViewById<LinearLayout>(R.id.tvFrom)
+        val layoutTo = view.findViewById<LinearLayout>(R.id.layoutTo)
+        val layoutDeaprtDate = view.findViewById<LinearLayout>(R.id.layoutDeaprtDate)
 
         mAppHandler = AppHandler.getmInstance(context)
 
@@ -273,11 +276,11 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            com.cloudwell.paywell.services.R.id.tvDepart2 -> {
+            R.id.tvDepart2 -> {
                 showDepartDatePicker()
             }
 
-            com.cloudwell.paywell.services.R.id.tvDepartDate -> {
+            R.id.tvDepartDate -> {
                 showDepartDatePicker()
             }
 
@@ -286,23 +289,23 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
             }
 
 
-            com.cloudwell.paywell.services.R.id.airTicketClass -> {
+            R.id.airTicketClass -> {
 
                 handleClass()
 
             }
 
-            com.cloudwell.paywell.services.R.id.llPsngr -> {
+            R.id.llPsngr -> {
 
                 handlePassengerClick()
             }
 
-            com.cloudwell.paywell.services.R.id.btn_search -> {
+            R.id.btn_search -> {
 
                 handleSearchClick()
             }
 
-            com.cloudwell.paywell.services.R.id.tvFrom -> {
+            R.id.tvFrom -> {
 
                 val intent = Intent(context, AirportsSearchActivity::class.java)
                 intent.putExtra("from", 1)
@@ -311,7 +314,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
                 startActivityForResult(intent, REQ_CODE_FROM)
             }
 
-            com.cloudwell.paywell.services.R.id.layoutTo -> {
+            R.id.layoutTo -> {
 
                 val intent = Intent(context, AirportsSearchActivity::class.java)
                 intent.putExtra("from", 1)
@@ -321,7 +324,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
             }
 
 
-            com.cloudwell.paywell.services.R.id.llDatePicker -> {
+            R.id.llDatePicker -> {
                 DatePickerDialog(context, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show()
@@ -353,7 +356,6 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
         val myFormatOne = "MM/dd/yy" //In which you need put here
         val sdf = SimpleDateFormat(myFormatOne, Locale.ENGLISH)
 
-//        tvDepartDate.setText(sdf.format(myCalendar.time))
         tvDepartDate.setText(humanReadAbleDate.format(myCalendar.time))
 
         searchRoundTripModel.departDate = humanReadAbleDate.format(myCalendar.time)
@@ -456,6 +458,15 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
         val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
 
 
+        if (!tvDepartDate.text.equals(getString(R.string.date))) {
+            val crachDepartureDate = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_API_formate_INDIA) as String?
+
+            val date = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(crachDepartureDate) as Date
+            calendar.time = date
+
+        }
+
+
         val datePickerDialog = DatePickerDialog(context,
                 DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
 
@@ -489,36 +500,13 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
                 }, year, thismonth, dayOfMonth)
 
-        datePickerDialog.datePicker.minDate = calendar.timeInMillis
-
-//        calendar.add(Calendar.MONTH, 6)
-//        datePickerDialog.datePicker.maxDate = calendar.timeInMillis
-
-
+        val calendarMin = Calendar.getInstance()
+        datePickerDialog.datePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
+        datePickerDialog.datePicker.minDate = calendarMin.timeInMillis
         datePickerDialog.show()
 
     }
 
-    fun onClassTextChange(text: String) {
-        airTicketClass.setText(text)
-
-    }
-
-
-    private fun handleFromSearchClick() {
-
-        val args = Bundle()
-        args.putString("Name", "Naima")
-
-        dialogFragment = FullScreenDialogFragment.Builder(context as AirTicketMainActivity)
-                .setTitle("From")
-                .setOnConfirmListener(this)
-                .setOnDiscardListener(this)
-                .setContent(SourceFragment::class.java, args)
-                .build()
-
-        dialogFragment.show(fragmentManager, dialogTag)
-    }
 
     override fun onConfirm(result: Bundle?) {
     }

@@ -11,14 +11,21 @@ import kotlinx.android.synthetic.main.fragment_prices_change.view.*
 class CancellationStatusMessageFragment : DialogFragment() {
 
 
+    private var handleOnClick: HandleOnClick? = null
+
     companion object {
         lateinit var message: String
+        var status: Int = 0
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+    }
+
+    fun setHandleOnClick(handleOnClick: HandleOnClick) {
+        this.handleOnClick = handleOnClick
     }
 
 
@@ -29,6 +36,7 @@ class CancellationStatusMessageFragment : DialogFragment() {
 
 
         v.btActionIssueTicket.setOnClickListener {
+            handleOnClick?.onOkClick(status)
             dismiss()
 
         }
@@ -44,5 +52,10 @@ class CancellationStatusMessageFragment : DialogFragment() {
         }
     }
 
+    interface HandleOnClick {
+
+        fun onOkClick(status: Int);
+
+    }
 
 }

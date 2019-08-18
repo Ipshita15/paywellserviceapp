@@ -50,7 +50,8 @@ class BookingStatusFragment : DialogFragment() {
 
         val segments = resAirPreBooking.data?.results
 
-        val totalFare = resAirPreBooking.data?.results?.get(0)?.fares?.let { CalculationHelper.getTotalFareDetati(it) }
+        val AIRLINE_CODE = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.AIRLINE_CODE) as String
+        val totalFare = resAirPreBooking.data?.results?.get(0)?.fares?.let { CalculationHelper.getTotalFareDetati(it, AIRLINE_CODE) }
 
         v.tvFare.text = activity?.getString(R.string.total_fare_text) + ": TK. " + totalFare
 
