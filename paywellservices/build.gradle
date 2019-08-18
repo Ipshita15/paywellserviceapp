@@ -28,8 +28,8 @@ android {
         applicationId "com.cloudwell.paywell.services"
         minSdkVersion 16
         //for push notification its 20 otherwise it was 25
-        versionCode 42
-        versionName '10.17.1'
+        versionCode 44
+        versionName '10.18.1'
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
 
@@ -47,11 +47,10 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix '.debug'
-
-
         }
         release {
             minifyEnabled true
+//            debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

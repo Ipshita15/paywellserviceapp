@@ -160,7 +160,7 @@ class SeatLayoutActivity : BusTricketBaseActivity(), View.OnClickListener {
                 displaySeatPatten()
             }
         } catch (e: Exception) {
-            Logger.v("" + e.localizedMessage)
+            Logger.v("" + e.message)
         }
     }
 

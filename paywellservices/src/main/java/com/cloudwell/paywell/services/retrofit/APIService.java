@@ -173,7 +173,15 @@ public interface APIService {
                                   @Field("password") String password,
                                   @Field("BookingID") String bookingId,
                                   @Field("reason") String cancelReason,
+                                  @Field("cancel_type") String cancel_type,
                                   @Field("format") String apiFormat);
+
+    @POST("PaywelltransactionHaltrip/reIssueTicket")
+    @FormUrlEncoded
+    Call<JsonObject> reIssueTicket(@Field("username") String username,
+                                   @Field("password") String password,
+                                   @Field("BookingID") String bookingId,
+                                   @Field("reason") String cancelReason);
 
 
     @POST("/PaywelltransactionHaltrip/reScheduleTicket")
@@ -186,7 +194,7 @@ public interface APIService {
                                       @Field("ResultID") String resultID,
                                       @Field("format") String apiFormat);
 
-    @POST("/PaywelltransactionHaltrip/reIssueTicket")
+    @POST("/PaywelltransactionHaltrip/infoUpdateTicket")
     @Multipart
     Call<JsonObject> reIssueTicket(@Part("username") String username,
                                    @Part("password") String password,

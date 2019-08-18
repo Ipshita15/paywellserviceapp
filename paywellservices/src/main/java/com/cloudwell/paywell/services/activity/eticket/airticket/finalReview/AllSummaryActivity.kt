@@ -73,7 +73,7 @@ class AllSummaryActivity : AirTricketBaseActivity() {
     override fun onResume() {
         super.onResume()
 
-        rvJoiner = RvJoiner(true)//auto update ON, stable ids ON
+        rvJoiner = RvJoiner(false)//auto update ON, stable ids ON
         initializationViewNew()
         mViewModel.init(passengerIDS)
 
@@ -327,7 +327,7 @@ class AllSummaryActivity : AirTricketBaseActivity() {
         }
 
         if (!status.noSerachFoundMessage.equals("")) {
-            showDialogMesssage(status.noSerachFoundMessage)
+            showDialogMessage(status.noSerachFoundMessage)
         }
 
 

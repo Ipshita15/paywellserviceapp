@@ -12,7 +12,6 @@ import com.orhanobut.hawk.Hawk;
  */
 public class AppStorageBox {
 
-
     /**
      * Enum representing your setting names or key for your setting.
      */
@@ -25,7 +24,7 @@ public class AppStorageBox {
          *
          * String: SAMPLE_KEY, SAMPLE_STR or just SAMPLE
          */
-        SERACH_ID, Request_ID, AUTHORIZATION_DATA, NOTIFICATION_DETAILS, FARE_DATA,
+        SERACH_ID, Request_ID, AUTHORIZATION_DATA, NOTIFICATION_DETAILS, FARE_DATA, AIRLINE_CODE,
         COUNTER_PASSENGER, ResposeAirPriceSearch, ShortDepartArriveTime, AIRTRICKET_EDIT_PASSENGER,
         SELETED_PASSENGER_IDS, AIRPORT, Airline_details, REQUEST_AIR_SERACH, orignAirportAnddestinationairportCode,
         totalJourney_time, humanReadAbleDate, AIR_PRE_BOOKKING, AIR_BOOKKING, AIRTICKET_BOOKING_RESPONSE,

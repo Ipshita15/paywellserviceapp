@@ -29,8 +29,10 @@ public class AllConstant {
 
 
     public static final String Action_IsisThicket = "Action_IsisThicket";
-    public static final String Action_reIssueTicket = "reIssueTicket";
-    public static final String Action_Ticket_Cancel = "Ticket Cancel";
-    public static final String Action_Reissue_or_Reschedule = "Reissue/Reschedule";
+    public static final String Action_reIssueTicket = "Ticket Re-issue";
+    public static final String Action_Void = "Ticket Void";
+    public static final String Action_REfund = "Ticket Refund";
+    public static final String Action_DOCS_UPDATE = "Action_DOCS_UPDATE";
+
 
 }

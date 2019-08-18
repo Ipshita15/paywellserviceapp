@@ -791,7 +791,6 @@
     <string name="booking_info">Booking Info</string>
     <string name="ticket_cancel">Cancel Ticket</string>
     <string name="reissue_reschedule">Re-issue/Reschedule</string>
-    <string name="title_reissue">Ticket Re-issue</string>
     <string name="reschedule">Reschedule</string>
     <string name="ekshop">Ekshop</string>
     <string name="visit">Visit</string>
@@ -810,6 +809,12 @@
     <string name="text_accept">Accept</string>
     <string name="text_decline">Decline</string>
     <string name="title_edit_passenger">Edit Passenger Info</string>
+    <string name="docs_info_update">Docs-Info Update</string>
+    <string name="ticket_refund">Ticket Refund</string>
+    <string name="re_issue">Re-issue</string>
+    <string name="ticket_void">Ticket Void</string>
+    <string name="title_docs_update">Docs/Info Update</string>
+    <string name="update_request">Update Request</string>
 
     <string name="title_bus_tickets">Search bus tickets</string>
     <string name="search_bus">Search Bus Ticket</string>

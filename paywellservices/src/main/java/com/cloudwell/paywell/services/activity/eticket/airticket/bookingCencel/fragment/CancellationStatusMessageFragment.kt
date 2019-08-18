@@ -5,14 +5,17 @@ import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_prices_change.view.*
+import kotlinx.android.synthetic.main.fragment_status_cencelation.view.*
 
 
 class CancellationStatusMessageFragment : DialogFragment() {
 
 
+    private var handleOnClick: HandleOnClick? = null
+
     companion object {
         lateinit var message: String
+        var status: Int = 0
     }
 
 
@@ -21,16 +24,19 @@ class CancellationStatusMessageFragment : DialogFragment() {
 
     }
 
+    fun setHandleOnClick(handleOnClick: HandleOnClick) {
+        this.handleOnClick = handleOnClick
+    }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_status_cencelation, container, false)
         isCancelable = false
-        v.tvYourSeats.text = message
-
-        v.tvYourSeats.text = message
+        v.tvFree.text = message
 
 
-        v.btAction.setOnClickListener {
+        v.btActionIssueTicket.setOnClickListener {
+            handleOnClick?.onOkClick(status)
             dismiss()
 
         }
@@ -46,5 +52,10 @@ class CancellationStatusMessageFragment : DialogFragment() {
         }
     }
 
+    interface HandleOnClick {
+
+        fun onOkClick(status: Int);
+
+    }
 
 }

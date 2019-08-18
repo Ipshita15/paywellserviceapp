@@ -75,7 +75,6 @@ class FlightSearchViewModel : AirTicketBaseViewMode() {
                 baseViewStatus.value = it.throwable!!.message.let { it1 ->
                     BaseViewState(errorMessage = it1.toString())
                 }
-
                 mViewStatus.value = SeachViewStatus(noSerachFoundMessage = "No Result Found!!", isShowShimmerView = false, isShowProcessIndicator = false);
 
                 return false
@@ -99,13 +98,9 @@ class FlightSearchViewModel : AirTicketBaseViewMode() {
     private fun handleRepose(t: ReposeAirSearch?) {
         t.let {
             it?.data?.results.let {
-                //                val sortedList = it?.sortedBy {
-//                    CalculationHelper.getTotalFare(it.fares)
-//                }
-
                 Collections.sort(it) { car1, car2 ->
-                    val a = CalculationHelper.getTotalFare(car1.fares).replace(",", "").toDouble()
-                    val b = CalculationHelper.getTotalFare(car2.fares).replace(",", "").toDouble()
+                    val a = CalculationHelper.getTotalFare(car1.fares, car1.segments.get(0).airline?.airlineCode).replace(",", "").toDouble()
+                    val b = CalculationHelper.getTotalFare(car2.fares, car1.segments.get(0).airline?.airlineCode).replace(",", "").toDouble()
 
                     if (a < b) {
                         -1
@@ -114,7 +109,6 @@ class FlightSearchViewModel : AirTicketBaseViewMode() {
                     } else {
                         0
                     }
-
                 }
                 mListMutableLiveDataFlightData.value = it
                 mSearchId.value = t?.data?.searchId

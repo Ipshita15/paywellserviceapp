@@ -16,7 +16,6 @@ import com.cloudwell.paywell.services.activity.notification.notificaitonFullView
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 2/1/19.
  */
-
 @Database(entities = {FavoriteMenu.class, NotificationDetailMessage.class, NotificationDetailMessageSync.class, Airport.class, Passenger.class, Transport.class, BusLocalDB.class, BusSchedule.class, TripScheduleInfo.class}, version = 4)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract FavoriteMenuDab mFavoriteMenuDab();

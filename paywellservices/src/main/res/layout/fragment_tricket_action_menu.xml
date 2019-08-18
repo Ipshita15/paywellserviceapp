@@ -28,14 +28,14 @@
     <Button
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:id="@+id/btActionReissue"
+        android:id="@+id/btActionDocsInfoUpdate"
         android:layout_width="250dp"
         android:layout_height="40dp"
         android:background="#5AC121"
         android:gravity="center"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="Re-issue"
+        android:text="@string/docs_info_update"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="16sp"
@@ -45,14 +45,14 @@
     <Button
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:id="@+id/btActionReschedule"
+        android:id="@+id/btActionReissue"
         android:layout_width="250dp"
         android:layout_height="40dp"
         android:background="#5AC121"
         android:gravity="center"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="@string/reschedule"
+        android:text="@string/re_issue"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="16sp"
@@ -78,17 +78,35 @@
     <Button
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:id="@+id/btTicketCancel"
+        android:id="@+id/btTicketRefund"
         android:layout_width="250dp"
         android:layout_height="40dp"
         android:background="#f36743"
         android:gravity="center"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="@string/ticket_cancel"
+        android:text="@string/ticket_refund"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="16sp"
         />
+
+
+    <Button
+        android:id="@+id/btTicketVoid"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:background="#f36743"
+        android:gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="@string/ticket_void"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        />
+
 
 </LinearLayout>

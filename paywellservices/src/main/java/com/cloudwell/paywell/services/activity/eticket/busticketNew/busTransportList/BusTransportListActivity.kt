@@ -118,7 +118,7 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
                     if (model.resSeatInfo == null) {
                         Toast.makeText(applicationContext, "PLease wailt..", Toast.LENGTH_LONG).show()
                     } else if (model.resSeatInfo?.tototalAvailableSeat == 0) {
-                        showDialogMesssage("seat not available")
+                        showDialogMessage("seat not available")
                     } else {
 
                         val toJson = Gson().toJson(model)
