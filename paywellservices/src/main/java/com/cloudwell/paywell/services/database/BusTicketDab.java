@@ -1,9 +1,5 @@
 package com.cloudwell.paywell.services.database;
 
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.OnConflictStrategy;
-import android.arch.persistence.room.Query;
 
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BusLocalDB;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BusSchedule;
@@ -12,6 +8,11 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripSc
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule;
 
 import java.util.List;
+
+import androidx.room.Dao;
+import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
+import androidx.room.Query;
 
 
 /**

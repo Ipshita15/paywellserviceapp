@@ -1,6 +1,6 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.viewmodel
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import com.cloudwell.paywell.services.activity.base.newBase.BaseViewState
 import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketBaseViewMode
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.model.Passenger

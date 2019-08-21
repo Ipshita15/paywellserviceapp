@@ -3,8 +3,6 @@ package com.cloudwell.paywell.services.activity.refill.banktransfer;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +19,9 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.google.android.material.snackbar.Snackbar;
 
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                                             xmlns:fancy="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent"
-                                             android:background="#d1e5e1"
-                                             tools:context="com.cloudwell.paywell.services.activity.eticket.busticketNew.transportSelect.TransportSelectActivity">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:fancy="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   android:background="#d1e5e1"
+                                                   tools:context="com.cloudwell.paywell.services.activity.eticket.busticketNew.transportSelect.TransportSelectActivity">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/cardLayout"
         android:layout_width="349dp"
         android:layout_height="162dp"
@@ -28,7 +28,7 @@
         card_view:cardCornerRadius="8dp"
         card_view:cardUseCompatPadding="true">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/dateLL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,7 +73,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.512"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView21"></Spinner>
+                app:layout_constraintTop_toBottomOf="@+id/textView21">
+
+            </Spinner>
 
             <View
                 android:layout_width="280dp"
@@ -89,9 +91,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/boothList"/>
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
     <mehdi.sakout.fancybuttons.FancyButton
         android:id="@+id/btn_next"
@@ -116,4 +118,4 @@
         fancy:fb_text="@string/next_btn"
         fancy:fb_textColor="#FFFFFF"/>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

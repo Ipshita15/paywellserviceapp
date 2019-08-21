@@ -1,6 +1,6 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.model
 
-import android.arch.persistence.room.ColumnInfo
+import androidx.room.ColumnInfo
 import com.google.gson.annotations.SerializedName
 
 

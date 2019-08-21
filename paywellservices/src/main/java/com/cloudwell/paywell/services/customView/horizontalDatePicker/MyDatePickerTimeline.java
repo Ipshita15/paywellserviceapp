@@ -2,8 +2,6 @@ package com.cloudwell.paywell.services.customView.horizontalDatePicker;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.DatePicker;
@@ -14,6 +12,9 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.customView.horizontalDatePicker.commincation.IDatePicker;
 
 import java.util.Calendar;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 
 /**

@@ -2,13 +2,13 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew.menu
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatDialog
 import android.view.View
 import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.RadioButton
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDialog
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList

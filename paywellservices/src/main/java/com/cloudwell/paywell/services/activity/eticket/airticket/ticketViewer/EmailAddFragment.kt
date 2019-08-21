@@ -1,12 +1,12 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer
 
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.constant.AllConstant.emailPattern
 import kotlinx.android.synthetic.main.fragment_add_email.*

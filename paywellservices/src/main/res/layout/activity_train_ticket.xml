@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/layout_background"
-    tools:context=".activity.eticket.trainticket.TrainTicketActivity">
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/layout_background"
+                tools:context=".activity.eticket.trainticket.TrainTicketActivity">
 
-    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/cardView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btnSource"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/btnSource"
-        android:layout_marginTop="16dp"
-        card_view:cardBackgroundColor="@color/card_background"
-        card_view:cardCornerRadius="4dp"
-        card_view:cardUseCompatPadding="true">
+    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                       android:id="@+id/cardView"
+                                       android:layout_width="match_parent"
+                                       android:layout_height="wrap_content"
+                                       android:layout_alignStart="@+id/btnSource"
+                                       android:layout_alignLeft="@+id/btnSource"
+                                       android:layout_alignParentTop="true"
+                                       android:layout_marginTop="16dp"
+                                       card_view:cardBackgroundColor="@color/card_background"
+                                       card_view:cardCornerRadius="4dp"
+                                       card_view:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,7 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/star_sign"
-                    android:textColor="#FF4719" />
+                    android:textColor="#FF4719"/>
 
                 <TextView
                     android:id="@+id/tvStationFrom"
@@ -44,7 +44,7 @@
                     android:paddingLeft="2dp"
                     android:paddingRight="2dp"
                     android:text="@string/from_city_ticket_des"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
             </LinearLayout>
 
             <LinearLayout
@@ -58,7 +58,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:visibility="visible" />
+                    android:visibility="visible"/>
             </LinearLayout>
 
             <LinearLayout
@@ -71,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/star_sign"
-                    android:textColor="#FF4719" />
+                    android:textColor="#FF4719"/>
 
                 <TextView
                     android:id="@+id/tvSourceStation"
@@ -80,7 +80,7 @@
                     android:paddingLeft="2dp"
                     android:paddingRight="2dp"
                     android:text="@string/to_city_msg"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
             </LinearLayout>
 
             <AutoCompleteTextView
@@ -95,7 +95,7 @@
                 android:imeOptions="actionDone"
                 android:inputType="text"
                 android:maxLength="3"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -103,10 +103,10 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="30dp"
                 android:text="@string/hint_source_msg"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/btnSource"
@@ -128,5 +128,5 @@
         android:text="@string/confirm_btn"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/colorText"
-        android:typeface="serif" />
+        android:typeface="serif"/>
 </RelativeLayout>

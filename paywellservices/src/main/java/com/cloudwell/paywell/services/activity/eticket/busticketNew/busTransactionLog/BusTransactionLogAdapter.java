@@ -4,9 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.FragmentTransaction;
 import android.os.Parcel;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +15,11 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.search.FullS
 import com.cloudwell.paywell.services.utils.FullScreenDialogPayWell;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by YASIN on 03,July,2019
@@ -98,7 +100,7 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
                     tvWebBookingIDTV.setVisibility(View.GONE);
                 }
 
-                android.support.constraint.ConstraintLayout linearLayout = holder.itemView.findViewById(R.id.mainClickLL);
+                ConstraintLayout linearLayout = holder.itemView.findViewById(R.id.mainClickLL);
                 linearLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

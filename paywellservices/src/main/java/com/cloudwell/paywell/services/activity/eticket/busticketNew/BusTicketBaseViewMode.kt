@@ -1,6 +1,7 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew
 
-import android.arch.lifecycle.ViewModel
+
+import androidx.lifecycle.ViewModel
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Transport
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.transportSelect.view.IBusSeletedView
 

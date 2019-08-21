@@ -3,14 +3,13 @@ package com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobile
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.view.MenuItem
 import android.widget.RelativeLayout
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.adapter.HeaderRVSectionForLog
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.model.MessageEventMobileNumberChange
@@ -20,10 +19,10 @@ import com.cloudwell.paywell.services.analytics.AnalyticsParameters
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.squareup.otto.Subscribe
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
-
 import java.text.SimpleDateFormat
 
 /**

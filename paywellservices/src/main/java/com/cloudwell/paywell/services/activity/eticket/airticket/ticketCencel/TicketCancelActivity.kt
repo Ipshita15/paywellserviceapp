@@ -2,16 +2,16 @@ package com.cloudwell.paywell.services.activity.eticket.airticket.ticketCencel
 
 import android.graphics.Color
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
-import android.support.design.widget.Snackbar
 import android.view.MenuItem
 import android.widget.Spinner
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment.CancellationStatusMessageFragment
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.utils.ConnectionDetector
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_ticket_cencel.*
 import mehdi.sakout.fancybuttons.FancyButton
 

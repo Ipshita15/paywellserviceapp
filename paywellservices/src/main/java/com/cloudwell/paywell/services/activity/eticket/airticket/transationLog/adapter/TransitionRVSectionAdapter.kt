@@ -1,14 +1,12 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.adapter
 
-import android.content.ClipboardManager
 import android.content.Context
-import android.content.Context.CLIPBOARD_SERVICE
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
+import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.constant.AllConstant
@@ -56,8 +54,8 @@ class TransitionRVSectionAdapter(val mContext: Context, private val title: Strin
         iHolder.tvStatus.text = "Status: " + model.message!!
 
 
-        if (model.message != null) {
-            if (model.invoiceUrl != null) {
+        if (`model`.message != null) {
+            if (`model`.invoiceUrl != null) {
                 iHolder.ivSymbolTicketed.visibility = View.VISIBLE
                 iHolder.viewPdfView.visibility = View.VISIBLE
             } else {
@@ -71,14 +69,14 @@ class TransitionRVSectionAdapter(val mContext: Context, private val title: Strin
 
 
         iHolder.ivSymbolTicketed.setOnClickListener { v ->
-            if (model.invoiceUrl != null) {
+            if (`model`.invoiceUrl != null) {
                 Logger.v("InvoiceURl: " + model.invoiceUrl)
                 onActionButtonClick!!.onItemClick(model)
             }
         }
 
         iHolder.viewPdfView.setOnClickListener {
-            if (model.invoiceUrl != null) {
+            if (`model`.invoiceUrl != null) {
                 Logger.v("InvoiceURl: " + model.invoiceUrl)
                 onActionButtonClick!!.onItemClick(model)
             }
@@ -99,15 +97,6 @@ class TransitionRVSectionAdapter(val mContext: Context, private val title: Strin
         iHolder.ivRootLayout.setOnClickListener {
 
             onActionButtonClick?.onRootViewClick(datum = model)
-        }
-
-        iHolder.tvBookingId.setOnLongClickListener {
-
-            val clipboard = mContext.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-            clipboard.setText(model.bookingId)
-            Toast.makeText(mContext, "Booking ID to clip", Toast.LENGTH_LONG).show()
-
-            true
         }
 
 
@@ -139,14 +128,14 @@ class TransitionRVSectionAdapter(val mContext: Context, private val title: Strin
 
 
         init {
-            ivRootLayout = view.findViewById(com.cloudwell.paywell.services.R.id.ivRootLayout)
-            tvBookingId = view.findViewById(com.cloudwell.paywell.services.R.id.tvBookingId)
-            tvTricketPrices = view.findViewById(com.cloudwell.paywell.services.R.id.tvTricketPrices)
-            tvStatus = view.findViewById(com.cloudwell.paywell.services.R.id.tvStatus)
-            ivSymbolTicketed = view.findViewById(com.cloudwell.paywell.services.R.id.ivSymbolTicketed)
-            tvAction = view.findViewById(com.cloudwell.paywell.services.R.id.ivActionTrans)
-            viewBackgroudAction = view.findViewById(com.cloudwell.paywell.services.R.id.viewBackgroudAction1)
-            viewPdfView = view.findViewById(com.cloudwell.paywell.services.R.id.viewPdfView)
+            ivRootLayout = view.findViewById(R.id.ivRootLayout)
+            tvBookingId = view.findViewById(R.id.tvBookingId)
+            tvTricketPrices = view.findViewById(R.id.tvTricketPrices)
+            tvStatus = view.findViewById(R.id.tvStatus)
+            ivSymbolTicketed = view.findViewById(R.id.ivSymbolTicketed)
+            tvAction = view.findViewById(R.id.ivActionTrans)
+            viewBackgroudAction = view.findViewById(R.id.viewBackgroudAction1)
+            viewPdfView = view.findViewById(R.id.viewPdfView)
 
         }
     }
@@ -155,7 +144,7 @@ class TransitionRVSectionAdapter(val mContext: Context, private val title: Strin
         internal var tvHeader: TextView
 
         init {
-            tvHeader = view.findViewById(com.cloudwell.paywell.services.R.id.header)
+            tvHeader = view.findViewById(R.id.header)
         }
     }
 

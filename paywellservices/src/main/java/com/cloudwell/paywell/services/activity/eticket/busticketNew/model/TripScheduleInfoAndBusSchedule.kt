@@ -1,7 +1,8 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew.model
 
-import android.arch.persistence.room.Embedded
-import android.arch.persistence.room.Ignore
+
+import androidx.room.Embedded
+import androidx.room.Ignore
 
 
 /**

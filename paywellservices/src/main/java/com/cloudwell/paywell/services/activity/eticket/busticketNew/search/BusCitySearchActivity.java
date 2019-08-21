@@ -2,7 +2,6 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew.search;
 
 import android.app.DatePickerDialog;
 import android.app.FragmentTransaction;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -46,6 +45,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import androidx.lifecycle.ViewModelProviders;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 public class BusCitySearchActivity extends BusTricketBaseActivity implements FullScreenDialogBus.OnCitySet, IbusTransportListView, AdapterView.OnItemSelectedListener {

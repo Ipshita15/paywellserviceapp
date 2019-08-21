@@ -1,11 +1,11 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.emailTicket.adapter
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import androidx.recyclerview.widget.RecyclerView
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Passenger
 import kotlinx.android.synthetic.main.item_mail_list.view.*
 

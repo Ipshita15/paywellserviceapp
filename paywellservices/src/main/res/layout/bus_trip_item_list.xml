@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools"
-                                             android:id="@+id/linearLayout7"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="wrap_content"
-                                             android:layout_margin="8dp"
-                                             android:background="@drawable/bus_trip_item_backgroud">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:id="@+id/linearLayout7"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="wrap_content"
+                                                   android:layout_margin="8dp"
+                                                   android:background="@drawable/bus_trip_item_backgroud">
 
     <ImageView
         android:id="@+id/imageView28"
@@ -169,4 +169,4 @@
         app:layout_constraintTop_toTopOf="@+id/tvAvailableSeat"
         tools:visibility="invisible"/>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

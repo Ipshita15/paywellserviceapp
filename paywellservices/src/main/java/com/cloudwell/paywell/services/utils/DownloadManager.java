@@ -4,18 +4,15 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
-import android.support.v4.content.FileProvider;
 import android.util.Log;
 
 import com.cloudwell.paywell.services.BuildConfig;
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.AppLoadingActivity;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -27,7 +24,7 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
-import static android.content.Context.DOWNLOAD_SERVICE;
+import androidx.core.content.FileProvider;
 
 public class DownloadManager extends AsyncTask<String, Integer, String> {
     private ProgressDialog progressDialog;
@@ -222,7 +219,7 @@ public class DownloadManager extends AsyncTask<String, Integer, String> {
     }
 
     public void installNew() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             try {
                 Intent intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
                 File file = new File(mContext.getFilesDir(), "app_release_" + mContext.getString(R.string.app_next_version_no) + ".apk");
@@ -235,7 +232,7 @@ public class DownloadManager extends AsyncTask<String, Integer, String> {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }else{
+        } else {
             try {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 File file = new File(Environment.getExternalStorageDirectory() + "/app_release_" + mContext.getString(R.string.app_next_version_no) + ".apk");

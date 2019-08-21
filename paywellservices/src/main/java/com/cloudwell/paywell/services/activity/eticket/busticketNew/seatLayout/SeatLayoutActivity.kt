@@ -3,8 +3,6 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew.seatLayout
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
-import android.support.design.widget.BottomSheetBehavior
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
@@ -12,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusPassengerBoothDepartureActivity
@@ -22,6 +21,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripSc
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.utils.BusCalculationHelper
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.gson.Gson
 import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.bottom_seat_layout.*

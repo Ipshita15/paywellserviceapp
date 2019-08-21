@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.cloudwell.paywell.services.BuildConfig;
@@ -24,6 +23,7 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
+import androidx.multidex.MultiDex;
 import io.fabric.sdk.android.Fabric;
 
 /**

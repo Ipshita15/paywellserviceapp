@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools"
-                                             android:id="@+id/linearLayout15"
-                                             android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:id="@+id/linearLayout15"
+                                                   android:layout_width="match_parent"
 
-                                             android:layout_height="match_parent"
-                                             tools:context="com.cloudwell.paywell.services.activity.eticket.airticket.booking.BookingStatusActivity">
+                                                   android:layout_height="match_parent"
+                                                   tools:context="com.cloudwell.paywell.services.activity.eticket.airticket.booking.BookingStatusActivity">
 
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listviewLog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -49,4 +49,4 @@
         app:layout_constraintEnd_toEndOf="@+id/ivForNodataFound"
         app:layout_constraintStart_toStartOf="@+id/ivForNodataFound"
         app:layout_constraintTop_toBottomOf="@+id/ivForNodataFound"/>
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
