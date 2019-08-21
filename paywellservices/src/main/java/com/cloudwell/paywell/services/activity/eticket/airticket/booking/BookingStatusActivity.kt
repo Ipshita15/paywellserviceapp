@@ -73,7 +73,7 @@ class BookingStatusActivity : TransitionLogBaseActivity() {
         }
 
         if (it.modelPriceChange != null) {
-            showTricketPriceChangeDialog(it.modelPriceChange!!)
+            showTicketPriceChangeDialog(it.modelPriceChange!!)
         }
     }
 

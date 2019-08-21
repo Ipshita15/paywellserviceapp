@@ -1,5 +1,6 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.adapter
 
+import android.content.Context
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -13,10 +14,11 @@ import com.orhanobut.logger.Logger
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection
 import java.text.NumberFormat
 
+
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 17/1/19.
  */
-class TransitionRVSectionAdapter(private val title: String, private val list: List<Datum>, private val mIsEnglish: Boolean) : StatelessSection(R.layout.item_header_air_tricket_transtion_log, R.layout.item_child_airtricket_transtion_log) {
+class TransitionRVSectionAdapter(val mContext: Context, private val title: String, private val list: List<Datum>, private val mIsEnglish: Boolean) : StatelessSection(com.cloudwell.paywell.services.R.layout.item_header_air_tricket_transtion_log, com.cloudwell.paywell.services.R.layout.item_child_airtricket_transtion_log) {
     private var onActionButtonClick: ItemClickListener? = null
 
 

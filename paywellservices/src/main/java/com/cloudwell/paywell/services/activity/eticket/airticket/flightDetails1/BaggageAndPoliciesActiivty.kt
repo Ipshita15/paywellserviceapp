@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment
+package com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1
 
 
 import android.os.Bundle
@@ -7,6 +7,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.EarningsFragment
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.FlightFareFragment
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.RolesFragment
 import kotlinx.android.synthetic.main.activity_baggage_and_policies_actiivty.*
 import java.util.*
 

@@ -1209,7 +1209,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".activity.eticket.airticket.flightDetails1.fragment.BaggageAndPoliciesActiivty"
+            android:name=".activity.eticket.airticket.flightDetails1.BaggageAndPoliciesActiivty"
             android:label="@string/title_activity_baggage_and_policies_actiivty"
             android:screenOrientation="portrait">
         </activity>
@@ -1251,12 +1251,12 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".activity.eticket.airticket.ticketCencel.TricketCancelActivity"
+            android:name=".activity.eticket.airticket.ticketCencel.TicketCancelActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".activity.eticket.airticket.reIssueTicket.ReIssueTicketActivity"
+            android:name=".activity.eticket.airticket.reIssueTicket.UpdateDocOrInfomationRequestActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>

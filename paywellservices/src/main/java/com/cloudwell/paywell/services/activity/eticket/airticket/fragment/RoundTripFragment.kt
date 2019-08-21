@@ -43,10 +43,6 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
 
 
     lateinit var tvClass: TextView
-    lateinit var tvAdult: TextView
-    lateinit var tvKid: TextView
-    lateinit var tvInfant: TextView
-    lateinit var llPassenger: LinearLayout
 
     private val REQ_CODE_FROM = 1
     private val REQ_CODE_TO = 3
@@ -62,11 +58,6 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
     private var mAppHandler: AppHandler? = null
 
     companion object {
-        val KEY_REQUEST_KEY = "KEY_REQUEST_KEY"
-        val KEY_REQUEST_FOR_FROM = 1
-        val KEY_FROM = "From"
-        val KEY_To = "To"
-        val KEY_AIRPORT = "Airport"
         val KEY_DEAPRT = "Deaprt"
         val KEY_RETURN = "Return"
     }
@@ -77,9 +68,9 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
     override fun onDataSelected(firstDate: Calendar?, secondDate: Calendar?, hours: Int, minutes: Int) {
         if (firstDate != null && secondDate != null) {
 
-            val nameOfDayOfWeekFirst = SimpleDateFormat("EEE").format(firstDate.time)
-            val nameOfMonthFirst = SimpleDateFormat("MMM").format(firstDate.time)
-            val dayFirst = SimpleDateFormat("dd").format(firstDate.time)
+            val nameOfDayOfWeekFirst = SimpleDateFormat("EEE", Locale.ENGLISH).format(firstDate.time)
+            val nameOfMonthFirst = SimpleDateFormat("MMM", Locale.ENGLISH).format(firstDate.time)
+            val dayFirst = SimpleDateFormat("dd", Locale.ENGLISH).format(firstDate.time)
 
             tvDepartDate.text = "$nameOfDayOfWeekFirst, $dayFirst $nameOfMonthFirst"
             tvDepartDate.setTextColor(Color.BLACK);
@@ -90,9 +81,9 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
             AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_FIRST_ROUND, humanReadAbleDateFirst)
 
 
-            val nameOfDayOfWeekSecound = SimpleDateFormat("EEE").format(secondDate.time)
-            val nameOfMonthSecound = SimpleDateFormat("MMM").format(secondDate.time)
-            val daySecound = SimpleDateFormat("dd").format(secondDate.time)
+            val nameOfDayOfWeekSecound = SimpleDateFormat("EEE", Locale.ENGLISH).format(secondDate.time)
+            val nameOfMonthSecound = SimpleDateFormat("MMM", Locale.ENGLISH).format(secondDate.time)
+            val daySecound = SimpleDateFormat("dd", Locale.ENGLISH).format(secondDate.time)
 
             tvDepartDate2.text = "$nameOfDayOfWeekSecound, $daySecound $nameOfMonthSecound"
             tvDepartDate2.setTextColor(Color.BLACK);
@@ -154,17 +145,6 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
 
             R.id.layoutDepart -> {
 
-//                val myDate = Date()
-//
-//                val callback = com.cloudwell.paywell.services.customView.multipDatePicker.SlyCalendarDialog()
-//                        .setSingle(false)
-//                        .setCallback(this)
-//                        .setEndDate(myDate)
-//                        .setStartDate(myDate)
-//
-//
-//                callback.show(activity?.supportFragmentManager, "TAG_SLYCALENDAR")
-
 
             }
 
@@ -183,6 +163,25 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
         val year = calendar.get(Calendar.YEAR)
         val thismonth = calendar.get(Calendar.MONTH)
         val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+
+        if (s.equals(KEY_DEAPRT)) {
+            if (!tvDepartDate.text.equals(getString(R.string.date))) {
+                val crachDepartureDate = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_FIRST_ROUND) as String?
+
+                val date = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(crachDepartureDate) as Date
+                calendar.time = date
+
+            }
+        } else {
+            if (!tvDepartDate2.text.equals(getString(R.string.date))) {
+                val crachDepartureDate = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_SECOUND_ROUND) as String?
+
+                val date = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(crachDepartureDate) as Date
+                calendar.time = date
+
+            }
+
+        }
 
 
         val datePickerDialog = DatePickerDialog(context,
@@ -219,9 +218,9 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
                         calendar1.set(Calendar.DAY_OF_MONTH, day)
                         val date = calendar1.getTime()
 
-                        val nameOfDayOfWeekSecound = SimpleDateFormat("EEE").format(calendar1.time)
-                        val nameOfMonthSecound = SimpleDateFormat("MMM").format(calendar1.time)
-                        val daySecound = SimpleDateFormat("dd").format(calendar1.time)
+                        val nameOfDayOfWeekSecound = SimpleDateFormat("EEE", Locale.ENGLISH).format(calendar1.time)
+                        val nameOfMonthSecound = SimpleDateFormat("MMM", Locale.ENGLISH).format(calendar1.time)
+                        val daySecound = SimpleDateFormat("dd", Locale.ENGLISH).format(calendar1.time)
 
 
                         val human = "$nameOfDayOfWeekSecound, $daySecound $nameOfMonthSecound"
@@ -237,9 +236,9 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
 
                 }, year, thismonth, dayOfMonth)
 
-        datePickerDialog.datePicker.minDate = calendar.timeInMillis
-
-
+        val calendarMin = Calendar.getInstance()
+        datePickerDialog.datePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
+        datePickerDialog.datePicker.minDate = calendarMin.timeInMillis
         datePickerDialog.show()
 
     }
@@ -247,7 +246,7 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_round_trip, container, false)
+        val view = inflater.inflate(R.layout.fragment_round_trip, container, false)
 
         inilitzationView(view)
 
@@ -257,16 +256,16 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
 
     private fun inilitzationView(view: View) {
 
-        frameLayout = view.findViewById(com.cloudwell.paywell.services.R.id.myView)
-        val tvDepart = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.tvDepart2)
-        val tvDepartDate = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.tvDepartDate)
-        val airTicketClass = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.airTicketClass)
-        val llPassenger = view.findViewById<LinearLayout>(com.cloudwell.paywell.services.R.id.llPassenger)
+        frameLayout = view.findViewById(R.id.myView)
+        val tvDepart = view.findViewById<TextView>(R.id.tvDepart2)
+        val tvDepartDate = view.findViewById<TextView>(R.id.tvDepartDate)
+        val airTicketClass = view.findViewById<TextView>(R.id.airTicketClass)
+        val llPassenger = view.findViewById<LinearLayout>(R.id.llPassenger)
         val btnSearch = view.findViewById<FancyButton>(R.id.btn_search)
         val tvFrom = view.findViewById<LinearLayout>(R.id.tvFrom)
         val layoutTo = view.findViewById<LinearLayout>(R.id.layoutTo)
         val layoutDepart = view.findViewById<LinearLayout>(R.id.layoutDepart)
-        val tvClass = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.airTicketClass)
+        val tvClass = view.findViewById<TextView>(R.id.airTicketClass)
 
         layoutDepart.setOnClickListener(this)
         view.tvDeaprt.setOnClickListener(this)
@@ -291,35 +290,35 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
         view.btn_search.setOnClickListener(this)
 
 
-        airTicketInfant = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.airTicketInfant)
-        airTicketAdult = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.airTicketAdult)
-        airTicketKid = view.findViewById<TextView>(com.cloudwell.paywell.services.R.id.airTicketKid)
+        airTicketInfant = view.findViewById<TextView>(R.id.airTicketInfant)
+        airTicketAdult = view.findViewById<TextView>(R.id.airTicketAdult)
+        airTicketKid = view.findViewById<TextView>(R.id.airTicketKid)
 
-        val tsFrom = view.findViewById<TextSwitcher>(com.cloudwell.paywell.services.R.id.tsRoundTripFrom)
-        val tsFromPort = view.findViewById<TextSwitcher>(com.cloudwell.paywell.services.R.id.tsRoundTripFromPort)
-        val tsTo = view.findViewById<TextSwitcher>(com.cloudwell.paywell.services.R.id.tsRoundTripTo)
-        val tsToPort = view.findViewById<TextSwitcher>(com.cloudwell.paywell.services.R.id.tsRoundTripToPort)
-        val ivSwitchTrip = view.findViewById<ImageView>(com.cloudwell.paywell.services.R.id.ivRoundTripTextSwitcher)
+        val tsFrom = view.findViewById<TextSwitcher>(R.id.tsRoundTripFrom)
+        val tsFromPort = view.findViewById<TextSwitcher>(R.id.tsRoundTripFromPort)
+        val tsTo = view.findViewById<TextSwitcher>(R.id.tsRoundTripTo)
+        val tsToPort = view.findViewById<TextSwitcher>(R.id.tsRoundTripToPort)
+        val ivSwitchTrip = view.findViewById<ImageView>(R.id.ivRoundTripTextSwitcher)
 
         tsFrom.removeAllViews()
         tsFrom.setFactory {
             TextView(android.view.ContextThemeWrapper(context,
-                    com.cloudwell.paywell.services.R.style.TicketFrom), null, 0)
+                    R.style.TicketFrom), null, 0)
         }
         tsFromPort.removeAllViews()
         tsFromPort.setFactory {
             TextView(android.view.ContextThemeWrapper(context,
-                    com.cloudwell.paywell.services.R.style.TicketFromPort), null, 0)
+                    R.style.TicketFromPort), null, 0)
         }
         tsTo.removeAllViews()
         tsTo.setFactory {
             TextView(android.view.ContextThemeWrapper(context,
-                    com.cloudwell.paywell.services.R.style.TicketTo), null, 0)
+                    R.style.TicketTo), null, 0)
         }
         tsToPort.removeAllViews()
         tsToPort.setFactory {
             TextView(android.view.ContextThemeWrapper(context,
-                    com.cloudwell.paywell.services.R.style.TicketToPort), null, 0)
+                    R.style.TicketToPort), null, 0)
         }
         val inAnim = AnimationUtils.loadAnimation(context,
                 android.R.anim.fade_in)
@@ -433,7 +432,7 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
         AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.TO_CACHE, fromAirTricket)
 
 
-        val crachDepartureDate = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_SECOUND_ROUND) as String?
+        val crachDepartureDate = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_FIRST_ROUND) as String?
         if (crachDepartureDate != null) {
             view.tvDepartDate.text = "" + crachDepartureDate
             view.tvDepartDate.setTextColor(Color.BLACK)
@@ -444,14 +443,16 @@ class RoundTripFragment : Fragment(), View.OnClickListener, SlyCalendarDialog.Ca
             view.tvDepartDate.text = "" + firstDate
             view.tvDepartDate.setTextColor(Color.BLACK)
 
+        }
+
+        val crachDepartureDateSecound = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_SECOUND_ROUND) as String?
+        if (crachDepartureDateSecound != null) {
             val secoundDate = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_SECOUND_ROUND_hyuman) as String
             val secoundDateAPI = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_SECOUND_ROUND) as String
             humanReadAbleDateSecond = secoundDateAPI
             view.tvDepartDate2.text = "" + secoundDate
             view.tvDepartDate2.setTextColor(Color.BLACK)
-
         }
-
 
         val classModel = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.CLASS_TYPE) as ClassModel?
         if (classModel == null) {

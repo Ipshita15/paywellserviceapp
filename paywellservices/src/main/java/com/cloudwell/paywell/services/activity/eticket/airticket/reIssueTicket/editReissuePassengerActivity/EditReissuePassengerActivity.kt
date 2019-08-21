@@ -20,7 +20,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.fr
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.fragment.PassengerTypeSheetDialog
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.model.MyCountry
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.view.PassgerAddViewStatus
-import com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.ReIssueTicketActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.UpdateDocOrInfomationRequestActivity
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.constant.AllConstant.emailPattern
 import com.cloudwell.paywell.services.libaray.imagePickerAndCrop.ImagePickerActivity
@@ -79,9 +79,9 @@ class EditReissuePassengerActivity : AirTricketBaseActivity() {
         setToolbar(getString(R.string.title_edit_passenger))
 
         id = intent.extras.getInt("id", 0)
-        val get = ReIssueTicketActivity.passengers.get(id)
+        val get = UpdateDocOrInfomationRequestActivity.passengers.get(id)
 
-        if (ReIssueTicketActivity.item.trip_type.equals("Local")) {
+        if (UpdateDocOrInfomationRequestActivity.item.trip_type.equals("Local")) {
             passportMadatory = false
         } else {
             passportMadatory = true
@@ -265,6 +265,14 @@ class EditReissuePassengerActivity : AirTricketBaseActivity() {
 
         ivPassportPageUpload.visibility = View.GONE
         ivVisaPageUpload.visibility = View.GONE
+
+
+        // disable field
+        etPassengerType.isEnabled = false
+        etTitle.isEnabled = false
+        etFirstName.isEnabled = false
+        etLastName.isEnabled = false
+        etGender.isEnabled = false
 
 
     }
@@ -525,7 +533,7 @@ class EditReissuePassengerActivity : AirTricketBaseActivity() {
         passenger.passportExpiryDate = passportExpiryDate
         passenger.passportNationality = passportNationalityCountry
 
-        ReIssueTicketActivity.passengers.set(id, passenger)
+        UpdateDocOrInfomationRequestActivity.passengers.set(id, passenger)
         finish()
 
     }
@@ -662,7 +670,7 @@ class EditReissuePassengerActivity : AirTricketBaseActivity() {
                     b.setMonth(b.getMonth() + 6);  //subtract 6 month from current date
 
                     if (a < b) {
-                        showDialogMesssage("Passport Expiry Date should have more than 6 months for passenger ");
+                        showDialogMessage("Passport Expiry Date should have more than 6 months for passenger ");
                     } else {
                         val mMonth = month + 1
                         val androidSystemdate = "${year}-${mMonth}-${day}"

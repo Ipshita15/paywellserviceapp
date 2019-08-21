@@ -163,6 +163,9 @@ class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
                     val mSearchId = mViewModelFlight.mSearchId.value
                     val resultID = get?.resultID
 
+                    val airlineCode = get?.segments?.get(0)?.airline?.airlineCode
+
+                    AppStorageBox.put(applicationContext, AppStorageBox.Key.AIRLINE_CODE, airlineCode)
 
                     AppStorageBox.put(applicationContext, AppStorageBox.Key.SERACH_ID, mSearchId)
                     AppStorageBox.put(applicationContext, AppStorageBox.Key.Request_ID, resultID)

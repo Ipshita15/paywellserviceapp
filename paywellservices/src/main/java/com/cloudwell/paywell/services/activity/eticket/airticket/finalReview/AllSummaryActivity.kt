@@ -327,7 +327,7 @@ class AllSummaryActivity : AirTricketBaseActivity() {
         }
 
         if (!status.noSerachFoundMessage.equals("")) {
-            showDialogMesssage(status.noSerachFoundMessage)
+            showDialogMessage(status.noSerachFoundMessage)
         }
 
 

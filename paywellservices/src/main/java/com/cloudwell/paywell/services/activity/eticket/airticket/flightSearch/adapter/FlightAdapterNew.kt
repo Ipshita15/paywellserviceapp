@@ -38,7 +38,7 @@ class FlightAdapterNew(val items: List<Result>, val requestAirSearch: RequestAir
         }
 
         val fares = model.fares
-        val totalPrice = CalculationHelper.getTotalFare(fares)
+        val totalPrice = CalculationHelper.getTotalFare(fares, model.segments.get(0).airline?.airlineCode)
         holder.tvPrices.text = totalPrice
 
 

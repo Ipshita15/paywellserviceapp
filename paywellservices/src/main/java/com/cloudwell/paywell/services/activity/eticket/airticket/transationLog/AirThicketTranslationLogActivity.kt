@@ -84,7 +84,7 @@ class AirThicketTranslationLogActivity : TransitionLogBaseActivity() {
             val sectionAdapter = SectionedRecyclerViewAdapter()
 
             groupBy.forEach {
-                val transitionRVSectionAdapter = TransitionRVSectionAdapter(it.key.toString(), it.value, isEnglish)
+                val transitionRVSectionAdapter = TransitionRVSectionAdapter(applicationContext, it.key.toString(), it.value, isEnglish)
                 transitionRVSectionAdapter.setOnActionButtonClick(object : TransitionRVSectionAdapter.ItemClickListener {
                     override fun onRootViewClick(datum: Datum) {
 
@@ -131,7 +131,7 @@ class AirThicketTranslationLogActivity : TransitionLogBaseActivity() {
         }
 
         if (it.modelPriceChange != null) {
-            showTricketPriceChangeDialog(it.modelPriceChange!!)
+            showTicketPriceChangeDialog(it.modelPriceChange!!)
         }
 
     }

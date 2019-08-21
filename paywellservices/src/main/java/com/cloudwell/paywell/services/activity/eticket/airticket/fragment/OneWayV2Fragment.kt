@@ -543,10 +543,10 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
         val calendar = Calendar.getInstance()
 
         if (!tvDepartDate.text.equals(getString(R.string.date))) {
-            val crachDepartureDate = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE) as String?
+            val crachDepartureDate = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_API_formate) as String?
 
-            val date = SimpleDateFormat("EEE, dd MMM", Locale.ENGLISH).parse(crachDepartureDate) as Date
-            calendar.setTime(date);
+            val date = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(crachDepartureDate) as Date
+            calendar.time = date
 
         }
 
@@ -588,38 +588,12 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
 
         val calendarMin = Calendar.getInstance()
         datePickerDialog.datePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
-
-
         datePickerDialog.datePicker.minDate = calendarMin.timeInMillis
-
-
-
-
         datePickerDialog.show()
 
 
     }
 
-    fun onClassTextChange(text: String) {
-        airTicketClass.setText(text)
-
-    }
-
-
-    private fun handleFromSearchClick() {
-
-        val args = Bundle()
-        args.putString("Name", "Naima")
-
-        dialogFragment = FullScreenDialogFragment.Builder(context as AirTicketMainActivity)
-                .setTitle("From")
-                .setOnConfirmListener(this)
-                .setOnDiscardListener(this)
-                .setContent(SourceFragment::class.java, args)
-                .build()
-
-        dialogFragment.show(fragmentManager, dialogTag)
-    }
 
     override fun onConfirm(result: Bundle?) {
     }

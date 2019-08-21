@@ -3,7 +3,6 @@ package com.cloudwell.paywell.services.activity.eticket.airticket.ticketCencel
 import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.cloudwell.paywell.services.R
@@ -17,14 +16,11 @@ import kotlinx.android.synthetic.main.activity_ticket_cencel.*
 import mehdi.sakout.fancybuttons.FancyButton
 
 
-class TricketCancelActivity : AirTricketBaseActivity() {
-    private var bookingCancelAdapter: ArrayAdapter<*>? = null
-    private val cancelReasonList = ArrayList<String>()
+class TicketCancelActivity : AirTricketBaseActivity() {
 
     private var bookingCancelReasonSPNR: Spinner? = null
     private var cancelBookingBtn: FancyButton? = null
     private var cd: ConnectionDetector? = null
-    private var PIN_NO = "unknown"
     private var cancelMainLayout: ConstraintLayout? = null
     var mAppHandler: AppHandler? = null
     private var bookingId = String()
@@ -56,13 +52,6 @@ class TricketCancelActivity : AirTricketBaseActivity() {
 
 
         cancelBookingBtn = findViewById(R.id.cancelBookingBtn)
-        cancelReasonList.add("Select your reason")
-        cancelReasonList.add("Have another work")
-        cancelReasonList.add("Travelling reason accomplished")
-        cancelReasonList.add("Have to travel another city")
-        cancelReasonList.add("Other")
-        bookingCancelAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, cancelReasonList)
-        bookingCancelReasonSPNR!!.adapter = bookingCancelAdapter
 
 
         bookingIdET.setText(model.bookingId)
@@ -70,14 +59,14 @@ class TricketCancelActivity : AirTricketBaseActivity() {
 
         cancelBookingBtn!!.setText(title)
         cancelBookingBtn!!.setOnClickListener {
-            if (!bookingIdET!!.text.toString().isEmpty() && bookingCancelReasonSPNR!!.selectedItem.toString() != "Select your reason") {
+            if (!bookingIdET!!.text.toString().isEmpty() && !etReasons.text.toString().trim().equals("")) {
 
                 val mAppHandler = AppHandler.getmInstance(applicationContext)
                 val userName = mAppHandler.getImeiNo()
 
-                val reason = bookingCancelReasonSPNR!!.selectedItem.toString()
+                val reason = etReasons.text.toString().trim()
 
-                callCancelMapping(userName, bookingIdET.getText().toString(), reason, AirTricketBaseActivity.KEY_ticket_cancel, Datum())
+                callCancelMapping(userName, bookingIdET.getText().toString(), reason, title, Datum())
 
 
             } else {

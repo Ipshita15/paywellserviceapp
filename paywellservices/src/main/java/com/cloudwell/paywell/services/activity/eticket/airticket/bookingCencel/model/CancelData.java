@@ -6,8 +6,8 @@ public class CancelData {
 
     @SerializedName("ReIssue")
     private String mReIssue;
-    @SerializedName("ReSchedule")
-    private String mReSchedule;
+    @SerializedName("InfoUpdate")
+    private String InfoUpdate;
     @SerializedName("Refund")
     private String mRefund;
     @SerializedName("Void")
@@ -17,16 +17,9 @@ public class CancelData {
         return mReIssue;
     }
 
-    public void setReIssue(String reIssue) {
-        mReIssue = reIssue;
-    }
 
-    public String getReSchedule() {
-        return mReSchedule;
-    }
-
-    public void setReSchedule(String reSchedule) {
-        mReSchedule = reSchedule;
+    public String getInfoUpdate() {
+        return InfoUpdate;
     }
 
     public String getRefund() {

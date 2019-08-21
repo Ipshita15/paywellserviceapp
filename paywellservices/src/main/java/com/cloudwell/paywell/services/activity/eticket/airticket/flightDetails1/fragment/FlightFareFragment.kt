@@ -39,15 +39,18 @@ class FlightFareFragment : Fragment() {
 
         val temp = mutableListOf<Fare>()
 
+        val AIRLINE_CODE = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.AIRLINE_CODE) as String
+
+
         for (f in fare) {
-            val calculatorFare = CalculationHelper.getFare(f)
+            val calculatorFare = CalculationHelper.getFare(f, AIRLINE_CODE)
             temp.add(calculatorFare)
         }
 
 
         fare = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.FARE_DATA) as MutableList<Fare>
 
-        val total = CalculationHelper.getTotalFareDetati(fare)
+        val total = CalculationHelper.getTotalFareDetati(fare, AIRLINE_CODE)
         val fare1 = Fare()
         fare1.amount = total
         temp.add(fare1)

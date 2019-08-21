@@ -586,12 +586,12 @@ class AddPassengerActivity : AirTricketBaseActivity() {
             }
 
             if (passportImagePath.equals("")) {
-                showDialogMesssage(getString(R.string.passport_image_mandatory))
+                showDialogMessage(getString(R.string.passport_image_mandatory))
                 return
             }
 
             if (visaImagePath.equals("")) {
-                showDialogMesssage(getString(R.string.visa_image_mandatory))
+                showDialogMessage(getString(R.string.visa_image_mandatory))
                 return
             }
 
@@ -785,7 +785,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
                     b.setMonth(b.getMonth() + 6);  //subtract 6 month from current date
 
                     if (a < b) {
-                        showDialogMesssage("Passport Expiry Date should have more than 6 months for passenger ");
+                        showDialogMessage("Passport Expiry Date should have more than 6 months for passenger ");
                     } else {
                         val mMonth = month + 1
                         val androidSystemdate = "${year}-${mMonth}-${day}"
