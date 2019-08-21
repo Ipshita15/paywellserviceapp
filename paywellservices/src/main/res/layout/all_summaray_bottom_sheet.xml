@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/allSummaryBottonSheet"
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:background="#189d49"
-    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     >
 
     <ImageView
@@ -58,4 +58,4 @@
         app:layout_constraintEnd_toStartOf="@+id/tvConfirm"
         app:layout_constraintTop_toTopOf="@+id/tvConfirm"
         app:srcCompat="@drawable/ic_comfirm_all_summary"/>
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

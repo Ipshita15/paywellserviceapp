@@ -1,6 +1,6 @@
 package com.cloudwell.paywell.services.activity.product.ekShop.report.ui.report
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import com.cloudwell.paywell.services.activity.product.ekShop.model.Data
 
 

@@ -1,7 +1,7 @@
 package com.cloudwell.paywell.services.activity.product.ekShop.report
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.cloudwell.paywell.services.activity.product.ekShop.report.ui.report.AKShopRepo
 import com.cloudwell.paywell.services.activity.product.ekShop.report.ui.report.ReportViewModel
 

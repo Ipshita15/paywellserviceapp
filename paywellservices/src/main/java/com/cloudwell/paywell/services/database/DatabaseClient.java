@@ -1,10 +1,11 @@
 package com.cloudwell.paywell.services.database;
 
-import android.arch.persistence.db.SupportSQLiteDatabase;
-import android.arch.persistence.room.Room;
-import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 import android.util.Log;
+
+import androidx.room.Room;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 2/1/19.
@@ -40,6 +41,7 @@ public class DatabaseClient {
     public AppDatabase getAppDatabase() {
         return appDatabase;
     }
+
     private DatabaseClient(Context mCtx) {
         //creating the app database with Room database builder
         //MyToDos is the name of the database

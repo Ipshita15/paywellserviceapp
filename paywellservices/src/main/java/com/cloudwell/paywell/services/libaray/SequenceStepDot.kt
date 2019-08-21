@@ -9,10 +9,10 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.GradientDrawable.OVAL
 import android.graphics.drawable.StateListDrawable
-import android.support.annotation.ColorInt
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
+import androidx.annotation.ColorInt
 import com.cloudwell.paywell.services.R
 import kotlinx.android.synthetic.main.sequence_dot.view.*
 

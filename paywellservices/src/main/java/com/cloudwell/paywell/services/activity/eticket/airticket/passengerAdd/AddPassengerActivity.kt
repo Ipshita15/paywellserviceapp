@@ -3,19 +3,18 @@ package com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd
 import android.Manifest
 import android.app.Activity
 import android.app.DatePickerDialog
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.support.annotation.Nullable
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.view.WindowManager
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
@@ -101,7 +100,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
     private fun initViewModel() {
         viewMode = ViewModelProviders.of(this).get(AddPassengerViewModel::class.java)
 
-        viewMode.baseViewStatus.observe(this, android.arch.lifecycle.Observer {
+        viewMode.baseViewStatus.observe(this, androidx.lifecycle.Observer {
             handleViewCommonStatus(it)
         })
 
@@ -739,11 +738,10 @@ class AddPassengerActivity : AirTricketBaseActivity() {
     }
 
 
-    @Override
-    override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_IMAGE) {
             if (resultCode == Activity.RESULT_OK) {
-                val uri: Uri = data.getParcelableExtra("path");
+                val uri: Uri = data!!.getParcelableExtra("path");
                 try {
                     // You can update this bitmap to your server
                     var bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);

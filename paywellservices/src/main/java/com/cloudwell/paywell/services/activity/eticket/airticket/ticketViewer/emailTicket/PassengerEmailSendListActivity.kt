@@ -1,10 +1,10 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.emailTicket
 
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
@@ -95,11 +95,11 @@ class PassengerEmailSendListActivity : AirTricketBaseActivity(), View.OnClickLis
     private fun initViewModel() {
         viewMode = ViewModelProviders.of(this).get(EmailListViewModel::class.java)
 
-        viewMode.baseViewStatus.observe(this, android.arch.lifecycle.Observer {
+        viewMode.baseViewStatus.observe(this, androidx.lifecycle.Observer {
             handleViewCommonStatus(it)
         })
 
-        viewMode.mViewStatus.observe(this, android.arch.lifecycle.Observer {
+        viewMode.mViewStatus.observe(this, androidx.lifecycle.Observer {
             handleViewStatus(it)
         })
 
@@ -126,7 +126,7 @@ class PassengerEmailSendListActivity : AirTricketBaseActivity(), View.OnClickLis
     }
 
     private fun showMsg(msg: String) {
-        val builder = android.support.v7.app.AlertDialog.Builder(this)
+        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
         builder.setTitle(R.string.message)
         builder.setMessage(msg)
         builder.setPositiveButton(R.string.okay_btn) { dialogInterface, id -> finish() }

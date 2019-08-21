@@ -65,7 +65,7 @@
     </LinearLayout>
 
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout8"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -131,5 +131,5 @@
             app:layout_constraintTop_toTopOf="@+id/vFlightBackgroud"
             tools:text="Biman Bangladesh airlines"/>
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </merge>

@@ -1,10 +1,10 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1
 
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import androidx.lifecycle.ViewModelProviders
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
@@ -49,16 +49,16 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
     private fun initViewModel() {
         mFlightDetails1ViewModel = ViewModelProviders.of(this).get(FlightDetails1ViewModel::class.java)
 
-        mFlightDetails1ViewModel.baseViewStatus.observe(this, android.arch.lifecycle.Observer {
+        mFlightDetails1ViewModel.baseViewStatus.observe(this, androidx.lifecycle.Observer {
             handleViewCommonStatus(it)
         })
 
-        mFlightDetails1ViewModel.mViewStatus.observe(this, android.arch.lifecycle.Observer {
+        mFlightDetails1ViewModel.mViewStatus.observe(this, androidx.lifecycle.Observer {
             handleViewStatus(it)
         })
 
 
-        mFlightDetails1ViewModel.mListMutableLiveDataResults.observe(this, android.arch.lifecycle.Observer {
+        mFlightDetails1ViewModel.mListMutableLiveDataResults.observe(this, androidx.lifecycle.Observer {
 
 
             it?.let { it1 -> displayData(it1) }

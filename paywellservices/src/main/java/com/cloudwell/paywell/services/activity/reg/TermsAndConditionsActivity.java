@@ -2,14 +2,14 @@ package com.cloudwell.paywell.services.activity.reg;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.webkit.WebView;
 
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.app.AppController;
 
 import java.io.InputStream;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class TermsAndConditionsActivity extends AppCompatActivity {
 

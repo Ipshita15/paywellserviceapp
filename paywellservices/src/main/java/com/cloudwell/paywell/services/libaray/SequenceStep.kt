@@ -3,13 +3,13 @@ package com.cloudwell.paywell.services.libaray
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
-import android.support.annotation.StringRes
-import android.support.annotation.StyleRes
-import android.support.v4.widget.TextViewCompat
 import android.util.AttributeSet
 import android.view.View
 import android.widget.TableRow
 import android.widget.TextView
+import androidx.annotation.StringRes
+import androidx.annotation.StyleRes
+import androidx.core.widget.TextViewCompat
 import com.cloudwell.paywell.services.R
 import kotlinx.android.synthetic.main.sequence_step.view.*
 
