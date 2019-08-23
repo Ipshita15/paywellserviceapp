@@ -6,19 +6,23 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.*
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.CardView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
+import android.widget.ImageView
+import android.widget.Toast
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.MainActivity
 import com.cloudwell.paywell.services.activity.base.newBase.MVVMBaseActivity
+import com.cloudwell.paywell.services.activity.notification.SwipeController
+import com.cloudwell.paywell.services.activity.notification.SwipeController.SwipeControllerActions
 import com.cloudwell.paywell.services.activity.notification.allNotificaiton.view.NotificationViewStatus
 import com.cloudwell.paywell.services.activity.notification.allNotificaiton.viewModel.NotificationNotifcationViewModel
 import com.cloudwell.paywell.services.activity.notification.model.NotificationDetailMessage
@@ -29,9 +33,12 @@ import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.utils.AppHelper.startNotificationSyncService
 import kotlinx.android.synthetic.main.activity_notification_view.*
 import kotlinx.android.synthetic.main.dialog_notification.view.*
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.coroutines.coroutineContext
 
 
-class NotificationAllActivity : MVVMBaseActivity() {
+class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
     private var listView: RecyclerView? = null
     private var mAppHandler: AppHandler? = null
     private var mLinearLayout: ConstraintLayout? = null
@@ -40,7 +47,7 @@ class NotificationAllActivity : MVVMBaseActivity() {
     lateinit var adapter: SimpleAdapter
     private var isNotificationFlow: Boolean = false
 
-    private lateinit var viewModel: NotificationNotifcationViewModel
+    lateinit var viewModel: NotificationNotifcationViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,17 +116,30 @@ class NotificationAllActivity : MVVMBaseActivity() {
     }
 
     private fun setupAdapter(t: List<NotificationDetailMessage>) {
-        adapter = SimpleAdapter(t)
-        listView!!.adapter = adapter
-        val swipeHandler = object : SwipeToDeleteCallback(this) {
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val adapter = listView!!.adapter as SimpleAdapter
-                adapter.removeItem(viewHolder.adapterPosition)
+        val swipeController = object : SwipeController(this) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
+                super.onSwiped(viewHolder, direction)
             }
         }
-        val itemTouchHelper = ItemTouchHelper(swipeHandler)
-        itemTouchHelper.attachToRecyclerView(listView)
+        adapter = SimpleAdapter(t,this,swipeController,listView!!)
+        listView!!.adapter = adapter
+//        val swipeHandler = object : SwipeToDeleteCallback(this) {
+//            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+//                val adapter = listView!!.adapter as SimpleAdapter
+//                adapter.removeItem(viewHolder.adapterPosition)
+//            }
+//        }
 
+
+
+
+        val itemTouchHelper = ItemTouchHelper(swipeController)
+        itemTouchHelper.attachToRecyclerView(listView)
+        listView!!.addItemDecoration(object : RecyclerView.ItemDecoration() {
+            override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State?) {
+                swipeController.onDraw(c)
+            }
+        })
     }
 
     private fun startNotificationFullViewActivity() {
@@ -139,7 +159,7 @@ class NotificationAllActivity : MVVMBaseActivity() {
 
         isNotificationFlow = intent.getBooleanExtra(IS_NOTIFICATION_SHOWN, false)
         listView = findViewById(com.cloudwell.paywell.services.R.id.listViewNotification)
-        listView!!.layoutManager = LinearLayoutManager(this)
+        listView!!.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
         mLinearLayout = findViewById(com.cloudwell.paywell.services.R.id.linearLayout)
         mAppHandler = AppHandler.getmInstance(applicationContext)
 
@@ -235,14 +255,45 @@ class NotificationAllActivity : MVVMBaseActivity() {
         }
     }
 
-    class SimpleAdapter(private val t: List<NotificationDetailMessage>) : RecyclerView.Adapter<SimpleAdapter.VH>() {
+    class SimpleAdapter(private val t: List<NotificationDetailMessage>, context: Context,swipeController: SwipeController,recyclerView: RecyclerView) : RecyclerView.Adapter<SimpleAdapter.ViewHolder>() {
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-            return VH(parent)
+        var swipeController: SwipeController=swipeController
+        var recyclerView: RecyclerView=recyclerView
+        public var counter=0
+        var context: Context=context
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.dialog_notification, parent, false)
+            return ViewHolder(view)
         }
 
-        override fun onBindViewHolder(holder: VH, position: Int) {
-            holder.bind(t[position])
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            if (counter>=3){
+                counter=0
+            }
+            holder.title.text = t.get(position).messageSub
+            holder.message.text = t.get(position).message
+            holder.date.text=t.get(position).addedDatetime
+            holder.notificationRandomImage.setImageResource(getImageDrawable(counter))
+//            holder.notificationCardView.setOnClickListener{view->
+//                Toast.makeText(context,"Test text",Toast.LENGTH_SHORT).show()
+//            }
+            counter++
+            holder.itemView.setOnTouchListener{ view,r ->
+                if (r.action==MotionEvent.ACTION_UP)
+                    (context as NotificationAllActivity).onRecyclerViewItemClick(position,"ADAPTER")
+                false
+            }
+
+
+
+        }
+        private fun getImageDrawable(counter: Int): Int {
+            when(counter) {
+                0 -> return R.drawable.notification_one
+                1 -> return R.drawable.notification_two
+                2 -> return R.drawable.notification_three
+                else -> return R.drawable.notification_one
+            }
         }
 
         override fun getItemCount(): Int = t.size
@@ -253,14 +304,43 @@ class NotificationAllActivity : MVVMBaseActivity() {
             notifyDataSetChanged()
         }
 
-        class VH(parent: ViewGroup) : RecyclerView.ViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.dialog_notification, parent, false)) {
-
-            fun bind(name: NotificationDetailMessage) = with(itemView) {
-                title.text = name.messageSub
-                message.text = name.message
-            }
-
+//        class VH(parent: ViewGroup) : RecyclerView.ViewHolder(
+//                LayoutInflater.from(parent.context).inflate(R.layout.dialog_notification, parent, false)) {
+//
+//            fun bind(name: NotificationDetailMessage,counter: Int) = with(itemView) {
+//                title.text = name.messageSub
+//                message.text = name.message
+//                date.text=name.addedDatetime
+//                notificationRandomImage.setImageResource(getImageDrawable(counter))
+//
+//                getCradView().setImageResource(R.mipmap.paywell_icon)
+//
+//            }
+//            fun getCradView():ImageView = with(itemView){
+//               return notificationRandomImage
+//            }
+//
+//        }
+        class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+            val title = view.title
+            val message = view.message
+            val date = view.date
+            val notificationRandomImage = view.notificationRandomImage
+            val notificationCardView = view.notificationCardView
         }
     }
+
+    override fun onLeftClicked(position: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onRightClicked(position: Int) {
+
+        adapter.removeItem(position)
+
+    }
+    override fun onRecyclerViewItemClick(position: Int, parent:String) {
+        Log.d("TEST_LOG","POSITION:"+position+"PARENT:"+parent)
+    }
+
 }
