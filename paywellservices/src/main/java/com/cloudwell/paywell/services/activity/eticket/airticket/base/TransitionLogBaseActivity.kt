@@ -80,7 +80,7 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
             override fun onTicketRefund(item: Datum) {
                 TicketCancelActivity.model = item
                 val intent = Intent(applicationContext, TicketCancelActivity::class.java)
-                intent.putExtra(TicketCancelActivity.KEY_TITLE, AllConstant.Action_REfund)
+                intent.putExtra(TicketCancelActivity.KEY_TITLE, AllConstant.Action_Refund)
                 startActivity(intent)
 
             }

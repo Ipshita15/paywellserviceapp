@@ -107,7 +107,7 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
                     val newIntent = UpdateDocOrInfomationRequestActivity.newIntent(applicationContext, item)
                     startActivity(newIntent)
 
-                } else if (typeOfRequest == AllConstant.Action_REfund) {
+                } else if (typeOfRequest == AllConstant.Action_Refund) {
                     askForPin(bookingId, reason, typeOfRequest)
                 } else if (typeOfRequest == AllConstant.Action_Void) {
                     askForPin(bookingId, reason, typeOfRequest)
@@ -152,7 +152,7 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
                     val userName = AppHandler.getmInstance(applicationContext).imeiNo
                     if (typeOfRequest == AllConstant.Action_Void) {
                         submitCancelTicketRequest(userName, PIN_NO, bookingId, cancelReason, "Void", "json")
-                    } else if (typeOfRequest == AllConstant.Action_REfund) {
+                    } else if (typeOfRequest == AllConstant.Action_Refund) {
                         submitCancelTicketRequest(userName, PIN_NO, bookingId, cancelReason, "Refund", "json")
                     } else if (typeOfRequest == AllConstant.Action_reIssueTicket) {
                         reIssueTicket(userName, PIN_NO, bookingId, cancelReason)
