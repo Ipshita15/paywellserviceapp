@@ -227,9 +227,9 @@ public interface APIService {
     Call<ResIssueTicket> callIssueTicketAPI(@Part("username") String username, @Part("password") String password, @Part("BookingID") String BookingID, @Part("IsAcceptedPriceChangeandIssueTicket") boolean ssAcceptedPriceChangeandIssueTicket);
 
 
-    @POST("PaywelltransactionHaltrip/reScheduleNotificationAccept")
+    @POST("PaywelltransactionHaltrip/reIssueNotificationAccept")
     @Multipart
-    Call<ResposeReScheduleNotificationAccept> reScheduleNotificationAccept(@Part("username") String username, @Part("id") int id, @Part("accept_status") int accept_status);
+    Call<ResposeReScheduleNotificationAccept> reIssueNotificationAccept(@Part("username") String username, @Part("id") int id, @Part("accept_status") int accept_status);
 
 
     @POST()

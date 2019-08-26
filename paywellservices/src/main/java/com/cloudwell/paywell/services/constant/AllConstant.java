@@ -20,18 +20,15 @@ public class AllConstant {
     public static final String IS_FLOW_FROM_FAVORITE_AIR = "IS_FLOW_FROM_FAVORITE_AIR";
 
     public static final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-    public static final String CancelInProcess = "CancelInProcess";
-    public static final String Expired = "Expired";
-    public static final String Cancelled = "Cancelled";
-    public static final String InProcess = "InProcess";
-    public static final String Pending = "Pending";
-    public static final String UnConfirmed = "UnConfirmed";
+
+    public static final String Booked = "Booked";
+    public static final String Ticketed = "Ticketed";
 
 
     public static final String Action_IsisThicket = "Action_IsisThicket";
     public static final String Action_reIssueTicket = "Ticket Re-issue";
     public static final String Action_Void = "Ticket Void";
-    public static final String Action_REfund = "Ticket Refund";
+    public static final String Action_Refund = "Ticket Refund";
     public static final String Action_DOCS_UPDATE = "Action_DOCS_UPDATE";
 
 

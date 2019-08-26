@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   xmlns:fancy="http://schemas.android.com/apk/res-auto"
-                                                   android:id="@+id/cancelMainLayout"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="match_parent"
-                                                   android:background="@drawable/cancel_bg">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cancelMainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/cancel_bg">
 
     <EditText
         android:id="@+id/bookingIdET"
@@ -21,7 +21,21 @@
         android:lines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etReasons"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Write your reasons"
+        android:inputType="textMultiLine"
+        android:maxHeight="200dp"
+        app:layout_constraintEnd_toEndOf="@+id/bookingIdET"
+        app:layout_constraintStart_toStartOf="@+id/bookingIdET"
+        app:layout_constraintTop_toBottomOf="@+id/bookingIdET" />
 
     <mehdi.sakout.fancybuttons.FancyButton
         android:id="@+id/cancelBookingBtn"
@@ -41,20 +55,6 @@
         fancy:fb_iconPosition="left"
         fancy:fb_radius="2dp"
         fancy:fb_text="Cancel Booking"
-        fancy:fb_textColor="#FFFFFF"/>
-
-    <EditText
-        android:id="@+id/etReasons"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="Write your reasons"
-        android:inputType="textMultiLine"
-        android:maxHeight="200dp"
-        app:layout_constraintEnd_toEndOf="@+id/bookingIdET"
-        app:layout_constraintStart_toStartOf="@+id/bookingIdET"
-        app:layout_constraintTop_toBottomOf="@+id/bookingIdET"/>
+        fancy:fb_textColor="#FFFFFF" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
