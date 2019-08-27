@@ -28,8 +28,8 @@ android {
         applicationId "com.cloudwell.paywell.services"
         minSdkVersion 16
         //for push notification its 20 otherwise it was 25
-        versionCode 44
-        versionName '10.18.1'
+        versionCode 45
+        versionName '10.18.2'
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
 
