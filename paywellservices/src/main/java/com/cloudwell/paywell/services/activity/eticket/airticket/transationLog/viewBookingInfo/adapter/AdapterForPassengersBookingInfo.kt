@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Passenger
 import com.cloudwell.paywell.services.utils.CountryUtility
+import kotlinx.android.synthetic.main.fragment_bus_ticket_confirm_successfull_fragment.view.*
 import kotlinx.android.synthetic.main.passenger_list_item_final.view.*
 
 /**
@@ -75,7 +76,7 @@ class AdapterForPassengersBookingInfo(var context: Context, var items: List<Pass
         val tvFirstName = view.tvFirstName
         val tvLastName = view.tvLastName
         val tvCountry = view.tvCountry
-        val tvGender = view.tvGender
+        val tvGender = view.tvBoardingPointName
         val tvDateOfBirth = view.tvDateOfBirth
         val tvContactNumber = view.tvContactNumber
         val tvEmailAddress = view.tvEmailAddress

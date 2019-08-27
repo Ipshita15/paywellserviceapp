@@ -10,7 +10,7 @@
     <dimen name="text_size_medium">18sp</dimen>
     <dimen name="text_size_button">15sp</dimen>
 
-    <!-- bluetooth api -->
+    <!-- bluetooth api -->app_bar_height
 
     <!-- Paywell topup dimension -->
     <!-- Default screen margins, per the Android Design guidelines. -->
@@ -47,4 +47,7 @@
     <dimen name="sequence_active_step_padding_bottom">16dp</dimen>
     <dimen name="sequence_anchor_min_width">48dp</dimen>
     <dimen name="sequence_anchor_max_width">120dp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>

@@ -9,7 +9,6 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.model.ResCancellationMapping
 import com.cloudwell.paywell.services.constant.AllConstant
 import kotlinx.android.synthetic.main.fragment_cancel_fee.view.*
-import kotlinx.android.synthetic.main.fragment_prices_change.view.btActionIssueTicket
 
 
 class UserAcceptDialogFragment : DialogFragment() {

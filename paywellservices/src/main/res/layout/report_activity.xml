@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:card_view="http://schemas.android.com/apk/res-auto"
-              android:id="@+id/utilityLinearLayout"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@drawable/layout_background"
-              android:descendantFocusability="beforeDescendants"
-              android:focusableInTouchMode="true"
-              android:orientation="vertical">
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/utilityLinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/layout_background"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/star_sign"
-                            android:textColor="#FF4719"/>
+                            android:textColor="#FF4719" />
 
                         <TextView
                             android:id="@+id/tvKarnaphuliPin"
@@ -59,7 +59,7 @@
                             android:paddingEnd="2dp"
                             android:paddingRight="2dp"
                             android:text="@string/start_date"
-                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
                     </LinearLayout>
 
                     <com.cloudwell.paywell.services.customView.clearableEditText.ClearableEditText
@@ -75,7 +75,7 @@
                         android:imeOptions="actionNext"
                         android:inputType="textCapCharacters"
 
-                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -89,7 +89,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/star_sign"
-                            android:textColor="#FF4719"/>
+                            android:textColor="#FF4719" />
 
                         <TextView
                             android:id="@+id/tvKarnaphuliBillNo"
@@ -100,7 +100,7 @@
                             android:paddingEnd="2dp"
                             android:paddingRight="2dp"
                             android:text="@string/end_date"
-                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
                     </LinearLayout>
 
                     <com.cloudwell.paywell.services.customView.clearableEditText.ClearableEditText
@@ -116,7 +116,7 @@
                         android:imeOptions="actionNext"
                         android:inputType="textCapCharacters"
                         android:maxLength="20"
-                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <TextView
                         android:id="@+id/textView8"
@@ -125,7 +125,7 @@
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:text="@string/or"
-                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -144,7 +144,7 @@
                             android:paddingEnd="2dp"
                             android:paddingRight="2dp"
                             android:text="@string/order_code"
-                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
                     </LinearLayout>
 
                     <EditText
@@ -158,7 +158,7 @@
                         android:layout_marginBottom="@dimen/activity_horizontal_margin"
                         android:hint="@string/optional"
                         android:imeOptions="actionDone"
-                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -176,7 +176,7 @@
                 android:shadowRadius="2"
                 android:text="@string/search_report"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorText"/>
+                android:textColor="@color/colorText" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

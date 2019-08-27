@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <Button
+        android:id="@+id/tvOk"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="200dp"
+        android:layout_marginBottom="32dp"
+        android:background="#00a89b"
+        android:drawablePadding="-20dp"
+        android:gravity="center"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:text="OK"
+        android:textAllCaps="false"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout17"/>
+
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:gravity="center"
+        android:textColor="#00a89b"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView18"
+        tools:text="Message"/>
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Message"
+        android:textColor="#00a89b"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMessage">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView36"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:padding="5dp"
+                android:text="Transaction ID"
+                android:textColor="@color/balck666666"
+                app:layout_constraintEnd_toStartOf="@+id/textView43"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/textView37"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Boarding Point"
+                android:textColor="@color/balck666666"
+                app:layout_constraintEnd_toStartOf="@+id/textView44"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView44"/>
+
+            <TextView
+                android:id="@+id/textView39"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Total Amount"
+                android:textColor="@color/balck666666"
+                app:layout_constraintEnd_toStartOf="@+id/textView45"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView45"/>
+
+            <TextView
+                android:id="@+id/textView40"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Ticket No."
+                android:textColor="@color/balck666666"
+                app:layout_constraintEnd_toStartOf="@+id/textView47"
+                app:layout_constraintHorizontal_bias="0.021"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView39"/>
+
+            <TextView
+                android:id="@+id/textView41"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Web Booking ID"
+                android:textColor="@color/balck666666"
+                app:layout_constraintEnd_toStartOf="@+id/textView49"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView49"/>
+
+            <TextView
+                android:id="@+id/textView42"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Booking ID"
+                android:textColor="@color/balck666666"
+                app:layout_constraintEnd_toStartOf="@+id/textView48"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView48"/>
+
+            <TextView
+                android:id="@+id/textView43"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="5dp"
+                android:text=":"
+                android:textColor="@color/balck666666"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/textView44"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text=":"
+                android:textColor="@color/balck666666"
+                app:layout_constraintEnd_toEndOf="@+id/textView43"
+                app:layout_constraintStart_toStartOf="@+id/textView43"
+                app:layout_constraintTop_toBottomOf="@+id/tvTranstionId"/>
+
+            <TextView
+                android:id="@+id/textView45"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text=":"
+                android:textColor="@color/balck666666"
+                app:layout_constraintEnd_toEndOf="@+id/textView44"
+                app:layout_constraintStart_toStartOf="@+id/textView44"
+                app:layout_constraintTop_toBottomOf="@+id/tvBoardingPointName"/>
+
+            <TextView
+                android:id="@+id/textView47"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text=":"
+                android:textColor="@color/balck666666"
+                app:layout_constraintEnd_toEndOf="@+id/textView45"
+                app:layout_constraintStart_toStartOf="@+id/textView45"
+                app:layout_constraintTop_toBottomOf="@+id/tvTotalAmount"/>
+
+            <TextView
+                android:id="@+id/textView48"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text=":"
+                android:textColor="@color/balck666666"
+                app:layout_constraintEnd_toEndOf="@+id/textView47"
+                app:layout_constraintHorizontal_bias="0.501"
+                app:layout_constraintStart_toStartOf="@+id/textView47"
+                app:layout_constraintTop_toBottomOf="@+id/tvTicketNoINfo"/>
+
+            <TextView
+                android:id="@+id/textView49"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text=":"
+                android:textColor="@color/balck666666"
+                app:layout_constraintEnd_toEndOf="@+id/textView48"
+                app:layout_constraintStart_toStartOf="@+id/textView48"
+                app:layout_constraintTop_toBottomOf="@+id/tvBookingId"/>
+
+            <TextView
+                android:id="@+id/tvTranstionId"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:hint=""
+                android:padding="5dp"
+                android:textColor="#268472"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/textView43"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="PRB20793893758973289475PRB20793893758973289475"/>
+
+            <TextView
+                android:id="@+id/tvBoardingPointName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:hint=""
+                android:padding="5dp"
+                android:textColor="#268472"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView44"
+                app:layout_constraintTop_toTopOf="@+id/textView44"
+                tools:text="ARAMBAGH-4 "/>
+
+            <TextView
+                android:id="@+id/tvTotalAmount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:hint=""
+                android:padding="5dp"
+                android:text="1270"
+                android:textColor="#268472"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView45"
+                app:layout_constraintTop_toTopOf="@+id/textView45"/>
+
+            <TextView
+                android:id="@+id/tvTicketNoINfo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:hint=""
+                android:padding="5dp"
+                android:textColor="#268472"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView47"
+                app:layout_constraintTop_toTopOf="@+id/textView47"
+                tools:text="G/1223232323"/>
+
+            <TextView
+                android:id="@+id/tvWebBookingId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:hint=""
+                android:padding="5dp"
+                android:textColor="#268472"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/textView49"
+                app:layout_constraintTop_toTopOf="@+id/textView49"
+                tools:text="497888347834"/>
+
+            <TextView
+                android:id="@+id/tvBookingId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:hint=""
+                android:padding="5dp"
+                android:textColor="#268472"
+                app:layout_constraintStart_toEndOf="@+id/textView48"
+                app:layout_constraintTop_toTopOf="@+id/textView48"
+                tools:text="73038490834983490"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/view16"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="#00a89b"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView18"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

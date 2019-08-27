@@ -34,10 +34,10 @@ class PriceChangeFragment : DialogFragment() {
         val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_prices_change, container, false)
 
         v.tvPrices.text = getString(R.string.old_ticket_prices) + " " + modelPriceChange.total_fare_calculated
-        v.tvFree.text = getString(R.string.new_ticket_prices) + " " + modelPriceChange.total_fare_calculated_new
+        v.tvYourSeats.text = getString(R.string.new_ticket_prices) + " " + modelPriceChange.total_fare_calculated_new
 
 
-        v.btActionIssueTicket.setOnClickListener {
+        v.btAction.setOnClickListener {
             dismiss()
             onClickHandler.onClickActionIssueTicket()
         }

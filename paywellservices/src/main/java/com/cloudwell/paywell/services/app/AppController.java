@@ -70,6 +70,11 @@ public class AppController extends Application {
 //                return;
 //            }
 //            refWatcher = LeakCanary.install(this);
+
+
+//            Stetho.initializeWithDefaults(this);
+//
+
         }
 
         configureCrashReporting();

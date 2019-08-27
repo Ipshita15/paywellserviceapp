@@ -25,10 +25,10 @@ class TicketStatusFragment : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_status_cencelation, container, false)
 
-        v.tvFree.text = message
+        v.tvYourSeats.text = message
 
 
-        v.btActionIssueTicket.setOnClickListener {
+        v.btAction.setOnClickListener {
             dismiss()
 
         }

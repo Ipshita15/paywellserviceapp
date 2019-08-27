@@ -28,8 +28,10 @@ class ShowMessageFragment() : DialogFragment() {
         val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_status_cencelation, container, false)
         isCancelable = false
 
-        v.tvFree.text = message
-        v.btActionIssueTicket.setOnClickListener {
+        v.tvYourSeats.text = message
+
+
+        v.btAction.setOnClickListener {
             dismiss()
             mListener?.onOkButtonClick()
 

@@ -30,7 +30,7 @@ class TicketActionMenuFragment : DialogFragment() {
 
         val m = model.message
         if (m.equals("Booked")) {
-            v.btActionIssueTicket.visibility = View.VISIBLE
+            v.btAction.visibility = View.VISIBLE
             v.btCencel.visibility = View.VISIBLE
 
             v.btActionDocsInfoUpdate.visibility = View.GONE
@@ -47,12 +47,12 @@ class TicketActionMenuFragment : DialogFragment() {
             v.btTicketVoid.visibility = View.VISIBLE
 
 
-            v.btActionIssueTicket.visibility = View.GONE
+            v.btAction.visibility = View.GONE
             v.btCencel.visibility = View.GONE
 
         }
 
-        v.btActionIssueTicket.setOnClickListener {
+        v.btAction.setOnClickListener {
             dismiss()
             onClickHandler.onIsisThicket()
         }

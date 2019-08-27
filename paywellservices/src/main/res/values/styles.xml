@@ -39,6 +39,22 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+
+    <style name="BanglaAppThemeBus" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/apona_lohit</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:actionMenuTextColor">@color/bus_action_menu_text_color</item>
+    </style>
+
+    <style name="EnglishAppThemeBus" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/oxygen_light</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:actionMenuTextColor">@color/bus_action_menu_text_color</item>
+
+    </style>
+
     <!-- For Lollipop only -->
 
     <!-- Search Activity theme. -->
@@ -138,6 +154,38 @@
     <style name="SlyCalendarTimeDialogTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/slycalendar_defHeaderColor</item>
         <item name="colorControlNormal">@color/slycalendar_defHeaderColor</item>
+    </style>
+
+    <style name="FullScreenDialogStyle" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="colorPrimaryDark">@color/bus_ticket_toolbar_title_text_color</item>
+        <item name="colorPrimary">@color/bus_ticket_status_color</item>
+
+        <!-- Set this to true if you want Full Screen without status bar -->
+        <item name="android:windowFullscreen">false</item>
+
+        <item name="android:windowIsFloating">false</item>
+
+        <!-- This is important! Don't forget to set window background -->
+        <item name="android:windowBackground">@color/white</item>
+
+        <!-- Additionally if you want animations when dialog opening -->
+
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
+    </style>
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/bus_button_color</item>
+    </style>
+
+    <style name="BusAppTheme" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorAccent">@color/bus_ticket_status_color</item>
+    </style>
+
+    <style name="BusEditInputLayout" parent="AppTheme">
+        <item name="colorAccent">#00a89b</item>
     </style>
 
 </resources>
