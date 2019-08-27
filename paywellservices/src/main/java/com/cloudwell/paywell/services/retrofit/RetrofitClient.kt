@@ -27,15 +27,17 @@ object RetrofitClient {
         if (retrofit == null) {
 
             val okHttpClient = OkHttpClient().newBuilder()
-                    .connectTimeout(100, TimeUnit.SECONDS)
-                    .readTimeout(100, TimeUnit.SECONDS)
-                    .writeTimeout(100, TimeUnit.SECONDS)
+                    .connectTimeout(60, TimeUnit.SECONDS)
+                    .readTimeout(60, TimeUnit.SECONDS)
+                    .writeTimeout(60, TimeUnit.SECONDS)
 
 
             if (BuildConfig.DEBUG) {
                 val logging = HttpLoggingInterceptor()
                 logging.setLevel(HttpLoggingInterceptor.Level.BODY)
                 okHttpClient.addInterceptor(logging)
+                okHttpClient.addNetworkInterceptor(StethoInterceptor())
+                okHttpClient.addInterceptor(OkHttpProfilerInterceptor())
 
             }
 
@@ -56,7 +58,7 @@ object RetrofitClient {
     fun getClientPHP(baseUrl: String): Retrofit? {
         if (retrofitPHP7 == null) {
             val httpClient = OkHttpClient.Builder()
-            httpClient.connectTimeout(100, TimeUnit.SECONDS).readTimeout(100, TimeUnit.SECONDS).writeTimeout(100, TimeUnit.SECONDS)
+            httpClient.connectTimeout(60, TimeUnit.SECONDS).readTimeout(60, TimeUnit.SECONDS).writeTimeout(60, TimeUnit.SECONDS)
 
             httpClient.addInterceptor(HeaderTokenInterceptor(AppController.getContext()))
 
