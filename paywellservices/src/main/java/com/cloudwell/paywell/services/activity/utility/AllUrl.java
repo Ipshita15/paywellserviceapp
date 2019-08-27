@@ -7,7 +7,7 @@ public class AllUrl {
 
     // host url
     private static final String HOST_URL = "https://api.paywellonline.com/";
-    public static final String HOST_URL_AUTHENTICATION = "http://pw7.paywellonline.com/paywellapi/index.php/PaywellAuthentication/getToken";
+    public static final String HOST_URL_AUTHENTICATION = "http://pw7.paywellonline.com/index.php/PaywellAuthentication/getToken";
 
     public static final String HOST_URL_PHP_7 = "http://pw7.paywellonline.com/";
 
