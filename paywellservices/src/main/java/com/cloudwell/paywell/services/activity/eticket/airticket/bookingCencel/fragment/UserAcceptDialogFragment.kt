@@ -50,7 +50,7 @@ class UserAcceptDialogFragment : DialogFragment() {
 
             v.tvFree.text = void
 
-        } else if (type.equals(AllConstant.Action_REfund)) {
+        } else if (type.equals(AllConstant.Action_Refund)) {
 
             v.tvFree.text = refund
 
