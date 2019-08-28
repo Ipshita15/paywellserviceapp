@@ -63,6 +63,8 @@ class BusTicketRepository() {
                     }
 
                     com.orhanobut.logger.Logger.v("" + body)
+                } else {
+                    data.value = null
                 }
             }
 
