@@ -31,7 +31,7 @@ public interface NotificationDab {
     long[] insert(List<NotificationDetailMessage> detailMessages);
 
     @Delete
-    void delete(NotificationDetailMessage task);
+    void delete(List<NotificationDetailMessage> task);
 
     @Update
     int update(NotificationDetailMessage task);

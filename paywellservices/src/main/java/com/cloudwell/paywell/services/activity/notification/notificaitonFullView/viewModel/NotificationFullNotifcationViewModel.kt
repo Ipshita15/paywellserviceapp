@@ -71,4 +71,6 @@ class NotificationFullNotifcationViewModel : BaseNotifcationViewModel() {
         return mNotificationRepository.callReScheduleNotificationAccept(id, accept_status)
 
     }
+
+
 }

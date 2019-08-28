@@ -183,6 +183,41 @@ class NotificationNotifcationViewModel : BaseNotifcationViewModel() {
         mNotificationRepository.saveNotificationDetailsData(json);
     }
 
+    fun deleteNotification(messageId: String): MutableLiveData<String> {
+        return mNotificationRepository.notificationDelete(messageId)
+    }
+
+    fun deleteNotificationFromLocal(notificationDetailMessage: List<NotificationDetailMessage>) {
+
+        if (notificationDetailMessage != null) {
+            doAsync {
+                mNotificationRepository.deleteNotificationForLocalDB(notificationDetailMessage)
+                uiThread {
+                    refreshNotificationUI()
+                }
+            }
+        }
+    }
+
+
+    fun refreshNotificationUI() {
+        mNotificationRepository.getLocalNotificationData()?.observeForever { detailMessages ->
+
+            val filletDataByCurrentTime = filletDataByCurrentTime(detailMessages);
+            mListMutableLiveData.setValue(filletDataByCurrentTime)
+            if (detailMessages?.size == 0) {
+                mViewStatus.value = NotificationViewStatus.SHOW_NO_NOTIFICAITON_FOUND
+            }
+
+//            if (detailMessages?.size == 0) {
+//                    baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
+//            } else {
+//                val filletDataByCurrentTime = filletDataByCurrentTime(detailMessages);
+//                mListMutableLiveData.setValue(filletDataByCurrentTime)
+//            }
+        }
+    }
+
 
 }
 

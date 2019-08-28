@@ -6,17 +6,17 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.*
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
 import android.support.v4.content.ContextCompat
-import android.support.v7.widget.CardView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.Log
-import android.view.*
-import android.widget.ImageView
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.MainActivity
@@ -31,17 +31,16 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.utils.AppHelper.startNotificationSyncService
+import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_notification_view.*
+import kotlinx.android.synthetic.main.activity_notification_view.view.*
 import kotlinx.android.synthetic.main.dialog_notification.view.*
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.coroutines.coroutineContext
 
 
 class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
     private var listView: RecyclerView? = null
     private var mAppHandler: AppHandler? = null
-    private var mLinearLayout: ConstraintLayout? = null
+    private var mLinearLayout: LinearLayout? = null
 
     private var position: Int = 0
     lateinit var adapter: SimpleAdapter
@@ -110,13 +109,12 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
     private fun subscribeDataStreams(viewModel: NotificationNotifcationViewModel) {
         viewModel.mListMutableLiveData.observe(this, Observer<List<NotificationDetailMessage>> { t ->
             this.setupAdapter(t!!)
-
         })
 
     }
 
     private fun setupAdapter(t: List<NotificationDetailMessage>) {
-        val swipeController = object : SwipeController(this) {
+        val swipeController = object : SwipeController(this, listView) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
                 super.onSwiped(viewHolder, direction)
             }
@@ -129,6 +127,7 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
 //                adapter.removeItem(viewHolder.adapterPosition)
 //            }
 //        }
+
 
 
 
@@ -148,11 +147,13 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
 
 
     private fun setupToolbarTitle() {
-        assert(supportActionBar != null)
-        if (supportActionBar != null) {
-            supportActionBar!!.setTitle(com.cloudwell.paywell.services.R.string.home_notification)
-            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
+        notification_toolbar.clear_all_ConstraintLayout.setOnClickListener {
+            deleteNotificationFromServer(viewModel.mListMutableLiveData.value!!)
         }
+        setSupportActionBar(notification_toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
     }
 
     fun initializer() {
@@ -184,6 +185,7 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
         }
         return super.onOptionsItemSelected(item)
     }
+
 
 
     companion object {
@@ -278,14 +280,11 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
 //                Toast.makeText(context,"Test text",Toast.LENGTH_SHORT).show()
 //            }
             counter++
-            holder.itemView.setOnTouchListener{ view,r ->
-                if (r.action==MotionEvent.ACTION_UP)
+            holder.itemView.setOnClickListener() {
+
                     (context as NotificationAllActivity).onRecyclerViewItemClick(position,"ADAPTER")
-                false
+
             }
-
-
-
         }
         private fun getImageDrawable(counter: Int): Int {
             when(counter) {
@@ -336,11 +335,41 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
 
     override fun onRightClicked(position: Int) {
 
-        adapter.removeItem(position)
+        var singleNotification = ArrayList<NotificationDetailMessage>()
+        singleNotification.add(viewModel.mListMutableLiveData.value!!.get(position))
 
+        deleteNotificationFromServer(singleNotification)
     }
     override fun onRecyclerViewItemClick(position: Int, parent:String) {
-        Log.d("TEST_LOG","POSITION:"+position+"PARENT:"+parent)
+        viewModel.onItemClick(position)
+
+    }
+
+    private fun deleteNotificationFromServer(messageIdList: List<NotificationDetailMessage>) {
+        showProgressDialog()
+        var messageIdListString = StringBuilder("")
+
+        for (x in 0 until messageIdList.size) {
+            messageIdListString.append(messageIdList.get(x).messageId)
+            if (!(x == messageIdList.size - 1)) {
+                messageIdListString.append(",")
+            }
+        }
+
+        viewModel.deleteNotification(messageIdListString.toString()).observeForever {
+            dismissProgressDialog()
+            if (it != null && !it.isEmpty()) {
+                val jsonObject = JsonParser().parse(it).asJsonObject
+                var status: String = jsonObject.getAsJsonPrimitive("status").asString
+                if (status == "200") {
+                    viewModel.deleteNotificationFromLocal(messageIdList)
+                    Toast.makeText(applicationContext, "Successfully deleted", Toast.LENGTH_SHORT).show()
+                    Log.d("TEST", "Successfully deleted/ " + messageIdListString.toString())
+                } else {
+                    Toast.makeText(applicationContext, "Can't be deleted at this moment!!!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
 }

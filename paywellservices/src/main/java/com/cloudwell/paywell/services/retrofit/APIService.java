@@ -112,6 +112,12 @@ public interface APIService {
                                                          @Field("message_id") String messageId,
                                                          @Field("format") String format);
 
+    @POST
+    @FormUrlEncoded
+    Call<String> deleteNotification(@Url String url,
+                                    @Field("username") String username,
+                                    @Field("message_id") String messageId);
+
 
     @Multipart
     @POST("PaywelltransactionHaltrip/airSearch")
