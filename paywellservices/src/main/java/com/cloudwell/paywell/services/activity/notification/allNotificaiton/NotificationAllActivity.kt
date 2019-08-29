@@ -8,6 +8,7 @@ import android.graphics.*
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
@@ -52,9 +53,10 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
         super.onCreate(savedInstanceState)
         setContentView(com.cloudwell.paywell.services.R.layout.activity_notification_view)
 
-        setupToolbarTitle()
         initializer()
         initViewModel()
+        setupToolbarTitle()
+
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_NOTIFICATION_PAPGE)
 
 
@@ -114,12 +116,8 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
     }
 
     private fun setupAdapter(t: List<NotificationDetailMessage>) {
-        val swipeController = object : SwipeController(this, listView) {
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
-                super.onSwiped(viewHolder, direction)
-            }
-        }
-        adapter = SimpleAdapter(t,this,swipeController,listView!!)
+
+        adapter = SimpleAdapter(t, this, listView!!)
         listView!!.adapter = adapter
 //        val swipeHandler = object : SwipeToDeleteCallback(this) {
 //            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -127,6 +125,11 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
 //                adapter.removeItem(viewHolder.adapterPosition)
 //            }
 //        }
+        val swipeController = object : SwipeController(this, listView) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
+                super.onSwiped(viewHolder, direction)
+            }
+        }
 
 
 
@@ -149,7 +152,11 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
     private fun setupToolbarTitle() {
 
         notification_toolbar.clear_all_ConstraintLayout.setOnClickListener {
-            deleteNotificationFromServer(viewModel.mListMutableLiveData.value!!)
+            if (viewModel.mListMutableLiveData.value != null && viewModel.mListMutableLiveData.value!!.size > 0) {
+                confirmDelete("Want to delete all notifications?")
+            } else {
+                Toast.makeText(applicationContext, "No notification available!!!", Toast.LENGTH_SHORT).show()
+            }
         }
         setSupportActionBar(notification_toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -257,9 +264,8 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
         }
     }
 
-    class SimpleAdapter(private val t: List<NotificationDetailMessage>, context: Context,swipeController: SwipeController,recyclerView: RecyclerView) : RecyclerView.Adapter<SimpleAdapter.ViewHolder>() {
+    class SimpleAdapter(private val t: List<NotificationDetailMessage>, context: Context, recyclerView: RecyclerView) : RecyclerView.Adapter<SimpleAdapter.ViewHolder>() {
 
-        var swipeController: SwipeController=swipeController
         var recyclerView: RecyclerView=recyclerView
         public var counter=0
         var context: Context=context
@@ -297,29 +303,10 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
 
         override fun getItemCount(): Int = t.size
 
-        fun removeItem(position: Int) {
-            var myList: MutableList<NotificationDetailMessage> = t as MutableList<NotificationDetailMessage>
-            myList.removeAt(position)
+        fun refreshList() {
             notifyDataSetChanged()
         }
 
-//        class VH(parent: ViewGroup) : RecyclerView.ViewHolder(
-//                LayoutInflater.from(parent.context).inflate(R.layout.dialog_notification, parent, false)) {
-//
-//            fun bind(name: NotificationDetailMessage,counter: Int) = with(itemView) {
-//                title.text = name.messageSub
-//                message.text = name.message
-//                date.text=name.addedDatetime
-//                notificationRandomImage.setImageResource(getImageDrawable(counter))
-//
-//                getCradView().setImageResource(R.mipmap.paywell_icon)
-//
-//            }
-//            fun getCradView():ImageView = with(itemView){
-//               return notificationRandomImage
-//            }
-//
-//        }
         class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val title = view.title
             val message = view.message
@@ -363,6 +350,7 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
                 var status: String = jsonObject.getAsJsonPrimitive("status").asString
                 if (status == "200") {
                     viewModel.deleteNotificationFromLocal(messageIdList)
+                    adapter.refreshList()
                     Toast.makeText(applicationContext, "Successfully deleted", Toast.LENGTH_SHORT).show()
                     Log.d("TEST", "Successfully deleted/ " + messageIdListString.toString())
                 } else {
@@ -370,6 +358,21 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
                 }
             }
         }
+    }
+
+    fun confirmDelete(message: String) {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage(message)
+                .setCancelable(true)
+                .setPositiveButton("Delete") { dialog, which ->
+                    deleteNotificationFromServer(viewModel.mListMutableLiveData.value!!)
+
+                }.setNegativeButton("Cancel") { dialogInterface, i ->
+                    dialogInterface.dismiss()
+                }
+        var alertDialog: AlertDialog = builder.create()
+        alertDialog.show()
+
     }
 
 }

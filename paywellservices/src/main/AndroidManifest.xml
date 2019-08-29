@@ -394,7 +394,7 @@
         <activity
             android:name=".activity.notification.allNotificaiton.NotificationAllActivity"
             android:parentActivityName=".activity.MainActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
 
 

@@ -208,13 +208,6 @@ class NotificationNotifcationViewModel : BaseNotifcationViewModel() {
             if (detailMessages?.size == 0) {
                 mViewStatus.value = NotificationViewStatus.SHOW_NO_NOTIFICAITON_FOUND
             }
-
-//            if (detailMessages?.size == 0) {
-//                    baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
-//            } else {
-//                val filletDataByCurrentTime = filletDataByCurrentTime(detailMessages);
-//                mListMutableLiveData.setValue(filletDataByCurrentTime)
-//            }
         }
     }
 

@@ -36,8 +36,6 @@ public class SwipeController extends Callback {
 
     private SwipeControllerActions buttonsActions = null;
 
-    private static final float buttonWidth = 150;
-
 
     public SwipeController(SwipeControllerActions buttonsActions, RecyclerView recyclerView) {
         this.buttonsActions = buttonsActions;
@@ -72,6 +70,8 @@ public class SwipeController extends Callback {
     @Override
     public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
 
+        int buttonWidth = viewHolder.itemView.getRight() / 5;
+
 
         if (actionState == ACTION_STATE_SWIPE) {
             if (buttonShowedState != ButtonsState.GONE) {
@@ -97,6 +97,9 @@ public class SwipeController extends Callback {
         recyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+
+                int buttonWidth = viewHolder.itemView.getRight() / 5;
+
 
                 swipeBack = event.getAction() == MotionEvent.ACTION_CANCEL || event.getAction() == MotionEvent.ACTION_UP;
                 if (swipeBack) {
@@ -136,13 +139,12 @@ public class SwipeController extends Callback {
 
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     SwipeController.super.onChildDraw(c, recyclerView, viewHolder, 0F, dY, actionState, isCurrentlyActive);
-//                    recyclerView.setOnTouchListener(new View.OnTouchListener() {
-//                        @Override
-//                        public boolean onTouch(View v, MotionEvent event) {
-//                            Log.d("TEST_LOG","onTouch Four");
-//                            return false;
-//                        }
-//                    });
+                    recyclerView.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            return false;
+                        }
+                    });
                     setItemsClickable(recyclerView, true);
                     swipeBack = false;
                     if (buttonsActions != null && buttonInstance != null && buttonInstance.contains(event.getX(), event.getY())) {
@@ -166,6 +168,10 @@ public class SwipeController extends Callback {
     }
 
     private void drawButtons(Canvas c, RecyclerView.ViewHolder viewHolder) {
+
+        int buttonWidth = viewHolder.itemView.getRight() / 5;
+
+
         float buttonWidthWithoutPadding = buttonWidth;
         float corners = 16;
 
@@ -178,7 +184,7 @@ public class SwipeController extends Callback {
         c.drawRoundRect(rightButton, corners, corners, p);
         Bitmap bmp = BitmapFactory.decodeResource(((Context)buttonsActions).getResources(), R.drawable.notification_delete);
         int imageTop= (int) ((itemView.getTop()) + ((itemView.getBottom()-itemView.getTop())/2.6));
-        int imageLeft = (int) (itemView.getRight() - (buttonWidthWithoutPadding / 1));
+        int imageLeft = (int) (itemView.getRight() - (buttonWidthWithoutPadding / 1.2));
         c.drawBitmap(bmp, imageLeft, imageTop, null); // 24 is the height of image
 
         buttonInstance = null;
