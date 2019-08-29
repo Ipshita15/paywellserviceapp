@@ -170,6 +170,14 @@ public class PBBillPayActivity extends BaseActivity implements View.OnClickListe
                             totalAmount = splitArray[5];
                             hotline = splitArray[8];
                             showStatusDialog();
+                        } else if (splitArray[0].equalsIgnoreCase("200")) {
+                            status = splitArray[1];
+                            trxId = splitArray[2];
+                            amount = splitArray[3];
+                            tbpsCharge = splitArray[4];
+                            totalAmount = splitArray[5];
+                            hotline = splitArray[8];
+                            showStatusDialog();
                         } else {
                             Snackbar snackbar = Snackbar.make(mLinearLayout, splitArray[1], Snackbar.LENGTH_LONG);
                             snackbar.setActionTextColor(Color.parseColor("#ffffff"));
