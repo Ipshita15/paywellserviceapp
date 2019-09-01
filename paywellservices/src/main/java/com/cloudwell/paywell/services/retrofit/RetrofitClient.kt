@@ -57,7 +57,7 @@ object RetrofitClient {
     fun getClientPHP(baseUrl: String): Retrofit? {
         if (retrofitPHP7 == null) {
             val httpClient = OkHttpClient.Builder()
-            httpClient.connectTimeout(60, TimeUnit.SECONDS).readTimeout(60, TimeUnit.SECONDS).writeTimeout(60, TimeUnit.SECONDS)
+            httpClient.connectTimeout(90, TimeUnit.SECONDS).readTimeout(90, TimeUnit.SECONDS).writeTimeout(90, TimeUnit.SECONDS)
 
             httpClient.addInterceptor(HeaderTokenInterceptor(AppController.getContext()))
 

@@ -42,6 +42,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cloudwell.paywell.services.BuildConfig;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.about.AboutActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
@@ -677,12 +678,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         assert _pwId != null;
 
         try {
-            _pwId.setText(getString(R.string.rid) + mAppHandler.getRID());
+            String rid = getString(R.string.rid) + mAppHandler.getRID();
+            if (BuildConfig.DEBUG) {
+
+                rid = rid + " (Beta)";
+            }
+            _pwId.setText(rid);
             if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
                 _pwId.setTypeface(AppController.getInstance().getOxygenLightFont());
             } else {
                 _pwId.setTypeface(AppController.getInstance().getAponaLohitFont());
             }
+
+
         } catch (Exception ex) {
             ex.printStackTrace();
             Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
