@@ -49,6 +49,7 @@ import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.chat.ChatActivity;
 import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity;
 import com.cloudwell.paywell.services.activity.mfs.MFSMainActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.MyFavoriteMenuActivity;
@@ -2326,7 +2327,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_ETICKET_BUS);
 
 
-                intent = new Intent(getApplicationContext(), ETicketMainActivity.class);
+                intent = new Intent(getApplicationContext(), BusTicketMenuActivity.class);
                 intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_BUS, true);
                 startActivityWithFlag(intent);
                 break;
