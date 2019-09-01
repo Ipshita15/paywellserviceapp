@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper.Callback;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -67,15 +68,15 @@ public class SwipeController extends Callback {
         return super.convertToAbsoluteDirection(flags, layoutDirection);
     }
 
+
     @Override
     public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
 
+        Log.d("TEST_LOG", "onChildDraw");
+
         int buttonWidth = viewHolder.itemView.getRight() / 5;
-
-
         if (actionState == ACTION_STATE_SWIPE) {
             if (buttonShowedState != ButtonsState.GONE) {
-//                if (buttonShowedState == ButtonsState.LEFT_VISIBLE) dX = Math.max(dX, buttonWidth);
                 if (buttonShowedState == ButtonsState.RIGHT_VISIBLE) dX = Math.min(dX, -buttonWidth);
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
             }
@@ -97,6 +98,8 @@ public class SwipeController extends Callback {
         recyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                Log.d("TEST_LOG", "OnTouch One");
+
 
                 int buttonWidth = viewHolder.itemView.getRight() / 5;
 
@@ -119,13 +122,10 @@ public class SwipeController extends Callback {
         recyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                Log.d("TEST_LOG", "OnTouch Two");
 
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     setTouchUpListener(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-                }
-                if (c == null && actionState == INITIALIZE_ACTION) {
-                    setTouchUpListener(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-
                 }
                 return false;
             }
@@ -136,6 +136,7 @@ public class SwipeController extends Callback {
         recyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                Log.d("TEST_LOG", "OnTouch Three");
 
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     SwipeController.super.onChildDraw(c, recyclerView, viewHolder, 0F, dY, actionState, isCurrentlyActive);
@@ -210,8 +211,6 @@ public class SwipeController extends Callback {
     }
 
      public interface SwipeControllerActions {
-
-         void onLeftClicked(int position);
 
          void onRightClicked(int position);
 

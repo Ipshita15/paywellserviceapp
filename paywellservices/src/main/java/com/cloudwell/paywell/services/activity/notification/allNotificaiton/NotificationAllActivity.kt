@@ -301,6 +301,12 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
             }
         }
 
+        fun remove(positions: ArrayList<Int>) {
+            for (x in 0 until positions.size step 2) {
+                (t as ArrayList).removeAt(x)
+                notifyDataSetChanged()
+            }
+        }
         override fun getItemCount(): Int = t.size
 
         fun refreshList() {
@@ -316,23 +322,20 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
         }
     }
 
-    override fun onLeftClicked(position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     override fun onRightClicked(position: Int) {
 
+        var positions: ArrayList<Int> = ArrayList()
+        positions.add(position)
         var singleNotification = ArrayList<NotificationDetailMessage>()
         singleNotification.add(viewModel.mListMutableLiveData.value!!.get(position))
-
-        deleteNotificationFromServer(singleNotification)
+        deleteNotificationFromServer(singleNotification, positions)
     }
     override fun onRecyclerViewItemClick(position: Int, parent:String) {
         viewModel.onItemClick(position)
 
     }
 
-    private fun deleteNotificationFromServer(messageIdList: List<NotificationDetailMessage>) {
+    private fun deleteNotificationFromServer(messageIdList: List<NotificationDetailMessage>, positions: ArrayList<Int>) {
         showProgressDialog()
         var messageIdListString = StringBuilder("")
 
@@ -350,7 +353,7 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
                 var status: String = jsonObject.getAsJsonPrimitive("status").asString
                 if (status == "200") {
                     viewModel.deleteNotificationFromLocal(messageIdList)
-                    adapter.refreshList()
+                    adapter.remove(positions)
                     Toast.makeText(applicationContext, "Successfully deleted", Toast.LENGTH_SHORT).show()
                     Log.d("TEST", "Successfully deleted/ " + messageIdListString.toString())
                 } else {
@@ -361,11 +364,16 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
     }
 
     fun confirmDelete(message: String) {
+        var positions: ArrayList<Int> = ArrayList()
+        for (x in 0 until viewModel.mListMutableLiveData.value!!.size) {
+            positions.add(x)
+        }
+
         val builder = AlertDialog.Builder(this)
         builder.setMessage(message)
                 .setCancelable(true)
                 .setPositiveButton("Delete") { dialog, which ->
-                    deleteNotificationFromServer(viewModel.mListMutableLiveData.value!!)
+                    deleteNotificationFromServer(viewModel.mListMutableLiveData.value!!, positions)
 
                 }.setNegativeButton("Cancel") { dialogInterface, i ->
                     dialogInterface.dismiss()
