@@ -426,6 +426,31 @@ class BusTicketRepository() {
             }
         })
 
+//        ApiUtils.getAPIServicePHP7().confirmPayment(
+//                "https://enr1gk8z5p91.x.pipedream.net",
+//                userName,
+//                skey,
+//                accessKey,
+//                transId,
+//                fullNameTV,
+//                mobileNumber,
+//                address,
+//                etEmail,
+//                age,
+//                gender,
+//                password).enqueue(object : Callback<ResPaymentBookingAPI> {
+//            override fun onFailure(call: Call<ResPaymentBookingAPI>, t: Throwable) {
+//                data.value = null
+//            }
+//
+//            override fun onResponse(call: Call<ResPaymentBookingAPI>, response: Response<ResPaymentBookingAPI>) {
+//                if (response.isSuccessful) {
+//                    data.value = response.body()
+//                }
+//            }
+//        })
+
+
         return data
     }
 
