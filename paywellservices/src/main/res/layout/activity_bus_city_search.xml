@@ -9,6 +9,8 @@
     android:background="#d1e5e1"
     tools:context="com.cloudwell.paywell.services.activity.eticket.busticketNew.search.BusCitySearchActivity">
 
+    <include layout="@layout/tab_background_bus" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,42 +29,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/layoutTo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:id="@+id/toLL"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextSwitcher
-                            android:id="@+id/busToCityTS"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-                        <TextView
-                            android:id="@+id/tvHitTo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:text="@string/to"
-                            android:textColor="#999999" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="7dp"
-                        android:background="#c0c0c0" />
-                </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -86,8 +52,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/from"
-                                android:layout_marginBottom="5dp"
-                                android:textColor="#999999" />
+                                android:textColor="#999999"
+                                android:layout_marginBottom="5dp" />
 
                             <TextSwitcher
                                 android:id="@+id/busFromCityTS"
@@ -100,8 +66,8 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:id="@+id/pointer"
-                            android:layout_height="20dp" />
+                            android:layout_height="20dp"
+                            android:id="@+id/pointer" />
                     </LinearLayout>
 
                     <RelativeLayout
@@ -131,6 +97,42 @@
                     </RelativeLayout>
 
                 </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutTo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/toLL"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvHitTo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:text="@string/to"
+                            android:textColor="#999999" />
+
+                        <TextSwitcher
+                            android:id="@+id/busToCityTS"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="7dp"
+                        android:background="#c0c0c0" />
+                </LinearLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -205,21 +207,22 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:padding="15dp"
                 android:id="@+id/dateLL"
-                android:padding="15dp">
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:padding="10dp"
+                    android:textColor="@color/color_tab_background_bus"
+                    android:text="Journey Date" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="2"
-                        android:src="@drawable/bus_calendar" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -237,40 +240,39 @@
                                 android:id="@+id/dateTV"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="23"
+                                android:textSize="30sp"
                                 android:layout_gravity="bottom"
                                 android:textColor="#ff7178"
-                                android:textSize="30sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                android:text="23" />
 
                             <TextView
                                 android:id="@+id/monthTV"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="17sp"
-                                android:text="May"
+                                android:textStyle="bold"
                                 android:layout_gravity="bottom"
                                 android:textColor="#ff7178"
-                                android:textStyle="bold" />
+                                android:text="May" />
                         </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center|top"
-                            android:text="Thursday"
+                            android:textSize="25sp"
                             android:id="@+id/dayTV"
-                            android:textSize="25sp" />
+                            android:text="Thursday" />
                     </LinearLayout>
-                </LinearLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:text="Journey Date"
-                    android:textColor="@color/color_tab_background_bus"
-                    android:textSize="20sp" />
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_gravity="center"
+                        android:src="@drawable/bus_calendar" />
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -293,8 +295,6 @@
             fancy:fb_textColor="#FFFFFF" />
 
     </LinearLayout>
-
-    <include layout="@layout/tab_background_bus" />
 
 
 </FrameLayout>
