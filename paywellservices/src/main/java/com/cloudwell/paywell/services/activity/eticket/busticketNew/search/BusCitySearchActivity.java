@@ -380,14 +380,14 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
         boardingViewStatusChange(View.VISIBLE);
 
 
-        tryToOldBoardingPointSeletion();
+//        tryToOldBoardingPointSeletion();
 
 
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        AppStorageBox.put(AppController.getContext(), AppStorageBox.Key.BOARDING_POGISTION, position);
+//        AppStorageBox.put(AppController.getContext(), AppStorageBox.Key.BOARDING_POGISTION, position);
     }
 
     @Override
