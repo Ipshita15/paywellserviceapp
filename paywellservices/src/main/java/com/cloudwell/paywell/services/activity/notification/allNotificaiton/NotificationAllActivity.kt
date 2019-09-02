@@ -49,6 +49,9 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
 
     lateinit var viewModel: NotificationNotifcationViewModel
 
+    var notificationDataList = ArrayList<NotificationDetailMessage>()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.cloudwell.paywell.services.R.layout.activity_notification_view)
@@ -117,7 +120,7 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
 
     private fun setupAdapter(t: List<NotificationDetailMessage>) {
 
-        adapter = SimpleAdapter(t, this, listView!!)
+        adapter = SimpleAdapter(t, this)
         listView!!.adapter = adapter
 //        val swipeHandler = object : SwipeToDeleteCallback(this) {
 //            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -264,9 +267,8 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
         }
     }
 
-    class SimpleAdapter(private val t: List<NotificationDetailMessage>, context: Context, recyclerView: RecyclerView) : RecyclerView.Adapter<SimpleAdapter.ViewHolder>() {
+    class SimpleAdapter(private val t: List<NotificationDetailMessage>, context: Context) : RecyclerView.Adapter<SimpleAdapter.ViewHolder>() {
 
-        var recyclerView: RecyclerView=recyclerView
         public var counter=0
         var context: Context=context
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -291,6 +293,15 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
                     (context as NotificationAllActivity).onRecyclerViewItemClick(position,"ADAPTER")
 
             }
+
+            val model = t[position]
+
+            if (model.status.equals("Unread")) {
+                holder.notificationCardView.setCardBackgroundColor(Color.parseColor("#DAFBFB"))
+            } else {
+                holder.notificationCardView.setCardBackgroundColor(Color.parseColor("#FFFFFF"))
+            }
+
         }
         private fun getImageDrawable(counter: Int): Int {
             when(counter) {
@@ -305,6 +316,7 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
             for (x in 0 until positions.size step 2) {
                 (t as ArrayList).removeAt(x)
                 notifyDataSetChanged()
+
             }
         }
         override fun getItemCount(): Int = t.size
@@ -353,7 +365,6 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
                 var status: String = jsonObject.getAsJsonPrimitive("status").asString
                 if (status == "200") {
                     viewModel.deleteNotificationFromLocal(messageIdList)
-                    adapter.remove(positions)
                     Toast.makeText(applicationContext, "Successfully deleted", Toast.LENGTH_SHORT).show()
                     Log.d("TEST", "Successfully deleted/ " + messageIdListString.toString())
                 } else {

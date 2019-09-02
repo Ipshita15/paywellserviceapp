@@ -52,15 +52,6 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/notiMessage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:autoLink="all"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#545454"
-                    tools:text="Message" />
-
-                <TextView
                     android:id="@+id/notiTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -69,6 +60,14 @@
                     android:textStyle="bold"
                     tools:text="Title" />
 
+                <TextView
+                    android:id="@+id/notiMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autoLink="all"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#545454"
+                    tools:text="Message" />
 
                 <ImageView
                     android:id="@+id/notiImg"

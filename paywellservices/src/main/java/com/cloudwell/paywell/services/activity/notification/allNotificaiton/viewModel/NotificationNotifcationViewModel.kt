@@ -192,9 +192,9 @@ class NotificationNotifcationViewModel : BaseNotifcationViewModel() {
         if (notificationDetailMessage != null) {
             doAsync {
                 mNotificationRepository.deleteNotificationForLocalDB(notificationDetailMessage)
-//                uiThread {
-//                    refreshNotificationUI()
-//                }
+                uiThread {
+                    refreshNotificationUI()
+                }
             }
         }
     }
