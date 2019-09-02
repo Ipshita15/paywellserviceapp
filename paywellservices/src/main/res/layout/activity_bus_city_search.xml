@@ -85,8 +85,8 @@
                                 android:id="@+id/tvHitFrom"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="5dp"
                                 android:text="@string/from"
+                                android:layout_marginBottom="5dp"
                                 android:textColor="#999999" />
 
                             <TextSwitcher
@@ -112,12 +112,12 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_centerVertical="true"
                             android:layout_marginStart="16dp"
                             android:layout_marginLeft="16dp"
                             android:layout_marginEnd="8dp"
                             android:layout_marginRight="8dp"
                             android:layout_marginBottom="7dp"
+                            android:layout_centerVertical="true"
                             android:background="#c0c0c0" />
 
                         <ImageView
@@ -247,8 +247,8 @@
                                 android:id="@+id/monthTV"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="May"
                                 android:textSize="17sp"
+                                android:text="May"
                                 android:layout_gravity="bottom"
                                 android:textColor="#ff7178"
                                 android:textStyle="bold" />
@@ -258,8 +258,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center|top"
-                            android:id="@+id/dayTV"
                             android:text="Thursday"
+                            android:id="@+id/dayTV"
                             android:textSize="25sp" />
                     </LinearLayout>
                 </LinearLayout>
