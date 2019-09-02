@@ -165,7 +165,6 @@
                         android:layout_marginRight="8dp"
                         android:dropDownSelector="@drawable/bus_down_drop_icon"
                         android:padding="5dp"
-                        android:spinnerMode="dialog"
                         card_view:layout_constraintEnd_toEndOf="parent"
                         card_view:layout_constraintStart_toStartOf="parent"
                         card_view:layout_constraintTop_toBottomOf="@+id/boaringPointLevel" />

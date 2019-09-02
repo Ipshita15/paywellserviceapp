@@ -375,7 +375,7 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
         String[] strings = allBoothNameInfo.toArray(new String[allBoothNameInfo.size()]);
 
 
-        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_dropdown_item_1line, strings);
+        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.bus_spinner_back, strings);
         boothList.setAdapter(stringArrayAdapter);
         boardingViewStatusChange(View.VISIBLE);
 
