@@ -1,301 +1,295 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:fancy="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#d1e5e1"
-    tools:context="com.cloudwell.paywell.services.activity.eticket.busticketNew.search.BusCitySearchActivity">
+    android:background="#d1e5e1">
 
-    <include layout="@layout/tab_background_bus" />
-
-    <LinearLayout
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:fancy="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:background="#d1e5e1"
+        tools:context="com.cloudwell.paywell.services.activity.eticket.busticketNew.search.BusCitySearchActivity">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/fbCardView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin_half"
-            android:layout_marginRight="@dimen/activity_horizontal_margin_half"
-            card_view:cardBackgroundColor="@color/card_background"
-            card_view:cardUseCompatPadding="true">
+            android:orientation="vertical">
 
-            <LinearLayout
+            <androidx.cardview.widget.CardView
+                android:id="@+id/fbCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginLeft="@dimen/activity_horizontal_margin_half"
+                android:layout_marginRight="@dimen/activity_horizontal_margin_half"
+                card_view:cardBackgroundColor="@color/card_background"
+                card_view:cardUseCompatPadding="true">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/tvFrom"
+                        android:id="@+id/layoutTo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/activity_horizontal_margin"
                         android:orientation="vertical">
 
                         <LinearLayout
-                            android:id="@+id/fromLL"
+                            android:id="@+id/toLL"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/tvHitFrom"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/from"
-                                android:textColor="#999999"
-                                android:layout_marginBottom="5dp" />
-
                             <TextSwitcher
-                                android:id="@+id/busFromCityTS"
+                                android:id="@+id/busToCityTS"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text=""
                                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                            <TextView
+                                android:id="@+id/tvHitTo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:text="@string/to"
+                                android:textColor="#999999" />
                         </LinearLayout>
-
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="20dp"
-                            android:id="@+id/pointer" />
-                    </LinearLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/tvFrom">
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="5dp"
                             android:layout_marginBottom="7dp"
-                            android:layout_centerVertical="true"
                             android:background="#c0c0c0" />
-
-                        <ImageView
-                            android:id="@+id/textSwitchIV"
-                            android:layout_width="31dp"
-                            android:layout_height="31dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginEnd="51dp"
-                            android:layout_marginRight="154dp"
-                            android:src="@drawable/bus_swithcher_icon" />
-                    </RelativeLayout>
-
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:id="@+id/layoutTo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/toLL"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tvHitTo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:text="@string/to"
-                            android:textColor="#999999" />
-
-                        <TextSwitcher
-                            android:id="@+id/busToCityTS"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
                     </LinearLayout>
 
-                    <View
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="7dp"
-                        android:background="#c0c0c0" />
-                </LinearLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/boaringPointLevel"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
-                        android:padding="10dp"
-                        android:text="Boarding Point (Optional)"
-                        android:textColor="#999999"
-                        android:textSize="14sp"
-                        card_view:layout_constraintEnd_toEndOf="parent"
-                        card_view:layout_constraintStart_toStartOf="parent"
-                        card_view:layout_constraintTop_toTopOf="parent" />
-
-                    <Spinner
-                        android:id="@+id/boothList"
-                        android:layout_width="0dp"
-                        android:layout_height="30dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
-
-                        android:dropDownSelector="@drawable/bus_down_drop_icon"
-                        android:padding="5dp"
-                        android:spinnerMode="dialog"
-                        card_view:layout_constraintEnd_toEndOf="parent"
-                        card_view:layout_constraintStart_toStartOf="parent"
-                        card_view:layout_constraintTop_toBottomOf="@+id/boaringPointLevel" />
-
-                    <View
-
-                        android:id="@+id/viewBoardingPoint"
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginBottom="16dp"
-                        android:background="#c0c0c0"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        card_view:layout_constraintEnd_toEndOf="parent"
-                        card_view:layout_constraintStart_toStartOf="parent"
-                        card_view:layout_constraintTop_toBottomOf="@+id/boothList" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin_half"
-            android:layout_marginTop="@dimen/activity_horizontal_margin_half"
-            android:layout_marginRight="@dimen/activity_horizontal_margin_half"
-            card_view:cardBackgroundColor="@color/card_background"
-            card_view:cardCornerRadius="8dp"
-            card_view:cardUseCompatPadding="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="15dp"
-                android:id="@+id/dateLL"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:padding="10dp"
-                    android:textColor="@color/color_tab_background_bus"
-                    android:text="Journey Date" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="4"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_height="wrap_content">
 
                         <LinearLayout
+                            android:id="@+id/tvFrom"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="horizontal">
+                            android:layout_margin="@dimen/activity_horizontal_margin"
+                            android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/dateTV"
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:id="@+id/fromLL"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:textSize="30sp"
-                                android:layout_gravity="bottom"
-                                android:textColor="#ff7178"
-                                android:textStyle="bold"
-                                android:text="23" />
+                                android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/monthTV"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="17sp"
-                                android:textStyle="bold"
-                                android:layout_gravity="bottom"
-                                android:textColor="#ff7178"
-                                android:text="May" />
+                                <TextSwitcher
+                                    android:id="@+id/busFromCityTS"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=""
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                                <TextView
+                                    android:id="@+id/tvHitFrom"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="5dp"
+                                    android:text="@string/from"
+                                    android:textColor="#999999" />
+                            </LinearLayout>
+
+                            <View
+                                android:id="@+id/pointer"
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp" />
                         </LinearLayout>
 
-                        <TextView
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center|top"
-                            android:textSize="25sp"
-                            android:id="@+id/dayTV"
-                            android:text="Thursday" />
+                            android:layout_alignBottom="@+id/tvFrom">
+
+                            <ImageView
+                                android:id="@+id/textSwitchIV"
+                                android:layout_width="31dp"
+                                android:layout_height="31dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginEnd="51dp"
+                                android:layout_marginRight="154dp"
+                                android:src="@drawable/bus_swithcher_icon" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginRight="8dp"
+                                android:layout_marginBottom="7dp"
+                                android:background="#c0c0c0" />
+                        </RelativeLayout>
+                    </RelativeLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <Spinner
+                            android:id="@+id/boothList"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:dropDownSelector="@drawable/bus_down_drop_icon"
+                            android:padding="5dp"
+                            android:spinnerMode="dialog"
+                            card_view:layout_constraintEnd_toEndOf="parent"
+                            card_view:layout_constraintStart_toStartOf="parent"
+                            card_view:layout_constraintTop_toBottomOf="@+id/boaringPointLevel" />
+
+                        <TextView
+                            android:id="@+id/boaringPointLevel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:padding="10dp"
+                            android:text="Boarding Point (Optional)"
+                            android:textColor="#999999"
+                            android:textSize="14sp"
+                            card_view:layout_constraintEnd_toEndOf="parent"
+                            card_view:layout_constraintStart_toStartOf="parent"
+                            card_view:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/viewBoardingPoint"
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginBottom="16dp"
+                            android:background="#c0c0c0"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            card_view:layout_constraintEnd_toEndOf="parent"
+                            card_view:layout_constraintStart_toStartOf="parent"
+                            card_view:layout_constraintTop_toBottomOf="@+id/boothList" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin_half"
+                android:layout_marginTop="@dimen/activity_horizontal_margin_half"
+                android:layout_marginRight="@dimen/activity_horizontal_margin_half"
+                card_view:cardBackgroundColor="@color/card_background"
+                card_view:cardCornerRadius="8dp"
+                card_view:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:id="@+id/dateLL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="2"
+                            android:src="@drawable/bus_calendar" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/dateTV"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom"
+                                    android:text="23"
+                                    android:textColor="#ff7178"
+                                    android:textSize="30sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/monthTV"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom"
+                                    android:text="May"
+                                    android:textColor="#ff7178"
+                                    android:textSize="17sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/dayTV"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center|top"
+                                android:text="Thursday"
+                                android:textSize="25sp" />
+                        </LinearLayout>
                     </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="0dp"
+                    <TextView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:layout_gravity="center"
-                        android:src="@drawable/bus_calendar" />
+                        android:padding="10dp"
+                        android:text="Journey Date"
+                        android:textColor="@color/color_tab_background_bus"
+                        android:textSize="20sp" />
                 </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-            </LinearLayout>
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/btn_search"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                fancy:fb_defaultColor="@color/bus_button_color"
+                fancy:fb_fontIconResource="&#xf002;"
+                fancy:fb_iconPosition="left"
+                fancy:fb_radius="5dp"
+                fancy:fb_text="@string/search_text"
+                fancy:fb_textColor="#FFFFFF" />
+        </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
-
-        <mehdi.sakout.fancybuttons.FancyButton
-            android:id="@+id/btn_search"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            fancy:fb_defaultColor="@color/bus_button_color"
-            fancy:fb_fontIconResource="&#xf002;"
-            fancy:fb_iconPosition="left"
-            fancy:fb_radius="5dp"
-            android:layout_gravity="center"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp"
-            fancy:fb_text="@string/search_text"
-            fancy:fb_textColor="#FFFFFF" />
-
-    </LinearLayout>
-
-
-</FrameLayout>
-
+        <include layout="@layout/tab_background_bus" />
+    </FrameLayout>
+</ScrollView>
