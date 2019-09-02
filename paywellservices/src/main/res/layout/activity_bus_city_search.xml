@@ -136,23 +136,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <Spinner
-                        android:id="@+id/boothList"
-                        android:layout_width="0dp"
-                        android:layout_height="30dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
-
-                        android:dropDownSelector="@drawable/bus_down_drop_icon"
-                        android:padding="5dp"
-                        android:spinnerMode="dialog"
-                        card_view:layout_constraintEnd_toEndOf="parent"
-                        card_view:layout_constraintStart_toStartOf="parent"
-                        card_view:layout_constraintTop_toBottomOf="@+id/boaringPointLevel" />
-
                     <TextView
                         android:id="@+id/boaringPointLevel"
                         android:layout_width="0dp"
@@ -169,6 +152,23 @@
                         card_view:layout_constraintEnd_toEndOf="parent"
                         card_view:layout_constraintStart_toStartOf="parent"
                         card_view:layout_constraintTop_toTopOf="parent" />
+
+                    <Spinner
+                        android:id="@+id/boothList"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+
+                        android:dropDownSelector="@drawable/bus_down_drop_icon"
+                        android:padding="5dp"
+                        android:spinnerMode="dialog"
+                        card_view:layout_constraintEnd_toEndOf="parent"
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        card_view:layout_constraintTop_toBottomOf="@+id/boaringPointLevel" />
 
                     <View
 
