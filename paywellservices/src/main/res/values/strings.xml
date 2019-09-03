@@ -523,9 +523,9 @@
     <string name="ajd_share">http://ajkerdeal.paywellonline.com</string>
 
 
-    <string name="ek_shope_token">http://ekshop.paywellonline.com/get_token</string>
-    <string name="ek_redirect">http://ekshop.paywellonline.com/redirect?</string>
-    <string name="ek_report">http://ekshop.paywellonline.com/report</string>
+    <string name="ek_shope_token" translatable="false">https://ekshop.paywellonline.com/get_token</string>
+    <string name="ek_redirect" translatable="false">https://ekshop.paywellonline.com/redirect?</string>
+    <string name="ek_report" translatable="false">https://ekshop.paywellonline.com/get_report</string>
 
     <string name="b2b_token">https://wholesale.paywellonline.com/Retailer/Home/CreateToken?</string>
     <string name="b2b_login">https://wholesale.paywellonline.com/Retailer/Home/CheckLoginByToken?</string>

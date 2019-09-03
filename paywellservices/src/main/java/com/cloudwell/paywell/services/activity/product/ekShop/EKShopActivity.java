@@ -138,7 +138,7 @@ public class EKShopActivity extends BaseActivity {
                         }
 
                     } else {
-                        Snackbar snackbar = Snackbar.make(linearLayout, "" + response.message(), Snackbar.LENGTH_LONG);
+                        Snackbar snackbar = Snackbar.make(linearLayout, "" + response.body().getMessage(), Snackbar.LENGTH_LONG);
                         snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                         View snackBarView = snackbar.getView();
                         snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
@@ -146,7 +146,7 @@ public class EKShopActivity extends BaseActivity {
                     }
 
                 } else {
-                    Snackbar snackbar = Snackbar.make(linearLayout, "" + response.message(), Snackbar.LENGTH_LONG);
+                    Snackbar snackbar = Snackbar.make(linearLayout, "" + R.string.try_again_msg, Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));

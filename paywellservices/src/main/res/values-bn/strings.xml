@@ -533,11 +533,6 @@
     <string name="ajd_share">http://ajkerdeal.paywellonline.com</string>
 
 
-    <string name="ek_shope_token">http://sandbox.paywellonline.com/ekshop/get_token</string>
-    <string name="ek_redirect">http://sandbox.paywellonline.com/ekshop/redirect?</string>
-    <string name="ek_report">http://sandbox.paywellonline.com/ekshop/report</string>
-
-
     <string name="b2b_token">https://wholesale.paywellonline.com/Home/CreateToken?</string>
     <string name="b2b_login">https://wholesale.paywellonline.com/Home/CheckLoginByToken?</string>
     <string name="b2b_refresh_token">https://wholesale.paywellonline.com/Retailer/MetaData/PingServer</string>
