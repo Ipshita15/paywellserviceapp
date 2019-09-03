@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.eticket.busticketNew
+package com.cloudwell.paywell.services.activity.eticket.busticketNew.passenger
 
 
 import android.content.Context

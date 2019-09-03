@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                                                   xmlns:fancy="http://schemas.android.com/apk/res-auto"
-                                                   xmlns:tools="http://schemas.android.com/tools"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="match_parent"
-                                                   android:background="#d1e5e1"
-                                                   tools:context="com.cloudwell.paywell.services.activity.eticket.busticketNew.transportSelect.TransportSelectActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#d1e5e1"
+    tools:context="com.cloudwell.paywell.services.activity.eticket.busticketNew.transportSelect.TransportSelectActivity">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardLayout"
@@ -57,7 +57,7 @@
                 app:layout_constraintHorizontal_bias="0.19"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0"/>
+                app:layout_constraintVertical_bias="1.0" />
 
             <Spinner
                 android:id="@+id/boothList"
@@ -70,6 +70,7 @@
                 android:layout_marginRight="8dp"
                 android:dropDownSelector="@drawable/bus_down_drop_icon"
                 android:padding="5dp"
+                android:spinnerMode="dialog"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.512"
                 app:layout_constraintStart_toStartOf="parent"
@@ -89,7 +90,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.48"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/boothList"/>
+                app:layout_constraintTop_toBottomOf="@+id/boothList" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -116,6 +117,6 @@
         fancy:fb_iconPosition="left"
         fancy:fb_radius="5dp"
         fancy:fb_text="@string/next_btn"
-        fancy:fb_textColor="#FFFFFF"/>
+        fancy:fb_textColor="#FFFFFF" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

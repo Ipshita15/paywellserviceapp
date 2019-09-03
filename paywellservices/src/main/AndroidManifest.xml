@@ -596,16 +596,6 @@
                 android:value="com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCMainActivity" />
         </activity>
         <activity
-            android:name=".activity.eticket.busticket.BusMainActivity"
-            android:parentActivityName=".activity.eticket.ETicketMainActivity"
-            android:screenOrientation="portrait">
-
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity" />
-        </activity>
-        <activity
             android:name=".activity.eticket.trainticket.TrainMainActivity"
             android:parentActivityName=".activity.eticket.ETicketMainActivity"
             android:screenOrientation="portrait">
@@ -996,7 +986,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.eticket.busticketNew.BusPassengerBoothDepartureActivity"
+            android:name=".activity.eticket.busticketNew.passenger.BusPassengerBoothDepartureActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity

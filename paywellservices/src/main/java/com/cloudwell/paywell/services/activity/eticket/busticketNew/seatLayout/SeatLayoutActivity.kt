@@ -13,7 +13,7 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusPassengerBoothDepartureActivity
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.passenger.BusPassengerBoothDepartureActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BusSeat
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Transport

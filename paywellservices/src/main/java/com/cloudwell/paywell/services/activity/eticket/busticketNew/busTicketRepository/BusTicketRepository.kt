@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.eticket.busticketNew
+package com.cloudwell.paywell.services.activity.eticket.busticketNew.busTicketRepository
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
