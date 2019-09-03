@@ -18,7 +18,6 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
@@ -51,7 +50,6 @@ public class EKShopActivity extends BaseActivity {
 
     public static String token;
     final long period = 300000;
-    RelativeLayout relativeLayout;
     private WebView webView = null;
     private LinearLayout linearLayout;
     private ConnectionDetector mCd;
@@ -139,10 +137,16 @@ public class EKShopActivity extends BaseActivity {
                             startWebView(getString(R.string.ek_redirect) + "token=" + token);
                         }
 
+                    } else {
+                        Snackbar snackbar = Snackbar.make(linearLayout, "" + response.message(), Snackbar.LENGTH_LONG);
+                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                        View snackBarView = snackbar.getView();
+                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                        snackbar.show();
                     }
 
                 } else {
-                    Snackbar snackbar = Snackbar.make(relativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                    Snackbar snackbar = Snackbar.make(linearLayout, "" + response.message(), Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
@@ -155,7 +159,7 @@ public class EKShopActivity extends BaseActivity {
             public void onFailure(Call<ResEkShopToken> call, Throwable t) {
                 dismissProgressDialog();
 
-                Snackbar snackbar = Snackbar.make(relativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                Snackbar snackbar = Snackbar.make(linearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                 View snackBarView = snackbar.getView();
                 snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
