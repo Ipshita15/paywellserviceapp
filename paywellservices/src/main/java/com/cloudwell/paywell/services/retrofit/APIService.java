@@ -296,7 +296,7 @@ public interface APIService {
                                                 @Field("total_amount") String total_amount);
 
     @FormUrlEncoded
-    @POST("PaywellParibahanService/ticketConfirmPayment")
+    @POST("PaywellParibahanService/confirmPayment")
     Call<ResPaymentBookingAPI> confirmPayment(@Field("username") String username,
                                               @Field("skey") String skey,
                                               @Field("accessKey") String accessKey,
