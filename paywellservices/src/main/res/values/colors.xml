@@ -8,15 +8,12 @@
     <color name="tab_indicator">#8de291</color>
     <color name="colorText">#ffffff</color>
     <color name="card_background">@color/colorText</color>
-    <color name="layout_background">#eeeeee</color>
 
     <!--
     <color name="list_divider">#272727</color>
 -->
     <!-- Paywell services color -->
-    <color name="ivory_black">#292421</color>
     <color name="bg_color">#ffffff</color>
-    <color name="bg_color_trns">#00ffffff</color>
     <color name="white">#ffffff</color>
 
     <!-- bluetooth api -->
@@ -34,18 +31,6 @@
 
     <!-- horizontal date picker-->
     <color name="mti_default_primary">#189d49</color>
-    <color name="mti_default_primary_dark">#09865f</color>
-    <color name="mti_bg_timeline">#FFFFFF</color>
-    <color name="mti_lbl_tab_selected">#FFFFFF</color>
-    <color name="mti_lbl_tab_before_selection">#5affffff</color>
-    <color name="mti_lbl_day">#b3bdc2</color>
-    <color name="mti_lbl_date">#555e6f</color>
-    <color name="mti_lbl_date_selected">#FFFFFF</color>
-    <color name="mti_bg_lbl_date_selected_color">#00b47c</color>
-    <color name="mti_ring_lbl_date_color">#d2f6eb</color>
-    <color name="mti_bg_lbl_today">#d6d6d6</color>
-    <color name="mti_lbl_label">#CCC</color>
-    <color name="color_black">#000000</color>
     <color name="text_color">#999999</color>
     <color name="text_color_white">#FFFFFF</color>
     <color name="default_progress_background">#ccc</color>
