@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   xmlns:tools="http://schemas.android.com/tools"
-                                                   android:id="@+id/linearLayout7"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="wrap_content"
-                                                   android:layout_marginBottom="8dp"
-                                                   android:background="@color/white">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout7"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/tvPrices"
@@ -20,7 +20,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tvTotalPrices"
         app:layout_constraintTop_toTopOf="@+id/recyclerView"
-        tools:text="50000"/>
+        tools:text="50000" />
 
     <ImageView
         android:id="@+id/ivTake"
@@ -31,7 +31,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/tvPrices"
         app:layout_constraintEnd_toStartOf="@+id/tvPrices"
         app:layout_constraintTop_toTopOf="@+id/tvPrices"
-        app:srcCompat="@drawable/ic_tk_symbol_low"/>
+        app:srcCompat="@drawable/ic_tk_symbol_low" />
 
     <Button
         android:id="@+id/btDetails"
@@ -52,7 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/recyclerView"
         app:layout_constraintTop_toBottomOf="@+id/tvchildAndInfant"
-        app:layout_constraintVertical_bias="0.0"/>
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/tvAirlessName"
@@ -65,7 +65,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/airlineSerachIcon"
         app:layout_constraintStart_toEndOf="@+id/airlineSerachIcon"
         app:layout_constraintTop_toTopOf="@+id/airlineSerachIcon"
-        tools:text="US-Bangla Airlines"/>
+        tools:text="US-Bangla Airlines" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -79,7 +79,7 @@
         app:layout_constraintEnd_toStartOf="@+id/btDetails"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/airlineSerachIcon"
-        tools:listitem="@layout/simple_list_item_segment"/>
+        tools:listitem="@layout/simple_list_item_segment" />
 
     <TextView
         android:id="@+id/tvTotalPrices"
@@ -95,7 +95,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/btDetails"
-        app:layout_constraintTop_toTopOf="@+id/tvAirlessName"/>
+        app:layout_constraintTop_toTopOf="@+id/tvAirlessName" />
 
     <TextView
         android:id="@+id/tvAdult"
@@ -111,7 +111,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tvchildAndInfant"
         app:layout_constraintTop_toBottomOf="@+id/tvPrices"
-        tools:text="1 adult "/>
+        tools:text="1 adult " />
 
     <TextView
         android:id="@+id/tvchildAndInfant"
@@ -125,7 +125,7 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvAdult"
-        tools:text="0 Child, 0 Infant "/>
+        tools:text="0 Child, 0 Infant " />
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/airlineSerachIcon"
@@ -135,10 +135,9 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/air_ticket"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
