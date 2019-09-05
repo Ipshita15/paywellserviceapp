@@ -85,7 +85,7 @@ public interface APIService {
                                                  @Field("depositslip") String depositslip,
                                                  @Field("Amount") String amount);
 
-    @POST("PaywelltransactionPollyBiddyut/pollyBiddyutBillStatusQuery")
+    @POST("PaywelltransactionPollyBiddyut/pollyBiddyutBillStatusQueryAPI")
     @FormUrlEncoded
     Call<RequestBillStatusData> callBillStatusRequestAPI(@Field("username") String username,
                                                          @Field("pass") String password,

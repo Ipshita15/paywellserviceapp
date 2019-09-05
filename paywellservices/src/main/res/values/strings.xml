@@ -464,10 +464,10 @@
     <string name="brilliant_trx_log">Brilliant Trx Log</string>
 
     <!-- Utility -->
-    <string name="pb_reg">https://www.paywellonline.com/default/api/polli/polli_regs.php?</string>
-    <string name="pb_reg_with_otp">https://www.paywellonline.com/default/api/polli/polli_reg_otp.php</string>
-    <string name="pb_bill_pay">https://www.paywellonline.com/default/api/polli/polli.php?</string>
-    <string name="pb_bill_pay_pollyBiddyutPhoneNoChange">https://api.paywellonline.com/PaywelltransactionPollyBiddyut/pollyBiddyutPhoneNoChange?</string>
+    <string name="pb_reg" translatable="false">https://api.paywellonline.com/PaywelltransactionPollyBiddyut/pollyBiddyutBillPayRegAPI</string>
+    <string name="pb_reg_with_otp" translatable="false">https://api.paywellonline.com/PaywelltransactionPollyBiddyut/pollyBiddyutBillPayRegPinVerifyAPI</string>
+    <string name="pb_bill_pay" translatable="false">https://api.paywellonline.com/PaywelltransactionPollyBiddyut/pollyBiddyutBillPayAPI</string>
+    <string name="pb_bill_pay_pollyBiddyutPhoneNoChange" translatable="false">https://api.paywellonline.com/PaywelltransactionPollyBiddyut/pollyBiddyutPhoneNoChangeAPI</string>
 
     <string name="desco_bill_enq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
     <string name="desco_bill_pay">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>

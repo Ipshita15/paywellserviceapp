@@ -473,10 +473,6 @@
 
 
     <!-- Utility -->
-    <string name="pb_reg">https://www.paywellonline.com/default/api/polli/polli_regs.php?</string>
-    <string name="pb_reg_with_otp">https://www.paywellonline.com/default/api/polli/polli_reg_otp.php</string>
-    <string name="pb_bill_pay">https://www.paywellonline.com/default/api/polli/polli.php?</string>
-    <string name="pb_bill_pay_pollyBiddyutPhoneNoChange">https://api.paywellonline.com/PaywelltransactionPollyBiddyut/pollyBiddyutPhoneNoChange?</string>
 
 
     <string name="desco_bill_enq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>

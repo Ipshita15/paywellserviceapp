@@ -135,12 +135,11 @@ public class PBBillPayActivity extends BaseActivity implements View.OnClickListe
             HttpPost httppost = new HttpPost(params[0]);
             try {
                 List<NameValuePair> nameValuePairs = new ArrayList<>(6);
-                nameValuePairs.add(new BasicNameValuePair("imei_no", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("pin_code", params[1]));
                 nameValuePairs.add(new BasicNameValuePair("bill_no", params[2]));
                 nameValuePairs.add(new BasicNameValuePair("amount", params[3]));
-                nameValuePairs.add(new BasicNameValuePair("smsAccountNumber", "0"));
-                nameValuePairs.add(new BasicNameValuePair("coustomerPhoneNumber", "0"));
+                nameValuePairs.add(new BasicNameValuePair("format", ""));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
@@ -170,7 +169,7 @@ public class PBBillPayActivity extends BaseActivity implements View.OnClickListe
                             totalAmount = splitArray[5];
                             hotline = splitArray[8];
                             showStatusDialog();
-                        } else if (splitArray[0].equalsIgnoreCase("200")) {
+                        } else if (splitArray[0].equalsIgnoreCase("200") || splitArray[0].equalsIgnoreCase("300")) {
                             status = splitArray[1];
                             trxId = splitArray[2];
                             amount = splitArray[3];
