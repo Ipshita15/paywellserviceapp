@@ -2394,7 +2394,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_SALES_MENU);
                 ViewStatementActivity.title = "sales";
-                ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/salesStatement?username="
+                ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/salesStatementForhttps?username="
                         + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
 
 
@@ -2406,7 +2406,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_TRX_MENU);
                 ViewStatementActivity.title = "trx";
-                ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/getAllTransactionStatement?username="
+                ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/getAllTransactionStatementForHttps?username="
                         + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
 
                 intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
