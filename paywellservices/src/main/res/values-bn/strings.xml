@@ -788,5 +788,10 @@
     <string name="no_boarding_point_found">No boarding point found!!!</string>
     <string name="sort">Sort</string>
     <string name="selected_seat">Selected seat:</string>
+    <string name="boarding_point_optional">Boarding Point (Optional)</string>
+    <string name="select_your_seat">Select your seat</string>
+    <string name="select">Select</string>
+    <string name="do_you_want_to_buy_this_ticket">Do you want to buy this ticket?</string>
+    <string name="buy">Buy</string>
 
 </resources>
