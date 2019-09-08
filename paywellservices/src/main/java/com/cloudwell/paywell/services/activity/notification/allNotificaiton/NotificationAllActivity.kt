@@ -120,6 +120,8 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
 
     private fun setupAdapter(t: List<NotificationDetailMessage>) {
 
+        adapter=SimpleAdapter(ArrayList<NotificationDetailMessage>(), this)
+        adapter.notifyDataSetChanged()
         adapter = SimpleAdapter(t, this)
         listView!!.adapter = adapter
 //        val swipeHandler = object : SwipeToDeleteCallback(this) {
@@ -128,23 +130,6 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
 //                adapter.removeItem(viewHolder.adapterPosition)
 //            }
 //        }
-        val swipeController = object : SwipeController(this, listView) {
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
-                super.onSwiped(viewHolder, direction)
-            }
-        }
-
-
-
-
-
-        val itemTouchHelper = ItemTouchHelper(swipeController)
-        itemTouchHelper.attachToRecyclerView(listView)
-        listView!!.addItemDecoration(object : RecyclerView.ItemDecoration() {
-            override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State?) {
-                swipeController.onDraw(c)
-            }
-        })
     }
 
     private fun startNotificationFullViewActivity() {
@@ -173,6 +158,24 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
         listView!!.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
         mLinearLayout = findViewById(com.cloudwell.paywell.services.R.id.linearLayout)
         mAppHandler = AppHandler.getmInstance(applicationContext)
+
+        val swipeController = object : SwipeController(this, listView) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
+                super.onSwiped(viewHolder, direction)
+            }
+        }
+
+
+
+
+
+        val itemTouchHelper = ItemTouchHelper(swipeController)
+        itemTouchHelper.attachToRecyclerView(listView)
+        listView!!.addItemDecoration(object : RecyclerView.ItemDecoration() {
+            override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State?) {
+                swipeController.onDraw(c)
+            }
+        })
 
     }
 
