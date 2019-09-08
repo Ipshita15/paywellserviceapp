@@ -85,7 +85,7 @@ public interface APIService {
                                                  @Field("depositslip") String depositslip,
                                                  @Field("Amount") String amount);
 
-    @POST("PaywelltransactionPollyBiddyut/pollyBiddyutBillStatusQuery")
+    @POST("PaywelltransactionPollyBiddyut/pollyBiddyutBillStatusQueryAPI")
     @FormUrlEncoded
     Call<RequestBillStatusData> callBillStatusRequestAPI(@Field("username") String username,
                                                          @Field("pass") String password,
@@ -245,18 +245,18 @@ public interface APIService {
     @Multipart
     Call<ResEKReport> getReport(@Url String url, @Part("uid") String rid, @Part("start_date") String start_date, @Part("end_date") String end_date, @Part("order_code") String order_code);
 
-    @POST("paywellapi/index.php/PaywellParibahanService/getBusListData")
+    @POST("PaywellParibahanService/getBusListData")
     @FormUrlEncoded
     Call<ResGetBusListData> getBusListData(@Field("username") String username, @Field("skey") String skey);
 
 
-    @POST("paywellapi/index.php/PaywellParibahanService/getBusSchedule?")
+    @POST("PaywellParibahanService/getBusSchedule?")
     @FormUrlEncoded
     Call<ResponseBody> getBusSchedule(@Field("username") String username, @Field("transport_id") String transport_id, @Field("skey") String skey, @Field("accessKey") String accessKey);
 
 
     @FormUrlEncoded
-    @POST("paywellapi/index.php/PaywellParibahanService/seatCheck")
+    @POST("PaywellParibahanService/seatCheck")
     Call<ResponseBody> seatCheck(@Field("username") String username,
                                  @Field("skey") String skey,
                                  @Field("accessKey") String accessKey,
@@ -268,12 +268,12 @@ public interface APIService {
                                  @Field("seat_ids") String seat_ids);
 
     @FormUrlEncoded
-    @POST("paywellapi/index.php/PaywellParibahanService/getTransactionData")
+    @POST("PaywellParibahanService/getTransactionData")
     Call<TransactionLogDetailsModel> getBusTransactionLogFromServer(@Field("username") String username, @Field("skey") String skey, @Field("limit") String limit);
 
 
     @FormUrlEncoded
-    @POST("paywellapi/index.php/PaywellParibahanService/seatCheckAndBlock")
+    @POST("PaywellParibahanService/seatCheckAndBlock")
     Call<ResSeatCheckBookAPI> seatCheckAndBlock(@Field("userName") String username,
                                                 @Field("skey") String skey,
                                                 @Field("accessKey") String accessKey,
@@ -296,7 +296,7 @@ public interface APIService {
                                                 @Field("total_amount") String total_amount);
 
     @FormUrlEncoded
-    @POST("paywellapi/index.php/PaywellParibahanService/confirmPayment")
+    @POST("PaywellParibahanService/confirmPayment")
     Call<ResPaymentBookingAPI> confirmPayment(@Field("username") String username,
                                               @Field("skey") String skey,
                                               @Field("accessKey") String accessKey,

@@ -120,7 +120,6 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
 
             @Override
             public void onFailure(Call<TransactionLogDetailsModel> call, Throwable t) {
-                t.printStackTrace();
                 Toast.makeText(BusTransactionLogActivity.this, getString(R.string.network_error), Toast.LENGTH_SHORT).show();
                 dismissProgressDialog();
             }

@@ -7,15 +7,14 @@ public class AllUrl {
 
     // host url
     private static final String HOST_URL = "https://api.paywellonline.com/";
-    public static final String HOST_URL_AUTHENTICATION = "http://pw7.paywellonline.com/paywellapi/index.php/PaywellAuthentication/getToken";
+    public static final String HOST_URL_AUTHENTICATION = "https://agentapi.paywellonline.com/PaywellAuthentication/getToken";
 
-    public static final String HOST_URL_PHP_7 = "http://pw7.paywellonline.com/";
+    public static final String HOST_URL_PHP_7 = "https://agentapi.paywellonline.com/";
 
 
     // Base url
     public static final String BASE_URL = HOST_URL + "";
     public static final String BASE_URL_PHP_7 = HOST_URL_PHP_7 + "";
-    private static final String GET_RECHARGEABLE_URL = HOST_URL + "Android/GetRechargeOffer?";
 
 
 }

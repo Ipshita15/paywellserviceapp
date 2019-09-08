@@ -68,21 +68,21 @@ public class StatementMainActivity extends AppCompatActivity implements View.OnC
             case R.id.balance_statement_btn:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_STATEMENT_MENU, AnalyticsParameters.KEY_STATEMENT_BALANCE_MENU);
                 ViewStatementActivity.title = "balance";
-                ViewStatementActivity.url = "http://api.cloudwell.co/AndroidWebViewController/balanceStatement?username="
+                ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/balanceStatement?username="
                         + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
                 startActivity(new Intent(StatementMainActivity.this, ViewStatementActivity.class));
                 break;
             case R.id.sales_statement_btn:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_STATEMENT_MENU, AnalyticsParameters.KEY_STATEMENT_SALES_MENU);
                 ViewStatementActivity.title = "sales";
-                ViewStatementActivity.url = "http://api.cloudwell.co/AndroidWebViewController/salesStatement?username="
+                ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/salesStatementForhttps?username="
                         + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
                 startActivity(new Intent(StatementMainActivity.this, ViewStatementActivity.class));
                 break;
             case R.id.trx_statement_btn:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_STATEMENT_MENU, AnalyticsParameters.KEY_STATEMENT_TRX_MENU);
                 ViewStatementActivity.title = "trx";
-                ViewStatementActivity.url = "http://api.cloudwell.co/AndroidWebViewController/getAllTransactionStatement?username="
+                ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/getAllTransactionStatementForHttps?username="
                         + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
                 startActivity(new Intent(StatementMainActivity.this, ViewStatementActivity.class));
                 break;

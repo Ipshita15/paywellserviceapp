@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketRepository
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTicketRepository.BusTicketRepository
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatInfo
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Transport

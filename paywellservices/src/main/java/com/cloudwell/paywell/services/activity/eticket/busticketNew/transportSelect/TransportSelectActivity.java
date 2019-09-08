@@ -10,8 +10,9 @@ import android.widget.Spinner;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity;
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketRepository;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTicketRepository.BusTicketRepository;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.BusTicketStatusFragment;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.OnClickListener;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Transport;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.search.BusCitySearchActivity;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.transportSelect.view.IBusSeletedView;
@@ -112,6 +113,18 @@ public class TransportSelectActivity extends BusTricketBaseActivity implements V
                     }
                     busListAdapter.notifyDataSetChanged();
                     dismissProgressDialog();
+                } else {
+                    dismissProgressDialog();
+
+                    BusTicketStatusFragment busTicketStatusFragment = new BusTicketStatusFragment();
+                    BusTicketStatusFragment.message = getString(R.string.please_try_again);
+                    busTicketStatusFragment.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick() {
+                            finish();
+                        }
+                    });
+                    busTicketStatusFragment.show(getSupportFragmentManager(), "dialog");
                 }
             }
         });

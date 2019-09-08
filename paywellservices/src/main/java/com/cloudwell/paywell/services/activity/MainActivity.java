@@ -42,12 +42,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cloudwell.paywell.services.BuildConfig;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.about.AboutActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.chat.ChatActivity;
 import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity;
 import com.cloudwell.paywell.services.activity.mfs.MFSMainActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.MyFavoriteMenuActivity;
@@ -677,12 +679,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         assert _pwId != null;
 
         try {
-            _pwId.setText(getString(R.string.rid) + mAppHandler.getRID());
+            String rid = getString(R.string.rid) + mAppHandler.getRID();
+            if (BuildConfig.DEBUG) {
+
+                rid = rid + " (Beta)";
+            }
+            _pwId.setText(rid);
             if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
                 _pwId.setTypeface(AppController.getInstance().getOxygenLightFont());
             } else {
                 _pwId.setTypeface(AppController.getInstance().getAponaLohitFont());
             }
+
+
         } catch (Exception ex) {
             ex.printStackTrace();
             Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
@@ -2318,7 +2327,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_ETICKET_BUS);
 
 
-                intent = new Intent(getApplicationContext(), ETicketMainActivity.class);
+                intent = new Intent(getApplicationContext(), BusTicketMenuActivity.class);
                 intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_BUS, true);
                 startActivityWithFlag(intent);
                 break;
@@ -2372,7 +2381,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_BALANCE_MENU);
                 ViewStatementActivity.title = "balance";
-                ViewStatementActivity.url = "http://api.cloudwell.co/AndroidWebViewController/balanceStatement?username="
+                ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/balanceStatement?username="
                         + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
 
                 intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
@@ -2385,7 +2394,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_SALES_MENU);
                 ViewStatementActivity.title = "sales";
-                ViewStatementActivity.url = "http://api.cloudwell.co/AndroidWebViewController/salesStatement?username="
+                ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/salesStatementForhttps?username="
                         + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
 
 
@@ -2397,7 +2406,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_TRX_MENU);
                 ViewStatementActivity.title = "trx";
-                ViewStatementActivity.url = "http://api.cloudwell.co/AndroidWebViewController/getAllTransactionStatement?username="
+                ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/getAllTransactionStatementForHttps?username="
                         + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
 
                 intent = new Intent(getApplicationContext(), ViewStatementActivity.class);

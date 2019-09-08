@@ -1,7 +1,7 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.viewModel
 
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketBaseViewMode
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.BusTicketRepository
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.viewMode.BusTicketBaseViewMode
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTicketRepository.BusTicketRepository
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
 import com.cloudwell.paywell.services.retrofit.ApiUtils

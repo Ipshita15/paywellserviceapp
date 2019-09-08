@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:card_view="http://schemas.android.com/apk/res-auto"
-             xmlns:fancy="http://schemas.android.com/apk/res-auto"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:id="@+id/rootLayout"
-             android:layout_height="match_parent"
-             tools:context=".activity.eticket.busticketNew.BusPassengerBoothDepartureActivity">
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/rootLayout"
+    android:layout_height="match_parent"
+    tools:context=".activity.eticket.busticketNew.passenger.BusPassengerBoothDepartureActivity">
 
-    <include layout="@layout/tab_background_bus"/>
+    <include layout="@layout/tab_background_bus" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -36,8 +36,7 @@
                     android:orientation="vertical"
                     android:paddingLeft="15dp"
                     android:paddingTop="15dp"
-                    android:paddingRight="15dp"
-                    >
+                    android:paddingRight="15dp">
 
 
                     <LinearLayout
@@ -52,8 +51,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/your_seats"
-                            android:textSize="14sp"
-                            />
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/busSeatsTV"
@@ -63,8 +61,7 @@
                             android:layout_marginLeft="8dp"
                             android:text="A1,A2"
                             android:textColor="@color/bus_button_color"
-                            android:textSize="18sp"
-                            />
+                            android:textSize="18sp" />
 
                     </LinearLayout>
 
@@ -78,8 +75,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/total_price"
-                            android:textSize="14sp"
-                            />
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tvTotalPrice"
@@ -90,8 +86,7 @@
                             android:layout_marginBottom="10dp"
                             android:text="500"
                             android:textColor="@color/bus_button_color"
-                            android:textSize="18sp"
-                            />
+                            android:textSize="18sp" />
 
                     </LinearLayout>
 
@@ -119,7 +114,7 @@
                                 android:lines="1"
                                 android:padding="10dp"
                                 android:textSize="19sp"
-                                android:theme="@style/BusAppTheme"/>
+                                android:theme="@style/BusAppTheme" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -142,7 +137,7 @@
                                 android:lines="1"
                                 android:padding="10dp"
                                 android:textSize="19sp"
-                                android:theme="@style/BusAppTheme"/>
+                                android:theme="@style/BusAppTheme" />
                         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -166,7 +161,7 @@
                                 android:inputType="phone"
                                 android:padding="10dp"
                                 android:textSize="19sp"
-                                android:theme="@style/BusAppTheme"/>
+                                android:theme="@style/BusAppTheme" />
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -188,7 +183,7 @@
                                 android:lines="1"
                                 android:padding="10dp"
                                 android:textSize="19sp"
-                                android:theme="@style/BusAppTheme"/>
+                                android:theme="@style/BusAppTheme" />
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -210,7 +205,7 @@
                                 android:lines="1"
                                 android:padding="10dp"
                                 android:textSize="19sp"
-                                android:theme="@style/BusAppTheme"/>
+                                android:theme="@style/BusAppTheme" />
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -230,7 +225,7 @@
                                 android:layout_marginEnd="10dp"
                                 android:textColor="@color/bus_button_color"
                                 android:text="@string/bus_info_gender"
-                                android:textSize="19sp"/>
+                                android:textSize="19sp" />
 
                             <RadioGroup
                                 android:id="@+id/radioGroup"
@@ -244,14 +239,14 @@
                                     android:layout_height="wrap_content"
                                     android:checked="true"
                                     android:text="@string/male"
-                                    android:theme="@style/BusAppTheme"/>
+                                    android:theme="@style/BusAppTheme" />
 
                                 <RadioButton
                                     android:id="@+id/femaleRB"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/female"
-                                    android:theme="@style/BusAppTheme"/>
+                                    android:theme="@style/BusAppTheme" />
 
                             </RadioGroup>
                         </LinearLayout>
@@ -278,8 +273,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/textView21"
@@ -297,7 +291,7 @@
                         android:textSize="20sp"
                         card_view:layout_constraintEnd_toEndOf="parent"
                         card_view:layout_constraintStart_toStartOf="parent"
-                        card_view:layout_constraintTop_toTopOf="parent"/>
+                        card_view:layout_constraintTop_toTopOf="parent" />
 
                     <Spinner
                         android:id="@+id/boothList"
@@ -310,9 +304,10 @@
                         android:layout_marginRight="8dp"
                         android:dropDownSelector="@drawable/bus_down_drop_icon"
                         android:padding="5dp"
+                        android:spinnerMode="dialog"
                         card_view:layout_constraintEnd_toEndOf="parent"
                         card_view:layout_constraintStart_toStartOf="parent"
-                        card_view:layout_constraintTop_toBottomOf="@+id/textView21"/>
+                        card_view:layout_constraintTop_toBottomOf="@+id/textView21" />
 
                     <View
 
@@ -326,7 +321,7 @@
                         android:background="@color/bus_button_color"
                         card_view:layout_constraintEnd_toEndOf="parent"
                         card_view:layout_constraintStart_toStartOf="parent"
-                        card_view:layout_constraintTop_toBottomOf="@+id/boothList"/>
+                        card_view:layout_constraintTop_toBottomOf="@+id/boothList" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -347,7 +342,7 @@
                 fancy:fb_iconPosition="left"
                 fancy:fb_radius="5dp"
                 fancy:fb_text="@string/continue_booking"
-                fancy:fb_textColor="#FFFFFF"/>
+                fancy:fb_textColor="#FFFFFF" />
         </LinearLayout>
     </ScrollView>
 

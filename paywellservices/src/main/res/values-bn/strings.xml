@@ -68,7 +68,7 @@
     <string name="home_bkash_bank_trns_req_title">ব্যাংক ট্রান্সফার</string>
     <string name="home_bkash_cash_req">ক্যাশের জন্য\nঅনুরোধ</string>
     <string name="home_bkash_cash_req_title">ক্যাশের জন্য অনুরোধ</string>
-    <string name="home_eticket_bus">বাস টিকেট</string>
+    <string name="home_eticket_bus">বাস টিকিট</string>
     <string name="home_eticket_air">বিমান টিকিট</string>
     <string name="home_product_ajker_deal">আজকের ডিল</string>
     <string name="home_product_pw_wholesale">পেওয়েল\nহোলসেল</string>
@@ -166,11 +166,7 @@
     <string name="pb_acc_mismatch_error_msg">অ্যাকাউন্ট নম্বর মিলেনি</string>
     <string name="pb_full_name_error_msg">সম্পূর্ণ নাম দিন</string>
     <string name="banglalion_acc_error_msg">সর্বনিম্ন ৪ ডিজিট দিন</string>
-    <string name="selection_error_msg">সঠিকভাবে নির্বাচন করুন</string>
     <string name="journey_date_select_error_msg">যাত্রা শুরু নির্বাচন করুন</string>
-    <string name="seat_select_error_msg">আসন নির্বাচন করুন</string>
-    <string name="seat_limit_select_error_msg">সর্বোচ্চ ৪টি আসন নির্বাচন করা যাবে</string>
-    <string name="ticket_name_error_msg">নাম দিন</string>
     <string name="ticket_destination_error_msg">প্রথম ৩ অক্ষর লিখুন</string>
     <string name="old_pin_error_msg">আগের পিন নম্বর দিন</string>
     <string name="new_pin_error_msg">সঠিকভাবে নতুন পিন নম্বর দিন</string>
@@ -199,29 +195,14 @@
     <string name="conf_topup_title_msg">অনুরোধ বিস্তারিত</string>
     <string name="confirm_title_msg">নিশ্চিতকরণ</string>
     <string name="alert_confirm_msg">আপনি কি ক্যাশ টাকা হাতে পেয়েছেন?</string>
-    <string name="from_city_msg">যাত্রা শুরু</string>
     <string name="to_city_msg">গন্তব্য</string>
-    <string name="select_city_ticket_msg">শহর নির্বাচন</string>
-    <string name="calendar_ticket_msg">ক্যালেন্ডার</string>
-    <string name="bus_list_ticket_msg">বাস তালিকা</string>
-    <string name="route_select_error_msg">বাস রুটগুলো গমনীয় নয়</string>
-    <string name="all_list_ticket_msg">সমস্ত</string>
-    <string name="ac_list_ticket_msg">এ/সি</string>
-    <string name="non_ac_list_ticket_msg">নন এ/সি</string>
-    <string name="seat_list_ticket_msg">আসন তালিকা</string>
     <string name="purchase_ticket_msg">টিকেট ক্রয়</string>
-    <string name="tk_with_charge_msg">টাকা(চার্জসহ)</string>
-    <string name="personal_info_msg">ব্যক্তিগত তথ্য</string>
-    <string name="agree_statement_msg">আমি শর্তাবলীগুলোর সাথে সম্মতি প্রদান করছি</string>
     <string name="journey_date_title_ticket_msg">যাত্রার দিন নির্বাচন করুন</string>
     <string name="three_char_msg">প্রথম ৩ অক্ষর</string>
     <string name="hint_source_msg">**স্টেশনের নাম দেখার জন্য, প্রথম তিন অক্ষর লিখুন</string>
     <string name="reset_pin_msg">আপনি কি পিন পরিবর্তন করতে চান?</string>
     <string name="change_pin_status_msg">আপনার পিন সফলভাবে পরিবর্তন করা হয়েছে</string>
     <string name="bank_transfer_header_msg">নীচের যেকোন ব্যাংকের লোগো সিলেক্ট করে, ব্যাংকের তথ্য জেনে নিন এবং ডিপোজিট স্লিপ আপলোড করুন</string>
-    <string name="today_msg">Today</string>
-    <string name="unread_first_msg">আপনার নতুন</string>
-    <string name="unread_second_msg">টি ম্যাসেজ আছে</string>
     <string name="language_title_msg">ভাষা নির্বাচন</string>
     <string name="wait_msg">একটু অপেক্ষা করুন</string>
     <string name="bell_msg">bell</string>
@@ -240,7 +221,6 @@
     <string name="verify_quote">উপরোক্ত নম্বরে একটি পিন আসবে এবং স্বয়ংক্রিয় ভাবে নম্বরটি ভেরিফাই হয়ে যাবে।</string>
     <string name="allow_error_msg">অনুমতি নেই। প্রথমে পিন পরিবর্তন করুন</string>
     <string name="select_phn_title_msg">নম্বর নির্বাচন করুন</string>
-    <string name="amount_transfer_msg">টাকা স্থানান্তর সফল</string>
     <string name="success_msg">সফল</string>
     <string name="request_failed_msg">ফেল</string>
     <string name="coming_soon_msg">শীঘ্রই আসছে</string>
@@ -285,14 +265,9 @@
     <string name="to_city_ticket_des">গন্তব্যঃ</string>
     <string name="journey_date_ticket_des">যাত্রার দিনঃ</string>
     <string name="selected_seat_des">নির্বাচিত আসনঃ</string>
-    <string name="coach_des">কোচের ধরনঃ</string>
     <string name="ticket_des">টিকেটঃ</string>
     <string name="boarding_des">ছাড়ার সময়ঃ</string>
-    <string name="droping_des">ছাড়াঃ</string>
-    <string name="passenger_name_des">যাত্রীর নামঃ</string>
     <string name="coach_number_des">কোচঃ</string>
-    <string name="seat_type_des">আসন ধরনঃ</string>
-    <string name="purchase_date_des">কেনার দিনঃ</string>
     <string name="passenger_type_des">যাত্রীর ধরনঃ</string>
     <string name="no_of_passenger_des">যাত্রীর সংখ্যাঃ</string>
     <string name="age_of_passenger_des">যাত্রীর বয়সঃ</string>
@@ -328,18 +303,12 @@
 
     <string name="pre_paid_str">prepaid</string>
     <string name="post_paid_str">postpaid</string>
-    <string name="image_city_str">City</string>
 
     <string name="star_sign">*</string>
 
     <!-- Paywell Services string level -->
     <string name="paywell_reg">পেওয়েল নিবন্ধন</string>
     <string name="paywell_reg_missing">অনুপস্থিত তথ্য</string>
-    <string name="search_hint">Search hint</string>
-    <string name="search_label">search label</string>
-    <string name="search_global_description">search global description</string>
-    <string name="date_format">EEE dd-MMM-yyyy</string>
-    <string name="time_format">"yyyy-MM-dd</string>
     <string name="paywell_footer">https://www.paywellonline.com</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -504,10 +473,6 @@
 
 
     <!-- Utility -->
-    <string name="pb_reg">https://www.paywellonline.com/default/api/polli/polli_regs.php?</string>
-    <string name="pb_reg_with_otp">https://www.paywellonline.com/default/api/polli/polli_reg_otp.php</string>
-    <string name="pb_bill_pay">https://www.paywellonline.com/default/api/polli/polli.php?</string>
-    <string name="pb_bill_pay_pollyBiddyutPhoneNoChange">https://api.paywellonline.com/PaywelltransactionPollyBiddyut/pollyBiddyutPhoneNoChange?</string>
 
 
     <string name="desco_bill_enq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
@@ -533,7 +498,6 @@
     <string name="karnaphuli_bill">https://api.paywellonline.com/PaywelltransactionMYCash/kgdcl_billinfo</string>
 
     <!-- Eticket -->
-    <string name="bus_ticket_url">https://www.paywellonline.com/final/BdTickets/BdBusTicket.php?</string>
     <string name="train_source_url">https://www.paywellonline.com/banglalink_services/train.php?</string>
 
     <!-- Payment -->
@@ -565,11 +529,6 @@
     <string name="ajd_share">http://ajkerdeal.paywellonline.com</string>
 
 
-    <string name="ek_shope_token">http://sandbox.paywellonline.com/ekshop/get_token</string>
-    <string name="ek_redirect">http://sandbox.paywellonline.com/ekshop/redirect?</string>
-    <string name="ek_report">http://sandbox.paywellonline.com/ekshop/report</string>
-
-
     <string name="b2b_token">https://wholesale.paywellonline.com/Home/CreateToken?</string>
     <string name="b2b_login">https://wholesale.paywellonline.com/Home/CheckLoginByToken?</string>
     <string name="b2b_refresh_token">https://wholesale.paywellonline.com/Retailer/MetaData/PingServer</string>
@@ -587,7 +546,6 @@
     <!-- Chat -->
     <string name="chat">https://www.paywellonline.com/chatting-retailer/?</string>
 
-    <string name="merchant_balance_return_url">https://api.paywellonline.com/PaywelltransactionSDA/SDAToMerchentBalanceReturn</string>
     <string name="title_activity_my_favorite_menu">আমার পছন্দ</string>
     <string name="can_not_add_more_than">৮ মেনু থেকে বেশি যোগ করতে পারবেন না</string>
     <string name="Added">যোগ করা হয়েছে:</string>
@@ -609,7 +567,6 @@
     <string name="home_utility_pb_bill_statu_inquery_bt">বিল স্ট্যাটাস \nঅনুসন্ধান</string>
     <string name="home_utility_pb_bill_change_number_bt">নম্বর পরিবর্তন</string>
     <string name="home_utility_pb_phone_number_inquiry_bt">নম্বর পরিবর্তন \n অনুসন্ধান</string>
-    <string name="one_way">One Way</string>
     <string name="title_activity_air_tricket_menu">Air Ticket</string>
     <string name="title_serach_view">Search Flights</string>
     <string name="no_search_results">No search results</string>
@@ -617,11 +574,9 @@
     <string name="search">সার্চ</string>
     <string name="cancel">বুকিং বাতিল</string>
     <string name="transaction_log">বুকিং লগ</string>
-    <string name="action_search">Serach</string>
     <string name="title_booking_and_review">Review and Book</string>
     <string name="baggage_policy_details"><![CDATA[Baggage & Policy Details]]></string>
     <string name="refundable">" Is refundable"</string>
-    <string name="non_refundable">No Refundable</string>
     <string name="passport_mandatory">Passport Mandatory</string>
     <string name="passport_not_mandatory">Passport not mandatory</string>
     <string name="fares_information">Fare Information</string>
@@ -641,8 +596,6 @@
     <string name="country">Country *</string>
     <string name="contact_number">Contact Number *</string>
     <string name="email">Email *</string>
-    <string name="add_id">Add ID</string>
-    <string name="passport_id">Passport/ID</string>
     <string name="hit_passport_number">Passport Number</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
@@ -656,9 +609,7 @@
     <string name="lbl_take_camera_picture">Camara</string>
     <string name="lbl_choose_from_gallery">Gallery</string>
     <string name="lbl_set_profile_photo" />
-    <string name="please_add_id_info_for_this_travaler">Please add ID info for this passenger</string>
     <string name="tile_cencel_booking">Cancel Booking</string>
-    <string name="tile_cencel_transaction_log">Transaction Log</string>
     <string name="airport_search_hit">Airport name or code or country name </string>
     <string name="from">From</string>
     <string name="to">To</string>
@@ -673,15 +624,11 @@
     <string name="child">Child</string>
     <string name="infant">Infant</string>
     <string name="kg_per_adult">per adult ticket</string>
-    <string name="economy_class">Economy Class: </string>
     <string name="baggage">Baggage :</string>
     <string name="n_a">N/A</string>
     <string name="slycalendar_save">Save</string>
     <string name="slycalendar_cancel">Cancel</string>
     <string name="slycalendar_next">Next</string>
-    <string name="slycalendar_singledate" translatable="false">EE, dd MMMM</string>
-    <string name="slycalendar_short" translatable="false">EE, dd</string>
-    <string name="slycalendar_short_month" translatable="false">EE, dd MMM</string>
     <string name="slycalendar_dates_period" translatable="false">%1$s – %2$s</string>
     <string name="continue_text">Continue</string>
     <string name="details_text">Details</string>
@@ -729,7 +676,6 @@
     <string name="search_flights">Search Flights</string>
     <string name="return_text">Return</string>
     <string name="airport">Airport</string>
-    <string name="duration_tiime">Duration:</string>
     <string name="more">More</string>
     <string name="price_details">Price Details</string>
     <string name="rules">Rules:</string>
@@ -752,10 +698,8 @@
     <string name="add_passenger">Add passenger</string>
     <string name="national_id">NID/Office ID/Student ID Number</string>
     <string name="booking_now">Book Now</string>
-    <string name="ticket_booking">Booking Now</string>
     <string name="booking_id">Booking ID: </string>
     <string name="ticket_status">Ticket status :</string>
-    <string name="please_seleted_a_option">please select a option</string>
     <string name="view_tricket">View Ticket</string>
     <string name="title_ticket_viewer">Ticket View</string>
     <string name="please_try_again">Please try again</string>
@@ -766,11 +710,8 @@
     <string name="please_select_atleast_one_email_address">Please select atleast one email address</string>
     <string name="message">Message</string>
     <string name="please_ensure_the_id_is_valid_for_at_least_6_months_after_the_date_of_departure">Please ensure the ID is valid for at least 6 months after the date of departure.</string>
-    <string name="ettitle_booking_and_review">Review and Book</string>
-    <string name="action_settings">action</string>
     <string name="booking_instructions_for_children_infants">Booking instructions for children/infants</string>
     <string name="earnings">Earnings</string>
-    <string name="instant_ticketing">Instant Ticketing</string>
     <string name="issue_ticket">Issue Ticket</string>
     <string name="tricking">Issue Ticket</string>
     <string name="new_ticket_prices">New prices Tk.</string>
@@ -778,8 +719,6 @@
     <string name="outbound">Outbound</string>
     <string name="inbound">Inbound</string>
     <string name="flight">Flight</string>
-    <string name="cancel_ticket">Cancel Ticket</string>
-    <string name="cancellation_fee">Fee:</string>
     <string name="passport_expiry_date">Passport Expiry Date</string>
 
     <string name="Passport_number_mandatory">Passport number mandatory</string>
@@ -795,13 +734,8 @@
     <string name="amount_optional">Amount(optional)</string>
     <string name="passport_image_mandatory">passport image mandatory</string>
     <string name="visa_image_mandatory">Visa image mandatory</string>
-    <string name="titel_reschedule">Reschedule</string>
     <string name="booking_info">Booking Info</string>
-    <string name="ticket_cancel">Cancel Ticket</string>
-    <string name="reissue_reschedule">Re-issue/Reschedule</string>
-    <string name="reschedule">Reschedule</string>
     <string name="ekshop">এক-শপ</string>
-    <string name="visit">প্রবেশ</string>
     <string name="report">প্রতিবেদন</string>
     <string name="home_title_ek_shope">এক-শপ</string>
     <string name="invalid_date">ভুল তারিখ</string>
@@ -824,10 +758,6 @@
     <string name="title_docs_update">Docs/Info Update</string>
     <string name="update_request">Update Request</string>
 
-    <string name="title_bus_tickets">Search bus tickets</string>
-    <string name="jsonData">
-        { "1": "A1", "2": "A2", "3": "A3", "4": "B1", "5": "B2", "6": "B3", "7": "C1", "8": "C2", "9": "C3", "10": "D1", "11": "D2", "12": "D3", "13": "E1", "14": "E2", "15": "E3", "16": "F1", "17": "F2", "18": "F3", "19": "G1", "20": "G2", "21": "G3", "22": "H1", "23": "H2", "24": "H3", "25": "I1", "26": "I2", "27": "I3" }
-    </string>
     <string name="title_bus_transtport_list">Search transport</string>
     <string name="coach_no">Coach no</string>
     <string name="departure">Departure</string>
@@ -857,5 +787,6 @@
     <string name="bus_validation_message">Please enter all the data first</string>
     <string name="no_boarding_point_found">No boarding point found!!!</string>
     <string name="sort">Sort</string>
+    <string name="selected_seat">Selected seat:</string>
 
 </resources>

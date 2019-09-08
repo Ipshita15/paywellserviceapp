@@ -3,7 +3,6 @@ package com.cloudwell.paywell.services.retrofit
 
 import com.cloudwell.paywell.services.BuildConfig
 import com.cloudwell.paywell.services.app.AppController
-import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.itkacher.okhttpprofiler.OkHttpProfilerInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -36,7 +35,7 @@ object RetrofitClient {
                 val logging = HttpLoggingInterceptor()
                 logging.setLevel(HttpLoggingInterceptor.Level.BODY)
                 okHttpClient.addInterceptor(logging)
-                okHttpClient.addNetworkInterceptor(StethoInterceptor())
+//                okHttpClient.addNetworkInterceptor(StethoInterceptor())
                 okHttpClient.addInterceptor(OkHttpProfilerInterceptor())
 
             }
@@ -58,7 +57,7 @@ object RetrofitClient {
     fun getClientPHP(baseUrl: String): Retrofit? {
         if (retrofitPHP7 == null) {
             val httpClient = OkHttpClient.Builder()
-            httpClient.connectTimeout(60, TimeUnit.SECONDS).readTimeout(60, TimeUnit.SECONDS).writeTimeout(60, TimeUnit.SECONDS)
+            httpClient.connectTimeout(90, TimeUnit.SECONDS).readTimeout(90, TimeUnit.SECONDS).writeTimeout(90, TimeUnit.SECONDS)
 
             httpClient.addInterceptor(HeaderTokenInterceptor(AppController.getContext()))
 
@@ -66,7 +65,7 @@ object RetrofitClient {
                 val logging = HttpLoggingInterceptor()
                 logging.setLevel(HttpLoggingInterceptor.Level.BODY)
                 httpClient.addInterceptor(logging)
-                httpClient.addNetworkInterceptor(StethoInterceptor())
+//                httpClient.addNetworkInterceptor(StethoInterceptor())
                 httpClient.addInterceptor(OkHttpProfilerInterceptor())
             }
             httpClient.authenticator(TokenAuthenticator())
