@@ -1,13 +1,13 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.transationLog
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.base.TransitionLogBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList
@@ -84,7 +84,7 @@ class AirThicketTranslationLogActivity : TransitionLogBaseActivity() {
             val sectionAdapter = SectionedRecyclerViewAdapter()
 
             groupBy.forEach {
-                val transitionRVSectionAdapter = TransitionRVSectionAdapter(it.key.toString(), it.value, isEnglish)
+                val transitionRVSectionAdapter = TransitionRVSectionAdapter(applicationContext, it.key.toString(), it.value, isEnglish)
                 transitionRVSectionAdapter.setOnActionButtonClick(object : TransitionRVSectionAdapter.ItemClickListener {
                     override fun onRootViewClick(datum: Datum) {
 
@@ -131,7 +131,7 @@ class AirThicketTranslationLogActivity : TransitionLogBaseActivity() {
         }
 
         if (it.modelPriceChange != null) {
-            showTricketPriceChangeDialog(it.modelPriceChange!!)
+            showTicketPriceChangeDialog(it.modelPriceChange!!)
         }
 
     }

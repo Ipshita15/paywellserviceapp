@@ -3,8 +3,6 @@ package com.cloudwell.paywell.services.libaray
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Rect
-import android.support.annotation.ColorInt
-import android.support.annotation.StyleRes
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
@@ -12,6 +10,8 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.view.animation.LinearInterpolator
 import android.widget.FrameLayout
+import androidx.annotation.ColorInt
+import androidx.annotation.StyleRes
 import com.cloudwell.paywell.services.R
 import kotlinx.android.synthetic.main.sequence_layout.view.*
 

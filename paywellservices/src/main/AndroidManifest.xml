@@ -47,9 +47,11 @@
     <uses-permission
         android:name="android.permission.PROCESS_OUTGOING_CALLS"
         tools:node="remove"/>
+
     <uses-permission
         android:name="android.permission.CALL_PHONE"
         tools:node="remove"/>
+
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -75,8 +77,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
-
-
         <uses-library
             android:name="com.google.android.maps"
             android:required="false"/>
@@ -282,95 +282,12 @@
             android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN"/> -->
-            <!-- <action android:name="android.intent.action.VIEW"/> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
-            <!-- </intent-filter> -->
-
-
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cloudwell.paywell.services.activity.MainActivity"/>
         </activity> <!-- Bus ticket activities -->
-        <activity
-            android:name=".activity.eticket.busticket.JourneyDateActivity"
-            android:parentActivityName=".activity.eticket.busticket.BusMainActivity"
-            android:screenOrientation="portrait">
 
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.eticket.busticket.BusMainActivity"/>
-        </activity>
-        <activity
-            android:name=".activity.eticket.busticket.FromCityListActivity"
-            android:launchMode="singleTop"
-            android:parentActivityName=".activity.eticket.busticket.BusMainActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH"/>
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable"/>
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.eticket.busticket.BusMainActivity"/>
-        </activity>
-        <activity
-            android:name=".activity.eticket.busticket.ToCityListActivity"
-            android:launchMode="singleTop"
-            android:parentActivityName=".activity.eticket.busticket.BusMainActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH"/>
-            </intent-filter>
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.eticket.busticket.BusMainActivity"/>
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable"/>
-        </activity>
-        <activity
-            android:name=".activity.eticket.busticket.SearchBusActivity"
-            android:parentActivityName=".activity.eticket.busticket.BusMainActivity"
-            android:screenOrientation="portrait">
-
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.eticket.busticket.BusMainActivity"/>
-        </activity>
-        <activity
-            android:name=".activity.eticket.busticket.SeatListActivity"
-            android:parentActivityName=".activity.eticket.busticket.SearchBusActivity"
-            android:screenOrientation="portrait">
-
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.eticket.busticket.SearchBusActivity"/>
-        </activity>
-        <activity
-            android:name=".activity.eticket.busticket.BoardingNDropping"
-            android:parentActivityName=".activity.eticket.busticket.SearchBusActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
-
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.eticket.busticket.SearchBusActivity"/>
-        </activity> <!-- activities for Payments -->
         <activity
             android:name=".activity.statements.StatementMainActivity"
             android:parentActivityName=".activity.MainActivity"
@@ -403,12 +320,6 @@
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
-            <!-- <intent-filter> -->
-            <!-- <action android:name="com.cloudwell.paywell.services.MESSAGE" /> -->
-            <!-- &lt;!&ndash; <action android:name="android.intent.action.VIEW"/> &ndash;&gt; -->
-            <!-- <category android:name="android.intent.category.DEFAULT" /> -->
-            <!-- </intent-filter> -->
-            <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cloudwell.paywell.services.activity.MainActivity"/>
@@ -427,32 +338,23 @@
         <activity
             android:name=".activity.product.ekShop.EkShopeMenuActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".activity.product.ekShop.EKShopActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
-
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".activity.product.ekShop.report.ReportMainActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
-
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".activity.product.ekShop.report.ReportListActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
-
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".activity.product.ekShop.report.ReportDetailsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
-
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".activity.eticket.trainticket.SearchTrainActivity"
             android:parentActivityName=".activity.eticket.trainticket.TrainTicketActivity"
@@ -1187,6 +1089,7 @@
             android:name=".activity.eticket.airticket.airportSearch.search.AirportsSearchActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+
         </activity>
         <activity
             android:name=".activity.eticket.airticket.flightDetails1.FlightDetails1Activity"
@@ -1212,11 +1115,13 @@
             android:name=".activity.eticket.airticket.finalReview.AllSummaryActivity"
             android:label="@string/title_all_summary"
             android:screenOrientation="portrait">
+
         </activity>
         <activity
-            android:name=".activity.eticket.airticket.flightDetails1.fragment.BaggageAndPoliciesActiivty"
+            android:name=".activity.eticket.airticket.flightDetails1.BaggageAndPoliciesActiivty"
             android:label="@string/title_activity_baggage_and_policies_actiivty"
             android:screenOrientation="portrait">
+
         </activity>
         <activity
             android:name=".activity.eticket.airticket.bookingCencel.BookingCancelActivity"
@@ -1234,49 +1139,102 @@
             android:name=".activity.eticket.airticket.booking.BookingStatusActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
         <activity
             android:name=".activity.eticket.airticket.transationLog.AirThicketTranslationLogActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
         <activity
             android:name=".activity.eticket.airticket.ticketViewer.TicketViewerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
         <activity
             android:name=".activity.eticket.airticket.ticketViewer.emailTicket.PassengerEmailSendListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
         <activity
             android:name=".activity.eticket.airticket.transationLog.viewBookingInfo.ViewBookingInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
+
         <activity
-            android:name=".activity.eticket.airticket.ticketCencel.TricketCancelActivity"
+            android:name=".activity.eticket.busticketNew.transportSelect.TransportSelectActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
         <activity
-            android:name=".activity.eticket.airticket.reIssueTicket.ReIssueTicketActivity"
+            android:name=".activity.eticket.busticketNew.search.BusCitySearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity
+            android:name=".activity.eticket.airticket.ticketCencel.TicketCancelActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity
+            android:name=".activity.eticket.airticket.reIssueTicket.UpdateDocOrInfomationRequestActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
         <activity
             android:name=".activity.eticket.airticket.reIssueTicket.editReissuePassengerActivity.EditReissuePassengerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity
+            android:name=".activity.eticket.busticketNew.menu.BusTicketMenuActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
 
-        <receiver android:name=".ActionReceiver">
+        <activity
+            android:name=".activity.eticket.busticketNew.seatLayout.SeatLayoutActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
 
-        </receiver>
+        </activity>
+        <activity
+            android:name=".activity.eticket.busticketNew.busTransportList.BusTransportListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".activity.eticket.busticketNew.BusPassengerBoothDepartureActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activity.eticket.busticketNew.passengerInformation.PassengerInformationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity
+            android:name=".activity.eticket.busticketNew.busTransactionLog.BusTransactionLogActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+
+        <receiver android:name=".ActionReceiver"/>
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">

@@ -21,48 +21,6 @@ object DateUtils {
             return cal.time.toString()
         }
 
-    fun getTimeInformationdifferenceDate(startDate: Date, endDate: Date): String {
-        //milliseconds
-        var different = endDate.time - startDate.time
-
-        val secondsInMilli: Long = 1000
-        val minutesInMilli = secondsInMilli * 60
-        val hoursInMilli = minutesInMilli * 60
-        val daysInMilli = hoursInMilli * 24
-
-        val elapsedDays = different / daysInMilli
-        different = different % daysInMilli
-
-        val elapsedHours = different / hoursInMilli
-        different = different % hoursInMilli
-
-        val elapsedMinutes = different / minutesInMilli
-        different = different % minutesInMilli
-
-
-        val elapsedSeconds = different / secondsInMilli
-
-        var date = "";
-        if (elapsedDays != 0L) {
-            date = "$elapsedDays d "
-        }
-
-        if (elapsedSeconds != 0L) {
-            date = "$elapsedHours h "
-        }
-
-
-        if (elapsedMinutes != 0L) {
-            date = "$elapsedMinutes m "
-        }
-
-        if (elapsedSeconds != 0L) {
-            date = "$elapsedSeconds s "
-        }
-
-        return date;
-    }
-
     fun getDurtingJounaryTime(millis: Long): String {
         var localMillis = millis
         if (localMillis < 0) {
@@ -103,190 +61,93 @@ object DateUtils {
         return sb.toString()
     }
 
+    fun getTotalDurationWithTransiteTime(duration: List<OutputSegment>): String {
+        val transitiveCalculation = getTransitiveCalculation(duration)
+//        val transitiveString = getDurationBreakdown(transitiveCalculation)
+        val totalDurationTime = getTotalDurationTime(duration)
+//        val totalDurationString = getDurationBreakdown(totalDurationTime)
 
-    fun getDurtingJounaryTimeNew(dateStart: Date, dateStop: Date): String {
-        //HH converts hour in 24 hours format (0-23), day calculation
-        val sb = StringBuilder(64)
-
-        try {
-
-
-            //in milliseconds
-            val diff = dateStop.time - dateStart.time
-
-            val diffSeconds = diff / 1000 % 60
-            val diffMinutes = diff / (60 * 1000) % 60
-            val diffHours = diff / (60 * 60 * 1000) % 24
-//            val diffDays = diff / (24 * 60 * 60 * 1000)
-
-//            if (diffDays != 0L) {
-//                sb.append(diffDays)
-//                sb.append(" day ")
-//            }
-
-            if (diffHours != 0L) {
-                sb.append(diffHours)
-                sb.append(" hr ")
-            }
-
-//            if (diffMinutes != 0L) {
-            sb.append(diffMinutes)
-            sb.append(" min ")
-//            }
-
-            if (diffSeconds != 0L) {
-                sb.append(diffSeconds)
-                sb.append(" s")
-            }
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-
-
-
-        return sb.toString()
+        val total = transitiveCalculation + totalDurationTime
+        return getDurationBreakdown(total)
 
     }
 
-
-    fun getDurtingJounaryTimeNew(duration: List<OutputSegment>): String {
-        //HH converts hour in 24 hours format (0-23), day calculation
-        val sb = StringBuilder(64)
+    fun getTotalDurationTime(duration: List<OutputSegment>): Long {
 
 
-        var diffMinutes = 0
-        var diffHours = 0
-
-        var durationInt = 0
-
+        var totalDuration = 0L
         duration.forEach {
-            durationInt = durationInt + it.journeyDuration.toInt()
+            totalDuration = totalDuration + it.journeyDuration.toString().toInt()
         }
 
-
-        diffHours = (durationInt / 60)
-        diffMinutes = (durationInt % 60)
-
-
-        if (diffHours != 0) {
-            sb.append(diffHours)
-            sb.append("h ")
-        }
-
-        if (diffMinutes != 0) {
-            sb.append(diffMinutes)
-            sb.append("m")
-        }
-
-        return sb.toString()
+        val toMillis = TimeUnit.MINUTES.toMillis(totalDuration)
+        return toMillis
 
     }
 
-    fun getDurtingJounaryTimeNewTest(duration: List<OutputSegment>): String {
-        //HH converts hour in 24 hours format (0-23), day calculation
+    private fun getTransitiveCalculation(data: List<OutputSegment>): Long {
+        var totalTransiteTime = 0L
 
-        val SECOND = 1000
-        val MINUTE = 60 * SECOND;
-        val HOUR = 60 * MINUTE;
-        val DAY = 24 * HOUR;
+        if (data.size > 1) {
+            var previousArrTime: Date? = null
+            data.forEachIndexed { index, it ->
+                val depTimeAPI = it.origin?.depTime?.split("T")
+                val arrTimeAPI = it.destination?.arrTime?.split("T")
+                val date = "yyyy-MM-dd HH:mm:ss"
+                val depTime = SimpleDateFormat(date, Locale.ENGLISH).parse(depTimeAPI?.get(0) + " " + depTimeAPI?.get(1)) as Date
+                val arrTime = SimpleDateFormat(date, Locale.ENGLISH).parse(arrTimeAPI?.get(0) + " " + arrTimeAPI?.get(1)) as Date
 
+                if (previousArrTime != null) {
+                    val journeyTransitTime = depTime.time - previousArrTime!!.time
+                    totalTransiteTime = totalTransiteTime + journeyTransitTime
+                }
+                previousArrTime = arrTime
 
-        val sb = StringBuilder(64)
-
-
-        var diffMinutes = 0
-        var diffHours = 0
-
-        var totalDiffent = 0L
-
-
-        duration.forEachIndexed { index, it ->
-            val depTimeAPI = it.origin?.depTime?.split("T")
-            val arrTimeAPI = it.destination?.arrTime?.split("T")
-            val date = "yyyy-MM-dd HH:mm:ss"
-            val depTime = SimpleDateFormat(date, Locale.ENGLISH).parse(depTimeAPI?.get(0) + " " + depTimeAPI?.get(1)) as Date
-            val arrTime = SimpleDateFormat(date, Locale.ENGLISH).parse(arrTimeAPI?.get(0) + " " + arrTimeAPI?.get(1)) as Date
-            val diff = arrTime.time - depTime.time
-
-            totalDiffent += diff
-
-            if (index != duration.lastIndex) {
-                val nextDepTimeAPI = duration.get(index + 1).origin?.depTime?.split("T")
-                val nextDepTime = SimpleDateFormat(date, Locale.ENGLISH).parse(nextDepTimeAPI?.get(0) + " " + nextDepTimeAPI?.get(1)) as Date
-                val transtionTimeDiff = nextDepTime.time - arrTime.time
-
-                totalDiffent += transtionTimeDiff
             }
-
-            com.orhanobut.logger.Logger.v("")
+            return totalTransiteTime
+        } else {
+            return totalTransiteTime
         }
-
-
-        diffMinutes = (totalDiffent / (1000 * 60) % 60).toInt()
-        diffHours = (totalDiffent / (1000 * 60 * 60) % 24).toInt()
-
-
-        if (diffHours != 0) {
-            sb.append(diffHours)
-            sb.append("h ")
-        }
-
-        if (diffMinutes != 0) {
-            sb.append(diffMinutes)
-            sb.append("m")
-        }
-
-        return sb.toString()
 
     }
 
 
-    fun getDartingJanuaryTimeNewTest(duration: OutputSegment): String {
-        //HH converts hour in 24 hours format (0-23), day calculation
+    fun getDurationBreakdown(millis: Long): String {
+        var millis = millis
+        if (millis < 0) {
+            throw IllegalArgumentException("Duration must be greater than zero!")
+        }
 
-        val SECOND = 1000
-        val MINUTE = 60 * SECOND;
-        val HOUR = 60 * MINUTE;
-        val DAY = 24 * HOUR;
+        val hours = TimeUnit.MILLISECONDS.toHours(millis)
+        millis -= TimeUnit.HOURS.toMillis(hours)
+        val minutes = TimeUnit.MILLISECONDS.toMinutes(millis)
+        millis -= TimeUnit.MINUTES.toMillis(minutes)
 
 
         val sb = StringBuilder(64)
 
-
-        var diffMinutes = 0
-        var diffHours = 0
-
-        var totalDiffent = 0L
-
-
-        val depTimeAPI = duration.origin?.depTime?.split("T")
-        val arrTimeAPI = duration.destination?.arrTime?.split("T")
-        val date = "yyyy-MM-dd HH:mm:ss"
-        val depTime = SimpleDateFormat(date, Locale.ENGLISH).parse(depTimeAPI?.get(0) + " " + depTimeAPI?.get(1)) as Date
-        val arrTime = SimpleDateFormat(date, Locale.ENGLISH).parse(arrTimeAPI?.get(0) + " " + arrTimeAPI?.get(1)) as Date
-        val diff = arrTime.time - depTime.time
-
-        totalDiffent += diff
-
-
-
-        diffMinutes = (totalDiffent / (1000 * 60) % 60).toInt()
-        diffHours = (totalDiffent / (1000 * 60 * 60) % 24).toInt()
-
-
-        if (diffHours != 0) {
-            sb.append(diffHours)
+        if (hours != 0L) {
+            sb.append(hours)
             sb.append("h ")
         }
 
-        if (diffMinutes != 0) {
-            sb.append(diffMinutes)
-            sb.append("m")
+        if (minutes != 0L) {
+            sb.append(minutes)
+            sb.append("m ")
         }
 
+        val toString = sb.toString();
         return sb.toString()
+    }
+
+
+    fun getTotalDurationTime(duration: OutputSegment): String {
+        val totalDuration = duration.journeyDuration.toString().toLong()
+
+        val toMillis = TimeUnit.MINUTES.toMillis(totalDuration)
+        val durationBreakdown = getDurationBreakdown(toMillis)
+
+        return durationBreakdown
 
     }
 

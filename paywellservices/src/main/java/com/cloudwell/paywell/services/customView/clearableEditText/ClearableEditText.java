@@ -14,7 +14,7 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 3/7/19.
  */
-public class ClearableEditText extends android.support.v7.widget.AppCompatEditText implements View.OnTouchListener, View.OnFocusChangeListener, TextWatcherListener {
+public class ClearableEditText extends androidx.appcompat.widget.AppCompatEditText implements View.OnTouchListener, View.OnFocusChangeListener, TextWatcherListener {
 
     public static enum Location {
         LEFT(0), RIGHT(2);

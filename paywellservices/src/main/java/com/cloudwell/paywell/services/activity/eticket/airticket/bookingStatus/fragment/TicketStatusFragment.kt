@@ -1,10 +1,10 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment
 
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import kotlinx.android.synthetic.main.fragment_prices_change.view.*
 
 
@@ -25,10 +25,10 @@ class TicketStatusFragment : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_status_cencelation, container, false)
 
-        v.tvFree.text = message
+        v.tvYourSeats.text = message
 
 
-        v.btActionIssueTicket.setOnClickListener {
+        v.btAction.setOnClickListener {
             dismiss()
 
         }

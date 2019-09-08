@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.myFavorite.adapter;
 
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.cloudwell.paywell.services.R;
@@ -12,10 +11,9 @@ import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus;
 import com.cloudwell.paywell.services.utils.ResorceHelper;
 import com.orhanobut.logger.Logger;
 
-
-
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 
 

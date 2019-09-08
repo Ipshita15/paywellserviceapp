@@ -1,20 +1,19 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2
 
-import android.arch.lifecycle.ViewModelProviders
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.BottomSheetBehavior
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.View
+import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.AllSummaryActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.BaggageAndPoliciesActiivty
+import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.BaggageAndPoliciesActiivty
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment.FlightFareDialogFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails2.adapter.AdapterForPassengers
@@ -25,6 +24,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.passengerList.P
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.utils.CalculationHelper
 import com.cloudwell.paywell.services.utils.RecyclerItemClickListener
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.contant_flight_details_2.*
 import kotlinx.android.synthetic.main.review_bottom_sheet.*
 
@@ -76,8 +76,8 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
             }
         })
 
-
-        val totalFareDetati = resposeAirPriceSearch.data?.results?.get(0)?.fares?.let { CalculationHelper.getTotalFareDetati(it) }
+        val AIRLINE_CODE = AppStorageBox.get(applicationContext, AppStorageBox.Key.AIRLINE_CODE) as String
+        val totalFareDetati = resposeAirPriceSearch.data?.results?.get(0)?.fares?.let { CalculationHelper.getTotalFareDetati(it, AIRLINE_CODE) }
 
         tvTotalPrice.text = totalFareDetati
 
@@ -233,11 +233,11 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
     private fun initViewModel() {
         viewMode = ViewModelProviders.of(this).get(FlightDetails2ViewModel::class.java)
 
-        viewMode.baseViewStatus.observe(this, android.arch.lifecycle.Observer {
+        viewMode.baseViewStatus.observe(this, androidx.lifecycle.Observer {
             handleViewCommonStatus(it)
         })
 
-        viewMode.mListMutableLiveDPassengers.observe(this, android.arch.lifecycle.Observer {
+        viewMode.mListMutableLiveDPassengers.observe(this, androidx.lifecycle.Observer {
             it?.let { it1 -> handleViewStatus(it1) }
         })
 

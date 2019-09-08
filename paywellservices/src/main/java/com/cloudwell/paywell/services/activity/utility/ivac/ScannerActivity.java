@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.utility.ivac;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 
 import com.cloudwell.paywell.services.R;
@@ -9,6 +8,8 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class ScannerActivity extends AppCompatActivity {
 

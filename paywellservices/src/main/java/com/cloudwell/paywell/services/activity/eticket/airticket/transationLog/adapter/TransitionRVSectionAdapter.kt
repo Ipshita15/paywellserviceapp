@@ -1,10 +1,14 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.adapter
 
-import android.support.v7.widget.RecyclerView
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Context.CLIPBOARD_SERVICE
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
 import com.cloudwell.paywell.services.app.AppController
@@ -13,10 +17,11 @@ import com.orhanobut.logger.Logger
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection
 import java.text.NumberFormat
 
+
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 17/1/19.
  */
-class TransitionRVSectionAdapter(private val title: String, private val list: List<Datum>, private val mIsEnglish: Boolean) : StatelessSection(R.layout.item_header_air_tricket_transtion_log, R.layout.item_child_airtricket_transtion_log) {
+class TransitionRVSectionAdapter(val mContext: Context, private val title: String, private val list: List<Datum>, private val mIsEnglish: Boolean) : StatelessSection(R.layout.item_header_air_tricket_transtion_log, R.layout.item_child_airtricket_transtion_log) {
     private var onActionButtonClick: ItemClickListener? = null
 
 
@@ -80,10 +85,10 @@ class TransitionRVSectionAdapter(private val title: String, private val list: Li
             }
         }
         val m = model.message
-        if (m.equals(AllConstant.CancelInProcess) || m.equals(AllConstant.Expired) || m.equals(AllConstant.Cancelled) || m.equals(AllConstant.InProcess) || m.equals(AllConstant.Pending) || m.equals(AllConstant.UnConfirmed)) {
-            iHolder.tvAction.visibility = View.GONE
-        } else {
+        if (m.equals(AllConstant.Booked) || m.equals(AllConstant.Ticketed)) {
             iHolder.tvAction.visibility = View.VISIBLE
+        } else {
+            iHolder.tvAction.visibility = View.GONE
         }
 
         iHolder.tvAction.setOnClickListener { v -> onActionButtonClick!!.onActionButtonClick(position, model) }
@@ -95,6 +100,15 @@ class TransitionRVSectionAdapter(private val title: String, private val list: Li
         iHolder.ivRootLayout.setOnClickListener {
 
             onActionButtonClick?.onRootViewClick(datum = model)
+        }
+
+        iHolder.tvBookingId.setOnLongClickListener {
+
+            val clipboard = mContext.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+            clipboard.setText(model.bookingId)
+            Toast.makeText(mContext, "Booking ID to clip", Toast.LENGTH_LONG).show()
+
+            true
         }
 
 

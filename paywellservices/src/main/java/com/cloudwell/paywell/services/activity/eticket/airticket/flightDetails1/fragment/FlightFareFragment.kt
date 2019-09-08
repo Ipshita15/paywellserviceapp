@@ -1,13 +1,13 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.fragment
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.adapter.FareListAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Fare
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
@@ -39,15 +39,18 @@ class FlightFareFragment : Fragment() {
 
         val temp = mutableListOf<Fare>()
 
+        val AIRLINE_CODE = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.AIRLINE_CODE) as String
+
+
         for (f in fare) {
-            val calculatorFare = CalculationHelper.getFare(f)
+            val calculatorFare = CalculationHelper.getFare(f, AIRLINE_CODE)
             temp.add(calculatorFare)
         }
 
 
         fare = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.FARE_DATA) as MutableList<Fare>
 
-        val total = CalculationHelper.getTotalFareDetati(fare)
+        val total = CalculationHelper.getTotalFareDetati(fare, AIRLINE_CODE)
         val fare1 = Fare()
         fare1.amount = total
         temp.add(fare1)

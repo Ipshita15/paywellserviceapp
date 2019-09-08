@@ -1,10 +1,10 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment
 
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import kotlinx.android.synthetic.main.fragment_prices_change.view.*
 
 
@@ -28,8 +28,10 @@ class ShowMessageFragment() : DialogFragment() {
         val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_status_cencelation, container, false)
         isCancelable = false
 
-        v.tvFree.text = message
-        v.btActionIssueTicket.setOnClickListener {
+        v.tvYourSeats.text = message
+
+
+        v.btAction.setOnClickListener {
             dismiss()
             mListener?.onOkButtonClick()
 

@@ -10,9 +10,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +28,10 @@ import com.cloudwell.paywell.services.app.AppHandler;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import static com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regModel;
 

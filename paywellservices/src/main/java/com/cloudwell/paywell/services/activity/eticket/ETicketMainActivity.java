@@ -3,8 +3,6 @@ package com.cloudwell.paywell.services.activity.eticket;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -12,11 +10,15 @@ import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
+import com.google.android.material.snackbar.Snackbar;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class ETicketMainActivity extends AppCompatActivity {
 
@@ -87,9 +89,8 @@ public class ETicketMainActivity extends AppCompatActivity {
 
         switch (v.getId()) {
             case R.id.et_shop_visit:
-//                startActivity(new Intent(this, BusMainActivity.class));
-//                finish();
-                showCommingSoonMesage();
+                startActivity(new Intent(this, BusTicketMenuActivity.class));
+
                 break;
             case R.id.et_ek_shop_report:
 //                startActivity(new Intent(this, TrainMainActivity.class));

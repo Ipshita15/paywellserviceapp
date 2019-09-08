@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/layout_background"
-    tools:context=".activity.eticket.busticket.BoardingNDropping">
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/layout_background"
+                tools:context=".activity.eticket.busticket.BoardingNDropping">
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="5dp"
         android:paddingLeft="@dimen/activity_vertical_margin"
+        android:paddingTop="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_vertical_margin"
-        android:paddingTop="@dimen/activity_horizontal_margin">
+        android:paddingBottom="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
                 card_view:cardBackgroundColor="@color/card_background"
                 card_view:cardCornerRadius="4dp"
                 card_view:cardUseCompatPadding="true">
@@ -43,7 +43,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentTop="true"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                     <TextView
                         android:id="@+id/coachType"
@@ -51,26 +51,26 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/companyName"
                         android:layout_marginTop="5dp"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                     <TextView
                         android:id="@+id/tvDepartureTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
                 </RelativeLayout>
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/cardView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/cardView"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
-                android:layout_below="@+id/cardView"
                 card_view:cardBackgroundColor="@color/card_background"
                 card_view:cardCornerRadius="4dp"
                 card_view:cardUseCompatPadding="true">
@@ -87,7 +87,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="@string/personal_info_msg"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -99,7 +99,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/star_sign"
-                            android:textColor="#FF4719" />
+                            android:textColor="#FF4719"/>
 
                         <TextView
                             android:id="@+id/tvName"
@@ -107,7 +107,7 @@
                             android:layout_height="wrap_content"
                             android:paddingLeft="2dp"
                             android:text="@string/passenger_name_des"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
                     </LinearLayout>
 
                     <EditText
@@ -116,7 +116,7 @@
                         android:layout_height="wrap_content"
                         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
                         android:inputType="textPersonName"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -128,7 +128,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/star_sign"
-                            android:textColor="#FF4719" />
+                            android:textColor="#FF4719"/>
 
                         <TextView
                             android:id="@+id/tvMobile"
@@ -136,7 +136,7 @@
                             android:layout_height="wrap_content"
                             android:paddingLeft="2dp"
                             android:text="@string/phone_no_des"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -158,7 +158,7 @@
                             android:imeOptions="actionDone"
                             android:inputType="number"
                             android:maxLength="11"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -171,7 +171,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/star_sign"
-                            android:textColor="#FF4719" />
+                            android:textColor="#FF4719"/>
 
                         <TextView
                             android:id="@+id/tvBoardingType"
@@ -179,7 +179,7 @@
                             android:layout_height="wrap_content"
                             android:paddingLeft="2dp"
                             android:text="@string/boarding_des"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
                     </LinearLayout>
 
                     <Spinner
@@ -189,7 +189,7 @@
                         android:layout_marginTop="5dp"
                         android:padding="2dp"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:visibility="visible" />
+                        android:visibility="visible"/>
 
 
                     <CheckBox
@@ -197,26 +197,26 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
                         android:layout_marginTop="@dimen/activity_horizontal_margin"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
                         android:onClick="onCheckboxClicked"
                         android:text="@string/agree_statement_msg"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
             <Button
                 android:id="@+id/btnDone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/cardView2"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_below="@+id/cardView2"
-                android:layout_marginBottom="5dp"
+                android:layout_alignParentBottom="true"
                 android:layout_marginLeft="@dimen/activity_vertical_margin"
-                android:layout_marginRight="@dimen/activity_vertical_margin"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="5dp"
                 android:background="@drawable/button_green"
                 android:shadowColor="#000000"
                 android:shadowDx="1"
@@ -225,7 +225,7 @@
                 android:text="@string/confirm_btn"
                 android:textAllCaps="false"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"/>
         </RelativeLayout>
     </ScrollView>
 
@@ -237,5 +237,5 @@
         android:layout_centerInParent="true"
         android:indeterminateBehavior="cycle"
         android:indeterminateDrawable="@drawable/rotar"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 </RelativeLayout>

@@ -1,10 +1,10 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.viewBookingInfo.adapter
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Airport
 import kotlinx.android.synthetic.main.item_airport_booking_info.view.*

@@ -2,10 +2,10 @@ package com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.fr
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.model.ResAirPreBooking
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.Fare
@@ -50,7 +50,8 @@ class BookingStatusFragment : DialogFragment() {
 
         val segments = resAirPreBooking.data?.results
 
-        val totalFare = resAirPreBooking.data?.results?.get(0)?.fares?.let { CalculationHelper.getTotalFareDetati(it) }
+        val AIRLINE_CODE = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.AIRLINE_CODE) as String
+        val totalFare = resAirPreBooking.data?.results?.get(0)?.fares?.let { CalculationHelper.getTotalFareDetati(it, AIRLINE_CODE) }
 
         v.tvFare.text = activity?.getString(R.string.total_fare_text) + ": TK. " + totalFare
 

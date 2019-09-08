@@ -2,10 +2,11 @@ package com.cloudwell.paywell.services.utils;
 
 import android.content.Context;
 import android.os.Environment;
-import android.support.v4.content.ContextCompat;
 
 import java.io.File;
 import java.util.Locale;
+
+import androidx.core.content.ContextCompat;
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 3/26/19.

@@ -1,6 +1,6 @@
 package com.cloudwell.paywell.services.activity.notification.notificaitonFullView.viewModel
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import com.cloudwell.paywell.services.activity.base.newBase.SingleLiveEvent
 import com.cloudwell.paywell.services.activity.notification.BaseNotifcationViewModel
 import com.cloudwell.paywell.services.activity.notification.model.NotificationDetailMessage

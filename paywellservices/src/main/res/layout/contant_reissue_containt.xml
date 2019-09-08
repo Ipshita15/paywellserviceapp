@@ -19,11 +19,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <android.support.constraint.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layoutAddPassenger"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -48,10 +48,10 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"/>
-                </android.support.constraint.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                <android.support.constraint.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constrainlayoutPricesDetailsView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
                         app:layout_constraintTop_toTopOf="@+id/constrainlayoutPricesDetailsView"
                         tools:visibility="visible"/>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutPassengerType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -86,15 +86,15 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/isLeadPassenger">
 
-                        <android.support.design.widget.TextInputEditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etPassengerType"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:editable="false"
                             android:hint="@string/passenger_type"/>
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -114,9 +114,9 @@
                             tools:layout_editor_absoluteX="8dp"
                             tools:layout_editor_absoluteY="0dp"/>
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutFirstName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -134,9 +134,9 @@
                             android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ _"
                             android:hint="@string/first_name"
                             android:lines="1"/>
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutLastName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -154,9 +154,9 @@
                             android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ _"
                             android:hint="@string/last_name"
                             android:lines="1"/>
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutGender"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -173,9 +173,9 @@
                             android:layout_height="wrap_content"
                             android:editable="false"
                             android:hint="@string/gender"/>
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutCountry"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -192,9 +192,9 @@
                             android:layout_height="wrap_content"
                             android:editable="false"
                             android:hint="@string/country"/>
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutContactNumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -212,9 +212,9 @@
                             android:hint="@string/contact_number"
                             android:inputType="phone"
                             android:maxLength="15"/>
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -231,9 +231,9 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/email"
                             android:inputType="textEmailAddress"/>
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutDateOfBirthday"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -252,9 +252,9 @@
                             android:layout_height="wrap_content"
                             android:editable="false"
                             android:hint="@string/date_of_birth"/>
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                </android.support.constraint.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
                     android:id="@+id/textView15"
@@ -272,7 +272,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/constrainlayoutPricesDetailsView"/>
 
-                <android.support.constraint.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout2"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -341,7 +341,7 @@
                         fancy:fb_text="@string/add_passenger"
                         fancy:fb_textColor="#FFFFFF"/>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutPassport"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -358,10 +358,10 @@
                             android:layout_height="wrap_content"
                             android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ _0123456789"
                             android:hint="@string/hit_passport_number"/>
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutNId"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -377,15 +377,15 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textLayoutPassportNationality">
 
-                        <android.support.design.widget.TextInputEditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etNationalIDNumber"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/national_id"
                             android:visibility="gone"/>
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutPassportExpiryDate"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -406,9 +406,9 @@
                             android:editable="false"
 
                             android:hint="@string/passport_expiry_date"/>
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textLayoutPassportNationality"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -428,12 +428,12 @@
                             android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ _0123456789"
                             android:editable="false"
                             android:hint="@string/passport_nationality_mannotory"/>
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                </android.support.constraint.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 

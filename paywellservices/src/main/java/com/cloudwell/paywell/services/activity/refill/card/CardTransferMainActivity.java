@@ -3,7 +3,6 @@ package com.cloudwell.paywell.services.activity.refill.card;
 import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
@@ -17,6 +16,7 @@ import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Locale;
 

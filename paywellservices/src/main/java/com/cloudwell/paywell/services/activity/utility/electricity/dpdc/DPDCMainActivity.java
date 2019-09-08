@@ -5,8 +5,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +22,7 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -36,6 +35,8 @@ import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatDialog;
 
 public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
 

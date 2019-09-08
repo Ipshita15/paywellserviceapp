@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:id="@+id/mainClickLL"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="wrap_content"
+                                                   android:layout_margin="5dp"
+                                                   android:background="#ffffff"
+    >
+
+
+    <TextView
+        android:id="@+id/bookingIdStringTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Booking ID:"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/WebBookingIDTV"
+        app:layout_constraintTop_toBottomOf="@+id/webBookingId"/>
+
+    <TextView
+        android:id="@+id/bookingIdTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:hint="Id number"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/bookingIdStringTV"
+        app:layout_constraintTop_toTopOf="@+id/bookingIdStringTV"/>
+
+
+    <TextView
+        android:id="@+id/tvTransactionId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:hint="Id number"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textView34"
+        app:layout_constraintTop_toTopOf="@+id/textView34"
+        tools:text="sdfsdfhsjkhdfkjhsfjkhsdjfkhjksdfh"/>
+
+    <TextView
+        android:id="@+id/WebBookingIDTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Web Booking ID:"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/statusStringTV"
+        app:layout_constraintTop_toBottomOf="@+id/statusTV"/>
+
+    <TextView
+        android:id="@+id/webBookingId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:hint="Id number"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/WebBookingIDTV"
+        app:layout_constraintTop_toTopOf="@+id/WebBookingIDTV"/>
+
+
+    <TextView
+        android:id="@+id/textView32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="BDT:"
+        android:textColor="#ff7178"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/priceTV"
+        app:layout_constraintEnd_toStartOf="@+id/imageView21"
+        app:layout_constraintTop_toTopOf="@+id/priceTV"
+        app:layout_constraintVertical_bias="0.652"/>
+
+    <ImageView
+        android:id="@+id/imageView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/taka_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/priceTV"
+        app:layout_constraintEnd_toStartOf="@+id/priceTV"
+        app:layout_constraintTop_toTopOf="@+id/priceTV"/>
+
+    <TextView
+        android:id="@+id/priceTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:padding="5dp"
+        android:text="8999"
+        android:textColor="#ff7178"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <TextView
+        android:id="@+id/statusStringTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Status:"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/statusTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:hint="booking"
+        android:textColor="#4ca896"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/textView32"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/statusStringTV"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="sdflskdjflksdjfkljsdflkjsdklfjslkdfjklsjflkjslkdfjlksjdfksjdflkjsdlkf"/>
+
+    <TextView
+        android:id="@+id/textView34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Transaction ID: "
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/bookingIdStringTV"
+        app:layout_constraintTop_toBottomOf="@+id/bookingIdTV"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

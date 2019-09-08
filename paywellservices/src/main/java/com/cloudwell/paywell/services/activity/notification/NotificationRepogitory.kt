@@ -1,9 +1,9 @@
 package com.cloudwell.paywell.services.activity.notification
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.LiveDataReactiveStreams
-import android.arch.lifecycle.MutableLiveData
 import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.LiveDataReactiveStreams
+import androidx.lifecycle.MutableLiveData
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.notification.model.NotificationDetailMessage
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI
@@ -120,7 +120,7 @@ class NotificationRepogitory(private val mContext: Context) {
         val url = mContext.getString(R.string.notif_url)
         val userName = mAppHandler!!.imeiNo
         val data = MutableLiveData<ResposeReScheduleNotificationAccept>()
-        val resNotificationAPICall = ApiUtils.getAPIService().reScheduleNotificationAccept(userName, id, accept_status)
+        val resNotificationAPICall = ApiUtils.getAPIService().reIssueNotificationAccept(userName, id, accept_status)
         resNotificationAPICall.enqueue(object : Callback<ResposeReScheduleNotificationAccept> {
             override fun onResponse(call: Call<ResposeReScheduleNotificationAccept>, response: Response<ResposeReScheduleNotificationAccept>) {
 

@@ -1,16 +1,10 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.finalReview
 
 import android.annotation.SuppressLint
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.BottomSheetBehavior
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
 import android.view.Gravity
@@ -21,6 +15,11 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.finalReview.adapter.AdapterForPassengersFinalList
@@ -38,6 +37,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.Fl
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.AddPassengerActivity
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.all_summaray_bottom_sheet.*
 import kotlinx.android.synthetic.main.contant_summary_contant.*
 import su.j2e.rvjoiner.JoinableAdapter
@@ -73,7 +73,7 @@ class AllSummaryActivity : AirTricketBaseActivity() {
     override fun onResume() {
         super.onResume()
 
-        rvJoiner = RvJoiner(true)//auto update ON, stable ids ON
+        rvJoiner = RvJoiner(false)//auto update ON, stable ids ON
         initializationViewNew()
         mViewModel.init(passengerIDS)
 
@@ -327,7 +327,7 @@ class AllSummaryActivity : AirTricketBaseActivity() {
         }
 
         if (!status.noSerachFoundMessage.equals("")) {
-            showDialogMesssage(status.noSerachFoundMessage)
+            showDialogMessage(status.noSerachFoundMessage)
         }
 
 

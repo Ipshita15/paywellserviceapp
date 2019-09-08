@@ -1,6 +1,6 @@
 package com.cloudwell.paywell.services.activity.base
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import com.cloudwell.paywell.services.activity.base.newBase.BaseViewState
 import com.cloudwell.paywell.services.activity.base.newBase.SingleLiveEvent
 

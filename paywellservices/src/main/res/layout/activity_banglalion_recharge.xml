@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/banglalionRechargeLL"
-    tools:context=".activity.utility.banglalion.BanglalionRechargeActivity">
+              xmlns:card_view="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/banglalionRechargeLL"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context=".activity.utility.banglalion.BanglalionRechargeActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,7 +18,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/cardView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -45,7 +44,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/star_sign"
-                            android:textColor="#FF4719" />
+                            android:textColor="#FF4719"/>
 
                         <TextView
                             android:id="@+id/tvQbeePin"
@@ -54,7 +53,7 @@
                             android:paddingLeft="2dp"
                             android:paddingRight="2dp"
                             android:text="@string/pw_pin_no_des"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
                     </LinearLayout>
 
                     <EditText
@@ -68,7 +67,7 @@
                         android:digits="0123456789"
                         android:inputType="numberPassword"
                         android:maxLength="10"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -83,7 +82,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/activity_horizontal_margin"
                             android:text="@string/star_sign"
-                            android:textColor="#FF4719" />
+                            android:textColor="#FF4719"/>
 
                         <TextView
                             android:id="@+id/tvQbeeAccount"
@@ -93,7 +92,7 @@
                             android:paddingLeft="2dp"
                             android:paddingRight="2dp"
                             android:text="@string/banglalion_acc_no"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
                     </LinearLayout>
 
                     <EditText
@@ -107,7 +106,7 @@
                         android:inputType="text"
                         android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789._"
                         android:maxLength="20"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -122,7 +121,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/activity_horizontal_margin"
                             android:text="@string/star_sign"
-                            android:textColor="#FF4719" />
+                            android:textColor="#FF4719"/>
 
                         <TextView
                             android:id="@+id/tvQbeeAmount"
@@ -132,7 +131,7 @@
                             android:paddingLeft="2dp"
                             android:paddingRight="2dp"
                             android:text="@string/amount_des"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
                     </LinearLayout>
 
                     <EditText
@@ -146,16 +145,16 @@
                         android:imeOptions="actionDone"
                         android:inputType="number"
                         android:maxLength="10"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                 </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
-                android:layout_weight="1" />
+                android:layout_weight="1"/>
 
             <Button
                 android:id="@+id/btnQubeeConfirm"
@@ -170,7 +169,7 @@
                 android:shadowRadius="2"
                 android:text="@string/confirm_btn"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorText" />
+                android:textColor="@color/colorText"/>
 
         </LinearLayout>
     </ScrollView>

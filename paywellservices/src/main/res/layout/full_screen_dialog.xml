@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                     xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                     android:layout_width="match_parent"
+                                                     android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#d1e5e1"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <include layout="@layout/tab_background_bus"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/citySearchET"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/rounded_corner_for_airport_search"
+                android:drawableLeft="@drawable/icon_flight_search_new"
+                android:drawablePadding="10dp"
+                android:ems="10"
+                android:hint="Search City"
+                android:inputType="textPersonName"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="#323232"
+                android:textColorHint="@color/blackcccccc"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivClose"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                             android:id="@+id/preDefinedDataTL"
+                             android:layout_width="fill_parent"
+                             android:layout_height="wrap_content"
+                             android:layout_margin="10dp"
+                             android:background="@color/white"
+                             android:padding="10dp"
+                             android:visibility="visible">
+
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:text="@string/popular_city"
+                            android:textColor="@color/color_tab_background_bus"
+                            android:textSize="18sp"/>
+
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/dhakaCityTV"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:layout_weight="1"
+                            android:background="@drawable/border_available"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="Dhaka"
+                            android:textColor="@color/black"/>
+
+                        <TextView
+                            android:id="@+id/coxBazarCityTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:width="0dp"
+                            android:background="@drawable/border_available"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="Coxs Bazar"
+                            android:textColor="@color/black"/>
+
+                        <TextView
+                            android:id="@+id/benapoleCityTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:width="0dp"
+                            android:background="@drawable/border_available"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="Benapole"
+                            android:textColor="@color/black"/>
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/kolkataCityTV"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:layout_weight="1"
+                            android:background="@drawable/border_available"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="Kolkata"
+                            android:textColor="@color/black"/>
+
+                        <TextView
+                            android:id="@+id/chittagongCityTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:width="0dp"
+                            android:background="@drawable/border_available"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="Chittagong"
+                            android:textColor="@color/black"/>
+
+                        <TextView
+                            android:id="@+id/sylhetCityTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:width="0dp"
+                            android:background="@drawable/border_available"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="Sylhet"
+                            android:textColor="@color/black"/>
+                    </TableRow>
+
+
+                </TableLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/cityRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:visibility="gone">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </RelativeLayout>
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

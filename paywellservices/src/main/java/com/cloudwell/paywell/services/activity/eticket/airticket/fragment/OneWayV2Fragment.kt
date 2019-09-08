@@ -6,7 +6,6 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
@@ -14,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.*
+import androidx.fragment.app.Fragment
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.*
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
@@ -226,6 +226,11 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
             toAirTricket.iata = searchRoundTripModel.getToName()
 
             AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.TO_CACHE, toAirTricket)
+
+
+
+            toAirport.iata = toAirTricket.iata
+            fromAirport.iata = fromAirTricket.iata
 
         }
 
@@ -538,10 +543,10 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
         val calendar = Calendar.getInstance()
 
         if (!tvDepartDate.text.equals(getString(R.string.date))) {
-            val crachDepartureDate = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE) as String?
+            val crachDepartureDate = AppStorageBox.get(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_API_formate) as String?
 
-            val date = SimpleDateFormat("EEE, dd MMM", Locale.ENGLISH).parse(crachDepartureDate) as Date
-            calendar.setTime(date);
+            val date = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(crachDepartureDate) as Date
+            calendar.time = date
 
         }
 
@@ -583,38 +588,12 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
 
         val calendarMin = Calendar.getInstance()
         datePickerDialog.datePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
-
-
         datePickerDialog.datePicker.minDate = calendarMin.timeInMillis
-
-
-
-
         datePickerDialog.show()
 
 
     }
 
-    fun onClassTextChange(text: String) {
-        airTicketClass.setText(text)
-
-    }
-
-
-    private fun handleFromSearchClick() {
-
-        val args = Bundle()
-        args.putString("Name", "Naima")
-
-        dialogFragment = FullScreenDialogFragment.Builder(context as AirTicketMainActivity)
-                .setTitle("From")
-                .setOnConfirmListener(this)
-                .setOnDiscardListener(this)
-                .setContent(SourceFragment::class.java, args)
-                .build()
-
-        dialogFragment.show(fragmentManager, dialogTag)
-    }
 
     override fun onConfirm(result: Bundle?) {
     }

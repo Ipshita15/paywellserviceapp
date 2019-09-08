@@ -1,10 +1,12 @@
 package com.cloudwell.paywell.services.activity.notification.allNotificaiton.adapter;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
+
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationViewModel> {
     @NonNull

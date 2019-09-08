@@ -1,10 +1,10 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment
 
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import kotlinx.android.synthetic.main.fragment_tricket_action_menu.view.*
@@ -30,51 +30,59 @@ class TicketActionMenuFragment : DialogFragment() {
 
         val m = model.message
         if (m.equals("Booked")) {
-            v.btActionIssueTicket.visibility = View.VISIBLE
+            v.btAction.visibility = View.VISIBLE
             v.btCencel.visibility = View.VISIBLE
 
+            v.btActionDocsInfoUpdate.visibility = View.GONE
+            v.btTicketRefund.visibility = View.GONE
+            v.btTicketVoid.visibility = View.GONE
+            v.btActionDocsInfoUpdate.visibility = View.GONE
             v.btActionReissue.visibility = View.GONE
-            v.btTicketCancel.visibility = View.GONE
-            v.btActionReissue.visibility = View.GONE
-            v.btActionReschedule.visibility = View.GONE
 
         } else if (m.equals("Ticketed")) {
 
+            v.btActionDocsInfoUpdate.visibility = View.VISIBLE
             v.btActionReissue.visibility = View.VISIBLE
-            v.btActionReschedule.visibility = View.VISIBLE
-            v.btTicketCancel.visibility = View.VISIBLE
+            v.btTicketRefund.visibility = View.VISIBLE
+            v.btTicketVoid.visibility = View.VISIBLE
 
 
-            v.btActionIssueTicket.visibility = View.GONE
+            v.btAction.visibility = View.GONE
             v.btCencel.visibility = View.GONE
 
         }
 
-        v.btActionIssueTicket.setOnClickListener {
+        v.btAction.setOnClickListener {
             dismiss()
-            onClickHandler.onClickIsisThicketButton()
+            onClickHandler.onIsisThicket()
         }
 
 
+
+        v.btActionDocsInfoUpdate.setOnClickListener {
+            dismiss()
+            onClickHandler.onDocsUpdate(model)
+        }
 
         v.btActionReissue.setOnClickListener {
             dismiss()
             onClickHandler.onReissue(model)
         }
 
-        v.btActionReschedule.setOnClickListener {
-            dismiss()
-            onClickHandler.onReschedule(model)
-        }
-
         v.btCencel.setOnClickListener {
             dismiss()
-            onClickHandler.onClickCancelButton()
+            onClickHandler.onBookingCancel()
         }
 
-        v.btTicketCancel.setOnClickListener {
+        v.btTicketRefund.setOnClickListener {
             dismiss()
-            onClickHandler.onTicketCancel(model)
+            onClickHandler.onTicketRefund(model)
+        }
+
+
+        v.btTicketVoid.setOnClickListener {
+            dismiss()
+            onClickHandler.onTicketVoid(model)
         }
 
 
@@ -91,11 +99,12 @@ class TicketActionMenuFragment : DialogFragment() {
 
 
     interface OnClickHandler {
-        fun onClickCancelButton()
-        fun onClickIsisThicketButton()
+        fun onBookingCancel()
+        fun onIsisThicket()
+        fun onDocsUpdate(item: Datum)
         fun onReissue(item: Datum)
-        fun onReschedule(item: Datum)
-        fun onTicketCancel(item: Datum)
+        fun onTicketRefund(item: Datum)
+        fun onTicketVoid(item: Datum)
 
     }
 

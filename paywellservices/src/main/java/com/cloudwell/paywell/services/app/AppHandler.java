@@ -7,10 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -21,6 +17,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 public class AppHandler {
 
@@ -154,6 +155,8 @@ public class AppHandler {
     private static final String DISPLAY_PICTURE_SIZE_ = "displayPictureSize";
     private static final String DISPLAY_PICTURE_ = "displaypicture_";
     private static final String UNKNOWN_DISPLAY_PICTURE = "unknownDisplayPicture";
+
+    private static final String SECUTIRY_TOEKN = "SECUTIRY_TOEKN";
 
     public static final int MULTI_CITY_LIMIT = 5;
     public static final String IVAC_CENTER_LOCK = "IVAC_CENTER_LOCK";
@@ -967,6 +970,16 @@ public class AppHandler {
         editor.putInt(CENTER_AREA_DROP_DOWN_POSITION, position);
         editor.commit();
     }
+
+    public String getToken() {
+        return mPref.getString(SECUTIRY_TOEKN, "");
+    }
+
+    public void setToken(String token) {
+        editor.putString(SECUTIRY_TOEKN, token);
+        editor.commit();
+    }
+
 
     public int getCenterDropDownPogistion() {
         return mPref.getInt(CENTER_AREA_DROP_DOWN_POSITION, 0);

@@ -2,8 +2,8 @@ package com.cloudwell.paywell.services.activity.product.ekShop.report
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
 import android.util.DisplayMetrics
+import androidx.recyclerview.widget.GridLayoutManager
 import com.cloudwell.paywell.services.activity.base.ProductEecommerceBaseActivity
 import com.cloudwell.paywell.services.activity.product.ekShop.model.OrderDetail
 import com.cloudwell.paywell.services.activity.product.ekShop.report.adapter.HeaderRecyclerForEkShopReport

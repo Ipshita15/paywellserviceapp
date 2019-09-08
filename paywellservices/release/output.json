@@ -3,11 +3,11 @@
     "outputType": {
       "type": "APK"
     },
-    "apkInfo": {
+    "apkData": {
       "type": "MAIN",
       "splits": [],
-      "versionCode": 43,
-      "versionName": "10.17.2",
+      "versionCode": 45,
+      "versionName": "10.18.2",
       "enabled": true,
       "outputFile": "paywellservices-release.apk",
       "fullName": "release",

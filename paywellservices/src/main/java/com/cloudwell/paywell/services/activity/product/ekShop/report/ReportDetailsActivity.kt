@@ -1,11 +1,11 @@
 package com.cloudwell.paywell.services.activity.product.ekShop.report
 
 import android.os.Bundle
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.cloudwell.paywell.services.activity.base.ProductEecommerceBaseActivity
 import com.cloudwell.paywell.services.activity.product.ekShop.report.adapter.OrderDetailsAdapter
 import com.cloudwell.paywell.services.app.AppHandler

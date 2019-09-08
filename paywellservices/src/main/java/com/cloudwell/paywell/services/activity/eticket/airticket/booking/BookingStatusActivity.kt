@@ -1,13 +1,13 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.booking
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.cloudwell.paywell.services.activity.eticket.airticket.base.TransitionLogBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
@@ -40,7 +40,7 @@ class BookingStatusActivity : TransitionLogBaseActivity() {
 
         mViewMode = ViewModelProviders.of(this).get(BookingStatsViewModel::class.java)
 
-        mViewMode.baseViewStatus.observe(this, android.arch.lifecycle.Observer {
+        mViewMode.baseViewStatus.observe(this, androidx.lifecycle.Observer {
             handleViewCommonStatus(it)
         })
 
@@ -73,7 +73,7 @@ class BookingStatusActivity : TransitionLogBaseActivity() {
         }
 
         if (it.modelPriceChange != null) {
-            showTricketPriceChangeDialog(it.modelPriceChange!!)
+            showTicketPriceChangeDialog(it.modelPriceChange!!)
         }
     }
 
