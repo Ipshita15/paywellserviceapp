@@ -46,6 +46,7 @@ public class PBRegistrationActivity extends BaseActivity implements View.OnClick
     private int otp_check = 0;
     private AppHandler mAppHandler;
     private LinearLayout mLinearLayout;
+    private String transitionID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,11 +161,12 @@ public class PBRegistrationActivity extends BaseActivity implements View.OnClick
             HttpPost httppost = new HttpPost(params[0]);
             try {
                 List<NameValuePair> nameValuePairs = new ArrayList<>(5);
-                nameValuePairs.add(new BasicNameValuePair("imei_no", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("pin_code", _pinNo));
                 nameValuePairs.add(new BasicNameValuePair("acc_no", _accountNo));
                 nameValuePairs.add(new BasicNameValuePair("cust_name", URLEncoder.encode(_customerName, "UTF-8")));
                 nameValuePairs.add(new BasicNameValuePair("cust_phn", _phone));
+                nameValuePairs.add(new BasicNameValuePair("format", ""));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
@@ -186,14 +188,11 @@ public class PBRegistrationActivity extends BaseActivity implements View.OnClick
                 if (result != null && result.contains("@")) {
                     String splitArray[] = result.split("@");
                     if (splitArray.length > 0) {
+                        transitionID = splitArray[2].toString();
                         if (splitArray[0].equalsIgnoreCase("100")) {
                             checkOTPValidation();
                         } else {
-                            Snackbar snackbar = Snackbar.make(mLinearLayout, splitArray[1], Snackbar.LENGTH_LONG);
-                            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                            View snackBarView = snackbar.getView();
-                            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                            snackbar.show();
+                            showStatusDialogForRegtionSuccessfull(splitArray[1]);
                         }
                     }
                 } else {
@@ -212,6 +211,27 @@ public class PBRegistrationActivity extends BaseActivity implements View.OnClick
                 snackbar.show();
             }
         }
+    }
+
+    private void showStatusDialogForRegtionSuccessfull(String message) {
+
+        StringBuilder reqStrBuilder = new StringBuilder();
+        reqStrBuilder.append(getString(R.string.acc_no_des) + " " + _accountNo
+                + "\n" + getString(R.string.cust_name_des) + " " + _customerName
+                + "\n" + getString(R.string.phone_no_des) + " " + _phone);
+        AlertDialog.Builder builder = new AlertDialog.Builder(PBRegistrationActivity.this);
+        builder.setTitle("Result :" + message);
+        builder.setMessage(reqStrBuilder.toString());
+        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int id) {
+                dialogInterface.dismiss();
+                onBackPressed();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+
     }
 
     private void checkOTPValidation() {
@@ -293,10 +313,12 @@ public class PBRegistrationActivity extends BaseActivity implements View.OnClick
             HttpPost httppost = new HttpPost(params[0]);
             try {
                 List<NameValuePair> nameValuePairs = new ArrayList<>(4);
-                nameValuePairs.add(new BasicNameValuePair("imei_no", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("pin_code", _pinNo));
-                nameValuePairs.add(new BasicNameValuePair("acc_no", _accountNo));
-                nameValuePairs.add(new BasicNameValuePair("polli_otp", params[1]));
+                nameValuePairs.add(new BasicNameValuePair("trx_id", transitionID));
+                nameValuePairs.add(new BasicNameValuePair("reb_pin", params[1]));
+                nameValuePairs.add(new BasicNameValuePair("format", ""));
+
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();

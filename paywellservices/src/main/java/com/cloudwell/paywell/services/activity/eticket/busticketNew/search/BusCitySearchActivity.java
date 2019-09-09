@@ -71,7 +71,7 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bus_city_search);
+        setContentView(R.layout.activity_bus_city_search_new);
 
         setToolbar(getString(R.string.search_transport_ticket), getApplicationContext().getResources().getColor(R.color.bus_ticket_toolbar_title_text_color));
 
@@ -375,19 +375,19 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
         String[] strings = allBoothNameInfo.toArray(new String[allBoothNameInfo.size()]);
 
 
-        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_dropdown_item_1line, strings);
+        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.bus_spinner_back, strings);
         boothList.setAdapter(stringArrayAdapter);
         boardingViewStatusChange(View.VISIBLE);
 
 
-        tryToOldBoardingPointSeletion();
+//        tryToOldBoardingPointSeletion();
 
 
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        AppStorageBox.put(AppController.getContext(), AppStorageBox.Key.BOARDING_POGISTION, position);
+//        AppStorageBox.put(AppController.getContext(), AppStorageBox.Key.BOARDING_POGISTION, position);
     }
 
     @Override

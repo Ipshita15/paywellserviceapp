@@ -2,12 +2,14 @@ package com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.a
 
 import android.content.Context
 import android.graphics.Color
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.Result
 import com.cloudwell.paywell.services.utils.CalculationHelper
@@ -57,11 +59,14 @@ class FlightAdapterNew(val items: List<Result>, val requestAirSearch: RequestAir
         val airlineCode = model.segments.get(0).airline?.airlineCode
 
 
-        val url = "https://notify.paywellonline.com/airlines/images_airline/${airlineCode}_40x35.png"
-        com.orhanobut.logger.Logger.v("Airless logo Url " + url)
-        val imageUri = Uri.parse(url)
+        val options = RequestOptions()
+                .placeholder(R.drawable.air_ticket)
+                .error(R.drawable.air_ticket)
 
-        holder.airlineSerachIcon.setImageURI(imageUri)
+        val url = "https://notify.paywellonline.com/airlines/images_airline/${airlineCode}_40x35.png"
+        Glide.with(context).load(url)
+                .apply(options)
+                .into(holder.airlineSerachIcon);
 
         if (isReSchuduler) {
             holder.btDetails.text = "Request"

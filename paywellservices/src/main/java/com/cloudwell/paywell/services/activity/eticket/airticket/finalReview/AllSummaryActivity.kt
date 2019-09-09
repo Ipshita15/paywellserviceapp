@@ -102,8 +102,8 @@ class AllSummaryActivity : AirTricketBaseActivity() {
             val departureTimeSplit = departureTime?.split("T")
 
 
-            text = text + "Departure Time " + (i + 1) + ": " + arrTimeSplit!!.get(0) + " " + arrTimeSplit.get(1) + "\n"
-            text = text + "Arrival Time " + (i + 1) + ": " + departureTimeSplit!!.get(0) + " " + departureTimeSplit!!.get(1) + "\n\n"
+            text = text + "Departure Time " + (i + 1) + ": " + arrTimeSplit!!.get(0) + " " + departureTimeSplit!!.get(1) + "\n"
+            text = text + "Arrival Time " + (i + 1) + ": " + departureTimeSplit!!.get(0) + " " + arrTimeSplit.get(1) + "\n\n"
         }
 
         text = text.substring(0, text.length - 2)

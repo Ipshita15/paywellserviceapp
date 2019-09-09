@@ -13,18 +13,24 @@ import com.cloudwell.paywell.services.service.notificaiton.model.StartNotificati
  */
 public class AppHelper {
     public static void notificationCounterCheck(ConnectionDetector mCd, Context context) {
-        if (mCd.isConnectingToInternet()) {
-            boolean myServiceRunning = AndroidServiceUtilis.isMyServiceRunning(context, NotificationCheckerService.class);
-            if (!myServiceRunning) {
-                Intent intent = new Intent(context, NotificationCheckerService.class);
-                context.startService(intent);
-            } else {
-                boolean apiCalledRuing = NotificationCheckerService.Companion.isAPICalledRunning();
-                if (!apiCalledRuing) {
-                    GlobalApplicationBus.getBus().post(new StartNotificationService(1));
+        try {
+            if (mCd.isConnectingToInternet()) {
+                boolean myServiceRunning = AndroidServiceUtilis.isMyServiceRunning(context, NotificationCheckerService.class);
+                if (!myServiceRunning) {
+                    Intent intent = new Intent(context, NotificationCheckerService.class);
+                    context.startService(intent);
+                } else {
+                    boolean apiCalledRuing = NotificationCheckerService.Companion.isAPICalledRunning();
+                    if (!apiCalledRuing) {
+                        GlobalApplicationBus.getBus().post(new StartNotificationService(1));
+                    }
                 }
             }
+        } catch (Exception e) {
+
         }
+
+
     }
 
     public static void startNotificationSyncService(Context context) {

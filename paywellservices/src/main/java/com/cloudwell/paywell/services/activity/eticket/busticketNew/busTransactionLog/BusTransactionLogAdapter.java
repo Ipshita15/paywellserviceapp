@@ -132,13 +132,13 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
 
                                         BusTransactionModel model = (BusTransactionModel) busTransactionModelArrayList.get(position);
 
-                                        if (model.getBookingId().equals("")) {
+                                        if (model.getBookingId() == null) {
                                             bookingId.setText(context.getString(R.string.not_available));
                                         } else {
                                             bookingId.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getBookingId());
                                         }
 
-                                        if (model.getWebBookingId().equals("")) {
+                                        if (model.getWebBookingId() == null) {
                                             webBookingId.setText(context.getString(R.string.not_available));
                                         } else {
                                             webBookingId.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getWebBookingId());
@@ -162,7 +162,7 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
                                             customerMobileTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getCustomerPhone());
                                         }
 
-                                        if (model.getTicketNum().equals("")) {
+                                        if (model.getTicketNum() == null) {
                                             ticketNum.setText(context.getString(R.string.not_available));
                                         } else {
                                             ticketNum.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getTicketNum());
@@ -174,11 +174,12 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
                                             addressTv.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getCustomerAddress());
                                         }
 
-                                        if (model.getCustomerEmail().equals("")) {
+                                        if (model.getCustomerEmail() == null) {
                                             emailTv.setText(context.getString(R.string.not_available));
                                         } else {
                                             emailTv.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getCustomerEmail());
                                         }
+
 
                                         busTrasLogId.setText(model.getTransactioID());
                                         travelDateTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getDepartureDate());
