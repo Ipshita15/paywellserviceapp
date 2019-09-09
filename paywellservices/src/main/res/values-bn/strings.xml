@@ -780,7 +780,7 @@
     <string name="invalid_age">Invalid age</string>
     <string name="invalid_address">Invalid address</string>
     <string name="no_data_found">No data found.</string>
-    <string name="network_error">Network error!!!</string>
+    <string name="network_error">Network error!</string>
     <string name="popular_city">Popular City</string>
     <string name="transport">Transport</string>
     <string name="search_transport_ticket">Search Transport Ticket</string>
