@@ -852,6 +852,7 @@
     <string name="no_boarding_point_found">No boarding point found!!!</string>
     <string name="boardingPoint">All</string>
     <string name="sort">Sort</string>
+    <string name="clear_all">Clear all</string>
 
 
 </resources>

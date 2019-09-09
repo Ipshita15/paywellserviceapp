@@ -42,7 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
-                    android:text="Clear all"
+                    android:text="@string/clear_all"
                     android:textColor="#ffffff"
                     android:textSize="14sp" />
 
@@ -59,7 +59,7 @@
                 android:gravity="center_vertical"
                 android:inputType="textPersonName"
                 android:singleLine="true"
-                android:text="Notification"
+                android:text="@string/home_notification"
                 android:textColor="#FFFFFF"
                 android:textSize="21sp"
                 app:layout_constraintBottom_toBottomOf="parent"
