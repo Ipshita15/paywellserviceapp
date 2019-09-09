@@ -1,5 +1,6 @@
 package com.cloudwell.paywell.services.activity.notification.notificaitonFullView
 
+
 import android.content.Intent
 import android.graphics.Point
 import android.media.RingtoneManager
@@ -103,6 +104,7 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
         val message = it?.message
         val messageSub = it?.messageSub
         val imageUrl = it?.imageUrl
+        val dateTime = it?.addedDatetime
 
         var testmessage = "" + message
         Logger.v(testmessage)
@@ -115,7 +117,7 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
 
         if (testmessage.contains("notification_action_type")) {
             // air ticket flow
-            handleAirTicket(testmessage, messageSub)
+            handleAirTicket(testmessage, messageSub,dateTime)
 
         } else {
             // normal
@@ -123,13 +125,13 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
             btAccept.visibility = View.GONE
             btTicketCancel.visibility = View.GONE
 
-            handleNormal(message, messageSub, imageUrl)
+            handleNormal(message, messageSub, imageUrl,dateTime)
         }
 
 
     }
 
-    private fun handleNormal(message: String?, messageSub: String?, imageUrl: String?) {
+    private fun handleNormal(message: String?, messageSub: String?, imageUrl: String?, dateTime: String?) {
         val s1 = StringEscapeUtils.unescapeJava(message);
 
         val spannableString = SpannableString(s1);
@@ -137,6 +139,7 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
 
         notiTitle.text = messageSub
         notiMessage.text = spannableString
+        date.text=dateTime
 
         if (!imageUrl.equals("")) {
             showProgressDialog();
@@ -167,7 +170,7 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
         }
     }
 
-    private fun handleAirTicket(testmessage: String, messageSub: String?) {
+    private fun handleAirTicket(testmessage: String, messageSub: String?, dateTime: String?) {
         try {
             val jsonObject = JSONObject(testmessage)
             val notification_action_type = jsonObject.getString("notification_action_type")
@@ -181,6 +184,7 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
             Linkify.addLinks(spannableString, Linkify.WEB_URLS);
             notiTitle.text = messageSub
             notiMessage.text = spannableString
+            date.text=dateTime
 
             if (notification_action_type == "AirTicketReScheduleConfirmation") {
                 btAccept.visibility = View.VISIBLE
