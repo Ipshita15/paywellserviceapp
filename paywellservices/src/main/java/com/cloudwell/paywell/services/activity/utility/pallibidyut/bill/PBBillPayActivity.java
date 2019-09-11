@@ -161,15 +161,7 @@ public class PBBillPayActivity extends BaseActivity implements View.OnClickListe
                 if (result != null && result.contains("@")) {
                     String splitArray[] = result.split("@");
                     if (splitArray.length > 0) {
-                        if (splitArray[0].equalsIgnoreCase("100")) {
-                            status = splitArray[1];
-                            trxId = splitArray[2];
-                            amount = splitArray[3];
-                            tbpsCharge = splitArray[4];
-                            totalAmount = splitArray[5];
-                            hotline = splitArray[8];
-                            showStatusDialog();
-                        } else if (splitArray[0].equalsIgnoreCase("200") || splitArray[0].equalsIgnoreCase("300")) {
+                        if (splitArray[0].equalsIgnoreCase("100") || splitArray[0].equalsIgnoreCase("200")) {
                             status = splitArray[1];
                             trxId = splitArray[2];
                             amount = splitArray[3];
@@ -178,11 +170,13 @@ public class PBBillPayActivity extends BaseActivity implements View.OnClickListe
                             hotline = splitArray[8];
                             showStatusDialog();
                         } else {
-                            Snackbar snackbar = Snackbar.make(mLinearLayout, splitArray[1], Snackbar.LENGTH_LONG);
-                            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                            View snackBarView = snackbar.getView();
-                            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                            snackbar.show();
+                            status = splitArray[1];
+                            trxId = splitArray[2];
+                            amount = splitArray[3];
+                            tbpsCharge = splitArray[4];
+                            totalAmount = splitArray[5];
+                            hotline = splitArray[8];
+                            showStatusDialogError();
                         }
                     }
                 } else {
@@ -213,13 +207,36 @@ public class PBBillPayActivity extends BaseActivity implements View.OnClickListe
                 + "\n\n" + getString(R.string.using_paywell_des)
                 + "\n" + getString(R.string.hotline_des) + " " + hotline);
         AlertDialog.Builder builder = new AlertDialog.Builder(PBBillPayActivity.this);
-        builder.setTitle("Result " + status);
+        builder.setTitle("Result :" + status);
         builder.setMessage(reqStrBuilder.toString());
         builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int id) {
                 dialogInterface.dismiss();
                 onBackPressed();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void showStatusDialogError() {
+        StringBuilder reqStrBuilder = new StringBuilder();
+        reqStrBuilder.append(getString(R.string.bill_no_des) + " " + billNo
+                + "\n" + getString(R.string.amount_des) + " " + amount
+                + "\n" + getString(R.string.tbps_charge_des) + " " + tbpsCharge
+                + "\n" + getString(R.string.total_des) + " " + totalAmount
+                + "\n" + getString(R.string.trx_id_des) + " " + trxId
+                + "\n\n" + getString(R.string.using_paywell_des)
+                + "\n" + getString(R.string.hotline_des) + " " + hotline);
+        AlertDialog.Builder builder = new AlertDialog.Builder(PBBillPayActivity.this);
+        builder.setTitle("Result :" + status);
+        builder.setMessage(reqStrBuilder.toString());
+        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int id) {
+                dialogInterface.dismiss();
+
             }
         });
         AlertDialog alert = builder.create();

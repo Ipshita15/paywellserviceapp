@@ -152,7 +152,7 @@
                             android:layout_marginEnd="8dp"
                             android:layout_marginRight="8dp"
                             android:padding="10dp"
-                            android:text="Boarding Point (Optional)"
+                            android:text="@string/boarding_point_optional"
                             android:textColor="#999999"
                             android:textSize="14sp"
                             card_view:layout_constraintEnd_toEndOf="parent"
