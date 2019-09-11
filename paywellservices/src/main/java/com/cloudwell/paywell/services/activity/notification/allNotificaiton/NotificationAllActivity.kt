@@ -51,6 +51,8 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
 
     var notificationDataList = ArrayList<NotificationDetailMessage>()
 
+    var previousPosition=-1
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -124,6 +126,10 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
         adapter.notifyDataSetChanged()
         adapter = SimpleAdapter(t, this)
         listView!!.adapter = adapter
+        Log.d("TESTING<", previousPosition.toString())
+        if(previousPosition>0){
+            listView!!.scrollToPosition(previousPosition)
+        }
 //        val swipeHandler = object : SwipeToDeleteCallback(this) {
 //            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 //                val adapter = listView!!.adapter as SimpleAdapter
@@ -296,6 +302,7 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
             if (!(x == messageIdList.size - 1)) {
                 messageIdListString.append(",")
             }
+            previousPosition=positions.get(x)-1
         }
 
         viewModel.deleteNotification(messageIdListString.toString()).observeForever {
@@ -305,6 +312,7 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
                 var status: String = jsonObject.getAsJsonPrimitive("status").asString
                 if (status == "200") {
                     viewModel.deleteNotificationFromLocal(messageIdList)
+
                     Toast.makeText(applicationContext, "Successfully deleted", Toast.LENGTH_SHORT).show()
                     Log.d("TEST", "Successfully deleted/ " + messageIdListString.toString())
                 } else {
