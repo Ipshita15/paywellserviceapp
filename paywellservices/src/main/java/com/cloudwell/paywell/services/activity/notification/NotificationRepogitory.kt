@@ -140,4 +140,63 @@ class NotificationRepogitory(private val mContext: Context) {
 
     }
 
+    fun notificationDelete(messageId: String): MutableLiveData<String> {
+        mAppHandler = AppHandler.getmInstance(mContext)
+        val url = "https://api.paywellonline.com/RetailerService/userNotificationDelete"
+        val userName = mAppHandler!!.imeiNo
+        val responseData = MutableLiveData<String>()
+
+
+        val resNotificationAPICall = ApiUtils.getAPIService().deleteNotification(url, userName, messageId)
+        resNotificationAPICall.enqueue(object : Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+
+                if (response.isSuccessful) {
+                    responseData.value = response.body()
+
+                } else {
+                    responseData.value = String()
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                responseData.value = String()
+
+            }
+        })
+        return responseData
+    }
+
+    fun deleteNotificationForLocalDB(notificationDetailMessageList: List<NotificationDetailMessage>) {
+        DatabaseClient.getInstance(mContext).appDatabase.mNotificationDab().delete(notificationDetailMessageList)
+    }
+
+    fun allNotificationDelete(messageIdList: String): MutableLiveData<String> {
+
+        mAppHandler = AppHandler.getmInstance(mContext)
+        val url = "https://api.paywellonline.com/RetailerService/userNotificationDelete"
+        val userName = mAppHandler!!.imeiNo
+        val responseData = MutableLiveData<String>()
+
+
+//        val resNotificationAPICall = ApiUtils.getAPIService().deleteNotification(url,userName,messageIdListString.toString())
+//        resNotificationAPICall.enqueue(object : Callback<String> {
+//            override fun onResponse(call: Call<String>, response: Response<String>) {
+//
+//                if (response.isSuccessful) {
+//                    responseData.value = response.body()
+//
+//                } else {
+//                    responseData.value = String()
+//                }
+//            }
+//            override fun onFailure(call: Call<String>, t: Throwable) {
+//                responseData.value = String()
+//
+//            }
+//        })
+        return responseData
+
+    }
+
 }

@@ -1,13 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ebf0f3"
     android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/listViewNotification"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/notification_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@null" />
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:title="Notification"
+        app:titleTextColor="#ffffff">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary">
+
+            <LinearLayout
+                android:id="@+id/clear_all_ConstraintLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/imageView21"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/clear_all_notification"></ImageView>
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:text="@string/clear_all"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/header"
+                style="?attr/actionBarTabTextStyle"
+                android:layout_width="228dp"
+                android:layout_height="53dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="3dp"
+                android:layout_weight="12"
+                android:gravity="center_vertical"
+                android:inputType="textPersonName"
+                android:singleLine="true"
+                android:text="@string/home_notification"
+                android:textColor="#FFFFFF"
+                android:textSize="21sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/clear_all_ConstraintLayout"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/noNotificationIMG"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="224dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/no_notification_avilable"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/listViewNotification" />
+
+        <TextView
+            android:id="@+id/noNotificationTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="No notification available"
+            android:textColor="#808080"
+            android:textSize="25sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/noNotificationIMG" />
+
+        <TextView
+            android:id="@+id/notificationDetailsTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="All notifications will be shown here"
+            android:textColor="#cccccc"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/noNotificationTV" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listViewNotification"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </LinearLayout>

@@ -44,6 +44,7 @@
     <color name="slycalendar_defTextColor">#333333</color>
     <color name="slycalendar_defSelectedColor">#5aac40</color>
     <color name="slycalendar_defSelectedTextColor">#ffffff</color>
+    <color name="gray">#BDBABA</color>
 
     <color name="bus_ticket_status_color">#00a89b</color>
     <color name="bus_ticket_toolbar_title_text_color">#268472</color>
