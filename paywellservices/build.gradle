@@ -28,8 +28,8 @@ android {
         applicationId "com.cloudwell.paywell.services"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 47
-        versionName '10.18.2'
+        versionCode 48
+        versionName '10.18.3'
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
 
