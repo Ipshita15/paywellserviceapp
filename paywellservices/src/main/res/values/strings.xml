@@ -439,9 +439,8 @@
     <string name="notification_token_url">https://www.paywellonline.com/paywellapi/setUserFCMToken.php</string>
 
     <string name="app_next_version_no">vten_seventeen</string>
-    <string name="update_check">https://app.paywellonline.com/apk/PaywellServices_v10_18.apk</string>
+    <string name="update_check" translatable="false">https://app.paywellonline.com/apk/paywell_services_latest_version.apk</string>
     <string name="check_version">https://app.paywellonline.com/version_update_info/paywellservice_update.txt</string>
-
     <string name="update_location">https://api.paywellonline.com/PaywellRetailerInformation/doUpdateRetailersCurrentLocation</string>
 
     <!-- Registration -->
@@ -633,8 +632,8 @@
     <string name="edit">Edit</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="multicity_limit_msg">Currently we are accepting only 5 requests</string>
-    <string name="bookingId">Booking Id</string>
+    <string name="multicity_limit_msg" translatable="false">Currently we are accepting only 5 requests</string>
+    <string name="bookingId" translatable="false">Booking Id</string>
     <string name="depart">Depart</string>
     <string name="date">Date</string>
     <string name="class_text">Class</string>
