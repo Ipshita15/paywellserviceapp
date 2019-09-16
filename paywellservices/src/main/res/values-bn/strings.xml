@@ -479,7 +479,6 @@
     <!--<string name="update_check">https://app.paywellonline.com/apk_test/app-release.apk</string>-->
     <!--<string name="check_version">https://app.paywellonline.com/apk_update_test/version/paywellservice_update.txt</string>-->
     <string name="app_next_version_no">vten_seventeen</string>
-    <string name="update_check">https://app.paywellonline.com/apk/PaywellServices_v10_18.apk</string>
     <string name="check_version">https://app.paywellonline.com/version_update_info/paywellservice_update.txt</string>
 
     <string name="update_location">https://api.paywellonline.com/PaywellRetailerInformation/doUpdateRetailersCurrentLocation</string>

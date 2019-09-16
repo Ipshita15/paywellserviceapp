@@ -161,6 +161,9 @@ dependencies {
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 
 
+    implementation 'com.mindorks.android:prdownloader:0.6.0'
+
+
 }
 // Add to the bottom of the file
 apply plugin: 'com.google.gms.google-services'
