@@ -55,8 +55,9 @@ import com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.MyFavoriteMenuActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
 import com.cloudwell.paywell.services.activity.notification.allNotificaiton.NotificationAllActivity;
+import com.cloudwell.paywell.services.activity.product.AjkerDealActivity;
 import com.cloudwell.paywell.services.activity.product.ProductMenuActivity;
-import com.cloudwell.paywell.services.activity.product.productHelper.ProductHelper;
+import com.cloudwell.paywell.services.activity.product.WholesaleActivity;
 import com.cloudwell.paywell.services.activity.refill.RefillBalanceMainActivity;
 import com.cloudwell.paywell.services.activity.refill.banktransfer.BankTransferMainActivity;
 import com.cloudwell.paywell.services.activity.refill.card.CardTransferMainActivity;
@@ -257,6 +258,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         changeStatusBarColor();
         setContentView(R.layout.activity_main);
 
+        PayWellShortcutManager.Companion.enableShortcutList(this);
 
         String bd = CountryUtility.getCountryCode("BD");
 
@@ -2351,17 +2353,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.string.home_product_ajker_deal:
 
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_PRODUCT_AJKER_DEAL_MENU);
-
-
-                new ProductHelper().getToken(this, 1);
-
+                startActivity(new Intent(this, AjkerDealActivity.class));
                 break;
 
             case R.string.home_product_pw_wholesale:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_PRODUCT_WHOLESALE_MENU);
-
-                new ProductHelper().getToken(this, 2);
-
+                startActivity(new Intent(this, WholesaleActivity.class));
                 break;
 
             case R.string.home_statement_mini:

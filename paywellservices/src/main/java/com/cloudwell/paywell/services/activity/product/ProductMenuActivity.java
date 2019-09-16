@@ -124,12 +124,18 @@ public class ProductMenuActivity extends ProductEecommerceBaseActivity {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_WRITE_STORAGE);
         } else {
             // Android version is lesser than 6.0 or the permission is already granted.
+//            if (serviceType == TAG_AJKER_DEAL) {
+//                URL = getString(R.string.ajd_token) + "rid=" + mAppHandler.getRID();
+//            } else if (serviceType == TAG_WHOLESALE) {
+//                URL = getString(R.string.b2b_token) + "rid=" + mAppHandler.getRID();
+//            }
+//            new GetToken().execute(URL);
+
             if (serviceType == TAG_AJKER_DEAL) {
-                URL = getString(R.string.ajd_token) + "rid=" + mAppHandler.getRID();
-            } else if (serviceType == TAG_WHOLESALE) {
-                URL = getString(R.string.b2b_token) + "rid=" + mAppHandler.getRID();
+                startActivity(new Intent(ProductMenuActivity.this, AjkerDealActivity.class));
+            } else {
+                startActivity(new Intent(ProductMenuActivity.this, WholesaleActivity.class));
             }
-            new GetToken().execute(URL);
         }
     }
 
@@ -141,11 +147,9 @@ public class ProductMenuActivity extends ProductEecommerceBaseActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted
                     if (serviceType == TAG_AJKER_DEAL) {
-                        String URL = getString(R.string.ajd_token) + "rid=" + mAppHandler.getRID();
-                        new GetToken().execute(URL);
-                    } else if (serviceType == TAG_WHOLESALE) {
-                        String URL = getString(R.string.b2b_token) + "rid=" + mAppHandler.getRID();
-                        new GetToken().execute(URL);
+                        startActivity(new Intent(ProductMenuActivity.this, AjkerDealActivity.class));
+                    } else {
+                        startActivity(new Intent(ProductMenuActivity.this, WholesaleActivity.class));
                     }
                 } else {
                     // permission denied

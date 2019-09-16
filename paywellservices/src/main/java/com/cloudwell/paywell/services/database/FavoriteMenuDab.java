@@ -28,6 +28,12 @@ public interface FavoriteMenuDab {
     @Query("SELECT * FROM favoritemenu WHERE status ='Favourite'")
     Maybe<List<FavoriteMenu>> getAllFavoriteMenu();
 
+    @Query("SELECT * FROM favoritemenu WHERE status ='Favourite'")
+    List<FavoriteMenu> getAppShortcut();
+
+    @Query("SELECT * FROM favoritemenu WHERE status !='Favourite'")
+    List<FavoriteMenu> getDislikedMenu();
+
     @Insert
     void insert(FavoriteMenu task);
 
