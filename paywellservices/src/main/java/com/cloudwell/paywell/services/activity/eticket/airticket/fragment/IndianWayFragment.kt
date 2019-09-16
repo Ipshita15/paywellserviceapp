@@ -502,7 +502,7 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
         val calendarMin = Calendar.getInstance()
         datePickerDialog.datePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
-        datePickerDialog.datePicker.minDate = calendarMin.timeInMillis
+        datePickerDialog.datePicker.minDate = (calendarMin.timeInMillis - 10000)
         datePickerDialog.show()
 
     }

@@ -123,7 +123,7 @@ public class MyDatePickerTimelineForBus extends LinearLayout implements View.OnC
             }
         }, year, thismonth, dayOfMonth);
 
-        datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+        datePickerDialog.getDatePicker().setMinDate((calendar.getTimeInMillis() - 10000));
 
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
