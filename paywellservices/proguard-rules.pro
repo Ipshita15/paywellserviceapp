@@ -37,3 +37,7 @@
 }
 
 -keep class com.shockwave.**
+
+
+-keep class com.crashlytics.** { *; }
+-dontwarn com.crashlytics.**
