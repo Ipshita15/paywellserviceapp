@@ -496,6 +496,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void updateMyFavorityView() {
         getAllFavoriteDate();
+        PayWellShortcutManager.Companion.enableShortcutList(this);
+
     }
 
 

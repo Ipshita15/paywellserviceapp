@@ -39,38 +39,34 @@ class PayWellShortcutManager {
             doAsync {
 
                 val favoriteMenuDab = DatabaseClient.getInstance(context).appDatabase.mFavoriteMenuDab()
-                val favouriteMenus= favoriteMenuDab.getAppShortcut() as ArrayList<FavoriteMenu>
-                val dislikeMenus:ArrayList<FavoriteMenu> = favoriteMenuDab.dislikedMenu as ArrayList<FavoriteMenu>
+                val favouriteMenus = favoriteMenuDab.getAppShortcut() as ArrayList<FavoriteMenu>
+                val dislikeMenus: ArrayList<FavoriteMenu> = favoriteMenuDab.dislikedMenu as ArrayList<FavoriteMenu>
+                val shortcuts = ArrayList<ShortcutInfo>()
+                shortcuts.clear()
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1) {
+                    val payWellShortcutManager: ShortcutManager = context.getSystemService(ShortcutManager::class.java)
 
-                uiThread {
-                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1) {
-                        val payWellShortcutManager: ShortcutManager = context.getSystemService(ShortcutManager::class.java)
-                        val shortcuts=ArrayList<ShortcutInfo>()
-                        if(favouriteMenus.size<=5){
-                            for (x in 0 until favouriteMenus.size){
-                                val completedTasksIntent = AppUtility.onAppShortcutItemClick(favouriteMenus.get(x), context)
-                                completedTasksIntent.setAction(Intent.ACTION_VIEW)
-                                completedTasksIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                val postShortcut = ShortcutInfo.Builder(context, favouriteMenus.get(x).name)
-                                        .setShortLabel(context.getString(ResorceHelper.getResId(favouriteMenus.get(x).name, R.string::class.java)))
-                                        .setLongLabel(context.getString(ResorceHelper.getResId(favouriteMenus.get(x).name, R.string::class.java)))
-                                        .setIcon(Icon.createWithResource(context, ResorceHelper.getResId(favouriteMenus.get(x).icon, R.drawable::class.java)))
-                                        .setIntents(arrayOf(Intent(Intent.ACTION_MAIN, Uri.EMPTY, context, MainActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK), completedTasksIntent))
-                                        .build()
+                    for (x in 0 until favouriteMenus.size) {
+                        if (x > 4) break
+                        val completedTasksIntent = AppUtility.onAppShortcutItemClick(favouriteMenus.get(x), context)
+                        completedTasksIntent.setAction(Intent.ACTION_VIEW)
+                        completedTasksIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        val postShortcut = ShortcutInfo.Builder(context, favouriteMenus.get(x).name)
+                                .setShortLabel(context.getString(ResorceHelper.getResId(favouriteMenus.get(x).name, R.string::class.java)))
+                                .setLongLabel(context.getString(ResorceHelper.getResId(favouriteMenus.get(x).name, R.string::class.java)))
+                                .setIcon(Icon.createWithResource(context, ResorceHelper.getResId(favouriteMenus.get(x).icon, R.drawable::class.java)))
+                                .setIntents(arrayOf(Intent(Intent.ACTION_MAIN, Uri.EMPTY, context, MainActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK), completedTasksIntent))
+                                .build()
 
-                                shortcuts.add(postShortcut)
-                            }
-                        }
-                        payWellShortcutManager.addDynamicShortcuts(shortcuts)
-                        for (x in 0 until dislikeMenus.size){
-                            val shortcutManager:ShortcutManager = context.getSystemService(ShortcutManager::class.java)
-                            shortcutManager.disableShortcuts(Arrays.asList(dislikeMenus.get(x).name))
-                        }
+                        shortcuts.add(postShortcut)
+                    }
+                    payWellShortcutManager.setDynamicShortcuts(shortcuts)
+                    for (x in 0 until dislikeMenus.size) {
+                        val shortcutManager: ShortcutManager = context.getSystemService(ShortcutManager::class.java)
+                        shortcutManager.disableShortcuts(Arrays.asList(dislikeMenus.get(x).name))
                     }
                 }
             }
-
-
         }
 
         @RequiresApi(Build.VERSION_CODES.N_MR1)
