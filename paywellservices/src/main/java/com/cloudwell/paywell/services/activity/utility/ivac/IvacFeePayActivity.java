@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -222,6 +223,9 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
         spnr_center.setBackgroundColor(getResources().getColor(R.color.white));
         spnr_center.setEnabled(true);
         spnr_center.setOnItemSelectedListener(this);
+        if (str_centerId!=null && !str_centerId.isEmpty()){
+            mAppHandler.setCenterId(str_centerId);
+        }
     }
 
     private void centerLock() {
@@ -229,6 +233,9 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
         spnr_center.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         isCenterUserLock = true;
         mAppHandler.setIVACCenterLock(isCenterUserLock);
+        if (str_centerId!=null && !str_centerId.isEmpty()){
+            mAppHandler.setCenterId(str_centerId);
+        }
     }
 
     private void setupCenterDetailsSpiner() {
@@ -269,7 +276,10 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
     private void autoSelectedCenterPosition() {
         int centerDropDownPogistion = mAppHandler.getCenterDropDownPogistion();
         spnr_center.setSelection(centerDropDownPogistion);
-
+        boolean ivacCenterLock = mAppHandler.isIVACCenterLock();
+        if (ivacCenterLock){
+            str_centerId=mAppHandler.getSavedCenterId();
+        }
     }
 
     @Override
@@ -340,6 +350,9 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
                     webFile = editTextWebFile.getText().toString().trim();
                     passportNo = editTextPassport.getText().toString().trim();
                     phnNum = editTextPhnNum.getText().toString().trim();
+
+//                    Log.d("IVAC_DETAILS","IMEI/"+mAppHandler.getImeiNo()+"PASS/"+password+"WEB_FILE/"+webFile+"AMOUNT/"+str_amount+"PASSPORT/"+passportNo+"CENTER_ID/"+str_centerId+"PHONE_NUMBER/"+phnNum);
+
                     mConfirmFeePayAsync = new ConfirmFeePayAsync().execute(
                             getResources().getString(R.string.utility_ivac_fee_pay));
                 }
