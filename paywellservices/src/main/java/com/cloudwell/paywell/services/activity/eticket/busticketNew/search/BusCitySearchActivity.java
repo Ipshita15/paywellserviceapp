@@ -179,6 +179,10 @@ public class BusCitySearchActivity extends BusTricketBaseActivity implements Ful
                 if (!from.isEmpty() && !(from.equals(FROM_STRING)) && !to.isEmpty() && !(to.equals(TO_STRING))) {
 
                     if (!from.equals(TO_STRING) && (!to.equals(FROM_STRING))) {
+                        if (from.equals(to)) {
+                            Toast.makeText(BusCitySearchActivity.this, getApplicationContext().getResources().getString(R.string.bus_validation_message_location), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
 
                         if (boothList.getSelectedItem().toString().equals("All")) {
                             openTripListActivity(from, to, "All");

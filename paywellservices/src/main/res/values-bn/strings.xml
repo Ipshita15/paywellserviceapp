@@ -221,6 +221,7 @@
     <string name="verify_quote">উপরোক্ত নম্বরে একটি পিন আসবে এবং স্বয়ংক্রিয় ভাবে নম্বরটি ভেরিফাই হয়ে যাবে।</string>
     <string name="allow_error_msg">অনুমতি নেই। প্রথমে পিন পরিবর্তন করুন</string>
     <string name="select_phn_title_msg">নম্বর নির্বাচন করুন</string>
+    <string name="amount_transfer_msg">টাকা স্থানান্তর সফল</string>
     <string name="success_msg">সফল</string>
     <string name="request_failed_msg">ফেল</string>
     <string name="coming_soon_msg">শীঘ্রই আসছে</string>
@@ -784,6 +785,7 @@
     <string name="transport">Transport</string>
     <string name="search_transport_ticket">Search Transport Ticket</string>
     <string name="bus_validation_message">Please enter all the data first</string>
+    <string name="bus_validation_message_location">Please seleted correct location</string>
     <string name="no_boarding_point_found">No boarding point found!!!</string>
     <string name="sort">Sort</string>
     <string name="selected_seat">Selected seat:</string>

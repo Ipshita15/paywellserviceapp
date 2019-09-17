@@ -223,6 +223,7 @@
         automatically.</string>
     <string name="allow_error_msg">Not allowed. Change the Pin first</string>
     <string name="select_phn_title_msg">Choose a number</string>
+    <string name="amount_transfer_msg">Amount transfer successful</string>
     <string name="success_msg">Successful</string>
     <string name="request_failed_msg">Failed</string>
     <string name="coming_soon_msg">Coming Soon</string>
@@ -543,6 +544,7 @@
     <!-- Chat -->
     <string name="chat">https://www.paywellonline.com/chatting-retailer/?</string>
 
+    <string name="merchant_balance_return_url" translatable="false">https://api.paywellonline.com/PaywelltransactionSDA/SDAToMerchentBalanceReturn</string>
     <string name="title_activity_my_favorite_menu">My Favorites</string>
     <string name="can_not_add_more_than">Can\'t add more than 8 menu</string>
     <string name="Added">Added:</string>
@@ -785,6 +787,7 @@
     <string name="transport">Transport</string>
     <string name="search_transport_ticket">Search Transport Ticket</string>
     <string name="bus_validation_message">Please enter all the data first</string>
+    <string name="bus_validation_message_location">Please seleted correct location</string>
     <string name="no_boarding_point_found">No boarding point found!!!</string>
     <string name="sort">Sort</string>
     <string name="selected_seat">Selected seat:</string>
