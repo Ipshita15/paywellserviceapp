@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
     <external-path
-        name="external_files"
+        name="external"
         path="."/>
     <external-files-path
         name="external_files"
         path="."/>
-
-    <external-cache-path
+    <cache-path
         name="cache"
-        path="camera" />
-    <!-- FOR SD CARD-->
-    <root-path
-        name="sdcard1"
+        path="." />
+    <external-cache-path
+        name="external_cache"
+        path="." />
+    <files-path
+        name="files"
         path="."/>
 </paths>
