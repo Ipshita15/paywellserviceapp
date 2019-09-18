@@ -1,5 +1,6 @@
 package com.cloudwell.paywell.services.activity.notification.notificaitonFullView
 
+
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
@@ -115,6 +116,7 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
         val message = it?.message
         val messageSub = it?.messageSub
         val imageUrl = it?.imageUrl
+        val dateTime = it?.addedDatetime
         val type = it?.type
 
 
@@ -130,10 +132,11 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
 
         if (testmessage.contains("notification_action_type")) {
             // air ticket flow
-            handleAirTicket(testmessage, messageSub)
+            handleAirTicket(testmessage, messageSub,dateTime)
 
         } else {
             // normal
+
             btAccept.visibility = View.GONE
             btTicketCancel.visibility = View.GONE
             handleNormal(it)
@@ -150,6 +153,7 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
 
         notiTitle.text = model?.messageSub
         notiMessage.text = spannableString
+        date.text=model?.addedDatetime
 
         if (!model?.imageUrl.equals("")) {
             showProgressDialog();
@@ -207,7 +211,7 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
         }
     }
 
-    private fun handleAirTicket(testmessage: String, messageSub: String?) {
+    private fun handleAirTicket(testmessage: String, messageSub: String?, dateTime: String?) {
         try {
             val jsonObject = JSONObject(testmessage)
             val notification_action_type = jsonObject.getString("notification_action_type")
@@ -221,6 +225,7 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
             Linkify.addLinks(spannableString, Linkify.WEB_URLS);
             notiTitle.text = messageSub
             notiMessage.text = spannableString
+            date.text=dateTime
 
             if (notification_action_type == "AirTicketReScheduleConfirmation") {
                 btAccept.visibility = View.VISIBLE

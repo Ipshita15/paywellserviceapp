@@ -794,5 +794,8 @@
     <string name="select">Select</string>
     <string name="do_you_want_to_buy_this_ticket">Do you want to buy this ticket?</string>
     <string name="buy">Buy</string>
+    <string name="clear_all">সব মুছুন</string>
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
 
 </resources>

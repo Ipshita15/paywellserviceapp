@@ -1,17 +1,29 @@
 package com.cloudwell.paywell.services.activity.notification.allNotificaiton
 
+import android.content.Context
 import android.content.Intent
+import android.graphics.*
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.MenuItem
-import android.widget.AdapterView
+import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.ListView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.Toolbar
+import androidx.cardview.widget.CardView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.MainActivity
 import com.cloudwell.paywell.services.activity.base.newBase.MVVMBaseActivity
-import com.cloudwell.paywell.services.activity.notification.allNotificaiton.adapter.MsgAdapter
+import com.cloudwell.paywell.services.activity.notification.SwipeController
+import com.cloudwell.paywell.services.activity.notification.SwipeController.SwipeControllerActions
 import com.cloudwell.paywell.services.activity.notification.allNotificaiton.view.NotificationViewStatus
 import com.cloudwell.paywell.services.activity.notification.allNotificaiton.viewModel.NotificationNotifcationViewModel
 import com.cloudwell.paywell.services.activity.notification.model.NotificationDetailMessage
@@ -20,26 +32,36 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.utils.AppHelper.startNotificationSyncService
+import com.google.gson.JsonParser
+import kotlinx.android.synthetic.main.activity_notification_view.*
+import kotlinx.android.synthetic.main.activity_notification_view.view.*
+import kotlinx.android.synthetic.main.dialog_notification.view.*
 
 
-class NotificationAllActivity : MVVMBaseActivity() {
-    private var listView: ListView? = null
+class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
+    private var listView: RecyclerView? = null
     private var mAppHandler: AppHandler? = null
     private var mLinearLayout: LinearLayout? = null
 
     private var position: Int = 0
-    lateinit var adapter: MsgAdapter
+    lateinit var adapter: SimpleAdapter
     private var isNotificationFlow: Boolean = false
 
-    private lateinit var viewModel: NotificationNotifcationViewModel
+    lateinit var viewModel: NotificationNotifcationViewModel
+
+    var notificationDataList = ArrayList<NotificationDetailMessage>()
+
+    var previousPosition=-1
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notification_view)
 
-        setupToolbarTitle()
         initializer()
         initViewModel()
+        setupToolbarTitle()
+
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_NOTIFICATION_PAPGE)
 
 
@@ -79,7 +101,14 @@ class NotificationAllActivity : MVVMBaseActivity() {
 
             NotificationViewStatus.SHOW_NO_NOTIFICAITON_FOUND -> {
                 showSnackMessageWithTextMessage(getString(R.string.no_notification_msg))
+
+                listViewNotification.visibility = View.GONE
+                noNotificationIMG.visibility = View.VISIBLE
+                noNotificationTV.visibility = View.VISIBLE
+                notificationDetailsTV.visibility = View.VISIBLE
+
             }
+
         }
 
     }
@@ -92,13 +121,21 @@ class NotificationAllActivity : MVVMBaseActivity() {
     }
 
     private fun setupAdapter(t: List<NotificationDetailMessage>) {
-        adapter = MsgAdapter(this, t)
-        listView!!.adapter = adapter
-        listView!!.onItemClickListener = AdapterView.OnItemClickListener { _, view, msgPosition, id ->
-            position = msgPosition
-            viewModel.onItemClick(position)
-        }
 
+        adapter=SimpleAdapter(ArrayList<NotificationDetailMessage>(), this)
+        adapter.notifyDataSetChanged()
+        adapter = SimpleAdapter(t, this)
+        listView!!.adapter = adapter
+        Log.d("TESTING<", previousPosition.toString())
+        if(previousPosition>0){
+            listView!!.scrollToPosition(previousPosition)
+        }
+//        val swipeHandler = object : SwipeToDeleteCallback(this) {
+//            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+//                val adapter = listView!!.adapter as SimpleAdapter
+//                adapter.removeItem(viewHolder.adapterPosition)
+//            }
+//        }
     }
 
     private fun startNotificationFullViewActivity() {
@@ -107,18 +144,44 @@ class NotificationAllActivity : MVVMBaseActivity() {
 
 
     private fun setupToolbarTitle() {
-        assert(supportActionBar != null)
-        if (supportActionBar != null) {
-            supportActionBar!!.setTitle(com.cloudwell.paywell.services.R.string.home_notification)
-            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
+        notification_toolbar.clear_all_ConstraintLayout.setOnClickListener {
+            if (viewModel.mListMutableLiveData.value != null && viewModel.mListMutableLiveData.value!!.size > 0) {
+                confirmDelete("Want to delete all notifications?")
+            } else {
+                Toast.makeText(applicationContext, "No notification available!!!", Toast.LENGTH_SHORT).show()
+            }
         }
+        setSupportActionBar(notification_toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
     }
 
     fun initializer() {
+
         isNotificationFlow = intent.getBooleanExtra(IS_NOTIFICATION_SHOWN, false)
         listView = findViewById(com.cloudwell.paywell.services.R.id.listViewNotification)
+        listView!!.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
         mLinearLayout = findViewById(com.cloudwell.paywell.services.R.id.linearLayout)
         mAppHandler = AppHandler.getmInstance(applicationContext)
+
+        val swipeController = object : SwipeController(this, listView) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                super.onSwiped(viewHolder, direction)
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(swipeController)
+        itemTouchHelper.attachToRecyclerView(listView)
+        listView!!.addItemDecoration(object : RecyclerView.ItemDecoration() {
+            override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
+                super.onDraw(c, parent, state)
+                swipeController.onDraw(c)
+            }
+
+
+        })
+
     }
 
     override fun onBackPressed() {
@@ -142,9 +205,141 @@ class NotificationAllActivity : MVVMBaseActivity() {
     }
 
 
+
     companion object {
         const val IS_NOTIFICATION_SHOWN = "isNotificationShown"
         var length: Int = 0
 
     }
+
+
+    class SimpleAdapter(private val t: List<NotificationDetailMessage>, context: Context) : RecyclerView.Adapter<SimpleAdapter.ViewHolder>() {
+
+        public var counter=0
+        var context: Context=context
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.dialog_notification, parent, false)
+            return ViewHolder(view)
+        }
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            if (counter>=3){
+                counter=0
+            }
+            holder.title.text = t.get(position).messageSub
+            holder.message.text = t.get(position).message
+            holder.date.text=t.get(position).addedDatetime
+            holder.notificationRandomImage.setImageResource(getImageDrawable(counter))
+//            holder.notificationCardView.setOnClickListener{view->
+//                Toast.makeText(context,"Test text",Toast.LENGTH_SHORT).show()
+//            }
+            counter++
+            holder.itemView.setOnClickListener() {
+
+                    (context as NotificationAllActivity).onRecyclerViewItemClick(position,"ADAPTER")
+
+            }
+
+            val model = t[position]
+
+            if (model.status.equals("Unread")) {
+                holder.notificationCardView.setCardBackgroundColor(Color.parseColor("#DAFBFB"))
+            } else {
+                holder.notificationCardView.setCardBackgroundColor(Color.parseColor("#FFFFFF"))
+            }
+
+        }
+        private fun getImageDrawable(counter: Int): Int {
+            when(counter) {
+                0 -> return R.drawable.notification_one
+                1 -> return R.drawable.notification_two
+                2 -> return R.drawable.notification_three
+                else -> return R.drawable.notification_one
+            }
+        }
+
+        fun remove(positions: ArrayList<Int>) {
+            for (x in 0 until positions.size step 2) {
+                (t as ArrayList).removeAt(x)
+                notifyDataSetChanged()
+
+            }
+        }
+        override fun getItemCount(): Int = t.size
+
+        fun refreshList() {
+            notifyDataSetChanged()
+        }
+
+        class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+            val title = view.title
+            val message = view.message
+            val date = view.date
+            val notificationRandomImage = view.notificationRandomImage
+            val notificationCardView:CardView = view.notificationCardView
+        }
+    }
+
+    override fun onRightClicked(position: Int) {
+
+        var positions: ArrayList<Int> = ArrayList()
+        positions.add(position)
+        var singleNotification = ArrayList<NotificationDetailMessage>()
+        singleNotification.add(viewModel.mListMutableLiveData.value!!.get(position))
+        deleteNotificationFromServer(singleNotification, positions)
+    }
+    override fun onRecyclerViewItemClick(position: Int, parent:String) {
+        viewModel.onItemClick(position)
+
+    }
+
+    private fun deleteNotificationFromServer(messageIdList: List<NotificationDetailMessage>, positions: ArrayList<Int>) {
+        showProgressDialog()
+        var messageIdListString = StringBuilder("")
+
+        for (x in 0 until messageIdList.size) {
+            messageIdListString.append(messageIdList.get(x).messageId)
+            if (!(x == messageIdList.size - 1)) {
+                messageIdListString.append(",")
+            }
+            previousPosition=positions.get(x)-1
+        }
+
+        viewModel.deleteNotification(messageIdListString.toString()).observeForever {
+            dismissProgressDialog()
+            if (it != null && !it.isEmpty()) {
+                val jsonObject = JsonParser().parse(it).asJsonObject
+                var status: String = jsonObject.getAsJsonPrimitive("status").asString
+                if (status == "200") {
+                    viewModel.deleteNotificationFromLocal(messageIdList)
+
+                    Toast.makeText(applicationContext, "Successfully deleted", Toast.LENGTH_SHORT).show()
+                    Log.d("TEST", "Successfully deleted/ " + messageIdListString.toString())
+                } else {
+                    Toast.makeText(applicationContext, "Can't be deleted at this moment!!!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    fun confirmDelete(message: String) {
+        var positions: ArrayList<Int> = ArrayList()
+        for (x in 0 until viewModel.mListMutableLiveData.value!!.size) {
+            positions.add(x)
+        }
+
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage(message)
+                .setCancelable(true)
+                .setPositiveButton("Delete") { dialog, which ->
+                    deleteNotificationFromServer(viewModel.mListMutableLiveData.value!!, positions)
+
+                }.setNegativeButton("Cancel") { dialogInterface, i ->
+                    dialogInterface.dismiss()
+                }
+        var alertDialog: AlertDialog = builder.create()
+        alertDialog.show()
+
+    }
+
 }

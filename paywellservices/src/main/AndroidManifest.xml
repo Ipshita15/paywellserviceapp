@@ -225,6 +225,7 @@
         <activity
             android:name=".activity.notification.allNotificaiton.NotificationAllActivity"
             android:parentActivityName=".activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="OPEN_ACTIVITY_1" />
