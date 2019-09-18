@@ -497,12 +497,12 @@ public class MultiCityFragment extends Fragment {
                 textView.setTextColor(Color.BLACK);
             }
         }, year, thismonth, dayOfMonth);
-        datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+        datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis() - 10000);
 
         Calendar calendarMin = Calendar.getInstance();
 
 
-        datePickerDialog.getDatePicker().setMinDate(calendarMin.getTimeInMillis());
+        datePickerDialog.getDatePicker().setMinDate((calendarMin.getTimeInMillis() - 10000));
         datePickerDialog.show();
 
     }

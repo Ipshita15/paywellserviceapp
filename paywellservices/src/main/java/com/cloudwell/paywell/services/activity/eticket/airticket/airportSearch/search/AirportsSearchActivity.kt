@@ -274,23 +274,29 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
 
         val density = resources.displayMetrics.density
         val dpWidth = outMetrics.widthPixels / density
-        var columns: Int;
+        val columns: Int;
         if (dpWidth > 320) {
             columns = 2
         } else {
             columns = 2
         }
 
-
         val glm = GridLayoutManager(applicationContext, columns)
         glm.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                when (sectionAdapter.getSectionItemViewType(position)) {
-                    SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER ->
-                        return columns
-                    else ->
-                        return 1
+                try {
+                    val sectionItemViewType = sectionAdapter.getSectionItemViewType(position)
+                    when (sectionItemViewType) {
+                        SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER ->
+                            return columns
+                        else ->
+                            return 1
+                    }
+                } catch (e: ArrayIndexOutOfBoundsException) {
+
                 }
+                return 1
+
             }
         }
 

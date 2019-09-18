@@ -21,7 +21,7 @@ class TokenAuthenticator : Authenticator {
 
     override fun authenticate(route: Route?, response: Response): Request? {
         Log.e("authenticate", "authenticate")
-        if (response.code == 401) {
+        if (response.code() == 401) {
             val userName = "paywell"
             val password = "PayWell@321"
             val base = "$userName:$password"
@@ -46,7 +46,7 @@ class TokenAuthenticator : Authenticator {
                 AppHandler.getmInstance(AppController.getContext()).setToken(securityToken)
 
 
-                return response.request.newBuilder()
+                return response.request().newBuilder()
                         .header("Authorization", "Bearer $securityToken")
                         .build()
 

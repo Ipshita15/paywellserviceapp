@@ -160,6 +160,7 @@ public class AppHandler {
 
     public static final int MULTI_CITY_LIMIT = 5;
     public static final String IVAC_CENTER_LOCK = "IVAC_CENTER_LOCK";
+    public static final String IVAC_CENTER_ID = "IVAC_CENTER_ID";
 
 
     public AppHandler() {
@@ -719,6 +720,15 @@ public class AppHandler {
     public void setIVACCenterLock(Boolean check) {
         editor.putBoolean(IVAC_CENTER_LOCK, check);
         editor.commit();
+    }
+
+    public void setCenterId(String centerId) {
+        editor.putString(IVAC_CENTER_ID, centerId);
+        editor.commit();
+    }
+
+    public String getSavedCenterId() {
+        return mPref.getString(IVAC_CENTER_ID,"");
     }
 
     public static class MyDialogFragment extends DialogFragment {

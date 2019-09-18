@@ -223,6 +223,7 @@
         automatically.</string>
     <string name="allow_error_msg">Not allowed. Change the Pin first</string>
     <string name="select_phn_title_msg">Choose a number</string>
+    <string name="amount_transfer_msg">Amount transfer successful</string>
     <string name="success_msg">Successful</string>
     <string name="request_failed_msg">Failed</string>
     <string name="coming_soon_msg">Coming Soon</string>
@@ -439,9 +440,8 @@
     <string name="notification_token_url">https://www.paywellonline.com/paywellapi/setUserFCMToken.php</string>
 
     <string name="app_next_version_no">vten_seventeen</string>
-    <string name="update_check">https://app.paywellonline.com/apk/PaywellServices_v10_18.apk</string>
+    <string name="update_check" translatable="false">https://app.paywellonline.com/apk/paywell_services_latest_version.apk</string>
     <string name="check_version">https://app.paywellonline.com/version_update_info/paywellservice_update.txt</string>
-
     <string name="update_location">https://api.paywellonline.com/PaywellRetailerInformation/doUpdateRetailersCurrentLocation</string>
 
     <!-- Registration -->
@@ -544,6 +544,7 @@
     <!-- Chat -->
     <string name="chat">https://www.paywellonline.com/chatting-retailer/?</string>
 
+    <string name="merchant_balance_return_url" translatable="false">https://api.paywellonline.com/PaywelltransactionSDA/SDAToMerchentBalanceReturn</string>
     <string name="title_activity_my_favorite_menu">My Favorites</string>
     <string name="can_not_add_more_than">Can\'t add more than 8 menu</string>
     <string name="Added">Added:</string>
@@ -633,8 +634,8 @@
     <string name="edit">Edit</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="multicity_limit_msg">Currently we are accepting only 5 requests</string>
-    <string name="bookingId">Booking Id</string>
+    <string name="multicity_limit_msg" translatable="false">Currently we are accepting only 5 requests</string>
+    <string name="bookingId" translatable="false">Booking Id</string>
     <string name="depart">Depart</string>
     <string name="date">Date</string>
     <string name="class_text">Class</string>
@@ -786,6 +787,7 @@
     <string name="transport">Transport</string>
     <string name="search_transport_ticket">Search Transport Ticket</string>
     <string name="bus_validation_message">Please enter all the data first</string>
+    <string name="bus_validation_message_location">Please seleted correct location</string>
     <string name="no_boarding_point_found">No boarding point found!!!</string>
     <string name="sort">Sort</string>
     <string name="selected_seat">Selected seat:</string>
