@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -407,9 +408,16 @@ public class AppHandler {
     }
 
     public static void showDialog(FragmentManager fm) {
-        FragmentTransaction ft = fm.beginTransaction();
-        MyDialogFragment frag = new MyDialogFragment();
-        frag.show(ft, "txn_tag");
+        try {
+            FragmentTransaction ft = fm.beginTransaction();
+            MyDialogFragment frag = new MyDialogFragment();
+            frag.show(ft, "txn_tag");
+
+        } catch (IllegalStateException e) {
+            Log.e("IllegalStateException", "Exception", e);
+        }
+
+
     }
 
     public static String getCurrentDate() {

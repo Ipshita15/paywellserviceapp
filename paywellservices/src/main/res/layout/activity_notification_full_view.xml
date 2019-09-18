@@ -69,7 +69,9 @@
                     android:contentDescription="@string/app_name"
                     android:visibility="gone"/>
 
+
                 <Button
+                    tools:visibility="visible"
                     android:id="@+id/notiButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -89,12 +91,29 @@
                     android:textColor="@color/colorText"
                     android:visibility="gone"/>
 
+                <EditText
+                    android:id="@+id/notiEditText"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:inputType="numberPassword"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
                     <Button
+                        android:visibility="gone"
+                        tools:visibility="visible"
                         android:id="@+id/btAccept"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -104,6 +123,8 @@
                         android:text="Accept"/>
 
                     <Button
+                        android:visibility="gone"
+                        tools:visibility="visible"
                         android:id="@+id/btTicketCancel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

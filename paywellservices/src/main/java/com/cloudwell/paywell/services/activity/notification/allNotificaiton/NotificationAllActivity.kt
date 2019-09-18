@@ -35,7 +35,7 @@ class NotificationAllActivity : MVVMBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.cloudwell.paywell.services.R.layout.activity_notification_view)
+        setContentView(R.layout.activity_notification_view)
 
         setupToolbarTitle()
         initializer()
