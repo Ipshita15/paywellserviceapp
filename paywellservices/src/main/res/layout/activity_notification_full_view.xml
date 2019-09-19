@@ -46,28 +46,6 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="#545454"
                     tools:text="Message" />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/notification_calendar" />
-
-                    <TextView
-                        android:id="@+id/date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="5dp"
-                        android:text="20 Jul"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="#C9CED3" />
-
-                </LinearLayout>
 
 
                 <ImageView
@@ -83,7 +61,26 @@
                     android:contentDescription="@string/app_name"
                     android:visibility="gone"/>
 
+
+
+
+                <EditText
+                    android:id="@+id/notiEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:inputType="numberPassword"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+
                 <Button
+                    tools:visibility="visible"
                     android:id="@+id/notiButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -109,22 +106,49 @@
                     android:orientation="horizontal">
 
                     <Button
+                        android:visibility="gone"
+                        tools:visibility="visible"
                         android:id="@+id/btAccept"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
                         android:layout_weight="1"
                         android:background="@color/greenShadeLight"
-                        android:text="Accept"/>
+                        android:text="@string/accept"/>
 
                     <Button
+                        android:visibility="gone"
+                        tools:visibility="visible"
                         android:id="@+id/btTicketCancel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
                         android:layout_weight="1"
                         android:background="@color/color_red"
-                        android:text="Decline"/>
+                        android:text="@string/decline"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/notification_calendar" />
+
+                    <TextView
+                        android:id="@+id/date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:text="20 Jul"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="#C9CED3" />
+
                 </LinearLayout>
 
             </LinearLayout>
