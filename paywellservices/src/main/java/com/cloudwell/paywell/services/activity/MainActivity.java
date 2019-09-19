@@ -2368,22 +2368,25 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_MINI_MENU);
 
-                ViewStatementActivity.title = "mini";
-                ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/StatementInquiry?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
 
                 intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
+                intent.putExtra(ViewStatementActivity.DESTINATION_TITLE,"mini");
+                intent.putExtra(ViewStatementActivity.DESTINATION_URL,"https://api.paywellonline.com/AndroidWebViewController/StatementInquiry?username="
+                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
+
                 startActivityWithFlag(intent);
 
                 break;
             case R.string.home_statement_balance:
 
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_BALANCE_MENU);
-                ViewStatementActivity.title = "balance";
-                ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/balanceStatement?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
 
                 intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
+
+                intent.putExtra(ViewStatementActivity.DESTINATION_TITLE,"balance");
+                intent.putExtra(ViewStatementActivity.DESTINATION_URL,"https://api.paywellonline.com/AndroidWebViewController/balanceStatement?username="
+                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
+
                 startActivityWithFlag(intent);
 
                 break;
@@ -2392,23 +2395,24 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.string.home_statement_sales:
 
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_SALES_MENU);
-                ViewStatementActivity.title = "sales";
-                ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/salesStatementForhttps?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
-
 
                 intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
+
+                intent.putExtra(ViewStatementActivity.DESTINATION_TITLE,"sales");
+                intent.putExtra(ViewStatementActivity.DESTINATION_URL,"https://api.paywellonline.com/AndroidWebViewController/salesStatementForhttps?username="
+                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
+
                 startActivityWithFlag(intent);
 
                 break;
             case R.string.home_statement_transaction:
 
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_TRX_MENU);
-                ViewStatementActivity.title = "trx";
-                ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/getAllTransactionStatementForHttps?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
 
                 intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
+                intent.putExtra(ViewStatementActivity.DESTINATION_TITLE,"trx");
+                intent.putExtra(ViewStatementActivity.DESTINATION_URL,"https://api.paywellonline.com/AndroidWebViewController/getAllTransactionStatementForHttps?username="
+                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
                 startActivityWithFlag(intent);
 
                 break;

@@ -2,6 +2,7 @@ package com.cloudwell.paywell.services.activity
 
 import android.os.Build
 import android.annotation.TargetApi
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ShortcutInfo
@@ -11,7 +12,9 @@ import android.net.Uri
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
 import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu
+import com.cloudwell.paywell.services.constant.AllConstant
 import com.cloudwell.paywell.services.database.DatabaseClient
 import com.cloudwell.paywell.services.utils.AppUtility
 import com.cloudwell.paywell.services.utils.ResorceHelper
@@ -49,6 +52,7 @@ class PayWellShortcutManager {
                     for (x in 0 until favouriteMenus.size) {
                         if (x > 4) break
                         val completedTasksIntent = AppUtility.onAppShortcutItemClick(favouriteMenus.get(x), context)
+                        completedTasksIntent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE, true)
                         completedTasksIntent.setAction(Intent.ACTION_VIEW)
                         completedTasksIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                         val postShortcut = ShortcutInfo.Builder(context, favouriteMenus.get(x).name)
