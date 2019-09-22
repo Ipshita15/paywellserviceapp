@@ -120,7 +120,6 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
         val type = it?.type
 
 
-
         var testmessage = "" + message
         Logger.v(testmessage)
         testmessage = StringEscapeUtils.unescapeJava(testmessage)
@@ -132,7 +131,7 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
 
         if (testmessage.contains("notification_action_type")) {
             // air ticket flow
-            handleAirTicket(testmessage, messageSub,dateTime)
+            handleAirTicket(testmessage, messageSub, dateTime)
 
         } else {
             // normal
@@ -153,7 +152,7 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
 
         notiTitle.text = model?.messageSub
         notiMessage.text = spannableString
-        date.text=model?.addedDatetime
+        date.text = model?.addedDatetime
 
         if (!model?.imageUrl.equals("")) {
             showProgressDialog();
@@ -225,26 +224,22 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
             Linkify.addLinks(spannableString, Linkify.WEB_URLS);
             notiTitle.text = messageSub
             notiMessage.text = spannableString
-            date.text=dateTime
+            date.text = dateTime
 
-            if (notification_action_type == "AirTicketReScheduleConfirmation") {
-                btAccept.visibility = View.VISIBLE
-                btTicketCancel.visibility = View.VISIBLE
-                btAccept.setOnClickListener {
 
-                    callAccept(id)
-                }
+            btAccept.visibility = View.VISIBLE
+            btTicketCancel.visibility = View.VISIBLE
+            btAccept.setOnClickListener {
 
-                btTicketCancel.setOnClickListener {
-                    callReject(id)
+                callAccept(id)
+            }
 
-                }
-
-            } else {
-                btAccept.visibility = View.GONE
-                btTicketCancel.visibility = View.GONE
+            btTicketCancel.setOnClickListener {
+                callReject(id)
 
             }
+
+
 
             try {
                 //automatic call to API
@@ -271,7 +266,7 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
         viewModel.callReScheduleNotificationAccept(id, 2).observeForever {
             dismissProgressDialog()
             if (it != null) {
-                showDialogMessage(it.message)
+                showdialogMessageWithFinishedActivity(it.message)
             }
         }
     }

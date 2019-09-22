@@ -2,7 +2,8 @@ package com.cloudwell.paywell.services.activity.notification.allNotificaiton
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,7 +13,6 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.Toolbar
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -33,9 +33,12 @@ import com.cloudwell.paywell.services.analytics.AnalyticsParameters
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.utils.AppHelper.startNotificationSyncService
 import com.google.gson.JsonParser
+import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_notification_view.*
 import kotlinx.android.synthetic.main.activity_notification_view.view.*
 import kotlinx.android.synthetic.main.dialog_notification.view.*
+import org.apache.commons.lang3.StringEscapeUtils
+import org.json.JSONObject
 
 
 class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
@@ -48,8 +51,6 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
     private var isNotificationFlow: Boolean = false
 
     lateinit var viewModel: NotificationNotifcationViewModel
-
-    var notificationDataList = ArrayList<NotificationDetailMessage>()
 
     var previousPosition=-1
 
@@ -130,12 +131,6 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
         if(previousPosition>0){
             listView!!.scrollToPosition(previousPosition)
         }
-//        val swipeHandler = object : SwipeToDeleteCallback(this) {
-//            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-//                val adapter = listView!!.adapter as SimpleAdapter
-//                adapter.removeItem(viewHolder.adapterPosition)
-//            }
-//        }
     }
 
     private fun startNotificationFullViewActivity() {
@@ -215,7 +210,7 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
 
     class SimpleAdapter(private val t: List<NotificationDetailMessage>, context: Context) : RecyclerView.Adapter<SimpleAdapter.ViewHolder>() {
 
-        public var counter=0
+        var counter=0
         var context: Context=context
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.dialog_notification, parent, false)
@@ -227,12 +222,30 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
                 counter=0
             }
             holder.title.text = t.get(position).messageSub
-            holder.message.text = t.get(position).message
+
+
+            // for air ticket notificaiton remove unwanted // date form message
+            var testmessage = "" + t.get(position).message
+            Logger.v(testmessage)
+            testmessage = StringEscapeUtils.unescapeJava(testmessage)
+
+            testmessage = testmessage.replace("\\", "")
+            testmessage = testmessage.replace("\\\\".toRegex(), "")
+            testmessage = testmessage.replace("\\\\\\\\".toRegex(), "")
+            testmessage = testmessage.replace("\\\\\\\\\\\\".toRegex(), "")
+
+            if (testmessage.contains("notification_action_type")) {
+                val s1 = handleAirTicketActionNotificaiton(testmessage)
+                holder.message.text = s1
+            }else{
+                // for normal notification
+                holder.message.text = t.get(position).message
+            }
+
+
             holder.date.text=t.get(position).addedDatetime
             holder.notificationRandomImage.setImageResource(getImageDrawable(counter))
-//            holder.notificationCardView.setOnClickListener{view->
-//                Toast.makeText(context,"Test text",Toast.LENGTH_SHORT).show()
-//            }
+
             counter++
             holder.itemView.setOnClickListener() {
 
@@ -249,6 +262,15 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
             }
 
         }
+
+        private fun handleAirTicketActionNotificaiton(testmessage: String): String? {
+            val jsonObject = JSONObject(testmessage)
+            val original_message = jsonObject.getString("original_message")
+
+            val s1 = StringEscapeUtils.unescapeJava(original_message);
+            return s1
+        }
+
         private fun getImageDrawable(counter: Int): Int {
             when(counter) {
                 0 -> return R.drawable.notification_one
@@ -282,9 +304,9 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
 
     override fun onRightClicked(position: Int) {
 
-        var positions: ArrayList<Int> = ArrayList()
+        val positions: ArrayList<Int> = ArrayList()
         positions.add(position)
-        var singleNotification = ArrayList<NotificationDetailMessage>()
+        val singleNotification = ArrayList<NotificationDetailMessage>()
         singleNotification.add(viewModel.mListMutableLiveData.value!!.get(position))
         deleteNotificationFromServer(singleNotification, positions)
     }
@@ -295,7 +317,7 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
 
     private fun deleteNotificationFromServer(messageIdList: List<NotificationDetailMessage>, positions: ArrayList<Int>) {
         showProgressDialog()
-        var messageIdListString = StringBuilder("")
+        val messageIdListString = StringBuilder("")
 
         for (x in 0 until messageIdList.size) {
             messageIdListString.append(messageIdList.get(x).messageId)
@@ -309,7 +331,7 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
             dismissProgressDialog()
             if (it != null && !it.isEmpty()) {
                 val jsonObject = JsonParser().parse(it).asJsonObject
-                var status: String = jsonObject.getAsJsonPrimitive("status").asString
+                val status: String = jsonObject.getAsJsonPrimitive("status").asString
                 if (status == "200") {
                     viewModel.deleteNotificationFromLocal(messageIdList)
 
@@ -323,7 +345,7 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
     }
 
     fun confirmDelete(message: String) {
-        var positions: ArrayList<Int> = ArrayList()
+        val positions: ArrayList<Int> = ArrayList()
         for (x in 0 until viewModel.mListMutableLiveData.value!!.size) {
             positions.add(x)
         }
@@ -337,7 +359,7 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
                 }.setNegativeButton("Cancel") { dialogInterface, i ->
                     dialogInterface.dismiss()
                 }
-        var alertDialog: AlertDialog = builder.create()
+        val alertDialog: AlertDialog = builder.create()
         alertDialog.show()
 
     }
