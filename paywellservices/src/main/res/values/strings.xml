@@ -518,7 +518,7 @@
 
     <!-- Product -->
     <string name="ajd_token">http://ajkerdeal.paywellonline.com/api/Paywell/CreateToken?</string>
-    <string name="ajd_login">http://ajkerdeal.paywellonline.com/Home/CheckLoginByToken?</string>
+    <string name="ajd_login">https://ajkerdeal.paywellonline.com/Home/CheckLoginByToken?</string>
     <string name="ajd_refresh_token">http://ajkerdeal.paywellonline.com/MetaData/PingServer</string>
     <string name="ajd_share">http://ajkerdeal.paywellonline.com</string>
 

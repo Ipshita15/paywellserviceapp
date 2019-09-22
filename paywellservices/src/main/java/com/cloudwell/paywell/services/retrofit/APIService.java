@@ -277,6 +277,11 @@ public interface APIService {
     @POST("PaywellParibahanService/getTransactionData")
     Call<TransactionLogDetailsModel> getBusTransactionLogFromServer(@Field("username") String username, @Field("skey") String skey, @Field("limit") String limit);
 
+    @POST
+    @FormUrlEncoded
+    Call<String> getToken(@Url String ur,
+                                      @Field("rid") String rid);
+
 
     @FormUrlEncoded
     @POST("PaywellParibahanService/seatCheckAndBlock")

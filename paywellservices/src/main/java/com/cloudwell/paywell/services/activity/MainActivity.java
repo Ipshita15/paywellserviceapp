@@ -54,8 +54,9 @@ import com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.MyFavoriteMenuActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
 import com.cloudwell.paywell.services.activity.notification.allNotificaiton.NotificationAllActivity;
+import com.cloudwell.paywell.services.activity.product.AjkerDealActivity;
 import com.cloudwell.paywell.services.activity.product.ProductMenuActivity;
-import com.cloudwell.paywell.services.activity.product.productHelper.ProductHelper;
+import com.cloudwell.paywell.services.activity.product.WholesaleActivity;
 import com.cloudwell.paywell.services.activity.refill.RefillBalanceMainActivity;
 import com.cloudwell.paywell.services.activity.refill.banktransfer.BankTransferMainActivity;
 import com.cloudwell.paywell.services.activity.refill.card.CardTransferMainActivity;
@@ -257,6 +258,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         changeStatusBarColor();
         setContentView(R.layout.activity_main);
 
+        PayWellShortcutManager.Companion.enableShortcutList(this);
 
         String bd = CountryUtility.getCountryCode("BD");
 
@@ -494,6 +496,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void updateMyFavorityView() {
         getAllFavoriteDate();
+        PayWellShortcutManager.Companion.enableShortcutList(this);
+
     }
 
 
@@ -2350,17 +2354,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.string.home_product_ajker_deal:
 
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_PRODUCT_AJKER_DEAL_MENU);
-
-
-                new ProductHelper().getToken(this, 1);
-
+                startActivity(new Intent(this, AjkerDealActivity.class));
                 break;
 
             case R.string.home_product_pw_wholesale:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_PRODUCT_WHOLESALE_MENU);
-
-                new ProductHelper().getToken(this, 2);
-
+                startActivity(new Intent(this, WholesaleActivity.class));
                 break;
 
             case R.string.home_statement_mini:
@@ -2368,22 +2367,25 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_MINI_MENU);
 
-                ViewStatementActivity.title = "mini";
-                ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/StatementInquiry?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
 
                 intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
+                intent.putExtra(ViewStatementActivity.DESTINATION_TITLE,"mini");
+                intent.putExtra(ViewStatementActivity.DESTINATION_URL,"https://api.paywellonline.com/AndroidWebViewController/StatementInquiry?username="
+                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
+
                 startActivityWithFlag(intent);
 
                 break;
             case R.string.home_statement_balance:
 
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_BALANCE_MENU);
-                ViewStatementActivity.title = "balance";
-                ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/balanceStatement?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
 
                 intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
+
+                intent.putExtra(ViewStatementActivity.DESTINATION_TITLE,"balance");
+                intent.putExtra(ViewStatementActivity.DESTINATION_URL,"https://api.paywellonline.com/AndroidWebViewController/balanceStatement?username="
+                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
+
                 startActivityWithFlag(intent);
 
                 break;
@@ -2392,23 +2394,24 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.string.home_statement_sales:
 
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_SALES_MENU);
-                ViewStatementActivity.title = "sales";
-                ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/salesStatementForhttps?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
-
 
                 intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
+
+                intent.putExtra(ViewStatementActivity.DESTINATION_TITLE,"sales");
+                intent.putExtra(ViewStatementActivity.DESTINATION_URL,"https://api.paywellonline.com/AndroidWebViewController/salesStatementForhttps?username="
+                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
+
                 startActivityWithFlag(intent);
 
                 break;
             case R.string.home_statement_transaction:
 
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_TRX_MENU);
-                ViewStatementActivity.title = "trx";
-                ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/getAllTransactionStatementForHttps?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
 
                 intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
+                intent.putExtra(ViewStatementActivity.DESTINATION_TITLE,"trx");
+                intent.putExtra(ViewStatementActivity.DESTINATION_URL,"https://api.paywellonline.com/AndroidWebViewController/getAllTransactionStatementForHttps?username="
+                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
                 startActivityWithFlag(intent);
 
                 break;

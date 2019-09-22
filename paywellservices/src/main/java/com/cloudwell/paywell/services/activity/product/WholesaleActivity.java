@@ -33,6 +33,7 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONObject;
 
 import java.util.List;
 import java.util.Locale;
@@ -80,20 +81,9 @@ public class WholesaleActivity extends BaseActivity {
 
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        try {
-            if (token.length() == 36) {
-                if (!mCd.isConnectingToInternet()) {
-                    connectionError();
-                } else {
-                    startWebView(getString(R.string.b2b_login) + "token=" + token);
-                }
-            } else {
-                onBackPressed();
-            }
-        } catch (Exception ex) {
-            onBackPressed();
-        }
 
+
+        new GetToken().execute(getString(R.string.b2b_token) + "rid=" + mAppHandler.getRID());
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_PRODUCT_WHOLESALE_PAGE);
     }
 
@@ -254,4 +244,75 @@ public class WholesaleActivity extends BaseActivity {
         }
 
     }
+
+    protected class GetToken extends AsyncTask<String, String, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            showProgressDialog();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String responseTxt = null;
+            // Create a new HttpClient and Post Header
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(params[0]);
+            try {
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                responseTxt = httpclient.execute(httppost, responseHandler);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(linearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
+            }
+            return responseTxt;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            dismissProgressDialog();
+
+            try {
+                if (!result.isEmpty()) {
+
+                    JSONObject jsonObject = new JSONObject(result);
+                    token = jsonObject.getString("Data");
+                    try {
+                        if (token.length() == 36) {
+                            if (!mCd.isConnectingToInternet()) {
+                                connectionError();
+                            } else {
+                                startWebView(getString(R.string.b2b_login) + "token=" + jsonObject.getString("Data"));
+                            }
+                        } else {
+                            onBackPressed();
+                        }
+                    } catch (Exception ex) {
+                        onBackPressed();
+                    }
+
+                } else {
+                    Snackbar snackbar = Snackbar.make(linearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                    View snackBarView = snackbar.getView();
+                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                    snackbar.show();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                Snackbar snackbar = Snackbar.make(linearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
+            }
+        }
+    }
+
+
 }

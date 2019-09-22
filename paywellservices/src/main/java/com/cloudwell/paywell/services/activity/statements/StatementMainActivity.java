@@ -60,31 +60,43 @@ public class StatementMainActivity extends AppCompatActivity implements View.OnC
         switch (v.getId()) {
             case R.id.mini_statement_btn:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_STATEMENT_MENU, AnalyticsParameters.KEY_STATEMENT_MINI_MENU);
-                ViewStatementActivity.title = "mini";
-                ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/StatementInquiry?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
-                startActivity(new Intent(StatementMainActivity.this, ViewStatementActivity.class));
+
+
+                Intent intent=new Intent(StatementMainActivity.this, ViewStatementActivity.class);
+                intent.putExtra(ViewStatementActivity.DESTINATION_TITLE,"mini");
+                intent.putExtra(ViewStatementActivity.DESTINATION_URL, "https://api.paywellonline.com/AndroidWebViewController/StatementInquiry?username="
+                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
+                startActivity(intent);
                 break;
             case R.id.balance_statement_btn:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_STATEMENT_MENU, AnalyticsParameters.KEY_STATEMENT_BALANCE_MENU);
-                ViewStatementActivity.title = "balance";
-                ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/balanceStatement?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
-                startActivity(new Intent(StatementMainActivity.this, ViewStatementActivity.class));
+
+
+                Intent intent1=new Intent(StatementMainActivity.this, ViewStatementActivity.class);
+                intent1.putExtra(ViewStatementActivity.DESTINATION_TITLE,"balance");
+                intent1.putExtra(ViewStatementActivity.DESTINATION_URL, "https://api.paywellonline.com/AndroidWebViewController/balanceStatement?username="
+                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
+                startActivity(intent1);
+
                 break;
             case R.id.sales_statement_btn:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_STATEMENT_MENU, AnalyticsParameters.KEY_STATEMENT_SALES_MENU);
-                ViewStatementActivity.title = "sales";
-                ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/salesStatementForhttps?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
-                startActivity(new Intent(StatementMainActivity.this, ViewStatementActivity.class));
+
+
+                Intent intent2=new Intent(StatementMainActivity.this, ViewStatementActivity.class);
+                intent2.putExtra(ViewStatementActivity.DESTINATION_TITLE,"sales");
+                intent2.putExtra(ViewStatementActivity.DESTINATION_URL, "https://api.paywellonline.com/AndroidWebViewController/salesStatementForhttps?username="
+                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
+                startActivity(intent2);
                 break;
             case R.id.trx_statement_btn:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_STATEMENT_MENU, AnalyticsParameters.KEY_STATEMENT_TRX_MENU);
-                ViewStatementActivity.title = "trx";
-                ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/getAllTransactionStatementForHttps?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
-                startActivity(new Intent(StatementMainActivity.this, ViewStatementActivity.class));
+
+                Intent intent3=new Intent(StatementMainActivity.this, ViewStatementActivity.class);
+                intent3.putExtra(ViewStatementActivity.DESTINATION_TITLE,"trx");
+                intent3.putExtra(ViewStatementActivity.DESTINATION_URL, "https://api.paywellonline.com/AndroidWebViewController/getAllTransactionStatementForHttps?username="
+                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
+                startActivity(intent3);
                 break;
             default:
                 break;
