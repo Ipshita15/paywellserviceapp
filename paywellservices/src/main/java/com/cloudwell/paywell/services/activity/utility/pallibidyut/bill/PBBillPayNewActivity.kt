@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.activity_merchant_type_verify.*
 import kotlinx.android.synthetic.main.activity_pbbill_pay_new.*
 import kotlinx.android.synthetic.main.activity_pbbill_pay_new.view.*
 import kotlinx.android.synthetic.main.pallibidyut_action_view.view.*
+import kotlinx.android.synthetic.main.pallibidyut_billpay_view.*
 import kotlinx.android.synthetic.main.pallibidyut_billpay_view.view.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -104,7 +105,7 @@ class PBBillPayNewActivity : AppCompatActivity() {
 
 
         if (addNoFlag == 1) {
-//            removeBtn.setVisibility(View.GONE)
+            billViewRemoveImage.setVisibility(View.GONE)
         } else {
 
         }
