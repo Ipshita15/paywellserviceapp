@@ -43,6 +43,15 @@ class PayWellShortcutManager {
 
                 val favoriteMenuDab = DatabaseClient.getInstance(context).appDatabase.mFavoriteMenuDab()
                 val favouriteMenus = favoriteMenuDab.getAppShortcut() as ArrayList<FavoriteMenu>
+                Collections.sort(favouriteMenus, Comparator<FavoriteMenu> { o1, o2 ->
+                    if (o1.favoriteListPosition > o2.favoriteListPosition) {
+                        0
+                    } else if (o1.favoriteListPosition > o2.favoriteListPosition) {
+                        1
+                    } else {
+                        -1
+                    }
+                })
                 val dislikeMenus: ArrayList<FavoriteMenu> = favoriteMenuDab.dislikedMenu as ArrayList<FavoriteMenu>
                 val shortcuts = ArrayList<ShortcutInfo>()
                 shortcuts.clear()
