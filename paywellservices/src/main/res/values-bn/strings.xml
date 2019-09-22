@@ -797,5 +797,7 @@
     <string name="clear_all">সব মুছুন</string>
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
+    <string name="bill_number">Bill Number</string>
+    <string name="bill_amount">Taka</string>
 
 </resources>
