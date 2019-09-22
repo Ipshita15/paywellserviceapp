@@ -228,9 +228,13 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
             AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.TO_CACHE, toAirTricket)
 
 
+            try {
+                toAirport.iata = toAirTricket.iata
+                fromAirport.iata = fromAirTricket.iata
+            } catch (e: java.lang.Exception) {
 
-            toAirport.iata = toAirTricket.iata
-            fromAirport.iata = fromAirTricket.iata
+            }
+
 
         }
 
@@ -588,7 +592,7 @@ class OneWayV2Fragment : Fragment(), View.OnClickListener, FullScreenDialogFragm
 
         val calendarMin = Calendar.getInstance()
         datePickerDialog.datePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
-        datePickerDialog.datePicker.minDate = calendarMin.timeInMillis
+        datePickerDialog.datePicker.minDate = (calendarMin.timeInMillis - 10000)
         datePickerDialog.show()
 
 

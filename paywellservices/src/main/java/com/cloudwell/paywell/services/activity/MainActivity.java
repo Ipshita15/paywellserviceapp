@@ -42,7 +42,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cloudwell.paywell.services.BuildConfig;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.about.AboutActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
@@ -106,6 +105,7 @@ import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.service.notificaiton.model.EventNewNotificaiton;
 import com.cloudwell.paywell.services.utils.AppHelper;
+import com.cloudwell.paywell.services.utils.AppTestVersionUtility;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.CountryUtility;
 import com.cloudwell.paywell.services.utils.LocationUtility;
@@ -684,10 +684,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         try {
             String rid = getString(R.string.rid) + mAppHandler.getRID();
-            if (BuildConfig.DEBUG) {
-
-                rid = rid + " (Beta)";
-            }
+            //if (BuildConfig.DEBUG) {
+                rid = rid + "(" + AppTestVersionUtility.testVersion + ")";
+           // }
             _pwId.setText(rid);
             if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
                 _pwId.setTypeface(AppController.getInstance().getOxygenLightFont());

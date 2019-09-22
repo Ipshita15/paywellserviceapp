@@ -186,8 +186,7 @@ public class UpdateChecker {
      */
     public void downloadAndInstall(String apkUrl) {
         if (isOnline()) {
-            downloadManager = new DownloadManager(mContext, true);
-            downloadManager.execute(apkUrl);
+            new DownloadManager2(mContext, true);
         } else {
             if (useToasts) {
                 makeToastFromString("App update failed. No internet connection available").show();

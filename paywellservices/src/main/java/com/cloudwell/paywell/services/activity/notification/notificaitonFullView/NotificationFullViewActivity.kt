@@ -1,13 +1,19 @@
 package com.cloudwell.paywell.services.activity.notification.notificaitonFullView
 
+
+import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.Point
 import android.media.RingtoneManager
+import android.os.AsyncTask
 import android.os.Bundle
+import android.text.Html
 import android.text.SpannableString
 import android.text.util.Linkify
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.cloudwell.paywell.services.R
@@ -23,11 +29,16 @@ import com.cloudwell.paywell.services.analytics.AnalyticsParameters
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.utils.AppHelper.startNotificationSyncService
+import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import com.orhanobut.logger.Logger
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_notification_full_view.*
 import org.apache.commons.lang3.StringEscapeUtils
+import org.apache.http.client.methods.HttpPost
+import org.apache.http.impl.client.BasicResponseHandler
+import org.apache.http.impl.client.DefaultHttpClient
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -90,19 +101,24 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
 
     fun handleLanguage() {
         if (mAppHandler?.getAppLanguage().equals("en")) {
-            notiTitle?.setTypeface(AppController.getInstance().getOxygenLightFont());
-            notiMessage?.setTypeface(AppController.getInstance().getOxygenLightFont());
+            notiTitle?.setTypeface(AppController.getInstance().getOxygenLightFont())
+            notiMessage?.setTypeface(AppController.getInstance().getOxygenLightFont())
 
         } else {
-            notiTitle?.setTypeface(AppController.getInstance().getAponaLohitFont());
-            notiMessage?.setTypeface(AppController.getInstance().getAponaLohitFont());
+            notiTitle?.setTypeface(AppController.getInstance().getAponaLohitFont())
+            notiMessage?.setTypeface(AppController.getInstance().getAponaLohitFont())
         }
     }
 
     private fun displayData(it: NotificationDetailMessage?) {
+        Logger.v("" + Gson().toJson(it))
+
         val message = it?.message
         val messageSub = it?.messageSub
         val imageUrl = it?.imageUrl
+        val dateTime = it?.addedDatetime
+        val type = it?.type
+
 
         var testmessage = "" + message
         Logger.v(testmessage)
@@ -115,30 +131,30 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
 
         if (testmessage.contains("notification_action_type")) {
             // air ticket flow
-            handleAirTicket(testmessage, messageSub)
+            handleAirTicket(testmessage, messageSub, dateTime)
 
         } else {
             // normal
 
             btAccept.visibility = View.GONE
             btTicketCancel.visibility = View.GONE
-
-            handleNormal(message, messageSub, imageUrl)
+            handleNormal(it)
         }
 
 
     }
 
-    private fun handleNormal(message: String?, messageSub: String?, imageUrl: String?) {
-        val s1 = StringEscapeUtils.unescapeJava(message);
+    private fun handleNormal(model: NotificationDetailMessage?) {
+        val s1 = StringEscapeUtils.unescapeJava(model?.message);
 
         val spannableString = SpannableString(s1);
         Linkify.addLinks(spannableString, Linkify.WEB_URLS);
 
-        notiTitle.text = messageSub
+        notiTitle.text = model?.messageSub
         notiMessage.text = spannableString
+        date.text = model?.addedDatetime
 
-        if (!imageUrl.equals("")) {
+        if (!model?.imageUrl.equals("")) {
             showProgressDialog();
             notiImg?.setVisibility(View.VISIBLE);
             val display = getWindowManager().getDefaultDisplay();
@@ -147,7 +163,7 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
             val width = size.x;
 
 
-            Picasso.get().load(imageUrl)
+            Picasso.get().load(model?.imageUrl)
                     .resize(width, 0)
                     .into(notiImg, object : Callback {
                         override fun onError(e: Exception?) {
@@ -159,15 +175,42 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
                         }
                     })
             notiImg.setOnClickListener {
-                ImageViewActivity.TAG_IMAGE_URL = imageUrl
+                ImageViewActivity.TAG_IMAGE_URL = model?.imageUrl
                 val intent = Intent(this, ImageViewActivity::class.java)
                 startActivity(intent)
 
             }
         }
+
+        if (model?.type.equals("BalanceReturnPwl") || model?.messageSub.equals("PW Balance Return")) {
+            notiEditText.setVisibility(View.VISIBLE)
+            notiButton.setVisibility(View.VISIBLE)
+
+            notiButton.setOnClickListener {
+
+                if (!notiEditText.getText().toString().isEmpty()) {
+                    PinRequestAsync().execute(
+                            getResources().getString(R.string.merchant_balance_return_url)
+                                    + "?messageId=" + model?.messageId
+                                    + "&merchentPassword=" + notiEditText.getText().toString()
+                                    + "&" + model?.balanceReturnData?.replace("@", "&")
+                    );
+
+                } else {
+                    val snackbar = Snackbar.make(linearLayoutNotiFullView, R.string.pin_no_error_msg, Snackbar.LENGTH_LONG)
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"))
+                    val snackBarView = snackbar.view
+                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))
+                    snackbar.show()
+                }
+
+
+            }
+
+        }
     }
 
-    private fun handleAirTicket(testmessage: String, messageSub: String?) {
+    private fun handleAirTicket(testmessage: String, messageSub: String?, dateTime: String?) {
         try {
             val jsonObject = JSONObject(testmessage)
             val notification_action_type = jsonObject.getString("notification_action_type")
@@ -181,25 +224,22 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
             Linkify.addLinks(spannableString, Linkify.WEB_URLS);
             notiTitle.text = messageSub
             notiMessage.text = spannableString
+            date.text = dateTime
 
-            if (notification_action_type == "AirTicketReScheduleConfirmation") {
-                btAccept.visibility = View.VISIBLE
-                btTicketCancel.visibility = View.VISIBLE
-                btAccept.setOnClickListener {
 
-                    callAccept(id)
-                }
+            btAccept.visibility = View.VISIBLE
+            btTicketCancel.visibility = View.VISIBLE
+            btAccept.setOnClickListener {
 
-                btTicketCancel.setOnClickListener {
-                    callReject(id)
+                callAccept(id)
+            }
 
-                }
-
-            } else {
-                btAccept.visibility = View.GONE
-                btTicketCancel.visibility = View.GONE
+            btTicketCancel.setOnClickListener {
+                callReject(id)
 
             }
+
+
 
             try {
                 //automatic call to API
@@ -226,7 +266,7 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
         viewModel.callReScheduleNotificationAccept(id, 2).observeForever {
             dismissProgressDialog()
             if (it != null) {
-                showDialogMessage(it.message)
+                showdialogMessageWithFinishedActivity(it.message)
             }
         }
     }
@@ -259,4 +299,83 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
             finish()
         }
     }
+
+
+    fun showTransferMessage(status_code: String, message: String) {
+
+        val builder = AlertDialog.Builder(this)
+        if (status_code.equals("200", ignoreCase = true)) {
+            builder.setTitle(Html.fromHtml("<font color='#66cc00'>" + getString(R.string.success_msg) + "</font>"))
+            builder.setMessage(getString(R.string.amount_transfer_msg))
+        } else {
+            builder.setTitle(Html.fromHtml("<font color='#e62e00'>" + getString(R.string.request_failed_msg) + "</font>"))
+            builder.setMessage(message)
+        }
+
+        builder.setPositiveButton(R.string.okay_btn, DialogInterface.OnClickListener { dialogInterface, id ->
+            dialogInterface.dismiss()
+            finish()
+        })
+
+        val alert = builder.create()
+        alert.show()
+        alert.setCanceledOnTouchOutside(false)
+    }
+
+
+    inner class PinRequestAsync : AsyncTask<String, String, String>() {
+        protected override fun onPreExecute() {
+            showProgressDialog()
+        }
+
+        override fun doInBackground(vararg params: String): String? {
+            var responseTxt: String? = null
+            // Create a new HttpClient and Post Header
+            val httpclient = DefaultHttpClient()
+            val httppost = HttpPost(params[0])
+            try {
+                val responseHandler = BasicResponseHandler()
+                responseTxt = httpclient.execute(httppost, responseHandler)
+            } catch (e: Exception) {
+                e.fillInStackTrace()
+                val snackbar = Snackbar.make(linearLayoutNotiFullView, R.string.try_again_msg, Snackbar.LENGTH_LONG)
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"))
+                val snackBarView = snackbar.view
+                snackBarView.setBackgroundColor(Color.parseColor("#8cc63f"))
+                snackbar.show()
+            }
+
+            return responseTxt
+        }
+
+        protected override fun onPostExecute(result: String?) {
+            dismissProgressDialog()
+            if (result != null) {
+                try {
+                    val jsonObject = JSONObject(result)
+                    val status = jsonObject.getString("Status")
+                    val message = jsonObject.getString("StatusName")
+                    showTransferMessage(status, message)
+                } catch (ex: Exception) {
+                    ex.printStackTrace()
+                    val snackbar = Snackbar.make(linearLayoutNotiFullView, R.string.try_again_msg, Snackbar.LENGTH_LONG)
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"))
+                    val snackBarView = snackbar.view
+                    snackBarView.setBackgroundColor(Color.parseColor("#8cc63f"))
+                    snackbar.show()
+                }
+
+            } else {
+                val snackbar = Snackbar.make(linearLayoutNotiFullView, R.string.try_again_msg, Snackbar.LENGTH_LONG)
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"))
+                val snackBarView = snackbar.view
+                snackBarView.setBackgroundColor(Color.parseColor("#8cc63f"))
+                snackbar.show()
+            }
+        }
+
+    }
 }
+
+
+

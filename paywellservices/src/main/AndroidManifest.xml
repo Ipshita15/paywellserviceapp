@@ -225,6 +225,7 @@
         <activity
             android:name=".activity.notification.allNotificaiton.NotificationAllActivity"
             android:parentActivityName=".activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="OPEN_ACTIVITY_1" />
@@ -931,11 +932,13 @@
         <activity
             android:name=".activity.eticket.airticket.menu.AirTicketMenuActivity"
             android:label="@string/title_activity_air_tricket_menu"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name=".activity.eticket.airticket.flightSearch.FlightSearchViewActivity"
             android:label="@string/title_activity_air_tricket_menu"
-            android:screenOrientation="portrait"></activity> <!-- SMS Receiver -->
+            android:screenOrientation="portrait">
+        </activity> <!-- SMS Receiver -->
         <!-- <receiver android:name=".activity.sms.SmsReceiver"> -->
         <!-- <intent-filter> -->
         <!-- <action android:name="android.provider.Telephony.SMS_RECEIVED" /> -->
@@ -946,32 +949,32 @@
         <activity
             android:name=".activity.eticket.airticket.flightDetails1.FlightDetails1Activity"
             android:label="@string/title_activity_air_tricket_menu"
-            android:screenOrientation="portrait"></activity>
-        <!--
-        Set custom default icon. This is used when no icon is set for incoming notification messages.
-        See README(https://goo.gl/l4GJaQ) for more.
-        -->
+            android:screenOrientation="portrait">
+        </activity>
+
+
         <activity
             android:name=".activity.eticket.airticket.flightDetails2.FlightDetails2Activity"
             android:label="@string/title_flightDetails2"
-            android:screenOrientation="portrait"></activity>
-        <!--
-             Set color used with incoming notification messages. This is used when no color is set for the incoming
-             notification message. See README(https://goo.gl/6BKBk7) for more.
-        -->
+            android:screenOrientation="portrait">
+        </activity>
+
         <activity
             android:name=".activity.eticket.airticket.passengerList.PassengerListActivity"
             android:label="@string/title_passenger_list"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+        </activity>
 
         <activity
             android:name=".activity.eticket.airticket.passengerAdd.AddPassengerActivity"
             android:label="@string/title_add_passenger"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name=".activity.eticket.airticket.bookingCencel.BookingCancelActivity"
             android:label="@string/tile_cencel_booking"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name=".libaray.imagePickerAndCrop.ImagePickerActivity"
             android:screenOrientation="portrait" />
@@ -984,78 +987,37 @@
         <activity
             android:name=".activity.eticket.busticketNew.busTransportList.BusTransportListActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activity.eticket.busticketNew.passenger.BusPassengerBoothDepartureActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".activity.eticket.busticketNew.passengerInformation.PassengerInformationActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".activity.eticket.busticketNew.busTransactionLog.BusTransactionLogActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
 
-        <meta-data
-            android:name="com.google.android.gms.vision.DEPENDENCIES"
-            android:value="barcode" />
         <activity
             android:name=".activity.eticket.airticket.airportSearch.search.AirportsSearchActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
 
         </activity>
-
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="8fbad4b3a6a78a5e18c5f18b833263a48b46e3d0" />
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/pw_notification_bar" />
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorAccent" />
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
         <activity
             android:name=".activity.eticket.airticket.finalReview.AllSummaryActivity"
             android:label="@string/title_all_summary"
             android:screenOrientation="portrait">
 
         </activity>
+
         <activity
             android:name=".activity.eticket.airticket.flightDetails1.BaggageAndPoliciesActiivty"
             android:label="@string/title_activity_baggage_and_policies_actiivty"
             android:screenOrientation="portrait">
 
         </activity>
-
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_provider" />
-        </provider>
-        <receiver
-            android:name=".utils.IsOnlineReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver> <!-- uCrop cropping activity -->
-        <receiver android:name=".ActionReceiver" />
-
         <activity
             android:name=".activity.eticket.airticket.booking.BookingStatusActivity"
             android:screenOrientation="portrait"
@@ -1074,6 +1036,7 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
+
         <activity
             android:name=".activity.eticket.airticket.ticketViewer.emailTicket.PassengerEmailSendListActivity"
             android:screenOrientation="portrait"
@@ -1098,13 +1061,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
-        </activity>
+        </activity> <!-- uCrop cropping activity -->
         <activity
             android:name=".activity.eticket.airticket.ticketCencel.TicketCancelActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
+
         <activity
             android:name=".activity.eticket.airticket.reIssueTicket.UpdateDocOrInfomationRequestActivity"
             android:screenOrientation="portrait"
@@ -1123,13 +1087,50 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
-
         <activity
             android:name=".activity.eticket.busticketNew.seatLayout.SeatLayoutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="barcode"/>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="8fbad4b3a6a78a5e18c5f18b833263a48b46e3d0" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/pw_notification_bar" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider" />
+        </provider>
+        <receiver
+            android:name=".utils.IsOnlineReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".ActionReceiver" />
 
         <service
             android:name=".service.MyFirebaseMessagingService"
@@ -1192,6 +1193,8 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
     <uses-permission
         android:name="android.permission.RECEIVE_SMS"
         tools:node="remove" />

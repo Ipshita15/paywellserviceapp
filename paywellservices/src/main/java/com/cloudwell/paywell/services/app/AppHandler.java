@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -160,6 +161,7 @@ public class AppHandler {
 
     public static final int MULTI_CITY_LIMIT = 5;
     public static final String IVAC_CENTER_LOCK = "IVAC_CENTER_LOCK";
+    public static final String IVAC_CENTER_ID = "IVAC_CENTER_ID";
 
 
     public AppHandler() {
@@ -406,9 +408,16 @@ public class AppHandler {
     }
 
     public static void showDialog(FragmentManager fm) {
-        FragmentTransaction ft = fm.beginTransaction();
-        MyDialogFragment frag = new MyDialogFragment();
-        frag.show(ft, "txn_tag");
+        try {
+            FragmentTransaction ft = fm.beginTransaction();
+            MyDialogFragment frag = new MyDialogFragment();
+            frag.show(ft, "txn_tag");
+
+        } catch (IllegalStateException e) {
+            Log.e("IllegalStateException", "Exception", e);
+        }
+
+
     }
 
     public static String getCurrentDate() {
@@ -719,6 +728,15 @@ public class AppHandler {
     public void setIVACCenterLock(Boolean check) {
         editor.putBoolean(IVAC_CENTER_LOCK, check);
         editor.commit();
+    }
+
+    public void setCenterId(String centerId) {
+        editor.putString(IVAC_CENTER_ID, centerId);
+        editor.commit();
+    }
+
+    public String getSavedCenterId() {
+        return mPref.getString(IVAC_CENTER_ID,"");
     }
 
     public static class MyDialogFragment extends DialogFragment {

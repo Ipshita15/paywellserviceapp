@@ -3,6 +3,7 @@ package com.cloudwell.paywell.services.libaray
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Rect
+import android.os.Build
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
@@ -188,37 +189,41 @@ public class SequenceLayout(context: Context?, attrs: AttributeSet?, defStyleAtt
             val activeDot = dotsWrapper.getChildAt(activeStepIndex)
             val activeDotTopMargin = (activeDot.layoutParams as LayoutParams).topMargin
             val progressBarForegroundTopMargin = (progressBarForeground.layoutParams as LayoutParams).topMargin
-            val scaleEnd = (activeDotTopMargin + (activeDot.measuredHeight / 2) - progressBarForegroundTopMargin) /
-                    progressBarBackground.measuredHeight.toFloat()
 
-            progressBarForeground
-                    .animate()
-                    .setStartDelay(resources.getInteger(R.integer.sequence_step_duration).toLong())
-                    .scaleY(scaleEnd)
-                    .setInterpolator(LinearInterpolator())
-                    .setDuration(activeStepIndex * resources.getInteger(R.integer.sequence_step_duration).toLong())
-                    .setUpdateListener({
-                        val animatedOffset = progressBarForeground.scaleY * progressBarBackground.measuredHeight
-                        dotsWrapper
-                                .children()
-                                .forEachIndexed { i, view ->
-                                    if (i > activeStepIndex) {
-                                        return@forEachIndexed
-                                    }
-                                    val dot = view as SequenceStepDot
-                                    val dotTopMargin = (dot.layoutParams as LayoutParams).topMargin -
-                                            progressBarForegroundTopMargin -
-                                            (dot.measuredHeight / 2)
-                                    if (animatedOffset >= dotTopMargin) {
-                                        if (i < activeStepIndex && !dot.isEnabled) {
-                                            dot.isEnabled = true
-                                        } else if (i == activeStepIndex && !dot.isActivated) {
-                                            dot.isActivated = true
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                val scaleEnd = (activeDotTopMargin + (activeDot.measuredHeight / 2) - progressBarForegroundTopMargin) /
+                        progressBarBackground.measuredHeight.toFloat()
+
+                progressBarForeground
+                        .animate()
+                        .setStartDelay(resources.getInteger(R.integer.sequence_step_duration).toLong())
+                        .scaleY(scaleEnd)
+                        .setInterpolator(LinearInterpolator())
+                        .setDuration(activeStepIndex * resources.getInteger(R.integer.sequence_step_duration).toLong())
+                        .setUpdateListener({
+                            val animatedOffset = progressBarForeground.scaleY * progressBarBackground.measuredHeight
+                            dotsWrapper
+                                    .children()
+                                    .forEachIndexed { i, view ->
+                                        if (i > activeStepIndex) {
+                                            return@forEachIndexed
+                                        }
+                                        val dot = view as SequenceStepDot
+                                        val dotTopMargin = (dot.layoutParams as LayoutParams).topMargin -
+                                                progressBarForegroundTopMargin -
+                                                (dot.measuredHeight / 2)
+                                        if (animatedOffset >= dotTopMargin) {
+                                            if (i < activeStepIndex && !dot.isEnabled) {
+                                                dot.isEnabled = true
+                                            } else if (i == activeStepIndex && !dot.isActivated) {
+                                                dot.isActivated = true
+                                            }
                                         }
                                     }
-                                }
-                    })
-                    .start()
+                        })
+                        .start()
+            }
         }
     }
 

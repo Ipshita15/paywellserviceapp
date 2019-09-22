@@ -21,14 +21,12 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
  */
 public class HeaderRVSectionForLog extends StatelessSection {
     private static final String TAG = HeaderRVSectionForLog.class.getSimpleName();
-    private int mIndex;
     private String title;
     private List<ResMobileChangeLog> list;
     private boolean mIsEnglish;
 
-    public HeaderRVSectionForLog(int index, String title, List<ResMobileChangeLog> list, boolean isEnglish) {
+    public HeaderRVSectionForLog(String title, List<ResMobileChangeLog> list, boolean isEnglish) {
         super(R.layout.dialog_both_header, R.layout.dialog_polli_reg_inq_new_log);
-        mIndex = index;
         this.title = title;
         this.list = list;
         mIsEnglish = isEnglish;

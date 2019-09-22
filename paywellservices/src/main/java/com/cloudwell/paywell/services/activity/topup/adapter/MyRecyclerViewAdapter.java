@@ -77,7 +77,12 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+            if (mClickListener != null) {
+                if (getAdapterPosition() == RecyclerView.NO_POSITION) {
+                    return;
+                }
+                mClickListener.onItemClick(view, getAdapterPosition());
+            }
         }
     }
 
