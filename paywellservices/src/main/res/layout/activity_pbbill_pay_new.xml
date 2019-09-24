@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f2f2f2"
+    android:id="@+id/PBBillPayMain"
     tools:context="com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBBillPayNewActivity">
     <ScrollView
         android:layout_width="match_parent"

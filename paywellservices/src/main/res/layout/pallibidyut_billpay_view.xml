@@ -62,24 +62,24 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
+                        <EditText
+                            android:id="@+id/pbBillNumberET"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:singleLine="true"
+                            android:textColor="#333333" />
+
                         <ImageView
                             android:id="@+id/billViewRemoveImage"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:layout_gravity="top|end"
                             android:layout_marginTop="3dp"
                             android:layout_marginRight="3dp"
                             android:background="@drawable/palli_bill_close"
                             android:contentDescription="@null"
                             android:shadowColor="@color/blackShade" />
-
-                        <EditText
-                            android:id="@+id/pbBillNumberET"
-                            android:layout_width="234dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:singleLine="true"
-                            android:textColor="#333333" />
 
                     </FrameLayout>
                     <EditText
