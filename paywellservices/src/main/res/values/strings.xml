@@ -517,10 +517,10 @@
     <string name="refill_mfs_info">https://api.paywellonline.com/Android/paymentInfo?</string>
 
     <!-- Product -->
-    <string name="ajd_token">http://ajkerdeal.paywellonline.com/api/Paywell/CreateToken?</string>
-    <string name="ajd_login">https://ajkerdeal.paywellonline.com/Home/CheckLoginByToken?</string>
-    <string name="ajd_refresh_token">http://ajkerdeal.paywellonline.com/MetaData/PingServer</string>
-    <string name="ajd_share">http://ajkerdeal.paywellonline.com</string>
+    <string name="ajd_token" translatable="false">https://ajkerdeal.paywellonline.com/api/Paywell/CreateToken?</string>
+    <string name="ajd_login" translatable="false">https://ajkerdeal.paywellonline.com/Home/CheckLoginByToken?</string>
+    <string name="ajd_refresh_token" translatable="false">https://ajkerdeal.paywellonline.com/MetaData/PingServer</string>
+    <string name="ajd_share" translatable="false">https://ajkerdeal.paywellonline.com</string>
 
 
     <string name="ek_shope_token" translatable="false">https://ekshop.paywellonline.com/get_token</string>
