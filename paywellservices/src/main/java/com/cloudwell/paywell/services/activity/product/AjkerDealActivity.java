@@ -25,6 +25,7 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -38,6 +39,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AjkerDealActivity extends BaseActivity {
 
@@ -82,20 +87,9 @@ public class AjkerDealActivity extends BaseActivity {
 
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        try {
-            if (token.length() == 36) {
-                if (!mCd.isConnectingToInternet()) {
-                    connectionError();
-                } else {
-                    startWebView(getString(R.string.ajd_login) + "token=" + token);
-                }
-            } else {
-                onBackPressed();
-            }
-        } catch (Exception ex) {
-            onBackPressed();
-        }
 
+
+        new GetToken().execute(getString(R.string.ajd_token) + "rid=" + mAppHandler.getRID());
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_PRODUCT_AJKER_DEAL_PAGE);
 
     }
@@ -256,4 +250,123 @@ public class AjkerDealActivity extends BaseActivity {
         }
 
     }
+
+    protected class GetToken extends AsyncTask<String, String, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            showProgressDialog();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String responseTxt = null;
+            // Create a new HttpClient and Post Header
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(params[0]);
+            try {
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                responseTxt = httpclient.execute(httppost, responseHandler);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(linearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
+            }
+            return responseTxt;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            dismissProgressDialog();
+
+            try {
+                if (!result.isEmpty()) {
+                    token=result;
+
+                    try {
+                        if (token.length() == 36) {
+                            if (!mCd.isConnectingToInternet()) {
+                                connectionError();
+                            } else {
+                                startWebView(getString(R.string.ajd_login) + "token=" + result);
+                            }
+                        } else {
+                            onBackPressed();
+                        }
+                    } catch (Exception ex) {
+                        onBackPressed();
+                    }
+
+
+                } else {
+                    Snackbar snackbar = Snackbar.make(linearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                    View snackBarView = snackbar.getView();
+                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                    snackbar.show();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                Snackbar snackbar = Snackbar.make(linearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
+            }
+        }
+    }
+
+    private void getToken(String url, String rid){
+        showProgressDialog();
+        ApiUtils.getAPIService().getToken(url,rid).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                dismissProgressDialog();
+                if (response.isSuccessful()) {
+                    String webResponse=response.body();
+                    try {
+                        if (webResponse.length() == 36) {
+                            if (!mCd.isConnectingToInternet()) {
+                                connectionError();
+                            } else {
+                                startWebView(getString(R.string.ajd_login) + "token=" + webResponse);
+                            }
+                        } else {
+                            onBackPressed();
+                        }
+                    } catch (Exception ex) {
+                        onBackPressed();
+                    }
+
+                } else {
+
+                    Snackbar snackbar = Snackbar.make(linearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                    View snackBarView = snackbar.getView();
+                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                    snackbar.show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                t.printStackTrace();
+
+                Snackbar snackbar = Snackbar.make(linearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
+
+            }
+        });
+    }
+
+
 }

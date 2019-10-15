@@ -20,6 +20,8 @@ import java.util.Locale;
 
 public class ViewStatementActivity extends BaseActivity {
 
+    public static final String DESTINATION_URL ="url";
+    public static final String DESTINATION_TITLE ="title";
     private RelativeLayout mRelativeLayout;
     private WebView mWebView;
     public static String url;
@@ -31,6 +33,11 @@ public class ViewStatementActivity extends BaseActivity {
         setContentView(R.layout.activity_mini_statement);
 
         AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
+
+        if (getIntent()!=null){
+            url=getIntent().getStringExtra(DESTINATION_URL);
+            title=getIntent().getStringExtra(DESTINATION_TITLE);
+        }
 
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
