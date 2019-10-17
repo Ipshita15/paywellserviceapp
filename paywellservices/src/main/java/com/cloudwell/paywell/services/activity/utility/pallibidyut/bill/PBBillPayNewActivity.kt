@@ -59,6 +59,7 @@ class PBBillPayNewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_pbbill_pay_new)
 
         if (supportActionBar != null) {
+            supportActionBar!!.setTitle(R.string.home_utility_pb_billpay_title)
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         }
 
