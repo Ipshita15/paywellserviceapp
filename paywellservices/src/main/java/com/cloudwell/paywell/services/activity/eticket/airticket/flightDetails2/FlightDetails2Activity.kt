@@ -381,8 +381,5 @@ class FlightDetails2Activity : AirTricketBaseActivity() {
     }
 
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(com.cloudwell.paywell.services.R.menu.airticket_menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
+
 }

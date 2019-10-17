@@ -2,7 +2,6 @@ package com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import android.view.View
 import androidx.lifecycle.ViewModelProviders
 import com.cloudwell.paywell.services.R
@@ -394,8 +393,5 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.airticket_menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
+
 }

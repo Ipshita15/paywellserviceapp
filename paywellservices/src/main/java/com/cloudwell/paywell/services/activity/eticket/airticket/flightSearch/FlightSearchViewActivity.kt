@@ -253,10 +253,7 @@ class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(com.cloudwell.paywell.services.R.menu.airticket_menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
+
 
     private fun askForPin(cancelReason: String, result: Result) {
         val builder = AlertDialog.Builder(this)

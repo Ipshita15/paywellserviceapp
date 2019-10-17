@@ -20,8 +20,9 @@ import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.utils.ConnectionDetector
 import com.cloudwell.paywell.services.utils.LanuageConstant.KEY_BANGLA
 import com.cloudwell.paywell.services.utils.LanuageConstant.KEY_ENGLISH
-import kotlinx.android.synthetic.main.activity_air_tricket_menu.*
+import kotlinx.android.synthetic.main.activity_air_ticket_main_contain.*
 import java.util.*
+
 
 class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
@@ -68,6 +69,8 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
         cd = ConnectionDetector(AppController.getContext())
         mConstraintLayout = findViewById(R.id.constraintLayoutBookingList)
         mAppHandler = AppHandler.getmInstance(applicationContext)
+
+
     }
 
     override fun onResume() {
@@ -230,4 +233,9 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
 
         super.onBackPressed()
     }
+
+
+
+
+
 }
