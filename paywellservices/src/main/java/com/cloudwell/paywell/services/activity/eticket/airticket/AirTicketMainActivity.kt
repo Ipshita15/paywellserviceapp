@@ -42,16 +42,14 @@ open class AirTicketMainActivity : AirTricketBaseActivity() {
         tabLayout_main.setupWithViewPager(viewpager_main)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.airticket_menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item!!.itemId == android.R.id.home)
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home)
             onBackPressed()
         return super.onOptionsItemSelected(item)
     }
+
 
     override fun onBackPressed() {
         item = Datum()

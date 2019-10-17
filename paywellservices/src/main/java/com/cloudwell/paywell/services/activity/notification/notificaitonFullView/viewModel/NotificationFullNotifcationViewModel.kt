@@ -49,7 +49,14 @@ class NotificationFullNotifcationViewModel : BaseNotifcationViewModel() {
         val image = jsonObject.getString("image");
         val addedDatetime = jsonObject.getString("added_datetime")
         val expiryTime = jsonObject.getString("message_expiry_time")
-        val balanceReturnData = jsonObject.getString("balance_return_data")
+
+        var balanceReturnData = ""
+        if (jsonObject.has("balance_return_data")){
+             balanceReturnData = jsonObject.getString("balance_return_data")
+        }else {
+            balanceReturnData = ""
+        }
+
 
         val model = NotificationDetailMessage(addedDatetime, balanceReturnData, image, message, "" + message_id, title, "Read", "Notification", expiryTime);
         mListMutableLiveData.value = model
