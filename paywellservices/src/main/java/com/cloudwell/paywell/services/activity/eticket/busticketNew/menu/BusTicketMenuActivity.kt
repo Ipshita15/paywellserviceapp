@@ -19,7 +19,7 @@ import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.utils.ConnectionDetector
 import com.cloudwell.paywell.services.utils.LanuageConstant.KEY_BANGLA
 import com.cloudwell.paywell.services.utils.LanuageConstant.KEY_ENGLISH
-import kotlinx.android.synthetic.main.activity_air_tricket_menu.*
+import kotlinx.android.synthetic.main.activity_air_ticket_main_contain.*
 import java.util.*
 
 
