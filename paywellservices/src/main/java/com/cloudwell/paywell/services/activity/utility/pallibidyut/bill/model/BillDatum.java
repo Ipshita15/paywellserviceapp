@@ -8,20 +8,20 @@ import com.google.gson.annotations.SerializedName;
 public class BillDatum {
 
     @SerializedName("amount")
-    private int amount;
+    private Long amount;
     @SerializedName("bill_no")
     private String billNo;
 
-    public BillDatum(int amount, String billNo) {
+    public BillDatum(Long amount, String billNo) {
         this.amount = amount;
         this.billNo = billNo;
     }
 
-    public int getAmount() {
+    public Long getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(Long amount) {
         this.amount = amount;
     }
 

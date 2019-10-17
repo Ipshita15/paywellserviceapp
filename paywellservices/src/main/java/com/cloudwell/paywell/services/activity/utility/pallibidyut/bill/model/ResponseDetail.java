@@ -7,25 +7,25 @@ import com.google.gson.annotations.SerializedName;
 public class ResponseDetail {
 
     @SerializedName("BillAmount")
-    private Long billAmount;
+    private Double billAmount;
     @SerializedName("BillNo")
     private String billNo;
     @SerializedName("ExtraCharge")
-    private Long extraCharge;
+    private Double extraCharge;
     @SerializedName("Status")
     private Long status;
     @SerializedName("StatusName")
     private String statusName;
     @SerializedName("TotalAmount")
-    private Long totalAmount;
+    private Double totalAmount;
     @SerializedName("TrxId")
     private String trxId;
 
-    public Long getBillAmount() {
+    public Double getBillAmount() {
         return billAmount;
     }
 
-    public void setBillAmount(Long billAmount) {
+    public void setBillAmount(Double billAmount) {
         this.billAmount = billAmount;
     }
 
@@ -37,11 +37,11 @@ public class ResponseDetail {
         this.billNo = billNo;
     }
 
-    public Long getExtraCharge() {
+    public Double getExtraCharge() {
         return extraCharge;
     }
 
-    public void setExtraCharge(Long extraCharge) {
+    public void setExtraCharge(Double extraCharge) {
         this.extraCharge = extraCharge;
     }
 
@@ -61,11 +61,11 @@ public class ResponseDetail {
         this.statusName = statusName;
     }
 
-    public Long getTotalAmount() {
+    public Double getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(Long totalAmount) {
+    public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
     }
 

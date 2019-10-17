@@ -170,4 +170,9 @@ public class AnalyticsParameters {
     public static final String KEY_PENDING = "Pending";
 
 
+    public static final String KEY_BUS_TICKET = "BusTicket";
+    public static final String KEY_AIR_TICKET = "AirTicket";
+
+
+
 }

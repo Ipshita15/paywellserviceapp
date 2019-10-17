@@ -43,14 +43,15 @@ class NotificationFullNotifcationViewModel : BaseNotifcationViewModel() {
     private fun handleNotificationClickFlow(fcmNotificationDetailsJson: String) {
 
         val jsonObject = JSONObject(fcmNotificationDetailsJson);
-        val message_id = jsonObject.getInt("message_id");
+        val message_id = jsonObject.getInt("message_id")
         val title = jsonObject.getString("title");
-        val message = jsonObject.getString("message");
+        val message = jsonObject.getString("message")
         val image = jsonObject.getString("image");
-        val addedDatetime = jsonObject.getString("added_datetime");
-        val expiryTime = jsonObject.getString("message_expiry_time");
+        val addedDatetime = jsonObject.getString("added_datetime")
+        val expiryTime = jsonObject.getString("message_expiry_time")
+        val balanceReturnData = jsonObject.getString("balance_return_data")
 
-        val model = NotificationDetailMessage(addedDatetime, "", image, message, "" + message_id, title, "Read", "Notification", expiryTime);
+        val model = NotificationDetailMessage(addedDatetime, balanceReturnData, image, message, "" + message_id, title, "Read", "Notification", expiryTime);
         mListMutableLiveData.value = model
 
 

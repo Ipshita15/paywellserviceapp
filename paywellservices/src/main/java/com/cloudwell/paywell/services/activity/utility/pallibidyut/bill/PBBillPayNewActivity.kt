@@ -20,8 +20,6 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.base.BaseActivity
-import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.BillPayResponseDialog
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.BillDatum
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PalliBidyutBillPayRequest
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PalliBidyutBillPayResponse
@@ -52,6 +50,7 @@ class PBBillPayNewActivity : AppCompatActivity() {
             Animation.RELATIVE_TO_PARENT, 0f, Animation.RELATIVE_TO_PARENT, 1f,
             Animation.RELATIVE_TO_PARENT, 0f, Animation.RELATIVE_TO_PARENT, 0f)
     lateinit var appHandler: AppHandler
+    var isCreateActivity=true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,15 +95,15 @@ class PBBillPayNewActivity : AppCompatActivity() {
 
     private fun addAnotherNo() {
         ++addNoFlag
-        val topUpView = layoutInflater.inflate(R.layout.pallibidyut_billpay_view, null)
+        val billView = layoutInflater.inflate(R.layout.pallibidyut_billpay_view, null)
 
         if (addNoFlag == 1) {
-            topUpView.billViewRemoveImage.visibility=View.GONE
+            billView.billViewRemoveImage.visibility=View.GONE
         } else {
 
         }
 
-        topUpView.billViewRemoveImage.setOnClickListener(View.OnClickListener {
+        billView.billViewRemoveImage.setOnClickListener(View.OnClickListener {
             --addNoFlag
             slideOutAnim
                     .setAnimationListener(object : Animation.AnimationListener {
@@ -114,15 +113,15 @@ class PBBillPayNewActivity : AppCompatActivity() {
                         override fun onAnimationRepeat(animation: Animation) {}
 
                         override fun onAnimationEnd(animation: Animation) {
-                            topUpView.postDelayed({ billMainLL.removeView(topUpView) }, 100)
+                            billView.postDelayed({ billMainLL.removeView(billView) }, 100)
                         }
                     })
-            topUpView.startAnimation(slideOutAnim)
+            billView.startAnimation(slideOutAnim)
         })
 
 
-        billMainLL.addView(topUpView)
-        topUpView.startAnimation(slideInAnim)
+        billMainLL.addView(billView)
+        billView.startAnimation(slideInAnim)
     }
 
     private fun showCurrentTopupLog() {
@@ -130,11 +129,11 @@ class PBBillPayNewActivity : AppCompatActivity() {
         if (billMainLL.getChildCount() > 0) {
             val reqStrBuilder = StringBuilder()
             for (i in 0 until billMainLL.getChildCount()) {
-                val singleTopUpView = billMainLL.getChildAt(i)
-                if (singleTopUpView != null) {
+                val singleBillView = billMainLL.getChildAt(i)
+                if (singleBillView != null) {
 
-                    val billNoET = singleTopUpView!!.pbBillNumberET
-                    val amountET = singleTopUpView!!.pbBillAmountET
+                    val billNoET = singleBillView!!.pbBillNumberET
+                    val amountET = singleBillView!!.pbBillAmountET
 
                     val billNoString = billNoET.getText().toString()
                     val amountString = amountET.getText().toString()
@@ -150,7 +149,7 @@ class PBBillPayNewActivity : AppCompatActivity() {
                     reqStrBuilder.append((i + 1).toString() + ". " + getString(R.string.bill_number)+ " " + billNoString
                             + "\n " + getString(R.string.amount_des) + " " + amountString + getString(R.string.tk)+"\n\n")
 
-                    billPayList.add(BillDatum(amountString.toInt(),billNoString))
+                    billPayList.add(BillDatum(amountString.toLong(),billNoString))
 
 
                 }
@@ -196,7 +195,7 @@ class PBBillPayNewActivity : AppCompatActivity() {
                 dialogInterface.dismiss()
 
                 if (cd.isConnectingToInternet) {
-                      sendBillDataToServer(billPayList,"json",/*pinNoET.text.toString()*/"654321",/*appHandler.imeiNo*/"cwntcl")
+                      sendBillDataToServer(billPayList,"json",pinNoET.text.toString(),appHandler.imeiNo)
                 } else {
                     val snackbar = Snackbar.make(PBBillPayMain, R.string.connection_error_msg, Snackbar.LENGTH_LONG)
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"))
@@ -248,13 +247,15 @@ class PBBillPayNewActivity : AppCompatActivity() {
         val view=layoutInflater.inflate(R.layout.pallibidyut_billpay_response_dialog,null)
         val linearLayout=view.billViewLL
         view.responseStatusTV.text=palliBidyutBillPayResponse.apiStatusName
+        view.outletNameTV.text=palliBidyutBillPayResponse.outletName
+        view.outletAddressTV.text=palliBidyutBillPayResponse.outletAddress
         if(palliBidyutBillPayResponse.apiStatus.toInt()==200){
             view.responseStatusTV.setTextColor(resources.getColor(R.color.colorPrimary))
         }else{
             view.responseStatusTV.setTextColor(resources.getColor(R.color.color_red))
+            view.outletNameTV.visibility=View.GONE
+            view.outletAddressTV.visibility=View.GONE
         }
-        view.outletNameTV.text=palliBidyutBillPayResponse.outletName
-        view.outletAddressTV.text=palliBidyutBillPayResponse.outletAddress
         view.helpLineTV.text=palliBidyutBillPayResponse.callCenter
         for (x in 0 until palliBidyutBillPayResponse.responseDetails.size){
             val  billDetailsView=layoutInflater.inflate(R.layout.pallibidyut_bill_details_view,null)
@@ -279,11 +280,31 @@ class PBBillPayNewActivity : AppCompatActivity() {
         alertDialog.setPositiveButton("Ok", object : DialogInterface.OnClickListener {
             override fun onClick(dialog: DialogInterface?, which: Int) {
                 dialog?.dismiss()
-                startActivity(Intent(this@PBBillPayNewActivity,PBBillPayNewActivity::class.java))
-                finish()
+                for (i in 0 until billMainLL.getChildCount()) {
+                    val singleBillView = billMainLL.getChildAt(i)
+                    if (singleBillView != null) {
+                        for (x in 0 until palliBidyutBillPayResponse.responseDetails.size){
+
+                            if((singleBillView.pbBillNumberET as TextView).text.toString().equals(palliBidyutBillPayResponse.responseDetails.get(x).billNo)){
+                                if(palliBidyutBillPayResponse.responseDetails.get(x).status.toInt()==200){
+                                    billMainLL.removeView(singleBillView)
+                                    --addNoFlag
+                                }else{
+                                    isCreateActivity=false
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if(isCreateActivity){
+                    startActivity(Intent(this@PBBillPayNewActivity,PBBillPayNewActivity::class.java))
+                    finish()
+                }
             }
         })
         alertDialog.setView(view)
+        alertDialog.setCancelable(false)
         alertDialog.create().show()
 
     }
@@ -299,6 +320,9 @@ class PBBillPayNewActivity : AppCompatActivity() {
     override fun onBackPressed() {
         finish()
     }
+
+
+
 
 
 }

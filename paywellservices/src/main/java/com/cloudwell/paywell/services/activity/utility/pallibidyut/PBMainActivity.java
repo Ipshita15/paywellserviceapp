@@ -17,7 +17,6 @@ import android.widget.RelativeLayout;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.WebViewActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
-import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBBillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBBillPayNewActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBInquiryBillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus.PBBillStatusActivity;

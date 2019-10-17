@@ -222,11 +222,18 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
         val glm = GridLayoutManager(applicationContext, columns)
         glm.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                when (sectionAdapter.getSectionItemViewType(position)) {
-                    SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER ->
-                        return columns
-                    else ->
-                        return 1
+
+                try {
+                    val sectionItemViewType = sectionAdapter.getSectionItemViewType(position)
+                    when (sectionItemViewType) {
+                        SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER ->
+                            return columns
+                        else ->
+                            return 1
+                    }
+                } catch (e: Exception) {
+                    Logger.e(e.localizedMessage)
+                    return columns
                 }
             }
         }
@@ -263,23 +270,11 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
 
             val sectionData = HeaderAirportRecyclerViewSection(k, v)
             sectionAdapter.addSection(sectionData)
-
             i++
         }
 
 
-        val display = this.getWindowManager().getDefaultDisplay()
-        val outMetrics = DisplayMetrics()
-        display.getMetrics(outMetrics)
-
-        val density = resources.displayMetrics.density
-        val dpWidth = outMetrics.widthPixels / density
-        val columns: Int;
-        if (dpWidth > 320) {
-            columns = 2
-        } else {
-            columns = 2
-        }
+        val columns = 2
 
         val glm = GridLayoutManager(applicationContext, columns)
         glm.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
@@ -292,10 +287,10 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
                         else ->
                             return 1
                     }
-                } catch (e: ArrayIndexOutOfBoundsException) {
-
+                } catch (e: Exception) {
+                    Logger.e(e.localizedMessage)
+                    return columns
                 }
-                return 1
 
             }
         }
