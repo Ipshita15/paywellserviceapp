@@ -688,6 +688,7 @@
     <string name="decline">Decline</string>
     <string name="bill_number">Bill Number:</string>
     <string name="bill_amount">Taka:</string>
+    <string name="bill_number_length">Bill number length must be greater than 5</string>
     <string-array name="month_array">
         <item>Select Month</item>
         <item>January</item>

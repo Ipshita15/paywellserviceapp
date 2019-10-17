@@ -68,6 +68,8 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
                             android:singleLine="true"
+                            android:inputType="number"
+                            android:maxLength="30"
                             android:textColor="#333333" />
 
                         <ImageView
@@ -88,6 +90,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:singleLine="true"
+                        android:inputType="number"
                         android:textColor="#333333" />
 
                 </LinearLayout>
