@@ -50,7 +50,7 @@
                 android:id="@+id/helpLineTV"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textSize="17dp"
+                android:textSize="18dp"
                 android:hint="PayWell Hotline:" />
         </LinearLayout>
 
