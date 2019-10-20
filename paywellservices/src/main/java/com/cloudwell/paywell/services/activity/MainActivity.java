@@ -222,7 +222,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private GoogleApiClient googleApiClient;
 
-    private String selectedPhnNo;
 
     private int downloadType = 0;
     private int TAG_DOWNLOAD_PLAY_STORE = 1;
@@ -1280,7 +1279,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.id.homeBtnCall:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CALL_MENU);
-                callPreview();
+                callPreview(false);
                 break;
 
             default:
@@ -1975,40 +1974,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    private void callPreview() {
-        final String[] numbers = {"09610116566", "09666773333", "09666716566", "09638016566"};
-        selectedPhnNo = "09610116566";
-        AlertDialog dialog;
-        // setup the alert builder
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle(getString(R.string.select_phn_title_msg));
 
-        builder.setSingleChoiceItems(numbers, 0, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface arg0, int arg1) {
-                selectedPhnNo = numbers[arg1];
-            }
-
-        }).create();
-        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                call();
-            }
-        });
-        dialog = builder.create();
-        dialog.show();
-    }
-
-    private void call() {
-
-        Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:" + selectedPhnNo));
-        startActivity(intent);
-
-
-    }
 
     private void goToFacebook() {
         try {

@@ -4,23 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
 
-import java.io.File;
-import java.util.Locale;
-
-import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
-import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI;
 import com.cloudwell.paywell.services.activity.product.AjkerDealActivity;
 import com.cloudwell.paywell.services.activity.product.WholesaleActivity;
-import com.cloudwell.paywell.services.activity.product.productHelper.ProductHelper;
 import com.cloudwell.paywell.services.activity.refill.banktransfer.BankTransferMainActivity;
 import com.cloudwell.paywell.services.activity.refill.card.CardTransferMainActivity;
 import com.cloudwell.paywell.services.activity.statements.ViewStatementActivity;
@@ -51,11 +41,11 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
-import com.cloudwell.paywell.services.retrofit.ApiUtils;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.io.File;
+import java.util.Locale;
+
+import androidx.core.content.ContextCompat;
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 3/26/19.

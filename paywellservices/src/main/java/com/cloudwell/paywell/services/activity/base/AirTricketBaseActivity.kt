@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
 import android.view.Gravity
+import android.view.Menu
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -287,6 +288,15 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
         priceChangeFragment.show(supportFragmentManager, "dialog")
 
     }
+
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_main_air_ticket, menu)
+        return true
+    }
+
+
 
 
 }
