@@ -93,6 +93,11 @@ class PBBillPayNewActivity : AppCompatActivity() {
         addAnotherNo()
     }
 
+    override fun onResume() {
+        super.onResume()
+        refreshLanguage()
+    }
+
     private fun addAnotherNo() {
         ++addNoFlag
         val billView = layoutInflater.inflate(R.layout.pallibidyut_billpay_view, null)
@@ -312,6 +317,15 @@ class PBBillPayNewActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         finish()
+    }
+
+    private fun refreshLanguage() {
+
+        if (appHandler.getAppLanguage().equals("en", ignoreCase = true)) {
+            imageAddIV.setBackgroundResource(R.drawable.add_en)
+        } else {
+            imageAddIV.setBackgroundResource(R.drawable.add_bn)
+        }
     }
 
 
