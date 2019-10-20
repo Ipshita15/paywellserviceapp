@@ -634,7 +634,6 @@
     <string name="details_text">Details</string>
     <string name="edit">Edit</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="multicity_limit_msg" translatable="false">Currently we are accepting only 5 requests</string>
     <string name="bookingId" translatable="false">Booking Id</string>
     <string name="depart">Depart</string>
@@ -800,6 +799,8 @@
     <string name="clear_all">Clear all</string>
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
-
+    <string name="bill_number">Bill No.:</string>
+    <string name="bill_amount">Taka:</string>
+    <string name="bill_number_length">Bill number length must be greater than 5</string>
 
 </resources>
