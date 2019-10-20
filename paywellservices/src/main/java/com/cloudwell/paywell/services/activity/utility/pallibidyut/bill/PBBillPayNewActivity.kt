@@ -70,7 +70,7 @@ class PBBillPayNewActivity : AppCompatActivity() {
             if (addNoFlag < AppHandler.MULTIPLE_TOPUP_LIMIT) {
                 addAnotherNo()
             } else {
-                val snackbar = Snackbar.make(PBBillPayMain, R.string.topup_limit_msg, Snackbar.LENGTH_LONG)
+                val snackbar = Snackbar.make(PBBillPayMain, R.string.bill_limit_msg, Snackbar.LENGTH_LONG)
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"))
                 val snackBarView = snackbar.view
                 snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))
