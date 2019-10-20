@@ -22,20 +22,6 @@
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:hint="Outlet Name"/>
-
-            <TextView
-                android:id="@+id/outletAddressTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Outlet Address"
-                android:textSize="12sp" />
-            <TextView
-                android:id="@+id/responseStatusTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:hint="Status"/>
         </LinearLayout>
         <ScrollView
             android:layout_width="match_parent"

@@ -246,16 +246,7 @@ class PBBillPayNewActivity : AppCompatActivity() {
         val alertDialog=AlertDialog.Builder(this@PBBillPayNewActivity)
         val view=layoutInflater.inflate(R.layout.pallibidyut_billpay_response_dialog,null)
         val linearLayout=view.billViewLL
-        view.responseStatusTV.text=palliBidyutBillPayResponse.apiStatusName
         view.outletNameTV.text=palliBidyutBillPayResponse.outletName
-        view.outletAddressTV.text=palliBidyutBillPayResponse.outletAddress
-        if(palliBidyutBillPayResponse.apiStatus.toInt()==200){
-            view.responseStatusTV.setTextColor(resources.getColor(R.color.colorPrimary))
-        }else{
-            view.responseStatusTV.setTextColor(resources.getColor(R.color.color_red))
-            view.outletNameTV.visibility=View.GONE
-            view.outletAddressTV.visibility=View.GONE
-        }
         view.helpLineTV.text=palliBidyutBillPayResponse.callCenter
         for (x in 0 until palliBidyutBillPayResponse.responseDetails.size){
             val  billDetailsView=layoutInflater.inflate(R.layout.pallibidyut_bill_details_view,null)
@@ -296,7 +287,9 @@ class PBBillPayNewActivity : AppCompatActivity() {
                         }
                     }
                 }
-
+                if(billMainLL.childCount>0){
+                    billMainLL.getChildAt(0).billViewRemoveImage.visibility=View.GONE
+                }
                 if(isCreateActivity){
                     startActivity(Intent(this@PBBillPayNewActivity,PBBillPayNewActivity::class.java))
                     finish()
