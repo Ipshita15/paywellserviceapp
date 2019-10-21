@@ -16,7 +16,10 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
 import android.view.inputmethod.InputMethodManager
-import android.widget.*
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.cloudwell.paywell.services.R
@@ -36,7 +39,6 @@ import kotlinx.android.synthetic.main.pallibidyut_billpay_view.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.collections.ArrayList
 
 class PBBillPayNewActivity : AppCompatActivity() {
     lateinit var cd: ConnectionDetector
@@ -160,7 +162,7 @@ class PBBillPayNewActivity : AppCompatActivity() {
                 }
             }
             val builder = AlertDialog.Builder(this)
-            builder.setTitle(R.string.conf_topup_title_msg)
+            builder.setTitle(R.string.conf_bill_title_msg)
             builder.setMessage(reqStrBuilder)
             builder.setPositiveButton(R.string.okay_btn) { dialogInterface, id ->
                 dialogInterface.dismiss()
