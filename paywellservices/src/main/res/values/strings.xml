@@ -804,5 +804,7 @@
     <string name="bill_number_length">Bill number length must be greater than 5</string>
     <string name="bill_limit_msg">Currently this is the limit of our support</string>
     <string name="conf_bill_title_msg">Bill Request</string>
+    <string name="bill_status">Bill Status</string>
+    <string name="amount_limit_error_msg">Amount must be greater than 1 taka</string>
 
 </resources>

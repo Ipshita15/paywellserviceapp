@@ -23,6 +23,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.BillDatum
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PalliBidyutBillPayRequest
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PalliBidyutBillPayResponse
@@ -40,7 +41,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PBBillPayNewActivity : AppCompatActivity() {
+class PBBillPayNewActivity : BaseActivity() {
     lateinit var cd: ConnectionDetector
     private var addNoFlag: Int = 0
     lateinit var universalRecyclerViewAdapter:UniversalRecyclerViewAdapter
@@ -152,11 +153,14 @@ class PBBillPayNewActivity : AppCompatActivity() {
                     if (amountString.length < 1) {
                         amountET.setError(Html.fromHtml("<font color='red'>" + getString(R.string.amount_error_msg) + "</font>"))
                         return
+                    }else if (amountString.toDouble() < 1) {
+                        amountET.setError(Html.fromHtml("<font color='red'>" + getString(R.string.amount_limit_error_msg) + "</font>"))
+                        return
                     }
                     reqStrBuilder.append((i + 1).toString() + ". " + getString(R.string.bill_number)+ " " + billNoString
                             + "\n " + getString(R.string.amount_des) + " " + amountString + getString(R.string.tk)+"\n\n")
 
-                    billPayList.add(BillDatum(amountString.toLong(),billNoString))
+                    billPayList.add(BillDatum(amountString.toDouble(),billNoString))
 
 
                 }
