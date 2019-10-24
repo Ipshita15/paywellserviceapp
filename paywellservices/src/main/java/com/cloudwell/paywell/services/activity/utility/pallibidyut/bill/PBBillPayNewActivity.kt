@@ -253,8 +253,6 @@ class PBBillPayNewActivity : AppCompatActivity() {
         val alertDialog=AlertDialog.Builder(this@PBBillPayNewActivity)
         val view=layoutInflater.inflate(R.layout.pallibidyut_billpay_response_dialog,null)
         val linearLayout=view.billViewLL
-        view.outletNameTV.text=palliBidyutBillPayResponse.outletName
-        view.helpLineTV.text=palliBidyutBillPayResponse.callCenter
         for (x in 0 until palliBidyutBillPayResponse.responseDetails.size){
             val  billDetailsView=layoutInflater.inflate(R.layout.pallibidyut_bill_details_view,null)
             billDetailsView.billStatusTV.text=palliBidyutBillPayResponse.responseDetails.get(x).statusName

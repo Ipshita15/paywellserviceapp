@@ -794,8 +794,8 @@
     <string name="clear_all">সব মুছুন</string>
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
-    <string name="bill_number">বিল নম্বর:</string>
-    <string name="bill_amount">টাকা:</string>
+    <string name="bill_number">বিল নম্বর</string>
+    <string name="bill_amount">টাকা</string>
     <string name="bill_number_length">Bill number length must be greater than 5</string>
     <string name="bill_limit_msg">বর্তমানে, একসাথে সর্বোচ্চ ৫ বিল প্রদান সম্ভব</string>
     <string name="conf_bill_title_msg">অনুরোধ বিস্তারিত</string>

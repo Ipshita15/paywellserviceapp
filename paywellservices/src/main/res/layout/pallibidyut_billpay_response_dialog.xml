@@ -6,22 +6,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center"
-        android:layout_margin="10dp">
+        android:gravity="center">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center">
+            android:background="@color/colorPrimary"
+            android:padding="10dp">
             <TextView
                 android:id="@+id/outletNameTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:textColor="@color/black"
-                android:hint="Outlet Name"/>
+                android:textColor="@color/white"
+                android:text="Payment Status"/>
         </LinearLayout>
         <ScrollView
             android:layout_width="match_parent"
@@ -30,29 +30,30 @@
                 android:id="@+id/billViewLL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"/>
+                android:orientation="vertical"
+                android:layout_margin="10dp"/>
         </ScrollView>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_marginTop="10dp">-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                android:textColor="@color/colorPrimary"
-                android:text="PayWell Hotline: " />
-            <TextView
-                android:id="@+id/helpLineTV"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textSize="18dp"
-                android:hint="PayWell Hotline:" />
-        </LinearLayout>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:textSize="18dp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:textColor="@color/colorPrimary"-->
+<!--                android:text="PayWell Hotline: " />-->
+<!--            <TextView-->
+<!--                android:id="@+id/helpLineTV"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:textSize="18dp"-->
+<!--                android:hint="PayWell Hotline:" />-->
+<!--        </LinearLayout>-->
 
     </LinearLayout>
 
