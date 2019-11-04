@@ -807,4 +807,10 @@
     <string name="bill_status">Bill Status</string>
     <string name="amount_limit_error_msg">Amount must be greater than 1 taka</string>
 
+    <string name="nagad_refill_msg">Nagad</string>
+    <string name="nagad_balance_refill_msg">Balance Refill</string>
+    <string name="nagad_qr_code_msg">QR Code</string>
+    <string name="nagad_balance_claim_msg">Balance Claim</string>
+    <string name="nagad_refill_log_msg">Refill Log</string>
+
 </resources>

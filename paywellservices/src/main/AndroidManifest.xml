@@ -3,6 +3,71 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.cloudwell.paywell.services">
 
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission
+        android:name="android.permission.RECEIVE_SMS"
+        tools:node="remove" />
+    <uses-permission
+        android:name="android.permission.READ_SMS"
+        tools:node="remove" />
+    <uses-permission
+        android:name="android.permission.SEND_SMS"
+        tools:node="remove" />
+    <uses-permission
+        android:name="android.permission.WRITE_SMS"
+        tools:node="remove" />
+    <uses-permission
+        android:name="android.permission.RECEIVE_WAP_PUSH"
+        tools:node="remove" />
+    <uses-permission
+        android:name="android.permission.RECEIVE_MMS"
+        tools:node="remove" />
+    <uses-permission
+        android:name="android.permission.READ_CALL_LOG"
+        tools:node="remove" /> <!-- <permission -->
+    <!-- android:name="com.cloudwell.paywell.services.permission.MAPS_RECEIVE" -->
+    <!-- android:protectionLevel="signature" /> -->
+    <!-- <uses-permission android:name="com.example.permission.MAPS_RECEIVE" /> -->
+    <uses-permission
+        android:name="android.permission.WRITE_CALL_LOG"
+        tools:node="remove" /> <!-- To auto-complete the email text field in ic_login_ajkogin form with the user's emails -->
+    <uses-permission
+        android:name="android.permission.PROCESS_OUTGOING_CALLS"
+        tools:node="remove" />
+    <uses-permission
+        android:name="android.permission.CALL_PHONE"
+        tools:node="remove" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+
     <application
         android:name=".app.AppController"
         android:allowBackup="false"
@@ -12,7 +77,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
-
+        <activity android:name=".activity.refill.nagad.NagadMainActivity"></activity>
         <activity
             android:name=".LaunchScreenActivity"
             android:label="@string/app_name"
@@ -58,7 +123,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity" />
         </activity> <!-- activities for bKasah -->
-
         <activity
             android:name=".activity.utility.pallibidyut.changeMobileNumber.MobileNumberChangeActivity"
             android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
@@ -917,11 +981,11 @@
         <activity
             android:name=".activity.eticket.airticket.menu.AirTicketMenuActivity"
             android:label="@string/title_activity_air_tricket_menu"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.eticket.airticket.flightSearch.FlightSearchViewActivity"
             android:label="@string/title_activity_air_tricket_menu"
-            android:screenOrientation="portrait"></activity> <!-- SMS Receiver -->
+            android:screenOrientation="portrait" /> <!-- SMS Receiver -->
         <!-- <receiver android:name=".activity.sms.SmsReceiver"> -->
         <!-- <intent-filter> -->
         <!-- <action android:name="android.provider.Telephony.SMS_RECEIVED" /> -->
@@ -932,23 +996,23 @@
         <activity
             android:name=".activity.eticket.airticket.flightDetails1.FlightDetails1Activity"
             android:label="@string/title_activity_air_tricket_menu"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.eticket.airticket.flightDetails2.FlightDetails2Activity"
             android:label="@string/title_flightDetails2"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.eticket.airticket.passengerList.PassengerListActivity"
             android:label="@string/title_passenger_list"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.eticket.airticket.passengerAdd.AddPassengerActivity"
             android:label="@string/title_add_passenger"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.eticket.airticket.bookingCencel.BookingCancelActivity"
             android:label="@string/tile_cencel_booking"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".libaray.imagePickerAndCrop.ImagePickerActivity"
             android:screenOrientation="portrait" />
@@ -963,83 +1027,70 @@
         <activity
             android:name=".activity.eticket.busticketNew.passenger.BusPassengerBoothDepartureActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.eticket.busticketNew.busTransactionLog.BusTransactionLogActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.eticket.airticket.airportSearch.search.AirportsSearchActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity
             android:name=".activity.eticket.airticket.finalReview.AllSummaryActivity"
             android:label="@string/title_all_summary"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.eticket.airticket.flightDetails1.BaggageAndPoliciesActiivty"
             android:label="@string/title_activity_baggage_and_policies_actiivty"
-            android:screenOrientation="portrait"></activity>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.utility.pallibidyut.bill.PBBillPayNewActivity"
-            android:screenOrientation="portrait"></activity>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.eticket.airticket.transationLog.AirThicketTranslationLogActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activity.eticket.airticket.ticketViewer.TicketViewerActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activity.eticket.airticket.ticketViewer.emailTicket.PassengerEmailSendListActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activity.eticket.airticket.transationLog.viewBookingInfo.ViewBookingInfoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activity.eticket.busticketNew.transportSelect.TransportSelectActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activity.eticket.busticketNew.search.BusCitySearchActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity> <!-- uCrop cropping activity -->
+            android:theme="@style/AppTheme.NoActionBar"></activity> <!-- uCrop cropping activity -->
         <activity
             android:name=".activity.eticket.airticket.ticketCencel.TicketCancelActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activity.eticket.airticket.reIssueTicket.UpdateDocOrInfomationRequestActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activity.eticket.airticket.reIssueTicket.editReissuePassengerActivity.EditReissuePassengerActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activity.eticket.busticketNew.menu.BusTicketMenuActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activity.eticket.busticketNew.seatLayout.SeatLayoutActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
@@ -1110,71 +1161,5 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
     </application>
-
-    <supports-screens
-        android:anyDensity="true"
-        android:largeScreens="true"
-        android:normalScreens="true"
-        android:resizeable="true"
-        android:smallScreens="true"
-        android:xlargeScreens="true" />
-
-    <uses-feature
-        android:glEsVersion="0x00020000"
-        android:required="true" />
-
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-    <uses-permission
-        android:name="android.permission.RECEIVE_SMS"
-        tools:node="remove" />
-    <uses-permission
-        android:name="android.permission.READ_SMS"
-        tools:node="remove" />
-    <uses-permission
-        android:name="android.permission.SEND_SMS"
-        tools:node="remove" />
-    <uses-permission
-        android:name="android.permission.WRITE_SMS"
-        tools:node="remove" />
-    <uses-permission
-        android:name="android.permission.RECEIVE_WAP_PUSH"
-        tools:node="remove" />
-    <uses-permission
-        android:name="android.permission.RECEIVE_MMS"
-        tools:node="remove" />
-    <uses-permission
-        android:name="android.permission.READ_CALL_LOG"
-        tools:node="remove" /> <!-- <permission -->
-    <!-- android:name="com.cloudwell.paywell.services.permission.MAPS_RECEIVE" -->
-    <!-- android:protectionLevel="signature" /> -->
-    <!-- <uses-permission android:name="com.example.permission.MAPS_RECEIVE" /> -->
-    <uses-permission
-        android:name="android.permission.WRITE_CALL_LOG"
-        tools:node="remove" /> <!-- To auto-complete the email text field in ic_login_ajkogin form with the user's emails -->
-    <uses-permission
-        android:name="android.permission.PROCESS_OUTGOING_CALLS"
-        tools:node="remove" />
-    <uses-permission
-        android:name="android.permission.CALL_PHONE"
-        tools:node="remove" />
-
-    <uses-permission android:name="android.permission.READ_PROFILE" />
 
 </manifest>

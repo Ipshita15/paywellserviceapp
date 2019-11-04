@@ -68,17 +68,20 @@ public class RefillBalanceMainActivity extends BaseActivity {
         Button btnSda = findViewById(R.id.homeBtnSDA);
         Button btnBank = findViewById(R.id.homeBtnBankTransfer);
         Button btnCard = findViewById(R.id.homeBtnCard);
+        Button btnNagad = findViewById(R.id.homeNagad);
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             btnSda.setTypeface(AppController.getInstance().getOxygenLightFont());
 
             btnBank.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnCard.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnNagad.setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
             btnSda.setTypeface(AppController.getInstance().getAponaLohitFont());
 
             btnBank.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnCard.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnNagad.setTypeface(AppController.getInstance().getOxygenLightFont());
         }
     }
 

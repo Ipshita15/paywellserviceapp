@@ -802,5 +802,11 @@
     <string name="bill_status">বিল স্ট্যাটাস</string>
     <string name="amount_limit_error_msg">টাকার পরিমান ১ টাকার বেশি হতে হবে</string>
 
+    <string name="nagad_refill_msg">নগদ</string>
+    <string name="nagad_balance_refill_msg">নগদ ব্যালেন্স রিফিল</string>
+    <string name="nagad_qr_code_msg">কিউ আর কোড</string>
+    <string name="nagad_balance_claim_msg">ব্যালেন্স ক্লেইম</string>
+    <string name="nagad_refill_log_msg">রিফিল লগ</string>
+
 
 </resources>
