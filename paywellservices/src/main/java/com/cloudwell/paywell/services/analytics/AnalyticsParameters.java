@@ -139,6 +139,9 @@ public class AnalyticsParameters {
     public static final String KEY_FAVORITE_MENU_PAGE = "FavoriteMenuPage";
     public static final String KEY_BALANCE_REFILL_BANK_TRANSFER_INFO_MENU = "BalanceRefillBankTransferInfoMenu";
     public static final String KEY_BALANCE_REFILL_CARD_MENU = "BalanceRefillCardMenu";
+
+    public static final String KEY_BALANCE_REFILL_NAGAD_MENU = "BalanceRefillNagadMenu";
+
     public static final String KEY_SETTINGS_CHANGE_PIN_MENU = "SettingsChangePinMenu";
     public static final String KEY_SETTINGS_UPGRADE_MENU = "SettingsUpgradeMenu";
     public static final String KEY_SETTINGS_RESET_PIN_MENU = "SettingsResetPinMenu";

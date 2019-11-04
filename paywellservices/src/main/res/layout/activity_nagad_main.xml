@@ -51,7 +51,7 @@
                     android:layout_weight="1"/>
 
                 <Button
-                    android:id="@+id/homeBtnCard"
+                    android:id="@+id/nagadQRCode"
                     style="@style/HomeButtonNew"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/nagad_qr_code"
@@ -90,7 +90,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
                 <Button
-                    android:id="@+id/homeNagad"
+                    android:id="@+id/nagadRefillLog"
                     style="@style/HomeButtonNew"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/nagad_refill_log"
