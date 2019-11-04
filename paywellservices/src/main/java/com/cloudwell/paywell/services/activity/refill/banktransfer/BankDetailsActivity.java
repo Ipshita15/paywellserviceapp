@@ -1,5 +1,7 @@
 package com.cloudwell.paywell.services.activity.refill.banktransfer;
 
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -18,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
@@ -128,6 +131,8 @@ public class BankDetailsActivity extends BaseActivity {
         }
 
 
+
+
         try {
 
             String branchName = "Branch Name: " + responseDistrictData.getBankInfo().getBranchName();
@@ -139,6 +144,17 @@ public class BankDetailsActivity extends BaseActivity {
 
             String text = "Account No: " + responseDistrictData.getBankInfo().getAccountNumber();
             textViewAccountNum.setText(text);
+
+
+            textViewAccountNum.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    ClipboardManager cm = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+                    cm.setText(responseDistrictData.getBankInfo().getAccountNumber());
+                    Toast.makeText(getApplicationContext(), "Copied to clipboard", Toast.LENGTH_SHORT).show();
+                }
+            });
 
 
             district_array = new ArrayList<>();
