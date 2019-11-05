@@ -814,6 +814,10 @@
     <string name="nagad_qr_code_msg">QR Code</string>
     <string name="nagad_balance_claim_msg">Balance Claim</string>
     <string name="nagad_refill_log_msg">Refill Log</string>
+    <string name="home_title_nagad_balance_claim">Balance claim</string>
+    <string name="hint_mobile_number_or_transtion_id">Mobile number/transaction ID</string>
+    <string name="bill_amount_naged">Amount</string>
+    <string name="invalid_input">Invalid input</string>
 
 
 
