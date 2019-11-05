@@ -82,7 +82,7 @@ public class RefillBalanceMainActivity extends BaseActivity {
 
             btnBank.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnCard.setTypeface(AppController.getInstance().getAponaLohitFont());
-            btnNagad.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnNagad.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
     }
 
