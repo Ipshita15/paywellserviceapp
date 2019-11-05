@@ -29,6 +29,8 @@
     <string name="home_statement_balance">Balance Statement</string>
     <string name="home_statement_sales">Sales Statement</string>
     <string name="home_statement_transaction">Transaction Statement</string>
+
+    <string name="home_nagad_balance_title">Nagad</string>
     `
     <!-- Sub Menu Names -->
     <string name="home_topup_trx_log">Trx. Log</string>

@@ -111,7 +111,7 @@ public class RefillBalanceMainActivity extends BaseActivity {
             case R.id.homeBtnBankTransfer:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_BALANCE_REFILL_MENU, AnalyticsParameters.KEY_BALANCE_REFILL_BANK_TRANSFER_INFO_MENU);
                 startActivity(new Intent(this, BankTransferMainActivity.class));
-                break;
+                break; 
             case R.id.homeBtnCard:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_BALANCE_REFILL_MENU, AnalyticsParameters.KEY_BALANCE_REFILL_CARD_MENU);
                 startActivity(new Intent(this, CardTransferMainActivity.class));

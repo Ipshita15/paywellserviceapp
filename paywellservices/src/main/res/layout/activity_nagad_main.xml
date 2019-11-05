@@ -39,7 +39,7 @@
                     style="@style/HomeButtonNew"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/nagad_balance_refill"
-                    android:onClick="onButtonClicker"
+
                     android:paddingTop="10dp"
                     android:text="@string/nagad_balance_refill_msg"
                     android:textAllCaps="false"
@@ -55,7 +55,7 @@
                     style="@style/HomeButtonNew"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/nagad_qr_code"
-                    android:onClick="onButtonClicker"
+
                     android:text="@string/nagad_qr_code_msg"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
@@ -80,7 +80,7 @@
                     style="@style/HomeButtonNew"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/nagad_balance_claim"
-                    android:onClick="onButtonClicker"
+
                     android:text="@string/nagad_balance_claim_msg"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
@@ -94,7 +94,7 @@
                     style="@style/HomeButtonNew"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/nagad_refill_log"
-                    android:onClick="onButtonClicker"
+
                     android:text="@string/nagad_refill_log_msg"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
