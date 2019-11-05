@@ -14,6 +14,7 @@ import com.cloudwell.paywell.services.activity.MainActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.refill.banktransfer.BankTransferMainActivity;
 import com.cloudwell.paywell.services.activity.refill.card.CardTransferMainActivity;
+import com.cloudwell.paywell.services.activity.refill.nagad.NagadMainActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
@@ -68,17 +69,20 @@ public class RefillBalanceMainActivity extends BaseActivity {
         Button btnSda = findViewById(R.id.homeBtnSDA);
         Button btnBank = findViewById(R.id.homeBtnBankTransfer);
         Button btnCard = findViewById(R.id.homeBtnCard);
+        Button btnNagad = findViewById(R.id.homeNagad);
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             btnSda.setTypeface(AppController.getInstance().getOxygenLightFont());
 
             btnBank.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnCard.setTypeface(AppController.getInstance().getOxygenLightFont());
+            btnNagad.setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
             btnSda.setTypeface(AppController.getInstance().getAponaLohitFont());
 
             btnBank.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnCard.setTypeface(AppController.getInstance().getAponaLohitFont());
+            btnNagad.setTypeface(AppController.getInstance().getOxygenLightFont());
         }
     }
 
@@ -107,11 +111,17 @@ public class RefillBalanceMainActivity extends BaseActivity {
             case R.id.homeBtnBankTransfer:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_BALANCE_REFILL_MENU, AnalyticsParameters.KEY_BALANCE_REFILL_BANK_TRANSFER_INFO_MENU);
                 startActivity(new Intent(this, BankTransferMainActivity.class));
-                break;
+                break; 
             case R.id.homeBtnCard:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_BALANCE_REFILL_MENU, AnalyticsParameters.KEY_BALANCE_REFILL_CARD_MENU);
                 startActivity(new Intent(this, CardTransferMainActivity.class));
                 break;
+
+            case R.id.homeNagad:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_BALANCE_REFILL_MENU, AnalyticsParameters.KEY_BALANCE_REFILL_NAGAD_MENU);
+                startActivity(new Intent(this, NagadMainActivity.class));
+                break;
+
             default:
                 break;
         }
