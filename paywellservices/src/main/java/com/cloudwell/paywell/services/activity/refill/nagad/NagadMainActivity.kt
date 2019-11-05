@@ -20,6 +20,7 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener {
 
 
         nagadBalanceClaim.setOnClickListener(this)
+        nagadBalanceRefill.setOnClickListener(this)
 
 
 
@@ -32,9 +33,16 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener {
                 val intent = Intent(applicationContext, NagadBalanceClaimActivity::class.java)
                 startActivity(intent)
             }
+            R.id.nagadBalanceRefill ->{
+                val intent = Intent(this, BalanceRefillActivity::class.java)
+                startActivity(intent)
+            }
+
 
 
         }
+
+
     }
 
 
