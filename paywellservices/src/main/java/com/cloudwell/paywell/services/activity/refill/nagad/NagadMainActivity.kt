@@ -39,7 +39,7 @@ class NagadMainActivity : BaseActivity() {
     private var mAppHandler: AppHandler? = null
     private var nagadConstrainLayout: ConstraintLayout? = null
 
-
+    private var cd: ConnectionDetector? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,8 +77,11 @@ class NagadMainActivity : BaseActivity() {
             startActivity(intent)
         }
 
+        nagadRefillLog.setOnClickListener {
 
 
+
+        }
 
     }
 
