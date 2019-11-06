@@ -4,10 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.base.BaseActivity
+import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
+import com.cloudwell.paywell.services.activity.refill.nagad.fragment.MobileNumberQRCodeFragment
 import kotlinx.android.synthetic.main.activity_nagad_main.*
 
-class NagadMainActivity : BaseActivity(), View.OnClickListener {
+class NagadMainActivity : AirTricketBaseActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +22,7 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener {
 
         nagadBalanceClaim.setOnClickListener(this)
         nagadBalanceRefill.setOnClickListener(this)
+        nagadQRCode.setOnClickListener(this)
 
 
 
@@ -36,6 +38,11 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener {
             R.id.nagadBalanceRefill ->{
                 val intent = Intent(this, BalanceRefillActivity::class.java)
                 startActivity(intent)
+            }
+            R.id.nagadQRCode ->{
+
+                val priceChangeFragment = MobileNumberQRCodeFragment()
+                priceChangeFragment.show(supportFragmentManager, "dialog")
             }
 
 

@@ -1,24 +1,22 @@
 package com.cloudwell.paywell.services.activity.refill.nagad;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
 import android.os.Build;
 import android.os.Bundle;
-import android.widget.Toolbar;
 
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BalanceRefillActivity extends BaseActivity {
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
+public class BalanceRefillActivity extends AirTricketBaseActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
