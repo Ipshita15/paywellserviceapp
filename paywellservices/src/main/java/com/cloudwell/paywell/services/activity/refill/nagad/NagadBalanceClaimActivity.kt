@@ -14,7 +14,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
+import com.cloudwell.paywell.services.activity.base.UtilityBaseActivity
 import com.cloudwell.paywell.services.activity.refill.nagad.model.ResTranstionINquiry
 import com.cloudwell.paywell.services.activity.utility.AllUrl
 import com.cloudwell.paywell.services.app.AppHandler
@@ -27,7 +27,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class NagadBalanceClaimActivity : AirTricketBaseActivity() {
+class NagadBalanceClaimActivity : UtilityBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

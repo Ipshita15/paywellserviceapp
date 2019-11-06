@@ -4,7 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity;
+import com.cloudwell.paywell.services.activity.base.UtilityBaseActivity;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-public class BalanceRefillActivity extends AirTricketBaseActivity {
+public class BalanceRefillActivity extends UtilityBaseActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
