@@ -22,6 +22,11 @@ public class RefillLogInquiryActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_refill_log_inquiry);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.nagad_refill_log_inquiry);
+        }
+
         String data = getIntent().getStringExtra("data");
         RefillLog refillLog = new Gson().fromJson(data, RefillLog.class);
         trxDetails = refillLog.getTrxDetails();
