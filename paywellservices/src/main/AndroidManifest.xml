@@ -77,7 +77,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
-
         <activity
             android:name=".LaunchScreenActivity"
             android:label="@string/app_name"
@@ -1093,16 +1092,16 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.refill.nagad.NagadBalanceClaimActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.refill.nagad.NagadMainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.refill.nagad.BalanceRefillActivity"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".activity.refill.nagad.RefillLogInquiryActivity"
-            android:screenOrientation="portrait" ></activity>
+        <activity
+            android:name=".activity.refill.nagad.RefillLogInquiryActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"

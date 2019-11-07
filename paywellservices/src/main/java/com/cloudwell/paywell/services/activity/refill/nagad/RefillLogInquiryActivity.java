@@ -28,7 +28,6 @@ public class RefillLogInquiryActivity extends BaseActivity {
         RefillLogInquiryAdapter refillLogInquiryAdapter = new RefillLogInquiryAdapter(getApplicationContext(), trxDetails);
 
         RecyclerView my_recycler_view = (RecyclerView) findViewById(R.id.refill_inquiryRV);
-        my_recycler_view.setHasFixedSize(true);
         my_recycler_view.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         my_recycler_view.setAdapter(refillLogInquiryAdapter);
 

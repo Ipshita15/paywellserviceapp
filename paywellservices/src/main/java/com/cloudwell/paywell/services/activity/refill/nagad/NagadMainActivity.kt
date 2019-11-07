@@ -20,8 +20,10 @@ import kotlinx.android.synthetic.main.activity_nagad_main.*
 import com.google.android.material.snackbar.Snackbar
 
 import androidx.appcompat.app.AppCompatDialog
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLog
 import com.cloudwell.paywell.services.activity.utility.AllUrl
+import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.ConnectionDetector
@@ -30,9 +32,11 @@ import kotlinx.android.synthetic.main.dialog_trx_limit.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 
 class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
 
         if (isChecked) {
@@ -96,25 +100,55 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
     private lateinit var radioButton_hundred:RadioButton
     private lateinit var radioButton_twoHundred:RadioButton
 
+    private var mAppHandler: AppHandler? = null
+    private var mCoordinateLayout: CoordinatorLayout? = null
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nagad_main)
+
+        // for set title and back button :
 
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
             supportActionBar!!.setTitle(R.string.home_nagad_balance_title)
         }
 
+        initView()
 
         nagadBalanceClaim.setOnClickListener(this)
         nagadBalanceRefill.setOnClickListener(this)
         nagadRefillLog.setOnClickListener(this)
 
-
-
-
     }
+
+    // for language font :
+
+    private fun initView() {
+        mAppHandler = AppHandler.getmInstance(applicationContext)
+        mCoordinateLayout = findViewById<CoordinatorLayout>(R.id.coordinateLayout)
+        ConnectionDetector(AppController.getContext())
+
+
+        if (mAppHandler?.getAppLanguage().equals("en", ignoreCase = true)) {
+            nagadBalanceClaim.typeface = AppController.getInstance().oxygenLightFont
+
+            nagadBalanceRefill.typeface = AppController.getInstance().oxygenLightFont
+            nagadRefillLog.typeface = AppController.getInstance().oxygenLightFont
+            nagadQRCode.typeface = AppController.getInstance().oxygenLightFont
+        } else {
+            nagadBalanceClaim.typeface = AppController.getInstance().aponaLohitFont
+
+            nagadBalanceRefill.typeface = AppController.getInstance().aponaLohitFont
+            nagadRefillLog.typeface = AppController.getInstance().aponaLohitFont
+            nagadQRCode.typeface = AppController.getInstance().aponaLohitFont
+        }
+    }
+
+    // button onclick :
 
     override fun onClick(v: View) {
         when (v.id) {
@@ -127,17 +161,11 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
                 startActivity(intent)
             }
             R.id.nagadRefillLog->{
-
                 showLimitPrompt()
-
             }
-
-
-
         }
-
-
     }
+
     private fun showLimitPrompt() {
 // custom dialog
         val dialog = AppCompatDialog(this)
@@ -186,6 +214,8 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
         dialog.show()
     }
 
+    // ask for pin :
+
     private fun askForPin(selectedLimit: String) {
 
         val builder = AlertDialog.Builder(this)
@@ -224,6 +254,8 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
 
     }
 
+    // calling API :
+
     private fun callAPI(pin: String, selectedLimit: String) {
 
         val hostUrlBkapi = AllUrl.HOST_URL_lastSuccessfulTrx
@@ -250,6 +282,8 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
                 if(body?.status == 407){
                     showSnackMessageWithTextMessage(""+body.message)
                 }else if(body?.status == 200){
+
+                    // convert json object to gson string and send next activity:
 
                     val toJson = Gson().toJson(body)
                     val intent = Intent(applicationContext, RefillLogInquiryActivity::class.java)
