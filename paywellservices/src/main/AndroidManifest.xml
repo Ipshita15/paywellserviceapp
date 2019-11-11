@@ -1104,13 +1104,17 @@
         <activity android:name=".activity.refill.nagad.NagadBalanceClaimActivity"
             android:screenOrientation="portrait">
         </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.refill.nagad.NagadMainActivity"
             android:screenOrientation="portrait" />
 
         <activity android:name=".activity.refill.nagad.BalanceRefillActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name=".activity.refill.nagad.NagadRefillLogInquiryActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"

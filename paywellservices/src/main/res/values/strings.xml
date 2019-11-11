@@ -818,7 +818,7 @@
     <string name="hint_mobile_number_or_transtion_id">Mobile number/transaction ID</string>
     <string name="bill_amount_naged">Amount</string>
     <string name="invalid_input">Invalid input</string>
-
+    <string name="nagad_refill_log_inquiry">Refill Log Inquiry</string>
 
 
 </resources>

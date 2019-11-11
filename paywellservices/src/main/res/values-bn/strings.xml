@@ -814,6 +814,7 @@
     <string name="hint_mobile_number_or_transtion_id">মোবাইল নম্বর/ট্রানজেকশন আইডি</string>
     <string name="bill_amount_naged">টাকার পরিমাণ</string>
     <string name="invalid_input">Invalid input</string>
+    <string name="nagad_refill_log_inquiry">রিফিল অনুসন্ধান</string>
 
 
 
