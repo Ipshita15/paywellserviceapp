@@ -4,7 +4,6 @@ import android.os.Bundle
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.newBase.MVVMBaseActivity
 import com.cloudwell.paywell.services.app.AppHandler
-import java.util.*
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 30/1/19.
@@ -14,7 +13,7 @@ open class UtilityBaseActivity : MVVMBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        switchToCzLocale(Locale.ENGLISH)
+//        switchToCzLocale(Locale.ENGLISH)
         changeAppTheme()
 
     }

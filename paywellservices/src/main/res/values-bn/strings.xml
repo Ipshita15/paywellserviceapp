@@ -26,7 +26,7 @@
     <string name="home_refill_balance">ব্যালেন্স রিফিল</string>
     <string name="home_refill_balance_title">ব্যালেন্স রিফিল</string>
 
-    <string name="home_nagad_balance_title">নগদ</string>
+    <string name="home_nagad_balance_title">নগদের মাধ্যমে ব্যালেন্স রিফিল</string>
 
     <string name="home_settings">সেটিংস</string>
     <string name="home_chat">আমাদের সাথে চ্যাট করুন</string>
@@ -805,7 +805,7 @@
     <string name="bill_status">বিল স্ট্যাটাস</string>
     <string name="amount_limit_error_msg">টাকার পরিমান ১ টাকার বেশি হতে হবে</string>
 
-    <string name="nagad_refill_msg">নগদের মাধ্যমে ব্যালেন্স রিফিল</string>
+    <string name="nagad_refill_msg">নগদ</string>
     <string name="nagad_balance_refill_msg">ব্যালেন্স রিফিল\nপ্রক্রিয়া</string>
     <string name="nagad_qr_code_msg">কিউ আর\nকোড</string>
     <string name="nagad_balance_claim_msg">ব্যালেন্স ক্লেইম</string>
