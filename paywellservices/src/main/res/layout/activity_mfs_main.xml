@@ -38,7 +38,7 @@
                     android:id="@+id/homeBtnMyCash"
                     style="@style/HomeButtonNew"
                     android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_my_cash"
+                    android:drawableTop="@drawable/mycash_new_logo"
                     android:onClick="onButtonClicker"
                     android:text="@string/home_mfs_mycash"
                     android:textAllCaps="false"
