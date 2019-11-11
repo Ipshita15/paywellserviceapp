@@ -1,8 +1,6 @@
 package com.cloudwell.paywell.services.activity.refill.nagad
 
-
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -13,29 +11,41 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.base.BaseActivity
-
-import kotlinx.android.synthetic.main.activity_nagad_main.*
-
-import com.google.android.material.snackbar.Snackbar
-
 import androidx.appcompat.app.AppCompatDialog
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
+import com.cloudwell.paywell.services.activity.base.UtilityBaseActivity
+import com.cloudwell.paywell.services.activity.refill.nagad.fragment.MobileNumberQRCodeFragment
+import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLog
 import com.cloudwell.paywell.services.activity.utility.AllUrl
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.ConnectionDetector
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
+
+import kotlinx.android.synthetic.main.activity_nagad_main.*
 import kotlinx.android.synthetic.main.dialog_trx_limit.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
 class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+
+    private var selectedLimit = ""
+
+    private lateinit var radioButton_five: RadioButton
+    private lateinit var radioButton_ten: RadioButton
+    private lateinit var radioButton_twenty: RadioButton
+    private lateinit var radioButton_fifty: RadioButton
+    private lateinit var radioButton_hundred: RadioButton
+    private lateinit var radioButton_twoHundred: RadioButton
+
+    private var mAppHandler: AppHandler? = null
+    private var mCoordinateLayout: CoordinatorLayout? = null
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
 
@@ -91,26 +101,12 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
         }
     }
 
-    private var selectedLimit = ""
-
-    private lateinit var radioButton_five: RadioButton
-    private lateinit var radioButton_ten:RadioButton
-    private lateinit var radioButton_twenty:RadioButton
-    private lateinit var radioButton_fifty:RadioButton
-    private lateinit var radioButton_hundred:RadioButton
-    private lateinit var radioButton_twoHundred:RadioButton
-
-    private var mAppHandler: AppHandler? = null
-    private var mCoordinateLayout: CoordinatorLayout? = null
-
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nagad_main)
-
-        // for set title and back button :
 
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -121,6 +117,7 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
 
         nagadBalanceClaim.setOnClickListener(this)
         nagadBalanceRefill.setOnClickListener(this)
+        nagadQRCode.setOnClickListener(this)
         nagadRefillLog.setOnClickListener(this)
 
     }
@@ -152,15 +149,20 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.nagadBalanceClaim ->{
+            R.id.nagadBalanceClaim -> {
                 val intent = Intent(applicationContext, NagadBalanceClaimActivity::class.java)
                 startActivity(intent)
             }
-            R.id.nagadBalanceRefill ->{
+            R.id.nagadBalanceRefill -> {
                 val intent = Intent(this, BalanceRefillActivity::class.java)
                 startActivity(intent)
             }
-            R.id.nagadRefillLog->{
+            R.id.nagadQRCode -> {
+
+                val priceChangeFragment = MobileNumberQRCodeFragment()
+                priceChangeFragment.show(supportFragmentManager, "dialog")
+            }
+            R.id.nagadRefillLog -> {
                 showLimitPrompt()
             }
         }
@@ -175,9 +177,9 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
         val btn_okay = dialog.buttonOk
         val btn_cancel = dialog.cancelBtn
 
-        radioButton_five =   dialog.radio_five
-        radioButton_ten =   dialog.radio_ten
-        radioButton_twenty= dialog.radio_twenty
+        radioButton_five = dialog.radio_five
+        radioButton_ten = dialog.radio_ten
+        radioButton_twenty = dialog.radio_twenty
         radioButton_fifty = dialog.radio_fifty
         radioButton_hundred = dialog.radio_hundred
         radioButton_twoHundred = dialog.radio_twoHundred
@@ -255,22 +257,20 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
     }
 
 
-
     // calling API :
 
     private fun callAPI(pin: String, selectedLimit: String) {
 
         val hostUrlBkapi = AllUrl.HOST_URL_lastSuccessfulTrx
         val sec_token = AllUrl.sec_token
-//        val imeiNo = AppHandler.getmInstance(applicationContext).imeiNo
-        val imeiNo = "867305035545487"
+        val imeiNo = AppHandler.getmInstance(applicationContext).imeiNo
         val format = "json"
         val gateway_id = "5"
         val limit = selectedLimit
 
         showProgressDialog()
 
-        ApiUtils.getAPIService().refillLogInquiry(hostUrlBkapi, sec_token, imeiNo.toString(), pin, format,gateway_id,limit).enqueue(object : Callback<RefillLog> {
+        ApiUtils.getAPIService().refillLogInquiry(hostUrlBkapi, sec_token, imeiNo.toString(), pin, format, gateway_id, limit).enqueue(object : Callback<RefillLog> {
             override fun onFailure(call: Call<RefillLog>, t: Throwable) {
                 Toast.makeText(applicationContext, "Server error!!!", Toast.LENGTH_SHORT).show()
                 dismissProgressDialog()
@@ -281,9 +281,9 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
 
                 val body = response.body()
 
-                if(body?.status == 407){
-                    showSnackMessageWithTextMessage(""+body.message)
-                }else if(body?.status == 200){
+                if (body?.status == 407) {
+                    showSnackMessageWithTextMessage("" + body.message)
+                } else if (body?.status == 200) {
 
                     // convert json object to gson string and send next activity:
 
@@ -291,15 +291,15 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
                     val intent = Intent(applicationContext, NagadRefillLogInquiryActivity::class.java)
                     intent.putExtra("data", toJson)
                     startActivity(intent)
-                }
-                else{
-                    showDialogMessage(""+body?.message)
+                } else {
+                    showDialogMessage("" + body?.message)
                 }
             }
         })
 
     }
 }
+
 
 
 

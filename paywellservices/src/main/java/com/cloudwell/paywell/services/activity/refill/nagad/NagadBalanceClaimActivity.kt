@@ -14,7 +14,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.base.BaseActivity
+import com.cloudwell.paywell.services.activity.base.UtilityBaseActivity
 import com.cloudwell.paywell.services.activity.refill.nagad.model.ResTranstionINquiry
 import com.cloudwell.paywell.services.activity.utility.AllUrl
 import com.cloudwell.paywell.services.app.AppHandler
@@ -27,7 +27,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class NagadBalanceClaimActivity : BaseActivity() {
+class NagadBalanceClaimActivity : UtilityBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,14 +95,14 @@ class NagadBalanceClaimActivity : BaseActivity() {
     private fun callRransactionInquiryAPI(pin: String, mobileNumber: String, amount: String) {
         val hostUrlBkapi = AllUrl.HOST_URL_bkapi
         val sec_token = AllUrl.sec_token
-        val imeiNo = AppHandler.getmInstance(applicationContext)
+        val imeiNo = AppHandler.getmInstance(applicationContext).imeiNo
         val format = "json"
         val gateway_id = "5"
 
 
         showProgressDialog()
 
-        ApiUtils.getAPIService().transactionInquiry(hostUrlBkapi, sec_token, imeiNo.toString(), pin, mobileNumber, format, gateway_id, amount).enqueue(object : Callback<ResTranstionINquiry> {
+        ApiUtils.getAPIService().transactionInquiry(hostUrlBkapi, sec_token, imeiNo, pin, mobileNumber, format, gateway_id, amount).enqueue(object : Callback<ResTranstionINquiry> {
             override fun onFailure(call: Call<ResTranstionINquiry>, t: Throwable) {
                 Toast.makeText(applicationContext, "Server error!!!", Toast.LENGTH_SHORT).show()
                 dismissProgressDialog()
