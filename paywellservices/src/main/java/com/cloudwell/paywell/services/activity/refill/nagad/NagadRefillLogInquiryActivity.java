@@ -27,10 +27,14 @@ public class NagadRefillLogInquiryActivity extends BaseActivity {
             getSupportActionBar().setTitle(R.string.nagad_refill_log_inquiry);
         }
 
+        //getting gson string and covert to json object :
+
         String data = getIntent().getStringExtra("data");
         RefillLog refillLog = new Gson().fromJson(data, RefillLog.class);
         trxDetails = refillLog.getTrxDetails();
         RefillLogInquiryAdapter refillLogInquiryAdapter = new RefillLogInquiryAdapter(getApplicationContext(), trxDetails);
+
+        // refill log inquiry recycle view :
 
         RecyclerView my_recycler_view = (RecyclerView) findViewById(R.id.refill_inquiryRV);
         my_recycler_view.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

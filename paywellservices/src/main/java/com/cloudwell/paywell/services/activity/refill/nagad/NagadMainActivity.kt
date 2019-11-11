@@ -292,6 +292,9 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
                     intent.putExtra("data", toJson)
                     startActivity(intent)
                 } else {
+
+                    // wrong pin provided dialog :
+
                     showDialogMessage("" + body?.message)
                 }
             }
