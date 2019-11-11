@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#d1e5e1">
+    android:background="#eeedee">
 
    <androidx.recyclerview.widget.RecyclerView
        android:id="@+id/refill_inquiryRV"

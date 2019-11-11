@@ -1100,7 +1100,7 @@
             android:name=".activity.refill.nagad.BalanceRefillActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.refill.nagad.RefillLogInquiryActivity"
+            android:name=".activity.refill.nagad.NagadRefillLogInquiryActivity"
             android:screenOrientation="portrait" />
 
         <meta-data

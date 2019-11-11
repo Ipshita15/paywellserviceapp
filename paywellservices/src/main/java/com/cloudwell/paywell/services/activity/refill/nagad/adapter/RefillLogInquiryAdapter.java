@@ -36,7 +36,6 @@ public class RefillLogInquiryAdapter extends RecyclerView.Adapter<RefillLogInqui
     @Override
     public void onBindViewHolder(@NonNull RefillInquiryViewHolder holder, int i) {
 
-
         TextView refill_dateTV = holder.itemView.findViewById(R.id.refill_dateTV);
         TextView refill_transactionNoTV = holder.itemView.findViewById(R.id.refill_transactionNoTV);
         TextView refill_mobileNoTV = holder.itemView.findViewById(R.id.refill_mobileNoTV);
@@ -49,11 +48,6 @@ public class RefillLogInquiryAdapter extends RecyclerView.Adapter<RefillLogInqui
         refill_amountNoTV.setText("Tk. "+trxList.get(i).getAmount());
         successMsgTV.setText("Successful");
 
-
-
-
-
-
     }
 
     @Override
@@ -64,30 +58,9 @@ public class RefillLogInquiryAdapter extends RecyclerView.Adapter<RefillLogInqui
 
     public class RefillInquiryViewHolder extends RecyclerView.ViewHolder {
 
-//        protected TextView refill_dateTV;
-//        protected TextView refill_transactionTV;
-//        protected TextView refill_transactionNoTV;
-//        protected TextView refill_mobileTV;
-//        protected TextView refill_mobileNoTV;
-//        protected TextView refill_amountNoTV;
-//        protected TextView successMsgTV;
-//
-
-
-
 
         public RefillInquiryViewHolder(@NonNull View itemView) {
             super(itemView);
-
-//            this.refill_dateTV = itemView.findViewById(R.id.refill_dateTV);
-//            this.refill_transactionTV = itemView.findViewById(R.id.refill_transactionTV);
-//            this.refill_transactionNoTV = itemView.findViewById(R.id.refill_transactionNoTV);
-//            this.refill_mobileTV = itemView.findViewById(R.id.refill_mobileTV);
-//            this.refill_mobileNoTV = itemView.findViewById(R.id.refill_mobileNoTV);
-//            this.refill_amountNoTV = itemView.findViewById(R.id.refill_amountNoTV);
-//            this.successMsgTV = itemView.findViewById(R.id.successMsgTV);
-
-
 
         }
     }

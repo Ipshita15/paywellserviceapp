@@ -2,6 +2,7 @@ package com.cloudwell.paywell.services.activity.refill.nagad
 
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -32,7 +33,6 @@ import kotlinx.android.synthetic.main.dialog_trx_limit.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 
 
 class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.OnCheckedChangeListener {
@@ -245,14 +245,16 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
                 }
             } else {
                 showServerErrorMessage(getString(R.string.pin_no_error_msg))
+
+
             }
         }
         val alert = builder.create()
         alert.show()
 
-
-
     }
+
+
 
     // calling API :
 
@@ -286,17 +288,15 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
                     // convert json object to gson string and send next activity:
 
                     val toJson = Gson().toJson(body)
-                    val intent = Intent(applicationContext, RefillLogInquiryActivity::class.java)
+                    val intent = Intent(applicationContext, NagadRefillLogInquiryActivity::class.java)
                     intent.putExtra("data", toJson)
                     startActivity(intent)
-
                 }
-
-
-
+                else{
+                    showDialogMessage(""+body?.message)
+                }
             }
         })
-
 
     }
 }

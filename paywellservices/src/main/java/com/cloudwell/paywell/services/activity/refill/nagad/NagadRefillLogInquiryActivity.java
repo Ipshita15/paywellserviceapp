@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
-public class RefillLogInquiryActivity extends BaseActivity {
+public class NagadRefillLogInquiryActivity extends BaseActivity {
     List<TrxDetail> trxDetails ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
