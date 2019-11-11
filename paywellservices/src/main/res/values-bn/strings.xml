@@ -815,6 +815,7 @@
     <string name="bill_amount_naged">টাকার পরিমাণ</string>
     <string name="invalid_input">Invalid input</string>
     <string name="nagad_refill_log_inquiry">রিফিল অনুসন্ধান</string>
+    <string name="log_refill_limit_title_msg">পূর্ববর্তী রিফিলের সংখ্যা</string>
 
 
 
