@@ -171,7 +171,7 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
     private fun showLimitPrompt() {
 // custom dialog
         val dialog = AppCompatDialog(this)
-        dialog.setTitle(R.string.log_limit_title_msg)
+        dialog.setTitle(R.string.log_refill_limit_title_msg)
         dialog.setContentView(R.layout.dialog_trx_limit)
 
         val btn_okay = dialog.buttonOk
@@ -292,6 +292,9 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
                     intent.putExtra("data", toJson)
                     startActivity(intent)
                 } else {
+
+                    // wrong pin provided dialog :
+
                     showDialogMessage("" + body?.message)
                 }
             }

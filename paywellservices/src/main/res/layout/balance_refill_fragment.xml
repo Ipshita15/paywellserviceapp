@@ -26,6 +26,8 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:text="রিফিল প্রক্রিয়া:"
+                android:textStyle="bold"
+                android:textColor="#4d4d4d"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

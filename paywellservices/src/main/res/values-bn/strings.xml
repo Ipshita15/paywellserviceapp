@@ -24,9 +24,8 @@
     <string name="nav_more_title">আর&#8230;</string>
     <string name="home_statement">বিবরণী</string>
     <string name="home_refill_balance">ব্যালেন্স রিফিল</string>
-    <string name="home_refill_balance_title">ব্যালেন্স রিফিল</string>
-
-    <string name="home_nagad_balance_title">নগদ</string>
+    <string name="home_refill_balance_title">ব্যালেন্স রিফিল প্রক্রিয়া</string>
+    <string name="home_nagad_balance_title">নগদের মাধ্যমে ব্যালেন্স রিফিল</string>
 
     <string name="home_settings">সেটিংস</string>
     <string name="home_chat">আমাদের সাথে চ্যাট করুন</string>
@@ -815,6 +814,7 @@
     <string name="bill_amount_naged">টাকার পরিমাণ</string>
     <string name="invalid_input">Invalid input</string>
     <string name="nagad_refill_log_inquiry">রিফিল অনুসন্ধান</string>
+    <string name="log_refill_limit_title_msg">পূর্ববর্তী রিফিলের সংখ্যা</string>
 
 
 

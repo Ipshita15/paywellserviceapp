@@ -10,132 +10,130 @@
     android:gravity="center">
 
 
-<!--    <androidx.cardview.widget.CardView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="8dp"-->
-<!--        android:layout_marginLeft="8dp"-->
-<!--        android:layout_marginTop="8dp"-->
-<!--        android:layout_marginEnd="8dp"-->
-<!--        android:layout_marginRight="8dp"-->
+    <!--    <androidx.cardview.widget.CardView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="8dp"-->
+    <!--        android:layout_marginLeft="8dp"-->
+    <!--        android:layout_marginTop="8dp"-->
+    <!--        android:layout_marginEnd="8dp"-->
+    <!--        android:layout_marginRight="8dp"-->
 
 
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent">-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent">-->
 
 
-<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent">-->
+    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent">-->
 
-            <ImageView
-                android:id="@+id/refill_calenderIV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/refill_calender_logo" />
+    <ImageView
+        android:id="@+id/refill_calenderIV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/refill_calender_logo" />
 
-            <TextView
-                android:id="@+id/refill_dateTV"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:text="Sample Date"
-                android:textColor="#4d4d4d"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/refill_calenderIV"
-                app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/refill_dateTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Sample Date"
+        android:textColor="#4d4d4d"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/refill_calenderIV"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/refill_transactionTV"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="TRX ID :"
-                android:textColor="#808080"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@+id/refill_calenderIV"
-                app:layout_constraintTop_toBottomOf="@+id/refill_dateTV" />
+    <TextView
+        android:id="@+id/refill_transactionTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TRX ID :"
+        android:textColor="#808080"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/refill_calenderIV"
+        app:layout_constraintTop_toBottomOf="@+id/refill_dateTV" />
 
-            <TextView
-                android:id="@+id/refill_mobileNoTV"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:text="Mobile Number"
-                android:textColor="#808080"
-                android:textSize="15sp"
-                app:layout_constraintStart_toEndOf="@+id/refill_mobileTV"
-                app:layout_constraintTop_toTopOf="@+id/refill_mobileTV" />
+    <TextView
+        android:id="@+id/refill_mobileNoTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="Mobile Number"
+        android:textColor="#808080"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/refill_mobileTV"
+        app:layout_constraintTop_toTopOf="@+id/refill_mobileTV" />
 
-            <TextView
-                android:id="@+id/refill_transactionNoTV"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:text="TRX ID Number"
-                android:textColor="#808080"
-                android:textSize="15sp"
-                app:layout_constraintStart_toEndOf="@+id/refill_transactionTV"
-                app:layout_constraintTop_toTopOf="@+id/refill_transactionTV" />
+    <TextView
+        android:id="@+id/refill_transactionNoTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="TRX ID Number"
+        android:textColor="#808080"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/refill_transactionTV"
+        app:layout_constraintTop_toTopOf="@+id/refill_transactionTV" />
 
-            <TextView
-                android:id="@+id/successMsgTV"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:text="Sample Text"
-                android:textAlignment="center"
-                android:textColor="#37b34a"
-                android:textSize="15sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/refill_amountNoTV" />
+    <TextView
+        android:id="@+id/successMsgTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Sample Text"
+        android:textAlignment="center"
+        android:textColor="#37b34a"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/refill_amountNoTV" />
 
-            <TextView
-                android:id="@+id/refill_amountNoTV"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:text="Amount"
-                android:textAlignment="center"
-                android:textColor="#f15a24"
-                android:textSize="15sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/refill_amountNoTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Amount"
+        android:textAlignment="center"
+        android:textColor="#f15a24"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/refill_mobileTV"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:text="Mobile :"
-                android:textColor="#808080"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/refill_transactionTV"
-                app:layout_constraintTop_toBottomOf="@+id/refill_transactionTV" />
-<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <TextView
+        android:id="@+id/refill_mobileTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Mobile :"
+        android:textColor="#808080"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/refill_transactionTV"
+        app:layout_constraintTop_toBottomOf="@+id/refill_transactionTV" />
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 
-<!--    </androidx.cardview.widget.CardView>-->
+    <!--    </androidx.cardview.widget.CardView>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
