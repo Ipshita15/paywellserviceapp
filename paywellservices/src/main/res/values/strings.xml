@@ -29,6 +29,8 @@
     <string name="home_statement_balance">Balance Statement</string>
     <string name="home_statement_sales">Sales Statement</string>
     <string name="home_statement_transaction">Transaction Statement</string>
+
+    <string name="home_nagad_balance_title">Refill Balance By Nagad</string>
     `
     <!-- Sub Menu Names -->
     <string name="home_topup_trx_log">Trx. Log</string>
@@ -806,5 +808,18 @@
     <string name="conf_bill_title_msg">Bill Request</string>
     <string name="bill_status">Bill Status</string>
     <string name="amount_limit_error_msg">Amount must be greater than 1 taka</string>
+
+    <string name="nagad_refill_msg">Nagad </string>
+    <string name="nagad_balance_refill_msg">Balance Refill</string>
+    <string name="nagad_qr_code_msg">QR Code</string>
+    <string name="nagad_balance_claim_msg">Balance Claim</string>
+    <string name="nagad_refill_log_msg">Refill Log</string>
+    <string name="home_title_nagad_balance_claim">Balance claim</string>
+    <string name="hint_mobile_number_or_transtion_id">Mobile number/transaction ID</string>
+    <string name="bill_amount_naged">Amount</string>
+    <string name="invalid_input">Invalid input</string>
+    <string name="nagad_refill_log_inquiry">Refill Log Inquiry</string>
+    <string name="log_refill_limit_title_msg">Refill Log Limit</string>
+
 
 </resources>

@@ -27,6 +27,8 @@ import com.cloudwell.paywell.services.activity.product.ekShop.model.ResEkShopTok
 import com.cloudwell.paywell.services.activity.refill.model.BranchData;
 import com.cloudwell.paywell.services.activity.refill.model.DistrictData;
 import com.cloudwell.paywell.services.activity.refill.model.RefillRequestData;
+import com.cloudwell.paywell.services.activity.refill.nagad.model.ResTranstionINquiry;
+import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLog;
 import com.cloudwell.paywell.services.activity.topup.model.RequestTopup;
 import com.cloudwell.paywell.services.activity.topup.model.TopupReposeData;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PalliBidyutBillPayRequest;
@@ -283,7 +285,7 @@ public interface APIService {
     @POST
     @FormUrlEncoded
     Call<String> getToken(@Url String ur,
-                                      @Field("rid") String rid);
+                          @Field("rid") String rid);
 
 
     @FormUrlEncoded
@@ -325,6 +327,28 @@ public interface APIService {
 
     @POST("/PaywelltransactionPollyBiddyut/pollyBiddyutBillPayAPIAsync")
     Call<PalliBidyutBillPayResponse> postPalliBidyutBills(@Body PalliBidyutBillPayRequest body);
+
+
+    @FormUrlEncoded
+    @POST
+    Call<ResTranstionINquiry> transactionInquiry(@Url String url,
+                                                 @Field("sec_token") String username,
+                                                 @Field("imei") String skey,
+                                                 @Field("pin") String accessKey,
+                                                 @Field("trxOrPhoneNo") String transactionId,
+                                                 @Field("format") String customerName,
+                                                 @Field("gateway_id") String customerPhone,
+                                                 @Field("amount") String customerAddress);
+
+    @FormUrlEncoded
+    @POST
+    Call<RefillLog> refillLogInquiry(@Url String url,
+                                     @Field("sec_token") String username,
+                                     @Field("imei") String skey,
+                                     @Field("pin") String accessKey,
+                                     @Field("format") String customerName,
+                                     @Field("gateway_id") String customerPhone,
+                                     @Field("limit") String limit);
 
 
 
