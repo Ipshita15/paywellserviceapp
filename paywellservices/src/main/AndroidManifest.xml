@@ -77,18 +77,31 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
-        <activity android:name=".activity.utility.pallibidyut.bill.PBBillPayOldActivity"></activity>
-        <activity
-            android:name=".LaunchScreenActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait">
+        <activity android:name=".activity.reg.HomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullScreen"
+            >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+        <activity android:name=".activity.utility.pallibidyut.bill.PBBillPayOldActivity" />
+        <activity
+            android:name=".LaunchScreenActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".activity.MainActivity"
@@ -981,11 +994,11 @@
         <activity
             android:name=".activity.eticket.airticket.menu.AirTicketMenuActivity"
             android:label="@string/title_activity_air_tricket_menu"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.eticket.airticket.flightSearch.FlightSearchViewActivity"
             android:label="@string/title_activity_air_tricket_menu"
-            android:screenOrientation="portrait"></activity> <!-- SMS Receiver -->
+            android:screenOrientation="portrait" /> <!-- SMS Receiver -->
         <!-- <receiver android:name=".activity.sms.SmsReceiver"> -->
         <!-- <intent-filter> -->
         <!-- <action android:name="android.provider.Telephony.SMS_RECEIVED" /> -->
@@ -1050,60 +1063,56 @@
         <activity
             android:name=".activity.eticket.airticket.transationLog.AirThicketTranslationLogActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.eticket.airticket.ticketViewer.TicketViewerActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.eticket.airticket.ticketViewer.emailTicket.PassengerEmailSendListActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.eticket.airticket.transationLog.viewBookingInfo.ViewBookingInfoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.eticket.busticketNew.transportSelect.TransportSelectActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.eticket.busticketNew.search.BusCitySearchActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity> <!-- uCrop cropping activity -->
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- uCrop cropping activity -->
         <activity
             android:name=".activity.eticket.airticket.ticketCencel.TicketCancelActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.eticket.airticket.reIssueTicket.UpdateDocOrInfomationRequestActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.eticket.airticket.reIssueTicket.editReissuePassengerActivity.EditReissuePassengerActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.eticket.busticketNew.menu.BusTicketMenuActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.eticket.busticketNew.seatLayout.SeatLayoutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".activity.refill.nagad.NagadBalanceClaimActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
+        <activity
+            android:name=".activity.refill.nagad.NagadBalanceClaimActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.refill.nagad.NagadMainActivity"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".activity.refill.nagad.BalanceRefillActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
+        <activity
+            android:name=".activity.refill.nagad.BalanceRefillActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.refill.nagad.NagadRefillLogInquiryActivity"
             android:screenOrientation="portrait" />
@@ -1122,7 +1131,7 @@
             android:resource="@color/colorAccent" />
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
+            android:value="@integer/google_play_services_version" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -1177,4 +1186,5 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
     </application>
+
 </manifest>
