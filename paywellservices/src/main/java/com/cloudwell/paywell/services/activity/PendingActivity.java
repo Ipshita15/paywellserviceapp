@@ -1,6 +1,7 @@
 package com.cloudwell.paywell.services.activity;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -28,7 +29,7 @@ public class PendingActivity extends AppCompatActivity {
         Button mBtnClose = findViewById(R.id.btnClose);
         ProgressBar mPBAppLoading = findViewById(R.id.pbAppLoading);
 
-        mConErrorMsg.setText(AppLoadingActivity.pendingStr);
+        mConErrorMsg.setText(Html.fromHtml(AppLoadingActivity.pendingStr));
         mConErrorMsg.setVisibility(View.VISIBLE);
         mPBAppLoading.setVisibility(View.GONE);
         mBtnRetry.setVisibility(View.GONE);
