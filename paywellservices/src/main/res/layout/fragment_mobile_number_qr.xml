@@ -9,8 +9,9 @@
 
     <ImageView
         android:id="@+id/imageViewQRCode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:background="@drawable/nagad_paywell_qu_code"
         android:contentDescription="@string/bell_msg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

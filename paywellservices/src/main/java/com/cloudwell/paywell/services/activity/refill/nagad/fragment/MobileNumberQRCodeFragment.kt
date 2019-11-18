@@ -7,12 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
 import com.google.zxing.qrcode.QRCodeWriter
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
-import kotlinx.android.synthetic.main.fragment_mobile_number_qr.view.*
 import java.util.*
 
 
@@ -36,12 +34,12 @@ class MobileNumberQRCodeFragment : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(com.cloudwell.paywell.services.R.layout.fragment_mobile_number_qr, container, false)
         isCancelable = true
-        val nagadMainActivity = activity as BaseActivity
-        nagadMainActivity.showProgressDialog()
-        val generateQrCode = generateQrCode("01787679661");
-        val bitmap = generateQrCode
-        v.imageViewQRCode.setImageBitmap(bitmap)
-        nagadMainActivity.dismissProgressDialog()
+//        val nagadMainActivity = activity as BaseActivity
+//        nagadMainActivity.showProgressDialog()
+//        val generateQrCode = generateQrCode("01787679661");
+//        val bitmap = generateQrCode
+//        v.imageViewQRCode.setImageBitmap(bitmap)
+//        nagadMainActivity.dismissProgressDialog()
         return v
     }
 
