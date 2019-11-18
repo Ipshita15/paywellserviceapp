@@ -43,7 +43,6 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
                             android:singleLine="true"
-                            android:inputType="number"
                             android:maxLength="30"
                             android:hint="@string/hint_mobile_number_or_transtion_id"
                             android:textColor="#333333" />
