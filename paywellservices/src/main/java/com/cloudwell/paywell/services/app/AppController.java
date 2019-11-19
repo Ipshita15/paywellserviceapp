@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.util.Log;
 
 import com.cloudwell.paywell.services.BuildConfig;
+import com.cloudwell.paywell.services.activity.home.AppSignatureHelper;
 import com.cloudwell.paywell.services.activity.myFavorite.helper.MyFavoriteHelper;
 import com.cloudwell.paywell.services.utils.AppVersionUtility;
 import com.cloudwell.paywell.services.utils.MyHttpClient;
@@ -81,6 +82,8 @@ public class AppController extends Application {
         setupCrashlyticsUserInfo();
 
         installMenuData();
+
+        new AppSignatureHelper(getApplicationContext()).getAppSignatures();
 
     }
 

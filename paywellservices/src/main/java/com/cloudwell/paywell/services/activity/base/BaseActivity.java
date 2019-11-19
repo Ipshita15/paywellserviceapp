@@ -257,7 +257,6 @@ public class BaseActivity extends AppCompatActivity {
         intent.setData(Uri.parse("tel:" + selectedPhnNo));
         startActivity(intent);
 
-
     }
 
 }
