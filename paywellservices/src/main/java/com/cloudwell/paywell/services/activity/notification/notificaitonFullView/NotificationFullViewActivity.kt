@@ -24,6 +24,8 @@ import com.cloudwell.paywell.services.activity.notification.allNotificaiton.Noti
 import com.cloudwell.paywell.services.activity.notification.model.NotificationDetailMessage
 import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.view.NotificationFullViewStatus
 import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.viewModel.NotificationFullNotifcationViewModel
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBBillPayOldActivity
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.REBNotification
 import com.cloudwell.paywell.services.analytics.AnalyticsManager
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters
 import com.cloudwell.paywell.services.app.AppController
@@ -207,8 +209,65 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
 
             }
 
+        }else {
+            try {
+                var message = StringEscapeUtils.unescapeJava(model?.balanceReturnData)
+
+                message = message.replace("\\", "")
+                message = message.replace("\\\\", "")
+                message = message.replace("\\\\\\\\", "")
+                message = message.replace("\\\\\\\\\\\\", "")
+
+                val rn: REBNotification = Gson().fromJson(message, REBNotification::class.java)
+
+                val m = StringEscapeUtils.unescapeJava(message)
+                val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+
+                if (rn.ServiceType == "REB_BILL") {
+                    if (rn.TrxData.StatusCode == 200 || rn.TrxData.StatusCode == 303 || rn.TrxData.StatusCode == 100 || rn.TrxData.StatusCode == 327) {
+
+                    } else {
+                        btResubmitREB.setText(getString(R.string.re_submit_reb));
+                        btResubmitREB.visibility = View.VISIBLE
+                        btResubmitREB.setOnClickListener {
+
+                            val intentActionAccept = Intent(applicationContext, PBBillPayOldActivity::class.java)
+                            intentActionAccept.putExtra("REBNotification", Gson().toJson(rn))
+                            startActivity(intentActionAccept)
+
+                        }
+                    }
+                } else if (rn.ServiceType == "REB_REG") {
+                    if (rn.TrxData.StatusCode == 200 || rn.TrxData.StatusCode == 303 || rn.TrxData.StatusCode == 100 || rn.TrxData.StatusCode == 327) {
+
+                    } else {
+//                    btResubmitREB.setText(getString(R.string.re_submit_reb));
+//                    btResubmitREB.setOnClickListener{
+//
+//                        val intentActionAccept = Intent(applicationContext, PBBillPayOldActivity::class.java)
+//                        intentActionAccept.putExtra("REBNotification", Gson().toJson(rn))
+//                        startActivity(intentActionAccept)
+//
+//                    }
+                    }
+                }
+            }catch (e:java.lang.Exception){
+
+            }
         }
-    }
+
+
+        }
+
+
+
+
+
+
+
+
+
+
 
     private fun handleAirTicket(testmessage: String, messageSub: String?, dateTime: String?) {
         try {
