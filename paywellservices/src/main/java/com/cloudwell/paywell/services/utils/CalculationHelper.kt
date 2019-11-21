@@ -54,7 +54,7 @@ object CalculationHelper {
         var totalRetailerCommission = 0.0
 
         var isLocalAirless = false
-        isLocalAirless = checkIsLocalAirlines(airlineCode, isLocalAirless)
+        //isLocalAirless = checkIsLocalAirlines(airlineCode, isLocalAirless)
 
 
         for (fare in fares.indices) {
@@ -123,7 +123,7 @@ object CalculationHelper {
 
 
         var isLocalAirless = false
-        isLocalAirless = checkIsLocalAirlines(airlineCode, isLocalAirless)
+//        isLocalAirless = checkIsLocalAirlines(airlineCode, isLocalAirless)
 
 
         val passengerCount = fares.passengerCount;
@@ -193,7 +193,7 @@ object CalculationHelper {
 
 
         var isLocalAirless = false
-        isLocalAirless = checkIsLocalAirlines(airlineCode, isLocalAirless)
+//        isLocalAirless = checkIsLocalAirlines(airlineCode, isLocalAirless)
 
 
         for (fare in fares.indices) {
