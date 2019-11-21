@@ -86,7 +86,6 @@ import com.cloudwell.paywell.services.activity.utility.ivac.IvacMainActivity;
 import com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliBillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliMainActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity;
-import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBBillPayNewActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBBillPayOldActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus.PBBillStatusActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.MobileNumberChangeActivity;

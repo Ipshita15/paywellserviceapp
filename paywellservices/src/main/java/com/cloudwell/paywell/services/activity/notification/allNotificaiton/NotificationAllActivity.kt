@@ -31,6 +31,7 @@ import com.cloudwell.paywell.services.activity.notification.notificaitonFullView
 import com.cloudwell.paywell.services.analytics.AnalyticsManager
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.utils.AppHelper.startNotificationSyncService
 import com.google.gson.JsonParser
 import com.orhanobut.logger.Logger
@@ -84,7 +85,12 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
         // call for data
         val isFlowForComingNewNotification = intent.getBooleanExtra(MainActivity.KEY_COMMING_NEW_NOTIFICATION, false);
 
-        viewModel.onPullRequested(isFlowForComingNewNotification, isInternetConnection)
+        // check to need snc data or not
+
+        val userUsedNotificationFLow = AppStorageBox.get(applicationContext, AppStorageBox.Key.USER_USED_NOTIFICAITON_FLOW) as Boolean
+
+
+        viewModel.onPullRequested(isFlowForComingNewNotification, isInternetConnection, userUsedNotificationFLow)
 
     }
 
@@ -98,6 +104,10 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
 
             NotificationViewStatus.NOTIFY_DATA_SET_CHANGE -> {
                 adapter.notifyDataSetChanged()
+            }
+
+            NotificationViewStatus.USER_FINISHED_NOTIFICATION_FLOW ->{
+                AppStorageBox.put(applicationContext, AppStorageBox.Key.USER_USED_NOTIFICAITON_FLOW, true)
             }
 
             NotificationViewStatus.SHOW_NO_NOTIFICAITON_FOUND -> {
@@ -131,6 +141,8 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
         if(previousPosition>0){
             listView!!.scrollToPosition(previousPosition)
         }
+
+        dismissProgressDialog()
     }
 
     private fun startNotificationFullViewActivity() {
