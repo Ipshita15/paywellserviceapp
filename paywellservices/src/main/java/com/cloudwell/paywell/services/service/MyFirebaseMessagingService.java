@@ -124,14 +124,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         message = message.replace("\\\\\\\\\\\\", "");
 
                         REBNotification REBNotification = gson.fromJson(message, REBNotification.class);
-                        checkREBType(REBNotification, notifcationDetails);
+                        checkREBType(REBNotification, notifcationDetails, remoteMessage);
+
+                    } else {
+                        handleNormalNotification(remoteMessage);
 
                     }
-                }else {
+                } else {
                     // normal
                     handleNormalNotification(remoteMessage);
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 // normal
                 handleNormalNotification(remoteMessage);
             }
@@ -139,24 +142,28 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     }
 
-    private void checkREBType(REBNotification rn, String notifcationDetails) {
+    private void checkREBType(REBNotification rn, String notifcationDetails, RemoteMessage remoteMessage) {
 
         String m = StringEscapeUtils.unescapeJava(message);
         final Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         if (rn.getServiceType().equals("REB_BILL")) {
 
-            if (rn.getTrxData().getStatusCode() == 200 || rn.getTrxData().getStatusCode() == 303|| rn.getTrxData().getStatusCode() == 100 || rn.getTrxData().getStatusCode() == 327){
-
-            }else {
-                HandleREBActionTextNotification(title,m , defaultSoundUri, new Gson().toJson(rn), notifcationDetails, true);
+            if (rn.getTrxData().getStatusCode() == 200 || rn.getTrxData().getStatusCode() == 303 || rn.getTrxData().getStatusCode() == 100 || rn.getTrxData().getStatusCode() == 327) {
+                handleNormalNotification(remoteMessage);
+            } else {
+                handleREBBillTextNotification(title, m, defaultSoundUri, new Gson().toJson(rn), notifcationDetails, true);
             }
 
-        }else if (rn.getServiceType().equals("REB_REG")) {
-
-
+        } else if (rn.getServiceType().equals("REB_REG")) {
+            if (rn.getTrxData().getStatusCode() == 200 || rn.getTrxData().getStatusCode() == 328 || rn.getTrxData().getStatusCode() == 100) {
+                handleNormalNotification(remoteMessage);
+            } else {
+                handleREBRegistrationTextNotification(title, m, defaultSoundUri, new Gson().toJson(rn), notifcationDetails, true);
+            }
         }
     }
+
 
     private void handleNormalNotification(RemoteMessage remoteMessage) {
         String imageUri;
@@ -382,7 +389,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     // REB
 
-    private void HandleREBActionTextNotification(String title, String messageBody, Uri defaultSoundUri, String REBNotification, String notifcationDetails, boolean isAction) {
+    private void handleREBBillTextNotification(String title, String messageBody, Uri defaultSoundUri, String REBNotification, String notifcationDetails, boolean isAction) {
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -413,8 +420,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         //This is the intent of PendingIntent
         Intent intentActionAccept = new Intent(getApplicationContext(), ActionReceiver.class);
         intentActionAccept.putExtra("action", "Re payment");
-        intentActionAccept.putExtra("requestID",         requestID);
-        intentActionAccept.putExtra("REBNotification",         REBNotification);
+        intentActionAccept.putExtra("requestID", requestID);
+        intentActionAccept.putExtra("REBNotification", REBNotification);
         PendingIntent pIntentActionAccept = PendingIntent.getBroadcast(getApplicationContext(), 1, intentActionAccept, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
@@ -436,7 +443,59 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             notificationManager.notify(requestID, builder.build());
         }
 
+    }
+
+    private void handleREBRegistrationTextNotification(String title, String messageBody, Uri defaultSoundUri, String REBNotification, String notifcationDetails, boolean isAction) {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        String channelId = "PayWell-01";
+        String channelName = "PayWell";
+
+        int requestID = (int) System.currentTimeMillis();
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel mChannel = new NotificationChannel(channelId, channelName, importance);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(mChannel);
+            }
+        }
+
+        final Intent intent = new Intent(this, NotificationFullViewActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("isNotificationFlow", true);
+        intent.putExtra("Notification_Details", notifcationDetails);
+        final PendingIntent pendingIntent = PendingIntent.getActivity(this, requestID /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
 
 
+        NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
+        bigText.bigText(messageBody);
+        bigText.setBigContentTitle(title);
+
+        //This is the intent of PendingIntent
+        Intent intentActionAccept = new Intent(getApplicationContext(), ActionReceiver.class);
+        intentActionAccept.putExtra("action", "registration");
+        intentActionAccept.putExtra("requestID", requestID);
+        intentActionAccept.putExtra("REBNotification", REBNotification);
+        PendingIntent pIntentActionAccept = PendingIntent.getBroadcast(getApplicationContext(), 1, intentActionAccept, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.drawable.pw_notification_bar)
+                .setContentTitle(title)
+                .setContentText(messageBody)
+                .setStyle(new NotificationCompat.InboxStyle())/*Notification with Image*/
+                .setAutoCancel(true)
+                .setSound(defaultSoundUri)
+                .setContentIntent(pendingIntent)
+                .setStyle(bigText)
+                .setPriority(Notification.PRIORITY_MAX);
+
+        if (isAction) {
+            builder.addAction(R.drawable.pw_notification_bar, getApplicationContext().getString(R.string.re_submit_reb), pIntentActionAccept);
+        }
+
+        if (notificationManager != null) {
+            notificationManager.notify(requestID, builder.build());
+        }
     }
 }

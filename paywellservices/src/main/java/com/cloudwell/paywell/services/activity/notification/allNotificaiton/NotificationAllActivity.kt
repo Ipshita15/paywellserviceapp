@@ -87,7 +87,10 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
 
         // check to need snc data or not
 
-        val userUsedNotificationFLow = AppStorageBox.get(applicationContext, AppStorageBox.Key.USER_USED_NOTIFICAITON_FLOW) as Boolean
+        var userUsedNotificationFLow = AppStorageBox.get(applicationContext, AppStorageBox.Key.USER_USED_NOTIFICAITON_FLOW) as? Boolean
+        if (userUsedNotificationFLow == null){
+            userUsedNotificationFLow = true
+        }
 
 
         viewModel.onPullRequested(isInternetConnection, userUsedNotificationFLow)
