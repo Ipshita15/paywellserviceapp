@@ -24,7 +24,7 @@ class NotificationNotifcationViewModel : BaseNotifcationViewModel() {
     val mListMutableLiveData = MutableLiveData<List<NotificationDetailMessage>>()
     val mViewStatus = SingleLiveEvent<NotificationViewStatus>()
 
-    fun onPullRequested(isFlowForComingNewNotification: Boolean, internetConnection: Boolean, userUsedNotificationFLow: Boolean) {
+    fun onPullRequested(internetConnection: Boolean, userUsedNotificationFLow: Boolean) {
 
         if (userUsedNotificationFLow == false) {
             if (internetConnection) {
@@ -35,12 +35,7 @@ class NotificationNotifcationViewModel : BaseNotifcationViewModel() {
         } else {
             mNotificationRepository.getLocalNotificationData()?.observeForever { detailMessages ->
                 if (detailMessages?.size == 0) {
-                    // first time in app
-                    if (internetConnection) {
-                        callNotificationRemoteAPI()
-                    } else {
-                        baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
-                    }
+                    mViewStatus.value = NotificationViewStatus.SHOW_NO_NOTIFICAITON_FOUND
                 } else {
                     // normal time
                     val filletDataByCurrentTime = filletDataByCurrentTime(detailMessages);

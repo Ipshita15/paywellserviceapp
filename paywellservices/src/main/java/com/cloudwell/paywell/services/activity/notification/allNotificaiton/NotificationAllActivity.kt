@@ -90,7 +90,7 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
         val userUsedNotificationFLow = AppStorageBox.get(applicationContext, AppStorageBox.Key.USER_USED_NOTIFICAITON_FLOW) as Boolean
 
 
-        viewModel.onPullRequested(isFlowForComingNewNotification, isInternetConnection, userUsedNotificationFLow)
+        viewModel.onPullRequested(isInternetConnection, userUsedNotificationFLow)
 
     }
 
