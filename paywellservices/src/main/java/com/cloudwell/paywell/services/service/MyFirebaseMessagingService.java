@@ -419,7 +419,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         //This is the intent of PendingIntent
         Intent intentActionAccept = new Intent(getApplicationContext(), ActionReceiver.class);
-        intentActionAccept.putExtra("action", "Re payment");
+        intentActionAccept.putExtra("action", "bill");
         intentActionAccept.putExtra("requestID", requestID);
         intentActionAccept.putExtra("REBNotification", REBNotification);
         PendingIntent pIntentActionAccept = PendingIntent.getBroadcast(getApplicationContext(), 1, intentActionAccept, PendingIntent.FLAG_UPDATE_CURRENT);

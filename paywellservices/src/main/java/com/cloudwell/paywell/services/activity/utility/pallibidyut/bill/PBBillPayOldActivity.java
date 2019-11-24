@@ -20,6 +20,7 @@ import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
@@ -137,12 +138,15 @@ public class PBBillPayOldActivity extends LanguagesBaseActivity implements View.
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(params[0]);
             try {
+                String uniqueKey = UniqueKeyGenerator.getUniqueKey();
+
                 List<NameValuePair> nameValuePairs = new ArrayList<>(6);
                 nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("pin_code", params[1]));
                 nameValuePairs.add(new BasicNameValuePair("bill_no", params[2]));
                 nameValuePairs.add(new BasicNameValuePair("amount", params[3]));
                 nameValuePairs.add(new BasicNameValuePair("format", ""));
+                nameValuePairs.add(new BasicNameValuePair("trx_ref", ""+uniqueKey));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
