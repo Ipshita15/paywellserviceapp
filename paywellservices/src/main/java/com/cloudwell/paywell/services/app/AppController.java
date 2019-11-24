@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.cloudwell.paywell.services.BuildConfig;
 import com.cloudwell.paywell.services.activity.myFavorite.helper.MyFavoriteHelper;
+import com.cloudwell.paywell.services.app.storage.AppStorageBox;
 import com.cloudwell.paywell.services.utils.AppVersionUtility;
 import com.cloudwell.paywell.services.utils.MyHttpClient;
 import com.crashlytics.android.Crashlytics;
@@ -88,11 +89,14 @@ public class AppController extends Application {
         AppVersionUtility.AppStart appStart = AppVersionUtility.checkAppStart(getApplicationContext());
         switch (appStart) {
             case NORMAL:
+
                 break;
             case FIRST_TIME:
                 MyFavoriteHelper.Companion.insertData(getApplicationContext());
+                AppStorageBox.put(getApplicationContext(), AppStorageBox.Key.USER_USED_NOTIFICAITON_FLOW,  false);
                 break;
             case FIRST_TIME_VERSION:
+                AppStorageBox.put(getApplicationContext(), AppStorageBox.Key.USER_USED_NOTIFICAITON_FLOW,  false);
                 // MyFavoriteHelper.Companion.insertData(getApplicationContext());
                 break;
         }
