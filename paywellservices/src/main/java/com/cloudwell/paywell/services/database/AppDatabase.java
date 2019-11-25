@@ -9,6 +9,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripSc
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
 import com.cloudwell.paywell.services.activity.notification.model.NotificationDetailMessage;
 import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.model.NotificationDetailMessageSync;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.DESCOHistory;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
@@ -16,7 +17,7 @@ import androidx.room.RoomDatabase;
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 2/1/19.
  */
-@Database(entities = {FavoriteMenu.class, NotificationDetailMessage.class, NotificationDetailMessageSync.class, Airport.class, Passenger.class, Transport.class, BusLocalDB.class, BusSchedule.class, TripScheduleInfo.class}, version = 3)
+@Database(entities = {FavoriteMenu.class, NotificationDetailMessage.class, NotificationDetailMessageSync.class, Airport.class, Passenger.class, Transport.class, BusLocalDB.class, BusSchedule.class, TripScheduleInfo.class, DESCOHistory.class}, version = 4)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract FavoriteMenuDab mFavoriteMenuDab();
 
@@ -25,4 +26,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract AirtricketDab mAirtricketDab();
 
     public abstract BusTicketDab mBusTicketDab();
+
+    public abstract UtilityDab mUtilityDab();
 }
