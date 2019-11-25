@@ -8,7 +8,6 @@ import android.widget.CompoundButton
 import android.widget.RadioButton
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialog
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketMainActivity
@@ -29,9 +28,6 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
     val KEY_TAG = AirTicketMenuActivity::class.java.getName()
     val BOOKING_TAG = "BOOKING"
     val TRX_TAG = "TRX_LOG"
-
-
-    lateinit var mConstraintLayout: ConstraintLayout
 
     private var mAppHandler: AppHandler? = null
     internal var radioButton_five: RadioButton? = null
@@ -64,10 +60,10 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
         btViewTricket.setOnClickListener(this)
         btCencel.setOnClickListener(this)
         btTransationLog.setOnClickListener(this)
+        btIssueTicket.setOnClickListener(this)
 
 
         cd = ConnectionDetector(AppController.getContext())
-        mConstraintLayout = findViewById(R.id.constraintLayoutBookingList)
         mAppHandler = AppHandler.getmInstance(applicationContext)
 
 
@@ -85,6 +81,10 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
             }
 
             R.id.btCencel -> {
+                startActivity(Intent(applicationContext, BookingCancelActivity::class.java))
+            }
+
+            R.id.btIssueTicket -> {
                 startActivity(Intent(applicationContext, BookingCancelActivity::class.java))
             }
 
