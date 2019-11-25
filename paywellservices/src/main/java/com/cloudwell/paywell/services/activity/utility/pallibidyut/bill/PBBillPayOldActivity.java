@@ -146,7 +146,7 @@ public class PBBillPayOldActivity extends LanguagesBaseActivity implements View.
                 nameValuePairs.add(new BasicNameValuePair("bill_no", params[2]));
                 nameValuePairs.add(new BasicNameValuePair("amount", params[3]));
                 nameValuePairs.add(new BasicNameValuePair("format", ""));
-                nameValuePairs.add(new BasicNameValuePair("trx_ref", ""+uniqueKey));
+                nameValuePairs.add(new BasicNameValuePair("ref_id", ""+uniqueKey));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
