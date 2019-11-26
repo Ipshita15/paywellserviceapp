@@ -106,11 +106,11 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
                 startActivity(intent)
             }
 
-//            R.id.btTicketReissue -> {
-//                val intent = Intent(applicationContext, TicketOtherRequestActivity::class.java)
-//                intent.putExtra(TicketCancelActivity.KEY_TITLE, AllConstant.Action_reIssueTicket)
-//                startActivity(intent)
-//            }
+            R.id.btTicketReissue -> {
+                val intent = Intent(applicationContext, TicketCancelActivity::class.java)
+                intent.putExtra(TicketCancelActivity.KEY_TITLE, AllConstant.Action_reIssueTicket)
+                startActivity(intent)
+            }
 //
 //            R.id.btTicketDocsInfoUpdateRequest -> {
 //                val intent = Intent(applicationContext, TicketOtherRequestActivity::class.java)
