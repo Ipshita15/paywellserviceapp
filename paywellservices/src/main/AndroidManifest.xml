@@ -1095,11 +1095,13 @@
 
         <activity
             android:name=".activity.refill.nagad.NagadBalanceClaimActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+        </activity>
 
         <activity
             android:name=".activity.utility.pallibidyut.bill.PBBillPayOldActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+        </activity>
 
         <activity
             android:name=".activity.refill.nagad.NagadMainActivity"
@@ -1107,7 +1109,12 @@
 
         <activity
             android:name=".activity.refill.nagad.BalanceRefillActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".activity.eticket.airticket.requestActivity.IssueTicketRequestActivity"
+            android:screenOrientation="portrait">
+        </activity>
 
         <activity
             android:name=".activity.refill.nagad.NagadRefillLogInquiryActivity"

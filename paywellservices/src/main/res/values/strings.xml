@@ -642,7 +642,7 @@
     <string name="edit">Edit</string>
 
     <string name="multicity_limit_msg" translatable="false">Currently we are accepting only 5 requests</string>
-    <string name="bookingId" translatable="false">Booking Id</string>
+    <string name="bookingId" >Booking Id</string>
     <string name="depart">Depart</string>
     <string name="date">Date</string>
     <string name="class_text">Class</string>
@@ -826,6 +826,7 @@
     <string name="nagad_refill_log_inquiry">Refill Log Inquiry</string>
     <string name="log_refill_limit_title_msg">Refill Log Limit</string>
     <string name="re_submit_reb">Resubmit</string>
+    <string name="title_issue_ticket">Issue Ticket</string>
 
 
 </resources>

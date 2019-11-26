@@ -821,6 +821,8 @@
     <string name="nagad_refill_log_inquiry">রিফিল অনুসন্ধান</string>
     <string name="log_refill_limit_title_msg">পূর্ববর্তী রিফিলের সংখ্যা</string>
     <string name="re_submit_reb">পুনরায় জমা দিন</string>
+    <string name="title_issue_ticket">ইস্যু টিকেট</string>
+    <string name="bookingId" >বুকিং আইডি</string>
 
 
 </resources>

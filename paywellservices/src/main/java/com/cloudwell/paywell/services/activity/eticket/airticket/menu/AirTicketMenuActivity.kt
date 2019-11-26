@@ -13,6 +13,7 @@ import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketMainActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.BookingCancelActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.requestActivity.IssueTicketRequestActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.AirThicketTranslationLogActivity
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
@@ -85,7 +86,7 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
             }
 
             R.id.btIssueTicket -> {
-                startActivity(Intent(applicationContext, BookingCancelActivity::class.java))
+                startActivity(Intent(applicationContext, IssueTicketRequestActivity::class.java))
             }
 
             R.id.btTransationLog -> {
