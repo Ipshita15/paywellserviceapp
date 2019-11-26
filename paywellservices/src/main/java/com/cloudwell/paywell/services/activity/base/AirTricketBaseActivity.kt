@@ -78,7 +78,7 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
                 if (response.body()!!.status == 200) {
                     showUserCancelData(bookingId, reason, response.body(), typeOfRequest, item)
                 } else {
-                    showSnackMessageWithTextMessage(response.body()!!.message)
+                    showMsg( response.body()!!.message, response.body()!!.status)
                 }
             }
 

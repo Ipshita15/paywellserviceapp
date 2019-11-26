@@ -827,6 +827,7 @@
     <string name="log_refill_limit_title_msg">Refill Log Limit</string>
     <string name="re_submit_reb">Resubmit</string>
     <string name="title_issue_ticket">Issue Ticket</string>
+    <string name="title_void_ticket">Ticket Void</string>
 
 
 </resources>

@@ -14,9 +14,11 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketMainAc
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.BookingCancelActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.issueTicket.IssueTicketRequestActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.ticketCencel.TicketCancelActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.AirThicketTranslationLogActivity
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.constant.AllConstant
 import com.cloudwell.paywell.services.utils.ConnectionDetector
 import com.cloudwell.paywell.services.utils.LanuageConstant.KEY_BANGLA
 import com.cloudwell.paywell.services.utils.LanuageConstant.KEY_ENGLISH
@@ -62,6 +64,10 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
         btCencel.setOnClickListener(this)
         btTransationLog.setOnClickListener(this)
         btIssueTicket.setOnClickListener(this)
+        btTicketVoid.setOnClickListener(this)
+        btTicketRefund.setOnClickListener(this)
+        btTicketReissue.setOnClickListener(this)
+        btTicketDocsInfoUpdateRequest.setOnClickListener { this }
 
 
         cd = ConnectionDetector(AppController.getContext())
@@ -88,6 +94,30 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
             R.id.btIssueTicket -> {
                 startActivity(Intent(applicationContext, IssueTicketRequestActivity::class.java))
             }
+
+            R.id.btTicketVoid -> {
+                val intent = Intent(applicationContext, TicketCancelActivity::class.java)
+                intent.putExtra(TicketCancelActivity.KEY_TITLE, AllConstant.Action_Void)
+                startActivity(intent)
+            }
+            R.id.btTicketRefund -> {
+                val intent = Intent(applicationContext, TicketCancelActivity::class.java)
+                intent.putExtra(TicketCancelActivity.KEY_TITLE, AllConstant.Action_Refund)
+                startActivity(intent)
+            }
+
+//            R.id.btTicketReissue -> {
+//                val intent = Intent(applicationContext, TicketOtherRequestActivity::class.java)
+//                intent.putExtra(TicketCancelActivity.KEY_TITLE, AllConstant.Action_reIssueTicket)
+//                startActivity(intent)
+//            }
+//
+//            R.id.btTicketDocsInfoUpdateRequest -> {
+//                val intent = Intent(applicationContext, TicketOtherRequestActivity::class.java)
+//                intent.putExtra(TicketCancelActivity.KEY_TITLE, AllConstant.Action_DOCS_UPDATE)
+//                startActivity(intent)
+//            }
+
 
             R.id.btTransationLog -> {
                 showLimitPrompt(TRX_TAG)

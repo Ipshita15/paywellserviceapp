@@ -823,6 +823,7 @@
     <string name="re_submit_reb">পুনরায় জমা দিন</string>
     <string name="title_issue_ticket">ইস্যু টিকেট</string>
     <string name="bookingId" >বুকিং আইডি</string>
+    <string name="title_void_ticket">Ticket Void</string>
 
 
 </resources>
