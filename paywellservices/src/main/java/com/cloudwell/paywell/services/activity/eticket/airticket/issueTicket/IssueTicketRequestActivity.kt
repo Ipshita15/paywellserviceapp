@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.eticket.airticket.requestActivity
+package com.cloudwell.paywell.services.activity.eticket.airticket.issueTicket
 
 import android.graphics.Color
 import android.os.Bundle
