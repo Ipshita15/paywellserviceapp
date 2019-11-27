@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.editReissuePassengerActivity
+package com.cloudwell.paywell.services.activity.eticket.airticket.dosInfoUpdate.editReissuePassengerActivity
 
 import android.Manifest
 import android.app.Activity
@@ -15,12 +15,12 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Passenger
+import com.cloudwell.paywell.services.activity.eticket.airticket.dosInfoUpdate.UpdateDocOrInfomationRequestActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.fragment.GenderBottomSheetDialog
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.fragment.NameTitleSheetDialog
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.fragment.PassengerTypeSheetDialog
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.model.MyCountry
 import com.cloudwell.paywell.services.activity.eticket.airticket.passengerAdd.view.PassgerAddViewStatus
-import com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.UpdateDocOrInfomationRequestActivity
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.constant.AllConstant.emailPattern
 import com.cloudwell.paywell.services.libaray.imagePickerAndCrop.ImagePickerActivity
@@ -41,7 +41,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class EditReissuePassengerActivity : AirTricketBaseActivity() {
+class DosInfoUpdatePassengerActivity : AirTricketBaseActivity() {
 
 
     val REQUEST_IMAGE = 100
@@ -74,7 +74,7 @@ class EditReissuePassengerActivity : AirTricketBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_passenger_edit_reissue_passenger)
+        setContentView(R.layout.activity_add_passenger_edit_dos_info_update_passenger)
 
         setToolbar(getString(R.string.title_edit_passenger))
 
@@ -115,10 +115,24 @@ class EditReissuePassengerActivity : AirTricketBaseActivity() {
         etCountry.setText(oldPassenger.country)
         etContactNumber.setText(oldPassenger.contactNumber)
         etEmail.setText(oldPassenger.email)
-        etNidorPassportNumber.setText(oldPassenger.passportNumber)
-        etPassportExpiryDate.setText(oldPassenger.passportExpiryDate.split(" ").get(0))
-        etpassportNationality.setText(oldPassenger.passportNationality)
 
+        if (oldPassenger.passportNumber.length >0){
+            etNidorPassportNumber.setText(oldPassenger.passportNumber)
+        }
+
+
+        if (oldPassenger.passportExpiryDate != null){
+            if (oldPassenger.passportExpiryDate.length >0){
+                etPassportExpiryDate.setText(oldPassenger.passportExpiryDate.split(" ").get(0))
+            }
+        }
+
+
+        if (oldPassenger.passportNationality != null){
+            if (oldPassenger.passportNationality.length >0){
+                etpassportNationality.setText(oldPassenger.passportNationality)
+            }
+        }
 
         val countryCode1 = CountryUtility.getCountryCode(oldPassenger.countryCode)
         etCountry.setText("" + countryCode1.toString())

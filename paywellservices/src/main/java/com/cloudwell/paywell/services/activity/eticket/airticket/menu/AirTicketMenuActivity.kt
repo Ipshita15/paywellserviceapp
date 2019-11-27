@@ -67,7 +67,7 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
         btTicketVoid.setOnClickListener(this)
         btTicketRefund.setOnClickListener(this)
         btTicketReissue.setOnClickListener(this)
-        btTicketDocsInfoUpdateRequest.setOnClickListener { this }
+        btTicketDocsInfoUpdateRequest.setOnClickListener(this)
 
 
         cd = ConnectionDetector(AppController.getContext())
@@ -112,11 +112,11 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
                 startActivity(intent)
             }
 //
-//            R.id.btTicketDocsInfoUpdateRequest -> {
-//                val intent = Intent(applicationContext, TicketOtherRequestActivity::class.java)
-//                intent.putExtra(TicketCancelActivity.KEY_TITLE, AllConstant.Action_DOCS_UPDATE)
-//                startActivity(intent)
-//            }
+            R.id.btTicketDocsInfoUpdateRequest -> {
+                val intent = Intent(applicationContext, TicketCancelActivity::class.java)
+                intent.putExtra(TicketCancelActivity.KEY_TITLE, AllConstant.Action_DOCS_UPDATE)
+                startActivity(intent)
+            }
 
 
             R.id.btTransationLog -> {

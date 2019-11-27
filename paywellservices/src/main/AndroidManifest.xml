@@ -1077,11 +1077,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.eticket.airticket.reIssueTicket.UpdateDocOrInfomationRequestActivity"
+            android:name=".activity.eticket.airticket.dosInfoUpdate.UpdateDocOrInfomationRequestActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.eticket.airticket.reIssueTicket.editReissuePassengerActivity.EditReissuePassengerActivity"
+            android:name=".activity.eticket.airticket.dosInfoUpdate.editReissuePassengerActivity.DosInfoUpdatePassengerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.model
+package com.cloudwell.paywell.services.activity.eticket.airticket.dosInfoUpdate.model
 
 import com.google.gson.annotations.SerializedName
 
