@@ -19,13 +19,14 @@
             android:id="@+id/btViewTricket"
             android:layout_width="0dp"
             android:layout_height="40dp"
+            android:gravity="start|center"
+            android:drawablePadding="12dp"
             android:layout_marginStart="60dp"
             android:layout_marginEnd="60dp"
             android:layout_marginRight="60dp"
-            android:background="@drawable/serach_roundedbutton"
+            android:background="@drawable/air_ticket_round_button_v1"
+            android:drawableStart="@drawable/ic_serach_menu"
             android:drawableLeft="@drawable/ic_serach_menu"
-            android:drawablePadding="-20dp"
-            android:gravity="center"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:text="@string/search"
@@ -33,11 +34,13 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.45"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
+            android:gravity="start|center"
+            android:drawablePadding="12dp"
             android:id="@+id/btIssueTicket"
             android:layout_width="0dp"
             android:layout_height="40dp"
@@ -45,10 +48,9 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="60dp"
             android:layout_marginRight="60dp"
-            android:background="@drawable/serach_roundedbutton"
-            android:drawableLeft="@drawable/ic_serach_menu"
-            android:drawablePadding="-20dp"
-            android:gravity="center"
+            android:background="@drawable/air_ticket_round_button_v1"
+            android:drawableLeft="@drawable/icon_isssue"
+
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:text="@string/ticket_issue_menu_text"
@@ -61,6 +63,8 @@
             app:layout_constraintTop_toBottomOf="@+id/btViewTricket" />
 
         <Button
+            android:gravity="start|center"
+            android:drawablePadding="12dp"
             android:id="@+id/btCencel"
             android:layout_width="0dp"
             android:layout_height="40dp"
@@ -69,9 +73,8 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="60dp"
             android:layout_marginRight="60dp"
-            android:background="@drawable/serach_roundedbutton_smiliar_red"
-            android:drawableLeft="@drawable/ic_cancel"
-            android:gravity="center"
+            android:background="@drawable/air_ticket_round_button_v1"
+            android:drawableLeft="@drawable/booking_cancel_icon"
             android:paddingLeft="20dp"
             android:text="@string/cancel"
             android:textAllCaps="false"
@@ -83,6 +86,8 @@
             app:layout_constraintTop_toBottomOf="@+id/btIssueTicket" />
 
         <Button
+            android:gravity="start|center"
+            android:drawablePadding="12dp"
             android:id="@+id/btTicketVoid"
             android:layout_width="0dp"
             android:layout_height="40dp"
@@ -91,9 +96,8 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="60dp"
             android:layout_marginRight="60dp"
-            android:background="@drawable/serach_roundedbutton_smiliar_red"
-            android:drawableLeft="@drawable/ic_cancel"
-            android:gravity="center"
+            android:background="@drawable/air_ticket_round_button_v1"
+            android:drawableLeft="@drawable/icon_void"
             android:paddingLeft="20dp"
             android:text="@string/ticket_void_menu_text"
             android:textAllCaps="false"
@@ -105,6 +109,8 @@
             app:layout_constraintTop_toBottomOf="@+id/btCencel" />
 
         <Button
+            android:gravity="start|center"
+            android:drawablePadding="12dp"
             android:id="@+id/btTicketRefund"
             android:layout_width="0dp"
             android:layout_height="40dp"
@@ -113,9 +119,8 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="60dp"
             android:layout_marginRight="60dp"
-            android:background="@drawable/serach_roundedbutton_smiliar_red"
-            android:drawableLeft="@drawable/ic_cancel"
-            android:gravity="center"
+            android:background="@drawable/air_ticket_round_button_v1"
+            android:drawableLeft="@drawable/icon_refand"
             android:paddingLeft="20dp"
             android:text="@string/ticket_refund_menu_text"
             android:textAllCaps="false"
@@ -127,6 +132,8 @@
             app:layout_constraintTop_toBottomOf="@+id/btTicketVoid" />
 
         <Button
+            android:gravity="start|center"
+            android:drawablePadding="12dp"
             android:id="@+id/btTicketReissue"
             android:layout_width="0dp"
             android:layout_height="40dp"
@@ -135,9 +142,8 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="60dp"
             android:layout_marginRight="60dp"
-            android:background="@drawable/serach_roundedbutton_smiliar_red"
-            android:drawableLeft="@drawable/ic_cancel"
-            android:gravity="center"
+            android:background="@drawable/air_ticket_round_button_v1"
+            android:drawableLeft="@drawable/icon_re_issue"
             android:paddingLeft="20dp"
             android:text="@string/ticket_reissue_menu_text"
             android:textAllCaps="false"
@@ -149,6 +155,8 @@
             app:layout_constraintTop_toBottomOf="@+id/btTicketRefund" />
 
         <Button
+            android:gravity="start|center"
+            android:drawablePadding="12dp"
             android:id="@+id/btTicketDocsInfoUpdateRequest"
             android:layout_width="0dp"
             android:layout_height="40dp"
@@ -157,9 +165,8 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="60dp"
             android:layout_marginRight="60dp"
-            android:background="@drawable/serach_roundedbutton_smiliar_red"
-            android:drawableLeft="@drawable/ic_cancel"
-            android:gravity="center"
+            android:background="@drawable/air_ticket_round_button_v1"
+            android:drawableLeft="@drawable/dos_update_info"
             android:paddingLeft="20dp"
             android:text="@string/ticket_docs_update_info_menu_text"
             android:textAllCaps="false"
@@ -171,6 +178,8 @@
             app:layout_constraintTop_toBottomOf="@+id/btTicketReissue" />
 
         <Button
+            android:gravity="start|center"
+            android:drawablePadding="12dp"
             android:id="@+id/btTransationLog"
             android:layout_width="0dp"
             android:layout_height="40dp"
@@ -179,10 +188,8 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="60dp"
             android:layout_marginRight="60dp"
-
-            android:background="@drawable/serach_roundedbutton_smiliar_blue_new"
-            android:drawableLeft="@drawable/ic_transtion_log"
-            android:gravity="center"
+            android:background="@drawable/serach_roundedbutton_smiliar_blue_new_v1"
+            android:drawableLeft="@drawable/transiton_log"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:text="@string/transaction_log"
