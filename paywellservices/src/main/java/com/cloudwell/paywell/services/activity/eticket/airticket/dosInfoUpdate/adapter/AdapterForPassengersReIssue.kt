@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.adapter
+package com.cloudwell.paywell.services.activity.eticket.airticket.dosInfoUpdate.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

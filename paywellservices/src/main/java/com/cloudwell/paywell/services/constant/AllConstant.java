@@ -29,7 +29,7 @@ public class AllConstant {
     public static final String Action_reIssueTicket = "Ticket Re-issue";
     public static final String Action_Void = "Ticket Void";
     public static final String Action_Refund = "Ticket Refund";
-    public static final String Action_DOCS_UPDATE = "Action_DOCS_UPDATE";
+    public static final String Action_DOCS_UPDATE = "Docs/info update";
 
 
 }

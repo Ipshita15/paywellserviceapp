@@ -10,10 +10,10 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -38,6 +38,7 @@ import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_notification_view.*
 import kotlinx.android.synthetic.main.activity_notification_view.view.*
 import kotlinx.android.synthetic.main.dialog_notification.view.*
+import kotlinx.android.synthetic.main.layout_notificaiton_all.*
 import org.apache.commons.lang3.StringEscapeUtils
 import org.json.JSONObject
 
@@ -45,7 +46,7 @@ import org.json.JSONObject
 class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
     private var listView: RecyclerView? = null
     private var mAppHandler: AppHandler? = null
-    private var mLinearLayout: LinearLayout? = null
+    private var mLinearLayout: CoordinatorLayout? = null
 
     private var position: Int = 0
     lateinit var adapter: SimpleAdapter
@@ -170,9 +171,9 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
     fun initializer() {
 
         isNotificationFlow = intent.getBooleanExtra(IS_NOTIFICATION_SHOWN, false)
-        listView = findViewById(com.cloudwell.paywell.services.R.id.listViewNotification)
+        listView = findViewById(R.id.listViewNotification)
         listView!!.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
-        mLinearLayout = findViewById(com.cloudwell.paywell.services.R.id.linearLayout)
+        mLinearLayout = findViewById(R.id.linearLayout)
         mAppHandler = AppHandler.getmInstance(applicationContext)
 
         val swipeController = object : SwipeController(this, listView) {

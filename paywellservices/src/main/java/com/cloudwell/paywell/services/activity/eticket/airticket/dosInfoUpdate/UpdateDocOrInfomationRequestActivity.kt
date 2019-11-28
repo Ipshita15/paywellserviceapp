@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket
+package com.cloudwell.paywell.services.activity.eticket.airticket.dosInfoUpdate
 
 import android.content.Context
 import android.content.Intent
@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
 import android.view.Gravity
-import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -21,9 +20,9 @@ import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Passenger
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment.ShowMessageFragment
-import com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.adapter.AdapterForPassengersReIssue
-import com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.editReissuePassengerActivity.EditReissuePassengerActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.model.ReissuePassenger
+import com.cloudwell.paywell.services.activity.eticket.airticket.dosInfoUpdate.adapter.AdapterForPassengersReIssue
+import com.cloudwell.paywell.services.activity.eticket.airticket.dosInfoUpdate.editReissuePassengerActivity.DosInfoUpdatePassengerActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.dosInfoUpdate.model.ReissuePassenger
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.google.android.material.snackbar.Snackbar
@@ -74,7 +73,7 @@ class UpdateDocOrInfomationRequestActivity : AirTricketBaseActivity(), ShowMessa
             val recyclerListAdapter = AdapterForPassengersReIssue(this, it, object : AdapterForPassengersReIssue.OnClickListener {
                 override fun onEditClick(model: Passenger, position: Int) {
 
-                    val intent = Intent(applicationContext, EditReissuePassengerActivity::class.java)
+                    val intent = Intent(applicationContext, DosInfoUpdatePassengerActivity::class.java)
                     intent.putExtra("id", position)
                     startActivity(intent)
                 }

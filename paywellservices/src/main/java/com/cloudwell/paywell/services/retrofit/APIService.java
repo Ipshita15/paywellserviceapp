@@ -14,6 +14,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.ResposeAirPriceSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.model.airRules.ResposeAirRules;
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.model.ResCommistionMaping;
+import com.cloudwell.paywell.services.activity.eticket.airticket.ticketCencel.model.ResSingleBooking;
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.model.ResInvoideEmailAPI;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResGetBusListData;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResPaymentBookingAPI;
@@ -237,6 +238,10 @@ public interface APIService {
     @Multipart
     Call<ResCommistionMaping> callGetCommissionMappingAPI(@Part("username") String username);
 
+
+    @POST("PaywelltransactionHaltrip/getSingleBooking")
+    @Multipart
+    Call<ResSingleBooking> getSingleBooking(@Part("username") String username, @Part("booking_id") String bookingId);
 
     @POST("PaywelltransactionHaltrip/airTicketIssue")
     @Multipart

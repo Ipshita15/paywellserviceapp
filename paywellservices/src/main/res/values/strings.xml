@@ -576,6 +576,11 @@
     <string name="search_again">Search again</string>
     <string name="search">Search</string>
     <string name="cancel">Booking Cancellation</string>
+    <string name="ticket_void_menu_text">Ticket Void</string>
+    <string name="ticket_refund_menu_text">Ticket Refund</string>
+    <string name="ticket_reissue_menu_text">Re-issue Ticket</string>
+    <string name="ticket_docs_update_info_menu_text">Docs/Info update</string>
+    <string name="ticket_issue_menu_text">Issue Ticket</string>
     <string name="transaction_log">Booking Log</string>
     <string name="baggage_policy_details"><![CDATA[Baggage & Policy Details]]></string>
     <string name="refundable">Refundable</string>
@@ -637,7 +642,7 @@
     <string name="edit">Edit</string>
 
     <string name="multicity_limit_msg" translatable="false">Currently we are accepting only 5 requests</string>
-    <string name="bookingId" translatable="false">Booking Id</string>
+    <string name="bookingId" >Booking Id</string>
     <string name="depart">Depart</string>
     <string name="date">Date</string>
     <string name="class_text">Class</string>
@@ -821,6 +826,8 @@
     <string name="nagad_refill_log_inquiry">Refill Log Inquiry</string>
     <string name="log_refill_limit_title_msg">Refill Log Limit</string>
     <string name="re_submit_reb">Resubmit</string>
+    <string name="title_issue_ticket">Issue Ticket</string>
+    <string name="title_void_ticket">Ticket Void</string>
 
 
 </resources>

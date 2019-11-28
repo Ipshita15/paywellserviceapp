@@ -9,6 +9,7 @@ import android.content.IntentFilter
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.os.Environment
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
@@ -19,6 +20,8 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
@@ -27,6 +30,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.f
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.TicketActionMenuFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.TicketStatusFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.TricketChooserFragment
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.BookingStatuViewStatus
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.ResIssueTicket
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.viewModel.BookingStatsViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketCencel.TicketCancelActivity
@@ -55,6 +59,25 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
 
     var pinNumber: String = ""
     var bookingId: String = ""
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        initViewModel()
+    }
+
+
+    fun initViewModel() {
+        mViewMode = ViewModelProviders.of(this).get(BookingStatsViewModel::class.java)
+
+        mViewMode.baseViewStatus.observe(this, Observer {
+            handleViewCommonStatus(it)
+        })
+
+        mViewMode.mViewStatus.observe(this, Observer {
+            it?.let { it1 -> handleViewStatus(it1) }
+        })
+    }
+
 
 
     fun showActionMenuPopupMessate(model: Datum) {
@@ -329,5 +352,21 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
         builder.setNegativeButton(R.string.cancel_btn) { dialogInterface, i -> dialogInterface.dismiss() }
         val alert = builder.create()
         alert.show()
+    }
+
+    fun handleViewStatus(it: BookingStatuViewStatus) {
+        if (it.isShowProcessIndicatior) {
+            showProgressDialog()
+        } else {
+            dismissProgressDialog()
+        }
+        if (!it.successMessageTricketStatus.equals("")) {
+            showMsg(it.successMessageTricketStatus)
+        }
+
+        if (it.modelPriceChange != null) {
+            showTicketPriceChangeDialog(it.modelPriceChange!!)
+        }
+
     }
 }
