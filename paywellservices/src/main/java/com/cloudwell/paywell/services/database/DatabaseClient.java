@@ -70,6 +70,8 @@ public class DatabaseClient {
 
             Log.e("start version 4", "Start");
             database.execSQL("CREATE TABLE IF NOT EXISTS `DESCOHistory`(`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `bill_number` TEXT NOT NULL, `payer_phone_number` TEXT NOT NULL, `date` TEXT NOT NULL)");
+            database.execSQL("CREATE TABLE IF NOT EXISTS `DPDCHistory` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `bill_number` TEXT NOT NULL, `payer_phone_number` TEXT NOT NULL, `location` TEXT NOT NULL, `date` TEXT NOT NULL)");
+            database.execSQL("CREATE TABLE IF NOT EXISTS `WasaHistory` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `bill_number` TEXT NOT NULL, `payer_phone_number` TEXT NOT NULL, `date` TEXT NOT NULL)");
             Log.e("migrate", "END");
 
         }

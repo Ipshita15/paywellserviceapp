@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,11 +16,16 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.DPDCHistory;
+import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCPostpaidBillPayActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.wasa.model.WasaHistory;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.DateUtils;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -37,13 +43,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 
 public class WASABillPayActivity extends BaseActivity implements View.OnClickListener {
 
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
     private LinearLayout mLinearLayout;
-    private EditText etBill, etPhn, etPin;
+    private AppCompatAutoCompleteTextView etBill, etPhn;
+    private EditText etPin;
     private ImageView imageView;
     private Button btnConfirm;
     private String mBill, mPhn, mPin, mTrxId, mTotalAmount;
@@ -52,6 +60,10 @@ public class WASABillPayActivity extends BaseActivity implements View.OnClickLis
     private static final String TAG_MESSAGE_TEXT = "msg_text";
     private static final String TAG_TRANSACTION_ID = "trans_id";
     private static final String TAG_TOTAL_AMOUNT = "total_amount";
+    private AsyncTask<Void, Void, Void> insertWasaHistoryAsyncTask;
+    List<String> billNumberList = new ArrayList<>();
+    List<String> payeerNumberList = new ArrayList<>();
+    private AsyncTask<Void, Void, Void> getAllWasaHistoryAsyncTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +114,69 @@ public class WASABillPayActivity extends BaseActivity implements View.OnClickLis
         }
         btnConfirm.setOnClickListener(this);
         imageView.setOnClickListener(this);
+
+        etBill.setOnTouchListener((v, event) -> {
+            etBill.showDropDown();
+            return false;
+        });
+
+
+        etPhn.setOnTouchListener((v, event) -> {
+            etPhn.showDropDown();
+            return false;
+        });
+
+
+
+        getAllWasaHistoryAsyncTask = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                billNumberList.clear();
+                payeerNumberList.clear();
+                List<WasaHistory> allDESCOHistory = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().getAllWasaHistory();
+                for (int i = 0; i < allDESCOHistory.size(); i++) {
+                    billNumberList.add(allDESCOHistory.get(i).getBilNumber());
+                    payeerNumberList.add(allDESCOHistory.get(i).getPayerPhoneNumber());
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+            }
+
+            @Override
+            protected void onPostExecute(Void list) {
+                super.onPostExecute(list);
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(WASABillPayActivity.this, android.R.layout.select_dialog_item, billNumberList);
+                etBill.setThreshold(1);
+                etBill.setAdapter(adapter);
+                etBill.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        etBill.showDropDown();
+                    }
+                });
+
+
+                ArrayAdapter<String> adapterPhone = new ArrayAdapter<String>(WASABillPayActivity.this, android.R.layout.select_dialog_item, payeerNumberList);
+                etPhn.setThreshold(1);
+                etPhn.setAdapter(adapterPhone);
+                etPhn.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        etPhn.showDropDown();
+                    }
+                });
+
+            }
+
+        }.execute();
+
     }
 
     @SuppressWarnings("deprecation")
@@ -196,6 +271,8 @@ public class WASABillPayActivity extends BaseActivity implements View.OnClickLis
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     String status = jsonObject.getString(TAG_STATUS);
+
+
 
                     if (status.equals("200")) {
                         mTotalAmount = jsonObject.getString(TAG_TOTAL_AMOUNT);
@@ -345,6 +422,23 @@ public class WASABillPayActivity extends BaseActivity implements View.OnClickLis
                         AlertDialog alert = builder.create();
                         alert.setCanceledOnTouchOutside(true);
                         alert.show();
+
+                        insertWasaHistoryAsyncTask = new AsyncTask<Void, Void, Void>() {
+                            @Override
+                            protected Void doInBackground(Void... voids) {
+
+                                String currentDataAndTIme = DateUtils.INSTANCE.getCurrentDataAndTIme();
+                                WasaHistory wasaHistory = new WasaHistory();
+                                wasaHistory.setBilNumber(mBill);
+                                wasaHistory.setPayerPhoneNumber(mPhn);
+                                wasaHistory.setDate(currentDataAndTIme);
+                                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().insertWasaHistory(wasaHistory);
+                                return null;
+                            }
+                        }.execute();
+
+
+
                     } else {
                         String msg = jsonObject.getString(TAG_MESSAGE);
                         String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);

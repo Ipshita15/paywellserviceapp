@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 4,
-    "identityHash": "ab6d5d6b4cc5401e8899dc60d0e5af94",
+    "identityHash": "8d3b12c950451683654f7e05a9ecb98c",
     "entities": [
       {
         "tableName": "FavoriteMenu",
@@ -657,11 +657,114 @@
           }
         ],
         "foreignKeys": []
+      },
+      {
+        "tableName": "DPDCHistory",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `bill_number` TEXT NOT NULL, `payer_phone_number` TEXT NOT NULL, `location` TEXT NOT NULL, `date` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "Id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bilNumber",
+            "columnName": "bill_number",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "payerPhoneNumber",
+            "columnName": "payer_phone_number",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "location",
+            "columnName": "location",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "Id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_DPDCHistory_bill_number_payer_phone_number_location",
+            "unique": true,
+            "columnNames": [
+              "bill_number",
+              "payer_phone_number",
+              "location"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_DPDCHistory_bill_number_payer_phone_number_location` ON `${TABLE_NAME}` (`bill_number`, `payer_phone_number`, `location`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "WasaHistory",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `bill_number` TEXT NOT NULL, `payer_phone_number` TEXT NOT NULL, `date` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "Id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bilNumber",
+            "columnName": "bill_number",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "payerPhoneNumber",
+            "columnName": "payer_phone_number",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "Id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_WasaHistory_bill_number_payer_phone_number",
+            "unique": true,
+            "columnNames": [
+              "bill_number",
+              "payer_phone_number"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_WasaHistory_bill_number_payer_phone_number` ON `${TABLE_NAME}` (`bill_number`, `payer_phone_number`)"
+          }
+        ],
+        "foreignKeys": []
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"ab6d5d6b4cc5401e8899dc60d0e5af94\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"8d3b12c950451683654f7e05a9ecb98c\")"
     ]
   }
 }
