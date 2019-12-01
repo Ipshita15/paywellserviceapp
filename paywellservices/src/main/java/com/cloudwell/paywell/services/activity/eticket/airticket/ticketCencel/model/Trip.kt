@@ -1,0 +1,32 @@
+package com.cloudwell.paywell.services.activity.eticket.airticket.ticketCencel.model
+
+data class Trip(
+    val active_status: String,
+    val airline_code: String,
+    val airline_name: String,
+    val airline_pnr: String,
+    val arrival_time: String,
+    val baggage: String,
+    val booking_class: String,
+    val booking_id: String,
+    val cabin_class: String,
+    val departure_time: String,
+    val destination_airport_code: String,
+    val destination_airport_name: String,
+    val destination_city: String,
+    val destination_country: String,
+    val destination_terminal: String,
+    val equipment: String,
+    val flight_number: String,
+    val id: String,
+    val journey_duration: String,
+    val operating_career: String,
+    val origin_airport_code: String,
+    val origin_airport_name: String,
+    val origin_city: String,
+    val origin_country: String,
+    val origin_terminal: String,
+    val search_booking_class: String,
+    val stop_quantity: String,
+    val trip_indicator: String
+)

@@ -572,6 +572,11 @@
     <string name="search_again">Search again</string>
     <string name="search">সার্চ</string>
     <string name="cancel">বুকিং বাতিল</string>
+    <string name="ticket_void_menu_text">টিকেট ভয়েড</string>
+    <string name="ticket_refund_menu_text">টিকেট রিফান্ড</string>
+    <string name="ticket_issue_menu_text">ইস্যু টিকেট</string>
+    <string name="ticket_reissue_menu_text">রি-ইস্যু টিকেট</string>
+    <string name="ticket_docs_update_info_menu_text">তথ্য পরিবর্তন</string>
     <string name="transaction_log">বুকিং লগ</string>
     <string name="title_booking_and_review">Review and Book</string>
     <string name="baggage_policy_details"><![CDATA[Baggage & Policy Details]]></string>
@@ -816,6 +821,9 @@
     <string name="nagad_refill_log_inquiry">রিফিল অনুসন্ধান</string>
     <string name="log_refill_limit_title_msg">পূর্ববর্তী রিফিলের সংখ্যা</string>
     <string name="re_submit_reb">পুনরায় জমা দিন</string>
+    <string name="title_issue_ticket">ইস্যু টিকেট</string>
+    <string name="bookingId" >বুকিং আইডি</string>
+    <string name="title_void_ticket">Ticket Void</string>
 
 
 </resources>

@@ -19,7 +19,8 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.D
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment.CancellationStatusMessageFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment.UserAcceptDialogFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.model.ResCancellationMapping
-import com.cloudwell.paywell.services.activity.eticket.airticket.reIssueTicket.UpdateDocOrInfomationRequestActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.dosInfoUpdate.UpdateDocOrInfomationRequestActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.ticketCencel.model.ResSingleBooking
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.constant.AllConstant
 import com.cloudwell.paywell.services.retrofit.ApiUtils
@@ -78,7 +79,7 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
                 if (response.body()!!.status == 200) {
                     showUserCancelData(bookingId, reason, response.body(), typeOfRequest, item)
                 } else {
-                    showSnackMessageWithTextMessage(response.body()!!.message)
+                    showMsg(response.body()!!.message, response.body()!!.status)
                 }
             }
 
@@ -105,8 +106,26 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
 
                 if (typeOfRequest == AllConstant.Action_DOCS_UPDATE) {
 
-                    val newIntent = UpdateDocOrInfomationRequestActivity.newIntent(applicationContext, item)
-                    startActivity(newIntent)
+                    showProgressDialog()
+
+                    val userName = AppHandler.getmInstance(applicationContext).imeiNo
+
+                    ApiUtils.getAPIService().getSingleBooking(userName, bookingId).enqueue(object : Callback<ResSingleBooking> {
+                        override fun onResponse(call: Call<ResSingleBooking>, response: Response<ResSingleBooking>) {
+                            dismissProgressDialog()
+                            assert(response.body() != null)
+                            if (response.body()!!.status == 200) {
+                                val newIntent = UpdateDocOrInfomationRequestActivity.newIntent(applicationContext, response.body()!!.data.get(0))
+                                startActivity(newIntent)
+                            } else {
+                                showMsg(response.body()!!.message, response.body()!!.status)
+                            }
+                        }
+                        override fun onFailure(call: Call<ResSingleBooking>, t: Throwable) {
+                            dismissProgressDialog()
+                            showSnackMessageWithTextMessage(getString(R.string.please_try_again))
+                        }
+                    })
 
                 } else if (typeOfRequest == AllConstant.Action_Refund) {
                     askForPin(bookingId, reason, typeOfRequest)
@@ -295,8 +314,6 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
         menuInflater.inflate(R.menu.menu_main_air_ticket, menu)
         return true
     }
-
-
 
 
 }

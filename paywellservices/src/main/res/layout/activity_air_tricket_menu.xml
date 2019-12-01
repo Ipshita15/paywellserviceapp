@@ -16,13 +16,5 @@
 
     <include layout="@layout/activity_air_ticket_main_contain" />
 
-<!--    <com.cloudwell.paywell.services.customView.movableFloatingActionButton.MovableFloatingActionButton-->
-<!--        android:id="@+id/fab"-->
-<!--        android:layout_marginTop="?android:attr/actionBarSize"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="bottom|end"-->
-<!--        android:layout_margin="8dp"-->
-<!--        android:src="@android:drawable/ic_menu_call" />-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

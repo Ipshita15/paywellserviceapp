@@ -1,19 +1,15 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.transationLog
 
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.base.TransitionLogBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
-import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.BookingStatuViewStatus
-import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.viewModel.BookingStatsViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.adapter.TransitionRVSectionAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.viewBookingInfo.ViewBookingInfoActivity
@@ -21,7 +17,7 @@ import com.cloudwell.paywell.services.app.AppHandler
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_transtionlog.*
 
-class AirThicketTranslationLogActivity : TransitionLogBaseActivity() {
+open class AirThicketTranslationLogActivity : TransitionLogBaseActivity() {
 
     lateinit var tag: String
 
@@ -36,33 +32,37 @@ class AirThicketTranslationLogActivity : TransitionLogBaseActivity() {
         val bundle = intent.extras
         limit = bundle.getInt(AirTicketMenuActivity.KEY_LIMIT)
 
-        initViewModel(limit)
-    }
-
-    private fun initViewModel(limit: Int) {
-
-        mViewMode = ViewModelProviders.of(this).get(BookingStatsViewModel::class.java)
-
-        mViewMode.baseViewStatus.observe(this, Observer {
-            handleViewCommonStatus(it)
-        })
-
-
-        mViewMode.mViewStatus.observe(this, Observer {
-            it?.let { it1 -> handleViewStatus(it1) }
-        })
-
+        //initViewModel(limit)
 
         mViewMode.responseList.observe(this, Observer {
             setupList(it)
         })
 
-
-
         mViewMode.getBookingStatus(isInternetConnection, limit)
-
-
     }
+
+//    private fun initViewModel(limit: Int) {
+//
+//        mViewMode = ViewModelProviders.of(this).get(BookingStatsViewModel::class.java)
+//
+//        mViewMode.baseViewStatus.observe(this, Observer {
+//            handleViewCommonStatus(it)
+//        })
+//
+//
+//        mViewMode.mViewStatus.observe(this, Observer {
+//            it?.let { it1 -> handleViewStatus(it1) }
+//        })
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//    }
 
     private fun setupList(it1: BookingList?) {
 
@@ -119,22 +119,22 @@ class AirThicketTranslationLogActivity : TransitionLogBaseActivity() {
 
     }
 
-    private fun handleViewStatus(it: BookingStatuViewStatus) {
-        if (it.isShowProcessIndicatior) {
-            showProgressDialog()
-        } else {
-            dismissProgressDialog()
-        }
-
-        if (!it.successMessageTricketStatus.equals("")) {
-            showMsg(it.successMessageTricketStatus)
-        }
-
-        if (it.modelPriceChange != null) {
-            showTicketPriceChangeDialog(it.modelPriceChange!!)
-        }
-
-    }
+//    public fun handleViewStatus(it: BookingStatuViewStatus) {
+//        if (it.isShowProcessIndicatior) {
+//            showProgressDialog()
+//        } else {
+//            dismissProgressDialog()
+//        }
+//
+//        if (!it.successMessageTricketStatus.equals("")) {
+//            showMsg(it.successMessageTricketStatus)
+//        }
+//
+//        if (it.modelPriceChange != null) {
+//            showTicketPriceChangeDialog(it.modelPriceChange!!)
+//        }
+//
+//    }
 
 
 
