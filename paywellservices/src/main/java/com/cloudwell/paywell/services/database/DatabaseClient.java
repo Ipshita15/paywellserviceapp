@@ -72,6 +72,11 @@ public class DatabaseClient {
             database.execSQL("CREATE TABLE IF NOT EXISTS `DESCOHistory`(`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `bill_number` TEXT NOT NULL, `payer_phone_number` TEXT NOT NULL, `date` TEXT NOT NULL)");
             database.execSQL("CREATE TABLE IF NOT EXISTS `DPDCHistory` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `bill_number` TEXT NOT NULL, `payer_phone_number` TEXT NOT NULL, `location` TEXT NOT NULL, `date` TEXT NOT NULL)");
             database.execSQL("CREATE TABLE IF NOT EXISTS `WasaHistory` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `bill_number` TEXT NOT NULL, `payer_phone_number` TEXT NOT NULL, `date` TEXT NOT NULL)");
+            database.execSQL("CREATE TABLE IF NOT EXISTS `PallibidyutHistory` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `bill_number` TEXT NOT NULL, `date` TEXT NOT NULL)");
+            database.execSQL("CREATE TABLE IF NOT EXISTS `WestZoneHistory` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `bill_number` TEXT NOT NULL, `payer_phone_number` TEXT NOT NULL, `date` TEXT NOT NULL)");
+            database.execSQL("CREATE TABLE IF NOT EXISTS `IvacHistory` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `payer_phone_number` TEXT NOT NULL, `date` TEXT NOT NULL)");
+            database.execSQL("CREATE TABLE IF NOT EXISTS `BanglalionHistory` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `customer_number` TEXT NOT NULL, `date` TEXT NOT NULL)");
+            database.execSQL("CREATE TABLE IF NOT EXISTS `KarnaphuliHistory` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `bill_number` TEXT NOT NULL, `payer_phone_number` TEXT NOT NULL, `date` TEXT NOT NULL)");
             Log.e("migrate", "END");
 
         }

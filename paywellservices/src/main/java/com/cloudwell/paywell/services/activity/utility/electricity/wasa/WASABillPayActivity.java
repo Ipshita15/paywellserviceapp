@@ -486,6 +486,16 @@ public class WASABillPayActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onBackPressed() {
+        if (getAllWasaHistoryAsyncTask != null) {
+            getAllWasaHistoryAsyncTask.cancel(true);
+
+        }
+
+        if (insertWasaHistoryAsyncTask != null) {
+            insertWasaHistoryAsyncTask.cancel(true);
+        }
+
+
         finish();
     }
 }

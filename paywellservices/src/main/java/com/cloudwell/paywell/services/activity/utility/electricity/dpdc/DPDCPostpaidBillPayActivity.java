@@ -598,6 +598,16 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
 
     @Override
     public void onBackPressed() {
+        if (getAllDPDCHistoryAsyncTask != null) {
+            getAllDPDCHistoryAsyncTask.cancel(true);
+
+        }
+
+        if (insertDPDCHistoryAsyncTask != null) {
+            insertDPDCHistoryAsyncTask.cancel(true);
+        }
+
+
         finish();
     }
 
