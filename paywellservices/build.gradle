@@ -85,6 +85,8 @@ ext {
     androidMaterialIntroScreen = '0.0.5'
     gogolePlay = '16.0.0'
     firebaseVersion = '16.0.6'
+    firebaseML = '24.0.1'
+    firebaseMessaging = '20.0.1'
 
     lifecycle_version = "1.1.1"
 
@@ -121,7 +123,8 @@ dependencies {
     implementation "com.google.android.gms:play-services-auth:$gogolePlay"
     implementation "com.google.firebase:firebase-core:$firebaseVersion"
     implementation "com.google.android.gms:play-services-analytics:$firebaseVersion"
-    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+    implementation "com.google.firebase:firebase-messaging:$firebaseMessaging"
+    implementation "com.google.firebase:firebase-ml-vision:$firebaseML"
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.7@aar') {
         transitive = true;
     }
@@ -234,7 +237,6 @@ dependencies {
         }
 
     }
-
 
     implementation 'com.mindorks.android:prdownloader:0.6.0'
     implementation 'com.github.deano2390:FlowTextView:2.0.5'
