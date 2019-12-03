@@ -1,6 +1,8 @@
 package com.cloudwell.paywell.services.activity.utility.electricity.dpdc;
 
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.ocr.OCRActivity;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.DateUtils;
 import com.github.chrisbanes.photoview.PhotoView;
@@ -40,15 +43,19 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 
 public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.OnClickListener {
+
+    private static final int REQUEST_CODE_OCR = 1001;
+
 
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
     private LinearLayout mLinearLayout;
     private EditText etBill, etPhn, etLocation, etPin;
-    private ImageView ivInfoBill, ivInfoLocation;
+    private ImageView ivInfoBill, ivInfoLocation, ivOCR;
     private Spinner spnr_month, spnr_year;
     private Button btnConfirm;
     private String mBill, mPhn, mLocation, mPin, mMonth, mYear, mTotalAmount, mTrxId;
@@ -97,6 +104,8 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
 
         spnr_month = findViewById(R.id.monthSpinner);
         spnr_year = findViewById(R.id.yearSpinner);
+        ivOCR = findViewById(R.id.ivOCR);
+        ivOCR.setOnClickListener(this);
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             _mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
@@ -209,6 +218,12 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
             showBillImage(1);
         } else if (v.equals(ivInfoLocation)) {
             showBillImage(2);
+        } else if (v.getId() == R.id.ivOCR) {
+
+            Intent intent = new Intent(getApplicationContext(), OCRActivity.class);
+            intent.putExtra(OCRActivity.REQUEST_FROM, OCRActivity.KEY_DPDC);
+            startActivityForResult(intent, REQUEST_CODE_OCR);
+
         }
     }
 
@@ -485,6 +500,15 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_OCR){
+            String data1 = data.getExtras().getString("data", "");
+            etBill.setText(""+data1);
+
+        }
     }
 
     @Override

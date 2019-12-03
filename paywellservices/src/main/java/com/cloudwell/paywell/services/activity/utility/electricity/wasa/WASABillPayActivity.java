@@ -1,6 +1,8 @@
 package com.cloudwell.paywell.services.activity.utility.electricity.wasa;
 
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.ocr.OCRActivity;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.material.snackbar.Snackbar;
@@ -36,15 +39,17 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 
 public class WASABillPayActivity extends BaseActivity implements View.OnClickListener {
+    private static final int REQUEST_CODE_OCR = 1001;
 
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
     private LinearLayout mLinearLayout;
     private EditText etBill, etPhn, etPin;
-    private ImageView imageView;
+    private ImageView imageView, ivOcrScan;
     private Button btnConfirm;
     private String mBill, mPhn, mPin, mTrxId, mTotalAmount;
     private static final String TAG_STATUS = "status";
@@ -82,6 +87,8 @@ public class WASABillPayActivity extends BaseActivity implements View.OnClickLis
 
         imageView = findViewById(R.id.imageView_info);
         btnConfirm = findViewById(R.id.btn_confirm);
+        ivOcrScan = findViewById(R.id.ivOcrScan);
+        ivOcrScan.setOnClickListener(this);
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             _mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
@@ -122,6 +129,10 @@ public class WASABillPayActivity extends BaseActivity implements View.OnClickLis
             }
         } else if (v == imageView) {
             showBillImage();
+        } else if (v.getId() == R.id.ivOcrScan) {
+            Intent intent = new Intent(getApplicationContext(), OCRActivity.class);
+            intent.putExtra(OCRActivity.REQUEST_FROM, OCRActivity.KEY_WASA);
+            startActivityForResult(intent, REQUEST_CODE_OCR);
         }
     }
 
@@ -388,6 +399,15 @@ public class WASABillPayActivity extends BaseActivity implements View.OnClickLis
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_OCR){
+            String data1 = data.getExtras().getString("data", "");
+            etBill.setText(""+data1);
+
+        }
     }
 
     @Override

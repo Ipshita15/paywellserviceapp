@@ -1,6 +1,8 @@
 package com.cloudwell.paywell.services.activity.utility.electricity.desco;
 
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.ocr.OCRActivity;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.material.snackbar.Snackbar;
@@ -36,10 +39,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 
 public class DESCOBillPayActivity extends BaseActivity implements View.OnClickListener {
 
+    private static final int REQUEST_CODE_OCR = 1001;
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
     private LinearLayout mLinearLayout;
@@ -58,6 +63,7 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
     private static final String TAG_MESSAGE_TEXT = "msg_text";
     private static final String TAG_TRANSACTION_ID = "trans_id";
     private static final String TAG_TOTAL_AMOUNT = "total_amount";
+    private ImageView ivOcrScanner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +94,9 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
         etPhn = findViewById(R.id.mycash_phn);
         imageView = findViewById(R.id.imageView_info);
         btnConfirm = findViewById(R.id.mycash_confirm);
+
+        ivOcrScanner = findViewById(R.id.ivOcrScanner);
+        ivOcrScanner.setOnClickListener(this);
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             _mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
@@ -128,6 +137,10 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
             }
         } else if (v == imageView) {
             showBillImage();
+        }else if (v.getId() == R.id.ivOcrScanner){
+            Intent intent = new Intent(getApplicationContext(), OCRActivity.class);
+            intent.putExtra(OCRActivity.REQUEST_FROM, OCRActivity.KEY_DESCO);
+            startActivityForResult(intent, REQUEST_CODE_OCR);
         }
     }
 
@@ -386,6 +399,15 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
                 snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                 snackbar.show();
             }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_OCR){
+            String data1 = data.getExtras().getString("data", "");
+            etBill.setText(""+data1);
+
         }
     }
 
