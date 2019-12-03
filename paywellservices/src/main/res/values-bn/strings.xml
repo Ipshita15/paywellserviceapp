@@ -824,6 +824,7 @@
     <string name="title_issue_ticket">ইস্যু টিকেট</string>
     <string name="bookingId" >বুকিং আইডি</string>
     <string name="title_void_ticket">Ticket Void</string>
+    <string name="view_ticket_with_fare">View Ticket With Fare</string>
 
 
 </resources>

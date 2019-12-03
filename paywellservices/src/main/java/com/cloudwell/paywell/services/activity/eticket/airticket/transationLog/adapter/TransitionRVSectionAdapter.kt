@@ -41,6 +41,12 @@ class TransitionRVSectionAdapter(val mContext: Context, private val title: Strin
         val iHolder = holder as ItemViewHolder
         val model = list[position]
 
+//        use for testing purpose
+//        model.message = "Ticketed";
+//        model.invoiceUrl = "http://www.africau.edu/images/default/sample.pdf"
+//        model.invoiceUrlWithFare = "http://www.pdf995.com/samples/pdf.pdf"
+
+
         if (mIsEnglish) {
             iHolder.tvBookingId.typeface = AppController.getInstance().oxygenLightFont
             iHolder.tvTricketPrices.typeface = AppController.getInstance().oxygenLightFont
@@ -84,6 +90,8 @@ class TransitionRVSectionAdapter(val mContext: Context, private val title: Strin
                 onActionButtonClick!!.onItemClick(model)
             }
         }
+
+
         val m = model.message
         if (m.equals(AllConstant.Booked) || m.equals(AllConstant.Ticketed)) {
             iHolder.tvAction.visibility = View.VISIBLE
