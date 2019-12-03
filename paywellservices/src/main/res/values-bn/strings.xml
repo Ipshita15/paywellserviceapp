@@ -825,6 +825,7 @@
     <string name="bookingId" >বুকিং আইডি</string>
     <string name="title_void_ticket">Ticket Void</string>
     <string name="view_ticket_with_fare">View Ticket With Fare</string>
+    <string name="send_email_with_fare">Send Email With Fare</string>
 
 
 </resources>

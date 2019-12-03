@@ -231,6 +231,7 @@ public interface APIService {
     @Multipart
     Call<ResInvoideEmailAPI> callSendInvoiceAPI(@Part("username") String username,
                                                 @Part("booking_id") String bookingId,
+                                                @Part("price_invoice_status") int priceInvoiceStatus,
                                                 @Part("email_address") String email_address);
 
 

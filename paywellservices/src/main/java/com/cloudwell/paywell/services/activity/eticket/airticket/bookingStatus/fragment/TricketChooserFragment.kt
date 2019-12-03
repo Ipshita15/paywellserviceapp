@@ -48,7 +48,7 @@ class TricketChooserFragment : DialogFragment() {
 
 
 
-        v.btSendEmail.setOnClickListener {
+        v.btSendEmailWithFare.setOnClickListener {
             dismiss()
             onClickHandler.onClick("email")
         }

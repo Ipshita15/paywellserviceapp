@@ -15,13 +15,13 @@ class EmailListViewModel : AirTicketBaseViewMode() {
     val mViewStatus = SingleLiveEvent<EmailListViewStatus>()
 
 
-    fun callSendInvoiceAPI(bookingId: String, emailString: String, internetConnection1: Boolean) {
+    fun callSendInvoiceAPI(bookingId: String, emailString: String, key:String, internetConnection1: Boolean) {
 
         if (!internetConnection1) {
             baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
         } else {
             mViewStatus.value = EmailListViewStatus(noSerachFoundMessage = "", isShowProcessIndicatior = true, successMessage = "")
-            mAirTicketRepository.callInvoiceAPI(bookingId, emailString).observeForever {
+            mAirTicketRepository.callInvoiceAPI(bookingId, emailString, key).observeForever {
                 mViewStatus.value = EmailListViewStatus(noSerachFoundMessage = "", isShowProcessIndicatior = false, successMessage = "")
 
                 val okNetworkAndStatusCode = isOkNetworkAndStatusCode(it)

@@ -236,21 +236,24 @@ class AirThicketRepository(private val mContext: Context) {
 
     }
 
-    fun callInvoiceAPI(bookingID: String, emailString: String): MutableLiveData<ResInvoideEmailAPI> {
+    fun callInvoiceAPI(bookingID: String, emailString: String, key: String): MutableLiveData<ResInvoideEmailAPI> {
 
         mAppHandler = AppHandler.getmInstance(mContext)
         val userName = mAppHandler!!.imeiNo
-//        val userName = "cwntcl"
 
+        val priceInvoiceStatus: Int
+        if (key.equals("fare")){
+            priceInvoiceStatus = 1
+        }else{
+            priceInvoiceStatus = 0
+        }
 
         val data = MutableLiveData<ResInvoideEmailAPI>()
 
-
-        val callAirSearch = ApiUtils.getAPIService().callSendInvoiceAPI(userName, bookingID, emailString)
+        val callAirSearch = ApiUtils.getAPIService().callSendInvoiceAPI(userName, bookingID, priceInvoiceStatus,emailString)
         callAirSearch.enqueue(object : Callback<ResInvoideEmailAPI> {
             override fun onResponse(call: Call<ResInvoideEmailAPI>, response: Response<ResInvoideEmailAPI>) {
                 if (response.isSuccessful) {
-//                    data.value = Gson().fromJson(DummayData().mockPreBooking, ResAirPreBooking::class.java)
                     data.value = response.body()
                 }
             }
