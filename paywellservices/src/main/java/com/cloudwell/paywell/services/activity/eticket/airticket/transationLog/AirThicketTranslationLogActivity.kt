@@ -41,31 +41,8 @@ open class AirThicketTranslationLogActivity : TransitionLogBaseActivity() {
         mViewMode.getBookingStatus(isInternetConnection, limit)
     }
 
-//    private fun initViewModel(limit: Int) {
-//
-//        mViewMode = ViewModelProviders.of(this).get(BookingStatsViewModel::class.java)
-//
-//        mViewMode.baseViewStatus.observe(this, Observer {
-//            handleViewCommonStatus(it)
-//        })
-//
-//
-//        mViewMode.mViewStatus.observe(this, Observer {
-//            it?.let { it1 -> handleViewStatus(it1) }
-//        })
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//    }
 
     private fun setupList(it1: BookingList?) {
-
 
         if (it1 == null) {
             ivForNodataFound.visibility = View.VISIBLE

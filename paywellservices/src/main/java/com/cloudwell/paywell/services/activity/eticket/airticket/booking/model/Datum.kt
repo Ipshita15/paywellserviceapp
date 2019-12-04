@@ -68,6 +68,9 @@ class Datum {
     @SerializedName("invoice_url")
     var invoiceUrl: String = ""
 
+    @SerializedName("invoice_url_with_fare")
+    var invoiceUrlWithFare: String = ""
+
     @SerializedName("trip_type")
     var trip_type: String = ""
 
