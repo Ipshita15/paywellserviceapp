@@ -157,7 +157,7 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
             protected void onPostExecute(Void list) {
                 super.onPostExecute(list);
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.select_dialog_item, billNumberList);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(DESCOBillPayActivity.this, android.R.layout.select_dialog_item, billNumberList);
                 etBill.setThreshold(1);
                 etBill.setAdapter(adapter);
                 etBill.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -168,7 +168,7 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
                 });
 
 
-                ArrayAdapter<String> adapterPhone = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.select_dialog_item, payeerNumberList);
+                ArrayAdapter<String> adapterPhone = new ArrayAdapter<String>(DESCOBillPayActivity.this, android.R.layout.select_dialog_item, payeerNumberList);
                 etPhn.setThreshold(1);
                 etPhn.setAdapter(adapterPhone);
                 etPhn.setOnFocusChangeListener(new View.OnFocusChangeListener() {
