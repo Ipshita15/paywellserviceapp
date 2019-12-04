@@ -176,7 +176,7 @@ public class WZPDCLBillPayActivity extends BaseActivity implements View.OnClickL
 
                 billNumberList.clear();
                 payeerNumberList.clear();
-                List<DPDCHistory> allDESCOHistory = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().getAllDPDCHistory();
+                List<WestZoneHistory> allDESCOHistory = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().getAllWestZoneHistory();
                 for (int i = 0; i < allDESCOHistory.size(); i++) {
                     billNumberList.add(allDESCOHistory.get(i).getBilNumber());
                     payeerNumberList.add(allDESCOHistory.get(i).getPayerPhoneNumber());

@@ -248,7 +248,7 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
                 etLocation.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
-                        etPhn.showDropDown();
+                        etLocation.showDropDown();
                     }
                 });
 

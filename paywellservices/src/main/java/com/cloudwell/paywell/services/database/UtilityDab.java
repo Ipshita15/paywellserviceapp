@@ -49,7 +49,7 @@ public interface UtilityDab {
     void insertPallibidyutHistory(PallibidyutHistory pallibidyutHistory);
 
     @Query("SELECT * FROM  WestZoneHistory")
-    List<WestZoneHistory> getAllWestZoneHistoryHistory();
+    List<WestZoneHistory> getAllWestZoneHistory();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertWestZoneHistory(WestZoneHistory westZoneHistory);
