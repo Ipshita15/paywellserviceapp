@@ -22,11 +22,17 @@ import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.DPDCHistory;
+import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCPostpaidBillPayActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.westzone.model.WestZoneHistory;
+import com.cloudwell.paywell.services.activity.utility.ivac.model.IvacHistory;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.DateUtils;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -46,6 +52,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 
@@ -60,7 +67,8 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
     private ArrayList<String> center_id_array, center_name_array, center_amount_array;
     private String str_centerId = "", str_amount = "", password = "", webFile = "", passportNo = "", phnNum = "";
     private TextView textViewAmount;
-    private EditText editTextPassword, editTextWebFile, editTextPassport, editTextPhnNum;
+    private EditText editTextPassword, editTextWebFile, editTextPassport;
+    private AppCompatAutoCompleteTextView   editTextPhnNum;
     Boolean isCenterUserLock = false;
 
     private static String TAG_RESPONSE_IVAC_CENTER_ID = "center_id";
@@ -79,6 +87,10 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
     private AsyncTask<String, Integer, String> mTransactionLogAsync;
     private AsyncTask<String, String, String> mConfirmFeePayAsync;
     private CheckBox checkBoxForCenterLock;
+    private AsyncTask<Void, Void, Void> insertIvacHistoryAsyncTask;
+    private AsyncTask<Void, Void, Void> getAllIvacHistoryAsyncTask;
+    List<String> payeerNumberList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,6 +204,52 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
 
         handleCenterLockCheckBox();
 
+
+
+        getAllIvacHistoryAsyncTask = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                payeerNumberList.clear();
+                List<IvacHistory> ivacHistories = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().getAllIvacHistoryHistory();
+                for (int i = 0; i < ivacHistories.size(); i++) {
+                    payeerNumberList.add(ivacHistories.get(i).getPayerPhoneNumber());
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+            }
+
+            @Override
+            protected void onPostExecute(Void list) {
+                super.onPostExecute(list);
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(IvacFeePayActivity.this, android.R.layout.select_dialog_item, payeerNumberList);
+                editTextPhnNum.setThreshold(1);
+                editTextPhnNum.setAdapter(adapter);
+                editTextPhnNum.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        editTextPhnNum.showDropDown();
+                    }
+                });
+
+
+
+
+            }
+
+        }.execute();
+
+
+        editTextPhnNum.setOnTouchListener((v, event) -> {
+            editTextPhnNum.showDropDown();
+            return false;
+        });
 
     }
 
@@ -375,12 +433,6 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
     }
 
     @Override
-    public void onBackPressed() {
-        finish();
-    }
-
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             this.onBackPressed();
@@ -558,6 +610,18 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
                     });
                     AlertDialog alert = builder.create();
                     alert.show();
+                    insertIvacHistoryAsyncTask = new AsyncTask<Void, Void, Void>() {
+                        @Override
+                        protected Void doInBackground(Void... voids) {
+
+                            String currentDataAndTIme = DateUtils.INSTANCE.getCurrentDataAndTIme();
+                            IvacHistory ivacHistory = new IvacHistory();
+                            ivacHistory.setPayerPhoneNumber(phnNum);
+                            ivacHistory.setDate(currentDataAndTIme);
+                            DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().insertIvacHistory(ivacHistory);
+                            return null;
+                        }
+                    }.execute();
                 } catch (Exception e) {
                     e.printStackTrace();
                     Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
@@ -568,5 +632,20 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
                 }
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getAllIvacHistoryAsyncTask != null) {
+            getAllIvacHistoryAsyncTask.cancel(true);
+
+        }
+
+        if (insertIvacHistoryAsyncTask != null) {
+            insertIvacHistoryAsyncTask.cancel(true);
+        }
+
+
+        finish();
     }
 }

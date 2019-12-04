@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -14,11 +15,18 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.utility.banglalion.model.BanglalionHistory;
+import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCPostpaidBillPayActivity;
+import com.cloudwell.paywell.services.activity.utility.ivac.IvacFeePayActivity;
+import com.cloudwell.paywell.services.activity.utility.ivac.model.IvacHistory;
+import com.cloudwell.paywell.services.activity.utility.karnaphuli.model.KarnaphuliHistory;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.DateUtils;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.http.NameValuePair;
@@ -35,6 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 
 public class KarnaphuliBillPayActivity extends BaseActivity implements View.OnClickListener {
 
@@ -46,9 +55,14 @@ public class KarnaphuliBillPayActivity extends BaseActivity implements View.OnCl
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
     private LinearLayout mLinearLayout;
-    private EditText etBill, etPhn, etPin;
+    private AppCompatAutoCompleteTextView etBill, etPhn;
+    private EditText etPin;
     private Button btnConfirm;
     private String mBill, mPhn, mPin, mTrxId, mTotalAmount;
+    private AsyncTask<Void, Void, Void> insertKarnaphuliHistoryAsyncTask;
+    private AsyncTask<Void, Void, Void> getAllKarnaphuliHistoryAsyncTask;
+    List<String> billNumberList = new ArrayList<>();
+    List<String> payeerNumberList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +113,67 @@ public class KarnaphuliBillPayActivity extends BaseActivity implements View.OnCl
             btnConfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
         btnConfirm.setOnClickListener(this);
+
+        etBill.setOnTouchListener((v, event) -> {
+            etBill.showDropDown();
+            return false;
+        });
+        etPhn.setOnTouchListener((v, event) -> {
+            etPhn.showDropDown();
+            return false;
+        });
+
+        getAllKarnaphuliHistoryAsyncTask = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                billNumberList.clear();
+                payeerNumberList.clear();
+                List<KarnaphuliHistory> karnaphuliHistories = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().getAllKarnaphuliHistoryHistory();
+                for (int i = 0; i < karnaphuliHistories.size(); i++) {
+                    payeerNumberList.add(karnaphuliHistories.get(i).getPayerPhoneNumber());
+                    billNumberList.add(karnaphuliHistories.get(i).getBilNumber());
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+            }
+
+            @Override
+            protected void onPostExecute(Void list) {
+                super.onPostExecute(list);
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(KarnaphuliBillPayActivity.this, android.R.layout.select_dialog_item, billNumberList);
+                etBill.setThreshold(1);
+                etBill.setAdapter(adapter);
+                etBill.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        etBill.showDropDown();
+                    }
+                });
+
+                ArrayAdapter<String> adapterPhone = new ArrayAdapter<String>(KarnaphuliBillPayActivity.this, android.R.layout.select_dialog_item, payeerNumberList);
+                etPhn.setThreshold(1);
+                etPhn.setAdapter(adapterPhone);
+                etPhn.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        etPhn.showDropDown();
+                    }
+                });
+
+
+
+
+            }
+
+        }.execute();
+
     }
 
     @SuppressWarnings("deprecation")
@@ -145,11 +220,6 @@ public class KarnaphuliBillPayActivity extends BaseActivity implements View.OnCl
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed() {
-        finish();
-    }
-
     private class SubmitInquiryAsync extends AsyncTask<String, Void, String> {
 
 
@@ -188,6 +258,19 @@ public class KarnaphuliBillPayActivity extends BaseActivity implements View.OnCl
         @Override
         protected void onPostExecute(String result) {
             dismissProgressDialog();
+            insertKarnaphuliHistoryAsyncTask = new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+
+                    String currentDataAndTIme = DateUtils.INSTANCE.getCurrentDataAndTIme();
+                    KarnaphuliHistory karnaphuliHistory = new KarnaphuliHistory();
+                    karnaphuliHistory.setBilNumber(mBill);
+                    karnaphuliHistory.setPayerPhoneNumber(mPhn);
+                    karnaphuliHistory.setDate(currentDataAndTIme);
+                    DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().insertKarnaphuliHistory(karnaphuliHistory);
+                    return null;
+                }
+            }.execute();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
@@ -310,6 +393,7 @@ public class KarnaphuliBillPayActivity extends BaseActivity implements View.OnCl
         @Override
         protected void onPostExecute(String result) {
             dismissProgressDialog();
+
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
@@ -365,5 +449,20 @@ public class KarnaphuliBillPayActivity extends BaseActivity implements View.OnCl
                 snackbar.show();
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getAllKarnaphuliHistoryAsyncTask != null) {
+            getAllKarnaphuliHistoryAsyncTask.cancel(true);
+
+        }
+
+        if (insertKarnaphuliHistoryAsyncTask != null) {
+            insertKarnaphuliHistoryAsyncTask.cancel(true);
+        }
+
+
+        finish();
     }
 }

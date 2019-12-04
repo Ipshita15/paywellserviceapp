@@ -111,7 +111,7 @@
                             android:contentDescription="@string/bell_msg"/>
                     </LinearLayout>
 
-                    <EditText
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                         android:id="@+id/mycash_bill"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -152,7 +152,7 @@
                             android:textAppearance="?android:attr/textAppearanceMedium"/>
                     </LinearLayout>
 
-                    <EditText
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                         android:id="@+id/mycash_phn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -202,7 +202,7 @@
                             android:contentDescription="@string/bell_msg"/>
                     </LinearLayout>
 
-                    <EditText
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                         android:id="@+id/mycash_location"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
