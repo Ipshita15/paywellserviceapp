@@ -21,18 +21,19 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.BillDatum
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PalliBidyutBillPayRequest
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PalliBidyutBillPayResponse
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.REBNotification
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.ConnectionDetector
 import com.cloudwell.paywell.services.utils.UniversalRecyclerViewAdapter
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_pbbill_pay_new.*
 import kotlinx.android.synthetic.main.pallibidyut_bill_details_view.view.*
 import kotlinx.android.synthetic.main.pallibidyut_billpay_response_dialog.view.*
@@ -93,7 +94,24 @@ class PBBillPayNewActivity : BaseActivity() {
         }
 
 
-        addAnotherNo()
+
+
+
+        try {
+            val data = intent.getStringExtra("REBNotification")
+            if (data != "") {
+                val gson = Gson()
+                val REBNotification = gson.fromJson(data, REBNotification::class.java)
+//                mBillNo.setText("" + TrxData.BillNo)
+//                mAmount.setText("" + TrxData.BillAmount)
+//                mComfirm.setText("" + getString(R.string.re_submit_reb))
+
+                addAnotherNoWithBillNumber(REBNotification)
+
+            }
+        } catch (e: Exception) {
+            addAnotherNo()
+        }
     }
 
     override fun onResume() {
@@ -130,6 +148,45 @@ class PBBillPayNewActivity : BaseActivity() {
 
         billMainLL.addView(billView)
         billView.startAnimation(slideInAnim)
+    }
+
+    private fun addAnotherNoWithBillNumber(rebNotification: REBNotification) {
+        ++addNoFlag
+        val billView = layoutInflater.inflate(R.layout.pallibidyut_billpay_view, null)
+        billView.pbBillNumberET.setText(""+rebNotification.TrxData.BillNo)
+        billView.pbBillAmountET.setText(""+rebNotification.TrxData.BillAmount)
+
+        submitButton.setText("" + getString(R.string.re_submit_reb))
+        imageAddIV.visibility = View.GONE
+
+
+        if (addNoFlag == 1) {
+            billView.billViewRemoveImage.visibility=View.GONE
+        } else {
+
+        }
+
+        billView.billViewRemoveImage.setOnClickListener(View.OnClickListener {
+            --addNoFlag
+            slideOutAnim
+                    .setAnimationListener(object : Animation.AnimationListener {
+
+                        override fun onAnimationStart(animation: Animation) {}
+
+                        override fun onAnimationRepeat(animation: Animation) {}
+
+                        override fun onAnimationEnd(animation: Animation) {
+                            billView.postDelayed({ billMainLL.removeView(billView) }, 100)
+                        }
+                    })
+            billView.startAnimation(slideOutAnim)
+        })
+
+
+        billMainLL.addView(billView)
+        billView.startAnimation(slideInAnim)
+
+
     }
 
     private fun showCurrentTopupLog() {
@@ -331,9 +388,6 @@ class PBBillPayNewActivity : BaseActivity() {
             imageAddIV.setBackgroundResource(R.drawable.add_bn)
         }
     }
-
-
-
 
 
 }
