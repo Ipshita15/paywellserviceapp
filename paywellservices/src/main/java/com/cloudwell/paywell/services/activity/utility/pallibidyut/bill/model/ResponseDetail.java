@@ -20,6 +20,8 @@ public class ResponseDetail {
     private Double totalAmount;
     @SerializedName("TrxId")
     private String trxId;
+    @SerializedName("RetailerCommission")
+    private String RetailerCommission;
 
     public Double getBillAmount() {
         return billAmount;
@@ -77,4 +79,11 @@ public class ResponseDetail {
         this.trxId = trxId;
     }
 
+    public String getRetailerCommission() {
+        return RetailerCommission;
+    }
+
+    public void setRetailerCommission(String retailerCommission) {
+        RetailerCommission = retailerCommission;
+    }
 }

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
+import android.os.AsyncTask
 import android.os.Bundle
 import android.text.Html
 import android.text.InputType
@@ -16,21 +17,22 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.annotation.Nullable
 import androidx.appcompat.app.AlertDialog
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.BillDatum
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PalliBidyutBillPayRequest
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PalliBidyutBillPayResponse
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PallibidyutHistory
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.REBNotification
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.database.DatabaseClient
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.ConnectionDetector
+import com.cloudwell.paywell.services.utils.DateUtils
 import com.cloudwell.paywell.services.utils.UniversalRecyclerViewAdapter
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
@@ -43,6 +45,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class PBBillPayNewActivity : BaseActivity() {
+
+
     lateinit var cd: ConnectionDetector
     private var addNoFlag: Int = 0
     lateinit var universalRecyclerViewAdapter:UniversalRecyclerViewAdapter
@@ -55,6 +59,11 @@ class PBBillPayNewActivity : BaseActivity() {
             Animation.RELATIVE_TO_PARENT, 0f, Animation.RELATIVE_TO_PARENT, 0f)
     lateinit var appHandler: AppHandler
     var isCreateActivity=true
+    private var getAllPallibidyutHistoryAsyncTask: AsyncTask<Void, Void, Void>? = null
+    private var insertPallibidyutHistoryAsyncTask: AsyncTask<Void, Void, Void>? = null
+    internal var billNumberList: MutableList<String> = java.util.ArrayList()
+    private lateinit var adapter: ArrayAdapter<String>
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -112,6 +121,34 @@ class PBBillPayNewActivity : BaseActivity() {
         } catch (e: Exception) {
             addAnotherNo()
         }
+
+
+        getAllPallibidyutHistoryAsyncTask = object : AsyncTask<Void, Void, Void>() {
+            override fun doInBackground(vararg voids: Void?): Void? {
+
+                billNumberList.clear()
+                val pallibidyutHistories = DatabaseClient.getInstance(applicationContext).appDatabase.mUtilityDab().allPallibidyutHistoryHistory
+                for (i in pallibidyutHistories.indices) {
+                    billNumberList.add(pallibidyutHistories[i].bilNumber)
+                }
+                return null
+            }
+
+            override fun onPreExecute() {
+                super.onPreExecute()
+
+            }
+
+            override fun onPostExecute(@Nullable list: Void?) {
+                super.onPostExecute(list)
+
+                adapter.notifyDataSetChanged()
+
+            }
+
+        }.execute()
+
+
     }
 
     override fun onResume() {
@@ -145,6 +182,14 @@ class PBBillPayNewActivity : BaseActivity() {
             billView.startAnimation(slideOutAnim)
         })
 
+        adapter= ArrayAdapter<String>(this@PBBillPayNewActivity, android.R.layout.select_dialog_item, billNumberList)
+        billView.pbBillNumberET.setThreshold(1)
+        billView.pbBillNumberET.setAdapter(adapter)
+        billView.pbBillNumberET.setOnFocusChangeListener(View.OnFocusChangeListener { v, hasFocus -> billView.pbBillNumberET.showDropDown() })
+        billView.pbBillNumberET.setOnTouchListener({ v, event ->
+            billView.pbBillNumberET.showDropDown()
+            false
+        })
 
         billMainLL.addView(billView)
         billView.startAnimation(slideInAnim)
@@ -154,7 +199,9 @@ class PBBillPayNewActivity : BaseActivity() {
         ++addNoFlag
         val billView = layoutInflater.inflate(R.layout.pallibidyut_billpay_view, null)
         billView.pbBillNumberET.setText(""+rebNotification.TrxData.BillNo)
+        billView.pbBillNumberET.setFocusable(false)
         billView.pbBillAmountET.setText(""+rebNotification.TrxData.BillAmount)
+
 
         submitButton.setText("" + getString(R.string.re_submit_reb))
         imageAddIV.visibility = View.GONE
@@ -182,6 +229,13 @@ class PBBillPayNewActivity : BaseActivity() {
             billView.startAnimation(slideOutAnim)
         })
 
+        adapter= ArrayAdapter<String>(this@PBBillPayNewActivity, android.R.layout.select_dialog_item, billNumberList)
+        billView.pbBillNumberET.setThreshold(1)
+        billView.pbBillNumberET.setAdapter(adapter)
+        billView.pbBillNumberET.setOnTouchListener({ v, event ->
+            billView.pbBillNumberET.showDropDown()
+            false
+        })
 
         billMainLL.addView(billView)
         billView.startAnimation(slideInAnim)
@@ -311,6 +365,8 @@ class PBBillPayNewActivity : BaseActivity() {
 
     private fun showBillResponseDialog(palliBidyutBillPayResponse: PalliBidyutBillPayResponse) {
 
+
+
         val alertDialog=AlertDialog.Builder(this@PBBillPayNewActivity)
         val view=layoutInflater.inflate(R.layout.pallibidyut_billpay_response_dialog,null)
         val linearLayout=view.billViewLL
@@ -319,13 +375,18 @@ class PBBillPayNewActivity : BaseActivity() {
             billDetailsView.billStatusTV.text=palliBidyutBillPayResponse.responseDetails.get(x).statusName
             if(palliBidyutBillPayResponse.responseDetails.get(x).status.toInt()==200){
                 billDetailsView.billStatusTV.setTextColor(resources.getColor(R.color.colorPrimary))
+                billDetailsView.serviceChargeTV.setText("Tk. "+palliBidyutBillPayResponse.responseDetails.get(x).extraCharge.toString())
+                billDetailsView.commissionTV.setText("Tk. "+palliBidyutBillPayResponse.responseDetails.get(x).retailerCommission.toString())
+                insertDataToDatabase()
             }else{
                 billDetailsView.billStatusTV.setTextColor(resources.getColor(R.color.color_red))
+                billDetailsView.serviceChargeLL.visibility=View.GONE
+                billDetailsView.commissionLL.visibility=View.GONE
             }
             billDetailsView.serialNumTV.text=(x+1).toString()+"."
             billDetailsView.billTransactionTV.text=palliBidyutBillPayResponse.responseDetails.get(x).trxId
             billDetailsView.billNumTV.text=palliBidyutBillPayResponse.responseDetails.get(x).billNo
-            billDetailsView.billAmountTV.text=palliBidyutBillPayResponse.responseDetails.get(x).billAmount.toString()
+            billDetailsView.billAmountTV.text="Tk. "+palliBidyutBillPayResponse.responseDetails.get(x).billAmount.toString()
             linearLayout.addView(billDetailsView)
             val view=View(this@PBBillPayNewActivity)
             view.layoutParams= ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,2)
@@ -368,6 +429,22 @@ class PBBillPayNewActivity : BaseActivity() {
 
     }
 
+    private fun insertDataToDatabase() {
+        insertPallibidyutHistoryAsyncTask = object : AsyncTask<Void, Void, Void>() {
+            override fun doInBackground(vararg voids: Void): Void? {
+
+                for (i in 0 until billPayList.size) {
+                    val currentDataAndTIme = DateUtils.currentDataAndTIme
+                    val pallibidyutHistory = PallibidyutHistory()
+                    pallibidyutHistory.bilNumber = billPayList.get(i).billNo
+                    pallibidyutHistory.date = currentDataAndTIme
+                    DatabaseClient.getInstance(applicationContext).appDatabase.mUtilityDab().insertPallibidyutHistory(pallibidyutHistory)
+                }
+                return null
+            }
+        }.execute()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             this.onBackPressed()
@@ -377,6 +454,16 @@ class PBBillPayNewActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
+        if (getAllPallibidyutHistoryAsyncTask != null) {
+            getAllPallibidyutHistoryAsyncTask!!.cancel(true)
+
+        }
+
+        if (insertPallibidyutHistoryAsyncTask != null) {
+            insertPallibidyutHistoryAsyncTask!!.cancel(true)
+        }
+
+
         finish()
     }
 
