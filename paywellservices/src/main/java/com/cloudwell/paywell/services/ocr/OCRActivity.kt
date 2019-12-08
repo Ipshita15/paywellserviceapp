@@ -9,6 +9,7 @@ import android.util.Log
 import android.util.SparseArray
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -61,7 +62,7 @@ class OCRActivity : LanguagesBaseActivity() {
         val tv = TextView(this)
         tv.text = "New textview"
 
-        btDone.setOnClickListener {
+        ivConfirm.setOnClickListener {
             if (!text_view.text.toString().equals("")) {
                 val data = Intent()
                 data.putExtra("data", ""+text_view.text)
@@ -162,14 +163,23 @@ class OCRActivity : LanguagesBaseActivity() {
                                         if (requestForm.equals(KEY_DESCO)){
                                             if (line.value.length == 12) {
                                                 mTextView!!.text = line.value
+                                                mTextView!!.visibility = View.VISIBLE
+                                                ivConfirm.visibility = View.VISIBLE
+                                                tvResultLevel.visibility = View.VISIBLE
                                             }
                                         }else if (requestForm.equals(KEY_DPDC)){
                                             if (line.value.length == 8) {
                                                 mTextView!!.text = line.value
+                                                mTextView!!.visibility = View.VISIBLE
+                                                ivConfirm.visibility = View.VISIBLE
+                                                tvResultLevel.visibility = View.VISIBLE
                                             }
                                         }else if (requestForm.equals(KEY_WASA)){
                                             if (line.value.length == 12) {
                                                 mTextView!!.text = line.value
+                                                mTextView!!.visibility = View.VISIBLE
+                                                ivConfirm.visibility = View.VISIBLE
+                                                tvResultLevel.visibility = View.VISIBLE
                                             }
                                         }
 
