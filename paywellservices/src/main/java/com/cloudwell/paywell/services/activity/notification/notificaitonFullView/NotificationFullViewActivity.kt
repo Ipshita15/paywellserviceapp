@@ -24,7 +24,7 @@ import com.cloudwell.paywell.services.activity.notification.allNotificaiton.Noti
 import com.cloudwell.paywell.services.activity.notification.model.NotificationDetailMessage
 import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.view.NotificationFullViewStatus
 import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.viewModel.NotificationFullNotifcationViewModel
-import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBBillPayOldActivity
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBBillPayNewActivity
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.REBNotification
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.registion.PBRegistrationActivity
 import com.cloudwell.paywell.services.analytics.AnalyticsManager
@@ -232,7 +232,7 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
                         btResubmitREB.visibility = View.VISIBLE
                         btResubmitREB.setOnClickListener {
 
-                            val intentActionAccept = Intent(applicationContext, PBBillPayOldActivity::class.java)
+                            val intentActionAccept = Intent(applicationContext, PBBillPayNewActivity::class.java)
                             intentActionAccept.putExtra("REBNotification", Gson().toJson(rn))
                             startActivity(intentActionAccept)
 

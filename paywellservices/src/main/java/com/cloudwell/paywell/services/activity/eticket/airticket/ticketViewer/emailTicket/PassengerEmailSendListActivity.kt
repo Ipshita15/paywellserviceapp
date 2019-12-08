@@ -20,36 +20,50 @@ import kotlinx.android.synthetic.main.activity_ticket_email.*
 class PassengerEmailSendListActivity : AirTricketBaseActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.btSendEmail -> {
-                val filterList = allPassegnerMutableList.filter {
-                    it.isDefalt == false
-                }
+            R.id.btSendEmailWithFare -> {
+                handleAPI("fare")
 
-                var isItemSeleted = false
-                var emailString = ""
 
-                filterList.forEach {
-                    if (it.isCheckEmail) {
-                        isItemSeleted = true
-                        emailString = emailString + it.email + ","
-                    } else {
-                        if (!isItemSeleted == true) {
-                            isItemSeleted = false
-                        }
-                    }
-                }
+            }
 
-                if (!isItemSeleted) {
-                    showSnackMessageWithTextMessage(getString(R.string.please_select_atleast_one_email_address))
-                } else {
-                    emailString = emailString.substring(0, emailString.lastIndexOf(","))
-
-                    callSendInvoideAPI(emailString)
-                }
+            R.id.btSendEmailWithOutFare -> {
+                handleAPI("withoutFare")
 
 
             }
         }
+    }
+
+    private fun handleAPI(key: String) {
+        val filterList = allPassegnerMutableList.filter {
+            it.isDefalt == false
+        }
+
+        var isItemSeleted = false
+        var emailString = ""
+
+        filterList.forEach {
+            if (it.isCheckEmail) {
+                isItemSeleted = true
+                emailString = emailString + it.email + ","
+            } else {
+                if (!isItemSeleted == true) {
+                    isItemSeleted = false
+                }
+            }
+        }
+
+        if (!isItemSeleted) {
+            showSnackMessageWithTextMessage(getString(R.string.please_select_atleast_one_email_address))
+        } else {
+            emailString = emailString.substring(0, emailString.lastIndexOf(","))
+            callSendInvoideAPI(emailString, key)
+        }
+    }
+
+    private fun callAPI(emailString: String, s: String) {
+        var emailString1 = emailString
+
     }
 
 
@@ -87,7 +101,8 @@ class PassengerEmailSendListActivity : AirTricketBaseActivity(), View.OnClickLis
 
         setupAdapter()
 
-        btSendEmail.setOnClickListener(this)
+        btSendEmailWithOutFare.setOnClickListener(this)
+        btSendEmailWithFare.setOnClickListener(this)
 
 
     }
@@ -193,9 +208,9 @@ class PassengerEmailSendListActivity : AirTricketBaseActivity(), View.OnClickLis
         tricketChooserFragment.show(supportFragmentManager, "dialog")
     }
 
-    private fun callSendInvoideAPI(emailString: String) {
+    private fun callSendInvoideAPI(emailString: String, key: String) {
 
-        datum.bookingId?.let { viewMode.callSendInvoiceAPI(it, emailString, isInternetConnection) }
+        datum.bookingId?.let { viewMode.callSendInvoiceAPI(it, emailString, key, isInternetConnection) }
 
     }
 

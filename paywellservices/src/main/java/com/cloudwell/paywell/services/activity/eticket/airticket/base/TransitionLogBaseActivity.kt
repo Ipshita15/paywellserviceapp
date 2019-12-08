@@ -150,12 +150,15 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
 
 
         val tricketChooserFragment = TricketChooserFragment()
+        tricketChooserFragment.datum = datum
 
         tricketChooserFragment.setOnClickHandlerTest(object : TricketChooserFragment.OnClickHandler {
             override fun onClick(s: String) {
                 if (s.equals("view")) {
-                    downloadPDFFile(datum)
-                } else if (s.equals("email")) {
+                    downloadPDFFile(datum.invoiceUrl)
+                } else if (s.equals("view_with_fare")) {
+                    downloadPDFFile(datum.invoiceUrlWithFare)
+                }else if (s.equals("email")) {
                     openSendEmailActivity(datum)
                 }
             }
@@ -175,7 +178,7 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
 
     }
 
-    private fun downloadPDFFile(datum: Datum) {
+    private fun downloadPDFFile(url: String) {
 
         Dexter.withActivity(this)
                 .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -185,7 +188,7 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
 
                             try {
                                 if (isInternetConnection) {
-                                    handlePDFDownload(datum)
+                                    handlePDFDownload(url)
                                 } else {
                                     showNoInternetConnectionFound()
                                 }
@@ -206,15 +209,15 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
                 }).check()
     }
 
-    private fun handlePDFDownload(datum: Datum) {
+    private fun handlePDFDownload(invoiceUrl: String) {
         val dir = File(Environment.getExternalStorageDirectory().toString() + File.separator + "PayWell/")
         dir.mkdirs()
 
-        val split = datum.invoiceUrl.toString().split("/")
+        val split = invoiceUrl.toString().split("/")
         val fileName = split.last()
 
         val pdfFile = File(dir.absolutePath, fileName)
-        downloadAndOpenPdf(datum.invoiceUrl, pdfFile)
+        downloadAndOpenPdf(invoiceUrl, pdfFile)
     }
 
     fun downloadAndOpenPdf(url: String, file: File) {

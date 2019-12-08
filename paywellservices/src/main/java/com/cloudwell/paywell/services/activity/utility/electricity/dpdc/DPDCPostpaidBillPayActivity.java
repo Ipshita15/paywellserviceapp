@@ -20,10 +20,12 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.DPDCHistory;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.ocr.OCRActivity;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.DateUtils;
@@ -45,6 +47,7 @@ import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 
 public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.OnClickListener {
 
@@ -54,7 +57,8 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
     private LinearLayout mLinearLayout;
-    private EditText etBill, etPhn, etLocation, etPin;
+    private AppCompatAutoCompleteTextView etBill, etPhn, etLocation;
+    private EditText etPin;
     private ImageView ivInfoBill, ivInfoLocation, ivOCR;
     private Spinner spnr_month, spnr_year;
     private Button btnConfirm;
@@ -65,6 +69,12 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
     private static final String TAG_MESSAGE_TEXT = "msg_text";
     private static final String TAG_TRANSACTION_ID = "trans_id";
     private static final String TAG_TOTAL_AMOUNT = "total_amount";
+    private AsyncTask<Void, Void, Void> insertDPDCHistoryAsyncTask;
+    private AsyncTask<Void, Void, Void> getAllDPDCHistoryAsyncTask;
+    List<String> billNumberList = new ArrayList<>();
+    List<String> payeerNumberList = new ArrayList<>();
+    List<String> locationList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,6 +183,90 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
         btnConfirm.setOnClickListener(this);
         ivInfoBill.setOnClickListener(this);
         ivInfoLocation.setOnClickListener(this);
+
+
+        etBill.setOnTouchListener((v, event) -> {
+            etBill.showDropDown();
+            return false;
+        });
+
+
+        etPhn.setOnTouchListener((v, event) -> {
+            etPhn.showDropDown();
+            return false;
+        });
+
+        etLocation.setOnTouchListener((v, event) -> {
+            etLocation.showDropDown();
+            return false;
+        });
+
+
+        getAllDPDCHistoryAsyncTask = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                billNumberList.clear();
+                payeerNumberList.clear();
+                locationList.clear();
+                List<DPDCHistory> allDESCOHistory = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().getAllDPDCHistory();
+                for (int i = 0; i < allDESCOHistory.size(); i++) {
+                    billNumberList.add(allDESCOHistory.get(i).getBilNumber());
+                    payeerNumberList.add(allDESCOHistory.get(i).getPayerPhoneNumber());
+                    locationList.add(allDESCOHistory.get(i).getLocation());
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+            }
+
+            @Override
+            protected void onPostExecute(Void list) {
+                super.onPostExecute(list);
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(DPDCPostpaidBillPayActivity.this, android.R.layout.select_dialog_item, billNumberList);
+                etBill.setThreshold(1);
+                etBill.setAdapter(adapter);
+                etBill.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        etBill.showDropDown();
+                    }
+                });
+
+
+                ArrayAdapter<String> adapterPhone = new ArrayAdapter<String>(DPDCPostpaidBillPayActivity.this, android.R.layout.select_dialog_item, payeerNumberList);
+                etPhn.setThreshold(1);
+                etPhn.setAdapter(adapterPhone);
+                etPhn.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        etPhn.showDropDown();
+                    }
+                });
+
+
+                ArrayAdapter<String> adapterLocation = new ArrayAdapter<String>(DPDCPostpaidBillPayActivity.this, android.R.layout.select_dialog_item, locationList);
+                etLocation.setThreshold(1);
+                etLocation.setAdapter(adapterLocation);
+                etLocation.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        etLocation.showDropDown();
+                    }
+                });
+
+            }
+
+        }.execute();
+
+
+
+
     }
 
     @SuppressWarnings("deprecation")
@@ -457,6 +551,20 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
                         AlertDialog alert = builder.create();
                         alert.setCanceledOnTouchOutside(true);
                         alert.show();
+                        insertDPDCHistoryAsyncTask = new AsyncTask<Void, Void, Void>() {
+                            @Override
+                            protected Void doInBackground(Void... voids) {
+
+                                String currentDataAndTIme = DateUtils.INSTANCE.getCurrentDataAndTIme();
+                                DPDCHistory dpdcHistory = new DPDCHistory();
+                                dpdcHistory.setBilNumber(mBill);
+                                dpdcHistory.setPayerPhoneNumber(mPhn);
+                                dpdcHistory.setLocation(mLocation);
+                                dpdcHistory.setDate(currentDataAndTIme);
+                                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().insertDPDCHistory(dpdcHistory);
+                                return null;
+                            }
+                        }.execute();
                     } else {
                         String msg = jsonObject.getString(TAG_MESSAGE);
                         String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
@@ -513,6 +621,16 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
 
     @Override
     public void onBackPressed() {
+        if (getAllDPDCHistoryAsyncTask != null) {
+            getAllDPDCHistoryAsyncTask.cancel(true);
+
+        }
+
+        if (insertDPDCHistoryAsyncTask != null) {
+            insertDPDCHistoryAsyncTask.cancel(true);
+        }
+
+
         finish();
     }
 

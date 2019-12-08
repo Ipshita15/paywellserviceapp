@@ -828,6 +828,8 @@
     <string name="re_submit_reb">Resubmit</string>
     <string name="title_issue_ticket">Issue Ticket</string>
     <string name="title_void_ticket">Ticket Void</string>
+    <string name="view_ticket_with_fare">View Ticket With Fare</string>
+    <string name="send_email_with_fare">Send Email With Fare</string>
     <string name="scanner">Scanner</string>
     <string name="done">Done</string>
     <string name="no_bill_number_found_message">No bill number found, please try again</string>

@@ -5,7 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBBillPayOldActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBBillPayNewActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.registion.PBRegistrationActivity;
 
 /**
@@ -34,14 +34,16 @@ public class ActionReceiver extends BroadcastReceiver {
     }
 
     public void performBill(Context context, String REBNotification) {
-        Intent intentActionAccept = new Intent(context, PBBillPayOldActivity.class);
+        Intent intentActionAccept = new Intent(context, PBBillPayNewActivity.class);
         intentActionAccept.putExtra("REBNotification", REBNotification);
+        intentActionAccept.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intentActionAccept);
     }
 
     public void performRegistration(Context context, String REBNotification) {
         Intent intentActionAccept = new Intent(context, PBRegistrationActivity.class);
         intentActionAccept.putExtra("REBNotification", REBNotification);
+        intentActionAccept.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intentActionAccept);
     }
 

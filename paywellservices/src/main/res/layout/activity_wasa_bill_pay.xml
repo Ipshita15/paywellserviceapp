@@ -135,7 +135,7 @@
                             card_view:srcCompat="@drawable/ocr_scanner" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <EditText
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                         android:id="@+id/wasa_bill"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
                             android:textAppearance="?android:attr/textAppearanceMedium"/>
                     </LinearLayout>
 
-                    <EditText
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                         android:id="@+id/wasa_phn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
