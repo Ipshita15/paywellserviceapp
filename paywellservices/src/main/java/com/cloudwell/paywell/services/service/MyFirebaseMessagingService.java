@@ -422,7 +422,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         intentActionAccept.putExtra("action", "bill");
         intentActionAccept.putExtra("requestID", requestID);
         intentActionAccept.putExtra("REBNotification", REBNotification);
-        PendingIntent pIntentActionAccept = PendingIntent.getBroadcast(getApplicationContext(), 1, intentActionAccept, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pIntentActionAccept = PendingIntent.getBroadcast(getApplicationContext(), requestID, intentActionAccept, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.pw_notification_bar)
@@ -477,7 +477,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         intentActionAccept.putExtra("action", "registration");
         intentActionAccept.putExtra("requestID", requestID);
         intentActionAccept.putExtra("REBNotification", REBNotification);
-        PendingIntent pIntentActionAccept = PendingIntent.getBroadcast(getApplicationContext(), 1, intentActionAccept, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pIntentActionAccept = PendingIntent.getBroadcast(getApplicationContext(), requestID, intentActionAccept, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.pw_notification_bar)
