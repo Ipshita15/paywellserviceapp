@@ -9,6 +9,7 @@ import com.cloudwell.paywell.services.activity.base.AppThemeBaseActivity
 import com.cloudwell.paywell.services.activity.reg.EntryMainActivity
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.MobileNumberInputDialog
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.OTPInputDialog
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.OTPSentMsgDialog
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.gms.common.ConnectionResult
@@ -85,14 +86,23 @@ class HomeActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks
         }
 
 
-        val oTPInputDialog = OTPInputDialog(object : OTPInputDialog.OnClickHandler {
+//        val oTPInputDialog = OTPInputDialog(object : OTPInputDialog.OnClickHandler {
+//            override fun onSubmit(mobileNumber: String) {
+//
+//
+//            }
+//
+//        })
+//        oTPInputDialog.show(supportFragmentManager, "mobileNumberInputDialog");
+
+        val otpSentMsgDialog = OTPSentMsgDialog(object : OTPSentMsgDialog.OnClickHandler {
             override fun onSubmit(mobileNumber: String) {
 
 
             }
 
         })
-        oTPInputDialog.show(supportFragmentManager, "mobileNumberInputDialog");
+        otpSentMsgDialog.show(supportFragmentManager, "otpSentMessageDialog");
 
 
     }
