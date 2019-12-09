@@ -189,7 +189,7 @@ public class PBBillPayOldActivity extends LanguagesBaseActivity implements View.
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(params[0]);
             try {
-                String uniqueKey = UniqueKeyGenerator.getUniqueKey();
+                String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
 
                 List<NameValuePair> nameValuePairs = new ArrayList<>(6);
                 nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
