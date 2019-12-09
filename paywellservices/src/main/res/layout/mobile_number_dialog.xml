@@ -48,7 +48,7 @@
 
             <Button
                 android:id="@+id/btbtSubmitMobileNumber"
-                android:layout_width="0dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginLeft="24dp"
@@ -57,7 +57,12 @@
                 android:layout_marginRight="24dp"
                 android:layout_marginBottom="40dp"
                 android:background="@drawable/submit_button"
+                android:drawableLeft="@drawable/submit_icon"
                 android:text="Submit"
+                android:paddingLeft="26dp"
+                android:paddingTop="8dp"
+                android:paddingRight="26dp"
+                android:paddingBottom="8dp"
                 android:textColor="#FFFFFF"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
