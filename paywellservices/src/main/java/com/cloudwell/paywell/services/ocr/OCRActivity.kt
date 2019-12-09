@@ -10,6 +10,7 @@ import android.util.SparseArray
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -62,7 +63,7 @@ class OCRActivity : LanguagesBaseActivity() {
         val tv = TextView(this)
         tv.text = "New textview"
 
-        ivConfirm.setOnClickListener {
+        btOk.setOnClickListener {
             if (!text_view.text.toString().equals("")) {
                 val data = Intent()
                 data.putExtra("data", ""+text_view.text)
@@ -72,6 +73,16 @@ class OCRActivity : LanguagesBaseActivity() {
                Toast.makeText(applicationContext, getString(R.string.no_bill_number_found_message), Toast.LENGTH_LONG).show();
             }
         }
+
+
+        btReTake.setOnClickListener {
+            text_view.text = ""
+            btReTake.visibility = View.INVISIBLE
+            btOk.visibility = View.INVISIBLE
+        }
+
+        val animBlink = AnimationUtils.loadAnimation(this, R.anim.blink);
+        viewLineBlink.startAnimation(animBlink)
 
 
     }
@@ -164,22 +175,22 @@ class OCRActivity : LanguagesBaseActivity() {
                                             if (line.value.length == 12) {
                                                 mTextView!!.text = line.value
                                                 mTextView!!.visibility = View.VISIBLE
-                                                ivConfirm.visibility = View.VISIBLE
-                                                tvResultLevel.visibility = View.VISIBLE
+                                                btReTake.visibility = View.VISIBLE
+                                                btOk.visibility = View.VISIBLE
                                             }
                                         }else if (requestForm.equals(KEY_DPDC)){
                                             if (line.value.length == 8) {
                                                 mTextView!!.text = line.value
                                                 mTextView!!.visibility = View.VISIBLE
-                                                ivConfirm.visibility = View.VISIBLE
-                                                tvResultLevel.visibility = View.VISIBLE
+                                                btReTake.visibility = View.VISIBLE
+                                                btOk.visibility = View.VISIBLE
                                             }
                                         }else if (requestForm.equals(KEY_WASA)){
                                             if (line.value.length == 12) {
                                                 mTextView!!.text = line.value
                                                 mTextView!!.visibility = View.VISIBLE
-                                                ivConfirm.visibility = View.VISIBLE
-                                                tvResultLevel.visibility = View.VISIBLE
+                                                btReTake.visibility = View.VISIBLE
+                                                btOk.visibility = View.VISIBLE
                                             }
                                         }
 
