@@ -2,14 +2,18 @@ package com.cloudwell.paywell.services.activity.home
 
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.Window
+import android.view.WindowManager
 import android.widget.Toast
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AppThemeBaseActivity
 import com.cloudwell.paywell.services.activity.reg.EntryMainActivity
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.MobileNumberInputDialog
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.OTPErrorMsgDialog
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.OTPInputDialog
-import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.OTPSentMsgDialog
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.gms.common.ConnectionResult
@@ -95,14 +99,39 @@ class HomeActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks
 //        })
 //        oTPInputDialog.show(supportFragmentManager, "mobileNumberInputDialog");
 
-        val otpSentMsgDialog = OTPSentMsgDialog(object : OTPSentMsgDialog.OnClickHandler {
+
+
+//        val otpSentMsgDialog = OTPSentMsgDialog(object : OTPSentMsgDialog.OnClickHandler {
+//            override fun onSubmit(mobileNumber: String) {
+//
+//
+//            }
+//
+//        })
+//        otpSentMsgDialog.show(supportFragmentManager, "otpSentMessageDialog");
+
+
+//        val otpVerificationMsgDialog = OTPVerificationMsgDialog(object : OTPVerificationMsgDialog.OnClickHandler {
+//            override fun onSubmit(mobileNumber: String) {
+//
+//
+//            }
+//
+//        })
+//        otpVerificationMsgDialog.show(supportFragmentManager, "otpVerificationMessageDialog");
+//
+//
+//    }
+
+        val otpErrorMsgDialog = OTPErrorMsgDialog(object : OTPErrorMsgDialog.OnClickHandler {
             override fun onSubmit(mobileNumber: String) {
 
 
             }
 
         })
-        otpSentMsgDialog.show(supportFragmentManager, "otpSentMessageDialog");
+        otpErrorMsgDialog.show(supportFragmentManager, "otpErrorMessageDialog");
+
 
 
     }
