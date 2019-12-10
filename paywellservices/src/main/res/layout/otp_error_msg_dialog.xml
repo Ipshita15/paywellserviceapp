@@ -51,15 +51,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginRight="24dp"
-                android:layout_marginBottom="16dp"
                 android:text="Your mobile number is not found as registered, please contact our call center :"
                 android:textColor="#ff7c1d"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/errorIV"
@@ -69,10 +67,11 @@
                 android:id="@+id/view18"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
+                android:layout_marginTop="16dp"
                 android:background="#d1d1d1"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/otpErrorMsgTV" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -90,14 +90,14 @@ class HomeActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks
         }
 
 
-//        val oTPInputDialog = OTPInputDialog(object : OTPInputDialog.OnClickHandler {
-//            override fun onSubmit(mobileNumber: String) {
-//
-//
-//            }
-//
-//        })
-//        oTPInputDialog.show(supportFragmentManager, "mobileNumberInputDialog");
+        val oTPInputDialog = OTPInputDialog(object : OTPInputDialog.OnClickHandler {
+            override fun onSubmit(mobileNumber: String) {
+
+
+            }
+
+        })
+        oTPInputDialog.show(supportFragmentManager, "mobileNumberInputDialog");
 
 
 
@@ -123,14 +123,14 @@ class HomeActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks
 //
 //    }
 
-        val otpErrorMsgDialog = OTPErrorMsgDialog(object : OTPErrorMsgDialog.OnClickHandler {
-            override fun onSubmit(mobileNumber: String) {
-
-
-            }
-
-        })
-        otpErrorMsgDialog.show(supportFragmentManager, "otpErrorMessageDialog");
+//        val otpErrorMsgDialog = OTPErrorMsgDialog(object : OTPErrorMsgDialog.OnClickHandler {
+//            override fun onSubmit(mobileNumber: String) {
+//
+//
+//            }
+//
+//        })
+//        otpErrorMsgDialog.show(supportFragmentManager, "otpErrorMessageDialog");
 
 
 

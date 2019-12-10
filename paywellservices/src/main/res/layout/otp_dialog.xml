@@ -115,8 +115,8 @@
                 android:layout_marginLeft="100dp"
                 android:padding="2dp"
                 android:text="to : "
-                android:textSize="14sp"
                 android:textColor="#808080"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toStartOf="@+id/otp_phoneNumber"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -131,14 +131,12 @@
                 android:padding="2dp"
                 android:text="01789067895"
                 android:textColor="#808080"
-                android:textStyle="bold"
                 android:textSize="14sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView53" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
     </LinearLayout>
 
 </RelativeLayout>
