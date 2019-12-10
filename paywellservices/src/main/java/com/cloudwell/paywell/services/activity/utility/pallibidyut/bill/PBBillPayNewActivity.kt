@@ -33,6 +33,7 @@ import com.cloudwell.paywell.services.database.DatabaseClient
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.ConnectionDetector
 import com.cloudwell.paywell.services.utils.DateUtils
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import com.cloudwell.paywell.services.utils.UniversalRecyclerViewAdapter
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
@@ -271,7 +272,11 @@ class PBBillPayNewActivity : BaseActivity() {
                     reqStrBuilder.append((i + 1).toString() + ". " + getString(R.string.bill_number)+ " " + billNoString
                             + "\n " + getString(R.string.amount_des) + " " + amountString + getString(R.string.tk)+"\n\n")
 
-                    billPayList.add(BillDatum(amountString.toDouble(),billNoString))
+
+                    val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).rid)
+
+
+                    billPayList.add(BillDatum(amountString.toDouble(),billNoString,uniqueKey))
 
 
                 }
