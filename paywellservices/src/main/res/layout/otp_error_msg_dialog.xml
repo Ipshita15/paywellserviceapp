@@ -11,7 +11,7 @@
         android:orientation="vertical"
         android:gravity="center">
 
-    <LinearLayout
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -30,7 +30,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linearLayout23"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="10dp">
 
             <ImageView
                 android:id="@+id/errorIV"
@@ -53,15 +54,29 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginRight="24dp"
+                android:layout_marginBottom="16dp"
                 android:text="Your mobile number is not found as registered, please contact our call center :"
                 android:textColor="#ff7c1d"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/errorIV"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/view18"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="#d1d1d1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,25 +85,26 @@
             android:gravity="center"
             android:padding="10dp">
 
+
             <RadioGroup
                 android:id="@+id/otpErrorCallNumbers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="10dp"
                 android:gravity="center"
                 android:weightSum="1"
+                android:padding="5dp"
                 >
 
                 <RadioButton
                     android:id="@+id/radio_number1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="#676767"
+                    android:checked="true"
                     android:text="Sample Number"
-                    android:checked="true"/>
+                    android:textColor="#676767"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
                 <RadioButton
                     android:id="@+id/radio_number2"
                     android:layout_width="wrap_content"
@@ -123,7 +139,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:gravity="center"
             android:padding="10dp">
 
@@ -131,6 +146,8 @@
                 android:id="@+id/btnOtpErrorCall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/submit_button"
                 android:drawableLeft="@drawable/otp_call_icon"
                 android:textSize="18sp"
@@ -141,11 +158,6 @@
                 android:paddingBottom="8dp"
                 android:text="Call"/>
         </LinearLayout>
-
-
-
-
-
 
     </LinearLayout>
 
