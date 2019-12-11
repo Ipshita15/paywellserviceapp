@@ -73,6 +73,7 @@
     <string name="home_eticket_bus">বাস টিকিট</string>
     <string name="home_eticket_air">বিমান টিকিট</string>
     <string name="home_product_ajker_deal">আজকের ডিল</string>
+    <string name="home_product_ekshop">এক-শপ</string>
     <string name="home_product_pw_wholesale">পেওয়েল\nহোলসেল</string>
     <string name="home_product_pw_wholesale_title">পেওয়েল হোলসেল</string>
     <string name="home_settings_reset_pin">পিন রিসেট</string>

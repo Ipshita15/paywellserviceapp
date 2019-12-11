@@ -96,8 +96,8 @@ public class AppController extends Application {
                 AppStorageBox.put(getApplicationContext(), AppStorageBox.Key.USER_USED_NOTIFICAITON_FLOW,  false);
                 break;
             case FIRST_TIME_VERSION:
-                AppStorageBox.put(getApplicationContext(), AppStorageBox.Key.USER_USED_NOTIFICAITON_FLOW,  false);
-                // MyFavoriteHelper.Companion.insertData(getApplicationContext());
+                 AppStorageBox.put(getApplicationContext(), AppStorageBox.Key.USER_USED_NOTIFICAITON_FLOW,  false);
+                 MyFavoriteHelper.Companion.updateData(getApplicationContext());
                 break;
         }
     }
