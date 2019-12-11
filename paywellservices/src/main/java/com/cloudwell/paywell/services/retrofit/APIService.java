@@ -351,7 +351,6 @@ public interface APIService {
     Call<RefillLog> refillLogInquiry(@Url String url,
                                      @Field("sec_token") String username,
                                      @Field("imei") String skey,
-                                     @Field("pin") String accessKey,
                                      @Field("format") String customerName,
                                      @Field("gateway_id") String customerPhone,
                                      @Field("limit") String limit);
