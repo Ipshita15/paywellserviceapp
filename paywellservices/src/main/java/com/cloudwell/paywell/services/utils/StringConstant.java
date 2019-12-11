@@ -70,4 +70,7 @@ public class StringConstant {
     public static String KEY_home_refill_card = "home_refill_card";
 
 
+    public static String KEY_home_product_ekshop = "home_product_ekshop";
+
+
 }
