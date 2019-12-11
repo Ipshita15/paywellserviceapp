@@ -83,12 +83,12 @@
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.VIEW" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".activity.MainActivity"
@@ -682,7 +682,19 @@
             android:name=".activity.reg.EntryMainActivity"
             android:label="@string/app_name"
             android:noHistory="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+
+
+        </activity>
         <activity
             android:name=".activity.reg.EntryFirstActivity"
             android:configChanges="orientation"
@@ -725,6 +737,7 @@
             android:label="@string/paywell_reg"
             android:parentActivityName=".activity.reg.EntryThirdActivity"
             android:screenOrientation="portrait">
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cloudwell.paywell.services.activity.reg.EntryThirdActivity" />
@@ -733,6 +746,15 @@
             android:name=".activity.reg.TermsAndConditionsActivity"
             android:parentActivityName=".activity.reg.EntryMainActivity"
             android:screenOrientation="portrait">
+
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
