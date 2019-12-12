@@ -9,7 +9,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.cloudwell.paywell.services.ActionReceiver;
 import com.cloudwell.paywell.services.R;
@@ -28,14 +30,26 @@ import com.facebook.imagepipeline.core.ImagePipeline;
 import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
 import com.facebook.imagepipeline.image.CloseableImage;
 import com.facebook.imagepipeline.request.ImageRequest;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
 
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
@@ -43,12 +57,104 @@ import androidx.core.app.TaskStackBuilder;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
-    private static final String TAG = "FirebaseMessageService";
+    private ConnectionDetector mCd;
     private AppHandler mAppHandler;
+    private static final String TAG_RESPONSE_STATUS = "status";
+    private String token;
+    private AsyncTask<String, Intent, String> mPushFirebaseIdTask;
 
+
+
+    private static final String TAG = "FirebaseMessageService";
     private String title;
     private String message;
     private String notifcationDetails;
+
+    @Override
+    public void onNewToken(String token) {
+        super.onNewToken(token);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
+        mAppHandler.setFirebaseId(token);
+        mAppHandler.setFirebaseTokenStatus("true");
+
+        // Get updated InstanceID token.
+        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        Log.d(TAG, "Refreshed token: " + refreshedToken);
+
+        // If you want to send messages to this application instance or
+        // manage this apps subscriptions on the server side, send the
+        // Instance ID token to your app server.
+        sendRegistrationToServer(refreshedToken);
+
+    }
+
+    private void sendRegistrationToServer(String token) {
+        this.token = token;
+        mCd = new ConnectionDetector(AppController.getContext());
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
+        if (mCd.isConnectingToInternet()) {
+
+            mPushFirebaseIdTask = new PushFirebaseIdTask().execute(getString(R.string.notification_token_url), token);
+        } else {
+            Toast.makeText(getApplicationContext(), R.string.connection_error_msg, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private class PushFirebaseIdTask extends AsyncTask<String, Intent, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String notifications = null;
+            try {
+                HttpClient httpClients = new DefaultHttpClient();
+                HttpPost httpPost = new HttpPost(params[0]);
+
+                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("usertype", "Retailer"));
+                nameValuePairs.add(new BasicNameValuePair("token", params[1]));
+
+                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                notifications = httpClients.execute(httpPost, responseHandler);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                Toast.makeText(getApplicationContext(), R.string.try_again_msg, Toast.LENGTH_LONG).show();
+            }
+            return notifications;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            if (result != null) {
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String status = jsonObject.getString(TAG_RESPONSE_STATUS);
+
+                    if (status.equalsIgnoreCase("200")) {
+                        mAppHandler.setFirebaseId(token);
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    Toast.makeText(getApplicationContext(), R.string.try_again_msg, Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), R.string.try_again_msg, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (mPushFirebaseIdTask != null) {
+            mPushFirebaseIdTask.cancel(true);
+        }
+
+        super.onDestroy();
+    }
+
 
 
     @Override
@@ -221,13 +327,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
 
-    @Override
-    public void onNewToken(String token) {
-        super.onNewToken(token);
-        mAppHandler = AppHandler.getmInstance(getApplicationContext());
-        mAppHandler.setFirebaseId(token);
-        mAppHandler.setFirebaseTokenStatus("true");
-    }
+
 
     private void displayNotification(@Nullable Bitmap bitmap, String title, String messageBody, Uri defaultSoundUri, String notificationDetails) {
 
