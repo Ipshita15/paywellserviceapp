@@ -9,18 +9,19 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.LanguagesBaseActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
@@ -29,18 +30,17 @@ import com.cloudwell.paywell.services.app.AppHandler;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import static com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regModel;
 
-public class EntryThirdActivity extends AppCompatActivity {
+public class EntryThirdActivity extends LanguagesBaseActivity {
     private EditText et_salesCode, et_collectionCode;
     private String str_which_btn_selected;
-    private ImageView img_one, img_two, img_three, img_four, img_five, img_six, img_seven, img_eight, img_nine;
     private static final int PERMISSION_FOR_GALLERY = 321;
     private AppHandler mAppHandler;
+    private Button btPicOutlet, btNID, btPicOwner, btPicTrade, btPicPassport, btPicBirth, btPicDrive, bTPicVisit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,37 +57,42 @@ public class EntryThirdActivity extends AppCompatActivity {
         et_salesCode = findViewById(R.id.editText_salesCode);
         et_collectionCode = findViewById(R.id.editText_collectionCode);
 
-        img_one = findViewById(R.id.img1);
-        img_two = findViewById(R.id.img2);
-        img_three = findViewById(R.id.img3);
-        img_four = findViewById(R.id.img4);
-        img_five = findViewById(R.id.img5);
-        img_six = findViewById(R.id.img6);
-        img_seven = findViewById(R.id.img7);
-        img_eight = findViewById(R.id.img8);
-        img_nine = findViewById(R.id.img9);
+
+        btPicOutlet = findViewById(R.id.btn_picOutlet);
+        btNID = findViewById(R.id.btn_picNidFront);
+        btNID = findViewById(R.id.btn_picOwner);
+        btPicOwner = findViewById(R.id.btn_picOwner);
+        btPicOwner = findViewById(R.id.btn_picOwner);
+        btPicTrade = findViewById(R.id.btn_picTrade);
+        btPicPassport = findViewById(R.id.btn_picPassport);
+        btPicBirth = findViewById(R.id.btn_picBirth);
+        btPicDrive = findViewById(R.id.btn_picDrive);
+        bTPicVisit = findViewById(R.id.btn_picVisit);
+
 
         if (mAppHandler.REG_FLAG_THREE) {
             et_salesCode.setText(regModel.getSalesCode());
             et_collectionCode.setText(regModel.getCollectionCode());
             if (regModel.getOutletImage() != null)
-                img_one.setVisibility(View.VISIBLE);
+//                img_one.setVisibility(View.VISIBLE);
             if (regModel.getNidFront() != null)
-                img_two.setVisibility(View.VISIBLE);
+
             if (regModel.getNidBack() != null)
-                img_three.setVisibility(View.VISIBLE);
+
             if (regModel.getOwnerImage() != null)
-                img_four.setVisibility(View.VISIBLE);
+
             if (regModel.getTradeLicense() != null)
-                img_five.setVisibility(View.VISIBLE);
+
             if (regModel.getPassport() != null)
-                img_six.setVisibility(View.VISIBLE);
+
             if (regModel.getBirthCertificate() != null)
-                img_seven.setVisibility(View.VISIBLE);
+
             if (regModel.getDrivingLicense() != null)
-                img_eight.setVisibility(View.VISIBLE);
-            if (regModel.getVisitingCard() != null)
-                img_nine.setVisibility(View.VISIBLE);
+
+            if (regModel.getVisitingCard() != null){
+
+            }
+
         }
 
         ((TextView) mScrollView.findViewById(R.id.textView_salesCode)).setTypeface(AppController.getInstance().getAponaLohitFont());
@@ -367,42 +372,65 @@ public class EntryThirdActivity extends AppCompatActivity {
 
         String strBuild = ("xxCloud" + imageEncoded + "xxCloud");
 
+        Drawable img = getResources().getDrawable( R.drawable.icon_seleted);
+
+
         switch (str_which_btn_selected) {
             case "1":
                 regModel.setOutletImage(strBuild);
-                img_one.setVisibility(View.VISIBLE);
+                btPicOutlet.setCompoundDrawablesWithIntrinsicBounds( null, null, img, null);
+                btPicOutlet.setCompoundDrawablePadding(100);
+
                 break;
             case "2":
-                regModel.setNidFront(strBuild);
-                img_two.setVisibility(View.VISIBLE);
+
                 break;
             case "3":
                 regModel.setNidBack(strBuild);
-                img_three.setVisibility(View.VISIBLE);
+
                 break;
             case "4":
                 regModel.setOwnerImage(strBuild);
-                img_four.setVisibility(View.VISIBLE);
+                btPicOwner.setCompoundDrawablesWithIntrinsicBounds( null, null, img, null);
+                btPicOwner.setCompoundDrawablePadding(100);
+
                 break;
             case "5":
                 regModel.setTradeLicense(strBuild);
-                img_five.setVisibility(View.VISIBLE);
+
+                btPicTrade.setCompoundDrawablesWithIntrinsicBounds( null, null, img, null);
+                btPicTrade.setCompoundDrawablePadding(100);
+
                 break;
             case "6":
                 regModel.setPassport(strBuild);
-                img_six.setVisibility(View.VISIBLE);
+
+                btPicPassport.setCompoundDrawablesWithIntrinsicBounds( null, null, img, null);
+                btPicPassport.setCompoundDrawablePadding(100);
+
                 break;
             case "7":
                 regModel.setBirthCertificate(strBuild);
-                img_seven.setVisibility(View.VISIBLE);
+
+                btPicBirth.setCompoundDrawablesWithIntrinsicBounds( null, null, img, null);
+                btPicBirth.setCompoundDrawablePadding(100);
+
+
                 break;
             case "8":
                 regModel.setDrivingLicense(strBuild);
-                img_eight.setVisibility(View.VISIBLE);
+
+                btPicDrive.setCompoundDrawablesWithIntrinsicBounds( null, null, img, null);
+                btPicDrive.setCompoundDrawablePadding(100);
+
                 break;
             case "9":
                 regModel.setVisitingCard(strBuild);
-                img_nine.setVisibility(View.VISIBLE);
+
+
+                bTPicVisit.setCompoundDrawablesWithIntrinsicBounds( null, null, img, null);
+                bTPicVisit.setCompoundDrawablePadding(100);
+
                 break;
             default:
                 break;

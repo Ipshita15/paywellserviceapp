@@ -76,6 +76,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 ext {
@@ -240,6 +244,9 @@ dependencies {
 
     implementation 'com.mindorks.android:prdownloader:0.6.0'
     implementation 'com.github.deano2390:FlowTextView:2.0.5'
+
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
+
 
 
 }
