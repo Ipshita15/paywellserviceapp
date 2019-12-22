@@ -830,6 +830,8 @@
     <string name="scanner">স্ক্যানার</string>
     <string name="done">ওকে</string>
     <string name="no_bill_number_found_message">কোনও বিল নম্বর পাওয়া যায় নি, আবার চেষ্টা করুন</string>
+    <string name="finished">সম্পূর্ণ</string>
+    <string name="next_text">পরবর্তী</string>
 
 
 </resources>

@@ -44,7 +44,7 @@ class NidInputViewModel() : BaseViewModel() {
     private var isDoneUserBirthday = false
 
     var isFirstPage = false
-    private var isNewNID = false;
+    private var isNID = false;
 
 
     var iView: IInputNidListener? = null
@@ -112,7 +112,7 @@ class NidInputViewModel() : BaseViewModel() {
 
 
     fun onNextClick(context: Context, newNID: Boolean) {
-        isNewNID = newNID
+        isNID = newNID
         if (::firstPageUri.isInitialized && ::secoundPageUri.isInitialized) {
             doOCFirstPage(context, firstPageUri)
         } else {
@@ -187,52 +187,7 @@ class NidInputViewModel() : BaseViewModel() {
 
     }
 
-    private fun doOCSecondPage(context: Context, resultUri: Uri) {
-        iView?.showProgress()
 
-        try {
-            val image = FirebaseVisionImage.fromFilePath(
-                context,
-                Uri.fromFile(File(resultUri.path!!))
-            )
-            val options = FirebaseVisionCloudTextRecognizerOptions.Builder()
-                .setModelType(FirebaseVisionCloudTextRecognizerOptions.DENSE_MODEL)
-                .setLanguageHints(Arrays.asList("hi", "bn"))
-                .build()
-
-
-            val textRecognizer = FirebaseVision.getInstance()
-                .getCloudTextRecognizer(options)
-
-
-            textRecognizer.processImage(image)
-                .addOnSuccessListener(OnSuccessListener<FirebaseVisionText> { result ->
-
-                    try {
-                        parseNIDOldSecoundPage(context, result)
-                        iView?.hiddenProgress()
-                    } catch (e: Exception) {
-                        Logger.e(""+e.message)
-                        iView?.hiddenProgress()
-                        iView?.setDefaultNIDImagInSecondNIDView()
-                        iView?.onFailure(context.getString(R.string.m_second_ni_error))
-                    }
-
-                })
-                .addOnFailureListener { e ->
-                    Logger.e(""+e.message)
-                    iView?.hiddenProgress()
-                    iView?.setDefaultNIDImagInSecondNIDView()
-                    iView?.onFailure(context.getString(R.string.m_second_ni_error))
-                }
-        } catch (e: IOException) {
-            e.printStackTrace()
-            iView?.hiddenProgress()
-            iView?.setDefaultNIDImagInSecondNIDView()
-            iView?.onFailure(context.getString(R.string.m_second_ni_error))
-        }
-
-    }
 
     private fun parseNIDOldFirstPage(context: Context, result: FirebaseVisionText) {
 
@@ -246,7 +201,7 @@ class NidInputViewModel() : BaseViewModel() {
         Logger.v(Gson().toJson(result))
         Logger.v("" + result.text)
 
-        if (isNewNID) {
+        if (isNID == false) {
 
             val resultText = result.text
             resultText.split("\\r?\\n")
@@ -329,6 +284,53 @@ class NidInputViewModel() : BaseViewModel() {
 
     }
 
+    private fun doOCSecondPage(context: Context, resultUri: Uri) {
+        iView?.showProgress()
+
+        try {
+            val image = FirebaseVisionImage.fromFilePath(
+                    context,
+                    Uri.fromFile(File(resultUri.path!!))
+            )
+            val options = FirebaseVisionCloudTextRecognizerOptions.Builder()
+                    .setModelType(FirebaseVisionCloudTextRecognizerOptions.DENSE_MODEL)
+                    .setLanguageHints(Arrays.asList("hi", "bn"))
+                    .build()
+
+
+            val textRecognizer = FirebaseVision.getInstance()
+                    .getCloudTextRecognizer(options)
+
+
+            textRecognizer.processImage(image)
+                    .addOnSuccessListener(OnSuccessListener<FirebaseVisionText> { result ->
+
+                        try {
+                            parseNIDOldSecoundPage(context, result)
+                            iView?.hiddenProgress()
+                        } catch (e: Exception) {
+                            Logger.e(""+e.message)
+                            iView?.hiddenProgress()
+                            iView?.setDefaultNIDImagInSecondNIDView()
+                            iView?.onFailure(context.getString(R.string.m_second_ni_error))
+                        }
+
+                    })
+                    .addOnFailureListener { e ->
+                        Logger.e(""+e.message)
+                        iView?.hiddenProgress()
+                        iView?.setDefaultNIDImagInSecondNIDView()
+                        iView?.onFailure(context.getString(R.string.m_second_ni_error))
+                    }
+        } catch (e: IOException) {
+            e.printStackTrace()
+            iView?.hiddenProgress()
+            iView?.setDefaultNIDImagInSecondNIDView()
+            iView?.onFailure(context.getString(R.string.m_second_ni_error))
+        }
+
+    }
+
     private fun parseNIDOldSecoundPage(context: Context, result: FirebaseVisionText) {
 
         val blocks = result.textBlocks
@@ -343,7 +345,7 @@ class NidInputViewModel() : BaseViewModel() {
         Logger.v("" + result.text)
 
 
-        if (isNewNID) {
+        if (isNID == false) {
             val blocks = result.textBlocks
             if (blocks.size == 0) {
                 iView?.hiddenProgress()

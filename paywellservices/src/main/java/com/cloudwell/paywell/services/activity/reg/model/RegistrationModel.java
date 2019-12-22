@@ -26,6 +26,9 @@ public class RegistrationModel {
     private String drivingLicense;
     private String visitingCard;
 
+    private String smartCardFront;
+    private String smartCardBack;
+
     public RegistrationModel() {
     }
 
@@ -240,5 +243,21 @@ public class RegistrationModel {
                 ", drivingLicense='" + drivingLicense + '\'' +
                 ", visitingCard='" + visitingCard + '\'' +
                 '}';
+    }
+
+    public void setSmartCardBack(String smartCardBack) {
+        this.smartCardBack = smartCardBack;
+    }
+
+    public String getSmartCardBack() {
+        return smartCardBack;
+    }
+
+    public String getSmartCardFront() {
+        return smartCardFront;
+    }
+
+    public void setSmartCardFront(String smartCardFront) {
+        this.smartCardFront = smartCardFront;
     }
 }

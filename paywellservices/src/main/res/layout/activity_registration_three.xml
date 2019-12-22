@@ -12,6 +12,7 @@
         android:focusableInTouchMode="true">
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/textView_salesCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,6 +28,8 @@
             android:textStyle="normal|bold" />
 
         <EditText
+            android:visibility="gone"
+
             android:id="@+id/editText_salesCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,6 +46,8 @@
             android:selectAllOnFocus="false" />
 
         <TextView
+            android:visibility="gone"
+
             android:id="@+id/textView_collectionCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,6 +61,8 @@
             android:textStyle="normal|bold" />
 
         <EditText
+            android:visibility="gone"
+
             android:id="@+id/editText_collectionCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -89,7 +96,7 @@
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
                 android:layout_weight="1.8"
-                android:background="@drawable/button_green"
+                android:background="@color/button_color"
                 android:onClick="outletImgOnClick"
                 android:shadowColor="#000000"
                 android:shadowDx="1"
@@ -112,20 +119,20 @@
             android:layout_marginTop="5dp">
 
             <Button
-                android:id="@+id/btn_picNidFront"
+                android:id="@+id/btNid"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
                 android:layout_weight="1.8"
-                android:background="@drawable/button_green"
+                android:background="@color/button_color"
                 android:onClick="nidImgOnClick"
                 android:shadowColor="#000000"
                 android:shadowDx="1"
                 android:shadowDy="1"
                 android:shadowRadius="2"
-                android:text="ন্যাশনাল আইডি সামনের পৃষ্ঠার ছবি"
+                android:text="এন.আই.ডি"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff" />
 
@@ -142,20 +149,20 @@
             android:layout_marginTop="5dp">
 
             <Button
-                android:id="@+id/btn_picNidBack"
+                android:id="@+id/btSmart"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
                 android:layout_weight="1.8"
-                android:background="@drawable/button_green"
-                android:onClick="nidBackImgOnClick"
+                android:background="@color/button_color"
+                android:onClick="smartImgOnClick"
                 android:shadowColor="#000000"
                 android:shadowDx="1"
                 android:shadowDy="1"
                 android:shadowRadius="2"
-                android:text="ন্যাশনাল আইডি পেছনের পৃষ্ঠার ছবি"
+                android:text="স্মার্ট কার্ড"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff" />
 
@@ -180,7 +187,7 @@
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
                 android:layout_weight="1.8"
-                android:background="@drawable/button_green"
+                android:background="@color/button_color"
                 android:onClick="ownerImgOnClick"
                 android:shadowColor="#000000"
                 android:shadowDx="1"
@@ -211,7 +218,7 @@
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
                 android:layout_weight="1.8"
-                android:background="@drawable/button_green"
+                android:background="@color/button_color"
                 android:onClick="tradeLicenseImgOnClick"
                 android:shadowColor="#000000"
                 android:shadowDx="1"
@@ -240,7 +247,7 @@
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
                 android:layout_weight="1.8"
-                android:background="@drawable/button_green"
+                android:background="@color/button_color"
                 android:onClick="passportImgOnClick"
                 android:shadowColor="#000000"
                 android:shadowDx="1"
@@ -269,7 +276,7 @@
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
                 android:layout_weight="1.8"
-                android:background="@drawable/button_green"
+                android:background="@color/button_color"
                 android:onClick="birthImgOnClick"
                 android:shadowColor="#000000"
                 android:shadowDx="1"
@@ -298,7 +305,7 @@
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
                 android:layout_weight="1.8"
-                android:background="@drawable/button_green"
+                android:background="@color/button_color"
                 android:onClick="drivingImgOnClick"
                 android:shadowColor="#000000"
                 android:shadowDx="1"
@@ -327,7 +334,7 @@
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
                 android:layout_weight="1.8"
-                android:background="@drawable/button_green"
+                android:background="@color/button_color"
                 android:onClick="visitingImgOnClick"
                 android:shadowColor="#000000"
                 android:shadowDx="1"
@@ -353,7 +360,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/button_green"
+                android:background="@color/button_color"
                 android:onClick="previousOnClick"
                 android:shadowColor="#000000"
                 android:shadowDx="1"
@@ -369,7 +376,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/button_green"
+                android:background="@color/button_color"
                 android:onClick="nextOnClick"
                 android:shadowColor="#000000"
                 android:shadowDx="1"

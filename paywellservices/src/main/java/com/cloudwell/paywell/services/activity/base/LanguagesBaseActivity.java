@@ -13,7 +13,7 @@ import static com.cloudwell.paywell.services.utils.LanuageConstant.KEY_ENGLISH;
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 2019-11-20.
  */
-public class LanguagesBaseActivity extends  BaseActivity{
+public class   LanguagesBaseActivity extends  BaseActivity{
 
 
     @Override

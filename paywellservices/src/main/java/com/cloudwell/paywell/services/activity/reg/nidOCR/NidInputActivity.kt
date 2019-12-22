@@ -3,17 +3,23 @@ package com.cloudwell.paywell.services.activity.reg.nidOCR
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.cloudwell.paywell.consumer.ui.nidRegistion.model.User
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.base.BaseActivity
+import com.cloudwell.paywell.services.activity.base.LanguagesBaseActivity
+import com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regModel
 import com.cloudwell.paywell.services.activity.reg.nidOCR.view.IInputNidListener
 import com.cloudwell.paywell.services.activity.reg.nidOCR.viewModel.InputNidModelFactory
 import com.cloudwell.paywell.services.activity.reg.nidOCR.viewModel.NidInputViewModel
 import com.cloudwell.paywell.services.databinding.ActivityOldNidPageBinding
+import com.cloudwell.paywell.services.utils.ImageUtility.getResizedBitmap
+import com.google.gson.Gson
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -23,11 +29,12 @@ import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.content_nid_input.*
 import org.jetbrains.anko.toast
+import java.io.ByteArrayOutputStream
 
 
-class NidInputActivity: BaseActivity(), IInputNidListener {
+class NidInputActivity: LanguagesBaseActivity(), IInputNidListener {
 
-    private var isNewNID = false;
+    private var isNID = false;
     private val authViewModelFactory: InputNidModelFactory? = null
 
 
@@ -46,7 +53,7 @@ class NidInputActivity: BaseActivity(), IInputNidListener {
 
         setToolbar("Test")
 
-        isNewNID =  intent.getBooleanExtra("date", false);
+        isNID =  intent.getBooleanExtra("isNID", false);
 
         ivNidFirst.setOnClickListener {
             inputViewModel.isFirstPage = true
@@ -60,7 +67,7 @@ class NidInputActivity: BaseActivity(), IInputNidListener {
         }
 
         btNext.setOnClickListener {
-            inputViewModel.onNextClick(applicationContext, isNewNID)
+            inputViewModel.onNextClick(applicationContext, isNID)
         }
 
     }
@@ -137,9 +144,30 @@ class NidInputActivity: BaseActivity(), IInputNidListener {
     }
 
     override fun openNextActivity(user: User) {
-//        val intent = Intent(applicationContext, InputNidInfoActivity::class.java)
-//        intent.putExtra("data", Gson().toJson(user))
-//        startActivity(intent)
+
+        if (isNID){
+
+            // here you will get captured or selected image<br>
+            val nidFirst = BitmapFactory.decodeFile(inputViewModel.firstPageUri.path)
+            regModel.nidFront =  encodeTobase64(nidFirst)
+
+            val nidSecound = BitmapFactory.decodeFile(inputViewModel.secoundPageUri.path)
+            regModel.nidBack =  encodeTobase64(nidSecound)
+
+        }else{
+            val nidFirst = BitmapFactory.decodeFile(inputViewModel.firstPageUri.path)
+            regModel.smartCardFront =  encodeTobase64(nidFirst)
+
+            val nidSecound = BitmapFactory.decodeFile(inputViewModel.secoundPageUri.path)
+            regModel.smartCardBack =  encodeTobase64(nidSecound)
+        }
+
+
+
+        val intent = Intent(applicationContext, InputNidInfoActivity::class.java)
+        intent.putExtra("data", Gson().toJson(user))
+        intent.putExtra("isNID", isNID)
+        startActivity(intent)
 
     }
 
@@ -151,4 +179,19 @@ class NidInputActivity: BaseActivity(), IInputNidListener {
         ivNidSecound.setImageResource(R.drawable.nid)
 
     }
+
+
+    fun encodeTobase64(image: Bitmap?): String {
+        val baos = ByteArrayOutputStream()
+        val myBm: Bitmap = getResizedBitmap(image, 1000, 700)
+        myBm.compress(Bitmap.CompressFormat.JPEG, 50, baos)
+        val b = baos.toByteArray()
+        val imageEncoded = Base64.encodeToString(b, Base64.DEFAULT).replace("[\n\r]".toRegex(), "")
+        val strBuild = "xxCloud" + imageEncoded + "xxCloud"
+        return strBuild
+    }
+
+
+
+
 }
