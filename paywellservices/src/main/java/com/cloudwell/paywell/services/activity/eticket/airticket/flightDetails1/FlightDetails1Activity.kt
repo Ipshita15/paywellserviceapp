@@ -2,6 +2,7 @@ package com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Html
 import android.view.View
 import androidx.lifecycle.ViewModelProviders
 import com.cloudwell.paywell.services.R
@@ -181,7 +182,8 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
 
 
-        tvBaggage.text = getString(R.string.baggage) + segment?.baggage + " " + getString(R.string.kg_per_adult)
+        val fromHtml = Html.fromHtml(getString(R.string.baggage) + segment?.baggage + " " + getString(R.string.kg_per_adult))
+        tvBaggage.text = fromHtml
 
 
         if (result.passportMadatory!!) {
