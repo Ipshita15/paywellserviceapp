@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionRechargeActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.DESCOHistory;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.DPDCHistory;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
@@ -27,6 +28,8 @@ import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.DateUtils;
+import com.cloudwell.paywell.services.utils.ParameterUtility;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -349,6 +352,9 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
         @Override
         protected String doInBackground(String... data) {
             String responseTxt = null;
+
+            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(DPDCPostpaidBillPayActivity.this).getRID());
+
             // Create a new HttpClient and Post Header
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(data[0]);
@@ -364,6 +370,7 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
                 nameValuePairs.add(new BasicNameValuePair("billYear", mYear));
                 nameValuePairs.add(new BasicNameValuePair("service_type", "DPDC_Enquiry"));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
+                nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
