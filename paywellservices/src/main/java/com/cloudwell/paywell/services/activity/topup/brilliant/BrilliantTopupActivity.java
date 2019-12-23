@@ -34,6 +34,7 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.topup.TopupMainActivity;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.BrilliantTopUpInquiry;
 import com.cloudwell.paywell.services.activity.utility.ivac.DrawableClickListener;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
@@ -42,6 +43,8 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.MyHttpClient;
+import com.cloudwell.paywell.services.utils.ParameterUtility;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.http.client.HttpClient;
@@ -411,6 +414,7 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
                     PIN_NO = pinNoET.getText().toString();
                     if (cd.isConnectingToInternet()) {
                         new TopUpAsync().execute();
+
                     } else {
                         Snackbar snackbar = Snackbar.make(topUpLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
                         snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -474,6 +478,8 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
         private String generateRequestURL() {
             String requestString = null;
 
+            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(BrilliantTopupActivity.this).getRID());
+
             // Single
             EditText phoneNoET, amountET;
 
@@ -487,6 +493,7 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
                     + "username=" + mAppHandler.getImeiNo()
                     + "&password=" + PIN_NO
                     + "&amount=" + amountStr
+                    + "&"+ParameterUtility.KEY_REF_ID+"="  + uniqueKey
                     + "&brilliantNumber=" + COUNTRY_CODE + phoneStr;
 
             return sendingHTTPSTopupRequest(requestString);
