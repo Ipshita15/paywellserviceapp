@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.cloudwell.paywell.consumer.ui.nidRegistion.model.User
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.LanguagesBaseActivity
+import com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regModel
 import com.cloudwell.paywell.services.activity.reg.EntryThirdActivity
 import com.cloudwell.paywell.services.activity.reg.nidOCR.view.IInputNidListener
 import com.cloudwell.paywell.services.activity.reg.nidOCR.viewModel.InputNidModelFactory
@@ -63,22 +64,29 @@ class InputNidInfoActivity: LanguagesBaseActivity(), IInputNidListener {
         btFinished.setOnClickListener {
 
 
+            if (isNID){
+                regModel.nidNumber = ""+etNid.text.toString().trim()
+                regModel.nidName = ""+etUserName.text
+                regModel.nidFatherName = ""+etUserUserFatherName.text
+                regModel.nidMotherName = ""+etUserUserMotherName.text
+                regModel.nidBirthday = ""+etUserUserBirthday.text
+                regModel.nidAddress = ""+etUserAddress.text
+            }else{
+                regModel.smartCardNumber = ""+etNid.text.toString().trim()
+                regModel.smartCardName = ""+etUserName.text
+                regModel.smartCardFatherName = ""+etUserUserFatherName.text
+                regModel.smartCardMotherName = ""+etUserUserMotherName.text
+                regModel.smartCardBirthday = ""+etUserUserBirthday.text
+                regModel.smartCardAddress = ""+etUserAddress.text
+            }
+
             val intent = Intent(applicationContext, EntryThirdActivity::class.java);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
 
             finish()
-
         }
-
-
-
     }
-
-
-
-
-
     override fun showProgress() {
         progressBar.visibility = View.VISIBLE
     }

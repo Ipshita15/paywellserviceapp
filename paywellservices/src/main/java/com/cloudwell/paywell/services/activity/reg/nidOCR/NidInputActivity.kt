@@ -51,9 +51,13 @@ class NidInputActivity: LanguagesBaseActivity(), IInputNidListener {
         binding.viewmode = inputViewModel
         inputViewModel.iView = this
 
-        setToolbar("Test")
 
         isNID =  intent.getBooleanExtra("isNID", false);
+        if (isNID){
+            setToolbar(getString(R.string.title_nid))
+        }else{
+            setToolbar(getString(R.string.title_smart))
+        }
 
         ivNidFirst.setOnClickListener {
             inputViewModel.isFirstPage = true
@@ -109,9 +113,11 @@ class NidInputActivity: LanguagesBaseActivity(), IInputNidListener {
 
                     inputViewModel.firstPageUri = resultUri
                     ivNidFirst.setImageURI(resultUri)
+                    ivForntSeleted.visibility = View.VISIBLE
                 }else{
                     inputViewModel.secoundPageUri = resultUri
                     ivNidSecound.setImageURI(resultUri)
+                    ivBackSeleted.visibility = View.VISIBLE
                 }
 
 

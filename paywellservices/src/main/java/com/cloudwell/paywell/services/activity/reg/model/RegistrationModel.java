@@ -1,5 +1,7 @@
 package com.cloudwell.paywell.services.activity.reg.model;
 
+import org.jetbrains.annotations.NotNull;
+
 public class RegistrationModel {
 
     private String outletName;
@@ -28,6 +30,21 @@ public class RegistrationModel {
 
     private String smartCardFront;
     private String smartCardBack;
+    public String nidNumber;
+
+    public String nidFatherName;
+
+    public String nidName;
+    public String nidMotherName;
+    public String nidBirthday;
+    public String nidAddress;
+    public String smartCardNumber;
+    public String smartCardName;
+    public String smartCardFatherName;
+    public String smartCardMotherName;
+    public String smartCardBirthday;
+    @NotNull
+    public String smartCardAddress;
 
     public RegistrationModel() {
     }
@@ -216,6 +233,104 @@ public class RegistrationModel {
         this.visitingCard = visitingCard;
     }
 
+
+    public String getNidNumber() {
+        return nidNumber;
+    }
+
+    public void setNidNumber(String nidNumber) {
+        this.nidNumber = nidNumber;
+    }
+
+    public String getNidFatherName() {
+        return nidFatherName;
+    }
+
+    public void setNidFatherName(String nidFatherName) {
+        this.nidFatherName = nidFatherName;
+    }
+
+    public String getNidName() {
+        return nidName;
+    }
+
+    public void setNidName(String nidName) {
+        this.nidName = nidName;
+    }
+
+    public String getNidMotherName() {
+        return nidMotherName;
+    }
+
+    public void setNidMotherName(String nidMotherName) {
+        this.nidMotherName = nidMotherName;
+    }
+
+    public String getNidBirthday() {
+        return nidBirthday;
+    }
+
+    public void setNidBirthday(String nidBirthday) {
+        this.nidBirthday = nidBirthday;
+    }
+
+    public String getNidAddress() {
+        return nidAddress;
+    }
+
+    public void setNidAddress(String nidAddress) {
+        this.nidAddress = nidAddress;
+    }
+
+    public String getSmartCardNumber() {
+        return smartCardNumber;
+    }
+
+    public void setSmartCardNumber(String smartCardNumber) {
+        this.smartCardNumber = smartCardNumber;
+    }
+
+    public String getSmartCardName() {
+        return smartCardName;
+    }
+
+    public void setSmartCardName(String smartCardName) {
+        this.smartCardName = smartCardName;
+    }
+
+    public String getSmartCardFatherName() {
+        return smartCardFatherName;
+    }
+
+    public void setSmartCardFatherName(String smartCardFatherName) {
+        this.smartCardFatherName = smartCardFatherName;
+    }
+
+    public String getSmartCardMotherName() {
+        return smartCardMotherName;
+    }
+
+    public void setSmartCardMotherName(String smartCardMotherName) {
+        this.smartCardMotherName = smartCardMotherName;
+    }
+
+    public String getSmartCardBirthday() {
+        return smartCardBirthday;
+    }
+
+    public void setSmartCardBirthday(String smartCardBirthday) {
+        this.smartCardBirthday = smartCardBirthday;
+    }
+
+    @NotNull
+    public String getSmartCardAddress() {
+        return smartCardAddress;
+    }
+
+    public void setSmartCardAddress(@NotNull String smartCardAddress) {
+        this.smartCardAddress = smartCardAddress;
+    }
+
     @Override
     public String toString() {
         return "RegistrationModel{" +
@@ -260,4 +375,5 @@ public class RegistrationModel {
     public void setSmartCardFront(String smartCardFront) {
         this.smartCardFront = smartCardFront;
     }
+
 }

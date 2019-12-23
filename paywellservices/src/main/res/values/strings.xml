@@ -856,6 +856,8 @@
     <string name="ocr_error">"Error reading text: %1$s"</string>
     <string name="finished">সম্পূর্ণ</string>
     <string name="next_text">পরবর্তী</string>
+    <string name="title_nid">এন.আই.ডি-এর তথ্য</string>
+    <string name="title_smart">এন.আই.ডি-এর তথ্য</string>
 
 
 </resources>

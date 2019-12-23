@@ -389,6 +389,27 @@ public class EntryForthActivity extends BaseActivity {
                 nameValuePairs.add(new BasicNameValuePair("operators", operators));
                 nameValuePairs.add(new BasicNameValuePair("downloadSource", downloadSource));
                 nameValuePairs.add(new BasicNameValuePair("dtype", "Tab"));
+
+
+                nameValuePairs.add(new BasicNameValuePair("nidFrontPic", ""+regModel.getNidFront()));
+                nameValuePairs.add(new BasicNameValuePair("nidBackPic", ""+regModel.getNidBack()));
+                nameValuePairs.add(new BasicNameValuePair("nidNumber", ""+regModel.getNidNumber()));
+                nameValuePairs.add(new BasicNameValuePair("nidName", ""+regModel.getNidName()));
+                nameValuePairs.add(new BasicNameValuePair("nidFatherName", ""+regModel.getNidFatherName()));
+                nameValuePairs.add(new BasicNameValuePair("nidMotherName", ""+regModel.getNidFatherName()));
+                nameValuePairs.add(new BasicNameValuePair("nidBirthday", ""+regModel.getNidBirthday()));
+                nameValuePairs.add(new BasicNameValuePair("nidAddress", ""+regModel.getNidAddress()));
+
+
+                nameValuePairs.add(new BasicNameValuePair("smartCardFrontPic", ""+regModel.getSmartCardFront()));
+                nameValuePairs.add(new BasicNameValuePair("smartCardBackPic", ""+regModel.getSmartCardBack()));
+                nameValuePairs.add(new BasicNameValuePair("smartCardNumber", ""+regModel.getSmartCardNumber()));
+                nameValuePairs.add(new BasicNameValuePair("smartCardName", ""+regModel.getSmartCardName()));
+                nameValuePairs.add(new BasicNameValuePair("smartCardFatherName", ""+regModel.getSmartCardFatherName()));
+                nameValuePairs.add(new BasicNameValuePair("smartCardMotherName", ""+regModel.getSmartCardMotherName()));
+                nameValuePairs.add(new BasicNameValuePair("smartCardBirthday", ""+regModel.getSmartCardBirthday()));
+                nameValuePairs.add(new BasicNameValuePair("smartCardAddress", ""+regModel.getSmartCardAddress()));
+
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
