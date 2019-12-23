@@ -51,6 +51,7 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.http.NameValuePair;
@@ -963,6 +964,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
 
     @SuppressWarnings("deprecation")
     private void showCurrentTopupLog() {
+
         if (topUpLayout.getChildCount() > 0) {
             StringBuilder reqStrBuilder = new StringBuilder();
             for (int i = 0; i < topUpLayout.getChildCount(); i++) {
@@ -1130,9 +1132,13 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
 
                     }
 
+
                     String operatorTextForServer = getOperatorTextForServer(result);
 
-                    TopupData topupDatum = new TopupData(amountStr, planStr, phoneStr, operatorTextForServer);
+                    String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).getRID());
+
+
+                    TopupData topupDatum = new TopupData(amountStr, planStr, phoneStr, operatorTextForServer,uniqueKey);
                     topupDatumList.add(topupDatum);
 
                 }
@@ -1175,8 +1181,10 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
                 }
 
                 String operatorTextForServer = getOperatorTextForServer(result);
+                String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).getRID());
 
-                TopupData topupDatum = new TopupData(amountStr, planStr, phoneStr, operatorTextForServer);
+
+                TopupData topupDatum = new TopupData(amountStr, planStr, phoneStr, operatorTextForServer,uniqueKey);
                 topupDatumList.add(topupDatum);
 
             }
