@@ -98,7 +98,9 @@ public interface APIService {
                                                          @Field("account_no") String accountNo,
                                                          @Field("month") String month,
                                                          @Field("year") String year,
+                                                         @Field("ref_id") String refId,
                                                          @Field("format") String format);
+
 
     @POST("RetailerService/checkBalance")
     @FormUrlEncoded
@@ -256,7 +258,7 @@ public interface APIService {
 
     @POST()
     @Multipart
-    Call<ResEkShopToken> getEkshopToken(@Url String url, @Part("uid") String rid, @Part("utype") String utype);
+    Call<ResEkShopToken> getEkshopToken(@Url String url, @Part("uid") String rid, @Part("utype") String utype, @Part("ref_id") String refId);
 
     @POST()
     @Multipart
