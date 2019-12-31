@@ -61,12 +61,17 @@ public class DatabaseClient {
         }
     };
 
-    private static final Migration MIGRATION_1_4 = new Migration(1, 4) {
+    private static final Migration MIGRATION_4_5 = new Migration(4, 5) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE IF NOT EXISTS `TripScheduleInfo` (`from_location` TEXT NOT NULL, `to_location` TEXT NOT NULL, `schedule_Id` TEXT NOT NULL, `validity_date` TEXT NOT NULL, PRIMARY KEY(`schedule_Id`))");
+        }
+    };
 
+    private static final Migration MIGRATION_1_5 = new Migration(1, 5) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
             updateMigration(database);
-
         }
     };
 
@@ -128,7 +133,7 @@ public class DatabaseClient {
         //creating the app database with Room database builder
         //MyToDos is the name of the database
         appDatabase = Room.databaseBuilder(mCtx, AppDatabase.class, DatabaseConstant.KEY_PARNELL_DATABASE_NAME)
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_1_4)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4,MIGRATION_4_5, MIGRATION_1_5)
                 .build();
     }
 }
