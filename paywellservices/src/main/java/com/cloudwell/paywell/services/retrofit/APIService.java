@@ -89,7 +89,8 @@ public interface APIService {
                                                  @Field("districtId") String districtId,
                                                  @Field("branchId") String branchId,
                                                  @Field("depositslip") String depositslip,
-                                                 @Field("Amount") String amount);
+                                                 @Field("Amount") String amount,
+                                                 @Field("ref_id") String refId);
 
     @POST("PaywelltransactionPollyBiddyut/pollyBiddyutBillStatusQueryAPI")
     @FormUrlEncoded
@@ -346,7 +347,8 @@ public interface APIService {
                                                  @Field("trxOrPhoneNo") String transactionId,
                                                  @Field("format") String customerName,
                                                  @Field("gateway_id") String customerPhone,
-                                                 @Field("amount") String customerAddress);
+                                                 @Field("amount") String customerAddress,
+                                                 @Field("ref_id") String refId);
 
     @FormUrlEncoded
     @POST
@@ -355,7 +357,8 @@ public interface APIService {
                                      @Field("imei") String skey,
                                      @Field("format") String customerName,
                                      @Field("gateway_id") String customerPhone,
-                                     @Field("limit") String limit);
+                                     @Field("limit") String limit,
+                                     @Field("ref_id") String refId);
 
 
 
