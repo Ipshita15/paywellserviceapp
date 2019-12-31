@@ -262,7 +262,7 @@ public interface APIService {
 
     @POST()
     @Multipart
-    Call<ResEKReport> getReport(@Url String url, @Part("uid") String rid, @Part("start_date") String start_date, @Part("end_date") String end_date, @Part("order_code") String order_code);
+    Call<ResEKReport> getReport(@Url String url, @Part("uid") String rid, @Part("start_date") String start_date, @Part("end_date") String end_date, @Part("order_code") String order_code, @Part("ref_id") String refId);
 
     @POST("PaywellParibahanService/getBusListData")
     @FormUrlEncoded
