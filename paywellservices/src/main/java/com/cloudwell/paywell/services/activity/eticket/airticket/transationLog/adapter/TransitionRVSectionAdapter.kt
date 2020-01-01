@@ -41,6 +41,12 @@ class TransitionRVSectionAdapter(val mContext: Context, private val title: Strin
         val iHolder = holder as ItemViewHolder
         val model = list[position]
 
+//        use for testing purpose
+//        model.message = "Ticketed";
+//        model.invoiceUrl = "http://www.africau.edu/images/default/sample.pdf"
+//        model.invoiceUrlWithFare = "http://www.pdf995.com/samples/pdf.pdf"
+
+
         if (mIsEnglish) {
             iHolder.tvBookingId.typeface = AppController.getInstance().oxygenLightFont
             iHolder.tvTricketPrices.typeface = AppController.getInstance().oxygenLightFont
@@ -84,6 +90,8 @@ class TransitionRVSectionAdapter(val mContext: Context, private val title: Strin
                 onActionButtonClick!!.onItemClick(model)
             }
         }
+
+
         val m = model.message
         if (m.equals(AllConstant.Booked) || m.equals(AllConstant.Ticketed)) {
             iHolder.tvAction.visibility = View.VISIBLE
@@ -102,13 +110,20 @@ class TransitionRVSectionAdapter(val mContext: Context, private val title: Strin
             onActionButtonClick?.onRootViewClick(datum = model)
         }
 
-        iHolder.tvBookingId.setOnLongClickListener {
+        iHolder.tvBookingId.setOnClickListener {
 
             val clipboard = mContext.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
             clipboard.setText(model.bookingId)
             Toast.makeText(mContext, "Booking ID to clip", Toast.LENGTH_LONG).show()
 
-            true
+        }
+
+        iHolder.ivCopy.setOnClickListener {
+
+            val clipboard = mContext.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+            clipboard.setText(model.bookingId)
+            Toast.makeText(mContext, "Booking ID to clip", Toast.LENGTH_LONG).show()
+
         }
 
 
@@ -134,6 +149,7 @@ class TransitionRVSectionAdapter(val mContext: Context, private val title: Strin
         internal var tvTricketPrices: TextView
         internal var tvStatus: TextView
         internal var ivSymbolTicketed: ImageView
+        internal var ivCopy: ImageView
         internal var tvAction: ImageView
         internal var viewBackgroudAction: View
         internal var viewPdfView: View
@@ -142,6 +158,7 @@ class TransitionRVSectionAdapter(val mContext: Context, private val title: Strin
         init {
             ivRootLayout = view.findViewById(R.id.ivRootLayout)
             tvBookingId = view.findViewById(R.id.tvBookingId)
+            ivCopy = view.findViewById(R.id.ivCopy)
             tvTricketPrices = view.findViewById(R.id.tvTricketPrices)
             tvStatus = view.findViewById(R.id.tvStatus)
             ivSymbolTicketed = view.findViewById(R.id.ivSymbolTicketed)

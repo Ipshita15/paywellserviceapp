@@ -1,7 +1,6 @@
 
 package com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("unused")
@@ -12,9 +11,14 @@ public class BillDatum {
     @SerializedName("bill_no")
     private String billNo;
 
-    public BillDatum(Double amount, String billNo) {
+    @SerializedName("ref_id")
+    private String refDd;
+
+
+    public BillDatum(Double amount, String billNo, String refDd) {
         this.amount = amount;
         this.billNo = billNo;
+        this.refDd = refDd;
     }
 
     public Double getAmount() {
@@ -33,4 +37,11 @@ public class BillDatum {
         this.billNo = billNo;
     }
 
+    public void setRefDd(String refDd) {
+        this.refDd = refDd;
+    }
+
+    public String getRefDd() {
+        return refDd;
+    }
 }

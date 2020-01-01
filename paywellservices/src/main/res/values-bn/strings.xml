@@ -73,6 +73,7 @@
     <string name="home_eticket_bus">বাস টিকিট</string>
     <string name="home_eticket_air">বিমান টিকিট</string>
     <string name="home_product_ajker_deal">আজকের ডিল</string>
+    <string name="home_product_ekshop">এক-শপ</string>
     <string name="home_product_pw_wholesale">পেওয়েল\nহোলসেল</string>
     <string name="home_product_pw_wholesale_title">পেওয়েল হোলসেল</string>
     <string name="home_settings_reset_pin">পিন রিসেট</string>
@@ -223,7 +224,7 @@
     <string name="verify_quote">উপরোক্ত নম্বরে একটি পিন আসবে এবং স্বয়ংক্রিয় ভাবে নম্বরটি ভেরিফাই হয়ে যাবে।</string>
     <string name="allow_error_msg">অনুমতি নেই। প্রথমে পিন পরিবর্তন করুন</string>
     <string name="select_phn_title_msg">নম্বর নির্বাচন করুন</string>
-    <string name="select_phn_title_air_ticket">সাহায্য জন্য কল করুন:</string>
+    <string name="select_phn_title_air_ticket">সাহায্যের জন্য কল করুন:</string>
     <string name="amount_transfer_msg">টাকা স্থানান্তর সফল</string>
     <string name="success_msg">সফল</string>
     <string name="request_failed_msg">ফেল</string>
@@ -572,6 +573,11 @@
     <string name="search_again">Search again</string>
     <string name="search">সার্চ</string>
     <string name="cancel">বুকিং বাতিল</string>
+    <string name="ticket_void_menu_text">টিকেট ভয়েড</string>
+    <string name="ticket_refund_menu_text">টিকেট রিফান্ড</string>
+    <string name="ticket_issue_menu_text">ইস্যু টিকেট</string>
+    <string name="ticket_reissue_menu_text">রি-ইস্যু টিকেট</string>
+    <string name="ticket_docs_update_info_menu_text">তথ্য পরিবর্তন</string>
     <string name="transaction_log">বুকিং লগ</string>
     <string name="title_booking_and_review">Review and Book</string>
     <string name="baggage_policy_details"><![CDATA[Baggage & Policy Details]]></string>
@@ -815,8 +821,12 @@
     <string name="invalid_input">Invalid input</string>
     <string name="nagad_refill_log_inquiry">রিফিল অনুসন্ধান</string>
     <string name="log_refill_limit_title_msg">পূর্ববর্তী রিফিলের সংখ্যা</string>
-
-
+    <string name="re_submit_reb">পুনরায় জমা দিন</string>
+    <string name="title_issue_ticket">ইস্যু টিকেট</string>
+    <string name="bookingId" >বুকিং আইডি</string>
+    <string name="title_void_ticket">Ticket Void</string>
+    <string name="view_ticket_with_fare">View Ticket With Fare</string>
+    <string name="send_email_with_fare">Send Email With Fare</string>
 
 
 </resources>

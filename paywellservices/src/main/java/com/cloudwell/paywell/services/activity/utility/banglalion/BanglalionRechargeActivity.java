@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -14,11 +15,16 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.utility.banglalion.model.BanglalionHistory;
+import com.cloudwell.paywell.services.activity.utility.ivac.IvacFeePayActivity;
+import com.cloudwell.paywell.services.activity.utility.ivac.model.IvacHistory;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.DateUtils;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.http.NameValuePair;
@@ -35,11 +41,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 
 public class BanglalionRechargeActivity extends BaseActivity implements View.OnClickListener {
 
     private EditText mPin;
-    private EditText mAccountNo;
+    private AppCompatAutoCompleteTextView mAccountNo;
     private Button mConfirm;
     private ConnectionDetector cd;
     private EditText mAmount;
@@ -48,6 +55,11 @@ public class BanglalionRechargeActivity extends BaseActivity implements View.OnC
     private AppHandler mAppHandler;
     private LinearLayout mLinearLayout;
     private AsyncTask<String, Integer, String> mSubmitAsync;
+    private AsyncTask<Void, Void, Void> insertBanglaliohHistoryAsyncTask;
+    private AsyncTask<Void, Void, Void> getAllBanglalionHistoryAsyncTask;
+
+    List<String> customerNumberList = new ArrayList<>();
+
 
 
     @Override
@@ -96,6 +108,50 @@ public class BanglalionRechargeActivity extends BaseActivity implements View.OnC
         }
 
         mConfirm.setOnClickListener(this);
+
+        getAllBanglalionHistoryAsyncTask = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                customerNumberList.clear();
+                List<BanglalionHistory> banglalionHistories = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().getAllBanglalionHistoryHistory();
+                for (int i = 0; i < banglalionHistories.size(); i++) {
+                    customerNumberList.add(banglalionHistories.get(i).getCustomerNumber());
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+            }
+
+            @Override
+            protected void onPostExecute(Void list) {
+                super.onPostExecute(list);
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(BanglalionRechargeActivity.this, android.R.layout.select_dialog_item, customerNumberList);
+                mAccountNo.setThreshold(1);
+                mAccountNo.setAdapter(adapter);
+                mAccountNo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        mAccountNo.showDropDown();
+                    }
+                });
+
+
+
+
+            }
+
+        }.execute();
+
+        mAccountNo.setOnTouchListener((v, event) -> {
+            mAccountNo.showDropDown();
+            return false;
+        });
     }
 
     public void onClick(View v) {
@@ -161,6 +217,18 @@ public class BanglalionRechargeActivity extends BaseActivity implements View.OnC
         @Override
         protected void onPostExecute(String result) {
             dismissProgressDialog();
+            insertBanglaliohHistoryAsyncTask = new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+
+                    String currentDataAndTIme = DateUtils.INSTANCE.getCurrentDataAndTIme();
+                    BanglalionHistory banglalionHistory = new BanglalionHistory();
+                    banglalionHistory.setCustomerNumber(accountNo);
+                    banglalionHistory.setDate(currentDataAndTIme);
+                    DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().insertBanglalionHistory(banglalionHistory);
+                    return null;
+                }
+            }.execute();
             try {
                 JSONObject jsonObject = new JSONObject(result);
                 String status = jsonObject.getString("status");

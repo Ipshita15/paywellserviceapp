@@ -61,7 +61,7 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:text="Bill No: " />
             <TextView
                 android:id="@+id/billNumTV"
@@ -78,13 +78,48 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Total Amount: " />
+                android:text="Bill Amount: " />
             <TextView
                 android:id="@+id/billAmountTV"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:hint="Total Amount"/>
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/serviceChargeLL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Service Charge: " />
+            <TextView
+                android:id="@+id/serviceChargeTV"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:hint="service charge"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/commissionLL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                android:text="Commission: " />
+            <TextView
+                android:id="@+id/commissionTV"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:hint="commission"/>
+        </LinearLayout>
+
 
     </LinearLayout>
 

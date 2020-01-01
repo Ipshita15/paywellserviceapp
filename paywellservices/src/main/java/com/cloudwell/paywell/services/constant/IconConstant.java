@@ -24,6 +24,7 @@ public class IconConstant {
     public static final String KEY_ic_karnafuli_gas = "ic_karnafuli_gas";
     public static final String KEY_ic_train_ticket = "ic_train_ticket";
     public static final String KEY_ic_ajker_deal = "ic_ajker_deal";
+    public static final String KEY_ic_ekshop = "ic_ekshop";
     public static final String KEY_ic_wholesale = "ic_wholesale";
     public static final String KEY_ic_statement = "ic_statement";
     public static final String KEY_ic_bank_deposit = "ic_bank_deposit";

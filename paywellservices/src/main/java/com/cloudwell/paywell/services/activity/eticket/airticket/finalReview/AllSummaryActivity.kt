@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.text.Html
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
 import android.view.Gravity
@@ -136,9 +137,10 @@ class AllSummaryActivity : AirTricketBaseActivity() {
                 tvCabinClass.text = getString(R.string.cabin_class) + " ${airline?.cabinClass}"
 
 
+                val fromHtml = Html.fromHtml(getString(R.string.baggage) + resposeAirPriceSearch.data?.results?.get(0)?.segments?.get(0)?.baggage + " " + getString(R.string.kg_per_adult))
 
 
-                tvBaggage.text = getString(R.string.baggage) + resposeAirPriceSearch.data?.results?.get(0)?.segments?.get(0)?.baggage + " " + getString(com.cloudwell.paywell.services.R.string.kg_per_adult)
+                tvBaggage.text = fromHtml
 
 
                 tveDpartureTime.text = "" + text

@@ -75,7 +75,7 @@
                     android:id="@+id/homeBtnEticket"
                     style="@style/HomeButtonNew"
                     android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_eticket"
+                    android:drawableTop="@drawable/ticketing_icon"
                     android:onClick="onButtonClicker"
                     android:text="@string/home_eticket"
                     android:textAllCaps="false"

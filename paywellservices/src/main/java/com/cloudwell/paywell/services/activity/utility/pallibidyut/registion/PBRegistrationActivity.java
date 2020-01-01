@@ -15,13 +15,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.base.LanguagesBaseActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.REBNotification;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -38,7 +40,7 @@ import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
 
-public class PBRegistrationActivity extends BaseActivity implements View.OnClickListener {
+public class PBRegistrationActivity extends LanguagesBaseActivity implements View.OnClickListener {
     private EditText mPinNumber, mAccount, mConfirmAccount, mCustomerName, mPhone;
     private Button mSubmitButton;
     private ConnectionDetector cd;
@@ -107,6 +109,22 @@ public class PBRegistrationActivity extends BaseActivity implements View.OnClick
             mSubmitButton.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
         mSubmitButton.setOnClickListener(this);
+
+
+        try {
+            String data = getIntent().getStringExtra("REBNotification");
+            if (!data.equals("")){
+                Gson gson = new Gson();
+                REBNotification notificationDetailMessage = gson.fromJson(data, REBNotification.class);
+                mAccount.setText(""+notificationDetailMessage.getTrxData().getAccountNo());
+                mConfirmAccount.setText(""+notificationDetailMessage.getTrxData().getAccountNo());
+                mCustomerName.setText(""+notificationDetailMessage.getTrxData().getCustomerName());
+                mPhone.setText(""+notificationDetailMessage.getTrxData().getCustomerPhone());
+                mSubmitButton.setText(""+getString(R.string.re_submit_reb));
+            }
+        }catch (Exception e){
+
+        }
     }
 
     @Override

@@ -278,7 +278,7 @@
                                 android:textAppearance="?android:attr/textAppearanceMedium"/>
                         </LinearLayout>
 
-                        <EditText
+                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                             android:id="@+id/etPhnNum"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
