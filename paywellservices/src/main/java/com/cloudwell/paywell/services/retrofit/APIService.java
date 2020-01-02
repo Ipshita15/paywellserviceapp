@@ -285,7 +285,8 @@ public interface APIService {
                                  @Field("bus_id") String bus_id,
                                  @Field("departure_id") String departure_id,
                                  @Field("departure_date") String departure_date,
-                                 @Field("seat_ids") String seat_ids);
+                                 @Field("seat_ids") String seat_ids,
+                                 @Field("ref_id") String refId);
 
     @FormUrlEncoded
     @POST("PaywellParibahanService/getTransactionData")
@@ -318,7 +319,8 @@ public interface APIService {
                                                 @Field("bus_is_ac") String bus_is_ac,
                                                 @Field("extra_charge") Double extra_charge,
                                                 @Field("ticket_price") Double ticket_price,
-                                                @Field("total_amount") String total_amount);
+                                                @Field("total_amount") String total_amount,
+                                                @Field("ref_id") String refId);
 
     @FormUrlEncoded
     @POST("PaywellParibahanService/confirmPayment")

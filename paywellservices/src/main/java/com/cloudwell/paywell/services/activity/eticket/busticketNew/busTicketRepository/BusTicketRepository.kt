@@ -11,6 +11,7 @@ import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.database.DatabaseClient
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.BusCalculationHelper
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import com.orhanobut.logger.Logger
 import okhttp3.ResponseBody
 import org.jetbrains.anko.doAsync
@@ -280,6 +281,7 @@ class BusTicketRepository() {
         val skey = ApiUtils.KEY_SKEY
 
         val accessKey = AppStorageBox.get(mContext, AppStorageBox.Key.ACCESS_KEY) as String
+        val uniqueKey = UniqueKeyGenerator.getUniqueKey(mAppHandler!!.rid)
 
         val data = MutableLiveData<ResSeatInfo>()
 
@@ -292,7 +294,8 @@ class BusTicketRepository() {
                 bus_id,
                 departure_id,
                 departure_date,
-                seat_ids
+                seat_ids,uniqueKey
+
         ).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
@@ -347,7 +350,7 @@ class BusTicketRepository() {
 
     }
 
-    fun callBookingAPI(model: TripScheduleInfoAndBusSchedule, requestBusSearch: RequestBusSearch, boothInfo: BoothInfo, seatLevel: String, seatId: String, totalAPIValuePrices: String): MutableLiveData<ResSeatCheckBookAPI> {
+    fun callBookingAPI(model: TripScheduleInfoAndBusSchedule, requestBusSearch: RequestBusSearch, boothInfo: BoothInfo, seatLevel: String, seatId: String, totalAPIValuePrices: String, uniqueKey: String): MutableLiveData<ResSeatCheckBookAPI> {
 
         mAppHandler = AppHandler.getmInstance(mContext)
         val userName = mAppHandler!!.imeiNo
@@ -377,7 +380,7 @@ class BusTicketRepository() {
                 model.busLocalDB?.busIsAc,
                 transport.extraCharge,
                 BusCalculationHelper.getPricesWithExtraAmount(model.busSchedule?.ticketPrice, requestBusSearch.date, transport = transport, isExtraAmount = false),
-                totalAPIValuePrices)
+                totalAPIValuePrices,uniqueKey)
                 .enqueue(object : Callback<ResSeatCheckBookAPI> {
                     override fun onFailure(call: Call<ResSeatCheckBookAPI>, t: Throwable) {
                         data.value = null
