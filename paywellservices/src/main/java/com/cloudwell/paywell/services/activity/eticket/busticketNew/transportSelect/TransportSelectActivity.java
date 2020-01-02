@@ -134,11 +134,11 @@ public class TransportSelectActivity extends BusTricketBaseActivity implements V
 
     }
 
-    public void goToSearchBusTicket() {
+    public void goToSearchBusTicket(String uniqueKey) {
         AppStorageBox.put(TransportSelectActivity.this, AppStorageBox.Key.SELETED_BUS_INFO, mTransportList.get(busListSpinner.getSelectedItemPosition()));
         Transport transport = (Transport) AppStorageBox.get(getApplicationContext(), AppStorageBox.Key.SELETED_BUS_INFO);
 
-        viewMode.getSchudle(isInternetConnection(), transport);
+        viewMode.getSchudle(isInternetConnection(), transport, uniqueKey);
 
 
     }
@@ -162,7 +162,8 @@ public class TransportSelectActivity extends BusTricketBaseActivity implements V
 
     @Override
     public void onClick(View v) {
-        goToSearchBusTicket();
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).getRID());
+        goToSearchBusTicket(uniqueKey);
     }
 
     @Override

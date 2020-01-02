@@ -272,7 +272,7 @@ public interface APIService {
 
     @POST("PaywellParibahanService/getBusSchedule?")
     @FormUrlEncoded
-    Call<ResponseBody> getBusSchedule(@Field("username") String username, @Field("transport_id") String transport_id, @Field("skey") String skey, @Field("accessKey") String accessKey);
+    Call<ResponseBody> getBusSchedule(@Field("username") String username, @Field("transport_id") String transport_id, @Field("skey") String skey, @Field("accessKey") String accessKey, @Field("ref_id") String refId);
 
 
     @FormUrlEncoded
