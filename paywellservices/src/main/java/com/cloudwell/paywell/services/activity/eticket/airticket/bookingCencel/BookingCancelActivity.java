@@ -22,6 +22,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.f
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.JsonObject;
 
@@ -105,8 +106,9 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
     private void submitCancelRequest(String userName, String pass, String bookingId, String cancelReason, String apiFormat) {
 
         showProgressDialog();
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(mAppHandler.getRID());
 
-        ApiUtils.getAPIService().cancelBooking(userName, pass, bookingId, cancelReason, apiFormat).enqueue(new Callback<JsonObject>() {
+        ApiUtils.getAPIService().cancelBooking(userName, pass, bookingId, cancelReason, apiFormat, uniqueKey).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 dismissProgressDialog();

@@ -109,7 +109,9 @@ class AirThicketRepository(private val mContext: Context) {
 
         val data = MutableLiveData<ResposeAirPriceSearch>()
 
-        val callAirSearch = ApiUtils.getAPIService().callairPriceSearch(userName, requestAirSearch)
+        val uniqueKey = UniqueKeyGenerator.getUniqueKey(mAppHandler!!.rid)
+
+        val callAirSearch = ApiUtils.getAPIService().callairPriceSearch(userName, requestAirSearch,uniqueKey)
         callAirSearch.enqueue(object : Callback<ResposeAirPriceSearch> {
             override fun onResponse(call: Call<ResposeAirPriceSearch>, response: Response<ResposeAirPriceSearch>) {
                 if (response.isSuccessful) {
@@ -186,8 +188,8 @@ class AirThicketRepository(private val mContext: Context) {
         model.searchId = requestAirPrebookingSearchParams.searchId
         model.resultID = requestAirPrebookingSearchParams.resultID
 
-
-        val callAirSearch = ApiUtils.getAPIService().airPreBooking(userName, format, model)
+        val uniqueKey = UniqueKeyGenerator.getUniqueKey(mAppHandler!!.rid)
+        val callAirSearch = ApiUtils.getAPIService().airPreBooking(userName, format, model,uniqueKey)
         callAirSearch.enqueue(object : Callback<ResAirPreBooking> {
             override fun onResponse(call: Call<ResAirPreBooking>, response: Response<ResAirPreBooking>) {
                 if (response.isSuccessful) {
@@ -304,7 +306,9 @@ class AirThicketRepository(private val mContext: Context) {
         model.searchId = requestAirPrebookingSearchParams.searchId
         model.resultID = requestAirPrebookingSearchParams.resultID
 
-        val callAirSearch = ApiUtils.getAPIService().airBooking(userName, piN_NO, format, model)
+        val uniqueKey = UniqueKeyGenerator.getUniqueKey(mAppHandler!!.rid)
+
+        val callAirSearch = ApiUtils.getAPIService().airBooking(userName, piN_NO, format, model, uniqueKey)
         callAirSearch.enqueue(object : Callback<ResBookingAPI> {
             override fun onResponse(call: Call<ResBookingAPI>, response: Response<ResBookingAPI>) {
                 if (response.isSuccessful) {
@@ -376,8 +380,8 @@ class AirThicketRepository(private val mContext: Context) {
         val username = mAppHandler!!.imeiNo
 
         val data = MutableLiveData<ResIssueTicket>()
-
-        val responseBodyCall = ApiUtils.getAPIService().callIssueTicketAPI(username, pinNumber, bookingId, ssAcceptedPriceChangeandIssueTicket)
+        val uniqueKey = UniqueKeyGenerator.getUniqueKey(mAppHandler!!.rid)
+        val responseBodyCall = ApiUtils.getAPIService().callIssueTicketAPI(username, pinNumber, bookingId, ssAcceptedPriceChangeandIssueTicket, uniqueKey)
         responseBodyCall.enqueue(object : Callback<ResIssueTicket> {
             override fun onResponse(call: Call<ResIssueTicket>, response: Response<ResIssueTicket>) {
 

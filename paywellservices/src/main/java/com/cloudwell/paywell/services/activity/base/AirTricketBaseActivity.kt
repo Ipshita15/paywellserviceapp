@@ -24,6 +24,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.ticketCencel.mo
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.constant.AllConstant
 import com.cloudwell.paywell.services.retrofit.ApiUtils
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.JsonObject
 import retrofit2.Call
@@ -231,8 +232,9 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
     private fun submitCancelRequest(userName: String, pass: String, bookingId: String, cancelReason: String, apiFormat: String) {
 
         showProgressDialog()
+        val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).rid)
 
-        ApiUtils.getAPIService().cancelBooking(userName, pass, bookingId, cancelReason, apiFormat).enqueue(object : Callback<JsonObject> {
+        ApiUtils.getAPIService().cancelBooking(userName, pass, bookingId, cancelReason, apiFormat, uniqueKey).enqueue(object : Callback<JsonObject> {
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 if (response.isSuccessful) {
 

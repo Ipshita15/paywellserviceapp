@@ -11,7 +11,9 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.m
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.Segment
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.view.SeachViewStatus
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.model.ResCommistionMaping
+import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.utils.CalculationHelper
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import java.util.*
 
 /**
@@ -120,6 +122,7 @@ class FlightSearchViewModel : AirTicketBaseViewMode() {
         if (!internetConnection) {
             baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
         } else {
+
             callCommissionMapingAPI();
         }
 

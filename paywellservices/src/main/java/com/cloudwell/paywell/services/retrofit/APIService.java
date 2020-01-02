@@ -143,7 +143,8 @@ public interface APIService {
     @Multipart
     @POST("PaywelltransactionHaltrip/airPriceSearch")
     Call<ResposeAirPriceSearch> callairPriceSearch(@Part("username") String username,
-                                                   @Part("search_params") RequestAirPriceSearch search_params);
+                                                   @Part("search_params") RequestAirPriceSearch search_params,
+                                                   @Part("ref_id") String refId);
 
 
     @Multipart
@@ -165,7 +166,8 @@ public interface APIService {
     @POST("PaywelltransactionHaltrip/airPreBooking")
     Call<ResAirPreBooking> airPreBooking(@Part("username") String username,
                                          @Part("format") String format,
-                                         @Part("search_params") RequestAirPrebookingSearchParamsForServer search_params);
+                                         @Part("search_params") RequestAirPrebookingSearchParamsForServer search_params,
+                                         @Part("ref_id") String refId);
 
 
     @Multipart
@@ -173,7 +175,8 @@ public interface APIService {
     Call<ResBookingAPI> airBooking(@Part("username") String username,
                                    @Part("password") String password,
                                    @Part("format") String format,
-                                   @Part("search_params") RequestAirPrebookingSearchParamsForServer search_params);
+                                   @Part("search_params") RequestAirPrebookingSearchParamsForServer search_params,
+                                   @Part("ref_id") String refId);
 
     @POST("PaywelltransactionHaltrip/cancelBooking")
     @FormUrlEncoded
@@ -181,7 +184,8 @@ public interface APIService {
                                    @Field("password") String password,
                                    @Field("BookingID") String bookingId,
                                    @Field("reason") String cancelReason,
-                                   @Field("format") String apiFormat);
+                                   @Field("format") String apiFormat,
+                                   @Field("ref_id") String refId);
 
 
     @POST("PaywelltransactionHaltrip/cancelTicket")
@@ -251,7 +255,7 @@ public interface APIService {
 
     @POST("PaywelltransactionHaltrip/airTicketIssue")
     @Multipart
-    Call<ResIssueTicket> callIssueTicketAPI(@Part("username") String username, @Part("password") String password, @Part("BookingID") String BookingID, @Part("IsAcceptedPriceChangeandIssueTicket") boolean ssAcceptedPriceChangeandIssueTicket);
+    Call<ResIssueTicket> callIssueTicketAPI(@Part("username") String username, @Part("password") String password, @Part("BookingID") String BookingID, @Part("IsAcceptedPriceChangeandIssueTicket") boolean ssAcceptedPriceChangeandIssueTicket, @Part("ref_id") String refId);
 
 
     @POST("PaywelltransactionHaltrip/reIssueNotificationAccept")

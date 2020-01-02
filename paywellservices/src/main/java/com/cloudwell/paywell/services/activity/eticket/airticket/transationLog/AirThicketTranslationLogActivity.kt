@@ -14,6 +14,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketM
 import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.adapter.TransitionRVSectionAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.viewBookingInfo.ViewBookingInfoActivity
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_transtionlog.*
 
@@ -37,6 +38,8 @@ open class AirThicketTranslationLogActivity : TransitionLogBaseActivity() {
         mViewMode.responseList.observe(this, Observer {
             setupList(it)
         })
+
+
 
         mViewMode.getBookingStatus(isInternetConnection, limit)
     }
