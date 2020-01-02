@@ -11,6 +11,7 @@ import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.database.DatabaseClient
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.BusCalculationHelper
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import com.orhanobut.logger.Logger
 import okhttp3.ResponseBody
 import org.jetbrains.anko.doAsync
@@ -37,14 +38,14 @@ class BusTicketRepository() {
     val statusOfDateInserted = SingleLiveEvent<String>()
 
 
-    fun getBusList(): MutableLiveData<List<Transport>> {
+    fun getBusList(uniqueKey: String): MutableLiveData<List<Transport>> {
         mAppHandler = AppHandler.getmInstance(mContext)
         val userName = mAppHandler!!.imeiNo
         val skey = ApiUtils.KEY_SKEY
 
         val data = MutableLiveData<List<Transport>>()
 
-        ApiUtils.getAPIServicePHP7().getBusListData(userName, skey).enqueue(object : Callback<ResGetBusListData> {
+        ApiUtils.getAPIServicePHP7().getBusListData(userName, skey,uniqueKey).enqueue(object : Callback<ResGetBusListData> {
             override fun onResponse(call: Call<ResGetBusListData>, response: Response<ResGetBusListData>) {
                 if (response.isSuccessful) {
                     val body = response.body()

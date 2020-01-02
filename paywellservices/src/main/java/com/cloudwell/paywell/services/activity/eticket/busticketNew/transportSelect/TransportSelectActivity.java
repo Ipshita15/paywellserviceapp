@@ -17,9 +17,11 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Transp
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.search.BusCitySearchActivity;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.transportSelect.view.IBusSeletedView;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.transportSelect.viewmodel.BusSelectedViewModel;
+import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.app.storage.AppStorageBox;
 import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus;
 import com.cloudwell.paywell.services.eventBus.model.MessageToBottom;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -60,7 +62,8 @@ public class TransportSelectActivity extends BusTricketBaseActivity implements V
         showProgressDialog();
 
         if (isInternetConnection()) {
-            callGetBusListAPI();
+            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).getRID());
+            callGetBusListAPI(uniqueKey);
         } else {
             showNoInternetConnectionFound();
         }
@@ -101,9 +104,9 @@ public class TransportSelectActivity extends BusTricketBaseActivity implements V
         GlobalApplicationBus.getBus().unregister(this);
     }
 
-    private void callGetBusListAPI() {
+    private void callGetBusListAPI(String uniqueKey) {
         mBusTicketRepository = new BusTicketRepository();
-        mBusTicketRepository.getBusList().observeForever(new Observer<List<Transport>>() {
+        mBusTicketRepository.getBusList(uniqueKey).observeForever(new Observer<List<Transport>>() {
             @Override
             public void onChanged(@Nullable List<Transport> transports) {
                 mTransportList = (ArrayList<Transport>) transports;

@@ -267,7 +267,7 @@ public interface APIService {
 
     @POST("PaywellParibahanService/getBusListData")
     @FormUrlEncoded
-    Call<ResGetBusListData> getBusListData(@Field("username") String username, @Field("skey") String skey);
+    Call<ResGetBusListData> getBusListData(@Field("username") String username, @Field("skey") String skey, @Field("ref_id") String refId);
 
 
     @POST("PaywellParibahanService/getBusSchedule?")
