@@ -195,14 +195,16 @@ public interface APIService {
                                   @Field("BookingID") String bookingId,
                                   @Field("reason") String cancelReason,
                                   @Field("cancel_type") String cancel_type,
-                                  @Field("format") String apiFormat);
+                                  @Field("format") String apiFormat,
+                                  @Field("ref_id") String refId);
 
     @POST("PaywelltransactionHaltrip/reIssueTicket")
     @FormUrlEncoded
     Call<JsonObject> reIssueTicket(@Field("username") String username,
                                    @Field("password") String password,
                                    @Field("BookingID") String bookingId,
-                                   @Field("reason") String cancelReason);
+                                   @Field("reason") String cancelReason,
+                                   @Field("ref_id") String refId);
 
 
     @POST("/PaywelltransactionHaltrip/reScheduleTicket")
@@ -221,13 +223,15 @@ public interface APIService {
                                    @Part("password") String password,
                                    @Part("BookingID") String bookingId,
                                    @Part("reason") String cancelReason,
-                                   @Part("passengers") String passengers);
+                                   @Part("passengers") String passengers,
+                                   @Part("ref_id") String refId);
 
 
     @POST("PaywelltransactionHaltrip/getCancelMap")
     @FormUrlEncoded
     Call<ResCancellationMapping> getCancelMap(@Field("username") String username,
-                                              @Field("booking_id") String bookingId);
+                                              @Field("booking_id") String bookingId,
+                                              @Field("ref_id") String refId);
 
     @Multipart
     @POST("PaywelltransactionHaltrip/uploadBookingFiles")

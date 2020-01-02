@@ -72,8 +72,9 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
     fun callCancelMapping(userName: String, bookingId: String, reason: String, typeOfRequest: String, item: Datum) {
 
         showProgressDialog()
+        val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this)!!.rid)
 
-        ApiUtils.getAPIService().getCancelMap(userName, bookingId).enqueue(object : Callback<ResCancellationMapping> {
+        ApiUtils.getAPIService().getCancelMap(userName, bookingId,uniqueKey).enqueue(object : Callback<ResCancellationMapping> {
             override fun onResponse(call: Call<ResCancellationMapping>, response: Response<ResCancellationMapping>) {
                 dismissProgressDialog()
                 assert(response.body() != null)
@@ -201,7 +202,8 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
     private fun reIssueTicket(userName: String, pass: String, bookingId: String, cancelReason: String) {
         showProgressDialog()
 
-        ApiUtils.getAPIService().reIssueTicket(userName, pass, bookingId, cancelReason).enqueue(object : Callback<JsonObject> {
+        val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this)!!.rid)
+        ApiUtils.getAPIService().reIssueTicket(userName, pass, bookingId, cancelReason,uniqueKey).enqueue(object : Callback<JsonObject> {
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 dismissProgressDialog()
                 if (response.isSuccessful) {
@@ -263,8 +265,8 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
 
     public fun submitCancelTicketRequest(userName: String, pass: String, bookingId: String, cancelReason: String, cancelType: String, apiFormat: String) {
         showProgressDialog()
-
-        ApiUtils.getAPIService().cancelTicket(userName, pass, bookingId, cancelReason, cancelType, apiFormat).enqueue(object : Callback<JsonObject> {
+        val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this)!!.rid)
+        ApiUtils.getAPIService().cancelTicket(userName, pass, bookingId, cancelReason, cancelType, apiFormat, uniqueKey).enqueue(object : Callback<JsonObject> {
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 dismissProgressDialog()
                 if (response.isSuccessful) {
