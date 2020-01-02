@@ -20,6 +20,7 @@ import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.database.DatabaseClient
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.InternalStorageHelper
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import org.jetbrains.anko.doAsync
@@ -38,14 +39,15 @@ class AirThicketRepository(private val mContext: Context) {
     private var mAppHandler: AppHandler? = null
 
 
+
     fun getAirSearchData(requestAirSearch: RequestAirSearch): MutableLiveData<ReposeAirSearch> {
         mAppHandler = AppHandler.getmInstance(mContext)
         val userName = mAppHandler!!.imeiNo
 //        val userName = "cwntcl"
 
         val data = MutableLiveData<ReposeAirSearch>()
-
-        val callAirSearch = ApiUtils.getAPIService().callAirSearch(userName, requestAirSearch)
+        val uniquekey = UniqueKeyGenerator.getUniqueKey(mAppHandler!!.rid)
+        val callAirSearch = ApiUtils.getAPIService().callAirSearch(userName, requestAirSearch,uniquekey)
         callAirSearch.enqueue(object : Callback<ReposeAirSearch> {
             override fun onResponse(call: Call<ReposeAirSearch>, response: Response<ReposeAirSearch>) {
                 if (response.isSuccessful) {
@@ -324,10 +326,10 @@ class AirThicketRepository(private val mContext: Context) {
     fun callGetBookingStatusAPI(limit: Int): MutableLiveData<BookingList> {
         mAppHandler = AppHandler.getmInstance(mContext)
         val username = mAppHandler!!.imeiNo
+        val uniquekey = UniqueKeyGenerator.getUniqueKey(mAppHandler!!.rid)
 
         val data = MutableLiveData<BookingList>()
-
-        val responseBodyCall = ApiUtils.getAPIService().callAirBookingListSearch(username, limit)
+        val responseBodyCall = ApiUtils.getAPIService().callAirBookingListSearch(username, limit,uniquekey)
         responseBodyCall.enqueue(object : Callback<BookingList> {
             override fun onResponse(call: Call<BookingList>, response: Response<BookingList>) {
 
@@ -350,8 +352,8 @@ class AirThicketRepository(private val mContext: Context) {
         val username = mAppHandler!!.imeiNo
 
         val data = MutableLiveData<ResCommistionMaping>()
-
-        val responseBodyCall = ApiUtils.getAPIService().callGetCommissionMappingAPI(username)
+        val uniquekey = UniqueKeyGenerator.getUniqueKey(mAppHandler!!.rid)
+        val responseBodyCall = ApiUtils.getAPIService().callGetCommissionMappingAPI(username, uniquekey)
         responseBodyCall.enqueue(object : Callback<ResCommistionMaping> {
             override fun onResponse(call: Call<ResCommistionMaping>, response: Response<ResCommistionMaping>) {
 

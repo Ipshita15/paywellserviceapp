@@ -136,7 +136,8 @@ public interface APIService {
     @Multipart
     @POST("PaywelltransactionHaltrip/airSearch")
     Call<ReposeAirSearch> callAirSearch(@Part("username") String username,
-                                        @Part("search_params") RequestAirSearch search_params);
+                                        @Part("search_params") RequestAirSearch search_params,
+                                        @Part("ref_id") String refId);
 
 
     @Multipart
@@ -157,7 +158,8 @@ public interface APIService {
     @FormUrlEncoded
     @POST("PaywelltransactionHaltrip/getBookingList")
     Call<BookingList> callAirBookingListSearch(@Field("username") String username,
-                                               @Field("limit") int limit);
+                                               @Field("limit") int limit,
+                                               @Field("ref_id") String refId);
 
     @Multipart
     @POST("PaywelltransactionHaltrip/airPreBooking")
@@ -240,7 +242,7 @@ public interface APIService {
 
     @POST("PaywelltransactionHaltrip/getCommissionMapping")
     @Multipart
-    Call<ResCommistionMaping> callGetCommissionMappingAPI(@Part("username") String username);
+    Call<ResCommistionMaping> callGetCommissionMappingAPI(@Part("username") String username, @Part("ref_id") String refId);
 
 
     @POST("PaywelltransactionHaltrip/getSingleBooking")
