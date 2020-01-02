@@ -289,7 +289,7 @@ public interface APIService {
 
     @FormUrlEncoded
     @POST("PaywellParibahanService/getTransactionData")
-    Call<TransactionLogDetailsModel> getBusTransactionLogFromServer(@Field("username") String username, @Field("skey") String skey, @Field("limit") String limit);
+    Call<TransactionLogDetailsModel> getBusTransactionLogFromServer(@Field("username") String username, @Field("skey") String skey, @Field("limit") String limit, @Field("ref_id") String refId);
 
     @POST
     @FormUrlEncoded
