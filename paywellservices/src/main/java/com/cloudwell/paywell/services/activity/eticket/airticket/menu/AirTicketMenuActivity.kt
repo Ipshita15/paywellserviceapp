@@ -8,15 +8,17 @@ import android.widget.CompoundButton
 import android.widget.RadioButton
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialog
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.AirTicketMainActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.BookingCancelActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.issueTicket.IssueTicketRequestActivity
+import com.cloudwell.paywell.services.activity.eticket.airticket.ticketCencel.TicketCancelActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.AirThicketTranslationLogActivity
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.constant.AllConstant
 import com.cloudwell.paywell.services.utils.ConnectionDetector
 import com.cloudwell.paywell.services.utils.LanuageConstant.KEY_BANGLA
 import com.cloudwell.paywell.services.utils.LanuageConstant.KEY_ENGLISH
@@ -29,9 +31,6 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
     val KEY_TAG = AirTicketMenuActivity::class.java.getName()
     val BOOKING_TAG = "BOOKING"
     val TRX_TAG = "TRX_LOG"
-
-
-    lateinit var mConstraintLayout: ConstraintLayout
 
     private var mAppHandler: AppHandler? = null
     internal var radioButton_five: RadioButton? = null
@@ -64,10 +63,14 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
         btViewTricket.setOnClickListener(this)
         btCencel.setOnClickListener(this)
         btTransationLog.setOnClickListener(this)
+        btIssueTicket.setOnClickListener(this)
+        btTicketVoid.setOnClickListener(this)
+        btTicketRefund.setOnClickListener(this)
+        btTicketReissue.setOnClickListener(this)
+        btTicketDocsInfoUpdateRequest.setOnClickListener(this)
 
 
         cd = ConnectionDetector(AppController.getContext())
-        mConstraintLayout = findViewById(R.id.constraintLayoutBookingList)
         mAppHandler = AppHandler.getmInstance(applicationContext)
 
 
@@ -87,6 +90,34 @@ class AirTicketMenuActivity : AirTricketBaseActivity(), View.OnClickListener, Co
             R.id.btCencel -> {
                 startActivity(Intent(applicationContext, BookingCancelActivity::class.java))
             }
+
+            R.id.btIssueTicket -> {
+                startActivity(Intent(applicationContext, IssueTicketRequestActivity::class.java))
+            }
+
+            R.id.btTicketVoid -> {
+                val intent = Intent(applicationContext, TicketCancelActivity::class.java)
+                intent.putExtra(TicketCancelActivity.KEY_TITLE, AllConstant.Action_Void)
+                startActivity(intent)
+            }
+            R.id.btTicketRefund -> {
+                val intent = Intent(applicationContext, TicketCancelActivity::class.java)
+                intent.putExtra(TicketCancelActivity.KEY_TITLE, AllConstant.Action_Refund)
+                startActivity(intent)
+            }
+
+            R.id.btTicketReissue -> {
+                val intent = Intent(applicationContext, TicketCancelActivity::class.java)
+                intent.putExtra(TicketCancelActivity.KEY_TITLE, AllConstant.Action_reIssueTicket)
+                startActivity(intent)
+            }
+//
+            R.id.btTicketDocsInfoUpdateRequest -> {
+                val intent = Intent(applicationContext, TicketCancelActivity::class.java)
+                intent.putExtra(TicketCancelActivity.KEY_TITLE, AllConstant.Action_DOCS_UPDATE)
+                startActivity(intent)
+            }
+
 
             R.id.btTransationLog -> {
                 showLimitPrompt(TRX_TAG)

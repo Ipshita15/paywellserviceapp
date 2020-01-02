@@ -9,6 +9,7 @@ import android.content.IntentFilter
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.os.Environment
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
@@ -19,6 +20,8 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.Datum
@@ -27,6 +30,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.f
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.TicketActionMenuFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.TicketStatusFragment
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.fragment.TricketChooserFragment
+import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.BookingStatuViewStatus
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.model.ResIssueTicket
 import com.cloudwell.paywell.services.activity.eticket.airticket.bookingStatus.viewModel.BookingStatsViewModel
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketCencel.TicketCancelActivity
@@ -55,6 +59,25 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
 
     var pinNumber: String = ""
     var bookingId: String = ""
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        initViewModel()
+    }
+
+
+    fun initViewModel() {
+        mViewMode = ViewModelProviders.of(this).get(BookingStatsViewModel::class.java)
+
+        mViewMode.baseViewStatus.observe(this, Observer {
+            handleViewCommonStatus(it)
+        })
+
+        mViewMode.mViewStatus.observe(this, Observer {
+            it?.let { it1 -> handleViewStatus(it1) }
+        })
+    }
+
 
 
     fun showActionMenuPopupMessate(model: Datum) {
@@ -127,12 +150,15 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
 
 
         val tricketChooserFragment = TricketChooserFragment()
+        tricketChooserFragment.datum = datum
 
         tricketChooserFragment.setOnClickHandlerTest(object : TricketChooserFragment.OnClickHandler {
             override fun onClick(s: String) {
                 if (s.equals("view")) {
-                    downloadPDFFile(datum)
-                } else if (s.equals("email")) {
+                    downloadPDFFile(datum.invoiceUrl)
+                } else if (s.equals("view_with_fare")) {
+                    downloadPDFFile(datum.invoiceUrlWithFare)
+                }else if (s.equals("email")) {
                     openSendEmailActivity(datum)
                 }
             }
@@ -152,7 +178,7 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
 
     }
 
-    private fun downloadPDFFile(datum: Datum) {
+    private fun downloadPDFFile(url: String) {
 
         Dexter.withActivity(this)
                 .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -162,7 +188,7 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
 
                             try {
                                 if (isInternetConnection) {
-                                    handlePDFDownload(datum)
+                                    handlePDFDownload(url)
                                 } else {
                                     showNoInternetConnectionFound()
                                 }
@@ -183,15 +209,15 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
                 }).check()
     }
 
-    private fun handlePDFDownload(datum: Datum) {
+    private fun handlePDFDownload(invoiceUrl: String) {
         val dir = File(Environment.getExternalStorageDirectory().toString() + File.separator + "PayWell/")
         dir.mkdirs()
 
-        val split = datum.invoiceUrl.toString().split("/")
+        val split = invoiceUrl.toString().split("/")
         val fileName = split.last()
 
         val pdfFile = File(dir.absolutePath, fileName)
-        downloadAndOpenPdf(datum.invoiceUrl, pdfFile)
+        downloadAndOpenPdf(invoiceUrl, pdfFile)
     }
 
     fun downloadAndOpenPdf(url: String, file: File) {
@@ -329,5 +355,21 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
         builder.setNegativeButton(R.string.cancel_btn) { dialogInterface, i -> dialogInterface.dismiss() }
         val alert = builder.create()
         alert.show()
+    }
+
+    fun handleViewStatus(it: BookingStatuViewStatus) {
+        if (it.isShowProcessIndicatior) {
+            showProgressDialog()
+        } else {
+            dismissProgressDialog()
+        }
+        if (!it.successMessageTricketStatus.equals("")) {
+            showMsg(it.successMessageTricketStatus)
+        }
+
+        if (it.modelPriceChange != null) {
+            showTicketPriceChangeDialog(it.modelPriceChange!!)
+        }
+
     }
 }

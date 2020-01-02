@@ -74,7 +74,7 @@ public class BaseActivity extends AppCompatActivity {
             this.onBackPressed();
             return true;
         }else if (item.getItemId() == R.id.item_air_ticket_call){
-            callPreview(true);
+            callPreviewAirticket(true);
 
         }
         return super.onOptionsItemSelected(item);
@@ -223,6 +223,37 @@ public class BaseActivity extends AppCompatActivity {
     public void callPreview(boolean isAirTicket) {
         final String[] numbers = {"09610116566", "09666773333", "09666716566", "09638016566"};
         selectedPhnNo = "09610116566";
+        AlertDialog dialog;
+        // setup the alert builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(BaseActivity.this);
+        if (isAirTicket){
+            builder.setTitle(getString(R.string.select_phn_title_air_ticket));
+        }else {
+            builder.setTitle(getString(R.string.select_phn_title_msg));
+        }
+
+
+        builder.setSingleChoiceItems(numbers, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                selectedPhnNo = numbers[arg1];
+            }
+
+        }).create();
+        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                call();
+            }
+        });
+        dialog = builder.create();
+        dialog.show();
+    }
+
+    public void callPreviewAirticket(boolean isAirTicket) {
+        final String[] numbers = {"01787679660","09610116566", "09666773333", "09666716566", "09638016566"};
+        selectedPhnNo = "01787679660";
         AlertDialog dialog;
         // setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(BaseActivity.this);

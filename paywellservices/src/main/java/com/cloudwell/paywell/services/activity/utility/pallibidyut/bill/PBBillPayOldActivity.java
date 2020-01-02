@@ -7,19 +7,26 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.base.LanguagesBaseActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PallibidyutHistory;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.REBNotification;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.DateUtils;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -34,15 +41,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 
-public class PBBillPayOldActivity extends BaseActivity implements View.OnClickListener {
+public class PBBillPayOldActivity extends LanguagesBaseActivity implements View.OnClickListener {
 
     private LinearLayout mLinearLayout;
-    private EditText mPin, mBillNo, mAmount;
+    private AppCompatAutoCompleteTextView mBillNo;
+    private EditText mPin, mAmount;
     private Button mComfirm;
     private ConnectionDetector cd;
     private String billNo, status, trxId, amount, tbpsCharge, totalAmount, hotline;
     private AppHandler mAppHandler;
+    private AsyncTask<Void, Void, Void> insertPallibidyutHistoryAsyncTask;
+    List<String> billNumberList = new ArrayList<>();
+    private AsyncTask<Void, Void, Void> getAllPallibidyutHistoryAsyncTask;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +75,8 @@ public class PBBillPayOldActivity extends BaseActivity implements View.OnClickLi
 
     }
 
+
+
     private void initView() {
         mLinearLayout = findViewById(R.id.linearLayout);
 
@@ -74,24 +89,63 @@ public class PBBillPayOldActivity extends BaseActivity implements View.OnClickLi
         mAmount = findViewById(R.id.etPBBillAmount);
         mComfirm = findViewById(R.id.btnPBBillConfirm);
 
-        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-            _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
-            mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
-            _billNo.setTypeface(AppController.getInstance().getOxygenLightFont());
-            mBillNo.setTypeface(AppController.getInstance().getOxygenLightFont());
-            _amount.setTypeface(AppController.getInstance().getOxygenLightFont());
-            mAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
-            mComfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
-        } else {
-            _pin.setTypeface(AppController.getInstance().getAponaLohitFont());
-            mPin.setTypeface(AppController.getInstance().getAponaLohitFont());
-            _billNo.setTypeface(AppController.getInstance().getAponaLohitFont());
-            mBillNo.setTypeface(AppController.getInstance().getAponaLohitFont());
-            _amount.setTypeface(AppController.getInstance().getAponaLohitFont());
-            mAmount.setTypeface(AppController.getInstance().getAponaLohitFont());
-            mComfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
-        }
         mComfirm.setOnClickListener(this);
+
+
+        try {
+            String data = getIntent().getStringExtra("REBNotification");
+            if (!data.equals("")){
+                Gson gson = new Gson();
+                REBNotification notificationDetailMessage = gson.fromJson(data, REBNotification.class);
+                mBillNo.setText(""+notificationDetailMessage.getTrxData().getBillNo());
+                mAmount.setText(""+notificationDetailMessage.getTrxData().getBillAmount());
+                mComfirm.setText(""+getString(R.string.re_submit_reb));
+            }
+        }catch (Exception e){
+
+        }
+
+        getAllPallibidyutHistoryAsyncTask = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                billNumberList.clear();
+                List<PallibidyutHistory> pallibidyutHistories = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().getAllPallibidyutHistoryHistory();
+                for (int i = 0; i < pallibidyutHistories.size(); i++) {
+                    billNumberList.add(pallibidyutHistories.get(i).getBilNumber());
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+            }
+
+            @Override
+            protected void onPostExecute(Void list) {
+                super.onPostExecute(list);
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(PBBillPayOldActivity.this, android.R.layout.select_dialog_item, billNumberList);
+                mBillNo.setThreshold(1);
+                mBillNo.setAdapter(adapter);
+                mBillNo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        mBillNo.showDropDown();
+                    }
+                });
+
+            }
+
+        }.execute();
+
+        mBillNo.setOnTouchListener((v, event) -> {
+            mBillNo.showDropDown();
+            return false;
+        });
+
     }
 
     @Override
@@ -135,12 +189,15 @@ public class PBBillPayOldActivity extends BaseActivity implements View.OnClickLi
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(params[0]);
             try {
+                String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
+
                 List<NameValuePair> nameValuePairs = new ArrayList<>(6);
                 nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("pin_code", params[1]));
                 nameValuePairs.add(new BasicNameValuePair("bill_no", params[2]));
                 nameValuePairs.add(new BasicNameValuePair("amount", params[3]));
                 nameValuePairs.add(new BasicNameValuePair("format", ""));
+                nameValuePairs.add(new BasicNameValuePair("ref_id", ""+uniqueKey));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
@@ -170,6 +227,18 @@ public class PBBillPayOldActivity extends BaseActivity implements View.OnClickLi
                             totalAmount = splitArray[5];
                             hotline = splitArray[8];
                             showStatusDialog();
+                            insertPallibidyutHistoryAsyncTask = new AsyncTask<Void, Void, Void>() {
+                                @Override
+                                protected Void doInBackground(Void... voids) {
+
+                                    String currentDataAndTIme = DateUtils.INSTANCE.getCurrentDataAndTIme();
+                                    PallibidyutHistory pallibidyutHistory = new PallibidyutHistory();
+                                    pallibidyutHistory.setBilNumber(billNo);
+                                    pallibidyutHistory.setDate(currentDataAndTIme);
+                                    DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().insertPallibidyutHistory(pallibidyutHistory);
+                                    return null;
+                                }
+                            }.execute();
                         } else {
                             status = splitArray[1];
                             trxId = splitArray[2];
@@ -255,6 +324,16 @@ public class PBBillPayOldActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onBackPressed() {
+        if (getAllPallibidyutHistoryAsyncTask != null) {
+            getAllPallibidyutHistoryAsyncTask.cancel(true);
+
+        }
+
+        if (insertPallibidyutHistoryAsyncTask != null) {
+            insertPallibidyutHistoryAsyncTask.cancel(true);
+        }
+
+
         finish();
     }
 }

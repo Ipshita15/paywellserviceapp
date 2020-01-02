@@ -34,7 +34,6 @@ import com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliBill
 import com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliMainActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBBillPayNewActivity;
-import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBBillPayOldActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus.PBBillStatusActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.MobileNumberChangeActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.registion.PBRegistrationActivity;
@@ -141,7 +140,7 @@ public class AppUtility {
             case R.string.home_utility_pollibiddut_bill_pay_favorite:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_BILL_PAY);
 
-                intent = new Intent(context, PBBillPayOldActivity.class);
+                intent = new Intent(context, PBBillPayNewActivity.class);
                 return intent;
 
             case R.string.home_utility_pollibiddut_reg_inquiry:

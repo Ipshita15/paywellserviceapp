@@ -43,6 +43,12 @@ public interface FavoriteMenuDab {
     @Delete
     void delete(FavoriteMenu task);
 
+    @Delete
+    void delete(List<FavoriteMenu> task);
+
+    @Query("DELETE FROM  favoritemenu WHERE alias_key = :aliasKey")
+    void delete( int aliasKey);
+
     @Update
     int update(FavoriteMenu task);
 

@@ -1,23 +1,17 @@
 package com.cloudwell.paywell.services.activity.refill.nagad
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.text.InputType
-import android.text.method.PasswordTransformationMethod
-import android.view.Gravity
 import android.view.View
-import android.view.inputmethod.InputMethodManager
-import android.widget.*
-import androidx.appcompat.app.AlertDialog
+import android.widget.CompoundButton
+import android.widget.RadioButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialog
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
-import com.cloudwell.paywell.services.activity.base.UtilityBaseActivity
-import com.cloudwell.paywell.services.activity.refill.nagad.fragment.MobileNumberQRCodeFragment
 import com.cloudwell.paywell.services.activity.base.BaseActivity
+import com.cloudwell.paywell.services.activity.refill.nagad.fragment.MobileNumberQRCodeFragment
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLog
 import com.cloudwell.paywell.services.activity.utility.AllUrl
 import com.cloudwell.paywell.services.app.AppController
@@ -26,7 +20,6 @@ import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.ConnectionDetector
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
-
 import kotlinx.android.synthetic.main.activity_nagad_main.*
 import kotlinx.android.synthetic.main.dialog_trx_limit.*
 import retrofit2.Call
@@ -200,7 +193,8 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
 
             if (ConnectionDetector(applicationContext).isConnectingToInternet) {
 
-                askForPin(selectedLimit);
+
+                callAPI( selectedLimit)
 
             } else {
                 val snackbar = Snackbar.make(nagadConstrainLayout, getResources().getString(R.string.connection_error_msg), Snackbar.LENGTH_LONG)
@@ -218,48 +212,48 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
 
     // ask for pin :
 
-    private fun askForPin(selectedLimit: String) {
-
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle(R.string.pin_no_title_msg)
-
-        val pinNoET = EditText(this)
-        val lp = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT)
-        pinNoET.gravity = Gravity.CENTER_HORIZONTAL
-        pinNoET.layoutParams = lp
-        pinNoET.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_TEXT_VARIATION_PASSWORD
-        pinNoET.transformationMethod = PasswordTransformationMethod.getInstance()
-        builder.setView(pinNoET)
-
-        builder.setPositiveButton(R.string.okay_btn) { dialogInterface, id ->
-            val inMethMan = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inMethMan.hideSoftInputFromWindow(pinNoET.windowToken, 0)
-
-            if (pinNoET.text.toString().length != 0) {
-                dialogInterface.dismiss()
-
-                if (ConnectionDetector(applicationContext).isConnectingToInternet) {
-                    callAPI(pinNoET.text.toString(), selectedLimit)
-                } else {
-                    showNoInternetConnectionFound()
-                }
-            } else {
-                showServerErrorMessage(getString(R.string.pin_no_error_msg))
-
-
-            }
-        }
-        val alert = builder.create()
-        alert.show()
-
-    }
+//    private fun askForPin(selectedLimit: String) {
+//
+//        val builder = AlertDialog.Builder(this)
+//        builder.setTitle(R.string.pin_no_title_msg)
+//
+//        val pinNoET = EditText(this)
+//        val lp = LinearLayout.LayoutParams(
+//                LinearLayout.LayoutParams.MATCH_PARENT,
+//                LinearLayout.LayoutParams.MATCH_PARENT)
+//        pinNoET.gravity = Gravity.CENTER_HORIZONTAL
+//        pinNoET.layoutParams = lp
+//        pinNoET.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_TEXT_VARIATION_PASSWORD
+//        pinNoET.transformationMethod = PasswordTransformationMethod.getInstance()
+//        builder.setView(pinNoET)
+//
+//        builder.setPositiveButton(R.string.okay_btn) { dialogInterface, id ->
+//            val inMethMan = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//            inMethMan.hideSoftInputFromWindow(pinNoET.windowToken, 0)
+//
+//            if (pinNoET.text.toString().length != 0) {
+//                dialogInterface.dismiss()
+//
+//                if (ConnectionDetector(applicationContext).isConnectingToInternet) {
+//                    callAPI(pinNoET.text.toString(), selectedLimit)
+//                } else {
+//                    showNoInternetConnectionFound()
+//                }
+//            } else {
+//                showServerErrorMessage(getString(R.string.pin_no_error_msg))
+//
+//
+//            }
+//        }
+//        val alert = builder.create()
+//        alert.show()
+//
+//    }
 
 
     // calling API :
 
-    private fun callAPI(pin: String, selectedLimit: String) {
+    private fun callAPI(selectedLimit: String) {
 
         val hostUrlBkapi = AllUrl.HOST_URL_lastSuccessfulTrx
         val sec_token = AllUrl.sec_token
@@ -270,7 +264,7 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
 
         showProgressDialog()
 
-        ApiUtils.getAPIService().refillLogInquiry(hostUrlBkapi, sec_token, imeiNo.toString(), pin, format, gateway_id, limit).enqueue(object : Callback<RefillLog> {
+        ApiUtils.getAPIService().refillLogInquiry(hostUrlBkapi, sec_token, imeiNo.toString(), format, gateway_id, limit).enqueue(object : Callback<RefillLog> {
             override fun onFailure(call: Call<RefillLog>, t: Throwable) {
                 Toast.makeText(applicationContext, "Server error!!!", Toast.LENGTH_SHORT).show()
                 dismissProgressDialog()

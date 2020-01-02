@@ -24,28 +24,18 @@ class NotificationNotifcationViewModel : BaseNotifcationViewModel() {
     val mListMutableLiveData = MutableLiveData<List<NotificationDetailMessage>>()
     val mViewStatus = SingleLiveEvent<NotificationViewStatus>()
 
-    fun onPullRequested(isFlowForComingNewNotification: Boolean, internetConnection: Boolean) {
+    fun onPullRequested(internetConnection: Boolean, userUsedNotificationFLow: Boolean) {
 
-        if (isFlowForComingNewNotification) {
-            // new notification combing
-            baseViewStatus.value = BaseViewState(true)
-
+        if (userUsedNotificationFLow == false) {
             if (internetConnection) {
                 callNotificationRemoteAPI()
             } else {
-
                 baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
             }
-
         } else {
             mNotificationRepository.getLocalNotificationData()?.observeForever { detailMessages ->
                 if (detailMessages?.size == 0) {
-                    // first time in app
-                    if (internetConnection) {
-                        callNotificationRemoteAPI()
-                    } else {
-                        baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
-                    }
+                    mViewStatus.value = NotificationViewStatus.SHOW_NO_NOTIFICAITON_FOUND
                 } else {
                     // normal time
                     val filletDataByCurrentTime = filletDataByCurrentTime(detailMessages);
@@ -59,9 +49,9 @@ class NotificationNotifcationViewModel : BaseNotifcationViewModel() {
     private fun callNotificationRemoteAPI() {
 
         baseViewStatus.value = BaseViewState(true)
-
         mNotificationRepository.remoteNotificationDate.observeForever { it ->
             baseViewStatus.value = BaseViewState(false)
+            mViewStatus.value = NotificationViewStatus.USER_FINISHED_NOTIFICATION_FLOW
 
             when {
                 it == null -> mViewStatus.value = NotificationViewStatus.SHOW_NO_NOTIFICAITON_FOUND

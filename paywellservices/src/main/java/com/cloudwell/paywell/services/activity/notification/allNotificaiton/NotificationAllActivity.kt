@@ -10,10 +10,10 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -31,12 +31,14 @@ import com.cloudwell.paywell.services.activity.notification.notificaitonFullView
 import com.cloudwell.paywell.services.analytics.AnalyticsManager
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.utils.AppHelper.startNotificationSyncService
 import com.google.gson.JsonParser
 import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_notification_view.*
 import kotlinx.android.synthetic.main.activity_notification_view.view.*
 import kotlinx.android.synthetic.main.dialog_notification.view.*
+import kotlinx.android.synthetic.main.layout_notificaiton_all.*
 import org.apache.commons.lang3.StringEscapeUtils
 import org.json.JSONObject
 
@@ -44,7 +46,7 @@ import org.json.JSONObject
 class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
     private var listView: RecyclerView? = null
     private var mAppHandler: AppHandler? = null
-    private var mLinearLayout: LinearLayout? = null
+    private var mLinearLayout: CoordinatorLayout? = null
 
     private var position: Int = 0
     lateinit var adapter: SimpleAdapter
@@ -84,7 +86,15 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
         // call for data
         val isFlowForComingNewNotification = intent.getBooleanExtra(MainActivity.KEY_COMMING_NEW_NOTIFICATION, false);
 
-        viewModel.onPullRequested(isFlowForComingNewNotification, isInternetConnection)
+        // check to need snc data or not
+
+        var userUsedNotificationFLow = AppStorageBox.get(applicationContext, AppStorageBox.Key.USER_USED_NOTIFICAITON_FLOW) as? Boolean
+        if (userUsedNotificationFLow == null){
+            userUsedNotificationFLow = true
+        }
+
+
+        viewModel.onPullRequested(isInternetConnection, userUsedNotificationFLow)
 
     }
 
@@ -98,6 +108,10 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
 
             NotificationViewStatus.NOTIFY_DATA_SET_CHANGE -> {
                 adapter.notifyDataSetChanged()
+            }
+
+            NotificationViewStatus.USER_FINISHED_NOTIFICATION_FLOW ->{
+                AppStorageBox.put(applicationContext, AppStorageBox.Key.USER_USED_NOTIFICAITON_FLOW, true)
             }
 
             NotificationViewStatus.SHOW_NO_NOTIFICAITON_FOUND -> {
@@ -131,6 +145,8 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
         if(previousPosition>0){
             listView!!.scrollToPosition(previousPosition)
         }
+
+        dismissProgressDialog()
     }
 
     private fun startNotificationFullViewActivity() {
@@ -155,9 +171,9 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
     fun initializer() {
 
         isNotificationFlow = intent.getBooleanExtra(IS_NOTIFICATION_SHOWN, false)
-        listView = findViewById(com.cloudwell.paywell.services.R.id.listViewNotification)
+        listView = findViewById(R.id.listViewNotification)
         listView!!.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
-        mLinearLayout = findViewById(com.cloudwell.paywell.services.R.id.linearLayout)
+        mLinearLayout = findViewById(R.id.linearLayout)
         mAppHandler = AppHandler.getmInstance(applicationContext)
 
         val swipeController = object : SwipeController(this, listView) {

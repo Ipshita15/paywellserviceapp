@@ -54,8 +54,11 @@ class TicketCancelActivity : AirTricketBaseActivity() {
         cancelBookingBtn = findViewById(R.id.cancelBookingBtn)
 
 
-        bookingIdET.setText(model.bookingId)
-        bookingIdET.setKeyListener(null)
+        if (model != null){
+            bookingIdET.setText(model!!.bookingId)
+            bookingIdET.setKeyListener(null)
+        }
+
 
         cancelBookingBtn!!.setText(title)
         cancelBookingBtn!!.setOnClickListener {
@@ -108,7 +111,7 @@ class TicketCancelActivity : AirTricketBaseActivity() {
     companion object {
         var KEY_BOOKING_ID = "Booking_Id"
         var KEY_TITLE = "KEY_TITLE"
-        lateinit var model: Datum
+        var model: Datum? = null
     }
 
 }

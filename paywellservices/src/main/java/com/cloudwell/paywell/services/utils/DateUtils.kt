@@ -16,9 +16,10 @@ object DateUtils {
 
     val currentDataAndTIme: String
         get() {
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
             val cal = Calendar.getInstance()
-            return cal.time.toString()
+            val formatDate = dateFormat.format(cal.time)
+            return formatDate
         }
 
     fun getDurtingJounaryTime(millis: Long): String {
