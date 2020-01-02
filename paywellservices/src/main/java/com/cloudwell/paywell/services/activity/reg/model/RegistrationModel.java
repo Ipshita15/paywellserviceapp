@@ -1,49 +1,99 @@
 package com.cloudwell.paywell.services.activity.reg.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.jetbrains.annotations.NotNull;
 
 public class RegistrationModel {
 
+
+    @SerializedName("imei")
+    private String imei;
+    @SerializedName("alternate_imei")
+    private String alternate_imei;
+    @SerializedName("dtype")
+    private String dtype;
+    @SerializedName("downloadSource")
+    private String downloadSource;
+    @SerializedName("operators")
+    private String operators;
+    @SerializedName("outlet_name")
     private String outletName;
+    @SerializedName("outlet_address")
     private String outletAddress;
+    @SerializedName("owner_name")
     private String ownerName;
+    @SerializedName("mobile_number")
     private String phnNumber;
+    @SerializedName("business_type_id")
     private String businessId;
+    @SerializedName("business_type")
     private String businessType;
+    @SerializedName("email")
     private String emailAddress;
+    @SerializedName("district")
     private String districtName;
+    @SerializedName("thana")
     private String thanaName;
+    @SerializedName("post_code")
     private String postcodeName;
+    @SerializedName("post_office_id")
     private String postcodeId;
+    @SerializedName("landmark")
     private String landmark;
+
     private String salesCode;
     private String collectionCode;
+
+    @SerializedName("outlet_img")
     private String outletImage;
+
+    @SerializedName("nidFrontPic")
     private String nidFront;
+    @SerializedName("nidBackPic")
     private String nidBack;
+    @SerializedName("owner_img")
     private String ownerImage;
+    @SerializedName("trade_license_img")
     private String tradeLicense;
+    @SerializedName("image_passport")
     private String passport;
+    @SerializedName("birth_certificate_img")
     private String birthCertificate;
+    @SerializedName("driving_license_imege")
     private String drivingLicense;
+    @SerializedName("visiting_card_img")
     private String visitingCard;
 
+    @SerializedName("smartCardFrontPic")
     private String smartCardFront;
+    @SerializedName("smartCardBackPic")
     private String smartCardBack;
+    @SerializedName("nidNumber")
     public String nidNumber;
 
+    @SerializedName("nidFatherName")
     public String nidFatherName;
 
+    @SerializedName("nidName")
     public String nidName;
+    @SerializedName("nidMotherName")
     public String nidMotherName;
+    @SerializedName("nidBirthday")
     public String nidBirthday;
+    @SerializedName("nidAddress")
     public String nidAddress;
+    @SerializedName("smartCardNumber")
     public String smartCardNumber;
+    @SerializedName("smartCardName")
     public String smartCardName;
+    @SerializedName("smartCardFatherName")
     public String smartCardFatherName;
+    @SerializedName("smartCardMotherName")
     public String smartCardMotherName;
+    @SerializedName("smartCardBirthday")
     public String smartCardBirthday;
-    @NotNull
+    @SerializedName("smartCardAddress")
     public String smartCardAddress;
 
     public RegistrationModel() {
@@ -376,4 +426,43 @@ public class RegistrationModel {
         this.smartCardFront = smartCardFront;
     }
 
+    public void setAlternate_imei(String alternate_imei) {
+        this.alternate_imei = alternate_imei;
+    }
+
+    public void setImei(String imei) {
+        this.imei = imei;
+    }
+
+    public String getAlternate_imei() {
+        return alternate_imei;
+    }
+
+    public String getImei() {
+        return imei;
+    }
+
+    public void setDownloadSource(String downloadSource) {
+        this.downloadSource = downloadSource;
+    }
+
+    public String getDownloadSource() {
+        return downloadSource;
+    }
+
+    public void setDtype(String dtype) {
+        this.dtype = dtype;
+    }
+
+    public String getDtype() {
+        return dtype;
+    }
+
+    public void setOperators(String operators) {
+        this.operators = operators;
+    }
+
+    public String getOperators() {
+        return operators;
+    }
 }
