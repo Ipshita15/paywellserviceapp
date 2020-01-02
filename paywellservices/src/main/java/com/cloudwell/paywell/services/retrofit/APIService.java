@@ -334,7 +334,8 @@ public interface APIService {
                                               @Field("customerEmail") String customerEmail,
                                               @Field("customerAge") String customerAge,
                                               @Field("customerGender") String customerGender,
-                                              @Field("password") String password);
+                                              @Field("password") String password,
+                                              @Field("ref_id") String refId);
 
     @POST("/PaywelltransactionPollyBiddyut/pollyBiddyutBillPayAPIAsync")
     Call<PalliBidyutBillPayResponse> postPalliBidyutBills(@Body PalliBidyutBillPayRequest body);

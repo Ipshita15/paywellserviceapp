@@ -405,7 +405,7 @@ class BusTicketRepository() {
         val accessKey = AppStorageBox.get(mContext, AppStorageBox.Key.ACCESS_KEY) as String
 
         val data = MutableLiveData<ResPaymentBookingAPI>()
-
+        val uniqueKey = UniqueKeyGenerator.getUniqueKey(mAppHandler!!.rid)
         ApiUtils.getAPIServicePHP7().confirmPayment(
                 userName,
                 skey,
@@ -417,7 +417,7 @@ class BusTicketRepository() {
                 etEmail,
                 age,
                 gender,
-                password).enqueue(object : Callback<ResPaymentBookingAPI> {
+                password,uniqueKey).enqueue(object : Callback<ResPaymentBookingAPI> {
             override fun onFailure(call: Call<ResPaymentBookingAPI>, t: Throwable) {
                 data.value = null
             }
