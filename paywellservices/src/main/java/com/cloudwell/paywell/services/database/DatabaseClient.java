@@ -61,12 +61,17 @@ public class DatabaseClient {
         }
     };
 
-    private static final Migration MIGRATION_1_4 = new Migration(1, 4) {
+    private static final Migration MIGRATION_4_5 = new Migration(4, 5) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE IF NOT EXISTS `TripScheduleInfo` (`from_location` TEXT NOT NULL, `to_location` TEXT NOT NULL, `schedule_Id` TEXT NOT NULL, `validity_date` TEXT NOT NULL, PRIMARY KEY(`schedule_Id`))");
+        }
+    };
 
+    private static final Migration MIGRATION_1_5 = new Migration(1, 5) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
             updateMigration(database);
-
         }
     };
 
@@ -82,6 +87,7 @@ public class DatabaseClient {
         database.execSQL("CREATE TABLE IF NOT EXISTS `Transport` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `busid` TEXT NOT NULL, `busname` TEXT NOT NULL, `extraCharge` REAL NOT NULL)");
         database.execSQL("CREATE TABLE IF NOT EXISTS `BusLocalDB` (`busID` TEXT NOT NULL, `bus_col_in_middle` TEXT NOT NULL, `bus_is_ac` TEXT NOT NULL, `columns_in_right` TEXT NOT NULL, `empty_rows_in_left` TEXT NOT NULL, `empty_rows_in_middle` TEXT NOT NULL, `empty_rows_in_right` TEXT NOT NULL, `name` TEXT NOT NULL, `seat_structure` TEXT NOT NULL, `structure_type` TEXT NOT NULL, `total_columns` TEXT NOT NULL, `total_rows` TEXT NOT NULL, `total_seats` TEXT NOT NULL, PRIMARY KEY(`busID`))");
         database.execSQL("CREATE TABLE IF NOT EXISTS `BusSchedule` (`_schedule_Id` TEXT NOT NULL, `schedule_time` TEXT NOT NULL, `bus_id` TEXT NOT NULL, `coach_no` TEXT NOT NULL, `schedule_type` TEXT NOT NULL, `_validity_date` TEXT NOT NULL, `ticket_price` TEXT NOT NULL, `allowed_seat_numbers` TEXT NOT NULL, `booth_departure_info` TEXT NOT NULL, PRIMARY KEY(`_schedule_Id`))");
+        database.execSQL("CREATE TABLE IF NOT EXISTS `TripScheduleInfo` (`from_location` TEXT NOT NULL, `to_location` TEXT NOT NULL, `schedule_Id` TEXT NOT NULL, `validity_date` TEXT NOT NULL, PRIMARY KEY(`schedule_Id`))");
 
         Log.e("start version 4", "Start");
         database.execSQL("CREATE TABLE IF NOT EXISTS `DESCOHistory`(`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `bill_number` TEXT NOT NULL, `payer_phone_number` TEXT NOT NULL, `date` TEXT NOT NULL)");
@@ -127,7 +133,7 @@ public class DatabaseClient {
         //creating the app database with Room database builder
         //MyToDos is the name of the database
         appDatabase = Room.databaseBuilder(mCtx, AppDatabase.class, DatabaseConstant.KEY_PARNELL_DATABASE_NAME)
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_1_4)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4,MIGRATION_4_5, MIGRATION_1_5)
                 .build();
     }
 }
