@@ -154,7 +154,7 @@ public interface APIService {
 
 
     @GET("PaywelltransactionHaltrip/getAirports?")
-    Call<ResGetAirports> getAirports(@Query("username") String username, @Query("format") String format, @Query("iso") String iso);
+    Call<ResGetAirports> getAirports(@Query("username") String username, @Query("format") String format, @Query("iso") String iso,@Query("ref_id") String refId );
 
     @FormUrlEncoded
     @POST("PaywelltransactionHaltrip/getBookingList")
