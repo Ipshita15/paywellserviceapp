@@ -437,7 +437,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
 
         @Override
         protected void onPreExecute() {
-            showProgressDialog();
+//            showProgressDialog();
         }
 
         @Override
@@ -468,7 +468,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
         @Override
         protected void onPostExecute(String result) {
 
-            dismissProgressDialog();
+           // dismissProgressDialog();
 
             if (result != null) {
                 try {
