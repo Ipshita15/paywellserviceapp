@@ -204,8 +204,8 @@ public class BanglalionRechargeActivity extends BaseActivity implements View.OnC
                 nameValuePairs.add(new BasicNameValuePair("customerID", params[2]));
                 nameValuePairs.add(new BasicNameValuePair("amount", params[3]));
                 nameValuePairs.add(new BasicNameValuePair("password", params[4]));
-                nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
+                nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();

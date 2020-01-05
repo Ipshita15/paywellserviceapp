@@ -631,7 +631,9 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
                     if (!cd.isConnectingToInternet()) {
                         AppHandler.showDialog(getSupportFragmentManager());
                     } else {
-                        getTopUpInquiry(mAppHandler.getImeiNo(), enqNoET.getText().toString());
+
+                        String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(BrilliantTopupActivity.this).getRID());
+                        getTopUpInquiry(mAppHandler.getImeiNo(), enqNoET.getText().toString(), uniqueKey);
                     }
                     dialogInterface.dismiss();
                 }
@@ -647,12 +649,13 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
         alert.show();
     }
 
-    private void getTopUpInquiry(final String userName, String number) {
+    private void getTopUpInquiry(final String userName, String number, String uniqueKey) {
         showProgressDialog();
 
         AndroidNetworking.get("https://api.paywellonline.com/PayWellBrilliantSystem/transactionEnquiry?")
                 .addQueryParameter("username", userName)
                 .addQueryParameter("brilliant_number", number)
+                .addQueryParameter(""+ParameterUtility.KEY_REF_ID+"",uniqueKey)
                 .setPriority(Priority.HIGH)
                 .build().getAsObject(BrilliantTopUpInquiry.class, new ParsedRequestListener<BrilliantTopUpInquiry>() {
             @Override

@@ -699,6 +699,8 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
         @Override
         protected String doInBackground(String... params) {
             String responseTxt = null;
+
+            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(TopupMainActivity.this).getRID());
             // Create a new HttpClient and Post Header
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(params[0]);
@@ -706,6 +708,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
                 List<NameValuePair> nameValuePairs = new ArrayList<>(2);
                 nameValuePairs.add(new BasicNameValuePair("iemi_no", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("msisdn", params[1]));
+                nameValuePairs.add(new BasicNameValuePair("ref_id", uniqueKey));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();

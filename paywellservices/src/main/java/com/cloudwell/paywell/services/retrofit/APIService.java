@@ -219,7 +219,7 @@ public interface APIService {
 
     @POST("/PaywelltransactionHaltrip/infoUpdateTicket")
     @Multipart
-    Call<JsonObject> reIssueTicket(@Part("username") String username,
+    Call<JsonObject> infoUpdateTicket(@Part("username") String username,
                                    @Part("password") String password,
                                    @Part("BookingID") String bookingId,
                                    @Part("reason") String cancelReason,
@@ -255,7 +255,7 @@ public interface APIService {
 
     @POST("PaywelltransactionHaltrip/getSingleBooking")
     @Multipart
-    Call<ResSingleBooking> getSingleBooking(@Part("username") String username, @Part("booking_id") String bookingId);
+    Call<ResSingleBooking> getSingleBooking(@Part("username") String username, @Part("booking_id") String bookingId, @Part("ref_id") String refId);
 
     @POST("PaywelltransactionHaltrip/airTicketIssue")
     @Multipart

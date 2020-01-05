@@ -112,7 +112,9 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
 
                     val userName = AppHandler.getmInstance(applicationContext).imeiNo
 
-                    ApiUtils.getAPIService().getSingleBooking(userName, bookingId).enqueue(object : Callback<ResSingleBooking> {
+                    val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(applicationContext)!!.rid)
+
+                    ApiUtils.getAPIService().getSingleBooking(userName, bookingId,uniqueKey).enqueue(object : Callback<ResSingleBooking> {
                         override fun onResponse(call: Call<ResSingleBooking>, response: Response<ResSingleBooking>) {
                             dismissProgressDialog()
                             assert(response.body() != null)
@@ -179,6 +181,7 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
                     } else if (typeOfRequest == AllConstant.Action_reIssueTicket) {
                         reIssueTicket(userName, PIN_NO, bookingId, cancelReason)
                     }
+
                 } else {
                     val snackbar = Snackbar.make(findViewById(android.R.id.content), R.string.connection_error_msg, Snackbar.LENGTH_LONG)
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"))
@@ -203,6 +206,8 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
         showProgressDialog()
 
         val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this)!!.rid)
+
+
         ApiUtils.getAPIService().reIssueTicket(userName, pass, bookingId, cancelReason,uniqueKey).enqueue(object : Callback<JsonObject> {
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 dismissProgressDialog()

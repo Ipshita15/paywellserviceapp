@@ -218,7 +218,9 @@ class UpdateDocOrInfomationRequestActivity : AirTricketBaseActivity(), ShowMessa
             apiNameReissuePassenger.add(p)
         }
 
-        ApiUtils.getAPIService().reIssueTicket(userName, pass, bookingId, cancelReason, Gson().toJson(apiNameReissuePassenger)).enqueue(object : Callback<JsonObject> {
+        val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this)!!.rid)
+
+        ApiUtils.getAPIService().infoUpdateTicket(userName, pass, bookingId, cancelReason, Gson().toJson(apiNameReissuePassenger),uniqueKey).enqueue(object : Callback<JsonObject> {
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 dismissProgressDialog()
 
