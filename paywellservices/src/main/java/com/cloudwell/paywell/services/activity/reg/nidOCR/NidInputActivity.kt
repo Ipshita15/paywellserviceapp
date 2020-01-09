@@ -35,6 +35,7 @@ import java.io.ByteArrayOutputStream
 class NidInputActivity: LanguagesBaseActivity(), IInputNidListener {
 
     private var isNID = false;
+    private var isMissingPage = false;
     private val authViewModelFactory: InputNidModelFactory? = null
 
 
@@ -58,6 +59,8 @@ class NidInputActivity: LanguagesBaseActivity(), IInputNidListener {
         }else{
             setToolbar(getString(R.string.title_smart))
         }
+
+        isMissingPage =  intent.getBooleanExtra("isMissingPage", false);
 
         ivNidFirst.setOnClickListener {
             inputViewModel.isFirstPage = true
@@ -170,9 +173,11 @@ class NidInputActivity: LanguagesBaseActivity(), IInputNidListener {
 
 
 
+
         val intent = Intent(applicationContext, InputNidInfoActivity::class.java)
         intent.putExtra("data", Gson().toJson(user))
         intent.putExtra("isNID", isNID)
+        intent.putExtra("isMissingPage", isMissingPage)
         startActivity(intent)
 
     }

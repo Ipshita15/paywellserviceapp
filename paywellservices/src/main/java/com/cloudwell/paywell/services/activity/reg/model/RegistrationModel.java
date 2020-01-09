@@ -95,6 +95,14 @@ public class RegistrationModel {
     public String smartCardBirthday;
     @SerializedName("smartCardAddress")
     public String smartCardAddress;
+    private String mBusinessaTypeAPIRespose;
+    private int mBusinesstypeAdapterPosition = 0;
+    private String mDistrictAPIRespose;
+    private String mThanaResponseAPIRespose;
+    private String mPostCodeResponseAPIRespose;
+    private int mDistrictAdapterPosition;
+    private int mThanaAdapterPosition;
+    private int mPostCodeAdapterPosition;
 
     public RegistrationModel() {
     }
@@ -464,5 +472,69 @@ public class RegistrationModel {
 
     public String getOperators() {
         return operators;
+    }
+
+    public void setBusinessaTypeAPIRespose(String businessaTypeAPIRespose) {
+        mBusinessaTypeAPIRespose = businessaTypeAPIRespose;
+    }
+
+    public String getBusinessaTypeAPIRespose() {
+        return mBusinessaTypeAPIRespose;
+    }
+
+    public void setBusinesstypeAdapterPosition(int businesstypeAdapterPosition) {
+        mBusinesstypeAdapterPosition = businesstypeAdapterPosition;
+    }
+
+    public int getBusinesstypeAdapterPosition() {
+        return mBusinesstypeAdapterPosition;
+    }
+
+    public void setDistrictAPIRespose(String districtAPIRespose) {
+        mDistrictAPIRespose = districtAPIRespose;
+    }
+
+    public String getDistrictAPIRespose() {
+        return mDistrictAPIRespose;
+    }
+
+    public void setThanaResponseAPIRespose(String thanaResponseAPIRespose) {
+        mThanaResponseAPIRespose = thanaResponseAPIRespose;
+    }
+
+    public String getThanaResponseAPIRespose() {
+        return mThanaResponseAPIRespose;
+    }
+
+    public void setPostCodeResponseAPIRespose(String postCodeResponseAPIRespose) {
+        mPostCodeResponseAPIRespose = postCodeResponseAPIRespose;
+    }
+
+    public String getPostCodeResponseAPIRespose() {
+        return mPostCodeResponseAPIRespose;
+    }
+
+    public void setDistrictAdapterPosition(int districtAdapterPosition) {
+        mDistrictAdapterPosition = districtAdapterPosition;
+    }
+
+    public int getDistrictAdapterPosition() {
+        return mDistrictAdapterPosition;
+    }
+
+    public void setThanaAdapterPosition(int thanaAdapterPosition) {
+        mThanaAdapterPosition = thanaAdapterPosition;
+    }
+
+    public int getThanaAdapterPosition() {
+        return mThanaAdapterPosition;
+    }
+
+    public void setPostCodeAdapterPosition(int postCodeAdapterPosition) {
+        mPostCodeAdapterPosition = postCodeAdapterPosition;
+    }
+
+    public int getPostCodeAdapterPosition() {
+        return mPostCodeAdapterPosition;
     }
 }

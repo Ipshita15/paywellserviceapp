@@ -249,6 +249,7 @@ dependencies {
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
     implementation 'com.github.himangipatel:ImagePickerUtil:0.1.9'
 
+    implementation 'org.sufficientlysecure:html-textview:3.9'
 
 
 

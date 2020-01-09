@@ -2,7 +2,6 @@ package com.cloudwell.paywell.services.activity.reg;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -172,7 +171,6 @@ public class EntryThirdActivity extends LanguagesBaseActivity {
 
 
         filePickUtils = new FilePickUtils(this, onFileChoose);
-        ;
         lifeCycleCallBackManager = filePickUtils.getCallBackManager();
 
     }
@@ -219,9 +217,8 @@ public class EntryThirdActivity extends LanguagesBaseActivity {
         isNID = true;
         Intent intent = new Intent(getApplicationContext(), NidInputActivity.class);
         intent.putExtra("isNID", isNID);
+        intent.putExtra("isMissingPage", false);
         startActivity(intent);
-
-
     }
 
 
@@ -229,6 +226,7 @@ public class EntryThirdActivity extends LanguagesBaseActivity {
         isNID = false;
         Intent intent = new Intent(getApplicationContext(), NidInputActivity.class);
         intent.putExtra("isNID", isNID);
+        intent.putExtra("isMissingPage", false);
         startActivity(intent);
 
 
@@ -408,7 +406,7 @@ public class EntryThirdActivity extends LanguagesBaseActivity {
 
     public void asked(String title, String number) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
         builder.setMessage(title)
                 .setCancelable(true)
                 .setPositiveButton("Camara", new DialogInterface.OnClickListener() {
@@ -437,7 +435,7 @@ public class EntryThirdActivity extends LanguagesBaseActivity {
 
                     }
                 });
-        AlertDialog alert = builder.create();
+        android.app.AlertDialog alert = builder.create();
         alert.show();
 
     }

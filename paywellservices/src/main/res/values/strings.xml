@@ -439,7 +439,7 @@
     </string-array>
 
     <!-- paywell apis -->
-    <string name="pw_auth">https://api.paywellonline.com/PaywelltransactionRetailer/TabUserServiceProfiling?</string>
+    <string name="pw_auth">https://agentapi.paywellonline.com/PaywelltransactionRetailer/userServiceProfiling</string>
     <string name="notif_url">https://www.paywellonline.com/default/api/notification_check_android.php?</string>
     <string name="notification_token_url">https://www.paywellonline.com/paywellapi/setUserFCMToken.php</string>
 
@@ -858,6 +858,8 @@
     <string name="next_text">পরবর্তী</string>
     <string name="title_nid">এন.আই.ডি-এর তথ্য</string>
     <string name="title_smart">এন.আই.ডি-এর তথ্য</string>
+    <string name="text_nid">এন.আই.ডি</string>
+    <string name="text_smart_card">স্মার্ট কার্ড</string>
 
 
 </resources>

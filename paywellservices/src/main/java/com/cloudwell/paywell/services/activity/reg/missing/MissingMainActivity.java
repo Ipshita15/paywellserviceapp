@@ -8,28 +8,36 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.reg.EntryMainActivity;
+import com.cloudwell.paywell.services.activity.reg.model.RegistrationModel;
+import com.cloudwell.paywell.services.activity.reg.nidOCR.NidInputActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.TelephonyInfo;
 import com.google.android.material.snackbar.Snackbar;
+import com.imagepicker.FilePickUtils;
+import com.imagepicker.LifeCycleCallBackManager;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -52,6 +60,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import static com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regModel;
+import static com.imagepicker.FilePickUtils.CAMERA_PERMISSION;
+
 public class MissingMainActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
 
     public static String RESPONSE_DETAILS;
@@ -71,9 +82,19 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
     private ArrayList<String> layoutNames, business_type_id_array;
     private HashMap<String, String> hashMap = new HashMap<>();
     private String[] district_array_id, thana_array_id, post_array_id, post_array_name;
-    private ImageView img_one, img_two, img_three, img_four, img_five, img_six, img_seven, img_eight, img_nine;
 
     private static final int PERMISSION_FOR_GALLERY = 321;
+
+
+    FilePickUtils filePickUtils;
+    LifeCycleCallBackManager lifeCycleCallBackManager;
+    boolean isNID;
+
+    private Button btPicOutlet, btOwnerImg, btTradeImg, btpassportImg, btBirthImg, btDriveImg, btCardImg;
+
+    ArrayAdapter<CharSequence> arrayAdapter_business_type_spinner;
+
+    boolean isMissingFlowGorble = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +106,9 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
             getSupportActionBar().setTitle(R.string.paywell_reg_missing);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        isMissingFlowGorble = getIntent().getBooleanExtra("isMissingFlow", false);
+
 
         mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
@@ -111,6 +135,12 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
             snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             snackbar.show();
         }
+
+
+        filePickUtils = new FilePickUtils(this, onFileChoose);
+        lifeCycleCallBackManager = filePickUtils.getCallBackManager();
+
+
     }
 
     private void initialize() {
@@ -145,15 +175,6 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
         spnr_thana = findViewById(R.id.spinner_thana);
         spnr_postcode = findViewById(R.id.spinner_postcode);
 
-        img_one = findViewById(R.id.img1);
-        img_two = findViewById(R.id.img2);
-        img_three = findViewById(R.id.img3);
-        img_four = findViewById(R.id.img4);
-        img_five = findViewById(R.id.img5);
-        img_six = findViewById(R.id.img6);
-        img_seven = findViewById(R.id.img7);
-        img_eight = findViewById(R.id.img8);
-        img_nine = findViewById(R.id.img9);
 
         spnr_merchatnType.setOnItemSelectedListener(this);
         spnr_businessType.setOnItemSelectedListener(this);
@@ -188,8 +209,8 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
         ((TextView) scrollView.findViewById(R.id.textView_landmarke)).setTypeface(AppController.getInstance().getAponaLohitFont());
         editText_landmark.setTypeface(AppController.getInstance().getAponaLohitFont());
         ((Button) scrollView.findViewById(R.id.button_outletImg)).setTypeface(AppController.getInstance().getAponaLohitFont());
-        ((Button) scrollView.findViewById(R.id.button_nidFrontImg)).setTypeface(AppController.getInstance().getAponaLohitFont());
-        ((Button) scrollView.findViewById(R.id.button_nidBackImg)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) scrollView.findViewById(R.id.btNid)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) scrollView.findViewById(R.id.btSmart)).setTypeface(AppController.getInstance().getAponaLohitFont());
         ((Button) scrollView.findViewById(R.id.button_ownerImg)).setTypeface(AppController.getInstance().getAponaLohitFont());
         ((Button) scrollView.findViewById(R.id.button_tradeImg)).setTypeface(AppController.getInstance().getAponaLohitFont());
         ((Button) scrollView.findViewById(R.id.button_passportImg)).setTypeface(AppController.getInstance().getAponaLohitFont());
@@ -198,46 +219,142 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
         ((Button) scrollView.findViewById(R.id.button_cardImg)).setTypeface(AppController.getInstance().getAponaLohitFont());
         ((Button) scrollView.findViewById(R.id.button_submitMissing)).setTypeface(AppController.getInstance().getAponaLohitFont());
 
+        btPicOutlet = findViewById(R.id.button_outletImg);
+        btOwnerImg = findViewById(R.id.button_ownerImg);
+        btTradeImg = findViewById(R.id.button_tradeImg);
+        btpassportImg = findViewById(R.id.button_passportImg);
+        btBirthImg = findViewById(R.id.button_birthImg);
+        btDriveImg = findViewById(R.id.button_driveImg);
+        btCardImg = findViewById(R.id.button_cardImg);
+
+
         visibilityStateDefine();
+
+
+        if (isMissingFlowGorble){
+
+            Handler handler =new Handler();
+            final Runnable r = new Runnable() {
+                public void run() {
+                    isMissingFlowGorble = false;
+
+                }
+            };
+            handler.postDelayed(r, 7000);
+        }
+
+
+
+
     }
 
     public void visibilityStateDefine() {
+
         if (layoutNames.contains("outlet_name")) {
             layoutOutletName.setVisibility(View.VISIBLE);
+
+            if (regModel != null) {
+                editText_outletName.setText(regModel.getOutletName());
+            }
+
         }
         if (layoutNames.contains("outlet_address")) {
             layoutOutletAddress.setVisibility(View.VISIBLE);
+
+            if (regModel != null) {
+                editText_address.setText(regModel.getOutletAddress());
+            }
         }
         if (layoutNames.contains("owner_name")) {
             layoutOwnerName.setVisibility(View.VISIBLE);
+
+            if (regModel != null) {
+                editText_ownerName.setText(regModel.getOwnerName());
+            }
         }
         if (layoutNames.contains("business_type")) {
             layoutBusinessType.setVisibility(View.VISIBLE);
             layoutMerchantType.setVisibility(View.VISIBLE);
+
+            if (EntryMainActivity.regModel != null) {
+                if (!regModel.getBusinessaTypeAPIRespose().equals("")) {
+                    setBusnicesTypeAdapter(regModel.getBusinessaTypeAPIRespose(), true);
+                }
+            }
         }
         if (layoutNames.contains("mobile_number")) {
             layoutPhnNumber.setVisibility(View.VISIBLE);
+
+            if (EntryMainActivity.regModel != null) {
+                if (regModel != null) {
+                    editText_phnNo.setText(regModel.getPhnNumber());
+                }
+            }
         }
         if (layoutNames.contains("district")) {
-            new GetDistrictResponseAsync().execute(getResources().getString(R.string.district_info_url));
+
+
             layoutDistrict.setVisibility(View.VISIBLE);
             layoutThana.setVisibility(View.VISIBLE);
             layoutPost.setVisibility(View.VISIBLE);
+
+
+            if (isMissingFlowGorble) {
+                if (regModel != null) {
+                    setupDistrictAdapter(regModel.getDistrictAPIRespose(), isMissingFlowGorble);
+                }
+
+            } else {
+
+                new GetDistrictResponseAsync().execute(getResources().getString(R.string.district_info_url));
+            }
+
+
         }
         if (layoutNames.contains("thana")) {
-            new GetDistrictResponseAsync().execute(getResources().getString(R.string.district_info_url));
+
+
             layoutDistrict.setVisibility(View.VISIBLE);
             layoutThana.setVisibility(View.VISIBLE);
             layoutPost.setVisibility(View.VISIBLE);
+
+
+
+            if (isMissingFlowGorble) {
+                if (regModel != null) {
+                    setAdapterThana(regModel.getThanaResponseAPIRespose(), isMissingFlowGorble);
+                }
+
+            } else {
+
+                new GetDistrictResponseAsync().execute(getResources().getString(R.string.district_info_url));
+            }
+
+
         }
         if (layoutNames.contains("post_code")) {
-            new GetDistrictResponseAsync().execute(getResources().getString(R.string.district_info_url));
+
+            if (isMissingFlowGorble) {
+
+                if (regModel != null) {
+                    setupPostCode(regModel.getPostCodeResponseAPIRespose(), isMissingFlowGorble);
+                }
+            } else {
+
+                new GetDistrictResponseAsync().execute(getResources().getString(R.string.district_info_url));
+
+            }
+
             layoutDistrict.setVisibility(View.VISIBLE);
             layoutThana.setVisibility(View.VISIBLE);
             layoutPost.setVisibility(View.VISIBLE);
         }
         if (layoutNames.contains("landmark")) {
             layoutLandmark.setVisibility(View.VISIBLE);
+
+            if (regModel != null) {
+                editText_landmark.setText(regModel.getLandmark());
+            }
         }
         if (layoutNames.contains("outlet_img")) {
             layoutOutletImg.setVisibility(View.VISIBLE);
@@ -270,71 +387,87 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        switch (adapterView.getId()) {
-            case R.id.spinner_merchantType:
-                String merchantId = spnr_merchatnType.getSelectedItem().toString();
-                if (merchantId.equals("Select One")) {
-                    str_merchantType = "";
-                } else {
-                    str_merchantType = hashMap.get(merchantId);
-                    initializationBusinessType();
-                }
-                break;
-            case R.id.spinner_businessType:
-                str_businessType = "";
+      if (!isMissingFlowGorble){
+          switch (adapterView.getId()) {
+              case R.id.spinner_merchantType:
+                  String merchantId = spnr_merchatnType.getSelectedItem().toString();
+                  if (merchantId.equals("Select One")) {
+                      str_merchantType = "";
+                  } else {
+                      str_merchantType = hashMap.get(merchantId);
+                      initializationBusinessType();
+                  }
+                  break;
+              case R.id.spinner_businessType:
+                  str_businessType = "";
 
-                if (spnr_businessType.getSelectedItem().toString().trim().equals("Select One")) {
-                    str_businessId = "";
-                    str_businessType = "";
-                } else {
-                    str_businessId = business_type_id_array.get(i);
-                    str_businessType = spnr_businessType.getSelectedItem().toString().trim();
-                }
-                break;
-            case R.id.spinner_district:
-                if (spnr_district.getSelectedItem().toString().equals("Select One")) {
-                    str_district = "";
-                } else {
-                    str_district = String.valueOf(district_array_id[i]);
-                    if (mCd.isConnectingToInternet()) {
-                        new GetThanaResponseAsync().execute(getResources().getString(R.string.district_info_url));
-                    } else {
-                        Snackbar snackbar = Snackbar.make(scrollView, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                }
-                break;
-            case R.id.spinner_thana:
-                if (adapterView.getItemAtPosition(i).toString().equals("Select One")) {
-                    str_thana = "";
-                } else {
-                    str_thana = thana_array_id[i];
-                    if (mCd.isConnectingToInternet()) {
-                        new GetPostResponseAsync().execute(getResources().getString(R.string.district_info_url));
-                    } else {
-                        Snackbar snackbar = Snackbar.make(scrollView, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                }
-                break;
-            case R.id.spinner_postcode:
-                if (adapterView.getItemAtPosition(i).toString().equals("Select One")) {
-                    str_postcodeId = "";
-                    str_postcode = "";
-                } else {
-                    str_postcodeId = String.valueOf(post_array_id[i]);
-                    str_postcode = String.valueOf(post_array_name[i]);
-                }
-                break;
-            default:
-                break;
-        }
+                  if (spnr_businessType.getSelectedItem().toString().trim().equals("Select One")) {
+                      str_businessId = "";
+                      str_businessType = "";
+                  } else {
+                      str_businessId = business_type_id_array.get(i);
+                      str_businessType = spnr_businessType.getSelectedItem().toString().trim();
+                      regModel.setBusinesstypeAdapterPosition(spnr_businessType.getSelectedItemPosition());
+                  }
+                  break;
+              case R.id.spinner_district:
+
+
+                  if (spnr_district.getSelectedItem().toString().equals("Select One")) {
+                      str_district = "";
+                  } else {
+                      str_district = String.valueOf(district_array_id[i]);
+                      regModel.setDistrictAdapterPosition(spnr_district.getSelectedItemPosition());
+
+
+                      if (mCd.isConnectingToInternet()) {
+                          new GetThanaResponseAsync().execute(getResources().getString(R.string.district_info_url));
+                      } else {
+                          Snackbar snackbar = Snackbar.make(scrollView, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
+                          snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                          View snackBarView = snackbar.getView();
+                          snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                          snackbar.show();
+                      }
+                  }
+
+
+                  break;
+              case R.id.spinner_thana:
+                  if (adapterView.getItemAtPosition(i).toString().equals("Select One")) {
+                      str_thana = "";
+                  } else {
+                      str_thana = thana_array_id[i];
+                      regModel.setThanaAdapterPosition(spnr_thana.getSelectedItemPosition());
+
+                      if (mCd.isConnectingToInternet()) {
+                          new GetPostResponseAsync().execute(getResources().getString(R.string.district_info_url));
+                      } else {
+                          Snackbar snackbar = Snackbar.make(scrollView, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
+                          snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                          View snackBarView = snackbar.getView();
+                          snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                          snackbar.show();
+                      }
+                  }
+                  break;
+              case R.id.spinner_postcode:
+                  if (adapterView.getItemAtPosition(i).toString().equals("Select One")) {
+                      str_postcodeId = "";
+                      str_postcode = "";
+                  } else {
+                      str_postcodeId = String.valueOf(post_array_id[i]);
+                      str_postcode = String.valueOf(post_array_name[i]);
+                      regModel.setPostCodeAdapterPosition(spnr_postcode.getSelectedItemPosition());
+
+                  }
+                  break;
+              default:
+                  break;
+          }
+      }
+
+
     }
 
     @Override
@@ -386,48 +519,66 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
         @Override
         protected void onPostExecute(String result) {
 
+            if (regModel == null) {
+                regModel = new RegistrationModel();
+
+            }
+            regModel.setBusinessaTypeAPIRespose(result);
+
             dismissProgressDialog();
 
-            if (result != null) {
-                try {
-                    business_type_id_array = new ArrayList<>();
-                    List business_type_name_array = new ArrayList<>();
+            setBusnicesTypeAdapter(result, false);
+        }
+    }
 
-                    JSONObject jsonObject = new JSONObject(result);
-                    String status = jsonObject.getString("status");
-                    if (status.equals("200")) {
-                        JSONArray jsonArray = jsonObject.getJSONArray("type_of_business");
+    private void setBusnicesTypeAdapter(String result, boolean isMissingFlow) {
+        if (result != null) {
+            try {
+                business_type_id_array = new ArrayList<>();
+                List business_type_name_array = new ArrayList<>();
 
-                        business_type_id_array.add("ipshita");
-                        business_type_name_array.add("Select One");
+                JSONObject jsonObject = new JSONObject(result);
+                String status = jsonObject.getString("status");
+                if (status.equals("200")) {
+                    JSONArray jsonArray = jsonObject.getJSONArray("type_of_business");
 
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject object = jsonArray.getJSONObject(i);
-                            String id = object.getString("id");
-                            String name = object.getString("name");
+                    business_type_id_array.add("ipshita");
+                    business_type_name_array.add("Select One");
 
-                            business_type_id_array.add(id);
-                            business_type_name_array.add(name);
-                        }
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        String id = object.getString("id");
+                        String name = object.getString("name");
 
-                        ArrayAdapter<CharSequence> arrayAdapter_business_type_spinner = new ArrayAdapter(MissingMainActivity.this, android.R.layout.simple_spinner_dropdown_item, business_type_name_array);
-
-                        spnr_businessType.setAdapter(arrayAdapter_business_type_spinner);
-                    } else {
-                        Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
+                        business_type_id_array.add(id);
+                        business_type_name_array.add(name);
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+
+                    arrayAdapter_business_type_spinner = new ArrayAdapter(MissingMainActivity.this, android.R.layout.simple_spinner_dropdown_item, business_type_name_array);
+
+                    spnr_businessType.setAdapter(arrayAdapter_business_type_spinner);
+
+                    spnr_businessType.setSelection(regModel.getBusinesstypeAdapterPosition());
+
+
+                    if (isMissingFlow) {
+                        spnr_merchatnType.setSelection(1);
+                    }
+
+                } else {
                     Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                View snackBarView = snackbar.getView();
+                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                snackbar.show();
             }
         }
     }
@@ -468,41 +619,52 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
         @Override
         protected void onPostExecute(String result) {
 
-           // dismissProgressDialog();
+            // dismissProgressDialog();
 
-            if (result != null) {
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String result_status = jsonObject.getString("status");
-                    if (result_status != null && result_status.equals("200")) {
-                        JSONArray result_data = jsonObject.getJSONArray("data");
-                        initializeDistrict(result_data.toString());
-                    } else {
-                        Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+            if (regModel == null) {
+
+                regModel = new RegistrationModel();
+            }
+
+            regModel.setDistrictAPIRespose(result);
+
+            setupDistrictAdapter(result, isMissingFlowGorble);
+        }
+    }
+
+    private void setupDistrictAdapter(String result, boolean isMissingFlowGorble) {
+        if (result != null) {
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                String result_status = jsonObject.getString("status");
+                if (result_status != null && result_status.equals("200")) {
+                    JSONArray result_data = jsonObject.getJSONArray("data");
+                    initializeDistrict(result_data.toString(), isMissingFlowGorble);
+                } else {
                     Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } else {
-                Snackbar snackbar = Snackbar.make(scrollView, R.string.services_off_msg, Snackbar.LENGTH_LONG);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                 View snackBarView = snackbar.getView();
                 snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                 snackbar.show();
             }
+        } else {
+            Snackbar snackbar = Snackbar.make(scrollView, R.string.services_off_msg, Snackbar.LENGTH_LONG);
+            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+            View snackBarView = snackbar.getView();
+            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+            snackbar.show();
         }
     }
 
-    public void initializeDistrict(String response) {
+    public void initializeDistrict(String response, boolean isMissingFlowGorble) {
         try {
             JSONArray array = new JSONArray(response);
 
@@ -520,6 +682,11 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
             }
             ArrayAdapter<CharSequence> arrayAdapter_spinner_district = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, district_array_name);
             spnr_district.setAdapter(arrayAdapter_spinner_district);
+
+            if (isMissingFlowGorble) {
+                spnr_district.setSelection(regModel.getDistrictAdapterPosition());
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
             Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
@@ -570,50 +737,62 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
         protected void onPostExecute(String result) {
             dismissProgressDialog();
 
-            if (result != null) {
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String result_status = jsonObject.getString("status");
-                    if (result_status != null && result_status.equals("200")) {
-                        JSONArray result_data = jsonObject.getJSONArray("data");
 
-                        String[] thana_array_name = new String[result_data.length() + 1];
-                        thana_array_id = new String[result_data.length() + 1];
-                        thana_array_name[0] = "Select One";
-                        thana_array_id[0] = "0";
+            regModel.setThanaResponseAPIRespose(result);
 
-                        for (int i = 0; i < result_data.length(); i++) {
-                            JSONObject obj = result_data.getJSONObject(i);
-                            String name = obj.getString("thana");
 
-                            thana_array_id[i + 1] = obj.getString("id");
-                            thana_array_name[i + 1] = name;
-                        }
-                        ArrayAdapter<CharSequence> arrayAdapter_spinner_thana = new ArrayAdapter(MissingMainActivity.this, android.R.layout.simple_spinner_dropdown_item, thana_array_name);
-                        spnr_thana.setAdapter(arrayAdapter_spinner_thana);
+            setAdapterThana(result, isMissingFlowGorble);
+        }
+    }
 
-                    } else {
-                        Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
+    private void setAdapterThana(String result, boolean isMissingFlowGorble) {
+        if (result != null) {
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                String result_status = jsonObject.getString("status");
+                if (result_status != null && result_status.equals("200")) {
+                    JSONArray result_data = jsonObject.getJSONArray("data");
+
+                    String[] thana_array_name = new String[result_data.length() + 1];
+                    thana_array_id = new String[result_data.length() + 1];
+                    thana_array_name[0] = "Select One";
+                    thana_array_id[0] = "0";
+
+                    for (int i = 0; i < result_data.length(); i++) {
+                        JSONObject obj = result_data.getJSONObject(i);
+                        String name = obj.getString("thana");
+
+                        thana_array_id[i + 1] = obj.getString("id");
+                        thana_array_name[i + 1] = name;
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    ArrayAdapter<CharSequence> arrayAdapter_spinner_thana = new ArrayAdapter(MissingMainActivity.this, android.R.layout.simple_spinner_dropdown_item, thana_array_name);
+                    spnr_thana.setAdapter(arrayAdapter_spinner_thana);
+
+                    if (isMissingFlowGorble) {
+                        spnr_thana.setSelection(regModel.getThanaAdapterPosition());
+                    }
+
+                } else {
                     Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } else {
-                Snackbar snackbar = Snackbar.make(scrollView, R.string.services_off_msg, Snackbar.LENGTH_LONG);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                 View snackBarView = snackbar.getView();
                 snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                 snackbar.show();
             }
+        } else {
+            Snackbar snackbar = Snackbar.make(scrollView, R.string.services_off_msg, Snackbar.LENGTH_LONG);
+            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+            View snackBarView = snackbar.getView();
+            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+            snackbar.show();
         }
     }
 
@@ -657,87 +836,120 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
 
             dismissProgressDialog();
 
-            if (result != null) {
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String result_status = jsonObject.getString("status");
-                    if (result_status != null && result_status.equals("200")) {
-                        JSONArray result_data = jsonObject.getJSONArray("data");
+            regModel.setPostCodeResponseAPIRespose(result);
 
-                        post_array_name = new String[result_data.length() + 1];
-                        post_array_id = new String[result_data.length() + 1];
-                        post_array_name[0] = "Select One";
-                        post_array_id[0] = "0";
+            setupPostCode(result,isMissingFlowGorble);
+        }
+    }
 
-                        for (int i = 0; i < result_data.length(); i++) {
-                            JSONObject obj = result_data.getJSONObject(i);
-                            String name = obj.getString("post");
-                            int id = Integer.parseInt(obj.getString("id"));
+    private void setupPostCode(String result, boolean isMissingFlowGorble) {
+        if (result != null) {
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                String result_status = jsonObject.getString("status");
+                if (result_status != null && result_status.equals("200")) {
+                    JSONArray result_data = jsonObject.getJSONArray("data");
 
-                            post_array_id[i + 1] = obj.getString("id");
-                            post_array_name[i + 1] = name;
-                        }
-                        ArrayAdapter<CharSequence> arrayAdapter_spinner_postcode = new ArrayAdapter(MissingMainActivity.this, android.R.layout.simple_spinner_dropdown_item, post_array_name);
-                        spnr_postcode.setAdapter(arrayAdapter_spinner_postcode);
+                    post_array_name = new String[result_data.length() + 1];
+                    post_array_id = new String[result_data.length() + 1];
+                    post_array_name[0] = "Select One";
+                    post_array_id[0] = "0";
 
-                    } else {
-                        Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
+                    for (int i = 0; i < result_data.length(); i++) {
+                        JSONObject obj = result_data.getJSONObject(i);
+                        String name = obj.getString("post");
+                        int id = Integer.parseInt(obj.getString("id"));
+
+                        post_array_id[i + 1] = obj.getString("id");
+                        post_array_name[i + 1] = name;
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    ArrayAdapter<CharSequence> arrayAdapter_spinner_postcode = new ArrayAdapter(MissingMainActivity.this, android.R.layout.simple_spinner_dropdown_item, post_array_name);
+                    spnr_postcode.setAdapter(arrayAdapter_spinner_postcode);
+
+                    if (isMissingFlowGorble) {
+                        spnr_postcode.setSelection(regModel.getPostCodeAdapterPosition());
+                    }
+
+                } else {
                     Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } else {
-                Snackbar snackbar = Snackbar.make(scrollView, R.string.services_off_msg, Snackbar.LENGTH_LONG);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                 View snackBarView = snackbar.getView();
                 snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                 snackbar.show();
             }
+        } else {
+            Snackbar snackbar = Snackbar.make(scrollView, R.string.services_off_msg, Snackbar.LENGTH_LONG);
+            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+            View snackBarView = snackbar.getView();
+            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+            snackbar.show();
         }
     }
 
 
     public void outletImgOnClickMissing(View v) {
-        str_which_btn_selected = "1";
-        int permissionCheckGallery = ContextCompat.checkSelfPermission(MissingMainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (permissionCheckGallery != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                    MissingMainActivity.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY);
-        } else {
-            galleryIntent();
-        }
+//        str_which_btn_selected = "1";
+//        int permissionCheckGallery = ContextCompat.checkSelfPermission(MissingMainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
+//        if (permissionCheckGallery != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(
+//                    MissingMainActivity.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY);
+//        } else {
+//            galleryIntent();
+//        }
+
+        asked("দোকানের ছবি", "1");
     }
 
 
     public void nidImgOnClickMissing(View v) {
         str_which_btn_selected = "2";
-        int permissionCheck = ContextCompat.checkSelfPermission(MissingMainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                    MissingMainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY);
-        } else {
-            galleryIntent();
+        isNID = true;
+
+        if (regModel == null) {
+            regModel = new RegistrationModel();
         }
+
+
+        saveSessionData();
+
+
+        Intent intent = new Intent(getApplicationContext(), NidInputActivity.class);
+        intent.putExtra("isNID", isNID);
+        intent.putExtra("isMissingPage", true);
+        startActivity(intent);
+
     }
 
-    public void nidBackImgOnClickMissing(View v) {
+    private void saveSessionData() {
+        regModel.setOutletName(editText_outletName.getText().toString());
+        regModel.setOutletAddress(editText_address.getText().toString());
+        regModel.setOwnerName(editText_ownerName.getText().toString());
+        regModel.setPhnNumber(editText_phnNo.getText().toString());
+        regModel.setLandmark(editText_landmark.getText().toString());
+    }
+
+    public void smartmgOnClickMissing(View v) {
         str_which_btn_selected = "3";
-        int permissionCheck = ContextCompat.checkSelfPermission(MissingMainActivity.this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                    MissingMainActivity.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY);
-        } else {
-            galleryIntent();
+        isNID = false;
+
+        if (regModel == null) {
+            regModel = new RegistrationModel();
         }
+
+        saveSessionData();
+
+        Intent intent = new Intent(getApplicationContext(), NidInputActivity.class);
+        intent.putExtra("isNID", isNID);
+        intent.putExtra("isMissingPage", true);
+        startActivity(intent);
     }
 
     public void ownerImgOnClickMissing(View v) {
@@ -814,31 +1026,54 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
         startActivityForResult(Intent.createChooser(intent, "Select File"), 1);
     }
 
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//
+//        if (resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+//            InputStream imageStream;
+//            try {
+//                imageStream = this.getContentResolver().openInputStream(data.getData());
+//
+//                // bimatp factory
+//                BitmapFactory.Options options = new BitmapFactory.Options();
+//                options.inSampleSize = 8;
+//
+//                Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+////                    Bitmap selectedImage = BitmapFactory.decodeStream(imageStream, null, options);
+////                    imageStream.close();
+//
+//                encodeTobase64(selectedImage);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                Snackbar snackbar = Snackbar.make(scrollView, "error", Snackbar.LENGTH_LONG);
+//                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+//                View snackBarView = snackbar.getView();
+//                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+//                snackbar.show();
+//            }
+//        }
+//
+//    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1) {
-            if (resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == 1) {
                 InputStream imageStream;
                 try {
                     imageStream = this.getContentResolver().openInputStream(data.getData());
-
-                    // bimatp factory
-                    BitmapFactory.Options options = new BitmapFactory.Options();
-                    options.inSampleSize = 8;
-
                     Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-//                    Bitmap selectedImage = BitmapFactory.decodeStream(imageStream, null, options);
-//                    imageStream.close();
-
                     encodeTobase64(selectedImage);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Snackbar snackbar = Snackbar.make(scrollView, "error", Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
+                    Toast.makeText(MissingMainActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
                 }
+            } else {
+
+                if (lifeCycleCallBackManager != null) {
+                    lifeCycleCallBackManager.onActivityResult(requestCode, resultCode, data);
+                }
+
             }
         }
     }
@@ -852,42 +1087,52 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
 
         String strBuild = ("xxCloud" + imageEncoded + "xxCloud");
 
+        Drawable img = getResources().getDrawable(R.drawable.icon_seleted);
+
         switch (str_which_btn_selected) {
             case "1":
                 outlet_img = strBuild;
-                img_one.setVisibility(View.VISIBLE);
+                btPicOutlet.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btPicOutlet.setCompoundDrawablePadding(100);
                 break;
             case "2":
                 nid_img = strBuild;
-                img_two.setVisibility(View.VISIBLE);
+                //img_two.setVisibility(View.VISIBLE);
                 break;
             case "3":
                 nid_back_img = strBuild;
-                img_three.setVisibility(View.VISIBLE);
+                //img_three.setVisibility(View.VISIBLE);
                 break;
             case "4":
                 owner_img = strBuild;
-                img_four.setVisibility(View.VISIBLE);
+
+                btOwnerImg.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btOwnerImg.setCompoundDrawablePadding(100);
                 break;
             case "5":
                 trade_license_img = strBuild;
-                img_five.setVisibility(View.VISIBLE);
+                btTradeImg.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btTradeImg.setCompoundDrawablePadding(100);
                 break;
             case "6":
                 passport_img = strBuild;
-                img_six.setVisibility(View.VISIBLE);
+                btpassportImg.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btpassportImg.setCompoundDrawablePadding(100);
                 break;
             case "7":
                 birth_certificate_img = strBuild;
-                img_seven.setVisibility(View.VISIBLE);
+                btBirthImg.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btBirthImg.setCompoundDrawablePadding(100);
                 break;
             case "8":
                 driving_license_img = strBuild;
-                img_eight.setVisibility(View.VISIBLE);
+                btDriveImg.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btDriveImg.setCompoundDrawablePadding(100);
                 break;
             case "9":
                 visiting_card_img = strBuild;
-                img_nine.setVisibility(View.VISIBLE);
+                btCardImg.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btCardImg.setCompoundDrawablePadding(100);
                 break;
             default:
                 break;
@@ -1326,4 +1571,51 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void asked(String title, String number) {
+
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        builder.setMessage(title)
+                .setCancelable(true)
+                .setPositiveButton("Camara", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                        str_which_btn_selected = number;
+
+                        filePickUtils.requestImageCamera(CAMERA_PERMISSION, false, true); // pass false if you dont want to allow image crope
+
+
+                    }
+                })
+                .setNegativeButton("Gallery", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                        str_which_btn_selected = number;
+
+                        int permissionCheck = ContextCompat.checkSelfPermission(MissingMainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
+                        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(
+                                    MissingMainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY);
+                        } else {
+                            galleryIntent();
+                        }
+                    }
+                });
+        android.app.AlertDialog alert = builder.create();
+        alert.show();
+
+    }
+
+    private FilePickUtils.OnFileChoose onFileChoose = new FilePickUtils.OnFileChoose() {
+        @Override
+        public void onFileChoose(String fileUri, int requestCode, int size) {
+            // here you will get captured or selected image<br>
+
+            Bitmap selectedImage = BitmapFactory.decodeFile(fileUri);
+            encodeTobase64(selectedImage);
+
+
+            Log.e("", "");
+        }
+    };
 }

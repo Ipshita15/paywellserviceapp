@@ -833,6 +833,8 @@
     <string name="next_text">পরবর্তী</string>
     <string name="title_nid">এন.আই.ডি-এর তথ্য</string>
     <string name="title_smart">স্মার্ট আইডি কার্ড-এর তথ্য</string>
+    <string name="text_nid">এন.আই.ডি</string>
+    <string name="text_smart_card">স্মার্ট কার্ড</string>
 
 
 </resources>

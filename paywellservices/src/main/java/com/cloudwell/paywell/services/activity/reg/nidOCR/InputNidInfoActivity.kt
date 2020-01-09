@@ -10,6 +10,7 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.LanguagesBaseActivity
 import com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regModel
 import com.cloudwell.paywell.services.activity.reg.EntryThirdActivity
+import com.cloudwell.paywell.services.activity.reg.missing.MissingMainActivity
 import com.cloudwell.paywell.services.activity.reg.nidOCR.view.IInputNidListener
 import com.cloudwell.paywell.services.activity.reg.nidOCR.viewModel.InputNidModelFactory
 import com.cloudwell.paywell.services.activity.reg.nidOCR.viewModel.NidInputViewModel
@@ -30,6 +31,7 @@ class InputNidInfoActivity: LanguagesBaseActivity(), IInputNidListener {
 
 
     private var isNID: Boolean = false
+    private var isMissingPage: Boolean = false
     private val authViewModelFactory: InputNidModelFactory? = null
 
 
@@ -51,6 +53,7 @@ class InputNidInfoActivity: LanguagesBaseActivity(), IInputNidListener {
 
         val string = intent.extras.getString("data")
         isNID = intent.extras.getBoolean("isNID", false)
+        isMissingPage = intent.extras.getBoolean("isMissingPage", false)
 
         val user = Gson().fromJson(string, User::class.java);
         etNid.setText(user.nid)
@@ -80,11 +83,22 @@ class InputNidInfoActivity: LanguagesBaseActivity(), IInputNidListener {
                 regModel.smartCardAddress = ""+etUserAddress.text
             }
 
-            val intent = Intent(applicationContext, EntryThirdActivity::class.java);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            startActivity(intent)
 
-            finish()
+            if (isMissingPage){
+
+                val intent = Intent(applicationContext, MissingMainActivity::class.java);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                intent.putExtra("isMissingFlow", true)
+                startActivity(intent)
+
+                finish()
+            }else{
+                val intent = Intent(applicationContext, EntryThirdActivity::class.java);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+
+                finish()
+            }
         }
     }
     override fun showProgress() {
