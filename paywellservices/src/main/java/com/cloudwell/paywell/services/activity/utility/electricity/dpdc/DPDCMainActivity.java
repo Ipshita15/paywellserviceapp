@@ -16,12 +16,15 @@ import android.widget.RelativeLayout;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.WebViewActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.wasa.WASABillPayActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.ParameterUtility;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.http.NameValuePair;
@@ -260,6 +263,8 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
         @Override
         protected String doInBackground(String... params) {
             String responseTxt = null;
+
+            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(DPDCMainActivity.this).getRID());
             // Create a new HttpClient and Post Header
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(params[0]);
@@ -268,6 +273,7 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
                 nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("service", "DPDC"));
                 nameValuePairs.add(new BasicNameValuePair("limit", selectedLimit));
+                nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();

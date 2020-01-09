@@ -17,6 +17,8 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.JSONParser;
+import com.cloudwell.paywell.services.utils.ParameterUtility;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONObject;
@@ -52,9 +54,10 @@ public class ResetPinActivity extends AppCompatActivity {
         if (!mCd.isConnectingToInternet()) {
             mAppHandler.showDialog(getSupportFragmentManager());
         } else {
+            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
             new ResetPinAsync().execute(getString(R.string.reset_pin),
                     "username=" + mAppHandler.getImeiNo(),
-                    "&mode=" + "json");
+                    "&mode=" + "json" +"&" + ParameterUtility.KEY_REF_ID +"="+ uniqueKey);
         }
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_SETTINGS_RESET_PIN_MENU);

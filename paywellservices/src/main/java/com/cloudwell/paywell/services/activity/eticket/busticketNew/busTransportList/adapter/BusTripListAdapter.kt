@@ -48,6 +48,7 @@ class BusTripListAdapter(val items: List<TripScheduleInfoAndBusSchedule>, val co
         if (model.resSeatInfo == null) {
 //            holder.tvAvailableSeat.text = ":"
 
+
             holder.progressBar.visibility = View.VISIBLE
             BusTicketRepository().getSeatCheck(transport_id, route, bus_id, departure_id, departure_date, seat_ids).observeForever {
                 holder.progressBar.visibility = View.INVISIBLE

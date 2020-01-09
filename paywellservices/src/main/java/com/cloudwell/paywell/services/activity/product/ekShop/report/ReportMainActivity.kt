@@ -11,7 +11,9 @@ import com.cloudwell.paywell.services.activity.base.ProductEecommerceBaseActivit
 import com.cloudwell.paywell.services.activity.product.ekShop.model.Data
 import com.cloudwell.paywell.services.activity.product.ekShop.report.ui.report.AKShopRepo
 import com.cloudwell.paywell.services.activity.product.ekShop.report.ui.report.ReportViewModel
+import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.report_activity.*
 import java.text.SimpleDateFormat
@@ -85,7 +87,9 @@ class ReportMainActivity : ProductEecommerceBaseActivity(), ReportViewModel.IRep
         btSearchReport.setOnClickListener {
 
 
-            viewModel.search(isInternetConnection, etStartDate.text.toString(), etEndDate.text.toString(), etOrderCode.text.toString())
+
+            val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).rid)
+            viewModel.search(isInternetConnection, etStartDate.text.toString(), etEndDate.text.toString(), etOrderCode.text.toString(), uniqueKey)
         }
 
         etStartDate.setOnClickListener {

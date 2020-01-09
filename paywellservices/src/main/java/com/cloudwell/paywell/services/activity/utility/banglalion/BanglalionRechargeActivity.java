@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.topup.TopupMainActivity;
 import com.cloudwell.paywell.services.activity.utility.banglalion.model.BanglalionHistory;
 import com.cloudwell.paywell.services.activity.utility.ivac.IvacFeePayActivity;
 import com.cloudwell.paywell.services.activity.utility.ivac.model.IvacHistory;
@@ -25,6 +26,8 @@ import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.DateUtils;
+import com.cloudwell.paywell.services.utils.ParameterUtility;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.http.NameValuePair;
@@ -190,6 +193,8 @@ public class BanglalionRechargeActivity extends BaseActivity implements View.OnC
         @Override
         protected String doInBackground(String... params) {
             String responseTxt = null;
+
+            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(BanglalionRechargeActivity.this).getRID());
             // Create a new HttpClient and Post Header
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(params[0]);
@@ -200,6 +205,7 @@ public class BanglalionRechargeActivity extends BaseActivity implements View.OnC
                 nameValuePairs.add(new BasicNameValuePair("amount", params[3]));
                 nameValuePairs.add(new BasicNameValuePair("password", params[4]));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
+                nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();

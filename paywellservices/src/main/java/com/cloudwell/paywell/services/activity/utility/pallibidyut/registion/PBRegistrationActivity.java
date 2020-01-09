@@ -22,6 +22,8 @@ import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.ParameterUtility;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
@@ -174,7 +176,7 @@ public class PBRegistrationActivity extends LanguagesBaseActivity implements Vie
         @Override
         protected String doInBackground(String... params) {
             String responseTxt = null;
-
+            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(params[0]);
             try {
@@ -185,6 +187,7 @@ public class PBRegistrationActivity extends LanguagesBaseActivity implements Vie
                 nameValuePairs.add(new BasicNameValuePair("cust_name", URLEncoder.encode(_customerName, "UTF-8")));
                 nameValuePairs.add(new BasicNameValuePair("cust_phn", _phone));
                 nameValuePairs.add(new BasicNameValuePair("format", ""));
+                nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();

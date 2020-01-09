@@ -133,13 +133,13 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
 
     }
 
-    fun bookingAPI(internetConnection: Boolean, model: TripScheduleInfoAndBusSchedule, requestBusSearch: RequestBusSearch, boothInfo: BoothInfo, seatLevel: String, seatId: String, totalAPIValuePrices: String) {
+    fun bookingAPI(internetConnection: Boolean, model: TripScheduleInfoAndBusSchedule, requestBusSearch: RequestBusSearch, boothInfo: BoothInfo, seatLevel: String, seatId: String, totalAPIValuePrices: String, uniqueKey: String) {
         if (!internetConnection) {
             view?.showNoInternetConnectionFound()
         } else {
 
             view?.showProgress()
-            BusTicketRepository().callBookingAPI(model, requestBusSearch, boothInfo, seatLevel, seatId, totalAPIValuePrices).observeForever {
+            BusTicketRepository().callBookingAPI(model, requestBusSearch, boothInfo, seatLevel, seatId, totalAPIValuePrices, uniqueKey).observeForever {
                 view?.hiddenProgress()
                 if (it == null) {
                     view?.showErrorMessage("Server error please try again later")

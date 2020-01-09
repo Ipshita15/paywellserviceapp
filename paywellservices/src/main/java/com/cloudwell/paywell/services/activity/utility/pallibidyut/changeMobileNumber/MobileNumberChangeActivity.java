@@ -19,6 +19,8 @@ import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.ParameterUtility;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
@@ -179,6 +181,7 @@ public class MobileNumberChangeActivity extends BaseActivity implements View.OnC
         @Override
         protected String doInBackground(String... params) {
             String responseTxt = null;
+            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(params[0]);
             try {
@@ -188,6 +191,7 @@ public class MobileNumberChangeActivity extends BaseActivity implements View.OnC
                 nameValuePairs.add(new BasicNameValuePair("account_no", params[2]));
                 nameValuePairs.add(new BasicNameValuePair("msisdn", params[3]));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
+                nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
                 responseTxt = httpclient.execute(httppost, responseHandler);

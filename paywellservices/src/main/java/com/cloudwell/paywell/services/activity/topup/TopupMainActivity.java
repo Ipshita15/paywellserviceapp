@@ -51,6 +51,8 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.ParameterUtility;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.http.NameValuePair;
@@ -697,6 +699,8 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
         @Override
         protected String doInBackground(String... params) {
             String responseTxt = null;
+
+            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(TopupMainActivity.this).getRID());
             // Create a new HttpClient and Post Header
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(params[0]);
@@ -704,6 +708,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
                 List<NameValuePair> nameValuePairs = new ArrayList<>(2);
                 nameValuePairs.add(new BasicNameValuePair("iemi_no", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("msisdn", params[1]));
+                nameValuePairs.add(new BasicNameValuePair("ref_id", uniqueKey));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
@@ -923,10 +928,14 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(params[0]);
             try {
+
+                String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(TopupMainActivity.this).getRID());
+
                 List<NameValuePair> nameValuePairs = new ArrayList<>(3);
                 nameValuePairs.add(new BasicNameValuePair("iemi_no", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("pin_code", "1234"));
                 nameValuePairs.add(new BasicNameValuePair("limit", params[1]));
+                nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
@@ -963,6 +972,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
 
     @SuppressWarnings("deprecation")
     private void showCurrentTopupLog() {
+
         if (topUpLayout.getChildCount() > 0) {
             StringBuilder reqStrBuilder = new StringBuilder();
             for (int i = 0; i < topUpLayout.getChildCount(); i++) {
@@ -1130,9 +1140,13 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
 
                     }
 
+
                     String operatorTextForServer = getOperatorTextForServer(result);
 
-                    TopupData topupDatum = new TopupData(amountStr, planStr, phoneStr, operatorTextForServer);
+                    String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).getRID());
+
+
+                    TopupData topupDatum = new TopupData(amountStr, planStr, phoneStr, operatorTextForServer,uniqueKey);
                     topupDatumList.add(topupDatum);
 
                 }
@@ -1175,8 +1189,10 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
                 }
 
                 String operatorTextForServer = getOperatorTextForServer(result);
+                String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).getRID());
 
-                TopupData topupDatum = new TopupData(amountStr, planStr, phoneStr, operatorTextForServer);
+
+                TopupData topupDatum = new TopupData(amountStr, planStr, phoneStr, operatorTextForServer,uniqueKey);
                 topupDatumList.add(topupDatum);
 
             }

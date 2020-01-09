@@ -20,11 +20,14 @@ import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.westzone.WZPDCLBillPayActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.ParameterUtility;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -323,6 +326,8 @@ public class IvacFeeInquiryMainActivity extends BaseActivity implements View.OnC
         @Override
         protected String doInBackground(String... params) {
             String responseTxt = null;
+            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
+
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(params[0]);
             try {
@@ -332,12 +337,15 @@ public class IvacFeeInquiryMainActivity extends BaseActivity implements View.OnC
                     nameValuePairs.add(new BasicNameValuePair("password", "1234"));
                     nameValuePairs.add(new BasicNameValuePair("limit", selectedLimit));
                     nameValuePairs.add(new BasicNameValuePair("format", "json"));
+                    nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
+
                     httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 } else if (requestType == TAG_REQUEST_IVAC_WEB_FILE_SEARCH) {
                     List<NameValuePair> nameValuePairs = new ArrayList<>(3);
                     nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                     nameValuePairs.add(new BasicNameValuePair("password", "1234"));
                     nameValuePairs.add(new BasicNameValuePair("web_file_no", params[1]));
+                    nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
                     httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 }
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();

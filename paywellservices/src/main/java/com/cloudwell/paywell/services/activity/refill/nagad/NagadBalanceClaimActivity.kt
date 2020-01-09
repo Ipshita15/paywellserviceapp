@@ -20,6 +20,7 @@ import com.cloudwell.paywell.services.activity.utility.AllUrl
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.ConnectionDetector
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import kotlinx.android.synthetic.main.activity_nagad_balance_claim.*
 import kotlinx.android.synthetic.main.nagad_balance_claim_response_dialog.view.*
 import kotlinx.android.synthetic.main.pallibidyut_billpay_response_dialog.view.billViewLL
@@ -102,7 +103,9 @@ class NagadBalanceClaimActivity : UtilityBaseActivity() {
 
         showProgressDialog()
 
-        ApiUtils.getAPIService().transactionInquiry(hostUrlBkapi, sec_token, imeiNo, pin, mobileNumber, format, gateway_id, amount).enqueue(object : Callback<ResTranstionINquiry> {
+        val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(applicationContext).rid)
+
+        ApiUtils.getAPIService().transactionInquiry(hostUrlBkapi, sec_token, imeiNo, pin, mobileNumber, format, gateway_id, amount, uniqueKey).enqueue(object : Callback<ResTranstionINquiry> {
             override fun onFailure(call: Call<ResTranstionINquiry>, t: Throwable) {
                 Toast.makeText(applicationContext, "Server error!!!", Toast.LENGTH_SHORT).show()
                 dismissProgressDialog()

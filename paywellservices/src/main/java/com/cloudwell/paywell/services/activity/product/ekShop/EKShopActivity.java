@@ -28,6 +28,7 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 import com.orhanobut.logger.Logger;
 
@@ -120,8 +121,9 @@ public class EKShopActivity extends BaseActivity {
         String rid = mAppHandler.getRID();
         String URL = getString(R.string.ek_shope_token);
         String utype = "Retailer";
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).getRID());
 
-        Call<ResEkShopToken> ekshopToken = ApiUtils.getAPIService().getEkshopToken(URL, rid, utype);
+        Call<ResEkShopToken> ekshopToken = ApiUtils.getAPIService().getEkshopToken(URL, rid, utype, uniqueKey);
         ekshopToken.enqueue(new Callback<ResEkShopToken>() {
             @Override
             public void onResponse(Call<ResEkShopToken> call, Response<ResEkShopToken> response) {
