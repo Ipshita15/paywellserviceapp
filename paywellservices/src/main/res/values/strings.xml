@@ -642,7 +642,7 @@
     <string name="edit">Edit</string>
 
     <string name="multicity_limit_msg" translatable="false">Currently we are accepting only 5 requests</string>
-    <string name="bookingId" >Booking Id</string>
+    <string name="bookingId">Booking Id</string>
     <string name="depart">Depart</string>
     <string name="date">Date</string>
     <string name="class_text">Class</string>
@@ -830,6 +830,8 @@
     <string name="title_void_ticket">Ticket Void</string>
     <string name="view_ticket_with_fare">View Ticket With Fare</string>
     <string name="send_email_with_fare">Send Email With Fare</string>
+    <string name="desco_prepaid_string">Desco Prepaid</string>
+    <string name="desco_postpaid_string">Desco Postpaid</string>
 
 
 </resources>

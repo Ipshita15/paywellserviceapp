@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.utility.electricity.desco;
+package com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -34,7 +34,7 @@ import java.util.Date;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class DESCOInquiryActivity extends AppCompatActivity {
+public class DESCOPostpaidInquiryActivity extends AppCompatActivity {
 
     private AppHandler mAppHandler;
     private RelativeLayout mRelativeLayout;
@@ -325,7 +325,7 @@ public class DESCOInquiryActivity extends AppCompatActivity {
                 + "\nPhone: " + array[5] + "\nDate: " + array[6]
                 + "\nTrx ID: " + array[4];
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(DESCOInquiryActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(DESCOPostpaidInquiryActivity.this);
         if (array[1].equalsIgnoreCase("200")) {
             builder.setTitle(Html.fromHtml("<font color='#008000'>Result Successful</font>"));
         } else {

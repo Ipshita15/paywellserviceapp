@@ -72,8 +72,8 @@ import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionMainActivity;
 import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionRechargeActivity;
 import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionRechargeInquiryActivity;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.DESCOBillPayActivity;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.DESCOMainActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidBillPayActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidMainActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCMainActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCPostpaidBillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.wasa.WASABillPayActivity;
@@ -2070,21 +2070,21 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.string.home_utility_desco:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_MENU);
 
-                intent = new Intent(getApplicationContext(), DESCOMainActivity.class);
+                intent = new Intent(getApplicationContext(), DESCOPostpaidMainActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_utility_desco_pay:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_BILL_PAY);
 
-                intent = new Intent(getApplicationContext(), DESCOBillPayActivity.class);
+                intent = new Intent(getApplicationContext(), DESCOPostpaidBillPayActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
             case R.string.home_utility_desco_pay_inquiry:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_BILL_PAY_INQUIRY);
 
-                intent = new Intent(getApplicationContext(), DESCOMainActivity.class);
+                intent = new Intent(getApplicationContext(), DESCOPostpaidMainActivity.class);
                 intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_DESCO_INQUERY, true);
                 startActivityWithFlag(intent);
                 break;

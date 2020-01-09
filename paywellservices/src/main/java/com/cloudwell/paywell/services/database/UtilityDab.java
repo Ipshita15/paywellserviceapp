@@ -1,8 +1,8 @@
 package com.cloudwell.paywell.services.database;
 
 import com.cloudwell.paywell.services.activity.utility.banglalion.model.BanglalionHistory;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.DESCOHistory;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.DPDCHistory;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.model.DESCOHistory;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.model.DPDCHistory;
 import com.cloudwell.paywell.services.activity.utility.electricity.wasa.model.WasaHistory;
 import com.cloudwell.paywell.services.activity.utility.electricity.westzone.model.WestZoneHistory;
 import com.cloudwell.paywell.services.activity.utility.ivac.model.IvacHistory;

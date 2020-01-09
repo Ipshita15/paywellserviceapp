@@ -1,4 +1,8 @@
-package com.cloudwell.paywell.services.activity.utility.electricity.dpdc;
+package com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -7,18 +11,17 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.model.DPDCHistory;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidBillPayActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.model.DESCOHistory;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
@@ -42,71 +45,63 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
-
-public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.OnClickListener {
+public class DescoPrepaidBillPayActivity extends BaseActivity implements View.OnClickListener {
 
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
     private LinearLayout mLinearLayout;
-    private AppCompatAutoCompleteTextView etBill, etPhn, etLocation;
+    private AppCompatAutoCompleteTextView etBill, etPhn;
     private EditText etPin;
-    private ImageView ivInfoBill, ivInfoLocation;
-    private Spinner spnr_month, spnr_year;
+    private ImageView imageView;
     private Button btnConfirm;
-    private String mBill, mPhn, mLocation, mPin, mMonth, mYear, mTotalAmount, mTrxId;
-    private int month = 0, year = 0;
+    private String mBill;
+    private String mPhn;
+    private String mPin;
+    private String mTrxId;
+    private String mTotalAmount;
     private static final String TAG_STATUS = "status";
     private static final String TAG_MESSAGE = "message";
     private static final String TAG_MESSAGE_TEXT = "msg_text";
     private static final String TAG_TRANSACTION_ID = "trans_id";
     private static final String TAG_TOTAL_AMOUNT = "total_amount";
-    private AsyncTask<Void, Void, Void> insertDPDCHistoryAsyncTask;
-    private AsyncTask<Void, Void, Void> getAllDPDCHistoryAsyncTask;
+
     List<String> billNumberList = new ArrayList<>();
     List<String> payeerNumberList = new ArrayList<>();
-    List<String> locationList = new ArrayList<>();
+
+
+    AsyncTask<Void, Void, Void> getAllDescoHistoryAsyncTask;
+    AsyncTask<Void, Void, Void> insertDescoHistoryAsyncTask;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dpdc_bill_pay);
+        setContentView(R.layout.activity_desco_prepaid_bill_pay);
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_utility_dpdc_bill_title);
+            getSupportActionBar().setTitle(R.string.home_utility_desco_pay_title);
         }
         mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = AppHandler.getmInstance(getApplicationContext());
-
         initializeView();
 
-        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_DPDC_BILL_PAY);
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_DESCO_BILL_PAY);
 
     }
-
 
     private void initializeView() {
         mLinearLayout = findViewById(R.id.utilityLinearLayout);
 
-        TextView _mPin = findViewById(R.id.tvDpdcPin);
-        TextView _mBill = findViewById(R.id.tvDpdcBill);
-        TextView _mPhn = findViewById(R.id.tvDpdcPhn);
-        TextView _mLocation = findViewById(R.id.tvDpdcLocation);
+        TextView _mPin = findViewById(R.id.tvDescoPin);
+        TextView _mBill = findViewById(R.id.tvDescoBillNo);
+        TextView _mPhn = findViewById(R.id.tvDescoPhn);
 
         etPin = findViewById(R.id.pin_no);
         etBill = findViewById(R.id.mycash_bill);
         etPhn = findViewById(R.id.mycash_phn);
-        etLocation = findViewById(R.id.mycash_location);
-
-        ivInfoBill = findViewById(R.id.imageView_infoBill);
-        ivInfoLocation = findViewById(R.id.imageView_infoLocation);
+        imageView = findViewById(R.id.imageView_info);
         btnConfirm = findViewById(R.id.mycash_confirm);
-
-        spnr_month = findViewById(R.id.monthSpinner);
-        spnr_year = findViewById(R.id.yearSpinner);
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             _mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
@@ -115,8 +110,6 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
             etBill.setTypeface(AppController.getInstance().getOxygenLightFont());
             _mPhn.setTypeface(AppController.getInstance().getOxygenLightFont());
             etPhn.setTypeface(AppController.getInstance().getOxygenLightFont());
-            _mLocation.setTypeface(AppController.getInstance().getOxygenLightFont());
-            etLocation.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
             _mPin.setTypeface(AppController.getInstance().getAponaLohitFont());
@@ -125,55 +118,10 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
             etBill.setTypeface(AppController.getInstance().getAponaLohitFont());
             _mPhn.setTypeface(AppController.getInstance().getAponaLohitFont());
             etPhn.setTypeface(AppController.getInstance().getAponaLohitFont());
-            _mLocation.setTypeface(AppController.getInstance().getAponaLohitFont());
-            etLocation.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnConfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> month_adapter = ArrayAdapter.createFromResource(this,
-                R.array.month_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        month_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the mAdapter to the spinner
-        spnr_month.setAdapter(month_adapter);
-        spnr_month.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                month = position;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                month = 0;
-            }
-        });
-
-
-        List<String> dynamicTwoYear = DateUtils.INSTANCE.getDynamicTwoYear();
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter year_adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, dynamicTwoYear);
-        // Specify the layout to use when the list of choices appears
-        year_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the mAdapter to the spinner
-        spnr_year.setAdapter(year_adapter);
-        spnr_year.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                String year_str = String.valueOf(spnr_year.getSelectedItem());
-                year = Integer.parseInt(year_str);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                year = 0;
-            }
-        });
-
         btnConfirm.setOnClickListener(this);
-        ivInfoBill.setOnClickListener(this);
-        ivInfoLocation.setOnClickListener(this);
+        imageView.setOnClickListener(this);
 
 
         etBill.setOnTouchListener((v, event) -> {
@@ -187,24 +135,17 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
             return false;
         });
 
-        etLocation.setOnTouchListener((v, event) -> {
-            etLocation.showDropDown();
-            return false;
-        });
 
-
-        getAllDPDCHistoryAsyncTask = new AsyncTask<Void, Void, Void>() {
+        getAllDescoHistoryAsyncTask = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
 
                 billNumberList.clear();
                 payeerNumberList.clear();
-                locationList.clear();
-                List<DPDCHistory> allDESCOHistory = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().getAllDPDCHistory();
+                List<DESCOHistory> allDESCOHistory = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().getAllDESCOHistory();
                 for (int i = 0; i < allDESCOHistory.size(); i++) {
                     billNumberList.add(allDESCOHistory.get(i).getBilNumber());
                     payeerNumberList.add(allDESCOHistory.get(i).getPayerPhoneNumber());
-                    locationList.add(allDESCOHistory.get(i).getLocation());
                 }
                 return null;
             }
@@ -219,7 +160,7 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
             protected void onPostExecute(Void list) {
                 super.onPostExecute(list);
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(DPDCPostpaidBillPayActivity.this, android.R.layout.select_dialog_item, billNumberList);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(DescoPrepaidBillPayActivity.this, android.R.layout.select_dialog_item, billNumberList);
                 etBill.setThreshold(1);
                 etBill.setAdapter(adapter);
                 etBill.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -230,7 +171,7 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
                 });
 
 
-                ArrayAdapter<String> adapterPhone = new ArrayAdapter<String>(DPDCPostpaidBillPayActivity.this, android.R.layout.select_dialog_item, payeerNumberList);
+                ArrayAdapter<String> adapterPhone = new ArrayAdapter<String>(DescoPrepaidBillPayActivity.this, android.R.layout.select_dialog_item, payeerNumberList);
                 etPhn.setThreshold(1);
                 etPhn.setAdapter(adapterPhone);
                 etPhn.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -239,23 +180,9 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
                         etPhn.showDropDown();
                     }
                 });
-
-
-                ArrayAdapter<String> adapterLocation = new ArrayAdapter<String>(DPDCPostpaidBillPayActivity.this, android.R.layout.select_dialog_item, locationList);
-                etLocation.setThreshold(1);
-                etLocation.setAdapter(adapterLocation);
-                etLocation.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        etLocation.showDropDown();
-                    }
-                });
-
             }
 
         }.execute();
-
-
 
 
     }
@@ -266,7 +193,6 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
         if (v == btnConfirm) {
             mBill = etBill.getText().toString().trim();
             mPhn = etPhn.getText().toString().trim();
-            mLocation = etLocation.getText().toString().trim();
             mPin = etPin.getText().toString().trim();
             if (mPin.length() == 0) {
                 etPin.setError(Html.fromHtml("<font color='red'>" + getString(R.string.pin_no_error_msg) + "</font>"));
@@ -274,47 +200,18 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
                 etBill.setError(Html.fromHtml("<font color='red'>" + getString(R.string.bill_no_error_msg) + "</font>"));
             } else if (mPhn.length() != 11) {
                 etPhn.setError(Html.fromHtml("<font color='red'>" + getString(R.string.phone_no_error_msg) + "</font>"));
-            } else if (mLocation.length() == 0) {
-                etLocation.setError(Html.fromHtml("<font color='red'>" + getString(R.string.location_error_msg) + "</font>"));
-            } else if (month == 0 || year == 0) {
-                if (month == 0) {
-                    Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.select_month_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                } else {
-                    Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.select_year_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
             } else {
-                if (month < 10) {
-                    mMonth = "0" + month;
-                } else {
-                    mMonth = String.valueOf(month);
-                }
-                mYear = String.valueOf(year);
                 submitInquiryConfirm();
             }
-        } else if (v.equals(ivInfoBill)) {
-            showBillImage(1);
-        } else if (v.equals(ivInfoLocation)) {
-            showBillImage(2);
+        } else if (v == imageView) {
+            showBillImage();
         }
     }
 
-
-    private void showBillImage(int number) {
+    private void showBillImage() {
         View mView = getLayoutInflater().inflate(R.layout.dialog_custom_image_layout, null);
         PhotoView photoView = mView.findViewById(R.id.imageView);
-        if (number == 1) {
-            photoView.setImageResource(R.drawable.ic_help_dpdc_bill_one);
-        } else {
-            photoView.setImageResource(R.drawable.ic_help_dpdc_bill_two);
-        }
+        photoView.setImageResource(R.drawable.ic_help_desco_bill);
 
         AlertDialog.Builder builder =
                 new AlertDialog.Builder(this).
@@ -332,7 +229,7 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
         if (!mCd.isConnectingToInternet()) {
             AppHandler.showDialog(this.getSupportFragmentManager());
         } else {
-            new SubmitInquiryAsync().execute(getString(R.string.dpdc_postpaid_bill_inq));
+            new DescoPrepaidBillPayActivity.SubmitInquiryAsync().execute(getResources().getString(R.string.desco_bill_enq));
         }
     }
 
@@ -351,17 +248,15 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
             // Create a new HttpClient and Post Header
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(data[0]);
+
             try {
                 //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<>(9);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(6);
                 nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("password", mPin));
                 nameValuePairs.add(new BasicNameValuePair("billNo", mBill));
                 nameValuePairs.add(new BasicNameValuePair("payerMobileNo", mPhn));
-                nameValuePairs.add(new BasicNameValuePair("billMonth", mMonth));
-                nameValuePairs.add(new BasicNameValuePair("location", mLocation));
-                nameValuePairs.add(new BasicNameValuePair("billYear", mYear));
-                nameValuePairs.add(new BasicNameValuePair("service_type", "DPDC_Enquiry"));
+                nameValuePairs.add(new BasicNameValuePair("service_type", "DESCO_Enquiry"));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -384,13 +279,15 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
                     String status = jsonObject.getString(TAG_STATUS);
+
                     if (status.equals("200")) {
+
                         mTotalAmount = jsonObject.getString(TAG_TOTAL_AMOUNT);
+                        mTrxId = jsonObject.getString(TAG_TRANSACTION_ID);
                         String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
                         String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
-                        mTrxId = jsonObject.getString(TAG_TRANSACTION_ID);
                         if (!mTotalAmount.equals("0")) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(DPDCPostpaidBillPayActivity.this);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(DescoPrepaidBillPayActivity.this);
                             builder.setTitle("Result");
                             builder.setMessage(msg_text + "\n\n" + getString(R.string.phone_no_des) + " " + mPhn + "\n\nPayWell Trx ID: " + trx_id);
                             builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
@@ -410,7 +307,7 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
                             alert.setCanceledOnTouchOutside(true);
                             alert.show();
                         } else {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(DPDCPostpaidBillPayActivity.this);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(DescoPrepaidBillPayActivity.this);
                             builder.setTitle("Result");
                             builder.setMessage(msg_text + "\n\n" + getString(R.string.phone_no_des) + " " + mPhn + "\n\nPayWell Trx ID: " + trx_id);
                             builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
@@ -425,11 +322,12 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
                             alert.show();
                         }
                     } else {
+
                         String msg = jsonObject.getString(TAG_MESSAGE);
                         String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
                         String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(DPDCPostpaidBillPayActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(DescoPrepaidBillPayActivity.this);
                         builder.setMessage(msg + "\n" + msg_text + "\nPayWell Trx ID: " + trx_id);
                         builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
                             @Override
@@ -464,7 +362,7 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
         if (!mCd.isConnectingToInternet()) {
             AppHandler.showDialog(this.getSupportFragmentManager());
         } else {
-            new SubmitBillAsync().execute(getString(R.string.dpdc_postpaid_bill_pay));
+            new DescoPrepaidBillPayActivity.SubmitBillAsync().execute(getString(R.string.desco_bill_pay));
         }
     }
 
@@ -486,17 +384,14 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
 
             try {
                 //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<>(11);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(8);
                 nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
                 nameValuePairs.add(new BasicNameValuePair("password", mPin));
                 nameValuePairs.add(new BasicNameValuePair("billNo", mBill));
                 nameValuePairs.add(new BasicNameValuePair("payerMobileNo", mPhn));
-                nameValuePairs.add(new BasicNameValuePair("billMonth", mMonth));
-                nameValuePairs.add(new BasicNameValuePair("location", mLocation));
-                nameValuePairs.add(new BasicNameValuePair("billYear", mYear));
-                nameValuePairs.add(new BasicNameValuePair("service_type", "DPDC"));
-                nameValuePairs.add(new BasicNameValuePair("totalAmount", mTotalAmount));
+                nameValuePairs.add(new BasicNameValuePair("service_type", "DESCO"));
                 nameValuePairs.add(new BasicNameValuePair("transId", mTrxId));
+                nameValuePairs.add(new BasicNameValuePair("totalAmount", mTotalAmount));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -509,6 +404,7 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
                 View snackBarView = snackbar.getView();
                 snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
+
             return responseTxt;
         }
 
@@ -520,10 +416,26 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
                     JSONObject jsonObject = new JSONObject(result);
                     String status = jsonObject.getString(TAG_STATUS);
                     if (status.equals("200")) {
+
+                        insertDescoHistoryAsyncTask = new AsyncTask<Void, Void, Void>() {
+                            @Override
+                            protected Void doInBackground(Void... voids) {
+
+                                String currentDataAndTIme = DateUtils.INSTANCE.getCurrentDataAndTIme();
+                                DESCOHistory descoHistory = new DESCOHistory();
+                                descoHistory.setBilNumber(mBill);
+                                descoHistory.setPayerPhoneNumber(mPhn);
+                                descoHistory.setDate(currentDataAndTIme);
+                                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().insert(descoHistory);
+                                return null;
+                            }
+                        }.execute();
+
+
                         String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
                         String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(DPDCPostpaidBillPayActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(DescoPrepaidBillPayActivity.this);
                         builder.setTitle("Result");
                         builder.setMessage(msg_text + "\nPayWell Trx ID: " + trx_id);
                         builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
@@ -536,26 +448,16 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
                         AlertDialog alert = builder.create();
                         alert.setCanceledOnTouchOutside(true);
                         alert.show();
-                        insertDPDCHistoryAsyncTask = new AsyncTask<Void, Void, Void>() {
-                            @Override
-                            protected Void doInBackground(Void... voids) {
 
-                                String currentDataAndTIme = DateUtils.INSTANCE.getCurrentDataAndTIme();
-                                DPDCHistory dpdcHistory = new DPDCHistory();
-                                dpdcHistory.setBilNumber(mBill);
-                                dpdcHistory.setPayerPhoneNumber(mPhn);
-                                dpdcHistory.setLocation(mLocation);
-                                dpdcHistory.setDate(currentDataAndTIme);
-                                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().insertDPDCHistory(dpdcHistory);
-                                return null;
-                            }
-                        }.execute();
+
                     } else {
+
+
                         String msg = jsonObject.getString(TAG_MESSAGE);
                         String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
                         String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(DPDCPostpaidBillPayActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(DescoPrepaidBillPayActivity.this);
                         builder.setMessage(msg + "\n" + msg_text + "\nPayWell Trx ID: " + trx_id);
                         builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
                             @Override
@@ -597,17 +499,16 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
 
     @Override
     public void onBackPressed() {
-        if (getAllDPDCHistoryAsyncTask != null) {
-            getAllDPDCHistoryAsyncTask.cancel(true);
+        if (getAllDescoHistoryAsyncTask != null) {
+            getAllDescoHistoryAsyncTask.cancel(true);
 
         }
 
-        if (insertDPDCHistoryAsyncTask != null) {
-            insertDPDCHistoryAsyncTask.cancel(true);
+        if (insertDescoHistoryAsyncTask != null) {
+            insertDescoHistoryAsyncTask.cancel(true);
         }
 
 
         finish();
     }
-
 }

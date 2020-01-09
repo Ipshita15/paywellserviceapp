@@ -1,4 +1,7 @@
-package com.cloudwell.paywell.services.activity.utility.electricity.desco;
+package com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDialog;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,6 +16,9 @@ import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidBillPayActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidInquiryActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidMainActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
@@ -33,10 +39,7 @@ import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.appcompat.app.AppCompatDialog;
-
-public class DESCOMainActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
-
+public class DescoPrepaidMainActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
     private RelativeLayout mRelativeLayout;
     RadioButton radioButton_five, radioButton_ten, radioButton_twenty, radioButton_fifty, radioButton_hundred, radioButton_twoHundred;
     String selectedLimit = "";
@@ -46,7 +49,7 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_desco_main);
+        setContentView(R.layout.activity_desco_prepaid_main);
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -91,7 +94,7 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
         switch (v.getId()) {
             case R.id.homeBtnBillPay:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_DESCO_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_BILL_PAY);
-                startActivity(new Intent(this, DESCOBillPayActivity.class));
+                startActivity(new Intent(this, DESCOPostpaidBillPayActivity.class));
                 break;
             case R.id.homeBtnInquiry:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_DESCO_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_BILL_PAY_INQUIRY);
@@ -152,7 +155,7 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
                     selectedLimit = "5";
                 }
                 if (cd.isConnectingToInternet()) {
-                    new TransactionLogAsync().execute(getString(R.string.utility_multi_trx_inq));
+                    new DescoPrepaidMainActivity.TransactionLogAsync().execute(getString(R.string.utility_multi_trx_inq));
                 } else {
                     Snackbar snackbar = Snackbar.make(mRelativeLayout, getResources().getString(R.string.connection_error_msg), Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -266,8 +269,8 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
         protected void onPostExecute(String result) {
             dismissProgressDialog();
             if (result != null) {
-                DESCOInquiryActivity.TRANSLOG_TAG = result;
-                startActivity(new Intent(DESCOMainActivity.this, DESCOInquiryActivity.class));
+                DESCOPostpaidInquiryActivity.TRANSLOG_TAG = result;
+                startActivity(new Intent(DescoPrepaidMainActivity.this, DESCOPostpaidInquiryActivity.class));
             } else {
                 Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));

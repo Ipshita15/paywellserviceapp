@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.utility.electricity.desco;
+package com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.DESCOHistory;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.model.DESCOHistory;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
@@ -43,7 +43,7 @@ import java.util.List;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 
-public class DESCOBillPayActivity extends BaseActivity implements View.OnClickListener {
+public class DESCOPostpaidBillPayActivity extends BaseActivity implements View.OnClickListener {
 
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
@@ -157,7 +157,7 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
             protected void onPostExecute(Void list) {
                 super.onPostExecute(list);
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(DESCOBillPayActivity.this, android.R.layout.select_dialog_item, billNumberList);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(DESCOPostpaidBillPayActivity.this, android.R.layout.select_dialog_item, billNumberList);
                 etBill.setThreshold(1);
                 etBill.setAdapter(adapter);
                 etBill.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -168,7 +168,7 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
                 });
 
 
-                ArrayAdapter<String> adapterPhone = new ArrayAdapter<String>(DESCOBillPayActivity.this, android.R.layout.select_dialog_item, payeerNumberList);
+                ArrayAdapter<String> adapterPhone = new ArrayAdapter<String>(DESCOPostpaidBillPayActivity.this, android.R.layout.select_dialog_item, payeerNumberList);
                 etPhn.setThreshold(1);
                 etPhn.setAdapter(adapterPhone);
                 etPhn.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -284,7 +284,7 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
                         String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
                         String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
                         if (!mTotalAmount.equals("0")) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(DESCOBillPayActivity.this);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(DESCOPostpaidBillPayActivity.this);
                             builder.setTitle("Result");
                             builder.setMessage(msg_text + "\n\n" + getString(R.string.phone_no_des) + " " + mPhn + "\n\nPayWell Trx ID: " + trx_id);
                             builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
@@ -304,7 +304,7 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
                             alert.setCanceledOnTouchOutside(true);
                             alert.show();
                         } else {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(DESCOBillPayActivity.this);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(DESCOPostpaidBillPayActivity.this);
                             builder.setTitle("Result");
                             builder.setMessage(msg_text + "\n\n" + getString(R.string.phone_no_des) + " " + mPhn + "\n\nPayWell Trx ID: " + trx_id);
                             builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
@@ -324,7 +324,7 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
                         String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
                         String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(DESCOBillPayActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(DESCOPostpaidBillPayActivity.this);
                         builder.setMessage(msg + "\n" + msg_text + "\nPayWell Trx ID: " + trx_id);
                         builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
                             @Override
@@ -432,7 +432,7 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
                         String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
                         String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(DESCOBillPayActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(DESCOPostpaidBillPayActivity.this);
                         builder.setTitle("Result");
                         builder.setMessage(msg_text + "\nPayWell Trx ID: " + trx_id);
                         builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
@@ -454,7 +454,7 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
                         String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
                         String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(DESCOBillPayActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(DESCOPostpaidBillPayActivity.this);
                         builder.setMessage(msg + "\n" + msg_text + "\nPayWell Trx ID: " + trx_id);
                         builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
                             @Override
