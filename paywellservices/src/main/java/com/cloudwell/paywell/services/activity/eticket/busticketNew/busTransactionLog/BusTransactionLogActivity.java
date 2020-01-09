@@ -16,6 +16,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.transa
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.transactionLog.TransactionLogDetailsModel;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 
 import java.util.ArrayList;
 
@@ -62,8 +63,9 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
     void getTransactionLog(String userName, String skey, String limit) {
 
         showProgressDialog();
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
 
-        ApiUtils.getAPIServicePHP7().getBusTransactionLogFromServer(userName, skey, limit).enqueue(new Callback<TransactionLogDetailsModel>() {
+        ApiUtils.getAPIServicePHP7().getBusTransactionLogFromServer(userName, skey, limit, uniqueKey).enqueue(new Callback<TransactionLogDetailsModel>() {
             @Override
             public void onResponse(Call<TransactionLogDetailsModel> call, Response<TransactionLogDetailsModel> response) {
                 if (response.isSuccessful()) {

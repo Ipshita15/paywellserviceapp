@@ -28,7 +28,7 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
     var serachParameter = ""
 
 
-    fun getData(internetConnection: Boolean, isIndian: Boolean, appHandler: AppHandler) {
+    fun getData(internetConnection: Boolean, isIndian: Boolean, appHandler: AppHandler, uniqueKey: String) {
 
         if (!internetConnection) {
             baseViewStatus.value = BaseViewState(isNoInternectConnectionFoud = true)
@@ -43,7 +43,7 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
 
             val checkAirportListUpdateChecker = checkAirportListUpdateChecker(appHandler, internetConnection)
             if (checkAirportListUpdateChecker == true) {
-                getAirportListForRemoteAPI(serachParameter, appHandler)
+                getAirportListForRemoteAPI(serachParameter, appHandler,uniqueKey)
             } else {
 
                 mAirTicketRepository.getAllAirportForLocal(serachParameter).observeForever {
@@ -54,7 +54,7 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
 
                     // update all airport data list by checking india list
                     if (it.size < 150) {
-                        getAirportListForRemoteAPI(serachParameter, appHandler)
+                        getAirportListForRemoteAPI(serachParameter, appHandler,uniqueKey)
                     }
                 }
             }
@@ -63,10 +63,10 @@ class AirportSerachViewModel : AirTicketBaseViewMode() {
         }
     }
 
-    private fun getAirportListForRemoteAPI(serachParameter: String, appHandler: AppHandler) {
+    private fun getAirportListForRemoteAPI(serachParameter: String, appHandler: AppHandler, uniqueKey: String) {
         mViewStatus.value = AirportSeachStatus(noSerachFoundMessage = "", isShowProcessIndicatior = true)
 
-        mAirTicketRepository.getAirports(serachParameter).observeForever {
+        mAirTicketRepository.getAirports(serachParameter, uniqueKey).observeForever {
             val checkNetworkAndStatusCode = isOkNetworkAndStatusCode(it)
             if (checkNetworkAndStatusCode) {
 

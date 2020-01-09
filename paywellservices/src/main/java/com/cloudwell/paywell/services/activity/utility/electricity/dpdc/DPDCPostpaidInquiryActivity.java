@@ -18,10 +18,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionRechargeInquiryActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.utils.ParameterUtility;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
@@ -330,10 +333,11 @@ public class DPDCPostpaidInquiryActivity extends AppCompatActivity {
     }
 
     private void showFullInfo(int position) {
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(DPDCPostpaidInquiryActivity.this).getRID());
         String array[] = adapter.mData.get(position).split("@");
         String msg = "Bill No: " + array[0] + "\nAmount: " + getString(R.string.tk_des) + " " + array[3]
                 + "\nBill Month: " + array[5] + "\nBill Year: " + array[6]
-                + "\nLocation: " + array[7] + "\nPhone: " + array[8]
+                + "\nLocation: " + array[7] + "\nPhone: " + array[8] +"\n"+ParameterUtility.KEY_REF_ID+":" + uniqueKey
                 + "\nDate: " + array[9] + "\nTrx ID: " + array[4];
 
         AlertDialog.Builder builder = new AlertDialog.Builder(DPDCPostpaidInquiryActivity.this);

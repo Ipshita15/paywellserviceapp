@@ -38,6 +38,7 @@
     <string name="home_utility_pollibiddut_registion">Polli Biddut\nReg.</string>
     <string name="home_utility_pollibiddut_bill_pay_favorite">Polli Biddut\nBill Pay</string>
     <string name="home_utility_ivac">IVAC</string>
+    <string name="home_product_ekshop">Ekshop</string>
     <string name="home_utility_banglalion">Banglalion</string>
     <string name="home_utility_karnaphuli">Karnaphuli</string>
     <string name="home_utility_karnaphuli_bill_pay">Karnaphuli \nBill Pay</string>
@@ -474,6 +475,9 @@
 
     <string name="desco_bill_enq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
     <string name="desco_bill_pay">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
+
+    <string name="desco_prepaid_bill_enq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
+
 
     <string name="dpdc_postpaid_bill_inq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DPDC</string>
     <string name="dpdc_postpaid_bill_pay">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DPDC</string>

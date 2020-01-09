@@ -42,6 +42,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cloudwell.paywell.services.BuildConfig;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.about.AboutActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
@@ -54,9 +55,8 @@ import com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.MyFavoriteMenuActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
 import com.cloudwell.paywell.services.activity.notification.allNotificaiton.NotificationAllActivity;
-import com.cloudwell.paywell.services.activity.product.AjkerDealActivity;
 import com.cloudwell.paywell.services.activity.product.ProductMenuActivity;
-import com.cloudwell.paywell.services.activity.product.WholesaleActivity;
+import com.cloudwell.paywell.services.activity.product.ekShop.EKShopActivity;
 import com.cloudwell.paywell.services.activity.refill.RefillBalanceMainActivity;
 import com.cloudwell.paywell.services.activity.refill.banktransfer.BankTransferMainActivity;
 import com.cloudwell.paywell.services.activity.refill.card.CardTransferMainActivity;
@@ -683,9 +683,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         try {
             String rid = getString(R.string.rid) + mAppHandler.getRID();
-            //if (BuildConfig.DEBUG) {
+            if (BuildConfig.DEBUG) {
                 rid = rid + "(" + AppTestVersionUtility.testVersion + ")";
-           // }
+            }
             _pwId.setText(rid);
             if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
                 _pwId.setTypeface(AppController.getInstance().getOxygenLightFont());
@@ -2317,16 +2317,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivityWithFlag(intent);
                 break;
 
-            case R.string.home_product_ajker_deal:
+            case R.string.home_product_ekshop:
 
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_PRODUCT_AJKER_DEAL_MENU);
-                startActivity(new Intent(this, AjkerDealActivity.class));
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_PRODUCT_EK_SHOP);
+                startActivity(new Intent(this, EKShopActivity.class));
                 break;
 
-            case R.string.home_product_pw_wholesale:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_PRODUCT_WHOLESALE_MENU);
-                startActivity(new Intent(this, WholesaleActivity.class));
-                break;
 
             case R.string.home_statement_mini:
 

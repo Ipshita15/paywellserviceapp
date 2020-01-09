@@ -73,6 +73,7 @@
     <string name="home_eticket_bus">বাস টিকিট</string>
     <string name="home_eticket_air">বিমান টিকিট</string>
     <string name="home_product_ajker_deal">আজকের ডিল</string>
+    <string name="home_product_ekshop">এক-শপ</string>
     <string name="home_product_pw_wholesale">পেওয়েল\nহোলসেল</string>
     <string name="home_product_pw_wholesale_title">পেওয়েল হোলসেল</string>
     <string name="home_settings_reset_pin">পিন রিসেট</string>
@@ -223,7 +224,7 @@
     <string name="verify_quote">উপরোক্ত নম্বরে একটি পিন আসবে এবং স্বয়ংক্রিয় ভাবে নম্বরটি ভেরিফাই হয়ে যাবে।</string>
     <string name="allow_error_msg">অনুমতি নেই। প্রথমে পিন পরিবর্তন করুন</string>
     <string name="select_phn_title_msg">নম্বর নির্বাচন করুন</string>
-    <string name="select_phn_title_air_ticket">সাহায্যর জন্য কল করুন:</string>
+    <string name="select_phn_title_air_ticket">সাহায্যের জন্য কল করুন:</string>
     <string name="amount_transfer_msg">টাকা স্থানান্তর সফল</string>
     <string name="success_msg">সফল</string>
     <string name="request_failed_msg">ফেল</string>
@@ -480,6 +481,8 @@
 
     <string name="desco_bill_enq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
     <string name="desco_bill_pay">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
+
+    <string name="desco_prepaid_bill_enq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
 
     <string name="dpdc_postpaid_bill_inq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DPDC</string>
     <string name="dpdc_postpaid_bill_pay">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DPDC</string>

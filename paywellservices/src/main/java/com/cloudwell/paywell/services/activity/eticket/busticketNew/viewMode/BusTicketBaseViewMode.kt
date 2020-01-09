@@ -19,12 +19,12 @@ open class BusTicketBaseViewMode : ViewModel() {
     }
 
 
-    fun getSchudle(internetConnection: Boolean, transport: Transport) {
+    fun getSchudle(internetConnection: Boolean, transport: Transport, uniqueKey: String) {
         if (!internetConnection) {
             view.showNoInternetConnectionFound()
         } else {
             view.showProgress()
-            BusTicketRepository().getBusScheduleDate(transport.busid).observeForever({ status ->
+            BusTicketRepository().getBusScheduleDate(transport.busid, uniqueKey).observeForever({ status ->
                 view.hiddenProgress()
                 if (status.equals("done")) {
                     view.openNextActivity()

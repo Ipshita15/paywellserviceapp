@@ -35,6 +35,7 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.ByteArrayOutputStream;
@@ -405,10 +406,13 @@ public class BankDetailsActivity extends BaseActivity {
     private void submitBalanceRequest() {
         showProgressDialog();
 
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
+
+
         Call<RefillRequestData> responseBodyCall = ApiUtils.getAPIService().callBalanceRefillAPI(mRequestRefillBalance.getmUsername(),
                 mRequestRefillBalance.getmBankId(), mRequestRefillBalance.getmDistrictId(),
                 mRequestRefillBalance.getmBranchId(),
-                mRequestRefillBalance.getmImagePath(), etAmount.getText().toString());
+                mRequestRefillBalance.getmImagePath(), etAmount.getText().toString(),uniqueKey);
 
         responseBodyCall.enqueue(new Callback<RefillRequestData>() {
             @Override

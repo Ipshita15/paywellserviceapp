@@ -166,6 +166,46 @@
                         android:inputType="number"
                         android:maxLength="11"
                         android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="@dimen/activity_horizontal_margin"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/star_sign"
+                            android:textColor="#FF4719"/>
+
+                        <TextView
+                            android:id="@+id/tvDescoAmount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingEnd="2dp"
+                            android:paddingLeft="2dp"
+                            android:paddingRight="2dp"
+                            android:paddingStart="2dp"
+                            android:text="@string/amount_des"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/amountDescoET"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="5dp"
+                        android:digits="0123456789"
+                        android:imeOptions="actionNext"
+                        android:inputType="numberPassword"
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>

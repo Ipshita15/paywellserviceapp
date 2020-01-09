@@ -23,6 +23,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.s
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import com.orhanobut.logger.Logger
 import com.squareup.otto.Subscribe
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
@@ -167,8 +168,8 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
             it?.let { it1 -> handleStatus(it1) }
         })
 
-
-        mAirTicketBaseViewMode.getData(isInternetConnection, isIndian, AppHandler.getmInstance(applicationContext));
+        val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).rid)
+        mAirTicketBaseViewMode.getData(isInternetConnection, isIndian, AppHandler.getmInstance(applicationContext),uniqueKey);
 
 
     }
