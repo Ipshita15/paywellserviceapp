@@ -258,7 +258,7 @@ public class DESCOPostpaidBillPayActivity extends BaseActivity implements View.O
                 nameValuePairs.add(new BasicNameValuePair("password", mPin));
                 nameValuePairs.add(new BasicNameValuePair("billNo", mBill));
                 nameValuePairs.add(new BasicNameValuePair("payerMobileNo", mPhn));
-                nameValuePairs.add(new BasicNameValuePair("service_type", "DESCO_Enquiry"));
+                nameValuePairs.add(new BasicNameValuePair("service_type", "DESCO_Postpaid"));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
                 nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));

@@ -53,7 +53,7 @@ public class DescoPrepaidMainActivity extends BaseActivity implements CompoundBu
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_utility_desco);
+            getSupportActionBar().setTitle(R.string.desco_prepaid_string);
         }
 
         mRelativeLayout = findViewById(R.id.relativeLayout);
@@ -94,7 +94,7 @@ public class DescoPrepaidMainActivity extends BaseActivity implements CompoundBu
         switch (v.getId()) {
             case R.id.homeBtnBillPay:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_DESCO_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_BILL_PAY);
-                startActivity(new Intent(this, DESCOPostpaidBillPayActivity.class));
+                startActivity(new Intent(this, DescoPrepaidBillPayActivity.class));
                 break;
             case R.id.homeBtnInquiry:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_DESCO_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_BILL_PAY_INQUIRY);

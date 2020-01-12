@@ -53,7 +53,7 @@ public class DESCOPostpaidMainActivity extends BaseActivity implements CompoundB
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_utility_desco);
+            getSupportActionBar().setTitle(R.string.desco_postpaid_string);
         }
 
         mRelativeLayout = findViewById(R.id.relativeLayout);

@@ -53,7 +53,7 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
     private AppHandler mAppHandler;
     private LinearLayout mLinearLayout;
     private AppCompatAutoCompleteTextView etBill, etPhn;
-    private EditText etPin;
+    private EditText etPin, etAmount;
     private ImageView imageView;
     private Button btnConfirm;
     private String mBill;
@@ -61,6 +61,8 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
     private String mPin;
     private String mTrxId;
     private String mTotalAmount;
+    private String mAmount;
+
     private static final String TAG_STATUS = "status";
     private static final String TAG_MESSAGE = "message";
     private static final String TAG_MESSAGE_TEXT = "msg_text";
@@ -98,10 +100,12 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
         TextView _mPin = findViewById(R.id.tvDescoPin);
         TextView _mBill = findViewById(R.id.tvDescoBillNo);
         TextView _mPhn = findViewById(R.id.tvDescoPhn);
+        TextView _mAmount = findViewById(R.id.tvDescoAmount);
 
         etPin = findViewById(R.id.pin_no);
         etBill = findViewById(R.id.mycash_bill);
         etPhn = findViewById(R.id.mycash_phn);
+        etAmount = findViewById(R.id.amountDescoET);
         imageView = findViewById(R.id.imageView_info);
         btnConfirm = findViewById(R.id.mycash_confirm);
 
@@ -112,6 +116,8 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
             etBill.setTypeface(AppController.getInstance().getOxygenLightFont());
             _mPhn.setTypeface(AppController.getInstance().getOxygenLightFont());
             etPhn.setTypeface(AppController.getInstance().getOxygenLightFont());
+            _mAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
+            etAmount.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
             _mPin.setTypeface(AppController.getInstance().getAponaLohitFont());
@@ -120,6 +126,8 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
             etBill.setTypeface(AppController.getInstance().getAponaLohitFont());
             _mPhn.setTypeface(AppController.getInstance().getAponaLohitFont());
             etPhn.setTypeface(AppController.getInstance().getAponaLohitFont());
+            _mAmount.setTypeface(AppController.getInstance().getAponaLohitFont());
+            etAmount.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnConfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
         btnConfirm.setOnClickListener(this);
@@ -196,12 +204,16 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
             mBill = etBill.getText().toString().trim();
             mPhn = etPhn.getText().toString().trim();
             mPin = etPin.getText().toString().trim();
+            mPin = etPin.getText().toString().trim();
+            mAmount = etAmount.getText().toString().trim();
             if (mPin.length() == 0) {
                 etPin.setError(Html.fromHtml("<font color='red'>" + getString(R.string.pin_no_error_msg) + "</font>"));
             } else if (mBill.length() == 0) {
                 etBill.setError(Html.fromHtml("<font color='red'>" + getString(R.string.bill_no_error_msg) + "</font>"));
             } else if (mPhn.length() != 11) {
                 etPhn.setError(Html.fromHtml("<font color='red'>" + getString(R.string.phone_no_error_msg) + "</font>"));
+            } else if (mAmount.length() == 0) {
+                etAmount.setError(Html.fromHtml("<font color='red'>" + getString(R.string.amount_error_msg) + "</font>"));
             } else {
                 submitInquiryConfirm();
             }
@@ -232,6 +244,8 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
             AppHandler.showDialog(this.getSupportFragmentManager());
         } else {
             new DescoPrepaidBillPayActivity.SubmitInquiryAsync().execute(getResources().getString(R.string.desco_prepaid_bill_enq));
+
+
         }
     }
 
@@ -259,7 +273,8 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
                 nameValuePairs.add(new BasicNameValuePair("password", mPin));
                 nameValuePairs.add(new BasicNameValuePair("billNo", mBill));
                 nameValuePairs.add(new BasicNameValuePair("payerMobileNo", mPhn));
-                nameValuePairs.add(new BasicNameValuePair("service_type", "DESCO_Enquiry"));
+                nameValuePairs.add(new BasicNameValuePair("amount", mAmount));
+                nameValuePairs.add(new BasicNameValuePair("service_type", "DESCO_PrepaidEnquiry"));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
                 nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -366,7 +381,7 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
         if (!mCd.isConnectingToInternet()) {
             AppHandler.showDialog(this.getSupportFragmentManager());
         } else {
-            new DescoPrepaidBillPayActivity.SubmitBillAsync().execute(getString(R.string.desco_bill_pay));
+            new DescoPrepaidBillPayActivity.SubmitBillAsync().execute(getString(R.string.desco_prepaid_bill_pay));
         }
     }
 
@@ -382,6 +397,7 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
         @Override
         protected String doInBackground(String... data) {
             String responseTxt = null;
+            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
             // Create a new HttpClient and Post Header
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(data[0]);
@@ -393,10 +409,11 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
                 nameValuePairs.add(new BasicNameValuePair("password", mPin));
                 nameValuePairs.add(new BasicNameValuePair("billNo", mBill));
                 nameValuePairs.add(new BasicNameValuePair("payerMobileNo", mPhn));
-                nameValuePairs.add(new BasicNameValuePair("service_type", "DESCO"));
+                nameValuePairs.add(new BasicNameValuePair("service_type", "DESCO_Prepaid"));
                 nameValuePairs.add(new BasicNameValuePair("transId", mTrxId));
                 nameValuePairs.add(new BasicNameValuePair("totalAmount", mTotalAmount));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
+                nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();

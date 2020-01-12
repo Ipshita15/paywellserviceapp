@@ -476,7 +476,8 @@
     <string name="desco_bill_enq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
     <string name="desco_bill_pay">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
 
-    <string name="desco_prepaid_bill_enq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
+    <string name="desco_prepaid_bill_enq">https://agentapi.paywellonline.com/MYCash/Utility/DESCOPrepaid_billInfo</string>
+    <string name="desco_prepaid_bill_pay">https://agentapi.paywellonline.com/MYCash/Utility/DESCOPrepaid_billPayment</string>
 
 
     <string name="dpdc_postpaid_bill_inq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DPDC</string>

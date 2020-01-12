@@ -482,7 +482,8 @@
     <string name="desco_bill_enq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
     <string name="desco_bill_pay">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
 
-    <string name="desco_prepaid_bill_enq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
+    <string name="desco_prepaid_bill_enq">https://agentapi.paywellonline.com/MYCash/Utility/DESCOPrepaid_billInfo</string>
+    <string name="desco_prepaid_bill_pay">https://agentapi.paywellonline.com/MYCash/Utility/DESCOPrepaid_billPayment</string>
 
     <string name="dpdc_postpaid_bill_inq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DPDC</string>
     <string name="dpdc_postpaid_bill_pay">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DPDC</string>
@@ -829,8 +830,8 @@
     <string name="title_void_ticket">Ticket Void</string>
     <string name="view_ticket_with_fare">View Ticket With Fare</string>
     <string name="send_email_with_fare">Send Email With Fare</string>
-    <string name="desco_prepaid_string">Desco Prepaid</string>
-    <string name="desco_postpaid_string">Desco Postpaid</string>
+    <string name="desco_prepaid_string">ডেসকো প্রিপেইড</string>
+    <string name="desco_postpaid_string">ডেসকো পোষ্টপেইড</string>
 
 
 </resources>
