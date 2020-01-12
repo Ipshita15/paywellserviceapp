@@ -17,6 +17,7 @@ public class APIResNoCheckNotification {
     @SerializedName("unread")
     private String mUnread;
 
+    @SerializedName("detail_message")
     private List<NotificationDetailMessage> detail_message;
 
     public String getMessage() {
