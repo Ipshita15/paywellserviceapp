@@ -113,6 +113,7 @@ public class PBBillStatusActivity extends BaseActivity implements View.OnClickLi
                 year = 0;
             }
         });
+        spnr_year.setSelection(1);
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             ((TextView) mLinearLayout.findViewById(R.id.tvPBPin)).setTypeface(AppController.getInstance().getOxygenLightFont());

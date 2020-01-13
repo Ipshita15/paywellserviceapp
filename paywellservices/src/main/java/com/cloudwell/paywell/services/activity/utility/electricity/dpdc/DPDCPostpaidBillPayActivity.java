@@ -175,6 +175,8 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
             }
         });
 
+        spnr_year.setSelection(1);
+
         btnConfirm.setOnClickListener(this);
         ivInfoBill.setOnClickListener(this);
         ivInfoLocation.setOnClickListener(this);
