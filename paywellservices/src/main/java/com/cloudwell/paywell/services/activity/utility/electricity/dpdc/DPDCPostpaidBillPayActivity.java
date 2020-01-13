@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.DESCOHistory;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.DPDCHistory;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
@@ -171,6 +170,8 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
                 year = 0;
             }
         });
+
+        spnr_year.setSelection(1);
 
         btnConfirm.setOnClickListener(this);
         ivInfoBill.setOnClickListener(this);

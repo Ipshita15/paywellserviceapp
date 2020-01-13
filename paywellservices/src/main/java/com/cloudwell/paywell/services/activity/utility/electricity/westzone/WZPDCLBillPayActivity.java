@@ -18,8 +18,6 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.DPDCHistory;
-import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCPostpaidBillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.westzone.model.WestZoneHistory;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
@@ -149,6 +147,8 @@ public class WZPDCLBillPayActivity extends BaseActivity implements View.OnClickL
                 year = 0;
             }
         });
+
+        spnr_year.setSelection(1);
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             _mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
