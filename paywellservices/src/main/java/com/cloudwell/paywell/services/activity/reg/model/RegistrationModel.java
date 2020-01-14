@@ -5,8 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import org.jetbrains.annotations.NotNull;
 
 public class RegistrationModel {
-
-
     @SerializedName("imei")
     private String imei;
     @SerializedName("alternate_imei")
@@ -18,7 +16,7 @@ public class RegistrationModel {
     @SerializedName("operators")
     private String operators;
     @SerializedName("outlet_name")
-    private String outletName;
+    private String outletName = "";
     @SerializedName("outlet_address")
     private String outletAddress;
     @SerializedName("owner_name")
@@ -42,39 +40,37 @@ public class RegistrationModel {
     @SerializedName("landmark")
     private String landmark;
 
-    private String salesCode;
-    private String collectionCode;
+
 
     @SerializedName("outlet_img")
-    private String outletImage;
-
+    private String outletImage = "";
     @SerializedName("nidFrontPic")
-    private String nidFront;
+    private String nidFront = "";
     @SerializedName("nidBackPic")
-    private String nidBack;
+    private String nidBack = "";
     @SerializedName("owner_img")
-    private String ownerImage;
+    private String ownerImage = "";
     @SerializedName("trade_license_img")
-    private String tradeLicense;
+    private String tradeLicense = "";
     @SerializedName("image_passport")
-    private String passport;
+    private String passport = "";
     @SerializedName("birth_certificate_img")
-    private String birthCertificate;
+    private String birthCertificate = "";
     @SerializedName("driving_license_imege")
-    private String drivingLicense;
+    private String drivingLicense= "";
     @SerializedName("visiting_card_img")
-    private String visitingCard;
+    private String visitingCard = "";
 
     @SerializedName("smartCardFrontPic")
-    private String smartCardFront;
+    private String smartCardFront = "";
     @SerializedName("smartCardBackPic")
-    private String smartCardBack;
+    private String smartCardBack = "";
+
+
     @SerializedName("nidNumber")
     public String nidNumber;
-
     @SerializedName("nidFatherName")
     public String nidFatherName;
-
     @SerializedName("nidName")
     public String nidName;
     @SerializedName("nidMotherName")
@@ -95,6 +91,10 @@ public class RegistrationModel {
     public String smartCardBirthday;
     @SerializedName("smartCardAddress")
     public String smartCardAddress;
+
+
+
+
     private String mBusinessaTypeAPIRespose;
     private int mBusinesstypeAdapterPosition = 0;
     private String mDistrictAPIRespose;
@@ -103,6 +103,10 @@ public class RegistrationModel {
     private int mDistrictAdapterPosition;
     private int mThanaAdapterPosition;
     private int mPostCodeAdapterPosition;
+    private String mMrchantType;
+    private String mDistrict;
+    private String salesCode;
+    private String collectionCode;
 
     public RegistrationModel() {
     }
@@ -536,5 +540,23 @@ public class RegistrationModel {
 
     public int getPostCodeAdapterPosition() {
         return mPostCodeAdapterPosition;
+    }
+
+
+
+    public void setMrchantType(String mrchantType) {
+        this.mMrchantType = mrchantType;
+    }
+
+    public String getMMrchantType() {
+        return mMrchantType;
+    }
+
+    public void setDistrict(String district) {
+        mDistrict = district;
+    }
+
+    public String getDistrict() {
+        return mDistrict;
     }
 }

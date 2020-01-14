@@ -237,19 +237,21 @@ public class EntryForthActivity extends BaseActivity {
                         visiting_card_img = regModel.getVisitingCard();
                     }
 
-                    if (!regModel.getOutletName().isEmpty() && !regModel.getOutletAddress().isEmpty() && !regModel.getOwnerName().isEmpty()
-                            && !regModel.getBusinessId().isEmpty() && !regModel.getBusinessType().isEmpty() && !regModel.getPhnNumber().isEmpty()
-                            && !regModel.getDistrictName().isEmpty() && !regModel.getThanaName().isEmpty() && !regModel.getPostcodeName().isEmpty()
-                            && !regModel.getPostcodeId().isEmpty() && !email.isEmpty() && !landmark.isEmpty() && !sales_code.isEmpty()
-                            && !collection_code.isEmpty() && !outlet_img.isEmpty() && !nid_img.isEmpty() && !nid_back_img.isEmpty()
-                            && !owner_img.isEmpty() && !trade_license_img.isEmpty() && !passport_img.isEmpty() && !birth_certificate_img.isEmpty()
-                            && !driving_license_img.isEmpty() && !visiting_card_img.isEmpty()) {
+//                    if (!regModel.getOutletName().isEmpty() && !regModel.getOutletAddress().isEmpty() && !regModel.getOwnerName().isEmpty()
+//                            && !regModel.getBusinessId().isEmpty() && !regModel.getBusinessType().isEmpty() && !regModel.getPhnNumber().isEmpty()
+//                            && !regModel.getDistrictName().isEmpty() && !regModel.getThanaName().isEmpty() && !regModel.getPostcodeName().isEmpty()
+//                            && !regModel.getPostcodeId().isEmpty() && !email.isEmpty() && !landmark.isEmpty() && !sales_code.isEmpty()
+//                            && !collection_code.isEmpty() && !outlet_img.isEmpty() && !nid_img.isEmpty() && !nid_back_img.isEmpty()
+//                            && !owner_img.isEmpty() && !trade_license_img.isEmpty() && !passport_img.isEmpty() && !birth_certificate_img.isEmpty()
+//                            && !driving_license_img.isEmpty() && !visiting_card_img.isEmpty()) {
+//
+//
+//                    } else {
+//                        Toast.makeText(this, "সঠিকভাবে ইনপুট দিন", Toast.LENGTH_SHORT).show();
+//                    }
 
-                        AnalyticsManager.sendEvent(AnalyticsParameters.KEY_REGISTRATION_MENU, AnalyticsParameters.KEY_REGISTRATION_FORTH_PORTION_SUBMIT_REQUEST);
-                        checkRequest();
-                    } else {
-                        Toast.makeText(this, "সঠিকভাবে ইনপুট দিন", Toast.LENGTH_SHORT).show();
-                    }
+                    AnalyticsManager.sendEvent(AnalyticsParameters.KEY_REGISTRATION_MENU, AnalyticsParameters.KEY_REGISTRATION_FORTH_PORTION_SUBMIT_REQUEST);
+                    checkRequest();
                 }
             } else {
                 Toast.makeText(this, "সঠিকভাবে ইনপুট দিন", Toast.LENGTH_SHORT).show();

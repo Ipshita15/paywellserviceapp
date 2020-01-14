@@ -75,10 +75,11 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
             layoutPassportImg, layoutBirthImg, layoutDrivingImg, layoutVisitingImg;
     private EditText editText_outletName, editText_address, editText_ownerName, editText_phnNo, editText_landmark;
     private Spinner spnr_merchatnType, spnr_businessType, spnr_district, spnr_thana, spnr_postcode;
-    private String str_businessId, str_businessType, str_merchantType, str_district, str_thana, str_postcodeId, str_postcode,
-            str_which_btn_selected, outlet_img = "", nid_img = "", nid_back_img = "",
-            owner_img = "", trade_license_img = "", passport_img = "", birth_certificate_img = "", driving_license_img = "",
-            visiting_card_img = "";
+//    private String str_businessId, str_businessType, str_merchantType, str_district, str_thana, str_postcodeId, str_postcode,
+//            str_which_btn_selected, outlet_img = "", nid_img = "", nid_back_img = "",
+//            owner_img = "", trade_license_img = "", passport_img = "", birth_certificate_img = "", driving_license_img = "",
+//            visiting_card_img = "";
+    private String str_which_btn_selected ="";
     private ArrayList<String> layoutNames, business_type_id_array;
     private HashMap<String, String> hashMap = new HashMap<>();
     private String[] district_array_id, thana_array_id, post_array_id, post_array_name;
@@ -90,7 +91,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
     LifeCycleCallBackManager lifeCycleCallBackManager;
     boolean isNID;
 
-    private Button btPicOutlet, btOwnerImg, btTradeImg, btpassportImg, btBirthImg, btDriveImg, btCardImg;
+    private Button btPicOutlet, btOwnerImg, btTradeImg, btpassportImg, btBirthImg, btDriveImg, btCardImg, btNid, btSmart;
 
     ArrayAdapter<CharSequence> arrayAdapter_business_type_spinner;
 
@@ -226,6 +227,9 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
         btBirthImg = findViewById(R.id.button_birthImg);
         btDriveImg = findViewById(R.id.button_driveImg);
         btCardImg = findViewById(R.id.button_cardImg);
+
+        btNid = findViewById(R.id.btNid);
+        btSmart = findViewById(R.id.btSmart);
 
 
         visibilityStateDefine();
@@ -383,6 +387,57 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
         if (layoutNames.contains("visiting_card_img")) {
             layoutVisitingImg.setVisibility(View.VISIBLE);
         }
+
+
+        if (regModel != null) {
+
+            Drawable img = getResources().getDrawable(R.drawable.icon_seleted);
+            if(!regModel.getOutletName().equals("")){
+                btPicOutlet.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btPicOutlet.setCompoundDrawablePadding(100);
+            }
+
+            if(!regModel.getNidFront().equals("")){
+                btNid.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btNid.setCompoundDrawablePadding(100);
+            }
+
+            if(!regModel.getSmartCardFront().equals("")){
+                btSmart.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btSmart.setCompoundDrawablePadding(100);
+            }
+
+            if(!regModel.getOwnerImage().equals("")){
+                btOwnerImg.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btOwnerImg.setCompoundDrawablePadding(100);
+            }
+
+            if(!regModel.getTradeLicense().equals("")){
+                btTradeImg.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btTradeImg.setCompoundDrawablePadding(100);
+            }
+
+            if(!regModel.getPassport().equals("")){
+                btpassportImg.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btpassportImg.setCompoundDrawablePadding(100);
+            }
+
+            if(!regModel.getBirthCertificate().equals("")){
+                btBirthImg.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btBirthImg.setCompoundDrawablePadding(100);
+            }
+
+            if(!regModel.getDrivingLicense().equals("")){
+                btDriveImg.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btDriveImg.setCompoundDrawablePadding(100);
+            }
+
+            if(!regModel.getVisitingCard().equals("")){
+                btCardImg.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btCardImg.setCompoundDrawablePadding(100);
+            }
+
+        }
     }
 
     @Override
@@ -392,31 +447,29 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
               case R.id.spinner_merchantType:
                   String merchantId = spnr_merchatnType.getSelectedItem().toString();
                   if (merchantId.equals("Select One")) {
-                      str_merchantType = "";
+                      regModel.setMrchantType("");
                   } else {
-                      str_merchantType = hashMap.get(merchantId);
+                      regModel.setMrchantType(hashMap.get(merchantId));
                       initializationBusinessType();
                   }
                   break;
               case R.id.spinner_businessType:
-                  str_businessType = "";
 
                   if (spnr_businessType.getSelectedItem().toString().trim().equals("Select One")) {
-                      str_businessId = "";
-                      str_businessType = "";
+                      regModel.setBusinessId("");
+                      regModel.setBusinessType("");
                   } else {
-                      str_businessId = business_type_id_array.get(i);
-                      str_businessType = spnr_businessType.getSelectedItem().toString().trim();
+                      regModel.setBusinessId(business_type_id_array.get(i));
+                      regModel.setBusinessType(spnr_businessType.getSelectedItem().toString().trim());
                       regModel.setBusinesstypeAdapterPosition(spnr_businessType.getSelectedItemPosition());
                   }
                   break;
               case R.id.spinner_district:
 
-
                   if (spnr_district.getSelectedItem().toString().equals("Select One")) {
-                      str_district = "";
+                      regModel.setDistrict("");
                   } else {
-                      str_district = String.valueOf(district_array_id[i]);
+                      regModel.setDistrict(String.valueOf(district_array_id[i]));
                       regModel.setDistrictAdapterPosition(spnr_district.getSelectedItemPosition());
 
 
@@ -435,9 +488,10 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                   break;
               case R.id.spinner_thana:
                   if (adapterView.getItemAtPosition(i).toString().equals("Select One")) {
-                      str_thana = "";
+                      regModel.setThanaName("");
+
                   } else {
-                      str_thana = thana_array_id[i];
+                      regModel.setThanaName(thana_array_id[i]);
                       regModel.setThanaAdapterPosition(spnr_thana.getSelectedItemPosition());
 
                       if (mCd.isConnectingToInternet()) {
@@ -453,11 +507,12 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                   break;
               case R.id.spinner_postcode:
                   if (adapterView.getItemAtPosition(i).toString().equals("Select One")) {
-                      str_postcodeId = "";
-                      str_postcode = "";
+                      regModel.setPostcodeId("");
+                      regModel.setPostcodeName("");
                   } else {
-                      str_postcodeId = String.valueOf(post_array_id[i]);
-                      str_postcode = String.valueOf(post_array_name[i]);
+                      regModel.setPostcodeId(post_array_id[i]);
+                      regModel.setPostcodeName(post_array_name[i]);
+
                       regModel.setPostCodeAdapterPosition(spnr_postcode.getSelectedItemPosition());
 
                   }
@@ -500,7 +555,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
 
             try {
                 List<NameValuePair> nameValuePairs = new ArrayList<>(1);
-                nameValuePairs.add(new BasicNameValuePair("serviceId", str_merchantType));
+                nameValuePairs.add(new BasicNameValuePair("serviceId", regModel.getMMrchantType()));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
@@ -718,7 +773,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(2);
                 nameValuePairs.add(new BasicNameValuePair("mode", "thana"));
-                nameValuePairs.add(new BasicNameValuePair("distriID", str_district));
+                nameValuePairs.add(new BasicNameValuePair("distriID", regModel.getDistrict()));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
@@ -814,8 +869,8 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(4);
                 nameValuePairs.add(new BasicNameValuePair("mode", "post"));
-                nameValuePairs.add(new BasicNameValuePair("distriID", str_district));
-                nameValuePairs.add(new BasicNameValuePair("thanaID", str_thana));
+                nameValuePairs.add(new BasicNameValuePair("distriID", regModel.getDistrict()));
+                nameValuePairs.add(new BasicNameValuePair("thanaID", regModel.getThanaName()));
                 nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getImeiNo()));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -934,7 +989,10 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
         regModel.setOwnerName(editText_ownerName.getText().toString());
         regModel.setPhnNumber(editText_phnNo.getText().toString());
         regModel.setLandmark(editText_landmark.getText().toString());
+
     }
+
+
 
     public void smartmgOnClickMissing(View v) {
         str_which_btn_selected = "3";
@@ -1026,34 +1084,6 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
         startActivityForResult(Intent.createChooser(intent, "Select File"), 1);
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//
-//        if (resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
-//            InputStream imageStream;
-//            try {
-//                imageStream = this.getContentResolver().openInputStream(data.getData());
-//
-//                // bimatp factory
-//                BitmapFactory.Options options = new BitmapFactory.Options();
-//                options.inSampleSize = 8;
-//
-//                Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-////                    Bitmap selectedImage = BitmapFactory.decodeStream(imageStream, null, options);
-////                    imageStream.close();
-//
-//                encodeTobase64(selectedImage);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                Snackbar snackbar = Snackbar.make(scrollView, "error", Snackbar.LENGTH_LONG);
-//                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-//                View snackBarView = snackbar.getView();
-//                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-//                snackbar.show();
-//            }
-//        }
-//
-//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -1091,48 +1121,45 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
 
         switch (str_which_btn_selected) {
             case "1":
-                outlet_img = strBuild;
                 btPicOutlet.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 btPicOutlet.setCompoundDrawablePadding(100);
+                if (regModel != null) {
+                    regModel.setOutletImage(strBuild);
+                }
                 break;
             case "2":
-                nid_img = strBuild;
-                //img_two.setVisibility(View.VISIBLE);
                 break;
             case "3":
-                nid_back_img = strBuild;
-                //img_three.setVisibility(View.VISIBLE);
                 break;
             case "4":
-                owner_img = strBuild;
-
                 btOwnerImg.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 btOwnerImg.setCompoundDrawablePadding(100);
+                regModel.setOwnerImage(strBuild);
                 break;
             case "5":
-                trade_license_img = strBuild;
                 btTradeImg.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 btTradeImg.setCompoundDrawablePadding(100);
+                regModel.setTradeLicense(strBuild);
                 break;
             case "6":
-                passport_img = strBuild;
                 btpassportImg.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 btpassportImg.setCompoundDrawablePadding(100);
+                regModel.setPassport(strBuild);
                 break;
             case "7":
-                birth_certificate_img = strBuild;
                 btBirthImg.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 btBirthImg.setCompoundDrawablePadding(100);
+                regModel.setBirthCertificate(strBuild);
                 break;
             case "8":
-                driving_license_img = strBuild;
                 btDriveImg.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 btDriveImg.setCompoundDrawablePadding(100);
+                regModel.setDrivingLicense(strBuild);
                 break;
             case "9":
-                visiting_card_img = strBuild;
                 btCardImg.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 btCardImg.setCompoundDrawablePadding(100);
+                regModel.setVisitingCard(strBuild);
                 break;
             default:
                 break;
@@ -1160,6 +1187,14 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
 
     public void submitMissingOnClick(View view) {
         if (mCd.isConnectingToInternet()) {
+
+            String mMrchantType = regModel.getMMrchantType();
+            String mBusinessType = regModel.getBusinessType();
+            String mDistrict = regModel.getDistrict();
+            String mThanaName = regModel.getThanaName();
+            String mPostcodeId = regModel.getPostcodeId();
+
+
             if (layoutNames.contains("outlet_name")) {
                 if (editText_outletName.getText().toString().trim().isEmpty()) {
                     Snackbar snackbar = Snackbar.make(scrollView, "দোকানের নাম দিন", Snackbar.LENGTH_LONG);
@@ -1191,14 +1226,15 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 }
             }
             if (layoutNames.contains("business_type")) {
-                if (str_merchantType == null || str_merchantType.equals("")) {
+
+                if (mMrchantType == null || mMrchantType.equals("")) {
                     Snackbar snackbar = Snackbar.make(scrollView, "মার্চেন্টের ধরন সিলেক্ট করুন", Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                     return;
-                } else if (str_businessType == null || str_businessType.equals("")) {
+                } else if (mBusinessType == null || mBusinessType.equals("")) {
                     Snackbar snackbar = Snackbar.make(scrollView, "ব্যবসার ধরন সিলেক্ট করুন", Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
@@ -1218,7 +1254,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 }
             }
             if (layoutNames.contains("district")) {
-                if (str_district == null || str_district.equals("")) {
+                if (mDistrict == null || mDistrict.equals("")) {
                     Snackbar snackbar = Snackbar.make(scrollView, "জেলা সিলেক্ট করুন", Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
@@ -1228,14 +1264,14 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 }
             }
             if (layoutNames.contains("thana")) {
-                if (str_district == null || str_district.equals("")) {
+                if (mDistrict == null || mDistrict.equals("")) {
                     Snackbar snackbar = Snackbar.make(scrollView, "জেলা সিলেক্ট করুন", Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                     return;
-                } else if (str_thana == null || str_thana.equals("")) {
+                } else if (mThanaName == null || mThanaName.equals("")) {
                     Snackbar snackbar = Snackbar.make(scrollView, "থানা সিলেক্ট করুন", Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
@@ -1245,21 +1281,21 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 }
             }
             if (layoutNames.contains("post_code")) {
-                if (str_district == null || str_district.equals("")) {
+                if (mDistrict == null || mDistrict.equals("")) {
                     Snackbar snackbar = Snackbar.make(scrollView, "জেলা সিলেক্ট করুন", Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                     return;
-                } else if (str_thana == null || str_thana.equals("")) {
+                } else if (mThanaName == null || mThanaName.equals("")) {
                     Snackbar snackbar = Snackbar.make(scrollView, "থানা সিলেক্ট করুন", Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                     return;
-                } else if (str_postcode == null || str_postcode.equalsIgnoreCase("")) {
+                } else if (mPostcodeId == null || mPostcodeId.equalsIgnoreCase("")) {
                     Snackbar snackbar = Snackbar.make(scrollView, "পোস্টকোড সিলেক্ট করুন", Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
@@ -1279,8 +1315,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 }
             }
             if (layoutNames.contains("outlet_img")) {
-                if (outlet_img.equals("")) {
-                    outlet_img = "";
+                if (regModel.getOutletImage().equals("")) {
                     Snackbar snackbar = Snackbar.make(scrollView, "দোকানের ছবি দিন", Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
@@ -1290,8 +1325,8 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 }
             }
             if (layoutNames.contains("nid_img")) {
-                if (nid_img.equals("")) {
-                    nid_img = "";
+                if (regModel.getNidFront().equals("")) {
+
                     Snackbar snackbar = Snackbar.make(scrollView, "ন্যাশনাল আইডি সামনের পৃষ্ঠার ছবি দিন", Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
@@ -1301,8 +1336,29 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 }
             }
             if (layoutNames.contains("nid_back_img")) {
-                if (nid_back_img.equals("")) {
-                    nid_back_img = "";
+                if (regModel.getNidBack().equals("")) {
+                    Snackbar snackbar = Snackbar.make(scrollView, "ন্যাশনাল আইডি পেছনের পৃষ্ঠার ছবি দিন", Snackbar.LENGTH_LONG);
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                    View snackBarView = snackbar.getView();
+                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                    snackbar.show();
+                    return;
+                }
+            }
+
+            if (layoutNames.contains("smartCardFrontPic")) {
+                if (regModel.getSmartCardFront().equals("")) {
+
+                    Snackbar snackbar = Snackbar.make(scrollView, "ন্যাশনাল আইডি সামনের পৃষ্ঠার ছবি দিন", Snackbar.LENGTH_LONG);
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                    View snackBarView = snackbar.getView();
+                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                    snackbar.show();
+                    return;
+                }
+            }
+            if (layoutNames.contains("smartCardFrontPic")) {
+                if (regModel.getSmartCardBack().equals("")) {
                     Snackbar snackbar = Snackbar.make(scrollView, "ন্যাশনাল আইডি পেছনের পৃষ্ঠার ছবি দিন", Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
@@ -1312,8 +1368,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 }
             }
             if (layoutNames.contains("owner_img")) {
-                if (owner_img.equals("")) {
-                    owner_img = "";
+                if (regModel.getOwnerImage().equals("")) {
                     Snackbar snackbar = Snackbar.make(scrollView, "মালিকের ছবি দিন", Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
@@ -1323,8 +1378,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 }
             }
             if (layoutNames.contains("trade_license_img")) {
-                if (trade_license_img.equals("")) {
-                    trade_license_img = "";
+                if (regModel.getTradeLicense().equals("")) {
                     Snackbar snackbar = Snackbar.make(scrollView, "ট্রেড লাইসেন্সের ছবি দিন", Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
@@ -1334,8 +1388,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 }
             }
             if (layoutNames.contains("image_passport")) {
-                if (passport_img.equals("")) {
-                    passport_img = "";
+                if (regModel.getPassport().equals("")) {
                     Snackbar snackbar = Snackbar.make(scrollView, "পাসপোর্টের ছবি দিন", Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
@@ -1345,8 +1398,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 }
             }
             if (layoutNames.contains("birth_certificate_img")) {
-                if (birth_certificate_img.equals("")) {
-                    birth_certificate_img = "";
+                if (regModel.getBirthCertificate().equals("")) {
                     Snackbar snackbar = Snackbar.make(scrollView, "বার্থ সার্টিফিকেটের ছবি দিন", Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
@@ -1356,8 +1408,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 }
             }
             if (layoutNames.contains("driving_license_imege")) {
-                if (driving_license_img.equals("")) {
-                    driving_license_img = "";
+                if (regModel.getDrivingLicense().equals("")) {
                     Snackbar snackbar = Snackbar.make(scrollView, "ড্রাইভিং লাইসেন্সের ছবি দিন", Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
@@ -1367,8 +1418,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 }
             }
             if (layoutNames.contains("visiting_card_img")) {
-                if (visiting_card_img.equals("")) {
-                    visiting_card_img = "";
+                if (regModel.getVisitingCard().equals("")) {
                     Snackbar snackbar = Snackbar.make(scrollView, "ভিজিটিং কার্ডের ছবি দিন", Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
@@ -1377,6 +1427,8 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                     return;
                 }
             }
+
+//            checkRequest();
             new RetailerMissingAsync().execute(getResources().getString(R.string.missing_reg_url));
         } else {
             Snackbar snackbar = Snackbar.make(scrollView, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
@@ -1386,6 +1438,116 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
             snackbar.show();
         }
     }
+
+//    private void checkRequest() {
+//        showProgressDialog();
+//
+//        try {
+//                TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(MissingMainActivity.this);
+//                String imeiOne = telephonyInfo.getImeiSIM1();
+//                String imeiTwo = telephonyInfo.getImeiSIM2();
+//
+//                JSONObject jsonInformationData = new JSONObject();
+//                try {
+//                    if (layoutNames.contains("outlet_name")) {
+//                        jsonInformationData.put("outlet_name", editText_outletName.getText().toString().trim());
+//                    }
+//                    if (layoutNames.contains("outlet_address")) {
+//                        jsonInformationData.put("outlet_address", editText_address.getText().toString().trim());
+//                    }
+//                    if (layoutNames.contains("owner_name")) {
+//                        jsonInformationData.put("owner_name", editText_ownerName.getText().toString().trim());
+//                    }
+//                    if (layoutNames.contains("business_type")) {
+//                        jsonInformationData.put("business_type_id", regModel.getBusinessId());
+//                        jsonInformationData.put("business_type", regModel.getBusinessType());
+//                    }
+//                    if (layoutNames.contains("mobile_number")) {
+//                        jsonInformationData.put("mobile_number", editText_phnNo.getText().toString().trim());
+//                    }
+//                    if (layoutNames.contains("district")) {
+//                        jsonInformationData.put("district", regModel.getDistrict());
+//                    }
+//                    if (layoutNames.contains("thana")) {
+//                        jsonInformationData.put("district", regModel.getDistrict());
+//                        jsonInformationData.put("thana", regModel.getThanaName());
+//                    }
+//                    if (layoutNames.contains("post_code")) {
+//                        jsonInformationData.put("district", regModel.getDistrict());
+//                        jsonInformationData.put("thana", regModel.getThanaName());
+//                        jsonInformationData.put("post_office_id", regModel.getPostcodeId());
+//                        jsonInformationData.put("post_code", regModel.getPostcodeName());
+//                    }
+//                    if (layoutNames.contains("landmark")) {
+//                        jsonInformationData.put("landmark", editText_landmark.getText().toString().trim());
+//                    }
+//
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                    Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+//                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+//                    View snackBarView = snackbar.getView();
+//                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+//                }
+//
+//                //add data
+//                List<NameValuePair> nameValuePairs = new ArrayList<>(12);
+//                nameValuePairs.add(new BasicNameValuePair("imei", imeiOne));
+//                nameValuePairs.add(new BasicNameValuePair("alternate_imei", imeiTwo));
+//                nameValuePairs.add(new BasicNameValuePair("informationData", jsonInformationData.toString()));
+//                if (layoutNames.contains("outlet_img")) {
+//                    nameValuePairs.add(new BasicNameValuePair("outlet_img", regModel.getOutletImage()));
+//                }
+//                if (layoutNames.contains("nid_img")) {
+//                    nameValuePairs.add(new BasicNameValuePair("nid_img", nid_img));
+//                }
+//                if (layoutNames.contains("nid_back_img")) {
+//                    nameValuePairs.add(new BasicNameValuePair("nid_back_img", nid_back_img));
+//                }
+//                if (layoutNames.contains("owner_img")) {
+//                    nameValuePairs.add(new BasicNameValuePair("owner_img", regModel.getOwnerImage()));
+//                }
+//                if (layoutNames.contains("trade_license_img")) {
+//                    nameValuePairs.add(new BasicNameValuePair("trade_license_img", regModel.getTradeLicense()));
+//                }
+//                if (layoutNames.contains("image_passport")) {
+//                    nameValuePairs.add(new BasicNameValuePair("image_passport", regModel.getPassport()));
+//                }
+//                if (layoutNames.contains("birth_certificate_img")) {
+//                    nameValuePairs.add(new BasicNameValuePair("birth_certificate_img", regModel.getBirthCertificate()));
+//                }
+//                if (layoutNames.contains("driving_license_imege")) {
+//                    nameValuePairs.add(new BasicNameValuePair("driving_license_imege", regModel.getDrivingLicense()));
+//                }
+//                if (layoutNames.contains("visiting_card_img")) {
+//                    nameValuePairs.add(new BasicNameValuePair("visiting_card_img", regModel.getVisitingCard()));
+//                }
+//
+//
+//        ApiUtils.getAPIServicePHP7().userInformationForRegistration(regModel).enqueue(new Callback<ResponseBody>() {
+//
+//            @Override
+//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                dismissProgressDialog();
+//                try {
+//                    JSONObject jsonObject = new JSONObject(response.body().string());
+//                    String status = jsonObject.getString("status");
+//                    String message = jsonObject.getString("message");
+//                    showTransferMessage(status, message);
+//                } catch (Exception ex) {
+//                    ex.printStackTrace();
+//                    Toast.makeText(EntryForthActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//            @Override
+//            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                dismissProgressDialog();
+//                Toast.makeText(EntryForthActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
+
+
 
     private class RetailerMissingAsync extends AsyncTask<String, Integer, String> {
 
@@ -1419,27 +1581,45 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                         jsonInformationData.put("owner_name", editText_ownerName.getText().toString().trim());
                     }
                     if (layoutNames.contains("business_type")) {
-                        jsonInformationData.put("business_type_id", str_businessId);
-                        jsonInformationData.put("business_type", str_businessType);
+                        jsonInformationData.put("business_type_id", regModel.getBusinessId());
+                        jsonInformationData.put("business_type", regModel.getBusinessType());
                     }
                     if (layoutNames.contains("mobile_number")) {
                         jsonInformationData.put("mobile_number", editText_phnNo.getText().toString().trim());
                     }
                     if (layoutNames.contains("district")) {
-                        jsonInformationData.put("district", str_district);
+                        jsonInformationData.put("district", regModel.getDistrict());
                     }
                     if (layoutNames.contains("thana")) {
-                        jsonInformationData.put("district", str_district);
-                        jsonInformationData.put("thana", str_thana);
+                        jsonInformationData.put("district", regModel.getDistrict());
+                        jsonInformationData.put("thana", regModel.getThanaName());
                     }
                     if (layoutNames.contains("post_code")) {
-                        jsonInformationData.put("district", str_district);
-                        jsonInformationData.put("thana", str_thana);
-                        jsonInformationData.put("post_office_id", str_postcodeId);
-                        jsonInformationData.put("post_code", str_postcode);
+                        jsonInformationData.put("district", regModel.getDistrict());
+                        jsonInformationData.put("thana", regModel.getThanaName());
+                        jsonInformationData.put("post_office_id", regModel.getPostcodeId());
+                        jsonInformationData.put("post_code", regModel.getPostcodeName());
                     }
                     if (layoutNames.contains("landmark")) {
                         jsonInformationData.put("landmark", editText_landmark.getText().toString().trim());
+                    }
+
+                    if (layoutNames.contains("nid_img")) {
+                        jsonInformationData.put("nidNumber", regModel.getNidNumber());
+                        jsonInformationData.put("nidName", regModel.getNidName());
+                        jsonInformationData.put("nidMotherName", regModel.getNidMotherName());
+                        jsonInformationData.put("nidBirthday", regModel.getNidBirthday());
+                        jsonInformationData.put("nidAddress", regModel.getNidAddress());
+                        jsonInformationData.put("nidFatherName", regModel.getNidFatherName());
+                    }
+
+                    if (layoutNames.contains("smartCardFrontPic")) {
+                        jsonInformationData.put("smartCardNumber", regModel.getSmartCardNumber());
+                        jsonInformationData.put("smartCardName", regModel.getSmartCardName());
+                        jsonInformationData.put("smartCardFatherName", regModel.getSmartCardFatherName());
+                        jsonInformationData.put("smartCardMotherName", regModel.getSmartCardMotherName());
+                        jsonInformationData.put("smartCardBirthday", regModel.getSmartCardBirthday());
+                        jsonInformationData.put("smartCardAddress", regModel.getSmartCardAddress());
                     }
 
                 } catch (Exception e) {
@@ -1451,36 +1631,45 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 }
 
                 //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<>(12);
+                List<NameValuePair> nameValuePairs = new ArrayList<>();
                 nameValuePairs.add(new BasicNameValuePair("imei", imeiOne));
                 nameValuePairs.add(new BasicNameValuePair("alternate_imei", imeiTwo));
                 nameValuePairs.add(new BasicNameValuePair("informationData", jsonInformationData.toString()));
                 if (layoutNames.contains("outlet_img")) {
-                    nameValuePairs.add(new BasicNameValuePair("outlet_img", outlet_img));
+                    nameValuePairs.add(new BasicNameValuePair("outlet_img", regModel.getOutletImage()));
                 }
                 if (layoutNames.contains("nid_img")) {
-                    nameValuePairs.add(new BasicNameValuePair("nid_img", nid_img));
+                    nameValuePairs.add(new BasicNameValuePair("nid_img", regModel.getNidFront()));
                 }
                 if (layoutNames.contains("nid_back_img")) {
-                    nameValuePairs.add(new BasicNameValuePair("nid_back_img", nid_back_img));
+                    nameValuePairs.add(new BasicNameValuePair("nid_back_img", regModel.getNidBack()));
                 }
-                if (layoutNames.contains("owner_img")) {
-                    nameValuePairs.add(new BasicNameValuePair("owner_img", owner_img));
+
+                if (layoutNames.contains("smartCardFrontPic")) {
+                    nameValuePairs.add(new BasicNameValuePair("smartCardFrontPic", regModel.getSmartCardFront()));
+                }
+
+                if (layoutNames.contains("smartCardBackPic")) {
+                    nameValuePairs.add(new BasicNameValuePair("smartCardBackPic", regModel.getSmartCardBack()));
+                }
+
+                if (layoutNames.contains("informationData")) {
+                    nameValuePairs.add(new BasicNameValuePair("owner_img", regModel.getOwnerImage()));
                 }
                 if (layoutNames.contains("trade_license_img")) {
-                    nameValuePairs.add(new BasicNameValuePair("trade_license_img", trade_license_img));
+                    nameValuePairs.add(new BasicNameValuePair("trade_license_img", regModel.getTradeLicense()));
                 }
                 if (layoutNames.contains("image_passport")) {
-                    nameValuePairs.add(new BasicNameValuePair("image_passport", passport_img));
+                    nameValuePairs.add(new BasicNameValuePair("image_passport", regModel.getPassport()));
                 }
                 if (layoutNames.contains("birth_certificate_img")) {
-                    nameValuePairs.add(new BasicNameValuePair("birth_certificate_img", birth_certificate_img));
+                    nameValuePairs.add(new BasicNameValuePair("birth_certificate_img", regModel.getBirthCertificate()));
                 }
                 if (layoutNames.contains("driving_license_imege")) {
-                    nameValuePairs.add(new BasicNameValuePair("driving_license_imege", driving_license_img));
+                    nameValuePairs.add(new BasicNameValuePair("driving_license_imege", regModel.getDrivingLicense()));
                 }
                 if (layoutNames.contains("visiting_card_img")) {
-                    nameValuePairs.add(new BasicNameValuePair("visiting_card_img", visiting_card_img));
+                    nameValuePairs.add(new BasicNameValuePair("visiting_card_img", regModel.getVisitingCard()));
                 }
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 

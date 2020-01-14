@@ -100,50 +100,50 @@ public class EntryThirdActivity extends LanguagesBaseActivity {
             Drawable img = getResources().getDrawable(R.drawable.icon_seleted);
 
 
-            if (regModel.getOutletImage() != null)
+            if (!regModel.getOutletImage().equals(""))
 
                 btPicOutlet.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 btPicOutlet.setCompoundDrawablePadding(100);
 
-            if (regModel.getNidFront() != null) {
+            if (!regModel.getNidFront().equals("")) {
 
                 btNID.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 btNID.setCompoundDrawablePadding(100);
             }
 
-            if (regModel.getSmartCardFront() != null) {
+            if (!regModel.getSmartCardFront().equals("")) {
 
                 btSmart.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 btSmart.setCompoundDrawablePadding(100);
 
             }
 
-            if (regModel.getOwnerImage() != null) {
+            if (!regModel.getOwnerImage().equals("")) {
                 btPicOwner.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 btPicOwner.setCompoundDrawablePadding(100);
 
             }
-            if (regModel.getTradeLicense() != null) {
+            if (!regModel.getTradeLicense().equals("")) {
                 btPicTrade.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 btPicTrade.setCompoundDrawablePadding(100);
             }
 
-            if (regModel.getPassport() != null) {
+            if (!regModel.getPassport().equals("")) {
                 btPicPassport.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 btPicPassport.setCompoundDrawablePadding(100);
             }
 
-            if (regModel.getBirthCertificate() != null) {
+            if (!regModel.getBirthCertificate().equals("")) {
                 btPicBirth.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 btPicBirth.setCompoundDrawablePadding(100);
             }
 
-            if (regModel.getDrivingLicense() != null) {
+            if (!regModel.getDrivingLicense().equals("")) {
                 btPicDrive.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 btPicDrive.setCompoundDrawablePadding(100);
             }
 
-            if (regModel.getVisitingCard() != null) {
+            if (!regModel.getVisitingCard().equals("")) {
                 bTPicVisit.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 bTPicVisit.setCompoundDrawablePadding(100);
 
