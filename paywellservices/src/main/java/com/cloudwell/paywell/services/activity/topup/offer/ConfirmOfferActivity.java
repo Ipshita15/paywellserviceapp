@@ -23,6 +23,7 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -117,7 +118,11 @@ public class ConfirmOfferActivity extends BaseActivity implements View.OnClickLi
         showProgressDialog();
 
         List<TopupData> topupDatumList = new ArrayList<>();
-        TopupData topupDatum = new TopupData(amount, "prepaid", mPhn, key);
+
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).getRID());
+
+
+        TopupData topupDatum = new TopupData(amount, "prepaid", mPhn, key, uniqueKey);
         topupDatumList.add(topupDatum);
 
         final RequestTopup requestTopup = new RequestTopup();

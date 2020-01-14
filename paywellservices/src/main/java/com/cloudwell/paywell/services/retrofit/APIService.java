@@ -91,7 +91,8 @@ public interface APIService {
                                                  @Field("districtId") String districtId,
                                                  @Field("branchId") String branchId,
                                                  @Field("depositslip") String depositslip,
-                                                 @Field("Amount") String amount);
+                                                 @Field("Amount") String amount,
+                                                 @Field("ref_id") String refId);
 
     @POST("PaywelltransactionPollyBiddyut/pollyBiddyutBillStatusQueryAPI")
     @FormUrlEncoded
@@ -100,7 +101,9 @@ public interface APIService {
                                                          @Field("account_no") String accountNo,
                                                          @Field("month") String month,
                                                          @Field("year") String year,
+                                                         @Field("ref_id") String refId,
                                                          @Field("format") String format);
+
 
     @POST("RetailerService/checkBalance")
     @FormUrlEncoded
@@ -135,13 +138,15 @@ public interface APIService {
     @Multipart
     @POST("PaywelltransactionHaltrip/airSearch")
     Call<ReposeAirSearch> callAirSearch(@Part("username") String username,
-                                        @Part("search_params") RequestAirSearch search_params);
+                                        @Part("search_params") RequestAirSearch search_params,
+                                        @Part("ref_id") String refId);
 
 
     @Multipart
     @POST("PaywelltransactionHaltrip/airPriceSearch")
     Call<ResposeAirPriceSearch> callairPriceSearch(@Part("username") String username,
-                                                   @Part("search_params") RequestAirPriceSearch search_params);
+                                                   @Part("search_params") RequestAirPriceSearch search_params,
+                                                   @Part("ref_id") String refId);
 
 
     @Multipart
@@ -151,18 +156,20 @@ public interface APIService {
 
 
     @GET("PaywelltransactionHaltrip/getAirports?")
-    Call<ResGetAirports> getAirports(@Query("username") String username, @Query("format") String format, @Query("iso") String iso);
+    Call<ResGetAirports> getAirports(@Query("username") String username, @Query("format") String format, @Query("iso") String iso,@Query("ref_id") String refId );
 
     @FormUrlEncoded
     @POST("PaywelltransactionHaltrip/getBookingList")
     Call<BookingList> callAirBookingListSearch(@Field("username") String username,
-                                               @Field("limit") int limit);
+                                               @Field("limit") int limit,
+                                               @Field("ref_id") String refId);
 
     @Multipart
     @POST("PaywelltransactionHaltrip/airPreBooking")
     Call<ResAirPreBooking> airPreBooking(@Part("username") String username,
                                          @Part("format") String format,
-                                         @Part("search_params") RequestAirPrebookingSearchParamsForServer search_params);
+                                         @Part("search_params") RequestAirPrebookingSearchParamsForServer search_params,
+                                         @Part("ref_id") String refId);
 
 
     @Multipart
@@ -170,7 +177,8 @@ public interface APIService {
     Call<ResBookingAPI> airBooking(@Part("username") String username,
                                    @Part("password") String password,
                                    @Part("format") String format,
-                                   @Part("search_params") RequestAirPrebookingSearchParamsForServer search_params);
+                                   @Part("search_params") RequestAirPrebookingSearchParamsForServer search_params,
+                                   @Part("ref_id") String refId);
 
     @POST("PaywelltransactionHaltrip/cancelBooking")
     @FormUrlEncoded
@@ -178,7 +186,8 @@ public interface APIService {
                                    @Field("password") String password,
                                    @Field("BookingID") String bookingId,
                                    @Field("reason") String cancelReason,
-                                   @Field("format") String apiFormat);
+                                   @Field("format") String apiFormat,
+                                   @Field("ref_id") String refId);
 
 
     @POST("PaywelltransactionHaltrip/cancelTicket")
@@ -188,14 +197,16 @@ public interface APIService {
                                   @Field("BookingID") String bookingId,
                                   @Field("reason") String cancelReason,
                                   @Field("cancel_type") String cancel_type,
-                                  @Field("format") String apiFormat);
+                                  @Field("format") String apiFormat,
+                                  @Field("ref_id") String refId);
 
     @POST("PaywelltransactionHaltrip/reIssueTicket")
     @FormUrlEncoded
     Call<JsonObject> reIssueTicket(@Field("username") String username,
                                    @Field("password") String password,
                                    @Field("BookingID") String bookingId,
-                                   @Field("reason") String cancelReason);
+                                   @Field("reason") String cancelReason,
+                                   @Field("ref_id") String refId);
 
 
     @POST("/PaywelltransactionHaltrip/reScheduleTicket")
@@ -210,17 +221,19 @@ public interface APIService {
 
     @POST("/PaywelltransactionHaltrip/infoUpdateTicket")
     @Multipart
-    Call<JsonObject> reIssueTicket(@Part("username") String username,
+    Call<JsonObject> infoUpdateTicket(@Part("username") String username,
                                    @Part("password") String password,
                                    @Part("BookingID") String bookingId,
                                    @Part("reason") String cancelReason,
-                                   @Part("passengers") String passengers);
+                                   @Part("passengers") String passengers,
+                                   @Part("ref_id") String refId);
 
 
     @POST("PaywelltransactionHaltrip/getCancelMap")
     @FormUrlEncoded
     Call<ResCancellationMapping> getCancelMap(@Field("username") String username,
-                                              @Field("booking_id") String bookingId);
+                                              @Field("booking_id") String bookingId,
+                                              @Field("ref_id") String refId);
 
     @Multipart
     @POST("PaywelltransactionHaltrip/uploadBookingFiles")
@@ -239,16 +252,16 @@ public interface APIService {
 
     @POST("PaywelltransactionHaltrip/getCommissionMapping")
     @Multipart
-    Call<ResCommistionMaping> callGetCommissionMappingAPI(@Part("username") String username);
+    Call<ResCommistionMaping> callGetCommissionMappingAPI(@Part("username") String username, @Part("ref_id") String refId);
 
 
     @POST("PaywelltransactionHaltrip/getSingleBooking")
     @Multipart
-    Call<ResSingleBooking> getSingleBooking(@Part("username") String username, @Part("booking_id") String bookingId);
+    Call<ResSingleBooking> getSingleBooking(@Part("username") String username, @Part("booking_id") String bookingId, @Part("ref_id") String refId);
 
     @POST("PaywelltransactionHaltrip/airTicketIssue")
     @Multipart
-    Call<ResIssueTicket> callIssueTicketAPI(@Part("username") String username, @Part("password") String password, @Part("BookingID") String BookingID, @Part("IsAcceptedPriceChangeandIssueTicket") boolean ssAcceptedPriceChangeandIssueTicket);
+    Call<ResIssueTicket> callIssueTicketAPI(@Part("username") String username, @Part("password") String password, @Part("BookingID") String BookingID, @Part("IsAcceptedPriceChangeandIssueTicket") boolean ssAcceptedPriceChangeandIssueTicket, @Part("ref_id") String refId);
 
 
     @POST("PaywelltransactionHaltrip/reIssueNotificationAccept")
@@ -258,20 +271,20 @@ public interface APIService {
 
     @POST()
     @Multipart
-    Call<ResEkShopToken> getEkshopToken(@Url String url, @Part("uid") String rid, @Part("utype") String utype);
+    Call<ResEkShopToken> getEkshopToken(@Url String url, @Part("uid") String rid, @Part("utype") String utype, @Part("ref_id") String refId);
 
     @POST()
     @Multipart
-    Call<ResEKReport> getReport(@Url String url, @Part("uid") String rid, @Part("start_date") String start_date, @Part("end_date") String end_date, @Part("order_code") String order_code);
+    Call<ResEKReport> getReport(@Url String url, @Part("uid") String rid, @Part("start_date") String start_date, @Part("end_date") String end_date, @Part("order_code") String order_code, @Part("ref_id") String refId);
 
     @POST("PaywellParibahanService/getBusListData")
     @FormUrlEncoded
-    Call<ResGetBusListData> getBusListData(@Field("username") String username, @Field("skey") String skey);
+    Call<ResGetBusListData> getBusListData(@Field("username") String username, @Field("skey") String skey, @Field("ref_id") String refId);
 
 
     @POST("PaywellParibahanService/getBusSchedule?")
     @FormUrlEncoded
-    Call<ResponseBody> getBusSchedule(@Field("username") String username, @Field("transport_id") String transport_id, @Field("skey") String skey, @Field("accessKey") String accessKey);
+    Call<ResponseBody> getBusSchedule(@Field("username") String username, @Field("transport_id") String transport_id, @Field("skey") String skey, @Field("accessKey") String accessKey, @Field("ref_id") String refId);
 
 
     @FormUrlEncoded
@@ -284,11 +297,12 @@ public interface APIService {
                                  @Field("bus_id") String bus_id,
                                  @Field("departure_id") String departure_id,
                                  @Field("departure_date") String departure_date,
-                                 @Field("seat_ids") String seat_ids);
+                                 @Field("seat_ids") String seat_ids,
+                                 @Field("ref_id") String refId);
 
     @FormUrlEncoded
     @POST("PaywellParibahanService/getTransactionData")
-    Call<TransactionLogDetailsModel> getBusTransactionLogFromServer(@Field("username") String username, @Field("skey") String skey, @Field("limit") String limit);
+    Call<TransactionLogDetailsModel> getBusTransactionLogFromServer(@Field("username") String username, @Field("skey") String skey, @Field("limit") String limit, @Field("ref_id") String refId);
 
     @POST
     @FormUrlEncoded
@@ -317,7 +331,8 @@ public interface APIService {
                                                 @Field("bus_is_ac") String bus_is_ac,
                                                 @Field("extra_charge") Double extra_charge,
                                                 @Field("ticket_price") Double ticket_price,
-                                                @Field("total_amount") String total_amount);
+                                                @Field("total_amount") String total_amount,
+                                                @Field("ref_id") String refId);
 
     @FormUrlEncoded
     @POST("PaywellParibahanService/confirmPayment")
@@ -331,7 +346,8 @@ public interface APIService {
                                               @Field("customerEmail") String customerEmail,
                                               @Field("customerAge") String customerAge,
                                               @Field("customerGender") String customerGender,
-                                              @Field("password") String password);
+                                              @Field("password") String password,
+                                              @Field("ref_id") String refId);
 
     @POST("/PaywelltransactionPollyBiddyut/pollyBiddyutBillPayAPIAsync")
     Call<PalliBidyutBillPayResponse> postPalliBidyutBills(@Body PalliBidyutBillPayRequest body);
@@ -346,7 +362,8 @@ public interface APIService {
                                                  @Field("trxOrPhoneNo") String transactionId,
                                                  @Field("format") String customerName,
                                                  @Field("gateway_id") String customerPhone,
-                                                 @Field("amount") String customerAddress);
+                                                 @Field("amount") String customerAddress,
+                                                 @Field("ref_id") String refId);
 
     @FormUrlEncoded
     @POST
@@ -355,7 +372,8 @@ public interface APIService {
                                      @Field("imei") String skey,
                                      @Field("format") String customerName,
                                      @Field("gateway_id") String customerPhone,
-                                     @Field("limit") String limit);
+                                     @Field("limit") String limit,
+                                     @Field("ref_id") String refId);
 
 
     @POST("PaywellUserRegistration/userInformationForRegistration")

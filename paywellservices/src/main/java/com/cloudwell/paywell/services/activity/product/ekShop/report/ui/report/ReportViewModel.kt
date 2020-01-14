@@ -9,12 +9,12 @@ class ReportViewModel(
 ) : ViewModel() {
     var iView: IReportView? = null
 
-    fun getReportList(internetConnection: Boolean, startDate: String, endDate: String, order_code: String) {
+    fun getReportList(internetConnection: Boolean, startDate: String, endDate: String, order_code: String, uniqueKey: String) {
         if (!internetConnection) {
             iView?.noInternetConnectionFOund()
         } else {
             iView?.showProgressBar()
-            aKShopRepo.getReportList(startDate, endDate, order_code).observeForever {
+            aKShopRepo.getReportList(startDate, endDate, order_code, uniqueKey).observeForever {
                 iView?.hiddenProgressBar()
                 if (it == null) {
                     iView?.showMessage("Please try again!!")
@@ -33,7 +33,7 @@ class ReportViewModel(
         this.iView = iView
     }
 
-    fun search(internetConnection: Boolean, startDate: String, endDate: String, orderCode: String) {
+    fun search(internetConnection: Boolean, startDate: String, endDate: String, orderCode: String, uniqueKey: String) {
 
         if (orderCode.equals("")) {
             if (startDate.equals("")) {
@@ -49,9 +49,9 @@ class ReportViewModel(
             } else {
                 this.iView?.clearEndDateError()
             }
-            getReportList(internetConnection, startDate, endDate, orderCode)
+            getReportList(internetConnection, startDate, endDate, orderCode, uniqueKey)
         } else {
-            getReportList(internetConnection, startDate, endDate, orderCode)
+            getReportList(internetConnection, startDate, endDate, orderCode, uniqueKey)
         }
 
 

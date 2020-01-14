@@ -20,6 +20,8 @@ import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.ParameterUtility;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.http.NameValuePair;
@@ -130,6 +132,8 @@ public class ChangeMYCashPinActivity extends BaseActivity implements View.OnClic
         @Override
         protected String doInBackground(String... data) {
             String responseTxt = null;
+            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
+
             // Create a new HttpClient and Post Header
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(data[0]);
@@ -143,6 +147,8 @@ public class ChangeMYCashPinActivity extends BaseActivity implements View.OnClic
                 nameValuePairs.add(new BasicNameValuePair("newpin", data[2]));
                 nameValuePairs.add(new BasicNameValuePair("service_type", "PIN_Change"));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
+                nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
+
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();

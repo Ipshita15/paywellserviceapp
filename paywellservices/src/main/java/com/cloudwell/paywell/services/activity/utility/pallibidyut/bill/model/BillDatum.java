@@ -1,6 +1,7 @@
 
 package com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model;
 
+import com.cloudwell.paywell.services.utils.ParameterUtility;
 import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("unused")
@@ -11,7 +12,7 @@ public class BillDatum {
     @SerializedName("bill_no")
     private String billNo;
 
-    @SerializedName("ref_id")
+    @SerializedName(ParameterUtility.KEY_REF_ID)
     private String refDd;
 
 

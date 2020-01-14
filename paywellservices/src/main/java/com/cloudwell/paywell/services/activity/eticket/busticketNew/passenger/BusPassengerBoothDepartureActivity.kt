@@ -24,7 +24,9 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.Bus
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.MyClickListener
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
+import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.constant.AllConstant
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.orhanobut.logger.Logger
@@ -244,9 +246,9 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTranspo
 
         val boothInfo = allBoothInfo.get(boothList.selectedItemPosition)
 
+        val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).rid)
 
-
-        viewMode.bookingAPI(isInternetConnection, model, requestBusSearch, boothInfo, seatLevel, seatId, totalAPIValuePrices)
+        viewMode.bookingAPI(isInternetConnection, model, requestBusSearch, boothInfo, seatLevel, seatId, totalAPIValuePrices, uniqueKey)
 
     }
 

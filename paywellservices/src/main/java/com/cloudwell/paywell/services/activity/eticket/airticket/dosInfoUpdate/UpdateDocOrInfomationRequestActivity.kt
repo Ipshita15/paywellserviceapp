@@ -25,6 +25,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.dosInfoUpdate.e
 import com.cloudwell.paywell.services.activity.eticket.airticket.dosInfoUpdate.model.ReissuePassenger
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -217,8 +218,9 @@ class UpdateDocOrInfomationRequestActivity : AirTricketBaseActivity(), ShowMessa
             apiNameReissuePassenger.add(p)
         }
 
+        val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this)!!.rid)
 
-        ApiUtils.getAPIService().reIssueTicket(userName, pass, bookingId, cancelReason, Gson().toJson(apiNameReissuePassenger)).enqueue(object : Callback<JsonObject> {
+        ApiUtils.getAPIService().infoUpdateTicket(userName, pass, bookingId, cancelReason, Gson().toJson(apiNameReissuePassenger),uniqueKey).enqueue(object : Callback<JsonObject> {
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 dismissProgressDialog()
 

@@ -24,7 +24,7 @@ import androidx.room.RoomDatabase;
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 2/1/19.
  */
-@Database(entities = {FavoriteMenu.class, NotificationDetailMessage.class, NotificationDetailMessageSync.class, Airport.class, Passenger.class, Transport.class, BusLocalDB.class, BusSchedule.class, TripScheduleInfo.class, DESCOHistory.class, DPDCHistory.class, WasaHistory.class, PallibidyutHistory.class, WestZoneHistory.class, IvacHistory.class, BanglalionHistory.class, KarnaphuliHistory.class}, version = 4)
+@Database(entities = {FavoriteMenu.class, NotificationDetailMessage.class, NotificationDetailMessageSync.class, Airport.class, Passenger.class, Transport.class, BusLocalDB.class, BusSchedule.class, TripScheduleInfo.class, DESCOHistory.class, DPDCHistory.class, WasaHistory.class, PallibidyutHistory.class, WestZoneHistory.class, IvacHistory.class, BanglalionHistory.class, KarnaphuliHistory.class}, version = 5)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract FavoriteMenuDab mFavoriteMenuDab();
 

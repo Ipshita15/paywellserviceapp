@@ -24,6 +24,8 @@ import com.cloudwell.paywell.services.activity.topup.brilliant.model.Datum;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.utils.ParameterUtility;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -64,12 +66,13 @@ public class BrilliantTransactionLogActivity extends BaseActivity {
             if (!limit.isEmpty()) {
                 AppHandler appHandler = AppHandler.getmInstance(getApplicationContext());
                 String imeiNo = appHandler.getImeiNo();
-                getBrilliantTrxLogData(imeiNo, limit);
+                String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
+                getBrilliantTrxLogData(imeiNo, limit, uniqueKey);
             }
         }
     }
 
-    private void getBrilliantTrxLogData(final String userName, String limitNumber) {
+    private void getBrilliantTrxLogData(final String userName, String limitNumber, String uniqueKey) {
         allDataList.clear();
 
         showProgressDialog();
@@ -78,6 +81,7 @@ public class BrilliantTransactionLogActivity extends BaseActivity {
                 .addQueryParameter("username", userName)
 //                .addQueryParameter("username","cwntcl")
                 .addQueryParameter("number", limitNumber)
+                .addQueryParameter(""+ ParameterUtility.KEY_REF_ID+"", uniqueKey)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsObject(APIBrilliantTRXLog.class, new ParsedRequestListener<APIBrilliantTRXLog>() {
