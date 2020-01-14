@@ -3,6 +3,7 @@ package com.cloudwell.paywell.services.database;
 import com.cloudwell.paywell.services.activity.utility.banglalion.model.BanglalionHistory;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.model.DESCOHistory;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.model.DPDCHistory;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DESCOPrepaidHistory;
 import com.cloudwell.paywell.services.activity.utility.electricity.wasa.model.WasaHistory;
 import com.cloudwell.paywell.services.activity.utility.electricity.westzone.model.WestZoneHistory;
 import com.cloudwell.paywell.services.activity.utility.ivac.model.IvacHistory;
@@ -29,6 +30,13 @@ public interface UtilityDab {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(DESCOHistory descoHistory);
+
+
+    @Query("SELECT * FROM  DESCOPrepaidHistory")
+    List<DESCOPrepaidHistory> getAllDESCOPrepaidHistory();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(DESCOPrepaidHistory descoPrepaidHistory);
 
     @Query("SELECT * FROM  DPDCHistory")
     List<DPDCHistory> getAllDPDCHistory();

@@ -1,11 +1,9 @@
 package com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
@@ -17,35 +15,32 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidBillPayActivity;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.model.DESCOHistory;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DESCOPrepaidHistory;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoBillPaySubmit;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoBillPaySubmitResponse;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoInquiryResponse;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoRequestInquiryModel;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.database.DatabaseClient;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.DateUtils;
-import com.cloudwell.paywell.services.utils.ParameterUtility;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.github.chrisbanes.photoview.PhotoView;
-import com.google.android.material.snackbar.Snackbar;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DescoPrepaidBillPayActivity extends BaseActivity implements View.OnClickListener {
 
@@ -60,8 +55,8 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
     private String mPhn;
     private String mPin;
     private String mTrxId;
-    private String mTotalAmount;
     private String mAmount;
+
 
     private static final String TAG_STATUS = "status";
     private static final String TAG_MESSAGE = "message";
@@ -73,8 +68,8 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
     List<String> payeerNumberList = new ArrayList<>();
 
 
-    AsyncTask<Void, Void, Void> getAllDescoHistoryAsyncTask;
-    AsyncTask<Void, Void, Void> insertDescoHistoryAsyncTask;
+    AsyncTask<Void, Void, Void> getAllDescoPrepaidHistoryAsyncTask;
+    AsyncTask<Void, Void, Void> insertDescoPrepaidHistoryAsyncTask;
 
 
     @Override
@@ -146,13 +141,13 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
         });
 
 
-        getAllDescoHistoryAsyncTask = new AsyncTask<Void, Void, Void>() {
+        getAllDescoPrepaidHistoryAsyncTask = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
 
                 billNumberList.clear();
                 payeerNumberList.clear();
-                List<DESCOHistory> allDESCOHistory = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().getAllDESCOHistory();
+                List<DESCOPrepaidHistory> allDESCOHistory = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().getAllDESCOPrepaidHistory();
                 for (int i = 0; i < allDESCOHistory.size(); i++) {
                     billNumberList.add(allDESCOHistory.get(i).getBilNumber());
                     payeerNumberList.add(allDESCOHistory.get(i).getPayerPhoneNumber());
@@ -204,7 +199,6 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
             mBill = etBill.getText().toString().trim();
             mPhn = etPhn.getText().toString().trim();
             mPin = etPin.getText().toString().trim();
-            mPin = etPin.getText().toString().trim();
             mAmount = etAmount.getText().toString().trim();
             if (mPin.length() == 0) {
                 etPin.setError(Html.fromHtml("<font color='red'>" + getString(R.string.pin_no_error_msg) + "</font>"));
@@ -243,222 +237,188 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
         if (!mCd.isConnectingToInternet()) {
             AppHandler.showDialog(this.getSupportFragmentManager());
         } else {
-            new DescoPrepaidBillPayActivity.SubmitInquiryAsync().execute(getResources().getString(R.string.desco_prepaid_bill_enq));
 
-
+            submitInquiryConfirmDesco();
+//            new DescoPrepaidBillPayActivity.SubmitInquiryAsync().execute(getResources().getString(R.string.desco_prepaid_bill_enq));
         }
     }
 
-    private class SubmitInquiryAsync extends AsyncTask<String, Void, String> {
+
+    private void submitInquiryConfirmDesco(){
+
+        showProgressDialog();
+
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
+        DescoRequestInquiryModel descoRequestInquiryModel = new DescoRequestInquiryModel();
+        descoRequestInquiryModel.setPassword("654321");
+        descoRequestInquiryModel.setBillNo(mBill);
+        descoRequestInquiryModel.setPayerMobileNo(mPhn);
+        descoRequestInquiryModel.setAmount(mAmount);
+        descoRequestInquiryModel.setFormat("json");
+        descoRequestInquiryModel.setUsername("cwntcl");
+        descoRequestInquiryModel.setRefId(uniqueKey);
+
+        ApiUtils.getAPIService().descoInquiryRequest(descoRequestInquiryModel,getResources().getString(R.string.desco_prepaid_bill_enq)).enqueue(new Callback<DescoInquiryResponse>() {
+            @Override
+            public void onResponse(Call<DescoInquiryResponse> call, Response<DescoInquiryResponse> response) {
+
+                dismissProgressDialog();
+
+                DescoInquiryResponse model = response.body();
+                if (model.getApiStatus() == 200) {
 
 
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
+                    submitBillConfirm(model);
+//                    if (model.getDescoInquiryResponseDetails().getStatus() == 200) {
+//
+//                        String message = model.getDescoInquiryResponseDetails().getMessage();
+//                        String trx_id = model.getDescoInquiryResponseDetails().getTransId();
+//
+//                        AlertDialog.Builder builder = new AlertDialog.Builder(DescoPrepaidBillPayActivity.this);
+//                        builder.setTitle("Result");
+//                        builder.setMessage(message + "\n\nPayWell Trx ID: " + trx_id);
+//                        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int id) {
+//                                submitBillConfirm(model.getDescoInquiryResponseDetails());
+//                            }
+//                        });
+//                        builder.setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.dismiss();
+//                            }
+//                        });
+//                        builder.setCancelable(true);
+//                        AlertDialog alert = builder.create();
+//                        alert.setCanceledOnTouchOutside(true);
+//                        alert.show();
+//                    } else {
+//                        showErrorMessage(model.getDescoInquiryResponseDetails().getMessage(), model.getDescoInquiryResponseDetails().getTransId());
+//                    }
 
-        @SuppressWarnings("deprecation")
-        @Override
-        protected String doInBackground(String... data) {
-            String responseTxt = null;
-            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(data[0]);
-
-            try {
-                //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<>(6);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("password", mPin));
-                nameValuePairs.add(new BasicNameValuePair("billNo", mBill));
-                nameValuePairs.add(new BasicNameValuePair("payerMobileNo", mPhn));
-                nameValuePairs.add(new BasicNameValuePair("amount", mAmount));
-                nameValuePairs.add(new BasicNameValuePair("service_type", "DESCO_PrepaidEnquiry"));
-                nameValuePairs.add(new BasicNameValuePair("format", "json"));
-                nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            try {
-                if (result != null) {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String status = jsonObject.getString(TAG_STATUS);
-
-                    if (status.equals("200")) {
-
-                        mTotalAmount = jsonObject.getString(TAG_TOTAL_AMOUNT);
-                        mTrxId = jsonObject.getString(TAG_TRANSACTION_ID);
-                        String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
-                        String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
-                        if (!mTotalAmount.equals("0")) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(DescoPrepaidBillPayActivity.this);
-                            builder.setTitle("Result");
-                            builder.setMessage(msg_text + "\n\n" + getString(R.string.phone_no_des) + " " + mPhn + "\n\nPayWell Trx ID: " + trx_id);
-                            builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int id) {
-                                    submitBillConfirm();
-                                }
-                            });
-                            builder.setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(true);
-                            AlertDialog alert = builder.create();
-                            alert.setCanceledOnTouchOutside(true);
-                            alert.show();
-                        } else {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(DescoPrepaidBillPayActivity.this);
-                            builder.setTitle("Result");
-                            builder.setMessage(msg_text + "\n\n" + getString(R.string.phone_no_des) + " " + mPhn + "\n\nPayWell Trx ID: " + trx_id);
-                            builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(true);
-                            AlertDialog alert = builder.create();
-                            alert.setCanceledOnTouchOutside(true);
-                            alert.show();
-                        }
-                    } else {
-
-                        String msg = jsonObject.getString(TAG_MESSAGE);
-                        String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
-                        String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(DescoPrepaidBillPayActivity.this);
-                        builder.setMessage(msg + "\n" + msg_text + "\nPayWell Trx ID: " + trx_id);
-                        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.dismiss();
-                            }
-                        });
-                        builder.setCancelable(true);
-                        AlertDialog alert = builder.create();
-                        alert.setCanceledOnTouchOutside(true);
-                        alert.show();
-                    }
                 } else {
-                    Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
+                    showInquiryErrorMessage(model.getApiStatusName());
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
             }
-        }
+
+            @Override
+            public void onFailure(Call<DescoInquiryResponse> call, Throwable t) {
+
+                t.printStackTrace();
+
+                dismissProgressDialog();
+
+
+            }
+        });
     }
 
-    private void submitBillConfirm() {
+    private void showInquiryErrorMessage(String apiStatusName) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(DescoPrepaidBillPayActivity.this);
+        builder.setMessage(apiStatusName);
+        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        builder.setCancelable(true);
+        AlertDialog alert = builder.create();
+        alert.setCanceledOnTouchOutside(true);
+        alert.show();
+    }
+
+    private void showErrorMessage(String message, String trx_id) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(DescoPrepaidBillPayActivity.this);
+        builder.setMessage(message+ "\n\nPayWell Trx ID: " + trx_id);
+        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        builder.setCancelable(true);
+        AlertDialog alert = builder.create();
+        alert.setCanceledOnTouchOutside(true);
+        alert.show();
+    }
+
+//    private void showSubmitErrorMessage(String message) {
+//
+//        AlertDialog.Builder builder = new AlertDialog.Builder(DescoPrepaidBillPayActivity.this);
+//        builder.setTitle("Result");
+//        builder.setMessage(message + "\nPayWell Trx ID: " + trx_id);
+//        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int id) {
+//                onBackPressed();
+//            }
+//        });
+//        builder.setCancelable(true);
+//        AlertDialog alert = builder.create();
+//        alert.setCanceledOnTouchOutside(true);
+//        alert.show();
+//    }
+
+    private void submitBillConfirm(DescoInquiryResponse model) {
         if (!mCd.isConnectingToInternet()) {
             AppHandler.showDialog(this.getSupportFragmentManager());
         } else {
-            new DescoPrepaidBillPayActivity.SubmitBillAsync().execute(getString(R.string.desco_prepaid_bill_pay));
+
+            descoSubmilBillPay(model);
+//            new DescoPrepaidBillPayActivity.SubmitBillAsync().execute(getString(R.string.desco_prepaid_bill_pay));
         }
     }
 
-    private class SubmitBillAsync extends AsyncTask<String, Void, String> {
+    private void descoSubmilBillPay(DescoInquiryResponse model) {
+
+        showProgressDialog();
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
+
+//        DescoBillPaySubmit descoBillPaySubmit = new DescoBillPaySubmit(mBill,"json",mPin,mPhn,mTotalAmount,mTrxId,mAppHandler.getImeiNo(), uniqueKey);
+        DescoBillPaySubmit descoBillPaySubmit = new DescoBillPaySubmit();
+        descoBillPaySubmit.setUsername( "cwntcl");
+        descoBillPaySubmit.setPassword("654321");
+        descoBillPaySubmit.setPayerMobileNo(mPhn);
+        descoBillPaySubmit.setBillNo(mBill);
+        descoBillPaySubmit.setTotalAmount(""+model.getDescoInquiryResponseDetails().getTotalAmount());
+        descoBillPaySubmit.setTransId(model.getDescoInquiryResponseDetails().getTransId());
+        descoBillPaySubmit.setFormat("json");
 
 
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
+        ApiUtils.getAPIService().descoBillPayement(descoBillPaySubmit,getString(R.string.desco_prepaid_bill_pay)).enqueue(new Callback<DescoBillPaySubmitResponse>() {
+            @Override
+            public void onResponse(Call<DescoBillPaySubmitResponse> call, Response<DescoBillPaySubmitResponse> response) {
 
-        @SuppressWarnings("deprecation")
-        @Override
-        protected String doInBackground(String... data) {
-            String responseTxt = null;
-            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(data[0]);
+                DescoBillPaySubmitResponse billPaySubmitResponse = response.body();
 
-            try {
-                //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<>(8);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("password", mPin));
-                nameValuePairs.add(new BasicNameValuePair("billNo", mBill));
-                nameValuePairs.add(new BasicNameValuePair("payerMobileNo", mPhn));
-                nameValuePairs.add(new BasicNameValuePair("service_type", "DESCO_Prepaid"));
-                nameValuePairs.add(new BasicNameValuePair("transId", mTrxId));
-                nameValuePairs.add(new BasicNameValuePair("totalAmount", mTotalAmount));
-                nameValuePairs.add(new BasicNameValuePair("format", "json"));
-                nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                if (billPaySubmitResponse.getApiStatus()== 200){
 
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
+                    if(billPaySubmitResponse.getResponseDetails().getStatus()==200){
 
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            try {
-                if (result != null) {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String status = jsonObject.getString(TAG_STATUS);
-                    if (status.equals("200")) {
-
-                        insertDescoHistoryAsyncTask = new AsyncTask<Void, Void, Void>() {
+                        insertDescoPrepaidHistoryAsyncTask = new AsyncTask<Void, Void, Void>() {
                             @Override
                             protected Void doInBackground(Void... voids) {
 
                                 String currentDataAndTIme = DateUtils.INSTANCE.getCurrentDataAndTIme();
-                                DESCOHistory descoHistory = new DESCOHistory();
-                                descoHistory.setBilNumber(mBill);
-                                descoHistory.setPayerPhoneNumber(mPhn);
-                                descoHistory.setDate(currentDataAndTIme);
-                                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().insert(descoHistory);
+                                DESCOPrepaidHistory descoprepaidHistory = new DESCOPrepaidHistory();
+                                descoprepaidHistory.setBilNumber(mBill);
+                                descoprepaidHistory.setPayerPhoneNumber(mPhn);
+                                descoprepaidHistory.setDate(currentDataAndTIme);
+                                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().insert(descoprepaidHistory);
                                 return null;
                             }
                         }.execute();
 
 
-                        String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
-                        String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
+                        String msg_text = billPaySubmitResponse.getResponseDetails().getMsgText();
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(DescoPrepaidBillPayActivity.this);
                         builder.setTitle("Result");
-                        builder.setMessage(msg_text + "\nPayWell Trx ID: " + trx_id);
+                        builder.setMessage(msg_text);
                         builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
@@ -470,44 +430,66 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
                         alert.setCanceledOnTouchOutside(true);
                         alert.show();
 
+                    }else{
 
-                    } else {
-
-
-                        String msg = jsonObject.getString(TAG_MESSAGE);
-                        String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
-                        String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
+                        String message = billPaySubmitResponse.getResponseDetails().getMessage();
+                        String trx_id = billPaySubmitResponse.getResponseDetails().getTransId();
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(DescoPrepaidBillPayActivity.this);
-                        builder.setMessage(msg + "\n" + msg_text + "\nPayWell Trx ID: " + trx_id);
+                        builder.setTitle("Result");
+                        builder.setMessage(message + "\nPayWell Trx ID: " + trx_id);
                         builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
-                                dialog.dismiss();
+
                             }
                         });
                         builder.setCancelable(true);
                         AlertDialog alert = builder.create();
                         alert.setCanceledOnTouchOutside(true);
                         alert.show();
+
+
                     }
-                } else {
-                    Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
+
+
+                }else{
+
+
+                    String getApiStatusName = billPaySubmitResponse.getApiStatusName();
+                    String trx_id = billPaySubmitResponse.getResponseDetails().getTransId();
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(DescoPrepaidBillPayActivity.this);
+                    builder.setTitle("Result");
+                    builder.setMessage(getApiStatusName + "\nPayWell Trx ID: " + trx_id);
+                    builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+
+                            dismissProgressDialog();
+
+                        }
+                    });
+                    builder.setCancelable(true);
+                    AlertDialog alert = builder.create();
+                    alert.setCanceledOnTouchOutside(true);
+                    alert.show();
+
+
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
+
+       }
+
+
+            @Override
+            public void onFailure(Call<DescoBillPaySubmitResponse> call, Throwable t) {
+                t.printStackTrace();
+                showInquiryErrorMessage(model.getApiStatusName());
+                dismissProgressDialog();
             }
-        }
+        });
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -520,13 +502,13 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
 
     @Override
     public void onBackPressed() {
-        if (getAllDescoHistoryAsyncTask != null) {
-            getAllDescoHistoryAsyncTask.cancel(true);
+        if (getAllDescoPrepaidHistoryAsyncTask != null) {
+            getAllDescoPrepaidHistoryAsyncTask.cancel(true);
 
         }
 
-        if (insertDescoHistoryAsyncTask != null) {
-            insertDescoHistoryAsyncTask.cancel(true);
+        if (insertDescoPrepaidHistoryAsyncTask != null) {
+            insertDescoPrepaidHistoryAsyncTask.cancel(true);
         }
 
 
