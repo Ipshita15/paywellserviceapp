@@ -250,12 +250,12 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
 
         String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
         DescoRequestInquiryModel descoRequestInquiryModel = new DescoRequestInquiryModel();
-        descoRequestInquiryModel.setPassword("654321");
+        descoRequestInquiryModel.setPassword(mPin);
         descoRequestInquiryModel.setBillNo(mBill);
         descoRequestInquiryModel.setPayerMobileNo(mPhn);
         descoRequestInquiryModel.setAmount(mAmount);
         descoRequestInquiryModel.setFormat("json");
-        descoRequestInquiryModel.setUsername("cwntcl");
+        descoRequestInquiryModel.setUsername(mAppHandler.getImeiNo());
         descoRequestInquiryModel.setRefId(uniqueKey);
 
         ApiUtils.getAPIService().descoInquiryRequest(descoRequestInquiryModel,getResources().getString(R.string.desco_prepaid_bill_enq)).enqueue(new Callback<DescoInquiryResponse>() {
@@ -269,6 +269,8 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
 
 
                     submitBillConfirm(model);
+
+
 //                    if (model.getDescoInquiryResponseDetails().getStatus() == 200) {
 //
 //                        String message = model.getDescoInquiryResponseDetails().getMessage();
@@ -280,7 +282,7 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
 //                        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
 //                            @Override
 //                            public void onClick(DialogInterface dialog, int id) {
-//                                submitBillConfirm(model.getDescoInquiryResponseDetails());
+//                                submitBillConfirm(model);
 //                            }
 //                        });
 //                        builder.setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
@@ -380,8 +382,8 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
 
 //        DescoBillPaySubmit descoBillPaySubmit = new DescoBillPaySubmit(mBill,"json",mPin,mPhn,mTotalAmount,mTrxId,mAppHandler.getImeiNo(), uniqueKey);
         DescoBillPaySubmit descoBillPaySubmit = new DescoBillPaySubmit();
-        descoBillPaySubmit.setUsername( "cwntcl");
-        descoBillPaySubmit.setPassword("654321");
+        descoBillPaySubmit.setUsername( mAppHandler.getImeiNo());
+        descoBillPaySubmit.setPassword(mPin);
         descoBillPaySubmit.setPayerMobileNo(mPhn);
         descoBillPaySubmit.setBillNo(mBill);
         descoBillPaySubmit.setTotalAmount(""+model.getDescoInquiryResponseDetails().getTotalAmount());
