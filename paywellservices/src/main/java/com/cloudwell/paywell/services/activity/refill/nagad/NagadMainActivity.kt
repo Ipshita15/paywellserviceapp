@@ -18,6 +18,7 @@ import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.ConnectionDetector
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_nagad_main.*
@@ -263,8 +264,9 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
         val limit = selectedLimit
 
         showProgressDialog()
+        val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(applicationContext).rid)
 
-        ApiUtils.getAPIService().refillLogInquiry(hostUrlBkapi, sec_token, imeiNo.toString(), format, gateway_id, limit).enqueue(object : Callback<RefillLog> {
+        ApiUtils.getAPIService().refillLogInquiry(hostUrlBkapi, sec_token, imeiNo.toString(), format, gateway_id, limit,uniqueKey).enqueue(object : Callback<RefillLog> {
             override fun onFailure(call: Call<RefillLog>, t: Throwable) {
                 Toast.makeText(applicationContext, "Server error!!!", Toast.LENGTH_SHORT).show()
                 dismissProgressDialog()

@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionRechargeActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.DESCOHistory;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
@@ -24,6 +25,8 @@ import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.DateUtils;
+import com.cloudwell.paywell.services.utils.ParameterUtility;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -242,6 +245,8 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
         @Override
         protected String doInBackground(String... data) {
             String responseTxt = null;
+
+            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(DESCOBillPayActivity.this).getRID());
             // Create a new HttpClient and Post Header
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(data[0]);
@@ -255,6 +260,7 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
                 nameValuePairs.add(new BasicNameValuePair("payerMobileNo", mPhn));
                 nameValuePairs.add(new BasicNameValuePair("service_type", "DESCO_Enquiry"));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
+                nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();

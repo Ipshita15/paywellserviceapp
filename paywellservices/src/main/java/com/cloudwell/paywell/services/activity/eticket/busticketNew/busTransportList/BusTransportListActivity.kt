@@ -20,8 +20,10 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.Sor
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.seatLayout.SeatLayoutActivity
 import com.cloudwell.paywell.services.app.AppController
+import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.customView.horizontalDatePicker.commincation.IDatePicker
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_bus_transport_list.*
@@ -99,6 +101,7 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
         shimmer_recycler_view.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
         shimmer_recycler_view.adapter = viewMode.mistOfSchedule.let { it1 ->
 
+
             busTripListAdapter = BusTripListAdapter(it1, applicationContext, requestBusSearch, transport, object : OnClickListener {
                 override fun onUpdateData(position: Int, resSeatInfo: ResSeatInfo) {
 
@@ -107,6 +110,7 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
                     viewMode.mistOfSchedule.set(position, get)
                     busTripListAdapter?.notifyItemRangeChanged(position, viewMode.mistOfSchedule.size);
                     busTripListAdapter?.notifyDataSetChanged()
+
 
                 }
 

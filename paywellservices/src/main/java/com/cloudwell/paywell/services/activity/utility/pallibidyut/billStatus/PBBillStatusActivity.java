@@ -26,6 +26,8 @@ import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.DateUtils;
+import com.cloudwell.paywell.services.utils.ParameterUtility;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
@@ -111,6 +113,7 @@ public class PBBillStatusActivity extends BaseActivity implements View.OnClickLi
                 year = 0;
             }
         });
+        spnr_year.setSelection(1);
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             ((TextView) mLinearLayout.findViewById(R.id.tvPBPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
@@ -168,18 +171,21 @@ public class PBBillStatusActivity extends BaseActivity implements View.OnClickLi
     private void handleBillStatusCheckRequest() {
         showProgressDialog();
 
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).getRID());
+
         final RequestBillStatus requestBillStatus = new RequestBillStatus();
         requestBillStatus.setmUsername("" + mAppHandler.getImeiNo());
         requestBillStatus.setmPassword("" + mPin);
         requestBillStatus.setmAccountNo("" + mAcc);
         requestBillStatus.setmMonth("" + mMonth);
         requestBillStatus.setmYear("" + mYear);
+        requestBillStatus.setRefId( ""+ uniqueKey);
         requestBillStatus.setmFormat("json");
 
         Call<RequestBillStatusData> responseBodyCall = ApiUtils.getAPIService()
                 .callBillStatusRequestAPI(requestBillStatus.getmUsername(), requestBillStatus.getmPassword(),
                         requestBillStatus.getmAccountNo(), requestBillStatus.getmMonth(),
-                        requestBillStatus.getmYear(), requestBillStatus.getmFormat());
+                        requestBillStatus.getmYear() ,requestBillStatus.getRefId(), requestBillStatus.getmFormat());
 
         responseBodyCall.enqueue(new Callback<RequestBillStatusData>() {
             @Override

@@ -87,7 +87,7 @@ class NotificationCheckerService : Service() {
                         if (detail_message.size > 0) {
                             doAsync {
                                 val notificationRepogitory = NotificationRepogitory(applicationContext);
-                                notificationRepogitory.insertLocalData(detail_message)
+                                notificationRepogitory.saveNotificationData(detail_message)
                             }
 
                         }

@@ -24,6 +24,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.ticketCencel.mo
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.constant.AllConstant
 import com.cloudwell.paywell.services.retrofit.ApiUtils
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.JsonObject
 import retrofit2.Call
@@ -71,8 +72,9 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
     fun callCancelMapping(userName: String, bookingId: String, reason: String, typeOfRequest: String, item: Datum) {
 
         showProgressDialog()
+        val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this)!!.rid)
 
-        ApiUtils.getAPIService().getCancelMap(userName, bookingId).enqueue(object : Callback<ResCancellationMapping> {
+        ApiUtils.getAPIService().getCancelMap(userName, bookingId,uniqueKey).enqueue(object : Callback<ResCancellationMapping> {
             override fun onResponse(call: Call<ResCancellationMapping>, response: Response<ResCancellationMapping>) {
                 dismissProgressDialog()
                 assert(response.body() != null)
@@ -110,7 +112,9 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
 
                     val userName = AppHandler.getmInstance(applicationContext).imeiNo
 
-                    ApiUtils.getAPIService().getSingleBooking(userName, bookingId).enqueue(object : Callback<ResSingleBooking> {
+                    val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(applicationContext)!!.rid)
+
+                    ApiUtils.getAPIService().getSingleBooking(userName, bookingId,uniqueKey).enqueue(object : Callback<ResSingleBooking> {
                         override fun onResponse(call: Call<ResSingleBooking>, response: Response<ResSingleBooking>) {
                             dismissProgressDialog()
                             assert(response.body() != null)
@@ -177,6 +181,7 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
                     } else if (typeOfRequest == AllConstant.Action_reIssueTicket) {
                         reIssueTicket(userName, PIN_NO, bookingId, cancelReason)
                     }
+
                 } else {
                     val snackbar = Snackbar.make(findViewById(android.R.id.content), R.string.connection_error_msg, Snackbar.LENGTH_LONG)
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"))
@@ -200,7 +205,10 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
     private fun reIssueTicket(userName: String, pass: String, bookingId: String, cancelReason: String) {
         showProgressDialog()
 
-        ApiUtils.getAPIService().reIssueTicket(userName, pass, bookingId, cancelReason).enqueue(object : Callback<JsonObject> {
+        val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this)!!.rid)
+
+
+        ApiUtils.getAPIService().reIssueTicket(userName, pass, bookingId, cancelReason,uniqueKey).enqueue(object : Callback<JsonObject> {
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 dismissProgressDialog()
                 if (response.isSuccessful) {
@@ -231,8 +239,9 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
     private fun submitCancelRequest(userName: String, pass: String, bookingId: String, cancelReason: String, apiFormat: String) {
 
         showProgressDialog()
+        val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).rid)
 
-        ApiUtils.getAPIService().cancelBooking(userName, pass, bookingId, cancelReason, apiFormat).enqueue(object : Callback<JsonObject> {
+        ApiUtils.getAPIService().cancelBooking(userName, pass, bookingId, cancelReason, apiFormat, uniqueKey).enqueue(object : Callback<JsonObject> {
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 if (response.isSuccessful) {
 
@@ -261,8 +270,8 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
 
     public fun submitCancelTicketRequest(userName: String, pass: String, bookingId: String, cancelReason: String, cancelType: String, apiFormat: String) {
         showProgressDialog()
-
-        ApiUtils.getAPIService().cancelTicket(userName, pass, bookingId, cancelReason, cancelType, apiFormat).enqueue(object : Callback<JsonObject> {
+        val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this)!!.rid)
+        ApiUtils.getAPIService().cancelTicket(userName, pass, bookingId, cancelReason, cancelType, apiFormat, uniqueKey).enqueue(object : Callback<JsonObject> {
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 dismissProgressDialog()
                 if (response.isSuccessful) {
