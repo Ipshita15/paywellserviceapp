@@ -75,11 +75,8 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
             layoutPassportImg, layoutBirthImg, layoutDrivingImg, layoutVisitingImg;
     private EditText editText_outletName, editText_address, editText_ownerName, editText_phnNo, editText_landmark;
     private Spinner spnr_merchatnType, spnr_businessType, spnr_district, spnr_thana, spnr_postcode;
-//    private String str_businessId, str_businessType, str_merchantType, str_district, str_thana, str_postcodeId, str_postcode,
-//            str_which_btn_selected, outlet_img = "", nid_img = "", nid_back_img = "",
-//            owner_img = "", trade_license_img = "", passport_img = "", birth_certificate_img = "", driving_license_img = "",
-//            visiting_card_img = "";
-    private String str_which_btn_selected ="";
+
+    private String str_which_btn_selected = "";
     private ArrayList<String> layoutNames, business_type_id_array;
     private HashMap<String, String> hashMap = new HashMap<>();
     private String[] district_array_id, thana_array_id, post_array_id, post_array_name;
@@ -235,9 +232,9 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
         visibilityStateDefine();
 
 
-        if (isMissingFlowGorble){
+        if (isMissingFlowGorble) {
 
-            Handler handler =new Handler();
+            Handler handler = new Handler();
             final Runnable r = new Runnable() {
                 public void run() {
                     isMissingFlowGorble = false;
@@ -246,8 +243,6 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
             };
             handler.postDelayed(r, 7000);
         }
-
-
 
 
     }
@@ -281,8 +276,12 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
             layoutMerchantType.setVisibility(View.VISIBLE);
 
             if (EntryMainActivity.regModel != null) {
-                if (!regModel.getBusinessaTypeAPIRespose().equals("")) {
-                    setBusnicesTypeAdapter(regModel.getBusinessaTypeAPIRespose(), true);
+
+                if (regModel.getBusinessaTypeAPIRespose() != null) {
+
+                    if (!regModel.getBusinessaTypeAPIRespose().equals("")) {
+                        setBusnicesTypeAdapter(regModel.getBusinessaTypeAPIRespose(), true);
+                    }
                 }
             }
         }
@@ -321,7 +320,6 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
             layoutDistrict.setVisibility(View.VISIBLE);
             layoutThana.setVisibility(View.VISIBLE);
             layoutPost.setVisibility(View.VISIBLE);
-
 
 
             if (isMissingFlowGorble) {
@@ -392,47 +390,47 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
         if (regModel != null) {
 
             Drawable img = getResources().getDrawable(R.drawable.icon_seleted);
-            if(!regModel.getOutletName().equals("")){
+            if (!regModel.getOutletName().equals("")) {
                 btPicOutlet.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 btPicOutlet.setCompoundDrawablePadding(100);
             }
 
-            if(!regModel.getNidFront().equals("")){
+            if (!regModel.getNidFront().equals("")) {
                 btNid.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 btNid.setCompoundDrawablePadding(100);
             }
 
-            if(!regModel.getSmartCardFront().equals("")){
+            if (!regModel.getSmartCardFront().equals("")) {
                 btSmart.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 btSmart.setCompoundDrawablePadding(100);
             }
 
-            if(!regModel.getOwnerImage().equals("")){
+            if (!regModel.getOwnerImage().equals("")) {
                 btOwnerImg.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 btOwnerImg.setCompoundDrawablePadding(100);
             }
 
-            if(!regModel.getTradeLicense().equals("")){
+            if (!regModel.getTradeLicense().equals("")) {
                 btTradeImg.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 btTradeImg.setCompoundDrawablePadding(100);
             }
 
-            if(!regModel.getPassport().equals("")){
+            if (!regModel.getPassport().equals("")) {
                 btpassportImg.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 btpassportImg.setCompoundDrawablePadding(100);
             }
 
-            if(!regModel.getBirthCertificate().equals("")){
+            if (!regModel.getBirthCertificate().equals("")) {
                 btBirthImg.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 btBirthImg.setCompoundDrawablePadding(100);
             }
 
-            if(!regModel.getDrivingLicense().equals("")){
+            if (!regModel.getDrivingLicense().equals("")) {
                 btDriveImg.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 btDriveImg.setCompoundDrawablePadding(100);
             }
 
-            if(!regModel.getVisitingCard().equals("")){
+            if (!regModel.getVisitingCard().equals("")) {
                 btCardImg.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 btCardImg.setCompoundDrawablePadding(100);
             }
@@ -442,85 +440,85 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-      if (!isMissingFlowGorble){
-          switch (adapterView.getId()) {
-              case R.id.spinner_merchantType:
-                  String merchantId = spnr_merchatnType.getSelectedItem().toString();
-                  if (merchantId.equals("Select One")) {
-                      regModel.setMrchantType("");
-                  } else {
-                      regModel.setMrchantType(hashMap.get(merchantId));
-                      initializationBusinessType();
-                  }
-                  break;
-              case R.id.spinner_businessType:
+        if (!isMissingFlowGorble) {
+            switch (adapterView.getId()) {
+                case R.id.spinner_merchantType:
+                    String merchantId = spnr_merchatnType.getSelectedItem().toString();
+                    if (merchantId.equals("Select One")) {
+                        regModel.setMrchantType("");
+                    } else {
+                        regModel.setMrchantType(hashMap.get(merchantId));
+                        initializationBusinessType();
+                    }
+                    break;
+                case R.id.spinner_businessType:
 
-                  if (spnr_businessType.getSelectedItem().toString().trim().equals("Select One")) {
-                      regModel.setBusinessId("");
-                      regModel.setBusinessType("");
-                  } else {
-                      regModel.setBusinessId(business_type_id_array.get(i));
-                      regModel.setBusinessType(spnr_businessType.getSelectedItem().toString().trim());
-                      regModel.setBusinesstypeAdapterPosition(spnr_businessType.getSelectedItemPosition());
-                  }
-                  break;
-              case R.id.spinner_district:
+                    if (spnr_businessType.getSelectedItem().toString().trim().equals("Select One")) {
+                        regModel.setBusinessId("");
+                        regModel.setBusinessType("");
+                    } else {
+                        regModel.setBusinessId(business_type_id_array.get(i));
+                        regModel.setBusinessType(spnr_businessType.getSelectedItem().toString().trim());
+                        regModel.setBusinesstypeAdapterPosition(spnr_businessType.getSelectedItemPosition());
+                    }
+                    break;
+                case R.id.spinner_district:
 
-                  if (spnr_district.getSelectedItem().toString().equals("Select One")) {
-                      regModel.setDistrict("");
-                  } else {
-                      regModel.setDistrict(String.valueOf(district_array_id[i]));
-                      regModel.setDistrictAdapterPosition(spnr_district.getSelectedItemPosition());
-
-
-                      if (mCd.isConnectingToInternet()) {
-                          new GetThanaResponseAsync().execute(getResources().getString(R.string.district_info_url));
-                      } else {
-                          Snackbar snackbar = Snackbar.make(scrollView, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
-                          snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                          View snackBarView = snackbar.getView();
-                          snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                          snackbar.show();
-                      }
-                  }
+                    if (spnr_district.getSelectedItem().toString().equals("Select One")) {
+                        regModel.setDistrict("");
+                    } else {
+                        regModel.setDistrict(String.valueOf(district_array_id[i]));
+                        regModel.setDistrictAdapterPosition(spnr_district.getSelectedItemPosition());
 
 
-                  break;
-              case R.id.spinner_thana:
-                  if (adapterView.getItemAtPosition(i).toString().equals("Select One")) {
-                      regModel.setThanaName("");
+                        if (mCd.isConnectingToInternet()) {
+                            new GetThanaResponseAsync().execute(getResources().getString(R.string.district_info_url));
+                        } else {
+                            Snackbar snackbar = Snackbar.make(scrollView, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
+                            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                            View snackBarView = snackbar.getView();
+                            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                            snackbar.show();
+                        }
+                    }
 
-                  } else {
-                      regModel.setThanaName(thana_array_id[i]);
-                      regModel.setThanaAdapterPosition(spnr_thana.getSelectedItemPosition());
 
-                      if (mCd.isConnectingToInternet()) {
-                          new GetPostResponseAsync().execute(getResources().getString(R.string.district_info_url));
-                      } else {
-                          Snackbar snackbar = Snackbar.make(scrollView, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
-                          snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                          View snackBarView = snackbar.getView();
-                          snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                          snackbar.show();
-                      }
-                  }
-                  break;
-              case R.id.spinner_postcode:
-                  if (adapterView.getItemAtPosition(i).toString().equals("Select One")) {
-                      regModel.setPostcodeId("");
-                      regModel.setPostcodeName("");
-                  } else {
-                      regModel.setPostcodeId(post_array_id[i]);
-                      regModel.setPostcodeName(post_array_name[i]);
+                    break;
+                case R.id.spinner_thana:
+                    if (adapterView.getItemAtPosition(i).toString().equals("Select One")) {
+                        regModel.setThanaName("");
 
-                      regModel.setPostCodeAdapterPosition(spnr_postcode.getSelectedItemPosition());
+                    } else {
+                        regModel.setThanaName(thana_array_id[i]);
+                        regModel.setThanaAdapterPosition(spnr_thana.getSelectedItemPosition());
 
-                  }
-                  break;
-              default:
-                  break;
-          }
-      }
+                        if (mCd.isConnectingToInternet()) {
+                            new GetPostResponseAsync().execute(getResources().getString(R.string.district_info_url));
+                        } else {
+                            Snackbar snackbar = Snackbar.make(scrollView, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
+                            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                            View snackBarView = snackbar.getView();
+                            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                            snackbar.show();
+                        }
+                    }
+                    break;
+                case R.id.spinner_postcode:
+                    if (adapterView.getItemAtPosition(i).toString().equals("Select One")) {
+                        regModel.setPostcodeId("");
+                        regModel.setPostcodeName("");
+                    } else {
+                        regModel.setPostcodeId(post_array_id[i]);
+                        regModel.setPostcodeName(post_array_name[i]);
+
+                        regModel.setPostCodeAdapterPosition(spnr_postcode.getSelectedItemPosition());
+
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
 
 
     }
@@ -893,7 +891,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
 
             regModel.setPostCodeResponseAPIRespose(result);
 
-            setupPostCode(result,isMissingFlowGorble);
+            setupPostCode(result, isMissingFlowGorble);
         }
     }
 
@@ -972,9 +970,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
             regModel = new RegistrationModel();
         }
 
-
         saveSessionData();
-
 
         Intent intent = new Intent(getApplicationContext(), NidInputActivity.class);
         intent.putExtra("isNID", isNID);
@@ -991,7 +987,6 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
         regModel.setLandmark(editText_landmark.getText().toString());
 
     }
-
 
 
     public void smartmgOnClickMissing(View v) {
@@ -1011,70 +1006,28 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
     }
 
     public void ownerImgOnClickMissing(View v) {
-        str_which_btn_selected = "4";
-        int permissionCheck = ContextCompat.checkSelfPermission(MissingMainActivity.this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                    MissingMainActivity.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY);
-        } else {
-            galleryIntent();
-        }
+        asked("মালিকের ছবি", "4");
     }
 
 
     public void tradeLicenseImgOnClickMissing(View v) {
-        str_which_btn_selected = "5";
-        int permissionCheck = ContextCompat.checkSelfPermission(MissingMainActivity.this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                    MissingMainActivity.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY);
-        } else {
-            galleryIntent();
-        }
+        asked("ট্রেড লাইসেন্সের ছবি", "5");
     }
 
     public void passportImgOnClickMissing(View v) {
-        str_which_btn_selected = "6";
-        int permissionCheck = ContextCompat.checkSelfPermission(MissingMainActivity.this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                    MissingMainActivity.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY);
-        } else {
-            galleryIntent();
-        }
+        asked("পাসপোর্টের ছবি", "6");
     }
 
     public void birthImgOnClickMissing(View v) {
-        str_which_btn_selected = "7";
-        int permissionCheck = ContextCompat.checkSelfPermission(MissingMainActivity.this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                    MissingMainActivity.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY);
-        } else {
-            galleryIntent();
-        }
+        asked("বার্থ সার্টিফিকেটের ছবি", "7");
     }
 
     public void drivingImgOnClickMissing(View v) {
-        str_which_btn_selected = "8";
-        int permissionCheck = ContextCompat.checkSelfPermission(MissingMainActivity.this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                    MissingMainActivity.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY);
-        } else {
-            galleryIntent();
-        }
+        asked("ড্রাইভিং লাইসেন্সের ছবি", "8");
     }
 
     public void visitingImgOnClickMissing(View v) {
-        str_which_btn_selected = "9";
-        int permissionCheck = ContextCompat.checkSelfPermission(MissingMainActivity.this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                    MissingMainActivity.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY);
-        } else {
-            galleryIntent();
-        }
+        asked("ভিজিটিং কার্ডের ছবি", "9");
     }
 
     private void galleryIntent() {
@@ -1428,7 +1381,6 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 }
             }
 
-//            checkRequest();
             new RetailerMissingAsync().execute(getResources().getString(R.string.missing_reg_url));
         } else {
             Snackbar snackbar = Snackbar.make(scrollView, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
@@ -1438,114 +1390,6 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
             snackbar.show();
         }
     }
-
-//    private void checkRequest() {
-//        showProgressDialog();
-//
-//        try {
-//                TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(MissingMainActivity.this);
-//                String imeiOne = telephonyInfo.getImeiSIM1();
-//                String imeiTwo = telephonyInfo.getImeiSIM2();
-//
-//                JSONObject jsonInformationData = new JSONObject();
-//                try {
-//                    if (layoutNames.contains("outlet_name")) {
-//                        jsonInformationData.put("outlet_name", editText_outletName.getText().toString().trim());
-//                    }
-//                    if (layoutNames.contains("outlet_address")) {
-//                        jsonInformationData.put("outlet_address", editText_address.getText().toString().trim());
-//                    }
-//                    if (layoutNames.contains("owner_name")) {
-//                        jsonInformationData.put("owner_name", editText_ownerName.getText().toString().trim());
-//                    }
-//                    if (layoutNames.contains("business_type")) {
-//                        jsonInformationData.put("business_type_id", regModel.getBusinessId());
-//                        jsonInformationData.put("business_type", regModel.getBusinessType());
-//                    }
-//                    if (layoutNames.contains("mobile_number")) {
-//                        jsonInformationData.put("mobile_number", editText_phnNo.getText().toString().trim());
-//                    }
-//                    if (layoutNames.contains("district")) {
-//                        jsonInformationData.put("district", regModel.getDistrict());
-//                    }
-//                    if (layoutNames.contains("thana")) {
-//                        jsonInformationData.put("district", regModel.getDistrict());
-//                        jsonInformationData.put("thana", regModel.getThanaName());
-//                    }
-//                    if (layoutNames.contains("post_code")) {
-//                        jsonInformationData.put("district", regModel.getDistrict());
-//                        jsonInformationData.put("thana", regModel.getThanaName());
-//                        jsonInformationData.put("post_office_id", regModel.getPostcodeId());
-//                        jsonInformationData.put("post_code", regModel.getPostcodeName());
-//                    }
-//                    if (layoutNames.contains("landmark")) {
-//                        jsonInformationData.put("landmark", editText_landmark.getText().toString().trim());
-//                    }
-//
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                    Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-//                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-//                    View snackBarView = snackbar.getView();
-//                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-//                }
-//
-//                //add data
-//                List<NameValuePair> nameValuePairs = new ArrayList<>(12);
-//                nameValuePairs.add(new BasicNameValuePair("imei", imeiOne));
-//                nameValuePairs.add(new BasicNameValuePair("alternate_imei", imeiTwo));
-//                nameValuePairs.add(new BasicNameValuePair("informationData", jsonInformationData.toString()));
-//                if (layoutNames.contains("outlet_img")) {
-//                    nameValuePairs.add(new BasicNameValuePair("outlet_img", regModel.getOutletImage()));
-//                }
-//                if (layoutNames.contains("nid_img")) {
-//                    nameValuePairs.add(new BasicNameValuePair("nid_img", nid_img));
-//                }
-//                if (layoutNames.contains("nid_back_img")) {
-//                    nameValuePairs.add(new BasicNameValuePair("nid_back_img", nid_back_img));
-//                }
-//                if (layoutNames.contains("owner_img")) {
-//                    nameValuePairs.add(new BasicNameValuePair("owner_img", regModel.getOwnerImage()));
-//                }
-//                if (layoutNames.contains("trade_license_img")) {
-//                    nameValuePairs.add(new BasicNameValuePair("trade_license_img", regModel.getTradeLicense()));
-//                }
-//                if (layoutNames.contains("image_passport")) {
-//                    nameValuePairs.add(new BasicNameValuePair("image_passport", regModel.getPassport()));
-//                }
-//                if (layoutNames.contains("birth_certificate_img")) {
-//                    nameValuePairs.add(new BasicNameValuePair("birth_certificate_img", regModel.getBirthCertificate()));
-//                }
-//                if (layoutNames.contains("driving_license_imege")) {
-//                    nameValuePairs.add(new BasicNameValuePair("driving_license_imege", regModel.getDrivingLicense()));
-//                }
-//                if (layoutNames.contains("visiting_card_img")) {
-//                    nameValuePairs.add(new BasicNameValuePair("visiting_card_img", regModel.getVisitingCard()));
-//                }
-//
-//
-//        ApiUtils.getAPIServicePHP7().userInformationForRegistration(regModel).enqueue(new Callback<ResponseBody>() {
-//
-//            @Override
-//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                dismissProgressDialog();
-//                try {
-//                    JSONObject jsonObject = new JSONObject(response.body().string());
-//                    String status = jsonObject.getString("status");
-//                    String message = jsonObject.getString("message");
-//                    showTransferMessage(status, message);
-//                } catch (Exception ex) {
-//                    ex.printStackTrace();
-//                    Toast.makeText(EntryForthActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//            @Override
-//            public void onFailure(Call<ResponseBody> call, Throwable t) {
-//                dismissProgressDialog();
-//                Toast.makeText(EntryForthActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
 
 
 
@@ -1719,11 +1563,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int id) {
-                                Intent intent = getBaseContext().getPackageManager()
-                                        .getLaunchIntentForPackage(getBaseContext().getPackageName());
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-                                finish();
+                                dialogInterface.dismiss();
                             }
                         });
                         AlertDialog alertDialog = builder.create();

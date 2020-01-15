@@ -452,7 +452,7 @@
     <string name="business_type_url">https://api.paywellonline.com/Android/userSubBusinessType</string>
     <string name="district_info_url">https://www.paywellonline.com/crs3291/android/sales_manager/district_info_bangladesh.php</string>
     <string name="final_reg_url" translatable="false">https://www.paywellonline.com/crs3291/android/sales_manager/getRetailerInformationForRegistrationNew.php</string>
-    <string name="missing_reg_url">https://www.paywellonline.com/crs3291/android/sales_manager/getUnverifiedData.php</string>
+    <string name="missing_reg_url">https://agentapi.paywellonline.com/PaywellUserRegistration/unverifiedDataCollectAndUpdate</string>
 
     <!-- Topup -->
     <string name="inq_top">https://www.paywellonline.com/default/api/enquiry.php?</string>
