@@ -2,17 +2,12 @@ package com.cloudwell.paywell.services.activity.home
 
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.Window
-import android.view.WindowManager
 import android.widget.Toast
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AppThemeBaseActivity
 import com.cloudwell.paywell.services.activity.reg.EntryMainActivity
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.MobileNumberInputDialog
-import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.OTPErrorMsgDialog
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.OTPInputDialog
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.phone.SmsRetriever
@@ -57,8 +52,6 @@ class HomeActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks
             startActivity(intent)
         }
 
-
-
         mSmsBroadcastReceiver = SmsBroadcastReceiver()
 
         //set google api client for hint request
@@ -80,7 +73,12 @@ class HomeActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks
             val mobileNumberInputDialog = MobileNumberInputDialog(object : MobileNumberInputDialog.OnClickHandler {
                 override fun onSubmit(mobileNumber: String) {
 
-                    startSMSListener();
+                    if(!mobileNumber.equals("")){
+
+                        startSMSListener();
+                    }else{
+                        Toast.makeText(applicationContext, "Please input valid RID or Mobile number", Toast.LENGTH_LONG).show()
+                    }
 
                 }
 
