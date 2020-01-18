@@ -1,6 +1,7 @@
 package com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model
 
 
+import com.cloudwell.paywell.services.utils.ParameterUtility
 import com.google.gson.annotations.SerializedName
 
 class DescoBillPaySubmit {
@@ -18,5 +19,7 @@ class DescoBillPaySubmit {
     var transId: String = ""
     @SerializedName("username")
     var username: String = ""
+    @SerializedName(ParameterUtility.KEY_REF_ID)
+    var refId: String = ""
 
 }

@@ -13,18 +13,23 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidBillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidInquiryActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidMainActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoPrepaidTrxLogRequest;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoPrepaidTrxLogResponse;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.http.NameValuePair;
@@ -39,12 +44,18 @@ import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class DescoPrepaidMainActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
     private RelativeLayout mRelativeLayout;
     RadioButton radioButton_five, radioButton_ten, radioButton_twenty, radioButton_fifty, radioButton_hundred, radioButton_twoHundred;
     String selectedLimit = "";
     private ConnectionDetector cd;
     private static AppHandler mAppHandler;
+
+    public final static String TRXLOG_INQUIRY_DATA_KEY ="trxlogdata";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,7 +166,7 @@ public class DescoPrepaidMainActivity extends BaseActivity implements CompoundBu
                     selectedLimit = "5";
                 }
                 if (cd.isConnectingToInternet()) {
-                    new DescoPrepaidMainActivity.TransactionLogAsync().execute(getString(R.string.utility_multi_trx_inq));
+                    trxLogRequest();
                 } else {
                     Snackbar snackbar = Snackbar.make(mRelativeLayout, getResources().getString(R.string.connection_error_msg), Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -230,54 +241,52 @@ public class DescoPrepaidMainActivity extends BaseActivity implements CompoundBu
         }
     }
 
-    @SuppressWarnings("deprecation")
-    private class TransactionLogAsync extends AsyncTask<String, Integer, String> {
+
+    private void trxLogRequest(){
+
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
+
+        ApiUtils.getAPIService().descoPrepaidTrxInquiry(new DescoPrepaidTrxLogRequest("json",selectedLimit,uniqueKey,"Desco_prepaid",mAppHandler.getImeiNo()),getString(R.string.desco_prepaid_trx_inquiry)).enqueue(new Callback<DescoPrepaidTrxLogResponse>() {
+            @Override
+            public void onResponse(Call<DescoPrepaidTrxLogResponse> call, Response<DescoPrepaidTrxLogResponse> response) {
+
+                if(response.body().getApiStatus()==200){
+
+                    if(response.body().getDescoPrepaidTrxLogResponseDetails().getStatus()==200){
 
 
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
+                        startActivity(new Intent(DescoPrepaidMainActivity.this, DescoPrepaidInquuiryActivity.class).putExtra(TRXLOG_INQUIRY_DATA_KEY,response.body()));
+
+                    }else{
+
+                        Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.no_data_msg, Snackbar.LENGTH_LONG);
+                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                        View snackBarView = snackbar.getView();
+                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                        snackbar.show();
+                    }
 
 
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("service", "DESCO"));
-                nameValuePairs.add(new BasicNameValuePair("limit", selectedLimit));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                }else{
 
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                    Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.no_data_msg, Snackbar.LENGTH_LONG);
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                    View snackBarView = snackbar.getView();
+                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                    snackbar.show();
+                }
+
+
             }
-            return responseTxt;
-        }
 
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            if (result != null) {
-                DESCOPostpaidInquiryActivity.TRANSLOG_TAG = result;
-                startActivity(new Intent(DescoPrepaidMainActivity.this, DESCOPostpaidInquiryActivity.class));
-            } else {
-                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
+            @Override
+            public void onFailure(Call<DescoPrepaidTrxLogResponse> call, Throwable t) {
+
+
+
             }
-        }
+        });
+
     }
+
 }

@@ -77,12 +77,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
-        <activity android:name=".activity.utility.electricity.desco.prepaid.DescoPrepaidInquuiryActivity"></activity>
+        <activity android:name=".activity.utility.electricity.desco.prepaid.DescoPrepaidInquuiryActivity" />
         <activity android:name=".activity.utility.electricity.desco.prepaid.DescoPrepaidBillPayActivity" />
         <activity android:name=".activity.utility.electricity.desco.prepaid.DescoPrepaidMainActivity" />
-        <activity android:name=".activity.utility.electricity.desco.DescoMainActivity"
+        <activity
+            android:name=".activity.utility.electricity.desco.DescoMainActivity"
             android:parentActivityName=".activity.utility.UtilityMainActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".LaunchScreenActivity"
             android:label="@string/app_name"
@@ -1095,30 +1096,21 @@
             android:name=".activity.eticket.busticketNew.seatLayout.SeatLayoutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".activity.refill.nagad.NagadBalanceClaimActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.utility.pallibidyut.bill.PBBillPayOldActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.refill.nagad.NagadMainActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.refill.nagad.BalanceRefillActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.eticket.airticket.issueTicket.IssueTicketRequestActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.refill.nagad.NagadRefillLogInquiryActivity"
             android:screenOrientation="portrait" />

@@ -20,6 +20,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoPrepaidTrxLogResponse;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.MsgText;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
@@ -57,6 +59,8 @@ public class DescoPrepaidInquuiryActivity extends AppCompatActivity {
     private static String TAG_RESPONSE_DESCO_STATUS = "statusCode";
     private static String TAG_RESPONSE_DESCO_MESSAGE = "statusName";
 
+    private DescoPrepaidTrxLogResponse descoPrepaidTrxLogResponse;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,22 +81,23 @@ public class DescoPrepaidInquuiryActivity extends AppCompatActivity {
     }
 
     private void initializeView() {
-        String response = TRANSLOG_TAG;
-        if (response != null && response.length() > 0) {
+
+        descoPrepaidTrxLogResponse = (DescoPrepaidTrxLogResponse) getIntent().getSerializableExtra(DescoPrepaidMainActivity.TRXLOG_INQUIRY_DATA_KEY);
+        if (descoPrepaidTrxLogResponse.getDescoPrepaidTrxLogResponseDetails().getMsgText() != null && descoPrepaidTrxLogResponse.getDescoPrepaidTrxLogResponseDetails().getMsgText().size() > 0) {
             try {
-                JSONArray jsonArray = new JSONArray(response);
 
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                for (int i = 0; i < descoPrepaidTrxLogResponse.getDescoPrepaidTrxLogResponseDetails().getMsgText().size(); i++) {
                     String result;
+                    MsgText msgText = descoPrepaidTrxLogResponse.getDescoPrepaidTrxLogResponseDetails().getMsgText().get(i);
 
-                    String mTrx = jsonObject.getString(TAG_RESPONSE_DESCO_TRX_ID);
-                    String mBillNO = jsonObject.getString(TAG_RESPONSE_DESCO_BILL_NO);
-                    String mCustPhn = jsonObject.getString(TAG_RESPONSE_DESCO_CUST_PHN);
-                    String mAmount = jsonObject.getString(TAG_RESPONSE_DESCO_AMOUNT);
-                    String mDate = jsonObject.getString(TAG_RESPONSE_DESCO_DATE_TIME);
-                    String mStatus = jsonObject.getString(TAG_RESPONSE_DESCO_STATUS);
-                    String mMsg = jsonObject.getString(TAG_RESPONSE_DESCO_MESSAGE);
+                    String mTrx = msgText.getTrxId1();
+                    String mBillNO = msgText.getBillNumber();
+                    String mCustPhn = msgText.getBillCustomerPhone();
+                    String mAmount = msgText.getTotalAmount();
+                    String mDate = msgText.getRequestDatetime();
+                    String mStatus = msgText.getStatusNameEnquiry();
+                    String mMsg = msgText.getResponseMsg();
 
                     String sub_date_comp = mDate.substring(0, 10);
 

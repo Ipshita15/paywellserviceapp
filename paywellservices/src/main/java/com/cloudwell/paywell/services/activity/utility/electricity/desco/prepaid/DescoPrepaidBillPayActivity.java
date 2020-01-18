@@ -239,7 +239,6 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
         } else {
 
             submitInquiryConfirmDesco();
-//            new DescoPrepaidBillPayActivity.SubmitInquiryAsync().execute(getResources().getString(R.string.desco_prepaid_bill_enq));
         }
     }
 
@@ -348,22 +347,7 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
         alert.show();
     }
 
-//    private void showSubmitErrorMessage(String message) {
-//
-//        AlertDialog.Builder builder = new AlertDialog.Builder(DescoPrepaidBillPayActivity.this);
-//        builder.setTitle("Result");
-//        builder.setMessage(message + "\nPayWell Trx ID: " + trx_id);
-//        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int id) {
-//                onBackPressed();
-//            }
-//        });
-//        builder.setCancelable(true);
-//        AlertDialog alert = builder.create();
-//        alert.setCanceledOnTouchOutside(true);
-//        alert.show();
-//    }
+
 
     private void submitBillConfirm(DescoInquiryResponse model) {
         if (!mCd.isConnectingToInternet()) {
@@ -371,7 +355,6 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
         } else {
 
             descoSubmilBillPay(model);
-//            new DescoPrepaidBillPayActivity.SubmitBillAsync().execute(getString(R.string.desco_prepaid_bill_pay));
         }
     }
 
@@ -379,8 +362,6 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
 
         showProgressDialog();
         String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
-
-//        DescoBillPaySubmit descoBillPaySubmit = new DescoBillPaySubmit(mBill,"json",mPin,mPhn,mTotalAmount,mTrxId,mAppHandler.getImeiNo(), uniqueKey);
         DescoBillPaySubmit descoBillPaySubmit = new DescoBillPaySubmit();
         descoBillPaySubmit.setUsername( mAppHandler.getImeiNo());
         descoBillPaySubmit.setPassword(mPin);
@@ -389,6 +370,7 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
         descoBillPaySubmit.setTotalAmount(""+model.getDescoInquiryResponseDetails().getTotalAmount());
         descoBillPaySubmit.setTransId(model.getDescoInquiryResponseDetails().getTransId());
         descoBillPaySubmit.setFormat("json");
+        descoBillPaySubmit.setRefId(uniqueKey);
 
 
         ApiUtils.getAPIService().descoBillPayement(descoBillPaySubmit,getString(R.string.desco_prepaid_bill_pay)).enqueue(new Callback<DescoBillPaySubmitResponse>() {
