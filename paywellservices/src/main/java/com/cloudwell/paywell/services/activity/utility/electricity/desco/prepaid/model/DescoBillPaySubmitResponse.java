@@ -12,7 +12,7 @@ public class DescoBillPaySubmitResponse {
     @SerializedName("ApiStatusName")
     private String mApiStatusName;
     @SerializedName("ResponseDetails")
-    private ResponseDetails mResponseDetails;
+    private DescoBillPaySubmitResponseDetails mDescoBillPaySubmitResponseDetails;
 
     public Long getApiStatus() {
         return mApiStatus;
@@ -30,12 +30,12 @@ public class DescoBillPaySubmitResponse {
         mApiStatusName = apiStatusName;
     }
 
-    public ResponseDetails getResponseDetails() {
-        return mResponseDetails;
+    public DescoBillPaySubmitResponseDetails getResponseDetails() {
+        return mDescoBillPaySubmitResponseDetails;
     }
 
-    public void setResponseDetails(ResponseDetails responseDetails) {
-        mResponseDetails = responseDetails;
+    public void setResponseDetails(DescoBillPaySubmitResponseDetails descoBillPaySubmitResponseDetails) {
+        mDescoBillPaySubmitResponseDetails = descoBillPaySubmitResponseDetails;
     }
 
 }

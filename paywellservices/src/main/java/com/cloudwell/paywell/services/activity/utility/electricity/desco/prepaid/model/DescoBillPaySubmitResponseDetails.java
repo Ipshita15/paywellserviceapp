@@ -4,7 +4,7 @@ package com.cloudwell.paywell.services.activity.utility.electricity.desco.prepai
 
 import com.google.gson.annotations.SerializedName;
 
-public class ResponseDetails {
+public class DescoBillPaySubmitResponseDetails {
 
     @SerializedName("message")
     private String mMessage;
