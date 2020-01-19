@@ -1,12 +1,15 @@
 package com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDialog;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -246,19 +249,20 @@ public class DescoPrepaidMainActivity extends BaseActivity implements CompoundBu
 
         String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
 
-        ApiUtils.getAPIService().descoPrepaidTrxInquiry(new DescoPrepaidTrxLogRequest("json",selectedLimit,uniqueKey,"Desco_prepaid",mAppHandler.getImeiNo()),getString(R.string.desco_prepaid_trx_inquiry)).enqueue(new Callback<DescoPrepaidTrxLogResponse>() {
+        DescoPrepaidTrxLogRequest descoPrepaidTrxLogRequest =new DescoPrepaidTrxLogRequest("json",selectedLimit,"201912301025587601","Desco_prepaid","cwntcl");
+
+        ApiUtils.getAPIService().descoPrepaidTrxInquiry(descoPrepaidTrxLogRequest,getString(R.string.desco_prepaid_trx_inquiry)).enqueue(new Callback<DescoPrepaidTrxLogResponse>() {
             @Override
             public void onResponse(Call<DescoPrepaidTrxLogResponse> call, Response<DescoPrepaidTrxLogResponse> response) {
 
+                DescoPrepaidTrxLogResponse descoPrepaidTrxLogResponseBody = response.body();
                 if(response.body().getApiStatus()==200){
 
-                    if(response.body().getDescoPrepaidTrxLogResponseDetails().getStatus()==200){
-
+                    if(descoPrepaidTrxLogResponseBody.getDescoPrepaidTrxLogResponseDetails().getStatus()==200){
 
                         startActivity(new Intent(DescoPrepaidMainActivity.this, DescoPrepaidInquuiryActivity.class).putExtra(TRXLOG_INQUIRY_DATA_KEY,response.body()));
 
                     }else{
-
                         Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.no_data_msg, Snackbar.LENGTH_LONG);
                         snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                         View snackBarView = snackbar.getView();
@@ -269,11 +273,7 @@ public class DescoPrepaidMainActivity extends BaseActivity implements CompoundBu
 
                 }else{
 
-                    Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.no_data_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
+                    showTrxLogErrorMessage(descoPrepaidTrxLogResponseBody.getApiStatusName());
                 }
 
 
@@ -281,12 +281,30 @@ public class DescoPrepaidMainActivity extends BaseActivity implements CompoundBu
 
             @Override
             public void onFailure(Call<DescoPrepaidTrxLogResponse> call, Throwable t) {
+                t.printStackTrace();
 
+                Toast.makeText(DescoPrepaidMainActivity.this, "Network error!!!", Toast.LENGTH_SHORT).show();
 
 
             }
         });
 
+    }
+
+    private void showTrxLogErrorMessage(String message) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(DescoPrepaidMainActivity.this);
+        builder.setMessage(message);
+        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        builder.setCancelable(true);
+        AlertDialog alert = builder.create();
+        alert.setCanceledOnTouchOutside(true);
+        alert.show();
     }
 
 }
