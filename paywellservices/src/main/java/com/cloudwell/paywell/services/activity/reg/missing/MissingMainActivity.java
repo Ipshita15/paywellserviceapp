@@ -33,9 +33,11 @@ import com.cloudwell.paywell.services.activity.reg.model.RegistrationModel;
 import com.cloudwell.paywell.services.activity.reg.nidOCR.NidInputActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.TelephonyInfo;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.JsonObject;
 import com.imagepicker.FilePickUtils;
 import com.imagepicker.LifeCycleCallBackManager;
 
@@ -48,9 +50,11 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,6 +63,10 @@ import java.util.List;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regModel;
 import static com.imagepicker.FilePickUtils.CAMERA_PERMISSION;
@@ -1381,7 +1389,12 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 }
             }
 
-            new RetailerMissingAsync().execute(getResources().getString(R.string.missing_reg_url));
+//            new RetailerMissingAsync().execute(getResources().getString(R.string.missing_reg_url));
+
+
+
+            submitRequest();
+
         } else {
             Snackbar snackbar = Snackbar.make(scrollView, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
             snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -1391,201 +1404,386 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
         }
     }
 
+    private void submitRequest() {
+
+        try {
+            TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(MissingMainActivity.this);
+            String imeiOne = telephonyInfo.getImeiSIM1();
+            String imeiTwo = telephonyInfo.getImeiSIM2();
+
+            JsonObject jsonInformationData = new JsonObject();
+
+            if (layoutNames.contains("outlet_name")) {
+                jsonInformationData.addProperty("outlet_name", editText_outletName.getText().toString().trim());
+            }
+            if (layoutNames.contains("outlet_address")) {
+                jsonInformationData.addProperty("outlet_address", editText_address.getText().toString().trim());
+            }
+            if (layoutNames.contains("owner_name")) {
+                jsonInformationData.addProperty("owner_name", editText_ownerName.getText().toString().trim());
+            }
+            if (layoutNames.contains("business_type")) {
+                jsonInformationData.addProperty("business_type_id", regModel.getBusinessId());
+                jsonInformationData.addProperty("business_type", regModel.getBusinessType());
+            }
+            if (layoutNames.contains("mobile_number")) {
+                jsonInformationData.addProperty("mobile_number", editText_phnNo.getText().toString().trim());
+            }
+            if (layoutNames.contains("district")) {
+                jsonInformationData.addProperty("district", regModel.getDistrict());
+            }
+            if (layoutNames.contains("thana")) {
+                jsonInformationData.addProperty("district", regModel.getDistrict());
+                jsonInformationData.addProperty("thana", regModel.getThanaName());
+            }
+            if (layoutNames.contains("post_code")) {
+                jsonInformationData.addProperty("district", regModel.getDistrict());
+                jsonInformationData.addProperty("thana", regModel.getThanaName());
+                jsonInformationData.addProperty("post_office_id", regModel.getPostcodeId());
+                jsonInformationData.addProperty("post_code", regModel.getPostcodeName());
+            }
+            if (layoutNames.contains("landmark")) {
+                jsonInformationData.addProperty("landmark", editText_landmark.getText().toString().trim());
+            }
+
+            if (layoutNames.contains("nid_img")) {
+                jsonInformationData.addProperty("nidNumber", regModel.getNidNumber());
+                jsonInformationData.addProperty("nidName", regModel.getNidName());
+                jsonInformationData.addProperty("nidMotherName", regModel.getNidMotherName());
+                jsonInformationData.addProperty("nidBirthday", regModel.getNidBirthday());
+                jsonInformationData.addProperty("nidAddress", regModel.getNidAddress());
+                jsonInformationData.addProperty("nidFatherName", regModel.getNidFatherName());
+            }
+
+            if (layoutNames.contains("smartCardFrontPic")) {
+                jsonInformationData.addProperty("smartCardNumber", regModel.getSmartCardNumber());
+                jsonInformationData.addProperty("smartCardName", regModel.getSmartCardName());
+                jsonInformationData.addProperty("smartCardFatherName", regModel.getSmartCardFatherName());
+                jsonInformationData.addProperty("smartCardMotherName", regModel.getSmartCardMotherName());
+                jsonInformationData.addProperty("smartCardBirthday", regModel.getSmartCardBirthday());
+                jsonInformationData.addProperty("smartCardAddress", regModel.getSmartCardAddress());
+            }
 
 
-    private class RetailerMissingAsync extends AsyncTask<String, Integer, String> {
+            JsonObject imageData = new JsonObject();
+            //add data
+            JsonObject rootJsonObject = new JsonObject();
+            rootJsonObject.addProperty("imei", imeiOne);
+            rootJsonObject.addProperty("alternate_imei", imeiTwo);
+            rootJsonObject.add("informationData", jsonInformationData);
+            if (layoutNames.contains("outlet_img")) {
+                imageData.addProperty("outlet_img", regModel.getOutletImage());
+            }
+            if (layoutNames.contains("nid_img")) {
+                imageData.addProperty("nid_img", regModel.getNidFront());
+            }
+            if (layoutNames.contains("nid_back_img")) {
+                imageData.addProperty("nid_back_img", regModel.getNidBack());
+            }
+
+            if (layoutNames.contains("smartCardFrontPic")) {
+                imageData.addProperty("smartCardFrontPic", regModel.getSmartCardFront());
+            }
+
+            if (layoutNames.contains("smartCardBackPic")) {
+                imageData.addProperty("smartCardBackPic", regModel.getSmartCardBack());
+            }
+
+            if (layoutNames.contains("informationData")) {
+                imageData.addProperty("owner_img", regModel.getOwnerImage());
+            }
+            if (layoutNames.contains("trade_license_img")) {
+                imageData.addProperty("trade_license_img", regModel.getTradeLicense());
+            }
+            if (layoutNames.contains("image_passport")) {
+                imageData.addProperty("image_passport", regModel.getPassport());
+            }
+            if (layoutNames.contains("birth_certificate_img")) {
+                imageData.addProperty("birth_certificate_img", regModel.getBirthCertificate());
+            }
+            if (layoutNames.contains("driving_license_imege")) {
+                imageData.addProperty("driving_license_imege", regModel.getDrivingLicense());
+            }
+            if (layoutNames.contains("visiting_card_img")) {
+                imageData.addProperty("visiting_card_img", regModel.getVisitingCard());
+            }
+
+            rootJsonObject.add("img", imageData);
 
 
-        @Override
-        protected void onPreExecute() {
             showProgressDialog();
-        }
 
-        @Override
-        protected String doInBackground(String... data) {
 
-            String responseTxt = null;
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(data[0]);
-            try {
-                TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(MissingMainActivity.this);
-                String imeiOne = telephonyInfo.getImeiSIM1();
-                String imeiTwo = telephonyInfo.getImeiSIM2();
+            ApiUtils.getAPIServicePHP7().unverifiedDataCollectAndUpdate(rootJsonObject).enqueue(new Callback<ResponseBody>() {
 
-                JSONObject jsonInformationData = new JSONObject();
-                try {
-                    if (layoutNames.contains("outlet_name")) {
-                        jsonInformationData.put("outlet_name", editText_outletName.getText().toString().trim());
-                    }
-                    if (layoutNames.contains("outlet_address")) {
-                        jsonInformationData.put("outlet_address", editText_address.getText().toString().trim());
-                    }
-                    if (layoutNames.contains("owner_name")) {
-                        jsonInformationData.put("owner_name", editText_ownerName.getText().toString().trim());
-                    }
-                    if (layoutNames.contains("business_type")) {
-                        jsonInformationData.put("business_type_id", regModel.getBusinessId());
-                        jsonInformationData.put("business_type", regModel.getBusinessType());
-                    }
-                    if (layoutNames.contains("mobile_number")) {
-                        jsonInformationData.put("mobile_number", editText_phnNo.getText().toString().trim());
-                    }
-                    if (layoutNames.contains("district")) {
-                        jsonInformationData.put("district", regModel.getDistrict());
-                    }
-                    if (layoutNames.contains("thana")) {
-                        jsonInformationData.put("district", regModel.getDistrict());
-                        jsonInformationData.put("thana", regModel.getThanaName());
-                    }
-                    if (layoutNames.contains("post_code")) {
-                        jsonInformationData.put("district", regModel.getDistrict());
-                        jsonInformationData.put("thana", regModel.getThanaName());
-                        jsonInformationData.put("post_office_id", regModel.getPostcodeId());
-                        jsonInformationData.put("post_code", regModel.getPostcodeName());
-                    }
-                    if (layoutNames.contains("landmark")) {
-                        jsonInformationData.put("landmark", editText_landmark.getText().toString().trim());
-                    }
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                    if (layoutNames.contains("nid_img")) {
-                        jsonInformationData.put("nidNumber", regModel.getNidNumber());
-                        jsonInformationData.put("nidName", regModel.getNidName());
-                        jsonInformationData.put("nidMotherName", regModel.getNidMotherName());
-                        jsonInformationData.put("nidBirthday", regModel.getNidBirthday());
-                        jsonInformationData.put("nidAddress", regModel.getNidAddress());
-                        jsonInformationData.put("nidFatherName", regModel.getNidFatherName());
+                    dismissProgressDialog();
+                    try {
+                        String result = null;
+                        result = response.body().string();
+
+                        JSONObject jsonObject = new JSONObject(result);
+                        String status = jsonObject.getString("status");
+                        if (status.equals("200")) {
+                            String msg = jsonObject.getString("message");
+                            AlertDialog.Builder builder = new AlertDialog.Builder(MissingMainActivity.this);
+                            builder.setTitle("Status");
+                            builder.setMessage(msg);
+                            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int id) {
+                                    Intent intent = getBaseContext().getPackageManager()
+                                            .getLaunchIntentForPackage(getBaseContext().getPackageName());
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
+                            AlertDialog alert = builder.create();
+                            alert.show();
+                        } else {
+                            String msg = jsonObject.getString("message");
+                            AlertDialog.Builder builder = new AlertDialog.Builder(MissingMainActivity.this);
+                            builder.setTitle("Status");
+                            builder.setMessage(msg);
+                            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int id) {
+                                    dialogInterface.dismiss();
+                                }
+                            });
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
+                        }
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                        Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                        View snackBarView = snackbar.getView();
+                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                        snackbar.show();
                     }
 
-                    if (layoutNames.contains("smartCardFrontPic")) {
-                        jsonInformationData.put("smartCardNumber", regModel.getSmartCardNumber());
-                        jsonInformationData.put("smartCardName", regModel.getSmartCardName());
-                        jsonInformationData.put("smartCardFatherName", regModel.getSmartCardFatherName());
-                        jsonInformationData.put("smartCardMotherName", regModel.getSmartCardMotherName());
-                        jsonInformationData.put("smartCardBirthday", regModel.getSmartCardBirthday());
-                        jsonInformationData.put("smartCardAddress", regModel.getSmartCardAddress());
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                 }
 
-                //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<>();
-                nameValuePairs.add(new BasicNameValuePair("imei", imeiOne));
-                nameValuePairs.add(new BasicNameValuePair("alternate_imei", imeiTwo));
-                nameValuePairs.add(new BasicNameValuePair("informationData", jsonInformationData.toString()));
-                if (layoutNames.contains("outlet_img")) {
-                    nameValuePairs.add(new BasicNameValuePair("outlet_img", regModel.getOutletImage()));
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    dismissProgressDialog();
+                    Toast.makeText(MissingMainActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
                 }
-                if (layoutNames.contains("nid_img")) {
-                    nameValuePairs.add(new BasicNameValuePair("nid_img", regModel.getNidFront()));
-                }
-                if (layoutNames.contains("nid_back_img")) {
-                    nameValuePairs.add(new BasicNameValuePair("nid_back_img", regModel.getNidBack()));
-                }
+            });
 
-                if (layoutNames.contains("smartCardFrontPic")) {
-                    nameValuePairs.add(new BasicNameValuePair("smartCardFrontPic", regModel.getSmartCardFront()));
-                }
 
-                if (layoutNames.contains("smartCardBackPic")) {
-                    nameValuePairs.add(new BasicNameValuePair("smartCardBackPic", regModel.getSmartCardBack()));
-                }
-
-                if (layoutNames.contains("informationData")) {
-                    nameValuePairs.add(new BasicNameValuePair("owner_img", regModel.getOwnerImage()));
-                }
-                if (layoutNames.contains("trade_license_img")) {
-                    nameValuePairs.add(new BasicNameValuePair("trade_license_img", regModel.getTradeLicense()));
-                }
-                if (layoutNames.contains("image_passport")) {
-                    nameValuePairs.add(new BasicNameValuePair("image_passport", regModel.getPassport()));
-                }
-                if (layoutNames.contains("birth_certificate_img")) {
-                    nameValuePairs.add(new BasicNameValuePair("birth_certificate_img", regModel.getBirthCertificate()));
-                }
-                if (layoutNames.contains("driving_license_imege")) {
-                    nameValuePairs.add(new BasicNameValuePair("driving_license_imege", regModel.getDrivingLicense()));
-                }
-                if (layoutNames.contains("visiting_card_img")) {
-                    nameValuePairs.add(new BasicNameValuePair("visiting_card_img", regModel.getVisitingCard()));
-                }
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-
-            if (result != null) {
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String status = jsonObject.getString("status");
-                    if (status.equals("200")) {
-                        String msg = jsonObject.getString("message");
-                        AlertDialog.Builder builder = new AlertDialog.Builder(MissingMainActivity.this);
-                        builder.setTitle("Status");
-                        builder.setMessage(msg);
-                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int id) {
-                                Intent intent = getBaseContext().getPackageManager()
-                                        .getLaunchIntentForPackage(getBaseContext().getPackageName());
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-                                finish();
-                            }
-                        });
-                        AlertDialog alert = builder.create();
-                        alert.show();
-                    } else {
-                        String msg = jsonObject.getString("message");
-                        AlertDialog.Builder builder = new AlertDialog.Builder(MissingMainActivity.this);
-                        builder.setTitle("Status");
-                        builder.setMessage(msg);
-                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int id) {
-                                dialogInterface.dismiss();
-                            }
-                        });
-                        AlertDialog alertDialog = builder.create();
-                        alertDialog.show();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-            } else {
-                Snackbar snackbar = Snackbar.make(scrollView, R.string.services_off_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
+        } catch (Exception e) {
+            Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+            View snackBarView = snackbar.getView();
+            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+            snackbar.show();
         }
     }
+
+
+//    private class RetailerMissingAsync extends AsyncTask<String, Integer, String> {
+//
+//
+//        @Override
+//        protected void onPreExecute() {
+//            showProgressDialog();
+//        }
+//
+//        @Override
+//        protected String doInBackground(String... data) {
+//
+//            String responseTxt = null;
+//            // Create a new HttpClient and Post Header
+//            HttpClient httpclient = new DefaultHttpClient();
+//            HttpPost httppost = new HttpPost(data[0]);
+//            try {
+//                TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(MissingMainActivity.this);
+//                String imeiOne = telephonyInfo.getImeiSIM1();
+//                String imeiTwo = telephonyInfo.getImeiSIM2();
+//
+//                JSONObject jsonInformationData = new JSONObject();
+//                try {
+//                    if (layoutNames.contains("outlet_name")) {
+//                        jsonInformationData.put("outlet_name", editText_outletName.getText().toString().trim());
+//                    }
+//                    if (layoutNames.contains("outlet_address")) {
+//                        jsonInformationData.put("outlet_address", editText_address.getText().toString().trim());
+//                    }
+//                    if (layoutNames.contains("owner_name")) {
+//                        jsonInformationData.put("owner_name", editText_ownerName.getText().toString().trim());
+//                    }
+//                    if (layoutNames.contains("business_type")) {
+//                        jsonInformationData.put("business_type_id", regModel.getBusinessId());
+//                        jsonInformationData.put("business_type", regModel.getBusinessType());
+//                    }
+//                    if (layoutNames.contains("mobile_number")) {
+//                        jsonInformationData.put("mobile_number", editText_phnNo.getText().toString().trim());
+//                    }
+//                    if (layoutNames.contains("district")) {
+//                        jsonInformationData.put("district", regModel.getDistrict());
+//                    }
+//                    if (layoutNames.contains("thana")) {
+//                        jsonInformationData.put("district", regModel.getDistrict());
+//                        jsonInformationData.put("thana", regModel.getThanaName());
+//                    }
+//                    if (layoutNames.contains("post_code")) {
+//                        jsonInformationData.put("district", regModel.getDistrict());
+//                        jsonInformationData.put("thana", regModel.getThanaName());
+//                        jsonInformationData.put("post_office_id", regModel.getPostcodeId());
+//                        jsonInformationData.put("post_code", regModel.getPostcodeName());
+//                    }
+//                    if (layoutNames.contains("landmark")) {
+//                        jsonInformationData.put("landmark", editText_landmark.getText().toString().trim());
+//                    }
+//
+//                    if (layoutNames.contains("nid_img")) {
+//                        jsonInformationData.put("nidNumber", regModel.getNidNumber());
+//                        jsonInformationData.put("nidName", regModel.getNidName());
+//                        jsonInformationData.put("nidMotherName", regModel.getNidMotherName());
+//                        jsonInformationData.put("nidBirthday", regModel.getNidBirthday());
+//                        jsonInformationData.put("nidAddress", regModel.getNidAddress());
+//                        jsonInformationData.put("nidFatherName", regModel.getNidFatherName());
+//                    }
+//
+//                    if (layoutNames.contains("smartCardFrontPic")) {
+//                        jsonInformationData.put("smartCardNumber", regModel.getSmartCardNumber());
+//                        jsonInformationData.put("smartCardName", regModel.getSmartCardName());
+//                        jsonInformationData.put("smartCardFatherName", regModel.getSmartCardFatherName());
+//                        jsonInformationData.put("smartCardMotherName", regModel.getSmartCardMotherName());
+//                        jsonInformationData.put("smartCardBirthday", regModel.getSmartCardBirthday());
+//                        jsonInformationData.put("smartCardAddress", regModel.getSmartCardAddress());
+//                    }
+//
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                    Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+//                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+//                    View snackBarView = snackbar.getView();
+//                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+//                }
+//
+//
+//                JSONObject imageData = new JSONObject();
+//                //add data
+//                JSONObject rootJsonObject = new JSONObject();
+//                rootJsonObject.put("imei", imeiOne);
+//                rootJsonObject.put("alternate_imei", imeiTwo);
+//                rootJsonObject.put("informationData", jsonInformationData.toString());
+//                if (layoutNames.contains("outlet_img")) {
+//                    imageData.put("outlet_img", regModel.getOutletImage());
+//                }
+//                if (layoutNames.contains("nid_img")) {
+//                    imageData.put("nid_img", regModel.getNidFront());
+//                }
+//                if (layoutNames.contains("nid_back_img")) {
+//                    imageData.put("nid_back_img", regModel.getNidBack());
+//                }
+//
+//                if (layoutNames.contains("smartCardFrontPic")) {
+//                    imageData.put("smartCardFrontPic", regModel.getSmartCardFront());
+//                }
+//
+//                if (layoutNames.contains("smartCardBackPic")) {
+//                    imageData.put("smartCardBackPic", regModel.getSmartCardBack());
+//                }
+//
+//                if (layoutNames.contains("informationData")) {
+//                    imageData.put("owner_img", regModel.getOwnerImage());
+//                }
+//                if (layoutNames.contains("trade_license_img")) {
+//                    imageData.put("trade_license_img", regModel.getTradeLicense());
+//                }
+//                if (layoutNames.contains("image_passport")) {
+//                    imageData.put("image_passport", regModel.getPassport());
+//                }
+//                if (layoutNames.contains("birth_certificate_img")) {
+//                    imageData.put("birth_certificate_img", regModel.getBirthCertificate());
+//                }
+//                if (layoutNames.contains("driving_license_imege")) {
+//                    imageData.put("driving_license_imege", regModel.getDrivingLicense());
+//                }
+//                if (layoutNames.contains("visiting_card_img")) {
+//                    imageData.put("visiting_card_img", regModel.getVisitingCard());
+//                }
+//
+//                rootJsonObject.put("img", imageData.toString());
+//                httppost.setEntity(new StringEntity( new Gson().toJson(rootJsonObject.toString())));
+//
+//                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+//                responseTxt = httpclient.execute(httppost, responseHandler);
+//            } catch (Exception e) {
+//                e.fillInStackTrace();
+//                Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+//                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+//                View snackBarView = snackbar.getView();
+//                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+//                snackbar.show();
+//            }
+//            return responseTxt;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            dismissProgressDialog();
+//
+//            if (result != null) {
+//                try {
+//                    JSONObject jsonObject = new JSONObject(result);
+//                    String status = jsonObject.getString("status");
+//                    if (status.equals("200")) {
+//                        String msg = jsonObject.getString("message");
+//                        AlertDialog.Builder builder = new AlertDialog.Builder(MissingMainActivity.this);
+//                        builder.setTitle("Status");
+//                        builder.setMessage(msg);
+//                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialogInterface, int id) {
+//                                Intent intent = getBaseContext().getPackageManager()
+//                                        .getLaunchIntentForPackage(getBaseContext().getPackageName());
+//                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                                startActivity(intent);
+//                                finish();
+//                            }
+//                        });
+//                        AlertDialog alert = builder.create();
+//                        alert.show();
+//                    } else {
+//                        String msg = jsonObject.getString("message");
+//                        AlertDialog.Builder builder = new AlertDialog.Builder(MissingMainActivity.this);
+//                        builder.setTitle("Status");
+//                        builder.setMessage(msg);
+//                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialogInterface, int id) {
+//                                dialogInterface.dismiss();
+//                            }
+//                        });
+//                        AlertDialog alertDialog = builder.create();
+//                        alertDialog.show();
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                    Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+//                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+//                    View snackBarView = snackbar.getView();
+//                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+//                    snackbar.show();
+//                }
+//            } else {
+//                Snackbar snackbar = Snackbar.make(scrollView, R.string.services_off_msg, Snackbar.LENGTH_LONG);
+//                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+//                View snackBarView = snackbar.getView();
+//                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+//                snackbar.show();
+//            }
+//        }
+//    }
 
     @Override
     public void onBackPressed() {

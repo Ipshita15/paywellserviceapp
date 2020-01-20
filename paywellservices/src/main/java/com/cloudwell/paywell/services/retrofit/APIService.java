@@ -385,6 +385,12 @@ public interface APIService {
 
 
 
+    @POST("PaywellUserRegistration/unverifiedDataUpdate")
+    Call<ResponseBody> unverifiedDataCollectAndUpdate( @Body JsonObject body);
+
+
+
+
 }
 
 
