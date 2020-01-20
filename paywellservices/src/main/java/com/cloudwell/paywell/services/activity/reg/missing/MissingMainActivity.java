@@ -1084,9 +1084,8 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
             case "1":
                 btPicOutlet.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 btPicOutlet.setCompoundDrawablePadding(100);
-                if (regModel != null) {
-                    regModel.setOutletImage(strBuild);
-                }
+                regModel.setOutletImage(strBuild);
+
                 break;
             case "2":
                 break;
@@ -1489,7 +1488,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 imageData.addProperty("smartCardBackPic", regModel.getSmartCardBack());
             }
 
-            if (layoutNames.contains("informationData")) {
+            if (layoutNames.contains("owner_img")) {
                 imageData.addProperty("owner_img", regModel.getOwnerImage());
             }
             if (layoutNames.contains("trade_license_img")) {
