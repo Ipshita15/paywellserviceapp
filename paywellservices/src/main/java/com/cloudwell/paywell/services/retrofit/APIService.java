@@ -30,6 +30,8 @@ import com.cloudwell.paywell.services.activity.refill.model.DistrictData;
 import com.cloudwell.paywell.services.activity.refill.model.RefillRequestData;
 import com.cloudwell.paywell.services.activity.refill.nagad.model.ResTranstionINquiry;
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLog;
+import com.cloudwell.paywell.services.activity.reg.model.AuthRequestModel;
+import com.cloudwell.paywell.services.activity.reg.model.RegistrationModel;
 import com.cloudwell.paywell.services.activity.topup.model.RequestTopup;
 import com.cloudwell.paywell.services.activity.topup.model.TopupReposeData;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoBillPaySubmit;
@@ -393,6 +395,20 @@ public interface APIService {
     @POST
     Call<DescoPrepaidTrxLogResponse> descoPrepaidTrxInquiry(@Body DescoPrepaidTrxLogRequest descoPrepaidTrxLogRequest,
                                                             @Url String url);
+
+
+    @POST("PaywellUserRegistration/userInformationForRegistration")
+    Call<ResponseBody> userInformationForRegistration(@Body RegistrationModel regModel);
+
+
+    @POST("PaywelltransactionRetailer/userServiceProfiling")
+    Call<ResponseBody> userServiceProfiling(@Body AuthRequestModel regModel);
+
+
+
+    @POST("PaywellUserRegistration/unverifiedDataUpdate")
+    Call<ResponseBody> unverifiedDataCollectAndUpdate( @Body JsonObject body);
+
 
 
 

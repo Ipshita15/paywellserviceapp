@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:card_view="http://schemas.android.com/apk/res-auto"
-              android:id="@+id/wasaLinearLayout"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/wasaLinearLayout"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@drawable/layout_background"
@@ -76,40 +77,63 @@
                         android:inputType="numberPassword"
                         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linearLayout25"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_marginRight="@dimen/activity_horizontal_margin"
                         android:layout_marginTop="@dimen/activity_horizontal_margin"
-                        android:orientation="horizontal">
+                        android:layout_marginRight="@dimen/activity_horizontal_margin">
 
                         <TextView
+                            android:id="@+id/textView53"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/star_sign"
-                            android:textColor="#FF4719"/>
+                            android:textColor="#FF4719"
+                            card_view:layout_constraintBottom_toBottomOf="parent"
+                            card_view:layout_constraintStart_toStartOf="parent"
+                            card_view:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:id="@+id/tvWasaBill"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingEnd="2dp"
-                            android:paddingLeft="2dp"
-                            android:paddingRight="2dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
                             android:paddingStart="2dp"
+                            android:paddingLeft="2dp"
+                            android:paddingEnd="2dp"
+                            android:paddingRight="2dp"
                             android:text="@string/bill_no_des"
-                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            card_view:layout_constraintBottom_toBottomOf="parent"
+                            card_view:layout_constraintStart_toEndOf="@+id/imageView_info"
+                            card_view:layout_constraintTop_toTopOf="parent"
+                            card_view:layout_constraintVertical_bias="0.0" />
 
                         <ImageView
                             android:id="@+id/imageView_info"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
                             android:background="@drawable/ic_info"
-                            android:contentDescription="@string/bell_msg"/>
-                    </LinearLayout>
+                            android:contentDescription="@string/bell_msg"
+                            card_view:layout_constraintBottom_toBottomOf="parent"
+                            card_view:layout_constraintStart_toStartOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/ivOcrScan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            card_view:layout_constraintBottom_toBottomOf="parent"
+                            card_view:layout_constraintEnd_toEndOf="parent"
+                            card_view:layout_constraintTop_toTopOf="parent"
+                            card_view:srcCompat="@drawable/ocr_scanner" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                         android:id="@+id/wasa_bill"

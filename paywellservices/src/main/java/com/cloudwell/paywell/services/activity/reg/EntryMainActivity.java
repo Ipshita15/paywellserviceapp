@@ -32,6 +32,10 @@ public class EntryMainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entry_main);
 
+        if (regModel == null){
+
+            regModel = new RegistrationModel();
+        }
 
         AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mAppHandler.setAppLanguage("bn");
