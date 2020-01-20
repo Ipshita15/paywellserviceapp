@@ -20,9 +20,7 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
-import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionRechargeActivity;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.DESCOHistory;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.DPDCHistory;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.model.DPDCHistory;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;

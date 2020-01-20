@@ -9,7 +9,8 @@ import android.widget.Button;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
 import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionMainActivity;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.DESCOMainActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.DescoMainActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidMainActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCMainActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.wasa.WASAMainActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.westzone.WZPDCLMainActivity;
@@ -89,7 +90,7 @@ public class UtilityMainActivity extends AppCompatActivity {
         switch (v.getId()) {
             case R.id.homeBtnDESCO:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_MENU);
-                startActivity(new Intent(this, DESCOMainActivity.class));
+                startActivity(new Intent(this, DescoMainActivity.class));
                 break;
             case R.id.homeBtnDPDC:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_DPDC_MENU);

@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.utility.electricity.desco.model
+package com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 2019-11-25.
  */
 @Entity(indices = [Index(value = ["bill_number","payer_phone_number"], unique = true)])
-public class DESCOHistory {
+public class DESCOPrepaidHistory {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "Id")

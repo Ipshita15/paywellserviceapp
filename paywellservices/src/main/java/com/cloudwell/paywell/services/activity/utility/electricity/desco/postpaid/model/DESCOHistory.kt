@@ -8,8 +8,8 @@ import androidx.room.PrimaryKey
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 2019-11-25.
  */
-@Entity(indices = [Index(value = ["bill_number","payer_phone_number","location"], unique = true)])
-public class DPDCHistory {
+@Entity(indices = [Index(value = ["bill_number","payer_phone_number"], unique = true)])
+public class DESCOHistory {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "Id")
@@ -20,9 +20,6 @@ public class DPDCHistory {
 
     @ColumnInfo(name = "payer_phone_number")
     var payerPhoneNumber: String = ""
-
-    @ColumnInfo(name = "location")
-    var location: String = ""
 
     @ColumnInfo(name = "date")
     var date: String = ""

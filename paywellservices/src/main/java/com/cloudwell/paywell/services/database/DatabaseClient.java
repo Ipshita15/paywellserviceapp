@@ -68,12 +68,25 @@ public class DatabaseClient {
         }
     };
 
-    private static final Migration MIGRATION_1_5 = new Migration(1, 5) {
+
+
+
+    private static final Migration MIGRATION_5_6 = new Migration(5, 6) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE IF NOT EXISTS `DESCOPrepaidHistory` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `bill_number` TEXT NOT NULL, `payer_phone_number` TEXT NOT NULL, `date` TEXT NOT NULL)");
+            database.execSQL("CREATE UNIQUE INDEX `index_DESCOPrepaidHistory_bill_number_payer_phone_number` ON `DESCOPrepaidHistory` (`bill_number`, `payer_phone_number`)");
+        }
+    };
+
+
+    private static final Migration MIGRATION_1_6 = new Migration(1, 6) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             updateMigration(database);
         }
     };
+
 
     private static void updateMigration(SupportSQLiteDatabase database) {
         Log.e("migrate", "Start");
@@ -115,6 +128,9 @@ public class DatabaseClient {
         database.execSQL("CREATE TABLE IF NOT EXISTS `KarnaphuliHistory` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `bill_number` TEXT NOT NULL, `payer_phone_number` TEXT NOT NULL, `date` TEXT NOT NULL)");
         database.execSQL("CREATE UNIQUE INDEX `index_KarnaphuliHistory_bill_number_payer_phone_number` ON `KarnaphuliHistory` (`bill_number`, `payer_phone_number`)");
 
+        database.execSQL("CREATE TABLE IF NOT EXISTS `DESCOPrepaidHistory` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `bill_number` TEXT NOT NULL, `payer_phone_number` TEXT NOT NULL, `date` TEXT NOT NULL)");
+        database.execSQL("CREATE UNIQUE INDEX `index_DESCOPrepaidHistory_bill_number_payer_phone_number` ON `DESCOPrepaidHistory` (`bill_number`, `payer_phone_number`)");
+
         Log.e("migrate", "END");
     }
 
@@ -133,7 +149,7 @@ public class DatabaseClient {
         //creating the app database with Room database builder
         //MyToDos is the name of the database
         appDatabase = Room.databaseBuilder(mCtx, AppDatabase.class, DatabaseConstant.KEY_PARNELL_DATABASE_NAME)
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4,MIGRATION_4_5, MIGRATION_1_5)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4,MIGRATION_4_5,MIGRATION_5_6, MIGRATION_1_6)
                 .build();
     }
 }

@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.utility.electricity.desco;
+package com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -38,7 +38,7 @@ import java.util.List;
 
 import androidx.appcompat.app.AppCompatDialog;
 
-public class DESCOMainActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
+public class DESCOPostpaidMainActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
 
     private RelativeLayout mRelativeLayout;
     RadioButton radioButton_five, radioButton_ten, radioButton_twenty, radioButton_fifty, radioButton_hundred, radioButton_twoHundred;
@@ -53,7 +53,7 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_utility_desco);
+            getSupportActionBar().setTitle(R.string.desco_postpaid_string);
         }
 
         mRelativeLayout = findViewById(R.id.relativeLayout);
@@ -94,7 +94,7 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
         switch (v.getId()) {
             case R.id.homeBtnBillPay:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_DESCO_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_BILL_PAY);
-                startActivity(new Intent(this, DESCOBillPayActivity.class));
+                startActivity(new Intent(this, DESCOPostpaidBillPayActivity.class));
                 break;
             case R.id.homeBtnInquiry:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_DESCO_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_BILL_PAY_INQUIRY);
@@ -244,7 +244,7 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
         protected String doInBackground(String... params) {
             String responseTxt = null;
 
-            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(DESCOMainActivity.this).getRID());
+            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
             // Create a new HttpClient and Post Header
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(params[0]);
@@ -272,8 +272,8 @@ public class DESCOMainActivity extends BaseActivity implements CompoundButton.On
         protected void onPostExecute(String result) {
             dismissProgressDialog();
             if (result != null) {
-                DESCOInquiryActivity.TRANSLOG_TAG = result;
-                startActivity(new Intent(DESCOMainActivity.this, DESCOInquiryActivity.class));
+                DESCOPostpaidInquiryActivity.TRANSLOG_TAG = result;
+                startActivity(new Intent(DESCOPostpaidMainActivity.this, DESCOPostpaidInquiryActivity.class));
             } else {
                 Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                 snackbar.setActionTextColor(Color.parseColor("#ffffff"));

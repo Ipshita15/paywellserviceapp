@@ -1,5 +1,6 @@
 package com.cloudwell.paywell.services.utils;
 
+import java.nio.ByteBuffer;
 import java.util.UUID;
 
 /**
@@ -13,7 +14,10 @@ public class UniqueKeyGenerator {
 
     public static String getRandomIntegerBetweenRange(){
         UUID uuid = UUID.randomUUID();
-        return uuid.toString();
+//        return uuid.toString();
+
+        long l = ByteBuffer.wrap(uuid.toString().getBytes()).getLong();
+        return Long.toString(l, Character.MAX_RADIX);
     }
 
     public static String getUniqueKey(String rid){

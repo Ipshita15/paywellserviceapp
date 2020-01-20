@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.utility.electricity.desco;
+package com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -18,8 +18,8 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
-import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionRechargeActivity;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.DESCOHistory;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.model.DESCOHistory;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.model.DESCOHistory;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
@@ -50,7 +50,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 
-public class DESCOBillPayActivity extends BaseActivity implements View.OnClickListener {
+public class DESCOPostpaidBillPayActivity extends BaseActivity implements View.OnClickListener {
 
     private static final int REQUEST_CODE_OCR = 1001;
     private ConnectionDetector mCd;
@@ -169,7 +169,7 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
             protected void onPostExecute(Void list) {
                 super.onPostExecute(list);
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(DESCOBillPayActivity.this, android.R.layout.select_dialog_item, billNumberList);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(DESCOPostpaidBillPayActivity.this, android.R.layout.select_dialog_item, billNumberList);
                 etBill.setThreshold(1);
                 etBill.setAdapter(adapter);
                 etBill.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -180,7 +180,7 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
                 });
 
 
-                ArrayAdapter<String> adapterPhone = new ArrayAdapter<String>(DESCOBillPayActivity.this, android.R.layout.select_dialog_item, payeerNumberList);
+                ArrayAdapter<String> adapterPhone = new ArrayAdapter<String>(DESCOPostpaidBillPayActivity.this, android.R.layout.select_dialog_item, payeerNumberList);
                 etPhn.setThreshold(1);
                 etPhn.setAdapter(adapterPhone);
                 etPhn.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -259,7 +259,7 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
         protected String doInBackground(String... data) {
             String responseTxt = null;
 
-            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(DESCOBillPayActivity.this).getRID());
+            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
             // Create a new HttpClient and Post Header
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(data[0]);
@@ -271,7 +271,7 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
                 nameValuePairs.add(new BasicNameValuePair("password", mPin));
                 nameValuePairs.add(new BasicNameValuePair("billNo", mBill));
                 nameValuePairs.add(new BasicNameValuePair("payerMobileNo", mPhn));
-                nameValuePairs.add(new BasicNameValuePair("service_type", "DESCO_Enquiry"));
+                nameValuePairs.add(new BasicNameValuePair("service_type", "DESCO_Postpaid"));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
                 nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -303,7 +303,7 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
                         String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
                         String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
                         if (!mTotalAmount.equals("0")) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(DESCOBillPayActivity.this);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(DESCOPostpaidBillPayActivity.this);
                             builder.setTitle("Result");
                             builder.setMessage(msg_text + "\n\n" + getString(R.string.phone_no_des) + " " + mPhn + "\n\nPayWell Trx ID: " + trx_id);
                             builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
@@ -323,7 +323,7 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
                             alert.setCanceledOnTouchOutside(true);
                             alert.show();
                         } else {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(DESCOBillPayActivity.this);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(DESCOPostpaidBillPayActivity.this);
                             builder.setTitle("Result");
                             builder.setMessage(msg_text + "\n\n" + getString(R.string.phone_no_des) + " " + mPhn + "\n\nPayWell Trx ID: " + trx_id);
                             builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
@@ -343,7 +343,7 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
                         String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
                         String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(DESCOBillPayActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(DESCOPostpaidBillPayActivity.this);
                         builder.setMessage(msg + "\n" + msg_text + "\nPayWell Trx ID: " + trx_id);
                         builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
                             @Override
@@ -394,6 +394,7 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
         @Override
         protected String doInBackground(String... data) {
             String responseTxt = null;
+            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
             // Create a new HttpClient and Post Header
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(data[0]);
@@ -409,6 +410,7 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
                 nameValuePairs.add(new BasicNameValuePair("transId", mTrxId));
                 nameValuePairs.add(new BasicNameValuePair("totalAmount", mTotalAmount));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
+                nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
@@ -451,7 +453,7 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
                         String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
                         String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(DESCOBillPayActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(DESCOPostpaidBillPayActivity.this);
                         builder.setTitle("Result");
                         builder.setMessage(msg_text + "\nPayWell Trx ID: " + trx_id);
                         builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
@@ -473,7 +475,7 @@ public class DESCOBillPayActivity extends BaseActivity implements View.OnClickLi
                         String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
                         String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(DESCOBillPayActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(DESCOPostpaidBillPayActivity.this);
                         builder.setMessage(msg + "\n" + msg_text + "\nPayWell Trx ID: " + trx_id);
                         builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
                             @Override
