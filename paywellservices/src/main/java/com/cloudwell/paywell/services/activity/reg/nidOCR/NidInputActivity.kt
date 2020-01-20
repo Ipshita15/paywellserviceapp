@@ -184,10 +184,14 @@ class NidInputActivity: LanguagesBaseActivity(), IInputNidListener {
 
     override fun setDefaultNIDImagInFirstNIDView() {
         ivNidFirst.setImageResource(R.drawable.nid)
+        ivForntSeleted.visibility = View.GONE
+
     }
 
     override fun setDefaultNIDImagInSecondNIDView() {
         ivNidSecound.setImageResource(R.drawable.nid)
+        ivBackSeleted.visibility = View.GONE
+
 
     }
 
