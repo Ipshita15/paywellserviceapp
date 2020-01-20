@@ -14,12 +14,17 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.reg.EntryMainActivity;
 import com.cloudwell.paywell.services.activity.reg.missing.MissingMainActivity;
+import com.cloudwell.paywell.services.activity.reg.model.AuthRequestModel;
+import com.cloudwell.paywell.services.activity.reg.model.RegistrationModel;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.TelephonyInfo;
 import com.google.android.material.snackbar.Snackbar;
@@ -40,11 +45,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class AppLoadingActivity extends AppCompatActivity {
+import static com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regModel;
+
+public class AppLoadingActivity extends BaseActivity {
     private static final String TAG = AppLoadingActivity.class.getName();
     private static final int REQUEST_PHONE_STATE = 1;
     private ProgressBar mPBAppLoading;
@@ -179,7 +189,9 @@ public class AppLoadingActivity extends AppCompatActivity {
             TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(this);
             mImeiNo = telephonyInfo.getImeiSIM1();
             mAppHandler.setImeiNo(mImeiNo);
-            new AuthAsync().execute(getResources().getString(R.string.pw_auth), "" + getVersionName());
+//            new AuthAsync().execute(getResources().getString(R.string.pw_auth), "" + getVersionName());
+
+            authAsync();
         }
     }
 
@@ -217,145 +229,6 @@ public class AppLoadingActivity extends AppCompatActivity {
         return versionName; // Found the code!
     }
 
-    @SuppressWarnings("deprecation")
-    private class AuthAsync extends AsyncTask<String, Integer, String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(4);
-                nameValuePairs.add(new BasicNameValuePair("imei_no", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("version_no", params[1]));
-                nameValuePairs.add(new BasicNameValuePair("version_name", androidVersionName));
-                nameValuePairs.add(new BasicNameValuePair("format", "json"));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            try {
-                if (result != null) {
-                    ArrayList<String> imgLink = new ArrayList<>();
-
-                    JSONObject jsonObject = new JSONObject(result);
-                    String status = jsonObject.getString("status");
-                    if (status.equalsIgnoreCase("200")) {
-
-                        mAppHandler.setAppStatus("registered");
-                        String rid = jsonObject.getString("retailer_code");
-                        mAppHandler.setRID(rid);
-
-                        String sme = jsonObject.getString("SME");
-                        String changePinStatus = jsonObject.getString("changePinStatus");
-                        String changePhnStatus = jsonObject.getString("isPhoneVerfied");
-                        String changeBTypeStatus = jsonObject.getString("businessTypeStatus");
-                        String displayPictureCount = jsonObject.getString("displayPictureCount");
-                        mAppHandler.setDisplayPictureCount(Integer.parseInt(displayPictureCount));
-
-                        String mobileNumber = jsonObject.getString("mobile_number");
-                        mAppHandler.setMobileNumber(mobileNumber);
-
-
-                        mAppHandler.displayPictureArray = new String[Integer.parseInt(displayPictureCount)];
-                        JSONArray pictureArrayJson = jsonObject.getJSONArray("imageLink");
-                        mAppHandler.setPictureArrayImageLink(pictureArrayJson.toString());
-
-                        for (int i = 0; i < pictureArrayJson.length(); i++) {
-                            String disImglink = pictureArrayJson.getString(i);
-                            if (disImglink.isEmpty()) {
-                                mAppHandler.displayPictureArray[i] = "";
-                                imgLink.add("");
-                            } else {
-                                mAppHandler.displayPictureArray[i] = disImglink;
-                                imgLink.add(disImglink);
-                            }
-                        }
-                        mAppHandler.setDisplayPictureArrayList(imgLink);
-
-                        if (sme.equalsIgnoreCase("0")) {
-                            mAppHandler.setGatewayId("1");
-                        } else if (sme.equalsIgnoreCase("1")) {
-                            mAppHandler.setGatewayId("4");
-                        }
-
-                        if (!changePinStatus.equalsIgnoreCase("0")) {
-                            mAppHandler.setInitialChangePinStatus("true");
-                        }
-
-                        if (changePhnStatus.equalsIgnoreCase("0")) {
-                            mAppHandler.setPhnNumberVerificationStatus("false");
-                        } else {
-                            mAppHandler.setPhnNumberVerificationStatus("verified");
-                        }
-
-                        if (changeBTypeStatus.equalsIgnoreCase("0")) {
-                            mAppHandler.setMerchantTypeVerificationStatus("false");
-                        } else {
-                            mAppHandler.setMerchantTypeVerificationStatus("verified");
-                        }
-                        mPBAppLoading.setVisibility(View.GONE);
-                        Intent i = new Intent(AppLoadingActivity.this, MainActivity.class);
-                        startActivity(i);
-                        finish();
-                    } else if (status.equalsIgnoreCase("502")) {
-                        mAppHandler.setAppStatus("unregistered");
-                        mPBAppLoading.setVisibility(View.GONE);
-                        Intent intent = new Intent(getApplicationContext(), EntryMainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } else if (status.equalsIgnoreCase("100")) {
-                        mAppHandler.setAppStatus("pending");
-                        mPBAppLoading.setVisibility(View.GONE);
-                        MissingMainActivity.RESPONSE_DETAILS = result;
-                        Intent intent = new Intent(getApplicationContext(), MissingMainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } else if (status.equalsIgnoreCase("309")
-                            || status.equalsIgnoreCase("360")
-                            || status.equalsIgnoreCase("400")) {
-
-                        pendingStr = jsonObject.getString("message");
-                        mPBAppLoading.setVisibility(View.GONE);
-                        Intent intent = new Intent(getApplicationContext(), PendingActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        ActivityCompat.finishAffinity(AppLoadingActivity.this);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        mConErrorMsg.setText(R.string.try_again_msg);
-                        mConErrorMsg.setVisibility(View.VISIBLE);
-                        mBtnRetry.setVisibility(View.VISIBLE);
-                        mPBAppLoading.setVisibility(View.GONE);
-                    }
-                } else {
-                    mConErrorMsg.setText(R.string.conn_timeout_msg);
-                    mConErrorMsg.setVisibility(View.VISIBLE);
-                    mBtnRetry.setVisibility(View.VISIBLE);
-                    mPBAppLoading.setVisibility(View.GONE);
-                }
-            } catch (Exception e) {
-                mConErrorMsg.setText(R.string.try_again_msg);
-                mConErrorMsg.setVisibility(View.VISIBLE);
-                mBtnRetry.setVisibility(View.VISIBLE);
-                mPBAppLoading.setVisibility(View.GONE);
-                e.printStackTrace();
-            }
-        }
-    }
 
     @SuppressWarnings("deprecation")
     private class AuthenticationAsync extends AsyncTask<String, Integer, String> {
@@ -456,6 +329,7 @@ public class AppLoadingActivity extends AppCompatActivity {
                         mAppHandler.setAppStatus("pending");
                         mPBAppLoading.setVisibility(View.GONE);
                         MissingMainActivity.RESPONSE_DETAILS = result;
+                        regModel = new RegistrationModel();
                         Intent intent = new Intent(AppLoadingActivity.this, MissingMainActivity.class);
                         startActivity(intent);
                         finish();
@@ -514,7 +388,8 @@ public class AppLoadingActivity extends AppCompatActivity {
                     if (!mCd.isConnectingToInternet()) {
                         mAppHandler.showDialog(getSupportFragmentManager());
                     } else {
-                        new AuthAsync().execute(getResources().getString(R.string.pw_auth), "" + getVersionName());
+//                        new AuthAsync().execute(getResources().getString(R.string.pw_auth), "" + getVersionName());
+                        authAsync();
                     }
                 } else {
                     Snackbar snackbar = Snackbar.make(mRelativeLayout, "Permission denied", Snackbar.LENGTH_LONG);
@@ -544,4 +419,139 @@ public class AppLoadingActivity extends AppCompatActivity {
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
+
+
+    public void authAsync(){
+        AuthRequestModel m = new AuthRequestModel();
+        m.setUsername(mAppHandler.getImeiNo());
+        m.setAppVersionName(getVersionName());
+        m.setAppVersionNo(androidVersionName);
+
+
+        ApiUtils.getAPIServicePHP7().userServiceProfiling(m).enqueue(new Callback<ResponseBody>() {
+
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                dismissProgressDialog();
+                try {
+                    String result = response.body().string();
+
+                    if (result != null) {
+                        ArrayList<String> imgLink = new ArrayList<>();
+
+                        JSONObject jsonObject = new JSONObject(result);
+                        String status = jsonObject.getString("status");
+                        if (status.equalsIgnoreCase("200")) {
+
+                            mAppHandler.setAppStatus("registered");
+                            String rid = jsonObject.getString("retailer_code");
+                            mAppHandler.setRID(rid);
+
+                            String sme = jsonObject.getString("SME");
+                            String changePinStatus = jsonObject.getString("changePinStatus");
+                            String changePhnStatus = jsonObject.getString("isPhoneVerfied");
+                            String changeBTypeStatus = jsonObject.getString("businessTypeStatus");
+                            String displayPictureCount = jsonObject.getString("displayPictureCount");
+                            mAppHandler.setDisplayPictureCount(Integer.parseInt(displayPictureCount));
+
+                            String mobileNumber = jsonObject.getString("mobile_number");
+                            mAppHandler.setMobileNumber(mobileNumber);
+
+
+                            mAppHandler.displayPictureArray = new String[Integer.parseInt(displayPictureCount)];
+                            JSONArray pictureArrayJson = jsonObject.getJSONArray("imageLink");
+                            mAppHandler.setPictureArrayImageLink(pictureArrayJson.toString());
+
+                            for (int i = 0; i < pictureArrayJson.length(); i++) {
+                                String disImglink = pictureArrayJson.getString(i);
+                                if (disImglink.isEmpty()) {
+                                    mAppHandler.displayPictureArray[i] = "";
+                                    imgLink.add("");
+                                } else {
+                                    mAppHandler.displayPictureArray[i] = disImglink;
+                                    imgLink.add(disImglink);
+                                }
+                            }
+                            mAppHandler.setDisplayPictureArrayList(imgLink);
+
+                            if (sme.equalsIgnoreCase("0")) {
+                                mAppHandler.setGatewayId("1");
+                            } else if (sme.equalsIgnoreCase("1")) {
+                                mAppHandler.setGatewayId("4");
+                            }
+
+                            if (!changePinStatus.equalsIgnoreCase("0")) {
+                                mAppHandler.setInitialChangePinStatus("true");
+                            }
+
+                            if (changePhnStatus.equalsIgnoreCase("0")) {
+                                mAppHandler.setPhnNumberVerificationStatus("false");
+                            } else {
+                                mAppHandler.setPhnNumberVerificationStatus("verified");
+                            }
+
+                            if (changeBTypeStatus.equalsIgnoreCase("0")) {
+                                mAppHandler.setMerchantTypeVerificationStatus("false");
+                            } else {
+                                mAppHandler.setMerchantTypeVerificationStatus("verified");
+                            }
+                            mPBAppLoading.setVisibility(View.GONE);
+                            Intent i = new Intent(AppLoadingActivity.this, MainActivity.class);
+                            startActivity(i);
+                            finish();
+                        } else if (status.equalsIgnoreCase("502")) {
+                            mAppHandler.setAppStatus("unregistered");
+                            mPBAppLoading.setVisibility(View.GONE);
+                            Intent intent = new Intent(getApplicationContext(), EntryMainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else if (status.equalsIgnoreCase("100")) {
+                            mAppHandler.setAppStatus("pending");
+                            mPBAppLoading.setVisibility(View.GONE);
+                            MissingMainActivity.RESPONSE_DETAILS = result;
+                            regModel = new RegistrationModel();
+                            Intent intent = new Intent(getApplicationContext(), MissingMainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else if (status.equalsIgnoreCase("309")
+                                || status.equalsIgnoreCase("360")
+                                || status.equalsIgnoreCase("400")) {
+
+                            pendingStr = jsonObject.getString("message");
+                            mPBAppLoading.setVisibility(View.GONE);
+                            Intent intent = new Intent(getApplicationContext(), PendingActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            ActivityCompat.finishAffinity(AppLoadingActivity.this);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            mConErrorMsg.setText(R.string.try_again_msg);
+                            mConErrorMsg.setVisibility(View.VISIBLE);
+                            mBtnRetry.setVisibility(View.VISIBLE);
+                            mPBAppLoading.setVisibility(View.GONE);
+                        }
+                    } else {
+                        mConErrorMsg.setText(R.string.conn_timeout_msg);
+                        mConErrorMsg.setVisibility(View.VISIBLE);
+                        mBtnRetry.setVisibility(View.VISIBLE);
+                        mPBAppLoading.setVisibility(View.GONE);
+                    }
+                } catch (Exception e) {
+                    mConErrorMsg.setText(R.string.try_again_msg);
+                    mConErrorMsg.setVisibility(View.VISIBLE);
+                    mBtnRetry.setVisibility(View.VISIBLE);
+                    mPBAppLoading.setVisibility(View.GONE);
+                    e.printStackTrace();
+                }
+
+
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+                Toast.makeText(getApplicationContext(), R.string.try_again_msg, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }

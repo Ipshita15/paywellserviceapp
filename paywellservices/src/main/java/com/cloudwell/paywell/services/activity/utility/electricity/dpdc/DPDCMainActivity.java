@@ -307,6 +307,9 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
         }
     }
 
+
+
+
     protected boolean isAppInstalled(String packageName) {
         Intent mIntent = getPackageManager().getLaunchIntentForPackage(packageName);
         if (mIntent != null) {

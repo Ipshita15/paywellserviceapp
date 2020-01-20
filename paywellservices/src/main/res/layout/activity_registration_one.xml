@@ -43,7 +43,6 @@
             android:layout_below="@+id/textView_outletName"
             android:layout_marginRight="15dp"
             android:layout_marginTop="5dp"
-            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.- "
             android:ems="10"
             android:hint="Please type in English"
             android:inputType="text" />
@@ -80,7 +79,6 @@
             android:layout_below="@+id/textView_address"
             android:layout_marginRight="15dp"
             android:layout_marginTop="5dp"
-            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-/#.,: "
             android:ems="10"
             android:hint="Please type in English"
             android:inputType="text" />
@@ -117,7 +115,6 @@
             android:layout_below="@+id/textView_ownerName"
             android:layout_marginRight="15dp"
             android:layout_marginTop="5dp"
-            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.- "
             android:ems="10"
             android:hint="Please type in English"
             android:inputType="text" />

@@ -1,30 +1,112 @@
 package com.cloudwell.paywell.services.activity.reg.model;
 
-public class RegistrationModel {
+import com.google.gson.annotations.SerializedName;
 
-    private String outletName;
+import org.jetbrains.annotations.NotNull;
+
+public class RegistrationModel {
+    @SerializedName("imei")
+    private String imei;
+    @SerializedName("alternate_imei")
+    private String alternate_imei;
+    @SerializedName("dtype")
+    private String dtype;
+    @SerializedName("downloadSource")
+    private String downloadSource;
+    @SerializedName("operators")
+    private String operators;
+    @SerializedName("outlet_name")
+    private String outletName = "";
+    @SerializedName("outlet_address")
     private String outletAddress;
+    @SerializedName("owner_name")
     private String ownerName;
+    @SerializedName("mobile_number")
     private String phnNumber;
+    @SerializedName("business_type_id")
     private String businessId;
+    @SerializedName("business_type")
     private String businessType;
+    @SerializedName("email")
     private String emailAddress;
+    @SerializedName("district")
     private String districtName;
+    @SerializedName("thana")
     private String thanaName;
+    @SerializedName("post_code")
     private String postcodeName;
+    @SerializedName("post_office_id")
     private String postcodeId;
+    @SerializedName("landmark")
     private String landmark;
+
+
+
+    @SerializedName("outlet_img")
+    private String outletImage = "";
+    @SerializedName("nidFrontPic")
+    private String nidFront = "";
+    @SerializedName("nidBackPic")
+    private String nidBack = "";
+    @SerializedName("owner_img")
+    private String ownerImage = "";
+    @SerializedName("trade_license_img")
+    private String tradeLicense = "";
+    @SerializedName("image_passport")
+    private String passport = "";
+    @SerializedName("birth_certificate_img")
+    private String birthCertificate = "";
+    @SerializedName("driving_license_imege")
+    private String drivingLicense= "";
+    @SerializedName("visiting_card_img")
+    private String visitingCard = "";
+
+    @SerializedName("smartCardFrontPic")
+    private String smartCardFront = "";
+    @SerializedName("smartCardBackPic")
+    private String smartCardBack = "";
+
+
+    @SerializedName("nidNumber")
+    public String nidNumber;
+    @SerializedName("nidFatherName")
+    public String nidFatherName;
+    @SerializedName("nidName")
+    public String nidName;
+    @SerializedName("nidMotherName")
+    public String nidMotherName;
+    @SerializedName("nidBirthday")
+    public String nidBirthday;
+    @SerializedName("nidAddress")
+    public String nidAddress;
+    @SerializedName("smartCardNumber")
+    public String smartCardNumber;
+    @SerializedName("smartCardName")
+    public String smartCardName;
+    @SerializedName("smartCardFatherName")
+    public String smartCardFatherName;
+    @SerializedName("smartCardMotherName")
+    public String smartCardMotherName;
+    @SerializedName("smartCardBirthday")
+    public String smartCardBirthday;
+    @SerializedName("smartCardAddress")
+    public String smartCardAddress;
+
+
+
+
+    private String mBusinessaTypeAPIRespose;
+    private int mBusinesstypeAdapterPosition = 0;
+    private String mDistrictAPIRespose;
+    private String mThanaResponseAPIRespose;
+    private String mPostCodeResponseAPIRespose;
+    private int mDistrictAdapterPosition;
+    private int mThanaAdapterPosition;
+    private int mPostCodeAdapterPosition;
+    private String mMrchantType;
+    private String mDistrict;
     private String salesCode;
     private String collectionCode;
-    private String outletImage;
-    private String nidFront;
-    private String nidBack;
-    private String ownerImage;
-    private String tradeLicense;
-    private String passport;
-    private String birthCertificate;
-    private String drivingLicense;
-    private String visitingCard;
 
     public RegistrationModel() {
     }
@@ -213,6 +295,104 @@ public class RegistrationModel {
         this.visitingCard = visitingCard;
     }
 
+
+    public String getNidNumber() {
+        return nidNumber;
+    }
+
+    public void setNidNumber(String nidNumber) {
+        this.nidNumber = nidNumber;
+    }
+
+    public String getNidFatherName() {
+        return nidFatherName;
+    }
+
+    public void setNidFatherName(String nidFatherName) {
+        this.nidFatherName = nidFatherName;
+    }
+
+    public String getNidName() {
+        return nidName;
+    }
+
+    public void setNidName(String nidName) {
+        this.nidName = nidName;
+    }
+
+    public String getNidMotherName() {
+        return nidMotherName;
+    }
+
+    public void setNidMotherName(String nidMotherName) {
+        this.nidMotherName = nidMotherName;
+    }
+
+    public String getNidBirthday() {
+        return nidBirthday;
+    }
+
+    public void setNidBirthday(String nidBirthday) {
+        this.nidBirthday = nidBirthday;
+    }
+
+    public String getNidAddress() {
+        return nidAddress;
+    }
+
+    public void setNidAddress(String nidAddress) {
+        this.nidAddress = nidAddress;
+    }
+
+    public String getSmartCardNumber() {
+        return smartCardNumber;
+    }
+
+    public void setSmartCardNumber(String smartCardNumber) {
+        this.smartCardNumber = smartCardNumber;
+    }
+
+    public String getSmartCardName() {
+        return smartCardName;
+    }
+
+    public void setSmartCardName(String smartCardName) {
+        this.smartCardName = smartCardName;
+    }
+
+    public String getSmartCardFatherName() {
+        return smartCardFatherName;
+    }
+
+    public void setSmartCardFatherName(String smartCardFatherName) {
+        this.smartCardFatherName = smartCardFatherName;
+    }
+
+    public String getSmartCardMotherName() {
+        return smartCardMotherName;
+    }
+
+    public void setSmartCardMotherName(String smartCardMotherName) {
+        this.smartCardMotherName = smartCardMotherName;
+    }
+
+    public String getSmartCardBirthday() {
+        return smartCardBirthday;
+    }
+
+    public void setSmartCardBirthday(String smartCardBirthday) {
+        this.smartCardBirthday = smartCardBirthday;
+    }
+
+    @NotNull
+    public String getSmartCardAddress() {
+        return smartCardAddress;
+    }
+
+    public void setSmartCardAddress(@NotNull String smartCardAddress) {
+        this.smartCardAddress = smartCardAddress;
+    }
+
     @Override
     public String toString() {
         return "RegistrationModel{" +
@@ -240,5 +420,143 @@ public class RegistrationModel {
                 ", drivingLicense='" + drivingLicense + '\'' +
                 ", visitingCard='" + visitingCard + '\'' +
                 '}';
+    }
+
+    public void setSmartCardBack(String smartCardBack) {
+        this.smartCardBack = smartCardBack;
+    }
+
+    public String getSmartCardBack() {
+        return smartCardBack;
+    }
+
+    public String getSmartCardFront() {
+        return smartCardFront;
+    }
+
+    public void setSmartCardFront(String smartCardFront) {
+        this.smartCardFront = smartCardFront;
+    }
+
+    public void setAlternate_imei(String alternate_imei) {
+        this.alternate_imei = alternate_imei;
+    }
+
+    public void setImei(String imei) {
+        this.imei = imei;
+    }
+
+    public String getAlternate_imei() {
+        return alternate_imei;
+    }
+
+    public String getImei() {
+        return imei;
+    }
+
+    public void setDownloadSource(String downloadSource) {
+        this.downloadSource = downloadSource;
+    }
+
+    public String getDownloadSource() {
+        return downloadSource;
+    }
+
+    public void setDtype(String dtype) {
+        this.dtype = dtype;
+    }
+
+    public String getDtype() {
+        return dtype;
+    }
+
+    public void setOperators(String operators) {
+        this.operators = operators;
+    }
+
+    public String getOperators() {
+        return operators;
+    }
+
+    public void setBusinessaTypeAPIRespose(String businessaTypeAPIRespose) {
+        mBusinessaTypeAPIRespose = businessaTypeAPIRespose;
+    }
+
+    public String getBusinessaTypeAPIRespose() {
+        return mBusinessaTypeAPIRespose;
+    }
+
+    public void setBusinesstypeAdapterPosition(int businesstypeAdapterPosition) {
+        mBusinesstypeAdapterPosition = businesstypeAdapterPosition;
+    }
+
+    public int getBusinesstypeAdapterPosition() {
+        return mBusinesstypeAdapterPosition;
+    }
+
+    public void setDistrictAPIRespose(String districtAPIRespose) {
+        mDistrictAPIRespose = districtAPIRespose;
+    }
+
+    public String getDistrictAPIRespose() {
+        return mDistrictAPIRespose;
+    }
+
+    public void setThanaResponseAPIRespose(String thanaResponseAPIRespose) {
+        mThanaResponseAPIRespose = thanaResponseAPIRespose;
+    }
+
+    public String getThanaResponseAPIRespose() {
+        return mThanaResponseAPIRespose;
+    }
+
+    public void setPostCodeResponseAPIRespose(String postCodeResponseAPIRespose) {
+        mPostCodeResponseAPIRespose = postCodeResponseAPIRespose;
+    }
+
+    public String getPostCodeResponseAPIRespose() {
+        return mPostCodeResponseAPIRespose;
+    }
+
+    public void setDistrictAdapterPosition(int districtAdapterPosition) {
+        mDistrictAdapterPosition = districtAdapterPosition;
+    }
+
+    public int getDistrictAdapterPosition() {
+        return mDistrictAdapterPosition;
+    }
+
+    public void setThanaAdapterPosition(int thanaAdapterPosition) {
+        mThanaAdapterPosition = thanaAdapterPosition;
+    }
+
+    public int getThanaAdapterPosition() {
+        return mThanaAdapterPosition;
+    }
+
+    public void setPostCodeAdapterPosition(int postCodeAdapterPosition) {
+        mPostCodeAdapterPosition = postCodeAdapterPosition;
+    }
+
+    public int getPostCodeAdapterPosition() {
+        return mPostCodeAdapterPosition;
+    }
+
+
+
+    public void setMrchantType(String mrchantType) {
+        this.mMrchantType = mrchantType;
+    }
+
+    public String getMMrchantType() {
+        return mMrchantType;
+    }
+
+    public void setDistrict(String district) {
+        mDistrict = district;
+    }
+
+    public String getDistrict() {
+        return mDistrict;
     }
 }

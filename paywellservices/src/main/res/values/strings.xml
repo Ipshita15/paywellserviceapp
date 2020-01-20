@@ -439,7 +439,7 @@
     </string-array>
 
     <!-- paywell apis -->
-    <string name="pw_auth">https://api.paywellonline.com/PaywelltransactionRetailer/TabUserServiceProfiling?</string>
+    <string name="pw_auth">https://agentapi.paywellonline.com/PaywelltransactionRetailer/userServiceProfiling</string>
     <string name="notif_url">https://www.paywellonline.com/default/api/notification_check_android.php?</string>
     <string name="notification_token_url">https://www.paywellonline.com/paywellapi/setUserFCMToken.php</string>
 
@@ -451,8 +451,8 @@
     <!-- Registration -->
     <string name="business_type_url">https://api.paywellonline.com/Android/userSubBusinessType</string>
     <string name="district_info_url">https://www.paywellonline.com/crs3291/android/sales_manager/district_info_bangladesh.php</string>
-    <string name="final_reg_url">https://www.paywellonline.com/crs3291/android/sales_manager/getRetailerInformationForRegistration.php</string>
-    <string name="missing_reg_url">https://www.paywellonline.com/crs3291/android/sales_manager/getUnverifiedData.php</string>
+    <string name="final_reg_url" translatable="false">https://www.paywellonline.com/crs3291/android/sales_manager/getRetailerInformationForRegistrationNew.php</string>
+    <string name="missing_reg_url">https://agentapi.paywellonline.com/PaywellUserRegistration/unverifiedDataCollectAndUpdate</string>
 
     <!-- Topup -->
     <string name="inq_top">https://www.paywellonline.com/default/api/enquiry.php?</string>
@@ -831,6 +831,35 @@
     <string name="title_void_ticket">Ticket Void</string>
     <string name="view_ticket_with_fare">View Ticket With Fare</string>
     <string name="send_email_with_fare">Send Email With Fare</string>
+    <string name="scanner">Scanner</string>
+    <string name="done">Done</string>
+    <string name="no_bill_number_found_message">No bill number found, please try again</string>
+
+
+
+    <string name="m_first_ni_error">Sorry, can\'t process first page of your input NID</string>
+    <string name="m_second_ni_error">Sorry, can\'t process second page of your input NID</string>
+    <string name="m_please_input_both_nid_page">Please input both NID page</string>
+
+
+
+    <string name="permission_camera_rationale">Access to the camera is needed for detection</string>
+    <string name="no_camera_permission">This application cannot run because it does not have the camera permission.  The application will now exit.</string>
+    <string name="low_storage_error">Ocr dependencies cannot be downloaded due to low device storage</string>
+    <string name="title_activity_main">Ocr Detector Sample</string>
+    <string name="ocr_header">Click &quot;Detect Text&quot; to detect text</string>
+    <string name="read_text">Detect Text</string>
+    <string name="auto_focus">Auto Focus</string>
+    <string name="use_flash">Use Flash</string>
+    <string name="ocr_success">Text read successfully</string>
+    <string name="ocr_failure">No text captured</string>
+    <string name="ocr_error">"Error reading text: %1$s"</string>
+    <string name="finished">সম্পূর্ণ</string>
+    <string name="next_text">পরবর্তী</string>
+    <string name="title_nid">এন.আই.ডি-এর তথ্য</string>
+    <string name="title_smart">এন.আই.ডি-এর তথ্য</string>
+    <string name="text_nid">এন.আই.ডি</string>
+    <string name="text_smart_card">স্মার্ট কার্ড</string>
 
 
 </resources>
