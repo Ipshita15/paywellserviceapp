@@ -106,9 +106,6 @@ class NotificationRepogitory(private val mContext: Context) {
         return AppStorageBox.get(mContext, AppStorageBox.Key.NOTIFICATION_DETAILS).toString()
     }
 
-    fun insertLocalData(detailMessages: List<NotificationDetailMessage>) {
-        DatabaseClient.getInstance(mContext).appDatabase.mNotificationDab().insert(detailMessages)
-    }
 
     fun deletedNotificationData(notificationExpireList: List<NotificationDetailMessage>) {
         DatabaseClient.getInstance(mContext).appDatabase.mNotificationDab().deleteData(notificationExpireList)

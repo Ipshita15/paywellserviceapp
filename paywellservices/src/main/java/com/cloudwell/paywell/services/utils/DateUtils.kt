@@ -192,6 +192,13 @@ object DateUtils {
     fun getDynamicTwoYear(): MutableList<String> {
         val years = mutableListOf<String>()
 
+
+        val c = Calendar.getInstance()
+        c.add(Calendar.YEAR, -1)
+        val previousYear = c.get(Calendar.YEAR)
+        years.add("" + previousYear)
+
+
         val year = Calendar.getInstance().get(Calendar.YEAR)
         years.add("" + year)
 
@@ -199,6 +206,10 @@ object DateUtils {
         today.add(Calendar.YEAR, 1)
         val nextYear = today.get(Calendar.YEAR)
         years.add("" + nextYear)
+
+
+
+
         return years
     }
 

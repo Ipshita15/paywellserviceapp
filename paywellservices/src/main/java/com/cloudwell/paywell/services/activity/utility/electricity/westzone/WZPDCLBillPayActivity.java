@@ -150,6 +150,8 @@ public class WZPDCLBillPayActivity extends BaseActivity implements View.OnClickL
             }
         });
 
+        spnr_year.setSelection(1);
+
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             _mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
             etPin.setTypeface(AppController.getInstance().getOxygenLightFont());

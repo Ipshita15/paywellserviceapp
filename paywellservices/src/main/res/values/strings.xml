@@ -813,7 +813,7 @@
     <string name="clear_all">Clear all</string>
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
-    <string name="bill_number">Bill Number</string>
+    <string name="bill_number">SMS Bill Number</string>
     <string name="bill_amount">Taka</string>
     <string name="bill_number_length">Bill number length must be greater than 5</string>
     <string name="bill_limit_msg">Currently this is the limit of our support</string>
