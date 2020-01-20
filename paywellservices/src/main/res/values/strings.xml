@@ -839,6 +839,7 @@
     <string name="send_email_with_fare">Send Email With Fare</string>
     <string name="desco_prepaid_string">Desco Prepaid</string>
     <string name="desco_postpaid_string">Desco Postpaid</string>
+    <string name="meter_number">Meter number</string>
 
 
 </resources>

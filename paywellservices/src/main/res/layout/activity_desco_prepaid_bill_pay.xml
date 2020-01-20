@@ -98,7 +98,7 @@
                             android:paddingLeft="2dp"
                             android:paddingRight="2dp"
                             android:paddingStart="2dp"
-                            android:text="@string/bill_no_des"
+                            android:text="@string/meter_number"
                             android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                         <ImageView

@@ -833,6 +833,7 @@
     <string name="send_email_with_fare">Send Email With Fare</string>
     <string name="desco_prepaid_string">ডেসকো প্রিপেইড</string>
     <string name="desco_postpaid_string">ডেসকো পোষ্টপেইড</string>
+    <string name="meter_number">মিটার নম্বর</string>
 
 
 </resources>

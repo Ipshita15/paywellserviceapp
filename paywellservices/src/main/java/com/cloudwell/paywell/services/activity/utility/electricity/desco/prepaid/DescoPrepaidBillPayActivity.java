@@ -1,8 +1,5 @@
 package com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
-
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,7 +12,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
@@ -38,6 +34,8 @@ import com.github.chrisbanes.photoview.PhotoView;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -267,36 +265,35 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
                 if (model.getApiStatus() == 200) {
 
 
-                    submitBillConfirm(model);
+                   // submitBillConfirm(model);
 
+                    if (model.getDescoInquiryResponseDetails().getStatus() == 200) {
 
-//                    if (model.getDescoInquiryResponseDetails().getStatus() == 200) {
-//
-//                        String message = model.getDescoInquiryResponseDetails().getMessage();
-//                        String trx_id = model.getDescoInquiryResponseDetails().getTransId();
-//
-//                        AlertDialog.Builder builder = new AlertDialog.Builder(DescoPrepaidBillPayActivity.this);
-//                        builder.setTitle("Result");
-//                        builder.setMessage(message + "\n\nPayWell Trx ID: " + trx_id);
-//                        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int id) {
-//                                submitBillConfirm(model);
-//                            }
-//                        });
-//                        builder.setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                dialog.dismiss();
-//                            }
-//                        });
-//                        builder.setCancelable(true);
-//                        AlertDialog alert = builder.create();
-//                        alert.setCanceledOnTouchOutside(true);
-//                        alert.show();
-//                    } else {
-//                        showErrorMessage(model.getDescoInquiryResponseDetails().getMessage(), model.getDescoInquiryResponseDetails().getTransId());
-//                    }
+                        String message = model.getDescoInquiryResponseDetails().getMessage();
+                        String trx_id = model.getDescoInquiryResponseDetails().getTransId();
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(DescoPrepaidBillPayActivity.this);
+                        builder.setTitle("Result");
+                        builder.setMessage(message + "\n\nPayWell Trx ID: " + trx_id);
+                        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                submitBillConfirm(model);
+                            }
+                        });
+                        builder.setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        builder.setCancelable(true);
+                        AlertDialog alert = builder.create();
+                        alert.setCanceledOnTouchOutside(true);
+                        alert.show();
+                    } else {
+                        showErrorMessage(model.getDescoInquiryResponseDetails().getMessage(), model.getDescoInquiryResponseDetails().getTransId());
+                    }
 
                 } else {
                     showInquiryErrorMessage(model.getApiStatusName());
