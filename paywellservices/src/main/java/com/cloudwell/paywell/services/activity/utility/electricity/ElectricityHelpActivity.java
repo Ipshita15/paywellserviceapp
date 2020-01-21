@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.DESCOMainActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidMainActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCMainActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.wasa.WASAMainActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.westzone.WZPDCLMainActivity;
@@ -170,7 +170,7 @@ public class ElectricityHelpActivity extends AppCompatActivity {
     }
 
     /*private void launchHomeScreen() {
-        startActivity(new Intent(ElectricityHelpActivity.this, DESCOMainActivity.class));
+        startActivity(new Intent(ElectricityHelpActivity.this, DESCOPostpaidMainActivity.class));
         finish();
     }*/
 
@@ -257,7 +257,7 @@ public class ElectricityHelpActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (serviceName.equalsIgnoreCase(TAG_DESCO_SERVICE)) {
-            startActivity(new Intent(ElectricityHelpActivity.this, DESCOMainActivity.class));
+            startActivity(new Intent(ElectricityHelpActivity.this, DESCOPostpaidMainActivity.class));
         } else if (serviceName.equalsIgnoreCase(TAG_DPDC_SERVICE)) {
             startActivity(new Intent(ElectricityHelpActivity.this, DPDCMainActivity.class));
         } else if (serviceName.equalsIgnoreCase(TAG_WASA_SERVICE)) {

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/ic_background_card"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activity.utility.electricity.desco.DESCOMainActivity">
+    tools:context=".activity.utility.electricity.desco.postpaid.DESCOPostpaidMainActivity">
 
     <ScrollView
         android:id="@+id/scrollView"

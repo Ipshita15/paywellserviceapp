@@ -7,6 +7,9 @@ import org.junit.Test
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
 
 /**
  * To work on unit tests, switch the Test Artifact in the Build Variants terms_and_conditions_format.
@@ -187,4 +190,16 @@ class ExampleUnitTest {
         return sb.toString()
 
     }
+
+    @Test
+    fun getDurtingJounaryTimeNewTest(){
+
+        val message = "#Your on-time-password (OTP) for log-in to PayWell is 7184. This OTP will expire in 5  minutes O4P+rGzX3rm"
+
+        val parseCode = parseCode(message)
+        Logger.v(""+parseCode)
+
+    }
+
+
 }

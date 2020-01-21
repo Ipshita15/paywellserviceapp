@@ -22,6 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                tools:visibility="visible"
                 android:visibility="gone">
 
                 <LinearLayout
@@ -58,7 +59,6 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="5dp"
-                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.- "
                     android:ems="10"
                     android:hint="@string/please_type_in_english"
                     android:inputType="text"/>
@@ -70,6 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                tools:visibility="visible"
                 android:visibility="gone">
 
                 <LinearLayout
@@ -106,7 +107,6 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="5dp"
-                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-/#.,: "
                     android:ems="10"
                     android:hint="@string/please_type_in_english"
                     android:inputType="text"/>
@@ -117,6 +117,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                tools:visibility="visible"
                 android:visibility="gone">
 
                 <LinearLayout
@@ -154,7 +155,6 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="5dp"
-                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.- "
                     android:ems="10"
                     android:hint="@string/please_type_in_english"
                     android:inputType="text"/>
@@ -167,6 +167,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
+                tools:visibility="visible"
                 android:visibility="gone">
 
                 <TextView
@@ -201,6 +202,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="30dp"
+                tools:visibility="visible"
                 android:visibility="gone">
 
                 <TextView
@@ -233,6 +235,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                tools:visibility="visible"
                 android:visibility="gone">
 
                 <LinearLayout
@@ -276,43 +279,6 @@
                     android:selectAllOnFocus="false"/>
             </LinearLayout>
 
-            <!--<LinearLayout-->
-            <!--android:id="@+id/layoutEmailAddress"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="vertical"-->
-            <!--android:visibility="gone">-->
-
-            <!--<LinearLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="horizontal">-->
-
-            <!--<TextView-->
-            <!--android:id="@+id/textView_emailAddress"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_marginStart="15dp"-->
-            <!--android:layout_marginTop="15dp"-->
-            <!--android:textSize="18sp"-->
-            <!--android:textStyle="normal|bold" />-->
-            <!--</LinearLayout>-->
-
-            <!--<EditText-->
-            <!--android:id="@+id/editText_emailAddress"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginEnd="15dp"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_marginRight="15dp"-->
-            <!--android:layout_marginStart="15dp"-->
-            <!--android:layout_marginTop="5dp"-->
-            <!--android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_@."-->
-            <!--android:hint="@string/please_type_in_english"-->
-            <!--android:inputType="textEmailAddress"-->
-            <!--android:selectAllOnFocus="false" />-->
-            <!--</LinearLayout>-->
 
             <LinearLayout
                 android:id="@+id/layoutDistrict"
@@ -321,6 +287,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
+                tools:visibility="visible"
                 android:visibility="gone">
 
                 <TextView
@@ -357,6 +324,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="30dp"
+                tools:visibility="visible"
                 android:visibility="gone">
 
                 <TextView
@@ -391,6 +359,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="30dp"
+                tools:visibility="visible"
                 android:visibility="gone">
 
                 <TextView
@@ -423,6 +392,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                tools:visibility="visible"
                 android:visibility="gone">
 
                 <TextView
@@ -443,78 +413,11 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="5dp"
-                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 "
                     android:ems="10"
                     android:hint="@string/please_type_in_english"
                     android:inputType="text"
                     android:selectAllOnFocus="false"/>
             </LinearLayout>
-
-            <!--<LinearLayout-->
-            <!--android:id="@+id/layoutSalesCode"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="vertical"-->
-            <!--android:visibility="gone">-->
-
-            <!--<TextView-->
-            <!--android:id="@+id/textView_salesCode"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_marginStart="15dp"-->
-            <!--android:layout_marginTop="15dp"-->
-            <!--android:text="সেলস কোডঃ"-->
-            <!--android:textColor="#41882b"-->
-            <!--android:textSize="18sp"-->
-            <!--android:textStyle="normal|bold" />-->
-
-            <!--<EditText-->
-            <!--android:id="@+id/editText_salesCode"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_marginRight="15dp"-->
-            <!--android:layout_marginTop="5dp"-->
-            <!--android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 "-->
-            <!--android:ems="10"-->
-            <!--android:hint="ঐচ্ছিক"-->
-            <!--android:inputType="text"-->
-            <!--android:selectAllOnFocus="false" />-->
-            <!--</LinearLayout>-->
-
-            <!--<LinearLayout-->
-            <!--android:id="@+id/layoutCollectionCode"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="vertical"-->
-            <!--android:visibility="gone">-->
-
-            <!--<TextView-->
-            <!--android:id="@+id/textView_collectionCode"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_marginRight="15dp"-->
-            <!--android:layout_marginTop="15dp"-->
-            <!--android:text="কালেকশন কোডঃ"-->
-            <!--android:textColor="#41882b"-->
-            <!--android:textSize="18sp"-->
-            <!--android:textStyle="normal|bold" />-->
-
-            <!--<EditText-->
-            <!--android:id="@+id/editText_collectionCode"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_marginRight="15dp"-->
-            <!--android:layout_marginTop="5dp"-->
-            <!--android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 "-->
-            <!--android:ems="10"-->
-            <!--android:hint="ঐচ্ছিক"-->
-            <!--android:inputType="text"-->
-            <!--android:selectAllOnFocus="false" />-->
-            <!--</LinearLayout>-->
 
             <LinearLayout
                 android:id="@+id/layoutOutletImg"
@@ -523,9 +426,11 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="15dp"
+                tools:visibility="visible"
                 android:visibility="gone">
 
                 <Button
+                    android:background="@color/button_color"
                     android:id="@+id/button_outletImg"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -533,7 +438,6 @@
                     android:layout_marginLeft="26dp"
                     android:layout_marginRight="26dp"
                     android:layout_weight="1.8"
-                    android:background="@drawable/button_green"
                     android:onClick="outletImgOnClickMissing"
                     android:shadowColor="#000000"
                     android:shadowDx="1"
@@ -543,18 +447,6 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#ffffff"/>
 
-                <ImageView
-                    android:id="@+id/img1"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="0.2"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/button_ok"
-                    android:scaleType="fitCenter"
-                    android:visibility="gone"
-                    tools:ignore="ContentDescription"/>
             </LinearLayout>
 
             <LinearLayout
@@ -564,38 +456,27 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
+                tools:visibility="visible"
                 android:visibility="gone">
 
                 <Button
-                    android:id="@+id/button_nidFrontImg"
+                    android:id="@+id/btNid"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_marginLeft="26dp"
                     android:layout_marginRight="26dp"
                     android:layout_weight="1.8"
-                    android:background="@drawable/button_green"
+                    android:background="@color/button_color"
                     android:onClick="nidImgOnClickMissing"
                     android:shadowColor="#000000"
                     android:shadowDx="1"
                     android:shadowDy="1"
                     android:shadowRadius="2"
-                    android:text="ন্যাশনাল আইডি সামনের পৃষ্ঠার ছবি"
+                    android:text="@string/text_nid"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#ffffff"/>
 
-                <ImageView
-                    android:id="@+id/img2"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="0.2"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/button_ok"
-                    android:scaleType="fitCenter"
-                    android:visibility="gone"
-                    tools:ignore="ContentDescription"/>
             </LinearLayout>
 
             <LinearLayout
@@ -605,38 +486,27 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
+                tools:visibility="visible"
                 android:visibility="gone">
 
                 <Button
-                    android:id="@+id/button_nidBackImg"
+                    android:id="@+id/btSmart"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_marginLeft="26dp"
                     android:layout_marginRight="26dp"
                     android:layout_weight="1.8"
-                    android:background="@drawable/button_green"
-                    android:onClick="nidBackImgOnClickMissing"
+                    android:background="@color/button_color"
+                    android:onClick="smartmgOnClickMissing"
                     android:shadowColor="#000000"
                     android:shadowDx="1"
                     android:shadowDy="1"
                     android:shadowRadius="2"
-                    android:text="ন্যাশনাল আইডি পেছনের পৃষ্ঠার ছবি"
+                    android:text="@string/text_smart_card"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#ffffff"/>
 
-                <ImageView
-                    android:id="@+id/img3"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="0.2"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/button_ok"
-                    android:scaleType="fitCenter"
-                    android:visibility="gone"
-                    tools:ignore="ContentDescription"/>
             </LinearLayout>
 
             <LinearLayout
@@ -647,6 +517,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
+                tools:visibility="visible"
                 android:visibility="gone">
 
                 <Button
@@ -657,7 +528,7 @@
                     android:layout_marginLeft="26dp"
                     android:layout_marginRight="26dp"
                     android:layout_weight="1.8"
-                    android:background="@drawable/button_green"
+                    android:background="@color/button_color"
                     android:onClick="ownerImgOnClickMissing"
                     android:shadowColor="#000000"
                     android:shadowDx="1"
@@ -666,19 +537,6 @@
                     android:text="মালিকের ছবি"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#ffffff"/>
-
-                <ImageView
-                    android:id="@+id/img4"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="0.2"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/button_ok"
-                    android:scaleType="fitCenter"
-                    android:visibility="gone"
-                    tools:ignore="ContentDescription"/>
 
             </LinearLayout>
 
@@ -690,6 +548,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
+                tools:visibility="visible"
                 android:visibility="gone">
 
                 <Button
@@ -700,7 +559,7 @@
                     android:layout_marginLeft="26dp"
                     android:layout_marginRight="26dp"
                     android:layout_weight="1.8"
-                    android:background="@drawable/button_green"
+                    android:background="@color/button_color"
                     android:onClick="tradeLicenseImgOnClickMissing"
                     android:shadowColor="#000000"
                     android:shadowDx="1"
@@ -710,18 +569,6 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#ffffff"/>
 
-                <ImageView
-                    android:id="@+id/img5"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="0.2"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/button_ok"
-                    android:scaleType="fitCenter"
-                    android:visibility="gone"
-                    tools:ignore="ContentDescription"/>
             </LinearLayout>
 
             <LinearLayout
@@ -732,6 +579,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
+                tools:visibility="visible"
                 android:visibility="gone">
 
                 <Button
@@ -742,7 +590,7 @@
                     android:layout_marginLeft="26dp"
                     android:layout_marginRight="26dp"
                     android:layout_weight="1.8"
-                    android:background="@drawable/button_green"
+                    android:background="@color/button_color"
                     android:onClick="passportImgOnClickMissing"
                     android:shadowColor="#000000"
                     android:shadowDx="1"
@@ -752,18 +600,6 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#ffffff"/>
 
-                <ImageView
-                    android:id="@+id/img6"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="0.2"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/button_ok"
-                    android:scaleType="fitCenter"
-                    android:visibility="gone"
-                    tools:ignore="ContentDescription"/>
             </LinearLayout>
 
             <LinearLayout
@@ -774,6 +610,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
+                tools:visibility="visible"
                 android:visibility="gone">
 
                 <Button
@@ -784,7 +621,7 @@
                     android:layout_marginLeft="26dp"
                     android:layout_marginRight="26dp"
                     android:layout_weight="1.8"
-                    android:background="@drawable/button_green"
+                    android:background="@color/button_color"
                     android:onClick="birthImgOnClickMissing"
                     android:shadowColor="#000000"
                     android:shadowDx="1"
@@ -794,18 +631,6 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#ffffff"/>
 
-                <ImageView
-                    android:id="@+id/img7"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="0.2"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/button_ok"
-                    android:scaleType="fitCenter"
-                    android:visibility="gone"
-                    tools:ignore="ContentDescription"/>
             </LinearLayout>
 
             <LinearLayout
@@ -816,6 +641,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
+                tools:visibility="visible"
                 android:visibility="gone">
 
                 <Button
@@ -826,7 +652,7 @@
                     android:layout_marginLeft="26dp"
                     android:layout_marginRight="26dp"
                     android:layout_weight="1.8"
-                    android:background="@drawable/button_green"
+                    android:background="@color/button_color"
                     android:onClick="drivingImgOnClickMissing"
                     android:shadowColor="#000000"
                     android:shadowDx="1"
@@ -835,19 +661,6 @@
                     android:text="ড্রাইভিং লাইসেন্সের ছবি"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#ffffff"/>
-
-                <ImageView
-                    android:id="@+id/img8"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="0.2"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/button_ok"
-                    android:scaleType="fitCenter"
-                    android:visibility="gone"
-                    tools:ignore="ContentDescription"/>
             </LinearLayout>
 
             <LinearLayout
@@ -858,6 +671,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
+                tools:visibility="visible"
                 android:visibility="gone">
 
                 <Button
@@ -868,7 +682,7 @@
                     android:layout_marginLeft="26dp"
                     android:layout_marginRight="26dp"
                     android:layout_weight="1.8"
-                    android:background="@drawable/button_green"
+                    android:background="@color/button_color"
                     android:onClick="visitingImgOnClickMissing"
                     android:shadowColor="#000000"
                     android:shadowDx="1"
@@ -878,330 +692,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#ffffff"/>
 
-                <ImageView
-                    android:id="@+id/img9"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="0.2"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/button_ok"
-                    android:scaleType="fitCenter"
-                    android:visibility="gone"
-                    tools:ignore="ContentDescription"/>
             </LinearLayout>
-
-            <!--<LinearLayout-->
-            <!--android:id="@+id/layoutMobileRecharge"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="vertical"-->
-            <!--android:visibility="gone">-->
-
-            <!--<TextView-->
-            <!--android:id="@+id/textView_mobileRecharge"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_marginStart="15dp"-->
-            <!--android:layout_marginTop="30dp"-->
-            <!--android:text="আপনি কি বর্তমানে রিচার্জের ব্যবসা করছেন?"-->
-            <!--android:textColor="#41882b"-->
-            <!--android:textSize="18sp"-->
-            <!--android:textStyle="normal|bold" />-->
-
-            <!--<RadioGroup-->
-            <!--android:id="@+id/radioGroup_one"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_marginStart="15dp"-->
-            <!--android:layout_marginTop="15dp"-->
-            <!--android:orientation="horizontal">-->
-
-            <!--<RadioButton-->
-            <!--android:id="@+id/rechargeYes"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="হাঁ" />-->
-
-            <!--<RadioButton-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_marginStart="15dp"-->
-            <!--android:text="না" />-->
-            <!--</RadioGroup>-->
-
-            <!--<LinearLayout-->
-            <!--android:id="@+id/layoutOperator"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="vertical"-->
-            <!--android:visibility="gone">-->
-
-            <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_marginStart="15dp"-->
-            <!--android:layout_marginTop="15dp"-->
-            <!--android:text="অপারেটর"-->
-            <!--android:textColor="#41882b"-->
-            <!--android:textSize="18sp"-->
-            <!--android:textStyle="normal|bold" />-->
-
-            <!--<LinearLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_marginStart="15dp"-->
-            <!--android:layout_marginTop="15dp"-->
-            <!--android:orientation="horizontal">-->
-
-            <!--<CheckBox-->
-            <!--android:id="@+id/item_check_gp"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:checked="false"-->
-            <!--android:onClickActionIssueTicket="itemClickedOne"-->
-            <!--android:text="গ্রামীনফোন" />-->
-
-            <!--<CheckBox-->
-            <!--android:id="@+id/item_check_bl"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:checked="false"-->
-            <!--android:onClickActionIssueTicket="itemClickedTwo"-->
-            <!--android:text="বাংলালিংক" />-->
-            <!--</LinearLayout>-->
-
-            <!--<LinearLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_marginStart="15dp"-->
-            <!--android:layout_marginTop="15dp"-->
-            <!--android:orientation="horizontal">-->
-
-            <!--<CheckBox-->
-            <!--android:id="@+id/item_check_rb"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:checked="false"-->
-            <!--android:onClickActionIssueTicket="itemClickedThree"-->
-            <!--android:text="রবি" />-->
-
-            <!--<CheckBox-->
-            <!--android:id="@+id/item_check_at"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:checked="false"-->
-            <!--android:onClickActionIssueTicket="itemClickedFour"-->
-            <!--android:text="এয়ারটেল" />-->
-            <!--</LinearLayout>-->
-
-            <!--<LinearLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_marginStart="15dp"-->
-            <!--android:layout_marginTop="15dp"-->
-            <!--android:orientation="horizontal">-->
-
-            <!--<CheckBox-->
-            <!--android:id="@+id/item_check_tt"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:checked="false"-->
-            <!--android:onClickActionIssueTicket="itemClickedFive"-->
-            <!--android:text="টেলিটক" />-->
-            <!--</LinearLayout>-->
-            <!--</LinearLayout>-->
-            <!--</LinearLayout>-->
-
-            <!--<LinearLayout-->
-            <!--android:id="@+id/layoutMobileBanking"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="vertical"-->
-            <!--android:visibility="gone">-->
-
-            <!--<TextView-->
-            <!--android:id="@+id/textView_bkashagent"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_marginStart="15dp"-->
-            <!--android:layout_marginTop="15dp"-->
-            <!--android:text="আপনি কি কোন মোবাইল ব্যাংকিং এজেন্ট?"-->
-            <!--android:textColor="#41882b"-->
-            <!--android:textSize="18sp"-->
-            <!--android:textStyle="normal|bold" />-->
-
-            <!--<RadioGroup-->
-            <!--android:id="@+id/radioGroup_two"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_marginStart="15dp"-->
-            <!--android:layout_marginTop="15dp"-->
-            <!--android:orientation="horizontal">-->
-
-            <!--<RadioButton-->
-            <!--android:id="@+id/agentYes"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="হাঁ" />-->
-
-            <!--<RadioButton-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_marginStart="15dp"-->
-            <!--android:text="না" />-->
-            <!--</RadioGroup>-->
-
-            <!--<LinearLayout-->
-            <!--android:id="@+id/layoutAgent"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="vertical"-->
-            <!--android:visibility="gone">-->
-
-            <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_marginStart="15dp"-->
-            <!--android:layout_marginTop="15dp"-->
-            <!--android:text="সার্ভিস"-->
-            <!--android:textColor="#41882b"-->
-            <!--android:textSize="18sp"-->
-            <!--android:textStyle="normal|bold" />-->
-
-            <!--<LinearLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_marginStart="15dp"-->
-            <!--android:layout_marginTop="15dp"-->
-            <!--android:orientation="horizontal">-->
-
-            <!--<CheckBox-->
-            <!--android:id="@+id/item_check_bkash"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:checked="false"-->
-            <!--android:onClickActionIssueTicket="itemClickedSix"-->
-            <!--android:text="বিকাশ" />-->
-
-            <!--<CheckBox-->
-            <!--android:id="@+id/item_check_rocket"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:checked="false"-->
-            <!--android:onClickActionIssueTicket="itemClickedSeven"-->
-            <!--android:text="রকেট" />-->
-            <!--</LinearLayout>-->
-
-            <!--<LinearLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_marginStart="15dp"-->
-            <!--android:layout_marginTop="15dp"-->
-            <!--android:orientation="horizontal">-->
-
-            <!--<CheckBox-->
-            <!--android:id="@+id/item_check_mcash"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:checked="false"-->
-            <!--android:onClickActionIssueTicket="itemClickedEight"-->
-            <!--android:text="এমক্যাশ" />-->
-
-            <!--<CheckBox-->
-            <!--android:id="@+id/item_check_mobile_money"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:checked="false"-->
-            <!--android:onClickActionIssueTicket="itemClickedNine"-->
-            <!--android:text="মোবাইল মানি" />-->
-            <!--</LinearLayout>-->
-
-            <!--<LinearLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_marginStart="15dp"-->
-            <!--android:layout_marginTop="15dp"-->
-            <!--android:orientation="horizontal">-->
-
-            <!--<CheckBox-->
-            <!--android:id="@+id/item_check_mycash"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:checked="false"-->
-            <!--android:onClickActionIssueTicket="itemClickedTen"-->
-            <!--android:text="মাইক্যাশ" />-->
-            <!--</LinearLayout>-->
-            <!--</LinearLayout>-->
-            <!--</LinearLayout>-->
-
-            <!--<LinearLayout-->
-            <!--android:id="@+id/layoutDownload"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="vertical"-->
-            <!--android:visibility="gone">-->
-
-            <!--<TextView-->
-            <!--android:id="@+id/textView_downloadOption"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_marginStart="15dp"-->
-            <!--android:layout_marginTop="15dp"-->
-            <!--android:text="আপনি কি প্লে স্টোর থেকে অ্যাপটি নিয়েছেন?"-->
-            <!--android:textColor="#41882b"-->
-            <!--android:textSize="18sp"-->
-            <!--android:textStyle="normal|bold" />-->
-
-            <!--<RadioGroup-->
-            <!--android:id="@+id/radioGroup_three"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_marginStart="15dp"-->
-            <!--android:layout_marginTop="15dp"-->
-            <!--android:orientation="horizontal">-->
-
-            <!--<RadioButton-->
-            <!--android:id="@+id/downloadYes"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="হাঁ" />-->
-
-            <!--<RadioButton-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_marginStart="15dp"-->
-            <!--android:text="না" />-->
-            <!--</RadioGroup>-->
-            <!--</LinearLayout>-->
         </LinearLayout>
 
         <Button
@@ -1215,7 +706,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/button_green"
+            android:background="@color/button_color"
             android:onClick="submitMissingOnClick"
             android:shadowColor="#000000"
             android:shadowDx="1"

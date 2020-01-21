@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.utility.electricity.desco.model
+package com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

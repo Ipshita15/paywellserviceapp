@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.cloudwell.paywell.services.R
+import kotlinx.android.synthetic.main.mobile_number_dialog.*
 import kotlinx.android.synthetic.main.mobile_number_dialog.view.*
 
 class MobileNumberInputDialog(val onClickHandler: OnClickHandler): DialogFragment() {
@@ -17,7 +18,7 @@ class MobileNumberInputDialog(val onClickHandler: OnClickHandler): DialogFragmen
         view.btbtSubmitMobileNumber.setOnClickListener {
 
             val mobileNumber = view.etMobileOrRID.text
-            onClickHandler?.onSubmit(mobileNumber.toString().trim())
+            onClickHandler?.onSubmit(mobileNumber.toString().trim(),etPin.text.toString().trim() )
 
         }
         return view
@@ -31,7 +32,7 @@ class MobileNumberInputDialog(val onClickHandler: OnClickHandler): DialogFragmen
 
     public interface OnClickHandler{
 
-        public fun onSubmit(mobileNumber:String);
+        public fun onSubmit(mobileNumber:String, pin:String);
     }
 
 }

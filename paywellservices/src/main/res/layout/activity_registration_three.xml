@@ -12,6 +12,7 @@
         android:focusableInTouchMode="true">
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/textView_salesCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,6 +28,8 @@
             android:textStyle="normal|bold" />
 
         <EditText
+            android:visibility="gone"
+
             android:id="@+id/editText_salesCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,6 +46,8 @@
             android:selectAllOnFocus="false" />
 
         <TextView
+            android:visibility="gone"
+
             android:id="@+id/textView_collectionCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,6 +61,8 @@
             android:textStyle="normal|bold" />
 
         <EditText
+            android:visibility="gone"
+
             android:id="@+id/editText_collectionCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -89,7 +96,7 @@
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
                 android:layout_weight="1.8"
-                android:background="@drawable/button_green"
+                android:background="@color/button_color"
                 android:onClick="outletImgOnClick"
                 android:shadowColor="#000000"
                 android:shadowDx="1"
@@ -99,18 +106,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff" />
 
-            <ImageView
-                android:id="@+id/img1"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_weight="0.2"
-                android:adjustViewBounds="true"
-                android:background="@drawable/button_ok"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
-                tools:ignore="ContentDescription" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -123,35 +119,24 @@
             android:layout_marginTop="5dp">
 
             <Button
-                android:id="@+id/btn_picNidFront"
+                android:id="@+id/btNid"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
                 android:layout_weight="1.8"
-                android:background="@drawable/button_green"
+                android:background="@color/button_color"
                 android:onClick="nidImgOnClick"
                 android:shadowColor="#000000"
                 android:shadowDx="1"
                 android:shadowDy="1"
                 android:shadowRadius="2"
-                android:text="ন্যাশনাল আইডি সামনের পৃষ্ঠার ছবি"
+                android:text="@string/text_nid"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff" />
 
-            <ImageView
-                android:id="@+id/img2"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_weight="0.2"
-                android:adjustViewBounds="true"
-                android:background="@drawable/button_ok"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
-                tools:ignore="ContentDescription" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -164,35 +149,24 @@
             android:layout_marginTop="5dp">
 
             <Button
-                android:id="@+id/btn_picNidBack"
+                android:id="@+id/btSmart"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
                 android:layout_weight="1.8"
-                android:background="@drawable/button_green"
-                android:onClick="nidBackImgOnClick"
+                android:background="@color/button_color"
+                android:onClick="smartImgOnClick"
                 android:shadowColor="#000000"
                 android:shadowDx="1"
                 android:shadowDy="1"
                 android:shadowRadius="2"
-                android:text="ন্যাশনাল আইডি পেছনের পৃষ্ঠার ছবি"
+                android:text="@string/text_smart_card"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff" />
 
-            <ImageView
-                android:id="@+id/img3"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_weight="0.2"
-                android:adjustViewBounds="true"
-                android:background="@drawable/button_ok"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
-                tools:ignore="ContentDescription" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -213,7 +187,7 @@
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
                 android:layout_weight="1.8"
-                android:background="@drawable/button_green"
+                android:background="@color/button_color"
                 android:onClick="ownerImgOnClick"
                 android:shadowColor="#000000"
                 android:shadowDx="1"
@@ -223,18 +197,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff" />
 
-            <ImageView
-                android:id="@+id/img4"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_weight="0.2"
-                android:adjustViewBounds="true"
-                android:background="@drawable/button_ok"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
-                tools:ignore="ContentDescription" />
+
 
         </LinearLayout>
 
@@ -255,7 +218,7 @@
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
                 android:layout_weight="1.8"
-                android:background="@drawable/button_green"
+                android:background="@color/button_color"
                 android:onClick="tradeLicenseImgOnClick"
                 android:shadowColor="#000000"
                 android:shadowDx="1"
@@ -264,18 +227,7 @@
                 android:text="ট্রেড লাইসেন্সের ছবি"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff" />
-            <ImageView
-                android:id="@+id/img5"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_weight="0.2"
-                android:adjustViewBounds="true"
-                android:background="@drawable/button_ok"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
-                tools:ignore="ContentDescription" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -295,7 +247,7 @@
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
                 android:layout_weight="1.8"
-                android:background="@drawable/button_green"
+                android:background="@color/button_color"
                 android:onClick="passportImgOnClick"
                 android:shadowColor="#000000"
                 android:shadowDx="1"
@@ -304,18 +256,7 @@
                 android:text="পাসপোর্টের ছবি"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff" />
-            <ImageView
-                android:id="@+id/img6"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_weight="0.2"
-                android:adjustViewBounds="true"
-                android:background="@drawable/button_ok"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
-                tools:ignore="ContentDescription" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -335,7 +276,7 @@
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
                 android:layout_weight="1.8"
-                android:background="@drawable/button_green"
+                android:background="@color/button_color"
                 android:onClick="birthImgOnClick"
                 android:shadowColor="#000000"
                 android:shadowDx="1"
@@ -344,18 +285,7 @@
                 android:text="বার্থ সার্টিফিকেটের ছবি"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff" />
-            <ImageView
-                android:id="@+id/img7"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_weight="0.2"
-                android:adjustViewBounds="true"
-                android:background="@drawable/button_ok"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
-                tools:ignore="ContentDescription" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -375,7 +305,7 @@
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
                 android:layout_weight="1.8"
-                android:background="@drawable/button_green"
+                android:background="@color/button_color"
                 android:onClick="drivingImgOnClick"
                 android:shadowColor="#000000"
                 android:shadowDx="1"
@@ -384,18 +314,7 @@
                 android:text="ড্রাইভিং লাইসেন্সের ছবি"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff" />
-            <ImageView
-                android:id="@+id/img8"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_weight="0.2"
-                android:adjustViewBounds="true"
-                android:background="@drawable/button_ok"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
-                tools:ignore="ContentDescription" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -415,7 +334,7 @@
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
                 android:layout_weight="1.8"
-                android:background="@drawable/button_green"
+                android:background="@color/button_color"
                 android:onClick="visitingImgOnClick"
                 android:shadowColor="#000000"
                 android:shadowDx="1"
@@ -424,18 +343,7 @@
                 android:text="ভিজিটিং কার্ডের ছবি"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff" />
-            <ImageView
-                android:id="@+id/img9"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_weight="0.2"
-                android:adjustViewBounds="true"
-                android:background="@drawable/button_ok"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
-                tools:ignore="ContentDescription" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -452,7 +360,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/button_green"
+                android:background="@color/button_color"
                 android:onClick="previousOnClick"
                 android:shadowColor="#000000"
                 android:shadowDx="1"
@@ -468,7 +376,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/button_green"
+                android:background="@color/button_color"
                 android:onClick="nextOnClick"
                 android:shadowColor="#000000"
                 android:shadowDx="1"

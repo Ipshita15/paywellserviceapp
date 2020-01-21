@@ -52,6 +52,9 @@
     <color name="color_tab_background_bus">#a3d3c5</color>
     <color name="bus_button_color">#00a89b</color>
     <color name="bus_action_menu_text_color">#268472</color>
+    <color name="button_color">#189d49</color>
+
+    <color name="toolbar_background">#189d49</color>
 
 
 </resources>

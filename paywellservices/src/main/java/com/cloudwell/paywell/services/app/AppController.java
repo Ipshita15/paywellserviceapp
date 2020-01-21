@@ -63,6 +63,9 @@ public class AppController extends Application {
             String id = FirebaseInstanceId.getInstance().getToken();
             Log.e("device_token", "" + id);
 
+
+
+            Logger.i( "SMS HashKey: " + new AppSignatureHelper(getApplicationContext()).getAppSignatures().get(0));
             // Logger.v(DebugDB.getAddressLog());
 
 

@@ -38,8 +38,7 @@ public class AppSignatureHelper extends ContextWrapper {
             // Get all package signatures for the current package
             String packageName = getPackageName();
             PackageManager packageManager = getPackageManager();
-            Signature[] signatures = packageManager.getPackageInfo(packageName,
-                    PackageManager.GET_SIGNATURES).signatures;
+            Signature[] signatures = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES).signatures;
 
             // For each signature create a compatible hash
             for (Signature signature : signatures) {

@@ -19,8 +19,8 @@ import com.cloudwell.paywell.services.activity.topup.brilliant.BrilliantTopupAct
 import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionMainActivity;
 import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionRechargeActivity;
 import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionRechargeInquiryActivity;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.DESCOBillPayActivity;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.DESCOMainActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidBillPayActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidMainActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCMainActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCPostpaidBillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.wasa.WASABillPayActivity;
@@ -93,17 +93,17 @@ public class AppUtility {
             case R.string.home_utility_desco:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_MENU);
 
-                return new Intent(context, DESCOMainActivity.class);
+                return new Intent(context, DESCOPostpaidMainActivity.class);
 
             case R.string.home_utility_desco_pay:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_BILL_PAY);
 
-                return new Intent(context, DESCOBillPayActivity.class);
+                return new Intent(context, DESCOPostpaidBillPayActivity.class);
 
             case R.string.home_utility_desco_pay_inquiry:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_BILL_PAY_INQUIRY);
 
-                intent = new Intent(context, DESCOMainActivity.class);
+                intent = new Intent(context, DESCOPostpaidMainActivity.class);
                 intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_DESCO_INQUERY, true);
                 return intent;
 

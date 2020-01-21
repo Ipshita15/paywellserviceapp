@@ -1,7 +1,9 @@
 package com.cloudwell.paywell.services.utils;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.provider.Settings;
 
 import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus;
 import com.cloudwell.paywell.services.service.notificaiton.NotificationCheckerService;
@@ -31,6 +33,11 @@ public class AppHelper {
         }
 
 
+    }
+
+
+    public static String getAndroidID(ContentResolver contentResolver ){
+       return Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID);
     }
 
     public static void startNotificationSyncService(Context context) {

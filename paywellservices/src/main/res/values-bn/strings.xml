@@ -458,8 +458,6 @@
     <string name="business_type_url">https://api.paywellonline.com/Android/userSubBusinessType</string>
     <string name="district_info_url">https://www.paywellonline.com/crs3291/android/sales_manager/district_info_bangladesh.php</string>
     <!--<string name="final_reg_url">https://www.paywellonline.com/crs3291/android/sales_manager/Retailer_Add_Request_Info.php</string>-->
-    <string name="final_reg_url">https://www.paywellonline.com/crs3291/android/sales_manager/getRetailerInformationForRegistration.php</string>
-    <string name="missing_reg_url">https://www.paywellonline.com/crs3291/android/sales_manager/getUnverifiedData.php</string>
 
     <!-- Topup -->
     <string name="inq_top">https://www.paywellonline.com/default/api/enquiry.php?</string>
@@ -481,6 +479,10 @@
 
     <string name="desco_bill_enq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
     <string name="desco_bill_pay">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
+
+    <string name="desco_prepaid_bill_enq">https://agentapi.paywellonline.com/MYCash/Utility/DESCOPrepaid_billInfo</string>
+    <string name="desco_prepaid_bill_pay">https://agentapi.paywellonline.com/MYCash/Utility/DESCOPrepaid_billPayment</string>
+    <string name="desco_prepaid_trx_inquiry">https://agentapi.paywellonline.com/MYCash/Utility/getEnquiryData</string>
 
     <string name="dpdc_postpaid_bill_inq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DPDC</string>
     <string name="dpdc_postpaid_bill_pay">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DPDC</string>
@@ -827,6 +829,15 @@
     <string name="title_void_ticket">Ticket Void</string>
     <string name="view_ticket_with_fare">View Ticket With Fare</string>
     <string name="send_email_with_fare">Send Email With Fare</string>
+    <string name="scanner">স্ক্যানার</string>
+    <string name="done">ওকে</string>
+    <string name="no_bill_number_found_message">কোনও বিল নম্বর পাওয়া যায় নি, আবার চেষ্টা করুন</string>
+    <string name="finished">সম্পূর্ণ</string>
+    <string name="next_text">পরবর্তী</string>
+    <string name="title_nid">এন.আই.ডি-এর তথ্য</string>
+    <string name="title_smart">স্মার্ট আইডি কার্ড-এর তথ্য</string>
+    <string name="text_nid">এন.আই.ডি</string>
+    <string name="text_smart_card">স্মার্ট কার্ড</string>
 
 
 </resources>

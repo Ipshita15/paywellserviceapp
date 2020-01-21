@@ -3,7 +3,6 @@ package com.cloudwell.paywell.services.activity.reg;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
@@ -22,21 +21,16 @@ import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.TelephonyInfo;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regModel;
 
@@ -49,7 +43,6 @@ public class EntryForthActivity extends BaseActivity {
             driving_license_img = "", visiting_card_img = "", operator = "", downloadSource = "";
     private CheckBox checkBox_one, checkBox_two, checkBox_three, checkBox_four, checkBox_five, checkBox_six, checkBox_seven, checkBox_eight, checkBox_nine,
             checkBox_ten;
-    private SubmitRequestTask mSubmitRequestTask = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -244,19 +237,21 @@ public class EntryForthActivity extends BaseActivity {
                         visiting_card_img = regModel.getVisitingCard();
                     }
 
-                    if (!regModel.getOutletName().isEmpty() && !regModel.getOutletAddress().isEmpty() && !regModel.getOwnerName().isEmpty()
-                            && !regModel.getBusinessId().isEmpty() && !regModel.getBusinessType().isEmpty() && !regModel.getPhnNumber().isEmpty()
-                            && !regModel.getDistrictName().isEmpty() && !regModel.getThanaName().isEmpty() && !regModel.getPostcodeName().isEmpty()
-                            && !regModel.getPostcodeId().isEmpty() && !email.isEmpty() && !landmark.isEmpty() && !sales_code.isEmpty()
-                            && !collection_code.isEmpty() && !outlet_img.isEmpty() && !nid_img.isEmpty() && !nid_back_img.isEmpty()
-                            && !owner_img.isEmpty() && !trade_license_img.isEmpty() && !passport_img.isEmpty() && !birth_certificate_img.isEmpty()
-                            && !driving_license_img.isEmpty() && !visiting_card_img.isEmpty()) {
+//                    if (!regModel.getOutletName().isEmpty() && !regModel.getOutletAddress().isEmpty() && !regModel.getOwnerName().isEmpty()
+//                            && !regModel.getBusinessId().isEmpty() && !regModel.getBusinessType().isEmpty() && !regModel.getPhnNumber().isEmpty()
+//                            && !regModel.getDistrictName().isEmpty() && !regModel.getThanaName().isEmpty() && !regModel.getPostcodeName().isEmpty()
+//                            && !regModel.getPostcodeId().isEmpty() && !email.isEmpty() && !landmark.isEmpty() && !sales_code.isEmpty()
+//                            && !collection_code.isEmpty() && !outlet_img.isEmpty() && !nid_img.isEmpty() && !nid_back_img.isEmpty()
+//                            && !owner_img.isEmpty() && !trade_license_img.isEmpty() && !passport_img.isEmpty() && !birth_certificate_img.isEmpty()
+//                            && !driving_license_img.isEmpty() && !visiting_card_img.isEmpty()) {
+//
+//
+//                    } else {
+//                        Toast.makeText(this, "সঠিকভাবে ইনপুট দিন", Toast.LENGTH_SHORT).show();
+//                    }
 
-                        AnalyticsManager.sendEvent(AnalyticsParameters.KEY_REGISTRATION_MENU, AnalyticsParameters.KEY_REGISTRATION_FORTH_PORTION_SUBMIT_REQUEST);
-                        checkRequest();
-                    } else {
-                        Toast.makeText(this, "সঠিকভাবে ইনপুট দিন", Toast.LENGTH_SHORT).show();
-                    }
+                    AnalyticsManager.sendEvent(AnalyticsParameters.KEY_REGISTRATION_MENU, AnalyticsParameters.KEY_REGISTRATION_FORTH_PORTION_SUBMIT_REQUEST);
+                    checkRequest();
                 }
             } else {
                 Toast.makeText(this, "সঠিকভাবে ইনপুট দিন", Toast.LENGTH_SHORT).show();
@@ -324,105 +319,48 @@ public class EntryForthActivity extends BaseActivity {
     }
 
     private void checkRequest() {
-        if (mSubmitRequestTask != null) {
-            return;
-        }
-        mSubmitRequestTask = new SubmitRequestTask(getString(R.string.final_reg_url));
-        mSubmitRequestTask.execute();
-    }
+        showProgressDialog();
 
-    private class SubmitRequestTask extends AsyncTask<Void, Intent, String> {
+        regModel.setImei(imeiOne);
+        regModel.setAlternate_imei(imeiTwo);
+        regModel.setDownloadSource(downloadSource);
+        regModel.setDtype("Tab");
+        regModel.setOperators(operator);
+        regModel.setLandmark(landmark);
+        regModel.setEmailAddress(email);
+        regModel.setPassport(passport_img);
+        regModel.setBirthCertificate(birth_certificate_img);
+        regModel.setDrivingLicense(driving_license_img);
+        regModel.setVisitingCard(visiting_card_img);
+        regModel.setOutletImage(outlet_img);
+        regModel.setOwnerImage(owner_img);
 
 
-        private final String mURL;
-        private String operators;
 
-        SubmitRequestTask(String url) {
-            mURL = url;
 
-            if (!operator.equals("")) {
-                operators = method(operator);
-            } else {
-                operators = "";
+        ApiUtils.getAPIServicePHP7().userInformationForRegistration(regModel).enqueue(new Callback<ResponseBody>() {
+
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
+                try {
+                    JSONObject jsonObject = new JSONObject(response.body().string());
+                    String status = jsonObject.getString("status");
+                    String message = jsonObject.getString("message");
+                    showTransferMessage(status, message);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    Toast.makeText(EntryForthActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
+                }
             }
-        }
-
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            String responseTxt = null;
-            try {
-                // Create a new HttpClient and Post Header
-                HttpClient httpclient = new DefaultHttpClient();
-                HttpPost httppost = new HttpPost(mURL);
-
-                List<NameValuePair> nameValuePairs = new ArrayList<>(28);
-                nameValuePairs.add(new BasicNameValuePair("imei", imeiOne));
-                nameValuePairs.add(new BasicNameValuePair("alternate_imei", imeiTwo));
-                nameValuePairs.add(new BasicNameValuePair("outlet_name", regModel.getOutletName()));
-                nameValuePairs.add(new BasicNameValuePair("outlet_address", regModel.getOutletAddress()));
-                nameValuePairs.add(new BasicNameValuePair("owner_name", regModel.getOwnerName()));
-                nameValuePairs.add(new BasicNameValuePair("mobile_number", regModel.getPhnNumber()));
-                nameValuePairs.add(new BasicNameValuePair("post_code", regModel.getPostcodeName()));
-                nameValuePairs.add(new BasicNameValuePair("post_office_id", regModel.getPostcodeId()));
-                nameValuePairs.add(new BasicNameValuePair("thana", regModel.getThanaName()));
-                nameValuePairs.add(new BasicNameValuePair("district", regModel.getDistrictName()));
-                nameValuePairs.add(new BasicNameValuePair("business_type_id", regModel.getBusinessId()));
-                nameValuePairs.add(new BasicNameValuePair("business_type", regModel.getBusinessType()));
-                nameValuePairs.add(new BasicNameValuePair("email", email));
-                nameValuePairs.add(new BasicNameValuePair("landmark", landmark));
-                nameValuePairs.add(new BasicNameValuePair("sales_code", sales_code));
-                nameValuePairs.add(new BasicNameValuePair("collection_code", collection_code));
-                nameValuePairs.add(new BasicNameValuePair("outlet_img", outlet_img));
-                nameValuePairs.add(new BasicNameValuePair("nid_img", nid_img));
-                nameValuePairs.add(new BasicNameValuePair("nid_back_img", nid_back_img));
-                nameValuePairs.add(new BasicNameValuePair("owner_img", owner_img));
-                nameValuePairs.add(new BasicNameValuePair("trade_license_img", trade_license_img));
-                nameValuePairs.add(new BasicNameValuePair("image_passport", passport_img));
-                nameValuePairs.add(new BasicNameValuePair("birth_certificate_img", birth_certificate_img));
-                nameValuePairs.add(new BasicNameValuePair("driving_license_imege", driving_license_img));
-                nameValuePairs.add(new BasicNameValuePair("visiting_card_img", visiting_card_img));
-                nameValuePairs.add(new BasicNameValuePair("operators", operators));
-                nameValuePairs.add(new BasicNameValuePair("downloadSource", downloadSource));
-                nameValuePairs.add(new BasicNameValuePair("dtype", "Tab"));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-                Toast.makeText(EntryForthActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT);
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            mSubmitRequestTask = null;
-           dismissProgressDialog();
-            try {
-                JSONObject jsonObject = new JSONObject(result);
-                String status = jsonObject.getString("status");
-                String message = jsonObject.getString("message");
-                showTransferMessage(status, message);
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
                 Toast.makeText(EntryForthActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
             }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mSubmitRequestTask = null;
-            dismissProgressDialog();
-        }
+        });
     }
 
-    @SuppressWarnings("deprecation")
     private void showTransferMessage(String status_code, String message) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
