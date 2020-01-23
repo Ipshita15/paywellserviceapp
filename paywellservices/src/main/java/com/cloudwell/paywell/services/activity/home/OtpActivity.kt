@@ -2,11 +2,13 @@ package com.cloudwell.paywell.services.activity.home
 
 import android.content.IntentFilter
 import android.os.Bundle
+import android.util.Base64
 import android.widget.Toast
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.AppThemeBaseActivity
 import com.cloudwell.paywell.services.activity.home.model.RequestOtpCheck
 import com.cloudwell.paywell.services.activity.home.model.ResposeAppsAuth
+import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.AppHelper
 import com.google.android.gms.auth.api.Auth
@@ -17,8 +19,14 @@ import kotlinx.android.synthetic.main.otp_dialog.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.security.KeyFactory
+import java.security.PrivateKey
+import java.security.spec.PKCS8EncodedKeySpec
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+import javax.crypto.Cipher
+import javax.crypto.spec.SecretKeySpec
+
 
 class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, OtpReceivedInterface {
 
@@ -30,12 +38,16 @@ class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
         btbtSubmitMobileNumber.setOnClickListener {
 
-            val mobileNumber = etMobileOrRID.text
-            //otpManualCall(mobileNumber.toString().trim())
+            val otp = etMobileOrRID.text
+
+            callCheckOTP("" + otp)
 
         }
 
         etMobileOrRID.requestFocus();
+
+
+
 
         btCancel.setOnClickListener {
             finish()
@@ -156,6 +168,35 @@ class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks,
         m.username = androidId
 
 
+        val envlope = AppHandler.getmInstance(applicationContext).envlope
+        val sealedData = AppHandler.getmInstance(applicationContext).sealedData
+
+        val p = getPrivateKey()
+
+
+        val cipher = Cipher.getInstance("RSA")
+        cipher?.init(Cipher.DECRYPT_MODE,  p)
+        val rowEnvlope = Base64.decode(envlope.toByteArray(), Base64.DEFAULT)
+        val doFinal = cipher.doFinal(rowEnvlope)
+        val envlpeDecryptionKey= Base64.encodeToString(doFinal, Base64.DEFAULT)
+
+
+
+        /* Decrypt the message, given derived encContentValues and initialization vector. */
+
+        val rowSealData = Base64.decode(sealedData.toByteArray(), Base64.DEFAULT)
+
+
+
+        val cipherRC4 = Cipher.getInstance("RC4") // Transformation of the algorithm
+        val secretKeySpec = SecretKeySpec(envlpeDecryptionKey.toByteArray(), "RC4")
+        cipherRC4.init(Cipher.DECRYPT_MODE,secretKeySpec)
+//
+        val sealedDataDecryption = cipher.doFinal(rowSealData);
+        val key = Base64.encodeToString(sealedDataDecryption, Base64.DEFAULT)
+        com.orhanobut.logger.Logger.v("")
+
+
 
 
         ApiUtils.getAPIServiceV2().checkOTP(m).enqueue(object : Callback<ResposeAppsAuth> {
@@ -170,9 +211,18 @@ class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks,
             override fun onFailure(call: Call<ResposeAppsAuth>, t: Throwable) {
                 dismissProgressDialog();
                 com.orhanobut.logger.Logger.e("" + t.message)
-
             }
         })
 
     }
+
+    private fun getPrivateKey(): PrivateKey? {
+        val privateString = AppHandler.getmInstance(applicationContext).rsaKays.get(0);
+        val decodePrivateKey = Base64.decode(privateString, Base64.DEFAULT)
+        val kf: KeyFactory = KeyFactory.getInstance("RSA")
+        val p = kf.generatePrivate(PKCS8EncodedKeySpec(decodePrivateKey))
+        return p
+    }
+
+
 }
