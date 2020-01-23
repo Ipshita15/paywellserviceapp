@@ -177,8 +177,8 @@ class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks,
         val cipher = Cipher.getInstance("RSA")
         cipher?.init(Cipher.DECRYPT_MODE,  p)
         val rowEnvlope = Base64.decode(envlope.toByteArray(), Base64.DEFAULT)
-        val doFinal = cipher.doFinal(rowEnvlope)
-        val envlpeDecryptionKey= Base64.encodeToString(doFinal, Base64.DEFAULT)
+        val rowEnvlopeDecrytionKey = cipher.doFinal(rowEnvlope)
+//        val envlpeDecryptionKey= Base64.encodeToString(rowEnvlopeDecrytionKey, Base64.DEFAULT)
 
 
 
@@ -189,7 +189,7 @@ class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
 
         val cipherRC4 = Cipher.getInstance("RC4") // Transformation of the algorithm
-        val secretKeySpec = SecretKeySpec(envlpeDecryptionKey.toByteArray(), "RC4")
+        val secretKeySpec = SecretKeySpec(rowEnvlopeDecrytionKey, "RC4")
         cipherRC4.init(Cipher.DECRYPT_MODE,secretKeySpec)
 //
         val sealedDataDecryption = cipher.doFinal(rowSealData);
