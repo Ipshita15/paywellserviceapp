@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.utils.AppHelper;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 
 import java.text.SimpleDateFormat;
@@ -108,6 +109,7 @@ public class AppHandler {
     private static final String UNKNOWN_PASSENGER_AGE = "unknownPassengerAge";
     private static final String UNKNOWN_SOURCE_STATION_CODE = "unknownSourceStationCode";
     private static final String UNKNOWN_MOBILE_NUMBER = "UNKNOWN_MOBILE_NUMBER";
+    private static final String  UNKNOWN = "UNKNOWN";
     private static final String MOBILE_NUMBER = "MOBILE_NUMBER";
     private static final String PictureArrayImageLink = "PictureArrayImageLink";
 
@@ -162,6 +164,13 @@ public class AppHandler {
     public static final int MULTI_CITY_LIMIT = 5;
     public static final String IVAC_CENTER_LOCK = "IVAC_CENTER_LOCK";
     public static final String IVAC_CENTER_ID = "IVAC_CENTER_ID";
+
+    public static final String KEY_RSA_PRIVATE_KEY= "KEY_RSA_PRIVATE_KEY";
+    public static final String KEY_RSA_PUBLIC_KEY= "KEY_RSA_PUBLIC_KEY";
+    public static final String KEY_SEALED_DATA= "KEY_SEALED_DATA";
+    public static final String KEY_ENVLOPE= "KEY_ENVLOPE";
+    public static final String KEY_APPS_SECURITY_Token= "KEY_APPS_SECURITY_Token";
+    public static final String KEY_APPS_TOKEN_EXP_Time= "KEY_APPS_TOKEN_EXP_Time";
 
 
     public AppHandler() {
@@ -738,6 +747,76 @@ public class AppHandler {
     public String getSavedCenterId() {
         return mPref.getString(IVAC_CENTER_ID,"");
     }
+
+    public ArrayList<String> getRSAKays() {
+
+        ArrayList<String> data = new ArrayList<String>();
+
+        String rSAPrivateKey = mPref.getString(KEY_RSA_PRIVATE_KEY, UNKNOWN);
+        if (rSAPrivateKey.equals(UNKNOWN)){
+            ArrayList<String> rsaKays = AppHelper.getRSAKays();
+            String privateKey = rsaKays.get(0);
+            String publicKey = rsaKays.get(1);
+
+            data.add(privateKey);
+            data.add(publicKey);
+
+            editor.putString(KEY_RSA_PRIVATE_KEY, privateKey);
+            editor.putString(KEY_RSA_PUBLIC_KEY, publicKey);
+        }else {
+
+            data.add(mPref.getString(KEY_RSA_PRIVATE_KEY, UNKNOWN));
+            data.add(mPref.getString(KEY_RSA_PUBLIC_KEY, UNKNOWN));
+
+        }
+        return data;
+
+
+    }
+
+    public void setSealedData(String sealedData) {
+        editor.putString(KEY_SEALED_DATA, sealedData);
+        editor.commit();
+    }
+
+
+    public String getSealedData() {
+        return mPref.getString(KEY_SEALED_DATA, "unknown");
+    }
+
+
+    public void setEnvlope(String envlope) {
+        editor.putString(KEY_ENVLOPE, envlope);
+        editor.commit();
+    }
+
+    public String getEnvlope() {
+        return mPref.getString(KEY_ENVLOPE, "unknown");
+    }
+
+
+    public void setAppsSecurityToken(String token) {
+        editor.putString(KEY_APPS_SECURITY_Token, token);
+        editor.commit();
+    }
+
+    public String getAppsSecurityToken() {
+        return mPref.getString(KEY_APPS_SECURITY_Token, "unknown");
+    }
+
+
+    public void setAppsTokenExpTime(String token) {
+        editor.putString(KEY_APPS_SECURITY_Token, token);
+        editor.commit();
+    }
+
+    public String getAppsTokenExpTime() {
+        return mPref.getString(KEY_APPS_TOKEN_EXP_Time, "unknown");
+    }
+
+
+
+
 
     public static class MyDialogFragment extends DialogFragment {
         private ConnectionDetector cd;

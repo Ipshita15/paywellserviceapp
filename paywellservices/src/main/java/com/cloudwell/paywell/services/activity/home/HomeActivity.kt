@@ -11,6 +11,7 @@ import com.cloudwell.paywell.services.activity.home.model.RequestAppsAuth
 import com.cloudwell.paywell.services.activity.home.model.ResposeAppsAuth
 import com.cloudwell.paywell.services.activity.reg.EntryMainActivity
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.MobileNumberInputDialog
+import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import kotlinx.android.synthetic.main.activity_home.*
 import retrofit2.Call
@@ -18,13 +19,16 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class HomeActivity : AppThemeBaseActivity(){
-
+class HomeActivity : AppThemeBaseActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
+
+
+
 
         getSupportActionBar()?.hide()
 
@@ -40,19 +44,19 @@ class HomeActivity : AppThemeBaseActivity(){
         btLogin.setOnClickListener {
 
             val mobileNumberInputDialog = MobileNumberInputDialog(object : MobileNumberInputDialog.OnClickHandler {
-                override fun onSubmit(mobileNumber: String, pin: String ) {
-                    if(!mobileNumber.equals("")){
+                override fun onSubmit(mobileNumber: String, pin: String) {
+                    if (!mobileNumber.equals("")) {
                         val userName = mobileNumber
                         val pin = pin
 
-                        if (isInternetConnection){
+                        if (isInternetConnection) {
                             callGetTokenAPI(userName, pin);
-                        }else{
+                        } else {
                             showSnackMessageWithTextMessage(getString(R.string.no_notification_msg))
 
                         }
 
-                    }else{
+                    } else {
                         Toast.makeText(applicationContext, "Please input valid RID or Mobile number", Toast.LENGTH_LONG).show()
                     }
 
@@ -62,10 +66,6 @@ class HomeActivity : AppThemeBaseActivity(){
             mobileNumberInputDialog.show(supportFragmentManager, "mobileNumberInputDialog");
 
         }
-
-
-
-
 
 
 //        val otpSentMsgDialog = OTPSentMsgDialog(object : OTPSentMsgDialog.OnClickHandler {
@@ -100,7 +100,6 @@ class HomeActivity : AppThemeBaseActivity(){
 //        otpErrorMsgDialog.show(supportFragmentManager, "otpErrorMessageDialog");
 
 
-
     }
 
     private fun callGetTokenAPI(userName: String, password: String) {
@@ -115,29 +114,46 @@ class HomeActivity : AppThemeBaseActivity(){
         val currentTimestamp = System.currentTimeMillis()
 
 
-        val authRequestModel = RequestAppsAuth(0, androidId, "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlHZk1BMEdDU3FHU0liM0RRRUJBUVVBQTRHTkFEQ0JpUUtCZ1FDdk9UVVo4a085NU80V0t4TW9MM3IyQ0NKZApwRFd1cEIyNTZVYkQvN3VwVS8wYkNJZUhaVE84WUlkMUZWZXpsR3hXRWdTQStHSSsydk52c2lab2JmVjVQZHRoClN2ZldjK0NzR1Q4WTZJbkJuUFpZTVh3dk0wb3VwNWtDSTc2Z1hmcUNMSWYwQnFVWGl1VFNTRzNxNHZrWlhGT2gKcEg5L1BvMmZ3U1ozRHNiS2Z3SURBUUFCCi0tLS0tRU5EIFBVQkxJQyBLRVktLS0tLQ==", channel, ""+currentTimestamp)
+        val privateKey = AppHandler.getmInstance(applicationContext).getRSAKays().get(1);
 
-            ApiUtils.getAPIServiceV2().getAppsAuthToken(authHeader, authRequestModel).enqueue(object : Callback<ResposeAppsAuth> {
-                override fun onResponse(call: Call<ResposeAppsAuth>, response: Response<ResposeAppsAuth>) {
-                    dismissProgressDialog()
-                    if (response.isSuccessful) {
-                        startActivity(Intent(this@HomeActivity, OtpActivity::class.java))
+
+        val authRequestModel = RequestAppsAuth(0, androidId, privateKey, channel, "" + currentTimestamp)
+
+        ApiUtils.getAPIServiceV2().getAppsAuthToken(authHeader, authRequestModel).enqueue(object : Callback<ResposeAppsAuth> {
+            override fun onResponse(call: Call<ResposeAppsAuth>, response: Response<ResposeAppsAuth>) {
+                dismissProgressDialog()
+                if (response.isSuccessful) {
+                    val m = response.body()
+
+                    m.let {
+                        if (m?.checkOTP ?: 0 == 1L) {
+
+                            AppHandler.getmInstance(applicationContext).setSealedData(m?.sealedData)
+                            AppHandler.getmInstance(applicationContext).setEnvlope(m?.envlope)
+                            AppHandler.getmInstance(applicationContext).setAppsSecurityToken(m?.token?.securityToken)
+                            AppHandler.getmInstance(applicationContext).setAppsTokenExpTime(m?.token?.tokenExpTime)
+
+                            startActivity(Intent(this@HomeActivity, OtpActivity::class.java))
+
+
+                        } else {
+
+
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<ResposeAppsAuth>, t: Throwable) {
-                    dismissProgressDialog();
-                    com.orhanobut.logger.Logger.e("" + t.message)
 
                 }
-            })
+            }
 
-        }
+            override fun onFailure(call: Call<ResposeAppsAuth>, t: Throwable) {
+                dismissProgressDialog();
+                com.orhanobut.logger.Logger.e("" + t.message)
 
+            }
+        })
 
-
-
-
+    }
 
 
 }

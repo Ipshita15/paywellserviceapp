@@ -21,6 +21,9 @@ class MobileNumberInputDialog(val onClickHandler: OnClickHandler): DialogFragmen
             onClickHandler?.onSubmit(mobileNumber.toString().trim(),etPin.text.toString().trim() )
 
         }
+
+        view.etMobileOrRID.setText("01675349882")
+        view.etPin.setText("1234")
         return view
 
     }

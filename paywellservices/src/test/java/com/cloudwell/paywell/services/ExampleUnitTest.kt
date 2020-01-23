@@ -4,11 +4,12 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.m
 import com.google.gson.Gson
 import com.orhanobut.logger.Logger
 import org.junit.Test
+import java.security.KeyPair
+import java.security.KeyPairGenerator
+import java.security.NoSuchAlgorithmException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
-import java.util.regex.Matcher
-import java.util.regex.Pattern
 
 
 /**
@@ -194,10 +195,27 @@ class ExampleUnitTest {
     @Test
     fun getDurtingJounaryTimeNewTest(){
 
-        val message = "#Your on-time-password (OTP) for log-in to PayWell is 7184. This OTP will expire in 5  minutes O4P+rGzX3rm"
+//        val message = "#Your on-time-password (OTP) for log-in to PayWell is 7184. This OTP will expire in 5  minutes O4P+rGzX3rm"
+//
+//        val parseCode = parseCode(message)
+//        Logger.v(""+parseCode)
 
-        val parseCode = parseCode(message)
-        Logger.v(""+parseCode)
+
+        var kpg: KeyPairGenerator? = null
+        try {
+            kpg = KeyPairGenerator.getInstance("RSA")
+            kpg.initialize(2048)
+            val kp: KeyPair = kpg.generateKeyPair()
+            println("-----BEGIN PRIVATE KEY-----")
+            System.out.println(Base64.getMimeEncoder().encodeToString(kp.getPrivate().getEncoded()))
+            println("-----END PRIVATE KEY-----")
+            println("-----BEGIN PUBLIC KEY-----")
+            System.out.println(Base64.getMimeEncoder().encodeToString(kp.getPublic().getEncoded()))
+            println("-----END PUBLIC KEY-----")
+        } catch (e: NoSuchAlgorithmException) {
+            e.printStackTrace()
+        }
+
 
     }
 
