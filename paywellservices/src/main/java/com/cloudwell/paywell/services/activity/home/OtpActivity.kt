@@ -11,6 +11,7 @@ import com.cloudwell.paywell.services.activity.home.model.ResposeAppsAuth
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.AppHelper
+import com.cloudwell.paywell.services.utils.algorithem.AES
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.gms.common.ConnectionResult
@@ -25,7 +26,6 @@ import java.security.spec.PKCS8EncodedKeySpec
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import javax.crypto.Cipher
-import javax.crypto.spec.SecretKeySpec
 
 
 class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, OtpReceivedInterface {
@@ -168,33 +168,59 @@ class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks,
         m.username = androidId
 
 
-        val envlope = AppHandler.getmInstance(applicationContext).envlope
-        val sealedData = AppHandler.getmInstance(applicationContext).sealedData
+        val envlopeString = AppHandler.getmInstance(applicationContext).envlope
+        val sealedDataString = AppHandler.getmInstance(applicationContext).sealedData
 
         val p = getPrivateKey()
 
 
         val cipher = Cipher.getInstance("RSA")
         cipher?.init(Cipher.DECRYPT_MODE,  p)
-        val rowEnvlope = Base64.decode(envlope.toByteArray(), Base64.DEFAULT)
-        val rowEnvlopeDecrytionKey = cipher.doFinal(rowEnvlope)
+        val envlopeDecode = Base64.decode(envlopeString.toByteArray(), Base64.DEFAULT)
+        val rowEnvlopeDecrytionKey = cipher.doFinal(envlopeDecode)
 //        val envlpeDecryptionKey= Base64.encodeToString(rowEnvlopeDecrytionKey, Base64.DEFAULT)
 
 
 
         /* Decrypt the message, given derived encContentValues and initialization vector. */
 
-        val rowSealData = Base64.decode(sealedData.toByteArray(), Base64.DEFAULT)
+        val sealDataDecode = Base64.decode(sealedDataString.toByteArray(), Base64.DEFAULT)
 
 
 
-        val cipherRC4 = Cipher.getInstance("RC4") // Transformation of the algorithm
-        val secretKeySpec = SecretKeySpec(rowEnvlopeDecrytionKey, "RC4")
-        cipherRC4.init(Cipher.DECRYPT_MODE,secretKeySpec)
+//        val cipherRC4 = Cipher.getInstance("RC4") // Transformation of the algorithm
+//        val secretKeySpec = SecretKeySpec(rowEnvlopeDecrytionKey, "RC4")
 //
-        val sealedDataDecryption = cipher.doFinal(rowSealData);
-        val key = Base64.encodeToString(sealedDataDecryption, Base64.DEFAULT)
-        com.orhanobut.logger.Logger.v("")
+////        val secretKeySpec = SecretKeySpec(Hex.decode(rowEnvlopeDecrytionKey), "RC4"); //String to key conversion using Hex.decode to convert to byte []
+//        cipherRC4.init(Cipher.DECRYPT_MODE, secretKeySpec)
+////
+//        val sealedDataDecryption = cipherRC4.doFinal(sealDataDecode)
+//        val key = Base64.encodeToString(sealDataDecode, Base64.DEFAULT)
+//
+//        val data=  String(sealedDataDecryption)
+//        com.orhanobut.logger.Logger.v("")
+
+//        val sr = SecureRandom(rowEnvlopeDecrytionKey)
+//        val kg = KeyGenerator.getInstance("RC4")
+//        kg.init(sr)
+//        val key = kg.generateKey();
+//
+//
+//        val cipherRC4 = Cipher.getInstance("RC4");
+//        cipherRC4.init(Cipher.DECRYPT_MODE, key);
+//        val doFinal = cipherRC4.doFinal(rowSealData);
+
+
+
+//
+
+
+
+        val saealDataString = String(sealDataDecode);
+        val initVector = saealDataString.substring(0, 16) // 128 bit key
+        val lastData = saealDataString.substring(17, saealDataString.length - 1) // 16 bytes IV
+
+        val decrypt = AES.decrypt(String(rowEnvlopeDecrytionKey),initVector,lastData)
 
 
 
@@ -220,6 +246,8 @@ class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks,
         val privateString = AppHandler.getmInstance(applicationContext).rsaKays.get(0);
         val decodePrivateKey = Base64.decode(privateString, Base64.DEFAULT)
         val kf: KeyFactory = KeyFactory.getInstance("RSA")
+//        RSAPrivateKeySpec(decodePrivateKey);
+
         val p = kf.generatePrivate(PKCS8EncodedKeySpec(decodePrivateKey))
         return p
     }

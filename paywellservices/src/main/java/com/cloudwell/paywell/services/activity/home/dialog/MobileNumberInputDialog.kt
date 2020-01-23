@@ -11,8 +11,6 @@ import kotlinx.android.synthetic.main.mobile_number_dialog.view.*
 
 class MobileNumberInputDialog(val onClickHandler: OnClickHandler): DialogFragment() {
 
-
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = layoutInflater.inflate(R.layout.mobile_number_dialog, null)
         view.btbtSubmitMobileNumber.setOnClickListener {

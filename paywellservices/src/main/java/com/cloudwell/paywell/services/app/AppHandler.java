@@ -12,6 +12,7 @@ import android.util.Log;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.utils.AppHelper;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.orhanobut.logger.Logger;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -764,6 +765,9 @@ public class AppHandler {
             editor.putString(KEY_RSA_PRIVATE_KEY, privateKey);
             editor.putString(KEY_RSA_PUBLIC_KEY, publicKey);
         }else {
+
+            Logger.v("private: "+mPref.getString(KEY_RSA_PRIVATE_KEY, UNKNOWN));
+            Logger.v("public: "+mPref.getString(KEY_RSA_PUBLIC_KEY, UNKNOWN));
 
             data.add(mPref.getString(KEY_RSA_PRIVATE_KEY, UNKNOWN));
             data.add(mPref.getString(KEY_RSA_PUBLIC_KEY, UNKNOWN));
