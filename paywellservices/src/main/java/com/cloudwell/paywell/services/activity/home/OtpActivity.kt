@@ -176,15 +176,15 @@ class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
         val cipher = Cipher.getInstance("RSA")
         cipher?.init(Cipher.DECRYPT_MODE,  p)
-        val envlopeDecode = Base64.decode(envlopeString.toByteArray(), Base64.DEFAULT)
+        val envlopeDecode = Base64.decode(envlopeString.toByteArray(Charsets.UTF_8), Base64.DEFAULT)
         val rowEnvlopeDecrytionKey = cipher.doFinal(envlopeDecode)
-//        val envlpeDecryptionKey= Base64.encodeToString(rowEnvlopeDecrytionKey, Base64.DEFAULT)
+        val envlpeDecryptionKey= Base64.encodeToString(rowEnvlopeDecrytionKey, Base64.DEFAULT)
 
 
 
         /* Decrypt the message, given derived encContentValues and initialization vector. */
 
-        val sealDataDecode = Base64.decode(sealedDataString.toByteArray(), Base64.DEFAULT)
+        val sealDataDecode = Base64.decode(sealedDataString.toByteArray(Charsets.UTF_8), Base64.DEFAULT)
 
 
 
@@ -218,9 +218,9 @@ class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
         val saealDataString = String(sealDataDecode);
         val initVector = saealDataString.substring(0, 16) // 128 bit key
-        val lastData = saealDataString.substring(17, saealDataString.length - 1) // 16 bytes IV
+        val encrypted = saealDataString.substring(17, saealDataString.length) // 16 bytes IV
 
-        val decrypt = AES.decrypt(String(rowEnvlopeDecrytionKey),initVector,lastData)
+        val decrypt = AES.decrypt(String(rowEnvlopeDecrytionKey),initVector,encrypted)
 
 
 
@@ -245,10 +245,9 @@ class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks,
     private fun getPrivateKey(): PrivateKey? {
         val privateString = AppHandler.getmInstance(applicationContext).rsaKays.get(0);
         val decodePrivateKey = Base64.decode(privateString, Base64.DEFAULT)
+        val keySpec = PKCS8EncodedKeySpec(decodePrivateKey)
         val kf: KeyFactory = KeyFactory.getInstance("RSA")
-//        RSAPrivateKeySpec(decodePrivateKey);
-
-        val p = kf.generatePrivate(PKCS8EncodedKeySpec(decodePrivateKey))
+        val p = kf.generatePrivate(keySpec)
         return p
     }
 
