@@ -168,13 +168,16 @@ class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks,
         m.username = androidId
 
 
+
         val envlopeString = AppHandler.getmInstance(applicationContext).envlope
         val sealedDataString = AppHandler.getmInstance(applicationContext).sealedData
 
         val p = getPrivateKey()
 
 
-        val cipher = Cipher.getInstance("RSA")
+
+
+        val cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding")
         cipher?.init(Cipher.DECRYPT_MODE,  p)
         val envlopeDecode = Base64.decode(envlopeString.toByteArray(Charsets.UTF_8), Base64.DEFAULT)
         val rowEnvlopeDecrytionKey = cipher.doFinal(envlopeDecode)
@@ -188,31 +191,6 @@ class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
 
 
-//        val cipherRC4 = Cipher.getInstance("RC4") // Transformation of the algorithm
-//        val secretKeySpec = SecretKeySpec(rowEnvlopeDecrytionKey, "RC4")
-//
-////        val secretKeySpec = SecretKeySpec(Hex.decode(rowEnvlopeDecrytionKey), "RC4"); //String to key conversion using Hex.decode to convert to byte []
-//        cipherRC4.init(Cipher.DECRYPT_MODE, secretKeySpec)
-////
-//        val sealedDataDecryption = cipherRC4.doFinal(sealDataDecode)
-//        val key = Base64.encodeToString(sealDataDecode, Base64.DEFAULT)
-//
-//        val data=  String(sealedDataDecryption)
-//        com.orhanobut.logger.Logger.v("")
-
-//        val sr = SecureRandom(rowEnvlopeDecrytionKey)
-//        val kg = KeyGenerator.getInstance("RC4")
-//        kg.init(sr)
-//        val key = kg.generateKey();
-//
-//
-//        val cipherRC4 = Cipher.getInstance("RC4");
-//        cipherRC4.init(Cipher.DECRYPT_MODE, key);
-//        val doFinal = cipherRC4.doFinal(rowSealData);
-
-
-
-//
 
 
 
@@ -243,7 +221,7 @@ class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks,
     }
 
     private fun getPrivateKey(): PrivateKey? {
-        val privateString = AppHandler.getmInstance(applicationContext).rsaKays.get(0);
+        val privateString = AppHandler.getmInstance(applicationContext).rsaKays.get(0)
         val decodePrivateKey = Base64.decode(privateString, Base64.DEFAULT)
         val keySpec = PKCS8EncodedKeySpec(decodePrivateKey)
         val kf: KeyFactory = KeyFactory.getInstance("RSA")

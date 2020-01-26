@@ -1,15 +1,16 @@
 package com.cloudwell.paywell.services
 
+import android.util.Log
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.OutputSegment
 import com.google.gson.Gson
 import com.orhanobut.logger.Logger
 import org.junit.Test
-import java.security.KeyPair
-import java.security.KeyPairGenerator
-import java.security.NoSuchAlgorithmException
+import java.security.KeyFactory
+import java.security.spec.PKCS8EncodedKeySpec
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+import javax.crypto.Cipher
 
 
 /**
@@ -195,27 +196,25 @@ class ExampleUnitTest {
     @Test
     fun getDurtingJounaryTimeNewTest(){
 
-//        val message = "#Your on-time-password (OTP) for log-in to PayWell is 7184. This OTP will expire in 5  minutes O4P+rGzX3rm"
-//
-//        val parseCode = parseCode(message)
-//        Logger.v(""+parseCode)
+
+        val privateString = "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCPvEWyoAS3fjtvanB4YpzYFBvS3yGXiygtyA4br32nrizRNyGntEQjDF8yVc9p66tIFEwUMYPn5p3m0P9aSh2yJRmH2OAxFzPJ2nyQIMs+PFiyzF7vo5bPu8nf37+v/uqY7vTmOB2vV8GczHnbVOFIbsWR29HUT8A0D6J2zX+E1adBD6V5SAQdoq+6H3YjMOUvLt9gfHF0KkKrStL0zwNFoZNn4JS9JB4hg6VPZlqotvhJpy8DCLpVCn91jg0OQEXWX02PD5H9j8jBhmsOQaJlEGM5aTnwqw4UJ8twUY/ubopWKlYsS6tdbznW1lQjhYo+bDEE54BOKWdq95pcUT2NAgMBAAECggEAC9Wgl3h9au5FzoKhCAh2iYP+VnpwtZ2LjVlvb/AfFHNO1VsItlotUgVuwSI3la0FyUWCjhcVmT5vudVzcOexUj2jwH+m1ePnK7OFlghdM56cXvxcxLZfcHMxx/EQQ1llz3m9SEdOimVbV6GuVtTCR8h3E+9Zc3WtiZvP8KAy46jkIBl4faXHHNlvx0fwzJtleclwnxEygVUvls5FBtvdAm+LezzVaZ2LyYvDHJoqlg+46o/LS1idSBeiaIBFq4raonwKpUZijXGbFtrbVtJtbWzSFeWV2Rp/+ZMZBPavsfC77bRYcapk9SALj1fBj3QCLR/fbTfbmX6pHNkeoTfxMQKBgQDJh2amQxUSNvcxwJodTUEFG1IxsdrD5t9hkklLmecFnLdskhvlRoW5NJK/psNZnWeRi7Uvzog4oazzLcKRbrtJ2+mfQ1nRqwejZpcm3AxMJ99qqVrWCmXxPh2CM9rz9I/njzV3oa6u6/T2Wrho661Rs0NfqTCZt/dlcKb3OUfMzwKBgQC2lehaJ0oPkgGeM5qY87i+PgrePUChefNZ+1BKkznJvlUXVOY+bxPLomH4DJXCOC0Z92l2zRTgjV4wPEgPFVeGownWdu293Q56WbQkze0FyJDT/3eI94XF6vV6Yj3WNK2WIvtoydyf27OKrX1Uk/+doym9kgXOa/WJfzztCUu+4wKBgAzEf0RZS6RzxwVn5luk4VGpgXOUiP+QSOatlecsQO6iFxzRxOKprR8mrYVm00mCJ2WZLElzFD5CP+rII2ODWGo9fHeSlMYrx7gab8kOd9j7TbQ8Nn0I+5xlCwmMr3p1LAjHkeOaYq7CVCqnZLeA9uIOMV6GIYYbmZjbojhXcK0RAoGBAJ1tlcCd3bqdHm4Eeojko+bMYdyLHb3dA1kTWoBiftIXHREX78nnRj8vDJ+uYjXq7+BStglr/FM9MPgQEeWHdkctLl9Pfd9VyZTu4WdWcsaoz08rFyrumNY0p2HVcRHPq9gm43TPkD35Vc39lnGlhiGqPGQqkn0QEs5x+ds7R6cXAoGAc6srBeILcZzUz83dUVpCLAzDVi5nnqOqTpaPJD9vIPDQWqzoUI8LvrP5CIMC0bemcrcM75aR3CvauXzHbETXZ0FzryWDWYbaENLS19YgGbbnXVoPai6oPnDljYbmW+n/eGCKVS9BQ4VRVUt248UwFLmRE4y0GYwJnv3CyXQnJrc="
+
+        val decodePrivateKey = java.util.Base64.getDecoder().decode(privateString)
+        val keySpec = PKCS8EncodedKeySpec(decodePrivateKey)
+        val kf: KeyFactory = KeyFactory.getInstance("RSA")
+        val p = kf.generatePrivate(keySpec)
 
 
-        var kpg: KeyPairGenerator? = null
-        try {
-            kpg = KeyPairGenerator.getInstance("RSA")
-            kpg.initialize(2048)
-            val kp: KeyPair = kpg.generateKeyPair()
-            println("-----BEGIN PRIVATE KEY-----")
-            System.out.println(Base64.getMimeEncoder().encodeToString(kp.getPrivate().getEncoded()))
-            println("-----END PRIVATE KEY-----")
-            println("-----BEGIN PUBLIC KEY-----")
-            System.out.println(Base64.getMimeEncoder().encodeToString(kp.getPublic().getEncoded()))
-            println("-----END PUBLIC KEY-----")
-        } catch (e: NoSuchAlgorithmException) {
-            e.printStackTrace()
-        }
+        val apiEnvoleData = "ij253m8HUmvrFgWpQPyVk9pR4TZ7NVQz2wB5ij6AIGJ6YcIY5KmBI5KD4G7aIQ3cFOGzTdbB0uze2g6mKnQnQ1o2fVSfh0PBQtvVq9SYAywpNyP1ceCrVj9vqH9kmBKOs5p61ED4xUUXyeFgY/oxL32rbBWFX1g5g1Gnb/6B6OyJsTFRQrm26DjRxweY3sAfaduaqjwOpa4ZXa5ip5gN+6WneoNjqMVhEMe1iDe0HuzRoB89oHN56kIKA5HHK644v3qHm7CW2jjcqe05I97lKijImpcnZgWnMbG9RrX6j98fwZBtbOCnVqm9ut/uaD7AwEvB6YPtI+a6RmFmL8fMfQ=="
 
+        val cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding")
+        cipher?.init(Cipher.DECRYPT_MODE,  p)
+
+
+        val envlopeDecode = java.util.Base64.getDecoder().decode(apiEnvoleData.toByteArray(Charsets.UTF_8))
+        val rowEnvlopeDecrytionKey = cipher.doFinal(envlopeDecode)
+        val envlpeDecryptionKey= java.util.Base64.getEncoder().encodeToString(rowEnvlopeDecrytionKey)
+        Log.e("data", "data")
 
     }
 

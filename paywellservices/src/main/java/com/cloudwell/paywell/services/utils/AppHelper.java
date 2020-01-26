@@ -65,7 +65,7 @@ public class AppHelper {
             String headlinePrivate = "-----BEGIN PRIVATE KEY-----\n";
             String footlinePrivate = "-----END PRIVATE KEY-----\n";
 
-            String privateKey = Base64.encodeToString(kp.getPrivate().getEncoded(), Base64.DEFAULT);
+            String privateKey = Base64.encodeToString(kp.getPrivate().getEncoded(), Base64.NO_WRAP);
 //            privateKey = headlinePrivate+privateKey+footlinePrivate;
 //            privateKey = Base64.encodeToString(privateKey.getBytes(), Base64.DEFAULT);;
             data.add(privateKey);
