@@ -839,5 +839,10 @@
     <string name="text_nid">এন.আই.ডি</string>
     <string name="text_smart_card">স্মার্ট কার্ড</string>
 
+    <string name="desco_prepaid_string">ডেসকো প্রিপেইড</string>
+    <string name="desco_postpaid_string">ডেসকো পোস্টপেইড</string>
+    <string name="meter_number">মিটার নম্বর</string>
+
+
 
 </resources>
