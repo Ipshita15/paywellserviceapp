@@ -1,9 +1,5 @@
 package com.cloudwell.paywell.services.utils.algorithem;
 
-import android.util.Base64;
-
-import javax.crypto.Cipher;
-import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 
@@ -45,21 +41,43 @@ public class AES {
 //    }
 
 
-    public static String decrypt(String key, String initVector, String encrypted) {
-        try {
-            IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
-            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
+//    public static String decrypt(String key, String initVector, String encrypted) {
+//        try {
+//            IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
+//            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
+//
+//            Cipher cipher = Cipher.getInstance("AES");
+//            cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
+//
+//            byte[] original = cipher.doFinal(Base64.decode(encrypted, Base64.DEFAULT));
+//
+//            return new String(original);
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//
+//        return null;
+//    }
 
-            Cipher cipher = Cipher.getInstance("AES");
-            cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
+//    public static String decrypt(String key, String initVector,  String encrypted) {
+//        try
+//        {
+//            IvParameterSpec ivspec = new IvParameterSpec(initVector.getBytes("UTF-8"));
+//
+//            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+//            KeySpec spec = new PBEKeySpec(key.toCharArray(), 65536, 256);
+//            SecretKey tmp = factory.generateSecret(spec);
+//            SecretKeySpec secretKey = new SecretKeySpec(tmp.getEncoded(), "AES");
+//
+//            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+//            cipher.init(Cipher.DECRYPT_MODE, secretKey, ivspec);
+//            return new String(cipher.doFinal(Base64.decode(encrypted, Base64.DEFAULT)));
+//        }
+//        catch (Exception e) {
+//            System.out.println("Error while decrypting: " + e.toString());
+//        }
+//        return null;
+//    }
 
-            byte[] original = cipher.doFinal(Base64.decode(encrypted, Base64.DEFAULT));
 
-            return new String(original);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return null;
-    }
 }

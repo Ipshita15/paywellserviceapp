@@ -11,7 +11,6 @@ import com.cloudwell.paywell.services.activity.home.model.ResposeAppsAuth
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.AppHelper
-import com.cloudwell.paywell.services.utils.algorithem.AES
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.gms.common.ConnectionResult
@@ -26,6 +25,7 @@ import java.security.spec.PKCS8EncodedKeySpec
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import javax.crypto.Cipher
+import javax.crypto.spec.SecretKeySpec
 
 
 class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, OtpReceivedInterface {
@@ -170,35 +170,25 @@ class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
 
         val envlopeString = AppHandler.getmInstance(applicationContext).envlope
-        val sealedDataString = AppHandler.getmInstance(applicationContext).sealedData
 
         val p = getPrivateKey()
-
-
-
-
-        val cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding")
-        cipher?.init(Cipher.DECRYPT_MODE,  p)
-        val envlopeDecode = Base64.decode(envlopeString.toByteArray(Charsets.UTF_8), Base64.DEFAULT)
-        val rowEnvlopeDecrytionKey = cipher.doFinal(envlopeDecode)
+        val rowEnvlopeDecrytionKey = getRowEnvlopeDecrytionKey(p, envlopeString)
         val envlpeDecryptionKey= Base64.encodeToString(rowEnvlopeDecrytionKey, Base64.DEFAULT)
 
 
 
         /* Decrypt the message, given derived encContentValues and initialization vector. */
-
+        val sealedDataString = AppHandler.getmInstance(applicationContext).sealedData
         val sealDataDecode = Base64.decode(sealedDataString.toByteArray(Charsets.UTF_8), Base64.DEFAULT)
 
+        val secretKeySpec = SecretKeySpec(rowEnvlopeDecrytionKey, "RC4")
+        val cipherRC4 = Cipher.getInstance("RC4") // Transformation of the algorithm
+        cipherRC4.init(Cipher.DECRYPT_MODE,secretKeySpec)
+        val rowDecryptionKey = cipherRC4.doFinal(sealDataDecode)
+        val sealDecryptionKey= Base64.encode(rowDecryptionKey, Base64.DEFAULT)
 
 
 
-
-
-        val saealDataString = String(sealDataDecode);
-        val initVector = saealDataString.substring(0, 16) // 128 bit key
-        val encrypted = saealDataString.substring(17, saealDataString.length) // 16 bytes IV
-
-        val decrypt = AES.decrypt(String(rowEnvlopeDecrytionKey),initVector,encrypted)
 
 
 
@@ -218,6 +208,14 @@ class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks,
             }
         })
 
+    }
+
+    private fun getRowEnvlopeDecrytionKey(p: PrivateKey?, envlopeString: String): ByteArray? {
+        val cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding")
+        cipher?.init(Cipher.DECRYPT_MODE, p)
+        val envlopeDecode = Base64.decode(envlopeString.toByteArray(Charsets.UTF_8), Base64.DEFAULT)
+        val rowEnvlopeDecrytionKey = cipher.doFinal(envlopeDecode)
+        return rowEnvlopeDecrytionKey
     }
 
     private fun getPrivateKey(): PrivateKey? {

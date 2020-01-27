@@ -6,11 +6,15 @@ import com.google.gson.Gson
 import com.orhanobut.logger.Logger
 import org.junit.Test
 import java.security.KeyFactory
+import java.security.SecureRandom
 import java.security.spec.PKCS8EncodedKeySpec
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.crypto.Cipher
+import javax.crypto.KeyGenerator
+import javax.crypto.SecretKey
+import javax.crypto.spec.SecretKeySpec
 
 
 /**
@@ -197,7 +201,7 @@ class ExampleUnitTest {
     fun getDurtingJounaryTimeNewTest(){
 
 
-        val privateString = "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCPvEWyoAS3fjtvanB4YpzYFBvS3yGXiygtyA4br32nrizRNyGntEQjDF8yVc9p66tIFEwUMYPn5p3m0P9aSh2yJRmH2OAxFzPJ2nyQIMs+PFiyzF7vo5bPu8nf37+v/uqY7vTmOB2vV8GczHnbVOFIbsWR29HUT8A0D6J2zX+E1adBD6V5SAQdoq+6H3YjMOUvLt9gfHF0KkKrStL0zwNFoZNn4JS9JB4hg6VPZlqotvhJpy8DCLpVCn91jg0OQEXWX02PD5H9j8jBhmsOQaJlEGM5aTnwqw4UJ8twUY/ubopWKlYsS6tdbznW1lQjhYo+bDEE54BOKWdq95pcUT2NAgMBAAECggEAC9Wgl3h9au5FzoKhCAh2iYP+VnpwtZ2LjVlvb/AfFHNO1VsItlotUgVuwSI3la0FyUWCjhcVmT5vudVzcOexUj2jwH+m1ePnK7OFlghdM56cXvxcxLZfcHMxx/EQQ1llz3m9SEdOimVbV6GuVtTCR8h3E+9Zc3WtiZvP8KAy46jkIBl4faXHHNlvx0fwzJtleclwnxEygVUvls5FBtvdAm+LezzVaZ2LyYvDHJoqlg+46o/LS1idSBeiaIBFq4raonwKpUZijXGbFtrbVtJtbWzSFeWV2Rp/+ZMZBPavsfC77bRYcapk9SALj1fBj3QCLR/fbTfbmX6pHNkeoTfxMQKBgQDJh2amQxUSNvcxwJodTUEFG1IxsdrD5t9hkklLmecFnLdskhvlRoW5NJK/psNZnWeRi7Uvzog4oazzLcKRbrtJ2+mfQ1nRqwejZpcm3AxMJ99qqVrWCmXxPh2CM9rz9I/njzV3oa6u6/T2Wrho661Rs0NfqTCZt/dlcKb3OUfMzwKBgQC2lehaJ0oPkgGeM5qY87i+PgrePUChefNZ+1BKkznJvlUXVOY+bxPLomH4DJXCOC0Z92l2zRTgjV4wPEgPFVeGownWdu293Q56WbQkze0FyJDT/3eI94XF6vV6Yj3WNK2WIvtoydyf27OKrX1Uk/+doym9kgXOa/WJfzztCUu+4wKBgAzEf0RZS6RzxwVn5luk4VGpgXOUiP+QSOatlecsQO6iFxzRxOKprR8mrYVm00mCJ2WZLElzFD5CP+rII2ODWGo9fHeSlMYrx7gab8kOd9j7TbQ8Nn0I+5xlCwmMr3p1LAjHkeOaYq7CVCqnZLeA9uIOMV6GIYYbmZjbojhXcK0RAoGBAJ1tlcCd3bqdHm4Eeojko+bMYdyLHb3dA1kTWoBiftIXHREX78nnRj8vDJ+uYjXq7+BStglr/FM9MPgQEeWHdkctLl9Pfd9VyZTu4WdWcsaoz08rFyrumNY0p2HVcRHPq9gm43TPkD35Vc39lnGlhiGqPGQqkn0QEs5x+ds7R6cXAoGAc6srBeILcZzUz83dUVpCLAzDVi5nnqOqTpaPJD9vIPDQWqzoUI8LvrP5CIMC0bemcrcM75aR3CvauXzHbETXZ0FzryWDWYbaENLS19YgGbbnXVoPai6oPnDljYbmW+n/eGCKVS9BQ4VRVUt248UwFLmRE4y0GYwJnv3CyXQnJrc="
+        val privateString = "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDBVkqCh5gT2d2EtIXtJSE1CNmC9k1n2HfHxmLbf8iprnD2AitxKXdCQrKYeNyye8yH1x011OpEmMx+F8zX+I5u5j4t9XugrI82FGjX/skxybjM5vWaU532NWt6zMQb4TjAR3aYv76j+ZmKhrsnGUQeGuR4AA3H/L+06Qu0WdZAvK7/VeDsPbqeMaKXDv0f0fgHhERVCyuNfQbf1zfCn4JQeuCzdG11UseAZlAqwwWddEkaNhTF6Uz7zOxi/0pkkZNC/M1WwBNSEeqEHjtWKSLA4k9a7MPxMAchvSSif/rDVdXcyaIICy0wGF7zpxoFubNDxUilBAGElKEzEBOFZrp5AgMBAAECggEAM9q6kkbe5Zgd/01RzFiUjv5oJGV+PleDTNwrQJcF0WjdmEXds/S8rVNpRlbITsDAi0CJb5pDGRHoavtkMBrUzO7JB5ebSG1v3b/cnO4TtVxWyfI6NmGt8M7EHIQWJyohiATCzNZEwgMciNh5EtQGfpKU65CMIbLrEhEdWApuWh8o3TytQlmaCb5V6Az4ZctdvRaytxQ/YvXTgRo/o+X+OaNDw8m250GkXd8iddfubenBse2BB9MaOfl1xP2+hPJkolz0fLZ93xT4r99TpcbIN7YsoDiXBFJXYaoWWjXRCGiPK7QQFm+8td65MTyKIJN7/WxQ/MwFZNNLQlU6x7LHDwKBgQD+mX7iWpDfRWMldJDHQiW77xXaHlX7VOge28RAidQOnbfQxH0HWIo/o8OYwqfkG0aFzW2JPEQXdGQ54OfIDOqvR4WiO7gF1pUmFTC3hPDxfQBZtDHzkcsaxmS9WDPIf/Hy9hVXzk+pn4R3U0841qzSc2lq0jU7/AEp9ptjFbKn3wKBgQDCZofw0BlPUMp5ZpTz9anLdv8riltonC6o5XExFTDf1ao3pEKiU/kkz7eeSo6a/zsAA86kB5fww3fvX0TY0jH/hOuAR/geS6dqDugapCyBPm4TWzKDOl/aHX/beIWEWbGXf8ipLQ6XsNSzDtKtuE7LUZTXqyKSDT6mkUqtb+vIpwKBgQDwxQYqV41zp/HYJQEZfuOic7qNmGyljykorZpNkkpZPCvuITM/9CphfqRl3YfafzTVKm1w/+5A5BA4cAmhtR1nf1LQFnu0Abbw2c9FblJRfW4MZw1qEzEo8/+m1De8X8rWgoOykufhOHqUQdPEo7eyGfTSUVKIlIwhPBa8wHNArwKBgAwqKFWMYBkTgCgKoEWH2OEviBYsaT3pkA3nlaaxocZP83/Z2oWX5Z5FFUNlfPj8AbAljNe81eguAyJKft9mf9Ryd94mIsOajlZXqnSIU3Se+HpjmYyWqYrXj7mnGAvJJRDK4T6c4C3j1duCkPJn9x5H851vSxGCnKoFq3ug5ks/AoGBAPONkaK8o/VIVc5BeV6f4jcXOc+B1ieFx+X2LO7pwRvEV0I1ti2aN0hUWm4U9AJ8Ox45bz/zEgGPXEvc+K1W93ZfIYAABYGM4/zcAAC3yMXTTqRhKoMjsc3p3E/A+fSuxw1naZyy8lPgtASV1pXpBOsGv5nmW+BuxpAlnCEtYsXw"
 
         val decodePrivateKey = java.util.Base64.getDecoder().decode(privateString)
         val keySpec = PKCS8EncodedKeySpec(decodePrivateKey)
@@ -205,19 +209,73 @@ class ExampleUnitTest {
         val p = kf.generatePrivate(keySpec)
 
 
-        val apiEnvoleData = "ij253m8HUmvrFgWpQPyVk9pR4TZ7NVQz2wB5ij6AIGJ6YcIY5KmBI5KD4G7aIQ3cFOGzTdbB0uze2g6mKnQnQ1o2fVSfh0PBQtvVq9SYAywpNyP1ceCrVj9vqH9kmBKOs5p61ED4xUUXyeFgY/oxL32rbBWFX1g5g1Gnb/6B6OyJsTFRQrm26DjRxweY3sAfaduaqjwOpa4ZXa5ip5gN+6WneoNjqMVhEMe1iDe0HuzRoB89oHN56kIKA5HHK644v3qHm7CW2jjcqe05I97lKijImpcnZgWnMbG9RrX6j98fwZBtbOCnVqm9ut/uaD7AwEvB6YPtI+a6RmFmL8fMfQ=="
+        val apiEnvoleData = "Q/TUBaTy3Bt8G7hnP00LqVS2rIl5tlgwaq9T4UDVCc3HdfluRIcnFZCT7TJOTepTSjzM0nF3HmXj2zEJRuUXtsi7yOf4xWHKuinhCbQQEc7c+/883jjaav6h7bo9ECKxDCyQvB3v384kE2aNUwO5qE2fgt469UeBZrxxDF/M0NomuP3pF/4EKBuIuneP9Vz476mL8n/SaZtA9Wow7Iypt8MQR7eDW1zcQUzCD/COoUifDKn5i1xkH9iM9lVq+a1spyNFTrvDnFFcFp6uGz8Jx/iEAntdxBs/LE1yfuulR6WfugHkWE7rKcI4rNUNa8eP/yCKhlHUgiLZmsyAglUyFw=="
 
-        val cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding")
+        val cipher = Cipher.getInstance("RSA")
         cipher?.init(Cipher.DECRYPT_MODE,  p)
 
 
         val envlopeDecode = java.util.Base64.getDecoder().decode(apiEnvoleData.toByteArray(Charsets.UTF_8))
         val rowEnvlopeDecrytionKey = cipher.doFinal(envlopeDecode)
         val envlpeDecryptionKey= java.util.Base64.getEncoder().encodeToString(rowEnvlopeDecrytionKey)
+
+
+
+
+        val sealAPI = "mcqZXxeKKaNRuijv83xqcG2ZwoJgMqWwoukEAYUTWV4oySR/E4RFq4s1f3zmUwdjR+yBEdngMmJS/zLt0Oev5QgRVzmPAwtwrPThnjJh7gX90tQJbVIPWd9IMp+hSjbhH//PJgnR/ePcDSk3GG/jSpNPjClqlnYJngZ0AVTx9eI="
+
+        val sealDatadecode = java.util.Base64.getDecoder().decode(sealAPI.toByteArray(Charsets.UTF_8))
+
+
+        val secretKeySpec = SecretKeySpec(rowEnvlopeDecrytionKey, "RC4")
+        val cipherRC4 = Cipher.getInstance("RC4") // Transformation of the algorithm
+        cipherRC4.init(Cipher.DECRYPT_MODE,secretKeySpec)
+        val rowDecryptionKey = cipherRC4.doFinal(sealDatadecode)
+        val sealDecryptionKey= java.util.Base64.getEncoder().encodeToString(rowDecryptionKey)
         Log.e("data", "data")
+    }
+
+
+    @Test
+    public fun testRC4(){
+        val toEncrypt = "The shorter you live, the longer you're dead!"
+
+        println("Encrypting...")
+        val encrypted = encrypt(toEncrypt, "password")
+
+        println("Decrypting...")
+        val decrypted = decrypt(encrypted, "password")
+
+        println("Decrypted text: $decrypted")
 
     }
 
+    @Throws(java.lang.Exception::class)
+    fun encrypt(toEncrypt: String, key: String): ByteArray? { // create a binary key from the argument key (seed)
+        val sr = SecureRandom(key.toByteArray())
+        val kg: KeyGenerator = KeyGenerator.getInstance("RC4")
+        kg.init(sr)
+        val sk: SecretKey = kg.generateKey()
+        // create an instance of cipher
+        val cipher = Cipher.getInstance("RC4")
+        // initialize the cipher with the key
+        cipher.init(Cipher.ENCRYPT_MODE, sk)
+        // enctypt!
+        return cipher.doFinal(toEncrypt.toByteArray())
+    }
+
+    @Throws(java.lang.Exception::class)
+    fun decrypt(toDecrypt: ByteArray?, key: String): String? { // create a binary key from the argument key (seed)
+        val sr = SecureRandom(key.toByteArray())
+        val kg: KeyGenerator = KeyGenerator.getInstance("RC4")
+        kg.init(sr)
+        val sk: SecretKey = kg.generateKey()
+        // do the decryption with that key
+        val cipher = Cipher.getInstance("RC4")
+        cipher.init(Cipher.DECRYPT_MODE, sk)
+        val decrypted = cipher.doFinal(toDecrypt)
+        return String(decrypted)
+    }
 
 
 
