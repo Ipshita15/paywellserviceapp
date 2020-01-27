@@ -6,6 +6,7 @@ import android.provider.Settings
 import android.util.Base64
 import android.widget.Toast
 import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.activity.AppLoadingActivity
 import com.cloudwell.paywell.services.activity.base.AppThemeBaseActivity
 import com.cloudwell.paywell.services.activity.home.model.RequestAppsAuth
 import com.cloudwell.paywell.services.activity.home.model.ResposeAppsAuth
@@ -28,6 +29,12 @@ class HomeActivity : AppThemeBaseActivity() {
 
         getSupportActionBar()?.hide()
 
+        if (AppHandler.getmInstance(applicationContext).isSuccessfulPassAuthenticationFlow()){
+            val i = Intent(this@HomeActivity, AppLoadingActivity::class.java)
+            startActivity(i)
+            finish()
+
+        }
         btRegistration.setOnClickListener {
             val intent = Intent(applicationContext, EntryMainActivity::class.java)
             startActivity(intent)
@@ -153,37 +160,5 @@ class HomeActivity : AppThemeBaseActivity() {
         })
 
     }
-
-
-    //    public static String decrypt(String strToDecrypt, String secret) {
-//        try {
-//
-//
-//            key = myKey.getBytes("UTF-8");
-//            sha = MessageDigest.getInstance("SHA-1");
-//            key = sha.digest(key);
-//            key = Arrays.copyOf(key, 16);
-//            secretKey = new SecretKeySpec(key, "AES");
-//
-//
-//
-//
-//
-//
-//            key = strToDecrypt.substring(0, 16).getBytes();
-//            secretKey = new SecretKeySpec(key, "AES");
-//            String lastData = strToDecrypt.substring(17, strToDecrypt.length() - 1);
-//            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
-//            cipher.init(Cipher.DECRYPT_MODE, secretKey);
-//            return new String(cipher.doFinal(Base64.decode(lastData.getBytes(), Base64.DEFAULT)));
-//        } catch (Exception e) {
-//            System.out.println("Error while decrypting: " + e.toString());
-//        }
-//        return null;
-//    }
-
-
-
-
 
 }

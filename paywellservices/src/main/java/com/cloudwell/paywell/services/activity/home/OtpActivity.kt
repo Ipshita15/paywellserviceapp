@@ -1,13 +1,15 @@
 package com.cloudwell.paywell.services.activity.home
 
+import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Base64
 import android.widget.Toast
 import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.activity.AppLoadingActivity
 import com.cloudwell.paywell.services.activity.base.AppThemeBaseActivity
 import com.cloudwell.paywell.services.activity.home.model.RequestOtpCheck
-import com.cloudwell.paywell.services.activity.home.model.ResposeAppsAuth
+import com.cloudwell.paywell.services.activity.home.model.ResposeOptCheck
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.AppHelper
@@ -104,7 +106,7 @@ class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks,
                 mSmsBroadcastReceiver.setOnOtpListeners(this)
                 val intentFilter = IntentFilter()
                 intentFilter.addAction(SmsRetriever.SMS_RETRIEVED_ACTION)
-               registerReceiver(mSmsBroadcastReceiver, intentFilter)
+                registerReceiver(mSmsBroadcastReceiver, intentFilter)
 
                 startSMSListener()
 
@@ -170,13 +172,11 @@ class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks,
         m.username = AppHandler.getmInstance(applicationContext).userName
 
 
-
         val envlopeString = AppHandler.getmInstance(applicationContext).envlope
 
         val p = getPrivateKey()
         val rowEnvlopeDecrytionKey = getRowEnvlopeDecrytionKey(p, envlopeString)
-        val envlpeDecryptionKey= Base64.encodeToString(rowEnvlopeDecrytionKey, Base64.DEFAULT)
-
+        val envlpeDecryptionKey = Base64.encodeToString(rowEnvlopeDecrytionKey, Base64.DEFAULT)
 
 
         /* Decrypt the message, given derived encContentValues and initialization vector. */
@@ -185,11 +185,10 @@ class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
         val secretKeySpec = SecretKeySpec(rowEnvlopeDecrytionKey, "RC4")
         val cipherRC4 = Cipher.getInstance("RC4") // Transformation of the algorithm
-        cipherRC4.init(Cipher.DECRYPT_MODE,secretKeySpec)
+        cipherRC4.init(Cipher.DECRYPT_MODE, secretKeySpec)
         val rowDecryptionKey = cipherRC4.doFinal(sealDataDecode)
-        val sealDecryptionKey= Base64.encodeToString(rowDecryptionKey, Base64.NO_WRAP)
+        val sealDecryptionKey = Base64.encodeToString(rowDecryptionKey, Base64.NO_WRAP)
         val sealDecryptionKeyDecodeFormate = String(Base64.decode(sealDecryptionKey, android.util.Base64.NO_WRAP))
-
 
 
         val appsSecurityToken = AppHandler.getmInstance(applicationContext).appsSecurityToken
@@ -207,16 +206,29 @@ class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
 
 
-        ApiUtils.getAPIServiceV2().checkOTP(authHeader,m).enqueue(object : Callback<ResposeAppsAuth> {
-            override fun onResponse(call: Call<ResposeAppsAuth>, response: Response<ResposeAppsAuth>) {
+        ApiUtils.getAPIServiceV2().checkOTP(authHeader, m).enqueue(object : Callback<ResposeOptCheck> {
+            override fun onResponse(call: Call<ResposeOptCheck>, response: Response<ResposeOptCheck>) {
                 dismissProgressDialog()
                 if (response.isSuccessful) {
+
+                    response.body().let {
+                        if (it?.apiStatus ?: 0 == 200) {
+                            AppHandler.getmInstance(applicationContext).setSuccessfulPassAuthenticationFlow(true)
+
+                            val i = Intent(this@OtpActivity, AppLoadingActivity::class.java)
+                            startActivity(i)
+                            finish()
+
+                        }else{
+
+                        }
+                    }
 
 
                 }
             }
 
-            override fun onFailure(call: Call<ResposeAppsAuth>, t: Throwable) {
+            override fun onFailure(call: Call<ResposeOptCheck>, t: Throwable) {
                 dismissProgressDialog();
                 com.orhanobut.logger.Logger.e("" + t.message)
             }

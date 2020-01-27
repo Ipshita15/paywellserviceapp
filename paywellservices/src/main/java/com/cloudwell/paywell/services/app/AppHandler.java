@@ -172,6 +172,7 @@ public class AppHandler {
     public static final String KEY_ENVLOPE= "KEY_ENVLOPE";
     public static final String KEY_APPS_SECURITY_Token= "KEY_APPS_SECURITY_Token";
     public static final String KEY_APPS_TOKEN_EXP_Time= "KEY_APPS_TOKEN_EXP_Time";
+    public static final String KEY_IsSuccessfullDoneAuthenticationFlow= "setSuccessfulPassAuthenticationFlow";
 
 
     public AppHandler() {
@@ -819,7 +820,14 @@ public class AppHandler {
     }
 
 
+    public void setSuccessfulPassAuthenticationFlow(boolean b) {
+        editor.putBoolean(KEY_IsSuccessfullDoneAuthenticationFlow, b);
+        editor.commit();
+    }
 
+    public boolean isSuccessfulPassAuthenticationFlow() {
+        return mPref.getBoolean(KEY_IsSuccessfullDoneAuthenticationFlow, false);
+    }
 
 
     public static class MyDialogFragment extends DialogFragment {

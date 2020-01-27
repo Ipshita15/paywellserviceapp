@@ -21,8 +21,9 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResPay
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatCheckBookAPI;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.transactionLog.TransactionLogDetailsModel;
 import com.cloudwell.paywell.services.activity.home.model.RequestAppsAuth;
-import com.cloudwell.paywell.services.activity.home.model.ResposeAppsAuth;
 import com.cloudwell.paywell.services.activity.home.model.RequestOtpCheck;
+import com.cloudwell.paywell.services.activity.home.model.ResposeAppsAuth;
+import com.cloudwell.paywell.services.activity.home.model.ResposeOptCheck;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationReadAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResposeReScheduleNotificationAccept;
@@ -417,7 +418,7 @@ public interface APIService {
 
 
     @POST("PaywellAuth/checkOTP")
-    Call<ResposeAppsAuth> checkOTP(@Header("Authorization") String AuthorizationKey,@Body RequestOtpCheck body);
+    Call<ResposeOptCheck> checkOTP(@Header("Authorization") String AuthorizationKey, @Body RequestOtpCheck body);
 
 
 
