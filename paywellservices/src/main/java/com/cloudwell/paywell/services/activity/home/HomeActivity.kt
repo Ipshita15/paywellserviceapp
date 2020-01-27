@@ -130,6 +130,7 @@ class HomeActivity : AppThemeBaseActivity() {
                             AppHandler.getmInstance(applicationContext).setEnvlope(m?.envlope)
                             AppHandler.getmInstance(applicationContext).setAppsSecurityToken(m?.token?.securityToken)
                             AppHandler.getmInstance(applicationContext).setAppsTokenExpTime(m?.token?.tokenExpTime)
+                            AppHandler.getmInstance(applicationContext).setUserName(userName)
 
                             startActivity(Intent(this@HomeActivity, OtpActivity::class.java))
 

@@ -15,16 +15,18 @@ import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.otp_dialog.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.security.KeyFactory
-import java.security.PrivateKey
+import java.security.*
 import java.security.spec.PKCS8EncodedKeySpec
+import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import javax.crypto.Cipher
+import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 
 
@@ -165,7 +167,7 @@ class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks,
         val m = RequestOtpCheck()
         m.format = "json"
         m.otp = otp
-        m.username = androidId
+        m.username = AppHandler.getmInstance(applicationContext).userName
 
 
 
@@ -185,15 +187,27 @@ class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks,
         val cipherRC4 = Cipher.getInstance("RC4") // Transformation of the algorithm
         cipherRC4.init(Cipher.DECRYPT_MODE,secretKeySpec)
         val rowDecryptionKey = cipherRC4.doFinal(sealDataDecode)
-        val sealDecryptionKey= Base64.encode(rowDecryptionKey, Base64.DEFAULT)
+        val sealDecryptionKey= Base64.encodeToString(rowDecryptionKey, Base64.NO_WRAP)
+        val sealDecryptionKeyDecodeFormate = String(Base64.decode(sealDecryptionKey, android.util.Base64.NO_WRAP))
 
 
 
+        val appsSecurityToken = AppHandler.getmInstance(applicationContext).appsSecurityToken
+        val encodeAppsSecurityToken = Base64.encodeToString(appsSecurityToken.toByteArray(Charsets.UTF_8), Base64.NO_WRAP)
+
+
+        val toJson = Gson().toJson(m)
+
+        val hmac: String? = calculateHMAC(toJson, sealDecryptionKeyDecodeFormate)
+
+        val authDataString = "$encodeAppsSecurityToken:$hmac"
+
+
+        val authHeader = "Bearer " + Base64.encodeToString(authDataString.toByteArray(Charsets.UTF_8), Base64.NO_WRAP);
 
 
 
-
-        ApiUtils.getAPIServiceV2().checkOTP(m).enqueue(object : Callback<ResposeAppsAuth> {
+        ApiUtils.getAPIServiceV2().checkOTP(authHeader,m).enqueue(object : Callback<ResposeAppsAuth> {
             override fun onResponse(call: Call<ResposeAppsAuth>, response: Response<ResposeAppsAuth>) {
                 dismissProgressDialog()
                 if (response.isSuccessful) {
@@ -227,5 +241,22 @@ class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks,
         return p
     }
 
+    @Throws(SignatureException::class, NoSuchAlgorithmException::class, InvalidKeyException::class)
+    fun calculateHMAC(data: String, key: String): String? {
+        val HMAC_SHA512 = "HmacSHA256"
+        val secretKeySpec = SecretKeySpec(key.toByteArray(), HMAC_SHA512)
+        val mac: Mac = Mac.getInstance(HMAC_SHA512)
+        mac.init(secretKeySpec)
+        return toHexString(mac.doFinal(data.toByteArray()))
+    }
+
+
+    private fun toHexString(bytes: ByteArray): String? {
+        val formatter = Formatter()
+        for (b in bytes) {
+            formatter.format("%02x", b)
+        }
+        return formatter.toString()
+    }
 
 }

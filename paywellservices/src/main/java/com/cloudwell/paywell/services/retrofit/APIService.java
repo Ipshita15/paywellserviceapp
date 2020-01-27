@@ -417,7 +417,7 @@ public interface APIService {
 
 
     @POST("PaywellAuth/checkOTP")
-    Call<ResposeAppsAuth> checkOTP(@Body RequestOtpCheck body);
+    Call<ResposeAppsAuth> checkOTP(@Header("Authorization") String AuthorizationKey,@Body RequestOtpCheck body);
 
 
 

@@ -810,7 +810,7 @@ public class AppHandler {
 
 
     public void setAppsTokenExpTime(String token) {
-        editor.putString(KEY_APPS_SECURITY_Token, token);
+        editor.putString(KEY_APPS_TOKEN_EXP_Time, token);
         editor.commit();
     }
 
@@ -884,6 +884,7 @@ public class AppHandler {
     public String getUserName() {
         return mPref.getString(USERNAME, "unknown");
     }
+
 
     public void setPhoneNumber(String mPhone) {
         editor.putString(PHONE_NUMBER, mPhone);
