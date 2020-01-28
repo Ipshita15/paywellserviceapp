@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.activity.base.BaseDialogFragment
 import kotlinx.android.synthetic.main.otp_verification_msg_dialog.view.*
 
-class OTPVerificationMsgDialog(val onClickHandler: OnClickHandler, val  message: String): DialogFragment() {
+class OTPVerificationMsgDialog(val onClickHandler: OnClickHandler, val  message: String): BaseDialogFragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

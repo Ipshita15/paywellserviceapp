@@ -1,18 +1,22 @@
 package com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.activity.base.BaseDialogFragment
 import kotlinx.android.synthetic.main.mobile_number_dialog.*
 import kotlinx.android.synthetic.main.mobile_number_dialog.view.*
 
-class MobileNumberInputDialog(val onClickHandler: OnClickHandler): DialogFragment() {
 
+class MobileNumberInputDialog(val onClickHandler: OnClickHandler): BaseDialogFragment() {
+
+    @SuppressLint("WrongConstant")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = layoutInflater.inflate(R.layout.mobile_number_dialog, null)
+
         view.btbtSubmitMobileNumber.setOnClickListener {
 
             val mobileNumber = view.etMobileOrRID.text
@@ -25,10 +29,9 @@ class MobileNumberInputDialog(val onClickHandler: OnClickHandler): DialogFragmen
         return view
 
     }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-    }
+
+
 
 
     public interface OnClickHandler{

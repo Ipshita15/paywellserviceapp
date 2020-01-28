@@ -7,9 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.activity.base.BaseDialogFragment
 
 
-class OTPErrorMsgDialog(val onClickHandler: OnClickHandler): DialogFragment() {
+class OTPErrorMsgDialog(val onClickHandler: OnClickHandler): BaseDialogFragment() {
 
 
 

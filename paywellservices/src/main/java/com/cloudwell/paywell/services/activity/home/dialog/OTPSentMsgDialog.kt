@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import com.cloudwell.paywell.services.R
-import kotlinx.android.synthetic.main.mobile_number_dialog.view.*
+import com.cloudwell.paywell.services.activity.base.BaseDialogFragment
 
-class OTPSentMsgDialog(val onClickHandler: OnClickHandler): DialogFragment() {
+class OTPSentMsgDialog(val onClickHandler: OnClickHandler): BaseDialogFragment() {
 
 
 
