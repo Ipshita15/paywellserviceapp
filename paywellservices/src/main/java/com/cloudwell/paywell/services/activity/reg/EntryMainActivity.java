@@ -32,6 +32,7 @@ public class EntryMainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entry_main);
 
+
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(""+getString(R.string.txt_user_registration));

@@ -58,7 +58,7 @@ public class BaseActivity extends AppCompatActivity {
         if (mAppHandler.getAppLanguage().equals("unknown")) {
             mAppHandler.setAppLanguage("bn");
             setTheme(R.style.BanglaAppTheme);
-            switchToCzLocale(new Locale(LanuageConstant.KEY_ENGLISH, ""));
+            switchToCzLocale(new Locale(LanuageConstant.KEY_BANGLA, ""));
         } else if (mAppHandler.getAppLanguage().equals("en")) {
             mAppHandler.setAppLanguage("en");
             setTheme(R.style.EnglishAppTheme);
@@ -66,6 +66,24 @@ public class BaseActivity extends AppCompatActivity {
         } else if (mAppHandler.getAppLanguage().equals("bn")) {
             mAppHandler.setAppLanguage("bn");
             setTheme(R.style.BanglaAppTheme);
+            switchToCzLocale(new Locale(LanuageConstant.KEY_BANGLA, ""));
+        }
+
+    }
+
+    public void changeAppThemeForNoActionBar() {
+        AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
+        if (mAppHandler.getAppLanguage().equals("unknown")) {
+            mAppHandler.setAppLanguage("bn");
+            setTheme(R.style.BanglaAppThemeNoActionBar);
+            switchToCzLocale(new Locale(LanuageConstant.KEY_BANGLA, ""));
+        } else if (mAppHandler.getAppLanguage().equals("en")) {
+            mAppHandler.setAppLanguage("en");
+            setTheme(R.style.EnglishAppThemeNoActionBar);
+            switchToCzLocale(new Locale(LanuageConstant.KEY_ENGLISH, ""));
+        } else if (mAppHandler.getAppLanguage().equals("bn")) {
+            mAppHandler.setAppLanguage("bn");
+            setTheme(R.style.BanglaAppThemeNoActionBar);
             switchToCzLocale(new Locale(LanuageConstant.KEY_BANGLA, ""));
         }
 

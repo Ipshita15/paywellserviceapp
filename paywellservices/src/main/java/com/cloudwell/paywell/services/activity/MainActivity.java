@@ -255,6 +255,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         changeStatusBarColor();
+
+        changeAppThemeForNoActionBar();
+
         setContentView(R.layout.activity_main);
 
         PayWellShortcutManager.Companion.enableShortcutList(this);
