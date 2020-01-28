@@ -186,9 +186,7 @@ public class AppLoadingActivity extends BaseActivity {
             for (Field field : fields) {
                 androidVersionName = field.getName();
             }
-            TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(this);
-            mImeiNo = telephonyInfo.getImeiSIM1();
-            mAppHandler.setImeiNo(mImeiNo);
+
 //            new AuthAsync().execute(getResources().getString(R.string.pw_auth), "" + getVersionName());
 
             authAsync();
@@ -423,7 +421,7 @@ public class AppLoadingActivity extends BaseActivity {
 
     public void authAsync(){
         AuthRequestModel m = new AuthRequestModel();
-        m.setUsername(mAppHandler.getImeiNo());
+        m.setUsername(""+mAppHandler.getMobileNumber());
         m.setAppVersionName(getVersionName());
         m.setAppVersionNo(androidVersionName);
 

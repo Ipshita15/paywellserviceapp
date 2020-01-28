@@ -986,7 +986,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         pb_dot.setVisibility(View.VISIBLE);
         mToolbarHeading.setVisibility(View.GONE);
 
-        String imeiNo = mAppHandler.getImeiNo();
+        String imeiNo = mAppHandler.getUserName();
         Call<APIResBalanceCheck> responseBodyCall = ApiUtils.getAPIService().callCheckBalance(imeiNo);
         responseBodyCall.enqueue(new Callback<APIResBalanceCheck>() {
             @Override

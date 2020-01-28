@@ -842,7 +842,14 @@
     <string name="desco_prepaid_string">ডেসকো প্রিপেইড</string>
     <string name="desco_postpaid_string">ডেসকো পোস্টপেইড</string>
     <string name="meter_number">মিটার নম্বর</string>
-
+    <string name="txt_login">লগ ইন</string>
+    <string name="txt_signup">রেজিস্ট্রেশন</string>
+    <string name="rid_mobile_number">আরআইডি / মোবাইল নম্বর</string>
+    <string name="pin_number">পিন নাম্বার</string>
+    <string name="submit">লগ ইন</string>
+    <string name="forget_pin">পিন ভুলে গেছেন?</string>
+    <string name="member_login">ব্যবহারকারী লগ ইন</string>
+    <string name="txt_user_registration">User Registration</string>
 
 
 </resources>

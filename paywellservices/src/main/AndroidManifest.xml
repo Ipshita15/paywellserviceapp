@@ -712,7 +712,8 @@
             android:name=".activity.reg.EntryMainActivity"
             android:label="@string/app_name"
             android:noHistory="true"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name=".activity.reg.EntryFirstActivity"
             android:configChanges="orientation"

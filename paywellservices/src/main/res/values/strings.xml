@@ -866,6 +866,14 @@
     <string name="desco_prepaid_string">Desco Prepaid</string>
     <string name="desco_postpaid_string">Desco Postpaid</string>
     <string name="meter_number">Meter number</string>
+    <string name="txt_login">Login</string>
+    <string name="txt_signup">Signup</string>
+    <string name="rid_mobile_number">RID/Mobile Number</string>
+    <string name="pin_number">Pin Number</string>
+    <string name="submit">Login</string>
+    <string name="forget_pin">Forget Pin?</string>
+    <string name="member_login">User Login</string>
+    <string name="txt_user_registration">User Registration</string>
 
 
 </resources>

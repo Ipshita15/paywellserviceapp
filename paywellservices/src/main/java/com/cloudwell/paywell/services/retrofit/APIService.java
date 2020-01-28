@@ -405,7 +405,7 @@ public interface APIService {
     Call<ResponseBody> userInformationForRegistration(@Body RegistrationModel regModel);
 
 
-    @POST("PaywelltransactionRetailer/userServiceProfiling")
+    @POST("PaywelltransactionRetailer/userServiceProfiling_v1")
     Call<ResponseBody> userServiceProfiling(@Body AuthRequestModel regModel);
 
 

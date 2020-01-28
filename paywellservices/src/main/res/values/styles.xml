@@ -26,7 +26,7 @@
     </style>
 
 
-    <style name="BanglaAppTheme" parent="AppTheme.NoActionBar">
+    <style name="BanglaAppTheme" parent="AppTheme">
         <!-- Customize your theme here. -->
         <item name="android:fontFamily">@font/apona_lohit</item>
         <item name="android:textColor">@color/black</item>

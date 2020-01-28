@@ -20,8 +20,10 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.app.AppController;
+import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.LanuageConstant;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Locale;
@@ -46,7 +48,44 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         isFlowFromFavorite = getIntent().getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE, false);
         mCd = new ConnectionDetector(AppController.getContext());
+
+        changeAppTheme();
     }
+
+
+    private void changeAppTheme() {
+        AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
+        if (mAppHandler.getAppLanguage().equals("unknown")) {
+            mAppHandler.setAppLanguage("bn");
+            setTheme(R.style.BanglaAppTheme);
+            switchToCzLocale(new Locale(LanuageConstant.KEY_ENGLISH, ""));
+        } else if (mAppHandler.getAppLanguage().equals("en")) {
+            mAppHandler.setAppLanguage("en");
+            setTheme(R.style.EnglishAppTheme);
+            switchToCzLocale(new Locale(LanuageConstant.KEY_ENGLISH, ""));
+        } else if (mAppHandler.getAppLanguage().equals("bn")) {
+            mAppHandler.setAppLanguage("bn");
+            setTheme(R.style.BanglaAppTheme);
+            switchToCzLocale(new Locale(LanuageConstant.KEY_BANGLA, ""));
+        }
+
+    }
+
+    public void switchLanguage() {
+        AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
+        if (mAppHandler.getAppLanguage().equals("unknown")) {
+            mAppHandler.setAppLanguage("bn");
+            switchToCzLocale(new Locale(LanuageConstant.KEY_BANGLA, ""));
+        } else if (mAppHandler.getAppLanguage().equals("en")) {
+            mAppHandler.setAppLanguage("bn");
+            switchToCzLocale(new Locale(LanuageConstant.KEY_BANGLA, ""));
+        } else if (mAppHandler.getAppLanguage().equals("bn")) {
+            mAppHandler.setAppLanguage("en");
+            switchToCzLocale(new Locale(LanuageConstant.KEY_ENGLISH, ""));
+        }
+    }
+
+
 
     public void setToolbar(String title, int color) {
         assert getSupportActionBar() != null;
