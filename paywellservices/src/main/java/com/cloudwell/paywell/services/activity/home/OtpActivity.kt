@@ -7,7 +7,6 @@ import android.util.Base64
 import android.widget.Toast
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.AppLoadingActivity
-import com.cloudwell.paywell.services.activity.base.AppThemeBaseActivity
 import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.activity.home.model.RequestOtpCheck
 import com.cloudwell.paywell.services.activity.home.model.ResposeOptCheck
@@ -57,6 +56,10 @@ class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleA
 
         btCancel.setOnClickListener {
             finish()
+        }
+
+        tvResend.setOnClickListener {
+
         }
     }
 
