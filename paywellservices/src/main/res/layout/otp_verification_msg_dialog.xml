@@ -19,12 +19,14 @@
         android:padding="10dp">
         <TextView
             android:id="@+id/otpVerificationTV"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:textStyle="bold"
             android:textColor="@color/white"
-            android:text="OTP Verification"/>
+            android:text="@string/otp_verification"/>
     </LinearLayout>
 
 
@@ -40,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="60dp"
                 android:padding="2dp"
-                android:text="OTP successfully verified"
+                tools:text="OTP successfully verified"
                 android:textColor="#808080"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -49,7 +51,7 @@
 
             <Button
                 android:id="@+id/otpOkMsg"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="32dp"
@@ -59,7 +61,7 @@
                 android:paddingTop="8dp"
                 android:paddingRight="16dp"
                 android:paddingBottom="8dp"
-                android:text="Ok"
+                android:text="@string/ok_text"
                 android:textColor="#FFFFFF"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

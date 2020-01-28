@@ -8,8 +8,10 @@ import android.widget.Toast
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.AppLoadingActivity
 import com.cloudwell.paywell.services.activity.base.AppThemeBaseActivity
+import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.activity.home.model.RequestOtpCheck
 import com.cloudwell.paywell.services.activity.home.model.ResposeOptCheck
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.OTPVerificationMsgDialog
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.AppHelper
@@ -32,7 +34,7 @@ import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 
 
-class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, OtpReceivedInterface {
+class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, OtpReceivedInterface {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -213,11 +215,19 @@ class OtpActivity : AppThemeBaseActivity(), GoogleApiClient.ConnectionCallbacks,
 
                     response.body().let {
                         if (it?.apiStatus ?: 0 == 200) {
-                            AppHandler.getmInstance(applicationContext).setSuccessfulPassAuthenticationFlow(true)
 
-                            val i = Intent(this@OtpActivity, AppLoadingActivity::class.java)
-                            startActivity(i)
-                            finish()
+
+                            val oTPVerificationMsgDialog = OTPVerificationMsgDialog(object : OTPVerificationMsgDialog.OnClickHandler {
+                                override fun onSubmit() {
+                                    AppHandler.getmInstance(applicationContext).setSuccessfulPassAuthenticationFlow(true)
+                                    val i = Intent(this@OtpActivity, AppLoadingActivity::class.java)
+                                    startActivity(i)
+                                    finish()
+                                }
+
+                            } , it?.responseDetails!!.statusName)
+                            oTPVerificationMsgDialog.show(supportFragmentManager, "oTPVerificationMsgDialog");
+
 
                         }else{
 

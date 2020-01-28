@@ -850,6 +850,8 @@
     <string name="forget_pin">পিন ভুলে গেছেন?</string>
     <string name="member_login">ব্যবহারকারী লগ ইন</string>
     <string name="txt_user_registration">User Registration</string>
+    <string name="otp_verification">ওটিপি যাচাইকরণ</string>
+    <string name="ok_text">ঠিক আছে</string>
 
 
 </resources>

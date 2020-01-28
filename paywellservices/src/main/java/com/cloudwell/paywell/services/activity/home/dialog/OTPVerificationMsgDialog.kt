@@ -6,14 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.cloudwell.paywell.services.R
-import kotlinx.android.synthetic.main.mobile_number_dialog.view.*
+import kotlinx.android.synthetic.main.otp_verification_msg_dialog.view.*
 
-class OTPVerificationMsgDialog(val onClickHandler: OnClickHandler): DialogFragment() {
-
+class OTPVerificationMsgDialog(val onClickHandler: OnClickHandler, val  message: String): DialogFragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = layoutInflater.inflate(R.layout.otp_verification_msg_dialog, null)
+        isCancelable = false
+        view.otpOkMsg.setOnClickListener {
+            dismiss()
+            onClickHandler.onSubmit()
+
+        }
+
+        view.otpVerificationMsgTV.text = ""+message
         return view
 
     }
@@ -25,7 +32,7 @@ class OTPVerificationMsgDialog(val onClickHandler: OnClickHandler): DialogFragme
 
     public interface OnClickHandler{
 
-        public fun onSubmit(mobileNumber:String);
+        public fun onSubmit();
     }
 
 }
