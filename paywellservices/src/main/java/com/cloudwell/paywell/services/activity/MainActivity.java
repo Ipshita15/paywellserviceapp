@@ -1282,7 +1282,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.id.homeBtnCall:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CALL_MENU);
-                callPreview(false);
+                callPreview(false, "");
                 break;
 
             default:

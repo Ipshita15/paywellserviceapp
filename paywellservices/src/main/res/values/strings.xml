@@ -885,6 +885,7 @@
     <string name="last_4_digit_mobile_number">Last 4 digits of mobile number</string>
     <string name="please_enter_the_last_4_digits_of_your_phone_number">Please enter the last 4 digits of your phone number</string>
     <string name="forgot_pin">Forgot Pin</string>
+    <string name="device_not_support">Your device not support, Please contact our call center</string>
 
 
 </resources>

@@ -2,8 +2,6 @@ package com.cloudwell.paywell.services.activity.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings.Secure
-import android.provider.Settings.Secure.getString
 import android.util.Base64
 import android.widget.Toast
 import com.cloudwell.paywell.services.BuildConfig
@@ -19,6 +17,7 @@ import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.F
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.MobileNumberInputDialog
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
+import com.cloudwell.paywell.services.utils.AndroidIDUtility
 import kotlinx.android.synthetic.main.activity_home.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,8 +30,10 @@ class HomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
         getSupportActionBar()?.hide()
+
+
+
 
         if (AppHandler.getmInstance(applicationContext).isSuccessfulPassAuthenticationFlow()) {
             val i = Intent(this@HomeActivity, AppLoadingActivity::class.java)
@@ -40,6 +41,23 @@ class HomeActivity : BaseActivity() {
             finish()
 
         } else {
+
+            // check device is support
+
+            val androidID = AppHandler.getmInstance(applicationContext).androidID
+            if (androidID == "") {
+                val androidID1 = AndroidIDUtility.getAndroidID(applicationContext)
+                if (androidID1 != null){
+                    if (androidID1.equals("")){
+                        // device not support
+                        callPreview(false, getString(R.string.device_not_support))
+
+                    }else{
+                        AppHandler.getmInstance(getApplicationContext()).setAndroidID(androidID1)
+                    }
+                }
+
+            }
 
             btRegistration.setOnClickListener {
                 val intent = Intent(applicationContext, EntryMainActivity::class.java)
@@ -56,7 +74,7 @@ class HomeActivity : BaseActivity() {
                             val pin = pin
 
 
-                            val androidId: String = getString(applicationContext.getContentResolver(), Secure.ANDROID_ID);
+                            val androidId: String = AppHandler.getmInstance(applicationContext).androidID
                             AppHandler.getmInstance(applicationContext).setAndroidID(androidId)
                             AppHandler.getmInstance(applicationContext).setMobileNumber(userName)
 

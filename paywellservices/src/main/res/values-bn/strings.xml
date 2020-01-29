@@ -861,6 +861,7 @@
     <string name="last_4_digit_mobile_number">মোবাইল নম্বরটির শেষ 4 টি সংখ্যা</string>
     <string name="please_enter_the_last_4_digits_of_your_phone_number">আপনার ফোন নম্বরটির শেষ 4 টি সংখ্যা লিখুন</string>
     <string name="forgot_pin">পিন অনুরোধ</string>
+    <string name="device_not_support">আপনার ডিভাইস সমর্থন করে না, দয়া করে আমাদের কল সেন্টারে যোগাযোগ করুন</string>
 
 
 </resources>

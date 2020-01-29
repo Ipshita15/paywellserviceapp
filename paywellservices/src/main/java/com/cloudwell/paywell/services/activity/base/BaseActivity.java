@@ -277,7 +277,7 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
-    public void callPreview(boolean isAirTicket) {
+    public void callPreview(boolean isAirTicket, String message) {
         final String[] numbers = {"09610116566", "09666773333", "09666716566", "09638016566"};
         selectedPhnNo = "09610116566";
         AlertDialog dialog;
@@ -289,6 +289,10 @@ public class BaseActivity extends AppCompatActivity {
             builder.setTitle(getString(R.string.select_phn_title_msg));
         }
 
+        if (!message.equals("")){
+            builder.setTitle(message);
+            builder.setCancelable(false);
+        }
 
         builder.setSingleChoiceItems(numbers, 0, new DialogInterface.OnClickListener() {
             @Override
@@ -302,6 +306,9 @@ public class BaseActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
                 call();
+                if (!message.equals("")){
+                   finish();
+                }
             }
         });
         dialog = builder.create();

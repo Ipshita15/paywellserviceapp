@@ -21,6 +21,7 @@ import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
+import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.TelephonyInfo;
@@ -38,7 +39,7 @@ public class EntryForthActivity extends BaseActivity {
 
     private LinearLayout linearLayoutOne, linearLayoutTwo;
     private int radio_one = 0, radio_two = 0, radio_three = 0;
-    private String email, landmark, sales_code = "", collection_code = "", imeiOne = "", imeiTwo = "", outlet_img = "", nid_img = "",
+    private String email, landmark, sales_code = "", collection_code = "", imeiOne = "", outlet_img = "", nid_img = "",
             nid_back_img = "", owner_img = "", trade_license_img = "", passport_img = "", birth_certificate_img = "",
             driving_license_img = "", visiting_card_img = "", operator = "", downloadSource = "";
     private CheckBox checkBox_one, checkBox_two, checkBox_three, checkBox_four, checkBox_five, checkBox_six, checkBox_seven, checkBox_eight, checkBox_nine,
@@ -168,8 +169,8 @@ public class EntryForthActivity extends BaseActivity {
                     Toast.makeText(this, "অন্তত একটি সেবা বাছাই করুন", Toast.LENGTH_SHORT).show();
                 } else {
                     TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(EntryForthActivity.this);
-                    imeiOne = telephonyInfo.getImeiSIM1();
-                    imeiTwo = telephonyInfo.getImeiSIM2();
+                    imeiOne = AppHandler.getmInstance(getApplicationContext()).getAndroidID();
+
 
                     if (regModel.getEmailAddress().isEmpty()) {
                         email = "0";
@@ -322,7 +323,6 @@ public class EntryForthActivity extends BaseActivity {
         showProgressDialog();
 
         regModel.setImei(imeiOne);
-        regModel.setAlternate_imei(imeiTwo);
         regModel.setDownloadSource(downloadSource);
         regModel.setDtype("Tab");
         regModel.setOperators(operator);

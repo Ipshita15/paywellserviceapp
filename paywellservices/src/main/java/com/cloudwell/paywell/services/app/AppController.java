@@ -10,6 +10,7 @@ import com.cloudwell.paywell.services.BuildConfig;
 import com.cloudwell.paywell.services.activity.home.AppSignatureHelper;
 import com.cloudwell.paywell.services.activity.myFavorite.helper.MyFavoriteHelper;
 import com.cloudwell.paywell.services.app.storage.AppStorageBox;
+import com.cloudwell.paywell.services.utils.AndroidIDUtility;
 import com.cloudwell.paywell.services.utils.AppVersionUtility;
 import com.cloudwell.paywell.services.utils.MyHttpClient;
 import com.crashlytics.android.Crashlytics;
@@ -53,6 +54,10 @@ public class AppController extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+
+
+
         mInstance = this;
         mContext = this;
         client = createTrustedHttpsClient();
@@ -88,6 +93,9 @@ public class AppController extends Application {
         installMenuData();
 
         new AppSignatureHelper(getApplicationContext()).getAppSignatures();
+
+
+
 
     }
 
