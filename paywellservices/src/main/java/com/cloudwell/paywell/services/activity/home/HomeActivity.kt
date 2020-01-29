@@ -6,6 +6,7 @@ import android.provider.Settings.Secure
 import android.provider.Settings.Secure.getString
 import android.util.Base64
 import android.widget.Toast
+import com.cloudwell.paywell.services.BuildConfig
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.AppLoadingActivity
 import com.cloudwell.paywell.services.activity.base.BaseActivity
@@ -80,8 +81,6 @@ class HomeActivity : BaseActivity() {
 
             showLanguageIcon()
 
-
-
             ivLanSwitch.setOnClickListener{
                 switchLanguage()
 
@@ -94,44 +93,6 @@ class HomeActivity : BaseActivity() {
                 callPreviewAirticket(false)
             }
         }
-
-
-
-
-
-
-
-
-//        val otpSentMsgDialog = OTPSentMsgDialog(object : OTPSentMsgDialog.OnClickHandler {
-//            override fun onSubmit(mobileNumber: String) {
-//
-//
-//            }
-//
-//        })
-//        otpSentMsgDialog.show(supportFragmentManager, "otpSentMessageDialog");
-
-
-//        val otpVerificationMsgDialog = OTPVerificationMsgDialog(object : OTPVerificationMsgDialog.OnClickHandler {
-//            override fun onSubmit(mobileNumber: String) {
-//
-//
-//            }
-//
-//        })
-//        otpVerificationMsgDialog.show(supportFragmentManager, "otpVerificationMessageDialog");
-//
-//
-//    }
-
-//        val otpErrorMsgDialog = OTPErrorMsgDialog(object : OTPErrorMsgDialog.OnClickHandler {
-//            override fun onSubmit(mobileNumber: String) {
-//
-//
-//            }
-//
-//        })
-//        otpErrorMsgDialog.show(supportFragmentManager, "otpErrorMessageDialog");
 
 
     }
@@ -164,7 +125,14 @@ class HomeActivity : BaseActivity() {
         val privateKey = AppHandler.getmInstance(applicationContext).getRSAKays().get(1);
 
 
-        val authRequestModel = RequestAppsAuth(0, androidId, privateKey, channel, "" + currentTimestamp)
+        var isDebug = 0
+        if (BuildConfig.DEBUG) {
+            isDebug = 0
+        }else{
+            isDebug = 1
+        }
+
+        val authRequestModel = RequestAppsAuth(isDebug, androidId, privateKey, channel, "" + currentTimestamp)
 
         ApiUtils.getAPIServiceV2().getAppsAuthToken(authHeader, authRequestModel).enqueue(object : Callback<ResposeAppsAuth> {
             override fun onResponse(call: Call<ResposeAppsAuth>, response: Response<ResposeAppsAuth>) {

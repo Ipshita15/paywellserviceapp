@@ -20,7 +20,9 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResGet
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResPaymentBookingAPI;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatCheckBookAPI;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.transactionLog.TransactionLogDetailsModel;
+import com.cloudwell.paywell.services.activity.home.model.ReposeGenerateOTP;
 import com.cloudwell.paywell.services.activity.home.model.RequestAppsAuth;
+import com.cloudwell.paywell.services.activity.home.model.RequestGenerateOTP;
 import com.cloudwell.paywell.services.activity.home.model.RequestOtpCheck;
 import com.cloudwell.paywell.services.activity.home.model.ResposeAppsAuth;
 import com.cloudwell.paywell.services.activity.home.model.ResposeOptCheck;
@@ -418,7 +420,11 @@ public interface APIService {
 
 
     @POST("PaywellAuth/checkOTP")
-    Call<ResposeOptCheck> checkOTP(@Header("Authorization") String AuthorizationKey, @Body RequestOtpCheck body);
+    Call<ResposeOptCheck> checkOTP( @Body RequestOtpCheck body);
+
+
+    @POST("PaywellAuth/generateOTP")
+    Call<ReposeGenerateOTP> generateOTP(@Body RequestGenerateOTP body);
 
 
 

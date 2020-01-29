@@ -86,7 +86,7 @@ object RetrofitClient {
             val httpClient = OkHttpClient.Builder()
             httpClient.connectTimeout(90, TimeUnit.SECONDS).readTimeout(90, TimeUnit.SECONDS).writeTimeout(90, TimeUnit.SECONDS)
 
-            httpClient.addInterceptor(HeaderTokenInterceptor(AppController.getContext()))
+            httpClient.addInterceptor(AppsAuthHeaderTokenInterceptor(AppController.getContext()))
 
             if (BuildConfig.DEBUG) {
                 val logging = HttpLoggingInterceptor()

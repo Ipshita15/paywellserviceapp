@@ -6,6 +6,6 @@ class ResponseDetails {
     @SerializedName("StatusName")
     var statusName: String = ""
     @SerializedName("Status")
-    var status: Long = 0
+    var status: Int = 0
 
 }

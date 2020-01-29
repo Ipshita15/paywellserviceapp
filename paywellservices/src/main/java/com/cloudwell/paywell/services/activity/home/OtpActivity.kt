@@ -8,17 +8,20 @@ import android.widget.Toast
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.AppLoadingActivity
 import com.cloudwell.paywell.services.activity.base.BaseActivity
+import com.cloudwell.paywell.services.activity.home.model.ReposeGenerateOTP
+import com.cloudwell.paywell.services.activity.home.model.RequestGenerateOTP
 import com.cloudwell.paywell.services.activity.home.model.RequestOtpCheck
 import com.cloudwell.paywell.services.activity.home.model.ResposeOptCheck
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.OTPVerificationMsgDialog
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.AppHelper
+import com.dhruv.timerbutton.ButtonAnimationListener
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
-import com.google.gson.Gson
+import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.otp_dialog.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -58,9 +61,78 @@ class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleA
             finish()
         }
 
-        tvResend.setOnClickListener {
 
-        }
+        timer_button.setDuration(60000L);
+
+
+        timer_button.setButtonAnimationListener(object : OnClickHandler, ButtonAnimationListener {
+            override fun otpAutoCall(mobileNumber: String) {
+
+            }
+
+            override fun otpManualCall(mobileNumber: String) {
+
+           }
+
+            override fun onAnimationEnd() {
+
+
+            }
+
+            override fun onAnimationStart() {
+                calledResendOtp();
+            }
+
+            override fun onAnimationReset() {
+                Logger.v("")
+
+            }
+
+
+        })
+
+
+
+
+    }
+
+    private fun calledResendOtp() {
+        showProgressDialog()
+
+        val m = RequestGenerateOTP()
+        m.username = AppHandler.getmInstance(applicationContext).userName
+
+        ApiUtils.getAPIServiceV2().generateOTP(m).enqueue(object : Callback<ReposeGenerateOTP> {
+            override fun onResponse(call: Call<ReposeGenerateOTP>, response: Response<ReposeGenerateOTP>) {
+                dismissProgressDialog()
+                if (response.isSuccessful) {
+
+                    response.body().let {
+                        if (it?.apiStatus ?: 0 == 200) {
+                            if (it?.responseDetails!!.status == 200){
+                                Toast.makeText(applicationContext, it.responseDetails?.statusName, Toast.LENGTH_LONG).show()
+                            } else{
+                                Toast.makeText(applicationContext, it.responseDetails?.statusName, Toast.LENGTH_LONG).show()
+                                timer_button.reset()
+                            }
+                        }else{
+                            Toast.makeText(applicationContext, it?.apiStatusName, Toast.LENGTH_LONG).show()
+                            timer_button.reset()
+                        }
+                    }
+
+                }
+            }
+
+            override fun onFailure(call: Call<ReposeGenerateOTP>, t: Throwable) {
+                dismissProgressDialog();
+                com.orhanobut.logger.Logger.e("" + t.message)
+            }
+        })
+
+
+
+
     }
 
     private var mGoogleApiClient: GoogleApiClient? = null
@@ -169,49 +241,12 @@ class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleA
         showProgressDialog()
 
         val androidId: String = AppHelper.getAndroidID(contentResolver);
-
-
         val m = RequestOtpCheck()
         m.format = "json"
         m.otp = otp
         m.username = AppHandler.getmInstance(applicationContext).userName
 
-
-        val envlopeString = AppHandler.getmInstance(applicationContext).envlope
-
-        val p = getPrivateKey()
-        val rowEnvlopeDecrytionKey = getRowEnvlopeDecrytionKey(p, envlopeString)
-        val envlpeDecryptionKey = Base64.encodeToString(rowEnvlopeDecrytionKey, Base64.DEFAULT)
-
-
-        /* Decrypt the message, given derived encContentValues and initialization vector. */
-        val sealedDataString = AppHandler.getmInstance(applicationContext).sealedData
-        val sealDataDecode = Base64.decode(sealedDataString.toByteArray(Charsets.UTF_8), Base64.DEFAULT)
-
-        val secretKeySpec = SecretKeySpec(rowEnvlopeDecrytionKey, "RC4")
-        val cipherRC4 = Cipher.getInstance("RC4") // Transformation of the algorithm
-        cipherRC4.init(Cipher.DECRYPT_MODE, secretKeySpec)
-        val rowDecryptionKey = cipherRC4.doFinal(sealDataDecode)
-        val sealDecryptionKey = Base64.encodeToString(rowDecryptionKey, Base64.NO_WRAP)
-        val sealDecryptionKeyDecodeFormate = String(Base64.decode(sealDecryptionKey, android.util.Base64.NO_WRAP))
-
-
-        val appsSecurityToken = AppHandler.getmInstance(applicationContext).appsSecurityToken
-        val encodeAppsSecurityToken = Base64.encodeToString(appsSecurityToken.toByteArray(Charsets.UTF_8), Base64.NO_WRAP)
-
-
-        val toJson = Gson().toJson(m)
-
-        val hmac: String? = calculateHMAC(toJson, sealDecryptionKeyDecodeFormate)
-
-        val authDataString = "$encodeAppsSecurityToken:$hmac"
-
-
-        val authHeader = "Bearer " + Base64.encodeToString(authDataString.toByteArray(Charsets.UTF_8), Base64.NO_WRAP);
-
-
-
-        ApiUtils.getAPIServiceV2().checkOTP(authHeader, m).enqueue(object : Callback<ResposeOptCheck> {
+        ApiUtils.getAPIServiceV2().checkOTP(m).enqueue(object : Callback<ResposeOptCheck> {
             override fun onResponse(call: Call<ResposeOptCheck>, response: Response<ResposeOptCheck>) {
                 dismissProgressDialog()
                 if (response.isSuccessful) {

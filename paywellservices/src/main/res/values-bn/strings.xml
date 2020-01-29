@@ -852,6 +852,11 @@
     <string name="txt_user_registration">User Registration</string>
     <string name="otp_verification">ওটিপি যাচাইকরণ</string>
     <string name="ok_text">ঠিক আছে</string>
+    <string name="resend_otp">ওটিপি পুনরায় পাঠান</string>
+    <string name="send_otp">ওটিপি পাঠান</string>
+    <string name="verify_your_phone_number">আপনার ফোন নম্বর যাচাই করুন</string>
+    <string name="we_have_send_you_an_sms_with_a_code_to_your_number">আমরা আপনার নম্বরটিতে একটি কোড সহ আপনাকে একটি এসএমএস পাঠিয়েছি</string>
+    <string name="didn_t_you_received_any_code">আপনি কোনও কোড পান নি?</string>
 
 
 </resources>
