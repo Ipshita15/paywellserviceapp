@@ -881,6 +881,10 @@
     <string name="verify_your_phone_number">Verify your phone number</string>
     <string name="we_have_send_you_an_sms_with_a_code_to_your_number">We have send you an SMS with a code to your number</string>
     <string name="didn_t_you_received_any_code">Didn\'t you received any code?</string>
+    <string name="request_format_pin">Request forgot pin</string>
+    <string name="last_4_digit_mobile_number">Last 4 digits of mobile number</string>
+    <string name="please_enter_the_last_4_digits_of_your_phone_number">Please enter the last 4 digits of your phone number</string>
+    <string name="forgot_pin">Forgot Pin</string>
 
 
 </resources>

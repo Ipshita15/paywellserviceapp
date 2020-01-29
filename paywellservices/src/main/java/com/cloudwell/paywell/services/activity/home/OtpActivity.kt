@@ -44,7 +44,7 @@ class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleA
 
         setToolbar("OTP Verification")
 
-        btbtSubmitMobileNumber.setOnClickListener {
+        btNextOtp.setOnClickListener {
 
             val otp = etMobileOrRID.text
 

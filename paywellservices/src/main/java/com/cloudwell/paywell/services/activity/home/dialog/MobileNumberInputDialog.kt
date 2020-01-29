@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,15 +12,19 @@ import kotlinx.android.synthetic.main.mobile_number_dialog.view.*
 
 class MobileNumberInputDialog(val onClickHandler: OnClickHandler): BaseDialogFragment() {
 
-    @SuppressLint("WrongConstant")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = layoutInflater.inflate(R.layout.mobile_number_dialog, null)
 
         view.btbtSubmitMobileNumber.setOnClickListener {
 
             val mobileNumber = view.etMobileOrRID.text
-            onClickHandler?.onSubmit(mobileNumber.toString().trim(),etPin.text.toString().trim() )
+            onClickHandler.onSubmit(mobileNumber.toString().trim(),etPin.text.toString().trim() )
 
+        }
+
+        view.btForgetPinNumber.setOnClickListener {
+            dismiss()
+            onClickHandler.onForgetPinNumber()
         }
 
         view.etMobileOrRID.setText("01675349882")
@@ -36,7 +39,8 @@ class MobileNumberInputDialog(val onClickHandler: OnClickHandler): BaseDialogFra
 
     public interface OnClickHandler{
 
-        public fun onSubmit(mobileNumber:String, pin:String);
+        public fun onSubmit(mobileNumber:String, pin:String)
+        public fun onForgetPinNumber();
     }
 
 }

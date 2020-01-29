@@ -820,7 +820,7 @@
     <string name="home_title_nagad_balance_claim">ব্যালেন্স ক্লেইম</string>
     <string name="hint_mobile_number_or_transtion_id">মোবাইল নম্বর/ট্রানজেকশন আইডি</string>
     <string name="bill_amount_naged">টাকার পরিমাণ</string>
-    <string name="invalid_input">Invalid input</string>
+    <string name="invalid_input">ভুল ইনপুট</string>
     <string name="nagad_refill_log_inquiry">রিফিল অনুসন্ধান</string>
     <string name="log_refill_limit_title_msg">পূর্ববর্তী রিফিলের সংখ্যা</string>
     <string name="re_submit_reb">পুনরায় জমা দিন</string>
@@ -857,6 +857,10 @@
     <string name="verify_your_phone_number">আপনার ফোন নম্বর যাচাই করুন</string>
     <string name="we_have_send_you_an_sms_with_a_code_to_your_number">আমরা আপনার নম্বরটিতে একটি কোড সহ আপনাকে একটি এসএমএস পাঠিয়েছি</string>
     <string name="didn_t_you_received_any_code">আপনি কোনও কোড পান নি?</string>
+    <string name="request_format_pin">পিন ভুলে অনুরোধ</string>
+    <string name="last_4_digit_mobile_number">মোবাইল নম্বরটির শেষ 4 টি সংখ্যা</string>
+    <string name="please_enter_the_last_4_digits_of_your_phone_number">আপনার ফোন নম্বরটির শেষ 4 টি সংখ্যা লিখুন</string>
+    <string name="forgot_pin">পিন অনুরোধ</string>
 
 
 </resources>

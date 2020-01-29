@@ -23,7 +23,7 @@
                 android:id="@+id/outletNameTV"
                 android:layout_width="396dp"
                 android:layout_height="wrap_content"
-                android:text="@string/member_login"
+                android:text="@string/forgot_pin"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -35,38 +35,34 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp">
 
-            <EditText
-                android:id="@+id/etMobileOrRID"
+            <TextView
+                android:id="@+id/textView60"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/rect_text_edit"
-                android:hint="@string/rid_mobile_number"
-                android:paddingLeft="16dp"
-                android:textColor="@android:color/black"
-                android:textCursorDrawable="@null"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="@string/please_enter_the_last_4_digits_of_your_phone_number"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/etPin"
+                android:id="@+id/etMobileOrRID"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
+                android:inputType="phone"
                 android:background="@drawable/rect_text_edit"
-                android:hint="@string/pin_number"
+                android:hint="@string/last_4_digit_mobile_number"
                 android:paddingLeft="16dp"
-                android:inputType="textPassword"
                 android:textColor="@android:color/black"
                 android:textCursorDrawable="@null"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etMobileOrRID" />
+                app:layout_constraintTop_toBottomOf="@+id/textView60" />
 
             <Button
-                android:id="@+id/btbtSubmitMobileNumber"
+                android:id="@+id/btForgetPinNumber"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -74,35 +70,20 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginRight="24dp"
+                android:layout_marginBottom="16dp"
                 android:background="@drawable/submit_button"
                 android:drawableLeft="@drawable/submit_icon"
                 android:paddingLeft="26dp"
                 android:paddingTop="8dp"
                 android:paddingRight="26dp"
                 android:paddingBottom="8dp"
-                android:text="@string/submit"
-                android:textColor="#FFFFFF"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etPin" />
-
-            <Button
-                android:id="@+id/btForgetPinNumber"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="40dp"
-                android:background="@drawable/submit_button"
-                android:drawableLeft="@drawable/submit_icon"
-                android:paddingLeft="26dp"
-                android:paddingTop="8dp"
-                android:paddingRight="26dp"
-                android:paddingBottom="8dp"
-                android:text="@string/forget_pin"
+                android:text="@string/request_format_pin"
                 android:textColor="#FFFFFF"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/btbtSubmitMobileNumber"
-                app:layout_constraintTop_toBottomOf="@+id/btbtSubmitMobileNumber" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etMobileOrRID" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

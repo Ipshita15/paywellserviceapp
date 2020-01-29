@@ -10,9 +10,12 @@ import com.cloudwell.paywell.services.BuildConfig
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.AppLoadingActivity
 import com.cloudwell.paywell.services.activity.base.BaseActivity
+import com.cloudwell.paywell.services.activity.home.model.ReposeGenerateOTP
 import com.cloudwell.paywell.services.activity.home.model.RequestAppsAuth
+import com.cloudwell.paywell.services.activity.home.model.RequestGenerateOTP
 import com.cloudwell.paywell.services.activity.home.model.ResposeAppsAuth
 import com.cloudwell.paywell.services.activity.reg.EntryMainActivity
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.ForgetPinNumberDialog
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.MobileNumberInputDialog
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
@@ -73,6 +76,24 @@ class HomeActivity : BaseActivity() {
 
                     }
 
+                    override fun onForgetPinNumber() {
+
+                        val mobileNumberInputDialog = ForgetPinNumberDialog(object : ForgetPinNumberDialog.OnClickHandler {
+
+                            override fun onForgetPinNumber(moibleNumber: String) {
+
+                                callForgetPasswordRequest("", "", "")
+
+
+                            }
+                        })
+
+                        mobileNumberInputDialog.show(supportFragmentManager, "mobileNumberInputDialog");
+                    }
+
+
+
+
                 })
                 mobileNumberInputDialog.show(supportFragmentManager, "mobileNumberInputDialog");
 
@@ -94,6 +115,42 @@ class HomeActivity : BaseActivity() {
             }
         }
 
+
+    }
+
+    private fun callForgetPasswordRequest(s: String, s1: String, s2: String) {
+        showProgressDialog()
+
+        val m = RequestGenerateOTP()
+        m.username = "sdf"
+
+        ApiUtils.getAPIServiceV2().generateOTP(m).enqueue(object : Callback<ReposeGenerateOTP> {
+            override fun onResponse(call: Call<ReposeGenerateOTP>, response: Response<ReposeGenerateOTP>) {
+                dismissProgressDialog()
+                if (response.isSuccessful) {
+
+                    response.body().let {
+                        if (it?.apiStatus ?: 0 == 200) {
+                            if (it?.responseDetails!!.status == 200){
+                                Toast.makeText(applicationContext, it.responseDetails?.statusName, Toast.LENGTH_LONG).show()
+                            } else{
+                                Toast.makeText(applicationContext, it.responseDetails?.statusName, Toast.LENGTH_LONG).show()
+
+                            }
+                        }else{
+                            Toast.makeText(applicationContext, it?.apiStatusName, Toast.LENGTH_LONG).show()
+
+                        }
+                    }
+
+                }
+            }
+
+            override fun onFailure(call: Call<ReposeGenerateOTP>, t: Throwable) {
+                dismissProgressDialog();
+                com.orhanobut.logger.Logger.e("" + t.message)
+            }
+        })
 
     }
 
@@ -150,7 +207,6 @@ class HomeActivity : BaseActivity() {
                             AppHandler.getmInstance(applicationContext).setUserName(userName)
 
                             startActivity(Intent(this@HomeActivity, OtpActivity::class.java))
-
 
                         } else {
 
