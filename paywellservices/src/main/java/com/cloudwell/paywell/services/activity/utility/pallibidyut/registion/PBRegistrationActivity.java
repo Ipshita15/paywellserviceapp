@@ -11,11 +11,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.base.LanguagesBaseActivity;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.REBNotification;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
@@ -42,9 +43,10 @@ import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
 
-public class PBRegistrationActivity extends LanguagesBaseActivity implements View.OnClickListener {
+public class PBRegistrationActivity extends BaseActivity implements View.OnClickListener {
     private EditText mPinNumber, mAccount, mConfirmAccount, mCustomerName, mPhone;
     private Button mSubmitButton;
+    ImageView imageViewInfo;
     private ConnectionDetector cd;
     private String _pinNo, _accountNo, _customerName, _phone, dialogHeader;
     private int otp_check = 0;
@@ -85,6 +87,9 @@ public class PBRegistrationActivity extends LanguagesBaseActivity implements Vie
         mPhone = findViewById(R.id.etPhone);
         mSubmitButton = findViewById(R.id.btnPBConfirm);
 
+        imageViewInfo = findViewById(R.id.imageView_info);
+        imageViewInfo.setOnClickListener(this);
+
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             _pin.setTypeface(AppController.getInstance().getOxygenLightFont());
             mPinNumber.setTypeface(AppController.getInstance().getOxygenLightFont());
@@ -115,16 +120,16 @@ public class PBRegistrationActivity extends LanguagesBaseActivity implements Vie
 
         try {
             String data = getIntent().getStringExtra("REBNotification");
-            if (!data.equals("")){
+            if (!data.equals("")) {
                 Gson gson = new Gson();
                 REBNotification notificationDetailMessage = gson.fromJson(data, REBNotification.class);
-                mAccount.setText(""+notificationDetailMessage.getTrxData().getAccountNo());
-                mConfirmAccount.setText(""+notificationDetailMessage.getTrxData().getAccountNo());
-                mCustomerName.setText(""+notificationDetailMessage.getTrxData().getCustomerName());
-                mPhone.setText(""+notificationDetailMessage.getTrxData().getCustomerPhone());
-                mSubmitButton.setText(""+getString(R.string.re_submit_reb));
+                mAccount.setText("" + notificationDetailMessage.getTrxData().getAccountNo());
+                mConfirmAccount.setText("" + notificationDetailMessage.getTrxData().getAccountNo());
+                mCustomerName.setText("" + notificationDetailMessage.getTrxData().getCustomerName());
+                mPhone.setText("" + notificationDetailMessage.getTrxData().getCustomerPhone());
+                mSubmitButton.setText("" + getString(R.string.re_submit_reb));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
@@ -162,6 +167,9 @@ public class PBRegistrationActivity extends LanguagesBaseActivity implements Vie
                 }
                 new CheckOTPAsync().execute(getString(R.string.pb_reg));
             }
+        } else if (v.getId() == R.id.imageView_info) {
+            showBillImageGobal(R.drawable.ic_polli_biddut_sms_acc_no);
+
         }
     }
 
@@ -390,6 +398,8 @@ public class PBRegistrationActivity extends LanguagesBaseActivity implements Vie
         }
 
     }
+
+
 
     private void showStatusDialog() {
         StringBuilder reqStrBuilder = new StringBuilder();
