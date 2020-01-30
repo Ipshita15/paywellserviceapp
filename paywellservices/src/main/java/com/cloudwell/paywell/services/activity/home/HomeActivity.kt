@@ -32,6 +32,7 @@ class HomeActivity : BaseActivity() {
         setContentView(R.layout.activity_home)
         getSupportActionBar()?.hide()
 
+//        AppHandler.getmInstance(applicationContext).setisSuccessfulPassRemissionFlowFlow(true)
 
 
 
@@ -40,6 +41,10 @@ class HomeActivity : BaseActivity() {
             startActivity(i)
             finish()
 
+        }else if(AppHandler.getmInstance(applicationContext).isSuccessfulPassRegistionFlow()){
+            val i = Intent(this@HomeActivity, AppLoadingActivity::class.java)
+            startActivity(i)
+            finish()
         } else {
 
             // check device is support

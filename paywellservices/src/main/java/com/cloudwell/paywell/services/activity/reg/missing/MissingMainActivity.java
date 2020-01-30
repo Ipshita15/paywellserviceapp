@@ -35,7 +35,6 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
-import com.cloudwell.paywell.services.utils.TelephonyInfo;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.JsonObject;
 import com.imagepicker.FilePickUtils;
@@ -302,7 +301,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 }
             }
         }
-        if (layoutNames.contains("district")) {
+        if (layoutNames.contains("district") ||layoutNames.contains("thana")  || layoutNames.contains("post_code")) {
 
 
             layoutDistrict.setVisibility(View.VISIBLE);
@@ -313,52 +312,59 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
             if (isMissingFlowGorble) {
                 if (regModel != null) {
                     setupDistrictAdapter(regModel.getDistrictAPIRespose(), isMissingFlowGorble);
-                }
-
-            } else {
-
-                new GetDistrictResponseAsync().execute(getResources().getString(R.string.district_info_url));
-            }
-
-
-        }
-        if (layoutNames.contains("thana")) {
-
-
-            layoutDistrict.setVisibility(View.VISIBLE);
-            layoutThana.setVisibility(View.VISIBLE);
-            layoutPost.setVisibility(View.VISIBLE);
-
-
-            if (isMissingFlowGorble) {
-                if (regModel != null) {
                     setAdapterThana(regModel.getThanaResponseAPIRespose(), isMissingFlowGorble);
-                }
-
-            } else {
-
-                new GetDistrictResponseAsync().execute(getResources().getString(R.string.district_info_url));
-            }
-
-
-        }
-        if (layoutNames.contains("post_code")) {
-
-            if (isMissingFlowGorble) {
-
-                if (regModel != null) {
                     setupPostCode(regModel.getPostCodeResponseAPIRespose(), isMissingFlowGorble);
+
                 }
+
             } else {
 
                 new GetDistrictResponseAsync().execute(getResources().getString(R.string.district_info_url));
+                new GetDistrictResponseAsync().execute(getResources().getString(R.string.district_info_url));
+                new GetDistrictResponseAsync().execute(getResources().getString(R.string.district_info_url));
+
 
             }
 
-            layoutDistrict.setVisibility(View.VISIBLE);
-            layoutThana.setVisibility(View.VISIBLE);
-            layoutPost.setVisibility(View.VISIBLE);
+
         }
+//        if (layoutNames.contains("thana")) {
+//
+//
+//            layoutDistrict.setVisibility(View.VISIBLE);
+//            layoutThana.setVisibility(View.VISIBLE);
+//            layoutPost.setVisibility(View.VISIBLE);
+//
+//
+//            if (isMissingFlowGorble) {
+//                if (regModel != null) {
+//                    setAdapterThana(regModel.getThanaResponseAPIRespose(), isMissingFlowGorble);
+//                }
+//
+//            } else {
+//
+//                new GetDistrictResponseAsync().execute(getResources().getString(R.string.district_info_url));
+//            }
+//
+//
+//        }
+//        if (layoutNames.contains("post_code")) {
+//
+//            if (isMissingFlowGorble) {
+//
+//                if (regModel != null) {
+//                    setupPostCode(regModel.getPostCodeResponseAPIRespose(), isMissingFlowGorble);
+//                }
+//            } else {
+//
+//                new GetDistrictResponseAsync().execute(getResources().getString(R.string.district_info_url));
+//
+//            }
+//
+//            layoutDistrict.setVisibility(View.VISIBLE);
+//            layoutThana.setVisibility(View.VISIBLE);
+//            layoutPost.setVisibility(View.VISIBLE);
+//        }
         if (layoutNames.contains("landmark")) {
             layoutLandmark.setVisibility(View.VISIBLE);
 
@@ -1406,9 +1412,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
     private void submitRequest() {
 
         try {
-            TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(MissingMainActivity.this);
-            String imeiOne = telephonyInfo.getImeiSIM1();
-            String imeiTwo = telephonyInfo.getImeiSIM2();
+            String androidID = AppHandler.getmInstance(getApplicationContext()).getAndroidID();
 
             JsonObject jsonInformationData = new JsonObject();
 
@@ -1467,8 +1471,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
             JsonObject imageData = new JsonObject();
             //add data
             JsonObject rootJsonObject = new JsonObject();
-            rootJsonObject.addProperty("imei", imeiOne);
-            rootJsonObject.addProperty("alternate_imei", imeiTwo);
+            rootJsonObject.addProperty("imei", androidID);
             rootJsonObject.add("informationData", jsonInformationData);
             if (layoutNames.contains("outlet_img")) {
                 imageData.addProperty("outlet_img", regModel.getOutletImage());

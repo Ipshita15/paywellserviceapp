@@ -173,6 +173,7 @@ public class AppHandler {
     public static final String KEY_APPS_SECURITY_Token= "KEY_APPS_SECURITY_Token";
     public static final String KEY_APPS_TOKEN_EXP_Time= "KEY_APPS_TOKEN_EXP_Time";
     public static final String KEY_IsSuccessfullDoneAuthenticationFlow= "setSuccessfulPassAuthenticationFlow";
+    public static final String KEY_IsSuccessfullDoneRegistionFlow= "KEY_IsSuccessfullDoneRegistionFlow";
     public static final String KEY_ANDROID_ID= "KEY_ANDROID_ID";
 
 
@@ -828,6 +829,15 @@ public class AppHandler {
 
     public boolean isSuccessfulPassAuthenticationFlow() {
         return mPref.getBoolean(KEY_IsSuccessfullDoneAuthenticationFlow, false);
+    }
+
+    public void setisSuccessfulPassRemissionFlowFlow(boolean b) {
+        editor.putBoolean(KEY_IsSuccessfullDoneRegistionFlow, b);
+        editor.commit();
+    }
+
+    public boolean isSuccessfulPassRegistionFlow() {
+        return mPref.getBoolean(KEY_IsSuccessfullDoneRegistionFlow, false);
     }
 
     public void setAndroidID(String androidId) {
