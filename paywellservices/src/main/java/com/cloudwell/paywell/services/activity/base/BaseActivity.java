@@ -22,6 +22,7 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.constant.AllConstant;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Locale;
@@ -289,6 +290,23 @@ public class BaseActivity extends AppCompatActivity {
         startActivity(intent);
 
 
+    }
+
+    public void showBillImageGobal(int id) {
+        View mView = getLayoutInflater().inflate(R.layout.dialog_custom_image_layout, null);
+        PhotoView photoView = mView.findViewById(R.id.imageView);
+        photoView.setImageResource(id);
+
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(this).
+                        setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).
+                        setView(mView);
+        builder.create().show();
     }
 
 }

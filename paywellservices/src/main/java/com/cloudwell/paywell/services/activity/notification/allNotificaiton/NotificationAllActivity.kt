@@ -5,6 +5,8 @@ import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.util.Linkify
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -252,10 +254,21 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
 
             if (testmessage.contains("notification_action_type")) {
                 val s1 = handleAirTicketActionNotificaiton(testmessage)
-                holder.message.text = s1
+
+                val mesage = StringEscapeUtils.unescapeJava(s1);
+
+                val spannableString = SpannableString(mesage);
+                Linkify.addLinks(spannableString, Linkify.WEB_URLS);
+                holder.message.text = mesage
             }else{
+
+
+                val mMesage = StringEscapeUtils.unescapeJava(t.get(position).message);
+
+                val spannableString = SpannableString(mMesage);
+                Linkify.addLinks(spannableString, Linkify.WEB_URLS);
                 // for normal notification
-                holder.message.text = t.get(position).message
+                holder.message.text = mMesage
             }
 
 

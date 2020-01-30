@@ -93,6 +93,17 @@
                             android:text="@string/acc_no_des"
                             android:textAppearance="?android:attr/textAppearanceMedium"/>
 
+                        <ImageView
+                            android:id="@+id/imageView_info"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:background="@drawable/ic_info"
+                            android:contentDescription="@string/bell_msg"
+                            card_view:layout_constraintBottom_toBottomOf="parent"
+                            card_view:layout_constraintStart_toEndOf="@+id/tvDescoBillNo" />
+
                     </LinearLayout>
 
                     <EditText

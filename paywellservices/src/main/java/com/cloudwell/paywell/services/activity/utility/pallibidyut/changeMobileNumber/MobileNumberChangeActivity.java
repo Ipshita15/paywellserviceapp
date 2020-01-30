@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.cloudwell.paywell.services.R;
@@ -45,6 +46,7 @@ public class MobileNumberChangeActivity extends BaseActivity implements View.OnC
     private Button mConfirm;
     private ConnectionDetector cd;
     private AppHandler mAppHandler;
+    ImageView imageViewInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,10 @@ public class MobileNumberChangeActivity extends BaseActivity implements View.OnC
         mAccount = findViewById(R.id.etPBAccount);
         mPhone = findViewById(R.id.etPBBIllNo);
         mConfirm = findViewById(R.id.btnPBBillConfirm);
+
+        imageViewInfo = findViewById(R.id.imageView_info);
+        imageViewInfo.setOnClickListener(this);
+
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
@@ -112,6 +118,9 @@ public class MobileNumberChangeActivity extends BaseActivity implements View.OnC
 
                 new SubmitAsync().execute(getString(R.string.pb_bill_pay_pollyBiddyutPhoneNoChange), _pin, _account, _phone);
             }
+        }else if (v.getId() == R.id.imageView_info) {
+            showBillImageGobal(R.drawable.ic_polli_biddut_sms_acc_no);
+
         }
     }
 
