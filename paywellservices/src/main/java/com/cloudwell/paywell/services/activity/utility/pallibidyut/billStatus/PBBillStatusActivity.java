@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -26,7 +27,6 @@ import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.DateUtils;
-import com.cloudwell.paywell.services.utils.ParameterUtility;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -47,6 +47,7 @@ public class PBBillStatusActivity extends BaseActivity implements View.OnClickLi
     private Button btnConfirm;
     private int month = 0, year = 0;
     private String mPin, mAcc, mMonth, mYear;
+    ImageView imageViewInfo;
 
     private static String KEY_TAG = PBBillStatusActivity.class.getName();
 
@@ -77,6 +78,10 @@ public class PBBillStatusActivity extends BaseActivity implements View.OnClickLi
 
         spnr_month = findViewById(R.id.monthSpinner);
         spnr_year = findViewById(R.id.yearSpinner);
+
+        imageViewInfo = findViewById(R.id.imageView_info);
+        imageViewInfo.setOnClickListener(this);
+
 
         ArrayAdapter<CharSequence> month_adapter = ArrayAdapter.createFromResource(this,
                 R.array.month_array, android.R.layout.simple_spinner_item);
@@ -165,6 +170,9 @@ public class PBBillStatusActivity extends BaseActivity implements View.OnClickLi
                 mMonth = spnr_month.getSelectedItem().toString().trim().substring(0, 3).toUpperCase();
                 handleBillStatusCheckRequest();
             }
+        } else if (v.getId() == R.id.imageView_info) {
+            showBillImageGobal(R.drawable.ic_polli_biddut_sms_acc_no);
+
         }
     }
 

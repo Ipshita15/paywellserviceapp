@@ -10,10 +10,7 @@ import android.os.Bundle
 import android.text.Html
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
-import android.view.Gravity
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
 import android.view.inputmethod.InputMethodManager
@@ -151,6 +148,12 @@ class PBBillPayNewActivity : BaseActivity() {
 
 
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_pb_bill, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
 
     override fun onResume() {
         super.onResume()
@@ -453,7 +456,10 @@ class PBBillPayNewActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             this.onBackPressed()
-            return true
+
+        }else if (item.itemId == R.id.action_info){
+
+            showBillImageGobal(R.drawable.ic_poli_biddut_sms_bill_number)
         }
         return super.onOptionsItemSelected(item)
     }

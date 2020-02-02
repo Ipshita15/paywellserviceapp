@@ -72,6 +72,7 @@ import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionMainActivity;
 import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionRechargeActivity;
 import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionRechargeInquiryActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.DescoMainActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidBillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidMainActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCMainActivity;
@@ -2073,7 +2074,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.string.home_utility_desco:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_MENU);
 
-                intent = new Intent(getApplicationContext(), DESCOPostpaidMainActivity.class);
+                intent = new Intent(getApplicationContext(), DescoMainActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
