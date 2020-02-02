@@ -440,29 +440,13 @@
 
 
     <!-- paywell apis -->
-    <!--<string name="pw_auth">https://www.paywellonline.com/crs3291/android/paywell_app_api/tab_user_service_profiling_test.php?</string>-->
-    <!--<string name="pw_auth">https://www.paywellonline.com/crs3291/android/paywell_app_api/tab_user_service_profiling_new.php?</string>-->
-    <string name="pw_auth">https://api.paywellonline.com/PaywelltransactionRetailer/TabUserServiceProfiling?</string>
-    <string name="notif_url">https://www.paywellonline.com/default/api/notification_check_android.php?</string>
-    <string name="notification_token_url">https://www.paywellonline.com/paywellapi/setUserFCMToken.php</string>
 
-    <!--<string name="update_check">https://app.paywellonline.com/apk_test/app-release.apk</string>-->
-    <!--<string name="check_version">https://app.paywellonline.com/apk_update_test/version/paywellservice_update.txt</string>-->
+
     <string name="app_next_version_no">vten_seventeen</string>
-    <string name="check_version">https://app.paywellonline.com/version_update_info/paywellservice_update.txt</string>
 
-    <string name="update_location">https://api.paywellonline.com/PaywellRetailerInformation/doUpdateRetailersCurrentLocation</string>
 
-    <!-- Registration -->
-    <!--<string name="business_type_url">https://api.paywellonline.com/Android/business_type</string>-->
-    <string name="business_type_url">https://api.paywellonline.com/Android/userSubBusinessType</string>
-    <string name="district_info_url">https://www.paywellonline.com/crs3291/android/sales_manager/district_info_bangladesh.php</string>
-    <!--<string name="final_reg_url">https://www.paywellonline.com/crs3291/android/sales_manager/Retailer_Add_Request_Info.php</string>-->
 
-    <!-- Topup -->
-    <string name="inq_top">https://www.paywellonline.com/default/api/enquiry.php?</string>
-    <string name="trx_log">https://www.paywellonline.com/crs3291/live/view_log.php?</string>
-    <string name="topup_offer">https://api.paywellonline.com/Android/GetRechargeOffer?</string>
+
 
     <string name="mobileOperator">সকল অপারেটর</string>
     <string name="operator"> অপারেটর</string>
@@ -476,77 +460,6 @@
 
     <!-- Utility -->
 
-
-    <string name="desco_bill_enq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
-    <string name="desco_bill_pay">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
-
-    <string name="desco_prepaid_bill_enq">https://agentapi.paywellonline.com/MYCash/Utility/DESCOPrepaid_billInfo</string>
-    <string name="desco_prepaid_bill_pay">https://agentapi.paywellonline.com/MYCash/Utility/DESCOPrepaid_billPayment</string>
-    <string name="desco_prepaid_trx_inquiry">https://agentapi.paywellonline.com/MYCash/Utility/getEnquiryData</string>
-
-    <string name="dpdc_postpaid_bill_inq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DPDC</string>
-    <string name="dpdc_postpaid_bill_pay">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DPDC</string>
-
-    <string name="wasa_bill">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_WASA</string>
-
-    <string name="west_zone_bill">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_WZPDCL</string>
-
-    <string name="utility_multi_trx_inq">https://api.paywellonline.com/PaywellTransactionReport/TransactionReport?</string>
-
-    <string name="utility_ivac_get_center">https://api.paywellonline.com/PaywelltransactionIVAC/getIvacCenter</string>
-    <string name="utility_ivac_fee_pay">https://api.paywellonline.com/PaywelltransactionIVAC/IVACRequest</string>
-    <string name="utility_ivac_fee_pay_inq">https://api.paywellonline.com/PaywelltransactionIVAC/getIvacTrxList</string>
-    <string name="utility_ivac_fee_pay_inq_with_web_file_no">https://api.paywellonline.com/PaywelltransactionIVAC/getIvacTrxByWebFileNo</string>
-
-    <string name="banglalion_bill_pay">https://api.paywellonline.com/PayWellInternateBillPay/banglalionBillPay</string>
-    <string name="banglalion_bill_inquiry">https://api.paywellonline.com/PayWellInternateBillPay/banglalionEnquiry</string>
-
-    <string name="karnaphuli_bill">https://api.paywellonline.com/PaywelltransactionMYCash/kgdcl_billinfo</string>
-
-    <!-- Eticket -->
-    <string name="train_source_url">https://www.paywellonline.com/banglalink_services/train.php?</string>
-
-    <!-- Payment -->
-    <string name="bkash_balance_check">https://bkapi.paywellonline.com/retailer/userBalanceCheck.php?</string>
-
-    <!-- MFS -->
-    <string name="mycash_generate_otp">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/GenerateOTP?</string>
-    <string name="mycash_balance_check">https://api.paywellonline.com/PaywelltransactionMYCash/GetMYCashRetailerPayWellBalance?</string>
-    <string name="mycash_cash_in">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/CashIn?</string>
-    <string name="mycash_management">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/Fund_Management?</string>
-    <string name="mycash_customer_reg">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/Customer_Registration?</string>
-    <string name="mycash_statement">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/Mini_Statement?</string>
-    <string name="mycash_balance_inq">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/Balance_Enquiry?</string>
-    <string name="mycash_trx_inq">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/lastTransactionList?</string>
-    <string name="mycash_cashout_inq">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/lastSuccessfulCashOutList?</string>
-    <string name="mycash_change_pin">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/PIN_Change?</string>
-    <string name="mycash_balance_transfer">https://api.paywellonline.com/PaywelltransactionMYCash/DoMyCahsToCashOrBankTransfer?</string>
-    <string name="mycash_balance_transfer_confirm_pending">https://api.paywellonline.com/PaywelltransactionMYCash/CheckMyCashPendingCashRequest?</string>
-    <string name="mycash_balance_transfer_confirm">https://api.paywellonline.com/PaywelltransactionMYCash/MyCashPendingCashRequestConfirmation?</string>
-
-    <!-- Refill -->
-    <string name="refill_sda_info">https://api.paywellonline.com/Android/SDAinformation?</string>
-    <string name="refill_mfs_info">https://api.paywellonline.com/Android/paymentInfo?</string>
-
-    <!-- Product -->
-
-
-    <string name="b2b_token">https://wholesale.paywellonline.com/Home/CreateToken?</string>
-    <string name="b2b_login">https://wholesale.paywellonline.com/Home/CheckLoginByToken?</string>
-    <string name="b2b_refresh_token">https://wholesale.paywellonline.com/Retailer/MetaData/PingServer</string>
-    <string name="b2b_share">https://wholesale.paywellonline.com</string>
-
-    <!-- Settings -->
-    <string name="pin">https://www.paywellonline.com/crs3291/live/change_password.php?</string>
-    <string name="reset_pin">https://api.paywellonline.com/paywellSetting/passwordChange?</string>
-
-    <!-- Verification -->
-    <string name="otp_for_phn_num">https://api.paywellonline.com/PaywelltransactionRetailer/GetRetailerPhoneNumberVerificationOTP</string>
-    <string name="conf_phn_num">https://api.paywellonline.com/PaywelltransactionRetailer/ConfirmRetaileOTPForPhoneNumberVerification</string>
-    <string name="conf_merchant_type">https://api.paywellonline.com/PaywelltransactionRetailer/UpdateMarchentAndBusinessType</string>
-
-    <!-- Chat -->
-    <string name="chat">https://www.paywellonline.com/chatting-retailer/?</string>
 
     <string name="title_activity_my_favorite_menu">আমার পছন্দ</string>
     <string name="can_not_add_more_than">৮ মেনু থেকে বেশি যোগ করতে পারবেন না</string>
