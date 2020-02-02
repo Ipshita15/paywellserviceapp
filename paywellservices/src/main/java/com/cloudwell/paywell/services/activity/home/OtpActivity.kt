@@ -205,7 +205,17 @@ class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleA
             mGoogleApiClient!!.disconnect()
             mGoogleApiClient = null
         }
-        unregisterReceiver(mSmsBroadcastReceiver)
+
+        try {
+            if (mSmsBroadcastReceiver !=null){
+                unregisterReceiver(mSmsBroadcastReceiver)
+            }
+        }catch (e: Exception){
+
+
+        }
+
+
 
     }
 
