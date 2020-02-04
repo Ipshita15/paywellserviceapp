@@ -897,6 +897,8 @@
     <string name="no_internet_connection">No internet connection</string>
     <string name="no_internet_connection_please_check_your_internet_connection">No internet connection Please check your internet connection</string>
     <string name="retry">Retry</string>
+    <string name="logout_message">Are you sure you want to logout of your account?</string>
+    <string name="logout_text">Logout</string>
 
 
 </resources>

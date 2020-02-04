@@ -64,6 +64,8 @@ public class AnalyticsParameters {
     public static final String KEY_NAV_TERMS_MENU = "TermsAndConditionMenuNav";
     public static final String KEY_NAV_PRIVACY_MENU = "PrivacyPolicyMenuNav";
     public static final String KEY_NAV_ABOUT_MENU = "AboutMenuNav";
+    public static final String KEY_NAV_LOGOUT = "LogoutMenuNav";
+
 
     public static final String KEY_UPGRADE_PLAYSTORE_OPTION = "UpgradeViaPlayStoreOption";
     public static final String KEY_UPGRADE_PAYWELL_OPTION = "UpgradeViaPayWellOption";

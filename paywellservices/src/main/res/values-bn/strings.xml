@@ -780,6 +780,8 @@
     <string name="no_internet_connection">কোনও ইন্টারনেট সংযোগ নেই</string>
     <string name="no_internet_connection_please_check_your_internet_connection">কোনও ইন্টারনেট সংযোগ নেই আপনার ইন্টারনেট সংযোগ পরীক্ষা করুন</string>
     <string name="retry">আবার চেষ্টা করুন</string>
+    <string name="logout_message">আপনি কি নিশ্চিত আপনার অ্যাকাউন্টটি লগআউট করতে চান?</string>
+    <string name="logout_text">লগআউট</string>
 
 
 </resources>
