@@ -21,6 +21,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResPay
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatCheckBookAPI;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.transactionLog.TransactionLogDetailsModel;
 import com.cloudwell.paywell.services.activity.home.model.ReposeGenerateOTP;
+import com.cloudwell.paywell.services.activity.home.model.ReposeUserProfile;
 import com.cloudwell.paywell.services.activity.home.model.RequestAppsAuth;
 import com.cloudwell.paywell.services.activity.home.model.RequestGenerateOTP;
 import com.cloudwell.paywell.services.activity.home.model.RequestOtpCheck;
@@ -408,7 +409,10 @@ public interface APIService {
 
 
     @POST("PaywelltransactionRetailer/userServiceProfiling_v1")
-    Call<ResponseBody> userServiceProfiling(@Body AuthRequestModel regModel);
+    Call<ReposeUserProfile> userServiceProfiling(@Body AuthRequestModel regModel);
+
+    @POST("PaywelltransactionRetailer/userServiceProfiling_v2")
+    Call<ReposeUserProfile> userServiceProfilingWithAuth(@Body AuthRequestModel regModel);
 
 
 

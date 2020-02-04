@@ -3,14 +3,13 @@ package com.cloudwell.paywell.services.activity.home
 import android.content.Intent
 import android.os.Bundle
 import android.util.Base64
+import android.view.View
 import android.widget.Toast
 import com.cloudwell.paywell.services.BuildConfig
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.AppLoadingActivity
 import com.cloudwell.paywell.services.activity.base.BaseActivity
-import com.cloudwell.paywell.services.activity.home.model.ReposeGenerateOTP
 import com.cloudwell.paywell.services.activity.home.model.RequestAppsAuth
-import com.cloudwell.paywell.services.activity.home.model.RequestGenerateOTP
 import com.cloudwell.paywell.services.activity.home.model.ResposeAppsAuth
 import com.cloudwell.paywell.services.activity.reg.EntryMainActivity
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.ForgetPinNumberDialog
@@ -18,6 +17,7 @@ import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.M
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.AndroidIDUtility
+import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_home.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -33,6 +33,7 @@ class HomeActivity : BaseActivity() {
         getSupportActionBar()?.hide()
 
 //        AppHandler.getmInstance(applicationContext).setisSuccessfulPassRemissionFlowFlow(true)
+//        AppHandler.getmInstance(applicationContext).setAppStatus("pendingLogin")
 
 
 
@@ -50,6 +51,14 @@ class HomeActivity : BaseActivity() {
             // check device is support
 
             val androidID = AppHandler.getmInstance(applicationContext).androidID
+            Logger.v("Android ID: "+androidID)
+            if (BuildConfig.DEBUG){
+                tvAndroidID.visibility = View.VISIBLE
+                tvAndroidID.text = ""+androidID
+            }else{
+                tvAndroidID.visibility = View.GONE
+            }
+
             if (androidID == "") {
                 val androidID1 = AndroidIDUtility.getAndroidID(applicationContext)
                 if (androidID1 != null){
@@ -142,38 +151,38 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun callForgetPasswordRequest(s: String, s1: String, s2: String) {
-        showProgressDialog()
-
-        val m = RequestGenerateOTP()
-        m.username = "sdf"
-
-        ApiUtils.getAPIServiceV2().generateOTP(m).enqueue(object : Callback<ReposeGenerateOTP> {
-            override fun onResponse(call: Call<ReposeGenerateOTP>, response: Response<ReposeGenerateOTP>) {
-                dismissProgressDialog()
-                if (response.isSuccessful) {
-
-                    response.body().let {
-                        if (it?.apiStatus ?: 0 == 200) {
-                            if (it?.responseDetails!!.status == 200){
-                                Toast.makeText(applicationContext, it.responseDetails?.statusName, Toast.LENGTH_LONG).show()
-                            } else{
-                                Toast.makeText(applicationContext, it.responseDetails?.statusName, Toast.LENGTH_LONG).show()
-
-                            }
-                        }else{
-                            Toast.makeText(applicationContext, it?.apiStatusName, Toast.LENGTH_LONG).show()
-
-                        }
-                    }
-
-                }
-            }
-
-            override fun onFailure(call: Call<ReposeGenerateOTP>, t: Throwable) {
-                dismissProgressDialog();
-                com.orhanobut.logger.Logger.e("" + t.message)
-            }
-        })
+//        showProgressDialog()
+//
+//        val m = RequestGenerateOTP()
+//        m.username = "sdf"
+//
+//        ApiUtils.getAPIServiceV2().generateOTP(m).enqueue(object : Callback<ReposeGenerateOTP> {
+//            override fun onResponse(call: Call<ReposeGenerateOTP>, response: Response<ReposeGenerateOTP>) {
+//                dismissProgressDialog()
+//                if (response.isSuccessful) {
+//
+//                    response.body().let {
+//                        if (it?.apiStatus ?: 0 == 200) {
+//                            if (it?.responseDetails!!.status == 200){
+//                                Toast.makeText(applicationContext, it.responseDetails?.statusName, Toast.LENGTH_LONG).show()
+//                            } else{
+//                                Toast.makeText(applicationContext, it.responseDetails?.statusName, Toast.LENGTH_LONG).show()
+//
+//                            }
+//                        }else{
+//                            Toast.makeText(applicationContext, it?.apiStatusName, Toast.LENGTH_LONG).show()
+//
+//                        }
+//                    }
+//
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<ReposeGenerateOTP>, t: Throwable) {
+//                dismissProgressDialog();
+//                com.orhanobut.logger.Logger.e("" + t.message)
+//            }
+//        })
 
     }
 

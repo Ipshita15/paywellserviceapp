@@ -1452,6 +1452,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
             if (layoutNames.contains("nid_img")) {
                 jsonInformationData.addProperty("nidNumber", regModel.getNidNumber());
                 jsonInformationData.addProperty("nidName", regModel.getNidName());
+                jsonInformationData.addProperty("nidNameEngish", regModel.getNidNameEngish());
                 jsonInformationData.addProperty("nidMotherName", regModel.getNidMotherName());
                 jsonInformationData.addProperty("nidBirthday", regModel.getNidBirthday());
                 jsonInformationData.addProperty("nidAddress", regModel.getNidAddress());

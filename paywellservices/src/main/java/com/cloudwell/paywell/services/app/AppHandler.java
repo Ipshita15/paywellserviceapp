@@ -831,7 +831,7 @@ public class AppHandler {
         return mPref.getBoolean(KEY_IsSuccessfullDoneAuthenticationFlow, false);
     }
 
-    public void setisSuccessfulPassRemissionFlowFlow(boolean b) {
+    public void setIsSuccessfulPassRegistionFlow(boolean b) {
         editor.putBoolean(KEY_IsSuccessfullDoneRegistionFlow, b);
         editor.commit();
     }

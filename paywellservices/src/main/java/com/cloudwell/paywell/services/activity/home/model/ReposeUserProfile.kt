@@ -2,12 +2,12 @@ package com.cloudwell.paywell.services.activity.home.model
 
 import com.google.gson.annotations.SerializedName
 
-class ResposeOptCheck {
+class ReposeUserProfile {
     @SerializedName("ApiStatus")
     val apiStatus: Int = 0
     @SerializedName("ApiStatusName")
     val apiStatusName: String = ""
     @SerializedName("ResponseDetails")
-    val responseDetails: ResponseDetails?= null
+    var responseDetails: ResponseDetailsUserProfile? = null
 
 }

@@ -588,9 +588,25 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             checkLocationUpdate();
         }
 
-        if (mAppHandler.getPhnNumberVerificationStatus().equalsIgnoreCase("false") || mAppHandler.getMerchantTypeVerificationStatus().equalsIgnoreCase("false")) {
-            checkPhnNoUpdate();
+        if ( mAppHandler.getMerchantTypeVerificationStatus().equalsIgnoreCase("false")) {
+
+            if (!mCd.isConnectingToInternet()) {
+                AppHandler.showDialog(getSupportFragmentManager());
+            }else {
+                startActivity(new Intent(MainActivity.this, MerchantTypeVerify.class));
+            }
+
         }
+//        else  if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("false")){
+//            Intent intent = new Intent(MainActivity.this, ChangePinActivity.class);
+//            intent.putExtra("isFirstTime", true);
+//            startActivity(intent);
+//            finish();
+//        }
+
+
+
+
 //      Handle possible data accompanying notification message.
         if (getIntent().getExtras() != null) {
             for (String key : getIntent().getExtras().keySet()) {
@@ -1463,20 +1479,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    private void checkPhnNoUpdate() {
-        if ((System.currentTimeMillis() / 1000) >= (mAppHandler.getPhnUpdateCheck() + PHN_NUM_CHECK_INTERVAL)) {
-            if (!mCd.isConnectingToInternet()) {
-                AppHandler.showDialog(getSupportFragmentManager());
-            } else {
-                if (mAppHandler.getPhnNumberVerificationStatus().equalsIgnoreCase("false")) {
-                    checkForPhnUpdate();
-                } else {
-                    mAppHandler.setPhnUpdateCheck(System.currentTimeMillis() / 1000);
-                    startActivity(new Intent(MainActivity.this, MerchantTypeVerify.class));
-                }
-            }
-        }
-    }
 
     private void checkForPhnUpdate() {
         phn_num_count = mAppHandler.getDayCount();

@@ -373,7 +373,7 @@ public class EntryForthActivity extends BaseActivity {
                 dialogInterface.dismiss();
 
                 if (status_code.equals("200")){
-                    AppHandler.getmInstance(getApplicationContext()).setisSuccessfulPassRemissionFlowFlow(true);
+                    AppHandler.getmInstance(getApplicationContext()).setIsSuccessfulPassRegistionFlow(true);
                     Intent intent = new Intent(getApplicationContext(),AppLoadingActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);

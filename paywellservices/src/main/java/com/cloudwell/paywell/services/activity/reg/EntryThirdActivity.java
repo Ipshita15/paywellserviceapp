@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.base.LanguagesBaseActivity;
 import com.cloudwell.paywell.services.activity.reg.nidOCR.NidInputActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
@@ -39,7 +40,7 @@ import androidx.core.content.ContextCompat;
 import static com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regModel;
 import static com.imagepicker.FilePickUtils.CAMERA_PERMISSION;
 
-public class EntryThirdActivity extends LanguagesBaseActivity {
+public class EntryThirdActivity extends BaseActivity {
     private EditText et_salesCode, et_collectionCode;
     private String str_which_btn_selected;
     private static final int PERMISSION_FOR_GALLERY = 321;

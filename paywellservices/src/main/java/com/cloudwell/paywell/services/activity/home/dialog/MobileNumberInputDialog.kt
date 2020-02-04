@@ -27,8 +27,11 @@ class MobileNumberInputDialog(val onClickHandler: OnClickHandler): BaseDialogFra
             onClickHandler.onForgetPinNumber()
         }
 
-        view.etMobileOrRID.setText("01675349882")
-        view.etPin.setText("1234")
+//        view.etMobileOrRID.setText("01675349882")
+//        view.etPin.setText("1234")
+
+        view.etMobileOrRID.setText("01787679663")
+        view.etPin.setText("1416")
         return view
 
     }

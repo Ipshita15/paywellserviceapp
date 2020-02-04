@@ -9,13 +9,12 @@ import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.home.HomeActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
@@ -44,7 +43,9 @@ public class ChangePinActivity extends BaseActivity {
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
     private EditText mOldPin, mNewPin;
+    EditText newPinAgain;
     private LinearLayout mLinearLayout;
+    boolean isFirstTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,8 @@ public class ChangePinActivity extends BaseActivity {
             getSupportActionBar().setTitle(R.string.home_settings_change_pin);
         }
 
+        isFirstTime = getIntent().getBooleanExtra("isFirstTime", false);
+
         mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = AppHandler.getmInstance(getApplicationContext());
         initView();
@@ -66,29 +69,18 @@ public class ChangePinActivity extends BaseActivity {
 
     private void initView() {
         mLinearLayout = findViewById(R.id.linearLayout);
-
         mOldPin = findViewById(R.id.oldPin);
         mNewPin = findViewById(R.id.newPin);
+        newPinAgain = findViewById(R.id.newPinAgain);
 
-        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-            ((TextView) mLinearLayout.findViewById(R.id.tvOldPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
-            mOldPin.setTypeface(AppController.getInstance().getOxygenLightFont());
-            ((TextView) mLinearLayout.findViewById(R.id.tvNewPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
-            mNewPin.setTypeface(AppController.getInstance().getOxygenLightFont());
-            ((Button) mLinearLayout.findViewById(R.id.btnChangePin)).setTypeface(AppController.getInstance().getOxygenLightFont());
-        } else {
-            ((TextView) mLinearLayout.findViewById(R.id.tvOldPin)).setTypeface(AppController.getInstance().getAponaLohitFont());
-            mOldPin.setTypeface(AppController.getInstance().getAponaLohitFont());
-            ((TextView) mLinearLayout.findViewById(R.id.tvNewPin)).setTypeface(AppController.getInstance().getAponaLohitFont());
-            mNewPin.setTypeface(AppController.getInstance().getAponaLohitFont());
-            ((Button) mLinearLayout.findViewById(R.id.btnChangePin)).setTypeface(AppController.getInstance().getAponaLohitFont());
-        }
+
     }
 
     @SuppressWarnings("deprecation")
     public void resetPin(View v) {
         String _oldPin = mOldPin.getText().toString();
         String _newPin = mNewPin.getText().toString();
+        String _newPinAgain = newPinAgain.getText().toString();
         if (_oldPin.length() == 0) {
             mOldPin.setError(Html.fromHtml("<font color='red'>" + getString(R.string.old_pin_error_msg) + "</font>"));
             return;
@@ -97,6 +89,12 @@ public class ChangePinActivity extends BaseActivity {
             mNewPin.setError(Html.fromHtml("<font color='red'>" + getString(R.string.new_pin_error_msg) + "</font>"));
             return;
         }
+        if (!_newPinAgain.equals(_newPin)) {
+            mNewPin.setError(Html.fromHtml("<font color='red'>" + getString(R.string.new_pin_error_msg) + "</font>"));
+            newPinAgain.setError(Html.fromHtml("<font color='red'>" + getString(R.string.new_pin_error_msg) + "</font>"));
+            return;
+        }
+
         if (!mCd.isConnectingToInternet()) {
             AppHandler.showDialog(getSupportFragmentManager());
         } else {
@@ -122,7 +120,7 @@ public class ChangePinActivity extends BaseActivity {
             HttpPost httppost = new HttpPost(params[0]);
             try {
                 List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("iemi_no", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("iemi_no", mAppHandler.getAndroidID()));
                 nameValuePairs.add(new BasicNameValuePair("old_pin", params[1]));
                 nameValuePairs.add(new BasicNameValuePair("new_pin", params[2]));
                 nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
@@ -149,15 +147,30 @@ public class ChangePinActivity extends BaseActivity {
                 if (result.startsWith("200")) {
 
                     mAppHandler.setInitialChangePinStatus("true");
+                    AppHandler.getmInstance(getApplicationContext()).setSuccessfulPassAuthenticationFlow(false);
+                    AppHandler.getmInstance(getApplicationContext()).setIsSuccessfulPassRegistionFlow(false);
+                    AppHandler.getmInstance(getApplicationContext()).setAppStatus("registered");
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(ChangePinActivity.this);
+                    builder.setCancelable(false);
                     builder.setTitle("Result");
                     builder.setMessage(R.string.change_pin_status_msg);
                     builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int id) {
                             dialogInterface.dismiss();
-                            onBackPressed();
+
+                            if (isFirstTime){
+
+                                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                finish();
+                            }else {
+                                onBackPressed();
+
+                            }
+
                         }
                     });
                     AlertDialog alert = builder.create();
@@ -170,7 +183,7 @@ public class ChangePinActivity extends BaseActivity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int id) {
                             dialogInterface.dismiss();
-                            onBackPressed();
+
                         }
                     });
                     AlertDialog alert = builder.create();
@@ -197,8 +210,6 @@ public class ChangePinActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(ChangePinActivity.this, SettingsActivity.class);
-        startActivity(intent);
         finish();
     }
 }
