@@ -13,7 +13,7 @@ public class ResponseDetail {
     @SerializedName("ExtraCharge")
     private Double extraCharge;
     @SerializedName("Status")
-    private Long status;
+    private int status;
     @SerializedName("StatusName")
     private String statusName;
     @SerializedName("TotalAmount")
@@ -47,11 +47,11 @@ public class ResponseDetail {
         this.extraCharge = extraCharge;
     }
 
-    public Long getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Long status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
