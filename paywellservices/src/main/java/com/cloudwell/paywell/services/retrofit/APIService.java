@@ -27,6 +27,7 @@ import com.cloudwell.paywell.services.activity.home.model.RequestGenerateOTP;
 import com.cloudwell.paywell.services.activity.home.model.RequestOtpCheck;
 import com.cloudwell.paywell.services.activity.home.model.ResposeAppsAuth;
 import com.cloudwell.paywell.services.activity.home.model.ResposeOptCheck;
+import com.cloudwell.paywell.services.activity.home.model.changePin.RequestChangePin;
 import com.cloudwell.paywell.services.activity.home.model.forgetPin.ReposeForgetPIn;
 import com.cloudwell.paywell.services.activity.home.model.forgetPin.RequestForgetPin;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI;
@@ -434,6 +435,9 @@ public interface APIService {
     Call<ReposeForgetPIn> resetPassword(@Body RequestForgetPin body);
 
 
+
+    @POST("PaywellAuth/changePassword")
+    Call<ReposeForgetPIn> changePassword(@Body RequestChangePin body);
 
 
 
