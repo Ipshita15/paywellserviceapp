@@ -19,12 +19,13 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.ErrorMsgDialog;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
-import com.github.chrisbanes.photoview.PhotoView;
 import com.cloudwell.paywell.services.utils.LanuageConstant;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Locale;
@@ -202,6 +203,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
+
     public void switchToCzLocale(Locale locale) {
         Configuration config = getBaseContext().getResources().getConfiguration();
         Locale.setDefault(locale);
@@ -370,6 +372,17 @@ public class BaseActivity extends AppCompatActivity {
                         }).
                         setView(mView);
         builder.create().show();
+    }
+
+    public void showTryAgainDialog() {
+        ErrorMsgDialog errorMsgDialog = new ErrorMsgDialog(getString(R.string.try_again_msg));
+        errorMsgDialog.show(getSupportFragmentManager(), "oTPVerificationMsgDialog");
+    }
+
+
+    public void showErrorMessagev1(String message) {
+        ErrorMsgDialog errorMsgDialog = new ErrorMsgDialog(message);
+        errorMsgDialog.show(getSupportFragmentManager(), "oTPVerificationMsgDialog");
     }
 
 }

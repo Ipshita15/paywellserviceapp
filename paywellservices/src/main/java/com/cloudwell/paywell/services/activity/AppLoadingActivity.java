@@ -284,9 +284,9 @@ public class AppLoadingActivity extends BaseActivity {
         APIService aPIService = ApiUtils.getAPIServiceV2();
         Call<ReposeUserProfile> responseBodyCall;
         if (AppHandler.getmInstance(getApplicationContext()).isSuccessfulPassRegistionFlow()) {
-            responseBodyCall = aPIService.userServiceProfilingWithAuth(m);
+            responseBodyCall = aPIService.userServiceProfiling_v2(m);
         } else {
-            responseBodyCall = aPIService.userServiceProfiling(m);
+            responseBodyCall = aPIService.userServiceProfiling_v1(m);
         }
 
         responseBodyCall.enqueue(new Callback<ReposeUserProfile>() {

@@ -3,7 +3,6 @@ package com.cloudwell.paywell.services.activity.home
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.util.Base64
 import android.widget.Toast
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.AppLoadingActivity
@@ -12,10 +11,10 @@ import com.cloudwell.paywell.services.activity.home.model.ReposeGenerateOTP
 import com.cloudwell.paywell.services.activity.home.model.RequestGenerateOTP
 import com.cloudwell.paywell.services.activity.home.model.RequestOtpCheck
 import com.cloudwell.paywell.services.activity.home.model.ResposeOptCheck
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.ErrorMsgDialog
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.OTPVerificationMsgDialog
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
-import com.cloudwell.paywell.services.utils.AppHelper
 import com.dhruv.timerbutton.ButtonAnimationListener
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.phone.SmsRetriever
@@ -26,14 +25,9 @@ import kotlinx.android.synthetic.main.otp_dialog.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.security.*
-import java.security.spec.PKCS8EncodedKeySpec
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import javax.crypto.Cipher
-import javax.crypto.Mac
-import javax.crypto.spec.SecretKeySpec
 
 
 class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, OtpReceivedInterface {
@@ -72,7 +66,7 @@ class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleA
 
             override fun otpManualCall(mobileNumber: String) {
 
-           }
+            }
 
             override fun onAnimationEnd() {
 
@@ -92,8 +86,6 @@ class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleA
         })
 
 
-
-
     }
 
     private fun calledResendOtp() {
@@ -109,15 +101,15 @@ class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleA
 
                     response.body().let {
                         if (it?.apiStatus ?: 0 == 200) {
-                            if (it?.responseDetails!!.status == 200){
+                            if (it?.responseDetails!!.status == 200) {
                                 Toast.makeText(applicationContext, it.responseDetails?.statusName, Toast.LENGTH_LONG).show()
-                            } else{
+                            } else {
                                 Toast.makeText(applicationContext, it.responseDetails?.statusName, Toast.LENGTH_LONG).show()
                                 timer_button.reset()
                             }
-                        }else{
-                            Toast.makeText(applicationContext, it?.apiStatusName, Toast.LENGTH_LONG).show()
-                            timer_button.reset()
+                        } else {
+                            val errorMsgDialog = it?.apiStatusName?.let { it1 -> ErrorMsgDialog(it1) }
+                            errorMsgDialog?.show(supportFragmentManager, "oTPVerificationMsgDialog")
                         }
                     }
 
@@ -125,12 +117,10 @@ class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleA
             }
 
             override fun onFailure(call: Call<ReposeGenerateOTP>, t: Throwable) {
-                dismissProgressDialog();
-                com.orhanobut.logger.Logger.e("" + t.message)
+                dismissProgressDialog()
+                showTryAgainDialog()
             }
         })
-
-
 
 
     }
@@ -187,10 +177,8 @@ class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleA
 
                 startSMSListener()
 
-
             }
         } catch (e: Exception) {
-
 
         }
 
@@ -207,14 +195,12 @@ class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleA
         }
 
         try {
-            if (mSmsBroadcastReceiver !=null){
+            if (mSmsBroadcastReceiver != null) {
                 unregisterReceiver(mSmsBroadcastReceiver)
             }
-        }catch (e: Exception){
-
+        } catch (e: Exception) {
 
         }
-
 
 
     }
@@ -250,7 +236,6 @@ class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleA
     private fun callCheckOTP(otp: String) {
         showProgressDialog()
 
-        val androidId: String = AppHelper.getAndroidID(contentResolver);
         val m = RequestOtpCheck()
         m.format = "json"
         m.otp = otp
@@ -259,66 +244,40 @@ class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleA
         ApiUtils.getAPIServiceV2().checkOTP(m).enqueue(object : Callback<ResposeOptCheck> {
             override fun onResponse(call: Call<ResposeOptCheck>, response: Response<ResposeOptCheck>) {
                 dismissProgressDialog()
-                if (response.isSuccessful) {
 
-                    response.body().let {
-                        if (it?.apiStatus ?: 0 == 200) {
+                response.body().let {
+                    if (it?.apiStatus ?: 0 == 200) {
+                        val oTPVerificationMsgDialog = OTPVerificationMsgDialog(object : OTPVerificationMsgDialog.OnClickHandler {
+                            override fun onSubmit() {
+                                AppHandler.getmInstance(applicationContext).setSuccessfulPassAuthenticationFlow(true)
+                                val i = Intent(this@OtpActivity, AppLoadingActivity::class.java)
+                                startActivity(i)
+                                finish()
+                            }
 
+                        }, it?.responseDetails!!.statusName)
+                        oTPVerificationMsgDialog.show(supportFragmentManager, "oTPVerificationMsgDialog");
 
-                            val oTPVerificationMsgDialog = OTPVerificationMsgDialog(object : OTPVerificationMsgDialog.OnClickHandler {
-                                override fun onSubmit() {
-                                    AppHandler.getmInstance(applicationContext).setSuccessfulPassAuthenticationFlow(true)
-                                    val i = Intent(this@OtpActivity, AppLoadingActivity::class.java)
-                                    startActivity(i)
-                                    finish()
-                                }
+                    } else {
+                        val errorMsgDialog = it?.apiStatusName?.let { it1 ->
 
-                            } , it?.responseDetails!!.statusName)
-                            oTPVerificationMsgDialog.show(supportFragmentManager, "oTPVerificationMsgDialog");
-
-
-                        }else{
+                            ErrorMsgDialog(it1)
 
                         }
+                        errorMsgDialog?.show(supportFragmentManager, "oTPVerificationMsgDialog")
                     }
-
-
                 }
             }
 
             override fun onFailure(call: Call<ResposeOptCheck>, t: Throwable) {
                 dismissProgressDialog();
-                com.orhanobut.logger.Logger.e("" + t.message)
+                showTryAgainDialog()
             }
         })
 
     }
 
-    private fun getRowEnvlopeDecrytionKey(p: PrivateKey?, envlopeString: String): ByteArray? {
-        val cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding")
-        cipher?.init(Cipher.DECRYPT_MODE, p)
-        val envlopeDecode = Base64.decode(envlopeString.toByteArray(Charsets.UTF_8), Base64.DEFAULT)
-        val rowEnvlopeDecrytionKey = cipher.doFinal(envlopeDecode)
-        return rowEnvlopeDecrytionKey
-    }
 
-    private fun getPrivateKey(): PrivateKey? {
-        val privateString = AppHandler.getmInstance(applicationContext).rsaKays.get(0)
-        val decodePrivateKey = Base64.decode(privateString, Base64.DEFAULT)
-        val keySpec = PKCS8EncodedKeySpec(decodePrivateKey)
-        val kf: KeyFactory = KeyFactory.getInstance("RSA")
-        val p = kf.generatePrivate(keySpec)
-        return p
-    }
-
-    @Throws(SignatureException::class, NoSuchAlgorithmException::class, InvalidKeyException::class)
-    fun calculateHMAC(data: String, key: String): String? {
-        val HMAC_SHA512 = "HmacSHA256"
-        val secretKeySpec = SecretKeySpec(key.toByteArray(), HMAC_SHA512)
-        val mac: Mac = Mac.getInstance(HMAC_SHA512)
-        mac.init(secretKeySpec)
-        return toHexString(mac.doFinal(data.toByteArray()))
-    }
 
 
     private fun toHexString(bytes: ByteArray): String? {

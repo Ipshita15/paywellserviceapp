@@ -11,23 +11,23 @@
         android:orientation="vertical"
         android:gravity="center">
         <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="#189d49"
-        android:padding="10dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#189d49"
+            android:padding="10dp">
 
             <TextView
                 android:id="@+id/otpErrorMsg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/title_error_message"
+                android:text="@string/no_internet_connection"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
-    </LinearLayout>
+        </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linearLayout23"
@@ -43,27 +43,9 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:padding="3dp"
-                android:src="@drawable/otp_error_icon"
-                app:layout_constraintBottom_toBottomOf="@+id/otpErrorMsgTV"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/otpErrorMsgTV"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:text="Your mobile number is not found as registered, please contact our call center :"
-                android:textColor="#ff7c1d"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:src="@drawable/ic_no_internet_connection_found"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/errorIV"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <View
@@ -74,7 +56,18 @@
                 android:background="#d1d1d1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/otpErrorMsgTV" />
+                app:layout_constraintTop_toBottomOf="@+id/textView59" />
+
+            <TextView
+                android:id="@+id/textView59"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="@string/no_internet_connection_please_check_your_internet_connection"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/errorIV" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -89,7 +82,7 @@
             android:padding="8dp">
 
             <Button
-                android:id="@+id/btnOtpErrorCall"
+                android:id="@+id/btRetry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -101,7 +94,7 @@
                 android:paddingTop="8dp"
                 android:paddingRight="16dp"
                 android:paddingBottom="16dp"
-                android:text="Ok"/>
+                android:text="@string/retry"/>
         </LinearLayout>
 
     </LinearLayout>

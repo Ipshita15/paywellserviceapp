@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 class ResposeAppsAuth {
     @SerializedName("checkOTP")
-    var checkOTP: Long = 0
+    var checkOTP: Int = 0
     @SerializedName("envlope")
     var envlope: String = ""
     @SerializedName("message")
@@ -12,7 +12,7 @@ class ResposeAppsAuth {
     @SerializedName("sealedData")
     var sealedData: String = ""
     @SerializedName("status")
-    var status: Long = 0
+    var status: Int = 0
     @SerializedName("token")
     var token: Token = Token()
 

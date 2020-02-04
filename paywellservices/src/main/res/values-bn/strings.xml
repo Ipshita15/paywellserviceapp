@@ -771,11 +771,15 @@
     <string name="we_have_send_you_an_sms_with_a_code_to_your_number">আমরা আপনার নম্বরটিতে একটি কোড সহ আপনাকে একটি এসএমএস পাঠিয়েছি</string>
     <string name="didn_t_you_received_any_code">আপনি কোনও কোড পান নি?</string>
     <string name="request_format_pin">পিন ভুলে অনুরোধ</string>
-    <string name="last_4_digit_mobile_number">মোবাইল নম্বরটির শেষ 4 টি সংখ্যা</string>
-    <string name="please_enter_the_last_4_digits_of_your_phone_number">আপনার ফোন নম্বরটির শেষ 4 টি সংখ্যা লিখুন</string>
+    <string name="last_4_digit_mobile_number">মোবাইল নম্বর</string>
+    <string name="please_enter_the_last_4_digits_of_your_phone_number">অনুগ্রহ করে আপনার ফোন নাম্বারটি প্রদান করুন</string>
     <string name="forgot_pin">পিন অনুরোধ</string>
     <string name="device_not_support">আপনার ডিভাইস সমর্থন করে না, দয়া করে আমাদের কল সেন্টারে যোগাযোগ করুন</string>
     <string name="retype_pin_number">পিন নম্বর পুনরায় টাইপ করুন</string>
+    <string name="title_error_message">বার্তা</string>
+    <string name="no_internet_connection">কোনও ইন্টারনেট সংযোগ নেই</string>
+    <string name="no_internet_connection_please_check_your_internet_connection">কোনও ইন্টারনেট সংযোগ নেই আপনার ইন্টারনেট সংযোগ পরীক্ষা করুন</string>
+    <string name="retry">আবার চেষ্টা করুন</string>
 
 
 </resources>

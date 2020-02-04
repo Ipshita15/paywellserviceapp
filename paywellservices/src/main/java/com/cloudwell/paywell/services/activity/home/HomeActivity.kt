@@ -11,12 +11,17 @@ import com.cloudwell.paywell.services.activity.AppLoadingActivity
 import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.activity.home.model.RequestAppsAuth
 import com.cloudwell.paywell.services.activity.home.model.ResposeAppsAuth
+import com.cloudwell.paywell.services.activity.home.model.forgetPin.ReposeForgetPIn
+import com.cloudwell.paywell.services.activity.home.model.forgetPin.RequestForgetPin
 import com.cloudwell.paywell.services.activity.reg.EntryMainActivity
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.ForgetPinNumberDialog
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.MobileNumberInputDialog
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.NoInternetConnectionMsgDialog
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.OTPVerificationMsgDialog
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.AndroidIDUtility
+import com.cloudwell.paywell.services.utils.DateUtils
 import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_home.*
 import retrofit2.Call
@@ -36,37 +41,41 @@ class HomeActivity : BaseActivity() {
 //        AppHandler.getmInstance(applicationContext).setAppStatus("pendingLogin")
 
 
+        initilizationView()
 
+
+    }
+
+    private fun initilizationView() {
         if (AppHandler.getmInstance(applicationContext).isSuccessfulPassAuthenticationFlow()) {
             val i = Intent(this@HomeActivity, AppLoadingActivity::class.java)
             startActivity(i)
             finish()
 
-        }else if(AppHandler.getmInstance(applicationContext).isSuccessfulPassRegistionFlow()){
+        } else if (AppHandler.getmInstance(applicationContext).isSuccessfulPassRegistionFlow()) {
             val i = Intent(this@HomeActivity, AppLoadingActivity::class.java)
             startActivity(i)
             finish()
         } else {
 
             // check device is support
-
             val androidID = AppHandler.getmInstance(applicationContext).androidID
-            Logger.v("Android ID: "+androidID)
-            if (BuildConfig.DEBUG){
+            Logger.v("Android ID: " + androidID)
+            if (BuildConfig.DEBUG) {
                 tvAndroidID.visibility = View.VISIBLE
-                tvAndroidID.text = ""+androidID
-            }else{
+                tvAndroidID.text = "" + androidID
+            } else {
                 tvAndroidID.visibility = View.GONE
             }
 
             if (androidID == "") {
                 val androidID1 = AndroidIDUtility.getAndroidID(applicationContext)
-                if (androidID1 != null){
-                    if (androidID1.equals("")){
+                if (androidID1 != null) {
+                    if (androidID1.equals("")) {
                         // device not support
                         callPreview(false, getString(R.string.device_not_support))
 
-                    }else{
+                    } else {
                         AppHandler.getmInstance(getApplicationContext()).setAndroidID(androidID1)
                     }
                 }
@@ -93,14 +102,7 @@ class HomeActivity : BaseActivity() {
                             AppHandler.getmInstance(applicationContext).setMobileNumber(userName)
 
 
-                            if (!isInternetConnection) {
-                                showSnackMessageWithTextMessage(getString(R.string.no_notification_msg))
-
-                            } else if (androidId.equals("")) {
-                                // device not support message
-                            } else {
-                                callGetTokenAPI(userName, pin, androidId);
-                            }
+                            requestAPIToken(androidId, userName, pin)
 
                         } else {
                             Toast.makeText(applicationContext, "Please input valid RID or Mobile number", Toast.LENGTH_LONG).show()
@@ -114,16 +116,12 @@ class HomeActivity : BaseActivity() {
 
                             override fun onForgetPinNumber(moibleNumber: String) {
 
-                                callForgetPasswordRequest("", "", "")
-
-
+                                requestResetPassord(moibleNumber)
                             }
                         })
 
                         mobileNumberInputDialog.show(supportFragmentManager, "mobileNumberInputDialog");
                     }
-
-
 
 
                 })
@@ -134,7 +132,7 @@ class HomeActivity : BaseActivity() {
 
             showLanguageIcon()
 
-            ivLanSwitch.setOnClickListener{
+            ivLanSwitch.setOnClickListener {
                 switchLanguage()
 
                 val refresh = Intent(this, HomeActivity::class.java)
@@ -146,43 +144,79 @@ class HomeActivity : BaseActivity() {
                 callPreviewAirticket(false)
             }
         }
-
-
     }
 
-    private fun callForgetPasswordRequest(s: String, s1: String, s2: String) {
-//        showProgressDialog()
-//
-//        val m = RequestGenerateOTP()
-//        m.username = "sdf"
-//
-//        ApiUtils.getAPIServiceV2().generateOTP(m).enqueue(object : Callback<ReposeGenerateOTP> {
-//            override fun onResponse(call: Call<ReposeGenerateOTP>, response: Response<ReposeGenerateOTP>) {
-//                dismissProgressDialog()
-//                if (response.isSuccessful) {
-//
-//                    response.body().let {
-//                        if (it?.apiStatus ?: 0 == 200) {
-//                            if (it?.responseDetails!!.status == 200){
-//                                Toast.makeText(applicationContext, it.responseDetails?.statusName, Toast.LENGTH_LONG).show()
-//                            } else{
-//                                Toast.makeText(applicationContext, it.responseDetails?.statusName, Toast.LENGTH_LONG).show()
-//
-//                            }
-//                        }else{
-//                            Toast.makeText(applicationContext, it?.apiStatusName, Toast.LENGTH_LONG).show()
-//
-//                        }
-//                    }
-//
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<ReposeGenerateOTP>, t: Throwable) {
-//                dismissProgressDialog();
-//                com.orhanobut.logger.Logger.e("" + t.message)
-//            }
-//        })
+    private fun requestAPIToken(androidId: String, userName: String, pin: String) {
+        if (androidId.equals("")) {
+            callPreview(false, getString(R.string.device_not_support))
+        } else if (isInternetConnection) {
+            callGetTokenAPI(userName, pin, androidId);
+        } else {
+            val noInternetConnectionMsgDialog = NoInternetConnectionMsgDialog(object : NoInternetConnectionMsgDialog.OnClickHandler {
+                override fun onRetry() {
+                    requestAPIToken(androidId, userName, pin)
+                }
+            })
+            noInternetConnectionMsgDialog.show(supportFragmentManager, "noInternetConnectionMsgDialog")
+        }
+    }
+
+    private fun requestResetPassord(moibleNumber: String) {
+        if (isInternetConnection) {
+            callForgetPasswordRequest(moibleNumber)
+        } else {
+            val noInternetConnectionMsgDialog = NoInternetConnectionMsgDialog(object : NoInternetConnectionMsgDialog.OnClickHandler {
+                override fun onRetry() {
+                    requestResetPassord(moibleNumber)
+                }
+            })
+            noInternetConnectionMsgDialog.show(supportFragmentManager, "noInternetConnectionMsgDialog")
+        }
+    }
+
+    private fun callForgetPasswordRequest(mobileNumber: String) {
+        showProgressDialog()
+
+        val m = RequestForgetPin()
+        m.username = mobileNumber
+        m.deviceId = AppHandler.getmInstance(applicationContext).androidID
+        m.format = "json"
+        m.timestamp = "" + DateUtils.getCurrentTimestamp();
+
+        ApiUtils.getAPIServiceV2().resetPassword(m).enqueue(object : Callback<ReposeForgetPIn> {
+            override fun onResponse(call: Call<ReposeForgetPIn>, response: Response<ReposeForgetPIn>) {
+                dismissProgressDialog()
+                if (response.isSuccessful) {
+
+                    response.body().let {
+                        if (it?.apiStatus ?: 0 == 200) {
+                            if (it?.responseDetails!!.status == 200) {
+
+                                val oTPVerificationMsgDialog = OTPVerificationMsgDialog(object : OTPVerificationMsgDialog.OnClickHandler {
+                                    override fun onSubmit() {
+
+                                    }
+                                }, it.responseDetails!!.statusName)
+                                oTPVerificationMsgDialog.show(supportFragmentManager, "oTPVerificationMsgDialog");
+
+                            } else {
+                                response.body()?.apiStatusName?.let { it1 -> showErrorMessagev1(it1) }
+                            }
+                        } else {
+                            response.body()?.apiStatusName?.let { it1 -> showErrorMessagev1(it1) }
+                        }
+                    }
+
+                }
+            }
+
+            override fun onFailure(call: Call<ReposeForgetPIn>, t: Throwable) {
+                dismissProgressDialog()
+                showTryAgainDialog()
+
+
+            }
+        })
 
     }
 
@@ -217,7 +251,7 @@ class HomeActivity : BaseActivity() {
         var isDebug = 0
         if (BuildConfig.DEBUG) {
             isDebug = 0
-        }else{
+        } else {
             isDebug = 1
         }
 
@@ -225,13 +259,15 @@ class HomeActivity : BaseActivity() {
 
         ApiUtils.getAPIServiceV2().getAppsAuthToken(authHeader, authRequestModel).enqueue(object : Callback<ResposeAppsAuth> {
             override fun onResponse(call: Call<ResposeAppsAuth>, response: Response<ResposeAppsAuth>) {
+
                 dismissProgressDialog()
-                if (response.isSuccessful) {
-                    val m = response.body()
 
-                    m.let {
-                        if (m?.checkOTP ?: 0 == 1L) {
+                val m = response.body()
 
+                m.let {
+                    if (m?.status == 200) {
+
+                        if (m.checkOTP == 1) {
                             AppHandler.getmInstance(applicationContext).setSealedData(m?.sealedData)
                             AppHandler.getmInstance(applicationContext).setEnvlope(m?.envlope)
                             AppHandler.getmInstance(applicationContext).setAppsSecurityToken(m?.token?.securityToken)
@@ -241,18 +277,22 @@ class HomeActivity : BaseActivity() {
                             startActivity(Intent(this@HomeActivity, OtpActivity::class.java))
 
                         } else {
+                            it?.message?.let { it1 -> showErrorMessagev1(it1) }
 
 
                         }
+                    } else {
+                        it?.message?.let { it1 -> showErrorMessagev1(it1) }
                     }
 
-
                 }
+
+
             }
 
             override fun onFailure(call: Call<ResposeAppsAuth>, t: Throwable) {
                 dismissProgressDialog();
-                com.orhanobut.logger.Logger.e("" + t.message)
+                showTryAgainDialog()
 
             }
         })

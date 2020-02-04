@@ -21,7 +21,7 @@ class ForgetPinNumberDialog(val onClickHandler: OnClickHandler): BaseDialogFragm
 
             val last4DigitOfMobiile = view.etMobileOrRID.text.toString().trim()
 
-            if (last4DigitOfMobiile.equals("") || last4DigitOfMobiile.length !=4){
+            if (last4DigitOfMobiile.equals("")){
                 Toast.makeText(activity, getString(R.string.invalid_input), Toast.LENGTH_LONG).show()
             }else{
                 onClickHandler.onForgetPinNumber(view.etMobileOrRID.text.toString().trim())
@@ -39,7 +39,7 @@ class ForgetPinNumberDialog(val onClickHandler: OnClickHandler): BaseDialogFragm
 
 
     public interface OnClickHandler{
-        public fun onForgetPinNumber( moibleNumber: String);
+        public fun onForgetPinNumber( moibleNumber: String)
     }
 
 }

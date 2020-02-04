@@ -729,7 +729,6 @@
     <string name="hit_email">Email</string>
     <string name="email_address_already_exists">Email address already exists</string>
     <string name="please_select_atleast_one_email_address">Please select atleast one email address</string>
-    <string name="message">Message</string>
     <string name="indian_menu_title">Indian</string>
     <string name="booking_instructions_for_children_infants">Booking instructions for children/infants</string>
     <string name="earnings">Earnings</string>
@@ -888,11 +887,16 @@
     <string name="we_have_send_you_an_sms_with_a_code_to_your_number">We have send you an SMS with a code to your number</string>
     <string name="didn_t_you_received_any_code">Didn\'t you received any code?</string>
     <string name="request_format_pin">Request forgot pin</string>
-    <string name="last_4_digit_mobile_number">Last 4 digits of mobile number</string>
-    <string name="please_enter_the_last_4_digits_of_your_phone_number">Please enter the last 4 digits of your phone number</string>
+    <string name="last_4_digit_mobile_number">Mobile number</string>
+    <string name="please_enter_the_last_4_digits_of_your_phone_number">Please enter your phone number</string>
     <string name="forgot_pin">Forgot Pin</string>
     <string name="device_not_support">Your device not support, Please contact our call center</string>
     <string name="retype_pin_number">Retype PIN Number</string>
+    <string name="message">Message</string>
+    <string name="title_error_message">Message</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="no_internet_connection_please_check_your_internet_connection">No internet connection Please check your internet connection</string>
+    <string name="retry">Retry</string>
 
 
 </resources>
