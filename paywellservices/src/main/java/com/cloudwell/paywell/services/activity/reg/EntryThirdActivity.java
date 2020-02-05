@@ -22,7 +22,6 @@ import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
-import com.cloudwell.paywell.services.activity.base.LanguagesBaseActivity;
 import com.cloudwell.paywell.services.activity.reg.nidOCR.NidInputActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
@@ -410,7 +409,7 @@ public class EntryThirdActivity extends BaseActivity {
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
         builder.setMessage(title)
                 .setCancelable(true)
-                .setPositiveButton("Camara", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Camera", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
                         str_which_btn_selected = number;
