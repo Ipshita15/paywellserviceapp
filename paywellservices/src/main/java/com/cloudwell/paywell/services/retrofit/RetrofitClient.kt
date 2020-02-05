@@ -20,6 +20,7 @@ object RetrofitClient {
     private var okHttpClient: OkHttpClient? = null
     private var retrofit: Retrofit? = null
     private var retrofitPHP7: Retrofit? = null
+    private var retrofitV2: Retrofit? = null
 
 
     fun getClient(baseUrl: String): Retrofit? {
@@ -82,7 +83,7 @@ object RetrofitClient {
 
 
     fun getServiceV2(baseUrl: String): Retrofit? {
-        if (retrofitPHP7 == null) {
+        if (retrofitV2 == null) {
             val httpClient = OkHttpClient.Builder()
             httpClient.connectTimeout(90, TimeUnit.SECONDS).readTimeout(90, TimeUnit.SECONDS).writeTimeout(90, TimeUnit.SECONDS)
 
@@ -99,12 +100,12 @@ object RetrofitClient {
 
 
             okHttpClient = httpClient.build()
-            retrofitPHP7 = Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create()).client(okHttpClient)
+            retrofitV2 = Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create()).client(okHttpClient)
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .build()
         }
-        return retrofitPHP7
+        return retrofitV2
     }
 
     fun getClient(): OkHttpClient? {

@@ -10,8 +10,11 @@ class ResponseDetailsUserProfile {
     val mChangePinStatus: String? = null
     @SerializedName("count")
     val mCount: Long? = null
+    @SerializedName("menuData")
+    val menuData: List<Menu>? = null
+
     @SerializedName("data")
-    val mData: List<Menu>? = null
+    val data: List<String>? = null
     @SerializedName("displayPictureCount")
     val mDisplayPictureCount: Int = 0
     @SerializedName("imageLink")

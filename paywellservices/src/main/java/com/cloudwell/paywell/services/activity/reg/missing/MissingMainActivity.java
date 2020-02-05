@@ -301,7 +301,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 }
             }
         }
-        if (layoutNames.contains("district") ||layoutNames.contains("thana")  || layoutNames.contains("post_code")) {
+        if (layoutNames.contains("district") || layoutNames.contains("thana") || layoutNames.contains("post_code")) {
 
 
             layoutDistrict.setVisibility(View.VISIBLE);
@@ -1154,11 +1154,23 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
     public void submitMissingOnClick(View view) {
         if (mCd.isConnectingToInternet()) {
 
-            String mMrchantType = regModel.getMMrchantType();
-            String mBusinessType = regModel.getBusinessType();
-            String mDistrict = regModel.getDistrict();
-            String mThanaName = regModel.getThanaName();
-            String mPostcodeId = regModel.getPostcodeId();
+
+            String mDistrict = "", mThanaName = "", mPostcodeId = "";
+
+
+            try {
+                mThanaName = regModel.getThanaName();
+            } catch (Exception e) {
+
+            }
+
+
+            try {
+                mPostcodeId = regModel.getPostcodeId();
+            } catch (Exception e) {
+
+
+            }
 
 
             if (layoutNames.contains("outlet_name")) {
@@ -1192,7 +1204,8 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 }
             }
             if (layoutNames.contains("business_type")) {
-
+                String mMrchantType = regModel.getMMrchantType();
+                String mBusinessType = regModel.getBusinessType();
                 if (mMrchantType == null || mMrchantType.equals("")) {
                     Snackbar snackbar = Snackbar.make(scrollView, "মার্চেন্টের ধরন সিলেক্ট করুন", Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -1220,6 +1233,8 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 }
             }
             if (layoutNames.contains("district")) {
+                mDistrict = regModel.getDistrict();
+
                 if (mDistrict == null || mDistrict.equals("")) {
                     Snackbar snackbar = Snackbar.make(scrollView, "জেলা সিলেক্ট করুন", Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -1395,7 +1410,6 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
             }
 
 //            new RetailerMissingAsync().execute(getResources().getString(R.string.missing_reg_url));
-
 
 
             submitRequest();
