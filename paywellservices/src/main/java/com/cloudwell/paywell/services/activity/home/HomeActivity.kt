@@ -32,6 +32,7 @@ import retrofit2.Response
 
 class HomeActivity : BaseActivity() {
 
+     var userPinNotSet: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +44,9 @@ class HomeActivity : BaseActivity() {
 
 
 //        AppHandler.getmInstance(applicationContext).appStatus = AppsStatusConstant.KEY_pending
+
+
+
         initilizationView(intent)
 
 
@@ -51,12 +55,12 @@ class HomeActivity : BaseActivity() {
     private fun initilizationView(intent: Intent) {
 
 
-        val isAutoLogin = intent.getBooleanExtra("isAutoLogin", false)
+        val isAutoLogin = intent.getBooleanExtra("userPinNotSet", false)
         val appStatus = AppHandler.getmInstance(applicationContext).appStatus
 
 
         if (isAutoLogin) {
-
+            userPinNotSet = true
 
         } else if (appStatus.equals(AppsStatusConstant.KEY_pending) || appStatus.equals(AppsStatusConstant.KEY_pinNotSetUser) || appStatus.equals(AppsStatusConstant.KEY_registered)) {
             val i = Intent(this@HomeActivity, AppLoadingActivity::class.java)
@@ -148,7 +152,6 @@ class HomeActivity : BaseActivity() {
         ivGetHelpCallCenter.setOnClickListener {
             callPreviewAirticket(false)
         }
-
 
     }
 
@@ -273,18 +276,26 @@ class HomeActivity : BaseActivity() {
                 m.let {
                     if (m?.status == 200) {
 
-                        if (m.checkOTP == 1) {
-                            AppHandler.getmInstance(applicationContext).setSealedData(m?.sealedData)
-                            AppHandler.getmInstance(applicationContext).setEnvlope(m?.envlope)
-                            AppHandler.getmInstance(applicationContext).setAppsSecurityToken(m?.token?.securityToken)
-                            AppHandler.getmInstance(applicationContext).setAppsTokenExpTime(m?.token?.tokenExpTime)
-                            AppHandler.getmInstance(applicationContext).setUserName(userName)
+                        AppHandler.getmInstance(applicationContext).setSealedData(m?.sealedData)
+                        AppHandler.getmInstance(applicationContext).setEnvlope(m?.envlope)
+                        AppHandler.getmInstance(applicationContext).setAppsSecurityToken(m?.token?.securityToken)
+                        AppHandler.getmInstance(applicationContext).setAppsTokenExpTime(m?.token?.tokenExpTime)
+                        AppHandler.getmInstance(applicationContext).setUserName(userName)
 
-                            startActivity(Intent(this@HomeActivity, OtpActivity::class.java))
+
+                        if (m.checkOTP == 1) {
+
+                            val intent = Intent(this@HomeActivity, OtpActivity::class.java)
+                            intent.putExtra("OTPMessaage", m?.OTPMessaage)
+                            intent.putExtra("userPinNotSet", userPinNotSet)
+                            startActivity(intent)
 
                         } else {
-                            it?.message?.let { it1 -> showErrorMessagev1(it1) }
 
+                            val intent = Intent(this@HomeActivity, AppLoadingActivity::class.java)
+                            intent.putExtra("userPinNotSet", userPinNotSet)
+                            startActivity(intent)
+                            finish()
 
                         }
                     } else {

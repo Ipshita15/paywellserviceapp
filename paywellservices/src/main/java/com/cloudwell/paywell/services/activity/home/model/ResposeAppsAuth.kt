@@ -9,6 +9,9 @@ class ResposeAppsAuth {
     var envlope: String = ""
     @SerializedName("message")
     var message: String = ""
+
+    @SerializedName("OTPMessaage")
+    var OTPMessaage: String = ""
     @SerializedName("sealedData")
     var sealedData: String = ""
     @SerializedName("status")

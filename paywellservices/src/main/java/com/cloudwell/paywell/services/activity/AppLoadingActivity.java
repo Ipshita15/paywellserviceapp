@@ -332,7 +332,7 @@ public class AppLoadingActivity extends BaseActivity {
                                         @Override
                                         public void onClick(View v) {
                                             Intent i = new Intent(AppLoadingActivity.this, HomeActivity.class);
-                                            i.putExtra("isAutoLogin", true);
+                                            i.putExtra("userPinNotSet", true);
                                             startActivity(i);
                                             finish();
                                         }

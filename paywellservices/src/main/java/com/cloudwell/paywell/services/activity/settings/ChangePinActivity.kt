@@ -9,8 +9,8 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.activity.AppLoadingActivity
 import com.cloudwell.paywell.services.activity.base.BaseActivity
-import com.cloudwell.paywell.services.activity.home.HomeActivity
 import com.cloudwell.paywell.services.activity.home.model.changePin.RequestChangePin
 import com.cloudwell.paywell.services.activity.home.model.forgetPin.ReposeForgetPIn
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.NoInternetConnectionMsgDialog
@@ -127,7 +127,7 @@ class ChangePinActivity : BaseActivity() {
                                 builder.setPositiveButton(R.string.okay_btn) { dialogInterface, id ->
                                     dialogInterface.dismiss()
                                     if (isFirstTime) {
-                                        val intent = Intent(applicationContext, HomeActivity::class.java)
+                                        val intent = Intent(applicationContext, AppLoadingActivity::class.java)
                                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                                         startActivity(intent)
                                         finish()

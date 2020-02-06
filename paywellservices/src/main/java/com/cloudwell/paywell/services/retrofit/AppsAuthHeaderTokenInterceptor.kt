@@ -101,6 +101,7 @@ class AppsAuthHeaderTokenInterceptor(val mContext: AppController?) : Interceptor
             obj.put("deviceId", mAppHandler.androidID)
             obj.put("timestamp",""+DateUtils.getCurrentTimestamp())
             obj.put("format","json")
+            obj.put("channel","android")
 
             getTokenBaseOnRSAlgorithm(obj)
 

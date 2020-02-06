@@ -11,6 +11,7 @@ import com.cloudwell.paywell.services.activity.home.model.ReposeGenerateOTP
 import com.cloudwell.paywell.services.activity.home.model.RequestGenerateOTP
 import com.cloudwell.paywell.services.activity.home.model.RequestOtpCheck
 import com.cloudwell.paywell.services.activity.home.model.ResposeOptCheck
+import com.cloudwell.paywell.services.activity.settings.ChangePinActivity
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.ErrorMsgDialog
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.OTPVerificationMsgDialog
 import com.cloudwell.paywell.services.app.AppHandler
@@ -33,11 +34,19 @@ import java.util.regex.Pattern
 
 class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, OtpReceivedInterface {
 
+    var isAutoLogin = false;
+    var OTPMessaage = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.otp_dialog)
 
         setToolbar("OTP Verification")
+
+         isAutoLogin = intent.getBooleanExtra("userPinNotSet", false)
+         OTPMessaage = intent.getStringExtra("OTPMessaage")
+
+         tvOtpMessage.text = OTPMessaage
+
 
         btNextOtp.setOnClickListener {
 
@@ -48,9 +57,6 @@ class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleA
         }
 
         etMobileOrRID.requestFocus();
-
-
-
 
         btCancel.setOnClickListener {
             finish()
@@ -250,10 +256,22 @@ class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleA
                     if (it?.apiStatus ?: 0 == 200) {
                         val oTPVerificationMsgDialog = OTPVerificationMsgDialog(object : OTPVerificationMsgDialog.OnClickHandler {
                             override fun onSubmit() {
-                                AppHandler.getmInstance(applicationContext).appStatus= AppsStatusConstant.KEY_login
-                                val i = Intent(this@OtpActivity, AppLoadingActivity::class.java)
-                                startActivity(i)
-                                finish()
+
+
+                                if (isAutoLogin){
+                                    val i = Intent(this@OtpActivity, ChangePinActivity::class.java)
+                                    i.putExtra("isFirstTime", true);
+                                    startActivity(i)
+                                    finish()
+
+                                }else{
+                                    AppHandler.getmInstance(applicationContext).appStatus= AppsStatusConstant.KEY_login
+                                    val i = Intent(this@OtpActivity, AppLoadingActivity::class.java)
+                                    startActivity(i)
+                                    finish()
+                                }
+
+
                             }
 
                         }, it?.responseDetails!!.statusName)
