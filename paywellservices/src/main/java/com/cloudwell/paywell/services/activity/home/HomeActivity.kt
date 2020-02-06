@@ -21,6 +21,7 @@ import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.O
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.AndroidIDUtility
+import com.cloudwell.paywell.services.utils.AppsStatusConstant
 import com.cloudwell.paywell.services.utils.DateUtils
 import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_home.*
@@ -41,109 +42,114 @@ class HomeActivity : BaseActivity() {
 //        AppHandler.getmInstance(applicationContext).setAppStatus("pendingLogin")
 
 
-        initilizationView()
+//        AppHandler.getmInstance(applicationContext).appStatus = AppsStatusConstant.KEY_pending
+        initilizationView(intent)
 
 
     }
 
-    private fun initilizationView() {
-        if (AppHandler.getmInstance(applicationContext).isSuccessfulPassAuthenticationFlow()) {
-            val i = Intent(this@HomeActivity, AppLoadingActivity::class.java)
-            startActivity(i)
-            finish()
+    private fun initilizationView(intent: Intent) {
 
-        } else if (AppHandler.getmInstance(applicationContext).isSuccessfulPassRegistionFlow()) {
+
+        val isAutoLogin = intent.getBooleanExtra("isAutoLogin", false)
+        val appStatus = AppHandler.getmInstance(applicationContext).appStatus
+
+
+        if (isAutoLogin) {
+
+
+        } else if (appStatus.equals(AppsStatusConstant.KEY_pending) || appStatus.equals(AppsStatusConstant.KEY_pinNotSetUser) || appStatus.equals(AppsStatusConstant.KEY_registered)) {
             val i = Intent(this@HomeActivity, AppLoadingActivity::class.java)
             startActivity(i)
             finish()
+        }
+        // check device is support
+        val androidID = AppHandler.getmInstance(applicationContext).androidID
+        Logger.v("Android ID: " + androidID)
+        if (BuildConfig.DEBUG) {
+            tvAndroidID.visibility = View.VISIBLE
+            tvAndroidID.text = "" + androidID
         } else {
+            tvAndroidID.visibility = View.GONE
+        }
 
-            // check device is support
-            val androidID = AppHandler.getmInstance(applicationContext).androidID
-            Logger.v("Android ID: " + androidID)
-            if (BuildConfig.DEBUG) {
-                tvAndroidID.visibility = View.VISIBLE
-                tvAndroidID.text = "" + androidID
-            } else {
-                tvAndroidID.visibility = View.GONE
+        if (androidID == "") {
+            val androidID1 = AndroidIDUtility.getAndroidID(applicationContext)
+            if (androidID1 != null) {
+                if (androidID1.equals("")) {
+                    // device not support
+                    callPreview(false, getString(R.string.device_not_support))
+
+                } else {
+                    AppHandler.getmInstance(getApplicationContext()).setAndroidID(androidID1)
+                }
             }
 
-            if (androidID == "") {
-                val androidID1 = AndroidIDUtility.getAndroidID(applicationContext)
-                if (androidID1 != null) {
-                    if (androidID1.equals("")) {
-                        // device not support
-                        callPreview(false, getString(R.string.device_not_support))
+        }
+
+        btRegistration.setOnClickListener {
+            val intent = Intent(applicationContext, EntryMainActivity::class.java)
+            startActivity(intent)
+        }
+
+
+        btLogin.setOnClickListener {
+
+            val mobileNumberInputDialog = MobileNumberInputDialog(object : MobileNumberInputDialog.OnClickHandler {
+                override fun onSubmit(mobileNumber: String, pin: String) {
+                    if (!mobileNumber.equals("")) {
+                        val userName = mobileNumber
+                        val pin = pin
+
+
+                        val androidId: String = AppHandler.getmInstance(applicationContext).androidID
+                        AppHandler.getmInstance(applicationContext).setAndroidID(androidId)
+                        AppHandler.getmInstance(applicationContext).setMobileNumber(userName)
+
+
+                        requestAPIToken(androidId, userName, pin)
 
                     } else {
-                        AppHandler.getmInstance(getApplicationContext()).setAndroidID(androidID1)
+                        Toast.makeText(applicationContext, "Please input valid RID or Mobile number", Toast.LENGTH_LONG).show()
                     }
+
                 }
 
-            }
+                override fun onForgetPinNumber() {
 
-            btRegistration.setOnClickListener {
-                val intent = Intent(applicationContext, EntryMainActivity::class.java)
-                startActivity(intent)
-            }
+                    val mobileNumberInputDialog = ForgetPinNumberDialog(object : ForgetPinNumberDialog.OnClickHandler {
 
+                        override fun onForgetPinNumber(moibleNumber: String) {
 
-            btLogin.setOnClickListener {
-
-                val mobileNumberInputDialog = MobileNumberInputDialog(object : MobileNumberInputDialog.OnClickHandler {
-                    override fun onSubmit(mobileNumber: String, pin: String) {
-                        if (!mobileNumber.equals("")) {
-                            val userName = mobileNumber
-                            val pin = pin
-
-
-                            val androidId: String = AppHandler.getmInstance(applicationContext).androidID
-                            AppHandler.getmInstance(applicationContext).setAndroidID(androidId)
-                            AppHandler.getmInstance(applicationContext).setMobileNumber(userName)
-
-
-                            requestAPIToken(androidId, userName, pin)
-
-                        } else {
-                            Toast.makeText(applicationContext, "Please input valid RID or Mobile number", Toast.LENGTH_LONG).show()
+                            requestResetPassord(moibleNumber)
                         }
+                    })
 
-                    }
-
-                    override fun onForgetPinNumber() {
-
-                        val mobileNumberInputDialog = ForgetPinNumberDialog(object : ForgetPinNumberDialog.OnClickHandler {
-
-                            override fun onForgetPinNumber(moibleNumber: String) {
-
-                                requestResetPassord(moibleNumber)
-                            }
-                        })
-
-                        mobileNumberInputDialog.show(supportFragmentManager, "mobileNumberInputDialog");
-                    }
+                    mobileNumberInputDialog.show(supportFragmentManager, "mobileNumberInputDialog");
+                }
 
 
-                })
-                mobileNumberInputDialog.show(supportFragmentManager, "mobileNumberInputDialog");
+            })
+            mobileNumberInputDialog.show(supportFragmentManager, "mobileNumberInputDialog");
 
-            }
-
-
-            showLanguageIcon()
-
-            ivLanSwitch.setOnClickListener {
-                switchLanguage()
-
-                val refresh = Intent(this, HomeActivity::class.java)
-                startActivity(refresh)
-
-            }
-
-            ivGetHelpCallCenter.setOnClickListener {
-                callPreviewAirticket(false)
-            }
         }
+
+
+        showLanguageIcon()
+
+        ivLanSwitch.setOnClickListener {
+            switchLanguage()
+
+            val refresh = Intent(this, HomeActivity::class.java)
+            startActivity(refresh)
+
+        }
+
+        ivGetHelpCallCenter.setOnClickListener {
+            callPreviewAirticket(false)
+        }
+
+
     }
 
     private fun requestAPIToken(androidId: String, userName: String, pin: String) {

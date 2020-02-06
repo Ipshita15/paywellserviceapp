@@ -19,6 +19,7 @@ import com.cloudwell.paywell.services.analytics.AnalyticsParameters
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
+import com.cloudwell.paywell.services.utils.AppsStatusConstant
 import com.cloudwell.paywell.services.utils.ConnectionDetector
 import com.cloudwell.paywell.services.utils.DateUtils
 import retrofit2.Call
@@ -118,9 +119,7 @@ class ChangePinActivity : BaseActivity() {
 
 
                                 mAppHandler!!.initialChangePinStatus = "true"
-                                AppHandler.getmInstance(applicationContext).isSuccessfulPassAuthenticationFlow = false
-                                AppHandler.getmInstance(applicationContext).setIsSuccessfulPassRegistionFlow(false)
-                                AppHandler.getmInstance(applicationContext).appStatus = "registered"
+                                AppHandler.getmInstance(applicationContext).appStatus = AppsStatusConstant.KEY_registered
                                 val builder = AlertDialog.Builder(this@ChangePinActivity)
                                 builder.setCancelable(false)
                                 builder.setTitle("Result")

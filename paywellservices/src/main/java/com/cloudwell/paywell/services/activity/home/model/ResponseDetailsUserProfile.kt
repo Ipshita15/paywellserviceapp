@@ -32,4 +32,7 @@ class ResponseDetailsUserProfile {
     @SerializedName("StatusName")
     val mStatusName: String? = null
 
+    @SerializedName("message")
+    val message: String? = null
+
 }

@@ -108,6 +108,7 @@ import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.service.notificaiton.model.EventNewNotificaiton;
 import com.cloudwell.paywell.services.utils.AppHelper;
 import com.cloudwell.paywell.services.utils.AppTestVersionUtility;
+import com.cloudwell.paywell.services.utils.AppsStatusConstant;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.CountryUtility;
 import com.cloudwell.paywell.services.utils.LocationUtility;
@@ -924,8 +925,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
                         //Yes button clicked
-                        AppHandler.getmInstance(getApplicationContext()).setSuccessfulPassAuthenticationFlow(false);
-                        AppHandler.getmInstance(getApplicationContext()).setIsSuccessfulPassRegistionFlow(false);
+                        AppHandler.getmInstance(getApplicationContext()).setAppStatus(AppsStatusConstant.KEY_logout);
 
                         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

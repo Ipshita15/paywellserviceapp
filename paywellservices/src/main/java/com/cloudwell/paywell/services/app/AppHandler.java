@@ -822,23 +822,7 @@ public class AppHandler {
     }
 
 
-    public void setSuccessfulPassAuthenticationFlow(boolean b) {
-        editor.putBoolean(KEY_IsSuccessfullDoneAuthenticationFlow, b);
-        editor.commit();
-    }
 
-    public boolean isSuccessfulPassAuthenticationFlow() {
-        return mPref.getBoolean(KEY_IsSuccessfullDoneAuthenticationFlow, false);
-    }
-
-    public void setIsSuccessfulPassRegistionFlow(boolean b) {
-        editor.putBoolean(KEY_IsSuccessfullDoneRegistionFlow, b);
-        editor.commit();
-    }
-
-    public boolean isSuccessfulPassRegistionFlow() {
-        return mPref.getBoolean(KEY_IsSuccessfullDoneRegistionFlow, false);
-    }
 
     public void setAndroidID(String androidId) {
         editor.putString(KEY_ANDROID_ID, androidId);

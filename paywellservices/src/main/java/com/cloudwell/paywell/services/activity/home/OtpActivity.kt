@@ -15,6 +15,7 @@ import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.E
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.OTPVerificationMsgDialog
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
+import com.cloudwell.paywell.services.utils.AppsStatusConstant
 import com.dhruv.timerbutton.ButtonAnimationListener
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.phone.SmsRetriever
@@ -249,7 +250,7 @@ class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleA
                     if (it?.apiStatus ?: 0 == 200) {
                         val oTPVerificationMsgDialog = OTPVerificationMsgDialog(object : OTPVerificationMsgDialog.OnClickHandler {
                             override fun onSubmit() {
-                                AppHandler.getmInstance(applicationContext).setSuccessfulPassAuthenticationFlow(true)
+                                AppHandler.getmInstance(applicationContext).appStatus= AppsStatusConstant.KEY_login
                                 val i = Intent(this@OtpActivity, AppLoadingActivity::class.java)
                                 startActivity(i)
                                 finish()

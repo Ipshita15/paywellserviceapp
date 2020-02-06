@@ -28,10 +28,12 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.APIService;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
+import com.cloudwell.paywell.services.utils.AppsStatusConstant;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.TelephonyInfo;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
+import com.orhanobut.logger.Logger;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -51,6 +53,8 @@ public class AppLoadingActivity extends BaseActivity {
     private RelativeLayout mRelativeLayout;
     private TextView mConErrorMsg;
     private Button mBtnRetry;
+    private Button btnClose;
+
     private AppHandler mAppHandler;
     private String mImeiNo;
     private ConnectionDetector mCd;
@@ -61,6 +65,7 @@ public class AppLoadingActivity extends BaseActivity {
     private static final int MY_PERMISSIONS_REQUEST_ACCOUNTS = 123;
     private RegistrationModel regModel;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +75,7 @@ public class AppLoadingActivity extends BaseActivity {
         mConErrorMsg = findViewById(R.id.connErrorMsg);
         mBtnRetry = findViewById(R.id.btnRetry);
         mPBAppLoading = findViewById(R.id.pbAppLoading);
-        Button btnClose = findViewById(R.id.btnClose);
+        btnClose = findViewById(R.id.btnClose);
 
         mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mCd = new ConnectionDetector(AppController.getContext());
@@ -78,7 +83,7 @@ public class AppLoadingActivity extends BaseActivity {
 
         if (Build.VERSION.SDK_INT < 23) {
             //Do not need to check the permission
-            if (mAppHandler.getAppStatus().equalsIgnoreCase("registered")) {
+            if (mAppHandler.getAppStatus().equalsIgnoreCase(AppsStatusConstant.KEY_registered) || mAppHandler.getAppStatus().equalsIgnoreCase(AppsStatusConstant.KEY_login)) {
                 //RegisteredUserLogin();
                 RegisterUser();
                 Handler handler = new Handler();
@@ -102,7 +107,7 @@ public class AppLoadingActivity extends BaseActivity {
         } else {
             if (checkAndRequestPermissions()) {
                 //If you have already permitted the permission
-                if (mAppHandler.getAppStatus().equalsIgnoreCase("registered")) {
+                if (mAppHandler.getAppStatus().equalsIgnoreCase(AppsStatusConstant.KEY_registered) || mAppHandler.getAppStatus().equalsIgnoreCase(AppsStatusConstant.KEY_login)) {
                     //RegisteredUserLogin();
                     RegisterUser();
                     Handler handler = new Handler();
@@ -133,6 +138,15 @@ public class AppLoadingActivity extends BaseActivity {
                 finish();
             }
         });
+
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
 
     }
 
@@ -217,10 +231,6 @@ public class AppLoadingActivity extends BaseActivity {
     }
 
 
-    public void onClickClose(View v) {
-        finish();
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
@@ -269,24 +279,20 @@ public class AppLoadingActivity extends BaseActivity {
 
     public void authAsync() {
         AuthRequestModel m = new AuthRequestModel();
-
-        if (AppHandler.getmInstance(getApplicationContext()).isSuccessfulPassAuthenticationFlow()) {
-            m.setUsername("" + mAppHandler.getUserName());
-        } else if (AppHandler.getmInstance(getApplicationContext()).isSuccessfulPassRegistionFlow()) {
-            m.setUsername("" + mAppHandler.getAndroidID());
-        }
-
-
         m.setAppVersionName(getVersionName());
         m.setAppVersionNo(androidVersionName);
 
 
         APIService aPIService = ApiUtils.getAPIServiceV2();
         Call<ReposeUserProfile> responseBodyCall;
-        if (AppHandler.getmInstance(getApplicationContext()).isSuccessfulPassRegistionFlow()) {
-            responseBodyCall = aPIService.userServiceProfiling_v2(m);
+
+        String appStatus = AppHandler.getmInstance(getApplicationContext()).getAppStatus();
+        if (appStatus.equals(AppsStatusConstant.KEY_pending) || appStatus.equals(AppsStatusConstant.KEY_pinNotSetUser)) {
+            m.setUsername("" + mAppHandler.getAndroidID());
+            responseBodyCall = aPIService.userServiceProfilingReg(m);
         } else {
-            responseBodyCall = aPIService.userServiceProfiling_v1(m);
+            m.setUsername("" + mAppHandler.getUserName());
+            responseBodyCall = aPIService.userServiceProfiling(m);
         }
 
         responseBodyCall.enqueue(new Callback<ReposeUserProfile>() {
@@ -309,44 +315,43 @@ public class AppLoadingActivity extends BaseActivity {
                             if (status.equalsIgnoreCase("200")) {
 
 
-                                String rid = details.getMRetailerCode();
-                                int sme = details.getMSME();
-                                String changePinStatus = details.getMChangePinStatus();
-                                String changePhnStatus = details.getMIsPhoneVerfied();
-                                String changeBTypeStatus = "" + details.getMBusinessTypeStatus();
-                                int displayPictureCount = details.getMDisplayPictureCount();
+                                if (appStatus.equals(AppsStatusConstant.KEY_pending)) {
 
-                                mAppHandler.setRID(rid);
 
-                                if (AppHandler.getmInstance(getApplicationContext()).isSuccessfulPassRegistionFlow()) {
-
+                                    mPBAppLoading.setVisibility(View.GONE);
+                                    mBtnRetry.setVisibility(View.INVISIBLE);
+                                    btnClose.setVisibility(View.VISIBLE);
                                     mConErrorMsg.setVisibility(View.VISIBLE);
-                                    mBtnRetry.setVisibility(View.VISIBLE);
-                                    mConErrorMsg.setText("Congratulation on your becoming a paywall merchant, Your RIDE is " + rid + " and your password already send your mobile number, You can login by user username and password, \n\nThank you");
-                                    mAppHandler.setAppStatus("pendingLogin");
+//                                        mConErrorMsg.setText("Congratulation on your becoming a paywell merchant, Your RIDE is " + rid + " and your password already send your mobile number, You can login by user username and password, \n\nThank you");
+                                    mConErrorMsg.setText("" + details.getMessage());
 
-                                    AppHandler.getmInstance(getApplicationContext()).setIsSuccessfulPassRegistionFlow(false);
 
-                                    mBtnRetry.setOnClickListener(new View.OnClickListener() {
+                                    //AppHandler.getmInstance(getApplicationContext()).setIsSuccessfulPassRegistionFlow(false);
+
+                                    btnClose.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
                                             Intent i = new Intent(AppLoadingActivity.this, HomeActivity.class);
+                                            i.putExtra("isAutoLogin", true);
                                             startActivity(i);
                                             finish();
                                         }
                                     });
 
-                                }else  if (changePinStatus.equalsIgnoreCase("0")) {
-                                    mAppHandler.setInitialChangePinStatus("false");
-                                    mAppHandler.setAppStatus("registered_pin_not_set");
-
-                                    Intent intent = new Intent(AppLoadingActivity.this, ChangePinActivity.class);
-                                    intent.putExtra("isFirstTime", true);
-                                    startActivity(intent);
-                                    finish();
-
 
                                 } else {
+
+
+                                    String rid = details.getMRetailerCode();
+                                    int sme = details.getMSME();
+                                    String changePinStatus = details.getMChangePinStatus();
+                                    String changePhnStatus = details.getMIsPhoneVerfied();
+                                    String changeBTypeStatus = "" + details.getMBusinessTypeStatus();
+                                    int displayPictureCount = details.getMDisplayPictureCount();
+
+                                    mAppHandler.setRID(rid);
+
+
                                     mAppHandler.setAppStatus("registered");
 
                                     mAppHandler.setDisplayPictureCount(displayPictureCount);
@@ -392,15 +397,21 @@ public class AppLoadingActivity extends BaseActivity {
                                     }
                                     mPBAppLoading.setVisibility(View.GONE);
 
+
+                                    if (!changePinStatus.equalsIgnoreCase("0")) {
+                                        mAppHandler.setInitialChangePinStatus("true");
+                                    }
+
+
                                     Intent i = new Intent(AppLoadingActivity.this, MainActivity.class);
                                     startActivity(i);
                                     finish();
+
+
                                 }
 
-
-
                             } else if (status.equalsIgnoreCase("502")) {
-                                mAppHandler.setAppStatus("unregistered");
+                                mAppHandler.setAppStatus(AppsStatusConstant.KEY_pending);
                                 pendingStr = details.getMStatusName();
                                 mPBAppLoading.setVisibility(View.GONE);
                                 Intent intent = new Intent(getApplicationContext(), PendingActivity.class);
@@ -408,8 +419,8 @@ public class AppLoadingActivity extends BaseActivity {
                                 ActivityCompat.finishAffinity(AppLoadingActivity.this);
                                 startActivity(intent);
                                 finish();
-                            } else if (status.equalsIgnoreCase("100")) {
-                                mAppHandler.setAppStatus("pending");
+                            } else if (status.equalsIgnoreCase("100")|| status.equalsIgnoreCase("323")) {
+                                mAppHandler.setAppStatus(AppsStatusConstant.KEY_pending);
                                 mPBAppLoading.setVisibility(View.GONE);
                                 MissingMainActivity.RESPONSE_DETAILS = new Gson().toJson(details);
                                 regModel = new RegistrationModel();
@@ -418,7 +429,10 @@ public class AppLoadingActivity extends BaseActivity {
                                 finish();
                             } else if (status.equalsIgnoreCase("309")
                                     || status.equalsIgnoreCase("360")
-                                    || status.equalsIgnoreCase("400")) {
+                                    || status.equalsIgnoreCase("400")
+                                    || status.equalsIgnoreCase("324")
+                                    || status.equalsIgnoreCase("325")
+                            ) {
 
                                 pendingStr = details.getMStatusName();
                                 mPBAppLoading.setVisibility(View.GONE);
@@ -461,6 +475,7 @@ public class AppLoadingActivity extends BaseActivity {
 
             @Override
             public void onFailure(Call<ReposeUserProfile> call, Throwable t) {
+                Logger.e(t.getMessage());
                 dismissProgressDialog();
                 Toast.makeText(getApplicationContext(), R.string.try_again_msg, Toast.LENGTH_SHORT).show();
             }

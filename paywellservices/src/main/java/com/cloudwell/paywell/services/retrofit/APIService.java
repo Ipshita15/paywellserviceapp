@@ -407,19 +407,19 @@ public interface APIService {
                                                             @Url String url);
 
 
-    @POST("PaywellUserRegistration/userInformationForRegistration")
+    @POST("UserRegistration/userInformationForRegistration")
     Call<ResponseBody> userInformationForRegistration(@Body RegistrationModel regModel);
 
 
-    @POST("PaywelltransactionRetailer/userServiceProfiling_v1")
-    Call<ReposeUserProfile> userServiceProfiling_v1(@Body AuthRequestModel regModel);
+    @POST("RetailerService/userServiceProfiling")
+    Call<ReposeUserProfile> userServiceProfiling(@Body AuthRequestModel regModel);
 
-    @POST("PaywelltransactionRetailer/userServiceProfiling_v2")
-    Call<ReposeUserProfile> userServiceProfiling_v2(@Body AuthRequestModel regModel);
+    @POST("RetailerService/userServiceProfilingReg")
+    Call<ReposeUserProfile> userServiceProfilingReg(@Body AuthRequestModel regModel);
 
 
 
-    @POST("PaywellUserRegistration/unverifiedDataUpdate")
+    @POST("UserRegistration/unverifiedDataUpdate")
     Call<ResponseBody> unverifiedDataCollectAndUpdate( @Body JsonObject body);
 
    @POST("PaywellAuth/getToken?")

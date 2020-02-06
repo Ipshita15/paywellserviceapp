@@ -35,7 +35,7 @@ class AppsAuthHeaderTokenInterceptor(val mContext: AppController?) : Interceptor
         val toString = chain.request().url().toString()
 
         if (toString.equals("https://agentapi.paywellonline.com/PaywellAuth/getToken?") ||
-                toString.equals("https://agentapi.paywellonline.com/PaywelltransactionRetailer/userServiceProfiling_v2") ||
+                toString.equals("https://agentapi.paywellonline.com/RetailerService/userServiceProfilingReg") ||
                 toString.equals("https://agentapi.paywellonline.com/PaywellAuth/resetPassword")){
             val newRequest = chain.request().newBuilder().build();
             return chain.proceed(newRequest)
