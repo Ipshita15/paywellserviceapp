@@ -878,7 +878,7 @@
     <string name="submit">Login</string>
     <string name="forget_pin">Forget Pin?</string>
     <string name="member_login">User Login</string>
-    <string name="txt_user_registration">User Registration</string>
+    <string name="txt_user_registration">খুচরা বিক্রেতা নিবন্ধকরণ</string>
     <string name="otp_verification">OTP Verification</string>
     <string name="ok_text">OK</string>
     <string name="resend_otp">Resend OTP</string>
