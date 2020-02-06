@@ -3,7 +3,6 @@ package com.cloudwell.paywell.services.activity.home
 import android.content.Intent
 import android.os.Bundle
 import android.util.Base64
-import android.view.View
 import android.widget.Toast
 import com.cloudwell.paywell.services.BuildConfig
 import com.cloudwell.paywell.services.R
@@ -62,7 +61,13 @@ class HomeActivity : BaseActivity() {
         if (isAutoLogin) {
             userPinNotSet = true
 
-        } else if (appStatus.equals(AppsStatusConstant.KEY_pending) || appStatus.equals(AppsStatusConstant.KEY_pinNotSetUser) || appStatus.equals(AppsStatusConstant.KEY_registered)) {
+        }
+        else if (appStatus.equals(AppsStatusConstant.KEY_unknown)){
+
+            checkUserPreviousRegistionStatus();
+
+        }
+        else if (appStatus.equals(AppsStatusConstant.KEY_pending) || appStatus.equals(AppsStatusConstant.KEY_pinNotSetUser) || appStatus.equals(AppsStatusConstant.KEY_registered)) {
             val i = Intent(this@HomeActivity, AppLoadingActivity::class.java)
             startActivity(i)
             finish()
@@ -70,12 +75,6 @@ class HomeActivity : BaseActivity() {
         // check device is support
         val androidID = AppHandler.getmInstance(applicationContext).androidID
         Logger.v("Android ID: " + androidID)
-        if (BuildConfig.DEBUG) {
-            tvAndroidID.visibility = View.VISIBLE
-            tvAndroidID.text = "" + androidID
-        } else {
-            tvAndroidID.visibility = View.GONE
-        }
 
         if (androidID == "") {
             val androidID1 = AndroidIDUtility.getAndroidID(applicationContext)
@@ -144,14 +143,33 @@ class HomeActivity : BaseActivity() {
         ivLanSwitch.setOnClickListener {
             switchLanguage()
 
-            val refresh = Intent(this, HomeActivity::class.java)
-            startActivity(refresh)
-
         }
 
         ivGetHelpCallCenter.setOnClickListener {
             callPreviewAirticket(false)
         }
+
+    }
+
+    private fun checkUserPreviousRegistionStatus() {
+         if (isInternetConnection) {
+            routToApploadingActivity();
+        } else {
+            val noInternetConnectionMsgDialog = NoInternetConnectionMsgDialog(object : NoInternetConnectionMsgDialog.OnClickHandler {
+                override fun onRetry() {
+                    checkUserPreviousRegistionStatus();
+                }
+            })
+            noInternetConnectionMsgDialog.isCancelable = false
+            noInternetConnectionMsgDialog.show(supportFragmentManager, "noInternetConnectionMsgDialog")
+        }
+
+    }
+
+    private fun routToApploadingActivity() {
+        val i = Intent(this@HomeActivity, AppLoadingActivity::class.java)
+        startActivity(i)
+        finish()
 
     }
 

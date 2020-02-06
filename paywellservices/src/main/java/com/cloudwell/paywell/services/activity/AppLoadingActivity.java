@@ -23,7 +23,6 @@ import com.cloudwell.paywell.services.activity.home.model.ResponseDetailsUserPro
 import com.cloudwell.paywell.services.activity.reg.missing.MissingMainActivity;
 import com.cloudwell.paywell.services.activity.reg.model.AuthRequestModel;
 import com.cloudwell.paywell.services.activity.reg.model.RegistrationModel;
-import com.cloudwell.paywell.services.activity.settings.ChangePinActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.APIService;
@@ -95,13 +94,7 @@ public class AppLoadingActivity extends BaseActivity {
                     }
                 };
                 handler.postDelayed(myRunnable, 100);
-            } else if (mAppHandler.getAppStatus().equalsIgnoreCase("registered_pin_not_set")) {
-                Intent intent = new Intent(AppLoadingActivity.this, ChangePinActivity.class);
-                intent.putExtra("isFirstTime", true);
-                startActivity(intent);
-                finish();
-
-            } else {
+            }else {
                 RegisterUser();
             }
         } else {
@@ -119,12 +112,6 @@ public class AppLoadingActivity extends BaseActivity {
                         }
                     };
                     handler.postDelayed(myRunnable, 100);
-                } else if (mAppHandler.getAppStatus().equalsIgnoreCase("registered_pin_not_set")) {
-                    Intent intent = new Intent(AppLoadingActivity.this, ChangePinActivity.class);
-                    intent.putExtra("isFirstTime", true);
-                    startActivity(intent);
-                    finish();
-
                 } else {
                     RegisterUser();
                 }
@@ -287,7 +274,7 @@ public class AppLoadingActivity extends BaseActivity {
         Call<ReposeUserProfile> responseBodyCall;
 
         String appStatus = AppHandler.getmInstance(getApplicationContext()).getAppStatus();
-        if (appStatus.equals(AppsStatusConstant.KEY_pending) || appStatus.equals(AppsStatusConstant.KEY_pinNotSetUser)) {
+        if (appStatus.equals(AppsStatusConstant.KEY_pending) || appStatus.equals("unknown")|| appStatus.equals(AppsStatusConstant.KEY_pinNotSetUser)) {
             m.setUsername("" + mAppHandler.getAndroidID());
             responseBodyCall = aPIService.userServiceProfilingReg(m);
         } else {
@@ -315,7 +302,7 @@ public class AppLoadingActivity extends BaseActivity {
                             if (status.equalsIgnoreCase("200")) {
 
 
-                                if (appStatus.equals(AppsStatusConstant.KEY_pending)) {
+                                if (appStatus.equals(AppsStatusConstant.KEY_pending) || appStatus.equals(AppsStatusConstant.KEY_unknown)) {
 
 
                                     mPBAppLoading.setVisibility(View.GONE);
@@ -339,7 +326,7 @@ public class AppLoadingActivity extends BaseActivity {
                                     });
 
 
-                                } else {
+                                }else {
 
 
                                     String rid = details.getMRetailerCode();
@@ -469,7 +456,6 @@ public class AppLoadingActivity extends BaseActivity {
                     mPBAppLoading.setVisibility(View.GONE);
                     e.printStackTrace();
                 }
-
 
             }
 

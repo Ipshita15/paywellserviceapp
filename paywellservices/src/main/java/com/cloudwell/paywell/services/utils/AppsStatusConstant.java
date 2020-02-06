@@ -5,6 +5,7 @@ package com.cloudwell.paywell.services.utils;
  */
 public class AppsStatusConstant {
 
+    public static String KEY_unknown = "unknown";
     public static String KEY_registered = "registered";
     public static String KEY_unregistered = "unregistered";
     public static String KEY_pending = "pending";
