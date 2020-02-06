@@ -8,14 +8,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 
-import androidx.appcompat.app.AppCompatActivity;
+public class PendingActivity extends BaseActivity {
 
-public class PendingActivity extends AppCompatActivity {
+    Button btnClose;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,8 @@ public class PendingActivity extends AppCompatActivity {
         Button mBtnRetry = findViewById(R.id.btnRetry);
         Button mBtnClose = findViewById(R.id.btnClose);
         ProgressBar mPBAppLoading = findViewById(R.id.pbAppLoading);
+
+        btnClose = findViewById(R.id.btnClose);
 
         mConErrorMsg.setText(Html.fromHtml(AppLoadingActivity.pendingStr));
         mConErrorMsg.setVisibility(View.VISIBLE);
@@ -47,6 +50,13 @@ public class PendingActivity extends AppCompatActivity {
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_PENDING);
 
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
 
     @Override
@@ -55,7 +65,5 @@ public class PendingActivity extends AppCompatActivity {
         finish();
     }
 
-    public void onClickClose(View v) {
-        finish();
-    }
+
 }
