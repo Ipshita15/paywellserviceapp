@@ -13,4 +13,9 @@ public class AppsStatusConstant {
     public static String KEY_login = "login";
     public static String KEY_logout = "logout";
 
+
+
+
+
+
 }

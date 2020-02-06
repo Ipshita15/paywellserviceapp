@@ -149,6 +149,9 @@ class HomeActivity : BaseActivity() {
             callPreviewAirticket(false)
         }
 
+
+
+
     }
 
     private fun checkUserPreviousRegistionStatus() {

@@ -94,7 +94,7 @@ public class AppLoadingActivity extends BaseActivity {
                     }
                 };
                 handler.postDelayed(myRunnable, 100);
-            }else {
+            } else {
                 RegisterUser();
             }
         } else {
@@ -274,7 +274,7 @@ public class AppLoadingActivity extends BaseActivity {
         Call<ReposeUserProfile> responseBodyCall;
 
         String appStatus = AppHandler.getmInstance(getApplicationContext()).getAppStatus();
-        if (appStatus.equals(AppsStatusConstant.KEY_pending) || appStatus.equals("unknown")|| appStatus.equals(AppsStatusConstant.KEY_pinNotSetUser)) {
+        if (appStatus.equals(AppsStatusConstant.KEY_pending) || appStatus.equals("unknown") || appStatus.equals(AppsStatusConstant.KEY_pinNotSetUser)) {
             m.setUsername("" + mAppHandler.getAndroidID());
             responseBodyCall = aPIService.userServiceProfilingReg(m);
         } else {
@@ -299,12 +299,10 @@ public class AppLoadingActivity extends BaseActivity {
                             ResponseDetailsUserProfile details = result.getResponseDetails();
 
                             String status = "" + details.getMStatus();
-                            if (status.equalsIgnoreCase("200")) {
+                            if (status.equalsIgnoreCase("200") || status.equalsIgnoreCase("322")) {
 
 
                                 if (appStatus.equals(AppsStatusConstant.KEY_pending) || appStatus.equals(AppsStatusConstant.KEY_unknown)) {
-
-
                                     mPBAppLoading.setVisibility(View.GONE);
                                     mBtnRetry.setVisibility(View.INVISIBLE);
                                     btnClose.setVisibility(View.VISIBLE);
@@ -319,14 +317,18 @@ public class AppLoadingActivity extends BaseActivity {
                                         @Override
                                         public void onClick(View v) {
                                             Intent i = new Intent(AppLoadingActivity.this, HomeActivity.class);
-                                            i.putExtra("userPinNotSet", true);
+                                            if (status.equals("200")) {
+                                                i.putExtra("userPinNotSet", true);
+                                            } else {
+                                                i.putExtra("userPinNotSet", true);
+                                            }
                                             startActivity(i);
                                             finish();
                                         }
                                     });
 
 
-                                }else {
+                                } else {
 
 
                                     String rid = details.getMRetailerCode();
@@ -406,7 +408,7 @@ public class AppLoadingActivity extends BaseActivity {
                                 ActivityCompat.finishAffinity(AppLoadingActivity.this);
                                 startActivity(intent);
                                 finish();
-                            } else if (status.equalsIgnoreCase("100")|| status.equalsIgnoreCase("323")) {
+                            } else if (status.equalsIgnoreCase("100") || status.equalsIgnoreCase("323")) {
                                 mAppHandler.setAppStatus(AppsStatusConstant.KEY_pending);
                                 mPBAppLoading.setVisibility(View.GONE);
                                 MissingMainActivity.RESPONSE_DETAILS = new Gson().toJson(details);

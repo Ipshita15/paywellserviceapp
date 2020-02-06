@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BaseDialogFragment
+import com.cloudwell.paywell.services.app.AppHandler
 import kotlinx.android.synthetic.main.mobile_number_dialog.*
 import kotlinx.android.synthetic.main.mobile_number_dialog.view.*
 
 
-class MobileNumberInputDialog(val onClickHandler: OnClickHandler): BaseDialogFragment() {
+class MobileNumberInputDialog(val onClickHandler: OnClickHandler) : BaseDialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = layoutInflater.inflate(R.layout.mobile_number_dialog, null)
@@ -18,7 +19,7 @@ class MobileNumberInputDialog(val onClickHandler: OnClickHandler): BaseDialogFra
         view.btbtSubmitMobileNumber.setOnClickListener {
 
             val mobileNumber = view.etMobileOrRID.text
-            onClickHandler.onSubmit(mobileNumber.toString().trim(),etPin.text.toString().trim() )
+            onClickHandler.onSubmit(mobileNumber.toString().trim(), etPin.text.toString().trim())
 
         }
 
@@ -30,19 +31,25 @@ class MobileNumberInputDialog(val onClickHandler: OnClickHandler): BaseDialogFra
 //        view.etMobileOrRID.setText("01675349882")
 //        view.etPin.setText("1234")
 
-        view.etMobileOrRID.setText("01787679663")
-        view.etPin.setText("1416")
+
+        val userName = AppHandler.getmInstance(activity?.applicationContext).userName
+        userName.let {
+            if (it.equals("unknown")) {
+
+            } else {
+                view.etMobileOrRID.setText(it)
+            }
+        }
+
+
         return view
 
     }
 
 
+    public interface OnClickHandler {
 
-
-
-    public interface OnClickHandler{
-
-        public fun onSubmit(mobileNumber:String, pin:String)
+        public fun onSubmit(mobileNumber: String, pin: String)
         public fun onForgetPinNumber();
     }
 
