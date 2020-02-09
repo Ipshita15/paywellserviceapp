@@ -100,6 +100,7 @@ import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.app.model.APIResBalanceCheck;
+import com.cloudwell.paywell.services.app.model.RequestBalanceCheck;
 import com.cloudwell.paywell.services.constant.AllConstant;
 import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.database.FavoriteMenuDab;
@@ -1040,8 +1041,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         pb_dot.setVisibility(View.VISIBLE);
         mToolbarHeading.setVisibility(View.GONE);
 
-        String imeiNo = mAppHandler.getUserName();
-        Call<APIResBalanceCheck> responseBodyCall = ApiUtils.getAPIService().callCheckBalance(imeiNo);
+        String userName = mAppHandler.getUserName();
+
+        RequestBalanceCheck m = new RequestBalanceCheck();
+        m.setUsername(userName);
+        m.setDeviceId(mAppHandler.getAndroidID());
+
+
+        Call<APIResBalanceCheck> responseBodyCall = ApiUtils.getAPIServiceV2().callCheckBalance(m);
         responseBodyCall.enqueue(new Callback<APIResBalanceCheck>() {
             @Override
             public void onResponse(Call<APIResBalanceCheck> call, Response<APIResBalanceCheck> response) {

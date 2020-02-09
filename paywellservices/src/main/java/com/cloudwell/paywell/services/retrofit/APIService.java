@@ -55,6 +55,7 @@ import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.Pa
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.RequestBillStatusData;
 import com.cloudwell.paywell.services.app.model.APIResBalanceCheck;
 import com.cloudwell.paywell.services.app.model.APIResposeGenerateToken;
+import com.cloudwell.paywell.services.app.model.RequestBalanceCheck;
 import com.cloudwell.paywell.services.service.notificaiton.model.APIResNoCheckNotification;
 import com.cloudwell.paywell.services.utils.ParameterUtility;
 import com.google.gson.JsonObject;
@@ -123,8 +124,8 @@ public interface APIService {
 
 
     @POST("RetailerService/checkBalance")
-    @FormUrlEncoded
-    Call<APIResBalanceCheck> callCheckBalance(@Field("username") String username);
+
+    Call<APIResBalanceCheck> callCheckBalance(@Body RequestBalanceCheck requestBalanceCheck);
 
     @POST("RetailerService/checkNotificationDetails")
     @FormUrlEncoded
