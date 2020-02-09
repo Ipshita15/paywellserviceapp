@@ -23,6 +23,7 @@ import com.cloudwell.paywell.services.activity.home.model.ResponseDetailsUserPro
 import com.cloudwell.paywell.services.activity.reg.missing.MissingMainActivity;
 import com.cloudwell.paywell.services.activity.reg.model.AuthRequestModel;
 import com.cloudwell.paywell.services.activity.reg.model.RegistrationModel;
+import com.cloudwell.paywell.services.activity.settings.ChangePinActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.APIService;
@@ -82,7 +83,14 @@ public class AppLoadingActivity extends BaseActivity {
 
         if (Build.VERSION.SDK_INT < 23) {
             //Do not need to check the permission
-            if (mAppHandler.getAppStatus().equalsIgnoreCase(AppsStatusConstant.KEY_registered) || mAppHandler.getAppStatus().equalsIgnoreCase(AppsStatusConstant.KEY_login)) {
+
+            if (mAppHandler.getUserNeedToChnagePassword()){
+                Intent i = new Intent(this, ChangePinActivity.class);
+                i.putExtra("isFirstTime", true);
+                startActivity(i);
+                finish();
+
+            } else if (mAppHandler.getAppStatus().equalsIgnoreCase(AppsStatusConstant.KEY_registered) || mAppHandler.getAppStatus().equalsIgnoreCase(AppsStatusConstant.KEY_login)) {
                 //RegisteredUserLogin();
                 RegisterUser();
                 Handler handler = new Handler();
@@ -98,7 +106,10 @@ public class AppLoadingActivity extends BaseActivity {
                 RegisterUser();
             }
         } else {
-            if (checkAndRequestPermissions()) {
+            if (mAppHandler.getUserNeedToChnagePassword()){
+
+
+            } else  if (checkAndRequestPermissions()) {
                 //If you have already permitted the permission
                 if (mAppHandler.getAppStatus().equalsIgnoreCase(AppsStatusConstant.KEY_registered) || mAppHandler.getAppStatus().equalsIgnoreCase(AppsStatusConstant.KEY_login)) {
                     //RegisteredUserLogin();
@@ -318,9 +329,9 @@ public class AppLoadingActivity extends BaseActivity {
                                         public void onClick(View v) {
                                             Intent i = new Intent(AppLoadingActivity.this, HomeActivity.class);
                                             if (status.equals("200")) {
-                                                i.putExtra("userPinNotSet", true);
+                                                AppHandler.getmInstance(getApplicationContext()).setUserNeedToChangePassword(true);
                                             } else {
-                                                i.putExtra("userPinNotSet", true);
+                                                AppHandler.getmInstance(getApplicationContext()).setUserNeedToChangePassword(false);
                                             }
                                             startActivity(i);
                                             finish();

@@ -175,6 +175,7 @@ public class AppHandler {
     public static final String KEY_IsSuccessfullDoneAuthenticationFlow= "setSuccessfulPassAuthenticationFlow";
     public static final String KEY_IsSuccessfullDoneRegistionFlow= "KEY_IsSuccessfullDoneRegistionFlow";
     public static final String KEY_ANDROID_ID= "KEY_ANDROID_ID";
+    public static final String KEY_setUserNeedToChangePassword= "KEY_setUserNeedToChangePassword";
 
 
     public AppHandler() {
@@ -833,7 +834,13 @@ public class AppHandler {
         return mPref.getString(KEY_ANDROID_ID, "");
     }
 
-
+    public void setUserNeedToChangePassword(boolean b) {
+        editor.putBoolean(KEY_setUserNeedToChangePassword, b);
+        editor.commit();
+    }
+    public boolean getUserNeedToChnagePassword(){
+        return mPref.getBoolean(KEY_setUserNeedToChangePassword, false);
+    }
 
     public static class MyDialogFragment extends DialogFragment {
         private ConnectionDetector cd;

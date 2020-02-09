@@ -31,7 +31,7 @@ import retrofit2.Response
 
 class HomeActivity : BaseActivity() {
 
-     var userPinNotSet: Boolean = false
+     var userNeedToChangePassword: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,14 +52,13 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun initilizationView(intent: Intent) {
+        var userNeedToChnagePasswordLocal = AppHandler.getmInstance(applicationContext).userNeedToChnagePassword
 
-
-        val isAutoLogin = intent.getBooleanExtra("userPinNotSet", false)
         val appStatus = AppHandler.getmInstance(applicationContext).appStatus
 
 
-        if (isAutoLogin) {
-            userPinNotSet = true
+        if (userNeedToChnagePasswordLocal) {
+            userNeedToChangePassword = true
 
         }
         else if (appStatus.equals(AppsStatusConstant.KEY_unknown)){
@@ -222,6 +221,10 @@ class HomeActivity : BaseActivity() {
                         if (it?.apiStatus ?: 0 == 200) {
                             if (it?.responseDetails!!.status == 200) {
 
+                                AppHandler.getmInstance(applicationContext).setUserNeedToChangePassword(true)
+                                userNeedToChangePassword = true
+
+
                                 val oTPVerificationMsgDialog = OTPVerificationMsgDialog(object : OTPVerificationMsgDialog.OnClickHandler {
                                     override fun onSubmit() {
 
@@ -308,13 +311,13 @@ class HomeActivity : BaseActivity() {
 
                             val intent = Intent(this@HomeActivity, OtpActivity::class.java)
                             intent.putExtra("OTPMessaage", m?.OTPMessaage)
-                            intent.putExtra("userPinNotSet", userPinNotSet)
+                            intent.putExtra("userNeedToChangePassword", userNeedToChangePassword)
                             startActivity(intent)
 
                         } else {
 
                             val intent = Intent(this@HomeActivity, AppLoadingActivity::class.java)
-                            intent.putExtra("userPinNotSet", userPinNotSet)
+                            intent.putExtra("userNeedToChangePassword", userNeedToChangePassword)
                             startActivity(intent)
                             finish()
 

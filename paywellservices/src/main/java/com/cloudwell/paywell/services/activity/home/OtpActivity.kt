@@ -34,7 +34,7 @@ import java.util.regex.Pattern
 
 class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, OtpReceivedInterface {
 
-    var isAutoLogin = false;
+    var userNeedToChangePassword = false;
     var OTPMessaage = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +42,7 @@ class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleA
 
         setToolbar("OTP Verification")
 
-         isAutoLogin = intent.getBooleanExtra("userPinNotSet", false)
+         userNeedToChangePassword = intent.getBooleanExtra("userNeedToChangePassword", false)
          OTPMessaage = intent.getStringExtra("OTPMessaage")
 
          tvOtpMessage.text = OTPMessaage
@@ -258,7 +258,7 @@ class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleA
                             override fun onSubmit() {
 
 
-                                if (isAutoLogin){
+                                if (userNeedToChangePassword){
                                     val i = Intent(this@OtpActivity, ChangePinActivity::class.java)
                                     i.putExtra("isFirstTime", true);
                                     startActivity(i)

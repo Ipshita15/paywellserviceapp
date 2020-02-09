@@ -120,6 +120,9 @@ class ChangePinActivity : BaseActivity() {
 
                                 mAppHandler!!.initialChangePinStatus = "true"
                                 AppHandler.getmInstance(applicationContext).appStatus = AppsStatusConstant.KEY_registered
+                                AppHandler.getmInstance(applicationContext).setUserNeedToChangePassword(false)
+
+
                                 val builder = AlertDialog.Builder(this@ChangePinActivity)
                                 builder.setCancelable(false)
                                 builder.setTitle("Result")

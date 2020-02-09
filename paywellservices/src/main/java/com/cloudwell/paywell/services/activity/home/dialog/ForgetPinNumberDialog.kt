@@ -25,6 +25,7 @@ class ForgetPinNumberDialog(val onClickHandler: OnClickHandler): BaseDialogFragm
                 Toast.makeText(activity, getString(R.string.invalid_input), Toast.LENGTH_LONG).show()
             }else{
                 onClickHandler.onForgetPinNumber(view.etMobileOrRID.text.toString().trim())
+                dismiss()
             }
 
 
