@@ -318,7 +318,7 @@ public class AppLoadingActivity extends BaseActivity {
                             ResponseDetailsUserProfile details = result.getResponseDetails();
 
                             String status = "" + details.getMStatus();
-                            if (status.equalsIgnoreCase("200") || status.equalsIgnoreCase("322")) {
+                            if (status.equalsIgnoreCase("200")) {
 
 
                                 if (appStatus.equals(AppsStatusConstant.KEY_pending) || appStatus.equals(AppsStatusConstant.KEY_unknown)) {
@@ -342,15 +342,6 @@ public class AppLoadingActivity extends BaseActivity {
 
                                                 Intent i = new Intent(AppLoadingActivity.this, HomeActivity.class);
                                                 startActivity(i);
-                                                finish();
-                                            } else {
-                                                AppHandler.getmInstance(getApplicationContext()).setAppStatus(AppsStatusConstant.KEY_allready_registered);
-                                                AppHandler.getmInstance(getApplicationContext()).setUserNeedToChangePassword(false);
-
-                                                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                ActivityCompat.finishAffinity(AppLoadingActivity.this);
-                                                startActivity(intent);
                                                 finish();
                                             }
 
@@ -428,6 +419,16 @@ public class AppLoadingActivity extends BaseActivity {
 
 
                                 }
+
+                            } else  if (status.equalsIgnoreCase("322")){
+                                AppHandler.getmInstance(getApplicationContext()).setAppStatus(AppsStatusConstant.KEY_allready_registered);
+                                AppHandler.getmInstance(getApplicationContext()).setUserNeedToChangePassword(false);
+
+                                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                ActivityCompat.finishAffinity(AppLoadingActivity.this);
+                                startActivity(intent);
+                                finish();
 
                             } else if (status.equalsIgnoreCase("502")) {
                                 mAppHandler.setAppStatus(AppsStatusConstant.KEY_unregistered);
