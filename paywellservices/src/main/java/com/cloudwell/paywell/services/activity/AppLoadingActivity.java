@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
@@ -107,12 +106,17 @@ public class AppLoadingActivity extends BaseActivity {
             }
         } else {
             if (mAppHandler.getUserNeedToChnagePassword()){
+                Intent i = new Intent(this, ChangePinActivity.class);
+                i.putExtra("isFirstTime", true);
+                startActivity(i);
+                finish();
 
-
-            } else  if (checkAndRequestPermissions()) {
-                //If you have already permitted the permission
-                if (mAppHandler.getAppStatus().equalsIgnoreCase(AppsStatusConstant.KEY_registered) || mAppHandler.getAppStatus().equalsIgnoreCase(AppsStatusConstant.KEY_login)) {
+            } else if (mAppHandler.getAppStatus().equalsIgnoreCase(AppsStatusConstant.KEY_registered) || mAppHandler.getAppStatus().equalsIgnoreCase(AppsStatusConstant.KEY_login)) {
                     //RegisteredUserLogin();
+
+                if (checkAndRequestPermissions()) {
+                    //If you have already permitted the permission
+
                     RegisterUser();
                     Handler handler = new Handler();
                     Runnable myRunnable = new Runnable() {
@@ -123,10 +127,14 @@ public class AppLoadingActivity extends BaseActivity {
                         }
                     };
                     handler.postDelayed(myRunnable, 100);
+
+                }else {
+                    //requestPhonePermission();
+                }
                 } else {
                     RegisterUser();
                 }
-            }
+
         }
 
         mBtnRetry.setOnClickListener(new View.OnClickListener() {
@@ -327,14 +335,25 @@ public class AppLoadingActivity extends BaseActivity {
                                     btnClose.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            Intent i = new Intent(AppLoadingActivity.this, HomeActivity.class);
+
                                             if (status.equals("200")) {
+                                                AppHandler.getmInstance(getApplicationContext()).setAppStatus(AppsStatusConstant.KEY_pending);
                                                 AppHandler.getmInstance(getApplicationContext()).setUserNeedToChangePassword(true);
+
+                                                Intent i = new Intent(AppLoadingActivity.this, HomeActivity.class);
+                                                startActivity(i);
+                                                finish();
                                             } else {
+                                                AppHandler.getmInstance(getApplicationContext()).setAppStatus(AppsStatusConstant.KEY_allready_registered);
                                                 AppHandler.getmInstance(getApplicationContext()).setUserNeedToChangePassword(false);
+
+                                                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                ActivityCompat.finishAffinity(AppLoadingActivity.this);
+                                                startActivity(intent);
+                                                finish();
                                             }
-                                            startActivity(i);
-                                            finish();
+
                                         }
                                     });
 
@@ -411,10 +430,10 @@ public class AppLoadingActivity extends BaseActivity {
                                 }
 
                             } else if (status.equalsIgnoreCase("502")) {
-                                mAppHandler.setAppStatus(AppsStatusConstant.KEY_pending);
+                                mAppHandler.setAppStatus(AppsStatusConstant.KEY_unregistered);
                                 pendingStr = details.getMStatusName();
                                 mPBAppLoading.setVisibility(View.GONE);
-                                Intent intent = new Intent(getApplicationContext(), PendingActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 ActivityCompat.finishAffinity(AppLoadingActivity.this);
                                 startActivity(intent);
@@ -476,7 +495,10 @@ public class AppLoadingActivity extends BaseActivity {
             public void onFailure(Call<ReposeUserProfile> call, Throwable t) {
                 Logger.e(t.getMessage());
                 dismissProgressDialog();
-                Toast.makeText(getApplicationContext(), R.string.try_again_msg, Toast.LENGTH_SHORT).show();
+                mConErrorMsg.setText(R.string.try_again_msg);
+                mConErrorMsg.setVisibility(View.VISIBLE);
+                mBtnRetry.setVisibility(View.VISIBLE);
+                mPBAppLoading.setVisibility(View.GONE);
             }
         });
     }

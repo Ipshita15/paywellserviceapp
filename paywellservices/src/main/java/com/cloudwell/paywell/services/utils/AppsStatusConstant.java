@@ -7,6 +7,7 @@ public class AppsStatusConstant {
 
     public static String KEY_unknown = "unknown";
     public static String KEY_registered = "registered";
+    public static String KEY_allready_registered = "allready_registered";
     public static String KEY_unregistered = "unregistered";
     public static String KEY_pending = "pending";
     public static String KEY_pinNotSetUser = "pinNotSetUser";

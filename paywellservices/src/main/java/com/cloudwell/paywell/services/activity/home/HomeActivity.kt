@@ -38,33 +38,21 @@ class HomeActivity : BaseActivity() {
         setContentView(R.layout.activity_home)
         getSupportActionBar()?.hide()
 
-//        AppHandler.getmInstance(applicationContext).setisSuccessfulPassRemissionFlowFlow(true)
-//        AppHandler.getmInstance(applicationContext).setAppStatus("pendingLogin")
-
-
-//        AppHandler.getmInstance(applicationContext).appStatus = AppsStatusConstant.KEY_pending
-
-
-
         initilizationView(intent)
 
 
     }
 
     private fun initilizationView(intent: Intent) {
-        var userNeedToChnagePasswordLocal = AppHandler.getmInstance(applicationContext).userNeedToChnagePassword
-
+        val userNeedToChnagePasswordLocal = AppHandler.getmInstance(applicationContext).userNeedToChnagePassword
         val appStatus = AppHandler.getmInstance(applicationContext).appStatus
-
 
         if (userNeedToChnagePasswordLocal) {
             userNeedToChangePassword = true
 
         }
         else if (appStatus.equals(AppsStatusConstant.KEY_unknown)){
-
             checkUserPreviousRegistionStatus();
-
         }
         else if (appStatus.equals(AppsStatusConstant.KEY_pending) || appStatus.equals(AppsStatusConstant.KEY_pinNotSetUser) || appStatus.equals(AppsStatusConstant.KEY_registered)) {
             val i = Intent(this@HomeActivity, AppLoadingActivity::class.java)
@@ -94,45 +82,9 @@ class HomeActivity : BaseActivity() {
             startActivity(intent)
         }
 
-
         btLogin.setOnClickListener {
 
-            val mobileNumberInputDialog = MobileNumberInputDialog(object : MobileNumberInputDialog.OnClickHandler {
-                override fun onSubmit(mobileNumber: String, pin: String) {
-                    if (!mobileNumber.equals("")) {
-                        val userName = mobileNumber
-                        val pin = pin
-
-
-                        val androidId: String = AppHandler.getmInstance(applicationContext).androidID
-                        AppHandler.getmInstance(applicationContext).setAndroidID(androidId)
-                        AppHandler.getmInstance(applicationContext).setMobileNumber(userName)
-
-
-                        requestAPIToken(androidId, userName, pin)
-
-                    } else {
-                        Toast.makeText(applicationContext, "Please input valid RID or Mobile number", Toast.LENGTH_LONG).show()
-                    }
-
-                }
-
-                override fun onForgetPinNumber() {
-
-                    val mobileNumberInputDialog = ForgetPinNumberDialog(object : ForgetPinNumberDialog.OnClickHandler {
-
-                        override fun onForgetPinNumber(moibleNumber: String) {
-
-                            requestResetPassord(moibleNumber)
-                        }
-                    })
-
-                    mobileNumberInputDialog.show(supportFragmentManager, "mobileNumberInputDialog");
-                }
-
-
-            })
-            mobileNumberInputDialog.show(supportFragmentManager, "mobileNumberInputDialog");
+            doLogin()
 
         }
 
@@ -141,7 +93,8 @@ class HomeActivity : BaseActivity() {
 
         ivLanSwitch.setOnClickListener {
             switchLanguage()
-
+            val refresh = Intent(this, HomeActivity::class.java)
+            startActivity(refresh)
         }
 
         ivGetHelpCallCenter.setOnClickListener {
@@ -151,6 +104,45 @@ class HomeActivity : BaseActivity() {
 
 
 
+    }
+
+    private fun doLogin() {
+        val mobileNumberInputDialog = MobileNumberInputDialog(object : MobileNumberInputDialog.OnClickHandler {
+            override fun onSubmit(mobileNumber: String, pin: String) {
+                if (!mobileNumber.equals("")) {
+                    val userName = mobileNumber
+                    val pin = pin
+
+
+                    val androidId: String = AppHandler.getmInstance(applicationContext).androidID
+                    AppHandler.getmInstance(applicationContext).setAndroidID(androidId)
+                    AppHandler.getmInstance(applicationContext).setMobileNumber(userName)
+
+
+                    requestAPIToken(androidId, userName, pin)
+
+                } else {
+                    Toast.makeText(applicationContext, "Please input valid RID or Mobile number", Toast.LENGTH_LONG).show()
+                }
+
+            }
+
+            override fun onForgetPinNumber() {
+
+                val mobileNumberInputDialog = ForgetPinNumberDialog(object : ForgetPinNumberDialog.OnClickHandler {
+
+                    override fun onForgetPinNumber(moibleNumber: String) {
+
+                        requestResetPassord(moibleNumber)
+                    }
+                })
+
+                mobileNumberInputDialog.show(supportFragmentManager, "mobileNumberInputDialog");
+            }
+
+
+        })
+        mobileNumberInputDialog.show(supportFragmentManager, "mobileNumberInputDialog")
     }
 
     private fun checkUserPreviousRegistionStatus() {
