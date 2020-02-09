@@ -1,18 +1,18 @@
 
 package com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model;
 
-import java.util.List;
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 @SuppressWarnings("unused")
 public class PalliBidyutBillPayRequest {
 
-    @SerializedName("billData")
+    @SerializedName("request_data")
     private List<BillDatum> billData;
     @SerializedName("format")
     private String format;
-    @SerializedName("pin_code")
+    @SerializedName("password")
     private String pinCode;
     @SerializedName("username")
     private String username;

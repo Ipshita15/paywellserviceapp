@@ -367,7 +367,7 @@ public interface APIService {
                                               @Field("password") String password,
                                               @Field(ParameterUtility.KEY_REF_ID) String refId);
 
-    @POST("/PaywelltransactionPollyBiddyut/pollyBiddyutBillPayAPIAsync")
+    @POST("PollyBiddyutSystem/pollyBiddyutBillPayAsync")
     Call<PalliBidyutBillPayResponse> postPalliBidyutBills(@Body PalliBidyutBillPayRequest body);
 
 
