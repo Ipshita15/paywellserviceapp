@@ -274,10 +274,12 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
 
     private void callAPI(String serviceName, String selectedLimit) {
 
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).getRID());
         ReqInquiryModel m = new ReqInquiryModel();
         m.setUsername(AppHandler.getmInstance(getApplicationContext()).getUserName());
         m.setLimit(selectedLimit);
         m.setService(serviceName);
+        m.setRefId(uniqueKey);
 
         showProgressDialog();
 
