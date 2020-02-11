@@ -12,6 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
 
+
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 7/29/18.
  */
@@ -93,10 +94,9 @@ object RetrofitClient {
                 val logging = HttpLoggingInterceptor()
                 logging.setLevel(HttpLoggingInterceptor.Level.BODY)
                 httpClient.addInterceptor(logging)
-//                httpClient.addNetworkInterceptor(StethoInterceptor())
                 httpClient.addInterceptor(OkHttpProfilerInterceptor())
             }
-            httpClient.authenticator(TokenAuthenticator())
+            httpClient.authenticator(TokenAuthenticatorV2Test())
 
 
             okHttpClient = httpClient.build()
@@ -107,6 +107,8 @@ object RetrofitClient {
         }
         return retrofitV2
     }
+
+
 
     fun getClient(): OkHttpClient? {
         return okHttpClient

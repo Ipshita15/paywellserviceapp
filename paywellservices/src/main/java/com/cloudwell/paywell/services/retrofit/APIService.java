@@ -30,6 +30,7 @@ import com.cloudwell.paywell.services.activity.home.model.ResposeOptCheck;
 import com.cloudwell.paywell.services.activity.home.model.changePin.RequestChangePin;
 import com.cloudwell.paywell.services.activity.home.model.forgetPin.ReposeForgetPIn;
 import com.cloudwell.paywell.services.activity.home.model.forgetPin.RequestForgetPin;
+import com.cloudwell.paywell.services.activity.home.model.refreshToken.RequestRefreshToken;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationReadAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResposeReScheduleNotificationAccept;
@@ -52,7 +53,9 @@ import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoRequestInquiryModel;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PalliBidyutBillPayRequest;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PalliBidyutBillPayResponse;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.ReqInquiryModel;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.RequestBillStatusData;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.registion.model.RequestPBRegistioin;
 import com.cloudwell.paywell.services.app.model.APIResBalanceCheck;
 import com.cloudwell.paywell.services.app.model.APIResposeGenerateToken;
 import com.cloudwell.paywell.services.app.model.RequestBalanceCheck;
@@ -123,11 +126,10 @@ public interface APIService {
                                                          @Field("format") String format);
 
 
-    @POST("RetailerService/checkBalance")
-
+    @POST("Retailer/RetailerService/checkBalance")
     Call<APIResBalanceCheck> callCheckBalance(@Body RequestBalanceCheck requestBalanceCheck);
 
-    @POST("RetailerService/checkNotificationDetails")
+    @POST("Retailer/RetailerService/checkNotificationDetails")
     @FormUrlEncoded
     Call<APIResNoCheckNotification> callCheckNotification(@Field("username") String username);
 
@@ -174,7 +176,7 @@ public interface APIService {
 
 
     @GET("PaywelltransactionHaltrip/getAirports?")
-    Call<ResGetAirports> getAirports(@Query("username") String username, @Query("format") String format, @Query("iso") String iso,@Query(ParameterUtility.KEY_REF_ID) String refId );
+    Call<ResGetAirports> getAirports(@Query("username") String username, @Query("format") String format, @Query("iso") String iso, @Query(ParameterUtility.KEY_REF_ID) String refId);
 
     @FormUrlEncoded
     @POST("PaywelltransactionHaltrip/getBookingList")
@@ -240,11 +242,11 @@ public interface APIService {
     @POST("/PaywelltransactionHaltrip/infoUpdateTicket")
     @Multipart
     Call<JsonObject> infoUpdateTicket(@Part("username") String username,
-                                   @Part("password") String password,
-                                   @Part("BookingID") String bookingId,
-                                   @Part("reason") String cancelReason,
-                                   @Part("passengers") String passengers,
-                                   @Part(ParameterUtility.KEY_REF_ID) String refId);
+                                      @Part("password") String password,
+                                      @Part("BookingID") String bookingId,
+                                      @Part("reason") String cancelReason,
+                                      @Part("passengers") String passengers,
+                                      @Part(ParameterUtility.KEY_REF_ID) String refId);
 
 
     @POST("PaywelltransactionHaltrip/getCancelMap")
@@ -408,45 +410,49 @@ public interface APIService {
                                                             @Url String url);
 
 
-    @POST("UserRegistration/userInformationForRegistration")
+    @POST("Registration/UserRegistration/userInformationForRegistration")
     Call<ResponseBody> userInformationForRegistration(@Body RegistrationModel regModel);
 
 
-    @POST("RetailerService/userServiceProfiling")
+    @POST("Retailer/RetailerService/userServiceProfiling")
     Call<ReposeUserProfile> userServiceProfiling(@Body AuthRequestModel regModel);
 
-    @POST("RetailerService/userServiceProfilingReg")
+    @POST("Retailer/RetailerService/userServiceProfilingReg")
     Call<ReposeUserProfile> userServiceProfilingReg(@Body AuthRequestModel regModel);
 
 
+    @POST("Registration/UserRegistration/unverifiedDataUpdate")
+    Call<ResponseBody> unverifiedDataCollectAndUpdate(@Body JsonObject body);
 
-    @POST("UserRegistration/unverifiedDataUpdate")
-    Call<ResponseBody> unverifiedDataCollectAndUpdate( @Body JsonObject body);
-
-   @POST("PaywellAuth/getToken?")
+    @POST("Authantication/PaywellAuth/getToken?")
     Call<ResposeAppsAuth> getAppsAuthToken(@Header("Authorization") String AuthorizationKey, @Body RequestAppsAuth body);
 
-
-    @POST("PaywellAuth/checkOTP")
-    Call<ResposeOptCheck> checkOTP( @Body RequestOtpCheck body);
-
+    @POST("Authantication/PaywellAuth/refreshToken")
+    Call<ResposeAppsAuth> refreshToken(@Header("Authorization") String AuthorizationKey, @Body RequestRefreshToken body);
 
 
-    @POST("PaywellAuth/resetPassword")
+    @POST("Authantication/PaywellAuth/checkOTP")
+    Call<ResposeOptCheck> checkOTP(@Body RequestOtpCheck body);
+
+
+    @POST("Authantication/PaywellAuth/resetPassword")
     Call<ReposeForgetPIn> resetPassword(@Body RequestForgetPin body);
 
 
-
-    @POST("PaywellAuth/changePassword")
+    @POST("Authantication/PaywellAuth/changePassword")
     Call<ReposeForgetPIn> changePassword(@Body RequestChangePin body);
 
 
-
-
-    @POST("PaywellAuth/generateOTP")
+    @POST("Authantication/PaywellAuth/generateOTP")
     Call<ReposeGenerateOTP> generateOTP(@Body RequestGenerateOTP body);
 
 
+    @POST("PollyBiddyutSystem/pollyBiddyutBillStatus")
+    Call<ResponseBody> PBInquiry(@Body ReqInquiryModel regModel);
+
+
+    @POST("/PollyBiddyutSystem/pollybuddutRegistration")
+    Call<ResponseBody> pollybuddutRegistration(@Body RequestPBRegistioin RequestPBRegistioin);
 
 
 }

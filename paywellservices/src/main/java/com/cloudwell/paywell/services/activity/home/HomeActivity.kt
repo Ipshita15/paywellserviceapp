@@ -12,11 +12,13 @@ import com.cloudwell.paywell.services.activity.home.model.RequestAppsAuth
 import com.cloudwell.paywell.services.activity.home.model.ResposeAppsAuth
 import com.cloudwell.paywell.services.activity.home.model.forgetPin.ReposeForgetPIn
 import com.cloudwell.paywell.services.activity.home.model.forgetPin.RequestForgetPin
+import com.cloudwell.paywell.services.activity.home.model.refreshToken.RequestRefreshToken
 import com.cloudwell.paywell.services.activity.reg.EntryMainActivity
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.ForgetPinNumberDialog
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.MobileNumberInputDialog
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.NoInternetConnectionMsgDialog
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.OTPVerificationMsgDialog
+import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.AndroidIDUtility
@@ -37,6 +39,43 @@ class HomeActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         getSupportActionBar()?.hide()
+
+
+
+
+        val userName = AppHandler.getmInstance(AppController.getContext()).userName
+        val androidId = AppHandler.getmInstance(AppController.getContext()).androidID
+
+        val model = RequestRefreshToken()
+        model.username = userName
+        model.channel = "android"
+        model.deviceId = androidId
+        model.format = "json"
+//        model.timestampamp = ""+DateUtils.getCurrentTimestamp()
+
+
+//        val jsonObject = JSONObject(Gson().toJson(model))
+//        val tokenBaseOnRSAlgorithm = RSAUtilty.getTokenBaseOnRSAlgorithm(jsonObject)
+//
+//
+//        val response1 = ApiUtils.getAPIServiceV2().refreshToken(tokenBaseOnRSAlgorithm, model).enqueue(object : Callback<ResposeAppsAuth> {
+//            override fun onFailure(call: Call<ResposeAppsAuth>, t: Throwable) {
+//
+//                Logger.v("", "")
+//            }
+//
+//            override fun onResponse(call: Call<ResposeAppsAuth>, response: Response<ResposeAppsAuth>) {
+//
+//
+//                val code = response.code()
+//                Logger.v("", "")
+//            }
+//
+//        })
+
+
+
+
 
         initilizationView(intent)
 

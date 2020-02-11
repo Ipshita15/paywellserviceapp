@@ -11,7 +11,6 @@ import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.Route
-import java.util.*
 
 
 /**
@@ -20,6 +19,8 @@ import java.util.*
 class TokenAuthenticator : Authenticator {
 
     override fun authenticate(route: Route?, response: Response): Request? {
+
+
         Log.e("authenticate", "authenticate")
         if (response.code() == 401) {
             val userName = "paywell"
@@ -36,6 +37,8 @@ class TokenAuthenticator : Authenticator {
             params["retailer_code"] = "" + mAppHandler.rid
 
 
+
+
             val apiResposeGenerateTokenCall = ApiUtils.getAPIService().callGenerateToken(AllUrl.HOST_URL_AUTHENTICATION, authorization, params)
             val response1 = apiResposeGenerateTokenCall.execute()
             val apiResposeGenerateToken = response1.body()
@@ -44,6 +47,9 @@ class TokenAuthenticator : Authenticator {
 
                 val securityToken = apiResposeGenerateToken.token!!.securityToken
                 AppHandler.getmInstance(AppController.getContext()).setToken(securityToken)
+
+
+
 
 
                 return response.request().newBuilder()
@@ -61,9 +67,7 @@ class TokenAuthenticator : Authenticator {
         return null
     }
 
-    companion object {
-        private val TAG = TokenAuthenticator::class.java.name
-    }
+
 
 
 }
