@@ -176,6 +176,7 @@ public class AppHandler {
     public static final String KEY_IsSuccessfullDoneRegistionFlow= "KEY_IsSuccessfullDoneRegistionFlow";
     public static final String KEY_ANDROID_ID= "KEY_ANDROID_ID";
     public static final String KEY_setUserNeedToChangePassword= "KEY_setUserNeedToChangePassword";
+    public static final String KEY_savePreviousRequestObject= "savePreviousRequestObject";
 
 
     public AppHandler() {
@@ -1128,5 +1129,17 @@ public class AppHandler {
         editor.putInt(DISPLAY_PICTURE_SIZE_, displayPictureArrayList.size());
         editor.commit();
     }
+
+
+    public void savePreviousRequestObject(String agentPhnNum) {
+        editor.putString(KEY_savePreviousRequestObject, agentPhnNum);
+        editor.commit();
+    }
+
+    public String getPreviousRequestObject() {
+        return mPref.getString(KEY_savePreviousRequestObject, "");
+    }
+
+
 
 }

@@ -30,6 +30,8 @@ public class TokenAuthenticatorV2Test implements Authenticator {
 
         if (response.code() == 401) {
 
+            synchronized (this) {
+
                 String userName = AppHandler.getmInstance(AppController.getContext()).getUserName();
                 String androidId = AppHandler.getmInstance(AppController.getContext()).getAndroidID();
 
@@ -53,11 +55,11 @@ public class TokenAuthenticatorV2Test implements Authenticator {
                     if (response1.code() == 200) {
 
                         String token = m.getToken().getSecurityToken();
-                        AppHandler.getmInstance(AppController.getContext()).setAppsSecurityToken(token);
+                        //AppHandler.getmInstance(AppController.getContext()).setAppsSecurityToken(token);
 
                         String tokenBaseOnRSAlgorithm1 = "";
                         try {
-                            JSONObject jsonObject1 = new JSONObject(AppController.previousRequestObject);
+                            JSONObject jsonObject1 = new JSONObject(AppHandler.getmInstance(AppController.getContext()).getPreviousRequestObject());
                             tokenBaseOnRSAlgorithm1 = RSAUtilty.Companion.getTokenBaseOnRSAlgorithm(jsonObject1);
 
                         } catch (Exception e) {
@@ -66,7 +68,7 @@ public class TokenAuthenticatorV2Test implements Authenticator {
 
 
                         return response.request().newBuilder()
-                                .addHeader("Authorization", tokenBaseOnRSAlgorithm1)
+                                .header("Authorization", tokenBaseOnRSAlgorithm1)
                                 .build();
 
 
@@ -77,9 +79,10 @@ public class TokenAuthenticatorV2Test implements Authenticator {
                 }
 
             }
+
+        }
+
             return null;
-
-
 
 
 
