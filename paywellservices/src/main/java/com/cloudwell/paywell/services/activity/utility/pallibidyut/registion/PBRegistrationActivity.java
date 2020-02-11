@@ -14,14 +14,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.REBNotification;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.registion.model.RequestPBRegistioin;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.ParameterUtility;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
@@ -36,12 +39,17 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PBRegistrationActivity extends BaseActivity implements View.OnClickListener {
     private EditText mPinNumber, mAccount, mConfirmAccount, mCustomerName, mPhone;
@@ -165,12 +173,47 @@ public class PBRegistrationActivity extends BaseActivity implements View.OnClick
                     mPhone.setError(Html.fromHtml("<font color='red'>" + getString(R.string.phone_no_error_msg) + "</font>"));
                     return;
                 }
-                new CheckOTPAsync().execute(getString(R.string.pb_reg));
+                //new CheckOTPAsync().execute(getString(R.string.pb_reg));
+                request();
             }
         } else if (v.getId() == R.id.imageView_info) {
             showBillImageGobal(R.drawable.ic_polli_biddut_sms_acc_no);
 
         }
+    }
+
+    private void request() {
+
+        RequestPBRegistioin m = new RequestPBRegistioin();
+        showProgressDialog();
+
+        ApiUtils.getAPIServiceV2().pollybuddutRegistration(m).enqueue(new Callback<ResponseBody>() {
+
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
+                try {
+                    JSONObject jsonObject = new JSONObject(response.body().string());
+
+                    String result = jsonObject.toString();
+
+
+
+
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    Toast.makeText(PBRegistrationActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+                Toast.makeText(PBRegistrationActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
     }
 
     private class CheckOTPAsync extends AsyncTask<String, Integer, String> {
