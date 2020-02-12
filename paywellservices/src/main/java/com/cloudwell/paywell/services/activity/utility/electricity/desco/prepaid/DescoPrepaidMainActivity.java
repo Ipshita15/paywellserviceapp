@@ -1,6 +1,5 @@
 package com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,7 +9,8 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatDialog;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
@@ -26,8 +26,6 @@ import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -246,17 +244,14 @@ public class DescoPrepaidMainActivity extends BaseActivity implements CompoundBu
                         startActivity(new Intent(DescoPrepaidMainActivity.this, DescoPrepaidInquuiryActivity.class).putExtra(TRXLOG_INQUIRY_DATA_KEY,response.body()));
 
                     }else{
-                        Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.no_data_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
+
+                        showErrorMessagev1(getString(R.string.no_data_msg));
+
                     }
 
 
                 }else{
-
-                    showTrxLogErrorMessage(descoPrepaidTrxLogResponseBody.getApiStatusName());
+                    showErrorMessagev1(descoPrepaidTrxLogResponseBody.getApiStatusName());
                 }
 
 
@@ -266,28 +261,12 @@ public class DescoPrepaidMainActivity extends BaseActivity implements CompoundBu
             public void onFailure(Call<DescoPrepaidTrxLogResponse> call, Throwable t) {
                 t.printStackTrace();
 
-                Toast.makeText(DescoPrepaidMainActivity.this, "Network error!!!", Toast.LENGTH_SHORT).show();
+                showErrorMessagev1("Network error!!!");
 
 
             }
         });
 
-    }
-
-    private void showTrxLogErrorMessage(String message) {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(DescoPrepaidMainActivity.this);
-        builder.setMessage(message);
-        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-            }
-        });
-        builder.setCancelable(true);
-        AlertDialog alert = builder.create();
-        alert.setCanceledOnTouchOutside(true);
-        alert.show();
     }
 
 }
