@@ -45,7 +45,7 @@ public class AppController extends Application {
     AppHandler mAppHandler;
 
     private RefWatcher refWatcher;
-    public static String previousRequestObject = "";
+
 
     public static synchronized AppController getInstance() {
         return mInstance;

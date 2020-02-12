@@ -1,14 +1,12 @@
-package com.cloudwell.paywell.services.activity.utility.pallibidyut.registion.model
+package com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.model.request
 
 import com.google.gson.annotations.SerializedName
 
-class RequestPBRegistioin {
+class RequestMobileNumberChange {
     @SerializedName("account_no")
-    var accoUntNo: String = ""
-    @SerializedName("cust_name")
-    var custName: String = ""
+    var accountNo: String = ""
     @SerializedName("cust_phn")
-    var custPHn: String = ""
+    var custPhn: String = ""
     @SerializedName("password")
     var password: String = ""
     @SerializedName("ref_id")

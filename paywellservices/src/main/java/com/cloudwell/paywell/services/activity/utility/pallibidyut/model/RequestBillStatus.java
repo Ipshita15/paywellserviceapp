@@ -7,7 +7,7 @@ public class RequestBillStatus {
 
     @SerializedName("username")
     private String mUsername;
-    @SerializedName("pass")
+    @SerializedName("password")
     private String mPassword;
     @SerializedName("account_no")
     private String mAccountNo;

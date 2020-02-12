@@ -461,10 +461,7 @@
 
 
     <!-- Utility -->
-    <string name="pb_reg" translatable="false">https://api.paywellonline.com/PaywelltransactionPollyBiddyut/pollyBiddyutBillPayRegAPI</string>
-    <string name="pb_reg_with_otp" translatable="false">https://api.paywellonline.com/PaywelltransactionPollyBiddyut/pollyBiddyutBillPayRegPinVerifyAPI</string>
     <string name="pb_bill_pay" translatable="false">https://api.paywellonline.com/PaywelltransactionPollyBiddyut/pollyBiddyutBillPayAPI</string>
-    <string name="pb_bill_pay_pollyBiddyutPhoneNoChange" translatable="false">https://api.paywellonline.com/PaywelltransactionPollyBiddyut/pollyBiddyutPhoneNoChangeAPI</string>
 
     <string name="desco_bill_enq" translatable="false">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
     <string name="desco_bill_pay" translatable="false">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>

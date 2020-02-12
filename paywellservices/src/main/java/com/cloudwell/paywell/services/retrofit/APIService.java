@@ -53,9 +53,13 @@ import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoRequestInquiryModel;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PalliBidyutBillPayRequest;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PalliBidyutBillPayResponse;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus.model.ResBIllStatus;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.model.request.RequestMobileNumberChange;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.model.request.ResposeMobileNumberChange;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.ReqInquiryModel;
-import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.RequestBillStatusData;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.RequestBillStatus;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.registion.model.RequestPBRegistioin;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.registion.model.ResposePBReg;
 import com.cloudwell.paywell.services.app.model.APIResBalanceCheck;
 import com.cloudwell.paywell.services.app.model.APIResposeGenerateToken;
 import com.cloudwell.paywell.services.app.model.RequestBalanceCheck;
@@ -115,15 +119,7 @@ public interface APIService {
                                                  @Field("Amount") String amount,
                                                  @Field(ParameterUtility.KEY_REF_ID) String refId);
 
-    @POST("PaywelltransactionPollyBiddyut/pollyBiddyutBillStatusQueryAPI")
-    @FormUrlEncoded
-    Call<RequestBillStatusData> callBillStatusRequestAPI(@Field("username") String username,
-                                                         @Field("pass") String password,
-                                                         @Field("account_no") String accountNo,
-                                                         @Field("month") String month,
-                                                         @Field("year") String year,
-                                                         @Field("ref_id") String refId,
-                                                         @Field("format") String format);
+
 
 
     @POST("Retailer/RetailerService/checkBalance")
@@ -369,7 +365,7 @@ public interface APIService {
                                               @Field("password") String password,
                                               @Field(ParameterUtility.KEY_REF_ID) String refId);
 
-    @POST("PollyBiddyutSystem/pollyBiddyutBillPayAsync")
+    @POST("Utility/PollyBiddyutSystem/pollyBiddyutBillPayAsync")
     Call<PalliBidyutBillPayResponse> postPalliBidyutBills(@Body PalliBidyutBillPayRequest body);
 
 
@@ -451,8 +447,17 @@ public interface APIService {
     Call<ResponseBody> PBInquiry(@Body ReqInquiryModel regModel);
 
 
-    @POST("/PollyBiddyutSystem/pollybuddutRegistration")
-    Call<ResponseBody> pollybuddutRegistration(@Body RequestPBRegistioin RequestPBRegistioin);
+    @POST("Utility/PollyBiddyutSystem/pollybuddutRegistration")
+    Call<ResposePBReg> pollybuddutRegistration(@Body RequestPBRegistioin RequestPBRegistioin);
+
+
+    @POST("Utility/PollyBiddyutSystem/pollyBiddyutBillStatus")
+    Call<ResBIllStatus> callBillStatusRequestAPI(@Body RequestBillStatus requestBillStatus);
+
+
+
+    @POST("Utility/PollyBiddyutSystem/pollyBiddyutPhoneNoChange")
+    Call<ResposeMobileNumberChange> pollyBiddyutPhoneNoChange(@Body RequestMobileNumberChange requestBillStatus);
 
 
 //    @POST("Recharge/BrilliantRecharge/transactionLog")

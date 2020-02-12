@@ -15,6 +15,15 @@ public class RequestBillStatusData {
     @SerializedName("trx_id")
     private String mTrxId;
 
+    @SerializedName("ApiStatusName")
+    private String ApiStatusName;
+
+    @SerializedName("ApiStatus")
+    private int ApiStatus;
+
+
+
+
     public String getMessage() {
         return mMessage;
     }
@@ -47,4 +56,20 @@ public class RequestBillStatusData {
         mTrxId = trxId;
     }
 
+
+    public int getApiStatus() {
+        return ApiStatus;
+    }
+
+    public void setApiStatus(int apiStatus) {
+        ApiStatus = apiStatus;
+    }
+
+    public void setApiStatusName(String apiStatusName) {
+        ApiStatusName = apiStatusName;
+    }
+
+    public String getApiStatusName() {
+        return ApiStatusName;
+    }
 }
