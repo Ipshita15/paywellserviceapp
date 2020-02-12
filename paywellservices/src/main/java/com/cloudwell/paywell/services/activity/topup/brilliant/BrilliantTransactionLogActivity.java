@@ -21,6 +21,7 @@ import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.APIBrilliantTRXLog;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.BrilliantTRXLogModel;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.Datum;
+import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.ResponseBrillintTNXLog;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppHandler;
@@ -68,6 +69,9 @@ public class BrilliantTransactionLogActivity extends BaseActivity {
                 String imeiNo = appHandler.getImeiNo();
                 String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
                 getBrilliantTrxLogData(imeiNo, limit, uniqueKey);
+
+                ResponseBrillintTNXLog responseBrillintTNXLog = new ResponseBrillintTNXLog();
+
             }
         }
     }
@@ -77,7 +81,7 @@ public class BrilliantTransactionLogActivity extends BaseActivity {
 
         showProgressDialog();
 
-        AndroidNetworking.get("https://api.paywellonline.com/PayWellBrilliantSystem/transactionLog?")
+        AndroidNetworking.get("https://api.paywellonline.com/PayWellBrilliantSystem/transactionLog?")      /////////////////TODO change with new api also retrofit
                 .addQueryParameter("username", userName)
 //                .addQueryParameter("username","cwntcl")
                 .addQueryParameter("number", limitNumber)
@@ -117,6 +121,8 @@ public class BrilliantTransactionLogActivity extends BaseActivity {
                     }
                 });
     }
+
+
 
     private String getBaseAmount(String amount) {
         double amountDouble = Double.parseDouble(amount);
