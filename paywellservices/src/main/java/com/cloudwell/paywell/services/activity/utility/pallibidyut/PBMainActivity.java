@@ -288,46 +288,51 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 dismissProgressDialog();
-                try {
-                    if (response.code() == 200){
+                if (response.code() == 200){
+                    try {
                         JSONObject jsonObject = new JSONObject(response.body().string());
-                        JSONArray responseDetails = jsonObject.getJSONArray("ResponseDetails");
-                        String result = responseDetails.toString();
+                        String responseMessage = jsonObject.getString("Message");
+                        int status = jsonObject.getInt("Status");
 
-                        if (PBMainActivity.serviceName.equalsIgnoreCase(TAG_SERVICE_REGISTRATION_INQUIRY)) {
-                            PBInquiryRegActivity.TRANSLOG_TAG = result;
-                            startActivity(new Intent(PBMainActivity.this, PBInquiryRegActivity.class));
-                        } else if (PBMainActivity.serviceName.equalsIgnoreCase(TAG_SERVICE_BILL_INQUIRY)) {
-                            PBInquiryBillPayActivity.TRANSLOG_TAG = result;
-                            startActivity(new Intent(PBMainActivity.this, PBInquiryBillPayActivity.class));
+                        if (status == 200){
 
-                        } else if (PBMainActivity.serviceName.equalsIgnoreCase(TAG_SERVICE_PHONE_NUMBER_BILL_STATUS)) {
-                            PBBillStatusInquiryActivity.TRANSLOG_TAG = result;
-                            startActivity(new Intent(PBMainActivity.this, PBBillStatusInquiryActivity.class));
+                            JSONArray responseDetails = jsonObject.getJSONArray("ResponseDetails");
+                            String result = responseDetails.toString();
 
-                        } else if (PBMainActivity.serviceName.equalsIgnoreCase(TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY)) {
-                            PBInquiryMobileNumberChangeActivity.Companion.setTRANSLOG_TAG(result);
-                            startActivity(new Intent(PBMainActivity.this, PBInquiryMobileNumberChangeActivity.class));
+                            if (PBMainActivity.serviceName.equalsIgnoreCase(TAG_SERVICE_REGISTRATION_INQUIRY)) {
+                                PBInquiryRegActivity.TRANSLOG_TAG = result;
+                                startActivity(new Intent(PBMainActivity.this, PBInquiryRegActivity.class));
+                            } else if (PBMainActivity.serviceName.equalsIgnoreCase(TAG_SERVICE_BILL_INQUIRY)) {
+                                PBInquiryBillPayActivity.TRANSLOG_TAG = result;
+                                startActivity(new Intent(PBMainActivity.this, PBInquiryBillPayActivity.class));
+
+                            } else if (PBMainActivity.serviceName.equalsIgnoreCase(TAG_SERVICE_PHONE_NUMBER_BILL_STATUS)) {
+                                PBBillStatusInquiryActivity.TRANSLOG_TAG = result;
+                                startActivity(new Intent(PBMainActivity.this, PBBillStatusInquiryActivity.class));
+
+                            } else if (PBMainActivity.serviceName.equalsIgnoreCase(TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY)) {
+                                PBInquiryMobileNumberChangeActivity.Companion.setTRANSLOG_TAG(result);
+                                startActivity(new Intent(PBMainActivity.this, PBInquiryMobileNumberChangeActivity.class));
+                            }
+
+                        } else {
+                            showErrorMessagev1(responseMessage);
                         }
 
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
+
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        showErrorMessagev1(getString(R.string.try_again_msg));
                     }
-
-
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    Toast.makeText(PBMainActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
+                }else {
+                    showErrorMessagev1(getString(R.string.try_again_msg));
                 }
+
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 dismissProgressDialog();
-                Toast.makeText(PBMainActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
+                showErrorMessagev1(getString(R.string.try_again_msg));
             }
         });
 
@@ -389,73 +394,7 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
         }
     }
 
-    @SuppressWarnings("deprecation")
-    private class TransactionLogAsync extends AsyncTask<String, Integer, String> {
 
-
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("service", serviceName));
-                nameValuePairs.add(new BasicNameValuePair("limit", selectedLimit));
-                nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-//                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-
-            Log.e("logTag", "" + result);
-
-
-            dismissProgressDialog();
-            if (result != null) {
-                if (serviceName.equalsIgnoreCase(TAG_SERVICE_REGISTRATION_INQUIRY)) {
-                    PBInquiryRegActivity.TRANSLOG_TAG = result;
-                    startActivity(new Intent(PBMainActivity.this, PBInquiryRegActivity.class));
-                } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_BILL_INQUIRY)) {
-                    PBInquiryBillPayActivity.TRANSLOG_TAG = result;
-                    startActivity(new Intent(PBMainActivity.this, PBInquiryBillPayActivity.class));
-
-                } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_PHONE_NUMBER_BILL_STATUS)) {
-                    PBBillStatusInquiryActivity.TRANSLOG_TAG = result;
-                    startActivity(new Intent(PBMainActivity.this, PBBillStatusInquiryActivity.class));
-
-                } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY)) {
-                    PBInquiryMobileNumberChangeActivity.Companion.setTRANSLOG_TAG(result);
-                    startActivity(new Intent(PBMainActivity.this, PBInquiryMobileNumberChangeActivity.class));
-                }
-            } else {
-                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-        }
-    }
 
     protected boolean isAppInstalled(String packageName) {
         Intent mIntent = getPackageManager().getLaunchIntentForPackage(packageName);
