@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,8 +17,9 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus.model.ResBIllStatus;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus.model.ResponseDetails;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.RequestBillStatus;
-import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.RequestBillStatusData;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
@@ -182,7 +182,7 @@ public class PBBillStatusActivity extends BaseActivity implements View.OnClickLi
         String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).getRID());
 
         final RequestBillStatus requestBillStatus = new RequestBillStatus();
-        requestBillStatus.setmUsername("" + mAppHandler.getImeiNo());
+        requestBillStatus.setmUsername("" + mAppHandler.getUserName());
         requestBillStatus.setmPassword("" + mPin);
         requestBillStatus.setmAccountNo("" + mAcc);
         requestBillStatus.setmMonth("" + mMonth);
@@ -190,36 +190,40 @@ public class PBBillStatusActivity extends BaseActivity implements View.OnClickLi
         requestBillStatus.setRefId( ""+ uniqueKey);
         requestBillStatus.setmFormat("json");
 
-        Call<RequestBillStatusData> responseBodyCall = ApiUtils.getAPIService()
-                .callBillStatusRequestAPI(requestBillStatus.getmUsername(), requestBillStatus.getmPassword(),
-                        requestBillStatus.getmAccountNo(), requestBillStatus.getmMonth(),
-                        requestBillStatus.getmYear() ,requestBillStatus.getRefId(), requestBillStatus.getmFormat());
+        Call<ResBIllStatus> responseBodyCall = ApiUtils.getAPIServiceV2().callBillStatusRequestAPI(requestBillStatus);
 
-        responseBodyCall.enqueue(new Callback<RequestBillStatusData>() {
+        responseBodyCall.enqueue(new Callback<ResBIllStatus>() {
             @Override
-            public void onResponse(Call<RequestBillStatusData> call, Response<RequestBillStatusData> response) {
+            public void onResponse(Call<ResBIllStatus> call, Response<ResBIllStatus> response) {
                 dismissProgressDialog();
-                showReposeUI(response.body());
+
+                ResBIllStatus m = response.body();
+
+                if (response.code() == 200){
+                    if (m.getApiStatus() == 200){
+                        showReposeUI(m);
+                    }  else {
+                        showErrorMessagev1(m.getApiStatusName());
+                    }
+                }  else {
+                    showErrorMessagev1(m.getApiStatusName());
+                }
+
             }
 
             @Override
-            public void onFailure(Call<RequestBillStatusData> call, Throwable t) {
+            public void onFailure(Call<ResBIllStatus> call, Throwable t) {
                 dismissProgressDialog();
-                Log.d(KEY_TAG, "onFailure:");
-                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
+                showTryAgainDialog();
             }
         });
     }
 
-    private void showReposeUI(RequestBillStatusData response) {
-        final RequestBillStatusData data = response;
+    private void showReposeUI(ResBIllStatus response) {
+        final ResponseDetails data = response.getResponseDetails();
         AlertDialog.Builder builder = new AlertDialog.Builder(PBBillStatusActivity.this);
         builder.setTitle("Message");
-        builder.setMessage(getString(R.string.trx_id_des) + " " + response.getTrxId() + "\n\n" + getString(R.string.status_des) + " " + response.getMessage());
+        builder.setMessage(getString(R.string.trx_id_des) + " " + data.getTrxId() + "\n\n" + getString(R.string.status_des) + " " + data.getMessage());
         builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int id) {

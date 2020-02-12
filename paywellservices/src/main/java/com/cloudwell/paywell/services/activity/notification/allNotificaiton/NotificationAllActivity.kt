@@ -61,6 +61,7 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        changeAppThemeForNoActionBar();
         setContentView(R.layout.activity_notification_view)
 
         initializer()

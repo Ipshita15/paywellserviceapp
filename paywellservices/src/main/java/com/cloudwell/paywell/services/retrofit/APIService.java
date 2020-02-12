@@ -20,6 +20,17 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResGet
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResPaymentBookingAPI;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatCheckBookAPI;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.transactionLog.TransactionLogDetailsModel;
+import com.cloudwell.paywell.services.activity.home.model.ReposeGenerateOTP;
+import com.cloudwell.paywell.services.activity.home.model.ReposeUserProfile;
+import com.cloudwell.paywell.services.activity.home.model.RequestAppsAuth;
+import com.cloudwell.paywell.services.activity.home.model.RequestGenerateOTP;
+import com.cloudwell.paywell.services.activity.home.model.RequestOtpCheck;
+import com.cloudwell.paywell.services.activity.home.model.ResposeAppsAuth;
+import com.cloudwell.paywell.services.activity.home.model.ResposeOptCheck;
+import com.cloudwell.paywell.services.activity.home.model.changePin.RequestChangePin;
+import com.cloudwell.paywell.services.activity.home.model.forgetPin.ReposeForgetPIn;
+import com.cloudwell.paywell.services.activity.home.model.forgetPin.RequestForgetPin;
+import com.cloudwell.paywell.services.activity.home.model.refreshToken.RequestRefreshToken;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationReadAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResposeReScheduleNotificationAccept;
@@ -42,9 +53,16 @@ import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoRequestInquiryModel;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PalliBidyutBillPayRequest;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PalliBidyutBillPayResponse;
-import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.RequestBillStatusData;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus.model.ResBIllStatus;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.model.request.RequestMobileNumberChange;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.model.request.ResposeMobileNumberChange;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.ReqInquiryModel;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.RequestBillStatus;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.registion.model.RequestPBRegistioin;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.registion.model.ResposePBReg;
 import com.cloudwell.paywell.services.app.model.APIResBalanceCheck;
 import com.cloudwell.paywell.services.app.model.APIResposeGenerateToken;
+import com.cloudwell.paywell.services.app.model.RequestBalanceCheck;
 import com.cloudwell.paywell.services.service.notificaiton.model.APIResNoCheckNotification;
 import com.cloudwell.paywell.services.utils.ParameterUtility;
 import com.google.gson.JsonObject;
@@ -101,22 +119,13 @@ public interface APIService {
                                                  @Field("Amount") String amount,
                                                  @Field(ParameterUtility.KEY_REF_ID) String refId);
 
-    @POST("PaywelltransactionPollyBiddyut/pollyBiddyutBillStatusQueryAPI")
-    @FormUrlEncoded
-    Call<RequestBillStatusData> callBillStatusRequestAPI(@Field("username") String username,
-                                                         @Field("pass") String password,
-                                                         @Field("account_no") String accountNo,
-                                                         @Field("month") String month,
-                                                         @Field("year") String year,
-                                                         @Field("ref_id") String refId,
-                                                         @Field("format") String format);
 
 
-    @POST("RetailerService/checkBalance")
-    @FormUrlEncoded
-    Call<APIResBalanceCheck> callCheckBalance(@Field("username") String username);
 
-    @POST("RetailerService/checkNotificationDetails")
+    @POST("Retailer/RetailerService/checkBalance")
+    Call<APIResBalanceCheck> callCheckBalance(@Body RequestBalanceCheck requestBalanceCheck);
+
+    @POST("Retailer/RetailerService/checkNotificationDetails")
     @FormUrlEncoded
     Call<APIResNoCheckNotification> callCheckNotification(@Field("username") String username);
 
@@ -163,7 +172,7 @@ public interface APIService {
 
 
     @GET("PaywelltransactionHaltrip/getAirports?")
-    Call<ResGetAirports> getAirports(@Query("username") String username, @Query("format") String format, @Query("iso") String iso,@Query(ParameterUtility.KEY_REF_ID) String refId );
+    Call<ResGetAirports> getAirports(@Query("username") String username, @Query("format") String format, @Query("iso") String iso, @Query(ParameterUtility.KEY_REF_ID) String refId);
 
     @FormUrlEncoded
     @POST("PaywelltransactionHaltrip/getBookingList")
@@ -229,11 +238,11 @@ public interface APIService {
     @POST("/PaywelltransactionHaltrip/infoUpdateTicket")
     @Multipart
     Call<JsonObject> infoUpdateTicket(@Part("username") String username,
-                                   @Part("password") String password,
-                                   @Part("BookingID") String bookingId,
-                                   @Part("reason") String cancelReason,
-                                   @Part("passengers") String passengers,
-                                   @Part(ParameterUtility.KEY_REF_ID) String refId);
+                                      @Part("password") String password,
+                                      @Part("BookingID") String bookingId,
+                                      @Part("reason") String cancelReason,
+                                      @Part("passengers") String passengers,
+                                      @Part(ParameterUtility.KEY_REF_ID) String refId);
 
 
     @POST("PaywelltransactionHaltrip/getCancelMap")
@@ -356,7 +365,7 @@ public interface APIService {
                                               @Field("password") String password,
                                               @Field(ParameterUtility.KEY_REF_ID) String refId);
 
-    @POST("/PaywelltransactionPollyBiddyut/pollyBiddyutBillPayAPIAsync")
+    @POST("Utility/PollyBiddyutSystem/pollyBiddyutBillPayAsync")
     Call<PalliBidyutBillPayResponse> postPalliBidyutBills(@Body PalliBidyutBillPayRequest body);
 
 
@@ -397,19 +406,62 @@ public interface APIService {
                                                             @Url String url);
 
 
-    @POST("PaywellUserRegistration/userInformationForRegistration")
+    @POST("Registration/UserRegistration/userInformationForRegistration")
     Call<ResponseBody> userInformationForRegistration(@Body RegistrationModel regModel);
 
 
-    @POST("PaywelltransactionRetailer/userServiceProfiling")
-    Call<ResponseBody> userServiceProfiling(@Body AuthRequestModel regModel);
+    @POST("Retailer/RetailerService/userServiceProfiling")
+    Call<ReposeUserProfile> userServiceProfiling(@Body AuthRequestModel regModel);
+
+    @POST("Retailer/RetailerService/userServiceProfilingReg")
+    Call<ReposeUserProfile> userServiceProfilingReg(@Body AuthRequestModel regModel);
+
+
+    @POST("Registration/UserRegistration/unverifiedDataUpdate")
+    Call<ResponseBody> unverifiedDataCollectAndUpdate(@Body JsonObject body);
+
+    @POST("Authantication/PaywellAuth/getToken?")
+    Call<ResposeAppsAuth> getAppsAuthToken(@Header("Authorization") String AuthorizationKey, @Body RequestAppsAuth body);
+
+    @POST("Authantication/PaywellAuth/refreshToken")
+    Call<ResposeAppsAuth> refreshToken(@Header("Authorization") String AuthorizationKey, @Body RequestRefreshToken body);
+
+
+    @POST("Authantication/PaywellAuth/checkOTP")
+    Call<ResposeOptCheck> checkOTP(@Body RequestOtpCheck body);
+
+
+    @POST("Authantication/PaywellAuth/resetPassword")
+    Call<ReposeForgetPIn> resetPassword(@Body RequestForgetPin body);
+
+
+    @POST("Authantication/PaywellAuth/changePassword")
+    Call<ReposeForgetPIn> changePassword(@Body RequestChangePin body);
+
+
+    @POST("Authantication/PaywellAuth/generateOTP")
+    Call<ReposeGenerateOTP> generateOTP(@Body RequestGenerateOTP body);
+
+
+    @POST("Reports/TransactionReport/TransactionReport")
+    Call<ResponseBody> PBInquiry(@Body ReqInquiryModel regModel);
+
+
+    @POST("Utility/PollyBiddyutSystem/pollybuddutRegistration")
+    Call<ResposePBReg> pollybuddutRegistration(@Body RequestPBRegistioin RequestPBRegistioin);
+
+
+    @POST("Utility/PollyBiddyutSystem/pollyBiddyutBillStatus")
+    Call<ResBIllStatus> callBillStatusRequestAPI(@Body RequestBillStatus requestBillStatus);
 
 
 
-    @POST("PaywellUserRegistration/unverifiedDataUpdate")
-    Call<ResponseBody> unverifiedDataCollectAndUpdate( @Body JsonObject body);
+    @POST("Utility/PollyBiddyutSystem/pollyBiddyutPhoneNoChange")
+    Call<ResposeMobileNumberChange> pollyBiddyutPhoneNoChange(@Body RequestMobileNumberChange requestBillStatus);
 
 
+//    @POST("Recharge/BrilliantRecharge/transactionLog")
+//    Call<>
 
 
 }

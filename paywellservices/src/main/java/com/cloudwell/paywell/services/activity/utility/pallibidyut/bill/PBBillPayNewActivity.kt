@@ -325,7 +325,7 @@ class PBBillPayNewActivity : BaseActivity() {
                 dialogInterface.dismiss()
 
                 if (cd.isConnectingToInternet) {
-                      sendBillDataToServer(billPayList,"json",pinNoET.text.toString(),appHandler.imeiNo)
+                      sendBillDataToServer(billPayList,"json",pinNoET.text.toString(),appHandler.userName)
                 } else {
                     val snackbar = Snackbar.make(PBBillPayMain, R.string.connection_error_msg, Snackbar.LENGTH_LONG)
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"))
@@ -350,7 +350,7 @@ class PBBillPayNewActivity : BaseActivity() {
         progressDialog.setMessage("Please wait...")
         progressDialog.setCancelable(false)
         progressDialog.show()
-        ApiUtils.getAPIService().postPalliBidyutBills(PalliBidyutBillPayRequest(billListData,format,pinCode,userName)).enqueue(object : Callback<PalliBidyutBillPayResponse>{
+        ApiUtils.getAPIServiceV2().postPalliBidyutBills(PalliBidyutBillPayRequest(billListData,format,pinCode,userName)).enqueue(object : Callback<PalliBidyutBillPayResponse>{
             override fun onFailure(call: Call<PalliBidyutBillPayResponse>, t: Throwable) {
                 t.printStackTrace()
                 Toast.makeText(applicationContext,"Server error!!!",Toast.LENGTH_SHORT).show()

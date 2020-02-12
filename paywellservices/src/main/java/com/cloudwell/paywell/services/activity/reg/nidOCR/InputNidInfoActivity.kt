@@ -63,6 +63,15 @@ class InputNidInfoActivity: LanguagesBaseActivity(), IInputNidListener {
         etUserUserBirthday.setText(user.birthday)
         etUserAddress.setText(user.address)
 
+        if (isNID){
+            textInputLayoutUserNameEnglish.visibility = View.VISIBLE
+            etUserNameEnglish.visibility = View.VISIBLE
+            etUserNameEnglish.setText(user.nameEnglish)
+        }else{
+            textInputLayoutUserNameEnglish.visibility = View.GONE
+            etUserNameEnglish.visibility = View.GONE
+        }
+
 
         btFinished.setOnClickListener {
 
@@ -74,6 +83,7 @@ class InputNidInfoActivity: LanguagesBaseActivity(), IInputNidListener {
                 regModel.nidMotherName = ""+etUserUserMotherName.text
                 regModel.nidBirthday = ""+etUserUserBirthday.text
                 regModel.nidAddress = ""+etUserAddress.text
+                regModel.nidNameEngish = ""+etUserNameEnglish.text
             }else{
                 regModel.smartCardNumber = ""+etNid.text.toString().trim()
                 regModel.smartCardName = ""+etUserName.text
@@ -81,6 +91,7 @@ class InputNidInfoActivity: LanguagesBaseActivity(), IInputNidListener {
                 regModel.smartCardMotherName = ""+etUserUserMotherName.text
                 regModel.smartCardBirthday = ""+etUserUserBirthday.text
                 regModel.smartCardAddress = ""+etUserAddress.text
+
             }
 
 

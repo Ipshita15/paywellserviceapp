@@ -17,13 +17,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.AppLoadingActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
+import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
+import com.cloudwell.paywell.services.utils.AppsStatusConstant;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
-import com.cloudwell.paywell.services.utils.TelephonyInfo;
 
 import org.json.JSONObject;
 
@@ -38,7 +40,7 @@ public class EntryForthActivity extends BaseActivity {
 
     private LinearLayout linearLayoutOne, linearLayoutTwo;
     private int radio_one = 0, radio_two = 0, radio_three = 0;
-    private String email, landmark, sales_code = "", collection_code = "", imeiOne = "", imeiTwo = "", outlet_img = "", nid_img = "",
+    private String email, landmark, sales_code = "", collection_code = "", andriodId = "", outlet_img = "", nid_img = "",
             nid_back_img = "", owner_img = "", trade_license_img = "", passport_img = "", birth_certificate_img = "",
             driving_license_img = "", visiting_card_img = "", operator = "", downloadSource = "";
     private CheckBox checkBox_one, checkBox_two, checkBox_three, checkBox_four, checkBox_five, checkBox_six, checkBox_seven, checkBox_eight, checkBox_nine,
@@ -167,10 +169,7 @@ public class EntryForthActivity extends BaseActivity {
                         || checkBox_eight.isChecked() || checkBox_nine.isChecked() || checkBox_ten.isChecked())) {
                     Toast.makeText(this, "অন্তত একটি সেবা বাছাই করুন", Toast.LENGTH_SHORT).show();
                 } else {
-                    TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(EntryForthActivity.this);
-                    imeiOne = telephonyInfo.getImeiSIM1();
-                    imeiTwo = telephonyInfo.getImeiSIM2();
-
+                    andriodId = AppHandler.getmInstance(getApplicationContext()).getAndroidID();
                     if (regModel.getEmailAddress().isEmpty()) {
                         email = "0";
                     } else {
@@ -321,8 +320,7 @@ public class EntryForthActivity extends BaseActivity {
     private void checkRequest() {
         showProgressDialog();
 
-        regModel.setImei(imeiOne);
-        regModel.setAlternate_imei(imeiTwo);
+        regModel.setImei(andriodId);
         regModel.setDownloadSource(downloadSource);
         regModel.setDtype("Tab");
         regModel.setOperators(operator);
@@ -374,11 +372,15 @@ public class EntryForthActivity extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int id) {
                 dialogInterface.dismiss();
-                Intent intent = getBaseContext().getPackageManager()
-                        .getLaunchIntentForPackage(getBaseContext().getPackageName());
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish();
+
+                if (status_code.equals("200")){
+                    AppHandler.getmInstance(getApplicationContext()).setAppStatus(AppsStatusConstant.KEY_pending);
+                    Intent intent = new Intent(getApplicationContext(),AppLoadingActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                }
+
             }
         });
 

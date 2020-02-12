@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.WebViewActivity;
@@ -23,6 +24,7 @@ import com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus.PB
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus.PBBillStatusInquiryActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.MobileNumberChangeActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.PBInquiryMobileNumberChangeActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.ReqInquiryModel;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.registion.PBInquiryRegActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.registion.PBRegistrationActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
@@ -30,6 +32,7 @@ import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.ParameterUtility;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
@@ -43,11 +46,17 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatDialog;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PBMainActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
 
@@ -242,10 +251,7 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
                     selectedLimit = "5";
                 }
                 if (cd.isConnectingToInternet()) {
-                    new TransactionLogAsync().execute(getString(R.string.utility_multi_trx_inq),
-                            "username=" + mAppHandler.getImeiNo(),
-                            "&service=" + serviceName,
-                            "&limit=" + selectedLimit);
+                    callAPI(serviceName,selectedLimit);
                 } else {
                     Snackbar snackbar = Snackbar.make(mRelativeLayout, getResources().getString(R.string.connection_error_msg), Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -264,6 +270,74 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
         });
         dialog.setCancelable(true);
         dialog.show();
+    }
+
+    private void callAPI(String serviceName, String selectedLimit) {
+
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).getRID());
+        ReqInquiryModel m = new ReqInquiryModel();
+        m.setUsername(AppHandler.getmInstance(getApplicationContext()).getUserName());
+        m.setLimit(selectedLimit);
+        m.setService(serviceName);
+        m.setRefId(uniqueKey);
+
+        showProgressDialog();
+
+        ApiUtils.getAPIServiceV2().PBInquiry(m).enqueue(new Callback<ResponseBody>() {
+
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
+                if (response.code() == 200){
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        String responseMessage = jsonObject.getString("Message");
+                        int status = jsonObject.getInt("Status");
+
+                        if (status == 200){
+
+                            JSONArray responseDetails = jsonObject.getJSONArray("ResponseDetails");
+                            String result = responseDetails.toString();
+
+                            if (PBMainActivity.serviceName.equalsIgnoreCase(TAG_SERVICE_REGISTRATION_INQUIRY)) {
+                                PBInquiryRegActivity.TRANSLOG_TAG = result;
+                                startActivity(new Intent(PBMainActivity.this, PBInquiryRegActivity.class));
+                            } else if (PBMainActivity.serviceName.equalsIgnoreCase(TAG_SERVICE_BILL_INQUIRY)) {
+                                PBInquiryBillPayActivity.TRANSLOG_TAG = result;
+                                startActivity(new Intent(PBMainActivity.this, PBInquiryBillPayActivity.class));
+
+                            } else if (PBMainActivity.serviceName.equalsIgnoreCase(TAG_SERVICE_PHONE_NUMBER_BILL_STATUS)) {
+                                PBBillStatusInquiryActivity.TRANSLOG_TAG = result;
+                                startActivity(new Intent(PBMainActivity.this, PBBillStatusInquiryActivity.class));
+
+                            } else if (PBMainActivity.serviceName.equalsIgnoreCase(TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY)) {
+                                PBInquiryMobileNumberChangeActivity.Companion.setTRANSLOG_TAG(result);
+                                startActivity(new Intent(PBMainActivity.this, PBInquiryMobileNumberChangeActivity.class));
+                            }
+
+                        } else {
+                            showErrorMessagev1(responseMessage);
+                        }
+
+
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        showErrorMessagev1(getString(R.string.try_again_msg));
+                    }
+                }else {
+                    showErrorMessagev1(getString(R.string.try_again_msg));
+                }
+
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
+            }
+        });
+
+
+
     }
 
     @Override
@@ -320,73 +394,7 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
         }
     }
 
-    @SuppressWarnings("deprecation")
-    private class TransactionLogAsync extends AsyncTask<String, Integer, String> {
 
-
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("service", serviceName));
-                nameValuePairs.add(new BasicNameValuePair("limit", selectedLimit));
-                nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-//                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-
-            Log.e("logTag", "" + result);
-
-
-            dismissProgressDialog();
-            if (result != null) {
-                if (serviceName.equalsIgnoreCase(TAG_SERVICE_REGISTRATION_INQUIRY)) {
-                    PBInquiryRegActivity.TRANSLOG_TAG = result;
-                    startActivity(new Intent(PBMainActivity.this, PBInquiryRegActivity.class));
-                } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_BILL_INQUIRY)) {
-                    PBInquiryBillPayActivity.TRANSLOG_TAG = result;
-                    startActivity(new Intent(PBMainActivity.this, PBInquiryBillPayActivity.class));
-
-                } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_PHONE_NUMBER_BILL_STATUS)) {
-                    PBBillStatusInquiryActivity.TRANSLOG_TAG = result;
-                    startActivity(new Intent(PBMainActivity.this, PBBillStatusInquiryActivity.class));
-
-                } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY)) {
-                    PBInquiryMobileNumberChangeActivity.Companion.setTRANSLOG_TAG(result);
-                    startActivity(new Intent(PBMainActivity.this, PBInquiryMobileNumberChangeActivity.class));
-                }
-            } else {
-                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-        }
-    }
 
     protected boolean isAppInstalled(String packageName) {
         Intent mIntent = getPackageManager().getLaunchIntentForPackage(packageName);

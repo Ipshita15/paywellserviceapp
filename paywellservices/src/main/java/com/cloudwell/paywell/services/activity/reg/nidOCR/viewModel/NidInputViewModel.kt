@@ -30,6 +30,7 @@ class NidInputViewModel() : BaseViewModel() {
     var password: String = ""
 
     var userName: String = ""
+    var userEnglishName: String = ""
     private var userFather: String = ""
     private var userMotherName: String = ""
     private var userDateOfBirthday: String = ""
@@ -264,6 +265,8 @@ class NidInputViewModel() : BaseViewModel() {
                         Logger.v("user name found")
                     } else if (findFatherName(lineText)) {
                         Logger.v("user father name found")
+                    } else if (findEnglishName(lineText)) {
+                        Logger.v("user english found")
                     }else if (findHusbandName(lineText)) {
                         Logger.v("user husband name found")
                     } else if (findMotherName(lineText)) {
@@ -281,6 +284,19 @@ class NidInputViewModel() : BaseViewModel() {
         }
 
         doOCSecondPage(context, secoundPageUri)
+
+    }
+
+    private fun findEnglishName(lineText: String): Boolean {
+        if (lineText.matches("(.*)Name:(.*)".toRegex())) {
+            val name =
+                    lineText.split("Name:".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            userEnglishName = name[1]
+            Logger.v("")
+            return true
+        } else {
+            return false
+        }
 
     }
 
@@ -412,6 +428,7 @@ class NidInputViewModel() : BaseViewModel() {
             iView?.openNextActivity(
                 User(
                     userName,
+                        userEnglishName,
                     userFather,
                     userMotherName,
                     birthday = userDateOfBirthday,

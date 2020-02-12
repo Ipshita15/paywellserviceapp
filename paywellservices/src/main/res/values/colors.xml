@@ -54,5 +54,7 @@
     <color name="bus_action_menu_text_color">#268472</color>
     <color name="button_color">#189d49</color>
 
+    <color name="toolbar_background">#189d49</color>
+
 
 </resources>

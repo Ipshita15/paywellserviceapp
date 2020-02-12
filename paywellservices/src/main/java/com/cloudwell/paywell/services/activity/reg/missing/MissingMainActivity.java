@@ -35,7 +35,6 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
-import com.cloudwell.paywell.services.utils.TelephonyInfo;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.JsonObject;
 import com.imagepicker.FilePickUtils;
@@ -302,7 +301,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 }
             }
         }
-        if (layoutNames.contains("district")) {
+        if (layoutNames.contains("district") || layoutNames.contains("thana") || layoutNames.contains("post_code")) {
 
 
             layoutDistrict.setVisibility(View.VISIBLE);
@@ -313,52 +312,59 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
             if (isMissingFlowGorble) {
                 if (regModel != null) {
                     setupDistrictAdapter(regModel.getDistrictAPIRespose(), isMissingFlowGorble);
-                }
-
-            } else {
-
-                new GetDistrictResponseAsync().execute(getResources().getString(R.string.district_info_url));
-            }
-
-
-        }
-        if (layoutNames.contains("thana")) {
-
-
-            layoutDistrict.setVisibility(View.VISIBLE);
-            layoutThana.setVisibility(View.VISIBLE);
-            layoutPost.setVisibility(View.VISIBLE);
-
-
-            if (isMissingFlowGorble) {
-                if (regModel != null) {
                     setAdapterThana(regModel.getThanaResponseAPIRespose(), isMissingFlowGorble);
-                }
-
-            } else {
-
-                new GetDistrictResponseAsync().execute(getResources().getString(R.string.district_info_url));
-            }
-
-
-        }
-        if (layoutNames.contains("post_code")) {
-
-            if (isMissingFlowGorble) {
-
-                if (regModel != null) {
                     setupPostCode(regModel.getPostCodeResponseAPIRespose(), isMissingFlowGorble);
+
                 }
+
             } else {
 
                 new GetDistrictResponseAsync().execute(getResources().getString(R.string.district_info_url));
+                new GetDistrictResponseAsync().execute(getResources().getString(R.string.district_info_url));
+                new GetDistrictResponseAsync().execute(getResources().getString(R.string.district_info_url));
+
 
             }
 
-            layoutDistrict.setVisibility(View.VISIBLE);
-            layoutThana.setVisibility(View.VISIBLE);
-            layoutPost.setVisibility(View.VISIBLE);
+
         }
+//        if (layoutNames.contains("thana")) {
+//
+//
+//            layoutDistrict.setVisibility(View.VISIBLE);
+//            layoutThana.setVisibility(View.VISIBLE);
+//            layoutPost.setVisibility(View.VISIBLE);
+//
+//
+//            if (isMissingFlowGorble) {
+//                if (regModel != null) {
+//                    setAdapterThana(regModel.getThanaResponseAPIRespose(), isMissingFlowGorble);
+//                }
+//
+//            } else {
+//
+//                new GetDistrictResponseAsync().execute(getResources().getString(R.string.district_info_url));
+//            }
+//
+//
+//        }
+//        if (layoutNames.contains("post_code")) {
+//
+//            if (isMissingFlowGorble) {
+//
+//                if (regModel != null) {
+//                    setupPostCode(regModel.getPostCodeResponseAPIRespose(), isMissingFlowGorble);
+//                }
+//            } else {
+//
+//                new GetDistrictResponseAsync().execute(getResources().getString(R.string.district_info_url));
+//
+//            }
+//
+//            layoutDistrict.setVisibility(View.VISIBLE);
+//            layoutThana.setVisibility(View.VISIBLE);
+//            layoutPost.setVisibility(View.VISIBLE);
+//        }
         if (layoutNames.contains("landmark")) {
             layoutLandmark.setVisibility(View.VISIBLE);
 
@@ -1148,11 +1154,23 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
     public void submitMissingOnClick(View view) {
         if (mCd.isConnectingToInternet()) {
 
-            String mMrchantType = regModel.getMMrchantType();
-            String mBusinessType = regModel.getBusinessType();
-            String mDistrict = regModel.getDistrict();
-            String mThanaName = regModel.getThanaName();
-            String mPostcodeId = regModel.getPostcodeId();
+
+            String mDistrict = "", mThanaName = "", mPostcodeId = "";
+
+
+            try {
+                mThanaName = regModel.getThanaName();
+            } catch (Exception e) {
+
+            }
+
+
+            try {
+                mPostcodeId = regModel.getPostcodeId();
+            } catch (Exception e) {
+
+
+            }
 
 
             if (layoutNames.contains("outlet_name")) {
@@ -1186,7 +1204,8 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 }
             }
             if (layoutNames.contains("business_type")) {
-
+                String mMrchantType = regModel.getMMrchantType();
+                String mBusinessType = regModel.getBusinessType();
                 if (mMrchantType == null || mMrchantType.equals("")) {
                     Snackbar snackbar = Snackbar.make(scrollView, "মার্চেন্টের ধরন সিলেক্ট করুন", Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -1214,6 +1233,8 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 }
             }
             if (layoutNames.contains("district")) {
+                mDistrict = regModel.getDistrict();
+
                 if (mDistrict == null || mDistrict.equals("")) {
                     Snackbar snackbar = Snackbar.make(scrollView, "জেলা সিলেক্ট করুন", Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -1391,7 +1412,6 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
 //            new RetailerMissingAsync().execute(getResources().getString(R.string.missing_reg_url));
 
 
-
             submitRequest();
 
         } else {
@@ -1406,9 +1426,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
     private void submitRequest() {
 
         try {
-            TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(MissingMainActivity.this);
-            String imeiOne = telephonyInfo.getImeiSIM1();
-            String imeiTwo = telephonyInfo.getImeiSIM2();
+            String androidID = AppHandler.getmInstance(getApplicationContext()).getAndroidID();
 
             JsonObject jsonInformationData = new JsonObject();
 
@@ -1448,6 +1466,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
             if (layoutNames.contains("nid_img")) {
                 jsonInformationData.addProperty("nidNumber", regModel.getNidNumber());
                 jsonInformationData.addProperty("nidName", regModel.getNidName());
+                jsonInformationData.addProperty("nidNameEngish", regModel.getNidNameEngish());
                 jsonInformationData.addProperty("nidMotherName", regModel.getNidMotherName());
                 jsonInformationData.addProperty("nidBirthday", regModel.getNidBirthday());
                 jsonInformationData.addProperty("nidAddress", regModel.getNidAddress());
@@ -1467,8 +1486,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
             JsonObject imageData = new JsonObject();
             //add data
             JsonObject rootJsonObject = new JsonObject();
-            rootJsonObject.addProperty("imei", imeiOne);
-            rootJsonObject.addProperty("alternate_imei", imeiTwo);
+            rootJsonObject.addProperty("imei", androidID);
             rootJsonObject.add("informationData", jsonInformationData);
             if (layoutNames.contains("outlet_img")) {
                 imageData.addProperty("outlet_img", regModel.getOutletImage());

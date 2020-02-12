@@ -20,10 +20,8 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.Sor
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.seatLayout.SeatLayoutActivity
 import com.cloudwell.paywell.services.app.AppController
-import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.customView.horizontalDatePicker.commincation.IDatePicker
-import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_bus_transport_list.*
@@ -62,6 +60,7 @@ class BusTransportListActivity : BusTricketBaseActivity(), IDatePicker, IbusTran
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bus_transport_list)
+
         setToolbar(getString(R.string.title_bus_transtport_list), resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
 
         requestBusSearch = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.REQUEST_AIR_SERACH) as RequestBusSearch

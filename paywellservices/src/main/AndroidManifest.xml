@@ -77,9 +77,30 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
-        <activity android:name=".activity.utility.electricity.desco.prepaid.DescoPrepaidInquuiryActivity" />
-        <activity android:name=".activity.utility.electricity.desco.prepaid.DescoPrepaidBillPayActivity" />
-        <activity android:name=".activity.utility.electricity.desco.prepaid.DescoPrepaidMainActivity" />
+
+        <activity
+            android:name=".activity.home.HomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullScreen">
+
+                        <intent-filter>
+                            <action android:name="android.intent.action.MAIN" />
+                            <action android:name="android.intent.action.VIEW" />
+
+                            <category android:name="android.intent.category.LAUNCHER" />
+                        </intent-filter>
+
+        </activity>
+
+        <activity
+            android:name=".activity.home.OtpActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+
+
+        </activity>
+
+
         <activity
             android:name=".activity.utility.electricity.desco.DescoMainActivity"
             android:parentActivityName=".activity.utility.UtilityMainActivity"
@@ -89,12 +110,15 @@
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+
+
         </activity>
         <activity
             android:name=".activity.MainActivity"
@@ -531,7 +555,6 @@
         </activity>
         <activity
             android:name=".activity.settings.ChangePinActivity"
-            android:parentActivityName=".activity.settings.SettingsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
 
@@ -689,16 +712,6 @@
             android:label="@string/app_name"
             android:noHistory="true"
             android:screenOrientation="portrait">
-
-
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN" />-->
-            <!--                <action android:name="android.intent.action.VIEW" />-->
-
-            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--            </intent-filter>-->
-
-
         </activity>
         <activity
             android:name=".activity.reg.EntryFirstActivity"
@@ -742,7 +755,6 @@
             android:label="@string/paywell_reg"
             android:parentActivityName=".activity.reg.EntryThirdActivity"
             android:screenOrientation="portrait">
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cloudwell.paywell.services.activity.reg.EntryThirdActivity" />
@@ -751,17 +763,6 @@
             android:name=".activity.reg.TermsAndConditionsActivity"
             android:parentActivityName=".activity.reg.EntryMainActivity"
             android:screenOrientation="portrait">
-
-
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <action android:name="android.intent.action.VIEW" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-
-
-            <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cloudwell.paywell.services.activity.reg.EntryMainActivity" />
@@ -1012,13 +1013,7 @@
         <activity
             android:name=".activity.eticket.airticket.flightSearch.FlightSearchViewActivity"
             android:label="@string/title_activity_air_tricket_menu"
-            android:screenOrientation="portrait" /> <!-- <receiver android:name=".activity.sms.SmsReceiver"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.provider.Telephony.SMS_RECEIVED" /> -->
-        <!-- </intent-filter> -->
-        <!-- </receiver> -->
-        <!-- ./SMS Receiver -->
-        <!-- Firebase Notifications -->
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.eticket.airticket.flightDetails1.FlightDetails1Activity"
             android:label="@string/title_activity_air_tricket_menu"
@@ -1119,38 +1114,42 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.refill.nagad.NagadBalanceClaimActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.utility.pallibidyut.bill.PBBillPayOldActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.refill.nagad.NagadMainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.refill.nagad.BalanceRefillActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.eticket.airticket.issueTicket.IssueTicketRequestActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.refill.nagad.NagadRefillLogInquiryActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ocr.OCRActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.reg.nidOCR.NidInputActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait">
-        </activity>
-
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.reg.nidOCR.InputNidInfoActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.utility.electricity.desco.prepaid.DescoPrepaidInquuiryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.utility.electricity.desco.prepaid.DescoPrepaidBillPayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.utility.electricity.desco.prepaid.DescoPrepaidMainActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
@@ -1190,6 +1189,13 @@
             </intent-filter>
         </receiver>
         <receiver android:name=".ActionReceiver" />
+        <receiver
+            android:name=".activity.home.SmsBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVE" />
+            </intent-filter>
+        </receiver>
 
         <service
             android:name=".service.MyFirebaseMessagingService"

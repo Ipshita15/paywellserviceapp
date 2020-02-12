@@ -27,6 +27,11 @@ public class ApiUtils {
         return RetrofitClient.INSTANCE.getClientPHP(BASE_URL_PHP7).create(APIService.class);
     }
 
+
+    public static APIService getAPIServiceV2() {
+        return RetrofitClient.INSTANCE.getServiceV2(BASE_URL_PHP7).create(APIService.class);
+    }
+
     public static OkHttpClient getClient() {
         return RetrofitClient.INSTANCE.getClient();
     }

@@ -243,4 +243,11 @@ object DateUtils {
     }
 
 
+    fun getCurrentTimestamp(): Long {
+        val format = Date().time
+        return format
+
+    }
+
+
 }

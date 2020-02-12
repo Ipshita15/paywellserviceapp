@@ -217,7 +217,7 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
     private void showBillImage() {
         View mView = getLayoutInflater().inflate(R.layout.dialog_custom_image_layout, null);
         PhotoView photoView = mView.findViewById(R.id.imageView);
-        photoView.setImageResource(R.drawable.ic_help_desco_bill);
+        photoView.setImageResource(R.drawable.ic_desco_prepaid_card_help);
 
         AlertDialog.Builder builder =
                 new AlertDialog.Builder(this).
@@ -472,6 +472,9 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
     }
 
 
+
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -495,4 +498,7 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
 
         finish();
     }
+
+
+
 }

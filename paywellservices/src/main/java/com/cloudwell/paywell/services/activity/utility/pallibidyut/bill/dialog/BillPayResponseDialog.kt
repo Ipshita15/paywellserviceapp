@@ -1,8 +1,6 @@
 package com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog
 
-import android.app.Dialog
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PalliBidyutBillPayResponse
-import kotlinx.android.synthetic.main.pallibidyut_bill_details_view.view.*
-import kotlinx.android.synthetic.main.pallibidyut_billpay_response_dialog.view.*
 
 
 
@@ -28,7 +24,7 @@ class BillPayResponseDialog(palliBidyutBillPayResponse: PalliBidyutBillPayRespon
     val  mContext=context
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return  layoutInflater.inflate(R.layout.pallibidyut_billpay_response_dialog,null)
+        return  layoutInflater.inflate(R.layout.mobile_number_dialog,null)
 
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

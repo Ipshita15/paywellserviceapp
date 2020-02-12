@@ -39,7 +39,6 @@
         android:layout_below="@+id/connErrorMsg"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:onClick="onClickRetry"
         android:visibility="gone"
         android:text="@string/try_again_msg"
         tools:visibility="visible"
@@ -53,8 +52,8 @@
         android:layout_below="@+id/connErrorMsg"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:onClick="onClickClose"
         android:visibility="gone"
         android:text="Ok"
+        tools:visibility="visible"
         android:textAllCaps="false" />
 </RelativeLayout>

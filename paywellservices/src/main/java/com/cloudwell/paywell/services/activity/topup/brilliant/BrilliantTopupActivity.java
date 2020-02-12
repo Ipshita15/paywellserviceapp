@@ -201,6 +201,7 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
                 }
                 if (cd.isConnectingToInternet()) {
                     startActivity(intent.putExtra(LIMIT_STRING, selectedLimit));
+
                 } else {
                     Snackbar snackbar = Snackbar.make(topUpLayout, getResources().getString(R.string.connection_error_msg), Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -649,7 +650,7 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
         alert.show();
     }
 
-    private void getTopUpInquiry(final String userName, String number, String uniqueKey) {
+    private void getTopUpInquiry(final String userName, String number, String uniqueKey) {                      ///////////////////TODO change to retrofit
         showProgressDialog();
 
         AndroidNetworking.get("https://api.paywellonline.com/PayWellBrilliantSystem/transactionEnquiry?")

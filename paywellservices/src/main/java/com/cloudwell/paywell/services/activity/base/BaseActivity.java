@@ -19,9 +19,12 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.ErrorMsgDialog;
 import com.cloudwell.paywell.services.app.AppController;
+import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.LanuageConstant;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -47,7 +50,62 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         isFlowFromFavorite = getIntent().getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE, false);
         mCd = new ConnectionDetector(AppController.getContext());
+
+        changeAppTheme();
     }
+
+
+    private void changeAppTheme() {
+        AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
+        if (mAppHandler.getAppLanguage().equals("unknown")) {
+            mAppHandler.setAppLanguage("bn");
+            setTheme(R.style.BanglaAppTheme);
+            switchToCzLocale(new Locale(LanuageConstant.KEY_BANGLA, ""));
+        } else if (mAppHandler.getAppLanguage().equals("en")) {
+            mAppHandler.setAppLanguage("en");
+            setTheme(R.style.EnglishAppTheme);
+            switchToCzLocale(new Locale(LanuageConstant.KEY_ENGLISH, ""));
+        } else if (mAppHandler.getAppLanguage().equals("bn")) {
+            mAppHandler.setAppLanguage("bn");
+            setTheme(R.style.BanglaAppTheme);
+            switchToCzLocale(new Locale(LanuageConstant.KEY_BANGLA, ""));
+        }
+
+    }
+
+    public void changeAppThemeForNoActionBar() {
+        AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
+        if (mAppHandler.getAppLanguage().equals("unknown")) {
+            mAppHandler.setAppLanguage("bn");
+            setTheme(R.style.BanglaAppThemeNoActionBar);
+            switchToCzLocale(new Locale(LanuageConstant.KEY_BANGLA, ""));
+        } else if (mAppHandler.getAppLanguage().equals("en")) {
+            mAppHandler.setAppLanguage("en");
+            setTheme(R.style.EnglishAppThemeNoActionBar);
+            switchToCzLocale(new Locale(LanuageConstant.KEY_ENGLISH, ""));
+        } else if (mAppHandler.getAppLanguage().equals("bn")) {
+            mAppHandler.setAppLanguage("bn");
+            setTheme(R.style.BanglaAppThemeNoActionBar);
+            switchToCzLocale(new Locale(LanuageConstant.KEY_BANGLA, ""));
+        }
+
+    }
+
+    public void switchLanguage() {
+        AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
+        if (mAppHandler.getAppLanguage().equals("unknown")) {
+            mAppHandler.setAppLanguage("bn");
+            switchToCzLocale(new Locale(LanuageConstant.KEY_BANGLA, ""));
+        } else if (mAppHandler.getAppLanguage().equals("en")) {
+            mAppHandler.setAppLanguage("bn");
+            switchToCzLocale(new Locale(LanuageConstant.KEY_BANGLA, ""));
+        } else if (mAppHandler.getAppLanguage().equals("bn")) {
+            mAppHandler.setAppLanguage("en");
+            switchToCzLocale(new Locale(LanuageConstant.KEY_ENGLISH, ""));
+        }
+    }
+
+
 
     public void setToolbar(String title, int color) {
         assert getSupportActionBar() != null;
@@ -145,6 +203,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
+
     public void switchToCzLocale(Locale locale) {
         Configuration config = getBaseContext().getResources().getConfiguration();
         Locale.setDefault(locale);
@@ -221,7 +280,7 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
-    public void callPreview(boolean isAirTicket) {
+    public void callPreview(boolean isAirTicket, String message) {
         final String[] numbers = {"09610116566", "09666773333", "09666716566", "09638016566"};
         selectedPhnNo = "09610116566";
         AlertDialog dialog;
@@ -233,6 +292,10 @@ public class BaseActivity extends AppCompatActivity {
             builder.setTitle(getString(R.string.select_phn_title_msg));
         }
 
+        if (!message.equals("")){
+            builder.setTitle(message);
+            builder.setCancelable(false);
+        }
 
         builder.setSingleChoiceItems(numbers, 0, new DialogInterface.OnClickListener() {
             @Override
@@ -246,6 +309,9 @@ public class BaseActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
                 call();
+                if (!message.equals("")){
+                   finish();
+                }
             }
         });
         dialog = builder.create();
@@ -289,7 +355,6 @@ public class BaseActivity extends AppCompatActivity {
         intent.setData(Uri.parse("tel:" + selectedPhnNo));
         startActivity(intent);
 
-
     }
 
     public void showBillImageGobal(int id) {
@@ -307,6 +372,17 @@ public class BaseActivity extends AppCompatActivity {
                         }).
                         setView(mView);
         builder.create().show();
+    }
+
+    public void showTryAgainDialog() {
+        ErrorMsgDialog errorMsgDialog = new ErrorMsgDialog(getString(R.string.try_again_msg));
+        errorMsgDialog.show(getSupportFragmentManager(), "oTPVerificationMsgDialog");
+    }
+
+
+    public void showErrorMessagev1(String message) {
+        ErrorMsgDialog errorMsgDialog = new ErrorMsgDialog(message);
+        errorMsgDialog.show(getSupportFragmentManager(), "oTPVerificationMsgDialog");
     }
 
 }

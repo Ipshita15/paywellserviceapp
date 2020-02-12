@@ -50,6 +50,7 @@ import com.cloudwell.paywell.services.activity.chat.ChatActivity;
 import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity;
+import com.cloudwell.paywell.services.activity.home.HomeActivity;
 import com.cloudwell.paywell.services.activity.mfs.MFSMainActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.MyFavoriteMenuActivity;
@@ -99,6 +100,7 @@ import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.app.model.APIResBalanceCheck;
+import com.cloudwell.paywell.services.app.model.RequestBalanceCheck;
 import com.cloudwell.paywell.services.constant.AllConstant;
 import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.database.FavoriteMenuDab;
@@ -107,6 +109,7 @@ import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.service.notificaiton.model.EventNewNotificaiton;
 import com.cloudwell.paywell.services.utils.AppHelper;
 import com.cloudwell.paywell.services.utils.AppTestVersionUtility;
+import com.cloudwell.paywell.services.utils.AppsStatusConstant;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.CountryUtility;
 import com.cloudwell.paywell.services.utils.LocationUtility;
@@ -256,6 +259,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         changeStatusBarColor();
+
+        changeAppThemeForNoActionBar();
+
         setContentView(R.layout.activity_main);
 
         PayWellShortcutManager.Companion.enableShortcutList(this);
@@ -585,9 +591,23 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             checkLocationUpdate();
         }
 
-        if (mAppHandler.getPhnNumberVerificationStatus().equalsIgnoreCase("false") || mAppHandler.getMerchantTypeVerificationStatus().equalsIgnoreCase("false")) {
-            checkPhnNoUpdate();
+        if (mAppHandler.getMerchantTypeVerificationStatus().equalsIgnoreCase("false")) {
+
+            if (!mCd.isConnectingToInternet()) {
+                AppHandler.showDialog(getSupportFragmentManager());
+            } else {
+                startActivity(new Intent(MainActivity.this, MerchantTypeVerify.class));
+            }
+
         }
+//        else  if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("false")){
+//            Intent intent = new Intent(MainActivity.this, ChangePinActivity.class);
+//            intent.putExtra("isFirstTime", true);
+//            startActivity(intent);
+//            finish();
+//        }
+
+
 //      Handle possible data accompanying notification message.
         if (getIntent().getExtras() != null) {
             for (String key : getIntent().getExtras().keySet()) {
@@ -886,11 +906,45 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             } else {
                 startActivity(new Intent(MainActivity.this, AboutActivity.class));
             }
+        } else if (id == R.id.nav_logout) {
+            logout();
+
+
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         assert drawer != null;
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void logout() {
+        AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_LOGOUT);
+
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        //Yes button clicked
+                        AppHandler.getmInstance(getApplicationContext()).setAppStatus(AppsStatusConstant.KEY_logout);
+
+                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish();
+
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setMessage(getString(R.string.logout_message)).setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
     }
 
     @Override
@@ -987,8 +1041,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         pb_dot.setVisibility(View.VISIBLE);
         mToolbarHeading.setVisibility(View.GONE);
 
-        String imeiNo = mAppHandler.getImeiNo();
-        Call<APIResBalanceCheck> responseBodyCall = ApiUtils.getAPIService().callCheckBalance(imeiNo);
+        String userName = mAppHandler.getUserName();
+
+        RequestBalanceCheck m = new RequestBalanceCheck();
+        m.setUsername(userName);
+        m.setDeviceId(mAppHandler.getAndroidID());
+
+
+        Call<APIResBalanceCheck> responseBodyCall = ApiUtils.getAPIServiceV2().callCheckBalance(m);
         responseBodyCall.enqueue(new Callback<APIResBalanceCheck>() {
             @Override
             public void onResponse(Call<APIResBalanceCheck> call, Response<APIResBalanceCheck> response) {
@@ -1280,7 +1340,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.id.homeBtnCall:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CALL_MENU);
-                callPreview(false);
+                callPreview(false, "");
                 break;
 
             default:
@@ -1460,20 +1520,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    private void checkPhnNoUpdate() {
-        if ((System.currentTimeMillis() / 1000) >= (mAppHandler.getPhnUpdateCheck() + PHN_NUM_CHECK_INTERVAL)) {
-            if (!mCd.isConnectingToInternet()) {
-                AppHandler.showDialog(getSupportFragmentManager());
-            } else {
-                if (mAppHandler.getPhnNumberVerificationStatus().equalsIgnoreCase("false")) {
-                    checkForPhnUpdate();
-                } else {
-                    mAppHandler.setPhnUpdateCheck(System.currentTimeMillis() / 1000);
-                    startActivity(new Intent(MainActivity.this, MerchantTypeVerify.class));
-                }
-            }
-        }
-    }
 
     private void checkForPhnUpdate() {
         phn_num_count = mAppHandler.getDayCount();
@@ -1976,7 +2022,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
 
-
     private void goToFacebook() {
         try {
             String facebookUrl = getFacebookPageURL();
@@ -2332,8 +2377,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
                 intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
-                intent.putExtra(ViewStatementActivity.DESTINATION_TITLE,"mini");
-                intent.putExtra(ViewStatementActivity.DESTINATION_URL,"https://api.paywellonline.com/AndroidWebViewController/StatementInquiry?username="
+                intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "mini");
+                intent.putExtra(ViewStatementActivity.DESTINATION_URL, "https://api.paywellonline.com/AndroidWebViewController/StatementInquiry?username="
                         + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
 
                 startActivityWithFlag(intent);
@@ -2345,8 +2390,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
 
-                intent.putExtra(ViewStatementActivity.DESTINATION_TITLE,"balance");
-                intent.putExtra(ViewStatementActivity.DESTINATION_URL,"https://api.paywellonline.com/AndroidWebViewController/balanceStatement?username="
+                intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "balance");
+                intent.putExtra(ViewStatementActivity.DESTINATION_URL, "https://api.paywellonline.com/AndroidWebViewController/balanceStatement?username="
                         + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
 
                 startActivityWithFlag(intent);
@@ -2360,8 +2405,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
 
-                intent.putExtra(ViewStatementActivity.DESTINATION_TITLE,"sales");
-                intent.putExtra(ViewStatementActivity.DESTINATION_URL,"https://api.paywellonline.com/AndroidWebViewController/salesStatementForhttps?username="
+                intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "sales");
+                intent.putExtra(ViewStatementActivity.DESTINATION_URL, "https://api.paywellonline.com/AndroidWebViewController/salesStatementForhttps?username="
                         + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
 
                 startActivityWithFlag(intent);
@@ -2372,8 +2417,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_TRX_MENU);
 
                 intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
-                intent.putExtra(ViewStatementActivity.DESTINATION_TITLE,"trx");
-                intent.putExtra(ViewStatementActivity.DESTINATION_URL,"https://api.paywellonline.com/AndroidWebViewController/getAllTransactionStatementForHttps?username="
+                intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "trx");
+                intent.putExtra(ViewStatementActivity.DESTINATION_URL, "https://api.paywellonline.com/AndroidWebViewController/getAllTransactionStatementForHttps?username="
                         + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
                 startActivityWithFlag(intent);
 

@@ -73,6 +73,8 @@ public class RegistrationModel {
     public String nidFatherName;
     @SerializedName("nidName")
     public String nidName;
+    @SerializedName("nidNameEngish")
+    public String nidNameEngish;
     @SerializedName("nidMotherName")
     public String nidMotherName;
     @SerializedName("nidBirthday")
@@ -558,5 +560,13 @@ public class RegistrationModel {
 
     public String getDistrict() {
         return mDistrict;
+    }
+
+    public String getNidNameEngish() {
+        return nidNameEngish;
+    }
+
+    public void setNidNameEngish(String nidNameEngish) {
+        this.nidNameEngish = nidNameEngish;
     }
 }
