@@ -4,7 +4,6 @@ import com.cloudwell.paywell.services.activity.home.model.ResposeAppsAuth;
 import com.cloudwell.paywell.services.activity.home.model.refreshToken.RequestRefreshToken;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
-import com.cloudwell.paywell.services.utils.DateUtils;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -40,7 +39,7 @@ public class TokenAuthenticatorV2Test implements Authenticator {
                 requestRefreshToken.setChannel("android");
                 requestRefreshToken.setDeviceId(androidId);
                 requestRefreshToken.setFormat("json");
-                requestRefreshToken.setTimestamp("" + DateUtils.INSTANCE.getCurrentTimestamp());
+//                requestRefreshToken.setTimestamp("" + DateUtils.INSTANCE.getCurrentTimestamp());
 
 
                 JSONObject jsonObject = null;
@@ -48,6 +47,11 @@ public class TokenAuthenticatorV2Test implements Authenticator {
                     jsonObject = new JSONObject(new Gson().toJson(requestRefreshToken));
 
                     String tokenBaseOnRSAlgorithm = RSAUtilty.Companion.getTokenBaseOnRSAlgorithm(jsonObject);
+
+
+                    if (tokenBaseOnRSAlgorithm.equals(response.request().header("Authorization"))) {
+                        return null; // If we already failed with these credentials, don't retry.
+                    }
 
 
                     retrofit2.Response<ResposeAppsAuth> response1 = ApiUtils.getAPIServiceV2().refreshToken(tokenBaseOnRSAlgorithm, requestRefreshToken).execute();
