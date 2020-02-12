@@ -42,11 +42,7 @@ import javax.crypto.spec.SecretKeySpec
             val appsSecurityToken = AppHandler.getmInstance(AppController.getContext()).appsSecurityToken
             val encodeAppsSecurityToken = Base64.encodeToString(appsSecurityToken.toByteArray(Charsets.UTF_8), Base64.NO_WRAP)
 
-
             val toJson = obj.toString()
-
-
-            AppHandler.getmInstance(AppController.getContext()).savePreviousRequestObject(toJson)
 
 
             val hmac: String? = calculateHMAC(toJson, sealDecryptionKeyDecodeFormate)

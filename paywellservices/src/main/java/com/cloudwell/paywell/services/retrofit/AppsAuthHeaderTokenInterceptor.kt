@@ -5,6 +5,8 @@ import com.cloudwell.paywell.services.activity.home.model.refreshToken.RequestRe
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.RSAUtilty.Companion.getTokenBaseOnRSAlgorithm
+import com.cloudwell.paywell.services.utils.DateUtils
+import com.cloudwell.paywell.services.utils.DateUtils.getCurrentTimestamp
 import com.google.gson.Gson
 import okhttp3.Interceptor
 import okhttp3.RequestBody
@@ -62,8 +64,9 @@ class AppsAuthHeaderTokenInterceptor(val mContext: AppController?) : Interceptor
                     requestRefreshToken.channel = "android"
                     requestRefreshToken.deviceId = androidId
                     requestRefreshToken.format = "json"
-//                    requestRefreshToken.timestamp = "" + getCurrentTimestamp()
-                    var jsonObject: JSONObject? = null
+                    requestRefreshToken.timestamp = "" + getCurrentTimestamp()
+
+                    val jsonObject: JSONObject?
                     try {
                         jsonObject = JSONObject(Gson().toJson(requestRefreshToken))
                         val tokenBaseOnRSAlgorithm = getTokenBaseOnRSAlgorithm(jsonObject)
@@ -72,14 +75,8 @@ class AppsAuthHeaderTokenInterceptor(val mContext: AppController?) : Interceptor
                         if (response1.code() == 200) {
                             val token = m!!.token.securityToken
                             AppHandler.getmInstance(AppController.getContext()).setAppsSecurityToken(token);
-                            var tokenBaseOnRSAlgorithm1 = ""
-                            try {
-                                val jsonObject1 = JSONObject(AppHandler.getmInstance(AppController.getContext()).previousRequestObject)
-                                tokenBaseOnRSAlgorithm1 = getTokenBaseOnRSAlgorithm(jsonObject1)
-                            } catch (e: Exception) {
-                            }
 
-
+                            // generate new Authorization token and post original request body
                             val newProcessApplicationJsonRequestBody = processApplicationJsonRequestBody(requestBody!!)
                             val newRequest = chain.request().newBuilder()
                                     .addHeader("Authorization", authHeader)
@@ -116,7 +113,7 @@ private fun processApplicationJsonRequestBody(requestBody: RequestBody): Request
 
         val obj = JSONObject(customReq)
         obj.put("deviceId", mAppHandler.androidID)
-//            obj.put("timestamp",""+DateUtils.getCurrentTimestamp())
+        obj.put("timestamp",""+ DateUtils.getCurrentTimestamp())
         obj.put("format", "json")
         obj.put("channel", "android")
 
