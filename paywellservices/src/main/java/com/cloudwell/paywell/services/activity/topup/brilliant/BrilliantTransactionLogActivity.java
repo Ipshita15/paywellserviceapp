@@ -21,15 +21,21 @@ import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.APIBrilliantTRXLog;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.BrilliantTRXLogModel;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.Datum;
+import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.BrillintTNXLog;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.ResponseBrillintTNXLog;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ParameterUtility;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BrilliantTransactionLogActivity extends BaseActivity {
     private ListView trxLogLV;
@@ -70,10 +76,43 @@ public class BrilliantTransactionLogActivity extends BaseActivity {
                 String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
                 getBrilliantTrxLogData(imeiNo, limit, uniqueKey);
 
-                ResponseBrillintTNXLog responseBrillintTNXLog = new ResponseBrillintTNXLog();
+                String userName = appHandler.getUserName();
+                getNewBrilliantTrxLogData(userName, "123", limit);
+
+
 
             }
         }
+    }
+
+    private void getNewBrilliantTrxLogData(final String userName, String password, String limit){
+        allDataList.clear();
+        showProgressDialog();
+
+        BrillintTNXLog model = new BrillintTNXLog();
+        model.setUsername(userName);
+        model.setPassword("");  //TODO have to know how to get this password
+        model.setNumber(limit);
+        model.setFormat("json");
+
+        ApiUtils.getAPIServiceV2().getBrillintTNXLog(model).enqueue(new Callback<ResponseBrillintTNXLog>() {
+            @Override
+            public void onResponse(Call<ResponseBrillintTNXLog> call, Response<ResponseBrillintTNXLog> response) {
+                if (response.code() == 200){
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBrillintTNXLog> call, Throwable t) {
+
+            }
+        });
+
+
+
+
     }
 
     private void getBrilliantTrxLogData(final String userName, String limitNumber, String uniqueKey) {

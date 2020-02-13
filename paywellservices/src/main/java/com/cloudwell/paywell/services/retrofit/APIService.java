@@ -43,6 +43,8 @@ import com.cloudwell.paywell.services.activity.refill.nagad.model.ResTranstionIN
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLog;
 import com.cloudwell.paywell.services.activity.reg.model.AuthRequestModel;
 import com.cloudwell.paywell.services.activity.reg.model.RegistrationModel;
+import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.BrillintTNXLog;
+import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.ResponseBrillintTNXLog;
 import com.cloudwell.paywell.services.activity.topup.model.RequestTopup;
 import com.cloudwell.paywell.services.activity.topup.model.TopupReposeData;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoBillPaySubmit;
@@ -460,8 +462,8 @@ public interface APIService {
     Call<ResposeMobileNumberChange> pollyBiddyutPhoneNoChange(@Body RequestMobileNumberChange requestBillStatus);
 
 
-//    @POST("Recharge/BrilliantRecharge/transactionLog")
-//    Call<>
+    @POST("Recharge/BrilliantRecharge/transactionLog")
+    Call<ResponseBrillintTNXLog> getBrillintTNXLog(@Body BrillintTNXLog requestBrillintTNXLog);
 
 
 }

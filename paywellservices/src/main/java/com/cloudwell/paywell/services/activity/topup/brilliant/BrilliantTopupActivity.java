@@ -650,7 +650,8 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
         alert.show();
     }
 
-    private void getTopUpInquiry(final String userName, String number, String uniqueKey) {                      ///////////////////TODO change to retrofit
+
+    private void getTopUpInquiry(final String userName, String number, String uniqueKey) {    ///////////////////TODO change to retrofit
         showProgressDialog();
 
         AndroidNetworking.get("https://api.paywellonline.com/PayWellBrilliantSystem/transactionEnquiry?")
