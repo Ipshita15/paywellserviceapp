@@ -1131,14 +1131,7 @@ public class AppHandler {
     }
 
 
-    public void savePreviousRequestObject(String agentPhnNum) {
-        editor.putString(KEY_savePreviousRequestObject, agentPhnNum);
-        editor.commit();
-    }
 
-    public String getPreviousRequestObject() {
-        return mPref.getString(KEY_savePreviousRequestObject, "");
-    }
 
 
 
