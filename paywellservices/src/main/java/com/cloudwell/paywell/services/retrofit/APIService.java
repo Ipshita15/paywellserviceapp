@@ -43,7 +43,11 @@ import com.cloudwell.paywell.services.activity.refill.nagad.model.ResTranstionIN
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLog;
 import com.cloudwell.paywell.services.activity.reg.model.AuthRequestModel;
 import com.cloudwell.paywell.services.activity.reg.model.RegistrationModel;
+import com.cloudwell.paywell.services.activity.topup.brilliant.model.APIBrilliantTRXLog;
+import com.cloudwell.paywell.services.activity.topup.brilliant.model.BrilliantTopUpInquiry;
+import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.BrillintAddBalanceModel;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.BrillintTNXLog;
+import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.EnqueryModel;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.ResponseBrillintTNXLog;
 import com.cloudwell.paywell.services.activity.topup.model.RequestTopup;
 import com.cloudwell.paywell.services.activity.topup.model.TopupReposeData;
@@ -463,7 +467,14 @@ public interface APIService {
 
 
     @POST("Recharge/BrilliantRecharge/transactionLog")
-    Call<ResponseBrillintTNXLog> getBrillintTNXLog(@Body BrillintTNXLog requestBrillintTNXLog);
+    Call<APIBrilliantTRXLog> getBrillintTNXLog(@Body BrillintTNXLog requestBrillintTNXLog);
+
+    @POST("Recharge/BrilliantRecharge/addBalance")
+    Call<ResponseBody> addBrillintBalance(@Body BrillintAddBalanceModel requestBrillintAddBalance);
+
+
+    @POST("Recharge/BrilliantRecharge/transactionEnquiry")
+    Call<BrilliantTopUpInquiry> getEnquery(@Body EnqueryModel requestEnqueryModel);
 
 
 }
