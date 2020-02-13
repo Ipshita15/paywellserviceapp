@@ -96,62 +96,6 @@ object RetrofitClient {
                 httpClient.addInterceptor(logging)
                 httpClient.addInterceptor(OkHttpProfilerInterceptor())
             }
-//            httpClient.authenticator(TokenAuthenticatorV2Test())
-
-//            httpClient.interceptors().add(Interceptor { chain ->
-//                val request: Request = chain.request()
-//                var response: Response? = null
-//                var responseOK = false
-//                        response = chain.proceed(request)
-//                        val code = response.code()
-//
-//                        if (code == 401){
-//
-//
-//                            synchronized(this) {
-//                                val userName = AppHandler.getmInstance(AppController.getContext()).userName
-//                                val androidId = AppHandler.getmInstance(AppController.getContext()).androidID
-//                                val requestRefreshToken = RequestRefreshToken()
-//                                requestRefreshToken.username = userName
-//                                requestRefreshToken.channel = "android"
-//                                requestRefreshToken.deviceId = androidId
-//                                requestRefreshToken.format = "json"
-//                                requestRefreshToken.timestamp = "" + getCurrentTimestamp()
-//                                var jsonObject: JSONObject? = null
-//                                try {
-//                                    jsonObject = JSONObject(Gson().toJson(requestRefreshToken))
-//                                    val tokenBaseOnRSAlgorithm = getTokenBaseOnRSAlgorithm(jsonObject)
-//                                    val response1 = ApiUtils.getAPIServiceV2().refreshToken(tokenBaseOnRSAlgorithm, requestRefreshToken).execute()
-//                                    val m = response1.body()
-//                                    if (response1.code() == 200) {
-//                                        val token = m!!.token.securityToken
-//                                        AppHandler.getmInstance(AppController.getContext()).setAppsSecurityToken(token);
-//                                        var tokenBaseOnRSAlgorithm1 = ""
-//                                        try {
-//                                            val jsonObject1 = JSONObject(AppHandler.getmInstance(AppController.getContext()).previousRequestObject)
-//                                            tokenBaseOnRSAlgorithm1 = getTokenBaseOnRSAlgorithm(jsonObject1)
-//                                        } catch (e: Exception) {
-//                                        }
-//
-//                                        response =   chain.proceed(request)
-//                                        response =   chain.proceed(response!!.request().newBuilder()
-//                                              .header("Authorization", tokenBaseOnRSAlgorithm1)
-//                                              .build())
-//                                    }
-//
-//                                } catch (e: JSONException) {
-//                                    e.printStackTrace()
-//                                }
-//                            }
-//
-//
-//                        }
-//
-//                // otherwise just pass the original response on
-//                response!!
-//            });
-
-
 
             okHttpClient = httpClient.build()
             retrofitV2 = Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create()).client(okHttpClient)
