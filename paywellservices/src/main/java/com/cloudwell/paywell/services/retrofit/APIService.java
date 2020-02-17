@@ -57,6 +57,7 @@ import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoPrepaidTrxLogRequest;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoPrepaidTrxLogResponse;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoRequestInquiryModel;
+import com.cloudwell.paywell.services.activity.utility.ivac.model.GetIvacCenterModel;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PalliBidyutBillPayRequest;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PalliBidyutBillPayResponse;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus.model.ResBIllStatus;
@@ -476,6 +477,8 @@ public interface APIService {
     @POST("Recharge/BrilliantRecharge/transactionEnquiry")
     Call<BrilliantTopUpInquiry> getEnquery(@Body EnqueryModel requestEnqueryModel);
 
+    @POST("Utility/IvacSystem/getIvacCenter")
+    Call<ResponseBody> getIvacCenter(@Body GetIvacCenterModel requestGetIvacCenter);
 
 }
 

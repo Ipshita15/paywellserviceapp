@@ -19,14 +19,21 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.utility.ivac.model.GetIvacCenterModel;
 import com.cloudwell.paywell.services.activity.utility.ivac.model.IvacHistory;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.database.DatabaseClient;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.DateUtils;
 import com.cloudwell.paywell.services.utils.ParameterUtility;
@@ -49,10 +56,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnItemSelectedListener, View.OnTouchListener {
 
@@ -82,11 +89,11 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
     private int state = 0;
     private ConnectionDetector cd;
 
-    private AsyncTask<String, Integer, String> mTransactionLogAsync;
-    private AsyncTask<String, String, String> mConfirmFeePayAsync;
+    private AsyncTask<String, Integer, String> mTransactionLogAsync;        //TODO Change to retrofit
+    private AsyncTask<String, String, String> mConfirmFeePayAsync;        //TODO Change to retrofit
     private CheckBox checkBoxForCenterLock;
-    private AsyncTask<Void, Void, Void> insertIvacHistoryAsyncTask;
-    private AsyncTask<Void, Void, Void> getAllIvacHistoryAsyncTask;
+    private AsyncTask<Void, Void, Void> insertIvacHistoryAsyncTask;        //TODO Change to retrofit
+    private AsyncTask<Void, Void, Void> getAllIvacHistoryAsyncTask;        //TODO Change to retrofit
     List<String> payeerNumberList = new ArrayList<>();
 
 
@@ -108,7 +115,8 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
 
         cd = new ConnectionDetector(AppController.getContext());
         if (cd.isConnectingToInternet()) {
-            mTransactionLogAsync = new TransactionLogAsync().execute(getResources().getString(R.string.utility_ivac_get_center));
+
+            transactionLog();
         } else {
             Snackbar snackbar = Snackbar.make(mConstraintLayout, getResources().getString(R.string.connection_error_msg), Snackbar.LENGTH_LONG);
             snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -411,6 +419,8 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
 
                     mConfirmFeePayAsync = new ConfirmFeePayAsync().execute(
                             getResources().getString(R.string.utility_ivac_fee_pay));
+
+
                 }
             }
         }
@@ -475,76 +485,52 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
         return isCenterUserLock;
     }
 
-    private class TransactionLogAsync extends AsyncTask<String, Integer, String> {
+    private void transactionLog(){
+        GetIvacCenterModel ivacCenterModel = new GetIvacCenterModel();
+        ivacCenterModel.setUsername(mAppHandler.getUserName());
 
+        ApiUtils.getAPIServiceV2().getIvacCenter(ivacCenterModel).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.code()==200){
 
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        int responseStatus = jsonObject.getInt(TAG_RESPONSE_IVAC_STATUS);
+                        if (responseStatus == 200){
+                            JSONArray jsonArray = jsonObject.getJSONArray(TAG_RESPONSE_IVAC_CENTER_DETAILS);
+                            IvacFeePayActivity.TAG_CENTER_DETAILS = jsonArray.toString();
 
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(2);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("format", "json"));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
+                            setupCenterDetailsSpiner();
+                            autoSelectedCenterPosition();
 
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            if (result != null) {
-                try {
-                    JSONObject object = new JSONObject(result);
+                        }else {
+                            showErrorMessagev1(getString(R.string.try_again_msg));
+                        }
 
-                    String status = object.getString(TAG_RESPONSE_IVAC_STATUS);
-                    String msg = object.getString(TAG_RESPONSE_IVAC_MSG);
-
-                    if (status.equalsIgnoreCase("200")) {
-                        JSONArray jsonArray = object.getJSONArray(TAG_RESPONSE_IVAC_CENTER_DETAILS);
-                        IvacFeePayActivity.TAG_CENTER_DETAILS = jsonArray.toString();
-
-                        setupCenterDetailsSpiner();
-                        autoSelectedCenterPosition();
-
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mConstraintLayout, msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        showErrorMessagev1(getString(R.string.try_again_msg));
                     }
-                } catch (Exception ex) {
-                    Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
+
+                }else {
+                    showErrorMessagev1(getString(R.string.try_again_msg));
                 }
-            } else {
-                Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
+
             }
-        }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+
     }
+
+    private void newConfirmFeePay(){
+
+    }
+
 
     private class ConfirmFeePayAsync extends AsyncTask<String, String, String> {
 
