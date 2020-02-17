@@ -35,7 +35,6 @@ import com.cloudwell.paywell.services.analytics.AnalyticsParameters
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.utils.AppHelper.startNotificationSyncService
-import com.google.gson.JsonParser
 import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_notification_view.*
 import kotlinx.android.synthetic.main.activity_notification_view.view.*
@@ -95,7 +94,6 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
         if (userUsedNotificationFLow == null){
             userUsedNotificationFLow = true
         }
-
 
         viewModel.onPullRequested(isInternetConnection, userUsedNotificationFLow)
 
@@ -359,12 +357,11 @@ class NotificationAllActivity : MVVMBaseActivity(), SwipeControllerActions {
 
         viewModel.deleteNotification(messageIdListString.toString()).observeForever {
             dismissProgressDialog()
-            if (it != null && !it.isEmpty()) {
-                val jsonObject = JsonParser().parse(it).asJsonObject
-                val status: String = jsonObject.getAsJsonPrimitive("status").asString
-                if (status == "200") {
+            if (it != null) {
+                val jsonObject = it
+                val status = jsonObject.status
+                if (status == 200) {
                     viewModel.deleteNotificationFromLocal(messageIdList)
-
                     Toast.makeText(applicationContext, "Successfully deleted", Toast.LENGTH_SHORT).show()
                     Log.d("TEST", "Successfully deleted/ " + messageIdListString.toString())
                 } else {

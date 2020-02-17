@@ -10,6 +10,8 @@ import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.service.notificaiton.model.APIResNoCheckNotification
 import com.cloudwell.paywell.services.service.notificaiton.model.EventNewNotificaiton
 import com.cloudwell.paywell.services.service.notificaiton.model.StartNotificationService
+import com.cloudwell.paywell.services.service.notificaiton.model.requestNotificationDetails.RequestNotification
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import com.orhanobut.logger.Logger
 import com.squareup.otto.Subscribe
 import org.jetbrains.anko.doAsync
@@ -63,11 +65,16 @@ class NotificationCheckerService : Service() {
 
     private fun callnotificaitonCheckDetausAPI() {
         isAPICalledRunning = true;
-        val ah = AppHandler.getmInstance(applicationContext)
-        val imeiNo = ah.getImeiNo()
 
 
-        val responseBodyCall = ApiUtils.getAPIService().callCheckNotification(imeiNo)
+        val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(applicationContext)!!.rid)
+
+        val m = RequestNotification()
+        m.refId = uniqueKey
+        m.username = AppHandler.getmInstance(applicationContext)!!.userName
+
+
+        val responseBodyCall = ApiUtils.getAPIServiceV2().callCheckNotification(m)
         responseBodyCall.enqueue(object : Callback<APIResNoCheckNotification> {
             override fun onFailure(call: Call<APIResNoCheckNotification>, t: Throwable) {
                 Logger.e(t.localizedMessage)

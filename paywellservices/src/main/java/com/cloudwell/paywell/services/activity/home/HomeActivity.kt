@@ -24,6 +24,8 @@ import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.AndroidIDUtility
 import com.cloudwell.paywell.services.utils.AppsStatusConstant
 import com.cloudwell.paywell.services.utils.DateUtils
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_home.*
 import retrofit2.Call
@@ -149,16 +151,22 @@ class HomeActivity : BaseActivity() {
         val mobileNumberInputDialog = MobileNumberInputDialog(object : MobileNumberInputDialog.OnClickHandler {
             override fun onSubmit(mobileNumber: String, pin: String) {
                 if (!mobileNumber.equals("")) {
+
+                    val firebaseId = AppHandler.getmInstance(applicationContext).firebaseId
+                    if (firebaseId.equals("unknown")){
+                        Toast.makeText(getApplicationContext(), R.string.try_again_msg, Toast.LENGTH_LONG).show();
+                        getFCMTokenAndSave();
+                        return
+                    }
+
                     val userName = mobileNumber
                     val pin = pin
-
 
                     val androidId: String = AppHandler.getmInstance(applicationContext).androidID
                     AppHandler.getmInstance(applicationContext).setAndroidID(androidId)
                     AppHandler.getmInstance(applicationContext).setMobileNumber(userName)
 
-
-                    requestAPIToken(androidId, userName, pin)
+                    requestAPIToken(androidId, userName, pin, firebaseId)
 
                 } else {
                     Toast.makeText(applicationContext, "Please input valid RID or Mobile number", Toast.LENGTH_LONG).show()
@@ -206,15 +214,15 @@ class HomeActivity : BaseActivity() {
 
     }
 
-    private fun requestAPIToken(androidId: String, userName: String, pin: String) {
+    private fun requestAPIToken(androidId: String, userName: String, pin: String, firebaseId: String) {
         if (androidId.equals("")) {
             callPreview(false, getString(R.string.device_not_support))
         } else if (isInternetConnection) {
-            callGetTokenAPI(userName, pin, androidId);
+            callGetTokenAPI(userName, pin, androidId, firebaseId);
         } else {
             val noInternetConnectionMsgDialog = NoInternetConnectionMsgDialog(object : NoInternetConnectionMsgDialog.OnClickHandler {
                 override fun onRetry() {
-                    requestAPIToken(androidId, userName, pin)
+                    requestAPIToken(androidId, userName, pin, firebaseId)
                 }
             })
             noInternetConnectionMsgDialog.show(supportFragmentManager, "noInternetConnectionMsgDialog")
@@ -297,7 +305,7 @@ class HomeActivity : BaseActivity() {
     }
 
 
-    private fun callGetTokenAPI(userName: String, password: String, androidId: String) {
+    private fun callGetTokenAPI(userName: String, password: String, androidId: String, firebaseId: String) {
 
         showProgressDialog()
 
@@ -319,7 +327,9 @@ class HomeActivity : BaseActivity() {
             isDebug = 1
         }
 
-        val authRequestModel = RequestAppsAuth(isDebug, androidId, privateKey, channel, "" + currentTimestamp)
+
+
+        val authRequestModel = RequestAppsAuth(isDebug, androidId, privateKey, channel, "" + currentTimestamp, firebaseId)
 
         ApiUtils.getAPIServiceV2().getAppsAuthToken(authHeader, authRequestModel).enqueue(object : Callback<ResposeAppsAuth> {
             override fun onResponse(call: Call<ResposeAppsAuth>, response: Response<ResposeAppsAuth>) {
@@ -370,5 +380,19 @@ class HomeActivity : BaseActivity() {
         })
 
     }
+    fun getFCMTokenAndSave(){
+        FirebaseInstanceId.getInstance().instanceId
+                .addOnCompleteListener(OnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        Logger.w("getInstanceId failed", task.exception)
+                        return@OnCompleteListener
+                    }
 
+                    // Get new Instance ID token
+                    val token = task.result?.token
+                    AppHandler.getmInstance(applicationContext).setFirebaseId(token)
+                })
+
+
+    }
 }

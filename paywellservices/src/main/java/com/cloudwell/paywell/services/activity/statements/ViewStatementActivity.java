@@ -1,22 +1,42 @@
 package com.cloudwell.paywell.services.activity.statements;
 
-import android.app.ProgressDialog;
+import android.annotation.TargetApi;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.statements.model.RequestWebView;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
+import org.apache.http.util.EncodingUtils;
+
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
+
+import okhttp3.MediaType;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Response;
+
+import static com.cloudwell.paywell.services.activity.utility.AllUrl.URL_statementInquiry;
 
 public class ViewStatementActivity extends BaseActivity {
 
@@ -54,8 +74,7 @@ public class ViewStatementActivity extends BaseActivity {
                 }
             } else {
                 title = "mini";
-                url = "https://api.paywellonline.com/AndroidWebViewController/StatementInquiry?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
+                url = "https://api.paywellonline.com/AndroidWebViewController/StatementInquiry?username=" + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
                 getSupportActionBar().setTitle(R.string.home_statement_mini);
             }
         }
@@ -81,8 +100,7 @@ public class ViewStatementActivity extends BaseActivity {
             }
         } else {
             title = "mini";
-            url = "https://api.paywellonline.com/AndroidWebViewController/StatementInquiry?username="
-                    + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
+            url = URL_statementInquiry;
             setToolbar(getString(R.string.home_statement_mini));
         }
 
@@ -98,6 +116,11 @@ public class ViewStatementActivity extends BaseActivity {
 
         mWebView.getSettings().setLoadsImagesAutomatically(true);
         mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        mWebView.getSettings().setDomStorageEnabled(true);
+        mWebView.getSettings().setUseWideViewPort(true);
+        mWebView.getSettings().setBuiltInZoomControls(true);
+        mWebView.getSettings().setPluginState(WebSettings.PluginState.ON);
+        mWebView.getSettings().setJavaScriptEnabled(true);
         startWebView(url);
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_STATEMENT_VIEW);
@@ -105,40 +128,118 @@ public class ViewStatementActivity extends BaseActivity {
     }
 
     private void startWebView(String url) {
+
+        showProgressDialog();
+
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
+
+
+        RequestWebView requestWebView = new RequestWebView();
+        requestWebView.setRefId(uniqueKey);
+        requestWebView.setUsername(AppHandler.getmInstance(getApplicationContext()).getUserName());
+        requestWebView.setLanguage(AppHandler.getmInstance(getApplicationContext()).getAppLanguage());
+        String rowJsonData = new Gson().toJson(requestWebView);
+
+
         mWebView.setWebViewClient(new WebViewClient() {
-            ProgressDialog progressDialog;
+
 
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
+
+                byte[] base64s = EncodingUtils.getBytes(rowJsonData, "BASE64");
+                view.postUrl(url, base64s);
                 return true;
             }
 
             public void onLoadResource(WebView view, String url) {
-                if (progressDialog == null) {
-                    progressDialog = new ProgressDialog(ViewStatementActivity.this);
-                    progressDialog.setMessage(getString(R.string.loading_msg));
-                    progressDialog.setCanceledOnTouchOutside(false);
-                    progressDialog.show();
-                }
+//                if (progressDialog == null) {
+//                    progressDialog = new ProgressDialog(ViewStatementActivity.this);
+//                    progressDialog.setMessage(getString(R.string.loading_msg));
+//                    progressDialog.setCanceledOnTouchOutside(false);
+//                    progressDialog.show();
+//                }
+                showProgressDialog();
             }
 
             public void onPageFinished(WebView view, String url) {
-                try {
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    }
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                    Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
+
+                dismissProgressDialog();
+//                try {
+//                    if (progressDialog.isShowing()) {
+//                        progressDialog.dismiss();
+//                    }
+//                } catch (Exception exception) {
+//                    exception.printStackTrace();
+//
+//                }
             }
+
+
+
+            // Handle API until level 21
+            @SuppressWarnings("deprecation")
+            @Override
+            public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+
+                return getNewResponse(url);
+            }
+
+            // Handle API 21+
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+
+                String url = request.getUrl().toString();
+
+                return getNewResponse(url);
+            }
+
+            private WebResourceResponse getNewResponse(String url) {
+
+                try {
+
+                    RequestBody body = RequestBody.create(MediaType.parse("application/json"), rowJsonData);
+
+                    Request request = new Request.Builder()
+                            .url(url.trim())
+                            .post(body)
+                            .build();
+                    RequestBody body1 = request.body();
+
+
+                    Response<ResponseBody> response = null;
+                    if (title.equalsIgnoreCase("mini")) {
+                        response = ApiUtils.getAPIServiceV2().StatementInquiry(body1).execute();
+                    } else if (title.equalsIgnoreCase("balance")) {
+                        response = ApiUtils.getAPIServiceV2().balanceStatement(body1).execute();
+                    } else if (title.equalsIgnoreCase("sales")) {
+                        response = ApiUtils.getAPIServiceV2().salesStatementForhttps(body1).execute();
+                    } else if (title.equalsIgnoreCase("trx")) {
+                        response = ApiUtils.getAPIServiceV2().getAllTransactionStatementForHttps(body1).execute();
+                    }
+
+                    return new WebResourceResponse(
+                            "multipart/form-data", "utf-8",
+                            response.body().byteStream()
+                    );
+
+                } catch (Exception e) {
+                    return null;
+                }
+
+            }
+
         });
         mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.loadUrl(url);
+
+        Map<String, String> extraHeaders = new HashMap<String, String>();
+        extraHeaders.put("Authorization","Bearer");
+
+
+        byte[] base64s = EncodingUtils.getBytes(rowJsonData, "BASE64");
+
+        mWebView.postUrl(url, base64s);
+
     }
 
     @Override
@@ -154,4 +255,6 @@ public class ViewStatementActivity extends BaseActivity {
     public void onBackPressed() {
         finish();
     }
+
+
 }
