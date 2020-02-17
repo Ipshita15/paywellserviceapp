@@ -14,12 +14,14 @@ import android.util.Log;
 
 import com.cloudwell.paywell.services.ActionReceiver;
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.home.HomeActivity;
 import com.cloudwell.paywell.services.activity.notification.model.NotificationDetailMessage;
 import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.NotificationFullViewActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.REBNotification;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.AppHelper;
+import com.cloudwell.paywell.services.utils.AppsStatusConstant;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.facebook.common.executors.UiThreadImmediateExecutorService;
 import com.facebook.common.references.CloseableReference;
@@ -59,7 +61,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onNewToken(String token) {
         super.onNewToken(token);
-        Logger.v("FCM token"+token);
+        Logger.v("FCM token" + token);
         mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mAppHandler.setFirebaseId(token);
         mAppHandler.setFirebaseTokenStatus("true");
@@ -74,7 +76,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         super.onDestroy();
     }
-
 
 
     @Override
@@ -247,8 +248,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
 
-
-
     private void displayNotification(@Nullable Bitmap bitmap, String title, String messageBody, Uri defaultSoundUri, String notificationDetails) {
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -266,7 +265,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             }
         }
 
-        final Intent intent = new Intent(this, NotificationFullViewActivity.class);
+        Intent intent;
+        String appStatus = AppHandler.getmInstance(getApplicationContext()).getAppStatus();
+        if (appStatus.equals(AppsStatusConstant.KEY_registered)) {
+            intent = new Intent(this, NotificationFullViewActivity.class);
+        } else {
+            intent = new Intent(this, HomeActivity.class);
+        }
+
+
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("isNotificationFlow", true);
         intent.putExtra("Notification_Details", notificationDetails);
@@ -319,7 +326,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             }
         }
 
-        final Intent intent = new Intent(this, NotificationFullViewActivity.class);
+        Intent intent;
+        String appStatus = AppHandler.getmInstance(getApplicationContext()).getAppStatus();
+        if (appStatus.equals(AppsStatusConstant.KEY_registered)) {
+            intent = new Intent(this, NotificationFullViewActivity.class);
+        } else {
+            intent = new Intent(this, HomeActivity.class);
+        }
+
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("isNotificationFlow", true);
         intent.putExtra("Notification_Details", notificationDetails);

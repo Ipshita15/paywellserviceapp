@@ -362,7 +362,7 @@ public class AppLoadingActivity extends BaseActivity {
                                     mAppHandler.setRID(rid);
 
 
-                                    mAppHandler.setAppStatus("registered");
+                                    mAppHandler.setAppStatus(AppsStatusConstant.KEY_registered);
 
                                     mAppHandler.setDisplayPictureCount(displayPictureCount);
 
