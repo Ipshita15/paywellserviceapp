@@ -15,6 +15,11 @@ import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import static com.cloudwell.paywell.services.activity.utility.AllUrl.URL_balanceStatement;
+import static com.cloudwell.paywell.services.activity.utility.AllUrl.URL_getAllTransactionStatementForHttps;
+import static com.cloudwell.paywell.services.activity.utility.AllUrl.URL_salesStatementForhttps;
+import static com.cloudwell.paywell.services.activity.utility.AllUrl.URL_statementInquiry;
+
 public class StatementMainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private AppHandler mAppHandler;
@@ -67,8 +72,7 @@ public class StatementMainActivity extends AppCompatActivity implements View.OnC
 
                 Intent intent=new Intent(StatementMainActivity.this, ViewStatementActivity.class);
                 intent.putExtra(ViewStatementActivity.DESTINATION_TITLE,"mini");
-                intent.putExtra(ViewStatementActivity.DESTINATION_URL, "https://api.paywellonline.com/AndroidWebViewController/StatementInquiry?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage()+ "&ref_id=" + uniqueKey );
+                intent.putExtra(ViewStatementActivity.DESTINATION_URL, URL_statementInquiry);
                 startActivity(intent);
                 break;
             case R.id.balance_statement_btn:
@@ -77,8 +81,7 @@ public class StatementMainActivity extends AppCompatActivity implements View.OnC
 
                 Intent intent1=new Intent(StatementMainActivity.this, ViewStatementActivity.class);
                 intent1.putExtra(ViewStatementActivity.DESTINATION_TITLE,"balance");
-                intent1.putExtra(ViewStatementActivity.DESTINATION_URL, "https://api.paywellonline.com/AndroidWebViewController/balanceStatement?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage()+ "&ref_id=" + uniqueKey );
+                intent1.putExtra(ViewStatementActivity.DESTINATION_URL, URL_balanceStatement);
                 startActivity(intent1);
 
                 break;
@@ -88,8 +91,7 @@ public class StatementMainActivity extends AppCompatActivity implements View.OnC
 
                 Intent intent2=new Intent(StatementMainActivity.this, ViewStatementActivity.class);
                 intent2.putExtra(ViewStatementActivity.DESTINATION_TITLE,"sales");
-                intent2.putExtra(ViewStatementActivity.DESTINATION_URL, "https://api.paywellonline.com/AndroidWebViewController/salesStatementForhttps?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage()+ "&ref_id=" + uniqueKey );
+                intent2.putExtra(ViewStatementActivity.DESTINATION_URL, URL_salesStatementForhttps );
                 startActivity(intent2);
                 break;
             case R.id.trx_statement_btn:
@@ -97,8 +99,7 @@ public class StatementMainActivity extends AppCompatActivity implements View.OnC
 
                 Intent intent3=new Intent(StatementMainActivity.this, ViewStatementActivity.class);
                 intent3.putExtra(ViewStatementActivity.DESTINATION_TITLE,"trx");
-                intent3.putExtra(ViewStatementActivity.DESTINATION_URL, "https://api.paywellonline.com/AndroidWebViewController/getAllTransactionStatementForHttps?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage()+ "&ref_id=" + uniqueKey );
+                intent3.putExtra(ViewStatementActivity.DESTINATION_URL, URL_getAllTransactionStatementForHttps);
                 startActivity(intent3);
                 break;
             default:

@@ -212,7 +212,7 @@ public class AppLoadingActivity extends BaseActivity {
                 androidVersionName = field.getName();
             }
 
-//            new AuthAsync().execute(getResources().getString(R.string.pw_auth), "" + getVersionName());
+//            new AuthAsync().execute(getResources().getString(R.string.pw_auth), "" + getVersionNo());
 
             authAsync();
         }
@@ -223,7 +223,7 @@ public class AppLoadingActivity extends BaseActivity {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_PHONE_STATE);
     }
 
-    private String getVersionName() {
+    private String getVersionNo() {
         String _versionName = null;
         try {
             _versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
@@ -250,7 +250,7 @@ public class AppLoadingActivity extends BaseActivity {
                     if (!mCd.isConnectingToInternet()) {
                         mAppHandler.showDialog(getSupportFragmentManager());
                     } else {
-//                        new AuthAsync().execute(getResources().getString(R.string.pw_auth), "" + getVersionName());
+//                        new AuthAsync().execute(getResources().getString(R.string.pw_auth), "" + getVersionNo());
                         authAsync();
                     }
                 } else {
@@ -285,8 +285,8 @@ public class AppLoadingActivity extends BaseActivity {
 
     public void authAsync() {
         AuthRequestModel m = new AuthRequestModel();
-        m.setAppVersionName(getVersionName());
-        m.setAppVersionNo(androidVersionName);
+        m.setAppVersionName(androidVersionName);
+        m.setAppVersionNo(getVersionNo());
 
 
         APIService aPIService = ApiUtils.getAPIServiceV2();
@@ -362,7 +362,7 @@ public class AppLoadingActivity extends BaseActivity {
                                     mAppHandler.setRID(rid);
 
 
-                                    mAppHandler.setAppStatus("registered");
+                                    mAppHandler.setAppStatus(AppsStatusConstant.KEY_registered);
 
                                     mAppHandler.setDisplayPictureCount(displayPictureCount);
 

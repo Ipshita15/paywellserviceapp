@@ -8,11 +8,15 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.notification.model.NotificationDetailMessage
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI
 import com.cloudwell.paywell.services.activity.notification.model.ResposeReScheduleNotificationAccept
+import com.cloudwell.paywell.services.activity.notification.model.deletetNotification.ReposeDeletedNotification
+import com.cloudwell.paywell.services.activity.notification.model.deletetNotification.RequestDeletedNotification
+import com.cloudwell.paywell.services.activity.notification.model.getNotification.RequestNotificationAll
 import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.model.NotificationDetailMessageSync
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.database.DatabaseClient
 import com.cloudwell.paywell.services.retrofit.ApiUtils
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import com.orhanobut.logger.Logger
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,13 +31,14 @@ class NotificationRepogitory(private val mContext: Context) {
     val remoteNotificationDate: MutableLiveData<ResNotificationAPI>
         get() {
             mAppHandler = AppHandler.getmInstance(mContext)
-            val url = mContext.getString(R.string.notif_url)
-            val userName = mAppHandler!!.imeiNo
-            val mesType = "all_message"
-            val messageStatus = "all"
-            val format = "json"
+
+            val m = RequestNotificationAll()
+            m.mesType = "all_message"
+            m.mesType = "all"
+            m.username = AppHandler.getmInstance(mContext).userName
             val data = MutableLiveData<ResNotificationAPI>()
-            val resNotificationAPICall = ApiUtils.getAPIService().callNotificationAPI(url, userName, mesType, messageStatus, format)
+
+            val resNotificationAPICall = ApiUtils.getAPIServiceV2().callNotificationAPI(m)
             resNotificationAPICall.enqueue(object : Callback<ResNotificationAPI> {
                 override fun onResponse(call: Call<ResNotificationAPI>, response: Response<ResNotificationAPI>) {
 
@@ -137,27 +142,34 @@ class NotificationRepogitory(private val mContext: Context) {
 
     }
 
-    fun notificationDelete(messageId: String): MutableLiveData<String> {
+    fun notificationDelete(messageId: String): MutableLiveData<ReposeDeletedNotification> {
         mAppHandler = AppHandler.getmInstance(mContext)
-        val url = "https://api.paywellonline.com/RetailerService/userNotificationDelete"
-        val userName = mAppHandler!!.imeiNo
-        val responseData = MutableLiveData<String>()
+        val responseData = MutableLiveData<ReposeDeletedNotification>()
+
+        val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(mContext)!!.rid)
+
+        val requestM = RequestDeletedNotification()
+        requestM.messageId = messageId
+        requestM.username = AppHandler.getmInstance(mContext).userName
+        requestM.refId = uniqueKey
 
 
-        val resNotificationAPICall = ApiUtils.getAPIService().deleteNotification(url, userName, messageId)
-        resNotificationAPICall.enqueue(object : Callback<String> {
-            override fun onResponse(call: Call<String>, response: Response<String>) {
+        val resNotificationAPICall = ApiUtils.getAPIServiceV2().deleteNotification(requestM)
+        resNotificationAPICall.enqueue(object : Callback<ReposeDeletedNotification> {
+            override fun onResponse(call: Call<ReposeDeletedNotification>, response: Response<ReposeDeletedNotification>) {
 
                 if (response.isSuccessful) {
                     responseData.value = response.body()
 
                 } else {
-                    responseData.value = String()
+                    responseData.value = response.body()
                 }
             }
 
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                responseData.value = String()
+            override fun onFailure(call: Call<ReposeDeletedNotification>, t: Throwable) {
+                val ReposeDeletedNotification = ReposeDeletedNotification()
+                ReposeDeletedNotification.message = mContext.getString(R.string.try_again_msg)
+                responseData.value = ReposeDeletedNotification
 
             }
         })

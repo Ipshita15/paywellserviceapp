@@ -34,6 +34,9 @@ import com.cloudwell.paywell.services.activity.home.model.refreshToken.RequestRe
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationReadAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResposeReScheduleNotificationAccept;
+import com.cloudwell.paywell.services.activity.notification.model.deletetNotification.ReposeDeletedNotification;
+import com.cloudwell.paywell.services.activity.notification.model.deletetNotification.RequestDeletedNotification;
+import com.cloudwell.paywell.services.activity.notification.model.getNotification.RequestNotificationAll;
 import com.cloudwell.paywell.services.activity.product.ekShop.model.ResEKReport;
 import com.cloudwell.paywell.services.activity.product.ekShop.model.ResEkShopToken;
 import com.cloudwell.paywell.services.activity.refill.model.BranchData;
@@ -43,6 +46,11 @@ import com.cloudwell.paywell.services.activity.refill.nagad.model.ResTranstionIN
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLog;
 import com.cloudwell.paywell.services.activity.reg.model.AuthRequestModel;
 import com.cloudwell.paywell.services.activity.reg.model.RegistrationModel;
+import com.cloudwell.paywell.services.activity.topup.brilliant.model.APIBrilliantTRXLog;
+import com.cloudwell.paywell.services.activity.topup.brilliant.model.BrilliantTopUpInquiry;
+import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.BrillintAddBalanceModel;
+import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.BrillintTNXLog;
+import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.EnqueryModel;
 import com.cloudwell.paywell.services.activity.topup.model.RequestTopup;
 import com.cloudwell.paywell.services.activity.topup.model.TopupReposeData;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoBillPaySubmit;
@@ -51,6 +59,11 @@ import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoPrepaidTrxLogRequest;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoPrepaidTrxLogResponse;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoRequestInquiryModel;
+import com.cloudwell.paywell.services.activity.utility.ivac.model.GetIvacCenterModel;
+import com.cloudwell.paywell.services.activity.utility.ivac.model.GetIvacTrx;
+import com.cloudwell.paywell.services.activity.utility.ivac.model.IvacFeePayModel;
+import com.cloudwell.paywell.services.activity.utility.ivac.model.IvacTrxListModel;
+import com.cloudwell.paywell.services.activity.utility.ivac.model.IvcTrxResponseModel;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PalliBidyutBillPayRequest;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PalliBidyutBillPayResponse;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus.model.ResBIllStatus;
@@ -63,12 +76,15 @@ import com.cloudwell.paywell.services.activity.utility.pallibidyut.registion.mod
 import com.cloudwell.paywell.services.app.model.APIResBalanceCheck;
 import com.cloudwell.paywell.services.app.model.APIResposeGenerateToken;
 import com.cloudwell.paywell.services.app.model.RequestBalanceCheck;
+import com.cloudwell.paywell.services.service.model.RequestUserFCMToken;
 import com.cloudwell.paywell.services.service.notificaiton.model.APIResNoCheckNotification;
+import com.cloudwell.paywell.services.service.notificaiton.model.requestNotificationDetails.RequestNotification;
 import com.cloudwell.paywell.services.utils.ParameterUtility;
 import com.google.gson.JsonObject;
 
 import java.util.Map;
 
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -125,37 +141,28 @@ public interface APIService {
     @POST("Retailer/RetailerService/checkBalance")
     Call<APIResBalanceCheck> callCheckBalance(@Body RequestBalanceCheck requestBalanceCheck);
 
-    @POST("Retailer/RetailerService/checkNotificationDetails")
-    @FormUrlEncoded
-    Call<APIResNoCheckNotification> callCheckNotification(@Field("username") String username);
 
-    @POST
-    @FormUrlEncoded
-    Call<ResNotificationAPI> callNotificationAPI(@Url String ur,
-                                                 @Field("username") String username,
-                                                 @Field("mes_type") String mesType,
-                                                 @Field("message_status") String messageStatus,
-                                                 @Field("format") String format);
+    @POST("Notification/NotificationSystem/setUserFCMToken")
+    Call<ResponseBody> setUserFCMToken(@Body RequestUserFCMToken requestUserFCMToken);
 
-    @POST
-    @FormUrlEncoded
-    Call<ResNotificationReadAPI> callNotificationReadAPI(@Url String url,
-                                                         @Field("username") String username,
-                                                         @Field("message_id") String messageId,
-                                                         @Field("format") String format);
+    @POST("Notification/NotificationSystem/getUnreadNotifications")
+    Call<APIResNoCheckNotification> callCheckNotification(@Body RequestNotification requestNotification);
 
-    @POST
-    @FormUrlEncoded
-    Call<String> deleteNotification(@Url String url,
-                                    @Field("username") String username,
-                                    @Field("message_id") String messageId);
+    @POST("Notification/NotificationSystem/getNotificationsbyType")
+    Call<ResNotificationAPI> callNotificationAPI(@Body RequestNotificationAll requestNotification);
+
+    @POST("Notification/NotificationSystem/notificationCheckAndroid")
+    Call<ResNotificationReadAPI> callNotificationReadAPI(@Body RequestNotificationAll requestNotification);
+
+    @POST("Notification/NotificationSystem/userNotificationDelete")
+    Call<ReposeDeletedNotification> deleteNotification(@Body RequestDeletedNotification requestDeletedNotification);
 
 
     @Multipart
     @POST("PaywelltransactionHaltrip/airSearch")
     Call<ReposeAirSearch> callAirSearch(@Part("username") String username,
-                                        @Part("search_params") RequestAirSearch search_params,
-                                        @Part(ParameterUtility.KEY_REF_ID) String refId);
+                                    @Part("search_params") RequestAirSearch search_params,
+                                    @Part(ParameterUtility.KEY_REF_ID) String refId);
 
 
     @Multipart
@@ -460,10 +467,45 @@ public interface APIService {
     Call<ResposeMobileNumberChange> pollyBiddyutPhoneNoChange(@Body RequestMobileNumberChange requestBillStatus);
 
 
-//    @POST("Recharge/BrilliantRecharge/transactionLog")
-//    Call<>
+
+    @POST("Android/AndroidWebViewController/StatementInquiry")
+    Call<ResponseBody> StatementInquiry( @Body RequestBody body);
 
 
+    @POST("Android/AndroidWebViewController/balanceStatement")
+    Call<ResponseBody> balanceStatement( @Body RequestBody body);
+
+
+    @POST("Android/AndroidWebViewController/salesStatement")
+    Call<ResponseBody> salesStatementForhttps( @Body RequestBody body);
+
+
+    @POST("Android/AndroidWebViewController/getAllTransactionStatement")
+    Call<ResponseBody> getAllTransactionStatementForHttps( @Body RequestBody body);
+
+
+    @POST("Recharge/BrilliantRecharge/transactionLog")
+    Call<APIBrilliantTRXLog> getBrillintTNXLog(@Body BrillintTNXLog requestBrillintTNXLog);
+
+    @POST("Recharge/BrilliantRecharge/addBalance")
+    Call<ResponseBody> addBrillintBalance(@Body BrillintAddBalanceModel requestBrillintAddBalance);
+
+
+    @POST("Recharge/BrilliantRecharge/transactionEnquiry")
+    Call<BrilliantTopUpInquiry> getEnquery(@Body EnqueryModel requestEnqueryModel);
+
+    @POST("Utility/IvacSystem/getIvacCenter")
+    Call<ResponseBody> getIvacCenter(@Body GetIvacCenterModel requestGetIvacCenter);
+
+    @POST("Utility/IvacSystem/IVACRequest")
+    Call<ResponseBody> confirmFeePay(@Body IvacFeePayModel confirmFeePay);
+
+
+    @POST("Utility/IvacSystem/getIvacTrxByWebFileNo")
+    Call<IvcTrxResponseModel> getIvacTrx(@Body GetIvacTrx getIvacTrx);
+
+    @POST("Utility/IvacSystem/getIvacTrxList")
+    Call<ResponseBody> getIvacTrxList(@Body IvacTrxListModel ivacTrxListModel);
 }
 
 

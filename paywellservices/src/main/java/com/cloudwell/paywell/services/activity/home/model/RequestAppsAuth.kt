@@ -10,13 +10,16 @@ data class RequestAppsAuth(
         val deviceId: String,
 
         @SerializedName("magicCard")
-        val magicCard: String ,
+        val magicCard: String,
 
         @SerializedName("channel")
         val channel: String,
 
         @SerializedName("timestamp")
-        val timestamp: String
+        val timestamp: String,
+
+        @SerializedName("deviceFcmToken")
+        val deviceFcmToken: String
 
 
 )

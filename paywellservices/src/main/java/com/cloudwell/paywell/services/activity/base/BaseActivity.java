@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.ErrorCallBackMsgDialog;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.ErrorMsgDialog;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
@@ -382,6 +383,16 @@ public class BaseActivity extends AppCompatActivity {
 
     public void showErrorMessagev1(String message) {
         ErrorMsgDialog errorMsgDialog = new ErrorMsgDialog(message);
+        errorMsgDialog.show(getSupportFragmentManager(), "oTPVerificationMsgDialog");
+    }
+
+    public void showErrorCallBackMessagev1(String message) {
+        ErrorCallBackMsgDialog errorMsgDialog = new ErrorCallBackMsgDialog(message, new ErrorCallBackMsgDialog.IonClickInterface() {
+            @Override
+            public void onclick() {
+                finish();
+            }
+        });
         errorMsgDialog.show(getSupportFragmentManager(), "oTPVerificationMsgDialog");
     }
 

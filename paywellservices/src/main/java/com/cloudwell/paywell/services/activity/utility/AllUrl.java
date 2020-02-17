@@ -24,4 +24,13 @@ public class AllUrl {
     public static final String BASE_URL_PHP_7 = HOST_URL_PHP_7 + "";
 
 
+
+    // webview url
+    public static final String URL_statementInquiry =  HOST_URL_PHP_7+"Android/AndroidWebViewController/StatementInquiry";
+    public static final String URL_balanceStatement =  HOST_URL_PHP_7+"Android/AndroidWebViewController/balanceStatement";
+    public static final String URL_salesStatementForhttps =  HOST_URL_PHP_7+"Android/AndroidWebViewController/salesStatement";
+    public static final String URL_getAllTransactionStatementForHttps =  HOST_URL_PHP_7+"Android/AndroidWebViewController/getAllTransactionStatement";
+
+
+
 }
