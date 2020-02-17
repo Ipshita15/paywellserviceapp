@@ -46,6 +46,11 @@ import com.cloudwell.paywell.services.activity.refill.nagad.model.ResTranstionIN
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLog;
 import com.cloudwell.paywell.services.activity.reg.model.AuthRequestModel;
 import com.cloudwell.paywell.services.activity.reg.model.RegistrationModel;
+import com.cloudwell.paywell.services.activity.topup.brilliant.model.APIBrilliantTRXLog;
+import com.cloudwell.paywell.services.activity.topup.brilliant.model.BrilliantTopUpInquiry;
+import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.BrillintAddBalanceModel;
+import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.BrillintTNXLog;
+import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.EnqueryModel;
 import com.cloudwell.paywell.services.activity.topup.model.RequestTopup;
 import com.cloudwell.paywell.services.activity.topup.model.TopupReposeData;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoBillPaySubmit;
@@ -54,6 +59,11 @@ import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoPrepaidTrxLogRequest;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoPrepaidTrxLogResponse;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoRequestInquiryModel;
+import com.cloudwell.paywell.services.activity.utility.ivac.model.GetIvacCenterModel;
+import com.cloudwell.paywell.services.activity.utility.ivac.model.GetIvacTrx;
+import com.cloudwell.paywell.services.activity.utility.ivac.model.IvacFeePayModel;
+import com.cloudwell.paywell.services.activity.utility.ivac.model.IvacTrxListModel;
+import com.cloudwell.paywell.services.activity.utility.ivac.model.IvcTrxResponseModel;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PalliBidyutBillPayRequest;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PalliBidyutBillPayResponse;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus.model.ResBIllStatus;
@@ -474,8 +484,28 @@ public interface APIService {
     Call<ResponseBody> getAllTransactionStatementForHttps( @Body RequestBody body);
 
 
+    @POST("Recharge/BrilliantRecharge/transactionLog")
+    Call<APIBrilliantTRXLog> getBrillintTNXLog(@Body BrillintTNXLog requestBrillintTNXLog);
+
+    @POST("Recharge/BrilliantRecharge/addBalance")
+    Call<ResponseBody> addBrillintBalance(@Body BrillintAddBalanceModel requestBrillintAddBalance);
 
 
+    @POST("Recharge/BrilliantRecharge/transactionEnquiry")
+    Call<BrilliantTopUpInquiry> getEnquery(@Body EnqueryModel requestEnqueryModel);
+
+    @POST("Utility/IvacSystem/getIvacCenter")
+    Call<ResponseBody> getIvacCenter(@Body GetIvacCenterModel requestGetIvacCenter);
+
+    @POST("Utility/IvacSystem/IVACRequest")
+    Call<ResponseBody> confirmFeePay(@Body IvacFeePayModel confirmFeePay);
+
+
+    @POST("Utility/IvacSystem/getIvacTrxByWebFileNo")
+    Call<IvcTrxResponseModel> getIvacTrx(@Body GetIvacTrx getIvacTrx);
+
+    @POST("Utility/IvacSystem/getIvacTrxList")
+    Call<ResponseBody> getIvacTrxList(@Body IvacTrxListModel ivacTrxListModel);
 }
 
 
