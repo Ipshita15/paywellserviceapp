@@ -1,6 +1,7 @@
 package com.cloudwell.paywell.services.activity.statements;
 
 import android.annotation.TargetApi;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
@@ -116,11 +116,6 @@ public class ViewStatementActivity extends BaseActivity {
 
         mWebView.getSettings().setLoadsImagesAutomatically(true);
         mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        mWebView.getSettings().setDomStorageEnabled(true);
-        mWebView.getSettings().setUseWideViewPort(true);
-        mWebView.getSettings().setBuiltInZoomControls(true);
-        mWebView.getSettings().setPluginState(WebSettings.PluginState.ON);
-        mWebView.getSettings().setJavaScriptEnabled(true);
         startWebView(url);
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_STATEMENT_VIEW);
@@ -129,7 +124,7 @@ public class ViewStatementActivity extends BaseActivity {
 
     private void startWebView(String url) {
 
-        showProgressDialog();
+
 
         String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
 
@@ -144,6 +139,12 @@ public class ViewStatementActivity extends BaseActivity {
         mWebView.setWebViewClient(new WebViewClient() {
 
 
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                showProgressDialog();
+            }
+
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
                 byte[] base64s = EncodingUtils.getBytes(rowJsonData, "BASE64");
@@ -152,26 +153,14 @@ public class ViewStatementActivity extends BaseActivity {
             }
 
             public void onLoadResource(WebView view, String url) {
-//                if (progressDialog == null) {
-//                    progressDialog = new ProgressDialog(ViewStatementActivity.this);
-//                    progressDialog.setMessage(getString(R.string.loading_msg));
-//                    progressDialog.setCanceledOnTouchOutside(false);
-//                    progressDialog.show();
-//                }
+
                 showProgressDialog();
             }
 
             public void onPageFinished(WebView view, String url) {
 
                 dismissProgressDialog();
-//                try {
-//                    if (progressDialog.isShowing()) {
-//                        progressDialog.dismiss();
-//                    }
-//                } catch (Exception exception) {
-//                    exception.printStackTrace();
-//
-//                }
+
             }
 
 
@@ -219,7 +208,7 @@ public class ViewStatementActivity extends BaseActivity {
                     }
 
                     return new WebResourceResponse(
-                            "multipart/form-data", "utf-8",
+                            "text/html", "utf-8",
                             response.body().byteStream()
                     );
 
