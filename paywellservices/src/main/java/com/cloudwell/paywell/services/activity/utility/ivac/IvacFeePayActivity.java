@@ -19,19 +19,28 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.utility.ivac.model.GetIvacCenterModel;
+import com.cloudwell.paywell.services.activity.utility.ivac.model.IvacFeePayModel;
 import com.cloudwell.paywell.services.activity.utility.ivac.model.IvacHistory;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.database.DatabaseClient;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.DateUtils;
 import com.cloudwell.paywell.services.utils.ParameterUtility;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.JsonObject;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -49,10 +58,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnItemSelectedListener, View.OnTouchListener {
 
@@ -82,8 +91,6 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
     private int state = 0;
     private ConnectionDetector cd;
 
-    private AsyncTask<String, Integer, String> mTransactionLogAsync;
-    private AsyncTask<String, String, String> mConfirmFeePayAsync;
     private CheckBox checkBoxForCenterLock;
     private AsyncTask<Void, Void, Void> insertIvacHistoryAsyncTask;
     private AsyncTask<Void, Void, Void> getAllIvacHistoryAsyncTask;
@@ -108,7 +115,8 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
 
         cd = new ConnectionDetector(AppController.getContext());
         if (cd.isConnectingToInternet()) {
-            mTransactionLogAsync = new TransactionLogAsync().execute(getResources().getString(R.string.utility_ivac_get_center));
+
+            transactionLog();
         } else {
             Snackbar snackbar = Snackbar.make(mConstraintLayout, getResources().getString(R.string.connection_error_msg), Snackbar.LENGTH_LONG);
             snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -409,8 +417,10 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
 
 //                    Log.d("IVAC_DETAILS","IMEI/"+mAppHandler.getImeiNo()+"PASS/"+password+"WEB_FILE/"+webFile+"AMOUNT/"+str_amount+"PASSPORT/"+passportNo+"CENTER_ID/"+str_centerId+"PHONE_NUMBER/"+phnNum);
 
-                    mConfirmFeePayAsync = new ConfirmFeePayAsync().execute(
-                            getResources().getString(R.string.utility_ivac_fee_pay));
+
+                    newConfirmFeePay();
+
+
                 }
             }
         }
@@ -418,13 +428,6 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
 
     @Override
     protected void onDestroy() {
-        if (mTransactionLogAsync != null) {
-            mTransactionLogAsync.cancel(true);
-        }
-
-        if (mConfirmFeePayAsync != null) {
-            mConfirmFeePayAsync.cancel(true);
-        }
 
         super.onDestroy();
 
@@ -475,167 +478,130 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
         return isCenterUserLock;
     }
 
-    private class TransactionLogAsync extends AsyncTask<String, Integer, String> {
+    private void transactionLog(){
+        showProgressDialog();
+        GetIvacCenterModel ivacCenterModel = new GetIvacCenterModel();
+        ivacCenterModel.setUsername(mAppHandler.getUserName());
 
+        ApiUtils.getAPIServiceV2().getIvacCenter(ivacCenterModel).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
+                if (response.code()==200){
 
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        int responseStatus = jsonObject.getInt(TAG_RESPONSE_IVAC_STATUS);
+                        String msg = jsonObject.getString(TAG_RESPONSE_IVAC_MSG);
+                        if (responseStatus == 200){
+                            JSONArray jsonArray = jsonObject.getJSONArray(TAG_RESPONSE_IVAC_CENTER_DETAILS);
+                            IvacFeePayActivity.TAG_CENTER_DETAILS = jsonArray.toString();
 
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(2);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("format", "json"));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
+                            setupCenterDetailsSpiner();
+                            autoSelectedCenterPosition();
 
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            if (result != null) {
-                try {
-                    JSONObject object = new JSONObject(result);
+                        }else {
+                            showErrorMessagev1(msg);
+                        }
 
-                    String status = object.getString(TAG_RESPONSE_IVAC_STATUS);
-                    String msg = object.getString(TAG_RESPONSE_IVAC_MSG);
-
-                    if (status.equalsIgnoreCase("200")) {
-                        JSONArray jsonArray = object.getJSONArray(TAG_RESPONSE_IVAC_CENTER_DETAILS);
-                        IvacFeePayActivity.TAG_CENTER_DETAILS = jsonArray.toString();
-
-                        setupCenterDetailsSpiner();
-                        autoSelectedCenterPosition();
-
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mConstraintLayout, msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        showErrorMessagev1(getString(R.string.try_again_msg));
                     }
-                } catch (Exception ex) {
-                    Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
+
+                }else {
+                    showErrorMessagev1(getString(R.string.try_again_msg));
                 }
-            } else {
-                Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
+
             }
-        }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
+
+            }
+        });
+
     }
 
-    private class ConfirmFeePayAsync extends AsyncTask<String, String, String> {
+    private void newConfirmFeePay(){
+        showProgressDialog();
+
+        IvacFeePayModel ivacFeePayModel = new IvacFeePayModel();
+        ivacFeePayModel.setUsername(mAppHandler.getUserName());
+        ivacFeePayModel.setAmount(str_amount);
+        ivacFeePayModel.setCenter_no(str_centerId);
+        ivacFeePayModel.setCust_mobile(phnNum);
+        ivacFeePayModel.setPassport_no(passportNo);
+        ivacFeePayModel.setPassword(password);
+        ivacFeePayModel.setWeb_file_no(webFile);
+        ivacFeePayModel.setFormat("json");
 
 
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
+        ApiUtils.getAPIServiceV2().confirmFeePay(ivacFeePayModel).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
+                if (response.code()==200){
 
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        final int responseStatus = jsonObject.getInt("status");
+                        String msg = jsonObject.getString("message");
+                        String trx = jsonObject.getString("trx_id");
 
-            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
+                     if ( responseStatus ==200){
+                         AlertDialog.Builder builder = new AlertDialog.Builder(IvacFeePayActivity.this);//ERROR ShowDialog cannot be resolved to a type
+                         builder.setTitle("Result");
+                         builder.setMessage(msg + "\n\n" + trx);
 
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<>(8);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("password", password));
-                nameValuePairs.add(new BasicNameValuePair("amount", str_amount));
-                nameValuePairs.add(new BasicNameValuePair("web_file_no", webFile));
-                nameValuePairs.add(new BasicNameValuePair("passport_no", passportNo));
-                nameValuePairs.add(new BasicNameValuePair("center_no", str_centerId));
-                nameValuePairs.add(new BasicNameValuePair("cust_mobile", phnNum));
-                nameValuePairs.add(new BasicNameValuePair("format", "json"));
-                nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
+                         builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+                             public void onClick(DialogInterface dialog, int id) {
+                                 dialog.dismiss();
+                                 onBackPressed();
 
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                             }
+                         });
+                         AlertDialog alert = builder.create();
+                         alert.show();
+                         insertIvacHistoryAsyncTask = new AsyncTask<Void, Void, Void>() {
+                             @Override
+                             protected Void doInBackground(Void... voids) {
 
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
+                                 String currentDataAndTIme = DateUtils.INSTANCE.getCurrentDataAndTIme();
+                                 IvacHistory ivacHistory = new IvacHistory();
+                                 ivacHistory.setPayerPhoneNumber(phnNum);
+                                 ivacHistory.setDate(currentDataAndTIme);
+                                 DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().insertIvacHistory(ivacHistory);
+                                 return null;
+                             }
+                         }.execute();
 
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            if (result != null) {
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    final String status = jsonObject.getString("status");
-                    String msg = jsonObject.getString("message");
-                    String trx = jsonObject.getString("trx_id");
+                     }else {
+                         showErrorMessagev1(msg);
+                     }
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(IvacFeePayActivity.this);//ERROR ShowDialog cannot be resolved to a type
-                    builder.setTitle("Result");
-                    builder.setMessage(msg + "\n\n" + trx);
 
-                    builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                            onBackPressed();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        showErrorMessagev1(getString(R.string.try_again_msg));
+                    }
 
-                        }
-                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    insertIvacHistoryAsyncTask = new AsyncTask<Void, Void, Void>() {
-                        @Override
-                        protected Void doInBackground(Void... voids) {
-
-                            String currentDataAndTIme = DateUtils.INSTANCE.getCurrentDataAndTIme();
-                            IvacHistory ivacHistory = new IvacHistory();
-                            ivacHistory.setPayerPhoneNumber(phnNum);
-                            ivacHistory.setDate(currentDataAndTIme);
-                            DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().insertIvacHistory(ivacHistory);
-                            return null;
-                        }
-                    }.execute();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
+                }else {
+                    showErrorMessagev1(getString(R.string.try_again_msg));
                 }
             }
-        }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
+            }
+        });
+
     }
+
 
     @Override
     public void onBackPressed() {

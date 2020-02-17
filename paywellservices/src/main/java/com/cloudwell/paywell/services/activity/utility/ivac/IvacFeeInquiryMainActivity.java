@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
@@ -18,38 +17,33 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.base.BaseActivity;
-import com.cloudwell.paywell.services.activity.utility.electricity.westzone.WZPDCLBillPayActivity;
-import com.cloudwell.paywell.services.analytics.AnalyticsManager;
-import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
-import com.cloudwell.paywell.services.app.AppController;
-import com.cloudwell.paywell.services.app.AppHandler;
-import com.cloudwell.paywell.services.utils.ConnectionDetector;
-import com.cloudwell.paywell.services.utils.ParameterUtility;
-import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
+
+import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.utility.ivac.model.GetIvacTrx;
+import com.cloudwell.paywell.services.activity.utility.ivac.model.IvacTrxListModel;
+import com.cloudwell.paywell.services.activity.utility.ivac.model.IvcTrxResponseModel;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
+import com.cloudwell.paywell.services.app.AppController;
+import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
+import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class IvacFeeInquiryMainActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
@@ -202,7 +196,9 @@ public class IvacFeeInquiryMainActivity extends BaseActivity implements View.OnC
                 if (!cd.isConnectingToInternet()) {
                     AppHandler.showDialog(getSupportFragmentManager());
                 } else {
-                    new TransactionLogAsync().execute(getString(R.string.utility_ivac_fee_pay_inq_with_web_file_no), web);
+
+                    transactionLogAsync(web);
+
                 }
             }
         }
@@ -239,7 +235,10 @@ public class IvacFeeInquiryMainActivity extends BaseActivity implements View.OnC
                     selectedLimit = "5";
                 }
                 if (cd.isConnectingToInternet()) {
-                    new TransactionLogAsync().execute(getResources().getString(R.string.utility_ivac_fee_pay_inq));
+
+                    transactionLogList(selectedLimit);
+
+
                 } else {
                     Snackbar snackbar = Snackbar.make(mConstraintLayout, getResources().getString(R.string.connection_error_msg), Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -314,104 +313,88 @@ public class IvacFeeInquiryMainActivity extends BaseActivity implements View.OnC
         }
     }
 
-    @SuppressWarnings("deprecation")
-    private class TransactionLogAsync extends AsyncTask<String, Integer, String> {
+    private void transactionLogAsync(String web_file_no){
+     showProgressDialog();
 
+        GetIvacTrx getIvacTrxModel = new GetIvacTrx();
+        getIvacTrxModel.setUsername(mAppHandler.getUserName());
+        getIvacTrxModel.setWeb_file_no(web_file_no);
 
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
+        ApiUtils.getAPIServiceV2().getIvacTrx(getIvacTrxModel).enqueue(new Callback<IvcTrxResponseModel>() {
+            @Override
+            public void onResponse(Call<IvcTrxResponseModel> call, Response<IvcTrxResponseModel> response) {
+                dismissProgressDialog();
+                if (response.code()==200){
+                    IvcTrxResponseModel model = response.body();
+                    String web_file = model.getWeb_file_no();
+                    String passport = model.getPassport_no();
+                    String amount = model.getAmount();
+                    String center = model.getCenter_name();
+                    String phone = model.getPhone_no();
+                    String trx_response_date_time = model.getTrx_response_date_time();
+                    String trx_id = model.getTrx_id();
+                    String status = String.valueOf(model.getStatus());
+                    String message = model.getMessage();
+                    showFullInfo(web_file, passport, amount, center, phone, trx_response_date_time, trx_id, status, message);
 
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
-
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                if (requestType == TAG_REQUEST_IVAC_FEE_INQUIRY) {
-                    List<NameValuePair> nameValuePairs = new ArrayList<>(4);
-                    nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                    nameValuePairs.add(new BasicNameValuePair("password", "1234"));
-                    nameValuePairs.add(new BasicNameValuePair("limit", selectedLimit));
-                    nameValuePairs.add(new BasicNameValuePair("format", "json"));
-                    nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
-
-                    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                } else if (requestType == TAG_REQUEST_IVAC_WEB_FILE_SEARCH) {
-                    List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                    nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                    nameValuePairs.add(new BasicNameValuePair("password", "1234"));
-                    nameValuePairs.add(new BasicNameValuePair("web_file_no", params[1]));
-                    nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
-                    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 }
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             }
-            return responseTxt;
-        }
 
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            if (result != null) {
-                try {
-                    if (requestType == TAG_REQUEST_IVAC_FEE_INQUIRY) {
-                        JSONObject object = new JSONObject(result);
+            @Override
+            public void onFailure(Call<IvcTrxResponseModel> call, Throwable t) {
+                dismissProgressDialog();
+            }
+        });
 
-                        String status = object.getString(TAG_RESPONSE_IVAC_STATUS);
-                        String msg = object.getString(TAG_RESPONSE_IVAC_MSG);
+    }
 
-                        if (status.equalsIgnoreCase("200")) {
-                            JSONArray jsonArray = object.getJSONArray(TAG_RESPONSE_IVAC_TRX_DETAILS);
+
+    private void transactionLogList(String selectedLimit){
+        showProgressDialog();
+
+        IvacTrxListModel listModel = new IvacTrxListModel();
+        listModel.setFormat("json");
+        listModel.setLimit(selectedLimit);
+        listModel.setPassword("123");
+        listModel.setUsername(mAppHandler.getUserName());
+
+        ApiUtils.getAPIServiceV2().getIvacTrxList(listModel).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
+                if (response.code() == 200){
+
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        String status = jsonObject.getString(TAG_RESPONSE_IVAC_STATUS);
+                        String msg = jsonObject.getString(TAG_RESPONSE_IVAC_MSG);
+                        if (status.equals("200")){
+                            JSONArray jsonArray = jsonObject.getJSONArray(TAG_RESPONSE_IVAC_TRX_DETAILS);
                             IvacFeeInquiryActivity.TRANSLOG_TAG = jsonArray.toString();
                             startActivity(new Intent(IvacFeeInquiryMainActivity.this, IvacFeeInquiryActivity.class));
                             finish();
-                        } else {
-                            Snackbar snackbar = Snackbar.make(mConstraintLayout, msg, Snackbar.LENGTH_LONG);
-                            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                            View snackBarView = snackbar.getView();
-                            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                            snackbar.show();
+
+                        }else {
+                            showErrorMessagev1(msg);
                         }
-                    } else if (requestType == TAG_REQUEST_IVAC_WEB_FILE_SEARCH) {
-                        JSONObject object = new JSONObject(result);
-                        String web_file = object.getString("web_file_no");
-                        String passport = object.getString("passport_no");
-                        String amount = object.getString("amount");
-                        String center = object.getString("center_name");
-                        String phone = object.getString("phone_no");
-                        String trx_response_date_time = object.getString("trx_response_date_time");
-                        String trx_id = object.getString("trx_id");
-                        String status = object.getString("status");
-                        String message = object.getString("message");
-                        showFullInfo(web_file, passport, amount, center, phone, trx_response_date_time, trx_id, status, message);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        showErrorMessagev1(getString(R.string.try_again_msg));
                     }
-                } catch (Exception ex) {
-                    Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
+
                 }
-            } else {
-                Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
             }
-        }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
+
+            }
+        });
+
     }
+
 
     private void showFullInfo(String web_file, String passport, String amount, String center, String phone, String trx_response_date_time,
                               String trx_id, String status, String message) {

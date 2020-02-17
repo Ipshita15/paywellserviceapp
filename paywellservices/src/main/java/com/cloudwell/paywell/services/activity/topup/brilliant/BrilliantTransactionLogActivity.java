@@ -12,24 +12,22 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.common.Priority;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.APIBrilliantTRXLog;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.BrilliantTRXLogModel;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.Datum;
-import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.ResponseBrillintTNXLog;
+import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.BrillintTNXLog;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppHandler;
-import com.cloudwell.paywell.services.utils.ParameterUtility;
-import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
-import com.google.android.material.snackbar.Snackbar;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BrilliantTransactionLogActivity extends BaseActivity {
     private ListView trxLogLV;
@@ -66,60 +64,69 @@ public class BrilliantTransactionLogActivity extends BaseActivity {
         if (limit != null) {
             if (!limit.isEmpty()) {
                 AppHandler appHandler = AppHandler.getmInstance(getApplicationContext());
-                String imeiNo = appHandler.getImeiNo();
-                String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
-                getBrilliantTrxLogData(imeiNo, limit, uniqueKey);
+                //String imeiNo = appHandler.getImeiNo();
+                //String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
+                //getBrilliantTrxLogData(imeiNo, limit, uniqueKey);
 
-                ResponseBrillintTNXLog responseBrillintTNXLog = new ResponseBrillintTNXLog();
+                String userName = appHandler.getUserName();
+                getNewBrilliantTrxLogData(userName, limit);
+
+
 
             }
         }
     }
 
-    private void getBrilliantTrxLogData(final String userName, String limitNumber, String uniqueKey) {
-        allDataList.clear();
-
+    private void getNewBrilliantTrxLogData(final String userName, String limit){
         showProgressDialog();
+        allDataList.clear();
+        BrillintTNXLog model = new BrillintTNXLog();
+        model.setUsername(userName);
+        model.setNumber(limit);
+        model.setFormat("json");
 
-        AndroidNetworking.get("https://api.paywellonline.com/PayWellBrilliantSystem/transactionLog?")      /////////////////TODO change with new api also retrofit
-                .addQueryParameter("username", userName)
-//                .addQueryParameter("username","cwntcl")
-                .addQueryParameter("number", limitNumber)
-                .addQueryParameter(""+ ParameterUtility.KEY_REF_ID+"", uniqueKey)
-                .setPriority(Priority.HIGH)
-                .build()
-                .getAsObject(APIBrilliantTRXLog.class, new ParsedRequestListener<APIBrilliantTRXLog>() {
-                    @Override
-                    public void onResponse(APIBrilliantTRXLog users) {
-                        if (users.getStatusCode() == 200) {
-                            for (Datum datum : users.getData()) {
-                                String sub_date_comp = datum.getAddDatetime().substring(0, 10);
-                                if (!date.equals(sub_date_comp)) {
-                                    date = sub_date_comp;
-                                    allDataList.add(date);
-                                }
-                                BrilliantTRXLogModel brilliantTRXLogModel = new BrilliantTRXLogModel(datum.getPaywellTrxId()
-                                        , datum.getBriliantTrxId(), datum.getBrilliantMobileNumber(), datum.getAmount(), datum.getStatusName(), datum.getAddDatetime());
-                                allDataList.add(brilliantTRXLogModel);
+        ApiUtils.getAPIServiceV2().getBrillintTNXLog(model).enqueue(new Callback<APIBrilliantTRXLog>() {
+            @Override
+            public void onResponse(Call<APIBrilliantTRXLog> call, Response<APIBrilliantTRXLog> response) {
+
+                if (response.code() == 200) {
+
+                    if (response.body().getStatusCode() == 200) {
+
+                        for (Datum datum : response.body().getData()) {
+                            String sub_date_comp = datum.getAddDatetime().substring(0, 10);
+                            if (!date.equals(sub_date_comp)) {
+                                date = sub_date_comp;
+                                allDataList.add(date);
                             }
-                            customAdapter.notifyDataSetChanged();
-                        } else {
-                            Snackbar snackbar = Snackbar.make(brilliantTrxLogLL, users.getMessage(), Snackbar.LENGTH_LONG);
-                            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                            View snackBarView = snackbar.getView();
-                            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                            snackbar.show();
-                        }
-                        dismissProgressDialog();
-                    }
+                            BrilliantTRXLogModel brilliantTRXLogModel = new BrilliantTRXLogModel(datum.getPaywellTrxId()
+                                    , datum.getBriliantTrxId(), datum.getBrilliantMobileNumber(), datum.getAmount()
+                                    , datum.getStatusName(), datum.getAddDatetime());
 
-                    @Override
-                    public void onError(ANError anError) {
-                        // handle error
-                        anError.printStackTrace();
-                        dismissProgressDialog();
+                            allDataList.add(brilliantTRXLogModel);
+                        }
+                        customAdapter.notifyDataSetChanged();
+                    } else {
+                        showErrorCallBackMessagev1(response.body().getMessage());
+
                     }
-                });
+                    dismissProgressDialog();
+                }else {
+
+                    showErrorCallBackMessagev1(getString(R.string.try_again_msg));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIBrilliantTRXLog> call, Throwable t) {
+                dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
+            }
+        });
+
+
+
+
     }
 
 
@@ -261,6 +268,5 @@ public class BrilliantTransactionLogActivity extends BaseActivity {
             TextView textView, phnNo, amount, date, status;
         }
     }
-
 
 }
