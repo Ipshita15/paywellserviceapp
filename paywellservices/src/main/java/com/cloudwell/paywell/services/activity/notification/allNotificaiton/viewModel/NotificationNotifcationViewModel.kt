@@ -7,6 +7,7 @@ import com.cloudwell.paywell.services.activity.notification.BaseNotifcationViewM
 import com.cloudwell.paywell.services.activity.notification.allNotificaiton.view.NotificationViewStatus
 import com.cloudwell.paywell.services.activity.notification.model.NotificationDetailMessage
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI
+import com.cloudwell.paywell.services.activity.notification.model.deletetNotification.ReposeDeletedNotification
 import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.model.NotificationDetailMessageSync
 import com.cloudwell.paywell.services.utils.DateUtils.notificationDateFormat
 import com.google.gson.Gson
@@ -173,7 +174,7 @@ class NotificationNotifcationViewModel : BaseNotifcationViewModel() {
         mNotificationRepository.saveNotificationDetailsData(json);
     }
 
-    fun deleteNotification(messageId: String): MutableLiveData<String> {
+    fun deleteNotification(messageId: String): MutableLiveData<ReposeDeletedNotification> {
         return mNotificationRepository.notificationDelete(messageId)
     }
 

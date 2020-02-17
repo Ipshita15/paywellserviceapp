@@ -3,9 +3,9 @@ package com.cloudwell.paywell.services.service.notificaiton
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.notification.NotificationRepogitory
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationReadAPI
+import com.cloudwell.paywell.services.activity.notification.model.getNotification.RequestNotificationAll
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import org.jetbrains.anko.doAsync
@@ -60,12 +60,11 @@ class NotificationDataSycService : Service() {
                 val notificationRepogitory = NotificationRepogitory(applicationContext)
                 notificaitonSyncData.forEach {
 
-                    val url = getString(R.string.notif_url)
-                    val userName = imeiNo
-                    val messageId = it.messageId
-                    val format = "json"
+                    val m = RequestNotificationAll()
+                    m.username = AppHandler.getmInstance(applicationContext).userName
+                    m.message_id = it.messageId
 
-                    val callNotificationReadAPI = ApiUtils.getAPIService().callNotificationReadAPI(url, userName, messageId, format);
+                    val callNotificationReadAPI = ApiUtils.getAPIServiceV2().callNotificationReadAPI(m)
                     callNotificationReadAPI.enqueue(object : Callback<ResNotificationReadAPI> {
                         override fun onFailure(call: Call<ResNotificationReadAPI>, t: Throwable) {
                             stopSelf()
