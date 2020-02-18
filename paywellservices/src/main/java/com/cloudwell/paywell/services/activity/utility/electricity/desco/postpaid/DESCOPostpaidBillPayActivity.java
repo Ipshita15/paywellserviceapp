@@ -19,7 +19,6 @@ import android.widget.TextView;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.model.DESCOHistory;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.model.DESCOHistory;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
@@ -267,7 +266,7 @@ public class DESCOPostpaidBillPayActivity extends BaseActivity implements View.O
             try {
                 //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(6);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("password", mPin));
                 nameValuePairs.add(new BasicNameValuePair("billNo", mBill));
                 nameValuePairs.add(new BasicNameValuePair("payerMobileNo", mPhn));
@@ -402,7 +401,7 @@ public class DESCOPostpaidBillPayActivity extends BaseActivity implements View.O
             try {
                 //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(8);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("password", mPin));
                 nameValuePairs.add(new BasicNameValuePair("billNo", mBill));
                 nameValuePairs.add(new BasicNameValuePair("payerMobileNo", mPhn));

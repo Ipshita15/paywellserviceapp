@@ -143,7 +143,7 @@ public class MYCashToPayWellActivity extends BaseActivity implements View.OnClic
             try {
                 //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(7);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("AgentOTP", mAgentOTP));
                 nameValuePairs.add(new BasicNameValuePair("amount", mAmount));
                 nameValuePairs.add(new BasicNameValuePair("password", mAppHandler.getPin()));

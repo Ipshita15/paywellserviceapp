@@ -108,7 +108,7 @@ public class BanglalionRechargeInquiryActivity extends BaseActivity implements V
                     return;
                 }
                 mSubmitAsync = new SubmitAsync().execute(getResources().getString(R.string.banglalion_bill_inquiry),
-                        mAppHandler.getImeiNo(),
+                        mAppHandler.getUserName(),
                         _account,
                         _pin);
             }

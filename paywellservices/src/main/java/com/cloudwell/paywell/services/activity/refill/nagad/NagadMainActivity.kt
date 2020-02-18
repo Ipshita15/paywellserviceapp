@@ -258,7 +258,7 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
 
         val hostUrlBkapi = AllUrl.HOST_URL_lastSuccessfulTrx
         val sec_token = AllUrl.sec_token
-        val imeiNo = AppHandler.getmInstance(applicationContext).imeiNo
+        val imeiNo = AppHandler.getmInstance(applicationContext).userName
         val format = "json"
         val gateway_id = "5"
         val limit = selectedLimit

@@ -1601,7 +1601,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             HttpPost httppost = new HttpPost(data[0]);
             try {
                 List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("imei_no", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("imei_no", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("phone", data[1]));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -1730,7 +1730,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             try {
                 List<NameValuePair> nameValuePairs = new ArrayList<>(4);
-                nameValuePairs.add(new BasicNameValuePair("imei_no", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("imei_no", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("phone", data[1]));
                 nameValuePairs.add(new BasicNameValuePair("otp", data[2]));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
@@ -1814,7 +1814,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 HttpPost httpPost = new HttpPost(params[0]);
 
                 List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("usertype", "Retailer"));
                 nameValuePairs.add(new BasicNameValuePair("token", params[1]));
 
@@ -1963,14 +1963,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 HttpPost httpPost = new HttpPost(params[0]);
 
                 List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("latitude", mAppHandler.getLatitude()));
                 nameValuePairs.add(new BasicNameValuePair("longitude", mAppHandler.getLongitude()));
                 nameValuePairs.add(new BasicNameValuePair("accuracy", mAppHandler.getAccuracy()));
                 nameValuePairs.add(new BasicNameValuePair("country", mAppHandler.getCountry()));
                 nameValuePairs.add(new BasicNameValuePair("address", mAppHandler.getAddress()));
 
-                Logger.v("username " + mAppHandler.getImeiNo() +
+                Logger.v("username " + mAppHandler.getUserName() +
                         " latitude " + mAppHandler.getLatitude() +
                         " longitude " + mAppHandler.getLongitude() +
                         " accuracy " + mAppHandler.getAccuracy() +
@@ -2378,8 +2378,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
                 intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "mini");
-                intent.putExtra(ViewStatementActivity.DESTINATION_URL, "https://api.paywellonline.com/AndroidWebViewController/StatementInquiry?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
+        ;
 
                 startActivityWithFlag(intent);
 
@@ -2391,8 +2390,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
 
                 intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "balance");
-                intent.putExtra(ViewStatementActivity.DESTINATION_URL, "https://api.paywellonline.com/AndroidWebViewController/balanceStatement?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
+
 
                 startActivityWithFlag(intent);
 
@@ -2406,8 +2404,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
 
                 intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "sales");
-                intent.putExtra(ViewStatementActivity.DESTINATION_URL, "https://api.paywellonline.com/AndroidWebViewController/salesStatementForhttps?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
+
 
                 startActivityWithFlag(intent);
 
@@ -2418,8 +2415,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
                 intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "trx");
-                intent.putExtra(ViewStatementActivity.DESTINATION_URL, "https://api.paywellonline.com/AndroidWebViewController/getAllTransactionStatementForHttps?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
+
                 startActivityWithFlag(intent);
 
                 break;

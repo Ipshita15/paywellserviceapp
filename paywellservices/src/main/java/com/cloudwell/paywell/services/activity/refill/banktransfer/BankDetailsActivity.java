@@ -79,7 +79,7 @@ public class BankDetailsActivity extends BaseActivity {
         mCd = new ConnectionDetector(AppController.getContext());
 
         mRequestRefillBalance = new RequestRefillBalance();
-        mRequestRefillBalance.setmUsername("" + mAppHandler.getImeiNo());
+        mRequestRefillBalance.setmUsername("" + mAppHandler.getUserName());
         districtChangeStatus = true;
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -282,7 +282,7 @@ public class BankDetailsActivity extends BaseActivity {
         showProgressDialog();
 
         final RequestBranch requestBranch = new RequestBranch();
-        requestBranch.setmUsername("" + mAppHandler.getImeiNo());
+        requestBranch.setmUsername("" + mAppHandler.getUserName());
         requestBranch.setmBankId("" + bankId);
         requestBranch.setmDistrictId("" + districtId);
 

@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
 import android.view.Gravity
-import android.view.Menu
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -277,7 +276,7 @@ class FlightSearchViewActivity : AirTricketBaseActivity(), IDatePicker {
                 if (isInternetConnection) {
 
                     val mAppHandler = AppHandler.getmInstance(application)
-                    val userName = mAppHandler.imeiNo
+                    val userName = mAppHandler.userName
 
                     val datum = AppStorageBox.get(applicationContext, AppStorageBox.Key.REQUEST_API_reschedule) as Datum
 

@@ -56,7 +56,7 @@ public class ResetPinActivity extends AppCompatActivity {
         } else {
             String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
             new ResetPinAsync().execute(getString(R.string.reset_pin),
-                    "username=" + mAppHandler.getImeiNo(),
+                    "username=" + mAppHandler.getUserName(),
                     "&mode=" + "json" +"&" + ParameterUtility.KEY_REF_ID +"="+ uniqueKey);
         }
 

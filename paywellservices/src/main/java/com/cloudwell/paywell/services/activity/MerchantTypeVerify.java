@@ -238,7 +238,7 @@ public class MerchantTypeVerify extends BaseActivity {
             HttpPost httppost = new HttpPost(params[0]);
             try {
                 List<NameValuePair> nameValuePairs = new ArrayList<>(5);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("merchantType", merchantTypeId));
                 nameValuePairs.add(new BasicNameValuePair("businessType", str_businessId));
                 nameValuePairs.add(new BasicNameValuePair("businessTypeName", URLEncoder.encode(str_businessType, "UTF-8")));

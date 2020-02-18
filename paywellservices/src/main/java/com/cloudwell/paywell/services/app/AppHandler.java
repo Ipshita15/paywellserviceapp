@@ -235,14 +235,7 @@ public class AppHandler {
         editor.commit();
     }
 
-    public String getImeiNo() {
-        return mPref.getString(IMEI_NO, "unknown");
-    }
 
-    public void setImeiNo(String imeiNo) {
-        editor.putString(IMEI_NO, imeiNo);
-        editor.commit();
-    }
 
     public String getPin() {
         return mPref.getString(PIN, "unknown");

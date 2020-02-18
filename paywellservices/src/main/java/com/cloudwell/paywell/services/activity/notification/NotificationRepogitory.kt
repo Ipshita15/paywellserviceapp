@@ -120,7 +120,7 @@ class NotificationRepogitory(private val mContext: Context) {
     fun callReScheduleNotificationAccept(id: Int, accept_status: Int): MutableLiveData<ResposeReScheduleNotificationAccept> {
         mAppHandler = AppHandler.getmInstance(mContext)
         val url = mContext.getString(R.string.notif_url)
-        val userName = mAppHandler!!.imeiNo
+        val userName = mAppHandler!!.userName
         val data = MutableLiveData<ResposeReScheduleNotificationAccept>()
         val resNotificationAPICall = ApiUtils.getAPIService().reIssueNotificationAccept(userName, id, accept_status)
         resNotificationAPICall.enqueue(object : Callback<ResposeReScheduleNotificationAccept> {
@@ -180,32 +180,6 @@ class NotificationRepogitory(private val mContext: Context) {
         DatabaseClient.getInstance(mContext).appDatabase.mNotificationDab().delete(notificationDetailMessageList)
     }
 
-    fun allNotificationDelete(messageIdList: String): MutableLiveData<String> {
 
-        mAppHandler = AppHandler.getmInstance(mContext)
-        val url = "https://api.paywellonline.com/RetailerService/userNotificationDelete"
-        val userName = mAppHandler!!.imeiNo
-        val responseData = MutableLiveData<String>()
-
-
-//        val resNotificationAPICall = ApiUtils.getAPIService().deleteNotification(url,userName,messageIdListString.toString())
-//        resNotificationAPICall.enqueue(object : Callback<String> {
-//            override fun onResponse(call: Call<String>, response: Response<String>) {
-//
-//                if (response.isSuccessful) {
-//                    responseData.value = response.body()
-//
-//                } else {
-//                    responseData.value = String()
-//                }
-//            }
-//            override fun onFailure(call: Call<String>, t: Throwable) {
-//                responseData.value = String()
-//
-//            }
-//        })
-        return responseData
-
-    }
 
 }

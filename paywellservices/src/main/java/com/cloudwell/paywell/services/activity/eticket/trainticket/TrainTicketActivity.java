@@ -162,7 +162,7 @@ public class TrainTicketActivity extends BaseActivity implements AdapterView.OnI
                 } else {
                     try {
                         new DestinationAsync().execute(getResources().getString(R.string.train_source_url),
-                                "imei_no=" + mAppHandler.getImeiNo(),
+                                "imei_no=" + mAppHandler.getUserName(),
                                 "&mode=destination_list",
                                 "&source_code=" + URLEncoder.encode(mSourceCode, "UTF-8"),
                                 "&destination=" + URLEncoder.encode(mDestination.toUpperCase(), "UTF-8")); //  imei_no=a10000289bbb5d&pin_code=1234&mode=destination_list&source_code=DA$DHAKA%20KAMALAPUR&destination=CHI

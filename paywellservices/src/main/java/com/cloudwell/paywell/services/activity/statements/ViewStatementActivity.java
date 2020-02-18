@@ -23,7 +23,6 @@ import com.google.gson.Gson;
 import java.util.Locale;
 
 import okhttp3.MediaType;
-import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -68,7 +67,6 @@ public class ViewStatementActivity extends BaseActivity {
                 }
             } else {
                 title = "mini";
-                url = "https://api.paywellonline.com/AndroidWebViewController/StatementInquiry?username=" + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
                 getSupportActionBar().setTitle(R.string.home_statement_mini);
             }
         }
@@ -126,27 +124,30 @@ public class ViewStatementActivity extends BaseActivity {
 
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), rowJsonData);
 
-        Request request = new Request.Builder()
-                .url(url.trim())
-                .post(body)
-                .build();
-        RequestBody body1 = request.body();
+//        Request request = new Request.Builder()
+//                .url("https://agentapi.paywellonline.com/")
+//                .post(body)
+//                .build();
+//        RequestBody body1 = request.body();
 
+
+        showProgressDialog();
 
         Call<ResponseBody> call = null;
         if (title.equalsIgnoreCase("mini")) {
-            call = ApiUtils.getAPIServiceV2().StatementInquiry(body1);
+            call = ApiUtils.getAPIServiceV2().StatementInquiry(body);
         } else if (title.equalsIgnoreCase("balance")) {
-            call = ApiUtils.getAPIServiceV2().balanceStatement(body1);
+            call = ApiUtils.getAPIServiceV2().balanceStatement(body);
         } else if (title.equalsIgnoreCase("sales")) {
-            call = ApiUtils.getAPIServiceV2().salesStatementForhttps(body1);
+            call = ApiUtils.getAPIServiceV2().salesStatementForhttps(body);
         } else if (title.equalsIgnoreCase("trx")) {
-            call = ApiUtils.getAPIServiceV2().getAllTransactionStatementForHttps(body1);
+            call = ApiUtils.getAPIServiceV2().getAllTransactionStatementForHttps(body);
         }
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
 
                 try {
                     String string = null;
@@ -166,6 +167,7 @@ public class ViewStatementActivity extends BaseActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
 
                 showErrorCallBackMessagev1(getString(R.string.try_again_msg));
 

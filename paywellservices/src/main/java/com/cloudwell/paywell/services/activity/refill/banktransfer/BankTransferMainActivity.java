@@ -124,7 +124,7 @@ public class BankTransferMainActivity extends BaseActivity {
         showProgressDialog();
 
         final RequestDistrict requestDistrict = new RequestDistrict();
-        requestDistrict.setmUsername("" + mAppHandler.getImeiNo());
+        requestDistrict.setmUsername("" + mAppHandler.getUserName());
         requestDistrict.setmBankId("" + bankId);
 
         Call<DistrictData> responseBodyCall = ApiUtils.getAPIService().callDistrictDataAPI(requestDistrict.getmUsername(), requestDistrict.getmBankId());

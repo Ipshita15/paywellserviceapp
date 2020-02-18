@@ -190,7 +190,7 @@ public class TrainTicketBookingActivity extends BaseActivity implements AdapterV
                 } else {
                     try {
                         new TrainSeatAsync().execute(getResources().getString(R.string.train_source_url),
-                                "imei_no=" + mAppHandler.getImeiNo(),
+                                "imei_no=" + mAppHandler.getUserName(),
                                 "&mode=cost_info",
                                 "&source_name=" + URLEncoder.encode(mAppHandler.getSourceStation(), "UTF-8"),
                                 "&source_code=" + URLEncoder.encode(mAppHandler.getSourceStationCode(), "UTF-8"),
@@ -302,7 +302,7 @@ public class TrainTicketBookingActivity extends BaseActivity implements AdapterV
                                 } else {
                                     try {
                                         new PurchaseTicketAsync().execute(getResources().getString(R.string.train_source_url),
-                                                "imei_no=" + mAppHandler.getImeiNo(),
+                                                "imei_no=" + mAppHandler.getUserName(),
                                                 "&pin_code=" + URLEncoder.encode(pin, "UTF-8"),
                                                 "&mode=purchase_ticket",
                                                 "&id=" + URLEncoder.encode(ticketId, "UTF-8"));

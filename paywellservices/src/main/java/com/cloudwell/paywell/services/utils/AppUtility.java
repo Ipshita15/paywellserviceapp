@@ -313,8 +313,6 @@ public class AppUtility {
 
                 intent = new Intent(context, ViewStatementActivity.class);
                 intent.putExtra(ViewStatementActivity.DESTINATION_TITLE,"mini");
-                intent.putExtra(ViewStatementActivity.DESTINATION_URL,"https://api.paywellonline.com/AndroidWebViewController/StatementInquiry?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
 
                 return intent;
             case R.string.home_statement_balance:
@@ -325,8 +323,7 @@ public class AppUtility {
                 intent = new Intent(context, ViewStatementActivity.class);
 
                 intent.putExtra(ViewStatementActivity.DESTINATION_TITLE,"balance");
-                intent.putExtra(ViewStatementActivity.DESTINATION_URL,"https://api.paywellonline.com/AndroidWebViewController/balanceStatement?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
+
                 return intent;
 
 
@@ -337,16 +334,14 @@ public class AppUtility {
 
                 intent = new Intent(context, ViewStatementActivity.class);
                 intent.putExtra(ViewStatementActivity.DESTINATION_TITLE,"sales");
-                intent.putExtra(ViewStatementActivity.DESTINATION_URL,"https://api.paywellonline.com/AndroidWebViewController/salesStatementForhttps?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
+
                 return intent;
 
             case R.string.home_statement_transaction:
 
                 intent = new Intent(context, ViewStatementActivity.class);
                 intent.putExtra(ViewStatementActivity.DESTINATION_TITLE,"trx");
-                intent.putExtra(ViewStatementActivity.DESTINATION_URL,"https://api.paywellonline.com/AndroidWebViewController/getAllTransactionStatementForHttps?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
+
                 return intent;
 
 

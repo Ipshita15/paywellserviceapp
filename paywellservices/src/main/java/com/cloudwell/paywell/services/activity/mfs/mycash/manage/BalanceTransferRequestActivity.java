@@ -161,7 +161,7 @@ public class BalanceTransferRequestActivity extends BaseActivity implements View
             try {
                 //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(6);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("password", mAppHandler.getPin()));
                 nameValuePairs.add(new BasicNameValuePair("amount", mAmount));
                 nameValuePairs.add(new BasicNameValuePair("AgentOTP", mAgentOTP));

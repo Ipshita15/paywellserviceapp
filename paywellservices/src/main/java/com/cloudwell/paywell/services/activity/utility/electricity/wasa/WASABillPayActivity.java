@@ -259,7 +259,7 @@ public class WASABillPayActivity extends BaseActivity implements View.OnClickLis
             try {
                 //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(6);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("password", mPin));
                 nameValuePairs.add(new BasicNameValuePair("billNo", mBill));
                 nameValuePairs.add(new BasicNameValuePair("payerMobileNo", mPhn));
@@ -392,7 +392,7 @@ public class WASABillPayActivity extends BaseActivity implements View.OnClickLis
             try {
                 //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(8);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("password", mPin));
                 nameValuePairs.add(new BasicNameValuePair("billNo", mBill));
                 nameValuePairs.add(new BasicNameValuePair("payerMobileNo", mPhn));

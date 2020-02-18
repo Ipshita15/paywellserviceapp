@@ -120,7 +120,7 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
 
             override fun onDocsUpdate(item: Datum) {
                 val mAppHandler = AppHandler.getmInstance(applicationContext)
-                val userName = mAppHandler.imeiNo
+                val userName = mAppHandler.userName
                 callCancelMapping(userName, item.bookingId!!, "", AllConstant.Action_DOCS_UPDATE, item)
             }
 

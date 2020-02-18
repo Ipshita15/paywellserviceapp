@@ -40,7 +40,7 @@ class BusTicketRepository() {
 
     fun getBusList(uniqueKey: String): MutableLiveData<List<Transport>> {
         mAppHandler = AppHandler.getmInstance(mContext)
-        val userName = mAppHandler!!.imeiNo
+        val userName = mAppHandler!!.userName
         val skey = ApiUtils.KEY_SKEY
 
         val data = MutableLiveData<List<Transport>>()
@@ -80,7 +80,7 @@ class BusTicketRepository() {
     public fun getBusScheduleDate(transport_id: String, uniqueKey: String): MutableLiveData<String> {
         mAppHandler = AppHandler.getmInstance(mContext)
 
-        val userName = mAppHandler!!.imeiNo
+        val userName = mAppHandler!!.userName
         val skey = ApiUtils.KEY_SKEY
 
         val accessKey = AppStorageBox.get(mContext, AppStorageBox.Key.ACCESS_KEY) as String
@@ -277,7 +277,7 @@ class BusTicketRepository() {
 
         mAppHandler = AppHandler.getmInstance(mContext)
 
-        val userName = mAppHandler!!.imeiNo
+        val userName = mAppHandler!!.userName
         val skey = ApiUtils.KEY_SKEY
 
         val accessKey = AppStorageBox.get(mContext, AppStorageBox.Key.ACCESS_KEY) as String
@@ -353,7 +353,7 @@ class BusTicketRepository() {
     fun callBookingAPI(model: TripScheduleInfoAndBusSchedule, requestBusSearch: RequestBusSearch, boothInfo: BoothInfo, seatLevel: String, seatId: String, totalAPIValuePrices: String, uniqueKey: String): MutableLiveData<ResSeatCheckBookAPI> {
 
         mAppHandler = AppHandler.getmInstance(mContext)
-        val userName = mAppHandler!!.imeiNo
+        val userName = mAppHandler!!.userName
         val skey = ApiUtils.KEY_SKEY
         val accessKey = AppStorageBox.get(mContext, AppStorageBox.Key.ACCESS_KEY) as String
 
@@ -400,7 +400,7 @@ class BusTicketRepository() {
 
     fun confirmPaymentAPI(transId: String, fullNameTV: String, mobileNumber: String, address: String, etEmail: String, age: String, gender: String, password: String): MutableLiveData<ResPaymentBookingAPI> {
         mAppHandler = AppHandler.getmInstance(mContext)
-        val userName = mAppHandler!!.imeiNo
+        val userName = mAppHandler!!.userName
         val skey = ApiUtils.KEY_SKEY
         val accessKey = AppStorageBox.get(mContext, AppStorageBox.Key.ACCESS_KEY) as String
 

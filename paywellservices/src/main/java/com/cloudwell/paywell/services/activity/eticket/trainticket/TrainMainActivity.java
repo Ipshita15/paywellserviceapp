@@ -144,7 +144,7 @@ public class TrainMainActivity extends BaseActivity implements View.OnClickListe
                         } else {
                             flag = false;
                             new TrainMainActivity.SourceAsync().execute(getResources().getString(R.string.train_source_url),
-                                    "imei_no=" + mAppHandler.getImeiNo(),
+                                    "imei_no=" + mAppHandler.getUserName(),
                                     "&mode=source_list",
                                     "&journey_date=" + mSelectedDate);
                         }
@@ -170,7 +170,7 @@ public class TrainMainActivity extends BaseActivity implements View.OnClickListe
                             AppHandler.showDialog(TrainMainActivity.this.getSupportFragmentManager());
                         } else {
                             new TrainMainActivity.SourceAsync().execute(getResources().getString(R.string.train_source_url),
-                                    "imei_no=" + mAppHandler.getImeiNo(),
+                                    "imei_no=" + mAppHandler.getUserName(),
                                     "&mode=source_list",
                                     "&journey_date=" + mSelectedDate);
                         }

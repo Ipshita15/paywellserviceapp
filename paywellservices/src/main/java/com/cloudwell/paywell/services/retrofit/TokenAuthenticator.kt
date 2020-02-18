@@ -33,7 +33,7 @@ class TokenAuthenticator : Authenticator {
 
             val params = HashMap<String, String>()
             params["sKey"] = ApiUtils.KEY_SKEY
-            params["username"] = "" + mAppHandler.imeiNo
+            params["username"] = "" + mAppHandler.userName
             params["retailer_code"] = "" + mAppHandler.rid
 
 

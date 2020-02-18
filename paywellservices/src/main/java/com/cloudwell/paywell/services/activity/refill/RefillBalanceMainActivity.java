@@ -134,7 +134,7 @@ public class RefillBalanceMainActivity extends BaseActivity {
             AppHandler.showDialog(getSupportFragmentManager());
         } else {
             new SDAInformationAsync().execute(
-                    getResources().getString(R.string.refill_sda_info), mAppHandler.getImeiNo());
+                    getResources().getString(R.string.refill_sda_info), mAppHandler.getUserName());
         }
     }
 
@@ -238,7 +238,7 @@ public class RefillBalanceMainActivity extends BaseActivity {
             try {
                 //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("serviceName", "bKash"));
                 nameValuePairs.add(new BasicNameValuePair("gateway_id", mAppHandler.getGatewayId()));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));

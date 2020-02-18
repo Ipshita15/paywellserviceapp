@@ -192,7 +192,7 @@ public class PBBillPayOldActivity extends LanguagesBaseActivity implements View.
                 String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
 
                 List<NameValuePair> nameValuePairs = new ArrayList<>(6);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("pin_code", params[1]));
                 nameValuePairs.add(new BasicNameValuePair("bill_no", params[2]));
                 nameValuePairs.add(new BasicNameValuePair("amount", params[3]));
