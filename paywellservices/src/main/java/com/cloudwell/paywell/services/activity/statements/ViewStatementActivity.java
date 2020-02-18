@@ -1,14 +1,10 @@
 package com.cloudwell.paywell.services.activity.statements;
 
-import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
@@ -24,16 +20,14 @@ import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
-import org.apache.http.util.EncodingUtils;
-
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.cloudwell.paywell.services.activity.utility.AllUrl.URL_statementInquiry;
@@ -116,14 +110,7 @@ public class ViewStatementActivity extends BaseActivity {
 
         mWebView.getSettings().setLoadsImagesAutomatically(true);
         mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        startWebView(url);
-
-        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_STATEMENT_VIEW);
-
-    }
-
-    private void startWebView(String url) {
-
+        mWebView.getSettings().setJavaScriptEnabled(true);
 
 
         String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
@@ -136,6 +123,61 @@ public class ViewStatementActivity extends BaseActivity {
         String rowJsonData = new Gson().toJson(requestWebView);
 
 
+
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), rowJsonData);
+
+        Request request = new Request.Builder()
+                .url(url.trim())
+                .post(body)
+                .build();
+        RequestBody body1 = request.body();
+
+
+        Call<ResponseBody> call = null;
+        if (title.equalsIgnoreCase("mini")) {
+            call = ApiUtils.getAPIServiceV2().StatementInquiry(body1);
+        } else if (title.equalsIgnoreCase("balance")) {
+            call = ApiUtils.getAPIServiceV2().balanceStatement(body1);
+        } else if (title.equalsIgnoreCase("sales")) {
+            call = ApiUtils.getAPIServiceV2().salesStatementForhttps(body1);
+        } else if (title.equalsIgnoreCase("trx")) {
+            call = ApiUtils.getAPIServiceV2().getAllTransactionStatementForHttps(body1);
+        }
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                try {
+                    String string = null;
+                    if (response.body() != null) {
+                        string = response.body().string();
+                        startWebView(string);
+                    }else {
+                        showErrorCallBackMessagev1(getString(R.string.try_again_msg));
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showErrorCallBackMessagev1(getString(R.string.try_again_msg));
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                showErrorCallBackMessagev1(getString(R.string.try_again_msg));
+
+            }
+        });
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_STATEMENT_VIEW);
+
+    }
+
+    private void startWebView(String data) {
+
         mWebView.setWebViewClient(new WebViewClient() {
 
 
@@ -145,16 +187,11 @@ public class ViewStatementActivity extends BaseActivity {
                 showProgressDialog();
             }
 
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
-                byte[] base64s = EncodingUtils.getBytes(rowJsonData, "BASE64");
-                view.postUrl(url, base64s);
-                return true;
-            }
 
             public void onLoadResource(WebView view, String url) {
 
-                showProgressDialog();
+                //showProgressDialog();
             }
 
             public void onPageFinished(WebView view, String url) {
@@ -163,71 +200,12 @@ public class ViewStatementActivity extends BaseActivity {
 
             }
 
+        }
+        );
+
+        mWebView.loadData(data, "", "");
 
 
-            // Handle API until level 21
-            @SuppressWarnings("deprecation")
-            @Override
-            public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-
-                return getNewResponse(url);
-            }
-
-            // Handle API 21+
-            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-
-                String url = request.getUrl().toString();
-
-                return getNewResponse(url);
-            }
-
-            private WebResourceResponse getNewResponse(String url) {
-
-                try {
-
-                    RequestBody body = RequestBody.create(MediaType.parse("application/json"), rowJsonData);
-
-                    Request request = new Request.Builder()
-                            .url(url.trim())
-                            .post(body)
-                            .build();
-                    RequestBody body1 = request.body();
-
-
-                    Response<ResponseBody> response = null;
-                    if (title.equalsIgnoreCase("mini")) {
-                        response = ApiUtils.getAPIServiceV2().StatementInquiry(body1).execute();
-                    } else if (title.equalsIgnoreCase("balance")) {
-                        response = ApiUtils.getAPIServiceV2().balanceStatement(body1).execute();
-                    } else if (title.equalsIgnoreCase("sales")) {
-                        response = ApiUtils.getAPIServiceV2().salesStatementForhttps(body1).execute();
-                    } else if (title.equalsIgnoreCase("trx")) {
-                        response = ApiUtils.getAPIServiceV2().getAllTransactionStatementForHttps(body1).execute();
-                    }
-
-                    return new WebResourceResponse(
-                            "text/html", "utf-8",
-                            response.body().byteStream()
-                    );
-
-                } catch (Exception e) {
-                    return null;
-                }
-
-            }
-
-        });
-        mWebView.getSettings().setJavaScriptEnabled(true);
-
-        Map<String, String> extraHeaders = new HashMap<String, String>();
-        extraHeaders.put("Authorization","Bearer");
-
-
-        byte[] base64s = EncodingUtils.getBytes(rowJsonData, "BASE64");
-
-        mWebView.postUrl(url, base64s);
 
     }
 

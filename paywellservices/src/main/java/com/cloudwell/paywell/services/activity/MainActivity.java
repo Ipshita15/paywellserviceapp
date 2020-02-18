@@ -617,7 +617,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
             }
         }
-        subscribeToPushService();
+       // subscribeToPushService();
         initializePreview();
 
         //Tutorial

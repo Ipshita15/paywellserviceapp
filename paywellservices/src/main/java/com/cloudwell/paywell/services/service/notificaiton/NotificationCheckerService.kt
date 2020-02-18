@@ -3,6 +3,8 @@ package com.cloudwell.paywell.services.service.notificaiton
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
+import android.widget.Toast
+import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.notification.NotificationRepogitory
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus
@@ -12,6 +14,8 @@ import com.cloudwell.paywell.services.service.notificaiton.model.EventNewNotific
 import com.cloudwell.paywell.services.service.notificaiton.model.StartNotificationService
 import com.cloudwell.paywell.services.service.notificaiton.model.requestNotificationDetails.RequestNotification
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 import com.orhanobut.logger.Logger
 import com.squareup.otto.Subscribe
 import org.jetbrains.anko.doAsync
@@ -70,8 +74,19 @@ class NotificationCheckerService : Service() {
         val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(applicationContext)!!.rid)
 
         val m = RequestNotification()
+
+
+        val firebaseId = AppHandler.getmInstance(applicationContext).firebaseId
+        if (firebaseId.equals("unknown")){
+            Toast.makeText(getApplicationContext(), R.string.try_again_msg, Toast.LENGTH_LONG).show();
+            getFCMTokenAndSave();
+            return
+        }
+
+
         m.refId = uniqueKey
         m.username = AppHandler.getmInstance(applicationContext)!!.userName
+        m.deviceFcmToken = firebaseId
 
 
         val responseBodyCall = ApiUtils.getAPIServiceV2().callCheckNotification(m)
@@ -108,6 +123,22 @@ class NotificationCheckerService : Service() {
             }
 
         })
+
+
+    }
+
+    fun getFCMTokenAndSave(){
+        FirebaseInstanceId.getInstance().instanceId
+                .addOnCompleteListener(OnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        Logger.w("getInstanceId failed", task.exception)
+                        return@OnCompleteListener
+                    }
+
+                    // Get new Instance ID token
+                    val token = task.result?.token
+                    AppHandler.getmInstance(applicationContext).setFirebaseId(token)
+                })
 
 
     }
