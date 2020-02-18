@@ -1094,7 +1094,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
         alert.show();
     }
 
-    private void handleTopupAPIValidation(String pinNo) {
+    private void handleTopupAPIValidation(String pinNo) {           //TODO Work in this method
         showProgressDialog();
 
         final RequestTopup requestTopup = new RequestTopup();
@@ -1103,7 +1103,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
 
         List<TopupData> topupDatumList = new ArrayList<>();
 
-        if (topUpLayout.getChildCount() > 1) {
+        if (topUpLayout.getChildCount() > 1) {                          // if topup number more then one
             AnalyticsManager.sendEvent(AnalyticsParameters.KEY_TOPUP_ALL_OPERATOR_MENU, AnalyticsParameters.KEY_TOPUP_ALL_OPERATOR_RECHARGE, AnalyticsParameters.KEY_BULK_TOPUP, (topUpLayout.getChildCount() + 1));
 
             for (int i = 0; i < topUpLayout.getChildCount(); i++) {
@@ -1152,7 +1152,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
                 }
             }
 
-        } else {
+        } else {                // if topup number is one
             // Single
             AnalyticsManager.sendEvent(AnalyticsParameters.KEY_TOPUP_ALL_OPERATOR_MENU, AnalyticsParameters.KEY_TOPUP_ALL_OPERATOR_RECHARGE, AnalyticsParameters.KEY_SINGLE_TOPUP);
             EditText phoneNoET, amountET;
@@ -1202,7 +1202,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
         requestTopup.setTopupData(topupDatumList);
 
 
-        Call<TopupReposeData> responseBodyCall = ApiUtils.getAPIService().callTopAPI(requestTopup);
+        Call<TopupReposeData> responseBodyCall = ApiUtils.getAPIService().callTopAPI(requestTopup);         //TODO change the api
 
 
         responseBodyCall.enqueue(new Callback<TopupReposeData>() {
