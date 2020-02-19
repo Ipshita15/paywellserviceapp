@@ -47,6 +47,7 @@ import com.cloudwell.paywell.services.activity.refill.model.RefillRequestData;
 import com.cloudwell.paywell.services.activity.refill.model.RequestBranch;
 import com.cloudwell.paywell.services.activity.refill.model.RequestDistrict;
 import com.cloudwell.paywell.services.activity.refill.model.RequestRefillBalance;
+import com.cloudwell.paywell.services.activity.refill.model.RequestSDAInfo;
 import com.cloudwell.paywell.services.activity.refill.nagad.model.ResTranstionINquiry;
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLog;
 import com.cloudwell.paywell.services.activity.reg.model.AuthRequestModel;
@@ -118,6 +119,10 @@ public interface APIService {
     @Multipart
     Call<TopupReposeData> callTopAPI(@Part("requestData") RequestTopup requestTopup);
 
+
+
+    @POST("Retailer/RetailerService/getRtlrSDAinfo")
+    Call<ResponseBody> getRtlrSDAinfo(@Body RequestSDAInfo requestSDAInfo);
 
     @POST("Retailer/BankDepositSystem/getDistrictListforBankDeposit")
     Call<ReposeDistrictListerBankDeposit> callDistrictDataAPI(@Body RequestDistrict requestDistrict);
