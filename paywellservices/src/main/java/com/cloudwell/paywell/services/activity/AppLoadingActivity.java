@@ -14,6 +14,10 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.home.HomeActivity;
@@ -38,9 +42,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -412,8 +413,7 @@ public class AppLoadingActivity extends BaseActivity {
                                         mAppHandler.setInitialChangePinStatus("true");
                                     }
 
-
-                                    Intent i = new Intent(AppLoadingActivity.this, MainActivity.class);
+                                    Intent i = new Intent(AppLoadingActivity.this, MainActivity .class);
                                     startActivity(i);
                                     finish();
 

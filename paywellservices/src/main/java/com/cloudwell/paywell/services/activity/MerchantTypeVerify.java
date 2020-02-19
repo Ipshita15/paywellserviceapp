@@ -300,81 +300,81 @@ public class MerchantTypeVerify extends BaseActivity {
 
     }
 
-    private class ConfirmMerchantTypeAsync extends AsyncTask<String, String, String> {
-
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(5);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("merchantType", merchantTypeId));
-                nameValuePairs.add(new BasicNameValuePair("businessType", str_businessId));
-                nameValuePairs.add(new BasicNameValuePair("businessTypeName", URLEncoder.encode(str_businessType, "UTF-8")));
-                nameValuePairs.add(new BasicNameValuePair("format", "json"));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            if (result != null) {
-                try {
-                    business_type_id_array = new ArrayList<>();
-                    business_type_name_array = new ArrayList<>();
-
-                    JSONObject jsonObject = new JSONObject(result);
-                    final String status = jsonObject.getString("status");
-                    String msg = jsonObject.getString("message");
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MerchantTypeVerify.this);//ERROR ShowDialog cannot be resolved to a type
-                    builder.setTitle("Result");
-                    builder.setMessage(msg);
-
-                    builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                            if (status.equalsIgnoreCase("200") || status.equalsIgnoreCase("335")) {
-                                mAppHandler.setMerchantTypeVerificationStatus("verified");
-                                mAppHandler.setDayCount(0);
-
-                                startActivity(new Intent(MerchantTypeVerify.this, MainActivity.class));
-                                finish();
-                            }
-                        }
-                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-            }
-        }
-    }
+//    private class ConfirmMerchantTypeAsync extends AsyncTask<String, String, String> {
+//
+//        @Override
+//        protected void onPreExecute() {
+//            showProgressDialog();
+//        }
+//
+//        @Override
+//        protected String doInBackground(String... params) {
+//            String responseTxt = null;
+//            HttpClient httpclient = new DefaultHttpClient();
+//            HttpPost httppost = new HttpPost(params[0]);
+//            try {
+//                List<NameValuePair> nameValuePairs = new ArrayList<>(5);
+//                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
+//                nameValuePairs.add(new BasicNameValuePair("merchantType", merchantTypeId));
+//                nameValuePairs.add(new BasicNameValuePair("businessType", str_businessId));
+//                nameValuePairs.add(new BasicNameValuePair("businessTypeName", URLEncoder.encode(str_businessType, "UTF-8")));
+//                nameValuePairs.add(new BasicNameValuePair("format", "json"));
+//                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+//
+//                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+//                responseTxt = httpclient.execute(httppost, responseHandler);
+//            } catch (Exception e) {
+//                e.fillInStackTrace();
+//                Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+//                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+//                View snackBarView = snackbar.getView();
+//                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+//            }
+//            return responseTxt;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            dismissProgressDialog();
+//            if (result != null) {
+//                try {
+//                    business_type_id_array = new ArrayList<>();
+//                    business_type_name_array = new ArrayList<>();
+//
+//                    JSONObject jsonObject = new JSONObject(result);
+//                    final String status = jsonObject.getString("status");
+//                    String msg = jsonObject.getString("message");
+//
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(MerchantTypeVerify.this);//ERROR ShowDialog cannot be resolved to a type
+//                    builder.setTitle("Result");
+//                    builder.setMessage(msg);
+//
+//                    builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            dialog.dismiss();
+//                            if (status.equalsIgnoreCase("200") || status.equalsIgnoreCase("335")) {
+//                                mAppHandler.setMerchantTypeVerificationStatus("verified");
+//                                mAppHandler.setDayCount(0);
+//
+//                                startActivity(new Intent(MerchantTypeVerify.this, MainActivity.class));
+//                                finish();
+//                            }
+//                        }
+//                    });
+//                    AlertDialog alert = builder.create();
+//                    alert.show();
+//
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                    Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+//                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+//                    View snackBarView = snackbar.getView();
+//                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+//                    snackbar.show();
+//                }
+//            }
+//        }
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
