@@ -135,10 +135,10 @@ public class BankDetailsActivity extends BaseActivity {
 
         try {
 
-//            String branchName = "Branch Name: " + responseDistrictData.getBankInfo().getBranchName();
-//            textBranchName.setText(branchName);
+            String branchName = "Branch Name: " + responseDistrictData.getBankInfo().getBranch();
+            textBranchName.setText(branchName);
 
-            String accountName = "Account Name: " + responseDistrictData.getBankInfo().getName();
+            String accountName = "Account Name: " + responseDistrictData.getBankInfo().getAccountName();
             textAccountName.setText(accountName);
 
 
