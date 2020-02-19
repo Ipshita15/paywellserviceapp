@@ -31,6 +31,8 @@ import com.cloudwell.paywell.services.activity.home.model.changePin.RequestChang
 import com.cloudwell.paywell.services.activity.home.model.forgetPin.ReposeForgetPIn;
 import com.cloudwell.paywell.services.activity.home.model.forgetPin.RequestForgetPin;
 import com.cloudwell.paywell.services.activity.home.model.refreshToken.RequestRefreshToken;
+import com.cloudwell.paywell.services.activity.location.model.CurrentLocationModel;
+import com.cloudwell.paywell.services.activity.modelPojo.MerchantRequestPojo;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationReadAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResposeReScheduleNotificationAccept;
@@ -470,7 +472,6 @@ public interface APIService {
     @POST("Android/AndroidWebViewController/salesStatement")
     Call<ResponseBody> salesStatementForhttps( @Body RequestBody body);
 
-
     @POST("Android/AndroidWebViewController/getAllTransactionStatement")
     Call<ResponseBody> getAllTransactionStatementForHttps( @Body RequestBody body);
 
@@ -497,6 +498,15 @@ public interface APIService {
 
     @POST("Utility/IvacSystem/getIvacTrxList")
     Call<ResponseBody> getIvacTrxList(@Body IvacTrxListModel ivacTrxListModel);
+
+    @POST("Retailer/RetailerService/doUpdateRetailersCurrentLocation")
+    Call<ResponseBody> updateCurrentLocation(@Body CurrentLocationModel locationModel);
+
+
+    @POST("Retailer/RetailerService/UpdateMarchentAndBusinessType")
+    Call<ResponseBody> updateMerchentBusiness(@Body MerchantRequestPojo merchantRequestPojo);
+
+
 }
 
 

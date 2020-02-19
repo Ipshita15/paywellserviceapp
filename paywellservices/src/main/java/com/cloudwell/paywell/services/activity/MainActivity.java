@@ -51,6 +51,7 @@ import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity;
 import com.cloudwell.paywell.services.activity.home.HomeActivity;
+import com.cloudwell.paywell.services.activity.location.model.CurrentLocationModel;
 import com.cloudwell.paywell.services.activity.mfs.MFSMainActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.MyFavoriteMenuActivity;
@@ -144,10 +145,12 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -174,6 +177,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -508,6 +512,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
     private void InitializeData() {
+
         /*Buttons Initialization*/
         home_topup = findViewById(R.id.homeBtnTopup);
         home_utility = findViewById(R.id.homeBtnUtility);
@@ -600,6 +605,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
 
         }
+
+
+
 //        else  if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("false")){
 //            Intent intent = new Intent(MainActivity.this, ChangePinActivity.class);
 //            intent.putExtra("isFirstTime", true);
@@ -1947,79 +1955,57 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else {
             if (!mAppHandler.getLatitude().equalsIgnoreCase("unknown")
                     && !mAppHandler.getLongitude().equalsIgnoreCase("unknown")) {
-                new PushLocationLonLatTask().execute(getResources().getString(R.string.update_location));
+                pushLocationLonLat();
             }
         }
     }
 
-
-    @SuppressWarnings("deprecation")
-    private class PushLocationLonLatTask extends AsyncTask<String, Intent, String> {
-        @Override
-        protected String doInBackground(String... params) {
-            String result = null;
-            try {
-                HttpClient httpClients = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost(params[0]);
-
-                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getUserName()));
-                nameValuePairs.add(new BasicNameValuePair("latitude", mAppHandler.getLatitude()));
-                nameValuePairs.add(new BasicNameValuePair("longitude", mAppHandler.getLongitude()));
-                nameValuePairs.add(new BasicNameValuePair("accuracy", mAppHandler.getAccuracy()));
-                nameValuePairs.add(new BasicNameValuePair("country", mAppHandler.getCountry()));
-                nameValuePairs.add(new BasicNameValuePair("address", mAppHandler.getAddress()));
-
-                Logger.v("username " + mAppHandler.getUserName() +
-                        " latitude " + mAppHandler.getLatitude() +
-                        " longitude " + mAppHandler.getLongitude() +
-                        " accuracy " + mAppHandler.getAccuracy() +
-                        " country" + mAppHandler.getCountry() +
-                        " address" + mAppHandler.getAddress()
-                );
+    private void pushLocationLonLat(){
+        CurrentLocationModel currentLocationModel = new CurrentLocationModel();
+        currentLocationModel.setUsername(mAppHandler.getUserName());
+        currentLocationModel.setLatitude(mAppHandler.getLatitude());
+        currentLocationModel.setLongitude(mAppHandler.getLongitude());
+        currentLocationModel.setAccuracy(mAppHandler.getAccuracy());
+        currentLocationModel.setCountry(mAppHandler.getCountry());
+        currentLocationModel.setAddress(mAppHandler.getAddress());
 
 
-                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+        ApiUtils.getAPIServiceV2().updateCurrentLocation(currentLocationModel).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                result = httpClients.execute(httpPost, responseHandler);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return result;
-        }
+                if (response.code() == 200){
 
-        @Override
-        protected void onPostExecute(String result) {
-            if (result != null) {
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String status = jsonObject.getString(TAG_RESPONSE_STATUS);
+                    try {
+                        JSONObject object = new JSONObject(response.body().string());
+                        int status = object.getInt(TAG_RESPONSE_STATUS);
+                        if (status == 200){
+                            mAppHandler.setLocationUpdateCheck(System.currentTimeMillis() / 1000);
+                        }else {
+                            showErrorMessagev1(getString(R.string.try_again_msg));
+                        }
 
-                    if (status.equalsIgnoreCase("200")) {
-                        mAppHandler.setLocationUpdateCheck(System.currentTimeMillis() / 1000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        showErrorMessagev1(getString(R.string.try_again_msg));
                     }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
+
+
+                }else {
+                    showErrorMessagev1(getString(R.string.conn_timeout_msg));
                 }
-            } else {
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.conn_timeout_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
+
             }
-        }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                showErrorMessagev1(getString(R.string.conn_timeout_msg));
+            }
+        });
+
+
     }
+
 
 
     private void goToFacebook() {
@@ -2378,7 +2364,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
                 intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "mini");
-        ;
+
 
                 startActivityWithFlag(intent);
 

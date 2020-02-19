@@ -16,10 +16,12 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.modelPojo.MerchantRequestPojo;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -34,12 +36,18 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MerchantTypeVerify extends BaseActivity {
 
@@ -218,87 +226,155 @@ public class MerchantTypeVerify extends BaseActivity {
                 AppHandler.showDialog(getSupportFragmentManager());
             } else {
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_MERCHANT_TYPE_CONFIRM_REQUEST);
-                new ConfirmMerchantTypeAsync().execute(
-                        getResources().getString(R.string.conf_merchant_type));
+              confirmMerchantType();
+              //  new ConfirmMerchantTypeAsync().execute(getResources().getString(R.string.conf_merchant_type));
             }
         }
     }
 
-    private class ConfirmMerchantTypeAsync extends AsyncTask<String, String, String> {
 
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
+
+    private void confirmMerchantType(){
+        showProgressDialog();
+        MerchantRequestPojo requestPojo = new MerchantRequestPojo();
+
+        requestPojo.setUsername(mAppHandler.getUserName());
+        requestPojo.setMerchantType(merchantTypeId);
+        requestPojo.setBusinessType(str_businessId);
+        try {
+            String busTypeName = URLEncoder.encode(str_businessType, "UTF-8");
+            requestPojo.setBusinessTypeName(busTypeName);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
 
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(5);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getUserName()));
-                nameValuePairs.add(new BasicNameValuePair("merchantType", merchantTypeId));
-                nameValuePairs.add(new BasicNameValuePair("businessType", str_businessId));
-                nameValuePairs.add(new BasicNameValuePair("businessTypeName", URLEncoder.encode(str_businessType, "UTF-8")));
-                nameValuePairs.add(new BasicNameValuePair("format", "json"));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
+        ApiUtils.getAPIServiceV2().updateMerchentBusiness(requestPojo).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
+                if (response.code() == 200){
+                    try {
+                        business_type_id_array = new ArrayList<>();
+                        business_type_name_array = new ArrayList<>();
 
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            if (result != null) {
-                try {
-                    business_type_id_array = new ArrayList<>();
-                    business_type_name_array = new ArrayList<>();
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        final String status = jsonObject.getString("status");
+                        String msg = jsonObject.getString("message");
 
-                    JSONObject jsonObject = new JSONObject(result);
-                    final String status = jsonObject.getString("status");
-                    String msg = jsonObject.getString("message");
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MerchantTypeVerify.this);//ERROR ShowDialog cannot be resolved to a type
+                        builder.setTitle("Result");
+                        builder.setMessage(msg);
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MerchantTypeVerify.this);//ERROR ShowDialog cannot be resolved to a type
-                    builder.setTitle("Result");
-                    builder.setMessage(msg);
+                        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                                if (status.equalsIgnoreCase("200") || status.equalsIgnoreCase("335")) {
+                                    mAppHandler.setMerchantTypeVerificationStatus("verified");
+                                    mAppHandler.setDayCount(0);
 
-                    builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                            if (status.equalsIgnoreCase("200") || status.equalsIgnoreCase("335")) {
-                                mAppHandler.setMerchantTypeVerificationStatus("verified");
-                                mAppHandler.setDayCount(0);
-
-                                startActivity(new Intent(MerchantTypeVerify.this, MainActivity.class));
-                                finish();
+                                    startActivity(new Intent(MerchantTypeVerify.this, MainActivity.class));
+                                    finish();
+                                }
                             }
-                        }
-                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
+                        });
+                        AlertDialog alert = builder.create();
+                        alert.show();
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
+
+                    }catch (Exception e){
+                        showErrorMessagev1(getString(R.string.try_again_msg));
+                    }
+                }else {
+                    showErrorMessagev1(getString(R.string.try_again_msg));
                 }
+
             }
-        }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+            }
+        });
+
+
     }
+
+//    private class ConfirmMerchantTypeAsync extends AsyncTask<String, String, String> {
+//
+//        @Override
+//        protected void onPreExecute() {
+//            showProgressDialog();
+//        }
+//
+//        @Override
+//        protected String doInBackground(String... params) {
+//            String responseTxt = null;
+//            HttpClient httpclient = new DefaultHttpClient();
+//            HttpPost httppost = new HttpPost(params[0]);
+//            try {
+//                List<NameValuePair> nameValuePairs = new ArrayList<>(5);
+//                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
+//                nameValuePairs.add(new BasicNameValuePair("merchantType", merchantTypeId));
+//                nameValuePairs.add(new BasicNameValuePair("businessType", str_businessId));
+//                nameValuePairs.add(new BasicNameValuePair("businessTypeName", URLEncoder.encode(str_businessType, "UTF-8")));
+//                nameValuePairs.add(new BasicNameValuePair("format", "json"));
+//                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+//
+//                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+//                responseTxt = httpclient.execute(httppost, responseHandler);
+//            } catch (Exception e) {
+//                e.fillInStackTrace();
+//                Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+//                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+//                View snackBarView = snackbar.getView();
+//                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+//            }
+//            return responseTxt;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            dismissProgressDialog();
+//            if (result != null) {
+//                try {
+//                    business_type_id_array = new ArrayList<>();
+//                    business_type_name_array = new ArrayList<>();
+//
+//                    JSONObject jsonObject = new JSONObject(result);
+//                    final String status = jsonObject.getString("status");
+//                    String msg = jsonObject.getString("message");
+//
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(MerchantTypeVerify.this);//ERROR ShowDialog cannot be resolved to a type
+//                    builder.setTitle("Result");
+//                    builder.setMessage(msg);
+//
+//                    builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            dialog.dismiss();
+//                            if (status.equalsIgnoreCase("200") || status.equalsIgnoreCase("335")) {
+//                                mAppHandler.setMerchantTypeVerificationStatus("verified");
+//                                mAppHandler.setDayCount(0);
+//
+//                                startActivity(new Intent(MerchantTypeVerify.this, MainActivity.class));
+//                                finish();
+//                            }
+//                        }
+//                    });
+//                    AlertDialog alert = builder.create();
+//                    alert.show();
+//
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                    Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+//                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+//                    View snackBarView = snackbar.getView();
+//                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+//                    snackbar.show();
+//                }
+//            }
+//        }
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
