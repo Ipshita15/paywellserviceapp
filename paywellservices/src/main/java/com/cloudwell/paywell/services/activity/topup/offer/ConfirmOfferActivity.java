@@ -127,7 +127,7 @@ public class ConfirmOfferActivity extends BaseActivity implements View.OnClickLi
 
         final RequestTopup requestTopup = new RequestTopup();
         requestTopup.setPassword("" + pin);
-        requestTopup.setUserName("" + mAppHandler.getImeiNo());
+        requestTopup.setUserName("" + mAppHandler.getUserName());
 
         requestTopup.setTopupData(topupDatumList);
 

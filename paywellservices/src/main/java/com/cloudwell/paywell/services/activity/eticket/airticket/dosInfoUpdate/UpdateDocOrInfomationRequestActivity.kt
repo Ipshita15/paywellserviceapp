@@ -168,7 +168,7 @@ class UpdateDocOrInfomationRequestActivity : AirTricketBaseActivity(), ShowMessa
                 if (isInternetConnection) {
 
                     val mAppHandler = AppHandler.getmInstance(application)
-                    val userName = mAppHandler.imeiNo
+                    val userName = mAppHandler.userName
 
 
 

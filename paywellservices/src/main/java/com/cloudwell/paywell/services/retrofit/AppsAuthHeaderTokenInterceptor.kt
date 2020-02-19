@@ -7,6 +7,7 @@ import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.RSAUtilty.Companion.getTokenBaseOnRSAlgorithm
 import com.cloudwell.paywell.services.utils.DateUtils
 import com.cloudwell.paywell.services.utils.DateUtils.getCurrentTimestamp
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import com.google.gson.Gson
 import okhttp3.Interceptor
 import okhttp3.RequestBody
@@ -111,11 +112,15 @@ private fun processApplicationJsonRequestBody(requestBody: RequestBody): Request
     try {
         val mAppHandler = AppHandler.getmInstance(mContext)
 
+        val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(mContext)!!.rid)
+
+
         val obj = JSONObject(customReq)
         obj.put("deviceId", mAppHandler.androidID)
         obj.put("timestamp",""+ DateUtils.getCurrentTimestamp())
         obj.put("format", "json")
         obj.put("channel", "android")
+        obj.put("ref_id", uniqueKey)
 
 
 

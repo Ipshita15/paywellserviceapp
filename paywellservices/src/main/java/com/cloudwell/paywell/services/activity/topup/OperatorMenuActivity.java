@@ -174,7 +174,7 @@ public class OperatorMenuActivity extends BaseActivity {
             try {
                 //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("subServiceId", data[1]));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));

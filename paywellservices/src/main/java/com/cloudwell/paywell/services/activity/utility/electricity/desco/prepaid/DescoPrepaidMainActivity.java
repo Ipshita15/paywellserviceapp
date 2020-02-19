@@ -10,8 +10,6 @@ import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 
-import androidx.appcompat.app.AppCompatDialog;
-
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoPrepaidTrxLogRequest;
@@ -26,6 +24,7 @@ import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.appcompat.app.AppCompatDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -228,7 +227,7 @@ public class DescoPrepaidMainActivity extends BaseActivity implements CompoundBu
 
         String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
 
-        String imeiNo = AppHandler.getmInstance(getApplicationContext()).getImeiNo();
+        String imeiNo = AppHandler.getmInstance(getApplicationContext()).getUserName();
 
         DescoPrepaidTrxLogRequest descoPrepaidTrxLogRequest =new DescoPrepaidTrxLogRequest("json",selectedLimit,uniqueKey,"Desco_prepaid",imeiNo);
 

@@ -309,7 +309,7 @@ public class EntrySecondActivity extends BaseActivity implements AdapterView.OnI
                 nameValuePairs.add(new BasicNameValuePair("mode", "post"));
                 nameValuePairs.add(new BasicNameValuePair("distriID", str_districtId));
                 nameValuePairs.add(new BasicNameValuePair("thanaID", str_thanaId));
-                nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getUserName()));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();

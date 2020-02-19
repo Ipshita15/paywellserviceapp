@@ -883,7 +883,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 nameValuePairs.add(new BasicNameValuePair("mode", "post"));
                 nameValuePairs.add(new BasicNameValuePair("distriID", regModel.getDistrict()));
                 nameValuePairs.add(new BasicNameValuePair("thanaID", regModel.getThanaName()));
-                nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getUserName()));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();

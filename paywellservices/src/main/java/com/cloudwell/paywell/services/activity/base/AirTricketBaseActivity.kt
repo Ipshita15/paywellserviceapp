@@ -110,7 +110,7 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
 
                     showProgressDialog()
 
-                    val userName = AppHandler.getmInstance(applicationContext).imeiNo
+                    val userName = AppHandler.getmInstance(applicationContext).userName
 
                     val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(applicationContext)!!.rid)
 
@@ -173,7 +173,7 @@ open class AirTricketBaseActivity : MVVMBaseActivity() {
                 val PIN_NO = pinNoET.text.toString()
                 if (isInternetConnection) {
 
-                    val userName = AppHandler.getmInstance(applicationContext).imeiNo
+                    val userName = AppHandler.getmInstance(applicationContext).userName
                     if (typeOfRequest == AllConstant.Action_Void) {
                         submitCancelTicketRequest(userName, PIN_NO, bookingId, cancelReason, "Void", "json")
                     } else if (typeOfRequest == AllConstant.Action_Refund) {

@@ -51,7 +51,7 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
         busTransactionRV.setLayoutManager(new LinearLayoutManager(this));
         adapter = new BusTransactionLogAdapter(allDataArrayList, BusTransactionLogActivity.this);
         busTransactionRV.setAdapter(adapter);
-        String userName = AppHandler.getmInstance(this).getImeiNo();
+        String userName = AppHandler.getmInstance(this).getUserName();
         String skey = ApiUtils.KEY_SKEY;
         if (limit > 0) {
             getTransactionLog(userName, skey, String.valueOf(limit));

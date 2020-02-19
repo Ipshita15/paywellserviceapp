@@ -7,5 +7,7 @@ class RequestNotification {
     var refId: String = ""
     @SerializedName("username")
     var username: String = ""
+    @SerializedName("deviceFcmToken")
+    var deviceFcmToken: String = ""
 
 }

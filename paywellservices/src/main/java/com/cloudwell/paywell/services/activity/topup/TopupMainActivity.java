@@ -706,7 +706,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
             HttpPost httppost = new HttpPost(params[0]);
             try {
                 List<NameValuePair> nameValuePairs = new ArrayList<>(2);
-                nameValuePairs.add(new BasicNameValuePair("iemi_no", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("iemi_no", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("msisdn", params[1]));
                 nameValuePairs.add(new BasicNameValuePair("ref_id", uniqueKey));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -932,7 +932,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
                 String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(TopupMainActivity.this).getRID());
 
                 List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("iemi_no", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("iemi_no", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("pin_code", "1234"));
                 nameValuePairs.add(new BasicNameValuePair("limit", params[1]));
                 nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
@@ -1099,7 +1099,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
 
         final RequestTopup requestTopup = new RequestTopup();
         requestTopup.setPassword("" + pinNo);
-        requestTopup.setUserName("" + mAppHandler.getImeiNo());
+        requestTopup.setUserName("" + mAppHandler.getUserName());
 
         List<TopupData> topupDatumList = new ArrayList<>();
 
@@ -1502,7 +1502,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
             try {
                 //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("subServiceId", data[1]));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));

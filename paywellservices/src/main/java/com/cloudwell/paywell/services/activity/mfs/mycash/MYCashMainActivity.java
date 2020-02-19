@@ -118,7 +118,7 @@ public class MYCashMainActivity extends BaseActivity implements View.OnClickList
 
             try {
                 List<NameValuePair> nameValuePairs = new ArrayList<>(2);
-                nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("pin", _pin));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -183,7 +183,7 @@ public class MYCashMainActivity extends BaseActivity implements View.OnClickList
             try {
                 //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("password", mAppHandler.getPin()));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));

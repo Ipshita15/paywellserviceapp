@@ -252,7 +252,7 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
         descoRequestInquiryModel.setPayerMobileNo(mPhn);
         descoRequestInquiryModel.setAmount(mAmount);
         descoRequestInquiryModel.setFormat("json");
-        descoRequestInquiryModel.setUsername(mAppHandler.getImeiNo());
+        descoRequestInquiryModel.setUsername(mAppHandler.getUserName());
         descoRequestInquiryModel.setRefId(uniqueKey);
 
         ApiUtils.getAPIService().descoInquiryRequest(descoRequestInquiryModel,getResources().getString(R.string.desco_prepaid_bill_enq)).enqueue(new Callback<DescoInquiryResponse>() {
@@ -360,7 +360,7 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
         showProgressDialog();
         String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
         DescoBillPaySubmit descoBillPaySubmit = new DescoBillPaySubmit();
-        descoBillPaySubmit.setUsername( mAppHandler.getImeiNo());
+        descoBillPaySubmit.setUsername( mAppHandler.getUserName());
         descoBillPaySubmit.setPassword(mPin);
         descoBillPaySubmit.setPayerMobileNo(mPhn);
         descoBillPaySubmit.setBillNo(mBill);

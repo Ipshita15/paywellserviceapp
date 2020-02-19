@@ -140,7 +140,7 @@ public class InquiryMenuActivity extends BaseActivity {
             try {
                 //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("limit", data[1]));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
                 nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));

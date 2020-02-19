@@ -194,7 +194,7 @@ public class SearchTrainActivity extends BaseActivity implements AdapterView.OnI
             } else {
                 try {
                     new TrainAsync().execute(getResources().getString(R.string.train_source_url),
-                            "imei_no=" + mAppHandler.getImeiNo(),
+                            "imei_no=" + mAppHandler.getUserName(),
                             "&mode=train_list",
                             "&source_code=" + URLEncoder.encode(mAppHandler.getSourceStationCode(), "UTF-8"),
                             "&destination=" + URLEncoder.encode(mAppHandler.getDestinationName(), "UTF-8"),

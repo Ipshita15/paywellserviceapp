@@ -15,10 +15,6 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
-import com.cloudwell.paywell.services.activity.utility.banglalion.model.BanglalionHistory;
-import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCPostpaidBillPayActivity;
-import com.cloudwell.paywell.services.activity.utility.ivac.IvacFeePayActivity;
-import com.cloudwell.paywell.services.activity.utility.ivac.model.IvacHistory;
 import com.cloudwell.paywell.services.activity.utility.karnaphuli.model.KarnaphuliHistory;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
@@ -242,7 +238,7 @@ public class KarnaphuliBillPayActivity extends BaseActivity implements View.OnCl
             try {
                 //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(6);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("password", mPin));
                 nameValuePairs.add(new BasicNameValuePair("billNo", mBill));
                 nameValuePairs.add(new BasicNameValuePair("payerMobileNo", mPhn));
@@ -376,7 +372,7 @@ public class KarnaphuliBillPayActivity extends BaseActivity implements View.OnCl
             try {
                 //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(8);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("password", mPin));
                 nameValuePairs.add(new BasicNameValuePair("billNo", mBill));
                 nameValuePairs.add(new BasicNameValuePair("payerMobileNo", mPhn));

@@ -96,7 +96,7 @@ class NagadBalanceClaimActivity : UtilityBaseActivity() {
     private fun callRransactionInquiryAPI(pin: String, mobileNumber: String, amount: String) {
         val hostUrlBkapi = AllUrl.HOST_URL_bkapi
         val sec_token = AllUrl.sec_token
-        val imeiNo = AppHandler.getmInstance(applicationContext).imeiNo
+        val imeiNo = AppHandler.getmInstance(applicationContext).userName
         val format = "json"
         val gateway_id = "5"
 

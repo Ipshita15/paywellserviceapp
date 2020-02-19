@@ -24,8 +24,8 @@ import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.refill.banktransfer.model.ReposeDistrictListerBankDeposit;
 import com.cloudwell.paywell.services.activity.refill.model.BranchData;
-import com.cloudwell.paywell.services.activity.refill.model.DistrictData;
 import com.cloudwell.paywell.services.activity.refill.model.RefillRequestData;
 import com.cloudwell.paywell.services.activity.refill.model.RequestBranch;
 import com.cloudwell.paywell.services.activity.refill.model.RequestRefillBalance;
@@ -35,7 +35,6 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
-import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.ByteArrayOutputStream;
@@ -53,7 +52,7 @@ import retrofit2.Response;
 public class BankDetailsActivity extends BaseActivity {
 
     private static final int PERMISSION_FOR_GALLERY = 321;
-    public static DistrictData responseDistrictData;
+    public static ReposeDistrictListerBankDeposit responseDistrictData;
     private static String KEY_TAG = BankDetailsActivity.class.getName();
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
@@ -79,7 +78,7 @@ public class BankDetailsActivity extends BaseActivity {
         mCd = new ConnectionDetector(AppController.getContext());
 
         mRequestRefillBalance = new RequestRefillBalance();
-        mRequestRefillBalance.setmUsername("" + mAppHandler.getImeiNo());
+        mRequestRefillBalance.setmUsername("" + mAppHandler.getUserName());
         districtChangeStatus = true;
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -136,10 +135,10 @@ public class BankDetailsActivity extends BaseActivity {
 
         try {
 
-            String branchName = "Branch Name: " + responseDistrictData.getBankInfo().getBranchName();
-            textBranchName.setText(branchName);
+//            String branchName = "Branch Name: " + responseDistrictData.getBankInfo().getBranchName();
+//            textBranchName.setText(branchName);
 
-            String accountName = "Account Name: " + responseDistrictData.getBankInfo().getAccountName();
+            String accountName = "Account Name: " + responseDistrictData.getBankInfo().getName();
             textAccountName.setText(accountName);
 
 
@@ -161,7 +160,7 @@ public class BankDetailsActivity extends BaseActivity {
             district_array = new ArrayList<>();
             branch_array = new ArrayList<>();
             for (int i = 0; i < responseDistrictData.getDistrictData().size(); i++) {
-                district_array.add(responseDistrictData.getDistrictData().get(i).getDistrictName());
+                district_array.add(responseDistrictData.getDistrictData().get(i).getDistrict_name());
             }
 
             final ArrayAdapter<String> arrayAdapterDistrictSpinner =
@@ -282,12 +281,11 @@ public class BankDetailsActivity extends BaseActivity {
         showProgressDialog();
 
         final RequestBranch requestBranch = new RequestBranch();
-        requestBranch.setmUsername("" + mAppHandler.getImeiNo());
+        requestBranch.setmUsername("" + mAppHandler.getUserName());
         requestBranch.setmBankId("" + bankId);
         requestBranch.setmDistrictId("" + districtId);
 
-        Call<BranchData> responseBodyCall = ApiUtils.getAPIService().callBranchDataAPI(requestBranch.getmUsername(),
-                requestBranch.getmBankId(), requestBranch.getmDistrictId());
+        Call<BranchData> responseBodyCall = ApiUtils.getAPIServiceV2().callBranchDataAPI(requestBranch);
 
         responseBodyCall.enqueue(new Callback<BranchData>() {
             @Override
@@ -406,13 +404,11 @@ public class BankDetailsActivity extends BaseActivity {
     private void submitBalanceRequest() {
         showProgressDialog();
 
-        String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
+        mRequestRefillBalance.setAmount(etAmount.getText().toString());
 
 
-        Call<RefillRequestData> responseBodyCall = ApiUtils.getAPIService().callBalanceRefillAPI(mRequestRefillBalance.getmUsername(),
-                mRequestRefillBalance.getmBankId(), mRequestRefillBalance.getmDistrictId(),
-                mRequestRefillBalance.getmBranchId(),
-                mRequestRefillBalance.getmImagePath(), etAmount.getText().toString(),uniqueKey);
+
+        Call<RefillRequestData> responseBodyCall = ApiUtils.getAPIServiceV2().callBalanceRefillAPI(mRequestRefillBalance);
 
         responseBodyCall.enqueue(new Callback<RefillRequestData>() {
             @Override

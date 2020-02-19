@@ -81,7 +81,7 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
             public void onClick(View view) {
 
                 if (!bookingIdET.getText().toString().isEmpty() && !bookingCancelReasonSPNR.getSelectedItem().toString().equals("Select your reason")) {
-                    String userName = mAppHandler.getImeiNo();
+                    String userName = mAppHandler.getUserName();
                     String reason = bookingCancelReasonSPNR.getSelectedItem().toString();
 
                     askForPin(bookingIdET.getText().toString(), bookingCancelReasonSPNR.getSelectedItem().toString());
@@ -160,7 +160,7 @@ public class BookingCancelActivity extends AirTricketBaseActivity {
                     PIN_NO = pinNoET.getText().toString();
                     if (cd.isConnectingToInternet()) {
 
-                        String userName = mAppHandler.getImeiNo();
+                        String userName = mAppHandler.getUserName();
                         submitCancelRequest(userName, PIN_NO, bookingId, cancelReason, "json");
                     } else {
                         Snackbar snackbar = Snackbar.make(cancelMainLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);

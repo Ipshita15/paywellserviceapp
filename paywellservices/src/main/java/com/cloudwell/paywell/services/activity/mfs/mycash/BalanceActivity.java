@@ -126,7 +126,7 @@ public class BalanceActivity extends BaseActivity implements View.OnClickListene
             try {
                 //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(5);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("password", mAppHandler.getPin()));
                 nameValuePairs.add(new BasicNameValuePair("pin", _pin));
                 nameValuePairs.add(new BasicNameValuePair("service_type", "MyCash_Balance"));

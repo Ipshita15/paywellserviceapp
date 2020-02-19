@@ -376,7 +376,7 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
             try {
                 //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(9);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("password", mPin));
                 nameValuePairs.add(new BasicNameValuePair("billNo", mBill));
                 nameValuePairs.add(new BasicNameValuePair("payerMobileNo", mPhn));
@@ -510,7 +510,7 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
             try {
                 //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(11);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("password", mPin));
                 nameValuePairs.add(new BasicNameValuePair("billNo", mBill));
                 nameValuePairs.add(new BasicNameValuePair("payerMobileNo", mPhn));

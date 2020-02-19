@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
-import com.cloudwell.paywell.services.activity.refill.model.DistrictData;
+import com.cloudwell.paywell.services.activity.refill.banktransfer.model.ReposeDistrictListerBankDeposit;
 import com.cloudwell.paywell.services.activity.refill.model.RequestDistrict;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
@@ -124,25 +124,42 @@ public class BankTransferMainActivity extends BaseActivity {
         showProgressDialog();
 
         final RequestDistrict requestDistrict = new RequestDistrict();
-        requestDistrict.setmUsername("" + mAppHandler.getImeiNo());
-        requestDistrict.setmBankId("" + bankId);
+        requestDistrict.setMUsername("" + mAppHandler.getUserName());
+        requestDistrict.setMBankId("" + bankId);
 
-        Call<DistrictData> responseBodyCall = ApiUtils.getAPIService().callDistrictDataAPI(requestDistrict.getmUsername(), requestDistrict.getmBankId());
 
-        responseBodyCall.enqueue(new Callback<DistrictData>() {
+
+        Call<ReposeDistrictListerBankDeposit> responseBodyCall = ApiUtils.getAPIServiceV2().callDistrictDataAPI(requestDistrict);
+
+        responseBodyCall.enqueue(new Callback<ReposeDistrictListerBankDeposit>() {
             @Override
-            public void onResponse(Call<DistrictData> call, Response<DistrictData> response) {
+            public void onResponse(Call<ReposeDistrictListerBankDeposit> call, Response<ReposeDistrictListerBankDeposit> response) {
                 dismissProgressDialog();
-                Bundle bundle = new Bundle();
-                bundle.putString("bankId", requestDistrict.getmBankId());
-                bundle.putString("bankName", bankName);
 
-                BankDetailsActivity.responseDistrictData = response.body();
-                startBankDetailsActivity(bundle);
+
+               if (response.code() == 200){
+                   ReposeDistrictListerBankDeposit m = response.body();
+                   if (m.getStatus() == 200){
+
+
+                       Bundle bundle = new Bundle();
+                       bundle.putString("bankId", requestDistrict.getMBankId());
+                       bundle.putString("bankName", bankName);
+
+                       BankDetailsActivity.responseDistrictData = m;
+                       startBankDetailsActivity(bundle);
+                   }   else {
+                       showErrorCallBackMessagev1(m.getMessage());
+                   }
+               }else {
+                   showTryAgainDialog();
+               }
+
+
             }
 
             @Override
-            public void onFailure(Call<DistrictData> call, Throwable t) {
+            public void onFailure(Call<ReposeDistrictListerBankDeposit> call, Throwable t) {
                 dismissProgressDialog();
                 Log.d(KEY_TAG, "onFailure:");
                 Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);

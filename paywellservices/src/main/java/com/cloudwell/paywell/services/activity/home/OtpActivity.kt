@@ -254,28 +254,35 @@ class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleA
 
                 response.body().let {
                     if (it?.apiStatus ?: 0 == 200) {
-                        val oTPVerificationMsgDialog = OTPVerificationMsgDialog(object : OTPVerificationMsgDialog.OnClickHandler {
-                            override fun onSubmit() {
+
+                       if (it?.responseDetails?.status == 200) {
 
 
-                                if (userNeedToChangePassword){
-                                    val i = Intent(this@OtpActivity, ChangePinActivity::class.java)
-                                    i.putExtra("isFirstTime", true);
-                                    startActivity(i)
-                                    finish()
-
-                                }else{
-                                    AppHandler.getmInstance(applicationContext).appStatus= AppsStatusConstant.KEY_login
-                                    val i = Intent(this@OtpActivity, AppLoadingActivity::class.java)
-                                    startActivity(i)
-                                    finish()
-                                }
+                           val oTPVerificationMsgDialog = OTPVerificationMsgDialog(object : OTPVerificationMsgDialog.OnClickHandler {
+                               override fun onSubmit() {
 
 
-                            }
+                                   if (userNeedToChangePassword){
+                                       val i = Intent(this@OtpActivity, ChangePinActivity::class.java)
+                                       i.putExtra("isFirstTime", true);
+                                       startActivity(i)
+                                       finish()
 
-                        }, it?.responseDetails!!.statusName)
-                        oTPVerificationMsgDialog.show(supportFragmentManager, "oTPVerificationMsgDialog");
+                                   }else{
+                                       AppHandler.getmInstance(applicationContext).appStatus= AppsStatusConstant.KEY_login
+                                       val i = Intent(this@OtpActivity, AppLoadingActivity::class.java)
+                                       startActivity(i)
+                                       finish()
+                                   }
+
+
+                               }
+
+                           }, it?.responseDetails!!.statusName)
+                           oTPVerificationMsgDialog.show(supportFragmentManager, "oTPVerificationMsgDialog");
+                       }else{
+                          showErrorMessagev1(it?.responseDetails?.statusName)
+                       }
 
                     } else {
                         val errorMsgDialog = it?.apiStatusName?.let { it1 ->

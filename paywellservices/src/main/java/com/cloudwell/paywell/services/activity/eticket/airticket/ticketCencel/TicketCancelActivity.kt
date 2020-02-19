@@ -65,7 +65,7 @@ class TicketCancelActivity : AirTricketBaseActivity() {
             if (!bookingIdET!!.text.toString().isEmpty() && !etReasons.text.toString().trim().equals("")) {
 
                 val mAppHandler = AppHandler.getmInstance(applicationContext)
-                val userName = mAppHandler.getImeiNo()
+                val userName = mAppHandler.userName
 
                 val reason = etReasons.text.toString().trim()
 

@@ -42,7 +42,7 @@ class AirThicketRepository(private val mContext: Context) {
 
     fun getAirSearchData(requestAirSearch: RequestAirSearch): MutableLiveData<ReposeAirSearch> {
         mAppHandler = AppHandler.getmInstance(mContext)
-        val userName = mAppHandler!!.imeiNo
+        val userName = mAppHandler!!.userName
 //        val userName = "cwntcl"
 
         val data = MutableLiveData<ReposeAirSearch>()
@@ -66,7 +66,7 @@ class AirThicketRepository(private val mContext: Context) {
     fun getAirports(iso: String, uniqueKey: String): MutableLiveData<ResGetAirports> {
 
         mAppHandler = AppHandler.getmInstance(mContext)
-        val userName = mAppHandler!!.imeiNo
+        val userName = mAppHandler!!.userName
 //        val userName = "cwntcl"
 
 
@@ -104,7 +104,7 @@ class AirThicketRepository(private val mContext: Context) {
 
     fun airPriceSearch(requestAirSearch: RequestAirPriceSearch): MutableLiveData<ResposeAirPriceSearch> {
         mAppHandler = AppHandler.getmInstance(mContext)
-        val userName = mAppHandler!!.imeiNo
+        val userName = mAppHandler!!.userName
 //        val userName = "cwntcl"
 
         val data = MutableLiveData<ResposeAirPriceSearch>()
@@ -129,7 +129,7 @@ class AirThicketRepository(private val mContext: Context) {
 
     fun airRulesSearch(requestAirPriceSearch: RequestAirPriceSearch): MutableLiveData<ResposeAirRules> {
         mAppHandler = AppHandler.getmInstance(mContext)
-        val userName = mAppHandler!!.imeiNo
+        val userName = mAppHandler!!.userName
 //        val userName = "cwntcl"
 
         val data = MutableLiveData<ResposeAirRules>()
@@ -157,7 +157,7 @@ class AirThicketRepository(private val mContext: Context) {
 
     fun callAirPreBookingAPI(requestAirPrebookingSearchParams: RequestAirPrebookingSearchParams): MutableLiveData<ResAirPreBooking> {
         mAppHandler = AppHandler.getmInstance(mContext)
-        val userName = mAppHandler!!.imeiNo
+        val userName = mAppHandler!!.userName
 //        val userName = "cwntcl"
         val format = "json"
 
@@ -210,7 +210,7 @@ class AirThicketRepository(private val mContext: Context) {
     fun uploadBookingFiles(bookingID: String?, dataList: List<FileUploadReqSearchPara>): MutableLiveData<JsonObject> {
 
         mAppHandler = AppHandler.getmInstance(mContext)
-        val userName = mAppHandler!!.imeiNo
+        val userName = mAppHandler!!.userName
 //        val userName = "cwntcl"
 
 
@@ -243,7 +243,7 @@ class AirThicketRepository(private val mContext: Context) {
     fun callInvoiceAPI(bookingID: String, emailString: String, key: String): MutableLiveData<ResInvoideEmailAPI> {
 
         mAppHandler = AppHandler.getmInstance(mContext)
-        val userName = mAppHandler!!.imeiNo
+        val userName = mAppHandler!!.userName
 
         val priceInvoiceStatus: Int
         if (key.equals("fare")){
@@ -275,7 +275,7 @@ class AirThicketRepository(private val mContext: Context) {
 
     fun callAirBookingAPI(piN_NO: String, requestAirPrebookingSearchParams: RequestAirPrebookingSearchParams): MutableLiveData<ResBookingAPI> {
         mAppHandler = AppHandler.getmInstance(mContext)
-        val userName = mAppHandler!!.imeiNo
+        val userName = mAppHandler!!.userName
         val format = "json"
 
         val data = MutableLiveData<ResBookingAPI>()
@@ -329,7 +329,7 @@ class AirThicketRepository(private val mContext: Context) {
 
     fun callGetBookingStatusAPI(limit: Int): MutableLiveData<BookingList> {
         mAppHandler = AppHandler.getmInstance(mContext)
-        val username = mAppHandler!!.imeiNo
+        val username = mAppHandler!!.userName
         val uniquekey = UniqueKeyGenerator.getUniqueKey(mAppHandler!!.rid)
 
         val data = MutableLiveData<BookingList>()
@@ -353,7 +353,7 @@ class AirThicketRepository(private val mContext: Context) {
 
     fun callCommissionMappingAPI(): MutableLiveData<ResCommistionMaping> {
         mAppHandler = AppHandler.getmInstance(mContext)
-        val username = mAppHandler!!.imeiNo
+        val username = mAppHandler!!.userName
 
         val data = MutableLiveData<ResCommistionMaping>()
         val uniquekey = UniqueKeyGenerator.getUniqueKey(mAppHandler!!.rid)
@@ -377,7 +377,7 @@ class AirThicketRepository(private val mContext: Context) {
 
     fun callIssueTicketAPI(pinNumber: String, bookingId: String, ssAcceptedPriceChangeandIssueTicket: Boolean): MutableLiveData<ResIssueTicket> {
         mAppHandler = AppHandler.getmInstance(mContext)
-        val username = mAppHandler!!.imeiNo
+        val username = mAppHandler!!.userName
 
         val data = MutableLiveData<ResIssueTicket>()
         val uniqueKey = UniqueKeyGenerator.getUniqueKey(mAppHandler!!.rid)

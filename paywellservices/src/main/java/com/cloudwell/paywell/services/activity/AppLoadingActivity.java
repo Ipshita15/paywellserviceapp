@@ -33,7 +33,6 @@ import com.cloudwell.paywell.services.retrofit.APIService;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.AppsStatusConstant;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
-import com.cloudwell.paywell.services.utils.TelephonyInfo;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
@@ -245,9 +244,7 @@ public class AppLoadingActivity extends BaseActivity {
             case REQUEST_PHONE_STATE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Phone permission has been granted
-                    TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(this);
-                    mImeiNo = telephonyInfo.getImeiSIM1();
-                    mAppHandler.setImeiNo(mImeiNo);
+
                     if (!mCd.isConnectingToInternet()) {
                         mAppHandler.showDialog(getSupportFragmentManager());
                     } else {
