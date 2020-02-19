@@ -39,9 +39,12 @@ import com.cloudwell.paywell.services.activity.notification.model.deletetNotific
 import com.cloudwell.paywell.services.activity.notification.model.getNotification.RequestNotificationAll;
 import com.cloudwell.paywell.services.activity.product.ekShop.model.ResEKReport;
 import com.cloudwell.paywell.services.activity.product.ekShop.model.ResEkShopToken;
+import com.cloudwell.paywell.services.activity.refill.banktransfer.model.ReposeDistrictListerBankDeposit;
 import com.cloudwell.paywell.services.activity.refill.model.BranchData;
-import com.cloudwell.paywell.services.activity.refill.model.DistrictData;
 import com.cloudwell.paywell.services.activity.refill.model.RefillRequestData;
+import com.cloudwell.paywell.services.activity.refill.model.RequestBranch;
+import com.cloudwell.paywell.services.activity.refill.model.RequestDistrict;
+import com.cloudwell.paywell.services.activity.refill.model.RequestRefillBalance;
 import com.cloudwell.paywell.services.activity.refill.nagad.model.ResTranstionINquiry;
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLog;
 import com.cloudwell.paywell.services.activity.reg.model.AuthRequestModel;
@@ -114,26 +117,14 @@ public interface APIService {
     Call<TopupReposeData> callTopAPI(@Part("requestData") RequestTopup requestTopup);
 
 
-    @POST("PayWellBankDepositSystem/getDistrictListforBankDeposit")
-    @FormUrlEncoded
-    Call<DistrictData> callDistrictDataAPI(@Field("username") String username,
-                                           @Field("bankId") String bankId);
+    @POST("Retailer/BankDepositSystem/getDistrictListforBankDeposit")
+    Call<ReposeDistrictListerBankDeposit> callDistrictDataAPI(@Body RequestDistrict requestDistrict);
 
-    @POST("PayWellBankDepositSystem/getBankBranch")
-    @FormUrlEncoded
-    Call<BranchData> callBranchDataAPI(@Field("username") String username,
-                                       @Field("bankId") String bankId,
-                                       @Field("districtId") String districtId);
+    @POST("Retailer/BankDepositSystem/getBankBranch")
+    Call<BranchData> callBranchDataAPI(@Body RequestBranch requestBranch);
 
-    @POST("PayWellBankDepositSystem/depositBankSlip")
-    @FormUrlEncoded
-    Call<RefillRequestData> callBalanceRefillAPI(@Field("username") String username,
-                                                 @Field("bankId") String bankId,
-                                                 @Field("districtId") String districtId,
-                                                 @Field("branchId") String branchId,
-                                                 @Field("depositslip") String depositslip,
-                                                 @Field("Amount") String amount,
-                                                 @Field(ParameterUtility.KEY_REF_ID) String refId);
+    @POST("Retailer/BankDepositSystem/depositBankSlip")
+    Call<RefillRequestData> callBalanceRefillAPI(@Body RequestRefillBalance requestRefillBalance);
 
 
 
