@@ -410,6 +410,7 @@ public class AppLoadingActivity extends BaseActivity {
                                         mAppHandler.setInitialChangePinStatus("true");
                                     }
 
+
                                     Intent i = new Intent(AppLoadingActivity.this, MainActivity .class);
                                     startActivity(i);
                                     finish();

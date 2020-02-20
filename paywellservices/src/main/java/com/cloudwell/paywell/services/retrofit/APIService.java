@@ -33,6 +33,7 @@ import com.cloudwell.paywell.services.activity.home.model.forgetPin.RequestForge
 import com.cloudwell.paywell.services.activity.home.model.refreshToken.RequestRefreshToken;
 import com.cloudwell.paywell.services.activity.location.model.CurrentLocationModel;
 import com.cloudwell.paywell.services.activity.modelPojo.MerchantRequestPojo;
+import com.cloudwell.paywell.services.activity.modelPojo.UserSubBusinessTypeModel;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationReadAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResposeReScheduleNotificationAccept;
@@ -505,6 +506,10 @@ public interface APIService {
 
     @POST("Retailer/RetailerService/UpdateMarchentAndBusinessType")
     Call<ResponseBody> updateMerchentBusiness(@Body MerchantRequestPojo merchantRequestPojo);
+
+    @POST("Retailer/RetailerService/userSubBusinessType")
+    Call<ResponseBody> getUserSubBusinessType(@Body UserSubBusinessTypeModel userSubBusinessTypeModel);
+
 
 
 }
