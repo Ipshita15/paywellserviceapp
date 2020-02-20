@@ -11,7 +11,7 @@ public class RequestTopup {
     private String mPassword;
     @SerializedName("topupData")
     private List<TopupData> mTopupData;
-    @SerializedName("userName")
+    @SerializedName("username")
     private String mUserName;
 
     public String getPassword() {

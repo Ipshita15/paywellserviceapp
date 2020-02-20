@@ -1202,7 +1202,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
         requestTopup.setTopupData(topupDatumList);
 
 
-        Call<TopupReposeData> responseBodyCall = ApiUtils.getAPIService().callTopAPI(requestTopup);         //TODO change the api
+        Call<TopupReposeData> responseBodyCall = ApiUtils.getAPIServiceV2().callTopAPI(requestTopup);         //TODO change the api
 
 
         responseBodyCall.enqueue(new Callback<TopupReposeData>() {

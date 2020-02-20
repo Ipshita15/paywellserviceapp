@@ -116,9 +116,8 @@ public interface APIService {
     @FormUrlEncoded
     Call<APIResposeGenerateToken> callGenerateToken(@Url String ur, @Header("Authorization") String AuthorizationKey, @FieldMap Map<String, String> params);
 
-    @POST("PaywellTopUpService/PaywellTopup")
-    @Multipart
-    Call<TopupReposeData> callTopAPI(@Part("requestData") RequestTopup requestTopup);
+    @POST("Recharge/mobileRecharge/bulkTopup")
+    Call<TopupReposeData> callTopAPI(@Body RequestTopup requestTopup);
 
 
 
