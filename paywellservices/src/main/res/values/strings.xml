@@ -888,6 +888,7 @@
     <string name="please_enter_the_last_4_digits_of_your_phone_number">Please enter your phone number</string>
     <string name="forgot_pin">Forgot Pin</string>
     <string name="device_not_support">Your device not support, Please contact our call center</string>
+    <string name="device_not_support_root">For Security Purpose rooted device not use this App, Please contact our call center</string>
     <string name="retype_pin_number">Retype PIN Number</string>
     <string name="message">Message</string>
     <string name="title_error_message">Message</string>
