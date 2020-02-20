@@ -481,6 +481,10 @@ public interface APIService {
     Call<ResponseBody> getAllTransactionStatementForHttps( @Body RequestBody body);
 
 
+    @POST("PaymentGateway/PaymentGatewaySystem/card")
+    Call<ResponseBody> card( @Body RequestBody body);
+
+
     @POST("Recharge/BrilliantRecharge/transactionLog")
     Call<APIBrilliantTRXLog> getBrillintTNXLog(@Body BrillintTNXLog requestBrillintTNXLog);
 

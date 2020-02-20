@@ -11,14 +11,25 @@ import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.statements.model.RequestWebView;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
 import java.util.Locale;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CardTransferMainActivity extends BaseActivity {
 
@@ -63,14 +74,80 @@ public class CardTransferMainActivity extends BaseActivity {
         if (!mCd.isConnectingToInternet()) {
             AppHandler.showDialog(getSupportFragmentManager());
         } else {
-            startWebView("https://www.paywellonline.com/payment_paywell/index.php?username=" +
-                    mAppHandler.getRID());
+
+
+
+            mWebview.setWebViewClient(new WebViewClient() {
+                public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                    Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.no_update_msg, Snackbar.LENGTH_LONG);
+                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                    View snackBarView = snackbar.getView();
+                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                    snackbar.show();
+                }
+            });
+
+            mWebview.getSettings().setLoadsImagesAutomatically(true);
+            mWebview.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+            mWebview.getSettings().setJavaScriptEnabled(true);
+
+
+            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
+
+
+            RequestWebView requestWebView = new RequestWebView();
+            requestWebView.setRefId(uniqueKey);
+            requestWebView.setUsername(AppHandler.getmInstance(getApplicationContext()).getUserName());
+            requestWebView.setLanguage(AppHandler.getmInstance(getApplicationContext()).getAppLanguage());
+            String rowJsonData = new Gson().toJson(requestWebView);
+
+            RequestBody body = RequestBody.create(MediaType.parse("application/json"), rowJsonData);
+
+
+            showProgressDialog();
+
+            Call<ResponseBody> call = null;
+
+            call = ApiUtils.getAPIServiceV2().card(body);
+
+
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    dismissProgressDialog();
+
+                    try {
+                        String string = null;
+                        if (response.body() != null) {
+                            string = response.body().string();
+                            startWebView(string);
+                        }else {
+                            showErrorCallBackMessagev1(getString(R.string.try_again_msg));
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        showErrorCallBackMessagev1(getString(R.string.try_again_msg));
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    dismissProgressDialog();
+
+                    showErrorCallBackMessagev1(getString(R.string.try_again_msg));
+
+                }
+            });
+
+
         }
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_BALANCE_REFILL_CARD);
 
     }
 
-    private void startWebView(String url) {
+    private void startWebView(String data) {
         mWebview.setWebViewClient(new WebViewClient() {
             ProgressDialog progressDialog;
 
@@ -103,8 +180,8 @@ public class CardTransferMainActivity extends BaseActivity {
                 }
             }
         });
-        mWebview.getSettings().setJavaScriptEnabled(true);
-        mWebview.loadUrl(url);
+
+        mWebview.loadData(data, "", "");
     }
 
     @Override
