@@ -606,8 +606,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         }
 
-
-
 //        else  if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("false")){
 //            Intent intent = new Intent(MainActivity.this, ChangePinActivity.class);
 //            intent.putExtra("isFirstTime", true);

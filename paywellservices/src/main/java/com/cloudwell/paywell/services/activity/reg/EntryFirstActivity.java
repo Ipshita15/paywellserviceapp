@@ -16,11 +16,15 @@ import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.modelPojo.UserSubBusinessTypeModel;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.DateUtils;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -36,6 +40,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regModel;
 
@@ -104,10 +113,103 @@ public class EntryFirstActivity extends BaseActivity {
         if (!mCd.isConnectingToInternet()) {
             AppHandler.showDialog(getSupportFragmentManager());
         } else {
-            new BusinessTypeAsync().execute(
-                    getResources().getString(R.string.business_type_url));
+//            new BusinessTypeAsync().execute(
+//                    getResources().getString(R.string.business_type_url));
+
+            getBusinessType();
+
         }
     }
+
+    private void getBusinessType(){
+
+        showProgressDialog();
+        UserSubBusinessTypeModel businessTypeModel =  new UserSubBusinessTypeModel();
+        businessTypeModel.setServiceId(str_merchantType);
+        businessTypeModel.setDeviceId(mAppHandler.getAndroidID());
+        String currentDataAndTIme = ""+ DateUtils.INSTANCE.getCurrentTimestamp();
+        businessTypeModel.setTimestamp(currentDataAndTIme);
+        businessTypeModel.setFormat("json");
+        businessTypeModel.setChannel("android");
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(mAppHandler.getRID());
+        businessTypeModel.setRefId(uniqueKey);
+
+        ApiUtils.getAPIServicePHP7().getUserSubBusinessType(businessTypeModel).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
+                if (response.code() == 200){
+
+                    try {
+
+                        business_type_id_array = new ArrayList<>();
+                        List business_type_name_array = new ArrayList<>();
+
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        String status = jsonObject.getString("status");
+                        String msg = jsonObject.getString("message");
+
+                        if (status.equals("200")){
+                            JSONArray jsonArray = jsonObject.getJSONArray("type_of_business");
+
+                            business_type_id_array.add("ipshita");
+                            business_type_name_array.add("Select One");
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject object = jsonArray.getJSONObject(i);
+                                String id = object.getString("id");
+                                String name = object.getString("name");
+
+                                business_type_id_array.add(id);
+                                business_type_name_array.add(name);
+                            }
+                            ArrayAdapter<String> arrayAdapter_business_type_spinner = new ArrayAdapter<>(EntryFirstActivity.this, android.R.layout.simple_spinner_dropdown_item, business_type_name_array);
+
+                            spnr_businessType.setAdapter(arrayAdapter_business_type_spinner);
+                            spnr_businessType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                                    try {
+                                        str_businessType = "";
+                                        str_businessId = business_type_id_array.get(position);
+                                        str_businessType = spnr_businessType.getSelectedItem().toString().trim();
+                                    } catch (Exception ex) {
+                                        ex.printStackTrace();
+                                        showErrorMessagev1(getString(R.string.try_again_msg));
+
+                                    }
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                }
+
+                            });
+                        }else {
+                            showErrorMessagev1(msg);
+                        }
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        showErrorMessagev1(getString(R.string.try_again_msg));
+
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
+            }
+        });
+
+
+
+    }
+
 
     private class BusinessTypeAsync extends AsyncTask<String, String, String> {
 

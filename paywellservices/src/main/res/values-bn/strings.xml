@@ -775,6 +775,7 @@
     <string name="please_enter_the_last_4_digits_of_your_phone_number">অনুগ্রহ করে আপনার ফোন নাম্বারটি প্রদান করুন</string>
     <string name="forgot_pin">পিন অনুরোধ</string>
     <string name="device_not_support">আপনার ডিভাইস সমর্থন করে না, দয়া করে আমাদের কল সেন্টারে যোগাযোগ করুন</string>
+    <string name="device_not_support_root">সুরক্ষা উদ্দেশ্যে রুটযুক্ত ডিভাইসটির জন্য এই অ্যাপটি ব্যবহার করে না, দয়া করে আমাদের কল সেন্টারে যোগাযোগ করুন</string>
     <string name="retype_pin_number">পিন নম্বর পুনরায় টাইপ করুন</string>
     <string name="title_error_message">বার্তা</string>
     <string name="no_internet_connection">কোনও ইন্টারনেট সংযোগ নেই</string>

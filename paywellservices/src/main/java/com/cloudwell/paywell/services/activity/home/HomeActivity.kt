@@ -24,6 +24,7 @@ import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.AndroidIDUtility
 import com.cloudwell.paywell.services.utils.AppsStatusConstant
 import com.cloudwell.paywell.services.utils.DateUtils
+import com.cloudwell.paywell.services.utils.RootUtil
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import com.orhanobut.logger.Logger
@@ -75,6 +76,8 @@ class HomeActivity : BaseActivity() {
         // check device is support
         val androidID = AppHandler.getmInstance(applicationContext).androidID
         Logger.v("Android ID: " + androidID)
+        val isRooted = RootUtil.isDeviceRooted();
+        Logger.v("Android Root: " + isRooted)
 
         if (androidID == "") {
             val androidID1 = AndroidIDUtility.getAndroidID(applicationContext)
@@ -88,6 +91,10 @@ class HomeActivity : BaseActivity() {
                 }
             }
 
+        }
+
+        if (isRooted.equals(true)){
+            callPreview(false, getString(R.string.device_not_support_root))
         }
 
         btRegistration.setOnClickListener {
