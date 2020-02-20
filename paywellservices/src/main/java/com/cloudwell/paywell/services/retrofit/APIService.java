@@ -448,7 +448,7 @@ public interface APIService {
     Call<ReposeGenerateOTP> generateOTP(@Body RequestGenerateOTP body);
 
 
-    @POST("Reports/TransactionReport/TransactionReport")
+    @POST("Reports/TransactionReportSystem/TransactionReport")
     Call<ResponseBody> PBInquiry(@Body ReqInquiryModel regModel);
 
 
