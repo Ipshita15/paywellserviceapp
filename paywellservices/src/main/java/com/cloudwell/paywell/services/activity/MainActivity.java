@@ -1793,81 +1793,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    private void subscribeToPushService() {
-        if (mAppHandler.getFirebaseTokenStatus().equals("true")) {
-            if (mCd.isConnectingToInternet()) {
-                mPushFirebaseIdTask = new PushFirebaseIdTask().execute(getString(R.string.notification_token_url), mAppHandler.getFirebaseId());
-            } else {
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-        }
-    }
 
 
-    private class PushFirebaseIdTask extends AsyncTask<String, Intent, String> {
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
 
-        @Override
-        protected String doInBackground(String... params) {
-            String notifications = null;
-            try {
-                HttpClient httpClients = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost(params[0]);
 
-                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getUserName()));
-                nameValuePairs.add(new BasicNameValuePair("usertype", "Retailer"));
-                nameValuePairs.add(new BasicNameValuePair("token", params[1]));
-
-                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                notifications = httpClients.execute(httpPost, responseHandler);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return notifications;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            if (result != null) {
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String status = jsonObject.getString(TAG_RESPONSE_STATUS);
-
-                    if (status.equalsIgnoreCase("200")) {
-                        mAppHandler.setFirebaseTokenStatus("false");
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-            } else {
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.conn_timeout_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-        }
-    }
 
     @Override
     public void onLocationChanged(Location location) {
