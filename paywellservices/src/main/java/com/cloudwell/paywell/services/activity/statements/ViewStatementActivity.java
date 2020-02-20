@@ -120,15 +120,7 @@ public class ViewStatementActivity extends BaseActivity {
         requestWebView.setLanguage(AppHandler.getmInstance(getApplicationContext()).getAppLanguage());
         String rowJsonData = new Gson().toJson(requestWebView);
 
-
-
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), rowJsonData);
-
-//        Request request = new Request.Builder()
-//                .url("https://agentapi.paywellonline.com/")
-//                .post(body)
-//                .build();
-//        RequestBody body1 = request.body();
 
 
         showProgressDialog();

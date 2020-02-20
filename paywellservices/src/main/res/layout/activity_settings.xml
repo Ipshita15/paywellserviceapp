@@ -27,6 +27,11 @@
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:orientation="horizontal">
 
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
                 <Button
                     android:id="@+id/homeBtnChangPin"
                     style="@style/HomeButtonNew"
@@ -41,19 +46,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <Button
-                    android:id="@+id/homeBtnPasswordReset"
-                    style="@style/HomeButtonNew"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_pin_reset"
-                    android:onClick="onSettingsButtonClicker"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+
 
                 <Button
                     android:id="@+id/homeBtnUpgrade"
@@ -63,6 +57,11 @@
                     android:onClick="onSettingsButtonClicker"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout

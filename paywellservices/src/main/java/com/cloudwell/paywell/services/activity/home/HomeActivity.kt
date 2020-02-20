@@ -43,9 +43,6 @@ class HomeActivity : BaseActivity() {
         setContentView(R.layout.activity_home)
         getSupportActionBar()?.hide()
 
-
-
-
         val userName = AppHandler.getmInstance(AppController.getContext()).userName
         val androidId = AppHandler.getmInstance(AppController.getContext()).androidID
 
@@ -54,28 +51,6 @@ class HomeActivity : BaseActivity() {
         model.channel = "android"
         model.deviceId = androidId
         model.format = "json"
-//        model.timestampamp = ""+DateUtils.getCurrentTimestamp()
-
-
-//        val jsonObject = JSONObject(Gson().toJson(model))
-//        val tokenBaseOnRSAlgorithm = RSAUtilty.getTokenBaseOnRSAlgorithm(jsonObject)
-//
-//
-//        val response1 = ApiUtils.getAPIServiceV2().refreshToken(tokenBaseOnRSAlgorithm, model).enqueue(object : Callback<ResposeAppsAuth> {
-//            override fun onFailure(call: Call<ResposeAppsAuth>, t: Throwable) {
-//
-//                Logger.v("", "")
-//            }
-//
-//            override fun onResponse(call: Call<ResposeAppsAuth>, response: Response<ResposeAppsAuth>) {
-//
-//
-//                val code = response.code()
-//                Logger.v("", "")
-//            }
-//
-//        })
-
 
         initilizationView(intent)
 
@@ -219,7 +194,6 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun requestAPIToken(androidId: String, userName: String, pin: String, firebaseId: String) {
-
         if (androidId.equals("")) {
             callPreview(false, getString(R.string.device_not_support))
         } else if (isInternetConnection) {
@@ -400,8 +374,4 @@ class HomeActivity : BaseActivity() {
 
 
     }
-
-
-
-
 }

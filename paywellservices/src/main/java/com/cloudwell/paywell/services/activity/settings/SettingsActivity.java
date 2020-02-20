@@ -37,7 +37,7 @@ public class SettingsActivity extends BaseActivity {
     private AppHandler mAppHandler;
     private RelativeLayout mRelativeLayout;
     private UpdateChecker mUpdateChecker;
-    private Button home_change_pin, home_upgrade, home_password_reset, home_change_language, home_help;
+    private Button home_change_pin, home_upgrade, home_change_language, home_help;
     private String selectedOption = "";
     private int flag = 0;
 
@@ -60,7 +60,6 @@ public class SettingsActivity extends BaseActivity {
         /*Buttons Initialization*/
         home_change_pin = findViewById(R.id.homeBtnChangPin);
         home_upgrade = findViewById(R.id.homeBtnUpgrade);
-        home_password_reset = findViewById(R.id.homeBtnPasswordReset);
         home_change_language = findViewById(R.id.homeBtnChangeLanguage);
         home_help = findViewById(R.id.homeBtnHelp);
 
@@ -79,27 +78,7 @@ public class SettingsActivity extends BaseActivity {
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_SETTINGS_MENU, AnalyticsParameters.KEY_SETTINGS_UPGRADE_MENU);
                 checkPermission();
                 break;
-            case R.id.homeBtnPasswordReset:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_SETTINGS_MENU, AnalyticsParameters.KEY_SETTINGS_RESET_PIN_MENU);
-                AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
-                builder.setTitle(R.string.home_settings_reset_pin);
-                builder.setMessage(R.string.reset_pin_msg);
-                builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int id) {
-                        dialogInterface.dismiss();
-                        startActivity(new Intent(SettingsActivity.this, ResetPinActivity.class));
-                    }
-                });
-                builder.setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                AlertDialog alert = builder.create();
-                alert.show();
-                break;
+
             case R.id.homeBtnChangeLanguage:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_SETTINGS_MENU, AnalyticsParameters.KEY_SETTINGS_CHANGE_LANGUAGE_MENU);
                 ShowLanguagePrompt();
@@ -108,9 +87,7 @@ public class SettingsActivity extends BaseActivity {
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_SETTINGS_MENU, AnalyticsParameters.KEY_SETTINGS_HELP_MENU);
                 startHelpMenu();
                 break;
-//            case R.id.homeBtnLocation:
-//                checkLocationPermission();
-//                break;
+
             default:
                 break;
         }
@@ -318,20 +295,17 @@ public class SettingsActivity extends BaseActivity {
         getSupportActionBar().setTitle(R.string.home_settings);
         home_change_pin.setText(R.string.home_settings_change_pin);
         home_upgrade.setText(R.string.home_settings_upgrade);
-        home_password_reset.setText(R.string.home_settings_reset_pin);
         home_change_language.setText(R.string.home_settings_change_language);
         home_help.setText(R.string.home_settings_help);
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             home_change_pin.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_upgrade.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_password_reset.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_change_language.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_help.setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
             home_change_pin.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_upgrade.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_password_reset.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_change_language.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_help.setTypeface(AppController.getInstance().getAponaLohitFont());
         }

@@ -439,20 +439,15 @@
     </string-array>
 
     <!-- paywell apis -->
-    <string name="pw_auth" translatable="false">https://agentapi.paywellonline.com/PaywelltransactionRetailer/userServiceProfiling</string>
     <string name="notif_url" translatable="false">https://www.paywellonline.com/default/api/notification_check_android.php?</string>
-    <string name="notification_token_url" translatable="false">https://www.paywellonline.com/paywellapi/setUserFCMToken.php</string>
 
     <string name="app_next_version_no">vten_seventeen</string>
     <string name="update_check" translatable="false">https://app.paywellonline.com/apk/paywell_services_latest_version.apk</string>
     <string name="check_version" translatable="false">https://app.paywellonline.com/version_update_info/paywellservice_update.txt</string>
-    <string name="update_location" translatable="false">https://api.paywellonline.com/PaywellRetailerInformation/doUpdateRetailersCurrentLocation</string>
 
     <!-- Registration -->
     <string name="business_type_url" translatable="false">https://api.paywellonline.com/Android/userSubBusinessType</string>
     <string name="district_info_url" translatable="false">https://www.paywellonline.com/crs3291/android/sales_manager/district_info_bangladesh.php</string>
-    <string name="final_reg_url" translatable="false">https://www.paywellonline.com/crs3291/android/sales_manager/getRetailerInformationForRegistrationNew.php</string>
-    <string name="missing_reg_url" translatable="false">https://agentapi.paywellonline.com/PaywellUserRegistration/unverifiedDataCollectAndUpdate</string>
 
     <!-- Topup -->
     <string name="inq_top" translatable="false">https://www.paywellonline.com/default/api/enquiry.php?</string>

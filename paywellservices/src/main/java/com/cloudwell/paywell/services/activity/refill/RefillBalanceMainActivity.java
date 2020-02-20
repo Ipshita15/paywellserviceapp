@@ -2,8 +2,6 @@ package com.cloudwell.paywell.services.activity.refill;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,31 +12,23 @@ import com.cloudwell.paywell.services.activity.MainActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.refill.banktransfer.BankTransferMainActivity;
 import com.cloudwell.paywell.services.activity.refill.card.CardTransferMainActivity;
+import com.cloudwell.paywell.services.activity.refill.model.RequestSDAInfo;
 import com.cloudwell.paywell.services.activity.refill.nagad.NagadMainActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
-import com.cloudwell.paywell.services.utils.ParameterUtility;
-import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
-import com.google.android.material.snackbar.Snackbar;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RefillBalanceMainActivity extends BaseActivity {
 
@@ -113,7 +103,7 @@ public class RefillBalanceMainActivity extends BaseActivity {
             case R.id.homeBtnBankTransfer:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_BALANCE_REFILL_MENU, AnalyticsParameters.KEY_BALANCE_REFILL_BANK_TRANSFER_INFO_MENU);
                 startActivity(new Intent(this, BankTransferMainActivity.class));
-                break; 
+                break;
             case R.id.homeBtnCard:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_BALANCE_REFILL_MENU, AnalyticsParameters.KEY_BALANCE_REFILL_CARD_MENU);
                 startActivity(new Intent(this, CardTransferMainActivity.class));
@@ -133,166 +123,60 @@ public class RefillBalanceMainActivity extends BaseActivity {
         if (!mCd.isConnectingToInternet()) {
             AppHandler.showDialog(getSupportFragmentManager());
         } else {
-            new SDAInformationAsync().execute(
-                    getResources().getString(R.string.refill_sda_info), mAppHandler.getUserName());
+            callGetSDAInfo();
+
         }
     }
 
-    private class SDAInformationAsync extends AsyncTask<String, String, String> {
+    private void callGetSDAInfo() {
+        showProgressDialog();
 
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
+        final RequestSDAInfo requestSDAInfo = new RequestSDAInfo();
+        requestSDAInfo.setUsername("" + mAppHandler.getUserName());
 
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
-                nameValuePairs.add(new BasicNameValuePair("imei", params[1]));
-                nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
+        Call<ResponseBody> responseBodyCall = ApiUtils.getAPIServiceV2().getRtlrSDAinfo(requestSDAInfo);
 
-        @Override
-        protected void onPostExecute(String result) {
+        responseBodyCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
 
-            dismissProgressDialog();
-            try {
-                JSONObject jsonObject = new JSONObject(result);
-                String status = jsonObject.getString(TAG_RESPONSE_STATUS);
+                try {
+                    String result = response.body().string();
+                    JSONObject jsonObject = new JSONObject(result);
+                    String status = jsonObject.getString(TAG_RESPONSE_STATUS);
 
-                if (status.equalsIgnoreCase("200")) {
-                    String sdaName = jsonObject.getString(TAG_SDA_NAME);
-                    String sdaPhone = jsonObject.getString(TAG_PHONE_NO);
+                    if (status.equalsIgnoreCase("200")) {
+                        String sdaName = jsonObject.getString(TAG_SDA_NAME);
+                        String sdaPhone = jsonObject.getString(TAG_PHONE_NO);
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(RefillBalanceMainActivity.this);
-                    builder.setTitle("Result");
-                    builder.setMessage("SDA Name: " + sdaName + "\nPhone No: " + sdaPhone);
-                    builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int id) {
-                            dialogInterface.dismiss();
-                        }
-                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                } else {
-                    String message = jsonObject.getString(TAG_MESSAGE);
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, message, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(RefillBalanceMainActivity.this);
+                        builder.setTitle("Result");
+                        builder.setMessage("SDA Name: " + sdaName + "\nPhone No: " + sdaPhone);
+                        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int id) {
+                                dialogInterface.dismiss();
+                            }
+                        });
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    } else {
+                        String message = jsonObject.getString(TAG_MESSAGE);
+                        showErrorMessagev1(message);
+                    }
+                } catch (Exception e) {
+                    showTryAgainDialog();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
             }
-        }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+                showTryAgainDialog();
+            }
+        });
     }
 
-    public void showInformation() {
-        if (!mCd.isConnectingToInternet()) {
-            AppHandler.showDialog(getSupportFragmentManager());
-        } else {
-            new InformationAsync().execute(
-                    getResources().getString(R.string.refill_mfs_info));
-        }
-    }
-
-    private class InformationAsync extends AsyncTask<String, String, String> {
-
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-
-            try {
-                //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getUserName()));
-                nameValuePairs.add(new BasicNameValuePair("serviceName", "bKash"));
-                nameValuePairs.add(new BasicNameValuePair("gateway_id", mAppHandler.getGatewayId()));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            try {
-                JSONObject jsonObject = new JSONObject(result);
-                String status = jsonObject.getString(TAG_RESPONSE_STATUS);
-
-                if (status.equalsIgnoreCase("200")) {
-                    String serviceName = jsonObject.getString(TAG_MESSAGE);
-                    String serviceInfo = jsonObject.getString(TAG_INFORMATION);
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(RefillBalanceMainActivity.this);
-                    builder.setTitle(serviceName);
-                    builder.setMessage(serviceInfo);
-                    builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int id) {
-                            dialogInterface.dismiss();
-                        }
-                    });
-                    AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
-
-                } else {
-                    String message = jsonObject.getString(TAG_MESSAGE);
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, message, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-        }
-    }
 }

@@ -48,6 +48,7 @@ import com.cloudwell.paywell.services.activity.refill.model.RefillRequestData;
 import com.cloudwell.paywell.services.activity.refill.model.RequestBranch;
 import com.cloudwell.paywell.services.activity.refill.model.RequestDistrict;
 import com.cloudwell.paywell.services.activity.refill.model.RequestRefillBalance;
+import com.cloudwell.paywell.services.activity.refill.model.RequestSDAInfo;
 import com.cloudwell.paywell.services.activity.refill.nagad.model.ResTranstionINquiry;
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLog;
 import com.cloudwell.paywell.services.activity.reg.model.AuthRequestModel;
@@ -119,6 +120,10 @@ public interface APIService {
     @Multipart
     Call<TopupReposeData> callTopAPI(@Part("requestData") RequestTopup requestTopup);
 
+
+
+    @POST("Retailer/RetailerService/getRtlrSDAinfo")
+    Call<ResponseBody> getRtlrSDAinfo(@Body RequestSDAInfo requestSDAInfo);
 
     @POST("Retailer/BankDepositSystem/getDistrictListforBankDeposit")
     Call<ReposeDistrictListerBankDeposit> callDistrictDataAPI(@Body RequestDistrict requestDistrict);
@@ -444,7 +449,7 @@ public interface APIService {
     Call<ReposeGenerateOTP> generateOTP(@Body RequestGenerateOTP body);
 
 
-    @POST("Reports/TransactionReport/TransactionReport")
+    @POST("Reports/TransactionReportSystem/TransactionReport")
     Call<ResponseBody> PBInquiry(@Body ReqInquiryModel regModel);
 
 
@@ -475,6 +480,10 @@ public interface APIService {
 
     @POST("Android/AndroidWebViewController/getAllTransactionStatement")
     Call<ResponseBody> getAllTransactionStatementForHttps( @Body RequestBody body);
+
+
+    @POST("PaymentGateway/PaymentGatewaySystem/card")
+    Call<ResponseBody> card( @Body RequestBody body);
 
 
     @POST("Recharge/BrilliantRecharge/transactionLog")
