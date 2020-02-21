@@ -58,6 +58,7 @@ import com.cloudwell.paywell.services.activity.topup.brilliant.model.BrilliantTo
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.BrillintAddBalanceModel;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.BrillintTNXLog;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.EnqueryModel;
+import com.cloudwell.paywell.services.activity.topup.model.RequestSingleTopup;
 import com.cloudwell.paywell.services.activity.topup.model.RequestTopup;
 import com.cloudwell.paywell.services.activity.topup.model.TopupReposeData;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoBillPaySubmit;
@@ -119,6 +120,8 @@ public interface APIService {
     @POST("Recharge/mobileRecharge/bulkTopup")
     Call<TopupReposeData> callTopAPI(@Body RequestTopup requestTopup);
 
+    @POST("Recharge/mobileRecharge/singleTopup")
+    Call<TopupReposeData> callSingleTopUpAPI(@Body RequestSingleTopup singleTopup);
 
 
     @POST("Retailer/RetailerService/getRtlrSDAinfo")

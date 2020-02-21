@@ -39,6 +39,7 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.topup.adapter.MyRecyclerViewAdapter;
 import com.cloudwell.paywell.services.activity.topup.model.MobileOperator;
+import com.cloudwell.paywell.services.activity.topup.model.RequestSingleTopup;
 import com.cloudwell.paywell.services.activity.topup.model.RequestTopup;
 import com.cloudwell.paywell.services.activity.topup.model.TopupData;
 import com.cloudwell.paywell.services.activity.topup.model.TopupDatum;
@@ -1149,8 +1150,33 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
                     TopupData topupDatum = new TopupData(amountStr, planStr, phoneStr, operatorTextForServer,uniqueKey);
                     topupDatumList.add(topupDatum);
 
+
+
+
+                    requestTopup.setTopupData(topupDatumList);
+                    Call<TopupReposeData> responseBodyCall = ApiUtils.getAPIServiceV2().callTopAPI(requestTopup);         //TODO change the api
+                    responseBodyCall.enqueue(new Callback<TopupReposeData>() {
+                        @Override
+                        public void onResponse(Call<TopupReposeData> call, Response<TopupReposeData> response) {
+                            dismissProgressDialog();
+                            Log.d(KEY_TAG, "onResponse:" + response.body());
+
+                            showReposeUI(response.body());
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<TopupReposeData> call, Throwable t) {
+                            dismissProgressDialog();
+
+                            Log.d(KEY_TAG, "onFailure:");
+                            showErrorMessagev1(getString(R.string.try_again_msg));
+                        }
+                    });
+
                 }
             }
+
 
         } else {                // if topup number is one
             // Single
@@ -1195,40 +1221,37 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
                 TopupData topupDatum = new TopupData(amountStr, planStr, phoneStr, operatorTextForServer,uniqueKey);
                 topupDatumList.add(topupDatum);
 
+                RequestSingleTopup singleTopup = new RequestSingleTopup();
+                singleTopup.setAmount(amountStr);
+                singleTopup.setConType(planStr);
+                singleTopup.setMsisdn(phoneStr);
+                singleTopup.setOperator(operatorTextForServer);
+                singleTopup.setClientTrxId(uniqueKey);
+                singleTopup.setUsername(mAppHandler.getUserName());
+                singleTopup.setPassword(pinNo);
+
+                ApiUtils.getAPIServiceV2().callSingleTopUpAPI(singleTopup).enqueue(new Callback<TopupReposeData>() {
+                    @Override
+                    public void onResponse(Call<TopupReposeData> call, Response<TopupReposeData> response) {
+                        dismissProgressDialog();
+                        if (response.code() == 200){
+
+                        }else {
+                            showErrorMessagev1(getString(R.string.try_again_msg));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<TopupReposeData> call, Throwable t) {
+
+                    }
+                });
+
             }
         }
 
 
-        requestTopup.setTopupData(topupDatumList);
 
-
-        Call<TopupReposeData> responseBodyCall = ApiUtils.getAPIServiceV2().callTopAPI(requestTopup);         //TODO change the api
-
-
-        responseBodyCall.enqueue(new Callback<TopupReposeData>() {
-            @Override
-            public void onResponse(Call<TopupReposeData> call, Response<TopupReposeData> response) {
-                dismissProgressDialog();
-                Log.d(KEY_TAG, "onResponse:" + response.body());
-
-                showReposeUI(response.body());
-
-            }
-
-            @Override
-            public void onFailure(Call<TopupReposeData> call, Throwable t) {
-                dismissProgressDialog();
-
-                Log.d(KEY_TAG, "onFailure:");
-                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-
-
-            }
-        });
 
     }
 
