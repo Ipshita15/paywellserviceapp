@@ -62,6 +62,7 @@ import com.cloudwell.paywell.services.activity.topup.model.SingleTopUp.RequestSi
 import com.cloudwell.paywell.services.activity.topup.model.RequestTopup;
 import com.cloudwell.paywell.services.activity.topup.model.SingleTopUp.SingleTopupResponse;
 import com.cloudwell.paywell.services.activity.topup.model.TopupReposeData;
+import com.cloudwell.paywell.services.activity.topup.model.TranscationLogResponseModel;
 import com.cloudwell.paywell.services.activity.topup.model.TranscationRequestModel;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoBillPaySubmit;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoBillPaySubmitResponse;
@@ -524,7 +525,7 @@ public interface APIService {
     Call<ResponseBody> getUserSubBusinessType(@Body UserSubBusinessTypeModel userSubBusinessTypeModel);
 
     @POST("Reports/TransactionReportSystem/TransactionReport")
-    Call<ResponseBody> getTransactionLog(@Body TranscationRequestModel transcationRequestModel);
+    Call<TranscationLogResponseModel> getTransactionLog(@Body TranscationRequestModel transcationRequestModel);
 
 
 }

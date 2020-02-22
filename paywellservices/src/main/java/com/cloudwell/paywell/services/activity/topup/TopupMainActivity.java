@@ -46,6 +46,7 @@ import com.cloudwell.paywell.services.activity.topup.model.SingleTopUp.SingleTop
 import com.cloudwell.paywell.services.activity.topup.model.TopupData;
 import com.cloudwell.paywell.services.activity.topup.model.TopupDatum;
 import com.cloudwell.paywell.services.activity.topup.model.TopupReposeData;
+import com.cloudwell.paywell.services.activity.topup.model.TranscationLogResponseModel;
 import com.cloudwell.paywell.services.activity.topup.model.TranscationRequestModel;
 import com.cloudwell.paywell.services.activity.topup.offer.OfferMainActivity;
 import com.cloudwell.paywell.services.activity.utility.ivac.DrawableClickListener;
@@ -930,31 +931,41 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
         requestModel.setUsername(mAppHandler.getUserName());
 
 
-        ApiUtils.getAPIServiceV2().getTransactionLog(requestModel).enqueue(new Callback<ResponseBody>() {
+        ApiUtils.getAPIServiceV2().getTransactionLog(requestModel).enqueue(new Callback<TranscationLogResponseModel>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<TranscationLogResponseModel> call, Response<TranscationLogResponseModel> response) {
                 dismissProgressDialog();
                 if (response.code() == 200){
 
-                    try {
-                        JSONObject jsonObject = new JSONObject(response.body().string());
+                    if (response.body().getStatus() == 200){
 
-                        int status = jsonObject.getInt("Status");
-                        String msg = jsonObject.getString("Message");
-                        if (status == 200){
-                            //JSONArray jsonArray = jsonObject.getJSONArray(jsonObject.getString("ResponseDetails"));
-                            TransLogActivity.TRANSLOG_TAG = jsonObject.getString("ResponseDetails");
-                            startActivity(new Intent(TopupMainActivity.this, TransLogActivity.class));
+                        TransLogActivity.responseDetailsItemList = response.body().getResponseDetails();
+                        startActivity(new Intent(TopupMainActivity.this, TransLogActivity.class));
 
-                        }else {
-                            showErrorMessagev1(msg);
-                        }
-
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        showErrorMessagev1(getString(R.string.try_again_msg));
+                    }else {
+                        showErrorMessagev1(response.body().getMessage());
                     }
+
+//                    try {
+//                        JSONObject jsonObject = new JSONObject(response.body().string());
+//
+//                        int status = jsonObject.getInt("Status");
+//                        String msg = jsonObject.getString("Message");
+//                        if (status == 200){
+//                            //JSONArray jsonArray = jsonObject.getJSONArray(jsonObject.getString("ResponseDetails"));
+//                            TransLogActivity.TRANSLOG_TAG = jsonObject.getString("ResponseDetails");
+//                            startActivity(new Intent(TopupMainActivity.this, TransLogActivity.class));
+//
+//                        }else {
+//                            showErrorMessagev1(msg);
+//                        }
+//
+//
+//                    }
+//                    catch (Exception e) {
+//                        e.printStackTrace();
+//                        showErrorMessagev1(getString(R.string.try_again_msg));
+//                    }
 
                 }else {
                     showErrorMessagev1(getString(R.string.try_again_msg));
@@ -962,7 +973,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<TranscationLogResponseModel> call, Throwable t) {
                 dismissProgressDialog();
                 showErrorMessagev1(getString(R.string.try_again_msg));
             }

@@ -12,15 +12,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.topup.model.ResponseDetailsItem;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.zip.Inflater;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class TransLogActivity extends AppCompatActivity {
+
+    public static ArrayList<ResponseDetailsItem> responseDetailsItems = new ArrayList<>();
+    public  static List<ResponseDetailsItem> responseDetailsItemList;
 
     private RelativeLayout relativeLayout;
     private ListView listView;
@@ -34,6 +42,8 @@ public class TransLogActivity extends AppCompatActivity {
     private String date = "";
     private CustomAdapter adapter;
 
+    RecyclerView responseRecyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +56,13 @@ public class TransLogActivity extends AppCompatActivity {
 
         relativeLayout = findViewById(R.id.relativeLayout);
         adapter = new CustomAdapter(this);
+        responseRecyclerView = findViewById(R.id.recycler_view_trsnscationLog);
+
+
+
+        responseDetailsItemList.size();
+
+
 
         String response = TRANSLOG_TAG;
         if (response != null && response.length() > 0) {
@@ -243,6 +260,42 @@ public class TransLogActivity extends AppCompatActivity {
 
         public class ViewHolder {
             TextView textView, phnNo, amount, date, status;
+        }
+    }
+
+
+    public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.VireHolder>{
+
+        private  List<ResponseDetailsItem> responseDetailsItemList;
+        private Context context;
+
+        public RecyclerViewAdapter(List<ResponseDetailsItem> responseDetailsItemList, Context context) {
+            this.responseDetailsItemList = responseDetailsItemList;
+            this.context = context;
+        }
+
+        @NonNull
+        @Override
+        public VireHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+
+            return null;
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull VireHolder holder, int position) {
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return responseDetailsItemList.size();
+        }
+
+        public class VireHolder extends RecyclerView.ViewHolder {
+            public VireHolder(@NonNull View itemView) {
+                super(itemView);
+            }
         }
     }
 
