@@ -26,5 +26,8 @@ data class ResponseDetailsItem(
 	val tranId: String? = null,
 
 	@field:SerializedName("recipient_msisdn")
-	val recipientMsisdn: String? = null
+	val recipientMsisdn: String? = null,
+
+	@field:SerializedName("trx_date")
+	val requestTrxDate: String? = null
 )
