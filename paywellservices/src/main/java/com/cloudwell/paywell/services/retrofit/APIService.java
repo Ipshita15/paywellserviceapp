@@ -58,6 +58,7 @@ import com.cloudwell.paywell.services.activity.topup.brilliant.model.BrilliantTo
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.BrillintAddBalanceModel;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.BrillintTNXLog;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.EnqueryModel;
+import com.cloudwell.paywell.services.activity.topup.model.RechargeOfferRequestModel;
 import com.cloudwell.paywell.services.activity.topup.model.SingleTopUp.RequestSingleTopup;
 import com.cloudwell.paywell.services.activity.topup.model.RequestTopup;
 import com.cloudwell.paywell.services.activity.topup.model.SingleTopUp.SingleTopupResponse;
@@ -526,6 +527,9 @@ public interface APIService {
 
     @POST("Reports/TransactionReportSystem/TransactionReport")
     Call<TranscationLogResponseModel> getTransactionLog(@Body TranscationRequestModel transcationRequestModel);
+
+    @POST("Recharge/mobileRecharge/rechargeOffer")
+    Call<ResponseBody> getRechargeOffer(@Body RechargeOfferRequestModel rechargeOfferRequestModel);
 
 
 }
