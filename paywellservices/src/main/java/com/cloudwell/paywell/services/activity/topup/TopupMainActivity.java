@@ -39,8 +39,10 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.topup.adapter.MyRecyclerViewAdapter;
 import com.cloudwell.paywell.services.activity.topup.model.MobileOperator;
-import com.cloudwell.paywell.services.activity.topup.model.RequestSingleTopup;
+import com.cloudwell.paywell.services.activity.topup.model.SingleTopUp.Data;
+import com.cloudwell.paywell.services.activity.topup.model.SingleTopUp.RequestSingleTopup;
 import com.cloudwell.paywell.services.activity.topup.model.RequestTopup;
+import com.cloudwell.paywell.services.activity.topup.model.SingleTopUp.SingleTopupResponse;
 import com.cloudwell.paywell.services.activity.topup.model.TopupData;
 import com.cloudwell.paywell.services.activity.topup.model.TopupDatum;
 import com.cloudwell.paywell.services.activity.topup.model.TopupReposeData;
@@ -1230,11 +1232,30 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
                 singleTopup.setUsername(mAppHandler.getUserName());
                 singleTopup.setPassword(pinNo);
 
-                ApiUtils.getAPIServiceV2().callSingleTopUpAPI(singleTopup).enqueue(new Callback<TopupReposeData>() {
+                ApiUtils.getAPIServiceV2().callSingleTopUpAPI(singleTopup).enqueue(new Callback<SingleTopupResponse>() {
                     @Override
-                    public void onResponse(Call<TopupReposeData> call, Response<TopupReposeData> response) {
+                    public void onResponse(Call<SingleTopupResponse> call, Response<SingleTopupResponse> response) {
                         dismissProgressDialog();
                         if (response.code() == 200){
+                            response.body().getData().getStatus();
+                            String msg = response.body().getData().getMessage();
+                            if (response.body().getData().getStatus()==200){
+                                if (response.body().getData().getTopupData() != null){
+
+                                    StringBuilder receiptBuilder = new StringBuilder();
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(TopupMainActivity.this);
+
+                                    SingleTopupResponse singleTopupResponse = response.body();
+                                    showDialogforsingle(singleTopupResponse,receiptBuilder, builder);
+
+                                }else {
+                                    showAuthticationError(msg);
+                                }
+
+                            }else {
+                                showAuthticationError(msg);
+                            }
+
 
                         }else {
                             showErrorMessagev1(getString(R.string.try_again_msg));
@@ -1242,8 +1263,10 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
                     }
 
                     @Override
-                    public void onFailure(Call<TopupReposeData> call, Throwable t) {
+                    public void onFailure(Call<SingleTopupResponse> call, Throwable t) {
 
+                        dismissProgressDialog();
+                        showErrorMessagev1(getString(R.string.try_again_msg));
                     }
                 });
 
@@ -1310,6 +1333,62 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
 
 
     }
+
+
+private void showDialogforsingle(SingleTopupResponse response, StringBuilder receiptBuilder, AlertDialog.Builder builder) {
+
+    boolean isRequestSuccess;
+    Data topupData = null;
+     topupData = response.getData();
+
+        if (topupData != null) {
+            receiptBuilder.append(getString(R.string.phone_no_des) + " " + topupData.getTopupData().getMsisdn());
+            receiptBuilder.append("\n" + getString(R.string.amount_des) + " " + topupData.getTopupData().getAmount() + " " + getString(R.string.tk_des));
+
+            if (topupData.getStatus().toString().equals("200")) {
+                receiptBuilder.append("\n" + Html.fromHtml("<font color='#ff0000'>" + getString(R.string.status_des) + "</font>") + " " + topupData.getMessage());
+            } else {
+                receiptBuilder.append("\n" + Html.fromHtml("<font color='#008000>" + getString(R.string.status_des) + "</font>") + " " + topupData.getMessage());
+            }
+
+            receiptBuilder.append("\n" + getString(R.string.trx_id_des) + " " + topupData.getTransId());
+            receiptBuilder.append("\n\n");
+        }
+    //}
+
+    if (response.getData().getStatus()==200){
+        isRequestSuccess = true;
+    }else {
+        isRequestSuccess = false;
+    }
+
+
+    mHotLine = response.getHotlineNumber();
+    receiptBuilder.append("\n\n" + getString(R.string.using_paywell_des) + "\n" + getString(R.string.hotline_des) + " " + mHotLine);
+
+    if (isRequestSuccess) {
+        builder.setTitle(Html.fromHtml("<font color='#008000'>Result Successful</font>"));
+    } else {
+        builder.setTitle(Html.fromHtml("<font color='#ff0000'>Result Failed</font>"));
+    }
+
+    builder.setMessage(receiptBuilder.toString());
+
+
+    final boolean finalIsTotalRequestSuccess = isRequestSuccess;
+    builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialogInterface, int id) {
+            dialogInterface.dismiss();
+            if (finalIsTotalRequestSuccess) {
+                startActivity(new Intent(TopupMainActivity.this, TopupMainActivity.class));
+                finish();
+            }
+        }
+    });
+    AlertDialog alert = builder.create();
+    alert.show();
+}
 
     private void showDialog(TopupReposeData response, StringBuilder receiptBuilder, AlertDialog.Builder builder) {
 

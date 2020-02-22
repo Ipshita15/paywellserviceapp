@@ -58,8 +58,9 @@ import com.cloudwell.paywell.services.activity.topup.brilliant.model.BrilliantTo
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.BrillintAddBalanceModel;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.BrillintTNXLog;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.EnqueryModel;
-import com.cloudwell.paywell.services.activity.topup.model.RequestSingleTopup;
+import com.cloudwell.paywell.services.activity.topup.model.SingleTopUp.RequestSingleTopup;
 import com.cloudwell.paywell.services.activity.topup.model.RequestTopup;
+import com.cloudwell.paywell.services.activity.topup.model.SingleTopUp.SingleTopupResponse;
 import com.cloudwell.paywell.services.activity.topup.model.TopupReposeData;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoBillPaySubmit;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoBillPaySubmitResponse;
@@ -121,7 +122,7 @@ public interface APIService {
     Call<TopupReposeData> callTopAPI(@Body RequestTopup requestTopup);
 
     @POST("Recharge/mobileRecharge/singleTopup")
-    Call<TopupReposeData> callSingleTopUpAPI(@Body RequestSingleTopup singleTopup);
+    Call<SingleTopupResponse> callSingleTopUpAPI(@Body RequestSingleTopup singleTopup);
 
 
     @POST("Retailer/RetailerService/getRtlrSDAinfo")
@@ -515,7 +516,7 @@ public interface APIService {
     Call<ResponseBody> updateCurrentLocation(@Body CurrentLocationModel locationModel);
 
 
-    @POST("Retailer/RetailerService/UpdateMarchentAndBusinessType")
+    @POST("Retailer/RetailerService/updateMarchentAndBusinessType")
     Call<ResponseBody> updateMerchentBusiness(@Body MerchantRequestPojo merchantRequestPojo);
 
     @POST("Retailer/RetailerService/userSubBusinessType")

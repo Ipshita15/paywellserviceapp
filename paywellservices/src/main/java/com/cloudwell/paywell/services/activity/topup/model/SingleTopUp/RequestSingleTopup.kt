@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.topup.model
+package com.cloudwell.paywell.services.activity.topup.model.SingleTopUp
 
 import com.google.gson.annotations.SerializedName
 
