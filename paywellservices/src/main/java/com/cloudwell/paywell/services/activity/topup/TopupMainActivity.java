@@ -46,6 +46,7 @@ import com.cloudwell.paywell.services.activity.topup.model.SingleTopUp.SingleTop
 import com.cloudwell.paywell.services.activity.topup.model.TopupData;
 import com.cloudwell.paywell.services.activity.topup.model.TopupDatum;
 import com.cloudwell.paywell.services.activity.topup.model.TopupReposeData;
+import com.cloudwell.paywell.services.activity.topup.model.TranscationRequestModel;
 import com.cloudwell.paywell.services.activity.topup.offer.OfferMainActivity;
 import com.cloudwell.paywell.services.activity.utility.ivac.DrawableClickListener;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
@@ -56,6 +57,7 @@ import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.ParameterUtility;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
+import com.google.android.gms.common.api.Api;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.http.NameValuePair;
@@ -69,6 +71,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,6 +80,8 @@ import androidx.appcompat.app.AppCompatDialog;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -839,7 +844,8 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
                 }
                 int limit = Integer.parseInt(selectedLimit);
                 if (cd.isConnectingToInternet()) {
-                    new TransactionLogAsync().execute(getString(R.string.trx_log), "" + limit);
+                    //new TransactionLogAsync().execute(getString(R.string.trx_log), "" + limit);
+                    getTransactionLog(limit);
                 } else {
                     Snackbar snackbar = Snackbar.make(mRelativeLayout, getResources().getString(R.string.connection_error_msg), Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -912,6 +918,58 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
                 radioButton_hundred.setChecked(false);
             }
         }
+    }
+
+    private void getTransactionLog(int limit){
+
+        showProgressDialog();
+
+        TranscationRequestModel requestModel = new TranscationRequestModel();
+        requestModel.setLimit(""+limit);
+        requestModel.setService("MOBILE_RECHARGE");
+        requestModel.setUsername(mAppHandler.getUserName());
+
+
+        ApiUtils.getAPIServiceV2().getTransactionLog(requestModel).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
+                if (response.code() == 200){
+
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+
+                        int status = jsonObject.getInt("Status");
+                        String msg = jsonObject.getString("Message");
+                        if (status == 200){
+                            //JSONArray jsonArray = jsonObject.getJSONArray(jsonObject.getString("ResponseDetails"));
+                            TransLogActivity.TRANSLOG_TAG = jsonObject.getString("ResponseDetails");
+                            startActivity(new Intent(TopupMainActivity.this, TransLogActivity.class));
+
+                        }else {
+                            showErrorMessagev1(msg);
+                        }
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        showErrorMessagev1(getString(R.string.try_again_msg));
+                    }
+
+                }else {
+                    showErrorMessagev1(getString(R.string.try_again_msg));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
+            }
+        });
+
+
+
     }
 
 

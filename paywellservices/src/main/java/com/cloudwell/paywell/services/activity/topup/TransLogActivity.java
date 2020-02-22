@@ -49,6 +49,7 @@ public class TransLogActivity extends AppCompatActivity {
 
         String response = TRANSLOG_TAG;
         if (response != null && response.length() > 0) {
+
             mPhn = new String[response.length()];
             mAmount = new String[response.length()];
             mDate = new String[response.length()];
