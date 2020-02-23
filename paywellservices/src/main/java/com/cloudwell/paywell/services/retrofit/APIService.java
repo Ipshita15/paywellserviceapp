@@ -55,6 +55,7 @@ import com.cloudwell.paywell.services.activity.reg.model.AuthRequestModel;
 import com.cloudwell.paywell.services.activity.reg.model.RegistrationModel;
 import com.cloudwell.paywell.services.activity.reg.model.RequestDistrictList;
 import com.cloudwell.paywell.services.activity.reg.model.RespsoeGetDistrictList;
+import com.cloudwell.paywell.services.activity.reg.model.postCode.RequestPostCodeList;
 import com.cloudwell.paywell.services.activity.reg.model.thana.RequestThanaAPI;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.APIBrilliantTRXLog;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.BrilliantTopUpInquiry;
@@ -528,6 +529,10 @@ public interface APIService {
 
     @POST("Registration/UserRegistration/getThanaInfo")
     Call<ResponseBody> getThanaInfo(@Body RequestThanaAPI requestThanaAPI);
+
+
+    @POST("Registration/UserRegistration/getPostOfficeInfo")
+    Call<ResponseBody> getPostOfficeInfo(@Body RequestPostCodeList requestPostCodeList);
 
 
 }

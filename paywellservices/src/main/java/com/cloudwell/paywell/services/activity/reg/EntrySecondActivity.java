@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.reg;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
@@ -17,6 +16,7 @@ import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.reg.model.postCode.RequestPostCodeList;
 import com.cloudwell.paywell.services.activity.reg.model.thana.RequestThanaAPI;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
@@ -27,19 +27,8 @@ import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.DateUtils;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -131,8 +120,6 @@ public class EntrySecondActivity extends BaseActivity implements AdapterView.OnI
                         isInternetPresent = cd.isConnectingToInternet();
                         if (isInternetPresent) {
                             getThannaList();
-
-                           /// new GetThanaResponseAsync().execute(getResources().getString(R.string.district_info_url));
                         } else {
                             Toast.makeText(EntrySecondActivity.this, R.string.connection_error_msg, Toast.LENGTH_SHORT).show();
                         }
@@ -269,7 +256,9 @@ public class EntrySecondActivity extends BaseActivity implements AdapterView.OnI
                     isInternetPresent = cd.isConnectingToInternet();
 
                     if (isInternetPresent) {
-                        new GetPostResponseAsync().execute(getResources().getString(R.string.district_info_url));
+
+                       getPostListAPI();
+
                     } else {
                         Toast.makeText(this, R.string.connection_error_msg, Toast.LENGTH_SHORT).show();
                     }
@@ -290,148 +279,78 @@ public class EntrySecondActivity extends BaseActivity implements AdapterView.OnI
         }
     }
 
+    private void getPostListAPI() {
+
+        showProgressDialog();
+        RequestPostCodeList m =  new RequestPostCodeList();
+        m.setDeviceId(mAppHandler.getAndroidID());
+        m.setUsername(mAppHandler.getAndroidID());
+        String currentDataAndTIme = ""+ DateUtils.INSTANCE.getCurrentTimestamp();
+        m.setTimestamp(currentDataAndTIme);
+        m.setFormat("json");
+        m.setChannel("android");
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(mAppHandler.getRID());
+        m.setRefId(uniqueKey);
+        m.setThanaID(str_thanaId);
+
+        ApiUtils.getAPIServicePHP7().getPostOfficeInfo(m).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
+                if (response.code() == 200) {
+
+                    try {
+
+                        String result = response.body().string();
+
+                        JSONObject jsonObject = new JSONObject(result);
+                        String result_status = jsonObject.getString("status");
+                        if (result_status.equals("200")) {
+                            JSONArray result_data = jsonObject.getJSONArray("data");
+
+                            post_array_name = new String[result_data.length() + 1];
+                            post_array_id = new String[result_data.length() + 1];
+                            post_array_name[0] = "Select One";
+                            post_array_id[0] = "0";
+
+                            for (int i = 0; i < result_data.length(); i++) {
+                                JSONObject obj = result_data.getJSONObject(i);
+                                String name = obj.getString("post");
+                                int id = Integer.parseInt(obj.getString("id"));
+
+                                post_array_id[i + 1] = obj.getString("id");
+                                post_array_name[i + 1] = name;
+                            }
+                            ArrayAdapter<CharSequence> arrayAdapter_spinner_postcode = new ArrayAdapter(EntrySecondActivity.this, android.R.layout.simple_spinner_dropdown_item, post_array_name);
+                            spnr_postcode.setAdapter(arrayAdapter_spinner_postcode);
+                        } else {
+                            Toast.makeText(EntrySecondActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(EntrySecondActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
+                    }
+
+
+
+                }else {
+                    showErrorMessagev1(getString(R.string.try_again_msg));
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
+            }
+        });
+    }
+
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
 
-    private class GetThanaResponseAsync extends AsyncTask<String, Integer, String> {
-
-
-        @Override
-        protected void onPreExecute() {
-
-            showProgressDialog();
-        }
-
-        @SuppressWarnings("deprecation")
-        @Override
-        protected String doInBackground(String... data) {
-            String responseTxt = null;
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(data[0]);
-            try {
-                //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<>(2);
-                nameValuePairs.add(new BasicNameValuePair("mode", "thana"));
-                nameValuePairs.add(new BasicNameValuePair("distriID", str_districtId));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                Toast.makeText(EntrySecondActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT);
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            if (result != null) {
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String result_status = jsonObject.getString("status");
-                    if (result_status.equals("200")) {
-                        JSONArray result_data = jsonObject.getJSONArray("data");
-
-                        String[] thana_array_name = new String[result_data.length() + 1];
-                        thana_array_id = new String[result_data.length() + 1];
-                        thana_array_name[0] = "Select One";
-                        thana_array_id[0] = "0";
-
-                        for (int i = 0; i < result_data.length(); i++) {
-                            JSONObject obj = result_data.getJSONObject(i);
-                            String name = obj.getString("thana");
-
-                            thana_array_id[i + 1] = obj.getString("id");
-                            thana_array_name[i + 1] = name;
-                        }
-                        ArrayAdapter<CharSequence> arrayAdapter_spinner_thana = new ArrayAdapter(EntrySecondActivity.this, android.R.layout.simple_spinner_dropdown_item, thana_array_name);
-                        spnr_thana.setAdapter(arrayAdapter_spinner_thana);
-                    } else {
-                        Toast.makeText(EntrySecondActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(EntrySecondActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(EntrySecondActivity.this, R.string.services_off_msg, Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    private class GetPostResponseAsync extends AsyncTask<String, Integer, String> {
-
-
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
-
-        @SuppressWarnings("deprecation")
-        @Override
-        protected String doInBackground(String... data) {
-            String responseTxt = null;
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(data[0]);
-            try {
-                //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<>(4);
-                nameValuePairs.add(new BasicNameValuePair("mode", "post"));
-                nameValuePairs.add(new BasicNameValuePair("distriID", str_districtId));
-                nameValuePairs.add(new BasicNameValuePair("thanaID", str_thanaId));
-                nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getUserName()));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                Toast.makeText(EntrySecondActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT);
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-
-            if (result != null) {
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String result_status = jsonObject.getString("status");
-                    if (result_status.equals("200")) {
-                        JSONArray result_data = jsonObject.getJSONArray("data");
-
-                        post_array_name = new String[result_data.length() + 1];
-                        post_array_id = new String[result_data.length() + 1];
-                        post_array_name[0] = "Select One";
-                        post_array_id[0] = "0";
-
-                        for (int i = 0; i < result_data.length(); i++) {
-                            JSONObject obj = result_data.getJSONObject(i);
-                            String name = obj.getString("post");
-                            int id = Integer.parseInt(obj.getString("id"));
-
-                            post_array_id[i + 1] = obj.getString("id");
-                            post_array_name[i + 1] = name;
-                        }
-                        ArrayAdapter<CharSequence> arrayAdapter_spinner_postcode = new ArrayAdapter(EntrySecondActivity.this, android.R.layout.simple_spinner_dropdown_item, post_array_name);
-                        spnr_postcode.setAdapter(arrayAdapter_spinner_postcode);
-                    } else {
-                        Toast.makeText(EntrySecondActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(EntrySecondActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(EntrySecondActivity.this, R.string.services_off_msg, Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
 }
 
