@@ -427,7 +427,7 @@ public interface APIService {
     @POST("Retailer/RetailerService/userServiceProfiling")
     Call<ReposeUserProfile> userServiceProfiling(@Body AuthRequestModel regModel);
 
-    @POST("Retailer/RetailerService/userServiceProfilingReg")
+    @POST("Registration/UserRegistration/userServiceProfilingReg")
     Call<ReposeUserProfile> userServiceProfilingReg(@Body AuthRequestModel regModel);
 
 

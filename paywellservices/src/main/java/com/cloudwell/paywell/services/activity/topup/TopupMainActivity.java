@@ -1045,7 +1045,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
         alert.show();
     }
 
-    private void handleTopupAPIValidation(String pinNo) {           //TODO Work in this method
+    private void handleTopupAPIValidation(String pinNo) {
         showProgressDialog();
 
         final RequestTopup requestTopup = new RequestTopup();
@@ -1202,7 +1202,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
     private void getBulkTopup(RequestTopup requestTopup) {
 
 
-        Call<TopupReposeData> responseBodyCall = ApiUtils.getAPIServiceV2().callTopAPI(requestTopup);         //TODO change the api
+        Call<TopupReposeData> responseBodyCall = ApiUtils.getAPIServiceV2().callTopAPI(requestTopup);
         responseBodyCall.enqueue(new Callback<TopupReposeData>() {
             @Override
             public void onResponse(Call<TopupReposeData> call, Response<TopupReposeData> response) {
