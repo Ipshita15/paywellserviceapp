@@ -35,13 +35,22 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDialog;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.topup.adapter.MyRecyclerViewAdapter;
+import com.cloudwell.paywell.services.activity.topup.model.EnquiryData;
 import com.cloudwell.paywell.services.activity.topup.model.MobileOperator;
+import com.cloudwell.paywell.services.activity.topup.model.RechargeEnqueryModel;
+import com.cloudwell.paywell.services.activity.topup.model.RechargeEnqueryResponseModel;
+import com.cloudwell.paywell.services.activity.topup.model.RequestTopup;
 import com.cloudwell.paywell.services.activity.topup.model.SingleTopUp.Data;
 import com.cloudwell.paywell.services.activity.topup.model.SingleTopUp.RequestSingleTopup;
-import com.cloudwell.paywell.services.activity.topup.model.RequestTopup;
 import com.cloudwell.paywell.services.activity.topup.model.SingleTopUp.SingleTopupResponse;
 import com.cloudwell.paywell.services.activity.topup.model.TopupData;
 import com.cloudwell.paywell.services.activity.topup.model.TopupDatum;
@@ -58,7 +67,6 @@ import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.ParameterUtility;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
-import com.google.android.gms.common.api.Api;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.http.NameValuePair;
@@ -72,15 +80,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatDialog;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -130,7 +131,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
     private ImageView imageViewInq;
     private ImageView imageViewTrxLog;
     Button buttonSubmit;
-
+    private String inquiryReceipt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -685,7 +686,8 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
                     if (!cd.isConnectingToInternet()) {
                         AppHandler.showDialog(getSupportFragmentManager());
                     } else {
-                        new TransEnquiryAsync().execute(getResources().getString(R.string.inq_top), enqNoET.getText().toString());
+                        transEnquery(enqNoET.getText().toString());
+                        //new TransEnquiryAsync().execute(getResources().getString(R.string.inq_top), enqNoET.getText().toString());
                     }
                     dialogInterface.dismiss();
                 }
@@ -695,120 +697,91 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
         alert.show();
     }
 
-    @SuppressWarnings("deprecation")
-    private class TransEnquiryAsync extends AsyncTask<String, Integer, String> {
 
-        private String inquiryReceipt;
+    private void transEnquery(String enqnoEt){
+        showProgressDialog();
+        RechargeEnqueryModel enqueryModel = new RechargeEnqueryModel();
+        enqueryModel.setUsername(mAppHandler.getUserName());
+        enqueryModel.setMsisdn(enqnoEt);
 
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
 
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
+        ApiUtils.getAPIServiceV2().getRechargeEnquiry(enqueryModel).enqueue(new Callback<RechargeEnqueryResponseModel>() {
+            @Override
+            public void onResponse(Call<RechargeEnqueryResponseModel> call, Response<RechargeEnqueryResponseModel> response) {
+                dismissProgressDialog();
+                if (response.code() == 200){
 
-            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(TopupMainActivity.this).getRID());
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(2);
-                nameValuePairs.add(new BasicNameValuePair("iemi_no", mAppHandler.getUserName()));
-                nameValuePairs.add(new BasicNameValuePair("msisdn", params[1]));
-                nameValuePairs.add(new BasicNameValuePair("ref_id", uniqueKey));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                    if (response.body().getStatusCode() == 200){
 
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-            }
-            return responseTxt;
-        }
+                        EnquiryData enquiryData = response.body().getEnquiryData();
 
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            if (result != null) {
-                try {
-                    String splitSingleAt[] = result.split("@");
-                    if (splitSingleAt[0].equalsIgnoreCase("362") || splitSingleAt[0].equalsIgnoreCase("360")) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(TopupMainActivity.this);
-                        builder.setTitle(Html.fromHtml("<font color='#ff0000'>Result Failed</font>"));
-                        builder.setMessage("Message: " + splitSingleAt[5]);
-                        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int id) {
-                                dialogInterface.dismiss();
-                            }
-                        });
-                        AlertDialog alert = builder.create();
-                        alert.show();
-                    } else {
-                        String phnNo = splitSingleAt[1];
-                        String amount = splitSingleAt[2];
-                        String packageType = splitSingleAt[3];
-                        String trxID = splitSingleAt[4];
-                        String message = splitSingleAt[5];
-                        String dateTime = AppHandler.timeStampFormat(splitSingleAt[6]);
-                        String hotline = splitSingleAt[9];
+                        String phnNo = enquiryData.getRecipientMsisdn();
+                        String amount = enquiryData.getAmount();
+                        String packageType = enquiryData.getConnectionType();
+                        String trxID = enquiryData.getTranId();
+                        String message = enquiryData.getStatusName();
+                        String dateTime = enquiryData.getRequestDate();
+                        String hotline = response.body().getHotline();
                         showEnquiryResult(phnNo, amount, packageType, trxID, message, dateTime, hotline);
+
+
+                    }else {
+                        showErrorMessagev1(response.body().getMessage());
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-            } else {
-                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-        }
 
-        private void showEnquiryResult(String phone, String amount, String packageType, String trxId, String status, String datetime, String hotline) {
-            if (status.equalsIgnoreCase("Successful")) {
-                inquiryReceipt = getString(R.string.phone_no_des) + " " + phone
-                        + "\n" + getString(R.string.package_type_des) + " " + packageType
-                        + "\n" + getString(R.string.amount_des) + " " + amount + getString(R.string.tk)
-                        + "\n" + getString(R.string.trx_id_des) + " " + trxId
-                        + "\n" + getString(R.string.date_des) + " " + datetime
-                        + "\n\n" + getString(R.string.using_paywell_des)
-                        + "\n" + getString(R.string.hotline_des) + " " + hotline;
-            } else {
-                inquiryReceipt = getString(R.string.phone_no_des) + " " + phone
-                        + "\n" + getString(R.string.package_type_des) + " " + packageType
-                        + "\n" + getString(R.string.amount_des) + " " + amount + getString(R.string.tk)
-                        + "\n\n" + getString(R.string.status_des) + " " + status
-                        + "\n\n" + getString(R.string.trx_id_des) + " " + trxId
-                        + "\n" + getString(R.string.date_des) + " " + datetime
-                        + "\n\n" + getString(R.string.using_paywell_des)
-                        + "\n" + getString(R.string.hotline_des) + " " + hotline;
+                }else {
+                    showErrorMessagev1(getString(R.string.try_again_msg));
+                }
+
             }
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(TopupMainActivity.this);
-            if (status.equalsIgnoreCase("Successful")) {
-                builder.setTitle(Html.fromHtml("<font color='#008000'>Result Successful</font>"));
-            } else {
-                builder.setTitle(Html.fromHtml("<font color='#ff0000'>Result Failed</font>"));
+            @Override
+            public void onFailure(Call<RechargeEnqueryResponseModel> call, Throwable t) {
+
             }
-            builder.setMessage(inquiryReceipt);
-            builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int id) {
-                    dialogInterface.dismiss();
-                }
-            });
-            AlertDialog alert = builder.create();
-            alert.show();
+        });
+
+
+
+    }
+
+
+
+    private void showEnquiryResult(String phone, String amount, String packageType, String trxId, String status, String datetime, String hotline) {
+        if (status.equalsIgnoreCase("Successful")) {
+            inquiryReceipt = getString(R.string.phone_no_des) + " " + phone
+                    + "\n" + getString(R.string.package_type_des) + " " + packageType
+                    + "\n" + getString(R.string.amount_des) + " " + amount + getString(R.string.tk)
+                    + "\n" + getString(R.string.trx_id_des) + " " + trxId
+                    + "\n" + getString(R.string.date_des) + " " + datetime
+                    + "\n\n" + getString(R.string.using_paywell_des)
+                    + "\n" + getString(R.string.hotline_des) + " " + hotline;
+        } else {
+            inquiryReceipt = getString(R.string.phone_no_des) + " " + phone
+                    + "\n" + getString(R.string.package_type_des) + " " + packageType
+                    + "\n" + getString(R.string.amount_des) + " " + amount + getString(R.string.tk)
+                    + "\n\n" + getString(R.string.status_des) + " " + status
+                    + "\n\n" + getString(R.string.trx_id_des) + " " + trxId
+                    + "\n" + getString(R.string.date_des) + " " + datetime
+                    + "\n\n" + getString(R.string.using_paywell_des)
+                    + "\n" + getString(R.string.hotline_des) + " " + hotline;
         }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(TopupMainActivity.this);
+        if (status.equalsIgnoreCase("Successful")) {
+            builder.setTitle(Html.fromHtml("<font color='#008000'>Result Successful</font>"));
+        } else {
+            builder.setTitle(Html.fromHtml("<font color='#ff0000'>Result Failed</font>"));
+        }
+        builder.setMessage(inquiryReceipt);
+        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int id) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     // Transaction LOG
