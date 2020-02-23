@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Base64;
@@ -28,26 +27,26 @@ import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.modelPojo.UserSubBusinessTypeModel;
 import com.cloudwell.paywell.services.activity.reg.EntryMainActivity;
 import com.cloudwell.paywell.services.activity.reg.model.RegistrationModel;
+import com.cloudwell.paywell.services.activity.reg.model.RequestDistrictList;
+import com.cloudwell.paywell.services.activity.reg.model.RespsoeGetDistrictList;
+import com.cloudwell.paywell.services.activity.reg.model.postCode.RequestPostCodeList;
+import com.cloudwell.paywell.services.activity.reg.model.thana.RequestThanaAPI;
 import com.cloudwell.paywell.services.activity.reg.nidOCR.NidInputActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.DateUtils;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.imagepicker.FilePickUtils;
 import com.imagepicker.LifeCycleCallBackManager;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -318,53 +317,13 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 }
 
             } else {
-
-                new GetDistrictResponseAsync().execute(getResources().getString(R.string.district_info_url));
-                new GetDistrictResponseAsync().execute(getResources().getString(R.string.district_info_url));
-                new GetDistrictResponseAsync().execute(getResources().getString(R.string.district_info_url));
-
+                getDistrictList();
 
             }
 
 
         }
-//        if (layoutNames.contains("thana")) {
-//
-//
-//            layoutDistrict.setVisibility(View.VISIBLE);
-//            layoutThana.setVisibility(View.VISIBLE);
-//            layoutPost.setVisibility(View.VISIBLE);
-//
-//
-//            if (isMissingFlowGorble) {
-//                if (regModel != null) {
-//                    setAdapterThana(regModel.getThanaResponseAPIRespose(), isMissingFlowGorble);
-//                }
-//
-//            } else {
-//
-//                new GetDistrictResponseAsync().execute(getResources().getString(R.string.district_info_url));
-//            }
-//
-//
-//        }
-//        if (layoutNames.contains("post_code")) {
-//
-//            if (isMissingFlowGorble) {
-//
-//                if (regModel != null) {
-//                    setupPostCode(regModel.getPostCodeResponseAPIRespose(), isMissingFlowGorble);
-//                }
-//            } else {
-//
-//                new GetDistrictResponseAsync().execute(getResources().getString(R.string.district_info_url));
-//
-//            }
-//
-//            layoutDistrict.setVisibility(View.VISIBLE);
-//            layoutThana.setVisibility(View.VISIBLE);
-//            layoutPost.setVisibility(View.VISIBLE);
-//        }
+
         if (layoutNames.contains("landmark")) {
             layoutLandmark.setVisibility(View.VISIBLE);
 
@@ -486,7 +445,8 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
 
 
                         if (mCd.isConnectingToInternet()) {
-                            new GetThanaResponseAsync().execute(getResources().getString(R.string.district_info_url));
+                            getThannaList();
+
                         } else {
                             Snackbar snackbar = Snackbar.make(scrollView, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
                             snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -507,7 +467,9 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                         regModel.setThanaAdapterPosition(spnr_thana.getSelectedItemPosition());
 
                         if (mCd.isConnectingToInternet()) {
-                            new GetPostResponseAsync().execute(getResources().getString(R.string.district_info_url));
+
+                            getPostListAPI();
+
                         } else {
                             Snackbar snackbar = Snackbar.make(scrollView, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
                             snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -546,57 +508,122 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
         if (!mCd.isConnectingToInternet()) {
             AppHandler.showDialog(getSupportFragmentManager());
         } else {
-            new BusinessTypeAsync().execute(
-                    getResources().getString(R.string.business_type_url));
+            getBusinessType();
         }
     }
 
-    private class BusinessTypeAsync extends AsyncTask<String, String, String> {
 
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
+    private void getBusinessType(){
 
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
+        showProgressDialog();
+        UserSubBusinessTypeModel businessTypeModel =  new UserSubBusinessTypeModel();
+        businessTypeModel.setServiceId(regModel.getMMrchantType());
+        businessTypeModel.setDeviceId(mAppHandler.getAndroidID());
+        String currentDataAndTIme = ""+ DateUtils.INSTANCE.getCurrentTimestamp();
+        businessTypeModel.setTimestamp(currentDataAndTIme);
+        businessTypeModel.setFormat("json");
+        businessTypeModel.setChannel("android");
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(mAppHandler.getRID());
+        businessTypeModel.setRefId(uniqueKey);
 
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
-                nameValuePairs.add(new BasicNameValuePair("serviceId", regModel.getMMrchantType()));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+        ApiUtils.getAPIServicePHP7().getUserSubBusinessType(businessTypeModel).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
+                if (response.code() == 200){
 
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                    try {
+
+
+                        String result = response.body().string();
+                        business_type_id_array = new ArrayList<>();
+
+
+                        JSONObject jsonObject = new JSONObject(result);
+                        String status = jsonObject.getString("status");
+                        String msg = jsonObject.getString("message");
+
+                        if (status.equals("200")){
+
+                            if (regModel == null) {
+                                regModel = new RegistrationModel();
+
+                            }
+                            regModel.setBusinessaTypeAPIRespose(result);
+
+                            dismissProgressDialog();
+
+                            setBusnicesTypeAdapter(result, false);
+                        }else {
+                            showErrorMessagev1(msg);
+                        }
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        showErrorMessagev1(getString(R.string.try_again_msg));
+
+                    }
+                }
+
             }
 
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-
-            if (regModel == null) {
-                regModel = new RegistrationModel();
-
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
             }
-            regModel.setBusinessaTypeAPIRespose(result);
+        });
 
-            dismissProgressDialog();
 
-            setBusnicesTypeAdapter(result, false);
-        }
+
     }
+
+//    private class BusinessTypeAsync extends AsyncTask<String, String, String> {
+//
+//        @Override
+//        protected void onPreExecute() {
+//            showProgressDialog();
+//        }
+//
+//        @Override
+//        protected String doInBackground(String... params) {
+//            String responseTxt = null;
+//            // Create a new HttpClient and Post Header
+//            HttpClient httpclient = new DefaultHttpClient();
+//            HttpPost httppost = new HttpPost(params[0]);
+//
+//            try {
+//                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
+//                nameValuePairs.add(new BasicNameValuePair("serviceId", regModel.getMMrchantType()));
+//                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+//
+//                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+//                responseTxt = httpclient.execute(httppost, responseHandler);
+//            } catch (Exception e) {
+//                e.fillInStackTrace();
+//                Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+//                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+//                View snackBarView = snackbar.getView();
+//                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+//            }
+//
+//            return responseTxt;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//
+//            if (regModel == null) {
+//                regModel = new RegistrationModel();
+//
+//            }
+//            regModel.setBusinessaTypeAPIRespose(result);
+//
+//            dismissProgressDialog();
+//
+//            setBusnicesTypeAdapter(result, false);
+//        }
+//    }
 
     private void setBusnicesTypeAdapter(String result, boolean isMissingFlow) {
         if (result != null) {
@@ -650,54 +677,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
         }
     }
 
-    private class GetDistrictResponseAsync extends AsyncTask<String, Integer, String> {
 
-
-        @Override
-        protected void onPreExecute() {
-//            showProgressDialog();
-        }
-
-        @Override
-        protected String doInBackground(String... data) {
-            String responseTxt = null;
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(data[0]);
-
-            try {
-                //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-                nameValuePairs.add(new BasicNameValuePair("mode", "district"));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-
-            // dismissProgressDialog();
-
-            if (regModel == null) {
-
-                regModel = new RegistrationModel();
-            }
-
-            regModel.setDistrictAPIRespose(result);
-
-            setupDistrictAdapter(result, isMissingFlowGorble);
-        }
-    }
 
     private void setupDistrictAdapter(String result, boolean isMissingFlowGorble) {
         if (result != null) {
@@ -765,52 +745,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
     }
 
 
-    private class GetThanaResponseAsync extends AsyncTask<String, Integer, String> {
 
-
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
-
-        @SuppressWarnings("deprecation")
-        @Override
-        protected String doInBackground(String... data) {
-            String responseTxt = null;
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(data[0]);
-
-            try {
-                //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<>(2);
-                nameValuePairs.add(new BasicNameValuePair("mode", "thana"));
-                nameValuePairs.add(new BasicNameValuePair("distriID", regModel.getDistrict()));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-
-
-            regModel.setThanaResponseAPIRespose(result);
-
-
-            setAdapterThana(result, isMissingFlowGorble);
-        }
-    }
 
     private void setAdapterThana(String result, boolean isMissingFlowGorble) {
         if (result != null) {
@@ -863,51 +798,6 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
         }
     }
 
-
-    private class GetPostResponseAsync extends AsyncTask<String, Integer, String> {
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
-
-        @SuppressWarnings("deprecation")
-        @Override
-        protected String doInBackground(String... data) {
-            String responseTxt = null;
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(data[0]);
-            try {
-                //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<>(4);
-                nameValuePairs.add(new BasicNameValuePair("mode", "post"));
-                nameValuePairs.add(new BasicNameValuePair("distriID", regModel.getDistrict()));
-                nameValuePairs.add(new BasicNameValuePair("thanaID", regModel.getThanaName()));
-                nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getUserName()));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-
-            dismissProgressDialog();
-
-            regModel.setPostCodeResponseAPIRespose(result);
-
-            setupPostCode(result, isMissingFlowGorble);
-        }
-    }
 
     private void setupPostCode(String result, boolean isMissingFlowGorble) {
         if (result != null) {
@@ -963,15 +853,6 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
 
 
     public void outletImgOnClickMissing(View v) {
-//        str_which_btn_selected = "1";
-//        int permissionCheckGallery = ContextCompat.checkSelfPermission(MissingMainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
-//        if (permissionCheckGallery != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(
-//                    MissingMainActivity.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY);
-//        } else {
-//            galleryIntent();
-//        }
-
         asked("দোকানের ছবি", "1");
     }
 
@@ -1157,6 +1038,13 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
 
             String mDistrict = "", mThanaName = "", mPostcodeId = "";
 
+
+
+            try {
+                mDistrict = regModel.getDistrict();
+            } catch (Exception e) {
+
+            }
 
             try {
                 mThanaName = regModel.getThanaName();
@@ -1409,9 +1297,6 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 }
             }
 
-//            new RetailerMissingAsync().execute(getResources().getString(R.string.missing_reg_url));
-
-
             submitRequest();
 
         } else {
@@ -1603,205 +1488,6 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
         }
     }
 
-
-//    private class RetailerMissingAsync extends AsyncTask<String, Integer, String> {
-//
-//
-//        @Override
-//        protected void onPreExecute() {
-//            showProgressDialog();
-//        }
-//
-//        @Override
-//        protected String doInBackground(String... data) {
-//
-//            String responseTxt = null;
-//            // Create a new HttpClient and Post Header
-//            HttpClient httpclient = new DefaultHttpClient();
-//            HttpPost httppost = new HttpPost(data[0]);
-//            try {
-//                TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(MissingMainActivity.this);
-//                String imeiOne = telephonyInfo.getImeiSIM1();
-//                String imeiTwo = telephonyInfo.getImeiSIM2();
-//
-//                JSONObject jsonInformationData = new JSONObject();
-//                try {
-//                    if (layoutNames.contains("outlet_name")) {
-//                        jsonInformationData.put("outlet_name", editText_outletName.getText().toString().trim());
-//                    }
-//                    if (layoutNames.contains("outlet_address")) {
-//                        jsonInformationData.put("outlet_address", editText_address.getText().toString().trim());
-//                    }
-//                    if (layoutNames.contains("owner_name")) {
-//                        jsonInformationData.put("owner_name", editText_ownerName.getText().toString().trim());
-//                    }
-//                    if (layoutNames.contains("business_type")) {
-//                        jsonInformationData.put("business_type_id", regModel.getBusinessId());
-//                        jsonInformationData.put("business_type", regModel.getBusinessType());
-//                    }
-//                    if (layoutNames.contains("mobile_number")) {
-//                        jsonInformationData.put("mobile_number", editText_phnNo.getText().toString().trim());
-//                    }
-//                    if (layoutNames.contains("district")) {
-//                        jsonInformationData.put("district", regModel.getDistrict());
-//                    }
-//                    if (layoutNames.contains("thana")) {
-//                        jsonInformationData.put("district", regModel.getDistrict());
-//                        jsonInformationData.put("thana", regModel.getThanaName());
-//                    }
-//                    if (layoutNames.contains("post_code")) {
-//                        jsonInformationData.put("district", regModel.getDistrict());
-//                        jsonInformationData.put("thana", regModel.getThanaName());
-//                        jsonInformationData.put("post_office_id", regModel.getPostcodeId());
-//                        jsonInformationData.put("post_code", regModel.getPostcodeName());
-//                    }
-//                    if (layoutNames.contains("landmark")) {
-//                        jsonInformationData.put("landmark", editText_landmark.getText().toString().trim());
-//                    }
-//
-//                    if (layoutNames.contains("nid_img")) {
-//                        jsonInformationData.put("nidNumber", regModel.getNidNumber());
-//                        jsonInformationData.put("nidName", regModel.getNidName());
-//                        jsonInformationData.put("nidMotherName", regModel.getNidMotherName());
-//                        jsonInformationData.put("nidBirthday", regModel.getNidBirthday());
-//                        jsonInformationData.put("nidAddress", regModel.getNidAddress());
-//                        jsonInformationData.put("nidFatherName", regModel.getNidFatherName());
-//                    }
-//
-//                    if (layoutNames.contains("smartCardFrontPic")) {
-//                        jsonInformationData.put("smartCardNumber", regModel.getSmartCardNumber());
-//                        jsonInformationData.put("smartCardName", regModel.getSmartCardName());
-//                        jsonInformationData.put("smartCardFatherName", regModel.getSmartCardFatherName());
-//                        jsonInformationData.put("smartCardMotherName", regModel.getSmartCardMotherName());
-//                        jsonInformationData.put("smartCardBirthday", regModel.getSmartCardBirthday());
-//                        jsonInformationData.put("smartCardAddress", regModel.getSmartCardAddress());
-//                    }
-//
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                    Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-//                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-//                    View snackBarView = snackbar.getView();
-//                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-//                }
-//
-//
-//                JSONObject imageData = new JSONObject();
-//                //add data
-//                JSONObject rootJsonObject = new JSONObject();
-//                rootJsonObject.put("imei", imeiOne);
-//                rootJsonObject.put("alternate_imei", imeiTwo);
-//                rootJsonObject.put("informationData", jsonInformationData.toString());
-//                if (layoutNames.contains("outlet_img")) {
-//                    imageData.put("outlet_img", regModel.getOutletImage());
-//                }
-//                if (layoutNames.contains("nid_img")) {
-//                    imageData.put("nid_img", regModel.getNidFront());
-//                }
-//                if (layoutNames.contains("nid_back_img")) {
-//                    imageData.put("nid_back_img", regModel.getNidBack());
-//                }
-//
-//                if (layoutNames.contains("smartCardFrontPic")) {
-//                    imageData.put("smartCardFrontPic", regModel.getSmartCardFront());
-//                }
-//
-//                if (layoutNames.contains("smartCardBackPic")) {
-//                    imageData.put("smartCardBackPic", regModel.getSmartCardBack());
-//                }
-//
-//                if (layoutNames.contains("informationData")) {
-//                    imageData.put("owner_img", regModel.getOwnerImage());
-//                }
-//                if (layoutNames.contains("trade_license_img")) {
-//                    imageData.put("trade_license_img", regModel.getTradeLicense());
-//                }
-//                if (layoutNames.contains("image_passport")) {
-//                    imageData.put("image_passport", regModel.getPassport());
-//                }
-//                if (layoutNames.contains("birth_certificate_img")) {
-//                    imageData.put("birth_certificate_img", regModel.getBirthCertificate());
-//                }
-//                if (layoutNames.contains("driving_license_imege")) {
-//                    imageData.put("driving_license_imege", regModel.getDrivingLicense());
-//                }
-//                if (layoutNames.contains("visiting_card_img")) {
-//                    imageData.put("visiting_card_img", regModel.getVisitingCard());
-//                }
-//
-//                rootJsonObject.put("img", imageData.toString());
-//                httppost.setEntity(new StringEntity( new Gson().toJson(rootJsonObject.toString())));
-//
-//                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-//                responseTxt = httpclient.execute(httppost, responseHandler);
-//            } catch (Exception e) {
-//                e.fillInStackTrace();
-//                Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-//                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-//                View snackBarView = snackbar.getView();
-//                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-//                snackbar.show();
-//            }
-//            return responseTxt;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String result) {
-//            dismissProgressDialog();
-//
-//            if (result != null) {
-//                try {
-//                    JSONObject jsonObject = new JSONObject(result);
-//                    String status = jsonObject.getString("status");
-//                    if (status.equals("200")) {
-//                        String msg = jsonObject.getString("message");
-//                        AlertDialog.Builder builder = new AlertDialog.Builder(MissingMainActivity.this);
-//                        builder.setTitle("Status");
-//                        builder.setMessage(msg);
-//                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialogInterface, int id) {
-//                                Intent intent = getBaseContext().getPackageManager()
-//                                        .getLaunchIntentForPackage(getBaseContext().getPackageName());
-//                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                                startActivity(intent);
-//                                finish();
-//                            }
-//                        });
-//                        AlertDialog alert = builder.create();
-//                        alert.show();
-//                    } else {
-//                        String msg = jsonObject.getString("message");
-//                        AlertDialog.Builder builder = new AlertDialog.Builder(MissingMainActivity.this);
-//                        builder.setTitle("Status");
-//                        builder.setMessage(msg);
-//                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialogInterface, int id) {
-//                                dialogInterface.dismiss();
-//                            }
-//                        });
-//                        AlertDialog alertDialog = builder.create();
-//                        alertDialog.show();
-//                    }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                    Snackbar snackbar = Snackbar.make(scrollView, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-//                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-//                    View snackBarView = snackbar.getView();
-//                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-//                    snackbar.show();
-//                }
-//            } else {
-//                Snackbar snackbar = Snackbar.make(scrollView, R.string.services_off_msg, Snackbar.LENGTH_LONG);
-//                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-//                View snackBarView = snackbar.getView();
-//                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-//                snackbar.show();
-//            }
-//        }
-//    }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -1862,4 +1548,166 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
             Log.e("", "");
         }
     };
+
+    private void getDistrictList() {
+        showProgressDialog();
+        RequestDistrictList businessTypeModel =  new RequestDistrictList();
+        businessTypeModel.setDeviceId(mAppHandler.getAndroidID());
+        businessTypeModel.setUsername(mAppHandler.getAndroidID());
+        String currentDataAndTIme = ""+ DateUtils.INSTANCE.getCurrentTimestamp();
+        businessTypeModel.setTimestamp(currentDataAndTIme);
+        businessTypeModel.setFormat("json");
+        businessTypeModel.setChannel("android");
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(mAppHandler.getRID());
+        businessTypeModel.setRefId(uniqueKey);
+
+        ApiUtils.getAPIServicePHP7().getDistrictInfo(businessTypeModel).enqueue(new Callback<RespsoeGetDistrictList>() {
+            @Override
+            public void onResponse(Call<RespsoeGetDistrictList> call, Response<RespsoeGetDistrictList> response) {
+                dismissProgressDialog();
+                if (response.code() == 200) {
+                    String data = new Gson().toJson(response.body());
+
+
+
+                    if (regModel == null) {
+
+                        regModel = new RegistrationModel();
+                    }
+
+                    regModel.setDistrictAPIRespose(data);
+
+                    setupDistrictAdapter(data, isMissingFlowGorble);
+
+
+
+                }else {
+                    showErrorMessagev1(getString(R.string.try_again_msg));
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RespsoeGetDistrictList> call, Throwable t) {
+                dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
+            }
+        });
+
+    }
+
+    private void getThannaList() {
+        showProgressDialog();
+        RequestThanaAPI m =  new RequestThanaAPI();
+        m.setDeviceId(mAppHandler.getAndroidID());
+        m.setUsername(mAppHandler.getAndroidID());
+        String currentDataAndTIme = ""+ DateUtils.INSTANCE.getCurrentTimestamp();
+        m.setTimestamp(currentDataAndTIme);
+        m.setFormat("json");
+        m.setChannel("android");
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(mAppHandler.getRID());
+        m.setRefId(uniqueKey);
+        m.setDistriID(regModel.getDistrict());
+
+        ApiUtils.getAPIServicePHP7().getThanaInfo(m).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
+                if (response.code() == 200) {
+
+                    try {
+                        String result = response.body().string();
+                        JSONObject jsonObject = new JSONObject(result);
+                        String result_status = jsonObject.getString("status");
+                        String msg = jsonObject.getString("message");
+
+                        if (result_status.equals("200")) {
+
+
+                            regModel.setThanaResponseAPIRespose(result);
+
+                            setAdapterThana(result, isMissingFlowGorble);
+
+                        } else {
+                            showErrorMessagev1(msg);
+                        }
+                    } catch (Exception e) {
+                        showErrorMessagev1(getString(R.string.try_again_msg));
+                    }
+
+
+
+                }else {
+                    showErrorMessagev1(getString(R.string.try_again_msg));
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
+            }
+        });
+    }
+
+    private void getPostListAPI() {
+
+        showProgressDialog();
+        RequestPostCodeList m =  new RequestPostCodeList();
+        m.setDeviceId(mAppHandler.getAndroidID());
+        m.setUsername(mAppHandler.getAndroidID());
+        String currentDataAndTIme = ""+ DateUtils.INSTANCE.getCurrentTimestamp();
+        m.setTimestamp(currentDataAndTIme);
+        m.setFormat("json");
+        m.setChannel("android");
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(mAppHandler.getRID());
+        m.setRefId(uniqueKey);
+        m.setThanaID(regModel.getThanaName());
+
+        ApiUtils.getAPIServicePHP7().getPostOfficeInfo(m).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
+                if (response.code() == 200) {
+
+                    try {
+
+                        String result = response.body().string();
+
+                        JSONObject jsonObject = new JSONObject(result);
+                        String result_status = jsonObject.getString("status");
+                        String msg = jsonObject.getString("message");
+
+                        if (result_status.equals("200")) {
+
+                            dismissProgressDialog();
+
+                            regModel.setPostCodeResponseAPIRespose(result);
+
+                            setupPostCode(result, isMissingFlowGorble);
+
+                        } else {
+                            showErrorMessagev1(msg);
+                        }
+                    } catch (Exception e) {
+
+                        showErrorMessagev1(getString(R.string.try_again_msg));
+                    }
+
+
+
+                }else {
+                    showErrorMessagev1(getString(R.string.try_again_msg));
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
+            }
+        });
+    }
 }
