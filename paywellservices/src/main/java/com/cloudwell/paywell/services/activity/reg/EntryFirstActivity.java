@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.modelPojo.UserSubBusinessTypeModel;
+import com.cloudwell.paywell.services.activity.reg.model.RequestDistrictList;
+import com.cloudwell.paywell.services.activity.reg.model.RespsoeGetDistrictList;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
@@ -25,6 +27,7 @@ import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.DateUtils;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
+import com.google.gson.Gson;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -113,8 +116,6 @@ public class EntryFirstActivity extends BaseActivity {
         if (!mCd.isConnectingToInternet()) {
             AppHandler.showDialog(getSupportFragmentManager());
         } else {
-//            new BusinessTypeAsync().execute(
-//                    getResources().getString(R.string.business_type_url));
 
             getBusinessType();
 
@@ -363,73 +364,57 @@ public class EntryFirstActivity extends BaseActivity {
                 regModel.setEmailAddress(et_email.getText().toString().trim());
 
                 mAppHandler.REG_FLAG_ONE = true;
+                
+                getDistrictList();
 
-                new GetDistrictResponseAsync().execute(getResources().getString(R.string.district_info_url));
             } else {
                 Toast.makeText(this, R.string.connection_error_msg, Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    private class GetDistrictResponseAsync extends AsyncTask<String, Integer, String> {
+    private void getDistrictList() {
+        showProgressDialog();
+        RequestDistrictList businessTypeModel =  new RequestDistrictList();
+        businessTypeModel.setDeviceId(mAppHandler.getAndroidID());
+        businessTypeModel.setUsername(mAppHandler.getAndroidID());
+        String currentDataAndTIme = ""+ DateUtils.INSTANCE.getCurrentTimestamp();
+        businessTypeModel.setTimestamp(currentDataAndTIme);
+        businessTypeModel.setFormat("json");
+        businessTypeModel.setChannel("android");
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(mAppHandler.getRID());
+        businessTypeModel.setRefId(uniqueKey);
 
+        ApiUtils.getAPIServicePHP7().getDistrictInfo(businessTypeModel).enqueue(new Callback<RespsoeGetDistrictList>() {
+            @Override
+            public void onResponse(Call<RespsoeGetDistrictList> call, Response<RespsoeGetDistrictList> response) {
+                dismissProgressDialog();
+                if (response.code() == 200) {
+                    String data = new Gson().toJson(response.body().getData());
 
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
+                    Bundle bundle = new Bundle();
+                    bundle.putString("district_array",data);
+                    mAppHandler.setDistrictArray(data);
 
-        @Override
-        protected String doInBackground(String... data) {
-            String responseTxt = null;
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(data[0]);
+                    AnalyticsManager.sendEvent(AnalyticsParameters.KEY_REGISTRATION_MENU, AnalyticsParameters.KEY_REGISTRATION_FIRST_PORTION_SUBMIT_REQUEST);
+                    Intent intent = new Intent(EntryFirstActivity.this, EntrySecondActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    finish();
 
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
-                nameValuePairs.add(new BasicNameValuePair("mode", "district"));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                Toast.makeText(EntryFirstActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT);
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-
-            if (result != null) {
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String result_status = jsonObject.getString("status");
-                    if (result_status.equals("200")) {
-                        JSONArray result_data = jsonObject.getJSONArray("data");
-
-                        Bundle bundle = new Bundle();
-                        bundle.putString("district_array", result_data.toString());
-                        mAppHandler.setDistrictArray(result_data.toString());
-
-                        AnalyticsManager.sendEvent(AnalyticsParameters.KEY_REGISTRATION_MENU, AnalyticsParameters.KEY_REGISTRATION_FIRST_PORTION_SUBMIT_REQUEST);
-                        Intent intent = new Intent(EntryFirstActivity.this, EntrySecondActivity.class);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        Toast.makeText(EntryFirstActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(EntryFirstActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
+                }else {
+                    showErrorMessagev1(getString(R.string.try_again_msg));
                 }
-            } else {
-                Toast.makeText(EntryFirstActivity.this, R.string.services_off_msg, Toast.LENGTH_SHORT).show();
+
             }
-        }
+
+            @Override
+            public void onFailure(Call<RespsoeGetDistrictList> call, Throwable t) {
+                dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
+            }
+        });
+
     }
 
     @Override

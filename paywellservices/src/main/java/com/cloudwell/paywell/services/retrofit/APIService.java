@@ -53,6 +53,8 @@ import com.cloudwell.paywell.services.activity.refill.nagad.model.ResTranstionIN
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLog;
 import com.cloudwell.paywell.services.activity.reg.model.AuthRequestModel;
 import com.cloudwell.paywell.services.activity.reg.model.RegistrationModel;
+import com.cloudwell.paywell.services.activity.reg.model.RequestDistrictList;
+import com.cloudwell.paywell.services.activity.reg.model.RespsoeGetDistrictList;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.APIBrilliantTRXLog;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.BrilliantTopUpInquiry;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.BrillintAddBalanceModel;
@@ -419,7 +421,7 @@ public interface APIService {
     @POST("Retailer/RetailerService/userServiceProfiling")
     Call<ReposeUserProfile> userServiceProfiling(@Body AuthRequestModel regModel);
 
-    @POST("Retailer/RetailerService/userServiceProfilingReg")
+    @POST("Registration/UserRegistration/userServiceProfilingReg")
     Call<ReposeUserProfile> userServiceProfilingReg(@Body AuthRequestModel regModel);
 
 
@@ -516,9 +518,11 @@ public interface APIService {
     @POST("Retailer/RetailerService/UpdateMarchentAndBusinessType")
     Call<ResponseBody> updateMerchentBusiness(@Body MerchantRequestPojo merchantRequestPojo);
 
-    @POST("Retailer/RetailerService/userSubBusinessType")
+    @POST("Registration/UserRegistration/userSubBusinessType")
     Call<ResponseBody> getUserSubBusinessType(@Body UserSubBusinessTypeModel userSubBusinessTypeModel);
 
+    @POST("Registration/UserRegistration/getDistrictInfo")
+    Call<RespsoeGetDistrictList> getDistrictInfo(@Body RequestDistrictList requestDistrictList);
 
 
 }
