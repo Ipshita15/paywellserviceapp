@@ -62,8 +62,19 @@ import com.cloudwell.paywell.services.activity.topup.brilliant.model.BrilliantTo
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.BrillintAddBalanceModel;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.BrillintTNXLog;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.EnqueryModel;
+import com.cloudwell.paywell.services.activity.topup.model.RechargeEnqueryModel;
+import com.cloudwell.paywell.services.activity.topup.model.RechargeEnqueryResponseModel;
+import com.cloudwell.paywell.services.activity.topup.model.RechargeOfferRequestModel;
+import com.cloudwell.paywell.services.activity.topup.model.SingleTopUp.RequestSingleTopup;
 import com.cloudwell.paywell.services.activity.topup.model.RequestTopup;
+import com.cloudwell.paywell.services.activity.topup.model.SingleTopUp.SingleTopupResponse;
 import com.cloudwell.paywell.services.activity.topup.model.TopupReposeData;
+import com.cloudwell.paywell.services.activity.topup.model.TranscationLogResponseModel;
+import com.cloudwell.paywell.services.activity.topup.model.TranscationRequestModel;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.BillPayMOdel;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.BillPayResponseModel;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.DESCOBillInfo;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.DESCOBillInfoResponse;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoBillPaySubmit;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoBillPaySubmitResponse;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoInquiryResponse;
@@ -120,10 +131,11 @@ public interface APIService {
     @FormUrlEncoded
     Call<APIResposeGenerateToken> callGenerateToken(@Url String ur, @Header("Authorization") String AuthorizationKey, @FieldMap Map<String, String> params);
 
-    @POST("PaywellTopUpService/PaywellTopup")
-    @Multipart
-    Call<TopupReposeData> callTopAPI(@Part("requestData") RequestTopup requestTopup);
+    @POST("Recharge/mobileRecharge/bulkTopup")
+    Call<TopupReposeData> callTopAPI(@Body RequestTopup requestTopup);
 
+    @POST("Recharge/mobileRecharge/singleTopup")
+    Call<SingleTopupResponse> callSingleTopUpAPI(@Body RequestSingleTopup singleTopup);
 
 
     @POST("Retailer/RetailerService/getRtlrSDAinfo")
@@ -517,7 +529,7 @@ public interface APIService {
     Call<ResponseBody> updateCurrentLocation(@Body CurrentLocationModel locationModel);
 
 
-    @POST("Retailer/RetailerService/UpdateMarchentAndBusinessType")
+    @POST("Retailer/RetailerService/updateMarchentAndBusinessType")
     Call<ResponseBody> updateMerchentBusiness(@Body MerchantRequestPojo merchantRequestPojo);
 
     @POST("Registration/UserRegistration/userSubBusinessType")
@@ -533,8 +545,20 @@ public interface APIService {
 
     @POST("Registration/UserRegistration/getPostOfficeInfo")
     Call<ResponseBody> getPostOfficeInfo(@Body RequestPostCodeList requestPostCodeList);
+    @POST("Reports/TransactionReportSystem/TransactionReport")
+    Call<TranscationLogResponseModel> getTransactionLog(@Body TranscationRequestModel transcationRequestModel);
 
+    @POST("Recharge/mobileRecharge/rechargeOffer")
+    Call<ResponseBody> getRechargeOffer(@Body RechargeOfferRequestModel rechargeOfferRequestModel);
+
+    @POST("Recharge/mobileRecharge/mobileRechargeEnquiry")
+    Call<RechargeEnqueryResponseModel> getRechargeEnquiry(@Body RechargeEnqueryModel rechargeEnqueryModel);
+
+    @POST("MYCash/Utility/getDESCOBillInfo")
+    Call<DESCOBillInfoResponse> getDESCOBillInfo(@Body DESCOBillInfo descoBillInfo);
+
+
+    @POST("MYCash/Utility/DESCOBillPay")
+    Call<BillPayResponseModel> confirmBillPay(@Body BillPayMOdel billPayMOdel);
 
 }
-
-
