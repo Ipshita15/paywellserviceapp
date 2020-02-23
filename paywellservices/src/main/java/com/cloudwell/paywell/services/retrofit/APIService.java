@@ -67,6 +67,10 @@ import com.cloudwell.paywell.services.activity.topup.model.SingleTopUp.SingleTop
 import com.cloudwell.paywell.services.activity.topup.model.TopupReposeData;
 import com.cloudwell.paywell.services.activity.topup.model.TranscationLogResponseModel;
 import com.cloudwell.paywell.services.activity.topup.model.TranscationRequestModel;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.BillPayMOdel;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.BillPayResponseModel;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.DESCOBillInfo;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.DESCOBillInfoResponse;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoBillPaySubmit;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoBillPaySubmitResponse;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoInquiryResponse;
@@ -536,5 +540,11 @@ public interface APIService {
     @POST("Recharge/mobileRecharge/mobileRechargeEnquiry")
     Call<RechargeEnqueryResponseModel> getRechargeEnquiry(@Body RechargeEnqueryModel rechargeEnqueryModel);
 
+    @POST("MYCash/Utility/getDESCOBillInfo")
+    Call<DESCOBillInfoResponse> getDESCOBillInfo(@Body DESCOBillInfo descoBillInfo);
+
+
+    @POST("MYCash/Utility/DESCOBillPay")
+    Call<BillPayResponseModel> confirmBillPay(@Body BillPayMOdel billPayMOdel);
 
 }
