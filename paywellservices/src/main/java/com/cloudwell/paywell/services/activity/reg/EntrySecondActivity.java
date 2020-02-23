@@ -17,11 +17,15 @@ import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.reg.model.thana.RequestThanaAPI;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.DateUtils;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -36,6 +40,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regModel;
 
@@ -121,7 +130,9 @@ public class EntrySecondActivity extends BaseActivity implements AdapterView.OnI
                         cd = new ConnectionDetector(AppController.getContext());
                         isInternetPresent = cd.isConnectingToInternet();
                         if (isInternetPresent) {
-                            new GetThanaResponseAsync().execute(getResources().getString(R.string.district_info_url));
+                            getThannaList();
+
+                           /// new GetThanaResponseAsync().execute(getResources().getString(R.string.district_info_url));
                         } else {
                             Toast.makeText(EntrySecondActivity.this, R.string.connection_error_msg, Toast.LENGTH_SHORT).show();
                         }
@@ -137,6 +148,70 @@ public class EntrySecondActivity extends BaseActivity implements AdapterView.OnI
             e.printStackTrace();
             Toast.makeText(this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void getThannaList() {
+        showProgressDialog();
+        RequestThanaAPI m =  new RequestThanaAPI();
+        m.setDeviceId(mAppHandler.getAndroidID());
+        m.setUsername(mAppHandler.getAndroidID());
+        String currentDataAndTIme = ""+ DateUtils.INSTANCE.getCurrentTimestamp();
+        m.setTimestamp(currentDataAndTIme);
+        m.setFormat("json");
+        m.setChannel("android");
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(mAppHandler.getRID());
+        m.setRefId(uniqueKey);
+        m.setDistriID(str_districtId);
+
+        ApiUtils.getAPIServicePHP7().getThanaInfo(m).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
+                if (response.code() == 200) {
+
+                    try {
+                        String result = response.body().string();
+                        JSONObject jsonObject = new JSONObject(result);
+                        String result_status = jsonObject.getString("status");
+                        if (result_status.equals("200")) {
+                            JSONArray result_data = jsonObject.getJSONArray("data");
+
+                            String[] thana_array_name = new String[result_data.length() + 1];
+                            thana_array_id = new String[result_data.length() + 1];
+                            thana_array_name[0] = "Select One";
+                            thana_array_id[0] = "0";
+
+                            for (int i = 0; i < result_data.length(); i++) {
+                                JSONObject obj = result_data.getJSONObject(i);
+                                String name = obj.getString("thana");
+
+                                thana_array_id[i + 1] = obj.getString("id");
+                                thana_array_name[i + 1] = name;
+                            }
+                            ArrayAdapter<CharSequence> arrayAdapter_spinner_thana = new ArrayAdapter(EntrySecondActivity.this, android.R.layout.simple_spinner_dropdown_item, thana_array_name);
+                            spnr_thana.setAdapter(arrayAdapter_spinner_thana);
+                        } else {
+                            Toast.makeText(EntrySecondActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(EntrySecondActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
+                    }
+
+
+
+                }else {
+                    showErrorMessagev1(getString(R.string.try_again_msg));
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
+            }
+        });
     }
 
     public void previousOnClick(View view) {
