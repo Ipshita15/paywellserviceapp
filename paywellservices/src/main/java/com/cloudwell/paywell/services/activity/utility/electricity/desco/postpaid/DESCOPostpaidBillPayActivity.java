@@ -377,10 +377,8 @@ public class DESCOPostpaidBillPayActivity extends BaseActivity implements View.O
         billPayMOdel.setBillNo(mBill);
         billPayMOdel.setPassword(mPin);
         billPayMOdel.setPayerMobileNo(mPhn);
-       // billPayMOdel.setTotalAmount(mTotalAmount);
-        billPayMOdel.setTotalAmount("133");
-        //billPayMOdel.setTransId(mTrxId);
-        billPayMOdel.setTransId("yb8by4rhfuir");
+        billPayMOdel.setTotalAmount(mTotalAmount);
+        billPayMOdel.setTransId(mTrxId);
 
         ApiUtils.getAPIServiceV2().confirmBillPay(billPayMOdel).enqueue(new Callback<BillPayResponseModel>() {
             @Override
