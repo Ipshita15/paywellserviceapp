@@ -24,7 +24,6 @@
     <string name="home_refill_balance">Refill\nBalance</string>
     <string name="home_refill_balance_title">Refill Balance</string>
     <string name="home_settings">Settings</string>
-    <string name="home_chat">Chat With Us</string>
     <string name="home_statement_mini">Mini Statement</string>
     <string name="home_statement_balance">Balance Statement</string>
     <string name="home_statement_sales">Sales Statement</string>
@@ -71,7 +70,6 @@
     <string name="home_eticket_air">Air Ticket</string>
     <string name="home_product_ajker_deal">Ajker Deal</string>
     <string name="home_product_pw_wholesale">PayWell\nWholesale</string>
-    <string name="home_product_pw_wholesale_title">PayWell Wholesale</string>
     <string name="home_settings_reset_pin">Reset PIN</string>
     <string name="home_settings_change_pin">Change PIN</string>
     <string name="home_settings_upgrade">Upgrade</string>
@@ -165,8 +163,6 @@
     <string name="pb_acc_mismatch_error_msg">Account number do not match</string>
     <string name="pb_full_name_error_msg">Enter full name</string>
     <string name="banglalion_acc_error_msg">Enter at least 4 digits</string>
-    <string name="journey_date_select_error_msg">Select your journey date</string>
-    <string name="ticket_destination_error_msg">Enter 1st 3 characters</string>
     <string name="old_pin_error_msg">Enter old pin</string>
     <string name="new_pin_error_msg">Enter correct new pin</string>
     <string name="bill_no_error_msg">Enter bill number</string>
@@ -174,7 +170,6 @@
     <string name="mycash_pin_error_msg">Enter MYCash pin number</string>
     <string name="location_error_msg">Enter location</string>
     <string name="otp_error_msg">Enter OTP</string>
-    <string name="cust_pin_msg">Enter Customer Pin</string>
     <string name="select_month_msg">Select Month</string>
     <string name="select_year_msg">Select Year</string>
     <string name="mycash_acc_error_msg">Enter at least 12 digits</string>
@@ -197,12 +192,6 @@
     <string name="postpaid_msg">Postpaid</string>
     <string name="confirm_title_msg">Confirmation</string>
     <string name="alert_confirm_msg">Did you receive cash?</string>
-    <string name="to_city_msg">To City</string>
-    <string name="purchase_ticket_msg">Purchase Ticket</string>
-    <string name="journey_date_title_ticket_msg">Select Your Journey Date</string>
-    <string name="three_char_msg">1st three characters</string>
-    <string name="hint_source_msg">**Type 1st 3 characters for destination</string>
-    <string name="reset_pin_msg">Are you sure, you want to reset PIN?</string>
     <string name="change_pin_status_msg">Your PIN changed successfully</string>
     <string name="bank_transfer_header_msg">Please press any of the logos below to find out our bank account details and
         also upload deposit slip</string>
@@ -262,28 +251,11 @@
     <string name="cust_name_des">Full Name:</string>
     <string name="package_type_des">Package Type:</string>
     <string name="date_des">Date:</string>
-    <string name="time_des">Time:</string>
     <string name="using_paywell_des">THANKS FOR USING PAYWELL</string>
     <string name="hotline_des">HOTLINE:</string>
     <string name="tbps_charge_des">TBPS Charge:</string>
     <string name="total_des">Total Amount:</string>
     <string name="tk_des">Tk</string>
-    <string name="from_city_ticket_des">From:</string>
-    <string name="to_city_ticket_des">To:</string>
-    <string name="journey_date_ticket_des">Journey Date:</string>
-    <string name="selected_seat_des">Selected Seat:</string>
-    <string name="ticket_des">Ticket:</string>
-    <string name="boarding_des">Boarding:</string>
-    <string name="coach_number_des">Coach Number:</string>
-    <string name="passenger_type_des">Passenger Type:</string>
-    <string name="no_of_passenger_des">No. of Passenger:</string>
-    <string name="age_of_passenger_des">Age of Passenger:</string>
-    <string name="select_train_des">Select Train:</string>
-    <string name="select_class_des">Select Class:</string>
-    <string name="train_name_and_number_des">Train Name/No:</string>
-    <string name="service_carge_des">Service Charge:</string>
-    <string name="total_fare_des">Total Fare:</string>
-    <string name="collect_before_des">Collect Before:</string>
     <string name="old_pin_des">Old PIN Number:</string>
     <string name="new_pin_des">New PIN Number:</string>
     <string name="mycash_balance_des">MYCash Balance:</string>
@@ -357,9 +329,6 @@
     <!-- Utility -->
     <string name="pb_bill_pay" translatable="false">https://api.paywellonline.com/PaywelltransactionPollyBiddyut/pollyBiddyutBillPayAPI</string>
 
-    <string name="desco_bill_enq" translatable="false">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
-    <string name="desco_bill_pay" translatable="false">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
-
     <string name="desco_prepaid_bill_enq" translatable="false">https://agentapi.paywellonline.com/MYCash/Utility/DESCOPrepaid_billInfo</string>
     <string name="desco_prepaid_bill_pay" translatable="false">https://agentapi.paywellonline.com/MYCash/Utility/DESCOPrepaid_billPayment</string>
     <string name="desco_prepaid_trx_inquiry" translatable="false">https://agentapi.paywellonline.com/MYCash/Utility/getEnquiryData</string>
@@ -372,20 +341,12 @@
 
     <string name="west_zone_bill" translatable="false">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_WZPDCL</string>
 
-    <string name="utility_multi_trx_inq" translatable="false">https://api.paywellonline.com/PaywellTransactionReport/TransactionReport?</string>
-
-    <string name="utility_ivac_get_center" translatable="false">https://api.paywellonline.com/PaywelltransactionIVAC/getIvacCenter</string>
-    <string name="utility_ivac_fee_pay" translatable="false">https://api.paywellonline.com/PaywelltransactionIVAC/IVACRequest</string>
-    <string name="utility_ivac_fee_pay_inq" translatable="false">https://api.paywellonline.com/PaywelltransactionIVAC/getIvacTrxList</string>
-    <string name="utility_ivac_fee_pay_inq_with_web_file_no" translatable="false">https://api.paywellonline.com/PaywelltransactionIVAC/getIvacTrxByWebFileNo</string>
-
     <string name="banglalion_bill_pay" translatable="false">https://api.paywellonline.com/PayWellInternateBillPay/banglalionBillPay</string>
     <string name="banglalion_bill_inquiry" translatable="false">https://api.paywellonline.com/PayWellInternateBillPay/banglalionEnquiry</string>
 
     <string name="karnaphuli_bill" translatable="false">https://api.paywellonline.com/PaywelltransactionMYCash/kgdcl_billinfo</string>
 
     <!-- Eticket -->
-    <string name="train_source_url" translatable="false">https://www.paywellonline.com/banglalink_services/train.php?</string>
 
     <!-- Payment -->
     <string name="bkash_balance_check" translatable="false">https://bkapi.paywellonline.com/retailer/userBalanceCheck.php?</string>
@@ -406,23 +367,14 @@
     <string name="mycash_balance_transfer_confirm" translatable="false">https://api.paywellonline.com/PaywelltransactionMYCash/MyCashPendingCashRequestConfirmation?</string>
 
     <!-- Refill -->
-    <string name="refill_sda_info" translatable="false">https://api.paywellonline.com/Android/SDAinformation?</string>
-    <string name="refill_mfs_info" translatable="false">https://api.paywellonline.com/Android/paymentInfo?</string>
 
-
-    <string name="b2b_token" translatable="false">https://wholesale.paywellonline.com/Retailer/Home/CreateToken?</string>
-    <string name="b2b_login" translatable="false">https://wholesale.paywellonline.com/Retailer/Home/CheckLoginByToken?</string>
-    <string name="b2b_refresh_token" translatable="false">https://wholesale.paywellonline.com/Retailer/MetaData/PingServer</string>
-    <string name="b2b_share" translatable="false">https://wholesale.paywellonline.com</string>
 
     <!-- Settings -->
-    <string name="pin" translatable="false">https://www.paywellonline.com/crs3291/live/change_password.php?</string>
     <string name="reset_pin" translatable="false">https://api.paywellonline.com/paywellSetting/passwordChange?</string>
 
     <!-- Verification -->
     <string name="otp_for_phn_num" translatable="false">https://api.paywellonline.com/PaywelltransactionRetailer/GetRetailerPhoneNumberVerificationOTP</string>
     <string name="conf_phn_num" translatable="false">https://api.paywellonline.com/PaywelltransactionRetailer/ConfirmRetaileOTPForPhoneNumberVerification</string>
-    <string name="conf_merchant_type" translatable="false">https://api.paywellonline.com/PaywelltransactionRetailer/UpdateMarchentAndBusinessType</string>
 
     <!-- Chat -->
     <string name="chat" translatable="false">https://www.paywellonline.com/chatting-retailer/?</string>
@@ -493,7 +445,6 @@
     <string name="title_flightDetails2">Review page 2</string>
     <string name="title_passenger_list">Passenger Info</string>
     <string name="title_add_passenger">Add Passenger</string>
-    <string name="booking_status_menu">Booking Status</string>
     <string name="add">Add</string>
     <string name="title">Title *</string>
     <string name="first_name">First Name *</string>
@@ -725,11 +676,9 @@
     <string name="log_refill_limit_title_msg">Refill Log Limit</string>
     <string name="re_submit_reb">Resubmit</string>
     <string name="title_issue_ticket">Issue Ticket</string>
-    <string name="title_void_ticket">Ticket Void</string>
     <string name="view_ticket_with_fare">View Ticket With Fare</string>
     <string name="send_email_with_fare">Send Email With Fare</string>
     <string name="scanner">Scanner</string>
-    <string name="done">Done</string>
     <string name="no_bill_number_found_message">No bill number found, please try again</string>
 
 
@@ -738,17 +687,6 @@
     <string name="m_please_input_both_nid_page">Please input both NID page</string>
 
 
-    <string name="permission_camera_rationale">Access to the camera is needed for detection</string>
-    <string name="no_camera_permission">This application cannot run because it does not have the camera permission.  The application will now exit.</string>
-    <string name="low_storage_error">Ocr dependencies cannot be downloaded due to low device storage</string>
-    <string name="title_activity_main">Ocr Detector Sample</string>
-    <string name="ocr_header">Click &quot;Detect Text&quot; to detect text</string>
-    <string name="read_text">Detect Text</string>
-    <string name="auto_focus">Auto Focus</string>
-    <string name="use_flash">Use Flash</string>
-    <string name="ocr_success">Text read successfully</string>
-    <string name="ocr_failure">No text captured</string>
-    <string name="ocr_error">"Error reading text: %1$s"</string>
     <string name="finished">সম্পূর্ণ</string>
     <string name="next_text">পরবর্তী</string>
     <string name="title_nid">এন.আই.ডি-এর তথ্য</string>
@@ -769,7 +707,6 @@
     <string name="otp_verification">OTP Verification</string>
     <string name="ok_text">OK</string>
     <string name="resend_otp">Resend OTP</string>
-    <string name="send_otp">Send Otp</string>
     <string name="verify_your_phone_number">Verify your phone number</string>
     <string name="we_have_send_you_an_sms_with_a_code_to_your_number">We have send you an SMS with a code to your number</string>
     <string name="didn_t_you_received_any_code">Didn\'t you received any code?</string>
