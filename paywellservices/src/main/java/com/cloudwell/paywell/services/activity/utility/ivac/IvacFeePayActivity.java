@@ -278,6 +278,7 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
         spnr_center.setOnItemSelectedListener(this);
         if (str_centerId!=null && !str_centerId.isEmpty()){
             mAppHandler.setCenterId(str_centerId);
+            mAppHandler.setCenterAmount(str_amount);
         }
     }
 
@@ -288,6 +289,7 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
         mAppHandler.setIVACCenterLock(isCenterUserLock);
         if (str_centerId!=null && !str_centerId.isEmpty()){
             mAppHandler.setCenterId(str_centerId);
+            mAppHandler.setCenterAmount(str_amount);
         }
     }
 
@@ -331,7 +333,9 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
         spnr_center.setSelection(centerDropDownPogistion);
         boolean ivacCenterLock = mAppHandler.isIVACCenterLock();
         if (ivacCenterLock){
-            str_centerId=mAppHandler.getSavedCenterId();
+            str_centerId=mAppHandler.getSavedCenterId();            //TODO get tk from handler
+            str_amount = mAppHandler.getSavedCenterAmount();
+            textViewAmount.setText(getString(R.string.tk_des) + " " + str_amount);
         }
     }
 
@@ -442,7 +446,6 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
 
                 // store selected position
                 mAppHandler.setCenterDropDownPogistion(position);
-
                 textViewAmount.setText(amountText);
             } catch (Exception ex) {
                 ex.printStackTrace();
