@@ -165,6 +165,7 @@ public class AppHandler {
     public static final int MULTI_CITY_LIMIT = 5;
     public static final String IVAC_CENTER_LOCK = "IVAC_CENTER_LOCK";
     public static final String IVAC_CENTER_ID = "IVAC_CENTER_ID";
+    public static final String IVAC_CENTER_AMOUNT = "IVAC_CENTER_AMOUNT";
 
     public static final String KEY_RSA_PRIVATE_KEY= "KEY_RSA_PRIVATE_KEY";
     public static final String KEY_RSA_PUBLIC_KEY= "KEY_RSA_PUBLIC_KEY";
@@ -745,6 +746,15 @@ public class AppHandler {
 
     public String getSavedCenterId() {
         return mPref.getString(IVAC_CENTER_ID,"");
+    }
+
+    public void setCenterAmount(String centerAmount) {
+        editor.putString(IVAC_CENTER_AMOUNT, centerAmount);
+        editor.commit();
+    }
+
+    public String getSavedCenterAmount() {
+        return mPref.getString(IVAC_CENTER_AMOUNT,"");
     }
 
     public ArrayList<String> getRSAKays() {

@@ -81,11 +81,18 @@ import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoPrepaidTrxLogRequest;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoPrepaidTrxLogResponse;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoRequestInquiryModel;
+import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.model.requestPojo.DPDCBillPayModel;
+import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.model.requestPojo.DPDCbillInfoModel;
+import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.model.responsePojo.DpdcResponse;
 import com.cloudwell.paywell.services.activity.utility.ivac.model.GetIvacCenterModel;
 import com.cloudwell.paywell.services.activity.utility.ivac.model.GetIvacTrx;
 import com.cloudwell.paywell.services.activity.utility.ivac.model.IvacFeePayModel;
 import com.cloudwell.paywell.services.activity.utility.ivac.model.IvacTrxListModel;
 import com.cloudwell.paywell.services.activity.utility.ivac.model.IvcTrxResponseModel;
+import com.cloudwell.paywell.services.activity.utility.karnaphuli.model.requestPojo.KgdlcBillInfoRequest;
+import com.cloudwell.paywell.services.activity.utility.karnaphuli.model.requestPojo.SubmitBillRequestPojo;
+import com.cloudwell.paywell.services.activity.utility.karnaphuli.model.responsePojo.SubmitBillResponse;
+import com.cloudwell.paywell.services.activity.utility.karnaphuli.model.responsePojo.SubmitInquiry;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PalliBidyutBillPayRequest;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PalliBidyutBillPayResponse;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus.model.ResBIllStatus;
@@ -560,5 +567,17 @@ public interface APIService {
 
     @POST("MYCash/Utility/DESCOBillPay")
     Call<BillPayResponseModel> confirmBillPay(@Body BillPayMOdel billPayMOdel);
+
+    @POST("MYCash/Utility/getKGDCLBillInfo")
+    Call<SubmitInquiry> kgdlcSubmitInquiry(@Body KgdlcBillInfoRequest kgdlcBillInfoRequest);
+
+    @POST("MYCash/Utility/KGDCLBillPay")
+    Call<SubmitBillResponse> kgdlcSubmitBill(@Body SubmitBillRequestPojo submitBillRequestPojo);
+
+    @POST("MYCash/Utility/getDPDCBillInfo")
+    Call<DpdcResponse> getDPDCBillInfo(@Body DPDCbillInfoModel dpdCbillInfoModel);
+
+    @POST("MYCash/Utility/DPDCBillPay")
+    Call<DpdcResponse> submitDPDCBillPay(@Body DPDCBillPayModel dpdcBillPayModel);
 
 }
