@@ -377,7 +377,7 @@
     <string name="conf_phn_num" translatable="false">https://api.paywellonline.com/PaywelltransactionRetailer/ConfirmRetaileOTPForPhoneNumberVerification</string>
 
     <!-- Chat -->
-    <string name="chat" translatable="false">https://www.paywellonline.com/chatting-retailer/?</string>
+    <string name="chat" translatable="false">https://agentapi.paywellonline.com/chatting-retailer/?</string>
 
     <string name="merchant_balance_return_url" translatable="false">https://api.paywellonline.com/PaywelltransactionSDA/SDAToMerchentBalanceReturn</string>
 
