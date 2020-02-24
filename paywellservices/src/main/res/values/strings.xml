@@ -342,104 +342,8 @@
     <string-array name="sampleStrings" formatted="false">
         <item>"PayWell is an organized retail approach by CloudWell Limited, focusing on providing convenient payments and value added services to major consumer service organizations in the utility, telecoms, healthcare, financial services, transport, retail, e-commerce, gaming and public sectors in Bangladesh.\nPayWell intends to deliver payments and services through a uniquely strong combination of local shops, internet and mobile distribution channels. The company follows standard distribution architecture, where layers of channel partners are involved i.e distributor &amp; retailers in its value chain.\n\nWe are located in:\nSkill House (L-7), KA-53/2, Shahajadpur, Gulshan, Dhaka-1212.\nPhone: 09666773333\nemail: contact@cloudwell.co"</item>
     </string-array>
-    <string-array name="train_destination_array">
-        <item>ABDULPUR</item>
-        <item>AGIMNAGAR</item>
-        <item>AHASANGONJ</item>
-        <item>AKHAURA</item>
-        <item>AKKELPUR</item>
-        <item>ASHGONJ</item>
-        <item>AZAMPUR</item>
-        <item>BAHADURABAD</item>
-        <item>BAJITPUR</item>
-        <item>BAMANDANGA</item>
-        <item>BARAL BRIDGE</item>
-        <item>BHAIRAB BAZAR</item>
-        <item>BHANUGACH</item>
-        <item>BHARAMARA</item>
-        <item>BIRAMPUR</item>
-        <item>BOGRA</item>
-        <item>BOJRA</item>
-        <item>BONARPARA</item>
-        <item>BRAHMAN BARIA</item>
-        <item>CHANDPUR</item>
-        <item>CHANDPUR COURT</item>
-        <item>CHATMOHOR</item>
-        <item>CHITOSI ROAD</item>
-        <item>CHITTAGONG</item>
-        <item>CHOUMUHANI</item>
-        <item>CHUADANGA</item>
-        <item>COMILLA</item>
-        <item>DEWANGANJBAZAR</item>
-        <item>DHAKA BIMAN BANDAR</item>
-        <item>DHAKA KAMALAPUR</item>
-        <item>DINAJPUR</item>
-        <item>FENI</item>
-        <item>GACHIHATA</item>
-        <item>GAFORGAON</item>
-        <item>GAIBANDHA</item>
-        <item>HAJIGANJ</item>
-        <item>HARASHPUR</item>
-        <item>IBRAHIMABAD</item>
-        <item>ISHARDHI</item>
-        <item>ISLAMPUR BAZAR</item>
-        <item>JAMALPUR TOWN</item>
-        <item>JAMTOIL</item>
-        <item>JAYDEBPUR</item>
-        <item>JESSORE</item>
-        <item>JOYPURHAT</item>
-        <item>KAUNIA</item>
-        <item>KHULNA</item>
-        <item>KISHORGANJ</item>
-        <item>KULAURA</item>
-        <item>KULIARCHAR</item>
-        <item>LAKSHAM</item>
-        <item>LALMONIR HAT</item>
-        <item>MAIJDI COURT</item>
-        <item>MAIJGAON</item>
-        <item>MALANDHA BAZAR</item>
-        <item>MANIKHALI</item>
-        <item>MEHER</item>
-        <item>MIRZAPUR</item>
-        <item>MONTALA</item>
-        <item>MUKUNDUPUR</item>
-        <item>MYMENSINGH</item>
-        <item>NANDINA</item>
-        <item>NANGAL KOT</item>
-        <item>NARSINGDI</item>
-        <item>NATHAR PATUA</item>
-        <item>NATOR</item>
-        <item>NILPHAMARI</item>
-        <item>NOAKHALI</item>
-        <item>NOAPARA</item>
-        <item>NOAYPARA</item>
-        <item>PANCHBIBI</item>
-        <item>PARBATIPUR</item>
-        <item>PHULBURI</item>
-        <item>PIRGACHA</item>
-        <item>PORADAHA</item>
-        <item>QOSBA</item>
-        <item>RAJSHAHI</item>
-        <item>SADANANDAPUR</item>
-        <item>SANTAHAR</item>
-        <item>SARARCHAR</item>
-        <item>SARISHABARI</item>
-        <item>SAYEDPUR</item>
-        <item>SHAHAGI BAZAR</item>
-        <item>SHAISTAGONJ</item>
-        <item>SHAMSHERNAGAR</item>
-        <item>SHORDHA ROAD</item>
-        <item>SONAIMURI</item>
-        <item>SONATALA</item>
-        <item>SRIMONGAL</item>
-        <item>SYLHET</item>
-        <item>TANGAIL</item>
-        <item>TARAKANDI</item>
-        <item>ULLAH PARA</item>
-    </string-array>
 
     <!-- paywell apis -->
-    <string name="notif_url" translatable="false">https://www.paywellonline.com/default/api/notification_check_android.php?</string>
 
     <string name="app_next_version_no">vten_seventeen</string>
     <string name="update_check" translatable="false">https://app.paywellonline.com/apk/paywell_services_latest_version.apk</string>
@@ -448,9 +352,6 @@
     <!-- Registration -->
 
     <!-- Topup -->
-    <string name="inq_top" translatable="false">https://www.paywellonline.com/default/api/enquiry.php?</string>
-    <string name="trx_log" translatable="false">https://www.paywellonline.com/crs3291/live/view_log.php?</string>
-    <string name="topup_offer" translatable="false">https://api.paywellonline.com/Android/GetRechargeOffer?</string>
 
 
     <!-- Utility -->
@@ -529,10 +430,6 @@
     <string name="merchant_balance_return_url" translatable="false">https://api.paywellonline.com/PaywelltransactionSDA/SDAToMerchentBalanceReturn</string>
 
     <!-- Product -->
-    <string name="ajd_token" translatable="false">https://ajkerdeal.paywellonline.com/api/Paywell/CreateToken?</string>
-    <string name="ajd_login" translatable="false">https://ajkerdeal.paywellonline.com/Home/CheckLoginByToken?</string>
-    <string name="ajd_refresh_token" translatable="false">https://ajkerdeal.paywellonline.com/MetaData/PingServer</string>
-    <string name="ajd_share" translatable="false">https://ajkerdeal.paywellonline.com</string>
 
 
     <string name="ek_shope_token" translatable="false">https://ekshop.paywellonline.com/get_token</string>

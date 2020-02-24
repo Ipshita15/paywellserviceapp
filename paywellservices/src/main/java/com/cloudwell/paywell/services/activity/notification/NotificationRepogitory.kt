@@ -119,7 +119,6 @@ class NotificationRepogitory(private val mContext: Context) {
 
     fun callReScheduleNotificationAccept(id: Int, accept_status: Int): MutableLiveData<ResposeReScheduleNotificationAccept> {
         mAppHandler = AppHandler.getmInstance(mContext)
-        val url = mContext.getString(R.string.notif_url)
         val userName = mAppHandler!!.userName
         val data = MutableLiveData<ResposeReScheduleNotificationAccept>()
         val resNotificationAPICall = ApiUtils.getAPIService().reIssueNotificationAccept(userName, id, accept_status)

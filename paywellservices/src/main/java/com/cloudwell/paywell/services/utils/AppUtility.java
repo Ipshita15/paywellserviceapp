@@ -9,8 +9,6 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketM
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
-import com.cloudwell.paywell.services.activity.product.AjkerDealActivity;
-import com.cloudwell.paywell.services.activity.product.WholesaleActivity;
 import com.cloudwell.paywell.services.activity.refill.banktransfer.BankTransferMainActivity;
 import com.cloudwell.paywell.services.activity.refill.card.CardTransferMainActivity;
 import com.cloudwell.paywell.services.activity.statements.ViewStatementActivity;
@@ -356,18 +354,6 @@ public class AppUtility {
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_BALANCE_REFILL_CARD);
 
                 intent = new Intent(context, CardTransferMainActivity.class);
-                return intent;
-
-
-            case R.string.home_product_ajker_deal:
-
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_PRODUCT_AJKER_DEAL_MENU);
-                intent = new Intent(context, AjkerDealActivity.class);
-                return intent;
-
-            case R.string.home_product_pw_wholesale:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_PRODUCT_WHOLESALE_MENU);
-                intent = new Intent(context, WholesaleActivity.class);
                 return intent;
 
             default:
