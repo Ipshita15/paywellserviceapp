@@ -157,33 +157,37 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
         notiMessage.text = spannableString
         date.text = model?.addedDatetime
 
-        if (!model?.imageUrl.equals("")) {
-            showProgressDialog();
-            notiImg?.setVisibility(View.VISIBLE);
-            val display = getWindowManager().getDefaultDisplay();
-            val size = Point();
-            display.getSize(size);
-            val width = size.x;
+        if (model?.imageUrl != null){
+
+            if (!model.imageUrl.equals("")) {
+                showProgressDialog();
+                notiImg?.setVisibility(View.VISIBLE);
+                val display = getWindowManager().getDefaultDisplay();
+                val size = Point();
+                display.getSize(size);
+                val width = size.x;
 
 
-            Picasso.get().load(model?.imageUrl)
-                    .resize(width, 0)
-                    .into(notiImg, object : Callback {
-                        override fun onError(e: Exception?) {
-                            dismissProgressDialog();
-                        }
+                Picasso.get().load(model.imageUrl)
+                        .resize(width, 0)
+                        .into(notiImg, object : Callback {
+                            override fun onError(e: Exception?) {
+                                dismissProgressDialog();
+                            }
 
-                        override fun onSuccess() {
-                            dismissProgressDialog();
-                        }
-                    })
-            notiImg.setOnClickListener {
-                ImageViewActivity.TAG_IMAGE_URL = model?.imageUrl
-                val intent = Intent(this, ImageViewActivity::class.java)
-                startActivity(intent)
+                            override fun onSuccess() {
+                                dismissProgressDialog();
+                            }
+                        })
+                notiImg.setOnClickListener {
+                    ImageViewActivity.TAG_IMAGE_URL = model?.imageUrl
+                    val intent = Intent(this, ImageViewActivity::class.java)
+                    startActivity(intent)
 
+                }
             }
         }
+
 
         if (model?.type.equals("BalanceReturnPwl") || model?.messageSub.equals("PW Balance Return")) {
             notiEditText.setVisibility(View.VISIBLE)

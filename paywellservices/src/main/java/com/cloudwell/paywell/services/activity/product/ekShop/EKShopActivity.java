@@ -32,12 +32,6 @@ import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 import com.orhanobut.logger.Logger;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -261,7 +255,6 @@ public class EKShopActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mRefreshTokenAsync = new RefreshTokenAsync().execute(getString(R.string.ajd_refresh_token));
     }
 
     private void connectionError() {
@@ -305,31 +298,7 @@ public class EKShopActivity extends BaseActivity {
 
     }
 
-    @SuppressWarnings("deprecation")
-    private class RefreshTokenAsync extends AsyncTask<String, Integer, String> {
-        @Override
-        protected void onPreExecute() {
-        }
 
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-        }
-    }
 
     private class MyJavaScriptInterface {
         private Context ctx;
