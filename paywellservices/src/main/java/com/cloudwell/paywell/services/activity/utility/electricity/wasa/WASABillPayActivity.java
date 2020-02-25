@@ -310,13 +310,15 @@ public class WASABillPayActivity extends BaseActivity implements View.OnClickLis
                             }
 
                         }else {
-                            String msg = jsonObject.getString(TAG_MESSAGE);
-                            if (status==301){
-                                showErrorMessagev1(msg);
-                            }else {
-                                String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
 
-                                String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
+                            String msg = jsonObject.getString(TAG_MESSAGE);
+                            String msg_text="",trx_id="";
+                            if (jsonObject.has(TAG_MESSAGE_TEXT)){
+                                msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
+                            }
+                            if (jsonObject.has(TAG_MESSAGE_TEXT)){
+                                trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
+                            }
                                 AlertDialog.Builder builder = new AlertDialog.Builder(WASABillPayActivity.this);
                                 builder.setMessage(msg + "\n" + msg_text + "\nPayWell Trx ID: " + trx_id);
                                 builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
@@ -329,7 +331,7 @@ public class WASABillPayActivity extends BaseActivity implements View.OnClickLis
                                 AlertDialog alert = builder.create();
                                 alert.setCanceledOnTouchOutside(true);
                                 alert.show();
-                            }
+
 
                         }
 
@@ -420,9 +422,13 @@ public class WASABillPayActivity extends BaseActivity implements View.OnClickLis
 
                         }else {
                             String msg = jsonObject.getString(TAG_MESSAGE);
-                            String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
-                            String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
-
+                            String msg_text="",trx_id="";
+                            if (jsonObject.has(TAG_MESSAGE_TEXT)){
+                                 msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
+                            }
+                            if (jsonObject.has(TAG_MESSAGE_TEXT)){
+                                trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
+                            }
                                 AlertDialog.Builder builder = new AlertDialog.Builder(WASABillPayActivity.this);
                                 builder.setMessage(msg + "\n" + msg_text + "\nPayWell Trx ID: " + trx_id);
                                 builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
