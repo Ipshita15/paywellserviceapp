@@ -32,8 +32,21 @@ import com.cloudwell.paywell.services.activity.home.model.forgetPin.ReposeForget
 import com.cloudwell.paywell.services.activity.home.model.forgetPin.RequestForgetPin;
 import com.cloudwell.paywell.services.activity.home.model.refreshToken.RequestRefreshToken;
 import com.cloudwell.paywell.services.activity.location.model.CurrentLocationModel;
+import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.ReqeustPaymentConfmation;
+import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestBalacne;
+import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestBalanceInquray;
+import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestBalanceTransferConfirm;
+import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestBalanceTransferRequest;
+import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestCashIn;
+import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestCashOut;
+import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestChangePInNumber;
+import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestFundManagment;
+import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestLCustomerReg;
+import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestMiniStatment;
+import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestTrxInquiry;
 import com.cloudwell.paywell.services.activity.modelPojo.MerchantRequestPojo;
 import com.cloudwell.paywell.services.activity.modelPojo.UserSubBusinessTypeModel;
+import com.cloudwell.paywell.services.activity.notification.model.RequestSDABalancceRetrun;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationReadAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResposeReScheduleNotificationAccept;
@@ -65,8 +78,8 @@ import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLo
 import com.cloudwell.paywell.services.activity.topup.model.RechargeEnqueryModel;
 import com.cloudwell.paywell.services.activity.topup.model.RechargeEnqueryResponseModel;
 import com.cloudwell.paywell.services.activity.topup.model.RechargeOfferRequestModel;
-import com.cloudwell.paywell.services.activity.topup.model.SingleTopUp.RequestSingleTopup;
 import com.cloudwell.paywell.services.activity.topup.model.RequestTopup;
+import com.cloudwell.paywell.services.activity.topup.model.SingleTopUp.RequestSingleTopup;
 import com.cloudwell.paywell.services.activity.topup.model.SingleTopUp.SingleTopupResponse;
 import com.cloudwell.paywell.services.activity.topup.model.TopupReposeData;
 import com.cloudwell.paywell.services.activity.topup.model.TranscationLogResponseModel;
@@ -178,6 +191,10 @@ public interface APIService {
 
     @POST("Notification/NotificationSystem/userNotificationDelete")
     Call<ReposeDeletedNotification> deleteNotification(@Body RequestDeletedNotification requestDeletedNotification);
+
+
+    @POST("SDA/SDASystem/SDAToMerchentBalanceReturn")
+    Call<ReposeDeletedNotification> SDAToMerchentBalanceReturn(@Body RequestSDABalancceRetrun RequestSDABalancceRetrun);
 
 
     @Multipart
@@ -579,5 +596,51 @@ public interface APIService {
 
     @POST("MYCash/Utility/DPDCBillPay")
     Call<DpdcResponse> submitDPDCBillPay(@Body DPDCBillPayModel dpdcBillPayModel);
+
+
+    @POST("MYCash/MFS/generateOTP")
+    Call<ResponseBody> generateOTPMYCash(@Body com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestGenerateOTP RequestGenerateOTP);
+
+    @POST("MYCash/MFS/miniStatement")
+    Call<ResponseBody> miniStatement(@Body RequestMiniStatment requestMiniStatment);
+
+
+    @POST("MYCash/MFS/balanceEnquiry")
+    Call<ResponseBody> balanceEnquiry(@Body RequestBalanceInquray requestBalanceInquray);
+
+    @POST("MYCash/MFS/fundManagement")
+    Call<ResponseBody> fundManagement(@Body RequestFundManagment requestFundManagment);
+
+    @POST("MYCash/MFS/customerRegistration")
+    Call<ResponseBody> customerRegistration(@Body RequestLCustomerReg requestLCustomerReg);
+
+    @POST("MYCash/MFS/cashIn")
+    Call<ResponseBody> cashIn(@Body RequestCashIn requestCashIn);
+
+    @POST("MYCash/MFS/changePIN")
+    Call<ResponseBody> changePinNumber(@Body RequestChangePInNumber RequestChangePInNumber);
+
+
+    @POST("MYCash/MFS/lastTransactionList")
+    Call<ResponseBody> lastTransactionList(@Body RequestTrxInquiry requestTrxInquiry);
+
+
+    @POST("MYCash/MFS/lastSuccessfulCashOutList")
+    Call<ResponseBody> cashOut(@Body RequestCashOut requestCashOut);
+
+    @POST("MYCash/MFS/doMyCahsToCashOrBankTransfer")
+    Call<ResponseBody> myCasyhToCashOrBankTransfer(@Body RequestBalanceTransferRequest RequestBalanceTransferRequest);
+
+
+    @POST("MYCash/MFS/checkMyCashPendingCashRequest")
+    Call<ResponseBody> checkMyCashPendingCashRequest(@Body RequestBalanceTransferConfirm requestBalanceTransferConfirm);
+
+    @POST("MYCash/MFS/myCashPendingCashRequestConfirmation")
+    Call<ResponseBody> myCashPendingCashRequestConfirmation(@Body ReqeustPaymentConfmation ReqeustPaymentConfmation);
+
+    @POST("MYCash/MFS/getMYCashRetailerPayWellBalance")
+    Call<ResponseBody> getMYCashRetailerPayWellBalance(@Body RequestBalacne requestBalacne);
+
+
 
 }

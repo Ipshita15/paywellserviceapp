@@ -351,20 +351,6 @@
     <!-- Payment -->
     <string name="bkash_balance_check" translatable="false">https://bkapi.paywellonline.com/retailer/userBalanceCheck.php?</string>
 
-    <!-- MFS -->
-    <string name="mycash_generate_otp" translatable="false">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/GenerateOTP?</string>
-    <string name="mycash_balance_check" translatable="false">https://api.paywellonline.com/PaywelltransactionMYCash/GetMYCashRetailerPayWellBalance?</string>
-    <string name="mycash_cash_in" translatable="false">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/CashIn?</string>
-    <string name="mycash_management" translatable="false">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/Fund_Management?</string>
-    <string name="mycash_customer_reg" translatable="false">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/Customer_Registration?</string>
-    <string name="mycash_statement" translatable="false">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/Mini_Statement?</string>
-    <string name="mycash_balance_inq" translatable="false">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/Balance_Enquiry?</string>
-    <string name="mycash_trx_inq" translatable="false">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/lastTransactionList?</string>
-    <string name="mycash_cashout_inq" translatable="false">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/lastSuccessfulCashOutList?</string>
-    <string name="mycash_change_pin" translatable="false">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/PIN_Change?</string>
-    <string name="mycash_balance_transfer" translatable="false">https://api.paywellonline.com/PaywelltransactionMYCash/DoMyCahsToCashOrBankTransfer?</string>
-    <string name="mycash_balance_transfer_confirm_pending" translatable="false">https://api.paywellonline.com/PaywelltransactionMYCash/CheckMyCashPendingCashRequest?</string>
-    <string name="mycash_balance_transfer_confirm" translatable="false">https://api.paywellonline.com/PaywelltransactionMYCash/MyCashPendingCashRequestConfirmation?</string>
 
     <!-- Refill -->
 
