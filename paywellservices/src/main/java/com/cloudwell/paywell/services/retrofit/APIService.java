@@ -84,6 +84,10 @@ import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid
 import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.model.requestPojo.DPDCBillPayModel;
 import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.model.requestPojo.DPDCbillInfoModel;
 import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.model.responsePojo.DpdcResponse;
+import com.cloudwell.paywell.services.activity.utility.electricity.wasa.model.SubmitBill;
+import com.cloudwell.paywell.services.activity.utility.electricity.wasa.model.WASABillInfoModel;
+import com.cloudwell.paywell.services.activity.utility.electricity.westzone.model.WZPDCLBillInfo;
+import com.cloudwell.paywell.services.activity.utility.electricity.westzone.model.WZPDCLBillPayModel;
 import com.cloudwell.paywell.services.activity.utility.ivac.model.GetIvacCenterModel;
 import com.cloudwell.paywell.services.activity.utility.ivac.model.GetIvacTrx;
 import com.cloudwell.paywell.services.activity.utility.ivac.model.IvacFeePayModel;
@@ -579,5 +583,17 @@ public interface APIService {
 
     @POST("MYCash/Utility/DPDCBillPay")
     Call<DpdcResponse> submitDPDCBillPay(@Body DPDCBillPayModel dpdcBillPayModel);
+
+    @POST("MYCash/Utility/getWASABillInfo")
+    Call<ResponseBody> getWASABillInfo(@Body WASABillInfoModel wasaBillInfoModel);
+
+    @POST("MYCash/Utility/WASABillPay")
+    Call<ResponseBody> submitWASABillPay(@Body SubmitBill submitBill);
+
+    @POST("MYCash/Utility/getWZPDCLBillInfo")
+    Call<ResponseBody> getWZPDCLBillInfo(@Body WZPDCLBillInfo wzpdclBillInfo);
+
+    @POST("MYCash/Utility/WZPDCLBillPay")
+    Call<ResponseBody> submitWZPDCLBillPay(@Body WZPDCLBillPayModel wzpdclBillPayModel);
 
 }
