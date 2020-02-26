@@ -22,6 +22,7 @@ import com.cloudwell.paywell.services.activity.notification.ImageViewActivity
 import com.cloudwell.paywell.services.activity.notification.allNotificaiton.NotificationAllActivity
 import com.cloudwell.paywell.services.activity.notification.allNotificaiton.NotificationAllActivity.Companion.IS_NOTIFICATION_SHOWN
 import com.cloudwell.paywell.services.activity.notification.model.NotificationDetailMessage
+import com.cloudwell.paywell.services.activity.notification.model.RequestSDABalancceRetrun
 import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.view.NotificationFullViewStatus
 import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.viewModel.NotificationFullNotifcationViewModel
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBBillPayNewActivity
@@ -203,6 +204,12 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
                                     + "&" + model?.balanceReturnData?.replace("@", "&")
                     );
 
+
+//                   pinRequest(model?.messageId,model?.merchentPassword)
+
+
+
+
                 } else {
                     val snackbar = Snackbar.make(linearLayoutNotiFullView, R.string.pin_no_error_msg, Snackbar.LENGTH_LONG)
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"))
@@ -266,14 +273,77 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
 
         }
 
+    private fun pinRequest(messageId: String, merchentPassword: String) {
+
+        showProgressDialog()
+        val m = RequestSDABalancceRetrun()
+        m.username = mAppHandler!!.userName
+        m.password = mAppHandler!!.pin
+        m.messageId = messageId
+        m.merchentPassword = merchentPassword
+        m.amount
+        m.dealerId
+        m.shadowId
 
 
 
 
 
+//        ApiUtils.getAPIServiceV2().SDAToMerchentBalanceReturn(m).enqueue(object : retrofit2.Callback<ResponseBody> {
+//            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+//                dismissProgressDialog()
+//                try {
+//                    val result = response.body()!!.string()
+//                    if (result != null) {
+//                        val jsonObject = JSONObject(result)
+//                        val status = jsonObject.getString(PayWellToMYCashActivity.TAG_STATUS)
+//                        if (status == "200") {
+//                            val msg_text = jsonObject.getString(PayWellToMYCashActivity.TAG_MESSAGE_TEXT)
+//                            val trx_id = jsonObject.getString(PayWellToMYCashActivity.TAG_TRANSACTION_ID)
+//                            val builder = AlertDialog.Builder(this@PayWellToMYCashActivity)
+//                            builder.setTitle("Result")
+//                            builder.setMessage("$msg_text\nPayWell Trx ID: $trx_id")
+//                            builder.setPositiveButton(R.string.okay_btn) { dialog, id -> onBackPressed() }
+//                            builder.setCancelable(true)
+//                            val alert = builder.create()
+//                            alert.setCanceledOnTouchOutside(true)
+//                            alert.show()
+//                        } else {
+//                            val msg = jsonObject.getString(PayWellToMYCashActivity.TAG_MESSAGE)
+//                            val msg_text = jsonObject.getString(PayWellToMYCashActivity.TAG_MESSAGE_TEXT)
+//                            val trx_id = jsonObject.getString(PayWellToMYCashActivity.TAG_TRANSACTION_ID)
+//                            val builder = AlertDialog.Builder(this@PayWellToMYCashActivity)
+//                            builder.setMessage("$msg\n$msg_text\nPayWell Trx ID: $trx_id")
+//                            builder.setPositiveButton(R.string.okay_btn) { dialog, id -> onBackPressed() }
+//                            builder.setCancelable(true)
+//                            val alert = builder.create()
+//                            alert.setCanceledOnTouchOutside(true)
+//                            alert.show()
+//                        }
+//                    } else {
+//                        val snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG)
+//                        snackbar.setActionTextColor(Color.parseColor("#ffffff"))
+//                        val snackBarView = snackbar.view
+//                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))
+//                        snackbar.show()
+//                    }
+//                } catch (e: java.lang.Exception) {
+//                    e.printStackTrace()
+//                    val snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG)
+//                    snackbar.setActionTextColor(Color.parseColor("#ffffff"))
+//                    val snackBarView = snackbar.view
+//                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))
+//                    snackbar.show()
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+//                dismissProgressDialog()
+//                showErrorMessagev1(getString(R.string.try_again_msg))
+//            }
+//        })
 
-
-
+    }
 
 
     private fun handleAirTicket(testmessage: String, messageSub: String?, dateTime: String?) {
