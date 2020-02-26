@@ -18,12 +18,15 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.westzone.model.WZPDCLBillInfo;
+import com.cloudwell.paywell.services.activity.utility.electricity.westzone.model.WZPDCLBillPayModel;
 import com.cloudwell.paywell.services.activity.utility.electricity.westzone.model.WestZoneHistory;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.database.DatabaseClient;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.DateUtils;
 import com.cloudwell.paywell.services.utils.ParameterUtility;
@@ -46,6 +49,11 @@ import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class WZPDCLBillPayActivity extends BaseActivity implements View.OnClickListener {
 
@@ -297,260 +305,221 @@ public class WZPDCLBillPayActivity extends BaseActivity implements View.OnClickL
         if (!mCd.isConnectingToInternet()) {
             AppHandler.showDialog(this.getSupportFragmentManager());
         } else {
-            mSubmitInquiryAsync = new SubmitInquiryAsync().execute(getString(R.string.west_zone_bill));
+            submitInquiry();
         }
     }
 
-    private class SubmitInquiryAsync extends AsyncTask<String, Void, String> {
+    private void submitInquiry(){
+        showProgressDialog();
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(WZPDCLBillPayActivity.this).getRID());
 
+        WZPDCLBillInfo info = new WZPDCLBillInfo();
+        info.setUsername(mAppHandler.getUserName());
+        info.setBillMonth(mMonth);
+        info.setBillNo(mBill);
+        info.setBillYear(mYear);
+        info.setPassword(mPin);
+        info.setPayerMobileNo(mPhn);
+        info.setReference_id(uniqueKey);
 
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
+        ApiUtils.getAPIServiceV2().getWZPDCLBillInfo(info).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-        @SuppressWarnings("deprecation")
-        @Override
-        protected String doInBackground(String... data) {
-            String responseTxt = null;
-            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(WZPDCLBillPayActivity.this).getRID());
+                dismissProgressDialog();
+                if (response.code() == 200){
 
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(data[0]);
-            try {
-                //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<>(8);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getUserName()));
-                nameValuePairs.add(new BasicNameValuePair("password", mPin));
-                nameValuePairs.add(new BasicNameValuePair("billNo", mBill));
-                nameValuePairs.add(new BasicNameValuePair("payerMobileNo", mPhn));
-                nameValuePairs.add(new BasicNameValuePair("billMonth", mMonth));
-                nameValuePairs.add(new BasicNameValuePair("billYear", mYear));
-                nameValuePairs.add(new BasicNameValuePair("service_type", "WZPDCL_Enquiry"));
-                nameValuePairs.add(new BasicNameValuePair("format", "json"));
-                nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
-
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            try {
-                if (result != null) {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String status = jsonObject.getString(TAG_STATUS);
-                    if (status.equals("200")) {
-                        mTotalAmount = jsonObject.getString(TAG_TOTAL_AMOUNT);
-                        String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
-                        String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
-                        mTrxId = jsonObject.getString(TAG_TRANSACTION_ID);
-                        if (!mTotalAmount.equals("0")) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(WZPDCLBillPayActivity.this);
-                            builder.setTitle("Result");
-                            builder.setMessage(msg_text + "\n\n" + getString(R.string.phone_no_des) + " " + mPhn + "\n\nPayWell Trx ID: " + trx_id);
-                            builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int id) {
-                                    submitBillConfirm();
-                                }
-                            });
-                            builder.setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(true);
-                            AlertDialog alert = builder.create();
-                            alert.setCanceledOnTouchOutside(true);
-                            alert.show();
-                        } else {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(WZPDCLBillPayActivity.this);
-                            builder.setTitle("Result");
-                            builder.setMessage(msg_text + "\n\n" + getString(R.string.phone_no_des) + " " + mPhn + "\n\nPayWell Trx ID: " + trx_id);
-                            builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(true);
-                            AlertDialog alert = builder.create();
-                            alert.setCanceledOnTouchOutside(true);
-                            alert.show();
-                        }
-                    } else {
-                        String msg = jsonObject.getString(TAG_MESSAGE);
-                        String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
-                        String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(WZPDCLBillPayActivity.this);
-                        builder.setMessage(msg + "\n" + msg_text + "\nPayWell Trx ID: " + trx_id);
-                        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.dismiss();
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        int status = jsonObject.getInt(TAG_STATUS);
+                        if (status == 200){
+                            mTotalAmount = jsonObject.getString(TAG_TOTAL_AMOUNT);
+                            mTrxId = jsonObject.getString(TAG_TRANSACTION_ID);
+                            String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
+                            String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
+                            if (!mTotalAmount.equals("0")) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(WZPDCLBillPayActivity.this);
+                                builder.setTitle("Result");
+                                builder.setMessage(msg_text + "\n\n" + getString(R.string.phone_no_des) + " " + mPhn + "\n\nPayWell Trx ID: " + trx_id);
+                                builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        submitBillConfirm();
+                                    }
+                                });
+                                builder.setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                                builder.setCancelable(true);
+                                AlertDialog alert = builder.create();
+                                alert.setCanceledOnTouchOutside(true);
+                                alert.show();
+                            } else {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(WZPDCLBillPayActivity.this);
+                                builder.setTitle("Result");
+                                builder.setMessage(msg_text + "\n\n" + getString(R.string.phone_no_des) + " " + mPhn + "\n\nPayWell Trx ID: " + trx_id);
+                                builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                                builder.setCancelable(true);
+                                AlertDialog alert = builder.create();
+                                alert.setCanceledOnTouchOutside(true);
+                                alert.show();
                             }
-                        });
-                        builder.setCancelable(true);
-                        AlertDialog alert = builder.create();
-                        alert.setCanceledOnTouchOutside(true);
-                        alert.show();
+
+                        }else {
+                            String msg = jsonObject.getString(TAG_MESSAGE);
+                            String msg_text="",trx_id="";
+                            if (jsonObject.has(TAG_MESSAGE_TEXT)){
+                                msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
+                            }
+                            if (jsonObject.has(TAG_MESSAGE_TEXT)){
+                                trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
+                            }
+                                AlertDialog.Builder builder = new AlertDialog.Builder(WZPDCLBillPayActivity.this);
+                                builder.setMessage(msg + "\n" + msg_text + "\nPayWell Trx ID: " + trx_id);
+                                builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                                builder.setCancelable(true);
+                                AlertDialog alert = builder.create();
+                                alert.setCanceledOnTouchOutside(true);
+                                alert.show();
+                            }
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        showErrorMessagev1(getString(R.string.try_again_msg));
                     }
-                } else {
-                    Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
+
+                }else {
+                    showErrorMessagev1(getString(R.string.try_again_msg));
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
             }
-        }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
+            }
+        });
+
+
     }
+
 
     private void submitBillConfirm() {
         if (!mCd.isConnectingToInternet()) {
             AppHandler.showDialog(this.getSupportFragmentManager());
         } else {
-            mSubmitBillAsync = new SubmitBillAsync().execute(getString(R.string.west_zone_bill));
+            submitBill();
         }
     }
 
-    private class SubmitBillAsync extends AsyncTask<String, Void, String> {
-
-
-        @Override
-        protected void onPreExecute() {
+    private void submitBill(){
             showProgressDialog();
-        }
 
-        @SuppressWarnings("deprecation")
-        @Override
-        protected String doInBackground(String... data) {
-            String responseTxt = null;
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(data[0]);
-            try {
-                //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<>(10);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getUserName()));
-                nameValuePairs.add(new BasicNameValuePair("password", mPin));
-                nameValuePairs.add(new BasicNameValuePair("billNo", mBill));
-                nameValuePairs.add(new BasicNameValuePair("payerMobileNo", mPhn));
-                nameValuePairs.add(new BasicNameValuePair("billMonth", mMonth));
-                nameValuePairs.add(new BasicNameValuePair("billYear", mYear));
-                nameValuePairs.add(new BasicNameValuePair("service_type", "WZPDCL"));
-                nameValuePairs.add(new BasicNameValuePair("totalAmount", mTotalAmount));
-                nameValuePairs.add(new BasicNameValuePair("transId", mTrxId));
-                nameValuePairs.add(new BasicNameValuePair("format", "json"));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+        WZPDCLBillPayModel model = new WZPDCLBillPayModel();
+        model.setBillMonth(mMonth);
+        model.setBillNo(mBill);
+        model.setBillYear(mYear);
+        model.setPassword(mPin);
+        model.setPayerMobileNo(mPhn);
+        model.setTotalAmount(mTotalAmount);
+        model.setTransId(mTrxId);
+        model.setUsername(mAppHandler.getUserName());
 
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
+        ApiUtils.getAPIServiceV2().submitWZPDCLBillPay(model).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.code() == 200){
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        String status = jsonObject.getString(TAG_STATUS);
 
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
+                        if (status.equals("200")){
+                            String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
+                            String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
 
-            insertWestZoneHistoryAsyncTask = new AsyncTask<Void, Void, Void>() {
-                @Override
-                protected Void doInBackground(Void... voids) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(WZPDCLBillPayActivity.this);
+                            builder.setTitle("Result");
+                            builder.setMessage(msg_text + "\nPayWell Trx ID: " + trx_id);
+                            builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    onBackPressed();
+                                }
+                            });
+                            builder.setCancelable(true);
+                            AlertDialog alert = builder.create();
+                            alert.setCanceledOnTouchOutside(true);
+                            alert.show();
 
-                    String currentDataAndTIme = DateUtils.INSTANCE.getCurrentDataAndTIme();
-                    WestZoneHistory westZoneHistory = new WestZoneHistory();
-                    westZoneHistory.setBilNumber(mBill);
-                    westZoneHistory.setPayerPhoneNumber(mPhn);
-                    westZoneHistory.setDate(currentDataAndTIme);
-                    DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().insertWestZoneHistory(westZoneHistory);
-                    return null;
-                }
-            }.execute();
+                            insertWestZoneHistoryAsyncTask = new AsyncTask<Void, Void, Void>() {
+                                @Override
+                                protected Void doInBackground(Void... voids) {
 
-            try {
-                if (result != null) {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String status = jsonObject.getString(TAG_STATUS);
-                    if (status.equals("200")) {
-                        String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
-                        String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
+                                    String currentDataAndTIme = DateUtils.INSTANCE.getCurrentDataAndTIme();
+                                    WestZoneHistory westZoneHistory = new WestZoneHistory();
+                                    westZoneHistory.setBilNumber(mBill);
+                                    westZoneHistory.setPayerPhoneNumber(mPhn);
+                                    westZoneHistory.setDate(currentDataAndTIme);
+                                    DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().insertWestZoneHistory(westZoneHistory);
+                                    return null;
+                                }
+                            }.execute();
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(WZPDCLBillPayActivity.this);
-                        builder.setTitle("Result");
-                        builder.setMessage(msg_text + "\nPayWell Trx ID: " + trx_id);
-                        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                onBackPressed();
+
+                        }else {
+                            String msg = jsonObject.getString(TAG_MESSAGE);
+                            String msg_text="",trx_id="";
+                            if (jsonObject.has(TAG_MESSAGE_TEXT)){
+                                msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
                             }
-                        });
-                        builder.setCancelable(true);
-                        AlertDialog alert = builder.create();
-                        alert.setCanceledOnTouchOutside(true);
-                        alert.show();
-                    } else {
-                        String msg = jsonObject.getString(TAG_MESSAGE);
-                        String msg_text = jsonObject.getString(TAG_MESSAGE_TEXT);
-                        String trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(WZPDCLBillPayActivity.this);
-                        builder.setMessage(msg + "\n" + msg_text + "\nPayWell Trx ID: " + trx_id);
-                        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.dismiss();
+                            if (jsonObject.has(TAG_MESSAGE_TEXT)){
+                                trx_id = jsonObject.getString(TAG_TRANSACTION_ID);
                             }
-                        });
-                        builder.setCancelable(true);
-                        AlertDialog alert = builder.create();
-                        alert.setCanceledOnTouchOutside(true);
-                        alert.show();
+                                AlertDialog.Builder builder = new AlertDialog.Builder(WZPDCLBillPayActivity.this);
+                                builder.setMessage(msg + "\n" + msg_text + "\nPayWell Trx ID: " + trx_id);
+                                builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                                builder.setCancelable(true);
+                                AlertDialog alert = builder.create();
+                                alert.setCanceledOnTouchOutside(true);
+                                alert.show();
+                            }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        showErrorMessagev1(getString(R.string.try_again_msg));
                     }
-                } else {
-                    Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
+
+                }else {
+                    showErrorMessagev1(getString(R.string.try_again_msg));
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
+
             }
-        }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
+
+            }
+        });
+
     }
 
     @Override

@@ -46,7 +46,6 @@ import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestMini
 import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestTrxInquiry;
 import com.cloudwell.paywell.services.activity.modelPojo.MerchantRequestPojo;
 import com.cloudwell.paywell.services.activity.modelPojo.UserSubBusinessTypeModel;
-import com.cloudwell.paywell.services.activity.notification.model.RequestSDABalancceRetrun;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationReadAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResposeReScheduleNotificationAccept;
@@ -97,6 +96,10 @@ import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid
 import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.model.requestPojo.DPDCBillPayModel;
 import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.model.requestPojo.DPDCbillInfoModel;
 import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.model.responsePojo.DpdcResponse;
+import com.cloudwell.paywell.services.activity.utility.electricity.wasa.model.SubmitBill;
+import com.cloudwell.paywell.services.activity.utility.electricity.wasa.model.WASABillInfoModel;
+import com.cloudwell.paywell.services.activity.utility.electricity.westzone.model.WZPDCLBillInfo;
+import com.cloudwell.paywell.services.activity.utility.electricity.westzone.model.WZPDCLBillPayModel;
 import com.cloudwell.paywell.services.activity.utility.ivac.model.GetIvacCenterModel;
 import com.cloudwell.paywell.services.activity.utility.ivac.model.GetIvacTrx;
 import com.cloudwell.paywell.services.activity.utility.ivac.model.IvacFeePayModel;
@@ -191,10 +194,6 @@ public interface APIService {
 
     @POST("Notification/NotificationSystem/userNotificationDelete")
     Call<ReposeDeletedNotification> deleteNotification(@Body RequestDeletedNotification requestDeletedNotification);
-
-
-    @POST("SDA/SDASystem/SDAToMerchentBalanceReturn")
-    Call<ReposeDeletedNotification> SDAToMerchentBalanceReturn(@Body RequestSDABalancceRetrun RequestSDABalancceRetrun);
 
 
     @Multipart
@@ -634,13 +633,21 @@ public interface APIService {
 
     @POST("MYCash/MFS/checkMyCashPendingCashRequest")
     Call<ResponseBody> checkMyCashPendingCashRequest(@Body RequestBalanceTransferConfirm requestBalanceTransferConfirm);
+    @POST("MYCash/Utility/getWASABillInfo")
+    Call<ResponseBody> getWASABillInfo(@Body WASABillInfoModel wasaBillInfoModel);
 
     @POST("MYCash/MFS/myCashPendingCashRequestConfirmation")
     Call<ResponseBody> myCashPendingCashRequestConfirmation(@Body ReqeustPaymentConfmation ReqeustPaymentConfmation);
+    @POST("MYCash/Utility/WASABillPay")
+    Call<ResponseBody> submitWASABillPay(@Body SubmitBill submitBill);
 
     @POST("MYCash/MFS/getMYCashRetailerPayWellBalance")
     Call<ResponseBody> getMYCashRetailerPayWellBalance(@Body RequestBalacne requestBalacne);
+    @POST("MYCash/Utility/getWZPDCLBillInfo")
+    Call<ResponseBody> getWZPDCLBillInfo(@Body WZPDCLBillInfo wzpdclBillInfo);
 
 
+    @POST("MYCash/Utility/WZPDCLBillPay")
+    Call<ResponseBody> submitWZPDCLBillPay(@Body WZPDCLBillPayModel wzpdclBillPayModel);
 
 }
