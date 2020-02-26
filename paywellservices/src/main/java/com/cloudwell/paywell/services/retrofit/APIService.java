@@ -596,14 +596,56 @@ public interface APIService {
     @POST("MYCash/Utility/DPDCBillPay")
     Call<DpdcResponse> submitDPDCBillPay(@Body DPDCBillPayModel dpdcBillPayModel);
 
+
+    @POST("MYCash/MFS/generateOTP")
+    Call<ResponseBody> generateOTPMYCash(@Body com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestGenerateOTP RequestGenerateOTP);
+
+    @POST("MYCash/MFS/miniStatement")
+    Call<ResponseBody> miniStatement(@Body RequestMiniStatment requestMiniStatment);
+
+
+    @POST("MYCash/MFS/balanceEnquiry")
+    Call<ResponseBody> balanceEnquiry(@Body RequestBalanceInquray requestBalanceInquray);
+
+    @POST("MYCash/MFS/fundManagement")
+    Call<ResponseBody> fundManagement(@Body RequestFundManagment requestFundManagment);
+
+    @POST("MYCash/MFS/customerRegistration")
+    Call<ResponseBody> customerRegistration(@Body RequestLCustomerReg requestLCustomerReg);
+
+    @POST("MYCash/MFS/cashIn")
+    Call<ResponseBody> cashIn(@Body RequestCashIn requestCashIn);
+
+    @POST("MYCash/MFS/changePIN")
+    Call<ResponseBody> changePinNumber(@Body RequestChangePInNumber RequestChangePInNumber);
+
+
+    @POST("MYCash/MFS/lastTransactionList")
+    Call<ResponseBody> lastTransactionList(@Body RequestTrxInquiry requestTrxInquiry);
+
+
+    @POST("MYCash/MFS/lastSuccessfulCashOutList")
+    Call<ResponseBody> cashOut(@Body RequestCashOut requestCashOut);
+
+    @POST("MYCash/MFS/doMyCahsToCashOrBankTransfer")
+    Call<ResponseBody> myCasyhToCashOrBankTransfer(@Body RequestBalanceTransferRequest RequestBalanceTransferRequest);
+
+
+    @POST("MYCash/MFS/checkMyCashPendingCashRequest")
+    Call<ResponseBody> checkMyCashPendingCashRequest(@Body RequestBalanceTransferConfirm requestBalanceTransferConfirm);
     @POST("MYCash/Utility/getWASABillInfo")
     Call<ResponseBody> getWASABillInfo(@Body WASABillInfoModel wasaBillInfoModel);
 
+    @POST("MYCash/MFS/myCashPendingCashRequestConfirmation")
+    Call<ResponseBody> myCashPendingCashRequestConfirmation(@Body ReqeustPaymentConfmation ReqeustPaymentConfmation);
     @POST("MYCash/Utility/WASABillPay")
     Call<ResponseBody> submitWASABillPay(@Body SubmitBill submitBill);
 
+    @POST("MYCash/MFS/getMYCashRetailerPayWellBalance")
+    Call<ResponseBody> getMYCashRetailerPayWellBalance(@Body RequestBalacne requestBalacne);
     @POST("MYCash/Utility/getWZPDCLBillInfo")
     Call<ResponseBody> getWZPDCLBillInfo(@Body WZPDCLBillInfo wzpdclBillInfo);
+
 
     @POST("MYCash/Utility/WZPDCLBillPay")
     Call<ResponseBody> submitWZPDCLBillPay(@Body WZPDCLBillPayModel wzpdclBillPayModel);
