@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.utility.AllUrl;
 import com.cloudwell.paywell.services.activity.utility.banglalion.model.BanglalionHistory;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
@@ -169,7 +170,7 @@ public class BanglalionRechargeActivity extends BaseActivity implements View.OnC
                 if (!cd.isConnectingToInternet()) {
                     AppHandler.showDialog(getSupportFragmentManager());
                 } else {
-                    mSubmitAsync = new SubmitAsync().execute(getResources().getString(R.string.banglalion_bill_pay),
+                    mSubmitAsync = new SubmitAsync().execute(AllUrl.URL_banglalion_bill_pay,
                             mAppHandler.getUserName(),
                             accountNo,
                             amount,

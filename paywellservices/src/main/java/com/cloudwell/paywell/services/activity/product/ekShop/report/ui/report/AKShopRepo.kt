@@ -1,12 +1,11 @@
 package com.cloudwell.paywell.services.activity.product.ekShop.report.ui.report
 
 import androidx.lifecycle.MutableLiveData
-import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.product.ekShop.model.ResEKReport
+import com.cloudwell.paywell.services.activity.utility.AllUrl
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.APIService
-import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,7 +20,7 @@ class AKShopRepo(val aPIService: APIService) {
 
         val mAppHandler = AppHandler.getmInstance(AppController.getContext())
         val rid = mAppHandler.rid
-        val url = AppController.getContext().getString(R.string.ek_report)
+        val url = AllUrl.URL_ek_report
 
 
 

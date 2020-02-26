@@ -442,18 +442,15 @@ public interface APIService {
                                      @Field(ParameterUtility.KEY_REF_ID) String refId);
 
 
-    @POST
-    Call<DescoInquiryResponse> descoInquiryRequest(@Body DescoRequestInquiryModel requestInquiryModelDesco,
-                                                   @Url String url);
+    @POST("MYCash/Utility/DESCOPrepaid_billInfo")
+    Call<DescoInquiryResponse> descoInquiryRequest(@Body DescoRequestInquiryModel requestInquiryModelDesco);
 
-    @POST
-    Call<DescoBillPaySubmitResponse> descoBillPayement(@Body DescoBillPaySubmit descoBillPaySubmit,
-                                                       @Url String url);
+    @POST("MYCash/Utility/DESCOPrepaid_billPayment")
+    Call<DescoBillPaySubmitResponse> descoBillPayement(@Body DescoBillPaySubmit descoBillPaySubmit);
 
 
-    @POST
-    Call<DescoPrepaidTrxLogResponse> descoPrepaidTrxInquiry(@Body DescoPrepaidTrxLogRequest descoPrepaidTrxLogRequest,
-                                                            @Url String url);
+    @POST("MYCash/Utility/getEnquiryData")
+    Call<DescoPrepaidTrxLogResponse> descoPrepaidTrxInquiry(@Body DescoPrepaidTrxLogRequest descoPrepaidTrxLogRequest);
 
 
     @POST("Registration/UserRegistration/userInformationForRegistration")

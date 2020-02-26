@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestBalacne;
+import com.cloudwell.paywell.services.activity.utility.AllUrl;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
@@ -102,7 +103,7 @@ public class MYCashMainActivity extends BaseActivity implements View.OnClickList
             AppHandler.showDialog(this.getSupportFragmentManager());
         } else {
             _pin = mPin.getText().toString().trim();
-            new SubmitAsync().execute(getString(R.string.bkash_balance_check));
+            new SubmitAsync().execute(AllUrl.URL_bkash_balance_check);
         }
     }
 

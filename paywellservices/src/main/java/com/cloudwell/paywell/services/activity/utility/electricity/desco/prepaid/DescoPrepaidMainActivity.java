@@ -231,7 +231,7 @@ public class DescoPrepaidMainActivity extends BaseActivity implements CompoundBu
 
         DescoPrepaidTrxLogRequest descoPrepaidTrxLogRequest =new DescoPrepaidTrxLogRequest("json",selectedLimit,uniqueKey,"Desco_prepaid",imeiNo);
 
-        ApiUtils.getAPIService().descoPrepaidTrxInquiry(descoPrepaidTrxLogRequest,getString(R.string.desco_prepaid_trx_inquiry)).enqueue(new Callback<DescoPrepaidTrxLogResponse>() {
+        ApiUtils.getAPIService().descoPrepaidTrxInquiry(descoPrepaidTrxLogRequest).enqueue(new Callback<DescoPrepaidTrxLogResponse>() {
             @Override
             public void onResponse(Call<DescoPrepaidTrxLogResponse> call, Response<DescoPrepaidTrxLogResponse> response) {
 

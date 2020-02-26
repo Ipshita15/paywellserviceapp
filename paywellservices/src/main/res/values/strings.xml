@@ -70,7 +70,6 @@
     <string name="home_eticket_air">Air Ticket</string>
     <string name="home_product_ajker_deal">Ajker Deal</string>
     <string name="home_product_pw_wholesale">PayWell\nWholesale</string>
-    <string name="home_settings_reset_pin">Reset PIN</string>
     <string name="home_settings_change_pin">Change PIN</string>
     <string name="home_settings_upgrade">Upgrade</string>
     <string name="home_settings_change_language">Change\nLanguage</string>
@@ -318,62 +317,6 @@
     <!-- paywell apis -->
 
     <string name="app_next_version_no">vten_seventeen</string>
-    <string name="update_check" translatable="false">https://app.paywellonline.com/apk/paywell_services_latest_version.apk</string>
-    <string name="check_version" translatable="false">https://app.paywellonline.com/version_update_info/paywellservice_update.txt</string>
-
-    <!-- Registration -->
-
-    <!-- Topup -->
-
-
-    <!-- Utility -->
-    <string name="pb_bill_pay" translatable="false">https://api.paywellonline.com/PaywelltransactionPollyBiddyut/pollyBiddyutBillPayAPI</string>
-
-    <string name="desco_prepaid_bill_enq" translatable="false">https://agentapi.paywellonline.com/MYCash/Utility/DESCOPrepaid_billInfo</string>
-    <string name="desco_prepaid_bill_pay" translatable="false">https://agentapi.paywellonline.com/MYCash/Utility/DESCOPrepaid_billPayment</string>
-    <string name="desco_prepaid_trx_inquiry" translatable="false">https://agentapi.paywellonline.com/MYCash/Utility/getEnquiryData</string>
-
-
-    <string name="dpdc_postpaid_bill_inq" translatable="false">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DPDC</string>
-    <string name="dpdc_postpaid_bill_pay" translatable="false">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DPDC</string>
-
-    <string name="wasa_bill" translatable="false">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_WASA</string>
-
-    <string name="west_zone_bill" translatable="false">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_WZPDCL</string>
-
-    <string name="banglalion_bill_pay" translatable="false">https://api.paywellonline.com/PayWellInternateBillPay/banglalionBillPay</string>
-    <string name="banglalion_bill_inquiry" translatable="false">https://api.paywellonline.com/PayWellInternateBillPay/banglalionEnquiry</string>
-
-    <string name="karnaphuli_bill" translatable="false">https://api.paywellonline.com/PaywelltransactionMYCash/kgdcl_billinfo</string>
-
-    <!-- Eticket -->
-
-    <!-- Payment -->
-    <string name="bkash_balance_check" translatable="false">https://bkapi.paywellonline.com/retailer/userBalanceCheck.php?</string>
-
-
-    <!-- Refill -->
-
-
-    <!-- Settings -->
-    <string name="reset_pin" translatable="false">https://api.paywellonline.com/paywellSetting/passwordChange?</string>
-
-    <!-- Verification -->
-    <string name="otp_for_phn_num" translatable="false">https://api.paywellonline.com/PaywelltransactionRetailer/GetRetailerPhoneNumberVerificationOTP</string>
-    <string name="conf_phn_num" translatable="false">https://api.paywellonline.com/PaywelltransactionRetailer/ConfirmRetaileOTPForPhoneNumberVerification</string>
-
-    <!-- Chat -->
-    <string name="chat" translatable="false">https://agentapi.paywellonline.com/chatting-retailer/?</string>
-
-    <string name="merchant_balance_return_url" translatable="false">https://api.paywellonline.com/PaywelltransactionSDA/SDAToMerchentBalanceReturn</string>
-
-    <!-- Product -->
-
-
-    <string name="ek_shope_token" translatable="false">https://ekshop.paywellonline.com/get_token</string>
-    <string name="ek_redirect" translatable="false">https://ekshop.paywellonline.com/redirect?</string>
-    <string name="ek_report" translatable="false">https://ekshop.paywellonline.com/get_report</string>
-
 
 
     <string name="operator"> অপারেটর</string>

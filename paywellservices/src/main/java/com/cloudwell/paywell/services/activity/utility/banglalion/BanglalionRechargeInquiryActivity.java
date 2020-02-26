@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.utility.AllUrl;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
@@ -107,7 +108,7 @@ public class BanglalionRechargeInquiryActivity extends BaseActivity implements V
                     mAccountNO.setError(Html.fromHtml("<font color='red'>" + getString(R.string.banglalion_acc_error_msg) + "</font></font>"));
                     return;
                 }
-                mSubmitAsync = new SubmitAsync().execute(getResources().getString(R.string.banglalion_bill_inquiry),
+                mSubmitAsync = new SubmitAsync().execute(AllUrl.URL_banglalion_bill_inquiry,
                         mAppHandler.getUserName(),
                         _account,
                         _pin);
