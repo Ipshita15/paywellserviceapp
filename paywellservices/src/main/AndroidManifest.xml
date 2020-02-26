@@ -522,16 +522,6 @@
                 android:value="com.cloudwell.paywell.services.activity.settings.SettingsActivity" />
         </activity>
         <activity
-            android:name=".activity.settings.ResetPinActivity"
-            android:parentActivityName=".activity.settings.SettingsActivity"
-            android:screenOrientation="portrait">
-
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.settings.SettingsActivity" />
-        </activity>
-        <activity
             android:name=".activity.settings.SettingsActivity"
             android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait">
