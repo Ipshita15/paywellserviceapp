@@ -22,4 +22,7 @@ class RequestSDABalancceRetrun {
     @SerializedName("username")
     var username: String = ""
 
+    @SerializedName("imeiNo")
+    var imeiNo: String = ""
+
 }

@@ -6,7 +6,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Point
 import android.media.RingtoneManager
-import android.os.AsyncTask
 import android.os.Bundle
 import android.text.Html
 import android.text.SpannableString
@@ -32,6 +31,7 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.AppHelper.startNotificationSyncService
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
@@ -39,10 +39,8 @@ import com.orhanobut.logger.Logger
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_notification_full_view.*
+import okhttp3.ResponseBody
 import org.apache.commons.lang3.StringEscapeUtils
-import org.apache.http.client.methods.HttpPost
-import org.apache.http.impl.client.BasicResponseHandler
-import org.apache.http.impl.client.DefaultHttpClient
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -197,16 +195,29 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
             notiButton.setOnClickListener {
 
                 if (!notiEditText.getText().toString().isEmpty()) {
-                    PinRequestAsync().execute(
-                            getResources().getString(R.string.merchant_balance_return_url)
-                                    + "?messageId=" + model?.messageId
-                                    + "&merchentPassword=" + notiEditText.getText().toString()
-                                    + "&" + model?.balanceReturnData?.replace("@", "&")
-                    );
 
 
-//                   pinRequest(model?.messageId,model?.merchentPassword)
+                    val split = model?.balanceReturnData?.split("@")
+                    val shadowId = split?.get(0)?.split("=")?.get(1)
+                    val dealerId = split?.get(1)?.split("=")?.get(1)
+                    val marchentId = split?.get(2)?.split("=")?.get(1)
+                    val password = split?.get(3)?.split("=")?.get(1)
+                    val imeiNo = split?.get(4)?.split("=")?.get(1)
+                    val amount = split?.get(5)?.split("=")?.get(1)
+                    Logger.v("")
 
+                    val m = RequestSDABalancceRetrun()
+                    m.merchentPassword = ""+notiEditText.getText().toString()
+                    m.username = mAppHandler!!.userName
+                    m.messageId = ""+model?.messageId
+                    m.password = ""+password
+                    m.amount = ""+amount
+                    m.dealerId = ""+dealerId
+                    m.shadowId= ""+shadowId
+                    m.imeiNo = ""+imeiNo
+                    m.marchentId = ""+marchentId
+
+                    pinRequest(m)
 
 
 
@@ -273,75 +284,35 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
 
         }
 
-    private fun pinRequest(messageId: String, merchentPassword: String) {
+    private fun pinRequest(m: RequestSDABalancceRetrun) {
 
         showProgressDialog()
-        val m = RequestSDABalancceRetrun()
-        m.username = mAppHandler!!.userName
-        m.password = mAppHandler!!.pin
-        m.messageId = messageId
-        m.merchentPassword = merchentPassword
-        m.amount
-        m.dealerId
-        m.shadowId
+
+        ApiUtils.getAPIServiceV2().SDAToMerchentBalanceReturn(m).enqueue(object : retrofit2.Callback<ResponseBody> {
+
+            override fun onResponse(call: retrofit2.Call<ResponseBody>, response: retrofit2.Response<ResponseBody>) {
+                dismissProgressDialog()
+                try {
+                    val result = response.body()?.string()
+                    val jsonObject = JSONObject(result)
+                    val status = jsonObject.getString("Status")
+                    val message = jsonObject.getString("StatusName")
+                    showTransferMessage(status, message)
+                } catch (ex: Exception) {
+                    showTryAgainDialog()
+                }
+
+            }
+
+            override fun onFailure(call: retrofit2.Call<ResponseBody>, t: Throwable) {
+                dismissProgressDialog()
+                showTryAgainDialog()
+
+            }
 
 
 
-
-
-//        ApiUtils.getAPIServiceV2().SDAToMerchentBalanceReturn(m).enqueue(object : retrofit2.Callback<ResponseBody> {
-//            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-//                dismissProgressDialog()
-//                try {
-//                    val result = response.body()!!.string()
-//                    if (result != null) {
-//                        val jsonObject = JSONObject(result)
-//                        val status = jsonObject.getString(PayWellToMYCashActivity.TAG_STATUS)
-//                        if (status == "200") {
-//                            val msg_text = jsonObject.getString(PayWellToMYCashActivity.TAG_MESSAGE_TEXT)
-//                            val trx_id = jsonObject.getString(PayWellToMYCashActivity.TAG_TRANSACTION_ID)
-//                            val builder = AlertDialog.Builder(this@PayWellToMYCashActivity)
-//                            builder.setTitle("Result")
-//                            builder.setMessage("$msg_text\nPayWell Trx ID: $trx_id")
-//                            builder.setPositiveButton(R.string.okay_btn) { dialog, id -> onBackPressed() }
-//                            builder.setCancelable(true)
-//                            val alert = builder.create()
-//                            alert.setCanceledOnTouchOutside(true)
-//                            alert.show()
-//                        } else {
-//                            val msg = jsonObject.getString(PayWellToMYCashActivity.TAG_MESSAGE)
-//                            val msg_text = jsonObject.getString(PayWellToMYCashActivity.TAG_MESSAGE_TEXT)
-//                            val trx_id = jsonObject.getString(PayWellToMYCashActivity.TAG_TRANSACTION_ID)
-//                            val builder = AlertDialog.Builder(this@PayWellToMYCashActivity)
-//                            builder.setMessage("$msg\n$msg_text\nPayWell Trx ID: $trx_id")
-//                            builder.setPositiveButton(R.string.okay_btn) { dialog, id -> onBackPressed() }
-//                            builder.setCancelable(true)
-//                            val alert = builder.create()
-//                            alert.setCanceledOnTouchOutside(true)
-//                            alert.show()
-//                        }
-//                    } else {
-//                        val snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG)
-//                        snackbar.setActionTextColor(Color.parseColor("#ffffff"))
-//                        val snackBarView = snackbar.view
-//                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))
-//                        snackbar.show()
-//                    }
-//                } catch (e: java.lang.Exception) {
-//                    e.printStackTrace()
-//                    val snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG)
-//                    snackbar.setActionTextColor(Color.parseColor("#ffffff"))
-//                    val snackBarView = snackbar.view
-//                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))
-//                    snackbar.show()
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-//                dismissProgressDialog()
-//                showErrorMessagev1(getString(R.string.try_again_msg))
-//            }
-//        })
+        })
 
     }
 
@@ -450,7 +421,10 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
 
         builder.setPositiveButton(R.string.okay_btn, DialogInterface.OnClickListener { dialogInterface, id ->
             dialogInterface.dismiss()
-            finish()
+            if (status_code.equals("200")){
+                finish()
+            }
+
         })
 
         val alert = builder.create()
@@ -458,59 +432,6 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
         alert.setCanceledOnTouchOutside(false)
     }
 
-
-    inner class PinRequestAsync : AsyncTask<String, String, String>() {
-        protected override fun onPreExecute() {
-            showProgressDialog()
-        }
-
-        override fun doInBackground(vararg params: String): String? {
-            var responseTxt: String? = null
-            // Create a new HttpClient and Post Header
-            val httpclient = DefaultHttpClient()
-            val httppost = HttpPost(params[0])
-            try {
-                val responseHandler = BasicResponseHandler()
-                responseTxt = httpclient.execute(httppost, responseHandler)
-            } catch (e: Exception) {
-                e.fillInStackTrace()
-                val snackbar = Snackbar.make(linearLayoutNotiFullView, R.string.try_again_msg, Snackbar.LENGTH_LONG)
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"))
-                val snackBarView = snackbar.view
-                snackBarView.setBackgroundColor(Color.parseColor("#8cc63f"))
-                snackbar.show()
-            }
-
-            return responseTxt
-        }
-
-        protected override fun onPostExecute(result: String?) {
-            dismissProgressDialog()
-            if (result != null) {
-                try {
-                    val jsonObject = JSONObject(result)
-                    val status = jsonObject.getString("Status")
-                    val message = jsonObject.getString("StatusName")
-                    showTransferMessage(status, message)
-                } catch (ex: Exception) {
-                    ex.printStackTrace()
-                    val snackbar = Snackbar.make(linearLayoutNotiFullView, R.string.try_again_msg, Snackbar.LENGTH_LONG)
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"))
-                    val snackBarView = snackbar.view
-                    snackBarView.setBackgroundColor(Color.parseColor("#8cc63f"))
-                    snackbar.show()
-                }
-
-            } else {
-                val snackbar = Snackbar.make(linearLayoutNotiFullView, R.string.try_again_msg, Snackbar.LENGTH_LONG)
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"))
-                val snackBarView = snackbar.view
-                snackBarView.setBackgroundColor(Color.parseColor("#8cc63f"))
-                snackbar.show()
-            }
-        }
-
-    }
 }
 
 

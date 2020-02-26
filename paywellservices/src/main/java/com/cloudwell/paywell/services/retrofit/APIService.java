@@ -46,6 +46,7 @@ import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestMini
 import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestTrxInquiry;
 import com.cloudwell.paywell.services.activity.modelPojo.MerchantRequestPojo;
 import com.cloudwell.paywell.services.activity.modelPojo.UserSubBusinessTypeModel;
+import com.cloudwell.paywell.services.activity.notification.model.RequestSDABalancceRetrun;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationReadAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResposeReScheduleNotificationAccept;
@@ -194,6 +195,10 @@ public interface APIService {
 
     @POST("Notification/NotificationSystem/userNotificationDelete")
     Call<ReposeDeletedNotification> deleteNotification(@Body RequestDeletedNotification requestDeletedNotification);
+
+
+    @POST("SDA/SDASystem/SDAToMerchentBalanceReturn")
+    Call<ResponseBody> SDAToMerchentBalanceReturn(@Body RequestSDABalancceRetrun RequestSDABalancceRetrun);
 
 
     @Multipart
