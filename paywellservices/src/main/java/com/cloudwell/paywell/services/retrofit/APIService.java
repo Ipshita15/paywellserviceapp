@@ -635,19 +635,21 @@ public interface APIService {
 
     @POST("MYCash/MFS/checkMyCashPendingCashRequest")
     Call<ResponseBody> checkMyCashPendingCashRequest(@Body RequestBalanceTransferConfirm requestBalanceTransferConfirm);
+
     @POST("MYCash/Utility/getWASABillInfo")
     Call<ResponseBody> getWASABillInfo(@Body WASABillInfoModel wasaBillInfoModel);
 
     @POST("MYCash/MFS/myCashPendingCashRequestConfirmation")
     Call<ResponseBody> myCashPendingCashRequestConfirmation(@Body ReqeustPaymentConfmation ReqeustPaymentConfmation);
+
     @POST("MYCash/Utility/WASABillPay")
     Call<ResponseBody> submitWASABillPay(@Body SubmitBill submitBill);
 
     @POST("MYCash/MFS/getMYCashRetailerPayWellBalance")
     Call<ResponseBody> getMYCashRetailerPayWellBalance(@Body RequestBalacne requestBalacne);
+
     @POST("MYCash/Utility/getWZPDCLBillInfo")
     Call<ResponseBody> getWZPDCLBillInfo(@Body WZPDCLBillInfo wzpdclBillInfo);
-
 
     @POST("MYCash/Utility/WZPDCLBillPay")
     Call<ResponseBody> submitWZPDCLBillPay(@Body WZPDCLBillPayModel wzpdclBillPayModel);
