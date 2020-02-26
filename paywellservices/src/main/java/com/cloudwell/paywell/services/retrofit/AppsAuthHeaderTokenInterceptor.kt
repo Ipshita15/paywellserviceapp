@@ -2,6 +2,7 @@ package com.cloudwell.paywell.services.retrofit
 
 import android.content.Context
 import com.cloudwell.paywell.services.activity.home.model.refreshToken.RequestRefreshToken
+import com.cloudwell.paywell.services.activity.utility.AllUrl
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.RSAUtilty.Companion.getTokenBaseOnRSAlgorithm
@@ -32,10 +33,10 @@ class AppsAuthHeaderTokenInterceptor(val mContext: AppController?) : Interceptor
         var requestBody = chain.request().body()
         val toString = chain.request().url().toString()
 
-        if (toString.equals("https://agentapi.paywellonline.com/Authantication/PaywellAuth/getToken?") ||
-                toString.equals("https://agentapi.paywellonline.com/Registration/UserRegistration/userServiceProfilingReg") ||
-                toString.equals("https://agentapi.paywellonline.com/Authantication/PaywellAuth/resetPassword") ||
-                toString.equals("https://agentapi.paywellonline.com/Authantication/PaywellAuth/refreshToken")
+        if (toString.equals(AllUrl.gettoken) ||
+                toString.equals(AllUrl.ProfilingReg) ||
+                toString.equals(AllUrl.resetPassword) ||
+                toString.equals(AllUrl.refreshToken)
         ) {
             val newRequest = chain.request().newBuilder().build();
             return chain.proceed(newRequest)

@@ -83,6 +83,8 @@ import com.cloudwell.paywell.services.activity.topup.model.SingleTopUp.SingleTop
 import com.cloudwell.paywell.services.activity.topup.model.TopupReposeData;
 import com.cloudwell.paywell.services.activity.topup.model.TranscationLogResponseModel;
 import com.cloudwell.paywell.services.activity.topup.model.TranscationRequestModel;
+import com.cloudwell.paywell.services.activity.utility.banglalion.model.RechargeRequestPojo;
+import com.cloudwell.paywell.services.activity.utility.banglalion.model.RechargeResponsePojo;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.BillPayMOdel;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.BillPayResponseModel;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.DESCOBillInfo;
@@ -649,5 +651,11 @@ public interface APIService {
 
     @POST("MYCash/Utility/WZPDCLBillPay")
     Call<ResponseBody> submitWZPDCLBillPay(@Body WZPDCLBillPayModel wzpdclBillPayModel);
+
+    @POST("Utility/InternateBillPay/banglalionBillPay")
+    Call<ResponseBody> banglalionRecharge(@Body RechargeRequestPojo rechargeRequestPojo);
+
+    @POST("Utility/InternateBillPay/banglalionEnquiry")
+    Call<ResponseBody> banglalionRechargeInquiry(@Body RechargeResponsePojo rechargeResponsePojo);
 
 }
