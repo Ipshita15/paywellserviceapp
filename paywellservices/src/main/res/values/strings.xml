@@ -318,6 +318,12 @@
 
     <string name="app_next_version_no">vten_seventeen</string>
 
+   <!-- privacy -->
+    <string name="privacy" translatable="false">https://www.paywellonline.com/Privacy.php</string>
+
+
+
+
 
     <string name="operator"> অপারেটর</string>
     <string name="mobileOperator">Mobile Operators</string>

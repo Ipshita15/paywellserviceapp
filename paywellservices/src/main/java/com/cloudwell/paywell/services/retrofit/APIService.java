@@ -63,7 +63,9 @@ import com.cloudwell.paywell.services.activity.refill.model.RequestDistrict;
 import com.cloudwell.paywell.services.activity.refill.model.RequestRefillBalance;
 import com.cloudwell.paywell.services.activity.refill.model.RequestSDAInfo;
 import com.cloudwell.paywell.services.activity.refill.nagad.model.ResTranstionINquiry;
+import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.BalanceClaimModel;
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLog;
+import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLogRequestModel;
 import com.cloudwell.paywell.services.activity.reg.model.AuthRequestModel;
 import com.cloudwell.paywell.services.activity.reg.model.RegistrationModel;
 import com.cloudwell.paywell.services.activity.reg.model.RequestDistrictList;
@@ -84,6 +86,8 @@ import com.cloudwell.paywell.services.activity.topup.model.SingleTopUp.SingleTop
 import com.cloudwell.paywell.services.activity.topup.model.TopupReposeData;
 import com.cloudwell.paywell.services.activity.topup.model.TranscationLogResponseModel;
 import com.cloudwell.paywell.services.activity.topup.model.TranscationRequestModel;
+import com.cloudwell.paywell.services.activity.utility.banglalion.model.RechargeRequestPojo;
+import com.cloudwell.paywell.services.activity.utility.banglalion.model.RechargeResponsePojo;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.BillPayMOdel;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.BillPayResponseModel;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.DESCOBillInfo;
@@ -419,27 +423,11 @@ public interface APIService {
     Call<PalliBidyutBillPayResponse> postPalliBidyutBills(@Body PalliBidyutBillPayRequest body);
 
 
-    @FormUrlEncoded
-    @POST
-    Call<ResTranstionINquiry> transactionInquiry(@Url String url,
-                                                 @Field("sec_token") String username,
-                                                 @Field("imei") String skey,
-                                                 @Field("pin") String accessKey,
-                                                 @Field("trxOrPhoneNo") String transactionId,
-                                                 @Field("format") String customerName,
-                                                 @Field("gateway_id") String customerPhone,
-                                                 @Field("amount") String customerAddress,
-                                                 @Field(ParameterUtility.KEY_REF_ID) String refId);
+    @POST("Retailer/BalanceRefill/nagodTrxClaim")
+    Call<ResTranstionINquiry> BalanceClaimRequest(@Body BalanceClaimModel balanceClaimModel);
 
-    @FormUrlEncoded
-    @POST
-    Call<RefillLog> refillLogInquiry(@Url String url,
-                                     @Field("sec_token") String username,
-                                     @Field("imei") String skey,
-                                     @Field("format") String customerName,
-                                     @Field("gateway_id") String customerPhone,
-                                     @Field("limit") String limit,
-                                     @Field(ParameterUtility.KEY_REF_ID) String refId);
+    @POST("Retailer/BalanceRefill/nagodSuccessfulTrxList")
+    Call<RefillLog> refillLogInquiry(@Body RefillLogRequestModel RefillLogRequestModel);
 
 
     @POST("MYCash/Utility/DESCOPrepaid_billInfo")
@@ -653,5 +641,11 @@ public interface APIService {
 
     @POST("MYCash/Utility/WZPDCLBillPay")
     Call<ResponseBody> submitWZPDCLBillPay(@Body WZPDCLBillPayModel wzpdclBillPayModel);
+
+    @POST("Utility/InternetBillPay/banglalionBillPay")
+    Call<ResponseBody> banglalionRecharge(@Body RechargeRequestPojo rechargeRequestPojo);
+
+    @POST("Utility/InternetBillPay/banglalionEnquiry")
+    Call<ResponseBody> banglalionRechargeInquiry(@Body RechargeResponsePojo rechargeResponsePojo);
 
 }

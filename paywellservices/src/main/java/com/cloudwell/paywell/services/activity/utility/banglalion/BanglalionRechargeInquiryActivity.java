@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.JsonReader;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -15,14 +16,17 @@ import android.widget.TextView;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.utility.AllUrl;
+import com.cloudwell.paywell.services.activity.utility.banglalion.model.RechargeResponsePojo;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.ParameterUtility;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.JsonObject;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -38,6 +42,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BanglalionRechargeInquiryActivity extends BaseActivity implements View.OnClickListener {
 
@@ -108,89 +117,66 @@ public class BanglalionRechargeInquiryActivity extends BaseActivity implements V
                     mAccountNO.setError(Html.fromHtml("<font color='red'>" + getString(R.string.banglalion_acc_error_msg) + "</font></font>"));
                     return;
                 }
-                mSubmitAsync = new SubmitAsync().execute(AllUrl.URL_banglalion_bill_inquiry,
-                        mAppHandler.getUserName(),
-                        _account,
-                        _pin);
+                submitForInquiry(mAppHandler.getUserName(), _account, _pin);
             }
         }
     }
 
-    private class SubmitAsync extends AsyncTask<String, Integer, String> {
+    private void submitForInquiry(String userName, String account, String pin) {
+        showProgressDialog();
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(BanglalionRechargeInquiryActivity.this).getRID());
 
+        RechargeResponsePojo pojo = new RechargeResponsePojo();
+        pojo.setCustomerID(account);
+        pojo.setUserName(userName);
+        pojo.setRef_id(uniqueKey);
+        pojo.setPassword(pin);
 
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
+        ApiUtils.getAPIServiceV2().banglalionRechargeInquiry(pojo).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
 
-        @Override
-        protected String doInBackground(String... params) {
+                if (response.code() == 200){
 
-            String responseTxt = null;
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        String status = jsonObject.getString("status");
 
-            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(BanglalionRechargeInquiryActivity.this).getRID());
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<>(4);
-                nameValuePairs.add(new BasicNameValuePair("userName", params[1]));
-                nameValuePairs.add(new BasicNameValuePair("password", params[3]));
-                nameValuePairs.add(new BasicNameValuePair("customerID", params[2]));
-                nameValuePairs.add(new BasicNameValuePair("format", "json"));
-                nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                        if (status != null && status.equals("200")) {
+                            JSONObject data = jsonObject.getJSONObject("data");
+                            if (data != null) {
+                                String transactionStatus = data.getString("status");
+                                String trxId = data.getString("tran_id");
+                                String blcTrx = data.getString("BLCTrx");
+                                String amount = data.getString("amount");
+                                String retailCommission = data.getString("retCommission");
+                                String accountNum = data.getString("customerID");
+                                String hotLine = data.getString("contact");
+                                showStatusDialog(transactionStatus, accountNum, amount, trxId, blcTrx, retailCommission, hotLine);
+                            }
+                        } else {
+                            String message = jsonObject.getString("message");
+                           showErrorMessagev1(message);
+                        }
 
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            try {
-                JSONObject jsonObject = new JSONObject(result);
-                String status = jsonObject.getString("status");
-
-                if (status != null && status.equals("200")) {
-                    JSONObject data = jsonObject.getJSONObject("data");
-                    if (data != null) {
-                        String transactionStatus = data.getString("status");
-                        String trxId = data.getString("tran_id");
-                        String blcTrx = data.getString("BLCTrx");
-                        String amount = data.getString("amount");
-                        String retailCommission = data.getString("retCommission");
-                        String accountNum = data.getString("customerID");
-                        String hotLine = data.getString("contact");
-                        showStatusDialog(transactionStatus, accountNum, amount, trxId, blcTrx, retailCommission, hotLine);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        showErrorMessagev1(getString(R.string.try_again_msg));
                     }
-                } else {
-                    String message = jsonObject.getString("message");
-                    Snackbar snackbar = Snackbar.make(mLinearLayout, message, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
+
+                }else {
+                    showErrorMessagev1(getString(R.string.try_again_msg));
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
             }
-        }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
+            }
+        });
+
     }
 
     private void showStatusDialog(String status, String accountNo, String amount, String trxId, String banglalinkTrx, String retailCommission, String hotline) {

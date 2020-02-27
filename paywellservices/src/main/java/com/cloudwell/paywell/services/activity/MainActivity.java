@@ -889,7 +889,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             startActivity(new Intent(MainActivity.this, TermsActivity.class));
         } else if (id == R.id.nav_policy) {
             AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_PRIVACY_MENU);
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.paywellonline.com/Privacy.php"));
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(AllUrl.privacy));
             startActivity(browserIntent);
         } else if (id == R.id.nav_about) {
             AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_ABOUT_MENU);
@@ -966,7 +966,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         String[] imageUrl = new String[mAppHandler.getDisplayPictureCount()];
         for (int len = 0; len < mAppHandler.getDisplayPictureCount(); len++) {
-            imageUrl[len] = "https://api.paywellonline.com/retailerPromotionImage/retailer_pic_" + len + ".jpg";
+            imageUrl[len] = AllUrl.len + len + ".jpg";
         }
 
         String imageUpdateVersionString = mAppHandler.getDisplayPictureCount() + mAppHandler.getPictureArrayImageLink();
@@ -1663,7 +1663,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private String getFacebookPageURL() {
-        String FACEBOOK_URL = "https://www.facebook.com/PayWellOnline/";
+        String FACEBOOK_URL = AllUrl.FACEBOOK_URL;
         String facebookurl = null;
 
         try {

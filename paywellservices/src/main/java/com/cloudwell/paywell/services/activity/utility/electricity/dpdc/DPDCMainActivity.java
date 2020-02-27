@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatDialog;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.WebViewActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.utility.AllUrl;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.ReqInquiryModel;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
@@ -44,8 +45,8 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
     private ConnectionDetector cd;
     private static AppHandler mAppHandler;
     private static int service_type;
-    private String packageNameYoutube = "com.google.android.youtube";
-    private String linkDpdcBillPay = "https://www.youtube.com/watch?v=EovJfDwrKSc&t=4s";
+    private String packageNameYoutube = AllUrl.packageNameYoutube;
+    private String linkDpdcBillPay =AllUrl.linkDpdcBillPay;
     private static int TAG_SERVICE_POSTPAID_INQUIRY = 1;
 
     @Override

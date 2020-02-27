@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.WebViewActivity;
+import com.cloudwell.paywell.services.activity.utility.AllUrl;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
@@ -21,13 +22,13 @@ public class HelpMainActivity extends AppCompatActivity implements View.OnClickL
 
     private AppHandler mAppHandler;
     private ConnectionDetector mCd;
-    private String packageNameYoutube = "com.google.android.youtube";
-    private String linkRefillBalance = "https://www.youtube.com/watch?v=EEgUyMt0sv8";
-    private String linkDpdcBillPay = "https://www.youtube.com/watch?v=EovJfDwrKSc&t=4s";
-    private String linkPolliBillPay = "https://www.youtube.com/watch?v=SAuIFcUclvs&t=1s";
-    private String linkAllServices = "https://www.youtube.com/watch?v=RNEjADit-PQ";
-    private String linkBusTicket = "https://www.youtube.com/watch?v=nqdc_vKPnWw&t=14s";
-    private String linkAirTicket = "https://www.youtube.com/watch?v=evzzJ5Ld4qs&t=1s";
+    private String packageNameYoutube = AllUrl.packageNameYoutube;
+    private String linkRefillBalance = AllUrl.linkRefillBalance;
+    private String linkDpdcBillPay =AllUrl.linkDpdcBillPay;
+    private String linkPolliBillPay = AllUrl.linkPolliBillPay;
+    private String linkAllServices = AllUrl.linkAllServices;
+    private String linkBusTicket = AllUrl.linkBusTicket;
+    private String linkAirTicket = AllUrl.linkAirTicket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

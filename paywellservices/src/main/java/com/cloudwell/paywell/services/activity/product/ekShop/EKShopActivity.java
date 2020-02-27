@@ -198,7 +198,7 @@ public class EKShopActivity extends BaseActivity {
             }
 
             public void onPageFinished(WebView view, String url) {
-                if (url.equals("https://ekshop.gov.bd/ekshop_integration/api/paywell-auth-check")) {
+                if (url.equals(AllUrl.ekshop_paywell_auth_check)) {
                     if (isFirstTime) {
                         isFirstTime = false;
                     } else {

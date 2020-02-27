@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.WebViewActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.utility.AllUrl;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBBillPayNewActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBInquiryBillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus.PBBillStatusActivity;
@@ -66,8 +67,8 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
     private ConnectionDetector cd;
     private static AppHandler mAppHandler;
     private static String serviceName;
-    private String packageNameYoutube = "com.google.android.youtube";
-    private String linkPolliBillPay = "https://www.youtube.com/watch?v=SAuIFcUclvs&t=1s";
+    private String packageNameYoutube = AllUrl.packageNameYoutube;
+    private String linkPolliBillPay =AllUrl.linkPolliBillPay;
     private static String TAG_SERVICE_REGISTRATION_INQUIRY = "POLLI_REG";
     private static String TAG_SERVICE_BILL_INQUIRY = "POLLI_BILL";
     private static String TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY = "POLLI_RREG";

@@ -13,7 +13,9 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.activity.refill.nagad.fragment.MobileNumberQRCodeFragment
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLog
+import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLogRequestModel
 import com.cloudwell.paywell.services.activity.utility.AllUrl
+import com.cloudwell.paywell.services.activity.utility.electricity.westzone.model.WZPDCLBillPayModel
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
@@ -194,8 +196,7 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
 
             if (ConnectionDetector(applicationContext).isConnectingToInternet) {
 
-
-                callAPI( selectedLimit)
+                getTranscationLog(selectedLimit)
 
             } else {
                 val snackbar = Snackbar.make(nagadConstrainLayout, getResources().getString(R.string.connection_error_msg), Snackbar.LENGTH_LONG)
@@ -254,19 +255,22 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
 
     // calling API :
 
-    private fun callAPI(selectedLimit: String) {
-
-        val hostUrlBkapi = AllUrl.HOST_URL_lastSuccessfulTrx
+    private fun getTranscationLog(selectedLimit: String){
+        showProgressDialog()
+        val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(applicationContext).rid)
         val sec_token = AllUrl.sec_token
         val imeiNo = AppHandler.getmInstance(applicationContext).userName
-        val format = "json"
         val gateway_id = "5"
         val limit = selectedLimit
 
-        showProgressDialog()
-        val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(applicationContext).rid)
+        val model =  RefillLogRequestModel()
+        model.imei = imeiNo
+        model.sec_token = sec_token
+        model.gateway_id = gateway_id
+        model.limit = limit
+        model.ref_id = uniqueKey
 
-        ApiUtils.getAPIService().refillLogInquiry(hostUrlBkapi, sec_token, imeiNo.toString(), format, gateway_id, limit,uniqueKey).enqueue(object : Callback<RefillLog> {
+        ApiUtils.getAPIServiceV2().refillLogInquiry(model).enqueue(object : Callback<RefillLog> {
             override fun onFailure(call: Call<RefillLog>, t: Throwable) {
                 Toast.makeText(applicationContext, "Server error!!!", Toast.LENGTH_SHORT).show()
                 dismissProgressDialog()
@@ -289,14 +293,12 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
                     startActivity(intent)
                 } else {
 
-                    // wrong pin provided dialog :
-
                     showDialogMessage("" + body?.message)
                 }
             }
         })
-
     }
+
 }
 
 
