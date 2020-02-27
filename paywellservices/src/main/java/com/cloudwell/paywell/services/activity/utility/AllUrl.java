@@ -14,7 +14,8 @@ public class AllUrl {
     public static final String HOST_URL_bkapi = "https://bkapi.paywellonline.com/retailer/transactionInquiry";
     public static final String sec_token = "a67c46503d7a8b617782fc50176d7f6d";
 
-    public static final String HOST_URL_lastSuccessfulTrx = "https://bkapi.paywellonline.com/retailer/lastSuccessfulTrx.php";
+    //public static final String HOST_URL_lastSuccessfulTrx = "https://bkapi.paywellonline.com/retailer/lastSuccessfulTrx.php";
+    public static final String HOST_URL_lastSuccessfulTrx = "https://agentapi.paywellonline.com/Retailer/BalanceRefill/nagodSuccessfulTrxList";
 
 
     // Base url
