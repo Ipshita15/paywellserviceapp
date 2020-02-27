@@ -652,10 +652,10 @@ public interface APIService {
     @POST("MYCash/Utility/WZPDCLBillPay")
     Call<ResponseBody> submitWZPDCLBillPay(@Body WZPDCLBillPayModel wzpdclBillPayModel);
 
-    @POST("Utility/InternateBillPay/banglalionBillPay")
+    @POST("Utility/InternetBillPay/banglalionBillPay")
     Call<ResponseBody> banglalionRecharge(@Body RechargeRequestPojo rechargeRequestPojo);
 
-    @POST("Utility/InternateBillPay/banglalionEnquiry")
+    @POST("Utility/InternetBillPay/banglalionEnquiry")
     Call<ResponseBody> banglalionRechargeInquiry(@Body RechargeResponsePojo rechargeResponsePojo);
 
 }
