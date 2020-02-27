@@ -7,7 +7,7 @@ data class RefillLogRequestModel (
         @field: SerializedName("sec_token")
         var sec_token : String = "",
 
-        @field: SerializedName("imei")
+        @field: SerializedName("username")
         var imei : String = "",
 
         @field: SerializedName("gateway_id")
