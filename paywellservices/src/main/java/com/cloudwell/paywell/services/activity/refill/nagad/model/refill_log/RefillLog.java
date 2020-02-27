@@ -12,7 +12,7 @@ public class RefillLog {
     private Long noOfTrx;
     @SerializedName("Status")
     private int status;
-    @SerializedName("Trx Details")
+    @SerializedName("ResponseDetails")
     private List<TrxDetail> trxDetails;
 
 
