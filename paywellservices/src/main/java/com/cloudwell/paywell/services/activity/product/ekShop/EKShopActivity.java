@@ -114,7 +114,7 @@ public class EKShopActivity extends BaseActivity {
         AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         String rid = mAppHandler.getRID();
-        String URL = getString(R.string.ek_shope_token);
+        String URL = AllUrl.URL_ek_shope_token;
         String utype = "Retailer";
         String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).getRID());
 
@@ -131,7 +131,7 @@ public class EKShopActivity extends BaseActivity {
                             connectionError();
                         } else {
                             isFirstTime = true;
-                            startWebView(getString(R.string.ek_redirect) + "token=" + token);
+                            startWebView(AllUrl.URL_ek_redirect+ "token=" + token);
                         }
 
                     } else {
@@ -267,7 +267,7 @@ public class EKShopActivity extends BaseActivity {
                         mCd = new ConnectionDetector(AppController.getContext());
                         if (mCd.isConnectingToInternet()) {
                             dialog.dismiss();
-                            startWebView(getString(R.string.ek_redirect) + "token=" + token);
+                            startWebView(AllUrl.URL_ek_redirect+ "token=" + token);
                         } else {
                             connectionError();
                         }

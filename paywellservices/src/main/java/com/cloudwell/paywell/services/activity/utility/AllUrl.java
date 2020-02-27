@@ -17,19 +17,16 @@ public class AllUrl {
     public static final String HOST_URL_lastSuccessfulTrx = "https://bkapi.paywellonline.com/retailer/lastSuccessfulTrx.php";
 
 
-
-
     // Base url
     public static final String BASE_URL = HOST_URL + "";
     public static final String BASE_URL_PHP_7 = HOST_URL_PHP_7 + "";
 
 
-
     // webview url
-    public static final String URL_statementInquiry =  HOST_URL_PHP_7+"Android/AndroidWebViewController/StatementInquiry";
-    public static final String URL_balanceStatement =  HOST_URL_PHP_7+"Android/AndroidWebViewController/balanceStatement";
-    public static final String URL_salesStatementForhttps =  HOST_URL_PHP_7+"Android/AndroidWebViewController/salesStatement";
-    public static final String URL_getAllTransactionStatementForHttps =  HOST_URL_PHP_7+"Android/AndroidWebViewController/getAllTransactionStatement";
+    public static final String URL_statementInquiry = HOST_URL_PHP_7 + "Android/AndroidWebViewController/StatementInquiry";
+    public static final String URL_balanceStatement = HOST_URL_PHP_7 + "Android/AndroidWebViewController/balanceStatement";
+    public static final String URL_salesStatementForhttps = HOST_URL_PHP_7 + "Android/AndroidWebViewController/salesStatement";
+    public static final String URL_getAllTransactionStatementForHttps = HOST_URL_PHP_7 + "Android/AndroidWebViewController/getAllTransactionStatement";
 
     public static final String privacy = "https://www.paywellonline.com/Privacy.php";
     public static final String len = "https://api.paywellonline.com/retailerPromotionImage/retailer_pic_";
@@ -55,6 +52,18 @@ public class AllUrl {
 
 
 
+
+    public static final String URL_ek_shope_token = "https://ekshop.paywellonline.com/get_token";
+    public static final String URL_ek_redirect = "https://ekshop.paywellonline.com/redirect?";
+    public static final String URL_ek_report = "https://ekshop.paywellonline.com/get_report";
+
+    public static final String URL_chat = "https://agentapi.paywellonline.com/chatting-retailer/";
+    public static final String URL_update_check = "https://app.paywellonline.com/apk/paywell_services_latest_version.apk";
+    public static final String URL_check_version = "https://app.paywellonline.com/version_update_info/paywellservice_update.txt";
+    public static final String URL_pb_bill_pay = "https://api.paywellonline.com/PaywelltransactionPollyBiddyut/pollyBiddyutBillPayAPI";
+    public static final String URL_banglalion_bill_pay = "https://api.paywellonline.com/PayWellInternateBillPay/banglalionBillPay";
+    public static final String URL_banglalion_bill_inquiry = "https://api.paywellonline.com/PayWellInternateBillPay/banglalionEnquiry";
+    public static final String URL_bkash_balance_check = "https://bkapi.paywellonline.com/retailer/userBalanceCheck.php?";
 
 
 }

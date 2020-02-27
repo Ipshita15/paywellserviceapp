@@ -46,6 +46,7 @@ import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestMini
 import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestTrxInquiry;
 import com.cloudwell.paywell.services.activity.modelPojo.MerchantRequestPojo;
 import com.cloudwell.paywell.services.activity.modelPojo.UserSubBusinessTypeModel;
+import com.cloudwell.paywell.services.activity.notification.model.RequestSDABalancceRetrun;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationReadAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResposeReScheduleNotificationAccept;
@@ -196,6 +197,10 @@ public interface APIService {
 
     @POST("Notification/NotificationSystem/userNotificationDelete")
     Call<ReposeDeletedNotification> deleteNotification(@Body RequestDeletedNotification requestDeletedNotification);
+
+
+    @POST("SDA/SDASystem/SDAToMerchentBalanceReturn")
+    Call<ResponseBody> SDAToMerchentBalanceReturn(@Body RequestSDABalancceRetrun RequestSDABalancceRetrun);
 
 
     @Multipart
@@ -439,18 +444,15 @@ public interface APIService {
                                      @Field(ParameterUtility.KEY_REF_ID) String refId);
 
 
-    @POST
-    Call<DescoInquiryResponse> descoInquiryRequest(@Body DescoRequestInquiryModel requestInquiryModelDesco,
-                                                   @Url String url);
+    @POST("MYCash/Utility/DESCOPrepaid_billInfo")
+    Call<DescoInquiryResponse> descoInquiryRequest(@Body DescoRequestInquiryModel requestInquiryModelDesco);
 
-    @POST
-    Call<DescoBillPaySubmitResponse> descoBillPayement(@Body DescoBillPaySubmit descoBillPaySubmit,
-                                                       @Url String url);
+    @POST("MYCash/Utility/DESCOPrepaid_billPayment")
+    Call<DescoBillPaySubmitResponse> descoBillPayement(@Body DescoBillPaySubmit descoBillPaySubmit);
 
 
-    @POST
-    Call<DescoPrepaidTrxLogResponse> descoPrepaidTrxInquiry(@Body DescoPrepaidTrxLogRequest descoPrepaidTrxLogRequest,
-                                                            @Url String url);
+    @POST("MYCash/Utility/getEnquiryData")
+    Call<DescoPrepaidTrxLogResponse> descoPrepaidTrxInquiry(@Body DescoPrepaidTrxLogRequest descoPrepaidTrxLogRequest);
 
 
     @POST("Registration/UserRegistration/userInformationForRegistration")
@@ -635,19 +637,21 @@ public interface APIService {
 
     @POST("MYCash/MFS/checkMyCashPendingCashRequest")
     Call<ResponseBody> checkMyCashPendingCashRequest(@Body RequestBalanceTransferConfirm requestBalanceTransferConfirm);
+
     @POST("MYCash/Utility/getWASABillInfo")
     Call<ResponseBody> getWASABillInfo(@Body WASABillInfoModel wasaBillInfoModel);
 
     @POST("MYCash/MFS/myCashPendingCashRequestConfirmation")
     Call<ResponseBody> myCashPendingCashRequestConfirmation(@Body ReqeustPaymentConfmation ReqeustPaymentConfmation);
+
     @POST("MYCash/Utility/WASABillPay")
     Call<ResponseBody> submitWASABillPay(@Body SubmitBill submitBill);
 
     @POST("MYCash/MFS/getMYCashRetailerPayWellBalance")
     Call<ResponseBody> getMYCashRetailerPayWellBalance(@Body RequestBalacne requestBalacne);
+
     @POST("MYCash/Utility/getWZPDCLBillInfo")
     Call<ResponseBody> getWZPDCLBillInfo(@Body WZPDCLBillInfo wzpdclBillInfo);
-
 
     @POST("MYCash/Utility/WZPDCLBillPay")
     Call<ResponseBody> submitWZPDCLBillPay(@Body WZPDCLBillPayModel wzpdclBillPayModel);

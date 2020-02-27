@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.utility.AllUrl;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
@@ -60,7 +61,7 @@ public class ChatActivity extends BaseActivity {
         if (!mCd.isConnectingToInternet()) {
             connectionError();
         } else {
-            startWebView(getString(R.string.chat) + "rid=" + mAppHandler.getRID());
+            startWebView(AllUrl.URL_chat + "rid=" + mAppHandler.getRID());
         }
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_CHAT);
@@ -149,7 +150,7 @@ public class ChatActivity extends BaseActivity {
                         mCd = new ConnectionDetector(AppController.getContext());
                         if (mCd.isConnectingToInternet()) {
                             dialog.dismiss();
-                            startWebView(getString(R.string.chat) + "rid=" + mAppHandler.getRID());
+                            startWebView(AllUrl.URL_chat + "rid=" + mAppHandler.getRID());
                         } else {
                             connectionError();
                         }

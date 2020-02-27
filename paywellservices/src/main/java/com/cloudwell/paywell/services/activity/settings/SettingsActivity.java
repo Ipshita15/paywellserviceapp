@@ -16,6 +16,7 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.location.LocationActivity;
+import com.cloudwell.paywell.services.activity.utility.AllUrl;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
@@ -103,7 +104,7 @@ public class SettingsActivity extends BaseActivity {
         new Thread() {
             @Override
             public void run() {
-                mUpdateChecker.checkForUpdateByVersionName(getResources().getString(R.string.check_version));
+                mUpdateChecker.checkForUpdateByVersionName(AllUrl.URL_check_version);
                 if (mUpdateChecker.isUpdateAvailable()) {
                     runOnUiThread(new Runnable() {
 
@@ -147,7 +148,7 @@ public class SettingsActivity extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                mUpdateChecker.downloadAndInstall(getResources().getString(R.string.update_check));
+                mUpdateChecker.downloadAndInstall(AllUrl.URL_update_check);
             }
         });
         builder.setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
