@@ -40,6 +40,7 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.BuildConfig;
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.BBC.BBC_Main_Activity;
 import com.cloudwell.paywell.services.activity.about.AboutActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.chat.ChatActivity;
@@ -201,7 +202,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private Slider viewPager;
     private int currentPage;
 
-    private Button home_topup, home_utility, home_eticket, home_mfs, home_product_catalog, home_statement, home_refill_balance, home_settings;
+    private Button home_topup, home_utility, home_eticket, home_mfs, home_product_catalog, home_statement, home_refill_balance, home_settings, home_education;
 
     private final int PERMISSIONS_FOR_QR_CODE_SCAN = 100;
     private final int PERMISSIONS_REQUEST_FOR_WRITE_EXTERNAL_STORAGE = 101;
@@ -509,6 +510,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         home_statement = findViewById(R.id.homeBtnMiniStatement);
         home_refill_balance = findViewById(R.id.homeBtnRefillBalance);
         home_settings = findViewById(R.id.homeBtnSettings);
+        home_education = findViewById(R.id.homeBtnEducation);
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             home_topup.setTypeface(AppController.getInstance().getOxygenLightFont());
@@ -517,6 +519,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             home_mfs.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_product_catalog.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_statement.setTypeface(AppController.getInstance().getOxygenLightFont());
+            home_education.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_refill_balance.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_settings.setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
@@ -526,6 +529,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             home_mfs.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_product_catalog.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_statement.setTypeface(AppController.getInstance().getAponaLohitFont());
+            home_education.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_refill_balance.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_settings.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
@@ -650,6 +654,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         home_mfs.setText(R.string.home_mfs);
         home_product_catalog.setText(R.string.home_product_catalog);
         home_statement.setText(R.string.home_statement);
+        home_education.setText(R.string.home_education);
         home_refill_balance.setText(R.string.home_refill_balance);
         home_settings.setText(R.string.home_settings);
 
@@ -660,6 +665,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             home_mfs.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_product_catalog.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_statement.setTypeface(AppController.getInstance().getOxygenLightFont());
+            home_education.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_refill_balance.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_settings.setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
@@ -669,6 +675,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             home_mfs.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_product_catalog.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_statement.setTypeface(AppController.getInstance().getAponaLohitFont());
+            home_education.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_refill_balance.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_settings.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
@@ -1333,6 +1340,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.homeBtnCall:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CALL_MENU);
                 callPreview(false, "");
+                break;
+
+            case R.id.homeBtnEducation:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_PRODUCT_EDUCATION_MENU);
+                startActivity(new Intent(MainActivity.this, BBC_Main_Activity.class));
                 break;
 
             default:
@@ -2001,17 +2013,25 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             case R.string.home_statement_mini:
 
-
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_MINI_MENU);
-
 
                 intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
                 intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "mini");
 
-
                 startActivityWithFlag(intent);
 
                 break;
+
+            case R.string.home_education:
+
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_PRODUCT_EDUCATION_MENU);
+                startActivity(new Intent(this, BBC_Main_Activity.class));
+                //intent = new Intent(getApplicationContext(), BBC_Main_Activity.class);
+                //intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "Education");
+               // startActivityWithFlag(intent);
+
+                break;
+
             case R.string.home_statement_balance:
 
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_BALANCE_MENU);
@@ -2038,6 +2058,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivityWithFlag(intent);
 
                 break;
+
+
             case R.string.home_statement_transaction:
 
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_TRX_MENU);

@@ -23,6 +23,7 @@
     <string name="nav_about">সম্পর্কে</string>
     <string name="nav_more_title">আর&#8230;</string>
     <string name="home_statement">বিবরণী</string>
+    <string name="home_education">Education</string>
     <string name="home_refill_balance">ব্যালেন্স রিফিল</string>
     <string name="home_refill_balance_title">ব্যালেন্স রিফিল প্রক্রিয়া</string>
     <string name="home_nagad_balance_title">নগদের মাধ্যমে ব্যালেন্স রিফিল</string>
@@ -469,6 +470,7 @@
     <string name="multi_city_menu_title">Multi-City</string>
     <string name="indian_menu_title">Indian</string>
     <string name="search_flights">Search Flights</string>
+    <string name="bbc">বিবিসি</string>
     <string name="return_text">Return</string>
     <string name="airport">Airport</string>
     <string name="more">More</string>

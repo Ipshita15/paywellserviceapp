@@ -1,6 +1,10 @@
 package com.cloudwell.paywell.services.retrofit;
 
 
+import com.cloudwell.paywell.services.activity.BBC.model.BbcSubscriptionPojo;
+import com.cloudwell.paywell.services.activity.BBC.model.CourseListRresponsePojo;
+import com.cloudwell.paywell.services.activity.BBC.model.CourseLlistRequestPojo;
+import com.cloudwell.paywell.services.activity.BBC.model.RegistationInfo;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.ReposeAirSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.ResGetAirports;
@@ -647,5 +651,14 @@ public interface APIService {
 
     @POST("Utility/InternetBillPay/banglalionEnquiry")
     Call<ResponseBody> banglalionRechargeInquiry(@Body RechargeResponsePojo rechargeResponsePojo);
+
+    @POST("Utility/BBC/getCourseList")
+    Call<CourseListRresponsePojo> getBBCcourseList(@Body CourseLlistRequestPojo pojo);
+
+    @POST("Utility/BBC/registrationInfo")
+    Call<ResponseBody> getBBCregistationInfo(@Body RegistationInfo pojo);
+
+    @POST("Utility/BBC/subscription")
+    Call<ResponseBody> getBBCregistationInfo(@Body BbcSubscriptionPojo pojo);
 
 }
