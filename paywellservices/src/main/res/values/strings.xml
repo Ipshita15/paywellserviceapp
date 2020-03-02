@@ -658,6 +658,7 @@
     <string name="retry">Retry</string>
     <string name="logout_message">Are you sure you want to logout of your account?</string>
     <string name="logout_text">Logout</string>
+    <string name="selectedCourse">course</string>
 
 
 </resources>

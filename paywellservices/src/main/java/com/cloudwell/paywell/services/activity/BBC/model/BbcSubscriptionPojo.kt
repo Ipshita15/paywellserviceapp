@@ -5,14 +5,11 @@ import com.google.gson.annotations.SerializedName
 data class BbcSubscriptionPojo(
 
 	@field:SerializedName("pin_no")
-	val pinNo: String? = null,
+	var pinNo: String = "",
 
 	@field:SerializedName("data")
-	val data: Data? = null,
-
-	@field:SerializedName("format")
-	val format: String? = null,
+	var data: Data? = null,
 
 	@field:SerializedName("username")
-	val username: String? = null
+	var username: String = ""
 )

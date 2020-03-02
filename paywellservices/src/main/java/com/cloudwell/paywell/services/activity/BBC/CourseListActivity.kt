@@ -1,6 +1,7 @@
 package com.cloudwell.paywell.services.activity.BBC
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -12,12 +13,20 @@ import com.cloudwell.paywell.services.activity.BBC.model.CourseListRresponsePojo
 import com.cloudwell.paywell.services.activity.BBC.model.CourseLlistRequestPojo
 import com.cloudwell.paywell.services.activity.BBC.model.CoursesItem
 import com.cloudwell.paywell.services.activity.base.BaseActivity
+import com.cloudwell.paywell.services.activity.mfs.mycash.manage.BalanceTransferRequestActivity
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_course_list.*
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
+
+/**
+ * Created by Sepon Email: ismailhossainsepon@gmail.com  Mobile: +8801612250477.
+ */
 
 class CourseListActivity : BaseActivity() {
 
@@ -37,7 +46,7 @@ class CourseListActivity : BaseActivity() {
         }
         mAppHandler = AppHandler.getmInstance(applicationContext)
 
-        var linearLayoutManager : LinearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
+        val linearLayoutManager : LinearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
         bbc_course_list.layoutManager = linearLayoutManager
 
         getCourseList();
@@ -56,13 +65,7 @@ class CourseListActivity : BaseActivity() {
 
                     if (response.body()?.status == 200){
                         courselist = response.body()?.courses as List<CoursesItem>
-                        bbc_course_list.adapter = CourseListAdapter(applicationContext, courselist, object : CourseListAdapter.CourseOnClick{
-                            override fun onclick(course: CoursesItem) {
-                                var name : String = course.courseName.toString()
-                                toast(message = name, toastDuration = Toast.LENGTH_LONG)
-                            }
-
-                        })
+                        setadapter(courselist)
 
                     }else{
                         showErrorCallBackMessagev1(response.body()?.message)
@@ -77,7 +80,23 @@ class CourseListActivity : BaseActivity() {
 
         })
     }
+
+    private fun setadapter(courselist: List<CoursesItem>) {
+        bbc_course_list.adapter = CourseListAdapter(applicationContext, courselist, object : CourseListAdapter.CourseOnClick{
+            override fun onclick(course: CoursesItem) {
+                val gson = Gson()
+                val json = gson.toJson(course)
+                val intent = Intent(applicationContext, BBCsubscribeActivity::class.java)
+                intent.putExtra(getString(R.string.selectedCourse), json)
+                applicationContext.startActivity(intent)
+            }
+
+        })
+    }
+
     fun Context.toast(context: Context = applicationContext, message: String, toastDuration: Int = Toast.LENGTH_SHORT) {
         Toast.makeText(context, message, toastDuration).show()
     }
+
+
 }

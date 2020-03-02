@@ -659,6 +659,6 @@ public interface APIService {
     Call<ResponseBody> getBBCregistationInfo(@Body RegistationInfo pojo);
 
     @POST("Utility/BBC/subscription")
-    Call<ResponseBody> getBBCregistationInfo(@Body BbcSubscriptionPojo pojo);
+    Call<ResponseBody> getBBCsubscribe(@Body BbcSubscriptionPojo pojo);
 
 }

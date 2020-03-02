@@ -5,11 +5,11 @@ import com.google.gson.annotations.SerializedName
 data class Data(
 
 	@field:SerializedName("name")
-	val name: String? = null,
+	var name: String = "",
 
 	@field:SerializedName("mobile")
-	val mobile: String? = null,
+	var mobile: String = "",
 
 	@field:SerializedName("course")
-	val course: String? = null
+	var course: String = ""
 )
