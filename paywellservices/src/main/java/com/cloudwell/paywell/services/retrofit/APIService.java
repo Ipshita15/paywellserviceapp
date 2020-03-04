@@ -95,8 +95,6 @@ import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.D
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoBillPaySubmit;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoBillPaySubmitResponse;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoInquiryResponse;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoPrepaidTrxLogRequest;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoPrepaidTrxLogResponse;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoRequestInquiryModel;
 import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.model.requestPojo.DPDCBillPayModel;
 import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.model.requestPojo.DPDCbillInfoModel;
@@ -437,8 +435,7 @@ public interface APIService {
     Call<DescoBillPaySubmitResponse> descoBillPayement(@Body DescoBillPaySubmit descoBillPaySubmit);
 
 
-    @POST("MYCash/Utility/getEnquiryData")
-    Call<DescoPrepaidTrxLogResponse> descoPrepaidTrxInquiry(@Body DescoPrepaidTrxLogRequest descoPrepaidTrxLogRequest);
+
 
 
     @POST("Registration/UserRegistration/userInformationForRegistration")
