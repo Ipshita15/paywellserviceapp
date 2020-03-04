@@ -1,11 +1,14 @@
 package com.cloudwell.paywell.services.retrofit
 
 import android.content.Context
+import android.content.Intent
+import com.cloudwell.paywell.services.activity.home.HomeActivity
 import com.cloudwell.paywell.services.activity.home.model.refreshToken.RequestRefreshToken
 import com.cloudwell.paywell.services.activity.utility.AllUrl
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.RSAUtilty.Companion.getTokenBaseOnRSAlgorithm
+import com.cloudwell.paywell.services.utils.AppsStatusConstant
 import com.cloudwell.paywell.services.utils.DateUtils
 import com.cloudwell.paywell.services.utils.DateUtils.getCurrentTimestamp
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
@@ -85,14 +88,22 @@ class AppsAuthHeaderTokenInterceptor(val mContext: AppController?) : Interceptor
                                     .post(newProcessApplicationJsonRequestBody)
                                     .build()
                             return chain.proceed(newRequest)
+                        }else{
+                            AppHandler.getmInstance(AppController.getContext()).appStatus = AppsStatusConstant.KEY_logout
+                            val intent = Intent(AppController.getContext(), HomeActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            AppController.getContext().startActivity(intent)
                         }
 
                     } catch (e: JSONException) {
                         e.printStackTrace()
+
+                        AppHandler.getmInstance(AppController.getContext()).appStatus = AppsStatusConstant.KEY_logout
+                        val intent = Intent(AppController.getContext(), HomeActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        AppController.getContext().startActivity(intent)
                     }
                 }
-
-
             }
 
             // otherwise just pass the original response on
