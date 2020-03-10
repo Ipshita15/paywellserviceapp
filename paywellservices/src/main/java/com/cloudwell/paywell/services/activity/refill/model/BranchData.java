@@ -1,6 +1,7 @@
 
 package com.cloudwell.paywell.services.activity.refill.model;
 
+import com.cloudwell.paywell.services.activity.refill.banktransfer.model.Branch;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;

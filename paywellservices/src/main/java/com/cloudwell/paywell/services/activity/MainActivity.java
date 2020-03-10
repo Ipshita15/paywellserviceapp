@@ -26,7 +26,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import android.text.InputType;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.KeyEvent;
@@ -35,11 +34,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.BuildConfig;
@@ -51,6 +47,7 @@ import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity;
 import com.cloudwell.paywell.services.activity.home.HomeActivity;
+import com.cloudwell.paywell.services.activity.location.model.CurrentLocationModel;
 import com.cloudwell.paywell.services.activity.mfs.MFSMainActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.MyFavoriteMenuActivity;
@@ -69,6 +66,7 @@ import com.cloudwell.paywell.services.activity.terms.TermsActivity;
 import com.cloudwell.paywell.services.activity.topup.TopupMainActivity;
 import com.cloudwell.paywell.services.activity.topup.TopupMenuActivity;
 import com.cloudwell.paywell.services.activity.topup.brilliant.BrilliantTopupActivity;
+import com.cloudwell.paywell.services.activity.utility.AllUrl;
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionMainActivity;
 import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionRechargeActivity;
@@ -136,20 +134,11 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.orhanobut.logger.Logger;
 import com.squareup.otto.Subscribe;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -174,6 +163,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -508,6 +498,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
     private void InitializeData() {
+
         /*Buttons Initialization*/
         home_topup = findViewById(R.id.homeBtnTopup);
         home_utility = findViewById(R.id.homeBtnUtility);
@@ -600,6 +591,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
 
         }
+
 //        else  if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("false")){
 //            Intent intent = new Intent(MainActivity.this, ChangePinActivity.class);
 //            intent.putExtra("isFirstTime", true);
@@ -617,7 +609,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
             }
         }
-        subscribeToPushService();
+       // subscribeToPushService();
         initializePreview();
 
         //Tutorial
@@ -897,7 +889,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             startActivity(new Intent(MainActivity.this, TermsActivity.class));
         } else if (id == R.id.nav_policy) {
             AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_PRIVACY_MENU);
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.paywellonline.com/Privacy.php"));
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(AllUrl.privacy));
             startActivity(browserIntent);
         } else if (id == R.id.nav_about) {
             AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_ABOUT_MENU);
@@ -974,7 +966,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         String[] imageUrl = new String[mAppHandler.getDisplayPictureCount()];
         for (int len = 0; len < mAppHandler.getDisplayPictureCount(); len++) {
-            imageUrl[len] = "https://api.paywellonline.com/retailerPromotionImage/retailer_pic_" + len + ".jpg";
+            imageUrl[len] = AllUrl.len + len + ".jpg";
         }
 
         String imageUpdateVersionString = mAppHandler.getDisplayPictureCount() + mAppHandler.getPictureArrayImageLink();
@@ -1125,7 +1117,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     if (getMailAddress()) {
                         mUpdateChecker.launchMarketDetails();
                     } else {
-                        mUpdateChecker.downloadAndInstall(getResources().getString(R.string.update_check));
+                        mUpdateChecker.downloadAndInstall(AllUrl.URL_update_check);
                     }
                 } else {
                     // permission denied
@@ -1195,7 +1187,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         new Thread() {
             @Override
             public void run() {
-                mUpdateChecker.checkForUpdateByVersionName(getResources().getString(R.string.check_version));
+                mUpdateChecker.checkForUpdateByVersionName(AllUrl.URL_check_version);
                 if (mUpdateChecker.isUpdateAvailable()) {
                     runOnUiThread(new Runnable() {
 
@@ -1253,7 +1245,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             if (downloadType == TAG_DOWNLOAD_PLAY_STORE) {
                 mUpdateChecker.launchMarketDetails();
             } else {
-                mUpdateChecker.downloadAndInstall(getResources().getString(R.string.update_check));
+                mUpdateChecker.downloadAndInstall(AllUrl.URL_update_check);
             }
         }
     }
@@ -1505,7 +1497,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private boolean getMailAddress() {
         String gmail = "";
-
         Pattern gmailPattern = Patterns.EMAIL_ADDRESS; // API level 8+
         Account[] accounts = AccountManager.get(this).getAccounts();
         for (Account account : accounts) {
@@ -1520,346 +1511,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-
-    private void checkForPhnUpdate() {
-        phn_num_count = mAppHandler.getDayCount();
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.info_collect_title));
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(20, 10, 20, 5);
-
-        final EditText etPhn = new EditText(this);
-        etPhn.setHint(getString(R.string.phn_num_hint));
-        etPhn.setRawInputType(InputType.TYPE_CLASS_NUMBER); //for decimal numbers
-        layout.addView(etPhn);
-
-        final TextView tvPhnQuote = new TextView(this);
-        String text = "\"" + getString(R.string.verify_quote) + "\"";
-        tvPhnQuote.setText(text);
-        layout.addView(tvPhnQuote);
-        builder.setView(layout);
-
-        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int id) {
-                InputMethodManager inMethMan = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                inMethMan.hideSoftInputFromWindow(etPhn.getWindowToken(), 0);
-
-                if (etPhn.getText().toString().length() == 11) {
-                    dialogInterface.dismiss();
-                    phn_num = etPhn.getText().toString();
-                    if (mCd.isConnectingToInternet()) {
-                        mRequestPhnNumberAddAsync = new RequestPhnNumberAddAsync().execute(getResources().getString(R.string.otp_for_phn_num), phn_num);
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_correct_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                    checkForPhnUpdate();
-                }
-            }
-        });
-
-        if (phn_num_count < 3) {
-            builder.setNegativeButton(R.string.skip_btn, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    mAppHandler.setDayCount(phn_num_count + 1);
-                }
-            });
-        }
-        AlertDialog alert = builder.create();
-        alert.setCanceledOnTouchOutside(false);
-        alert.show();
-
-        mAppHandler.setPhnUpdateCheck(System.currentTimeMillis() / 1000);
-    }
-
-    private class RequestPhnNumberAddAsync extends AsyncTask<String, Integer, String> {
-
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
-
-        @SuppressWarnings("deprecation")
-        @Override
-        protected String doInBackground(String... data) {
-            String responseTxt = null;
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(data[0]);
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("imei_no", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("phone", data[1]));
-                nameValuePairs.add(new BasicNameValuePair("format", "json"));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            try {
-                JSONObject jsonObject = new JSONObject(result);
-
-                String status = jsonObject.getString(TAG_RESPONSE_STATUS);
-                String msg = jsonObject.getString(TAG_RESPONSE_MESSAGE);
-                String TAG_RESPONSE_OTP = "otp";
-                String foundOtp = jsonObject.getString(TAG_RESPONSE_OTP);
-
-                if (status.equalsIgnoreCase("200")) {
-                    otp = foundOtp;
-                    checkForOTP();
-                } else if (status.equalsIgnoreCase("335")) {
-                    mAppHandler.setPhnNumberVerificationStatus("verified");
-                    mAppHandler.setPhnNumber(phn_num);
-                    mAppHandler.setDayCount(0);
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-            } catch (Exception ex) {
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-        }
-    }
-
-    private void checkForOTP() {
-        if (otp_check < 3) {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(getString(R.string.info_collect_title));
-            LinearLayout layout = new LinearLayout(this);
-            layout.setOrientation(LinearLayout.VERTICAL);
-            layout.setPadding(20, 10, 20, 5);
-
-            final EditText etOtp = new EditText(this);
-            etOtp.setHint(getString(R.string.otp_error_msg));
-            etOtp.setRawInputType(InputType.TYPE_CLASS_NUMBER); //for decimal numbers
-            layout.addView(etOtp);
-
-            builder.setView(layout);
-            builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int id) {
-                    InputMethodManager inMethMan = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inMethMan.hideSoftInputFromWindow(etOtp.getWindowToken(), 0);
-
-                    if (etOtp.getText().toString().length() > 0) {
-                        dialogInterface.dismiss();
-                        String inputedOtp = etOtp.getText().toString();
-                        if (inputedOtp.equalsIgnoreCase(otp)) {
-                            mConfirmPhnNumberAddAsync = new ConfirmPhnNumberAddAsync().execute(getResources().getString(R.string.conf_phn_num), phn_num, otp);
-                        } else {
-                            Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_correct_msg, Snackbar.LENGTH_LONG);
-                            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                            View snackBarView = snackbar.getView();
-                            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                            snackbar.show();
-                            otp_check++;
-                            checkForOTP();
-                        }
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_correct_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                }
-            });
-            AlertDialog alert = builder.create();
-            alert.setCanceledOnTouchOutside(false);
-            alert.show();
-        } else {
-            Snackbar snackbar = Snackbar.make(mCoordinateLayout, getString(R.string.try_again_msg), Snackbar.LENGTH_LONG);
-            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-            View snackBarView = snackbar.getView();
-            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            snackbar.show();
-            otp_check = 0;
-        }
-    }
-
-    private class ConfirmPhnNumberAddAsync extends AsyncTask<String, Integer, String> {
-
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
-
-        @SuppressWarnings("deprecation")
-        @Override
-        protected String doInBackground(String... data) {
-            String responseTxt = null;
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(data[0]);
-
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(4);
-                nameValuePairs.add(new BasicNameValuePair("imei_no", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("phone", data[1]));
-                nameValuePairs.add(new BasicNameValuePair("otp", data[2]));
-                nameValuePairs.add(new BasicNameValuePair("format", "json"));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-
-            try {
-                JSONObject jsonObject = new JSONObject(result);
-
-                String status = jsonObject.getString(TAG_RESPONSE_STATUS);
-                String msg = jsonObject.getString(TAG_RESPONSE_MESSAGE);
-
-                if (status.equalsIgnoreCase("200")) {
-                    mAppHandler.setPhnNumberVerificationStatus("verified");
-                    mAppHandler.setPhnNumber(phn_num);
-                    mAppHandler.setDayCount(0);
-                }
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("Result");
-                builder.setMessage(msg);
-
-                builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int id) {
-                        dialogInterface.dismiss();
-                    }
-                });
-                AlertDialog alert = builder.create();
-                alert.show();
-            } catch (Exception ex) {
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-        }
-    }
-
-    private void subscribeToPushService() {
-        if (mAppHandler.getFirebaseTokenStatus().equals("true")) {
-            if (mCd.isConnectingToInternet()) {
-                mPushFirebaseIdTask = new PushFirebaseIdTask().execute(getString(R.string.notification_token_url), mAppHandler.getFirebaseId());
-            } else {
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-        }
-    }
-
-
-    private class PushFirebaseIdTask extends AsyncTask<String, Intent, String> {
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            String notifications = null;
-            try {
-                HttpClient httpClients = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost(params[0]);
-
-                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("usertype", "Retailer"));
-                nameValuePairs.add(new BasicNameValuePair("token", params[1]));
-
-                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                notifications = httpClients.execute(httpPost, responseHandler);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return notifications;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            if (result != null) {
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String status = jsonObject.getString(TAG_RESPONSE_STATUS);
-
-                    if (status.equalsIgnoreCase("200")) {
-                        mAppHandler.setFirebaseTokenStatus("false");
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-            } else {
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.conn_timeout_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-        }
-    }
 
     @Override
     public void onLocationChanged(Location location) {
@@ -1947,79 +1598,57 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else {
             if (!mAppHandler.getLatitude().equalsIgnoreCase("unknown")
                     && !mAppHandler.getLongitude().equalsIgnoreCase("unknown")) {
-                new PushLocationLonLatTask().execute(getResources().getString(R.string.update_location));
+                pushLocationLonLat();
             }
         }
     }
 
-
-    @SuppressWarnings("deprecation")
-    private class PushLocationLonLatTask extends AsyncTask<String, Intent, String> {
-        @Override
-        protected String doInBackground(String... params) {
-            String result = null;
-            try {
-                HttpClient httpClients = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost(params[0]);
-
-                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("latitude", mAppHandler.getLatitude()));
-                nameValuePairs.add(new BasicNameValuePair("longitude", mAppHandler.getLongitude()));
-                nameValuePairs.add(new BasicNameValuePair("accuracy", mAppHandler.getAccuracy()));
-                nameValuePairs.add(new BasicNameValuePair("country", mAppHandler.getCountry()));
-                nameValuePairs.add(new BasicNameValuePair("address", mAppHandler.getAddress()));
-
-                Logger.v("username " + mAppHandler.getImeiNo() +
-                        " latitude " + mAppHandler.getLatitude() +
-                        " longitude " + mAppHandler.getLongitude() +
-                        " accuracy " + mAppHandler.getAccuracy() +
-                        " country" + mAppHandler.getCountry() +
-                        " address" + mAppHandler.getAddress()
-                );
+    private void pushLocationLonLat(){
+        CurrentLocationModel currentLocationModel = new CurrentLocationModel();
+        currentLocationModel.setUsername(mAppHandler.getUserName());
+        currentLocationModel.setLatitude(mAppHandler.getLatitude());
+        currentLocationModel.setLongitude(mAppHandler.getLongitude());
+        currentLocationModel.setAccuracy(mAppHandler.getAccuracy());
+        currentLocationModel.setCountry(mAppHandler.getCountry());
+        currentLocationModel.setAddress(mAppHandler.getAddress());
 
 
-                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+        ApiUtils.getAPIServiceV2().updateCurrentLocation(currentLocationModel).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                result = httpClients.execute(httpPost, responseHandler);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return result;
-        }
+                if (response.code() == 200){
 
-        @Override
-        protected void onPostExecute(String result) {
-            if (result != null) {
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String status = jsonObject.getString(TAG_RESPONSE_STATUS);
+                    try {
+                        JSONObject object = new JSONObject(response.body().string());
+                        int status = object.getInt(TAG_RESPONSE_STATUS);
+                        if (status == 200){
+                            mAppHandler.setLocationUpdateCheck(System.currentTimeMillis() / 1000);
+                        }else {
+                            showErrorMessagev1(getString(R.string.try_again_msg));
+                        }
 
-                    if (status.equalsIgnoreCase("200")) {
-                        mAppHandler.setLocationUpdateCheck(System.currentTimeMillis() / 1000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        showErrorMessagev1(getString(R.string.try_again_msg));
                     }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
+
+
+                }else {
+                    showErrorMessagev1(getString(R.string.conn_timeout_msg));
                 }
-            } else {
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.conn_timeout_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
+
             }
-        }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                showErrorMessagev1(getString(R.string.conn_timeout_msg));
+            }
+        });
+
+
     }
+
 
 
     private void goToFacebook() {
@@ -2034,7 +1663,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private String getFacebookPageURL() {
-        String FACEBOOK_URL = "https://www.facebook.com/PayWellOnline/";
+        String FACEBOOK_URL = AllUrl.FACEBOOK_URL;
         String facebookurl = null;
 
         try {
@@ -2378,8 +2007,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
                 intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "mini");
-                intent.putExtra(ViewStatementActivity.DESTINATION_URL, "https://api.paywellonline.com/AndroidWebViewController/StatementInquiry?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
+
 
                 startActivityWithFlag(intent);
 
@@ -2391,8 +2019,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
 
                 intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "balance");
-                intent.putExtra(ViewStatementActivity.DESTINATION_URL, "https://api.paywellonline.com/AndroidWebViewController/balanceStatement?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
+
 
                 startActivityWithFlag(intent);
 
@@ -2406,8 +2033,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
 
                 intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "sales");
-                intent.putExtra(ViewStatementActivity.DESTINATION_URL, "https://api.paywellonline.com/AndroidWebViewController/salesStatementForhttps?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
+
 
                 startActivityWithFlag(intent);
 
@@ -2418,8 +2044,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
                 intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "trx");
-                intent.putExtra(ViewStatementActivity.DESTINATION_URL, "https://api.paywellonline.com/AndroidWebViewController/getAllTransactionStatementForHttps?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage());
+
                 startActivityWithFlag(intent);
 
                 break;

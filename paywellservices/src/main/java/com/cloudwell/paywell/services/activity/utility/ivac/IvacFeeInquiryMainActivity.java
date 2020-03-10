@@ -353,7 +353,6 @@ public class IvacFeeInquiryMainActivity extends BaseActivity implements View.OnC
         showProgressDialog();
 
         IvacTrxListModel listModel = new IvacTrxListModel();
-        listModel.setFormat("json");
         listModel.setLimit(selectedLimit);
         listModel.setPassword("123");
         listModel.setUsername(mAppHandler.getUserName());

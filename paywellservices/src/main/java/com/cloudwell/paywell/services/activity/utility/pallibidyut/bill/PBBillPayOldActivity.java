@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.LanguagesBaseActivity;
+import com.cloudwell.paywell.services.activity.utility.AllUrl;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PallibidyutHistory;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.REBNotification;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
@@ -169,7 +170,7 @@ public class PBBillPayOldActivity extends LanguagesBaseActivity implements View.
                     mAmount.setError(Html.fromHtml("<font color='red'>" + getString(R.string.amount_error_msg) + "</font>"));
                     return;
                 }
-                new SubmitAsync().execute(getString(R.string.pb_bill_pay), _pin, billNo, _amount);
+                new SubmitAsync().execute(AllUrl.URL_pb_bill_pay, _pin, billNo, _amount);
             }
         }
     }
@@ -192,7 +193,7 @@ public class PBBillPayOldActivity extends LanguagesBaseActivity implements View.
                 String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
 
                 List<NameValuePair> nameValuePairs = new ArrayList<>(6);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("pin_code", params[1]));
                 nameValuePairs.add(new BasicNameValuePair("bill_no", params[2]));
                 nameValuePairs.add(new BasicNameValuePair("amount", params[3]));

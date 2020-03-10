@@ -9,7 +9,7 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.cloudwell.paywell.services.BuildConfig;
-import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.utility.AllUrl;
 import com.downloader.Error;
 import com.downloader.OnCancelListener;
 import com.downloader.OnDownloadListener;
@@ -51,7 +51,7 @@ public class DownloadManager2 {
                 .build();
         PRDownloader.initialize(mContext, config);
 
-        String url = mContext.getString(R.string.update_check);
+        String url = AllUrl.URL_update_check;
 
         File file = new File(Environment.getExternalStorageDirectory().getPath() + FOLDER_NAEME);
         if (!file.exists()) {

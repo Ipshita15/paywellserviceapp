@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -39,14 +38,12 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.em
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.constant.AllConstant
-import com.google.android.material.snackbar.Snackbar
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.orhanobut.logger.Logger
-import kotlinx.android.synthetic.main.activity_booking_main.*
 import java.io.File
 
 /**
@@ -120,7 +117,7 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
 
             override fun onDocsUpdate(item: Datum) {
                 val mAppHandler = AppHandler.getmInstance(applicationContext)
-                val userName = mAppHandler.imeiNo
+                val userName = mAppHandler.userName
                 callCancelMapping(userName, item.bookingId!!, "", AllConstant.Action_DOCS_UPDATE, item)
             }
 
@@ -345,11 +342,8 @@ open class TransitionLogBaseActivity : AirTricketBaseActivity() {
 
 
             } else {
-                val snackbar = Snackbar.make(mCoordinateLayout, R.string.pin_no_error_msg, Snackbar.LENGTH_LONG)
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"))
-                val snackBarView = snackbar.view
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))
-                snackbar.show()
+                showMsg(getString(R.string.pin_no_error_msg))
+
             }
         }
         builder.setNegativeButton(R.string.cancel_btn) { dialogInterface, i -> dialogInterface.dismiss() }

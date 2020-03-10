@@ -1,5 +1,6 @@
 package com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.Result
+import com.cloudwell.paywell.services.activity.utility.AllUrl
 import com.cloudwell.paywell.services.utils.CalculationHelper
 import kotlinx.android.synthetic.main.flight_list_item_new.view.*
 
@@ -22,6 +24,7 @@ import kotlinx.android.synthetic.main.flight_list_item_new.view.*
 class FlightAdapterNew(val items: List<Result>, val requestAirSearch: RequestAirSearch, val context: Context, var isReSchuduler: Boolean, val onClickListener: OnClickListener) : RecyclerView.Adapter<ViewHolderNew>() {
 
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolderNew, position: Int) {
 
 
@@ -63,7 +66,7 @@ class FlightAdapterNew(val items: List<Result>, val requestAirSearch: RequestAir
                 .placeholder(R.drawable.air_ticket)
                 .error(R.drawable.air_ticket)
 
-        val url = "https://notify.paywellonline.com/airlines/images_airline/${airlineCode}_40x35.png"
+        val url = "${AllUrl.flightAdapter}${airlineCode}_40x35.png"
         Glide.with(context).load(url)
                 .apply(options)
                 .into(holder.airlineSerachIcon);

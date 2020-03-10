@@ -37,21 +37,10 @@ import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.DateUtils;
-import com.cloudwell.paywell.services.utils.ParameterUtility;
-import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.JsonObject;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -289,6 +278,7 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
         spnr_center.setOnItemSelectedListener(this);
         if (str_centerId!=null && !str_centerId.isEmpty()){
             mAppHandler.setCenterId(str_centerId);
+            mAppHandler.setCenterAmount(str_amount);
         }
     }
 
@@ -299,6 +289,7 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
         mAppHandler.setIVACCenterLock(isCenterUserLock);
         if (str_centerId!=null && !str_centerId.isEmpty()){
             mAppHandler.setCenterId(str_centerId);
+            mAppHandler.setCenterAmount(str_amount);
         }
     }
 
@@ -342,7 +333,9 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
         spnr_center.setSelection(centerDropDownPogistion);
         boolean ivacCenterLock = mAppHandler.isIVACCenterLock();
         if (ivacCenterLock){
-            str_centerId=mAppHandler.getSavedCenterId();
+            str_centerId=mAppHandler.getSavedCenterId();            //TODO get tk from handler
+            str_amount = mAppHandler.getSavedCenterAmount();
+            textViewAmount.setText(getString(R.string.tk_des) + " " + str_amount);
         }
     }
 
@@ -453,7 +446,6 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
 
                 // store selected position
                 mAppHandler.setCenterDropDownPogistion(position);
-
                 textViewAmount.setText(amountText);
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -536,7 +528,6 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
         ivacFeePayModel.setPassport_no(passportNo);
         ivacFeePayModel.setPassword(password);
         ivacFeePayModel.setWeb_file_no(webFile);
-        ivacFeePayModel.setFormat("json");
 
 
         ApiUtils.getAPIServiceV2().confirmFeePay(ivacFeePayModel).enqueue(new Callback<ResponseBody>() {

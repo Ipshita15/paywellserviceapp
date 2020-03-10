@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.UtilityBaseActivity
 import com.cloudwell.paywell.services.activity.refill.nagad.model.ResTranstionINquiry
+import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.BalanceClaimModel
 import com.cloudwell.paywell.services.activity.utility.AllUrl
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
@@ -81,7 +82,8 @@ class NagadBalanceClaimActivity : UtilityBaseActivity() {
                 dialogInterface.dismiss()
 
                 if (ConnectionDetector(applicationContext).isConnectingToInternet) {
-                    callRransactionInquiryAPI(pinNoET.text.toString(), mobileNumber, amount)
+
+                    callBalanceClimApi(pinNoET.text.toString(), mobileNumber, amount)
                 } else {
                     showNoInternetConnectionFound()
                 }
@@ -93,19 +95,21 @@ class NagadBalanceClaimActivity : UtilityBaseActivity() {
         alert.show()
     }
 
-    private fun callRransactionInquiryAPI(pin: String, mobileNumber: String, amount: String) {
-        val hostUrlBkapi = AllUrl.HOST_URL_bkapi
-        val sec_token = AllUrl.sec_token
-        val imeiNo = AppHandler.getmInstance(applicationContext).imeiNo
-        val format = "json"
-        val gateway_id = "5"
-
-
+    private fun callBalanceClimApi(pin: String, mobileNumber: String, amount: String) {
         showProgressDialog()
-
         val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(applicationContext).rid)
+        val sec_token = AllUrl.sec_token
 
-        ApiUtils.getAPIService().transactionInquiry(hostUrlBkapi, sec_token, imeiNo, pin, mobileNumber, format, gateway_id, amount, uniqueKey).enqueue(object : Callback<ResTranstionINquiry> {
+
+        val newModel = BalanceClaimModel()
+        newModel.amount = amount
+        newModel.gatewayId = "5"
+        newModel.password = pin
+        newModel.refId = uniqueKey
+        newModel.trxOrPhoneNo = mobileNumber
+        newModel.username = AppHandler.getmInstance(applicationContext).userName
+
+        ApiUtils.getAPIServiceV2().BalanceClaimRequest(newModel).enqueue(object : Callback<ResTranstionINquiry>{
             override fun onFailure(call: Call<ResTranstionINquiry>, t: Throwable) {
                 Toast.makeText(applicationContext, "Server error!!!", Toast.LENGTH_SHORT).show()
                 dismissProgressDialog()
@@ -115,9 +119,10 @@ class NagadBalanceClaimActivity : UtilityBaseActivity() {
                 dismissProgressDialog()
                 response.body()?.let { showBillResponseDialog(this@NagadBalanceClaimActivity, it) }
             }
-        })
 
+        })
     }
+
 
     private fun showBillResponseDialog(activity: Activity, palliBidyutBillPayResponse: ResTranstionINquiry) {
 

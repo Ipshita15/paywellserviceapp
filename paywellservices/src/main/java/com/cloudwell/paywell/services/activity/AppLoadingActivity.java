@@ -14,6 +14,10 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.home.HomeActivity;
@@ -29,7 +33,6 @@ import com.cloudwell.paywell.services.retrofit.APIService;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.AppsStatusConstant;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
-import com.cloudwell.paywell.services.utils.TelephonyInfo;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
@@ -38,9 +41,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -244,9 +244,7 @@ public class AppLoadingActivity extends BaseActivity {
             case REQUEST_PHONE_STATE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Phone permission has been granted
-                    TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(this);
-                    mImeiNo = telephonyInfo.getImeiSIM1();
-                    mAppHandler.setImeiNo(mImeiNo);
+
                     if (!mCd.isConnectingToInternet()) {
                         mAppHandler.showDialog(getSupportFragmentManager());
                     } else {
@@ -413,7 +411,7 @@ public class AppLoadingActivity extends BaseActivity {
                                     }
 
 
-                                    Intent i = new Intent(AppLoadingActivity.this, MainActivity.class);
+                                    Intent i = new Intent(AppLoadingActivity.this, MainActivity .class);
                                     startActivity(i);
                                     finish();
 

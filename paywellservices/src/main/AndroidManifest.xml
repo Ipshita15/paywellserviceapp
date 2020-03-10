@@ -316,17 +316,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cloudwell.paywell.services.activity.MainActivity" />
         </activity>
-        <activity
-            android:name=".activity.eticket.trainticket.TrainTicketActivity"
-            android:parentActivityName=".activity.eticket.ETicketMainActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
-
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity" />
-        </activity> <!-- eTicket activity -->
+        <!-- eTicket activity -->
         <activity
             android:name=".activity.product.ekShop.EkShopeMenuActivity"
             android:screenOrientation="portrait"
@@ -347,38 +337,6 @@
             android:name=".activity.product.ekShop.report.ReportDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.eticket.trainticket.SearchTrainActivity"
-            android:parentActivityName=".activity.eticket.trainticket.TrainTicketActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
-
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.eticket.trainticket.TrainTicketActivity" />
-        </activity>
-        <activity
-            android:name=".activity.eticket.trainticket.TrainTicketBookingActivity"
-            android:parentActivityName=".activity.eticket.trainticket.SearchTrainActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
-
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.eticket.trainticket.SearchTrainActivity" />
-        </activity>
-        <activity
-            android:name=".activity.eticket.trainticket.TrainTicketBookingStatusActivity"
-            android:parentActivityName=".activity.eticket.ETicketMainActivity"
-            android:screenOrientation="portrait">
-
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity" />
-        </activity>
         <activity
             android:name=".activity.mfs.MFSMainActivity"
             android:parentActivityName=".activity.MainActivity"
@@ -564,16 +522,6 @@
                 android:value="com.cloudwell.paywell.services.activity.settings.SettingsActivity" />
         </activity>
         <activity
-            android:name=".activity.settings.ResetPinActivity"
-            android:parentActivityName=".activity.settings.SettingsActivity"
-            android:screenOrientation="portrait">
-
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.settings.SettingsActivity" />
-        </activity>
-        <activity
             android:name=".activity.settings.SettingsActivity"
             android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait">
@@ -675,16 +623,6 @@
                 android:value="com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCMainActivity" />
         </activity>
         <activity
-            android:name=".activity.eticket.trainticket.TrainMainActivity"
-            android:parentActivityName=".activity.eticket.ETicketMainActivity"
-            android:screenOrientation="portrait">
-
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity" />
-        </activity>
-        <activity
             android:name=".activity.refill.RefillBalanceMainActivity"
             android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait">
@@ -776,12 +714,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.product.ProductMenuActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.product.AjkerDealActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.product.WholesaleActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.scan.DisplayQRCodeActivity"

@@ -48,9 +48,7 @@ class NotificationDataSycService : Service() {
 
     private fun callnotificaitonCheckDetausAPI() {
         isAPICalledRunning = true;
-        val ah = AppHandler.getmInstance(applicationContext)
-        val imeiNo = ah.getImeiNo()
-
+        AppHandler.getmInstance(applicationContext)
 
         doAsync {
             val notificaitonSyncData = NotificationRepogitory(applicationContext).getNotificationSyncData()

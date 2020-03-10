@@ -3,7 +3,6 @@ package com.cloudwell.paywell.services.activity.product;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -20,13 +19,6 @@ import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.google.android.material.snackbar.Snackbar;
-
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONObject;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -131,11 +123,7 @@ public class ProductMenuActivity extends ProductEecommerceBaseActivity {
 //            }
 //            new GetToken().execute(URL);
 
-            if (serviceType == TAG_AJKER_DEAL) {
-                startActivity(new Intent(ProductMenuActivity.this, AjkerDealActivity.class));
-            } else {
-                startActivity(new Intent(ProductMenuActivity.this, WholesaleActivity.class));
-            }
+
         }
     }
 
@@ -146,11 +134,7 @@ public class ProductMenuActivity extends ProductEecommerceBaseActivity {
             case PERMISSIONS_REQUEST_WRITE_STORAGE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted
-                    if (serviceType == TAG_AJKER_DEAL) {
-                        startActivity(new Intent(ProductMenuActivity.this, AjkerDealActivity.class));
-                    } else {
-                        startActivity(new Intent(ProductMenuActivity.this, WholesaleActivity.class));
-                    }
+
                 } else {
                     // permission denied
                     Snackbar snackbar = Snackbar.make(relativeLayout, R.string.access_denied_msg, Snackbar.LENGTH_LONG);
@@ -164,63 +148,4 @@ public class ProductMenuActivity extends ProductEecommerceBaseActivity {
         }
     }
 
-    @SuppressWarnings("deprecation")
-    protected class GetToken extends AsyncTask<String, String, String> {
-
-
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(relativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            try {
-                if (!result.isEmpty()) {
-                    dismissProgressDialog();
-                    if (serviceType == TAG_AJKER_DEAL) {
-                        AjkerDealActivity.token = result;
-                        startActivity(new Intent(ProductMenuActivity.this, AjkerDealActivity.class));
-                    } else {
-                        JSONObject jsonObject = new JSONObject(result);
-                        WholesaleActivity.token = jsonObject.getString("Data");
-                        startActivity(new Intent(ProductMenuActivity.this, WholesaleActivity.class));
-                    }
-                } else {
-                    Snackbar snackbar = Snackbar.make(relativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                Snackbar snackbar = Snackbar.make(relativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-        }
-    }
 }

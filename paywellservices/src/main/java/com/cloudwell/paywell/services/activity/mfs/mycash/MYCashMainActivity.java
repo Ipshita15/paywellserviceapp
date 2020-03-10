@@ -16,8 +16,11 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestBalacne;
+import com.cloudwell.paywell.services.activity.utility.AllUrl;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -33,6 +36,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MYCashMainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -95,7 +103,7 @@ public class MYCashMainActivity extends BaseActivity implements View.OnClickList
             AppHandler.showDialog(this.getSupportFragmentManager());
         } else {
             _pin = mPin.getText().toString().trim();
-            new SubmitAsync().execute(getString(R.string.bkash_balance_check));
+            new SubmitAsync().execute(AllUrl.URL_bkash_balance_check);
         }
     }
 
@@ -118,7 +126,7 @@ public class MYCashMainActivity extends BaseActivity implements View.OnClickList
 
             try {
                 List<NameValuePair> nameValuePairs = new ArrayList<>(2);
-                nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("pin", _pin));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -166,73 +174,63 @@ public class MYCashMainActivity extends BaseActivity implements View.OnClickList
         if (!mCd.isConnectingToInternet()) {
             AppHandler.showDialog(this.getSupportFragmentManager());
         } else {
-            new BalanceAsync().execute(getString(R.string.mycash_balance_check));
+            reqeustBalance();
         }
     }
 
-    private class BalanceAsync extends AsyncTask<String, Void, String> {
+    private void reqeustBalance() {
+        showProgressDialog();
+        RequestBalacne m = new RequestBalacne();
+        m.setUsername(mAppHandler.getUserName());
+        m.setPassword(mAppHandler.getPin());
 
-        @SuppressWarnings("deprecation")
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
 
-            try {
-                //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("password", mAppHandler.getPin()));
-                nameValuePairs.add(new BasicNameValuePair("format", "json"));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            try {
-                if (result != null) {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String status = jsonObject.getString("status");
-                    if (status.equals("200")) {
-                        JSONObject data = jsonObject.getJSONObject("data");
-                        String balance = data.getString("balance");
-                        mAppHandler.setMYCashBalance(balance);
+        ApiUtils.getAPIServiceV2().getMYCashRetailerPayWellBalance(m).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
+                try {
+                    String result = response.body().string();
+                    if (result != null) {
+                        JSONObject jsonObject = new JSONObject(result);
+                        String status = jsonObject.getString("status");
+                        if (status.equals("200")) {
+                            JSONObject data = jsonObject.getJSONObject("data");
+                            String balance = data.getString("balance");
+                            mAppHandler.setMYCashBalance(balance);
+                        } else {
+                            mAppHandler.setMYCashBalance("");
+                        }
+                        mAppHandler.setPin(_pin);
+                        Intent intent = new Intent(MYCashMainActivity.this, MYCashMenuActivity.class);
+                        startActivity(intent);
+                        mPin.setText("");
                     } else {
-                        mAppHandler.setMYCashBalance("");
+                        Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+                        View snackBarView = snackbar.getView();
+                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+                        snackbar.show();
                     }
-                    mAppHandler.setPin(_pin);
-                    Intent intent = new Intent(MYCashMainActivity.this, MYCashMenuActivity.class);
-                    startActivity(intent);
-                    mPin.setText("");
-                } else {
+                } catch (Exception e) {
+                    e.printStackTrace();
                     Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                     View snackBarView = snackbar.getView();
                     snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
                     snackbar.show();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
             }
-        }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
+            }
+        });
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

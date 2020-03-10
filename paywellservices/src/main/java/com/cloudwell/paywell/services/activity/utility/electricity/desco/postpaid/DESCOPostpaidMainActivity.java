@@ -150,7 +150,6 @@ public class DESCOPostpaidMainActivity extends BaseActivity implements CompoundB
                     selectedLimit = "5";
                 }
                 if (cd.isConnectingToInternet()) {
-                   // new TransactionLogAsync().execute(getString(R.string.utility_multi_trx_inq));
                     callAPI("DESCO", selectedLimit);
                 } else {
                     Snackbar snackbar = Snackbar.make(mRelativeLayout, getResources().getString(R.string.connection_error_msg), Snackbar.LENGTH_LONG);

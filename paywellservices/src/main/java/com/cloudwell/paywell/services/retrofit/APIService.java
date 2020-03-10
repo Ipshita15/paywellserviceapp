@@ -31,6 +31,22 @@ import com.cloudwell.paywell.services.activity.home.model.changePin.RequestChang
 import com.cloudwell.paywell.services.activity.home.model.forgetPin.ReposeForgetPIn;
 import com.cloudwell.paywell.services.activity.home.model.forgetPin.RequestForgetPin;
 import com.cloudwell.paywell.services.activity.home.model.refreshToken.RequestRefreshToken;
+import com.cloudwell.paywell.services.activity.location.model.CurrentLocationModel;
+import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.ReqeustPaymentConfmation;
+import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestBalacne;
+import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestBalanceInquray;
+import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestBalanceTransferConfirm;
+import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestBalanceTransferRequest;
+import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestCashIn;
+import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestCashOut;
+import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestChangePInNumber;
+import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestFundManagment;
+import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestLCustomerReg;
+import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestMiniStatment;
+import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestTrxInquiry;
+import com.cloudwell.paywell.services.activity.modelPojo.MerchantRequestPojo;
+import com.cloudwell.paywell.services.activity.modelPojo.UserSubBusinessTypeModel;
+import com.cloudwell.paywell.services.activity.notification.model.RequestSDABalancceRetrun;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResNotificationReadAPI;
 import com.cloudwell.paywell.services.activity.notification.model.ResposeReScheduleNotificationAccept;
@@ -39,31 +55,65 @@ import com.cloudwell.paywell.services.activity.notification.model.deletetNotific
 import com.cloudwell.paywell.services.activity.notification.model.getNotification.RequestNotificationAll;
 import com.cloudwell.paywell.services.activity.product.ekShop.model.ResEKReport;
 import com.cloudwell.paywell.services.activity.product.ekShop.model.ResEkShopToken;
+import com.cloudwell.paywell.services.activity.refill.banktransfer.model.ReposeDistrictListerBankDeposit;
 import com.cloudwell.paywell.services.activity.refill.model.BranchData;
-import com.cloudwell.paywell.services.activity.refill.model.DistrictData;
 import com.cloudwell.paywell.services.activity.refill.model.RefillRequestData;
+import com.cloudwell.paywell.services.activity.refill.model.RequestBranch;
+import com.cloudwell.paywell.services.activity.refill.model.RequestDistrict;
+import com.cloudwell.paywell.services.activity.refill.model.RequestRefillBalance;
+import com.cloudwell.paywell.services.activity.refill.model.RequestSDAInfo;
 import com.cloudwell.paywell.services.activity.refill.nagad.model.ResTranstionINquiry;
+import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.BalanceClaimModel;
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLog;
+import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLogRequestModel;
 import com.cloudwell.paywell.services.activity.reg.model.AuthRequestModel;
 import com.cloudwell.paywell.services.activity.reg.model.RegistrationModel;
+import com.cloudwell.paywell.services.activity.reg.model.RequestDistrictList;
+import com.cloudwell.paywell.services.activity.reg.model.RespsoeGetDistrictList;
+import com.cloudwell.paywell.services.activity.reg.model.postCode.RequestPostCodeList;
+import com.cloudwell.paywell.services.activity.reg.model.thana.RequestThanaAPI;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.APIBrilliantTRXLog;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.BrilliantTopUpInquiry;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.BrillintAddBalanceModel;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.BrillintTNXLog;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.EnqueryModel;
+import com.cloudwell.paywell.services.activity.topup.model.RechargeEnqueryModel;
+import com.cloudwell.paywell.services.activity.topup.model.RechargeEnqueryResponseModel;
+import com.cloudwell.paywell.services.activity.topup.model.RechargeOfferRequestModel;
 import com.cloudwell.paywell.services.activity.topup.model.RequestTopup;
+import com.cloudwell.paywell.services.activity.topup.model.SingleTopUp.RequestSingleTopup;
+import com.cloudwell.paywell.services.activity.topup.model.SingleTopUp.SingleTopupResponse;
 import com.cloudwell.paywell.services.activity.topup.model.TopupReposeData;
+import com.cloudwell.paywell.services.activity.topup.model.TranscationLogResponseModel;
+import com.cloudwell.paywell.services.activity.topup.model.TranscationRequestModel;
+import com.cloudwell.paywell.services.activity.utility.banglalion.model.RechargeRequestPojo;
+import com.cloudwell.paywell.services.activity.utility.banglalion.model.RechargeResponsePojo;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.BillPayMOdel;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.BillPayResponseModel;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.DESCOBillInfo;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.DESCOBillInfoResponse;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoBillPaySubmit;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoBillPaySubmitResponse;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoInquiryResponse;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoPrepaidTrxLogRequest;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoPrepaidTrxLogResponse;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoRequestInquiryModel;
+import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.model.requestPojo.DPDCBillPayModel;
+import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.model.requestPojo.DPDCbillInfoModel;
+import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.model.responsePojo.DpdcResponse;
+import com.cloudwell.paywell.services.activity.utility.electricity.wasa.model.SubmitBill;
+import com.cloudwell.paywell.services.activity.utility.electricity.wasa.model.WASABillInfoModel;
+import com.cloudwell.paywell.services.activity.utility.electricity.westzone.model.WZPDCLBillInfo;
+import com.cloudwell.paywell.services.activity.utility.electricity.westzone.model.WZPDCLBillPayModel;
 import com.cloudwell.paywell.services.activity.utility.ivac.model.GetIvacCenterModel;
 import com.cloudwell.paywell.services.activity.utility.ivac.model.GetIvacTrx;
 import com.cloudwell.paywell.services.activity.utility.ivac.model.IvacFeePayModel;
 import com.cloudwell.paywell.services.activity.utility.ivac.model.IvacTrxListModel;
 import com.cloudwell.paywell.services.activity.utility.ivac.model.IvcTrxResponseModel;
+import com.cloudwell.paywell.services.activity.utility.karnaphuli.model.requestPojo.KgdlcBillInfoRequest;
+import com.cloudwell.paywell.services.activity.utility.karnaphuli.model.requestPojo.SubmitBillRequestPojo;
+import com.cloudwell.paywell.services.activity.utility.karnaphuli.model.responsePojo.SubmitBillResponse;
+import com.cloudwell.paywell.services.activity.utility.karnaphuli.model.responsePojo.SubmitInquiry;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PalliBidyutBillPayRequest;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PalliBidyutBillPayResponse;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus.model.ResBIllStatus;
@@ -109,31 +159,24 @@ public interface APIService {
     @FormUrlEncoded
     Call<APIResposeGenerateToken> callGenerateToken(@Url String ur, @Header("Authorization") String AuthorizationKey, @FieldMap Map<String, String> params);
 
-    @POST("PaywellTopUpService/PaywellTopup")
-    @Multipart
-    Call<TopupReposeData> callTopAPI(@Part("requestData") RequestTopup requestTopup);
+    @POST("Recharge/mobileRecharge/bulkTopup")
+    Call<TopupReposeData> callTopAPI(@Body RequestTopup requestTopup);
+
+    @POST("Recharge/mobileRecharge/singleTopup")
+    Call<SingleTopupResponse> callSingleTopUpAPI(@Body RequestSingleTopup singleTopup);
 
 
-    @POST("PayWellBankDepositSystem/getDistrictListforBankDeposit")
-    @FormUrlEncoded
-    Call<DistrictData> callDistrictDataAPI(@Field("username") String username,
-                                           @Field("bankId") String bankId);
+    @POST("Retailer/RetailerService/getRtlrSDAinfo")
+    Call<ResponseBody> getRtlrSDAinfo(@Body RequestSDAInfo requestSDAInfo);
 
-    @POST("PayWellBankDepositSystem/getBankBranch")
-    @FormUrlEncoded
-    Call<BranchData> callBranchDataAPI(@Field("username") String username,
-                                       @Field("bankId") String bankId,
-                                       @Field("districtId") String districtId);
+    @POST("Retailer/BankDepositSystem/getDistrictListforBankDeposit")
+    Call<ReposeDistrictListerBankDeposit> callDistrictDataAPI(@Body RequestDistrict requestDistrict);
 
-    @POST("PayWellBankDepositSystem/depositBankSlip")
-    @FormUrlEncoded
-    Call<RefillRequestData> callBalanceRefillAPI(@Field("username") String username,
-                                                 @Field("bankId") String bankId,
-                                                 @Field("districtId") String districtId,
-                                                 @Field("branchId") String branchId,
-                                                 @Field("depositslip") String depositslip,
-                                                 @Field("Amount") String amount,
-                                                 @Field(ParameterUtility.KEY_REF_ID) String refId);
+    @POST("Retailer/BankDepositSystem/getBankBranch")
+    Call<BranchData> callBranchDataAPI(@Body RequestBranch requestBranch);
+
+    @POST("Retailer/BankDepositSystem/depositBankSlip")
+    Call<RefillRequestData> callBalanceRefillAPI(@Body RequestRefillBalance requestRefillBalance);
 
 
 
@@ -156,6 +199,10 @@ public interface APIService {
 
     @POST("Notification/NotificationSystem/userNotificationDelete")
     Call<ReposeDeletedNotification> deleteNotification(@Body RequestDeletedNotification requestDeletedNotification);
+
+
+    @POST("SDA/SDASystem/SDAToMerchentBalanceReturn")
+    Call<ResponseBody> SDAToMerchentBalanceReturn(@Body RequestSDABalancceRetrun RequestSDABalancceRetrun);
 
 
     @Multipart
@@ -376,41 +423,22 @@ public interface APIService {
     Call<PalliBidyutBillPayResponse> postPalliBidyutBills(@Body PalliBidyutBillPayRequest body);
 
 
-    @FormUrlEncoded
-    @POST
-    Call<ResTranstionINquiry> transactionInquiry(@Url String url,
-                                                 @Field("sec_token") String username,
-                                                 @Field("imei") String skey,
-                                                 @Field("pin") String accessKey,
-                                                 @Field("trxOrPhoneNo") String transactionId,
-                                                 @Field("format") String customerName,
-                                                 @Field("gateway_id") String customerPhone,
-                                                 @Field("amount") String customerAddress,
-                                                 @Field(ParameterUtility.KEY_REF_ID) String refId);
+    @POST("Retailer/BalanceRefill/nagodTrxClaim")
+    Call<ResTranstionINquiry> BalanceClaimRequest(@Body BalanceClaimModel balanceClaimModel);
 
-    @FormUrlEncoded
-    @POST
-    Call<RefillLog> refillLogInquiry(@Url String url,
-                                     @Field("sec_token") String username,
-                                     @Field("imei") String skey,
-                                     @Field("format") String customerName,
-                                     @Field("gateway_id") String customerPhone,
-                                     @Field("limit") String limit,
-                                     @Field(ParameterUtility.KEY_REF_ID) String refId);
+    @POST("Retailer/BalanceRefill/nagodSuccessfulTrxList")
+    Call<RefillLog> refillLogInquiry(@Body RefillLogRequestModel RefillLogRequestModel);
 
 
-    @POST
-    Call<DescoInquiryResponse> descoInquiryRequest(@Body DescoRequestInquiryModel requestInquiryModelDesco,
-                                                   @Url String url);
+    @POST("MYCash/Utility/DESCOPrepaid_billInfo")
+    Call<DescoInquiryResponse> descoInquiryRequest(@Body DescoRequestInquiryModel requestInquiryModelDesco);
 
-    @POST
-    Call<DescoBillPaySubmitResponse> descoBillPayement(@Body DescoBillPaySubmit descoBillPaySubmit,
-                                                       @Url String url);
+    @POST("MYCash/Utility/DESCOPrepaid_billPayment")
+    Call<DescoBillPaySubmitResponse> descoBillPayement(@Body DescoBillPaySubmit descoBillPaySubmit);
 
 
-    @POST
-    Call<DescoPrepaidTrxLogResponse> descoPrepaidTrxInquiry(@Body DescoPrepaidTrxLogRequest descoPrepaidTrxLogRequest,
-                                                            @Url String url);
+    @POST("MYCash/Utility/getEnquiryData")
+    Call<DescoPrepaidTrxLogResponse> descoPrepaidTrxInquiry(@Body DescoPrepaidTrxLogRequest descoPrepaidTrxLogRequest);
 
 
     @POST("Registration/UserRegistration/userInformationForRegistration")
@@ -420,7 +448,7 @@ public interface APIService {
     @POST("Retailer/RetailerService/userServiceProfiling")
     Call<ReposeUserProfile> userServiceProfiling(@Body AuthRequestModel regModel);
 
-    @POST("Retailer/RetailerService/userServiceProfilingReg")
+    @POST("Registration/UserRegistration/userServiceProfilingReg")
     Call<ReposeUserProfile> userServiceProfilingReg(@Body AuthRequestModel regModel);
 
 
@@ -450,7 +478,7 @@ public interface APIService {
     Call<ReposeGenerateOTP> generateOTP(@Body RequestGenerateOTP body);
 
 
-    @POST("Reports/TransactionReport/TransactionReport")
+    @POST("Reports/TransactionReportSystem/TransactionReport")
     Call<ResponseBody> PBInquiry(@Body ReqInquiryModel regModel);
 
 
@@ -479,9 +507,12 @@ public interface APIService {
     @POST("Android/AndroidWebViewController/salesStatement")
     Call<ResponseBody> salesStatementForhttps( @Body RequestBody body);
 
-
     @POST("Android/AndroidWebViewController/getAllTransactionStatement")
     Call<ResponseBody> getAllTransactionStatementForHttps( @Body RequestBody body);
+
+
+    @POST("PaymentGateway/PaymentGatewaySystem/card")
+    Call<ResponseBody> card( @Body RequestBody body);
 
 
     @POST("Recharge/BrilliantRecharge/transactionLog")
@@ -506,6 +537,115 @@ public interface APIService {
 
     @POST("Utility/IvacSystem/getIvacTrxList")
     Call<ResponseBody> getIvacTrxList(@Body IvacTrxListModel ivacTrxListModel);
+
+    @POST("Retailer/RetailerService/doUpdateRetailersCurrentLocation")
+    Call<ResponseBody> updateCurrentLocation(@Body CurrentLocationModel locationModel);
+
+
+    @POST("Retailer/RetailerService/updateMarchentAndBusinessType")
+    Call<ResponseBody> updateMerchentBusiness(@Body MerchantRequestPojo merchantRequestPojo);
+
+    @POST("Registration/UserRegistration/userSubBusinessType")
+    Call<ResponseBody> getUserSubBusinessType(@Body UserSubBusinessTypeModel userSubBusinessTypeModel);
+
+    @POST("Registration/UserRegistration/getDistrictInfo")
+    Call<RespsoeGetDistrictList> getDistrictInfo(@Body RequestDistrictList requestDistrictList);
+
+
+    @POST("Registration/UserRegistration/getThanaInfo")
+    Call<ResponseBody> getThanaInfo(@Body RequestThanaAPI requestThanaAPI);
+
+
+    @POST("Registration/UserRegistration/getPostOfficeInfo")
+    Call<ResponseBody> getPostOfficeInfo(@Body RequestPostCodeList requestPostCodeList);
+    @POST("Reports/TransactionReportSystem/TransactionReport")
+    Call<TranscationLogResponseModel> getTransactionLog(@Body TranscationRequestModel transcationRequestModel);
+
+    @POST("Recharge/mobileRecharge/rechargeOffer")
+    Call<ResponseBody> getRechargeOffer(@Body RechargeOfferRequestModel rechargeOfferRequestModel);
+
+    @POST("Recharge/mobileRecharge/mobileRechargeEnquiry")
+    Call<RechargeEnqueryResponseModel> getRechargeEnquiry(@Body RechargeEnqueryModel rechargeEnqueryModel);
+
+    @POST("MYCash/Utility/getDESCOBillInfo")
+    Call<DESCOBillInfoResponse> getDESCOBillInfo(@Body DESCOBillInfo descoBillInfo);
+
+
+    @POST("MYCash/Utility/DESCOBillPay")
+    Call<BillPayResponseModel> confirmBillPay(@Body BillPayMOdel billPayMOdel);
+
+    @POST("MYCash/Utility/getKGDCLBillInfo")
+    Call<SubmitInquiry> kgdlcSubmitInquiry(@Body KgdlcBillInfoRequest kgdlcBillInfoRequest);
+
+    @POST("MYCash/Utility/KGDCLBillPay")
+    Call<SubmitBillResponse> kgdlcSubmitBill(@Body SubmitBillRequestPojo submitBillRequestPojo);
+
+    @POST("MYCash/Utility/getDPDCBillInfo")
+    Call<DpdcResponse> getDPDCBillInfo(@Body DPDCbillInfoModel dpdCbillInfoModel);
+
+    @POST("MYCash/Utility/DPDCBillPay")
+    Call<DpdcResponse> submitDPDCBillPay(@Body DPDCBillPayModel dpdcBillPayModel);
+
+
+    @POST("MYCash/MFS/generateOTP")
+    Call<ResponseBody> generateOTPMYCash(@Body com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestGenerateOTP RequestGenerateOTP);
+
+    @POST("MYCash/MFS/miniStatement")
+    Call<ResponseBody> miniStatement(@Body RequestMiniStatment requestMiniStatment);
+
+
+    @POST("MYCash/MFS/balanceEnquiry")
+    Call<ResponseBody> balanceEnquiry(@Body RequestBalanceInquray requestBalanceInquray);
+
+    @POST("MYCash/MFS/fundManagement")
+    Call<ResponseBody> fundManagement(@Body RequestFundManagment requestFundManagment);
+
+    @POST("MYCash/MFS/customerRegistration")
+    Call<ResponseBody> customerRegistration(@Body RequestLCustomerReg requestLCustomerReg);
+
+    @POST("MYCash/MFS/cashIn")
+    Call<ResponseBody> cashIn(@Body RequestCashIn requestCashIn);
+
+    @POST("MYCash/MFS/changePIN")
+    Call<ResponseBody> changePinNumber(@Body RequestChangePInNumber RequestChangePInNumber);
+
+
+    @POST("MYCash/MFS/lastTransactionList")
+    Call<ResponseBody> lastTransactionList(@Body RequestTrxInquiry requestTrxInquiry);
+
+
+    @POST("MYCash/MFS/lastSuccessfulCashOutList")
+    Call<ResponseBody> cashOut(@Body RequestCashOut requestCashOut);
+
+    @POST("MYCash/MFS/doMyCahsToCashOrBankTransfer")
+    Call<ResponseBody> myCasyhToCashOrBankTransfer(@Body RequestBalanceTransferRequest RequestBalanceTransferRequest);
+
+
+    @POST("MYCash/MFS/checkMyCashPendingCashRequest")
+    Call<ResponseBody> checkMyCashPendingCashRequest(@Body RequestBalanceTransferConfirm requestBalanceTransferConfirm);
+
+    @POST("MYCash/Utility/getWASABillInfo")
+    Call<ResponseBody> getWASABillInfo(@Body WASABillInfoModel wasaBillInfoModel);
+
+    @POST("MYCash/MFS/myCashPendingCashRequestConfirmation")
+    Call<ResponseBody> myCashPendingCashRequestConfirmation(@Body ReqeustPaymentConfmation ReqeustPaymentConfmation);
+
+    @POST("MYCash/Utility/WASABillPay")
+    Call<ResponseBody> submitWASABillPay(@Body SubmitBill submitBill);
+
+    @POST("MYCash/MFS/getMYCashRetailerPayWellBalance")
+    Call<ResponseBody> getMYCashRetailerPayWellBalance(@Body RequestBalacne requestBalacne);
+
+    @POST("MYCash/Utility/getWZPDCLBillInfo")
+    Call<ResponseBody> getWZPDCLBillInfo(@Body WZPDCLBillInfo wzpdclBillInfo);
+
+    @POST("MYCash/Utility/WZPDCLBillPay")
+    Call<ResponseBody> submitWZPDCLBillPay(@Body WZPDCLBillPayModel wzpdclBillPayModel);
+
+    @POST("Utility/InternetBillPay/banglalionBillPay")
+    Call<ResponseBody> banglalionRecharge(@Body RechargeRequestPojo rechargeRequestPojo);
+
+    @POST("Utility/InternetBillPay/banglalionEnquiry")
+    Call<ResponseBody> banglalionRechargeInquiry(@Body RechargeResponsePojo rechargeResponsePojo);
+
 }
-
-

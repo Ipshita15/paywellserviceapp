@@ -2,11 +2,13 @@ package com.cloudwell.paywell.services.retrofit
 
 import android.content.Context
 import com.cloudwell.paywell.services.activity.home.model.refreshToken.RequestRefreshToken
+import com.cloudwell.paywell.services.activity.utility.AllUrl
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.RSAUtilty.Companion.getTokenBaseOnRSAlgorithm
 import com.cloudwell.paywell.services.utils.DateUtils
 import com.cloudwell.paywell.services.utils.DateUtils.getCurrentTimestamp
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import com.google.gson.Gson
 import okhttp3.Interceptor
 import okhttp3.RequestBody
@@ -31,10 +33,10 @@ class AppsAuthHeaderTokenInterceptor(val mContext: AppController?) : Interceptor
         var requestBody = chain.request().body()
         val toString = chain.request().url().toString()
 
-        if (toString.equals("https://agentapi.paywellonline.com/Authantication/PaywellAuth/getToken?") ||
-                toString.equals("https://agentapi.paywellonline.com/Retailer/RetailerService/userServiceProfilingReg") ||
-                toString.equals("https://agentapi.paywellonline.com/Authantication/PaywellAuth/resetPassword") ||
-                toString.equals("https://agentapi.paywellonline.com/Authantication/PaywellAuth/refreshToken")
+        if (toString.equals(AllUrl.gettoken) ||
+                toString.equals(AllUrl.ProfilingReg) ||
+                toString.equals(AllUrl.resetPassword) ||
+                toString.equals(AllUrl.refreshToken)
         ) {
             val newRequest = chain.request().newBuilder().build();
             return chain.proceed(newRequest)
@@ -111,11 +113,15 @@ private fun processApplicationJsonRequestBody(requestBody: RequestBody): Request
     try {
         val mAppHandler = AppHandler.getmInstance(mContext)
 
+        val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(mContext)!!.rid)
+
+
         val obj = JSONObject(customReq)
         obj.put("deviceId", mAppHandler.androidID)
         obj.put("timestamp",""+ DateUtils.getCurrentTimestamp())
         obj.put("format", "json")
         obj.put("channel", "android")
+        obj.put("ref_id", uniqueKey)
 
 
 

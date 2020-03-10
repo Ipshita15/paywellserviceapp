@@ -6,7 +6,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Point
 import android.media.RingtoneManager
-import android.os.AsyncTask
 import android.os.Bundle
 import android.text.Html
 import android.text.SpannableString
@@ -22,6 +21,7 @@ import com.cloudwell.paywell.services.activity.notification.ImageViewActivity
 import com.cloudwell.paywell.services.activity.notification.allNotificaiton.NotificationAllActivity
 import com.cloudwell.paywell.services.activity.notification.allNotificaiton.NotificationAllActivity.Companion.IS_NOTIFICATION_SHOWN
 import com.cloudwell.paywell.services.activity.notification.model.NotificationDetailMessage
+import com.cloudwell.paywell.services.activity.notification.model.RequestSDABalancceRetrun
 import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.view.NotificationFullViewStatus
 import com.cloudwell.paywell.services.activity.notification.notificaitonFullView.viewModel.NotificationFullNotifcationViewModel
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBBillPayNewActivity
@@ -31,6 +31,7 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.AppHelper.startNotificationSyncService
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
@@ -38,10 +39,8 @@ import com.orhanobut.logger.Logger
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_notification_full_view.*
+import okhttp3.ResponseBody
 import org.apache.commons.lang3.StringEscapeUtils
-import org.apache.http.client.methods.HttpPost
-import org.apache.http.impl.client.BasicResponseHandler
-import org.apache.http.impl.client.DefaultHttpClient
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -157,33 +156,37 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
         notiMessage.text = spannableString
         date.text = model?.addedDatetime
 
-        if (!model?.imageUrl.equals("")) {
-            showProgressDialog();
-            notiImg?.setVisibility(View.VISIBLE);
-            val display = getWindowManager().getDefaultDisplay();
-            val size = Point();
-            display.getSize(size);
-            val width = size.x;
+        if (model?.imageUrl != null){
+
+            if (!model.imageUrl.equals("")) {
+                showProgressDialog();
+                notiImg?.setVisibility(View.VISIBLE);
+                val display = getWindowManager().getDefaultDisplay();
+                val size = Point();
+                display.getSize(size);
+                val width = size.x;
 
 
-            Picasso.get().load(model?.imageUrl)
-                    .resize(width, 0)
-                    .into(notiImg, object : Callback {
-                        override fun onError(e: Exception?) {
-                            dismissProgressDialog();
-                        }
+                Picasso.get().load(model.imageUrl)
+                        .resize(width, 0)
+                        .into(notiImg, object : Callback {
+                            override fun onError(e: Exception?) {
+                                dismissProgressDialog();
+                            }
 
-                        override fun onSuccess() {
-                            dismissProgressDialog();
-                        }
-                    })
-            notiImg.setOnClickListener {
-                ImageViewActivity.TAG_IMAGE_URL = model?.imageUrl
-                val intent = Intent(this, ImageViewActivity::class.java)
-                startActivity(intent)
+                            override fun onSuccess() {
+                                dismissProgressDialog();
+                            }
+                        })
+                notiImg.setOnClickListener {
+                    ImageViewActivity.TAG_IMAGE_URL = model?.imageUrl
+                    val intent = Intent(this, ImageViewActivity::class.java)
+                    startActivity(intent)
 
+                }
             }
         }
+
 
         if (model?.type.equals("BalanceReturnPwl") || model?.messageSub.equals("PW Balance Return")) {
             notiEditText.setVisibility(View.VISIBLE)
@@ -192,12 +195,31 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
             notiButton.setOnClickListener {
 
                 if (!notiEditText.getText().toString().isEmpty()) {
-                    PinRequestAsync().execute(
-                            getResources().getString(R.string.merchant_balance_return_url)
-                                    + "?messageId=" + model?.messageId
-                                    + "&merchentPassword=" + notiEditText.getText().toString()
-                                    + "&" + model?.balanceReturnData?.replace("@", "&")
-                    );
+
+
+                    val split = model?.balanceReturnData?.split("@")
+                    val shadowId = split?.get(0)?.split("=")?.get(1)
+                    val dealerId = split?.get(1)?.split("=")?.get(1)
+                    val marchentId = split?.get(2)?.split("=")?.get(1)
+                    val password = split?.get(3)?.split("=")?.get(1)
+                    val imeiNo = split?.get(4)?.split("=")?.get(1)
+                    val amount = split?.get(5)?.split("=")?.get(1)
+                    Logger.v("")
+
+                    val m = RequestSDABalancceRetrun()
+                    m.merchentPassword = ""+notiEditText.getText().toString()
+                    m.username = mAppHandler!!.userName
+                    m.messageId = ""+model?.messageId
+                    m.password = ""+password
+                    m.amount = ""+amount
+                    m.dealerId = ""+dealerId
+                    m.shadowId= ""+shadowId
+                    m.imeiNo = ""+imeiNo
+                    m.marchentId = ""+marchentId
+
+                    pinRequest(m)
+
+
 
                 } else {
                     val snackbar = Snackbar.make(linearLayoutNotiFullView, R.string.pin_no_error_msg, Snackbar.LENGTH_LONG)
@@ -262,14 +284,37 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
 
         }
 
+    private fun pinRequest(m: RequestSDABalancceRetrun) {
+
+        showProgressDialog()
+
+        ApiUtils.getAPIServiceV2().SDAToMerchentBalanceReturn(m).enqueue(object : retrofit2.Callback<ResponseBody> {
+
+            override fun onResponse(call: retrofit2.Call<ResponseBody>, response: retrofit2.Response<ResponseBody>) {
+                dismissProgressDialog()
+                try {
+                    val result = response.body()?.string()
+                    val jsonObject = JSONObject(result)
+                    val status = jsonObject.getString("Status")
+                    val message = jsonObject.getString("StatusName")
+                    showTransferMessage(status, message)
+                } catch (ex: Exception) {
+                    showTryAgainDialog()
+                }
+
+            }
+
+            override fun onFailure(call: retrofit2.Call<ResponseBody>, t: Throwable) {
+                dismissProgressDialog()
+                showTryAgainDialog()
+
+            }
 
 
 
+        })
 
-
-
-
-
+    }
 
 
     private fun handleAirTicket(testmessage: String, messageSub: String?, dateTime: String?) {
@@ -376,7 +421,10 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
 
         builder.setPositiveButton(R.string.okay_btn, DialogInterface.OnClickListener { dialogInterface, id ->
             dialogInterface.dismiss()
-            finish()
+            if (status_code.equals("200")){
+                finish()
+            }
+
         })
 
         val alert = builder.create()
@@ -384,59 +432,6 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
         alert.setCanceledOnTouchOutside(false)
     }
 
-
-    inner class PinRequestAsync : AsyncTask<String, String, String>() {
-        protected override fun onPreExecute() {
-            showProgressDialog()
-        }
-
-        override fun doInBackground(vararg params: String): String? {
-            var responseTxt: String? = null
-            // Create a new HttpClient and Post Header
-            val httpclient = DefaultHttpClient()
-            val httppost = HttpPost(params[0])
-            try {
-                val responseHandler = BasicResponseHandler()
-                responseTxt = httpclient.execute(httppost, responseHandler)
-            } catch (e: Exception) {
-                e.fillInStackTrace()
-                val snackbar = Snackbar.make(linearLayoutNotiFullView, R.string.try_again_msg, Snackbar.LENGTH_LONG)
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"))
-                val snackBarView = snackbar.view
-                snackBarView.setBackgroundColor(Color.parseColor("#8cc63f"))
-                snackbar.show()
-            }
-
-            return responseTxt
-        }
-
-        protected override fun onPostExecute(result: String?) {
-            dismissProgressDialog()
-            if (result != null) {
-                try {
-                    val jsonObject = JSONObject(result)
-                    val status = jsonObject.getString("Status")
-                    val message = jsonObject.getString("StatusName")
-                    showTransferMessage(status, message)
-                } catch (ex: Exception) {
-                    ex.printStackTrace()
-                    val snackbar = Snackbar.make(linearLayoutNotiFullView, R.string.try_again_msg, Snackbar.LENGTH_LONG)
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"))
-                    val snackBarView = snackbar.view
-                    snackBarView.setBackgroundColor(Color.parseColor("#8cc63f"))
-                    snackbar.show()
-                }
-
-            } else {
-                val snackbar = Snackbar.make(linearLayoutNotiFullView, R.string.try_again_msg, Snackbar.LENGTH_LONG)
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"))
-                val snackBarView = snackbar.view
-                snackBarView.setBackgroundColor(Color.parseColor("#8cc63f"))
-                snackbar.show()
-            }
-        }
-
-    }
 }
 
 

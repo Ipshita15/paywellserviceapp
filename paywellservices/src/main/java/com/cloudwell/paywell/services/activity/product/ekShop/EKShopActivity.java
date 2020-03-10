@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.product.ekShop.model.ResEkShopToken;
+import com.cloudwell.paywell.services.activity.utility.AllUrl;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
@@ -31,12 +32,6 @@ import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 import com.orhanobut.logger.Logger;
-
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.util.Locale;
 import java.util.Timer;
@@ -119,7 +114,7 @@ public class EKShopActivity extends BaseActivity {
         AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         String rid = mAppHandler.getRID();
-        String URL = getString(R.string.ek_shope_token);
+        String URL = AllUrl.URL_ek_shope_token;
         String utype = "Retailer";
         String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).getRID());
 
@@ -136,7 +131,7 @@ public class EKShopActivity extends BaseActivity {
                             connectionError();
                         } else {
                             isFirstTime = true;
-                            startWebView(getString(R.string.ek_redirect) + "token=" + token);
+                            startWebView(AllUrl.URL_ek_redirect+ "token=" + token);
                         }
 
                     } else {
@@ -203,7 +198,7 @@ public class EKShopActivity extends BaseActivity {
             }
 
             public void onPageFinished(WebView view, String url) {
-                if (url.equals("https://ekshop.gov.bd/ekshop_integration/api/paywell-auth-check")) {
+                if (url.equals(AllUrl.ekshop_paywell_auth_check)) {
                     if (isFirstTime) {
                         isFirstTime = false;
                     } else {
@@ -261,7 +256,6 @@ public class EKShopActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mRefreshTokenAsync = new RefreshTokenAsync().execute(getString(R.string.ajd_refresh_token));
     }
 
     private void connectionError() {
@@ -273,7 +267,7 @@ public class EKShopActivity extends BaseActivity {
                         mCd = new ConnectionDetector(AppController.getContext());
                         if (mCd.isConnectingToInternet()) {
                             dialog.dismiss();
-                            startWebView(getString(R.string.ek_redirect) + "token=" + token);
+                            startWebView(AllUrl.URL_ek_redirect+ "token=" + token);
                         } else {
                             connectionError();
                         }
@@ -305,31 +299,7 @@ public class EKShopActivity extends BaseActivity {
 
     }
 
-    @SuppressWarnings("deprecation")
-    private class RefreshTokenAsync extends AsyncTask<String, Integer, String> {
-        @Override
-        protected void onPreExecute() {
-        }
 
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-        }
-    }
 
     private class MyJavaScriptInterface {
         private Context ctx;

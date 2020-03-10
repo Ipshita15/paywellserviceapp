@@ -3,7 +3,6 @@ package com.cloudwell.paywell.services.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,32 +13,34 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.modelPojo.MerchantRequestPojo;
+import com.cloudwell.paywell.services.activity.modelPojo.UserSubBusinessTypeModel;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.DateUtils;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MerchantTypeVerify extends BaseActivity {
 
@@ -47,6 +48,7 @@ public class MerchantTypeVerify extends BaseActivity {
     private AppHandler mAppHandler;
     private ConstraintLayout mConstraintLayout;
     private String merchantTypeId = "0", str_businessId = "", str_businessType = "";
+    private int serviceID=0;
     private Spinner spnr_businessType;
     private ArrayList<String> business_type_id_array, business_type_name_array;
 
@@ -69,10 +71,12 @@ public class MerchantTypeVerify extends BaseActivity {
         mConstraintLayout = findViewById(R.id.constrainLayout);
 
         RadioGroup radioGroup = findViewById(R.id.radioGroup_merchantType);
+
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                merchantTypeId = String.valueOf(checkedId);
+                merchantTypeId =  "1";
+
                 initializationBusinessType();
             }
         });
@@ -96,109 +100,99 @@ public class MerchantTypeVerify extends BaseActivity {
         if (!mCd.isConnectingToInternet()) {
             AppHandler.showDialog(getSupportFragmentManager());
         } else {
-            new BusinessTypeAsync().execute(
-                    getResources().getString(R.string.business_type_url));
+            getBusinessType();
         }
     }
 
-    private class BusinessTypeAsync extends AsyncTask<String, String, String> {
+    private void getBusinessType(){
 
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
+        showProgressDialog();
+        UserSubBusinessTypeModel businessTypeModel =  new UserSubBusinessTypeModel();
+        businessTypeModel.setUsername(mAppHandler.getUserName());
+        businessTypeModel.setServiceId(merchantTypeId);
+        businessTypeModel.setDeviceId(mAppHandler.getAndroidID());
+        String currentDataAndTIme = ""+DateUtils.INSTANCE.getCurrentTimestamp();
+        businessTypeModel.setTimestamp(currentDataAndTIme);
+        businessTypeModel.setFormat("json");
+        businessTypeModel.setChannel("android");
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(mAppHandler.getRID());
+        businessTypeModel.setRefId(uniqueKey);
 
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
-                nameValuePairs.add(new BasicNameValuePair("serviceId", merchantTypeId));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+        ApiUtils.getAPIServicePHP7().getUserSubBusinessType(businessTypeModel).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
+                if (response.code() == 200){
 
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
+                    try {
 
-        @Override
-        protected void onPostExecute(String result) {
+                        business_type_id_array = new ArrayList<>();
+                        business_type_name_array = new ArrayList<>();
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        String status = jsonObject.getString("status");
+                        String msg = jsonObject.getString("message");
 
-            dismissProgressDialog();
-            if (result != null) {
-                try {
-                    business_type_id_array = new ArrayList<>();
-                    business_type_name_array = new ArrayList<>();
+                        if (status.equals("200")){
+                            JSONArray jsonArray = jsonObject.getJSONArray("type_of_business");
 
-                    JSONObject jsonObject = new JSONObject(result);
-                    String status = jsonObject.getString("status");
-                    if (status.equalsIgnoreCase("200")) {
-                        JSONArray jsonArray = jsonObject.getJSONArray("type_of_business");
+                            business_type_id_array.add("ipshita");
+                            business_type_name_array.add("Select One");
 
-                        business_type_id_array.add("ipshita");
-                        business_type_name_array.add("Select One");
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject object = jsonArray.getJSONObject(i);
+                                String id = object.getString("id");
+                                String name = object.getString("name");
 
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject object = jsonArray.getJSONObject(i);
-                            String id = object.getString("id");
-                            String name = object.getString("name");
+                                business_type_id_array.add(id);
+                                business_type_name_array.add(name);
+                            }
+                            ArrayAdapter<String> arrayAdapter_business_type_spinner = new ArrayAdapter<>(MerchantTypeVerify.this, android.R.layout.simple_spinner_dropdown_item, business_type_name_array);
 
-                            business_type_id_array.add(id);
-                            business_type_name_array.add(name);
-                        }
-                        ArrayAdapter<String> arrayAdapter_business_type_spinner = new ArrayAdapter<>(MerchantTypeVerify.this, android.R.layout.simple_spinner_dropdown_item, business_type_name_array);
+                            spnr_businessType.setAdapter(arrayAdapter_business_type_spinner);
+                            spnr_businessType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                                    try {
+                                        str_businessType = "";
+                                        str_businessId = business_type_id_array.get(position);
+                                        str_businessType = spnr_businessType.getSelectedItem().toString().trim();
+                                    } catch (Exception ex) {
+                                        ex.printStackTrace();
+                                        showErrorMessagev1(getString(R.string.try_again_msg));
 
-                        spnr_businessType.setAdapter(arrayAdapter_business_type_spinner);
-                        spnr_businessType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                                try {
-                                    str_businessType = "";
-                                    str_businessId = business_type_id_array.get(position);
-                                    str_businessType = spnr_businessType.getSelectedItem().toString().trim();
-                                } catch (Exception ex) {
-                                    ex.printStackTrace();
-                                    Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                                    View snackBarView = snackbar.getView();
-                                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                                    snackbar.show();
+                                    }
                                 }
-                            }
 
-                            @Override
-                            public void onNothingSelected(AdapterView<?> adapterView) {
+                                @Override
+                                public void onNothingSelected(AdapterView<?> adapterView) {
 
-                            }
+                                }
 
-                        });
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
+                            });
+                        }else {
+                            showErrorMessagev1(msg);
+                        }
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        showErrorMessagev1(getString(R.string.try_again_msg));
+
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
                 }
+
             }
-        }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
+            }
+        });
+
+
+
     }
+
 
     public void confirmOnClick(View view) {
         if (merchantTypeId.trim().equals("0")) {
@@ -218,86 +212,78 @@ public class MerchantTypeVerify extends BaseActivity {
                 AppHandler.showDialog(getSupportFragmentManager());
             } else {
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_MERCHANT_TYPE_CONFIRM_REQUEST);
-                new ConfirmMerchantTypeAsync().execute(
-                        getResources().getString(R.string.conf_merchant_type));
+              confirmMerchantType();
             }
         }
     }
 
-    private class ConfirmMerchantTypeAsync extends AsyncTask<String, String, String> {
 
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
+
+    private void confirmMerchantType(){
+        showProgressDialog();
+        MerchantRequestPojo requestPojo = new MerchantRequestPojo();
+
+        requestPojo.setUsername(mAppHandler.getUserName());
+        requestPojo.setMerchantType(merchantTypeId);
+        requestPojo.setBusinessType(str_businessId);
+        try {
+            String busTypeName = URLEncoder.encode(str_businessType, "UTF-8");
+            requestPojo.setBusinessTypeName(busTypeName);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
 
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(5);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("merchantType", merchantTypeId));
-                nameValuePairs.add(new BasicNameValuePair("businessType", str_businessId));
-                nameValuePairs.add(new BasicNameValuePair("businessTypeName", URLEncoder.encode(str_businessType, "UTF-8")));
-                nameValuePairs.add(new BasicNameValuePair("format", "json"));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
+        ApiUtils.getAPIServiceV2().updateMerchentBusiness(requestPojo).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
+                if (response.code() == 200){
+                    try {
+                        business_type_id_array = new ArrayList<>();
+                        business_type_name_array = new ArrayList<>();
 
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            if (result != null) {
-                try {
-                    business_type_id_array = new ArrayList<>();
-                    business_type_name_array = new ArrayList<>();
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        final String status = jsonObject.getString("status");
+                        String msg = jsonObject.getString("message");
 
-                    JSONObject jsonObject = new JSONObject(result);
-                    final String status = jsonObject.getString("status");
-                    String msg = jsonObject.getString("message");
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MerchantTypeVerify.this);//ERROR ShowDialog cannot be resolved to a type
+                        builder.setTitle("Result");
+                        builder.setMessage(msg);
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MerchantTypeVerify.this);//ERROR ShowDialog cannot be resolved to a type
-                    builder.setTitle("Result");
-                    builder.setMessage(msg);
+                        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                                if (status.equalsIgnoreCase("200") || status.equalsIgnoreCase("335")) {
+                                    mAppHandler.setMerchantTypeVerificationStatus("verified");
+                                    mAppHandler.setDayCount(0);
 
-                    builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                            if (status.equalsIgnoreCase("200") || status.equalsIgnoreCase("335")) {
-                                mAppHandler.setMerchantTypeVerificationStatus("verified");
-                                mAppHandler.setDayCount(0);
-
-                                startActivity(new Intent(MerchantTypeVerify.this, MainActivity.class));
-                                finish();
+                                    startActivity(new Intent(MerchantTypeVerify.this, MainActivity.class));
+                                    finish();
+                                }
                             }
-                        }
-                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
+                        });
+                        AlertDialog alert = builder.create();
+                        alert.show();
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
+
+                    }catch (Exception e){
+                        showErrorMessagev1(getString(R.string.try_again_msg));
+                    }
+                }else {
+                    showErrorMessagev1(getString(R.string.try_again_msg));
                 }
+
             }
-        }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
+            }
+        });
+
+
     }
 
     @Override

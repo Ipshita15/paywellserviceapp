@@ -252,10 +252,10 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
         descoRequestInquiryModel.setPayerMobileNo(mPhn);
         descoRequestInquiryModel.setAmount(mAmount);
         descoRequestInquiryModel.setFormat("json");
-        descoRequestInquiryModel.setUsername(mAppHandler.getImeiNo());
+        descoRequestInquiryModel.setUsername(mAppHandler.getUserName());
         descoRequestInquiryModel.setRefId(uniqueKey);
 
-        ApiUtils.getAPIService().descoInquiryRequest(descoRequestInquiryModel,getResources().getString(R.string.desco_prepaid_bill_enq)).enqueue(new Callback<DescoInquiryResponse>() {
+        ApiUtils.getAPIServiceV2().descoInquiryRequest(descoRequestInquiryModel).enqueue(new Callback<DescoInquiryResponse>() {
             @Override
             public void onResponse(Call<DescoInquiryResponse> call, Response<DescoInquiryResponse> response) {
 
@@ -360,7 +360,7 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
         showProgressDialog();
         String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
         DescoBillPaySubmit descoBillPaySubmit = new DescoBillPaySubmit();
-        descoBillPaySubmit.setUsername( mAppHandler.getImeiNo());
+        descoBillPaySubmit.setUsername( mAppHandler.getUserName());
         descoBillPaySubmit.setPassword(mPin);
         descoBillPaySubmit.setPayerMobileNo(mPhn);
         descoBillPaySubmit.setBillNo(mBill);
@@ -370,7 +370,7 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
         descoBillPaySubmit.setRefId(uniqueKey);
 
 
-        ApiUtils.getAPIService().descoBillPayement(descoBillPaySubmit,getString(R.string.desco_prepaid_bill_pay)).enqueue(new Callback<DescoBillPaySubmitResponse>() {
+        ApiUtils.getAPIServiceV2().descoBillPayement(descoBillPaySubmit).enqueue(new Callback<DescoBillPaySubmitResponse>() {
             @Override
             public void onResponse(Call<DescoBillPaySubmitResponse> call, Response<DescoBillPaySubmitResponse> response) {
 

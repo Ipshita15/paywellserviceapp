@@ -28,7 +28,6 @@
     <string name="home_nagad_balance_title">নগদের মাধ্যমে ব্যালেন্স রিফিল</string>
 
     <string name="home_settings">সেটিংস</string>
-    <string name="home_chat">আমাদের সাথে চ্যাট করুন</string>
     <string name="home_statement_mini">মিনি স্টেটমেন্ট</string>
     <string name="home_statement_balance">ব্যালেন্স স্টেটমেন্ট</string>
     <string name="home_statement_sales">সেল্‌স স্টেটমেন্ট</string>
@@ -75,8 +74,6 @@
     <string name="home_product_ajker_deal">আজকের ডিল</string>
     <string name="home_product_ekshop">এক-শপ</string>
     <string name="home_product_pw_wholesale">পেওয়েল\nহোলসেল</string>
-    <string name="home_product_pw_wholesale_title">পেওয়েল হোলসেল</string>
-    <string name="home_settings_reset_pin">পিন রিসেট</string>
     <string name="home_settings_change_pin">পিন পরিবর্তন</string>
     <string name="home_settings_upgrade">আপগ্রেড</string>
     <string name="home_settings_change_language">ভাষা\nপরিবর্তন</string>
@@ -169,8 +166,6 @@
     <string name="pb_acc_mismatch_error_msg">অ্যাকাউন্ট নম্বর মিলেনি</string>
     <string name="pb_full_name_error_msg">সম্পূর্ণ নাম দিন</string>
     <string name="banglalion_acc_error_msg">সর্বনিম্ন ৪ ডিজিট দিন</string>
-    <string name="journey_date_select_error_msg">যাত্রা শুরু নির্বাচন করুন</string>
-    <string name="ticket_destination_error_msg">প্রথম ৩ অক্ষর লিখুন</string>
     <string name="old_pin_error_msg">আগের পিন নম্বর দিন</string>
     <string name="new_pin_error_msg">সঠিকভাবে নতুন পিন নম্বর দিন</string>
     <string name="bill_no_error_msg">বিল নম্বর দিন</string>
@@ -178,7 +173,6 @@
     <string name="mycash_pin_error_msg">মাইক্যাশ পিন নম্বর দিন</string>
     <string name="location_error_msg">অবস্থান দিন</string>
     <string name="otp_error_msg">ওটিপি দিন</string>
-    <string name="cust_pin_msg">কাস্টমার পিন দিন</string>
     <string name="select_month_msg">মাস নির্বাচন করুন</string>
     <string name="select_year_msg">বছর নির্বাচন করুন</string>
     <string name="mycash_acc_error_msg">সর্বনিম্ন ১২ ডিজিট দিন</string>
@@ -198,12 +192,6 @@
     <string name="conf_topup_title_msg">অনুরোধ বিস্তারিত</string>
     <string name="confirm_title_msg">নিশ্চিতকরণ</string>
     <string name="alert_confirm_msg">আপনি কি ক্যাশ টাকা হাতে পেয়েছেন?</string>
-    <string name="to_city_msg">গন্তব্য</string>
-    <string name="purchase_ticket_msg">টিকেট ক্রয়</string>
-    <string name="journey_date_title_ticket_msg">যাত্রার দিন নির্বাচন করুন</string>
-    <string name="three_char_msg">প্রথম ৩ অক্ষর</string>
-    <string name="hint_source_msg">**স্টেশনের নাম দেখার জন্য, প্রথম তিন অক্ষর লিখুন</string>
-    <string name="reset_pin_msg">আপনি কি পিন পরিবর্তন করতে চান?</string>
     <string name="change_pin_status_msg">আপনার পিন সফলভাবে পরিবর্তন করা হয়েছে</string>
     <string name="bank_transfer_header_msg">নীচের যেকোন ব্যাংকের লোগো সিলেক্ট করে, ব্যাংকের তথ্য জেনে নিন এবং ডিপোজিট স্লিপ আপলোড করুন</string>
     <string name="language_title_msg">ভাষা নির্বাচন</string>
@@ -220,8 +208,6 @@
     <string name="input_error_msg">সঠিকভাবে ইনপুট দিন</string>
     <string name="please_type_in_english">Please type in English</string>
     <string name="info_collect_title">জরুরী তথ্য সংগ্রহ</string>
-    <string name="phn_num_hint">আপনার বর্তমান ফোন নম্বরটি দিন</string>
-    <string name="verify_quote">উপরোক্ত নম্বরে একটি পিন আসবে এবং স্বয়ংক্রিয় ভাবে নম্বরটি ভেরিফাই হয়ে যাবে।</string>
     <string name="allow_error_msg">অনুমতি নেই। প্রথমে পিন পরিবর্তন করুন</string>
     <string name="select_phn_title_msg">নম্বর নির্বাচন করুন</string>
     <string name="select_phn_title_air_ticket">সাহায্যের জন্য কল করুন:</string>
@@ -260,28 +246,11 @@
     <string name="bill_no_des">বিল নম্বরঃ</string>
     <string name="package_type_des">টাইপঃ</string>
     <string name="date_des">তারিখঃ</string>
-    <string name="time_des">সময়ঃ</string>
     <string name="using_paywell_des">পেওয়েল ব্যবহারের জন্য ধন্যবাদ</string>
     <string name="hotline_des">হটলাইনঃ</string>
     <string name="tbps_charge_des">টিবিপিএস চার্জঃ</string>
     <string name="total_des">মোটঃ</string>
     <string name="tk_des">টাকা</string>
-    <string name="from_city_ticket_des">যাত্রা শুরুঃ</string>
-    <string name="to_city_ticket_des">গন্তব্যঃ</string>
-    <string name="journey_date_ticket_des">যাত্রার দিনঃ</string>
-    <string name="selected_seat_des">নির্বাচিত আসনঃ</string>
-    <string name="ticket_des">টিকেটঃ</string>
-    <string name="boarding_des">ছাড়ার সময়ঃ</string>
-    <string name="coach_number_des">কোচঃ</string>
-    <string name="passenger_type_des">যাত্রীর ধরনঃ</string>
-    <string name="no_of_passenger_des">যাত্রীর সংখ্যাঃ</string>
-    <string name="age_of_passenger_des">যাত্রীর বয়সঃ</string>
-    <string name="select_train_des">ট্রেন নির্বাচনঃ</string>
-    <string name="select_class_des">শ্রেনী নির্বাচনঃ</string>
-    <string name="train_name_and_number_des">ট্রেন নাম/নংঃ</string>
-    <string name="service_carge_des">সার্ভিস চার্জঃ</string>
-    <string name="total_fare_des">মোট ভাড়াঃ</string>
-    <string name="collect_before_des">সংগ্রহর শেষ দিনঃ</string>
     <string name="old_pin_des">আগের পিন নম্বরঃ</string>
     <string name="new_pin_des">নতুন পিন নম্বরঃ</string>
     <string name="mycash_balance_des">মাইক্যাশ ব্যালেন্সঃ</string>
@@ -341,101 +310,6 @@
             রিটেইলসহ নানাবিধ পেমেন্ট সংক্রান্ত সার্ভিস প্রদান করে। পেওয়েল সার্ভিস একটি মানসম্পন্ন ডিস্ট্রিবিউশন প্রক্রিয়ায় ভোক্তার কাছে পৌছায়, যেখানে ডিস্ট্রিবিউটর ও
             রিটেইলাররা পেওয়েলের চ্যানেল পার্টনার হিসেবে সক্রিয় ভুমিকা পালন করে।\n\nআমাদের ঠিকানাঃ\nস্কিল হাউজ (ল-৭), ক-৫৩/২, শাহাজাদপুর, গুলশান,
             ঢাকা-১২১২.\nফোনঃ ০৯৬৬৬৭৭৩৩৩৩\nইমেইলঃ contact@cloudwell.co"</item>
-    </string-array>
-    <string-array name="train_destination_array">
-        <item>ABDULPUR</item>
-        <item>AGIMNAGAR</item>
-        <item>AHASANGONJ</item>
-        <item>AKHAURA</item>
-        <item>AKKELPUR</item>
-        <item>ASHGONJ</item>
-        <item>AZAMPUR</item>
-        <item>BAHADURABAD</item>
-        <item>BAJITPUR</item>
-        <item>BAMANDANGA</item>
-        <item>BARAL BRIDGE</item>
-        <item>BHAIRAB BAZAR</item>
-        <item>BHANUGACH</item>
-        <item>BHARAMARA</item>
-        <item>BIRAMPUR</item>
-        <item>BOGRA</item>
-        <item>BOJRA</item>
-        <item>BONARPARA</item>
-        <item>BRAHMAN BARIA</item>
-        <item>CHANDPUR</item>
-        <item>CHANDPUR COURT</item>
-        <item>CHATMOHOR</item>
-        <item>CHITOSI ROAD</item>
-        <item>CHITTAGONG</item>
-        <item>CHOUMUHANI</item>
-        <item>CHUADANGA</item>
-        <item>COMILLA</item>
-        <item>DEWANGANJBAZAR</item>
-        <item>DHAKA BIMAN BANDAR</item>
-        <item>DHAKA KAMALAPUR</item>
-        <item>DINAJPUR</item>
-        <item>FENI</item>
-        <item>GACHIHATA</item>
-        <item>GAFORGAON</item>
-        <item>GAIBANDHA</item>
-        <item>HAJIGANJ</item>
-        <item>HARASHPUR</item>
-        <item>IBRAHIMABAD</item>
-        <item>ISHARDHI</item>
-        <item>ISLAMPUR BAZAR</item>
-        <item>JAMALPUR TOWN</item>
-        <item>JAMTOIL</item>
-        <item>JAYDEBPUR</item>
-        <item>JESSORE</item>
-        <item>JOYPURHAT</item>
-        <item>KAUNIA</item>
-        <item>KHULNA</item>
-        <item>KISHORGANJ</item>
-        <item>KULAURA</item>
-        <item>KULIARCHAR</item>
-        <item>LAKSHAM</item>
-        <item>LALMONIR HAT</item>
-        <item>MAIJDI COURT</item>
-        <item>MAIJGAON</item>
-        <item>MALANDHA BAZAR</item>
-        <item>MANIKHALI</item>
-        <item>MEHER</item>
-        <item>MIRZAPUR</item>
-        <item>MONTALA</item>
-        <item>MUKUNDUPUR</item>
-        <item>MYMENSINGH</item>
-        <item>NANDINA</item>
-        <item>NANGAL KOT</item>
-        <item>NARSINGDI</item>
-        <item>NATHAR PATUA</item>
-        <item>NATOR</item>
-        <item>NILPHAMARI</item>
-        <item>NOAKHALI</item>
-        <item>NOAPARA</item>
-        <item>NOAYPARA</item>
-        <item>PANCHBIBI</item>
-        <item>PARBATIPUR</item>
-        <item>PHULBURI</item>
-        <item>PIRGACHA</item>
-        <item>PORADAHA</item>
-        <item>QOSBA</item>
-        <item>RAJSHAHI</item>
-        <item>SADANANDAPUR</item>
-        <item>SANTAHAR</item>
-        <item>SARARCHAR</item>
-        <item>SARISHABARI</item>
-        <item>SAYEDPUR</item>
-        <item>SHAHAGI BAZAR</item>
-        <item>SHAISTAGONJ</item>
-        <item>SHAMSHERNAGAR</item>
-        <item>SHORDHA ROAD</item>
-        <item>SONAIMURI</item>
-        <item>SONATALA</item>
-        <item>SRIMONGAL</item>
-        <item>SYLHET</item>
-        <item>TANGAIL</item>
-        <item>TARAKANDI</item>
-        <item>ULLAH PARA</item>
     </string-array>
 
 
@@ -506,7 +380,6 @@
     <string name="title_passenger_list">Passenger Info</string>
 
     <string name="title_add_passenger">Add Passenger</string>
-    <string name="booking_status_menu">বুকিং স্টেটাস</string>
 
     <string name="add">Add</string>
     <string name="title">Title *</string>
@@ -739,11 +612,9 @@
     <string name="re_submit_reb">পুনরায় জমা দিন</string>
     <string name="title_issue_ticket">ইস্যু টিকেট</string>
     <string name="bookingId" >বুকিং আইডি</string>
-    <string name="title_void_ticket">Ticket Void</string>
     <string name="view_ticket_with_fare">View Ticket With Fare</string>
     <string name="send_email_with_fare">Send Email With Fare</string>
     <string name="scanner">স্ক্যানার</string>
-    <string name="done">ওকে</string>
     <string name="no_bill_number_found_message">কোনও বিল নম্বর পাওয়া যায় নি, আবার চেষ্টা করুন</string>
     <string name="finished">সম্পূর্ণ</string>
     <string name="next_text">পরবর্তী</string>
@@ -757,7 +628,7 @@
     <string name="meter_number">মিটার নম্বর</string>
     <string name="txt_login">লগ ইন</string>
     <string name="txt_signup">রেজিস্ট্রেশন</string>
-    <string name="rid_mobile_number">আরআইডি / মোবাইল নম্বর</string>
+    <string name="rid_mobile_number">মোবাইল নম্বর</string>
     <string name="pin_number">পিন নাম্বার</string>
     <string name="submit">লগ ইন</string>
     <string name="forget_pin">পিন ভুলে গেছেন?</string>
@@ -766,7 +637,6 @@
     <string name="otp_verification">ওটিপি যাচাইকরণ</string>
     <string name="ok_text">ঠিক আছে</string>
     <string name="resend_otp">ওটিপি পুনরায় পাঠান</string>
-    <string name="send_otp">ওটিপি পাঠান</string>
     <string name="verify_your_phone_number">আপনার ফোন নম্বর যাচাই করুন</string>
     <string name="we_have_send_you_an_sms_with_a_code_to_your_number">আমরা আপনার নম্বরটিতে একটি কোড সহ আপনাকে একটি এসএমএস পাঠিয়েছি</string>
     <string name="didn_t_you_received_any_code">আপনি কোনও কোড পান নি?</string>
@@ -775,6 +645,7 @@
     <string name="please_enter_the_last_4_digits_of_your_phone_number">অনুগ্রহ করে আপনার ফোন নাম্বারটি প্রদান করুন</string>
     <string name="forgot_pin">পিন অনুরোধ</string>
     <string name="device_not_support">আপনার ডিভাইস সমর্থন করে না, দয়া করে আমাদের কল সেন্টারে যোগাযোগ করুন</string>
+    <string name="device_not_support_root">সুরক্ষা উদ্দেশ্যে রুটযুক্ত ডিভাইসটির জন্য এই অ্যাপটি ব্যবহার করে না, দয়া করে আমাদের কল সেন্টারে যোগাযোগ করুন</string>
     <string name="retype_pin_number">পিন নম্বর পুনরায় টাইপ করুন</string>
     <string name="title_error_message">বার্তা</string>
     <string name="no_internet_connection">কোনও ইন্টারনেট সংযোগ নেই</string>

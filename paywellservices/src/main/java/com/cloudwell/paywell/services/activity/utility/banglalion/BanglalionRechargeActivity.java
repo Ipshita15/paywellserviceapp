@@ -15,15 +15,15 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
-import com.cloudwell.paywell.services.activity.topup.TopupMainActivity;
+import com.cloudwell.paywell.services.activity.utility.AllUrl;
 import com.cloudwell.paywell.services.activity.utility.banglalion.model.BanglalionHistory;
-import com.cloudwell.paywell.services.activity.utility.ivac.IvacFeePayActivity;
-import com.cloudwell.paywell.services.activity.utility.ivac.model.IvacHistory;
+import com.cloudwell.paywell.services.activity.utility.banglalion.model.RechargeRequestPojo;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.database.DatabaseClient;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.DateUtils;
 import com.cloudwell.paywell.services.utils.ParameterUtility;
@@ -45,6 +45,11 @@ import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BanglalionRechargeActivity extends BaseActivity implements View.OnClickListener {
 
@@ -172,102 +177,69 @@ public class BanglalionRechargeActivity extends BaseActivity implements View.OnC
                 if (!cd.isConnectingToInternet()) {
                     AppHandler.showDialog(getSupportFragmentManager());
                 } else {
-                    mSubmitAsync = new SubmitAsync().execute(getResources().getString(R.string.banglalion_bill_pay),
-                            mAppHandler.getImeiNo(),
-                            accountNo,
-                            amount,
-                            _pin);
+                    submitRecharge(mAppHandler.getUserName(), accountNo, amount, _pin);
                 }
             }
         }
     }
 
-    private class SubmitAsync extends AsyncTask<String, Integer, String> {
+    private void submitRecharge(String userName, String accountNo, String amount, String pin) {
+        showProgressDialog();
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(BanglalionRechargeActivity.this).getRID());
+        RechargeRequestPojo pojo = new RechargeRequestPojo();
+        pojo.setAmount(amount);
+        pojo.setCustomerID(accountNo);
+        pojo.setPassword(pin);
+        pojo.setRef_id(uniqueKey);
+        pojo.setUserName(userName);
 
 
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
+        ApiUtils.getAPIServiceV2().banglalionRecharge(pojo).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
 
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
+                if (response.code() == 200){
+                 try {
+                     JSONObject jsonObject = new JSONObject(response.body().string());
+                     int status = jsonObject.getInt("status");
+                     String message = jsonObject.getString("message");
+                     if (status == 200){
+                         String trxId = jsonObject.getString("trans_id");
+                         JSONObject data = jsonObject.getJSONObject("data");
+                         if (data != null) {
+                             String blcTrx = data.getString("BLCTrx");
+                             String amount = data.getString("amount");
+                             String retailCommission = data.getString("retCommission");
+                             String accountNum = data.getString("customerID");
+                             String hotLine = data.getString("contact");
+                             showStatusDialog(message, accountNum, amount, trxId, blcTrx, retailCommission, hotLine);
+                         }
+                     }else {
+                         showErrorMessagev1(message);
+                     }
 
-            String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(BanglalionRechargeActivity.this).getRID());
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(5);
-                nameValuePairs.add(new BasicNameValuePair("userName", params[1]));
-                nameValuePairs.add(new BasicNameValuePair("customerID", params[2]));
-                nameValuePairs.add(new BasicNameValuePair("amount", params[3]));
-                nameValuePairs.add(new BasicNameValuePair("password", params[4]));
-                nameValuePairs.add(new BasicNameValuePair("format", "json"));
-                nameValuePairs.add(new BasicNameValuePair(ParameterUtility.KEY_REF_ID, uniqueKey));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                 }catch (Exception e){
+                     e.printStackTrace();
+                     showErrorMessagev1(getString(R.string.try_again_msg));
+                 }
 
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            insertBanglaliohHistoryAsyncTask = new AsyncTask<Void, Void, Void>() {
-                @Override
-                protected Void doInBackground(Void... voids) {
-
-                    String currentDataAndTIme = DateUtils.INSTANCE.getCurrentDataAndTIme();
-                    BanglalionHistory banglalionHistory = new BanglalionHistory();
-                    banglalionHistory.setCustomerNumber(accountNo);
-                    banglalionHistory.setDate(currentDataAndTIme);
-                    DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mUtilityDab().insertBanglalionHistory(banglalionHistory);
-                    return null;
+                }else {
+                    showErrorMessagev1(getString(R.string.try_again_msg));
                 }
-            }.execute();
-            try {
-                JSONObject jsonObject = new JSONObject(result);
-                String status = jsonObject.getString("status");
-                String message = jsonObject.getString("message");
-
-                if (status != null && status.equals("200")) {
-                    String trxId = jsonObject.getString("trans_id");
-                    JSONObject data = jsonObject.getJSONObject("data");
-                    if (data != null) {
-                        String blcTrx = data.getString("BLCTrx");
-                        String amount = data.getString("amount");
-                        String retailCommission = data.getString("retCommission");
-                        String accountNum = data.getString("customerID");
-                        String hotLine = data.getString("contact");
-                        showStatusDialog(message, accountNum, amount, trxId, blcTrx, retailCommission, hotLine);
-                    }
-                } else {
-                    Snackbar snackbar = Snackbar.make(mLinearLayout, message, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
             }
-        }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
+            }
+        });
+
+
+
     }
+
 
     private void showStatusDialog(String msg, String accountNo, String amount, String trxId, String banglalinkTrx, String retailCommission, String hotline) {
         StringBuilder reqStrBuilder = new StringBuilder();
