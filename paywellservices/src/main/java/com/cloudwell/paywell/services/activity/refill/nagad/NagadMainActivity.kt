@@ -14,6 +14,7 @@ import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.activity.refill.nagad.fragment.MobileNumberQRCodeFragment
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLog
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLogRequestModel
+import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.NagadBalanceClaimActivityv2
 import com.cloudwell.paywell.services.activity.utility.AllUrl
 import com.cloudwell.paywell.services.activity.utility.electricity.westzone.model.WZPDCLBillPayModel
 import com.cloudwell.paywell.services.app.AppController
@@ -110,7 +111,7 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
         }
 
         initView()
-
+        nagadBalanceClaimv2.setOnClickListener(this)
         nagadBalanceClaim.setOnClickListener(this)
         nagadBalanceRefill.setOnClickListener(this)
         nagadQRCode.setOnClickListener(this)
@@ -145,7 +146,12 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
 
     override fun onClick(v: View) {
         when (v.id) {
+            R.id.nagadBalanceClaimv2 -> {
+                val intent = Intent(applicationContext, NagadBalanceClaimActivityv2::class.java)
+                startActivity(intent)
+            }
             R.id.nagadBalanceClaim -> {
+
                 val intent = Intent(applicationContext, NagadBalanceClaimActivity::class.java)
                 startActivity(intent)
             }

@@ -11,7 +11,7 @@ data class RequestSingleTopup(
 	var password: String = "",
 
 		@field: SerializedName("amount")
-	var amount: String = "",
+	var amount: Int = 0,
 
 		@field: SerializedName("con_type")
 	var conType: String = "",

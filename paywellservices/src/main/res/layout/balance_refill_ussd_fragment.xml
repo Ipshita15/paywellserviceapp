@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
 
     <ScrollView
@@ -96,8 +96,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tvLine6"
                 app:srcCompat="@drawable/balance_refill_one" />
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvLine7"
+                app:srcCompat="@drawable/balance_refill_one" />
 
             <TextView
+                android:textColor="@color/nogadh_text_clr"
                 android:id="@+id/tvLine1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -112,6 +123,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
             <TextView
+                android:textColor="@color/nogadh_text_clr"
                 android:id="@+id/tvLine2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -126,6 +138,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvLine1" />
 
             <TextView
+                android:textColor="@color/nogadh_text_clr"
                 android:id="@+id/tvLine3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -138,6 +151,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvLine2" />
 
             <TextView
+                android:textColor="@color/nogadh_text_clr"
                 android:id="@+id/tvLine4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -150,6 +164,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvLine3" />
 
             <TextView
+                android:textColor="@color/nogadh_text_clr"
                 android:id="@+id/tvLine5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -162,6 +177,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvLine4" />
 
             <TextView
+                android:textColor="@color/nogadh_text_clr"
                 android:id="@+id/tvLine6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -170,9 +186,22 @@
                 android:layout_marginRight="8dp"
                 android:text="TextView"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/tvLine5"
                 app:layout_constraintTop_toBottomOf="@+id/tvLine5" />
+
+            <TextView
+                android:textColor="@color/nogadh_text_clr"
+                android:id="@+id/tvLine7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="7dp"
+                android:text="TextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tvLine6"
+                app:layout_constraintTop_toBottomOf="@+id/tvLine6" />
 
             <View
                 android:id="@+id/view17"
@@ -185,9 +214,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/imageView5"
-                app:layout_constraintTop_toBottomOf="@+id/tvLine6" />
+                app:layout_constraintTop_toBottomOf="@+id/tvLine7" />
 
             <TextView
+                android:textColor="@color/nogadh_text_clr"
                 android:id="@+id/textView50"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

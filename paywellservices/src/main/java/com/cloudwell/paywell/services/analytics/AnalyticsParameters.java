@@ -129,6 +129,7 @@ public class AnalyticsParameters {
     public static final String KEY_PRODUCT_EKSHOPE_DEAL_PAGE = "ProductAjkerEkshop";
     public static final String KEY_PRODUCT_EK_SHOP = "ProductEKShope";
 
+    public static final String KEY_PRODUCT_EDUCATION_MENU = "BbcEducation";
 
     public static final String KEY_PRODUCT_WHOLESALE_MENU = "ProductWholesaleMenu";
     public static final String KEY_PRODUCT_WHOLESALE_PAGE = "ProductWholesalePage";

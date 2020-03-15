@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public class TopupData {
 
     @SerializedName("amount")
-    private String mAmount;
+    private int mAmount;
     @SerializedName("con_type")
     private String mConType;
     @SerializedName("msisdn")
@@ -20,7 +20,7 @@ public class TopupData {
     @SerializedName(ParameterUtility.KEY_REF_ID)
     private String refId;
 
-    public TopupData(String amount, String conType, String msisdn, String operator, String refId) {
+    public TopupData(int amount, String conType, String msisdn, String operator, String refId) {
         mAmount = amount;
         mConType = conType;
         mMsisdn = msisdn;
@@ -28,11 +28,11 @@ public class TopupData {
         this.refId = refId;
     }
 
-    public String getAmount() {
+    public int getAmount() {
         return mAmount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(int amount) {
         mAmount = amount;
     }
 
