@@ -2,9 +2,13 @@ package com.cloudwell.paywell.services.retrofit;
 
 
 import com.cloudwell.paywell.services.activity.BBC.model.BbcSubscriptionPojo;
+import com.cloudwell.paywell.services.activity.BBC.model.BbcTranscationLog;
 import com.cloudwell.paywell.services.activity.BBC.model.CourseListRresponsePojo;
 import com.cloudwell.paywell.services.activity.BBC.model.CourseLlistRequestPojo;
 import com.cloudwell.paywell.services.activity.BBC.model.RegistationInfo;
+import com.cloudwell.paywell.services.activity.bank_info_update.spineer.BankResponse;
+import com.cloudwell.paywell.services.activity.bank_info_update.spineer.GetBankPojo;
+import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.Nagadv2requestPojo;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.ReposeAirSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.ResGetAirports;
@@ -70,6 +74,7 @@ import com.cloudwell.paywell.services.activity.refill.nagad.model.ResTranstionIN
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.BalanceClaimModel;
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLog;
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLogRequestModel;
+import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.NagadWebResponse;
 import com.cloudwell.paywell.services.activity.reg.model.AuthRequestModel;
 import com.cloudwell.paywell.services.activity.reg.model.RegistrationModel;
 import com.cloudwell.paywell.services.activity.reg.model.RequestDistrictList;
@@ -179,11 +184,13 @@ public interface APIService {
     @POST("Retailer/BankDepositSystem/getBankBranch")
     Call<BranchData> callBranchDataAPI(@Body RequestBranch requestBranch);
 
+
+    @POST("Retailer/BankDepositSystem/getBankInfo")
+    Call<BankResponse> callBankDataAPI(@Body GetBankPojo bankPojo);
+
+
     @POST("Retailer/BankDepositSystem/depositBankSlip")
     Call<RefillRequestData> callBalanceRefillAPI(@Body RequestRefillBalance requestRefillBalance);
-
-
-
 
     @POST("Retailer/RetailerService/checkBalance")
     Call<APIResBalanceCheck> callCheckBalance(@Body RequestBalanceCheck requestBalanceCheck);
@@ -375,7 +382,7 @@ public interface APIService {
                                  @Field(ParameterUtility.KEY_REF_ID) String refId);
 
     @FormUrlEncoded
-    @POST("PaywellParibahanService/getTransactionData")
+    @POST("PaywellParibahanService/getEnquiryData")
     Call<TransactionLogDetailsModel> getBusTransactionLogFromServer(@Field("username") String username, @Field("skey") String skey, @Field("limit") String limit, @Field(ParameterUtility.KEY_REF_ID) String refId);
 
     @POST
@@ -652,6 +659,7 @@ public interface APIService {
     @POST("Utility/InternetBillPay/banglalionEnquiry")
     Call<ResponseBody> banglalionRechargeInquiry(@Body RechargeResponsePojo rechargeResponsePojo);
 
+    //BBC
     @POST("Utility/BBC/getCourseList")
     Call<CourseListRresponsePojo> getBBCcourseList(@Body CourseLlistRequestPojo pojo);
 
@@ -660,5 +668,12 @@ public interface APIService {
 
     @POST("Utility/BBC/subscription")
     Call<ResponseBody> getBBCsubscribe(@Body BbcSubscriptionPojo pojo);
+
+    @POST("Reports/TransactionReportSystem/TransactionReport")
+    Call<ResponseBody> getBBCTransactionLog(@Body BbcTranscationLog transcationLog);
+
+    //new Nagdh
+    @POST("PaymentGateway/PaymentGatewaySystem/nagadApiProcess")
+    Call<NagadWebResponse> gestNahadg(@Body Nagadv2requestPojo nagadv2requestPojo);
 
 }

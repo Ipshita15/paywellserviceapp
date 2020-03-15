@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.refill.nagad
+package com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView
 
 import android.app.Activity
 import android.content.Context
@@ -33,13 +33,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class NagadBalanceClaimActivity : UtilityBaseActivity() {
+class NagadBalanceClaimActivityv2 : UtilityBaseActivity() {
     private var mAppHandler: AppHandler? = null
      val INTENT_REQUEST = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_nagad_balance_claim)
+        setContentView(R.layout.activity_nagad_balance_claim2)
         setToolbar(getString(R.string.home_title_nagad_balance_claim))
         mAppHandler = AppHandler.getmInstance(applicationContext)
 
@@ -50,7 +50,7 @@ class NagadBalanceClaimActivity : UtilityBaseActivity() {
     }
 
     private fun checkValidation() {
-        val mobileNumber = pbBillNumberET.text.toString()
+        //val mobileNumber = pbBillNumberET.text.toString()
         val amountString = pbBillAmountET.text.toString()
 
         if (amountString.length < 1) {
@@ -59,15 +59,12 @@ class NagadBalanceClaimActivity : UtilityBaseActivity() {
         } else if (amountString.toDouble() < 1) {
             pbBillAmountET.setError(Html.fromHtml("<font color='red'>" + getString(R.string.amount_limit_error_msg) + "</font>"))
             return
-        } else if (mobileNumber.length < 1) {
-            pbBillNumberET.setError(Html.fromHtml("<font color='red'>" + getString(R.string.invalid_input) + "</font>"))
-            return
         }
 
-        askForPin(mobileNumber, amountString)
+        askForPin(amountString)
     }
 
-    private fun askForPin(mobileNumber: String, amount: String) {
+    private fun askForPin(amount: String) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.pin_no_title_msg)
 
@@ -90,7 +87,7 @@ class NagadBalanceClaimActivity : UtilityBaseActivity() {
 
                 if (ConnectionDetector(applicationContext).isConnectingToInternet) {
 
-                    callBalanceClimApi(pinNoET.text.toString(), mobileNumber, amount)     //for nagad v1
+                    callBalanceClimApi_v2(pinNoET.text.toString(),  amount)    //for nagad v2 webview
 
                 } else {
                     showNoInternetConnectionFound()
@@ -103,7 +100,7 @@ class NagadBalanceClaimActivity : UtilityBaseActivity() {
         alert.show()
     }
 
-    private fun callBalanceClimApi_v2(pin: String, mobileNumber: String, amount: String) {
+    private fun callBalanceClimApi_v2(pin: String, amount: String) {
         showProgressDialog()
         val pojo =  Nagadv2requestPojo()
         pojo.password = pin
@@ -158,35 +155,6 @@ class NagadBalanceClaimActivity : UtilityBaseActivity() {
             }
         }
 
-    }
-
-
-
-    private fun callBalanceClimApi(pin: String, mobileNumber: String, amount: String) {
-        showProgressDialog()
-        val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(applicationContext).rid)
-        val sec_token = AllUrl.sec_token
-
-        val newModel = BalanceClaimModel()
-        newModel.amount = amount
-        newModel.gatewayId = "5"
-        newModel.password = pin
-        newModel.refId = uniqueKey
-        newModel.trxOrPhoneNo = mobileNumber
-        newModel.username = AppHandler.getmInstance(applicationContext).userName
-
-        ApiUtils.getAPIServiceV2().BalanceClaimRequest(newModel).enqueue(object : Callback<ResTranstionINquiry>{
-            override fun onFailure(call: Call<ResTranstionINquiry>, t: Throwable) {
-                Toast.makeText(applicationContext, "Server error!!!", Toast.LENGTH_SHORT).show()
-                dismissProgressDialog()
-            }
-
-            override fun onResponse(call: Call<ResTranstionINquiry>, response: Response<ResTranstionINquiry>) {
-                dismissProgressDialog()
-                response.body()?.let { showBillResponseDialog(this@NagadBalanceClaimActivity, it) }
-            }
-
-        })
     }
 
 
