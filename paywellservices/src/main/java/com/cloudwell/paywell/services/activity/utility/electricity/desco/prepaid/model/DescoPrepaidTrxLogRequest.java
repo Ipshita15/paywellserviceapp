@@ -2,21 +2,20 @@
 package com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model;
 
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
 public class DescoPrepaidTrxLogRequest {
 
-    @Expose
+    @SerializedName("format")
     private String format;
-    @Expose
+    @SerializedName("limit")
     private String limit;
     @SerializedName("ref_id")
     private String refId;
-    @Expose
+    @SerializedName("service")
     private String service;
-    @Expose
+    @SerializedName("username")
     private String username;
 
     public DescoPrepaidTrxLogRequest(String format, String limit, String refId, String service, String username) {

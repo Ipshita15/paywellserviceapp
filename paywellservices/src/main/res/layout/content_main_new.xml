@@ -147,23 +147,6 @@
                 android:gravity="center_horizontal"
                 android:orientation="horizontal"
                 android:weightSum="5">
-                <Button
-                    android:id="@+id/homeBtnEducation"
-                    style="@style/HomeButtonNew"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_statement"
-                    android:onClick="onButtonClicker"
-                    android:text="@string/home_education"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"/>
 
                 <Button
                     android:id="@+id/homeBtnMiniStatement"

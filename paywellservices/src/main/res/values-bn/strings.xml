@@ -209,8 +209,6 @@
     <string name="input_error_msg">সঠিকভাবে ইনপুট দিন</string>
     <string name="please_type_in_english">Please type in English</string>
     <string name="info_collect_title">জরুরী তথ্য সংগ্রহ</string>
-    <string name="phn_num_hint">আপনার বর্তমান ফোন নম্বরটি দিন</string>
-    <string name="verify_quote">উপরোক্ত নম্বরে একটি পিন আসবে এবং স্বয়ংক্রিয় ভাবে নম্বরটি ভেরিফাই হয়ে যাবে।</string>
     <string name="allow_error_msg">অনুমতি নেই। প্রথমে পিন পরিবর্তন করুন</string>
     <string name="select_phn_title_msg">নম্বর নির্বাচন করুন</string>
     <string name="select_phn_title_air_ticket">সাহায্যের জন্য কল করুন:</string>
@@ -632,7 +630,7 @@
     <string name="meter_number">মিটার নম্বর</string>
     <string name="txt_login">লগ ইন</string>
     <string name="txt_signup">রেজিস্ট্রেশন</string>
-    <string name="rid_mobile_number">আরআইডি / মোবাইল নম্বর</string>
+    <string name="rid_mobile_number">মোবাইল নম্বর</string>
     <string name="pin_number">পিন নাম্বার</string>
     <string name="submit">লগ ইন</string>
     <string name="forget_pin">পিন ভুলে গেছেন?</string>

@@ -210,9 +210,6 @@
     <string name="input_error_msg">Enter properly</string>
     <string name="please_type_in_english">Please type in English</string>
     <string name="info_collect_title">Important Information Collection</string>
-    <string name="phn_num_hint">Please enter your current phone number</string>
-    <string name="verify_quote">You will receive a PIN in the above phone number and your phone number will verify
-        automatically.</string>
     <string name="allow_error_msg">Not allowed. Change the Pin first</string>
     <string name="select_phn_title_msg">Choose a number</string>
     <string name="select_phn_title_air_ticket">Call for help:</string>
@@ -318,6 +315,9 @@
     <!-- paywell apis -->
 
     <string name="app_next_version_no">vten_seventeen</string>
+
+   <!-- privacy -->
+
 
     <!-- privacy -->
     <string name="privacy" translatable="false">https://www.paywellonline.com/Privacy.php</string>
@@ -632,7 +632,7 @@
     <string name="meter_number">Meter number</string>
     <string name="txt_login">Login</string>
     <string name="txt_signup">Signup</string>
-    <string name="rid_mobile_number">RID/Mobile Number</string>
+    <string name="rid_mobile_number">Mobile Number</string>
     <string name="pin_number">Pin Number</string>
     <string name="submit">Login</string>
     <string name="forget_pin">Forget Pin?</string>

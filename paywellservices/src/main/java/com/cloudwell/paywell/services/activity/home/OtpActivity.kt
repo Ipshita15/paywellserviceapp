@@ -218,7 +218,7 @@ class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleA
         val mTask = mClient.startSmsRetriever()
         mTask.addOnSuccessListener {
 
-            Toast.makeText(this, "SMS Retriever starts", Toast.LENGTH_LONG).show()
+//            Toast.makeText(this, "SMS Retriever starts", Toast.LENGTH_LONG).show()
         }
         mTask.addOnFailureListener { Toast.makeText(this, "Error", Toast.LENGTH_LONG).show() }
     }

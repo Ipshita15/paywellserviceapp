@@ -77,6 +77,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
+        <activity android:name=".activity.BBC.BBCsubscribeActivity"
+            android:parentActivityName=".activity.BBC.CourseListActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.BBC.CourseListActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".activity.bank_info_update.BankINFO_MainActivity"
@@ -1063,6 +1069,14 @@
         <activity
             android:name=".activity.refill.nagad.NagadBalanceClaimActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.refill.nagad.nagad_v2.webView.NagadBalanceClaimActivityv2"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.refill.nagad.nagad_v2.webView.WebViewActivity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.utility.pallibidyut.bill.PBBillPayOldActivity"
             android:screenOrientation="portrait" />
@@ -1089,9 +1103,6 @@
             android:name=".activity.reg.nidOCR.InputNidInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activity.utility.electricity.desco.prepaid.DescoPrepaidInquuiryActivity"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.utility.electricity.desco.prepaid.DescoPrepaidBillPayActivity"
             android:screenOrientation="portrait" />

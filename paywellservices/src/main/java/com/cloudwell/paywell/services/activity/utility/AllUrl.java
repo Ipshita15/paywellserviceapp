@@ -49,14 +49,14 @@ public class AllUrl {
     public static final  String resetPassword = "https://agentapi.paywellonline.com/Authantication/PaywellAuth/resetPassword";
     public static final  String refreshToken = "https://agentapi.paywellonline.com/Authantication/PaywellAuth/refreshToken";
 
-    public static final  String ekshop_paywell_auth_check = "https://ekshop.gov.bd/ekshop_integration/api/paywell-auth-check";
+    public static final  String ekshop_paywell_auth_check = "https://agentapi.paywellonline.com/Ecommerce/Ekshop/auth";
 
 
 
 
-    public static final String URL_ek_shope_token = "https://ekshop.paywellonline.com/get_token";
-    public static final String URL_ek_redirect = "https://ekshop.paywellonline.com/redirect?";
-    public static final String URL_ek_report = "https://ekshop.paywellonline.com/get_report";
+    public static final String URL_ek_shope_token = "https://agentapi.paywellonline.com/Ecommerce/Ekshop/get_token";
+    public static final String URL_ek_redirect = "https://agentapi.paywellonline.com/Ecommerce/Ekshop/redirect?";
+    public static final String URL_ek_report = "https://agentapi.paywellonline.com/Ecommerce/Ekshop/get_report";
 
     public static final String URL_chat = "https://agentapi.paywellonline.com/chatting-retailer/";
     public static final String URL_update_check = "https://app.paywellonline.com/apk/paywell_services_latest_version.apk";
@@ -65,6 +65,9 @@ public class AllUrl {
     public static final String URL_banglalion_bill_pay = "https://api.paywellonline.com/PayWellInternateBillPay/banglalionBillPay";
     public static final String URL_banglalion_bill_inquiry = "https://api.paywellonline.com/PayWellInternateBillPay/banglalionEnquiry";
     public static final String URL_bkash_balance_check = "https://bkapi.paywellonline.com/retailer/userBalanceCheck.php?";
+
+    public static final String URL_salesStatement= "https://agentapi.paywellonline.com/Android/AndroidWebViewController/salesStatement?username=";
+    public static final String URL_getAllTransactionStatement= "https://agentapi.paywellonline.com/Android/AndroidWebViewController/getAllTransactionStatement?username=";
 
 
 }
