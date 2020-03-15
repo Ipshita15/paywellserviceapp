@@ -9,7 +9,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.26.1'
+        classpath 'io.fabric.tools:gradle:1.28.0'
     }
 }
 // Put Fabric plugin after Android plugin
@@ -259,7 +259,6 @@ dependencies {
     implementation group: 'org.bouncycastle', name: 'bcprov-jdk15', version: '1.40'
 
     implementation 'com.dt:timerbutton:0.1'
-
 
 
 }

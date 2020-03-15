@@ -77,10 +77,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
-        <activity android:name=".activity.BBC.BBCsubscribeActivity"
-            android:parentActivityName=".activity.BBC.CourseListActivity"
+
+        <activity
+            android:name=".activity.bank_info_update.BankINFO_MainActivity"
             android:screenOrientation="portrait"
-            ></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".BankInformation.BongoMainActivity" />
+
+        <activity android:name=".activity.refill.nagad.nagad_v2.webView.WebViewActivity" />
+
+        <activity
+            android:name=".activity.BBC.BBCsubscribeActivity"
+            android:parentActivityName=".activity.BBC.CourseListActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".activity.BBC.CourseListActivity" />
         <activity
             android:name=".activity.BBC.BBC_Main_Activity"
@@ -925,7 +935,15 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.WebViewActivity"
-            android:screenOrientation="portrait" />
+            android:parentActivityName=".activity.refill.nagad.NagadBalanceClaimActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".activity.refill.nagad.nagad_v2.webView.NagadBalanceClaimActivityv2"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
+
+
         <activity
             android:name=".activity.refill.banktransfer.BankDetailsActivity"
             android:screenOrientation="portrait" />

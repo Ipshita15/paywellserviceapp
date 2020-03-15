@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
+import com.cloudwell.paywell.services.activity.bank_info_update.BankINFO_MainActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.location.LocationActivity;
 import com.cloudwell.paywell.services.activity.utility.AllUrl;
@@ -87,6 +88,11 @@ public class SettingsActivity extends BaseActivity {
             case R.id.homeBtnHelp:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_SETTINGS_MENU, AnalyticsParameters.KEY_SETTINGS_HELP_MENU);
                 startHelpMenu();
+                break;
+
+            case R.id.bankBtn:
+              Intent intent = new Intent(this, BankINFO_MainActivity.class);
+              startActivity(intent);
                 break;
 
             default:

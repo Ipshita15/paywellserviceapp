@@ -13,16 +13,13 @@ import com.cloudwell.paywell.services.activity.BBC.model.CourseListRresponsePojo
 import com.cloudwell.paywell.services.activity.BBC.model.CourseLlistRequestPojo
 import com.cloudwell.paywell.services.activity.BBC.model.CoursesItem
 import com.cloudwell.paywell.services.activity.base.BaseActivity
-import com.cloudwell.paywell.services.activity.mfs.mycash.manage.BalanceTransferRequestActivity
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_course_list.*
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 
 /**
  * Created by Sepon Email: ismailhossainsepon@gmail.com  Mobile: +8801612250477.
