@@ -66,5 +66,8 @@ public class AllUrl {
     public static final String URL_banglalion_bill_inquiry = "https://api.paywellonline.com/PayWellInternateBillPay/banglalionEnquiry";
     public static final String URL_bkash_balance_check = "https://bkapi.paywellonline.com/retailer/userBalanceCheck.php?";
 
+    public static final String URL_salesStatement= "https://agentapi.paywellonline.com/Android/AndroidWebViewController/salesStatement?username=";
+    public static final String URL_getAllTransactionStatement= "https://agentapi.paywellonline.com/Android/AndroidWebViewController/getAllTransactionStatement?username=";
+
 
 }
