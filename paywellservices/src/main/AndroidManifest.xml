@@ -79,9 +79,10 @@
         tools:replace="allowBackup">
         <activity android:name=".activity.BBC.BBCsubscribeActivity"
             android:parentActivityName=".activity.BBC.CourseListActivity"
-            android:screenOrientation="portrait"
-            ></activity>
-        <activity android:name=".activity.BBC.CourseListActivity" />
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.BBC.CourseListActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.BBC.BBC_Main_Activity"
             android:parentActivityName=".activity.MainActivity"
@@ -1045,6 +1046,14 @@
         <activity
             android:name=".activity.refill.nagad.NagadBalanceClaimActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.refill.nagad.nagad_v2.webView.NagadBalanceClaimActivityv2"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.refill.nagad.nagad_v2.webView.WebViewActivity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.utility.pallibidyut.bill.PBBillPayOldActivity"
             android:screenOrientation="portrait" />
