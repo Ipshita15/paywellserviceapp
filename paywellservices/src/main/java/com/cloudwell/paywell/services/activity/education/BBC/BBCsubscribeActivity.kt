@@ -5,10 +5,10 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.BBC.model.BbcSubscriptionPojo
-import com.cloudwell.paywell.services.activity.BBC.model.CoursesItem
-import com.cloudwell.paywell.services.activity.BBC.model.Data
 import com.cloudwell.paywell.services.activity.base.BaseActivity
+import com.cloudwell.paywell.services.activity.education.BBC.model.BbcSubscriptionPojo
+import com.cloudwell.paywell.services.activity.education.BBC.model.CoursesItem
+import com.cloudwell.paywell.services.activity.education.BBC.model.Data
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.google.gson.Gson

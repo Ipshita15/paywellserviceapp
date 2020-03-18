@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.BBC
+package com.cloudwell.paywell.services.activity.education.BBC
 
 import android.content.Context
 import android.content.Intent
@@ -8,10 +8,11 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.BBC.adapter.CourseListAdapter
-import com.cloudwell.paywell.services.activity.BBC.model.CourseListRresponsePojo
-import com.cloudwell.paywell.services.activity.BBC.model.CourseLlistRequestPojo
-import com.cloudwell.paywell.services.activity.BBC.model.CoursesItem
+import com.cloudwell.paywell.services.activity.BBC.BBCsubscribeActivity
+import com.cloudwell.paywell.services.activity.education.BBC.adapter.CourseListAdapter
+import com.cloudwell.paywell.services.activity.education.BBC.model.CourseListRresponsePojo
+import com.cloudwell.paywell.services.activity.education.BBC.model.CourseLlistRequestPojo
+import com.cloudwell.paywell.services.activity.education.BBC.model.CoursesItem
 import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils

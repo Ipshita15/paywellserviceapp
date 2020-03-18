@@ -130,7 +130,7 @@
                     android:id="@+id/homeBtnEducation"
                     style="@style/HomeButtonNew"
                     android:layout_weight="1"
-                    android:drawableTop="@drawable/education_icon"
+                    android:drawableTop="@drawable/education"
                     android:onClick="onButtonClicker"
                     android:paddingTop="10dp"
                     android:text="@string/home_refill_balance"

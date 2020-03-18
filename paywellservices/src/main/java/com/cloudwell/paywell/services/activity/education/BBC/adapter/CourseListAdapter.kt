@@ -1,15 +1,12 @@
-package com.cloudwell.paywell.services.activity.BBC.adapter
+package com.cloudwell.paywell.services.activity.education.BBC.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.BBC.model.CoursesItem
-import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.ErrorCallBackMsgDialog
-import kotlinx.android.synthetic.main.activity_course_list.view.*
+import com.cloudwell.paywell.services.activity.education.BBC.model.CoursesItem
 import kotlinx.android.synthetic.main.bbc_course_item.view.*
 
 class CourseListAdapter(val mContext: Context, var courseList : List<CoursesItem>, var onclick : CourseListAdapter.CourseOnClick) : RecyclerView.Adapter<CourseListAdapter.CourseListViewHolder>() {

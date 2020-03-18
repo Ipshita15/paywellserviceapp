@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.BBC.model
+package com.cloudwell.paywell.services.activity.education.BBC.model
 
 import com.google.gson.annotations.SerializedName
 

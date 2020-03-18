@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.BBC
+package com.cloudwell.paywell.services.activity.education.BBC
 
 import android.content.Context
 import android.content.Intent
@@ -16,9 +16,9 @@ import androidx.appcompat.app.AppCompatDialog
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.R.layout.dialog_trx_limit
 import com.cloudwell.paywell.services.R.string.log_limit_title_msg
-import com.cloudwell.paywell.services.activity.BBC.model.BbcTranscationLog
-import com.cloudwell.paywell.services.activity.BBC.model.RegistationInfo
 import com.cloudwell.paywell.services.activity.base.BaseActivity
+import com.cloudwell.paywell.services.activity.education.BBC.model.BbcTranscationLog
+import com.cloudwell.paywell.services.activity.education.BBC.model.RegistationInfo
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
