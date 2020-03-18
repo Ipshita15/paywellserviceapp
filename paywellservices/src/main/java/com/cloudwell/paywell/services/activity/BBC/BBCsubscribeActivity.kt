@@ -1,25 +1,18 @@
 package com.cloudwell.paywell.services.activity.BBC
 
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.BBC.model.BbcSubscriptionPojo
 import com.cloudwell.paywell.services.activity.BBC.model.CoursesItem
 import com.cloudwell.paywell.services.activity.BBC.model.Data
-import com.cloudwell.paywell.services.activity.BBC.model.RegistationInfo
 import com.cloudwell.paywell.services.activity.base.BaseActivity
-import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
-import com.cloudwell.paywell.services.utils.ConnectionDetector
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_b_b_csubscribe.*
-import kotlinx.android.synthetic.main.activity_missing_main.view.*
-import kotlinx.android.synthetic.main.activity_topup_main.view.*
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
