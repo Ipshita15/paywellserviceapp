@@ -170,6 +170,7 @@ import retrofit2.Response;
 import ss.com.bannerslider.Slider;
 import ss.com.bannerslider.event.OnSlideClickListener;
 
+import static com.cloudwell.paywell.services.activity.MainActivity.AutomaticDatetimeFragment.*;
 import static com.cloudwell.paywell.services.utils.LanuageConstant.KEY_BANGLA;
 import static com.cloudwell.paywell.services.utils.LanuageConstant.KEY_ENGLISH;
 
