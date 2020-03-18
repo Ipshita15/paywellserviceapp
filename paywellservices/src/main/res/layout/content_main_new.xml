@@ -127,10 +127,10 @@
                     android:gravity="center"/>
 
                 <Button
-                    android:id="@+id/homeBtnEducation"
+                    android:id="@+id/homeBtnRefillBalance"
                     style="@style/HomeButtonNew"
                     android:layout_weight="1"
-                    android:drawableTop="@drawable/education"
+                    android:drawableTop="@drawable/ic_balance_refill"
                     android:onClick="onButtonClicker"
                     android:paddingTop="10dp"
                     android:text="@string/home_refill_balance"
@@ -149,25 +149,6 @@
                 android:weightSum="5">
 
                 <Button
-                    android:id="@+id/homeBtnRefillBalance"
-                    style="@style/HomeButtonNew"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_balance_refill"
-                    android:onClick="onButtonClicker"
-                    android:text="@string/home_statement"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"/>
-
-                <Button
                     android:id="@+id/homeBtnMiniStatement"
                     style="@style/HomeButtonNew"
                     android:layout_weight="1"
@@ -176,7 +157,6 @@
                     android:text="@string/home_statement"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
-
 
 
                 <LinearLayout

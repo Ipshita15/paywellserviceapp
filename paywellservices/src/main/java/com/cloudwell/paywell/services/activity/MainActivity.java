@@ -102,7 +102,6 @@ import com.cloudwell.paywell.services.app.model.RequestBalanceCheck;
 import com.cloudwell.paywell.services.constant.AllConstant;
 import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.database.FavoriteMenuDab;
-import com.cloudwell.paywell.services.activity.education.EducationMainActivity;
 import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.service.notificaiton.model.EventNewNotificaiton;
@@ -203,7 +202,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private int currentPage;
 
     private Button home_topup, home_utility, home_eticket, home_mfs, home_product_catalog,
-            home_statement, home_refill_balance, home_settings, home_education;
+            home_statement, home_refill_balance, home_settings;
 
     private final int PERMISSIONS_FOR_QR_CODE_SCAN = 100;
     private final int PERMISSIONS_REQUEST_FOR_WRITE_EXTERNAL_STORAGE = 101;
@@ -504,7 +503,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         /*Buttons Initialization*/
         home_topup = findViewById(R.id.homeBtnTopup);
         home_utility = findViewById(R.id.homeBtnUtility);
-        home_education = findViewById(R.id.homeBtnEducation);
         home_eticket = findViewById(R.id.homeBtnEticket);
         home_mfs = findViewById(R.id.homeBtnMFS);
         home_product_catalog = findViewById(R.id.homeBtnProductCategory);
@@ -521,7 +519,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             home_statement.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_refill_balance.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_settings.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_education.setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
             home_topup.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_utility.setTypeface(AppController.getInstance().getAponaLohitFont());
@@ -531,7 +528,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             home_statement.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_refill_balance.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_settings.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_education.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
 
         drawer = findViewById(R.id.drawer_layout);
@@ -656,7 +652,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         home_statement.setText(R.string.home_statement);
         home_refill_balance.setText(R.string.home_refill_balance);
         home_settings.setText(R.string.home_settings);
-        home_education.setText(R.string.home_education);
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             home_topup.setTypeface(AppController.getInstance().getOxygenLightFont());
@@ -667,7 +662,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             home_statement.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_refill_balance.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_settings.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_education.setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
             home_topup.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_utility.setTypeface(AppController.getInstance().getAponaLohitFont());
@@ -677,7 +671,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             home_statement.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_refill_balance.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_settings.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_education.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
 
         navigationView.getMenu().findItem(R.id.nav_topup).setTitle(R.string.home_topup);
@@ -1337,11 +1330,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.homeBtnMessage:
                 startActivity(new Intent(MainActivity.this, ChatActivity.class));
                 break;
-
-            case R.id.homeBtnEducation:
-                startActivity(new Intent(MainActivity.this, EducationMainActivity.class));
-                break;
-
             case R.id.homeBtnCall:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CALL_MENU);
                 callPreview(false, "");
