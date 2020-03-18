@@ -660,7 +660,7 @@
     <string name="logout_text">Logout</string>
     <string name="selectedCourse">course</string>
     <string name="account_number">Account Number</string>
-    <string name="direct_refil">Direct Balance refill</string>
+    <string name="direct_refil">Direct Balance\nRefill</string>
 
 
 </resources>

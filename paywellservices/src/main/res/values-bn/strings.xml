@@ -657,6 +657,6 @@
     <string name="logout_text">লগআউট</string>
     <string name="selectedCourse">course</string>
     <string name="account_number">Account Number</string>
-    <string name="direct_refil">ডিরেক্ট ব্যালেন্স রিফিল</string>
+    <string name="direct_refil">ডিরেক্ট ব্যালেন্স\nরিফিল</string>
 
 </resources>
