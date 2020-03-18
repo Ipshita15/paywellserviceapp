@@ -16,7 +16,6 @@ import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.Ref
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLogRequestModel
 import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.NagadBalanceClaimActivityv2
 import com.cloudwell.paywell.services.activity.utility.AllUrl
-import com.cloudwell.paywell.services.activity.utility.electricity.westzone.model.WZPDCLBillPayModel
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils

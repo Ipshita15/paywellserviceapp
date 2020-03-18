@@ -1,11 +1,11 @@
 package com.cloudwell.paywell.services.retrofit;
 
 
-import com.cloudwell.paywell.services.activity.BBC.model.BbcSubscriptionPojo;
-import com.cloudwell.paywell.services.activity.BBC.model.BbcTranscationLog;
-import com.cloudwell.paywell.services.activity.BBC.model.CourseListRresponsePojo;
-import com.cloudwell.paywell.services.activity.BBC.model.CourseLlistRequestPojo;
-import com.cloudwell.paywell.services.activity.BBC.model.RegistationInfo;
+import com.cloudwell.paywell.services.activity.education.BBC.model.BbcSubscriptionPojo;
+import com.cloudwell.paywell.services.activity.education.BBC.model.BbcTranscationLog;
+import com.cloudwell.paywell.services.activity.education.BBC.model.CourseListRresponsePojo;
+import com.cloudwell.paywell.services.activity.education.BBC.model.CourseLlistRequestPojo;
+import com.cloudwell.paywell.services.activity.education.BBC.model.RegistationInfo;
 import com.cloudwell.paywell.services.activity.bank_info_update.spineer.BankResponse;
 import com.cloudwell.paywell.services.activity.bank_info_update.spineer.GetBankPojo;
 import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.Nagadv2requestPojo;
