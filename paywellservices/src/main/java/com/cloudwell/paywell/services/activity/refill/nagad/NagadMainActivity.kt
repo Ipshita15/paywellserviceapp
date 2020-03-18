@@ -128,13 +128,13 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
 
         if (mAppHandler?.getAppLanguage().equals("en", ignoreCase = true)) {
             nagadBalanceClaim.typeface = AppController.getInstance().oxygenLightFont
-
+            nagadBalanceClaimv2.typeface = AppController.getInstance().oxygenLightFont
             nagadBalanceRefill.typeface = AppController.getInstance().oxygenLightFont
             nagadRefillLog.typeface = AppController.getInstance().oxygenLightFont
             nagadQRCode.typeface = AppController.getInstance().oxygenLightFont
         } else {
             nagadBalanceClaim.typeface = AppController.getInstance().aponaLohitFont
-
+            nagadBalanceClaimv2.typeface = AppController.getInstance().oxygenLightFont
             nagadBalanceRefill.typeface = AppController.getInstance().aponaLohitFont
             nagadRefillLog.typeface = AppController.getInstance().aponaLohitFont
             nagadQRCode.typeface = AppController.getInstance().aponaLohitFont
