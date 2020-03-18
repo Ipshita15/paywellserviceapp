@@ -39,9 +39,9 @@
                     android:id="@+id/nagadBalanceClaimv2"
                     style="@style/HomeButtonNew"
                     android:layout_weight="1"
-                    android:drawableTop="@drawable/taka"
+                    android:drawableTop="@drawable/direct_refill"
                     android:paddingTop="10dp"
-                    android:text="@string/nagad_balance_refill_msg"
+                    android:text="@string/direct_refil"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
 
@@ -54,7 +54,7 @@
                     android:id="@+id/nagadBalanceClaim"
                     style="@style/HomeButtonNew"
                     android:layout_weight="1"
-                    android:drawableTop="@drawable/balanceclim"
+                    android:drawableTop="@drawable/claim_balance"
                     android:text="@string/nagad_balance_claim_msg"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>

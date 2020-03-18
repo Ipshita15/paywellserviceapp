@@ -90,10 +90,6 @@ public class SettingsActivity extends BaseActivity {
                 startHelpMenu();
                 break;
 
-            case R.id.bankBtn:
-              Intent intent = new Intent(this, BankINFO_MainActivity.class);
-              startActivity(intent);
-                break;
 
             default:
                 break;

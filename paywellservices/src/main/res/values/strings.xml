@@ -316,7 +316,7 @@
 
     <string name="app_next_version_no">vten_seventeen</string>
 
-   <!-- privacy -->
+    <!-- privacy -->
 
 
     <!-- privacy -->
@@ -660,6 +660,7 @@
     <string name="logout_text">Logout</string>
     <string name="selectedCourse">course</string>
     <string name="account_number">Account Number</string>
+    <string name="direct_refil">Direct Balance refill</string>
 
 
 </resources>
