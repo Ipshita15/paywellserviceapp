@@ -54,6 +54,6 @@
     <color name="button_color">#189d49</color>
     <color name="tab_selector">#00834a</color>
     <color name="nogadh_text_clr">#666666</color>
-
+    <color name="colorFocused">#1e00844a</color>
 
 </resources>

@@ -661,6 +661,19 @@
     <string name="selectedCourse">course</string>
     <string name="account_number">Account Number</string>
     <string name="direct_refil">Direct Balance\nRefill</string>
+    <string name="bbc_janala">BBC Janala</string>
+    <string name="subscription">Subscription</string>
+    <string name="bbc_course">BBC Janala Course List</string>
+    <string name="courses">Course List</string>
+    <string name="check_status">Check Status</string>
+    <string name="start_course">Start a Course</string>
+    <string name="bbc_registation_actionbar">Course Registration</string>
+    <string name="reg_korun">Registration</string>
+    <string name="reg_guid">Complete the form below to create your account and begin your English course. Remember that the name given at the time of registration will be mentioned in your Topic Report and Course Report.</string>
+    <string name="reg_must">Must write in English. (*) Marked /nThe cells must be filled.</string>
+    <string name="paywell_pin">Paywell Pin</string>
+    <string name="reg_dialog">Registration Result</string>
+    <string name="reg_dialog_msg">Registration Successfully Done </string>
 
 
 </resources>

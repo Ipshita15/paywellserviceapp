@@ -3,12 +3,17 @@ package com.cloudwell.paywell.services.activity.BBC
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Message
+import android.util.Log
 import android.view.View
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.activity.education.BBC.model.BbcSubscriptionPojo
 import com.cloudwell.paywell.services.activity.education.BBC.model.CoursesItem
 import com.cloudwell.paywell.services.activity.education.BBC.model.Data
+import com.cloudwell.paywell.services.activity.education.PaywellPinDialog
+import com.cloudwell.paywell.services.activity.education.Registation_Result
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.ErrorCallBackMsgDialog
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.google.gson.Gson
@@ -22,13 +27,16 @@ import retrofit2.Response
 class BBCsubscribeActivity : BaseActivity() {
     private var mAppHandler: AppHandler? = null
    private var mCourse: CoursesItem? = null
+    private var pinNumber : String? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_b_b_csubscribe)
         assert(supportActionBar != null)
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-            supportActionBar!!.setTitle("BBC Course List")
+            supportActionBar!!.setTitle(getString(R.string.bbc_registation_actionbar))
             supportActionBar!!.elevation = 0f
             supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#5aac40")));
         }
@@ -36,8 +44,11 @@ class BBCsubscribeActivity : BaseActivity() {
 
         val course : String = intent.getStringExtra(getString(R.string.selectedCourse))
         mCourse = Gson().fromJson(course, CoursesItem::class.java)
-
-
+        Log.e("Amoun ", mCourse?.amount.toString())
+        Log.e("Amoun ", mCourse?.courseName.toString())
+        Log.e("Amoun ", mCourse?.courseNo.toString())
+//
+//
         subscribeBtn.setOnClickListener(View.OnClickListener {
             getUserData()
         })
@@ -45,13 +56,10 @@ class BBCsubscribeActivity : BaseActivity() {
     }
 
     private fun getUserData() {
-        val pinnumber  = pin?.text.toString().trim()
         val username  = userNmae?.text.toString().trim()
         val mobile  = userMobile?.text.toString().trim()
 
-        if(pinnumber.isEmpty()){
-            showErrorMessagev1("Please give Pin")
-        }else if (username.isEmpty()){
+      if (username.isEmpty()){
             showErrorMessagev1("Please give username")
         }else if (mobile.length<11){
             showErrorMessagev1("Please give mobile number correctly")
@@ -59,11 +67,23 @@ class BBCsubscribeActivity : BaseActivity() {
             if (!isInternetConnection) {
                 AppHandler.showDialog(supportFragmentManager)
             } else {
-                letsSubscribe(pinnumber, username, mobile)
+
+                var msg : String = mCourse?.courseName+" "+mCourse?.amount
+                askforPin(msg, username, mobile)
             }
         }
 
 
+    }
+
+    private fun askforPin(message: String, username: String, mobile: String){
+
+        val askingPinDialog = PaywellPinDialog(message, object : PaywellPinDialog.IonClickInterface {
+            override fun onclick(pin: String) {
+                letsSubscribe(pin, username, mobile)
+            }
+        })
+        askingPinDialog.show(supportFragmentManager, "Pin Dialog")
     }
 
     private fun letsSubscribe(pin: String, username: String, mobile: String) {
@@ -92,20 +112,32 @@ class BBCsubscribeActivity : BaseActivity() {
                     val msg = js.getString("message")
                     if (status == 200){
 
-
+                        //TODO what to do after success
+                        showDialog()
 
                     }else{
-                        showErrorMessagev1(msg)
+                        showErrorCallBackMessagev1(msg)
                     }
 
                 }else{
-                    showErrorMessagev1(getString(R.string.try_again_msg))
+                    showErrorCallBackMessagev1(getString(R.string.try_again_msg))
                 }
 
             }
 
         })
 
+    }
+
+    private fun showDialog() {
+        var msg = Registation_Result(object : Registation_Result.IonClickInterface {
+            override fun onclick() {
+                finish()
+            }
+
+
+        })
+        msg.show(getSupportFragmentManager(), "oTPVerificationMsgDialog");
     }
 
 

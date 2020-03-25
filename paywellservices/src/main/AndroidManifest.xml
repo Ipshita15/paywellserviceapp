@@ -80,19 +80,29 @@
         <activity android:name=".activity.education.EducationMainActivity"
             android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.education.BBC.BBC_Main_Activity"
+            android:parentActivityName=".activity.education.BBC.CourseListActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator" />
+
         <activity android:name=".activity.BBC.BBCsubscribeActivity"
             android:parentActivityName=".activity.education.BBC.CourseListActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator" />
+
         <activity android:name=".activity.education.BBC.CourseListActivity"
-            android:screenOrientation="portrait"/>
+            android:parentActivityName=".activity.education.BBC.BBC_Main_Activity"
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator" />
 
         <activity
             android:name=".activity.bank_info_update.BankINFO_MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".BankInformation.BongoMainActivity" />
+        <activity android:name=".BankInformation.BongoMainActivity"
+            tools:ignore="InnerclassSeparator" />
 
 
 

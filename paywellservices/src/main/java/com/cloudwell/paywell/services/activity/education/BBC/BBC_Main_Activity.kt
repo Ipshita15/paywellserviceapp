@@ -19,6 +19,7 @@ import com.cloudwell.paywell.services.R.string.log_limit_title_msg
 import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.activity.education.BBC.model.BbcTranscationLog
 import com.cloudwell.paywell.services.activity.education.BBC.model.RegistationInfo
+import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
@@ -48,33 +49,45 @@ class BBC_Main_Activity : BaseActivity(), View.OnClickListener , CompoundButton.
         assert(supportActionBar != null)
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-            supportActionBar!!.setTitle(getString(R.string.bbc))
+            supportActionBar!!.setTitle(getString(R.string.subscription))
             supportActionBar!!.elevation = 0f
             supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#5aac40")));
         }
 
         mAppHandler = AppHandler.getmInstance(applicationContext)
+        initilize()
 
-        homeBtnEducation.setOnClickListener(this)
-        homeBtnMiniStatement.setOnClickListener(this)
-        homeBtnSettings.setOnClickListener(this)
+        bbcBtnCourse.setOnClickListener(this)
+        bbcBtnstatus.setOnClickListener(this)
+        bbcBtnTranscation.setOnClickListener(this)
 
+    }
+
+    private fun initilize() {
+        if (mAppHandler!!.appLanguage.equals("en", ignoreCase = true)) {
+            bbcBtnCourse.setTypeface(AppController.getInstance().oxygenLightFont)
+            bbcBtnstatus.setTypeface(AppController.getInstance().oxygenLightFont)
+            bbcBtnTranscation.setTypeface(AppController.getInstance().oxygenLightFont)
+
+        } else {
+            bbcBtnCourse.setTypeface(AppController.getInstance().aponaLohitFont)
+            bbcBtnstatus.setTypeface(AppController.getInstance().aponaLohitFont)
+            bbcBtnTranscation.setTypeface(AppController.getInstance().aponaLohitFont)
+
+        }
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.homeBtnEducation -> {
-                toast(message = "Androidly Long Toasts", toastDuration = Toast.LENGTH_LONG)
+            R.id.bbcBtnCourse -> {
                 startActivity(Intent(applicationContext, CourseListActivity::class.java))
             }
-            R.id.homeBtnMiniStatement -> {
-                showLimitPrompt()
-                //test()
+            R.id.bbcBtnstatus -> {
+                showEnquiryPrompt()
 
             }
-            R.id.homeBtnSettings -> {
-               showEnquiryPrompt()
-              //  toast(message = "Androidly Long Toasts", toastDuration = Toast.LENGTH_LONG)
+            R.id.bbcBtnTranscation -> {
+                showLimitPrompt()
 
             }
         }
@@ -121,7 +134,7 @@ class BBC_Main_Activity : BaseActivity(), View.OnClickListener , CompoundButton.
 
     private fun getRegistationInfo(mobile : String) {
         showProgressDialog()
-        toast(message = "Androidly Long Toasts", toastDuration = Toast.LENGTH_LONG)
+        //toast(message = "hello asce", toastDuration = Toast.LENGTH_LONG)
         val registation = RegistationInfo()
         registation.mobile = mobile
         registation.username = mAppHandler?.userName.toString()
@@ -220,6 +233,7 @@ class BBC_Main_Activity : BaseActivity(), View.OnClickListener , CompoundButton.
                    val msg = js.getString("message")
                    if (status == 200){
 
+
                    }else{
                        showErrorMessagev1(msg)
                    }
@@ -288,6 +302,7 @@ class BBC_Main_Activity : BaseActivity(), View.OnClickListener , CompoundButton.
             }
         }
     }
+
 
 
 }

@@ -6,14 +6,16 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.widget.Toast
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.BBC.BBCsubscribeActivity
+import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.activity.education.BBC.adapter.CourseListAdapter
+import com.cloudwell.paywell.services.activity.education.BBC.adapter.TestAdapter
 import com.cloudwell.paywell.services.activity.education.BBC.model.CourseListRresponsePojo
 import com.cloudwell.paywell.services.activity.education.BBC.model.CourseLlistRequestPojo
 import com.cloudwell.paywell.services.activity.education.BBC.model.CoursesItem
-import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.google.gson.Gson
@@ -21,6 +23,7 @@ import kotlinx.android.synthetic.main.activity_course_list.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 /**
  * Created by Sepon Email: ismailhossainsepon@gmail.com  Mobile: +8801612250477.
@@ -38,13 +41,19 @@ class CourseListActivity : BaseActivity() {
         assert(supportActionBar != null)
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-            supportActionBar!!.setTitle("BBC Course List")
+            supportActionBar!!.setTitle(getString(R.string.bbc_course))
             supportActionBar!!.elevation = 0f
             supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#5aac40")));
         }
         mAppHandler = AppHandler.getmInstance(applicationContext)
 
         val linearLayoutManager : LinearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
+
+        val dividerItemDecoration = DividerItemDecoration(bbc_course_list.getContext(),
+                linearLayoutManager.getOrientation())
+
+        bbc_course_list.addItemDecoration(dividerItemDecoration)
+
         bbc_course_list.layoutManager = linearLayoutManager
 
         getCourseList();
@@ -80,17 +89,23 @@ class CourseListActivity : BaseActivity() {
     }
 
     private fun setadapter(courselist: List<CoursesItem>) {
-        bbc_course_list.adapter = CourseListAdapter(applicationContext, courselist, object : CourseListAdapter.CourseOnClick{
-            override fun onclick(course: CoursesItem) {
+
+
+        bbc_course_list.adapter = TestAdapter(bbc_course_list, applicationContext,courselist, object : TestAdapter.CourseClick {
+            override fun courseOnclick(coursesItem: CoursesItem?) {
                 val gson = Gson()
-                val json = gson.toJson(course)
+                val json = gson.toJson(coursesItem)
                 val intent = Intent(applicationContext, BBCsubscribeActivity::class.java)
                 intent.putExtra(getString(R.string.selectedCourse), json)
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 applicationContext.startActivity(intent)
             }
 
         })
+
     }
+
+
 
     fun Context.toast(context: Context = applicationContext, message: String, toastDuration: Int = Toast.LENGTH_SHORT) {
         Toast.makeText(context, message, toastDuration).show()

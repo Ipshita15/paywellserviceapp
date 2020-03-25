@@ -104,6 +104,7 @@ ext {
 }
 
 dependencies {
+    implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
     implementation files('libs/urlimageviewhelper-1.0.4.jar')
     //noinspection GradleCompatible
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
