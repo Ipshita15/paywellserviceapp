@@ -9,7 +9,7 @@ data class BbcTranscationLog(
         @field: SerializedName("username")
         var userName : String = "",
         @field: SerializedName("service")
-        var rfId : String = "",
+        var service : String = "",
         @field: SerializedName("limit")
         var limit : String = ""
 

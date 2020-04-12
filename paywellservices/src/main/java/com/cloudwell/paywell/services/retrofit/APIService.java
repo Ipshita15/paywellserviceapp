@@ -1,6 +1,9 @@
 package com.cloudwell.paywell.services.retrofit;
 
 
+import com.cloudwell.paywell.services.activity.bank_info_update.model.BankListRequestPojo;
+import com.cloudwell.paywell.services.activity.bank_info_update.model.BankPojo;
+import com.cloudwell.paywell.services.activity.bank_info_update.model.RemoveReqPojo;
 import com.cloudwell.paywell.services.activity.education.BBC.model.BbcSubscriptionPojo;
 import com.cloudwell.paywell.services.activity.education.BBC.model.BbcTranscationLog;
 import com.cloudwell.paywell.services.activity.education.BBC.model.CourseListRresponsePojo;
@@ -8,6 +11,13 @@ import com.cloudwell.paywell.services.activity.education.BBC.model.CourseLlistRe
 import com.cloudwell.paywell.services.activity.education.BBC.model.RegistationInfo;
 import com.cloudwell.paywell.services.activity.bank_info_update.spineer.BankResponse;
 import com.cloudwell.paywell.services.activity.bank_info_update.spineer.GetBankPojo;
+import com.cloudwell.paywell.services.activity.education.BBC.model.StatusCheckResponsePojo;
+import com.cloudwell.paywell.services.activity.education.BBC.model.TransactionResponsePOjo;
+import com.cloudwell.paywell.services.activity.education.Bongo.model.BongoActivePkgPojo;
+import com.cloudwell.paywell.services.activity.education.Bongo.model.BongoEnquiryRqstPojo;
+import com.cloudwell.paywell.services.activity.education.Bongo.model.BongoPkgListReqPojo;
+import com.cloudwell.paywell.services.activity.education.Bongo.model.BongoResponsePojo;
+import com.cloudwell.paywell.services.activity.education.Bongo.model.BongoSubscriptionPojo;
 import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.Nagadv2requestPojo;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.ReposeAirSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch;
@@ -661,16 +671,47 @@ public interface APIService {
     Call<CourseListRresponsePojo> getBBCcourseList(@Body CourseLlistRequestPojo pojo);
 
     @POST("Utility/BBC/registrationInfo")
-    Call<ResponseBody> getBBCregistationInfo(@Body RegistationInfo pojo);
+    Call<StatusCheckResponsePojo> getBBCregistationInfo(@Body RegistationInfo pojo);
 
     @POST("Utility/BBC/subscription")
     Call<ResponseBody> getBBCsubscribe(@Body BbcSubscriptionPojo pojo);
 
     @POST("Reports/TransactionReportSystem/TransactionReport")
-    Call<ResponseBody> getBBCTransactionLog(@Body BbcTranscationLog transcationLog);
+    Call<TransactionResponsePOjo> getBBCTransactionLog(@Body BbcTranscationLog transcationLog);
 
     //new Nagdh
     @POST("PaymentGateway/PaymentGatewaySystem/nagadApiProcess")
     Call<NagadWebResponse> gestNahadg(@Body Nagadv2requestPojo nagadv2requestPojo);
+
+
+    //Bank info
+    @POST("Retailer/BankDepositSystem/addRtlrBankInfo")
+    Call<ResponseBody> uploadBankInfo(@Body BankPojo bankPojo);
+
+    @POST("Retailer/BankDepositSystem/getRtlrBankAccList")
+    Call<ResponseBody> getRetailerBankList(@Body BankListRequestPojo bankListRequestPojo);
+
+    @POST("Retailer/BankDepositSystem/removeBankAccount")
+    Call<ResponseBody> removeBankInfo(@Body RemoveReqPojo removeReqPojo);
+
+    //Bongo
+
+    @POST("Utility/Bongo/getPackageList")
+    Call<BongoResponsePojo> getBongoPackgeList(@Body BongoPkgListReqPojo bongoPkgListReqPojo);
+
+    @POST("Utility/Bongo/activatePackage")
+    Call<ResponseBody> getBongoActivePackgeList(@Body BongoActivePkgPojo bongoActivePkgPojo);
+
+    @POST("Utility/Bongo/getSubscriptionCount")
+    Call<ResponseBody> getBongoSubscriptionCount(@Body BongoSubscriptionPojo bongoSubscriptionPojo);
+
+    @POST("Utility/Bongo/getEnquiryData")
+    Call<ResponseBody> getBongoEnquiryData(@Body BongoEnquiryRqstPojo bongoEnquiryRqstPojo);
+
+//    @POST("Retailer/BankDepositSystem/removeBankAccount")
+//    Call<ResponseBody> removeBankInfo(@Body RemoveReqPojo removeReqPojo);
+
+
+
 
 }

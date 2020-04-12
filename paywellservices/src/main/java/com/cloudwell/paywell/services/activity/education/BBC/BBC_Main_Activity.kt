@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
 import android.text.InputType
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.*
@@ -17,12 +18,13 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.R.layout.dialog_trx_limit
 import com.cloudwell.paywell.services.R.string.log_limit_title_msg
 import com.cloudwell.paywell.services.activity.base.BaseActivity
-import com.cloudwell.paywell.services.activity.education.BBC.model.BbcTranscationLog
-import com.cloudwell.paywell.services.activity.education.BBC.model.RegistationInfo
+import com.cloudwell.paywell.services.activity.education.BBC.model.*
+import com.cloudwell.paywell.services.activity.refill.nagad.NagadRefillLogInquiryActivity
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_bbc_main.*
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -122,7 +124,7 @@ class BBC_Main_Activity : BaseActivity(), View.OnClickListener , CompoundButton.
                 if (!isInternetConnection) {
                     AppHandler.showDialog(supportFragmentManager)
                 } else {
-                    getRegistationInfo(enqNoET.text.toString())
+                    getRegistationStatus(enqNoET.text.toString())
                 }
                 dialogInterface.dismiss()
             }
@@ -132,33 +134,34 @@ class BBC_Main_Activity : BaseActivity(), View.OnClickListener , CompoundButton.
     }
 
 
-    private fun getRegistationInfo(mobile : String) {
+    private fun getRegistationStatus(mobile : String) {
         showProgressDialog()
         //toast(message = "hello asce", toastDuration = Toast.LENGTH_LONG)
         val registation = RegistationInfo()
         registation.mobile = mobile
         registation.username = mAppHandler?.userName.toString()
 
-        ApiUtils.getAPIServiceV2().getBBCregistationInfo(registation).enqueue(object : Callback<ResponseBody>{
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+        ApiUtils.getAPIServiceV2().getBBCregistationInfo(registation).enqueue(object : Callback<StatusCheckResponsePojo>{
+            override fun onFailure(call: Call<StatusCheckResponsePojo>, t: Throwable) {
                 dismissProgressDialog()
                 showErrorMessagev1(getString(R.string.try_again_msg))
 
             }
 
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+            override fun onResponse(call: Call<StatusCheckResponsePojo>, response: Response<StatusCheckResponsePojo>) {
                     dismissProgressDialog()
                 if (response.isSuccessful){
-                    val js = JSONObject(response.body()?.string())
-                    val status = js.getInt("status")
-                    val msg = js.getString("message")
+                    val status : StatusCheckResponsePojo = response.body()!!
+                    if (status.status == 200){
 
-                    if (status == 200){
-
+                        val toJson = Gson().toJson(status)
+                        val intent = Intent(applicationContext, BBCstatusCheckActivity::class.java)
+                        intent.putExtra("data", toJson)
+                        startActivity(intent)
 
 
                     }else{
-                        showErrorMessagev1(msg)
+                        showErrorMessagev1(status.message)
                     }
 
                    }else{
@@ -199,9 +202,9 @@ class BBC_Main_Activity : BaseActivity(), View.OnClickListener , CompoundButton.
             }
             val limit = selectedLimit.toInt()
             if (!isInternetConnection) {
-                getTransactionLog(limit)
+                AppHandler.showDialog(supportFragmentManager)
             } else {
-
+                getTransactionLog(limit)
             }
         }
         assert(btn_cancel != null)
@@ -211,28 +214,33 @@ class BBC_Main_Activity : BaseActivity(), View.OnClickListener , CompoundButton.
     }
 
 
-
     private fun getTransactionLog(limit: Int) {
         showProgressDialog()
+        Toast.makeText(applicationContext, "ok", Toast.LENGTH_LONG).show()
         val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).rid)
 
         val transcationLog = BbcTranscationLog()
         transcationLog.limit = ""+limit
-        transcationLog.rfId = uniqueKey
+        transcationLog.service = "BBC"
         transcationLog.userName = mAppHandler?.userName.toString()
 
-        ApiUtils.getAPIServiceV2().getBBCTransactionLog(transcationLog).enqueue(object : Callback<ResponseBody>{
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+        ApiUtils.getAPIServiceV2().getBBCTransactionLog(transcationLog).enqueue(object : Callback<TransactionResponsePOjo>{
+            override fun onFailure(call: Call<TransactionResponsePOjo>, t: Throwable) {
                 showErrorMessagev1(getString(R.string.try_again_msg))
             }
 
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+            override fun onResponse(call: Call<TransactionResponsePOjo>, response: Response<TransactionResponsePOjo>) {
                if (response.isSuccessful){
-                   val js =  JSONObject(response.body()?.string())
-                   val status = js.getInt("status")
-                   val msg = js.getString("message")
+                  // val js =  JSONObject(response.body()?.string())
+                   val trPojo : TransactionResponsePOjo = response.body()!!
+                   val status :Int? =  trPojo.status //js.getInt("status")
+                   val msg : String =   trPojo.message.toString() //js.getString("message")
                    if (status == 200){
 
+                       val toJson = Gson().toJson(trPojo)
+                       val intent = Intent(applicationContext, TranscationListActivity::class.java)
+                       intent.putExtra("data", toJson)
+                       startActivity(intent)
 
                    }else{
                        showErrorMessagev1(msg)

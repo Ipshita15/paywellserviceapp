@@ -8,6 +8,7 @@ import android.view.View
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.activity.education.BBC.BBC_Main_Activity
+import com.cloudwell.paywell.services.activity.education.Bongo.BongoMainActivity
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import kotlinx.android.synthetic.main.activity_education_main.*
@@ -42,6 +43,11 @@ class EducationMainActivity : BaseActivity() {
 
         educationBtnBbc.setOnClickListener(View.OnClickListener {
             startActivity(Intent(applicationContext, BBC_Main_Activity::class.java))
+        })
+
+
+        bongo.setOnClickListener(View.OnClickListener {
+            startActivity(Intent(applicationContext, BongoMainActivity::class.java))
         })
     }
 }

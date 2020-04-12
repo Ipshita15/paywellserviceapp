@@ -27,10 +27,10 @@
                 android:orientation="horizontal"
                 android:weightSum="3">
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+<!--                <LinearLayout-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"/>-->
 
                 <Button
                     android:id="@+id/educationBtnBbc"
@@ -45,6 +45,17 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
+
+                <Button
+                    android:id="@+id/bongo"
+                    style="@style/HomeButtonNew"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/bbc_icon"
+                    android:text="Bongo"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

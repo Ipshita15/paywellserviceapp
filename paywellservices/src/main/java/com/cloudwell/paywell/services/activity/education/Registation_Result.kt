@@ -22,6 +22,7 @@ class Registation_Result (val onclick : IonClickInterface): BaseDialogFragment()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = layoutInflater.inflate(R.layout.reg_result, null)
 
+        msg.setText(getString(R.string.reg_dialog_msg))
         view.reg_dialog_btn.setOnClickListener {
             dismiss()
             if(onclick != null){

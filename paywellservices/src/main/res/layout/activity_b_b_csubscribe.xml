@@ -52,10 +52,11 @@
 
 
                 <TextView
+
                     android:layout_marginTop="@dimen/activity_horizontal_margin"
                     android:layout_marginBottom="@dimen/activity_horizontal_margin"
                     android:textSize="12sp"
-                    android:textColor="#59595c"
+                    android:textColor="@color/red_500"
                     android:text="@string/reg_must"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -66,14 +67,14 @@
                     android:id="@+id/userNmae"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="User Name" />
+                    android:hint="User Name*" />
 
                 <EditText
                     android:layout_marginTop="10dp"
                     android:id="@+id/userMobile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Mobile Number"
+                    android:hint="Mobile Number*"
                     android:inputType="number" />
 
 

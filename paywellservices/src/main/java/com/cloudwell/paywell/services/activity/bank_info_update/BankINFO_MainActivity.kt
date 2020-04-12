@@ -2,6 +2,7 @@ package com.cloudwell.paywell.services.activity.bank_info_update
 
 import android.Manifest
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -9,18 +10,24 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.Html
+import android.text.InputType
+import android.text.method.PasswordTransformationMethod
 import android.util.Base64
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.activity.bank_info_update.model.BankListRequestPojo
+import com.cloudwell.paywell.services.activity.bank_info_update.model.BankPojo
+import com.cloudwell.paywell.services.activity.bank_info_update.model.RemoveReqPojo
 import com.cloudwell.paywell.services.activity.bank_info_update.spineer.*
 import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.activity.refill.banktransfer.model.Branch
@@ -29,6 +36,7 @@ import com.cloudwell.paywell.services.activity.refill.banktransfer.model.ReposeD
 import com.cloudwell.paywell.services.activity.refill.model.BranchData
 import com.cloudwell.paywell.services.activity.refill.model.RequestBranch
 import com.cloudwell.paywell.services.activity.refill.model.RequestDistrict
+import com.cloudwell.paywell.services.activity.topup.TopupMainActivity
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.ImageUtility.getResizedBitmap
@@ -57,6 +65,7 @@ class BankINFO_MainActivity : BaseActivity() {
 
     private var mAppHandler: AppHandler? = null
     var bankAdd : ImageView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bank_info_main)
@@ -66,10 +75,17 @@ class BankINFO_MainActivity : BaseActivity() {
         slideInAnim.duration = 50
         slideOutAnim.duration = 50
         btnSubmit.setOnClickListener(View.OnClickListener {
+
+            showCurrentBankinfo()
+
+        })
+        add_btn.setOnClickListener(View.OnClickListener {
             addAnotherBank()
         })
 
         addAnotherBank()
+
+
 
     }
 
@@ -357,67 +373,158 @@ class BankINFO_MainActivity : BaseActivity() {
 
     }
 
-//    private fun showCurrentTopupLog() {
-//        if (topUpLayout.getChildCount() > 0) {
-//            val reqStrBuilder = StringBuilder()
-//            for (i in 0 until topUpLayout.getChildCount()) {
-//                val singleTopUpView: View = topUpLayout.getChildAt(i)
-//                if (singleTopUpView != null) {
-//                    val phoneNoET = singleTopUpView.findViewById<EditText>(R.id.phoneNo)
-//                    val amountET = singleTopUpView.findViewById<EditText>(R.id.amount)
-//                    val prePostSelector = singleTopUpView.findViewById<RadioGroup>(R.id.prePostRadioGroup)
-//                    val phoneStr = phoneNoET.text.toString()
-//                    val amountStr = amountET.text.toString()
-//                    var planStr = "prepaid"
-//                    if (prePostSelector.checkedRadioButtonId == R.id.preRadioButton) {
-//                        planStr = resources.getString(R.string.pre_paid_str)
-//                    } else if (prePostSelector.checkedRadioButtonId == R.id.postRadioButton) {
-//                        planStr = resources.getString(R.string.post_paid_str)
-//                    }
-//                    if (phoneStr.length < 11) {
-//                        phoneNoET.error = Html.fromHtml("<font color='red'>" + getString(R.string.phone_no_error_msg) + "</font>")
-//                        return
-//                    } else if (amountStr.length < 1) {
-//                        amountET.error = Html.fromHtml("<font color='red'>" + getString(R.string.amount_error_msg) + "</font>")
-//                        return
-//                    }
-//                    val textView = singleTopUpView.findViewById<TextView>(R.id.tvResult)
-//                    val result = textView.text.toString()
-//                    if (result == "") {
-//                        // No item selected
-//                        val tvError = singleTopUpView.findViewById<TextView>(R.id.tvError)
-//                        tvError.visibility = View.VISIBLE
-//                        tvError.text = getString(R.string.error_correct_operator_msg)
-//                        tvError.setTextColor(Color.WHITE)
-//                        val linearLayout = singleTopUpView.findViewById<LinearLayout>(R.id.llHeader)
-//                        linearLayout.setBackgroundColor(Color.RED)
-//                        return
-//                    }
-//                    reqStrBuilder.append("""${i + 1}. ${getString(R.string.phone_no_des)} $phoneStr
-// ${getString(R.string.amount_des)} $amountStr${getString(R.string.tk)}
-// ${getString(R.string.package_type_des)} : ${planStr.substring(0, 1).toUpperCase()}${planStr.substring(1).toLowerCase()}
-//${getString(R.string.operator)} : $result
-//
-//""")
-//                }
-//            }
-//            val builder = androidx.appcompat.app.AlertDialog.Builder(this)
-//            builder.setTitle(R.string.conf_topup_title_msg)
-//            builder.setMessage(reqStrBuilder)
-//            builder.setPositiveButton(R.string.okay_btn) { dialogInterface, id ->
-//                dialogInterface.dismiss()
-//                askForPin()
-//            }
-//            val alert = builder.create()
-//            alert.show()
-//        } else {
-//            val snackbar = Snackbar.make(mRelativeLayout, R.string.add_number_amount_msg, Snackbar.LENGTH_LONG)
-//            snackbar.setActionTextColor(Color.parseColor("#ffffff"))
-//            val snackBarView = snackbar.view
-//            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))
-//            snackbar.show()
-//        }
-//    }
+    private fun showCurrentBankinfo() {
+        if (bankAddLayout?.getChildCount()!! > 0) {
+            val reqStrBuilder = StringBuilder()
+            for (i in 0 until bankAddLayout!!.getChildCount()) {
+                val singleTopUpView: View = bankAddLayout!!.getChildAt(i)
+                if (singleTopUpView != null) {
+                    val bank_sp = singleTopUpView.findViewById<Spinner>(R.id.spinner_Bank)
+                    val distrrict_sp = singleTopUpView.findViewById<Spinner>(R.id.spinner_district)
+                    val branch_sp = singleTopUpView.findViewById<Spinner>(R.id.spinner_branch)
+                    val account_et = singleTopUpView.findViewById<EditText>(R.id.acNumber)
+                    val prePostSelector = singleTopUpView.findViewById<RadioGroup>(R.id.prePostRadioGroup)
+
+                    val accountNumberStr = account_et.text.toString()
+                    val bank : BankDataItem  = bank_sp.selectedItem as BankDataItem
+                    val bankName : String = bank.name.toString()
+                    val district : DistrictData = distrrict_sp.selectedItem as DistrictData
+                    val branch : Branch = branch_sp.selectedItem as Branch
+                    val branchname : String = branch.name.toString()
+
+                    val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(applicationContext)!!.rid)
+
+                    val bankPojo = BankPojo()
+                    bankPojo.accountNo  = accountNumberStr
+                    bankPojo.bankId = bank.id
+                    bankPojo.branchId = branch.id
+                    bankPojo.districtId = district.id
+                    bankPojo.refId = uniqueKey
+                    bankPojo.checkBookSlip = "as"
+                    bankPojo.password = "12345"
+                    bankPojo.username = mAppHandler?.userName
+
+                    uploadBankInfo(bankPojo   )
+
+                    reqStrBuilder.append("""${i + 1}. ${"Bank"} $bankName
+                        ${"branch"} $branchname${getString(R.string.tk)}
+                        ${"AC"} : ${accountNumberStr}""")
+
+                }
+            }
+            val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+            builder.setTitle("Bank Info Update")
+            builder.setMessage(reqStrBuilder)
+            builder.setPositiveButton(R.string.okay_btn) { dialogInterface, id ->
+                dialogInterface.dismiss()
+
+                var pojo = BankListRequestPojo()
+                val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(applicationContext).rid)
+                pojo.refId = uniqueKey
+                pojo.username = mAppHandler?.userName
+                getBankInfoList(pojo)
+
+                // askForPin()
+            }
+            val alert = builder.create()
+            alert.show()
+
+
+        } else {
+           showErrorMessagev1("try again")
+        }
+    }
+
+    private fun uploadBankInfo(bankPojo: BankPojo) {
+        showProgressDialog()
+        ApiUtils.getAPIServiceV2().uploadBankInfo(bankPojo).enqueue(object : Callback<ResponseBody>{
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    dismissProgressDialog()
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                dismissProgressDialog()
+              if (  response.isSuccessful){
+
+
+
+
+
+
+              }else{
+                  showErrorMessagev1(getString(R.string.try_again_msg))
+              }
+            }
+
+        })
+
+    }
+
+    private fun getBankInfoList(pojo : BankListRequestPojo){
+        showProgressDialog()
+
+        ApiUtils.getAPIServiceV2().getRetailerBankList(pojo).enqueue(object : Callback<ResponseBody>{
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                dismissProgressDialog()
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+               dismissProgressDialog()
+            }
+
+        })
+
+    }
+
+    private fun removeBnkInfo(pojo : RemoveReqPojo){
+        showProgressDialog()
+
+        ApiUtils.getAPIServiceV2().removeBankInfo(pojo).enqueue(object : Callback<ResponseBody>{
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                dismissProgressDialog()
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                dismissProgressDialog()
+            }
+
+        })
+    }
+
+    private fun askForPin() {
+        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+        builder.setTitle(R.string.pin_no_title_msg)
+        val pinNoET = EditText(this)
+        val lp = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT)
+        pinNoET.gravity = Gravity.CENTER_HORIZONTAL
+        pinNoET.layoutParams = lp
+        pinNoET.inputType = InputType.TYPE_CLASS_NUMBER or
+                InputType.TYPE_TEXT_VARIATION_PASSWORD
+        pinNoET.transformationMethod = PasswordTransformationMethod.getInstance()
+        builder.setView(pinNoET)
+        builder.setPositiveButton(R.string.okay_btn) { dialogInterface, id ->
+            val inMethMan = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inMethMan.hideSoftInputFromWindow(pinNoET.windowToken, 0)
+            if (pinNoET.text.toString().length != 0) {
+                dialogInterface.dismiss()
+                val pin = pinNoET.text.toString()
+                if (isInternetConnection) {
+
+                    //uploadBankInfo()
+
+                } else {
+                    showErrorMessagev1(getString(R.string.connection_error_msg))
+                }
+            } else {
+                showErrorMessagev1(getString(R.string.pin_no_error_msg))
+//                snackbar.show()
+            }
+        }
+        val alert = builder.create()
+        alert.show()
+    }
 
 
     private interface DistrictCallBack{

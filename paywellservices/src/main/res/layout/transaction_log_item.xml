@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="5dp">
+
+
+
+        <ImageView
+            android:id="@+id/imageView38"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginLeft="40dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/course"
+            tools:layout_editor_absoluteY="16dp"
+            tools:ignore="ContentDescription,MissingConstraints" />
+
+    <TextView
+        android:id="@+id/courseNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="240dp"
+        android:layout_marginRight="240dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView38"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="25dp"
+        tools:text="Course 1" />
+
+    <TextView
+        android:id="@+id/courseStartDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.319"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView38"
+        tools:text="25 Mar, 2020" />
+
+    <TextView
+        android:id="@+id/courseEndDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.319"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/courseStartDate"
+        tools:text="25 Mar, 2020" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

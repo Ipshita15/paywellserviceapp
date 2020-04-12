@@ -77,35 +77,41 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
-        <activity android:name=".activity.education.EducationMainActivity"
+        <activity
+            android:name=".activity.education.BBC.BBCstatusCheckActivity"
+            android:parentActivityName=".activity.education.BBC.BBC_Main_Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.education.BBC.TranscationListActivity"
+            android:parentActivityName=".activity.education.BBC.BBC_Main_Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.education.EducationMainActivity"
             android:parentActivityName=".activity.MainActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".activity.education.BBC.BBC_Main_Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.education.BBC.BBC_Main_Activity"
             android:parentActivityName=".activity.education.BBC.CourseListActivity"
             android:screenOrientation="portrait"
             tools:ignore="InnerclassSeparator" />
-
-        <activity android:name=".activity.BBC.BBCsubscribeActivity"
+        <activity
+            android:name=".activity.BBC.BBCsubscribeActivity"
             android:parentActivityName=".activity.education.BBC.CourseListActivity"
             android:screenOrientation="portrait"
             tools:ignore="InnerclassSeparator" />
-
-        <activity android:name=".activity.education.BBC.CourseListActivity"
+        <activity
+            android:name=".activity.education.BBC.CourseListActivity"
             android:parentActivityName=".activity.education.BBC.BBC_Main_Activity"
             android:screenOrientation="portrait"
             tools:ignore="InnerclassSeparator" />
-
         <activity
             android:name=".activity.bank_info_update.BankINFO_MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".BankInformation.BongoMainActivity"
-            tools:ignore="InnerclassSeparator" />
-
-
-
+        <activity
+            android:name=".activity.education.Bongo.BongoMainActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".activity.education.EducationMainActivity"/>
         <activity
             android:name=".activity.home.HomeActivity"
             android:screenOrientation="portrait"
@@ -948,12 +954,10 @@
             android:parentActivityName=".activity.refill.nagad.NagadBalanceClaimActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".activity.refill.nagad.nagad_v2.webView.NagadBalanceClaimActivityv2"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
-
-
+        <activity
+            android:name=".activity.refill.nagad.nagad_v2.webView.NagadBalanceClaimActivityv2"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.refill.banktransfer.BankDetailsActivity"
             android:screenOrientation="portrait" />
@@ -1073,12 +1077,9 @@
         <activity
             android:name=".activity.refill.nagad.NagadBalanceClaimActivity"
             android:screenOrientation="portrait" />
-
-
         <activity
             android:name=".activity.refill.nagad.nagad_v2.webView.WebViewActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.utility.pallibidyut.bill.PBBillPayOldActivity"
             android:screenOrientation="portrait" />

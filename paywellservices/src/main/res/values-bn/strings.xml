@@ -667,7 +667,7 @@
     <string name="bbc_registation_actionbar">কোর্স রেজিস্ট্রেশন</string>
     <string name="reg_korun">রেজিস্ট্রেশন করুন</string>
     <string name="reg_guid">আপনার একাউন্ট তৈরির জন্য নিচের ফর্মটি পূরণ করুন এবং শুরু করুন আপনার ইংরেজী কোর্স। মনে রাখবেন, রেজিস্ট্রেশনের সময় দেওয়া নামটিই আপনার Topic Report ও Course Report-এ উল্লেখ করা হবে।</string>
-    <string name="reg_must">অবশ্যই ইংরেজিতে লিখতে হবে।  (*) চিহ্নিত /nঘরগুলো অবশ্যই পূরণ করতে হবে।</string>
+    <string name="reg_must">অবশ্যই ইংরেজিতে লিখতে হবে।  (*) চিহ্নিত ঘরগুলো অবশ্যই পূরণ করতে হবে।</string>
     <string name="paywell_pin">পেওয়েল পিন</string>
     <string name="reg_dialog">রেজিস্ট্রেশন রেজাল্ট</string>
     <string name="reg_dialog_msg">রেজিস্ট্রেশন সফলভাবে সম্পন্ন হয়েছে। </string>
