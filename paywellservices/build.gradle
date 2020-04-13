@@ -101,6 +101,7 @@ ext {
     rxJava = '2.1.6'
 
     room_version = "1.1.1"
+    appcompat = "1.1.0"
 }
 
 dependencies {

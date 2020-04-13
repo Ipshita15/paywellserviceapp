@@ -36,6 +36,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.BuildConfig;
@@ -124,6 +125,7 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.zxing.BarcodeFormat;
@@ -147,6 +149,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
@@ -242,6 +245,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     DrawerLayout drawer;
     ImageView ivRightSliderUpDown;
     ObjectAnimator animation;
+    private BottomSheetBehavior sheetBehavior;
+    LinearLayout layoutBottomSheet;
 
 
     @SuppressWarnings("deprecation")
@@ -262,11 +267,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         setSupportActionBar(mToolbar);
         mToolbar.setTitleTextColor(Color.parseColor("#ffffff"));
 
-        mToolbarHeading = (mToolbar.findViewById(R.id.txtHeading));
+        mToolbarHeading = findViewById(R.id.txtHeading);
         mCoordinateLayout = findViewById(R.id.coordinateLayout);
         pb_dot = findViewById(R.id.dot_progress_bar);
-        ivBalanceBorder = findViewById(R.id.ivBalanceBorder);
-        ivBalanceBorder.setOnClickListener(this);
+//        ivBalanceBorder = findViewById(R.id.ivBalanceBorder);
+//        ivBalanceBorder.setOnClickListener(this);
 
         mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = AppHandler.getmInstance(getApplicationContext());
@@ -296,6 +301,47 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         setupRightNagivationView();
 
         setScreenStateReciver();
+
+        setUpBottomSheet();
+
+
+    }
+
+    private void setUpBottomSheet() {
+
+        layoutBottomSheet = findViewById(R.id.bottom_sheet);
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+
+        /**
+         * bottom sheet state change listener
+         * we are changing button text when sheet changed state
+         * */
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
 
 
     }
@@ -510,25 +556,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         home_refill_balance = findViewById(R.id.homeBtnRefillBalance);
         home_settings = findViewById(R.id.homeBtnSettings);
 
-        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-            home_topup.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_utility.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_eticket.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_mfs.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_product_catalog.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_statement.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_refill_balance.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_settings.setTypeface(AppController.getInstance().getOxygenLightFont());
-        } else {
-            home_topup.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_utility.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_eticket.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_mfs.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_product_catalog.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_statement.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_refill_balance.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_settings.setTypeface(AppController.getInstance().getAponaLohitFont());
-        }
+
 
         drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -547,7 +575,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             switchToCzLocale(new Locale(KEY_ENGLISH, ""));
         }
 
-        // mToolbarHeading.setText(getString(R.string.balance) + mAppHandler.getPwBalance() + getString(R.string.tk));
+         mToolbarHeading.setText(mAppHandler.getPwBalance() + getString(R.string.tk));
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             mToolbarHeading.setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
@@ -653,25 +681,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         home_refill_balance.setText(R.string.home_refill_balance);
         home_settings.setText(R.string.home_settings);
 
-        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-            home_topup.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_utility.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_eticket.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_mfs.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_product_catalog.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_statement.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_refill_balance.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_settings.setTypeface(AppController.getInstance().getOxygenLightFont());
-        } else {
-            home_topup.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_utility.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_eticket.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_mfs.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_product_catalog.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_statement.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_refill_balance.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_settings.setTypeface(AppController.getInstance().getAponaLohitFont());
-        }
+
 
         navigationView.getMenu().findItem(R.id.nav_topup).setTitle(R.string.home_topup);
         navigationView.getMenu().findItem(R.id.nav_utility).setTitle(R.string.home_utility);
@@ -967,6 +977,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         String[] imageUrl = new String[mAppHandler.getDisplayPictureCount()];
         for (int len = 0; len < mAppHandler.getDisplayPictureCount(); len++) {
             imageUrl[len] = AllUrl.len + len + ".jpg";
+//                        imageUrl[len] = "https://api.paywellonline.com/retailerPromotionImage/Banner_Bus.9.png";
         }
 
         String imageUpdateVersionString = mAppHandler.getDisplayPictureCount() + mAppHandler.getPictureArrayImageLink();
@@ -1031,7 +1042,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         isBalaceCheckProcessRunning = true;
         pb_dot.setVisibility(View.VISIBLE);
-        mToolbarHeading.setVisibility(View.GONE);
+        mToolbarHeading.setVisibility(View.INVISIBLE);
 
         String userName = mAppHandler.getUserName();
 
@@ -1045,7 +1056,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onResponse(Call<APIResBalanceCheck> call, Response<APIResBalanceCheck> response) {
                 try {
-                    pb_dot.setVisibility(View.GONE);
+                    pb_dot.setVisibility(View.INVISIBLE);
                     mToolbarHeading.setVisibility(View.VISIBLE);
                     isBalaceCheckProcessRunning = false;
 
@@ -1081,7 +1092,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             @Override
             public void onFailure(Call<APIResBalanceCheck> call, Throwable t) {
-                pb_dot.setVisibility(View.GONE);
+                pb_dot.setVisibility(View.INVISIBLE);
                 mToolbarHeading.setVisibility(View.VISIBLE);
                 isBalaceCheckProcessRunning = false;
 
