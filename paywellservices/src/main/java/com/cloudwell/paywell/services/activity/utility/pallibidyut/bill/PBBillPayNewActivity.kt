@@ -26,12 +26,11 @@ import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.Pa
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.REBNotification
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.constant.IconConstant
 import com.cloudwell.paywell.services.database.DatabaseClient
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu
 import com.cloudwell.paywell.services.retrofit.ApiUtils
-import com.cloudwell.paywell.services.utils.ConnectionDetector
-import com.cloudwell.paywell.services.utils.DateUtils
-import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
-import com.cloudwell.paywell.services.utils.UniversalRecyclerViewAdapter
+import com.cloudwell.paywell.services.utils.*
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_pbbill_pay_new.*
@@ -147,6 +146,14 @@ class PBBillPayNewActivity : BaseActivity() {
         }.execute()
 
 
+        addRecentUsedList()
+
+
+    }
+
+    private fun addRecentUsedList() {
+        val recentUsedMenu = RecentUsedMenu(StringConstant.KEY_home_utility_pollibiddut_bill_pay_favorite, StringConstant.KEY_home_utility, IconConstant.KEY_ic_polli_biddut, 0, 9)
+        addItemToRecentListInDB(recentUsedMenu)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

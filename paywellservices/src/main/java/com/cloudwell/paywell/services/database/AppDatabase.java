@@ -18,6 +18,7 @@ import com.cloudwell.paywell.services.activity.utility.electricity.westzone.mode
 import com.cloudwell.paywell.services.activity.utility.ivac.model.IvacHistory;
 import com.cloudwell.paywell.services.activity.utility.karnaphuli.model.KarnaphuliHistory;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.PallibidyutHistory;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
@@ -25,7 +26,7 @@ import androidx.room.RoomDatabase;
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 2/1/19.
  */
-@Database(entities = {FavoriteMenu.class, NotificationDetailMessage.class, NotificationDetailMessageSync.class, Airport.class, Passenger.class, Transport.class, BusLocalDB.class, BusSchedule.class, TripScheduleInfo.class, DESCOHistory.class, DESCOPrepaidHistory.class,DPDCHistory.class, WasaHistory.class, PallibidyutHistory.class, WestZoneHistory.class, IvacHistory.class, BanglalionHistory.class, KarnaphuliHistory.class}, version = 6)
+@Database(entities = {FavoriteMenu.class, NotificationDetailMessage.class, NotificationDetailMessageSync.class, Airport.class, Passenger.class, Transport.class, BusLocalDB.class, BusSchedule.class, TripScheduleInfo.class, DESCOHistory.class, DESCOPrepaidHistory.class,DPDCHistory.class, WasaHistory.class, PallibidyutHistory.class, WestZoneHistory.class, IvacHistory.class, BanglalionHistory.class, KarnaphuliHistory.class, RecentUsedMenu.class}, version = 6)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract FavoriteMenuDab mFavoriteMenuDab();
 

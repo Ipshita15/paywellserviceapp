@@ -3,9 +3,7 @@ package com.cloudwell.paywell.services.activity.utility.pallibidyut;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,7 +11,6 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.WebViewActivity;
@@ -33,25 +30,16 @@ import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
+import com.cloudwell.paywell.services.constant.IconConstant;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
-import com.cloudwell.paywell.services.utils.ParameterUtility;
+import com.cloudwell.paywell.services.utils.StringConstant;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.appcompat.app.AppCompatDialog;
 import okhttp3.ResponseBody;
@@ -128,17 +116,33 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
     }
 
     private void checkIsComeFromFav(Intent intent) {
+
+        RecentUsedMenu recentUsedMenu;
         boolean isFav = intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE, false);
         if (isFav) {
             boolean booleanExtra = intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_RG_INQUERY, false);
             if (booleanExtra) {
                 shwTheLimitedPrompt(TAG_SERVICE_REGISTRATION_INQUIRY);
+                recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_utility_pollibiddut_reg_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, 0, 12);
+                addItemToRecentListInDB(recentUsedMenu);
+
             } else if (intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_BILL_INQUERY, false)) {
                 shwTheLimitedPrompt(TAG_SERVICE_BILL_INQUIRY);
+                recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_utility_pollibiddut_bill_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, 0, 13);
+                addItemToRecentListInDB(recentUsedMenu);
+
             } else if (intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_REQUEST_BILL_INQUIRY, false)) {
                 shwTheLimitedPrompt(TAG_SERVICE_PHONE_NUMBER_BILL_STATUS);
+
+                recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_utility_pb_bill_statu_inquery, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, 0, 15);
+                addItemToRecentListInDB(recentUsedMenu);
+
             } else if (intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_MOBILE_NUMBER_CHANGE_INQUIRY, false)) {
                 shwTheLimitedPrompt(TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY);
+
+
+                recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_utility_pb_phone_number_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry ,0, 17);
+                addItemToRecentListInDB(recentUsedMenu);
             }
         }
     }
@@ -176,6 +180,8 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
 
     public void onButtonClicker(View v) {
 
+        RecentUsedMenu recentUsedMenu;
+
         switch (v.getId()) {
             case R.id.homeBtnRegistration:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_MENU, AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_REGISTION);
@@ -187,9 +193,14 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
                 break;
             case R.id.homeBtnInquiryReg:
                 shwTheLimitedPrompt(TAG_SERVICE_REGISTRATION_INQUIRY);
+                 recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_utility_pollibiddut_reg_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, 0, 12);
+                addItemToRecentListInDB(recentUsedMenu);
+
                 break;
             case R.id.homeBtnInquiryBillPay:
                 shwTheLimitedPrompt(TAG_SERVICE_BILL_INQUIRY);
+                 recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_utility_pollibiddut_bill_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, 0, 13);
+                addItemToRecentListInDB(recentUsedMenu);
                 break;
 
             case R.id.btRequestInquiry:
@@ -198,6 +209,9 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
                 break;
             case R.id.btBillStatusInquiry:
                 shwTheLimitedPrompt(TAG_SERVICE_PHONE_NUMBER_BILL_STATUS);
+
+                recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_utility_pb_bill_statu_inquery, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, 0, 15);
+                addItemToRecentListInDB(recentUsedMenu);
                 break;
 
             case R.id.btChangeMobileNumber:
@@ -206,10 +220,18 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
 
             case R.id.btChangeMobileNumbeEnquiry:
                 shwTheLimitedPrompt(TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY);
+
+                addRecentUsedList();
                 break;
             default:
                 break;
         }
+    }
+
+    private void addRecentUsedList() {
+        RecentUsedMenu recentUsedMenu;
+        recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_utility_pb_phone_number_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry ,0, 17);
+        addItemToRecentListInDB(recentUsedMenu);
     }
 
     private void shwTheLimitedPrompt(String tagServiceBillInquiry) {

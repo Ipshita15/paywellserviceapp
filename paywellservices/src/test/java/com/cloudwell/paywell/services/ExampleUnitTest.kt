@@ -279,6 +279,29 @@ class ExampleUnitTest {
 
 
 
+    @Test
+    fun statackTest(){
+        val s: Set<String> = HashSet<String>(5);
+        s.plusElement("1")
+        s.plusElement("2")
+        s.plusElement("3")
+        s.plusElement("4")
+        s.plusElement("5")
+        s.plusElement("6")
+        s.plus("7")
+
+        s.forEach {
+            System.out.println("item"+it)
+        }
+
+        System.out.println("end")
+
+
+
+    }
+
+
+
 
 
 

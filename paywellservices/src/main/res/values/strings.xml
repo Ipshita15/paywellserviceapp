@@ -652,6 +652,10 @@
     <string name="retry">Retry</string>
     <string name="logout_message">Are you sure you want to logout of your account?</string>
     <string name="logout_text">Logout</string>
+    <string name="fee">Fee</string>
+    <string name="home_insurance">Insurance</string>
+    <string name="home_education">Education</string>
+    <string name="home_entertainment">Entertainment</string>
 
 
 </resources>
