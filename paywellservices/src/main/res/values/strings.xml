@@ -677,6 +677,7 @@
     <string name="paywell_pin">Paywell Pin</string>
     <string name="reg_dialog">Registration Result</string>
     <string name="reg_dialog_msg">Registration Successfully Done </string>
+    <string name="bongo">Bongo</string>
 
 
 </resources>

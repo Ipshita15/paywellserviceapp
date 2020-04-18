@@ -675,5 +675,6 @@
     <string name="paywell_pin">পেওয়েল পিন</string>
     <string name="reg_dialog">রেজিস্ট্রেশন রেজাল্ট</string>
     <string name="reg_dialog_msg">রেজিস্ট্রেশন সফলভাবে সম্পন্ন হয়েছে। </string>
+    <string name="bongo">বংগ</string>
 
 </resources>

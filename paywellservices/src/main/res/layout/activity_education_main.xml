@@ -51,7 +51,7 @@
                     style="@style/HomeButtonNew"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/bbc_icon"
-                    android:text="Bongo"
+                    android:text="@string/bongo"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
 
