@@ -1,10 +1,16 @@
 package com.cloudwell.paywell.services.activity.statements;
 
 import android.graphics.Bitmap;
-import android.graphics.Color;
+import android.net.http.SslError;
 import android.os.Bundle;
+import android.os.Message;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
@@ -12,6 +18,7 @@ import android.widget.RelativeLayout;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.statements.model.RequestWebView;
+import com.cloudwell.paywell.services.activity.utility.AllUrl;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppHandler;
@@ -20,7 +27,6 @@ import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.StringConstant;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
 import java.util.Locale;
@@ -36,8 +42,8 @@ import static com.cloudwell.paywell.services.activity.utility.AllUrl.URL_stateme
 
 public class ViewStatementActivity extends BaseActivity {
 
-    public static final String DESTINATION_URL ="url";
-    public static final String DESTINATION_TITLE ="title";
+    public static final String DESTINATION_URL = "url";
+    public static final String DESTINATION_TITLE = "title";
     private RelativeLayout mRelativeLayout;
     private WebView mWebView;
     public static String url;
@@ -50,9 +56,9 @@ public class ViewStatementActivity extends BaseActivity {
 
         AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
-        if (getIntent()!=null){
-            url=getIntent().getStringExtra(DESTINATION_URL);
-            title=getIntent().getStringExtra(DESTINATION_TITLE);
+        if (getIntent() != null) {
+            url = getIntent().getStringExtra(DESTINATION_URL);
+            title = getIntent().getStringExtra(DESTINATION_TITLE);
         }
 
         assert getSupportActionBar() != null;
@@ -74,8 +80,6 @@ public class ViewStatementActivity extends BaseActivity {
             }
         }
 
-        mRelativeLayout = findViewById(R.id.relativeLayout);
-        mWebView = findViewById(R.id.webView);
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             switchToCzLocale(new Locale("en", ""));
@@ -83,9 +87,25 @@ public class ViewStatementActivity extends BaseActivity {
             switchToCzLocale(new Locale("bn", ""));
         }
 
+
+        mRelativeLayout = findViewById(R.id.relativeLayout);
+        mWebView = findViewById(R.id.webView);
+
+        mWebView.getSettings().setLoadsImagesAutomatically(true);
+        mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        mWebView.getSettings().setAppCacheEnabled(true);
+        mWebView.getSettings().setLoadsImagesAutomatically(true);
+        mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        mWebView.getSettings().setPluginState(WebSettings.PluginState.ON);
+        mWebView.getSettings().setSupportMultipleWindows(true);
+
+
         if (!title.isEmpty()) {
             if (title.equalsIgnoreCase("mini")) {
                 setToolbar(getString(R.string.home_statement_mini));
+                callPostWebview();
 
                 RecentUsedMenu recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_statement_mini, StringConstant.KEY_home_statement, IconConstant.KEY_ic_statement, 0, 39);
                 addItemToRecentListInDB(recentUsedMenu);
@@ -93,6 +113,8 @@ public class ViewStatementActivity extends BaseActivity {
 
             } else if (title.equalsIgnoreCase("balance")) {
                 setToolbar(getString(R.string.home_statement_balance));
+                callPostWebview();
+
 
                 RecentUsedMenu recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_statement_balance, StringConstant.KEY_home_statement, IconConstant.KEY_ic_statement, 0, 40);
                 addItemToRecentListInDB(recentUsedMenu);
@@ -100,11 +122,21 @@ public class ViewStatementActivity extends BaseActivity {
             } else if (title.equalsIgnoreCase("sales")) {
                 setToolbar(getString(R.string.home_statement_sales));
 
+                String url = AllUrl.URL_salesStatement + AppHandler.getmInstance(getApplicationContext()).getUserName() + "&language=" + AppHandler.getmInstance(getApplicationContext()).getAppLanguage();
+
+                startWebViewGet(url);
+
+
                 RecentUsedMenu recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_statement_sales, StringConstant.KEY_home_statement, IconConstant.KEY_ic_statement, 0, 41);
                 addItemToRecentListInDB(recentUsedMenu);
 
             } else if (title.equalsIgnoreCase("trx")) {
                 setToolbar(getString(R.string.home_statement_transaction));
+
+                String url = AllUrl.URL_getAllTransactionStatement + AppHandler.getmInstance(getApplicationContext()).getUserName() + "&language=" + AppHandler.getmInstance(getApplicationContext()).getAppLanguage();
+
+                startWebViewGet(url);
+
 
                 RecentUsedMenu recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_statement_transaction, StringConstant.KEY_home_statement, IconConstant.KEY_ic_statement, 0, 42);
                 addItemToRecentListInDB(recentUsedMenu);
@@ -116,21 +148,10 @@ public class ViewStatementActivity extends BaseActivity {
             setToolbar(getString(R.string.home_statement_mini));
         }
 
-        mWebView.setWebViewClient(new WebViewClient() {
-            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.no_update_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-        });
 
-        mWebView.getSettings().setLoadsImagesAutomatically(true);
-        mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        mWebView.getSettings().setJavaScriptEnabled(true);
+    }
 
-
+    private void callPostWebview() {
         String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
 
 
@@ -150,10 +171,6 @@ public class ViewStatementActivity extends BaseActivity {
             call = ApiUtils.getAPIServiceV2().StatementInquiry(body);
         } else if (title.equalsIgnoreCase("balance")) {
             call = ApiUtils.getAPIServiceV2().balanceStatement(body);
-        } else if (title.equalsIgnoreCase("sales")) {
-            call = ApiUtils.getAPIServiceV2().salesStatementForhttps(body);
-        } else if (title.equalsIgnoreCase("trx")) {
-            call = ApiUtils.getAPIServiceV2().getAllTransactionStatementForHttps(body);
         }
 
         call.enqueue(new Callback<ResponseBody>() {
@@ -166,7 +183,7 @@ public class ViewStatementActivity extends BaseActivity {
                     if (response.body() != null) {
                         string = response.body().string();
                         startWebView(string);
-                    }else {
+                    } else {
                         showErrorCallBackMessagev1(getString(R.string.try_again_msg));
                     }
 
@@ -187,7 +204,6 @@ public class ViewStatementActivity extends BaseActivity {
         });
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_STATEMENT_VIEW);
-
     }
 
     private void startWebView(String data) {
@@ -195,31 +211,128 @@ public class ViewStatementActivity extends BaseActivity {
         mWebView.setWebViewClient(new WebViewClient() {
 
 
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                super.onPageStarted(view, url, favicon);
-                showProgressDialog();
-            }
+                                      @Override
+                                      public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                                          super.onPageStarted(view, url, favicon);
+                                          showProgressDialog();
+                                      }
 
 
+                                      public void onLoadResource(WebView view, String url) {
 
-            public void onLoadResource(WebView view, String url) {
+                                          //showProgressDialog();
+                                      }
 
-                //showProgressDialog();
-            }
 
-            public void onPageFinished(WebView view, String url) {
+                                      @Override
+                                      public void onFormResubmission(WebView view, Message dontResend, Message resend) {
+                                          super.onFormResubmission(view, dontResend, resend);
+                                      }
 
-                dismissProgressDialog();
+                                      @Override
+                                      public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                                          super.onReceivedSslError(view, handler, error);
+                                      }
 
-            }
+                                      @Override
+                                      public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                                          super.onReceivedError(view, request, error);
+                                      }
 
-        }
+
+                                      public void onPageFinished(WebView view, String url) {
+
+                                          dismissProgressDialog();
+
+                                      }
+
+
+                                      @Override
+                                      public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                                          view.loadUrl(url);
+                                          return true;
+                                      }
+
+
+                                      @Override
+                                      public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                                          return super.shouldOverrideUrlLoading(view, request);
+                                      }
+
+                                  }
         );
 
-        mWebView.loadData(data, "", "");
+        String encodedHtml = Base64.encodeToString(data.getBytes(), Base64.NO_PADDING);
+
+//        mWebView.loadDataWithBaseURL(null, data, "text/html", "base64", null);
+
+//        mWebView.loadUrl("https://agentapi.paywellonline.com/test.php");
 
 
+        mWebView.loadData(data, null, null);
+
+
+    }
+
+
+    private void startWebViewGet(String data) {
+
+        mWebView.setWebViewClient(new WebViewClient() {
+
+
+                                      @Override
+                                      public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                                          super.onPageStarted(view, url, favicon);
+                                          showProgressDialog();
+                                      }
+
+
+                                      public void onLoadResource(WebView view, String url) {
+
+                                          //showProgressDialog();
+                                      }
+
+
+                                      @Override
+                                      public void onFormResubmission(WebView view, Message dontResend, Message resend) {
+                                          super.onFormResubmission(view, dontResend, resend);
+                                      }
+
+                                      @Override
+                                      public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                                          super.onReceivedSslError(view, handler, error);
+                                      }
+
+                                      @Override
+                                      public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                                          super.onReceivedError(view, request, error);
+                                      }
+
+
+                                      public void onPageFinished(WebView view, String url) {
+
+                                          dismissProgressDialog();
+
+                                      }
+
+
+                                      @Override
+                                      public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                                          view.loadUrl(url);
+                                          return true;
+                                      }
+
+
+                                      @Override
+                                      public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                                          return super.shouldOverrideUrlLoading(view, request);
+                                      }
+
+
+                                  }
+        );
+
+        mWebView.loadUrl(data);
 
     }
 
@@ -234,7 +347,11 @@ public class ViewStatementActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        finish();
+        if (mWebView.canGoBack()) {
+            mWebView.goBack();
+        } else {
+            super.onBackPressed();
+        }
     }
 
 

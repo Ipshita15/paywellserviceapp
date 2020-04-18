@@ -301,8 +301,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 --addNoFlag;
-                slideOutAnim
-                        .setAnimationListener(new Animation.AnimationListener() {
+                slideOutAnim.setAnimationListener(new Animation.AnimationListener() {
 
                             @Override
                             public void onAnimationStart(Animation animation) {
@@ -1105,7 +1104,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
                     }
                     String operatorTextForServer = getOperatorTextForServer(result);
                     String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).getRID());
-                    TopupData topupDatum = new TopupData(amountStr, planStr, phoneStr, operatorTextForServer, uniqueKey);
+                    TopupData topupDatum = new TopupData(Integer.parseInt(amountStr), planStr, phoneStr, operatorTextForServer, uniqueKey);
                     topupDatumList.add(topupDatum);
 
                 }
@@ -1155,7 +1154,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
                 String operatorTextForServer = getOperatorTextForServer(result);
                 String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).getRID());
                 RequestSingleTopup singleTopup = new RequestSingleTopup();
-                singleTopup.setAmount(amountStr);
+                singleTopup.setAmount(Integer.parseInt(amountStr));
                 singleTopup.setConType(planStr);
                 singleTopup.setMsisdn(phoneStr);
                 singleTopup.setOperator(operatorTextForServer);

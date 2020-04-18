@@ -58,13 +58,16 @@ public class AllUrl {
     public static final String URL_ek_redirect = "https://agentapi.paywellonline.com/Ecommerce/Ekshop/redirect?";
     public static final String URL_ek_report = "https://agentapi.paywellonline.com/Ecommerce/Ekshop/get_report";
 
-    public static final String URL_chat = "https://agentapi.paywellonline.com/chatting-retailer/";
+    public static final String URL_chat = "https://agentapi.paywellonline.com/chatting-retailer/?";
     public static final String URL_update_check = "https://app.paywellonline.com/apk/paywell_services_latest_version.apk";
     public static final String URL_check_version = "https://app.paywellonline.com/version_update_info/paywellservice_update.txt";
     public static final String URL_pb_bill_pay = "https://api.paywellonline.com/PaywelltransactionPollyBiddyut/pollyBiddyutBillPayAPI";
     public static final String URL_banglalion_bill_pay = "https://api.paywellonline.com/PayWellInternateBillPay/banglalionBillPay";
     public static final String URL_banglalion_bill_inquiry = "https://api.paywellonline.com/PayWellInternateBillPay/banglalionEnquiry";
     public static final String URL_bkash_balance_check = "https://bkapi.paywellonline.com/retailer/userBalanceCheck.php?";
+
+    public static final String URL_salesStatement= "https://agentapi.paywellonline.com/Android/AndroidWebViewController/salesStatement?username=";
+    public static final String URL_getAllTransactionStatement= "https://agentapi.paywellonline.com/Android/AndroidWebViewController/getAllTransactionStatement?username=";
 
 
 }

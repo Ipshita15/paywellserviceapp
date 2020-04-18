@@ -44,6 +44,7 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.about.AboutActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.chat.ChatActivity;
+import com.cloudwell.paywell.services.activity.education.EducationMainActivity;
 import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity;
@@ -209,7 +210,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private Slider viewPager;
     private int currentPage;
 
-    private Button home_topup, home_utility, home_eticket, home_mfs, home_product_catalog, home_statement, home_refill_balance, home_settings;
+    private Button home_topup, home_utility, home_eticket, home_mfs, home_product_catalog, home_statement, home_refill_balance, home_settings, home_Eduction;
 
     private final int PERMISSIONS_FOR_QR_CODE_SCAN = 100;
     private final int PERMISSIONS_REQUEST_FOR_WRITE_EXTERNAL_STORAGE = 101;
@@ -632,6 +633,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         home_statement = findViewById(R.id.homeBtnMiniStatement);
         home_refill_balance = findViewById(R.id.homeBtnRefillBalance);
         home_settings = findViewById(R.id.homeBtnSettings);
+        home_Eduction = findViewById(R.id.homeBtnEduction);
 
 
 
@@ -757,6 +759,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         home_statement.setText(R.string.home_statement);
         home_refill_balance.setText(R.string.home_refill_balance);
         home_settings.setText(R.string.home_settings);
+        home_Eduction.setText(R.string.home_education);
 
 
 
@@ -1421,6 +1424,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.homeBtnCall:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CALL_MENU);
                 callPreview(false, "");
+                break;
+
+            case R.id.homeBtnEduction:
+
+                startActivity(new Intent(this, EducationMainActivity.class));
+
                 break;
 
             default:

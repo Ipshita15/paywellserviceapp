@@ -3,6 +3,7 @@ package com.cloudwell.paywell.services.activity.refill.nagad
 import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.text.Html
 import android.text.InputType
@@ -17,6 +18,9 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.UtilityBaseActivity
 import com.cloudwell.paywell.services.activity.refill.nagad.model.ResTranstionINquiry
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.BalanceClaimModel
+import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.NagadWebResponse
+import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.Nagadv2requestPojo
+import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.WebViewActivity
 import com.cloudwell.paywell.services.activity.utility.AllUrl
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
@@ -30,11 +34,14 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class NagadBalanceClaimActivity : UtilityBaseActivity() {
+    private var mAppHandler: AppHandler? = null
+     val INTENT_REQUEST = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nagad_balance_claim)
         setToolbar(getString(R.string.home_title_nagad_balance_claim))
+        mAppHandler = AppHandler.getmInstance(applicationContext)
 
         submitButton.setOnClickListener {
             checkValidation()
@@ -83,7 +90,8 @@ class NagadBalanceClaimActivity : UtilityBaseActivity() {
 
                 if (ConnectionDetector(applicationContext).isConnectingToInternet) {
 
-                    callBalanceClimApi(pinNoET.text.toString(), mobileNumber, amount)
+                    callBalanceClimApi(pinNoET.text.toString(), mobileNumber, amount)     //for nagad v1
+
                 } else {
                     showNoInternetConnectionFound()
                 }
@@ -95,11 +103,69 @@ class NagadBalanceClaimActivity : UtilityBaseActivity() {
         alert.show()
     }
 
+    private fun callBalanceClimApi_v2(pin: String, mobileNumber: String, amount: String) {
+        showProgressDialog()
+        val pojo =  Nagadv2requestPojo()
+        pojo.password = pin
+        pojo.username = mAppHandler?.userName.toString()
+        pojo.amount = amount
+
+
+        ApiUtils.getAPIServiceV2().gestNahadg(pojo).enqueue(object : Callback<NagadWebResponse>{
+            override fun onFailure(call: Call<NagadWebResponse>, t: Throwable) {
+                dismissProgressDialog()
+                showErrorMessagev1(getString(R.string.try_again_msg))
+            }
+
+            override fun onResponse(call: Call<NagadWebResponse>, response: Response<NagadWebResponse>) {
+                dismissProgressDialog()
+                if(response.isSuccessful){
+
+                    if(response.body()?.apiStatus == 200){
+                       val details  = response.body()?.responseDetails
+                        if (details?.status == 200){
+
+                            val intent = Intent(applicationContext, WebViewActivity::class.java)
+                            intent.putExtra("url", details.redirectLink)
+                            startActivityForResult(intent, INTENT_REQUEST)
+
+                        }else{
+                            showErrorMessagev1(details?.statusName.toString())
+                        }
+
+                    }else{
+                        showErrorMessagev1(response.body()?.apiStatusName.toString())
+                    }
+
+
+                }else{
+                    showErrorMessagev1(getString(R.string.try_again_msg))
+                }
+            }
+
+        })
+
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == INTENT_REQUEST) {
+            // Make sure the request was successful
+            if (resultCode == Activity.RESULT_OK) {
+                finish()
+            }
+        }
+
+    }
+
+
+
     private fun callBalanceClimApi(pin: String, mobileNumber: String, amount: String) {
         showProgressDialog()
         val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(applicationContext).rid)
         val sec_token = AllUrl.sec_token
-
 
         val newModel = BalanceClaimModel()
         newModel.amount = amount
