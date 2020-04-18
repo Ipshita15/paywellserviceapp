@@ -21,8 +21,11 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.constant.IconConstant;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.StringConstant;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.gson.Gson;
 
@@ -57,6 +60,14 @@ public class PBRegistrationActivity extends BaseActivity implements View.OnClick
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_REGISTION_INQUIRY);
 
+
+        addRecentUsedList();
+
+    }
+
+    private void addRecentUsedList() {
+        RecentUsedMenu recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_utility_pollibiddut_registion, StringConstant.KEY_home_utility, IconConstant.KEY_ic_registration,  0, 10);
+        addItemToRecentListInDB(recentUsedMenu);
     }
 
     private void initView() {

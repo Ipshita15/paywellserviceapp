@@ -34,12 +34,6 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatDialog;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.topup.adapter.MyRecyclerViewAdapter;
@@ -61,14 +55,22 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.constant.IconConstant;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.StringConstant;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDialog;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -195,7 +197,18 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
         });
 
         addAnotherNo();
+
+
+        addRecentUsedList();
+
+
     }
+
+    private void addRecentUsedList() {
+        RecentUsedMenu recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_mobileOperator, StringConstant.KEY_topup, IconConstant.KEY_all_operator, 1, 1);
+        addItemToRecentListInDB(recentUsedMenu);
+    }
+
 
     private void refreshLanguage() {
 

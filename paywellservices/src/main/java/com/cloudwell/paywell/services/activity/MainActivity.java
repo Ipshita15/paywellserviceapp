@@ -36,6 +36,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.BuildConfig;
@@ -43,7 +44,6 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.about.AboutActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.chat.ChatActivity;
-import com.cloudwell.paywell.services.activity.education.EducationMainActivity;
 import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity;
@@ -67,6 +67,7 @@ import com.cloudwell.paywell.services.activity.terms.TermsActivity;
 import com.cloudwell.paywell.services.activity.topup.TopupMainActivity;
 import com.cloudwell.paywell.services.activity.topup.TopupMenuActivity;
 import com.cloudwell.paywell.services.activity.topup.brilliant.BrilliantTopupActivity;
+import com.cloudwell.paywell.services.activity.topup.model.MobileOperator;
 import com.cloudwell.paywell.services.activity.utility.AllUrl;
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionMainActivity;
@@ -104,6 +105,8 @@ import com.cloudwell.paywell.services.constant.AllConstant;
 import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.database.FavoriteMenuDab;
 import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus;
+import com.cloudwell.paywell.services.recentList.MyRecyclerViewAdapterRecentUsed;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.service.notificaiton.model.EventNewNotificaiton;
 import com.cloudwell.paywell.services.utils.AppHelper;
@@ -125,6 +128,7 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.zxing.BarcodeFormat;
@@ -140,6 +144,8 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -148,6 +154,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
@@ -202,8 +209,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private Slider viewPager;
     private int currentPage;
 
-    private Button home_topup, home_utility, home_eticket, home_mfs, home_product_catalog, home_statement, home_refill_balance,
-            home_settings, home_education;
+    private Button home_topup, home_utility, home_eticket, home_mfs, home_product_catalog, home_statement, home_refill_balance, home_settings;
 
     private final int PERMISSIONS_FOR_QR_CODE_SCAN = 100;
     private final int PERMISSIONS_REQUEST_FOR_WRITE_EXTERNAL_STORAGE = 101;
@@ -244,6 +250,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     DrawerLayout drawer;
     ImageView ivRightSliderUpDown;
     ObjectAnimator animation;
+    private BottomSheetBehavior sheetBehavior;
+    LinearLayout layoutBottomSheet;
 
 
     @SuppressWarnings("deprecation")
@@ -251,7 +259,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         changeStatusBarColor();
+
         changeAppThemeForNoActionBar();
+
         setContentView(R.layout.activity_main);
 
         PayWellShortcutManager.Companion.enableShortcutList(this);
@@ -262,11 +272,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         setSupportActionBar(mToolbar);
         mToolbar.setTitleTextColor(Color.parseColor("#ffffff"));
 
-        mToolbarHeading = (mToolbar.findViewById(R.id.txtHeading));
+        mToolbarHeading = findViewById(R.id.txtHeading);
         mCoordinateLayout = findViewById(R.id.coordinateLayout);
         pb_dot = findViewById(R.id.dot_progress_bar);
-        ivBalanceBorder = findViewById(R.id.ivBalanceBorder);
-        ivBalanceBorder.setOnClickListener(this);
+//        ivBalanceBorder = findViewById(R.id.ivBalanceBorder);
+//        ivBalanceBorder.setOnClickListener(this);
 
         mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = AppHandler.getmInstance(getApplicationContext());
@@ -296,6 +306,117 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         setupRightNagivationView();
 
         setScreenStateReciver();
+
+
+        setUpBottomSheet();
+
+
+    }
+
+    private void setRecentList() {
+
+
+        final FavoriteMenuDab favoriteMenuDab = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mFavoriteMenuDab();
+        favoriteMenuDab.getAllRecentUsedMenu().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<RecentUsedMenu>>() {
+                    @Override
+                    public void accept(List<RecentUsedMenu> favoriteMenus) throws Exception {
+
+//                        Collections.sort(favoriteMenus, new Comparator<RecentUsedMenu>() {
+//                            @Override
+//                            public int compare(RecentUsedMenu o1, RecentUsedMenu o2) {
+//                                if (o1.getFavoriteListPosition() > o2.getFavoriteListPosition()) {
+//                                    return 0;
+//                                } else if (o1.getFavoriteListPosition() > o2.getFavoriteListPosition()) {
+//                                    return 1;
+//                                } else {
+//                                    return -1;
+//                                }
+//                            }
+//                        });
+
+                       // Collections.reverse(favoriteMenus);
+                        generatedRecentUsedRecycView(favoriteMenus);
+
+                    }
+                });
+
+
+
+
+    }
+
+    private void generatedRecentUsedRecycView(List<RecentUsedMenu> favoriteMenus) {
+        boolean isEnglish = mAppHandler.getAppLanguage().equalsIgnoreCase("en");
+
+
+        List<Object> objects = Arrays.asList(RecentUsedStackSet.getInstance().getAll());
+        List<MobileOperator> TEMP  = (List<MobileOperator>)(Object) objects;
+        ArrayList<MobileOperator> mobileOperatorArrayList = new ArrayList<>(TEMP);
+
+
+        // new recycle view
+        final RecyclerView recyclerView = findViewById(R.id.rvRecent);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(horizontalLayoutManager);
+        recyclerView.getLayoutManager().setMeasurementCacheEnabled(false);
+        MyRecyclerViewAdapterRecentUsed adapter = new MyRecyclerViewAdapterRecentUsed(this, favoriteMenus,isEnglish);
+
+
+        adapter.setClickListener(new MyRecyclerViewAdapterRecentUsed.ItemClickListener() {
+            @Override
+            public void onItemClick(int position, RecentUsedMenu favoriteMenu) {
+                onRecentUsedItemClick(favoriteMenu);
+               // lastFavoitePosition = position;
+            }
+        });
+
+
+
+        recyclerView.setAdapter(adapter);
+    }
+
+
+
+    private void setUpBottomSheet() {
+
+        layoutBottomSheet = findViewById(R.id.bottom_sheet);
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+
+        /**
+         * bottom sheet state change listener
+         * we are changing button text when sheet changed state
+         * */
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
 
 
     }
@@ -337,6 +458,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
         mToolbarHeading.setText(getString(R.string.balance_pre_text));
+
+        setRecentList();
 
     }
 
@@ -509,29 +632,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         home_statement = findViewById(R.id.homeBtnMiniStatement);
         home_refill_balance = findViewById(R.id.homeBtnRefillBalance);
         home_settings = findViewById(R.id.homeBtnSettings);
-        home_education = findViewById(R.id.homeBtnEducation);
 
-        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-            home_topup.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_utility.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_eticket.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_mfs.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_product_catalog.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_statement.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_refill_balance.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_settings.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_education.setTypeface(AppController.getInstance().getOxygenLightFont());
-        } else {
-            home_topup.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_utility.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_eticket.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_mfs.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_product_catalog.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_statement.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_refill_balance.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_settings.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_education.setTypeface(AppController.getInstance().getAponaLohitFont());
-        }
+
 
         drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -550,7 +652,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             switchToCzLocale(new Locale(KEY_ENGLISH, ""));
         }
 
-        // mToolbarHeading.setText(getString(R.string.balance) + mAppHandler.getPwBalance() + getString(R.string.tk));
+         mToolbarHeading.setText(mAppHandler.getPwBalance() + getString(R.string.tk));
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             mToolbarHeading.setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
@@ -655,29 +757,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         home_statement.setText(R.string.home_statement);
         home_refill_balance.setText(R.string.home_refill_balance);
         home_settings.setText(R.string.home_settings);
-        home_education.setText(R.string.home_education);
 
-        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-            home_topup.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_utility.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_eticket.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_mfs.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_product_catalog.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_statement.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_refill_balance.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_settings.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_education.setTypeface(AppController.getInstance().getOxygenLightFont());
-        } else {
-            home_topup.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_utility.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_eticket.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_mfs.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_product_catalog.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_statement.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_refill_balance.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_settings.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_education.setTypeface(AppController.getInstance().getAponaLohitFont());
-        }
+
 
         navigationView.getMenu().findItem(R.id.nav_topup).setTitle(R.string.home_topup);
         navigationView.getMenu().findItem(R.id.nav_utility).setTitle(R.string.home_utility);
@@ -973,6 +1054,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         String[] imageUrl = new String[mAppHandler.getDisplayPictureCount()];
         for (int len = 0; len < mAppHandler.getDisplayPictureCount(); len++) {
             imageUrl[len] = AllUrl.len + len + ".jpg";
+//                        imageUrl[len] = "https://api.paywellonline.com/retailerPromotionImage/Banner_Bus.9.png";
         }
 
         String imageUpdateVersionString = mAppHandler.getDisplayPictureCount() + mAppHandler.getPictureArrayImageLink();
@@ -1037,7 +1119,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         isBalaceCheckProcessRunning = true;
         pb_dot.setVisibility(View.VISIBLE);
-        mToolbarHeading.setVisibility(View.GONE);
+        mToolbarHeading.setVisibility(View.INVISIBLE);
 
         String userName = mAppHandler.getUserName();
 
@@ -1051,7 +1133,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onResponse(Call<APIResBalanceCheck> call, Response<APIResBalanceCheck> response) {
                 try {
-                    pb_dot.setVisibility(View.GONE);
+                    pb_dot.setVisibility(View.INVISIBLE);
                     mToolbarHeading.setVisibility(View.VISIBLE);
                     isBalaceCheckProcessRunning = false;
 
@@ -1087,7 +1169,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             @Override
             public void onFailure(Call<APIResBalanceCheck> call, Throwable t) {
-                pb_dot.setVisibility(View.GONE);
+                pb_dot.setVisibility(View.INVISIBLE);
                 mToolbarHeading.setVisibility(View.VISIBLE);
                 isBalaceCheckProcessRunning = false;
 
@@ -1735,10 +1817,27 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         drawer.closeDrawer(GravityCompat.END);
 
 
-        Intent intent;
 
         int resId = ResorceHelper.getResId(favoriteMenu.getName(), R.string.class);
 
+        handleFavoriteAndRecientListOnclicl(resId);
+
+
+    }
+
+
+    private void onRecentUsedItemClick(RecentUsedMenu favoriteMenu) {
+        drawer.closeDrawer(GravityCompat.END);
+
+
+        int resId = ResorceHelper.getResId(favoriteMenu.getName(), R.string.class);
+
+        handleFavoriteAndRecientListOnclicl(resId);
+
+    }
+
+    private void handleFavoriteAndRecientListOnclicl(int resId) {
+        Intent intent;
         switch (resId) {
 
             case R.string.mobileOperator:
@@ -2079,8 +2178,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
 
         }
-
-
     }
 
     private void startActivityWithFlag(Intent intent) {

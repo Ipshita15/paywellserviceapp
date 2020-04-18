@@ -16,9 +16,12 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransacti
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.transportSelect.TransportSelectActivity
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.constant.IconConstant
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu
 import com.cloudwell.paywell.services.utils.ConnectionDetector
 import com.cloudwell.paywell.services.utils.LanuageConstant.KEY_BANGLA
 import com.cloudwell.paywell.services.utils.LanuageConstant.KEY_ENGLISH
+import com.cloudwell.paywell.services.utils.StringConstant
 import kotlinx.android.synthetic.main.activity_air_ticket_main_contain.*
 import java.util.*
 
@@ -63,6 +66,14 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
         mAppHandler = AppHandler.getmInstance(applicationContext)
 
 
+        addRecentUsedList()
+
+
+    }
+
+    private fun addRecentUsedList() {
+        val recentUsedMenu = RecentUsedMenu(StringConstant.KEY_home_bus, StringConstant.KEY_home_ticket, IconConstant.KEY_ic_ticket, 0, 34)
+        addItemToRecentListInDB(recentUsedMenu)
     }
 
 

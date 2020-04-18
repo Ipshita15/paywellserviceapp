@@ -7,14 +7,17 @@
         android:title="@string/action_settings"
         app:showAsAction="never" />
         -->
+
+    <item android:id="@+id/menu_scanner"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_qr_code_"
+        android:title="@string/home_scan" />
+
     <item android:id="@+id/menu_notification"
         app:actionLayout="@layout/action_bar_notification_icon"
         app:showAsAction="always"
         android:icon="@drawable/ic_bell"
         android:title="@string/home_notification" />
 
-    <item android:id="@+id/menu_scanner"
-        app:showAsAction="always"
-        android:icon="@drawable/ic_qr_code_scanner"
-        android:title="@string/home_scan" />
+
 </menu>

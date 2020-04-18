@@ -1,6 +1,7 @@
 package com.cloudwell.paywell.services.database;
 
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 
 import java.util.List;
 
@@ -28,6 +29,10 @@ public interface FavoriteMenuDab {
     @Query("SELECT * FROM favoritemenu WHERE status ='Favourite'")
     Maybe<List<FavoriteMenu>> getAllFavoriteMenu();
 
+
+    @Query("SELECT * FROM RecentUsedMenu")
+    Maybe<List<RecentUsedMenu>> getAllRecentUsedMenu();
+
     @Query("SELECT * FROM favoritemenu WHERE status ='Favourite'")
     List<FavoriteMenu> getAppShortcut();
 
@@ -39,6 +44,10 @@ public interface FavoriteMenuDab {
 
     @Insert
     void insert(List<FavoriteMenu> task);
+
+
+    @Insert
+    void insertRecentUsedMenu(List<RecentUsedMenu> task);
 
     @Delete
     void delete(FavoriteMenu task);
@@ -54,4 +63,15 @@ public interface FavoriteMenuDab {
 
     @Query("DELETE FROM favoritemenu")
     public void deletedALl();
+
+
+    @Query("DELETE FROM RecentUsedMenu")
+    public void deletedALlRecentUsedMenu();
+
+
+
+
+
+
+
 }
