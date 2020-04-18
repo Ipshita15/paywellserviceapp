@@ -67,6 +67,7 @@ import com.cloudwell.paywell.services.activity.terms.TermsActivity;
 import com.cloudwell.paywell.services.activity.topup.TopupMainActivity;
 import com.cloudwell.paywell.services.activity.topup.TopupMenuActivity;
 import com.cloudwell.paywell.services.activity.topup.brilliant.BrilliantTopupActivity;
+import com.cloudwell.paywell.services.activity.topup.model.MobileOperator;
 import com.cloudwell.paywell.services.activity.utility.AllUrl;
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionMainActivity;
@@ -104,6 +105,8 @@ import com.cloudwell.paywell.services.constant.AllConstant;
 import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.database.FavoriteMenuDab;
 import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus;
+import com.cloudwell.paywell.services.recentList.MyRecyclerViewAdapterRecentUsed;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.service.notificaiton.model.EventNewNotificaiton;
 import com.cloudwell.paywell.services.utils.AppHelper;
@@ -141,6 +144,8 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -302,10 +307,80 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         setScreenStateReciver();
 
+
         setUpBottomSheet();
 
 
     }
+
+    private void setRecentList() {
+
+
+        final FavoriteMenuDab favoriteMenuDab = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mFavoriteMenuDab();
+        favoriteMenuDab.getAllRecentUsedMenu().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<RecentUsedMenu>>() {
+                    @Override
+                    public void accept(List<RecentUsedMenu> favoriteMenus) throws Exception {
+
+//                        Collections.sort(favoriteMenus, new Comparator<RecentUsedMenu>() {
+//                            @Override
+//                            public int compare(RecentUsedMenu o1, RecentUsedMenu o2) {
+//                                if (o1.getFavoriteListPosition() > o2.getFavoriteListPosition()) {
+//                                    return 0;
+//                                } else if (o1.getFavoriteListPosition() > o2.getFavoriteListPosition()) {
+//                                    return 1;
+//                                } else {
+//                                    return -1;
+//                                }
+//                            }
+//                        });
+
+                       // Collections.reverse(favoriteMenus);
+                        generatedRecentUsedRecycView(favoriteMenus);
+
+                    }
+                });
+
+
+
+
+    }
+
+    private void generatedRecentUsedRecycView(List<RecentUsedMenu> favoriteMenus) {
+        boolean isEnglish = mAppHandler.getAppLanguage().equalsIgnoreCase("en");
+
+
+        List<Object> objects = Arrays.asList(RecentUsedStackSet.getInstance().getAll());
+        List<MobileOperator> TEMP  = (List<MobileOperator>)(Object) objects;
+        ArrayList<MobileOperator> mobileOperatorArrayList = new ArrayList<>(TEMP);
+
+
+        // new recycle view
+        final RecyclerView recyclerView = findViewById(R.id.rvRecent);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(horizontalLayoutManager);
+        recyclerView.getLayoutManager().setMeasurementCacheEnabled(false);
+        MyRecyclerViewAdapterRecentUsed adapter = new MyRecyclerViewAdapterRecentUsed(this, favoriteMenus,isEnglish);
+
+
+        adapter.setClickListener(new MyRecyclerViewAdapterRecentUsed.ItemClickListener() {
+            @Override
+            public void onItemClick(int position, RecentUsedMenu favoriteMenu) {
+                onRecentUsedItemClick(favoriteMenu);
+               // lastFavoitePosition = position;
+            }
+        });
+
+
+
+        recyclerView.setAdapter(adapter);
+    }
+
+
 
     private void setUpBottomSheet() {
 
@@ -383,6 +458,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
         mToolbarHeading.setText(getString(R.string.balance_pre_text));
+
+        setRecentList();
 
     }
 
@@ -1734,10 +1811,27 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         drawer.closeDrawer(GravityCompat.END);
 
 
-        Intent intent;
 
         int resId = ResorceHelper.getResId(favoriteMenu.getName(), R.string.class);
 
+        handleFavoriteAndRecientListOnclicl(resId);
+
+
+    }
+
+
+    private void onRecentUsedItemClick(RecentUsedMenu favoriteMenu) {
+        drawer.closeDrawer(GravityCompat.END);
+
+
+        int resId = ResorceHelper.getResId(favoriteMenu.getName(), R.string.class);
+
+        handleFavoriteAndRecientListOnclicl(resId);
+
+    }
+
+    private void handleFavoriteAndRecientListOnclicl(int resId) {
+        Intent intent;
         switch (resId) {
 
             case R.string.mobileOperator:
@@ -2078,8 +2172,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
 
         }
-
-
     }
 
     private void startActivityWithFlag(Intent intent) {

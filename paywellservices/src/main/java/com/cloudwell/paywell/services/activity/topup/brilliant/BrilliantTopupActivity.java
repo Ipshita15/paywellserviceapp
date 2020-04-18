@@ -27,12 +27,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.BrilliantTopUpInquiry;
@@ -43,10 +37,13 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.constant.IconConstant;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.MyHttpClient;
 import com.cloudwell.paywell.services.utils.ParameterUtility;
+import com.cloudwell.paywell.services.utils.StringConstant;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -62,6 +59,11 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -157,6 +159,15 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
         refreshLanguage();
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_TOPUP_BRILLIANT_PAGE);
+
+
+        addRecentUsedList();
+
+    }
+
+    private void addRecentUsedList() {
+        RecentUsedMenu recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_brilliant, StringConstant.KEY_topup, IconConstant.KEY_brilli_ant, 0, 2);
+        addItemToRecentListInDB(recentUsedMenu);
     }
 
     private void refreshLanguage() {

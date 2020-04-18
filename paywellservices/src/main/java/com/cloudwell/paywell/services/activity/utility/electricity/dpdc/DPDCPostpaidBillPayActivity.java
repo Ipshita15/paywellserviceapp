@@ -18,10 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
-
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.model.DPDCHistory;
@@ -33,11 +29,14 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.constant.IconConstant;
 import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.ocr.OCRActivity;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.DateUtils;
+import com.cloudwell.paywell.services.utils.StringConstant;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.material.snackbar.Snackbar;
@@ -45,6 +44,9 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -92,6 +94,15 @@ public class DPDCPostpaidBillPayActivity extends BaseActivity implements View.On
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_DPDC_BILL_PAY);
 
+
+        addRecentUsedList();
+
+
+    }
+
+    private void addRecentUsedList() {
+        RecentUsedMenu recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_utility_dpdc_bill_pay, StringConstant.KEY_home_utility, IconConstant.KEY_ic_dpdc, 0, 7);
+        addItemToRecentListInDB(recentUsedMenu);
     }
 
 

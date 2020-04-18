@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -19,16 +20,20 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.RecentUsedStackSet;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.ErrorCallBackMsgDialog;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.ErrorMsgDialog;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
+import com.cloudwell.paywell.services.database.DatabaseClient;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.LanuageConstant;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import androidx.appcompat.app.AlertDialog;
@@ -394,6 +399,40 @@ public class BaseActivity extends AppCompatActivity {
             }
         });
         errorMsgDialog.show(getSupportFragmentManager(), "oTPVerificationMsgDialog");
+    }
+
+
+    public void addItemToRecentListInDB(RecentUsedMenu recentUsedMenu) {
+        RecentUsedStackSet.getInstance().add(recentUsedMenu);
+
+        ArrayList<RecentUsedMenu> update = new ArrayList<>();
+
+        ArrayList<RecentUsedMenu> all = RecentUsedStackSet.getInstance().getAll();
+
+        for (int i = 0; i < all.size(); i++) {
+            RecentUsedMenu recentUsedMenu1 = all.get(i);
+            recentUsedMenu1.setId(+i+1);
+            update.add(recentUsedMenu1);
+
+        }
+
+
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+
+                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
+                        .mFavoriteMenuDab()
+                        .deletedALlRecentUsedMenu();
+
+                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
+                        .mFavoriteMenuDab()
+                        .insertRecentUsedMenu(update);
+
+                return null;
+            }
+        }.execute();
     }
 
 }

@@ -1,11 +1,9 @@
 package com.cloudwell.paywell.services.activity.utility.banglalion;
 
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.JsonReader;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -15,34 +13,21 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
-import com.cloudwell.paywell.services.activity.utility.AllUrl;
 import com.cloudwell.paywell.services.activity.utility.banglalion.model.RechargeResponsePojo;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.constant.IconConstant;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
-import com.cloudwell.paywell.services.utils.ParameterUtility;
+import com.cloudwell.paywell.services.utils.StringConstant;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.JsonObject;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.appcompat.app.AlertDialog;
-
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -73,6 +58,13 @@ public class BanglalionRechargeInquiryActivity extends BaseActivity implements V
         initView();
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_BANGLALION_RECHARGE_INQUIRY);
+
+        addRecentUsedList();
+    }
+
+    private void addRecentUsedList() {
+        RecentUsedMenu recentUsedMenu= new RecentUsedMenu(StringConstant.KEY_home_utility_banglalion_recharge_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_recharge_information, 0, 29);
+        addItemToRecentListInDB(recentUsedMenu);
     }
 
     private void initView() {

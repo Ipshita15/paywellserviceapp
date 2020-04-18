@@ -24,9 +24,12 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.constant.IconConstant;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.DateUtils;
+import com.cloudwell.paywell.services.utils.StringConstant;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -67,6 +70,13 @@ public class PBBillStatusActivity extends BaseActivity implements View.OnClickLi
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_BILL_STATUS);
 
+        addRecentUsedList();
+
+    }
+
+    private void addRecentUsedList() {
+        RecentUsedMenu recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_utility_pb_request_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_to_know_bill_status, 0, 14);
+        addItemToRecentListInDB(recentUsedMenu);
     }
 
     private void initializeView() {

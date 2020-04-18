@@ -25,21 +25,23 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/linearLayout18"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 tools:context=".activity.MainActivity"
                 tools:showIn="@layout/app_bar_main">
 
                 <LinearLayout
                     android:id="@+id/rootLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <ScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        >
+                        android:layout_height="wrap_content">
 
                         <LinearLayout
 
@@ -65,33 +67,33 @@
                                     android:onClick="onButtonClicker"
                                     android:text="@string/home_topup"
                                     android:textAllCaps="false"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                                 <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
-                                    android:gravity="center"/>
+                                    android:gravity="center" />
 
                                 <Button
                                     android:id="@+id/homeBtnUtility"
                                     style="@style/HomeButtonNew"
                                     android:layout_weight="1"
-                                    android:drawablePadding="0dp"
+                                    android:drawableTop="@drawable/ic_utility"
 
-                                android:drawableTop="@drawable/ic_utility"
+                                    android:drawablePadding="0dp"
                                     android:onClick="onButtonClicker"
                                     android:text="@string/home_utility"
                                     android:textAllCaps="false"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                                 <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
-                                    android:gravity="center"/>
+                                    android:gravity="center" />
 
                                 <Button
                                     android:id="@+id/homeBtnEticket"
@@ -101,13 +103,13 @@
                                     android:onClick="onButtonClicker"
                                     android:text="@string/home_eticket"
                                     android:textAllCaps="false"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_marginTop="16dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
+                                android:layout_marginTop="16dp"
                                 android:layout_weight="1"
                                 android:orientation="horizontal"
                                 android:weightSum="5">
@@ -122,14 +124,14 @@
 
                                     android:text="@string/home_mfs"
                                     android:textAllCaps="false"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                                 <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
-                                    android:gravity="center"/>
+                                    android:gravity="center" />
 
                                 <Button
                                     android:id="@+id/homeBtnProductCategory"
@@ -139,14 +141,14 @@
                                     android:onClick="onButtonClicker"
                                     android:text="@string/home_product_catalog"
                                     android:textAllCaps="false"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                                 <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
-                                    android:gravity="center"/>
+                                    android:gravity="center" />
 
 
                                 <Button
@@ -157,18 +159,16 @@
                                     android:onClick="onButtonClicker"
                                     android:text="@string/fee"
                                     android:textAllCaps="false"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"/>
-
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
                             </LinearLayout>
 
 
-
                             <LinearLayout
-                                android:layout_marginTop="16dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
+                                android:layout_marginTop="16dp"
                                 android:layout_weight="1"
                                 android:orientation="horizontal"
                                 android:weightSum="5">
@@ -182,14 +182,14 @@
                                     android:onClick="onButtonClicker"
                                     android:text="@string/home_education"
                                     android:textAllCaps="false"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                                 <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
-                                    android:gravity="center"/>
+                                    android:gravity="center" />
 
                                 <Button
                                     android:id="@+id/homeBtnEntertainment"
@@ -199,14 +199,14 @@
                                     android:onClick="onButtonClicker"
                                     android:text="@string/home_entertainment"
                                     android:textAllCaps="false"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                                 <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
-                                    android:gravity="center"/>
+                                    android:gravity="center" />
 
 
                                 <Button
@@ -217,18 +217,16 @@
                                     android:onClick="onButtonClicker"
                                     android:text="@string/home_insurance"
                                     android:textAllCaps="false"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
                             </LinearLayout>
 
 
                             <LinearLayout
-                                android:layout_marginTop="16dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
+                                android:layout_marginTop="16dp"
                                 android:layout_weight="1"
                                 android:gravity="center_horizontal"
                                 android:orientation="horizontal"
@@ -243,8 +241,7 @@
                                     android:onClick="onButtonClicker"
                                     android:text="@string/home_refill_balance"
                                     android:textAllCaps="false"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"/>
-
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
                                 <LinearLayout
@@ -252,7 +249,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
-                                    android:gravity="center"/>
+                                    android:gravity="center" />
 
 
                                 <Button
@@ -263,8 +260,7 @@
                                     android:onClick="onButtonClicker"
                                     android:text="@string/home_statement"
                                     android:textAllCaps="false"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"/>
-
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
                                 <LinearLayout
@@ -272,7 +268,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
-                                    android:gravity="center"/>
+                                    android:gravity="center" />
 
                                 <Button
                                     android:id="@+id/homeBtnSettings"
@@ -282,7 +278,7 @@
                                     android:onClick="onButtonClicker"
                                     android:text="@string/home_settings"
                                     android:textAllCaps="false"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
                                 <LinearLayout
@@ -290,30 +286,47 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
-                                    android:gravity="center"/>
+                                    android:gravity="center" />
                             </LinearLayout>
 
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="600dp">
 
-                            </LinearLayout>
+<!--                            <androidx.core.widget.NestedScrollView-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content">-->
+
+                                <LinearLayout
+                                    android:layout_marginTop="8dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+
+                                    <TextView
+                                        android:layout_margin="16dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="#59595c"
+                                        android:textSize="16sp"
+                                        android:text="বেশী ব্যবহৃত সার্ভিস সমুহ-" />
+
+
+                                    <androidx.recyclerview.widget.RecyclerView
+                                        android:background="#f6f6f6"
+                                        android:id="@+id/rvRecent"
+                                        tools:listitem="@layout/recyclerview_item"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+
+                                        />
+                                </LinearLayout>
+<!--                            </androidx.core.widget.NestedScrollView>-->
+
 
                         </LinearLayout>
 
 
                     </ScrollView>
-
-
-
-
-
-
-
-
-
-
 
 
                 </LinearLayout>
@@ -328,7 +341,7 @@
                     app:layout_constraintHorizontal_bias="0.65"
                     app:layout_constraintStart_toEndOf="@+id/rootLayout"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/open_arrow"/>
+                    app:srcCompat="@drawable/open_arrow" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

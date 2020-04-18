@@ -12,8 +12,6 @@ import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 
-import androidx.appcompat.app.AppCompatDialog;
-
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.WebViewActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
@@ -24,14 +22,18 @@ import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
+import com.cloudwell.paywell.services.constant.IconConstant;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.StringConstant;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import androidx.appcompat.app.AppCompatDialog;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -86,9 +88,15 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
             if (booleanExtra) {
                 service_type = TAG_SERVICE_POSTPAID_INQUIRY;
                 showLimitPrompt();
+                addRecentUsedList();
             }
 
         }
+    }
+
+    private void addRecentUsedList() {
+        RecentUsedMenu recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_utility_dpdc_bill_pay_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_dpdc, 0, 8);
+        addItemToRecentListInDB(recentUsedMenu);
     }
 
     public void onButtonClicker(View v) {
@@ -101,6 +109,7 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_DPDC_MENU, AnalyticsParameters.KEY_UTILITY_DPDC_BILL_PAY_INQUIRY);
                 service_type = TAG_SERVICE_POSTPAID_INQUIRY;
                 showLimitPrompt();
+                addRecentUsedList();
                 break;
             default:
                 break;

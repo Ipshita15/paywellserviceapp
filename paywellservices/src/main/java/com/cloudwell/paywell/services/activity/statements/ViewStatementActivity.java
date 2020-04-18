@@ -15,7 +15,10 @@ import com.cloudwell.paywell.services.activity.statements.model.RequestWebView;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.constant.IconConstant;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
+import com.cloudwell.paywell.services.utils.StringConstant;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
@@ -83,13 +86,30 @@ public class ViewStatementActivity extends BaseActivity {
         if (!title.isEmpty()) {
             if (title.equalsIgnoreCase("mini")) {
                 setToolbar(getString(R.string.home_statement_mini));
+
+                RecentUsedMenu recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_statement_mini, StringConstant.KEY_home_statement, IconConstant.KEY_ic_statement, 0, 39);
+                addItemToRecentListInDB(recentUsedMenu);
+
+
             } else if (title.equalsIgnoreCase("balance")) {
                 setToolbar(getString(R.string.home_statement_balance));
+
+                RecentUsedMenu recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_statement_balance, StringConstant.KEY_home_statement, IconConstant.KEY_ic_statement, 0, 40);
+                addItemToRecentListInDB(recentUsedMenu);
+
             } else if (title.equalsIgnoreCase("sales")) {
                 setToolbar(getString(R.string.home_statement_sales));
+
+                RecentUsedMenu recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_statement_sales, StringConstant.KEY_home_statement, IconConstant.KEY_ic_statement, 0, 41);
+                addItemToRecentListInDB(recentUsedMenu);
+
             } else if (title.equalsIgnoreCase("trx")) {
                 setToolbar(getString(R.string.home_statement_transaction));
+
+                RecentUsedMenu recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_statement_transaction, StringConstant.KEY_home_statement, IconConstant.KEY_ic_statement, 0, 42);
+                addItemToRecentListInDB(recentUsedMenu);
             }
+
         } else {
             title = "mini";
             url = URL_statementInquiry;
