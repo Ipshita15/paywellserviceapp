@@ -1,10 +1,14 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew.busTicketRepository
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.newBase.SingleLiveEvent
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.*
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.scheduledata.ScheduleDataItem
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.seatview.SeatviewResponse
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
@@ -12,6 +16,9 @@ import com.cloudwell.paywell.services.database.DatabaseClient
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.BusCalculationHelper
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
+import com.cloudwell.paywell.services.utils.algorithem.AES.key
+import com.google.gson.Gson
+import com.google.gson.JsonArray
 import com.orhanobut.logger.Logger
 import okhttp3.ResponseBody
 import org.jetbrains.anko.doAsync
@@ -36,6 +43,7 @@ class BusTicketRepository() {
     }
 
     val statusOfDateInserted = SingleLiveEvent<String>()
+
 
 
     fun getBusList(uniqueKey: String): MutableLiveData<List<Transport>> {
@@ -456,5 +464,349 @@ class BusTicketRepository() {
 
         return data
     }
+
+
+    //New Version Api call
+
+    fun getbusAndLaunchCities(busLunCityPojo : BusLunCityRequest): String{
+
+        mAppHandler = AppHandler.getmInstance(mContext)
+
+        val userName = mAppHandler!!.userName
+        val data = SingleLiveEvent<String>()
+
+        ApiUtils.getAPIServiceV2().getbusAndLaunchCities(busLunCityPojo).enqueue(object : Callback<BusLunCityResponse> {
+            override fun onResponse(call: Call<BusLunCityResponse>, response: Response<BusLunCityResponse>) {
+                if (response.isSuccessful) {
+
+                    val request_response = response.body()
+
+                    if (request_response?.statusCode == 200){
+                        val citiesList: List<CitiesListItem?>? = request_response?.citiesList
+                        data.postValue(citiesList.toString())
+                    }
+
+                }
+            }
+
+            override fun onFailure(call: Call<BusLunCityResponse>, t: Throwable) {
+
+                data.postValue(mContext?.getString(R.string.network_error))
+
+            }
+        })
+        return data.toString()
+
+    }
+
+
+    fun getScheduleData(schedulePojo : GetScheduledata): String{
+
+        mAppHandler = AppHandler.getmInstance(mContext)
+
+        val userName = mAppHandler!!.userName
+        val data = SingleLiveEvent<String>()
+
+        ApiUtils.getAPIServiceV2().getScheduleData(schedulePojo).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+
+//                    val sc : SchiduleResponse = response.body()!!
+//                    val d = sc.departureScheduleData
+//                    val s = d?.scheduleData
+//                    val o = s?.get(0)
+//                    Log.e("list" , o.toString())
+
+                    val jsonObject = JSONObject(response.body()!!.string())
+                    val status = jsonObject.getInt("status_code")
+                    val message = jsonObject.getString("message")
+
+                    val scheduleDataItemHashMap = HashMap<String, ScheduleDataItem>()
+                    val returnscheduleDataItemHashMap = HashMap<String, ScheduleDataItem>()
+
+                    if (status == 200){
+
+                        //departureScheduleData Data
+                        val departureScheduleData = jsonObject.getJSONObject("departureScheduleData")
+                            val array = departureScheduleData.getJSONArray("scheduleData")
+                            val s : String = departureScheduleData.getString("scheduleData")
+
+                        val a : ArrayList<String>? = null
+                        Log.e("check ", a.toString())
+                        Log.e("check ", array.toString())
+
+                            val scheduleData_array: JSONObject = array.optJSONObject(0)
+                            val keys: Iterator<*> = scheduleData_array.keys()
+//                            while (keys.hasNext()) {
+//                                val key = keys.next() as String
+//                                val itemString : String = scheduleData_array.get(key).toString()
+//                                val gson = Gson()
+//                                val item: ScheduleDataItem = gson.fromJson(itemString, ScheduleDataItem::class.java)
+//                                scheduleDataItemHashMap.put(key, item)
+//                                Log.e("Item: "+scheduleDataItemHashMap.keys , scheduleDataItemHashMap.get(key)?.routeName)
+//                            }
+
+
+
+
+                        //return ScheduleData data
+                        val returnScheduleData = jsonObject.getJSONObject("reternschedule")
+                        val returnarray = returnScheduleData.getJSONArray("scheduleData")
+                        val return_scheduleData_array: JSONObject = returnarray.optJSONObject(0)
+
+                        val return_keys: Iterator<*> = return_scheduleData_array.keys()
+                        while (return_keys.hasNext()) {
+                            val key = return_keys.next() as String
+                            val itemString : String = return_scheduleData_array.get(key).toString()
+                            val gson = Gson()
+                            val item: ScheduleDataItem = gson.fromJson(itemString, ScheduleDataItem::class.java)
+                            returnscheduleDataItemHashMap.put(key, item)
+                            Log.e("ReturnItem: "+returnscheduleDataItemHashMap.keys , returnscheduleDataItemHashMap.get(key)?.routeName)
+
+                        }
+
+
+                        data.postValue(scheduleDataItemHashMap.toString())
+
+
+                    }else{
+
+                    }
+
+
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                data.postValue(mContext?.getString(R.string.network_error))
+
+            }
+        })
+        return data.toString()
+
+    }
+
+    fun getSeatView(schedulePojo : GetSeatViewRquestPojo): String{
+
+        mAppHandler = AppHandler.getmInstance(mContext)
+
+        val userName = mAppHandler!!.userName
+        val data = SingleLiveEvent<String>()
+
+        ApiUtils.getAPIServiceV2().getSeatView(schedulePojo).enqueue(object : Callback<SeatviewResponse> {
+            override fun onResponse(call: Call<SeatviewResponse>, response: Response<SeatviewResponse>) {
+                if (response.isSuccessful) {
+                    val setview : SeatviewResponse = response.body()!!
+                    Log.e("seatview", setview.message)
+                    Log.e("seatview", setview.statusCode.toString())
+                    Log.e("seatview", setview.seatViewData.toString())
+//
+//                    val request_response = response.body()
+//
+//                    if (request_response?.statusCode == 200){
+//                        val citiesList: List<CitiesListItem?>? = request_response?.citiesList
+//                        data.postValue(citiesList.toString())
+//                    }
+
+                }
+            }
+
+            override fun onFailure(call: Call<SeatviewResponse>, t: Throwable) {
+
+                data.postValue(mContext?.getString(R.string.network_error))
+
+            }
+        })
+        return data.toString()
+
+    }
+
+    fun getSeatStatus(schedulePojo : GetSeatStatusRequest): String{
+
+        mAppHandler = AppHandler.getmInstance(mContext)
+
+        val userName = mAppHandler!!.userName
+        val data = SingleLiveEvent<String>()
+
+        ApiUtils.getAPIServiceV2().getSeatStatus(schedulePojo).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+//
+//                    val request_response = response.body()
+//
+//                    if (request_response?.statusCode == 200){
+//                        val citiesList: List<CitiesListItem?>? = request_response?.citiesList
+//                        data.postValue(citiesList.toString())
+//                    }
+
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                data.postValue(mContext?.getString(R.string.network_error))
+
+            }
+        })
+        return data.toString()
+
+    }
+
+    fun getseatBlock(schedulePojo : SeatBlockRequestPojo): String{
+
+        mAppHandler = AppHandler.getmInstance(mContext)
+
+        val userName = mAppHandler!!.userName
+        val data = SingleLiveEvent<String>()
+
+        ApiUtils.getAPIServiceV2().seatBlock(schedulePojo).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+//
+//                    val request_response = response.body()
+//
+//                    if (request_response?.statusCode == 200){
+//                        val citiesList: List<CitiesListItem?>? = request_response?.citiesList
+//                        data.postValue(citiesList.toString())
+//                    }
+
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                data.postValue(mContext?.getString(R.string.network_error))
+
+            }
+        })
+        return data.toString()
+
+    }
+
+    fun getcancelBookedTicket(schedulePojo : CancelBookedTicketReques): String{
+
+        mAppHandler = AppHandler.getmInstance(mContext)
+
+        val userName = mAppHandler!!.userName
+        val data = SingleLiveEvent<String>()
+
+        ApiUtils.getAPIServiceV2().cancelBookedTicket(schedulePojo).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+//
+//                    val request_response = response.body()
+//
+//                    if (request_response?.statusCode == 200){
+//                        val citiesList: List<CitiesListItem?>? = request_response?.citiesList
+//                        data.postValue(citiesList.toString())
+//                    }
+
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                data.postValue(mContext?.getString(R.string.network_error))
+
+            }
+        })
+        return data.toString()
+
+    }
+
+    fun getconfirmTicket(schedulePojo : ConfirmTicketRquestPojo): String{
+
+        mAppHandler = AppHandler.getmInstance(mContext)
+
+        val userName = mAppHandler!!.userName
+        val data = SingleLiveEvent<String>()
+
+        ApiUtils.getAPIServiceV2().confirmTicket(schedulePojo).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+//
+//                    val request_response = response.body()
+//
+//                    if (request_response?.statusCode == 200){
+//                        val citiesList: List<CitiesListItem?>? = request_response?.citiesList
+//                        data.postValue(citiesList.toString())
+//                    }
+
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                data.postValue(mContext?.getString(R.string.network_error))
+
+            }
+        })
+        return data.toString()
+
+    }
+
+    fun getticketInformationForCancel(schedulePojo : TicketInformationForCancelRequest): String{
+
+        mAppHandler = AppHandler.getmInstance(mContext)
+
+        val userName = mAppHandler!!.userName
+        val data = SingleLiveEvent<String>()
+
+        ApiUtils.getAPIServiceV2().ticketInformationForCancel(schedulePojo).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+//
+//                    val request_response = response.body()
+//
+//                    if (request_response?.statusCode == 200){
+//                        val citiesList: List<CitiesListItem?>? = request_response?.citiesList
+//                        data.postValue(citiesList.toString())
+//                    }
+
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                data.postValue(mContext?.getString(R.string.network_error))
+
+            }
+        })
+        return data.toString()
+
+    }
+
+    fun getcancelTicket(schedulePojo : CancelTicketRequest): String{
+
+        mAppHandler = AppHandler.getmInstance(mContext)
+
+        val userName = mAppHandler!!.userName
+        val data = SingleLiveEvent<String>()
+
+        ApiUtils.getAPIServiceV2().cancelTicket(schedulePojo).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+//
+//                    val request_response = response.body()
+//
+//                    if (request_response?.statusCode == 200){
+//                        val citiesList: List<CitiesListItem?>? = request_response?.citiesList
+//                        data.postValue(citiesList.toString())
+//                    }
+
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                data.postValue(mContext?.getString(R.string.network_error))
+
+            }
+        })
+        return data.toString()
+
+    }
+
 
 }

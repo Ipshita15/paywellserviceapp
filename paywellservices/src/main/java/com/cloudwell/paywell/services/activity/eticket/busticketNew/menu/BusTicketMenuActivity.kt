@@ -12,7 +12,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTicketRepository.BusTicketRepository
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransactionLog.BusTransactionLogActivity
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.*
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.transportSelect.TransportSelectActivity
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
@@ -58,9 +60,93 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
         btTransationLog.setOnClickListener(this)
 
 
+
+        callnewApiTest()
+
+
         cd = ConnectionDetector(AppController.getContext())
         mConstraintLayout = findViewById(R.id.constraintLayoutBookingList)
         mAppHandler = AppHandler.getmInstance(applicationContext)
+
+
+    }
+
+    private fun callnewApiTest() {
+//1
+        var pojo = BusLunCityRequest()
+        pojo.deviceId = mAppHandler.androidID
+        pojo.username = mAppHandler.userName
+        pojo.transportType = "1"
+        BusTicketRepository().getbusAndLaunchCities(pojo)
+
+//2
+        val p = GetScheduledata()
+        p.username = mAppHandler.userName
+        p.coachType = "all"
+        p.departingDate = "2020-04-19"
+        p.departingTime = "Morning"
+        p.departure = "Dhaka"
+        p.destination = "Chittagong"
+        p.deviceId = mAppHandler.androidID
+        p.returnCoachType = "any"
+        p.returnDate = "2020-04-20"
+        p.returnTime = "Night"
+        p.roundTrip = "1"
+        p.transportType ="1"
+        BusTicketRepository().getScheduleData(p)
+
+//3
+        val po = GetSeatViewRquestPojo()
+        po.departureDate = "2020-04-19"
+        po.deviceId = mAppHandler.androidID
+        po.fromCity = "Dhaka"
+        po.toCity = "Chittagong"
+        po.optionId = "BBS_3897"
+        po.username = mAppHandler.userName
+            BusTicketRepository().getSeatView(po)
+
+//4
+       val p4 =  GetSeatStatusRequest()
+        p4.departureDate = "2020-04-19"
+        p4.deviceId = mAppHandler.androidID
+        p4.fromCity = "Dhaka"
+        p4.optionId = "BBS_3897"
+        p4.seatData = "2,3"
+        p4.toCity = "Chittagong"
+        p4.username = mAppHandler.userName
+        BusTicketRepository().getSeatStatus(p4)
+
+
+       val p5 =  SeatBlockRequestPojo()
+        p5.deviceId = mAppHandler.androidID
+        p5.fromCity = "Dhaka"
+        p5.password = "12345"
+        p5.roundTrip = "2"
+        p5.toCity = "Chittagong"
+        p5.username = mAppHandler.userName
+        val opif = OptionInfoItem()
+        opif.boardingPointId = "272"
+        opif.departureDate = "2020-04-19"
+        opif.optionId = "BBS_3067"
+        opif.seat = "5468"
+        p5.optionInfo?.add(opif)
+        p5.optionInfo?.add(opif)
+
+        val passenger = Passenger()
+        passenger.passengerAddress = "cloudWell"
+        passenger.passengerAge = "25"
+        passenger.passengerEmail = "sepon@gmail.com"
+        passenger.passengerGender = "male"
+        passenger.passengerMobile = "01912250477"
+        passenger.passengerName = "sepon"
+        p5.passenger = passenger
+        BusTicketRepository().getseatBlock(p5)
+
+       val p6 =  CancelBookedTicketReques()
+       val p7 =  ConfirmTicketRquestPojo()
+       val p8 =  TicketInformationForCancelRequest()
+       val p9 =  CancelTicketRequest()
+
 
 
     }

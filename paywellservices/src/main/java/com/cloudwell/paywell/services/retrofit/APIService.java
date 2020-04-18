@@ -19,6 +19,17 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.mo
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResGetBusListData;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResPaymentBookingAPI;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatCheckBookAPI;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.BusLunCityRequest;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.BusLunCityResponse;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.CancelBookedTicketReques;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.CancelTicketRequest;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ConfirmTicketRquestPojo;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.GetScheduledata;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.GetSeatStatusRequest;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.GetSeatViewRquestPojo;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.SeatBlockRequestPojo;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.TicketInformationForCancelRequest;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.seatview.SeatviewResponse;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.transactionLog.TransactionLogDetailsModel;
 import com.cloudwell.paywell.services.activity.home.model.ReposeGenerateOTP;
 import com.cloudwell.paywell.services.activity.home.model.ReposeUserProfile;
@@ -648,4 +659,33 @@ public interface APIService {
     @POST("Utility/InternetBillPay/banglalionEnquiry")
     Call<ResponseBody> banglalionRechargeInquiry(@Body RechargeResponsePojo rechargeResponsePojo);
 
+    //Bus lunch ticket new version
+
+    @POST("Tickets/BusAndLaunchService/busAndLaunchCities")
+    Call<BusLunCityResponse> getbusAndLaunchCities(@Body BusLunCityRequest busLunCityRequest);
+
+    @POST("Tickets/BusAndLaunchService/getScheduleData")
+    Call<ResponseBody> getScheduleData(@Body GetScheduledata getScheduledata);
+
+    @POST("Tickets/BusAndLaunchService/getSeatView")
+    Call<SeatviewResponse> getSeatView(@Body GetSeatViewRquestPojo getSeatViewRquestPojo);
+
+
+    @POST("Tickets/BusAndLaunchService/getSeatStatus")
+    Call<ResponseBody> getSeatStatus(@Body GetSeatStatusRequest getSeatStatusRequest);
+
+    @POST("Tickets/BusAndLaunchService/seatBlock")
+    Call<ResponseBody> seatBlock(@Body SeatBlockRequestPojo seatBlockRequestPojo);
+
+    @POST("Tickets/BusAndLaunchService/cancelBookedTicket")
+    Call<ResponseBody> cancelBookedTicket(@Body CancelBookedTicketReques cancelBookedTicketReques);
+
+    @POST("Tickets/BusAndLaunchService/confirmTicket")
+    Call<ResponseBody> confirmTicket(@Body ConfirmTicketRquestPojo confirmTicketRquestPojo);
+
+    @POST("Tickets/BusAndLaunchService/ticketInformationForCancel")
+    Call<ResponseBody> ticketInformationForCancel(@Body TicketInformationForCancelRequest ticketInformationForCancelRequest);
+
+    @POST("Tickets/BusAndLaunchService/cancelTicket")
+    Call<ResponseBody> cancelTicket(@Body CancelTicketRequest getScheduledata);
 }
