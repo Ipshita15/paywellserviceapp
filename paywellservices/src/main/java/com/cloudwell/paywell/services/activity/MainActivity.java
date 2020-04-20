@@ -193,6 +193,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private static final long KEY_BALANCE_CHECK_INTERVAL = 5000;
     private boolean doubleBackToExitPressedOnce = false;
     public CoordinatorLayout mCoordinateLayout;
+    private LinearLayout linearLayoutRecentUsedList;
     private AppHandler mAppHandler;
     private UpdateChecker mUpdateChecker;
     public final long UPDATE_SOFTWARE_INTERVAL = 24 * 60 * 60;// 1 day
@@ -281,8 +282,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mToolbarHeading = findViewById(R.id.txtHeading);
         mCoordinateLayout = findViewById(R.id.coordinateLayout);
         pb_dot = findViewById(R.id.dot_progress_bar);
-//        ivBalanceBorder = findViewById(R.id.ivBalanceBorder);
-//        ivBalanceBorder.setOnClickListener(this);
+        linearLayoutRecentUsedList  = findViewById(R.id.linearLayoutRecentUsedList);
 
         mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = AppHandler.getmInstance(getApplicationContext());
@@ -338,6 +338,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void generatedRecentUsedRecycView(List<RecentUsedMenu> favoriteMenus) {
+
+
+        if(favoriteMenus.size() == 0){
+            linearLayoutRecentUsedList.setVisibility(View.GONE);
+        }else {
+            linearLayoutRecentUsedList.setVisibility(View.VISIBLE);
+        }
+
+
         boolean isEnglish = mAppHandler.getAppLanguage().equalsIgnoreCase("en");
 
 
@@ -1028,11 +1037,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
 
                 break;
-
-
-
-
-
         }
     }
 
