@@ -136,6 +136,7 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -1037,13 +1038,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void initializePreview() {
 
-        String[] imageUrl = new String[mAppHandler.getDisplayPictureCount()];
-        for (int len = 0; len < mAppHandler.getDisplayPictureCount(); len++) {
-            imageUrl[len] = AllUrl.len + len + ".jpg";
-//                        imageUrl[len] = "https://api.paywellonline.com/retailerPromotionImage/Banner_Bus.9.png";
-        }
+        String[] imageUrl = new Gson().fromJson(mAppHandler.getImageAddress(), String[].class);
+//        for (int len = 0; len < mAppHandler.getDisplayPictureCount(); len++) {
+//            imageUrl[len] = AllUrl.len + len + ".jpg";
+////                        imageUrl[len] = "https://api.paywellonline.com/retailerPromotionImage/Banner_Bus.9.png";
+//        }
 
-        String imageUpdateVersionString = mAppHandler.getDisplayPictureCount() + mAppHandler.getPictureArrayImageLink();
+        String imageUpdateVersionString = mAppHandler.getDisplayPictureCount() + mAppHandler.getImageAddress();
 
         Slider.init(new PicassoImageLoadingService(imageUpdateVersionString));
 
