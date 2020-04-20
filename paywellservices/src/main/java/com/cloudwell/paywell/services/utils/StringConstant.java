@@ -15,7 +15,10 @@ public class StringConstant {
     public static String KEY_home_utility = "home_utility";
     public static String KEY_home_utility_desco = "home_utility_desco";
     public static String KEY_home_utility_desco_pay = "home_utility_desco_pay";
-    public static String KEY_home_utility_desco_pay_inquiry = "home_utility_desco_pay_inquiry";
+    public static String KEY_home_utility_desco_postpaid_string = "desco_postpaid_string";
+    public static String KEY_home_utility_desco_postpaid_inquiry = "desco_postpaid_inquiry";
+    public static String KEY_home_utility_desco_prepaid_string = "home_utility_desco_prepaid_title";
+    public static String KEY_home_utility_desco_prepaid_inquiry = "home_utility_desco_prepaid_inquiry";
     public static String KEY_home_utility_dpdc = "home_utility_dpdc";
     public static String KEY_home_utility_dpdc_bill_pay = "home_utility_dpdc_bill_pay";
     public static String KEY_home_utility_dpdc_bill_pay_inquiry = "home_utility_dpdc_bill_pay_inquiry";
@@ -68,6 +71,7 @@ public class StringConstant {
     public static String KEY_home_refill_balance = "home_refill_balance";
     public static String KEY_home_refill_bank = "home_refill_bank";
     public static String KEY_home_refill_card = "home_refill_card";
+    public static String KEY_home_nagad_refill_msg = "nagad_refill_msg";
 
 
     public static String KEY_home_product_ekshop = "home_product_ekshop";

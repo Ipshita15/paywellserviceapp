@@ -3,7 +3,6 @@ package com.cloudwell.paywell.services.activity.utility.electricity.desco.postpa
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
@@ -24,30 +23,19 @@ import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.D
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.DESCOBillInfoResponse;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.ResponseDetails;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.model.DESCOHistory;
-import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.model.BillDatum;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.constant.IconConstant;
 import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.ocr.OCRActivity;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.DateUtils;
-import com.cloudwell.paywell.services.utils.ParameterUtility;
-import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
+import com.cloudwell.paywell.services.utils.StringConstant;
 import com.github.chrisbanes.photoview.PhotoView;
-import com.google.android.material.snackbar.Snackbar;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,8 +43,6 @@ import java.util.List;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
-
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -97,13 +83,16 @@ public class DESCOPostpaidBillPayActivity extends BaseActivity implements View.O
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_utility_desco_pay_title);
+            getSupportActionBar().setTitle(R.string.desco_postpaid_string);
         }
         mCd = new ConnectionDetector(AppController.getContext());
         mAppHandler = AppHandler.getmInstance(getApplicationContext());
         initializeView();
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_DESCO_BILL_PAY);
+
+        addRecentUsedList();
+
 
     }
 
@@ -205,6 +194,12 @@ public class DESCOPostpaidBillPayActivity extends BaseActivity implements View.O
         }.execute();
 
 
+    }
+
+
+    private void addRecentUsedList() {
+        RecentUsedMenu recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_utility_desco_postpaid_string, StringConstant.KEY_home_utility, IconConstant.KEY_ic_desco__postpaid, 4, 46);
+        addItemToRecentListInDB(recentUsedMenu);
     }
 
     @SuppressWarnings("deprecation")

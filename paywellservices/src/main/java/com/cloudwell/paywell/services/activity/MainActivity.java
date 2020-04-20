@@ -48,6 +48,7 @@ import com.cloudwell.paywell.services.activity.education.EducationMainActivity;
 import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity;
+import com.cloudwell.paywell.services.activity.fee.FeeMainActivity;
 import com.cloudwell.paywell.services.activity.home.HomeActivity;
 import com.cloudwell.paywell.services.activity.location.model.CurrentLocationModel;
 import com.cloudwell.paywell.services.activity.mfs.MFSMainActivity;
@@ -60,6 +61,7 @@ import com.cloudwell.paywell.services.activity.product.ekShop.EKShopActivity;
 import com.cloudwell.paywell.services.activity.refill.RefillBalanceMainActivity;
 import com.cloudwell.paywell.services.activity.refill.banktransfer.BankTransferMainActivity;
 import com.cloudwell.paywell.services.activity.refill.card.CardTransferMainActivity;
+import com.cloudwell.paywell.services.activity.refill.nagad.NagadMainActivity;
 import com.cloudwell.paywell.services.activity.scan.DisplayQRCodeActivity;
 import com.cloudwell.paywell.services.activity.settings.SettingsActivity;
 import com.cloudwell.paywell.services.activity.statements.StatementMainActivity;
@@ -77,6 +79,8 @@ import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionRech
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.DescoMainActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidBillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidMainActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.DescoPrepaidBillPayActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.DescoPrepaidMainActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCMainActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCPostpaidBillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.wasa.WASABillPayActivity;
@@ -323,23 +327,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 .subscribe(new Consumer<List<RecentUsedMenu>>() {
                     @Override
                     public void accept(List<RecentUsedMenu> favoriteMenus) throws Exception {
-
-//                        Collections.sort(favoriteMenus, new Comparator<RecentUsedMenu>() {
-//                            @Override
-//                            public int compare(RecentUsedMenu o1, RecentUsedMenu o2) {
-//                                if (o1.getFavoriteListPosition() > o2.getFavoriteListPosition()) {
-//                                    return 0;
-//                                } else if (o1.getFavoriteListPosition() > o2.getFavoriteListPosition()) {
-//                                    return 1;
-//                                } else {
-//                                    return -1;
-//                                }
-//                            }
-//                        });
-
-                       // Collections.reverse(favoriteMenus);
                         generatedRecentUsedRecycView(favoriteMenus);
-
                     }
                 });
 
@@ -1040,13 +1028,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 break;
 
-            case R.id.ivBalanceBorder:
-                Log.e("check balance", "check balance");
-                if (!isBalaceCheckProcessRunning) {
-                    checkPayWellBalance();
-                }
 
-                break;
+
 
 
         }
@@ -1429,6 +1412,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.homeBtnEduction:
 
                 startActivity(new Intent(this, EducationMainActivity.class));
+
+                break;
+
+
+            case R.id.homeBtnFee:
+
+                startActivity(new Intent(this, FeeMainActivity.class));
 
                 break;
 
@@ -1863,20 +1853,37 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivityWithFlag(intent);
                 break;
 
-            case R.string.home_utility_desco_pay:
+            case R.string.desco_postpaid_string:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_BILL_PAY);
 
                 intent = new Intent(getApplicationContext(), DESCOPostpaidBillPayActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
-            case R.string.home_utility_desco_pay_inquiry:
+            case R.string.desco_postpaid_inquiry:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_BILL_PAY_INQUIRY);
 
                 intent = new Intent(getApplicationContext(), DESCOPostpaidMainActivity.class);
                 intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_DESCO_INQUERY, true);
                 startActivityWithFlag(intent);
                 break;
+
+            case R.string.home_utility_desco_prepaid_title:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_PRE_PAID_BILL_PAY);
+
+                intent = new Intent(getApplicationContext(), DescoPrepaidBillPayActivity.class);
+                intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_DESCO_INQUERY, true);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_desco_prepaid_inquiry:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.UtilityDescoPrepaidBillInquiry);
+
+                intent = new Intent(getApplicationContext(), DescoPrepaidMainActivity.class);
+                intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_DESCO_INQUERY, true);
+                startActivityWithFlag(intent);
+                break;
+
 
             case R.string.home_utility_dpdc:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_DPDC_MENU);
@@ -2176,6 +2183,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_BALANCE_REFILL_CARD);
 
                 intent = new Intent(getApplicationContext(), CardTransferMainActivity.class);
+                startActivityWithFlag(intent);
+
+            case R.string.nagad_refill_msg:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_BALANCE_REFILL_NAGAD);
+
+                intent = new Intent(getApplicationContext(), NagadMainActivity.class);
                 startActivityWithFlag(intent);
 
                 break;

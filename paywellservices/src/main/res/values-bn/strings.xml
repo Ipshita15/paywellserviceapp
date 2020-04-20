@@ -10,6 +10,7 @@
     <string name="home_topup">টপআপ</string>
     <string name="home_topup_offer_title">বান্ডেল ও প্যাক</string>
     <string name="home_utility">ইউটিলিটি</string>
+    <string name="home_fee">ফী</string>
     <string name="home_eticket">টিকেট</string>
     <string name="home_mfs">মোবাইল ব্যাংকিং</string>
     <string name="home_mfs_fav">মোবাইল ব্যাংকিং</string>
@@ -92,6 +93,9 @@
     <string name="home_utility_desco_pay_inquiry">ডেসকো \nবিল অনুসন্ধান</string>
     <string name="home_utility_desco_pay_title">ডেসকো বিল প্রদান</string>
     <string name="home_utility_desco_inquary_title">ডেসকো বিল অনুসন্ধান</string>
+    <string name="desco_postpaid_inquiry">ডেসকো পোস্টপেইড \nবিল অনুসন্ধান</string>
+    <string name="home_utility_desco_prepaid_title">ডেসকো প্রিপেইড \nবিল প্রদান</string>
+    <string name="home_utility_desco_prepaid_inquiry">ডেসকো প্রিপেইড \nবিল অনুসন্ধান</string>
     <string name="home_utility_dpdc">ডিপিডিসি</string>
     <string name="home_utility_dpdc_bill_title">ডিপিডিসি বিল প্রদান</string>
     <string name="home_utility_dpdc_inquary_title">ডিপিডিসি  অনুসন্ধান</string>

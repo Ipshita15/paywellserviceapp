@@ -12,6 +12,8 @@ public class AnalyticsParameters {
 
     public static final String KEY_UTILITY_DESCO_BILL_PAY = "UtilityDescoBillPay";
     public static final String KEY_UTILITY_DESCO_BILL_PAY_INQUIRY = "UtilityDescoBillPayInquiry";
+    public static final String KEY_UTILITY_DESCO_PRE_PAID_BILL_PAY = "UtilityDescoPrepaidBillPay";
+    public static final String UtilityDescoPrepaidBillInquiry = "UtilityDescoPrepaidBillInquiry";
     public static final String KEY_UTILITY_DPDC_BILL_PAY = "UtilityDPDCBillPay";
     public static final String KEY_TOPUP_BRILLIANT_MENU = "TopupBrilliantMenu";
 
@@ -31,6 +33,7 @@ public class AnalyticsParameters {
 
     public static final String KEY_TOPUP_MENU = "TopupMenu";
     public static final String KEY_UTILITY_MENU = "UtilityMenu";
+    public static final String KEY_FEE_MENU = "FeeMenu";
     public static final String KEY_PAYMENT_MENU = "PaymentMenu";
     public static final String KEY_ETICKET_MENU = "EticketMenu";
     public static final String KEY_MFS_MENU = "MobileBankingMenu";
@@ -122,6 +125,7 @@ public class AnalyticsParameters {
     public static final String KEY_BALANCE_REFILL_BANK = "BalanceRefillBank";
     public static final String KEY_UTILITY_KARNAPHULI_MENU = "UtilityKarnaphuliMenu";
     public static final String KEY_BALANCE_REFILL_CARD = "BalanceRefillCard";
+    public static final String KEY_BALANCE_REFILL_NAGAD = "BalanceRefillNagad";
     public static final String KEY_ETICKET_BUS = "E_TICKET_BUS";
     public static final String KEY_MFS_MYCASH_MENU = "MfsMycashMenu";
     public static final String KEY_PRODUCT_AJKER_DEAL_MENU = "ProductAjkerDealMenu";
