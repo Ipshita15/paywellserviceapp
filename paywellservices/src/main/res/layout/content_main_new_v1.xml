@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_marginTop="-10dp"
+    android:layout_marginBottom="40dp"
     android:background="@drawable/round_white_layout_bg_v1"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -27,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:context=".activity.MainActivity"
-                tools:showIn="@layout/app_bar_main">
+                tools:showIn="@layout/app_bar_main_v1">
 
                 <LinearLayout
                     android:id="@+id/rootLayout"

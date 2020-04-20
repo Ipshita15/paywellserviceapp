@@ -113,6 +113,17 @@
                 tools:layout_conversion_absoluteHeight="150dp"
                 tools:layout_conversion_absoluteWidth="379dp" />
 
+            <ImageView
+                android:id="@+id/imageView39"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                app:layout_constraintBottom_toBottomOf="@+id/txtHeading"
+                app:layout_constraintEnd_toStartOf="@+id/txtHeading"
+                app:layout_constraintTop_toTopOf="@+id/txtHeading"
+                custom:srcCompat="@drawable/ic_tk" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
