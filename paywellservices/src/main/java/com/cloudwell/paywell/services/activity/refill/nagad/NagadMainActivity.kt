@@ -14,12 +14,15 @@ import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.activity.refill.nagad.fragment.MobileNumberQRCodeFragment
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLog
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLogRequestModel
+import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.NagadBalanceClaimActivityv2
 import com.cloudwell.paywell.services.activity.utility.AllUrl
-import com.cloudwell.paywell.services.activity.utility.electricity.westzone.model.WZPDCLBillPayModel
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.constant.IconConstant
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.ConnectionDetector
+import com.cloudwell.paywell.services.utils.StringConstant
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
@@ -110,12 +113,21 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
         }
 
         initView()
-
+        nagadBalanceClaimv2.setOnClickListener(this)
         nagadBalanceClaim.setOnClickListener(this)
         nagadBalanceRefill.setOnClickListener(this)
         nagadQRCode.setOnClickListener(this)
         nagadRefillLog.setOnClickListener(this)
 
+        addRecentUsedList()
+
+
+    }
+
+
+    private fun addRecentUsedList() {
+        val recentUsedMenu = RecentUsedMenu(StringConstant.KEY_home_nagad_refill_msg, StringConstant.KEY_home_refill_balance, IconConstant.KEY_ic_nagad_main, 0, 50)
+        addItemToRecentListInDB(recentUsedMenu)
     }
 
     // for language font :
@@ -128,13 +140,13 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
 
         if (mAppHandler?.getAppLanguage().equals("en", ignoreCase = true)) {
             nagadBalanceClaim.typeface = AppController.getInstance().oxygenLightFont
-
+            nagadBalanceClaimv2.typeface = AppController.getInstance().oxygenLightFont
             nagadBalanceRefill.typeface = AppController.getInstance().oxygenLightFont
             nagadRefillLog.typeface = AppController.getInstance().oxygenLightFont
             nagadQRCode.typeface = AppController.getInstance().oxygenLightFont
         } else {
             nagadBalanceClaim.typeface = AppController.getInstance().aponaLohitFont
-
+            nagadBalanceClaimv2.typeface = AppController.getInstance().aponaLohitFont
             nagadBalanceRefill.typeface = AppController.getInstance().aponaLohitFont
             nagadRefillLog.typeface = AppController.getInstance().aponaLohitFont
             nagadQRCode.typeface = AppController.getInstance().aponaLohitFont
@@ -145,7 +157,12 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
 
     override fun onClick(v: View) {
         when (v.id) {
+            R.id.nagadBalanceClaimv2 -> {
+                val intent = Intent(applicationContext, NagadBalanceClaimActivityv2::class.java)
+                startActivity(intent)
+            }
             R.id.nagadBalanceClaim -> {
+
                 val intent = Intent(applicationContext, NagadBalanceClaimActivity::class.java)
                 startActivity(intent)
             }

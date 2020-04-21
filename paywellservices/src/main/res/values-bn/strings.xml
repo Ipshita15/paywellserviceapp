@@ -10,6 +10,7 @@
     <string name="home_topup">টপআপ</string>
     <string name="home_topup_offer_title">বান্ডেল ও প্যাক</string>
     <string name="home_utility">ইউটিলিটি</string>
+    <string name="home_fee">ফী</string>
     <string name="home_eticket">টিকেট</string>
     <string name="home_mfs">মোবাইল ব্যাংকিং</string>
     <string name="home_mfs_fav">মোবাইল ব্যাংকিং</string>
@@ -92,6 +93,9 @@
     <string name="home_utility_desco_pay_inquiry">ডেসকো \nবিল অনুসন্ধান</string>
     <string name="home_utility_desco_pay_title">ডেসকো বিল প্রদান</string>
     <string name="home_utility_desco_inquary_title">ডেসকো বিল অনুসন্ধান</string>
+    <string name="desco_postpaid_inquiry">ডেসকো পোস্টপেইড \nবিল অনুসন্ধান</string>
+    <string name="home_utility_desco_prepaid_title">ডেসকো প্রিপেইড \nবিল প্রদান</string>
+    <string name="home_utility_desco_prepaid_inquiry">ডেসকো প্রিপেইড \nবিল অনুসন্ধান</string>
     <string name="home_utility_dpdc">ডিপিডিসি</string>
     <string name="home_utility_dpdc_bill_title">ডিপিডিসি বিল প্রদান</string>
     <string name="home_utility_dpdc_inquary_title">ডিপিডিসি  অনুসন্ধান</string>
@@ -467,6 +471,7 @@
     <string name="multi_city_menu_title">Multi-City</string>
     <string name="indian_menu_title">Indian</string>
     <string name="search_flights">Search Flights</string>
+    <string name="bbc">বিবিসি</string>
     <string name="return_text">Return</string>
     <string name="airport">Airport</string>
     <string name="more">More</string>
@@ -653,6 +658,27 @@
     <string name="retry">আবার চেষ্টা করুন</string>
     <string name="logout_message">আপনি কি নিশ্চিত আপনার অ্যাকাউন্টটি লগআউট করতে চান?</string>
     <string name="logout_text">লগআউট</string>
+    <string name="fee">ফি</string>
+    <string name="home_insurance">ইন্সুরেন্স</string>
+    <string name="home_education">এডুকেশন</string>
+    <string name="home_entertainment">বিনোদন</string>
 
+    <string name="selectedCourse">course</string>
+    <string name="account_number">Account Number</string>
+    <string name="direct_refil">ডিরেক্ট ব্যালেন্স\nরিফিল</string>
+    <string name="bbc_janala">বিবিসি জানালা</string>
+    <string name="subscription">সাবস্ক্রিপশন</string>
+    <string name="bbc_course">বিবিসি জানালা কোর্স সমুহ</string>
+    <string name="courses">কোর্স সমুহ</string>
+    <string name="check_status">স্ট্যাটাস চেক</string>
+    <string name="start_course">কোর্স শুরু করুন</string>
+    <string name="bbc_registation_actionbar">কোর্স রেজিস্ট্রেশন</string>
+    <string name="reg_korun">রেজিস্ট্রেশন করুন</string>
+    <string name="reg_guid">আপনার একাউন্ট তৈরির জন্য নিচের ফর্মটি পূরণ করুন এবং শুরু করুন আপনার ইংরেজী কোর্স। মনে রাখবেন, রেজিস্ট্রেশনের সময় দেওয়া নামটিই আপনার Topic Report ও Course Report-এ উল্লেখ করা হবে।</string>
+    <string name="reg_must">অবশ্যই ইংরেজিতে লিখতে হবে।  (*) চিহ্নিত ঘরগুলো অবশ্যই পূরণ করতে হবে।</string>
+    <string name="paywell_pin">পেওয়েল পিন</string>
+    <string name="reg_dialog">রেজিস্ট্রেশন রেজাল্ট</string>
+    <string name="reg_dialog_msg">রেজিস্ট্রেশন সফলভাবে সম্পন্ন হয়েছে। </string>
+    <string name="bongo">বংগ</string>
 
 </resources>

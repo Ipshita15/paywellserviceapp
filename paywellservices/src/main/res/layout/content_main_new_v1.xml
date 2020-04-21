@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_marginTop="-10dp"
+    android:layout_marginBottom="40dp"
+    android:background="@drawable/round_white_layout_bg_v1"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_marginTop="24dp"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:background="@drawable/round_white_layout_bg_v1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linearLayout18"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:context=".activity.MainActivity"
+                tools:showIn="@layout/app_bar_main_v1">
+
+                <LinearLayout
+                    android:id="@+id/rootLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:weightSum="4">
+
+                            <LinearLayout
+
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:orientation="horizontal"
+                                android:weightSum="5">
+
+                                <Button
+                                    android:id="@+id/homeBtnTopup"
+                                    style="@style/HomeButtonNew"
+                                    android:layout_weight="1"
+                                    android:drawableTop="@drawable/ic_topup_v1"
+                                    android:onClick="onButtonClicker"
+                                    android:text="@string/home_topup"
+                                    android:textAllCaps="false"
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center" />
+
+                                <Button
+                                    android:id="@+id/homeBtnUtility"
+                                    style="@style/HomeButtonNew"
+                                    android:layout_weight="1"
+                                    android:drawableTop="@drawable/ic_utility"
+
+                                    android:drawablePadding="0dp"
+                                    android:onClick="onButtonClicker"
+                                    android:text="@string/home_utility"
+                                    android:textAllCaps="false"
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center" />
+
+                                <Button
+                                    android:id="@+id/homeBtnEticket"
+                                    style="@style/HomeButtonNew"
+                                    android:layout_weight="1"
+                                    android:drawableTop="@drawable/ic_ticket_v1"
+                                    android:onClick="onButtonClicker"
+                                    android:text="@string/home_eticket"
+                                    android:textAllCaps="false"
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_marginTop="16dp"
+                                android:layout_weight="1"
+                                android:orientation="horizontal"
+                                android:weightSum="5">
+
+
+                                <Button
+                                    android:id="@+id/homeBtnMFS"
+                                    style="@style/HomeButtonNew"
+                                    android:layout_weight="1"
+                                    android:drawableTop="@drawable/ic_mobile_banking_v1"
+                                    android:onClick="onButtonClicker"
+
+                                    android:text="@string/home_mfs"
+                                    android:textAllCaps="false"
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center" />
+
+                                <Button
+                                    android:id="@+id/homeBtnProductCategory"
+                                    style="@style/HomeButtonNew"
+                                    android:layout_weight="1"
+                                    android:drawableTop="@drawable/ic_product_v1"
+                                    android:onClick="onButtonClicker"
+                                    android:text="@string/home_product_catalog"
+                                    android:textAllCaps="false"
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center" />
+
+
+                                <Button
+                                    android:id="@+id/homeBtnFee"
+                                    style="@style/HomeButtonNew"
+                                    android:layout_weight="1"
+                                    android:drawableTop="@drawable/ic_fee"
+                                    android:onClick="onButtonClicker"
+                                    android:text="@string/fee"
+                                    android:textAllCaps="false"
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_marginTop="16dp"
+                                android:layout_weight="1"
+                                android:orientation="horizontal"
+                                android:weightSum="5">
+
+
+                                <Button
+                                    android:id="@+id/homeBtnEduction"
+                                    style="@style/HomeButtonNew"
+                                    android:layout_weight="1"
+                                    android:drawableTop="@drawable/ic_education"
+                                    android:onClick="onButtonClicker"
+                                    android:text="@string/home_education"
+                                    android:textAllCaps="false"
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center" />
+
+                                <Button
+                                    android:id="@+id/homeBtnEntertainment"
+                                    style="@style/HomeButtonNew"
+                                    android:layout_weight="1"
+                                    android:drawableTop="@drawable/ic_entertainment_v1"
+                                    android:onClick="onButtonClicker"
+                                    android:text="@string/home_entertainment"
+                                    android:textAllCaps="false"
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center" />
+
+
+                                <Button
+                                    android:id="@+id/homeBtnInsurance"
+                                    style="@style/HomeButtonNew"
+                                    android:layout_weight="1"
+                                    android:drawableTop="@drawable/ic_insurance_v1"
+                                    android:onClick="onButtonClicker"
+                                    android:text="@string/home_insurance"
+                                    android:textAllCaps="false"
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_marginTop="16dp"
+                                android:layout_weight="1"
+                                android:gravity="center_horizontal"
+                                android:orientation="horizontal"
+                                android:weightSum="5">
+
+
+                                <Button
+                                    android:id="@+id/homeBtnRefillBalance"
+                                    style="@style/HomeButtonNew"
+                                    android:layout_weight="1"
+                                    android:drawableTop="@drawable/ic_refile_v1"
+                                    android:onClick="onButtonClicker"
+                                    android:text="@string/home_refill_balance"
+                                    android:textAllCaps="false"
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center" />
+
+
+                                <Button
+                                    android:id="@+id/homeBtnMiniStatement"
+                                    style="@style/HomeButtonNew"
+                                    android:layout_weight="1"
+                                    android:drawableTop="@drawable/ic_statment_v1"
+                                    android:onClick="onButtonClicker"
+                                    android:text="@string/home_statement"
+                                    android:textAllCaps="false"
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center" />
+
+                                <Button
+                                    android:id="@+id/homeBtnSettings"
+                                    style="@style/HomeButtonNew"
+                                    android:layout_weight="1"
+                                    android:drawableTop="@drawable/ic_settings_v1"
+                                    android:onClick="onButtonClicker"
+                                    android:text="@string/home_settings"
+                                    android:textAllCaps="false"
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center" />
+                            </LinearLayout>
+
+
+
+<!--                            <androidx.core.widget.NestedScrollView-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content">-->
+
+                            <LinearLayout
+                                android:id="@+id/linearLayoutRecentUsedList"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:orientation="vertical"
+                                android:visibility="visible">
+
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="16dp"
+                                    android:text="বেশী ব্যবহৃত সার্ভিস সমুহ-"
+                                    android:textColor="#59595c"
+                                    android:textSize="16sp" />
+
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/rvRecent"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:background="#f6f6f6"
+                                    tools:listitem="@layout/item_recent_used_list"
+
+                                    />
+                            </LinearLayout>
+<!--                            </androidx.core.widget.NestedScrollView>-->
+
+
+                        </LinearLayout>
+
+
+                    </ScrollView>
+
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/ivRightSliderUpDown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="60dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.65"
+                    app:layout_constraintStart_toEndOf="@+id/rootLayout"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/open_arrow" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -45,6 +45,7 @@ public class AppHandler {
     public static final String KEY_TYPE2 = "wrong_amount";
     public static final String TRX_TYPE = "recharge_not_received";
     public static final int MULTIPLE_TOPUP_LIMIT = 5;
+    public static final int MULTIPLE_BANK_INFO_LIMIT = 5;
     private static final String UPDATE_CHECK = "LastUpdateCheck";
     private static final String AIRPORT_LIST_UPDATE_CHECKER = "AIRPORT_LIST_UPDATE_CHECKER";
     private static final String PIN = "pin";
@@ -178,6 +179,7 @@ public class AppHandler {
     public static final String KEY_ANDROID_ID= "KEY_ANDROID_ID";
     public static final String KEY_setUserNeedToChangePassword= "KEY_setUserNeedToChangePassword";
     public static final String KEY_savePreviousRequestObject= "savePreviousRequestObject";
+    public static final String KEY_ImageAddressArrayJson= "KEY_ImageAddressArrayJson";
 
 
     public AppHandler() {
@@ -844,6 +846,14 @@ public class AppHandler {
     }
     public boolean getUserNeedToChnagePassword(){
         return mPref.getBoolean(KEY_setUserNeedToChangePassword, false);
+    }
+
+    public void setImageAddress(String json) {
+        editor.putString(KEY_ImageAddressArrayJson, json);
+    }
+
+    public String getImageAddress() {
+        return mPref.getString(KEY_ImageAddressArrayJson, "");
     }
 
     public static class MyDialogFragment extends DialogFragment {

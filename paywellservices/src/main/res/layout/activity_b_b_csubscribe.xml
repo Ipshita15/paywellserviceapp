@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_background_card"
+    tools:context=".activity.BBC.BBCsubscribeActivity">
+
+
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/courseName">
+
+        <androidx.cardview.widget.CardView
+            android:elevation="10dp"
+            app:cardCornerRadius="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="#59595c"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:text="@string/reg_korun"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:textSize="16sp"
+                    android:textColor="#59595c"
+                    android:text="@string/reg_guid"
+                    android:id="@+id/reg_review"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+
+                <TextView
+
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:textSize="12sp"
+                    android:textColor="@color/red_500"
+                    android:text="@string/reg_must"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+
+                <EditText
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/userNmae"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="User Name*" />
+
+                <EditText
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/userMobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Mobile Number*"
+                    android:inputType="number" />
+
+
+                <Button
+                    android:background="@drawable/button_corner"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:textColor="@color/white"
+                    android:id="@+id/subscribeBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    android:text="Subscribe" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+
+
+
+</ScrollView>

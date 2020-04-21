@@ -1,6 +1,24 @@
 package com.cloudwell.paywell.services.retrofit;
 
 
+import com.cloudwell.paywell.services.activity.bank_info_update.model.BankListRequestPojo;
+import com.cloudwell.paywell.services.activity.bank_info_update.model.BankPojo;
+import com.cloudwell.paywell.services.activity.bank_info_update.model.RemoveReqPojo;
+import com.cloudwell.paywell.services.activity.education.BBC.model.BbcSubscriptionPojo;
+import com.cloudwell.paywell.services.activity.education.BBC.model.BbcTranscationLog;
+import com.cloudwell.paywell.services.activity.education.BBC.model.CourseListRresponsePojo;
+import com.cloudwell.paywell.services.activity.education.BBC.model.CourseLlistRequestPojo;
+import com.cloudwell.paywell.services.activity.education.BBC.model.RegistationInfo;
+import com.cloudwell.paywell.services.activity.bank_info_update.spineer.BankResponse;
+import com.cloudwell.paywell.services.activity.bank_info_update.spineer.GetBankPojo;
+import com.cloudwell.paywell.services.activity.education.BBC.model.StatusCheckResponsePojo;
+import com.cloudwell.paywell.services.activity.education.BBC.model.TransactionResponsePOjo;
+import com.cloudwell.paywell.services.activity.education.Bongo.model.BongoActivePkgPojo;
+import com.cloudwell.paywell.services.activity.education.Bongo.model.BongoEnquiryRqstPojo;
+import com.cloudwell.paywell.services.activity.education.Bongo.model.BongoPkgListReqPojo;
+import com.cloudwell.paywell.services.activity.education.Bongo.model.BongoResponsePojo;
+import com.cloudwell.paywell.services.activity.education.Bongo.model.BongoSubscriptionPojo;
+import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.Nagadv2requestPojo;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.ReposeAirSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.ResGetAirports;
@@ -81,6 +99,7 @@ import com.cloudwell.paywell.services.activity.refill.nagad.model.ResTranstionIN
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.BalanceClaimModel;
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLog;
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLogRequestModel;
+import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.NagadWebResponse;
 import com.cloudwell.paywell.services.activity.reg.model.AuthRequestModel;
 import com.cloudwell.paywell.services.activity.reg.model.RegistrationModel;
 import com.cloudwell.paywell.services.activity.reg.model.RequestDistrictList;
@@ -110,8 +129,6 @@ import com.cloudwell.paywell.services.activity.utility.electricity.desco.model.D
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoBillPaySubmit;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoBillPaySubmitResponse;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoInquiryResponse;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoPrepaidTrxLogRequest;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoPrepaidTrxLogResponse;
 import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoRequestInquiryModel;
 import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.model.requestPojo.DPDCBillPayModel;
 import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.model.requestPojo.DPDCbillInfoModel;
@@ -190,11 +207,13 @@ public interface APIService {
     @POST("Retailer/BankDepositSystem/getBankBranch")
     Call<BranchData> callBranchDataAPI(@Body RequestBranch requestBranch);
 
+
+    @POST("Retailer/BankDepositSystem/getBankInfo")
+    Call<BankResponse> callBankDataAPI(@Body GetBankPojo bankPojo);
+
+
     @POST("Retailer/BankDepositSystem/depositBankSlip")
     Call<RefillRequestData> callBalanceRefillAPI(@Body RequestRefillBalance requestRefillBalance);
-
-
-
 
     @POST("Retailer/RetailerService/checkBalance")
     Call<APIResBalanceCheck> callCheckBalance(@Body RequestBalanceCheck requestBalanceCheck);
@@ -386,7 +405,7 @@ public interface APIService {
                                  @Field(ParameterUtility.KEY_REF_ID) String refId);
 
     @FormUrlEncoded
-    @POST("PaywellParibahanService/getTransactionData")
+    @POST("PaywellParibahanService/getEnquiryData")
     Call<TransactionLogDetailsModel> getBusTransactionLogFromServer(@Field("username") String username, @Field("skey") String skey, @Field("limit") String limit, @Field(ParameterUtility.KEY_REF_ID) String refId);
 
     @POST
@@ -452,8 +471,7 @@ public interface APIService {
     Call<DescoBillPaySubmitResponse> descoBillPayement(@Body DescoBillPaySubmit descoBillPaySubmit);
 
 
-    @POST("MYCash/Utility/getEnquiryData")
-    Call<DescoPrepaidTrxLogResponse> descoPrepaidTrxInquiry(@Body DescoPrepaidTrxLogRequest descoPrepaidTrxLogRequest);
+
 
 
     @POST("Registration/UserRegistration/userInformationForRegistration")
@@ -662,6 +680,54 @@ public interface APIService {
 
     @POST("Utility/InternetBillPay/banglalionEnquiry")
     Call<ResponseBody> banglalionRechargeInquiry(@Body RechargeResponsePojo rechargeResponsePojo);
+
+    //BBC
+    @POST("Utility/BBC/getCourseList")
+    Call<CourseListRresponsePojo> getBBCcourseList(@Body CourseLlistRequestPojo pojo);
+
+    @POST("Utility/BBC/registrationInfo")
+    Call<StatusCheckResponsePojo> getBBCregistationInfo(@Body RegistationInfo pojo);
+
+    @POST("Utility/BBC/subscription")
+    Call<ResponseBody> getBBCsubscribe(@Body BbcSubscriptionPojo pojo);
+
+    @POST("Reports/TransactionReportSystem/TransactionReport")
+    Call<TransactionResponsePOjo> getBBCTransactionLog(@Body BbcTranscationLog transcationLog);
+
+    //new Nagdh
+    @POST("PaymentGateway/PaymentGatewaySystem/nagadApiProcess")
+    Call<NagadWebResponse> gestNahadg(@Body Nagadv2requestPojo nagadv2requestPojo);
+
+
+    //Bank info
+    @POST("Retailer/BankDepositSystem/addRtlrBankInfo")
+    Call<ResponseBody> uploadBankInfo(@Body BankPojo bankPojo);
+
+    @POST("Retailer/BankDepositSystem/getRtlrBankAccList")
+    Call<ResponseBody> getRetailerBankList(@Body BankListRequestPojo bankListRequestPojo);
+
+    @POST("Retailer/BankDepositSystem/removeBankAccount")
+    Call<ResponseBody> removeBankInfo(@Body RemoveReqPojo removeReqPojo);
+
+    //Bongo
+
+    @POST("Utility/Bongo/getPackageList")
+    Call<BongoResponsePojo> getBongoPackgeList(@Body BongoPkgListReqPojo bongoPkgListReqPojo);
+
+    @POST("Utility/Bongo/activatePackage")
+    Call<ResponseBody> getBongoActivePackgeList(@Body BongoActivePkgPojo bongoActivePkgPojo);
+
+    @POST("Utility/Bongo/getSubscriptionCount")
+    Call<ResponseBody> getBongoSubscriptionCount(@Body BongoSubscriptionPojo bongoSubscriptionPojo);
+
+    @POST("Utility/Bongo/getEnquiryData")
+    Call<ResponseBody> getBongoEnquiryData(@Body BongoEnquiryRqstPojo bongoEnquiryRqstPojo);
+
+//    @POST("Retailer/BankDepositSystem/removeBankAccount")
+//    Call<ResponseBody> removeBankInfo(@Body RemoveReqPojo removeReqPojo);
+
+
+
 
     //Bus lunch ticket new version
 

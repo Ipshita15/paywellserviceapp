@@ -34,12 +34,6 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatDialog;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.topup.adapter.MyRecyclerViewAdapter;
@@ -61,14 +55,22 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.constant.IconConstant;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.StringConstant;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDialog;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -195,7 +197,18 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
         });
 
         addAnotherNo();
+
+
+        addRecentUsedList();
+
+
     }
+
+    private void addRecentUsedList() {
+        RecentUsedMenu recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_mobileOperator, StringConstant.KEY_topup, IconConstant.KEY_all_operator, 1, 1);
+        addItemToRecentListInDB(recentUsedMenu);
+    }
+
 
     private void refreshLanguage() {
 
@@ -288,8 +301,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 --addNoFlag;
-                slideOutAnim
-                        .setAnimationListener(new Animation.AnimationListener() {
+                slideOutAnim.setAnimationListener(new Animation.AnimationListener() {
 
                             @Override
                             public void onAnimationStart(Animation animation) {
@@ -1092,7 +1104,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
                     }
                     String operatorTextForServer = getOperatorTextForServer(result);
                     String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).getRID());
-                    TopupData topupDatum = new TopupData(amountStr, planStr, phoneStr, operatorTextForServer, uniqueKey);
+                    TopupData topupDatum = new TopupData(Integer.parseInt(amountStr), planStr, phoneStr, operatorTextForServer, uniqueKey);
                     topupDatumList.add(topupDatum);
 
                 }
@@ -1142,7 +1154,7 @@ public class TopupMainActivity extends BaseActivity implements View.OnClickListe
                 String operatorTextForServer = getOperatorTextForServer(result);
                 String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).getRID());
                 RequestSingleTopup singleTopup = new RequestSingleTopup();
-                singleTopup.setAmount(amountStr);
+                singleTopup.setAmount(Integer.parseInt(amountStr));
                 singleTopup.setConType(planStr);
                 singleTopup.setMsisdn(phoneStr);
                 singleTopup.setOperator(operatorTextForServer);

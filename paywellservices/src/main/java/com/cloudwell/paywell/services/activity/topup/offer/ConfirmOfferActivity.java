@@ -118,7 +118,7 @@ public class ConfirmOfferActivity extends BaseActivity implements View.OnClickLi
         String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).getRID());
 
         RequestSingleTopup singleTopup = new RequestSingleTopup();
-        singleTopup.setAmount(amount);
+        singleTopup.setAmount(Integer.parseInt(amount));
         singleTopup.setConType("prepaid");
         singleTopup.setMsisdn(mPhn);
         singleTopup.setOperator(key);

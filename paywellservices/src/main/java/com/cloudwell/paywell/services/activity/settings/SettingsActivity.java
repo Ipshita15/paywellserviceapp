@@ -14,12 +14,12 @@ import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
+import com.cloudwell.paywell.services.activity.bank_info_update.BankINFO_MainActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.location.LocationActivity;
 import com.cloudwell.paywell.services.activity.utility.AllUrl;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
-import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.UpdateChecker;
 import com.google.android.material.snackbar.Snackbar;
@@ -88,6 +88,11 @@ public class SettingsActivity extends BaseActivity {
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_SETTINGS_MENU, AnalyticsParameters.KEY_SETTINGS_HELP_MENU);
                 startHelpMenu();
                 break;
+
+            case R.id.bank_btn:
+                startActivity(new Intent(this, BankINFO_MainActivity.class));
+                break;
+
 
             default:
                 break;
@@ -299,16 +304,16 @@ public class SettingsActivity extends BaseActivity {
         home_change_language.setText(R.string.home_settings_change_language);
         home_help.setText(R.string.home_settings_help);
 
-        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-            home_change_pin.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_upgrade.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_change_language.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_help.setTypeface(AppController.getInstance().getOxygenLightFont());
-        } else {
-            home_change_pin.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_upgrade.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_change_language.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_help.setTypeface(AppController.getInstance().getAponaLohitFont());
-        }
+//        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+////            home_change_pin.setTypeface(AppController.getInstance().getOxygenLightFont());
+////            home_upgrade.setTypeface(AppController.getInstance().getOxygenLightFont());
+//            home_change_language.setTypeface(AppController.getInstance().getOxygenLightFont());
+//            home_help.setTypeface(AppController.getInstance().getOxygenLightFont());
+//        } else {
+////            home_change_pin.setTypeface(AppController.getInstance().getAponaLohitFont());
+////            home_upgrade.setTypeface(AppController.getInstance().getAponaLohitFont());
+//            home_change_language.setTypeface(AppController.getInstance().getAponaLohitFont());
+//            home_help.setTypeface(AppController.getInstance().getAponaLohitFont());
+//        }
     }
 }

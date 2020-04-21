@@ -35,6 +35,45 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
 
+
+                <Button
+                    android:id="@+id/nagadBalanceClaimv2"
+                    style="@style/HomeButtonNew"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/direct_refill"
+                    android:paddingTop="10dp"
+                    android:text="@string/direct_refil"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <Button
+                    android:id="@+id/nagadBalanceClaim"
+                    style="@style/HomeButtonNew"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/claim_balance"
+                    android:text="@string/nagad_balance_claim_msg"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:orientation="horizontal"
+                android:weightSum="5">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
                 <Button
                     android:id="@+id/nagadBalanceRefill"
                     style="@style/HomeButtonNew"
@@ -51,43 +90,6 @@
                     android:layout_weight="1"/>
 
                 <Button
-                    android:id="@+id/nagadQRCode"
-                    style="@style/HomeButtonNew"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/nagad_qr_code"
-                    android:text="@string/nagad_qr_code_msg"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:orientation="horizontal"
-                android:weightSum="5">
-
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
-
-                <Button
-                    android:id="@+id/nagadBalanceClaim"
-                    style="@style/HomeButtonNew"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/nagad_balance_claim"
-                    android:text="@string/nagad_balance_claim_msg"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
-                <Button
                     android:id="@+id/nagadRefillLog"
                     style="@style/HomeButtonNew"
                     android:layout_weight="1"
@@ -95,6 +97,66 @@
                     android:text="@string/nagad_refill_log_msg"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+            </LinearLayout>
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/activity_horizontal_margin"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:weightSum="5">-->
+
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"/>-->
+
+<!--                <Button-->
+<!--                    android:id="@+id/nagadBalanceClaim"-->
+<!--                    style="@style/HomeButtonNew"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:drawableTop="@drawable/nagad_balance_claim"-->
+<!--                    android:text="@string/nagad_balance_claim_msg"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textAppearance="?android:attr/textAppearanceSmall"/>-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"/>-->
+
+<!--                <Button-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:gravity="center_horizontal"-->
+<!--                    android:id="@+id/nagadQRCode"-->
+<!--                    style="@style/HomeButtonNew"-->
+<!--                    android:layout_gravity="center_horizontal"-->
+<!--                    android:drawableTop="@drawable/nagad_qr_code"-->
+<!--                    android:text="@string/nagad_qr_code_msg"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textAppearance="?android:attr/textAppearanceSmall" />-->
+
+<!--              -->
+
+<!--            </LinearLayout>-->
+            <LinearLayout
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:id="@+id/nagadQRCode"
+                    style="@style/HomeButtonNew"
+                    android:layout_gravity="center_horizontal"
+                    android:drawableTop="@drawable/nagad_qr_code"
+                    android:text="@string/nagad_qr_code_msg"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
 
 
             </LinearLayout>

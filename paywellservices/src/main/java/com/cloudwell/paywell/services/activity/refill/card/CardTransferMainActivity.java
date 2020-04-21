@@ -16,8 +16,11 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.constant.IconConstant;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.StringConstant;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
@@ -145,6 +148,14 @@ public class CardTransferMainActivity extends BaseActivity {
         }
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_BALANCE_REFILL_CARD);
 
+
+        addRecentUsedList();
+
+    }
+
+    private void addRecentUsedList() {
+        RecentUsedMenu recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_refill_card, StringConstant.KEY_home_refill_balance, IconConstant.KEY_ic_visa_master_card, 0, 44);
+        addItemToRecentListInDB(recentUsedMenu);
     }
 
     private void startWebView(String data) {

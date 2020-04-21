@@ -12,19 +12,26 @@ import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoPrepaidTrxLogRequest;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.model.DescoPrepaidTrxLogResponse;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidInquiryActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.ReqInquiryModel;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
+import com.cloudwell.paywell.services.constant.IconConstant;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.StringConstant;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import androidx.appcompat.app.AppCompatDialog;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -76,9 +83,15 @@ public class DescoPrepaidMainActivity extends BaseActivity implements CompoundBu
             boolean booleanExtra = intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_DESCO_INQUERY, false);
             if (booleanExtra) {
                 showLimitPrompt();
+                addRecentUsedList();
             }
 
         }
+    }
+
+    private void addRecentUsedList() {
+        RecentUsedMenu recentUsedMenu= new RecentUsedMenu(StringConstant.KEY_home_utility_desco_prepaid_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, 4, 49);
+        addItemToRecentListInDB(recentUsedMenu);
     }
 
     public void onButtonClicker(View v) {
@@ -91,6 +104,7 @@ public class DescoPrepaidMainActivity extends BaseActivity implements CompoundBu
             case R.id.homeBtnInquiry:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_DESCO_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_BILL_PAY_INQUIRY);
                 showLimitPrompt();
+                addRecentUsedList();
                 break;
             default:
                 break;
@@ -227,37 +241,57 @@ public class DescoPrepaidMainActivity extends BaseActivity implements CompoundBu
 
         String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
 
-        String imeiNo = AppHandler.getmInstance(getApplicationContext()).getUserName();
+        String userName = AppHandler.getmInstance(getApplicationContext()).getUserName();
 
-        DescoPrepaidTrxLogRequest descoPrepaidTrxLogRequest =new DescoPrepaidTrxLogRequest("json",selectedLimit,uniqueKey,"Desco_prepaid",imeiNo);
+        ReqInquiryModel m =new ReqInquiryModel();
+        m.setRefId(uniqueKey);
+        m.setLimit(selectedLimit);
+        m.setUsername(userName);
+        m.setService("DESCO_Prepaid");
 
-        ApiUtils.getAPIServiceV2().descoPrepaidTrxInquiry(descoPrepaidTrxLogRequest).enqueue(new Callback<DescoPrepaidTrxLogResponse>() {
+        ApiUtils.getAPIServiceV2().PBInquiry(m).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<DescoPrepaidTrxLogResponse> call, Response<DescoPrepaidTrxLogResponse> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                DescoPrepaidTrxLogResponse descoPrepaidTrxLogResponseBody = response.body();
-                if(response.body().getApiStatus()==200){
 
-                    if(descoPrepaidTrxLogResponseBody.getDescoPrepaidTrxLogResponseDetails().getStatus()==200){
+                if (response.code()==200){
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        String responseMessage = jsonObject.getString("Message");
+                        int status = jsonObject.getInt("Status");
 
-                        startActivity(new Intent(DescoPrepaidMainActivity.this, DescoPrepaidInquuiryActivity.class).putExtra(TRXLOG_INQUIRY_DATA_KEY,response.body()));
+                        if (status == 200){
+                            JSONArray responseDetails = jsonObject.getJSONArray("ResponseDetails");
+                            String result = responseDetails.toString();
 
-                    }else{
+                            if (result != null) {
+                                DESCOPostpaidInquiryActivity.TRANSLOG_TAG = result;
 
-                        showErrorMessagev1(getString(R.string.no_data_msg));
+                                startActivity(new Intent(DescoPrepaidMainActivity.this, DESCOPostpaidInquiryActivity.class));
+                            }
 
+
+                        } else {
+                            showErrorMessagev1(responseMessage);
+
+                        }
+
+
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        showErrorMessagev1(getString(R.string.try_again_msg));
                     }
-
-
-                }else{
-                    showErrorMessagev1(descoPrepaidTrxLogResponseBody.getApiStatusName());
+                }else {
+                    showErrorMessagev1(getString(R.string.try_again_msg));
                 }
-
 
             }
 
+
+
+
             @Override
-            public void onFailure(Call<DescoPrepaidTrxLogResponse> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 t.printStackTrace();
 
                 showErrorMessagev1("Network error!!!");

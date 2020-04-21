@@ -76,6 +76,9 @@ public class DatabaseClient {
         public void migrate(SupportSQLiteDatabase database) {
             database.execSQL("CREATE TABLE IF NOT EXISTS `DESCOPrepaidHistory` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `bill_number` TEXT NOT NULL, `payer_phone_number` TEXT NOT NULL, `date` TEXT NOT NULL)");
             database.execSQL("CREATE UNIQUE INDEX `index_DESCOPrepaidHistory_bill_number_payer_phone_number` ON `DESCOPrepaidHistory` (`bill_number`, `payer_phone_number`)");
+            database.execSQL("CREATE TABLE IF NOT EXISTS `RecentUsedMenu` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `category` TEXT NOT NULL, `icon` TEXT NOT NULL, `favorite_list_position` INTEGER NOT NULL, `alias_key` INTEGER NOT NULL)");
+
+
         }
     };
 
@@ -130,6 +133,11 @@ public class DatabaseClient {
 
         database.execSQL("CREATE TABLE IF NOT EXISTS `DESCOPrepaidHistory` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `bill_number` TEXT NOT NULL, `payer_phone_number` TEXT NOT NULL, `date` TEXT NOT NULL)");
         database.execSQL("CREATE UNIQUE INDEX `index_DESCOPrepaidHistory_bill_number_payer_phone_number` ON `DESCOPrepaidHistory` (`bill_number`, `payer_phone_number`)");
+
+
+        Log.e("start version 6", "Start");
+        database.execSQL("CREATE TABLE IF NOT EXISTS `RecentUsedMenu` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `category` TEXT NOT NULL, `icon` TEXT NOT NULL, `favorite_list_position` INTEGER NOT NULL, `alias_key` INTEGER NOT NULL)");
+
 
         Log.e("migrate", "END");
     }

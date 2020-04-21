@@ -7,10 +7,10 @@ import android.text.Html
 import android.view.MenuItem
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.adapter.HeaderRVSectionForLog
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.model.MessageEventMobileNumberChange
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.model.ResMobileChangeLog
@@ -18,7 +18,10 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.constant.IconConstant
 import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu
+import com.cloudwell.paywell.services.utils.StringConstant
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.squareup.otto.Subscribe
@@ -30,7 +33,7 @@ import kotlin.collections.ArrayList
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 17/1/19.
  */
-class PBInquiryMobileNumberChangeActivity : AppCompatActivity() {
+class PBInquiryMobileNumberChangeActivity : BaseActivity() {
     private var mAppHandler: AppHandler? = null
     private var mRelativeLayout: RelativeLayout? = null
 
@@ -72,6 +75,13 @@ class PBInquiryMobileNumberChangeActivity : AppCompatActivity() {
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_MOBILE_NUMBER_CHANGE_INQUIRY)
 
 
+        addRecentUsedList()
+
+    }
+
+    private fun addRecentUsedList() {
+        val recentUsedMenu = RecentUsedMenu(StringConstant.KEY_home_utility_pb_bill_change_number, StringConstant.KEY_home_utility, IconConstant.KEY_contact_number_change, 0, 16)
+        addItemToRecentListInDB(recentUsedMenu)
     }
 
     private fun initView() {

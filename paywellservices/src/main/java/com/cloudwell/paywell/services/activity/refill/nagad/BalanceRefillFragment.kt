@@ -18,7 +18,7 @@ class BalanceRefillFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.balance_refill_fragment, container, false)
+        val view = inflater.inflate(R.layout.balance_nagad_refill_fragment, container, false)
 
 
         val line1 = "নগদ অ্যাপ-এর মার্চেন্ট পে মেনুতে গিয়ে " + getFontStyle("QR") + " কোড স্ক্যান করুন বা ১১ ডিজিটের মোবাইল নাম্বারে " + getFontStyle("<u>01787679661</u>") + "  লিখে বাটনটি ট্যাপ করুন। টাকার পরিমাণ লিখে পরবর্তী ধাপে যান।"
