@@ -22,14 +22,18 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSea
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.BusLunCityRequest;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.BusLunCityResponse;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.CancelBookedTicketReques;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.CancelBookedTicketResponse;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.CancelTicketRequest;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ConfirmTicketRquestPojo;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.GetScheduledata;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.GetSeatStatusRequest;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.GetSeatViewRquestPojo;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.SeatBlockRequestPojo;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.SeatBookResponse;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.TicketInformationForCancelRequest;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.seatview.SeatviewResponse;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ConfirmTicketResponse;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm_cancel.ConfirmTicketCancelResponse;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.transactionLog.TransactionLogDetailsModel;
 import com.cloudwell.paywell.services.activity.home.model.ReposeGenerateOTP;
 import com.cloudwell.paywell.services.activity.home.model.ReposeUserProfile;
@@ -675,16 +679,16 @@ public interface APIService {
     Call<ResponseBody> getSeatStatus(@Body GetSeatStatusRequest getSeatStatusRequest);
 
     @POST("Tickets/BusAndLaunchService/seatBlock")
-    Call<ResponseBody> seatBlock(@Body SeatBlockRequestPojo seatBlockRequestPojo);
+    Call<SeatBookResponse> seatBlock(@Body SeatBlockRequestPojo seatBlockRequestPojo);
 
     @POST("Tickets/BusAndLaunchService/cancelBookedTicket")
-    Call<ResponseBody> cancelBookedTicket(@Body CancelBookedTicketReques cancelBookedTicketReques);
+    Call<CancelBookedTicketResponse> cancelBookedTicket(@Body CancelBookedTicketReques cancelBookedTicketReques);
 
     @POST("Tickets/BusAndLaunchService/confirmTicket")
-    Call<ResponseBody> confirmTicket(@Body ConfirmTicketRquestPojo confirmTicketRquestPojo);
+    Call<ConfirmTicketResponse> confirmTicket(@Body ConfirmTicketRquestPojo confirmTicketRquestPojo);
 
     @POST("Tickets/BusAndLaunchService/ticketInformationForCancel")
-    Call<ResponseBody> ticketInformationForCancel(@Body TicketInformationForCancelRequest ticketInformationForCancelRequest);
+    Call<ConfirmTicketCancelResponse> ticketInformationForCancel(@Body TicketInformationForCancelRequest ticketInformationForCancelRequest);
 
     @POST("Tickets/BusAndLaunchService/cancelTicket")
     Call<ResponseBody> cancelTicket(@Body CancelTicketRequest getScheduledata);

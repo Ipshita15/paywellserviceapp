@@ -83,13 +83,13 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
         val p = GetScheduledata()
         p.username = mAppHandler.userName
         p.coachType = "all"
-        p.departingDate = "2020-04-19"
+        p.departingDate = "2020-04-26"
         p.departingTime = "Morning"
         p.departure = "Dhaka"
         p.destination = "Chittagong"
         p.deviceId = mAppHandler.androidID
         p.returnCoachType = "any"
-        p.returnDate = "2020-04-20"
+        p.returnDate = "2020-04-27"
         p.returnTime = "Night"
         p.roundTrip = "1"
         p.transportType ="1"
@@ -97,7 +97,7 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
 
 //3
         val po = GetSeatViewRquestPojo()
-        po.departureDate = "2020-04-19"
+        po.departureDate = "2020-04-26"
         po.deviceId = mAppHandler.androidID
         po.fromCity = "Dhaka"
         po.toCity = "Chittagong"
@@ -107,7 +107,7 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
 
 //4
        val p4 =  GetSeatStatusRequest()
-        p4.departureDate = "2020-04-19"
+        p4.departureDate = "2020-04-26"
         p4.deviceId = mAppHandler.androidID
         p4.fromCity = "Dhaka"
         p4.optionId = "BBS_3897"
@@ -125,11 +125,10 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
         p5.toCity = "Chittagong"
         p5.username = mAppHandler.userName
         val opif = OptionInfoItem()
-        opif.boardingPointId = "272"
-        opif.departureDate = "2020-04-19"
-        opif.optionId = "BBS_3067"
-        opif.seat = "5468"
-        p5.optionInfo?.add(opif)
+        opif.boardingPointId = "110"
+        opif.departureDate = "2020-04-26"
+        opif.optionId = "BBS_3897"
+        opif.seat = "3"
         p5.optionInfo?.add(opif)
 
         val passenger = Passenger()
@@ -140,12 +139,41 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
         passenger.passengerMobile = "01912250477"
         passenger.passengerName = "sepon"
         p5.passenger = passenger
-        BusTicketRepository().getseatBlock(p5)
+        //BusTicketRepository().getseatBlock(p5)
 
        val p6 =  CancelBookedTicketReques()
+        p6.deviceId = mAppHandler.androidID
+        p6.password = "12345"
+        p6.trxId = "PRB202004211217214235"
+        p6.username =  mAppHandler.userName
+        //BusTicketRepository().getcancelBookedTicket(p6)
+
        val p7 =  ConfirmTicketRquestPojo()
+        p7.deviceId = mAppHandler.androidID
+        p7.password = "12345"
+        p7.trxId = "PRB202004211353153450"
+        p7.username =  mAppHandler.userName
+        BusTicketRepository().getconfirmTicket(p7)
+
+
        val p8 =  TicketInformationForCancelRequest()
-       val p9 =  CancelTicketRequest()
+        p8.deviceId = mAppHandler.androidID
+        p8.password = "12345"
+        p8.trxId = "PRB202004211353153450"
+        p8.username =  mAppHandler.userName
+        BusTicketRepository().getticketInformationForCancel(p8)
+
+
+
+        val p9 =  CancelTicketRequest()
+        p9.deviceId = mAppHandler.androidID
+        p9.password = "12345"
+        p9.trxId = "PRB202004211217214235"
+        p9.username =  mAppHandler.userName
+        p9.ticketNo = ""
+
+        //BusTicketRepository().getcancelTicket(p9)
+
 
 
 

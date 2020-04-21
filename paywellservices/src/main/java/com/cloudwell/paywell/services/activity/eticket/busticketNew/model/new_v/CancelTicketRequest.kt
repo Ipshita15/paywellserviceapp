@@ -5,17 +5,17 @@ import com.google.gson.annotations.SerializedName
 data class CancelTicketRequest(
 
 	@field:SerializedName("password")
-	val password: String? = null,
+	var password: String? = null,
 
 	@field:SerializedName("ticketNo")
-	val ticketNo: String? = null,
+	var ticketNo: String? = null,
 
 	@field:SerializedName("trxId")
-	val trxId: String? = null,
+	var trxId: String? = null,
 
 	@field:SerializedName("deviceId")
-	val deviceId: String? = null,
+	var deviceId: String? = null,
 
 	@field:SerializedName("username")
-	val username: String? = null
+	var username: String? = null
 )

@@ -9,6 +9,8 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.*
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.scheduledata.ScheduleDataItem
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.seatview.SeatviewResponse
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ConfirmTicketResponse
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm_cancel.ConfirmTicketCancelResponse
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
@@ -660,9 +662,14 @@ class BusTicketRepository() {
         val userName = mAppHandler!!.userName
         val data = SingleLiveEvent<String>()
 
-        ApiUtils.getAPIServiceV2().seatBlock(schedulePojo).enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+        ApiUtils.getAPIServiceV2().seatBlock(schedulePojo).enqueue(object : Callback<SeatBookResponse> {
+            override fun onResponse(call: Call<SeatBookResponse>, response: Response<SeatBookResponse>) {
                 if (response.isSuccessful) {
+
+                    val bookingResponse : SeatBookResponse = response.body()!!
+                    if (bookingResponse.equals(100)){
+
+                    }
 //
 //                    val request_response = response.body()
 //
@@ -674,7 +681,7 @@ class BusTicketRepository() {
                 }
             }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+            override fun onFailure(call: Call<SeatBookResponse>, t: Throwable) {
 
                 data.postValue(mContext?.getString(R.string.network_error))
 
@@ -691,11 +698,13 @@ class BusTicketRepository() {
         val userName = mAppHandler!!.userName
         val data = SingleLiveEvent<String>()
 
-        ApiUtils.getAPIServiceV2().cancelBookedTicket(schedulePojo).enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+        ApiUtils.getAPIServiceV2().cancelBookedTicket(schedulePojo).enqueue(object : Callback<CancelBookedTicketResponse> {
+            override fun onResponse(call: Call<CancelBookedTicketResponse>, response: Response<CancelBookedTicketResponse>) {
                 if (response.isSuccessful) {
 //
-//                    val request_response = response.body()
+                    val cancelResponse : CancelBookedTicketResponse = response.body()!!
+                    val msg : String? = cancelResponse.message
+                    //show this msg
 //
 //                    if (request_response?.statusCode == 200){
 //                        val citiesList: List<CitiesListItem?>? = request_response?.citiesList
@@ -705,7 +714,7 @@ class BusTicketRepository() {
                 }
             }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+            override fun onFailure(call: Call<CancelBookedTicketResponse>, t: Throwable) {
 
                 data.postValue(mContext?.getString(R.string.network_error))
 
@@ -722,9 +731,12 @@ class BusTicketRepository() {
         val userName = mAppHandler!!.userName
         val data = SingleLiveEvent<String>()
 
-        ApiUtils.getAPIServiceV2().confirmTicket(schedulePojo).enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+        ApiUtils.getAPIServiceV2().confirmTicket(schedulePojo).enqueue(object : Callback<ConfirmTicketResponse> {
+            override fun onResponse(call: Call<ConfirmTicketResponse>, response: Response<ConfirmTicketResponse>) {
                 if (response.isSuccessful) {
+
+                    val ticketResponse = response.body()
+
 //
 //                    val request_response = response.body()
 //
@@ -736,7 +748,7 @@ class BusTicketRepository() {
                 }
             }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+            override fun onFailure(call: Call<ConfirmTicketResponse>, t: Throwable) {
 
                 data.postValue(mContext?.getString(R.string.network_error))
 
@@ -753,9 +765,11 @@ class BusTicketRepository() {
         val userName = mAppHandler!!.userName
         val data = SingleLiveEvent<String>()
 
-        ApiUtils.getAPIServiceV2().ticketInformationForCancel(schedulePojo).enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+        ApiUtils.getAPIServiceV2().ticketInformationForCancel(schedulePojo).enqueue(object : Callback<ConfirmTicketCancelResponse> {
+            override fun onResponse(call: Call<ConfirmTicketCancelResponse>, response: Response<ConfirmTicketCancelResponse>) {
                 if (response.isSuccessful) {
+
+                    val ticketCancel = response.body()
 //
 //                    val request_response = response.body()
 //
@@ -767,7 +781,7 @@ class BusTicketRepository() {
                 }
             }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+            override fun onFailure(call: Call<ConfirmTicketCancelResponse>, t: Throwable) {
 
                 data.postValue(mContext?.getString(R.string.network_error))
 
