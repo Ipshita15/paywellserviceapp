@@ -10,8 +10,6 @@ import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 
-import androidx.appcompat.app.AppCompatDialog;
-
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.ReqInquiryModel;
@@ -20,14 +18,18 @@ import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
+import com.cloudwell.paywell.services.constant.IconConstant;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.StringConstant;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import androidx.appcompat.app.AppCompatDialog;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -79,9 +81,15 @@ public class DESCOPostpaidMainActivity extends BaseActivity implements CompoundB
             boolean booleanExtra = intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_DESCO_INQUERY, false);
             if (booleanExtra) {
                 showLimitPrompt();
+                addRecentUsedList();
             }
 
         }
+    }
+
+    private void addRecentUsedList() {
+        RecentUsedMenu recentUsedMenu= new RecentUsedMenu(StringConstant.KEY_home_utility_desco_postpaid_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, 0, 47);
+        addItemToRecentListInDB(recentUsedMenu);
     }
 
     public void onButtonClicker(View v) {
@@ -94,6 +102,7 @@ public class DESCOPostpaidMainActivity extends BaseActivity implements CompoundB
             case R.id.homeBtnInquiry:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_DESCO_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_BILL_PAY_INQUIRY);
                 showLimitPrompt();
+                addRecentUsedList();
                 break;
             default:
                 break;

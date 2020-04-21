@@ -8,27 +8,26 @@ import androidx.room.PrimaryKey
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 2020-04-15.
  */
 @Entity
-class RecentUsedMenu(@ColumnInfo(name = "name")
-                 var name: String,
+class RecentUsedMenu(
+
+                     @ColumnInfo(name = "name")
+                     var name: String,
 
                      @ColumnInfo(name = "category")
-                 var category: String,
+                     var category: String,
 
                      @ColumnInfo(name = "icon")
-                 var icon: String,
+                     var icon: String,
 
 
                      @ColumnInfo(name = "favorite_list_position")
-                 var favoriteListPosition: Int,
+                     var favoriteListPosition: Int,
 
                      @ColumnInfo(name = "alias_key")
-                 var alias: Int
+                     var alias: Int
 
-) {
-
-
+){
     @PrimaryKey(autoGenerate = true)
-    var id: Int = 0 // or foodId: Int? = null
-
-
+    @ColumnInfo(name = "Id")
+    var id: Int = 0
 }

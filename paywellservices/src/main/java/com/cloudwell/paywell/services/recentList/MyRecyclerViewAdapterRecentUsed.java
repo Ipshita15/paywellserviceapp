@@ -41,7 +41,7 @@ public class MyRecyclerViewAdapterRecentUsed extends RecyclerView.Adapter<MyRecy
     @Override
     @NonNull
     public MyRecyclerViewAdapterRecentUsed.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_favorite_item_home_page, parent, false);
+        View view = mInflater.inflate(R.layout.item_recent_used_list, parent, false);
         return new MyRecyclerViewAdapterRecentUsed.ItemViewHolder(view);
     }
 

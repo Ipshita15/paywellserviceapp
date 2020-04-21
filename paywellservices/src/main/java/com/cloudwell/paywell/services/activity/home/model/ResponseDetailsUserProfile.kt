@@ -19,6 +19,9 @@ class ResponseDetailsUserProfile {
     val mDisplayPictureCount: Int = 0
     @SerializedName("imageLink")
     val mImageLink: List<String>? = null
+
+    @SerializedName("imageAddress")
+    val imageAddress: List<String>? = null
     @SerializedName("isPhoneVerfied")
     val mIsPhoneVerfied: String? = null
     @SerializedName("mobile_number")

@@ -31,10 +31,14 @@ class MyFavoriteHelper {
             listOfData.add(FavoriteMenu(StringConstant.KEY_brilliant, StringConstant.KEY_topup, IconConstant.KEY_brilli_ant, MenuStatus.UnFavorite.text, 0, 2))
 
 //            // utility
-            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_desco, StringConstant.KEY_home_utility, IconConstant.KEY_ic_desco, MenuStatus.UnFavorite.text, 0, 3))
-            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_desco_pay, StringConstant.KEY_home_utility, IconConstant.KEY_ic_bill_pay, MenuStatus.Favourite.text, 4, 4))
-            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_desco_pay_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, MenuStatus.UnFavorite.text, 0, 5))
-//
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_desco, StringConstant.KEY_home_utility, IconConstant.KEY_ic_desco, MenuStatus.Favourite.text, 0, 3))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_desco_postpaid_string, StringConstant.KEY_home_utility, IconConstant.KEY_ic_desco__postpaid, MenuStatus.UnFavorite.text, 4, 46))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_desco_postpaid_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, MenuStatus.UnFavorite.text, 0, 47))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_desco_prepaid_string, StringConstant.KEY_home_utility, IconConstant.KEY_ic_desco_prepaid, MenuStatus.UnFavorite.text, 4, 48))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_desco_prepaid_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, MenuStatus.UnFavorite.text, 4, 49))
+
+
+
             listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_dpdc, StringConstant.KEY_home_utility, IconConstant.KEY_ic_dpdc, MenuStatus.UnFavorite.text, 0, 6))
             listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_dpdc_bill_pay, StringConstant.KEY_home_utility, IconConstant.KEY_ic_dpdc, MenuStatus.UnFavorite.text, 0, 7))
             listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_dpdc_bill_pay_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_dpdc, MenuStatus.UnFavorite.text, 0, 8))
@@ -86,6 +90,8 @@ class MyFavoriteHelper {
 
             listOfData.add(FavoriteMenu(StringConstant.KEY_home_refill_bank, StringConstant.KEY_home_refill_balance, IconConstant.KEY_ic_bank_deposit, MenuStatus.UnFavorite.text, 0, 43))
             listOfData.add(FavoriteMenu(StringConstant.KEY_home_refill_card, StringConstant.KEY_home_refill_balance, IconConstant.KEY_ic_visa_master_card, MenuStatus.UnFavorite.text, 0, 44))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_nagad_refill_msg, StringConstant.KEY_home_refill_balance, IconConstant.KEY_ic_nagad_main, MenuStatus.UnFavorite.text, 0, 50))
+
 
             listOfData.add(FavoriteMenu(StringConstant.KEY_home_product_ekshop, StringConstant.KEY_home_product_catalog, IconConstant.KEY_ic_ekshop, MenuStatus.UnFavorite.text, 0, 45))
 
@@ -94,7 +100,7 @@ class MyFavoriteHelper {
                         .mFavoriteMenuDab()
                         .insert(listOfData)
 
-                update(context)
+                renoveItem(context)
 
             }
         }
@@ -103,38 +109,40 @@ class MyFavoriteHelper {
             // ek-shop added
             val listOfData = mutableListOf<FavoriteMenu>()
 
-            listOfData.add(FavoriteMenu(StringConstant.KEY_home_product_ekshop, StringConstant.KEY_home_product_catalog, IconConstant.KEY_ic_ekshop, MenuStatus.UnFavorite.text, 0, 45))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_desco_postpaid_string, StringConstant.KEY_home_utility, IconConstant.KEY_ic_desco__postpaid, MenuStatus.UnFavorite.text, 0, 46))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_desco_postpaid_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, MenuStatus.UnFavorite.text, 0, 47))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_desco_prepaid_string, StringConstant.KEY_home_utility, IconConstant.KEY_ic_desco_prepaid, MenuStatus.UnFavorite.text, 0, 48))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_desco_prepaid_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, MenuStatus.UnFavorite.text, 0, 49))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_nagad_refill_msg, StringConstant.KEY_home_refill_balance, IconConstant.KEY_ic_nagad_main, MenuStatus.UnFavorite.text, 0, 50))
+
+
             AsyncTask.execute {
                 DatabaseClient.getInstance(applicationContext).getAppDatabase()
                         .mFavoriteMenuDab()
                         .insert(listOfData)
 
-                update(applicationContext)
+                renoveItem(applicationContext)
 
             }
 
         }
 
-        private fun update(context: Context) {
+        private fun renoveItem(context: Context) {
             val removeUnFavoriteList = mutableListOf<FavoriteMenu>()
             removeUnFavoriteList.add(FavoriteMenu(StringConstant.KEY_home_product_ajker_deal, StringConstant.KEY_home_product_catalog, IconConstant.KEY_ic_ajker_deal, MenuStatus.UnFavorite.text, 0, 37))
             removeUnFavoriteList.add(FavoriteMenu(StringConstant.KEY_home_product_pw_wholesale, StringConstant.KEY_home_product_catalog, IconConstant.KEY_ic_wholesale, MenuStatus.UnFavorite.text, 0, 38))
 
-           removeUnFavoriteList.forEach {
+            removeUnFavoriteList.add(FavoriteMenu(StringConstant.KEY_home_product_pw_wholesale, StringConstant.KEY_home_product_catalog, IconConstant.KEY_ic_wholesale, MenuStatus.UnFavorite.text, 0, 4))
+            removeUnFavoriteList.add(FavoriteMenu(StringConstant.KEY_home_product_pw_wholesale, StringConstant.KEY_home_product_catalog, IconConstant.KEY_ic_wholesale, MenuStatus.UnFavorite.text, 0, 5))
+
+
+            removeUnFavoriteList.forEach {
                DatabaseClient.getInstance(context).getAppDatabase()
                        .mFavoriteMenuDab()
                        .delete(it.alias)
            }
 
-            val removeFavoriteList = mutableListOf<FavoriteMenu>()
-            removeFavoriteList.add(FavoriteMenu(StringConstant.KEY_home_product_ajker_deal, StringConstant.KEY_home_product_catalog, IconConstant.KEY_ic_ajker_deal, MenuStatus.UnFavorite.text, 0, 37))
-            removeFavoriteList.add(FavoriteMenu(StringConstant.KEY_home_product_pw_wholesale, StringConstant.KEY_home_product_catalog, IconConstant.KEY_ic_wholesale, MenuStatus.UnFavorite.text, 0, 38))
 
-            removeFavoriteList.forEach {
-                DatabaseClient.getInstance(context).getAppDatabase()
-                        .mFavoriteMenuDab()
-                        .delete(it.alias)
-            }
 
         }
     }

@@ -179,6 +179,7 @@ public class AppHandler {
     public static final String KEY_ANDROID_ID= "KEY_ANDROID_ID";
     public static final String KEY_setUserNeedToChangePassword= "KEY_setUserNeedToChangePassword";
     public static final String KEY_savePreviousRequestObject= "savePreviousRequestObject";
+    public static final String KEY_ImageAddressArrayJson= "KEY_ImageAddressArrayJson";
 
 
     public AppHandler() {
@@ -845,6 +846,14 @@ public class AppHandler {
     }
     public boolean getUserNeedToChnagePassword(){
         return mPref.getBoolean(KEY_setUserNeedToChangePassword, false);
+    }
+
+    public void setImageAddress(String json) {
+        editor.putString(KEY_ImageAddressArrayJson, json);
+    }
+
+    public String getImageAddress() {
+        return mPref.getString(KEY_ImageAddressArrayJson, "");
     }
 
     public static class MyDialogFragment extends DialogFragment {

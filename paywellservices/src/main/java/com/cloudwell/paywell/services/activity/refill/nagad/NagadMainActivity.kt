@@ -18,8 +18,11 @@ import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.Nag
 import com.cloudwell.paywell.services.activity.utility.AllUrl
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.constant.IconConstant
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.ConnectionDetector
+import com.cloudwell.paywell.services.utils.StringConstant
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
@@ -116,6 +119,15 @@ class NagadMainActivity : BaseActivity(), View.OnClickListener, CompoundButton.O
         nagadQRCode.setOnClickListener(this)
         nagadRefillLog.setOnClickListener(this)
 
+        addRecentUsedList()
+
+
+    }
+
+
+    private fun addRecentUsedList() {
+        val recentUsedMenu = RecentUsedMenu(StringConstant.KEY_home_nagad_refill_msg, StringConstant.KEY_home_refill_balance, IconConstant.KEY_ic_nagad_main, 0, 50)
+        addItemToRecentListInDB(recentUsedMenu)
     }
 
     // for language font :

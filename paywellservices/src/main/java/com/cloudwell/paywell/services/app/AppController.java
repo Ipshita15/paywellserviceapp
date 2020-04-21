@@ -109,7 +109,7 @@ public class AppController extends Application {
 
     private void addDefaultRecentList() {
 
-        RecentUsedStackSet.getInstance().add(new RecentUsedMenu(StringConstant.KEY_home_utility_desco_pay, StringConstant.KEY_home_utility, IconConstant.KEY_ic_bill_pay, 4, 4));
+        RecentUsedStackSet.getInstance().add(new RecentUsedMenu(StringConstant.KEY_home_utility_desco, StringConstant.KEY_home_utility, IconConstant.KEY_ic_bill_pay, 4, 4));
         RecentUsedStackSet.getInstance().add(new RecentUsedMenu(StringConstant.KEY_home_utility_ivac_free_pay_favorite, StringConstant.KEY_home_utility, IconConstant.KEY_ic_bill_pay, 3, 25));
         RecentUsedStackSet.getInstance().add(new RecentUsedMenu(StringConstant.KEY_home_utility_pollibiddut_bill_pay_favorite, StringConstant.KEY_home_utility, IconConstant.KEY_ic_polli_biddut, 2, 11));
         RecentUsedStackSet.getInstance().add(new RecentUsedMenu(StringConstant.KEY_mobileOperator, StringConstant.KEY_topup, IconConstant.KEY_all_operator, 1, 1));
@@ -163,14 +163,14 @@ public class AppController extends Application {
                 MyFavoriteHelper.Companion.insertData(getApplicationContext());
                 AppStorageBox.put(getApplicationContext(), AppStorageBox.Key.USER_USED_NOTIFICAITON_FLOW, false);
 
-                setDefaultRecentList();
+                //setDefaultRecentList();
 
                 break;
             case FIRST_TIME_VERSION:
                 AppStorageBox.put(getApplicationContext(), AppStorageBox.Key.USER_USED_NOTIFICAITON_FLOW, false);
                 MyFavoriteHelper.Companion.updateData(getApplicationContext());
 
-                setDefaultRecentList();
+               // setDefaultRecentList();
 
                 break;
         }

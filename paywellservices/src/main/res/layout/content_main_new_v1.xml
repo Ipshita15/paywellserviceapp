@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_marginTop="-10dp"
+    android:layout_marginBottom="40dp"
     android:background="@drawable/round_white_layout_bg_v1"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -27,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:context=".activity.MainActivity"
-                tools:showIn="@layout/app_bar_main">
+                tools:showIn="@layout/app_bar_main_v1">
 
                 <LinearLayout
                     android:id="@+id/rootLayout"
@@ -295,31 +296,34 @@
 <!--                                android:layout_width="match_parent"-->
 <!--                                android:layout_height="wrap_content">-->
 
-                                <LinearLayout
-                                    android:layout_marginTop="8dp"
+                            <LinearLayout
+                                android:id="@+id/linearLayoutRecentUsedList"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:orientation="vertical"
+                                android:visibility="visible">
+
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="16dp"
+                                    android:text="বেশী ব্যবহৃত সার্ভিস সমুহ-"
+                                    android:textColor="#59595c"
+                                    android:textSize="16sp" />
+
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/rvRecent"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:orientation="vertical">
+                                    android:layout_gravity="center_horizontal"
+                                    android:background="#f6f6f6"
+                                    tools:listitem="@layout/item_recent_used_list"
 
-
-                                    <TextView
-                                        android:layout_margin="16dp"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textColor="#59595c"
-                                        android:textSize="16sp"
-                                        android:text="বেশী ব্যবহৃত সার্ভিস সমুহ-" />
-
-
-                                    <androidx.recyclerview.widget.RecyclerView
-                                        android:background="#f6f6f6"
-                                        android:id="@+id/rvRecent"
-                                        tools:listitem="@layout/recyclerview_item"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-
-                                        />
-                                </LinearLayout>
+                                    />
+                            </LinearLayout>
 <!--                            </androidx.core.widget.NestedScrollView>-->
 
 
