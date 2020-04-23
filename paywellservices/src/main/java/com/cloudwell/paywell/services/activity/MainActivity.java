@@ -94,6 +94,8 @@ import com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliBill
 import com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliMainActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBBillPayNewActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.BannerDetailsDialog;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.CommingSoonDialog;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus.PBBillStatusActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.MobileNumberChangeActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.registion.PBRegistrationActivity;
@@ -315,6 +317,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
         setUpBottomSheet();
+
+
+
 
 
     }
@@ -1057,6 +1062,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         viewPager.hideIndicators();
         viewPager.setLoopSlides(true);
 
+
+        String[] bannerDetails = new Gson().fromJson(mAppHandler.getBannerDetails(), String[].class);
+
         viewPager.setOnSlideClickListener(new OnSlideClickListener() {
 
             @Override
@@ -1094,11 +1102,27 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         WebViewActivity.TAG_LINK = link;
                         startActivity(new Intent(MainActivity.this, WebViewActivity.class));
                     }
+
+                    String bannerDetail = bannerDetails[position];
+                    String image = imageUrl[position];
+
+                    if (!bannerDetail.equals("")){
+                        showBannerDetails(image, bannerDetail);
+                    }
+
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
+    }
+
+    private void showBannerDetails(String image, String bannerDetail) {
+
+        BannerDetailsDialog bannerDetailsDialog = new BannerDetailsDialog(image, bannerDetail);
+        bannerDetailsDialog.show(getSupportFragmentManager(), "bannerDetailsDialog");
+
     }
 
     private void checkPayWellBalance() {
@@ -1424,6 +1448,21 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.homeBtnFee:
 
                 startActivity(new Intent(this, FeeMainActivity.class));
+
+                break;
+
+
+            case R.id.homeBtnInsurance:
+
+                CommingSoonDialog commingSoonDialog = new CommingSoonDialog();
+                commingSoonDialog.show(getSupportFragmentManager(), "commingSoonDialog");
+
+                break;
+
+            case R.id.homeBtnEntertainment:
+
+                CommingSoonDialog commingSoonDialog1 = new CommingSoonDialog();
+                commingSoonDialog1.show(getSupportFragmentManager(), "commingSoonDialog");
 
                 break;
 

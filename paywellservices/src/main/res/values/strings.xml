@@ -682,6 +682,9 @@
     <string name="reg_dialog">Registration Result</string>
     <string name="reg_dialog_msg">Registration Successfully Done </string>
     <string name="bongo">Bongo</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="title_message_comming_soon">Service Information</string>
+    <string name="text_comming_soon">Coming soon....</string>
 
 
 </resources>

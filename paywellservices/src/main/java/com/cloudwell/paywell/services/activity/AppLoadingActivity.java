@@ -414,6 +414,10 @@ public class AppLoadingActivity extends BaseActivity {
                                     mAppHandler.setImageAddress(json);
 
 
+                                    String jsonDetails = new Gson().toJson(details.getDetails());
+                                    mAppHandler.setBannerDetails(jsonDetails);
+
+
 
                                     Intent i = new Intent(AppLoadingActivity.this, MainActivity .class);
                                     startActivity(i);
