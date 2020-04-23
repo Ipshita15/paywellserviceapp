@@ -1,15 +1,11 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew.search;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,14 +17,24 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.CityName;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.BusLunCityRequest;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.CitiesListItem;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.search.view.ICitySerach;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.search.viewModel.CitySearchViewModel;
+import com.cloudwell.paywell.services.app.AppController;
+import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.app.storage.AppStorageBox;
-import com.cloudwell.paywell.services.database.DatabaseClient;
+import com.google.gson.Gson;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,7 +42,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * Created by YASIN on 24,June,2019
  * Email: yasinenubd5@gmail.com
  */
-public class FullScreenDialogBus extends DialogFragment implements View.OnClickListener {
+public class FullScreenDialogBus extends DialogFragment implements View.OnClickListener, ICitySerach {
 
     private static final int TRIGGER_AUTO_COMPLETE = 100;
     private static final long AUTO_COMPLETE_DELAY = 300;
@@ -46,11 +52,12 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
 
     OnCitySet onCitySet;
     private String toOrFrom;
-    private Handler handler;
     private EditText citySearchET;
     private TableLayout predefineDataTL;
-    static ArrayList<String> cityList = new ArrayList<>();
     private CustomAdapter customAdapter;
+
+    CitySearchViewModel viewMode;
+    List<CitiesListItem> cityList;
 
 
     @Override
@@ -81,6 +88,7 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
         kolkataCityTV.setOnClickListener(this);
         chittagong.setOnClickListener(this);
         sylhetCityTV.setOnClickListener(this);
+
         toolbar.setNavigationIcon(R.drawable.close);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +96,8 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
                 dismiss();
             }
         });
+
+
         toolbar.setBackgroundColor(getResources().getColor(R.color.color_tab_background_bus));
         toOrFrom = getArguments().getString(BusCitySearchActivity.FullSCREEN_DIALOG_HEADER, "Search Transport");
         toolbar.setTitle(toOrFrom);
@@ -96,6 +106,14 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
         cityRecyclerView.setLayoutManager(gridLayoutManager);
 
 
+        actionSearch();
+        initViewModel();
+
+
+        return view;
+    }
+
+    private void actionSearch() {
         citySearchET.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -104,13 +122,12 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                customAdapter.clear();
+
                 if (charSequence.length() > 0) {
                     predefineDataTL.setVisibility(View.INVISIBLE);
                     cityRecyclerView.setVisibility(View.VISIBLE);
-                    handler.removeMessages(TRIGGER_AUTO_COMPLETE);
-                    handler.sendEmptyMessageDelayed(TRIGGER_AUTO_COMPLETE,
-                            AUTO_COMPLETE_DELAY);
+                    customAdapter.getFilter().filter(charSequence);
+
                 } else {
                     predefineDataTL.setVisibility(View.VISIBLE);
                     cityRecyclerView.setVisibility(View.INVISIBLE);
@@ -121,46 +138,58 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
             public void afterTextChanged(Editable editable) {
             }
         });
+    }
 
-        handler = new Handler(new Handler.Callback() {
-            @Override
-            public boolean handleMessage(Message msg) {
-                if (msg.what == TRIGGER_AUTO_COMPLETE) {
-                    if (!TextUtils.isEmpty(citySearchET.getText().toString())) {
-                        DatabaseAccessAsyncTask databaseAccessAsyncTask = new DatabaseAccessAsyncTask(getActivity(), cityRecyclerView);
-                        databaseAccessAsyncTask.execute(citySearchET.getText().toString());
-                    }
-                }
-                return false;
-            }
-        });
+    private void initViewModel() {
+         viewMode = ViewModelProviders.of(this).get(CitySearchViewModel.class);
+        viewMode.setIbusTransportListView(this);
 
-        customAdapter = new CustomAdapter(getActivity(), cityList, onCitySet, toOrFrom, this);
+        AppHandler mAppHandler =  AppHandler.getmInstance(getContext().getApplicationContext());
+
+        BusLunCityRequest pojo = new BusLunCityRequest();
+        pojo.setDeviceId(mAppHandler.getAndroidID());
+        pojo.setUsername(mAppHandler.getUserName());
+
+        if (AppController.isBusTicket){
+            pojo.setTransportType("1");
+        }else {
+            pojo.setTransportType("0");
+        }
+
+
+
+       viewMode.getbusAndLaunchCities(pojo);
+
+
+    }
+
+    @Override
+    public void generateCitylist(@Nullable List<CitiesListItem> it) {
+        Log.e("", "");
+
+        this.cityList = it;
+        customAdapter = new CustomAdapter(getActivity(), it, onCitySet, toOrFrom, this);
         cityRecyclerView.setAdapter(customAdapter);
-
-
-        return view;
     }
 
-    private class DatabaseAccessAsyncTask extends AsyncTask<String, Void, String> {
-        private Context context;
-
-        DatabaseAccessAsyncTask(Context context, RecyclerView recyclerView) {
-            this.context = context;
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-            cityList = (ArrayList<String>) DatabaseClient.getInstance(context).getAppDatabase().mBusTicketDab().searchAvailableCityForBus();
-            return strings[0];
-        }
-
-        @Override
-        protected void onPostExecute(String searchString) {
-            super.onPostExecute(searchString);
-            customAdapter.getFilter().filter(searchString);
-        }
+    @Override
+    public void showProgress() {
+        BusCitySearchActivity activity = (BusCitySearchActivity) getActivity();
+        activity.showProgress();
     }
+
+    @Override
+    public void hiddenProgress() {
+        BusCitySearchActivity activity = (BusCitySearchActivity) getActivity();
+        activity.dismissProgressDialog();
+
+    }
+
+    @Override
+    public void showNoInternetConnectionFound() {
+
+    }
+
 
     @Override
     public void onStart() {
@@ -175,63 +204,72 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
 
     @Override
     public void onClick(View view) {
+        CitiesListItem citiesListItem;
+
         switch (view.getId()) {
             case R.id.dhakaCityTV:
-                onCitySet.setCityData(CityName.DHAKA_CITY, toOrFrom);
-                setCityDataToSP(toOrFrom, CityName.DHAKA_CITY);
+
+                citiesListItem = new CitiesListItem( "44", CityName.DHAKA_CITY);
+                onCitySet.setCityData(citiesListItem, toOrFrom);
+                setCityDataToSP(toOrFrom, citiesListItem);
                 dismiss();
                 break;
             case R.id.coxBazarCityTV:
-                onCitySet.setCityData(CityName.COXBAZAR_CITY, toOrFrom);
-                setCityDataToSP(toOrFrom, CityName.COXBAZAR_CITY);
-                dismiss();
+                 citiesListItem = new CitiesListItem( "42", CityName.COXBAZAR_CITY);
+                 onCitySet.setCityData(citiesListItem, toOrFrom);
+                 setCityDataToSP(toOrFrom, citiesListItem);
+                 dismiss();
                 break;
             case R.id.benapoleCityTV:
-                onCitySet.setCityData(CityName.BENAPOLE_CITY, toOrFrom);
-                setCityDataToSP(toOrFrom, CityName.BENAPOLE_CITY);
+                citiesListItem = new CitiesListItem( "22", CityName.BENAPOLE_CITY);
+                onCitySet.setCityData(citiesListItem, toOrFrom);
+                setCityDataToSP(toOrFrom, citiesListItem);
                 dismiss();
                 break;
             case R.id.kolkataCityTV:
-                onCitySet.setCityData(CityName.KOLKATA_CITY, toOrFrom);
-                setCityDataToSP(toOrFrom, CityName.KOLKATA_CITY);
+                citiesListItem = new CitiesListItem( "82", CityName.KOLKATA_CITY);
+                onCitySet.setCityData(citiesListItem, toOrFrom);
+                setCityDataToSP(toOrFrom, citiesListItem);
                 dismiss();
                 break;
             case R.id.chittagongCityTV:
-                onCitySet.setCityData(CityName.CHITTAGONG_CITY, toOrFrom);
-                setCityDataToSP(toOrFrom, CityName.CHITTAGONG_CITY);
+                citiesListItem = new CitiesListItem( "38", CityName.CHITTAGONG_CITY);
+                onCitySet.setCityData(citiesListItem, toOrFrom);
+                setCityDataToSP(toOrFrom, citiesListItem);
                 dismiss();
                 break;
             case R.id.sylhetCityTV:
-                onCitySet.setCityData(CityName.SYLHET_CITY, toOrFrom);
-                setCityDataToSP(toOrFrom, CityName.SYLHET_CITY);
+                citiesListItem = new CitiesListItem( "168", CityName.SYLHET_CITY);
+                onCitySet.setCityData(citiesListItem, toOrFrom);
+                setCityDataToSP(toOrFrom, citiesListItem);
                 dismiss();
                 break;
         }
     }
 
-    private void setCityDataToSP(String toOrFrom, String city) {
+    private void setCityDataToSP(String toOrFrom, CitiesListItem city) {
         if (toOrFrom.equals(BusCitySearchActivity.FROM_STRING)) {
-            AppStorageBox.put(getActivity(), AppStorageBox.Key.BUS_LEAVING_FROM_CITY, city);
+            AppStorageBox.put(getActivity(), AppStorageBox.Key.BUS_LEAVING_FROM_CITY, new Gson().toJson(city));
         } else {
-            AppStorageBox.put(getActivity(), AppStorageBox.Key.BUS_GOING_TO_CITY, city);
+            AppStorageBox.put(getActivity(), AppStorageBox.Key.BUS_GOING_TO_CITY, new Gson().toJson(city));
         }
     }
 
     public interface OnCitySet {
-        void setCityData(String cityName, String toOrFrom);
+        void setCityData(CitiesListItem citiesListItem, String toOrFrom);
     }
 
-    public static class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> implements Filterable {
+    public  class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> implements Filterable {
 
         Context context;
-        ArrayList<String> cityArrayList;
+        ArrayList<CitiesListItem> cityArrayList;
         OnCitySet onCitySet;
         String toOrFrom;
         FullScreenDialogBus fullScreenDialogBus;
 
-        CustomAdapter(Context context, List<String> cityArrayList, OnCitySet onCitySet, String toOrFrom, FullScreenDialogBus fullScreenDialogBus) {
+        CustomAdapter(Context context, List<CitiesListItem> cityArrayList, OnCitySet onCitySet, String toOrFrom, FullScreenDialogBus fullScreenDialogBus) {
             this.context = context;
-            this.cityArrayList = (ArrayList<String>) cityArrayList;
+            this.cityArrayList = (ArrayList<CitiesListItem>) cityArrayList;
             this.onCitySet = onCitySet;
             this.toOrFrom = toOrFrom;
             this.fullScreenDialogBus = fullScreenDialogBus;
@@ -246,12 +284,13 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-            holder.textView.setText(cityArrayList.get(position));
+
+            holder.textView.setText(String.format("%s", cityArrayList.get(position).getCitiesName()));
             holder.textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onCitySet.setCityData(holder.textView.getText().toString(), toOrFrom);
-                    setCityDataToSP(toOrFrom, holder.textView.getText().toString());
+                    onCitySet.setCityData(cityArrayList.get(position), toOrFrom);
+                    setCityDataToSP(toOrFrom, cityArrayList.get(position));
                     fullScreenDialogBus.dismiss();
                 }
             });
@@ -286,20 +325,20 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
                     FilterResults filterResults = new FilterResults();
                     if (charSequence != null) {
                         String filterString = charSequence.toString().toLowerCase();
-                        final List<String> list = cityList;
+                        final List<CitiesListItem> list = cityList;
                         int count = list.size();
-                        final ArrayList<String> nlist = new ArrayList<String>();
+                        final ArrayList<CitiesListItem> tempList = new ArrayList<CitiesListItem>();
 
                         String filterableString;
 
                         for (int i = 0; i < count; i++) {
-                            filterableString = list.get(i);
+                            filterableString = list.get(i).getCitiesName();
                             if (filterableString.toLowerCase().startsWith(filterString.toLowerCase())) {
-                                nlist.add(filterableString);
+                                tempList.add(list.get(i));
                             }
                         }
-                        filterResults.values = nlist;
-                        filterResults.count = nlist.size();
+                        filterResults.values = tempList;
+                        filterResults.count = tempList.size();
 
                     }
                     return filterResults;
@@ -311,7 +350,7 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
                         notifyDataSetChanged();
                     }
                     if (filterResults.values != null) {
-                        cityArrayList = (ArrayList<String>) filterResults.values;
+                        cityArrayList = (ArrayList<CitiesListItem>) filterResults.values;
                     } else {
                         cityArrayList = null;
                     }
@@ -320,13 +359,7 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
             };
         }
 
-        private void setCityDataToSP(String toOrFrom, String city) {
-            if (toOrFrom.equals(BusCitySearchActivity.FROM_STRING)) {
-                AppStorageBox.put(context, AppStorageBox.Key.BUS_LEAVING_FROM_CITY, city);
-            } else {
-                AppStorageBox.put(context, AppStorageBox.Key.BUS_GOING_TO_CITY, city);
-            }
-        }
+
     }
 
 }

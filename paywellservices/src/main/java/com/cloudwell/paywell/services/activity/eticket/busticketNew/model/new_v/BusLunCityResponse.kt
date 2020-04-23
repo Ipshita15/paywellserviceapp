@@ -7,7 +7,7 @@ class BusLunCityResponse(
 	val statusCode: Int? = null,
 
 	@field:SerializedName("citiesList")
-	val citiesList: List<CitiesListItem?>? = null,
+	val citiesList: List<CitiesListItem> = mutableListOf(),
 
 	@field:SerializedName("message")
 	val message: String? = null

@@ -89,13 +89,22 @@ public class ETicketMainActivity extends AppCompatActivity {
 
         switch (v.getId()) {
             case R.id.et_shop_visit:
+                AppController.isBusTicket = true;
                 AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_BUS_TICKET);
                 startActivity(new Intent(this, BusTicketMenuActivity.class));
                 break;
             case R.id.et_ek_shop_report:
+
                 AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_AIR_TICKET);
                 startActivity(new Intent(this, AirTicketMenuActivity.class));
                 break;
+
+            case R.id.et_launch:
+                AppController.isBusTicket = false;
+                AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_Launch);
+                startActivity(new Intent(this, BusTicketMenuActivity.class));
+                break;
+
             default:
                 break;
         }

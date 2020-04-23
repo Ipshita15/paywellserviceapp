@@ -15,9 +15,11 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransport
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.viewModel.BusTransportViewModel
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.CitiesListItem
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.search.FullScreenDialogBus.OnCitySet
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_bus_city_search_new.*
 import kotlinx.android.synthetic.main.bus_advance_setttings.*
 import java.text.DateFormatSymbols
@@ -26,6 +28,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransportListView, OnItemSelectedListener {
+
+    private var fromCitiesListItem: CitiesListItem? = null
+    private var toCitiesListItem: CitiesListItem? = null
 
     private var fromString: String? = null
     private var toString: String? = null
@@ -73,26 +78,19 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
         })
         fromString = FROM_STRING
         toString = TO_STRING
-        val fromData = AppStorageBox.get(this, AppStorageBox.Key.BUS_LEAVING_FROM_CITY) as String
-        val toData = AppStorageBox.get(this, AppStorageBox.Key.BUS_GOING_TO_CITY) as String
-        if (fromData != null && !fromData.isEmpty() && fromData != "null") {
-            busFromCityTS.setText(fromData)
-            fromString = fromData
-        } else {
-            busFromCityTS.setText(fromString)
-        }
+
+
+
+
         busToCityTS.setFactory(ViewSwitcher.ViewFactory {
             val switcherTextView = TextView(applicationContext)
             switcherTextView.textSize = 18f
             switcherTextView.setTextColor(Color.BLACK)
             switcherTextView
         })
-        if (toData != null && !toData.isEmpty() && toData != "null") {
-            busToCityTS.setText(toData)
-            toString = toData
-        } else {
-            busToCityTS.setText(toString)
-        }
+
+
+
         val inAnim = AnimationUtils.loadAnimation(this,
                 android.R.anim.fade_in)
         val outAnim = AnimationUtils.loadAnimation(this,
@@ -103,40 +101,66 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
         busFromCityTS.setOutAnimation(outAnim)
         busToCityTS.setInAnimation(inAnim)
         busToCityTS.setOutAnimation(outAnim)
-
+//
         textSwitchIV.setOnClickListener(View.OnClickListener {
             busToCityTS.setText(fromString)
             busFromCityTS.setText(toString)
+
+
+
+            fromCitiesListItem.let {
+                TO_STRING.let { it1 -> fromCitiesListItem?.let { it2 -> setCityDataToSP(it1, it2) } };
+            }
+
+            toCitiesListItem.let {
+                FROM_STRING.let { it1 -> toCitiesListItem?.let { it2 -> setCityDataToSP(it1, it2) } };
+            }
+
+
+
+
             val from = toString
             toString = fromString
             fromString = from
-            boardingPoint
+
+
+
+            val tempFromCitiesListItem = fromCitiesListItem
+            fromCitiesListItem = toCitiesListItem
+
+            toCitiesListItem = tempFromCitiesListItem;
+
         })
-        btn_search.setOnClickListener(View.OnClickListener {
-            val from = (busFromCityTS.getCurrentView() as TextView).text.toString()
-            val to = (busToCityTS.getCurrentView() as TextView).text.toString()
-            if (!from.isEmpty() && from != FROM_STRING && !to.isEmpty() && to != TO_STRING) {
-                if (from != TO_STRING && to != FROM_STRING) {
-                    if (from == to) {
-                        Toast.makeText(this@BusCitySearchActivity, applicationContext.resources.getString(R.string.bus_validation_message_location), Toast.LENGTH_SHORT).show()
-                        return@OnClickListener
-                    }
-                    //                        if (boothList.getSelectedItem().toString().equals("All")) {
-//                            openTripListActivity(from, to, "All");
-//                        } else {
-//                            openTripListActivity(from, to, boothList.getSelectedItem().toString());
-//                        }
-                }
-            } else {
-                Toast.makeText(this@BusCitySearchActivity, applicationContext.resources.getString(R.string.bus_validation_message), Toast.LENGTH_SHORT).show()
-            }
-        })
+
+        setOldData()
+
+
+//        btn_search.setOnClickListener(View.OnClickListener {
+//            val from = (busFromCityTS.getCurrentView() as TextView).text.toString()
+//            val to = (busToCityTS.getCurrentView() as TextView).text.toString()
+//            if (!from.isEmpty() && from != FROM_STRING && !to.isEmpty() && to != TO_STRING) {
+//                if (from != TO_STRING && to != FROM_STRING) {
+//                    if (from == to) {
+//                        Toast.makeText(this@BusCitySearchActivity, applicationContext.resources.getString(R.string.bus_validation_message_location), Toast.LENGTH_SHORT).show()
+//                        return@OnClickListener
+//                    }
+//                    //                        if (boothList.getSelectedItem().toString().equals("All")) {
+////                            openTripListActivity(from, to, "All");
+////                        } else {
+////                            openTripListActivity(from, to, boothList.getSelectedItem().toString());
+////                        }
+//                }
+//            } else {
+//                Toast.makeText(this@BusCitySearchActivity, applicationContext.resources.getString(R.string.bus_validation_message), Toast.LENGTH_SHORT).show()
+//            }
+//        })
         fromLL.setOnClickListener(View.OnClickListener {
             val dialog = FullScreenDialogBus()
             val b = Bundle()
             b.putString(FullSCREEN_DIALOG_HEADER, FROM_STRING)
             dialog.arguments = b
-            val ft = fragmentManager.beginTransaction()
+
+            val ft = supportFragmentManager.beginTransaction()
             dialog.show(ft, FullScreenDialogBus.TAG)
         })
         toLL.setOnClickListener(View.OnClickListener { view: View? ->
@@ -144,12 +168,12 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
             val b = Bundle()
             b.putString(FullSCREEN_DIALOG_HEADER, TO_STRING)
             dialog.arguments = b
-            val ft = fragmentManager.beginTransaction()
+            val ft = supportFragmentManager.beginTransaction()
             dialog.show(ft, FullScreenDialogBus.TAG)
         })
-
-        initViewModel()
-
+//
+//        initViewModel()
+//
         radioGroupTripType.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.radioButtonOneWay -> {
@@ -258,6 +282,29 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
 
     }
 
+    private fun setOldData() {
+        val fromDataSP = AppStorageBox.get(this, AppStorageBox.Key.BUS_LEAVING_FROM_CITY) as? String
+        fromDataSP.let {
+            fromCitiesListItem = Gson().fromJson(it, CitiesListItem::class.java)
+
+            if (fromCitiesListItem != null) {
+                busFromCityTS.setText(fromCitiesListItem?.citiesName)
+                fromString = fromCitiesListItem?.citiesName
+
+            }
+        }
+
+        val toDataSP = AppStorageBox.get(this, AppStorageBox.Key.BUS_GOING_TO_CITY) as? String
+        toDataSP.let {
+            toCitiesListItem = Gson().fromJson(toDataSP, CitiesListItem::class.java)
+
+            if (toCitiesListItem != null) {
+                busToCityTS.setText(toCitiesListItem?.citiesName)
+                toString = toCitiesListItem?.citiesName
+            }
+        }
+    }
+
     //    private void tryToOldBoardingPointSeletion() {
 //        Integer o = (Integer) AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.BOARDING_POGISTION);
 //        if (o != null) {
@@ -281,13 +328,15 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
         startActivity(intent)
     }
 
-    override fun setCityData(cityName: String, toOrFrom: String) {
+    override fun setCityData(citiesListItem: CitiesListItem, toOrFrom: String) {
         if (toOrFrom == TO_STRING) {
-            busToCityTS!!.setText(cityName)
-            toString = cityName
+            busToCityTS.setText(citiesListItem.citiesName)
+            toString = citiesListItem.citiesName
+            toCitiesListItem  = citiesListItem
         } else if (toOrFrom == FROM_STRING) {
-            busFromCityTS!!.setText(cityName)
-            fromString = cityName
+            busFromCityTS.setText(citiesListItem.citiesName)
+            fromString = citiesListItem.citiesName
+            fromCitiesListItem  = citiesListItem
         } else {
             Toast.makeText(this@BusCitySearchActivity, resources.getString(R.string.network_error), Toast.LENGTH_SHORT).show()
         }
@@ -352,9 +401,22 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
+
+    private fun setCityDataToSP(toOrFrom: String, city: CitiesListItem) {
+        if (toOrFrom == FROM_STRING) {
+            AppStorageBox.put(applicationContext, AppStorageBox.Key.BUS_LEAVING_FROM_CITY, Gson().toJson(city))
+        } else {
+            AppStorageBox.put(applicationContext, AppStorageBox.Key.BUS_GOING_TO_CITY, Gson().toJson(city))
+        }
+    }
+
+
     companion object {
         const val FullSCREEN_DIALOG_HEADER = "header"
         const val TO_STRING = "Going To"
         const val FROM_STRING = "Leaving From"
     }
+
+
+
 }

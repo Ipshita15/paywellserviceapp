@@ -49,6 +49,7 @@ public class AppController extends Application {
 
     private static final String APONA_LOHIT = "fonts/AponaLohit.ttf";
     private static final String OXYGEN_LIGHT = "fonts/Oxygen-Light.ttf";
+    public static boolean isBusTicket;
     private static AppController mInstance;
     private static SharedPreferences preference;
     public static HttpClient client;

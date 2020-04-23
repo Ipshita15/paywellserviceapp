@@ -4,8 +4,8 @@ import com.google.gson.annotations.SerializedName
 class CitiesListItem(
 
 	@field:SerializedName("cities_id")
-	val citiesId: String? = null,
+	val citiesId: String = "",
 
 	@field:SerializedName("cities_name")
-	val citiesName: String? = null
+	val citiesName: String = ""
 )

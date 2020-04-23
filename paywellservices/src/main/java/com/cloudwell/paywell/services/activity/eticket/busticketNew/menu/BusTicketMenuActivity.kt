@@ -15,7 +15,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.B
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTicketRepository.BusTicketRepository
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransactionLog.BusTransactionLogActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.*
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.transportSelect.TransportSelectActivity
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.search.BusCitySearchActivity
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.constant.IconConstant
@@ -64,7 +64,7 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
 
 
 
-        callnewApiTest()
+        //callnewApiTest()
 
 
         cd = ConnectionDetector(AppController.getContext())
@@ -199,7 +199,7 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btViewTricket -> {
-                startActivity(Intent(applicationContext, TransportSelectActivity::class.java))
+                startActivity(Intent(applicationContext, BusCitySearchActivity::class.java))
             }
 
 

@@ -18,9 +18,7 @@ import com.cloudwell.paywell.services.database.DatabaseClient
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.BusCalculationHelper
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
-import com.cloudwell.paywell.services.utils.algorithem.AES.key
 import com.google.gson.Gson
-import com.google.gson.JsonArray
 import com.orhanobut.logger.Logger
 import okhttp3.ResponseBody
 import org.jetbrains.anko.doAsync
@@ -470,12 +468,11 @@ class BusTicketRepository() {
 
     //New Version Api call
 
-    fun getbusAndLaunchCities(busLunCityPojo : BusLunCityRequest): String{
+    fun getbusAndLaunchCities(busLunCityPojo : BusLunCityRequest): SingleLiveEvent<List<CitiesListItem>> {
 
         mAppHandler = AppHandler.getmInstance(mContext)
 
-        val userName = mAppHandler!!.userName
-        val data = SingleLiveEvent<String>()
+        val data = SingleLiveEvent<List<CitiesListItem>>()
 
         ApiUtils.getAPIServiceV2().getbusAndLaunchCities(busLunCityPojo).enqueue(object : Callback<BusLunCityResponse> {
             override fun onResponse(call: Call<BusLunCityResponse>, response: Response<BusLunCityResponse>) {
@@ -484,8 +481,8 @@ class BusTicketRepository() {
                     val request_response = response.body()
 
                     if (request_response?.statusCode == 200){
-                        val citiesList: List<CitiesListItem?>? = request_response?.citiesList
-                        data.postValue(citiesList.toString())
+                        val citiesList: List<CitiesListItem>? = request_response.citiesList
+                        data.postValue(citiesList!!)
                     }
 
                 }
@@ -493,11 +490,11 @@ class BusTicketRepository() {
 
             override fun onFailure(call: Call<BusLunCityResponse>, t: Throwable) {
 
-                data.postValue(mContext?.getString(R.string.network_error))
+                data.postValue(null);
 
             }
         })
-        return data.toString()
+        return data
 
     }
 
