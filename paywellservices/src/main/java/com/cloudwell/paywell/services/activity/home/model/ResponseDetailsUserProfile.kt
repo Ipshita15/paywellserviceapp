@@ -22,6 +22,13 @@ class ResponseDetailsUserProfile {
 
     @SerializedName("imageAddress")
     val imageAddress: List<String>? = null
+
+
+    @SerializedName("details")
+    val details: List<String>? = null
+
+
+
     @SerializedName("isPhoneVerfied")
     val mIsPhoneVerfied: String? = null
     @SerializedName("mobile_number")

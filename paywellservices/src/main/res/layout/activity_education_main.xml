@@ -25,7 +25,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:orientation="horizontal"
-                android:weightSum="3">
+                android:weightSum="1">
 
 <!--                <LinearLayout-->
 <!--                    android:layout_width="0dp"-->
@@ -38,20 +38,6 @@
                     android:layout_weight="1"
                     android:drawableTop="@drawable/bbc_icon"
                     android:text="@string/bbc_janala"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
-
-                <Button
-                    android:id="@+id/bongo"
-                    style="@style/HomeButtonNew"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/bbc_icon"
-                    android:text="@string/bongo"
                     android:textAllCaps="false"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
 

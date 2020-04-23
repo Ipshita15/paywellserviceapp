@@ -180,6 +180,7 @@ public class AppHandler {
     public static final String KEY_setUserNeedToChangePassword= "KEY_setUserNeedToChangePassword";
     public static final String KEY_savePreviousRequestObject= "savePreviousRequestObject";
     public static final String KEY_ImageAddressArrayJson= "KEY_ImageAddressArrayJson";
+    public static final String KEY_BannerDetails= "BannerDetails";
 
 
     public AppHandler() {
@@ -854,6 +855,15 @@ public class AppHandler {
 
     public String getImageAddress() {
         return mPref.getString(KEY_ImageAddressArrayJson, "");
+    }
+
+    public void setBannerDetails(String json) {
+        editor.putString(KEY_BannerDetails, json);
+    }
+
+
+  public String getBannerDetails() {
+        return mPref.getString(KEY_BannerDetails, "");
     }
 
     public static class MyDialogFragment extends DialogFragment {

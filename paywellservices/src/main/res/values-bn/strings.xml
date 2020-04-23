@@ -506,7 +506,7 @@
     <string name="hit_email">Email</string>
     <string name="email_address_already_exists">Email address already exists</string>
     <string name="please_select_atleast_one_email_address">Please select atleast one email address</string>
-    <string name="message">Message</string>
+    <string name="message">বার্তা</string>
     <string name="please_ensure_the_id_is_valid_for_at_least_6_months_after_the_date_of_departure">Please ensure the ID is valid for at least 6 months after the date of departure.</string>
     <string name="booking_instructions_for_children_infants">Booking instructions for children/infants</string>
     <string name="earnings">Earnings</string>
@@ -680,5 +680,9 @@
     <string name="reg_dialog">রেজিস্ট্রেশন রেজাল্ট</string>
     <string name="reg_dialog_msg">রেজিস্ট্রেশন সফলভাবে সম্পন্ন হয়েছে। </string>
     <string name="bongo">বংগ</string>
+    <string name="cancel_text">বাতিল</string>
+    <string name="title_message_comming_soon">সার্ভিস সংক্রান্ত তথ্য</string>
+    <string name="text_comming_soon">শিঘ্রয়ই আসছে সার্ভিসটি ....</string>
+
 
 </resources>
