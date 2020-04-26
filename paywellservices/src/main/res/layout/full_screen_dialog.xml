@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                     xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                     android:layout_width="match_parent"
-                                                     android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -22,17 +23,13 @@
         android:background="#d1e5e1"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <include layout="@layout/tab_background_bus"/>
+        <include layout="@layout/tab_background_bus" />
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_margin="5dp"
             android:orientation="vertical">
 
@@ -57,23 +54,32 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ivClose"/>
+                app:layout_constraintTop_toBottomOf="@+id/ivClose" />
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/relativeLayout4"
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                             android:id="@+id/preDefinedDataTL"
-                             android:layout_width="fill_parent"
-                             android:layout_height="wrap_content"
-                             android:layout_margin="10dp"
-                             android:background="@color/white"
-                             android:padding="10dp"
-                             android:visibility="visible">
+                <TableLayout
+                    android:id="@+id/preDefinedDataTL"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@color/white"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:layout_conversion_absoluteHeight="122dp"
+                    tools:layout_conversion_absoluteWidth="382dp">
 
                     <TableRow
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="fill_parent">
 
                         <TextView
@@ -84,7 +90,7 @@
                             android:paddingBottom="10dp"
                             android:text="@string/popular_city"
                             android:textColor="@color/color_tab_background_bus"
-                            android:textSize="18sp"/>
+                            android:textSize="18sp" />
 
                     </TableRow>
 
@@ -100,7 +106,7 @@
                             android:gravity="center"
                             android:padding="5dp"
                             android:text="Dhaka"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black" />
 
                         <TextView
                             android:id="@+id/coxBazarCityTV"
@@ -112,7 +118,7 @@
                             android:gravity="center"
                             android:padding="5dp"
                             android:text="Coxs Bazar"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black" />
 
                         <TextView
                             android:id="@+id/benapoleCityTV"
@@ -124,7 +130,7 @@
                             android:gravity="center"
                             android:padding="5dp"
                             android:text="Benapole"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black" />
                     </TableRow>
 
                     <TableRow>
@@ -139,7 +145,7 @@
                             android:gravity="center"
                             android:padding="5dp"
                             android:text="Kolkata"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black" />
 
                         <TextView
                             android:id="@+id/chittagongCityTV"
@@ -151,7 +157,7 @@
                             android:gravity="center"
                             android:padding="5dp"
                             android:text="Chittagong"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black" />
 
                         <TextView
                             android:id="@+id/sylhetCityTV"
@@ -163,21 +169,47 @@
                             android:gravity="center"
                             android:padding="5dp"
                             android:text="Sylhet"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black" />
                     </TableRow>
 
 
                 </TableLayout>
 
+
+                <TextView
+                    android:id="@+id/textView63"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="All City"
+                    android:textColor="@color/color_tab_background_bus"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/preDefinedDataTL" />
+
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/cityRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="10dp"
-                    android:visibility="gone">
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView63"
+                    tools:layout_conversion_absoluteHeight="597dp"
+                    tools:layout_conversion_absoluteWidth="382dp">
 
                 </androidx.recyclerview.widget.RecyclerView>
-            </RelativeLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
 

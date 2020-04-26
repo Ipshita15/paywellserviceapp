@@ -44,6 +44,8 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bus_city_search_new)
+
+
         setToolbar(getString(R.string.search_transport_ticket), applicationContext.resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
 
 
@@ -103,36 +105,17 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
         busToCityTS.setOutAnimation(outAnim)
 //
         textSwitchIV.setOnClickListener(View.OnClickListener {
-            busToCityTS.setText(fromString)
-            busFromCityTS.setText(toString)
 
-
-
-            fromCitiesListItem.let {
-                TO_STRING.let { it1 -> fromCitiesListItem?.let { it2 -> setCityDataToSP(it1, it2) } };
-            }
-
-            toCitiesListItem.let {
-                FROM_STRING.let { it1 -> toCitiesListItem?.let { it2 -> setCityDataToSP(it1, it2) } };
-            }
-
-
-
-
-            val from = toString
-            toString = fromString
-            fromString = from
-
-
-
-            val tempFromCitiesListItem = fromCitiesListItem
-            fromCitiesListItem = toCitiesListItem
-
-            toCitiesListItem = tempFromCitiesListItem;
+              switchFromAndTo()
 
         })
 
-        setOldData()
+        if (AppController.isBusTicket){
+            setOldDataForBus()
+        } else{
+            setOldDataForLaunch()
+        }
+
 
 
 //        btn_search.setOnClickListener(View.OnClickListener {
@@ -282,7 +265,78 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
 
     }
 
-    private fun setOldData() {
+    private fun switchLaunchTicketLication() {
+
+        busToCityTS.setText(fromString)
+        busFromCityTS.setText(toString)
+
+        fromCitiesListItem.let {
+            TO_STRING.let { it1 -> fromCitiesListItem?.let { it2 -> setCityDataToSP(it1, it2) } };
+        }
+
+        toCitiesListItem.let {
+            FROM_STRING.let { it1 -> toCitiesListItem?.let { it2 -> setCityDataToSP(it1, it2) } };
+        }
+
+        val from = toString
+        toString = fromString
+        fromString = from
+
+
+        val tempFromCitiesListItem = fromCitiesListItem
+        fromCitiesListItem = toCitiesListItem
+
+        toCitiesListItem = tempFromCitiesListItem
+    }
+
+    private fun switchFromAndTo() {
+        busToCityTS.setText(fromString)
+        busFromCityTS.setText(toString)
+
+        fromCitiesListItem.let {
+            TO_STRING.let { it1 -> fromCitiesListItem?.let { it2 -> setCityDataToSP(it1, it2) } };
+        }
+
+        toCitiesListItem.let {
+            FROM_STRING.let { it1 -> toCitiesListItem?.let { it2 -> setCityDataToSP(it1, it2) } };
+        }
+
+        val from = toString
+        toString = fromString
+        fromString = from
+
+
+        val tempFromCitiesListItem = fromCitiesListItem
+        fromCitiesListItem = toCitiesListItem
+
+        toCitiesListItem = tempFromCitiesListItem
+    }
+
+    private fun setOldDataForLaunch() {
+        val fromDataSP = AppStorageBox.get(this, AppStorageBox.Key.LAUNCH_LEAVING_FROM_CITY) as? String
+        fromDataSP.let {
+            fromCitiesListItem = Gson().fromJson(it, CitiesListItem::class.java)
+
+            if (fromCitiesListItem != null) {
+                busFromCityTS.setText(fromCitiesListItem?.citiesName)
+                fromString = fromCitiesListItem?.citiesName
+
+            }
+        }
+
+        val toDataSP = AppStorageBox.get(this, AppStorageBox.Key.LAUNCH_GOING_TO_CITY) as? String
+        toDataSP.let {
+            toCitiesListItem = Gson().fromJson(toDataSP, CitiesListItem::class.java)
+
+            if (toCitiesListItem != null) {
+                busToCityTS.setText(toCitiesListItem?.citiesName)
+                toString = toCitiesListItem?.citiesName
+            }
+        }
+
+    }
+
+    private fun setOldDataForBus() {
         val fromDataSP = AppStorageBox.get(this, AppStorageBox.Key.BUS_LEAVING_FROM_CITY) as? String
         fromDataSP.let {
             fromCitiesListItem = Gson().fromJson(it, CitiesListItem::class.java)
@@ -403,11 +457,21 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
 
 
     private fun setCityDataToSP(toOrFrom: String, city: CitiesListItem) {
-        if (toOrFrom == FROM_STRING) {
-            AppStorageBox.put(applicationContext, AppStorageBox.Key.BUS_LEAVING_FROM_CITY, Gson().toJson(city))
-        } else {
-            AppStorageBox.put(applicationContext, AppStorageBox.Key.BUS_GOING_TO_CITY, Gson().toJson(city))
+        if (AppController.isBusTicket){
+            if (toOrFrom == FROM_STRING) {
+                AppStorageBox.put(applicationContext, AppStorageBox.Key.BUS_LEAVING_FROM_CITY, Gson().toJson(city))
+            } else {
+                AppStorageBox.put(applicationContext, AppStorageBox.Key.BUS_GOING_TO_CITY, Gson().toJson(city))
+            }
+        }else{
+            if (toOrFrom == FROM_STRING) {
+                AppStorageBox.put(applicationContext, AppStorageBox.Key.LAUNCH_LEAVING_FROM_CITY, Gson().toJson(city))
+            } else {
+                AppStorageBox.put(applicationContext, AppStorageBox.Key.LAUNCH_GOING_TO_CITY, Gson().toJson(city))
+            }
         }
+
+
     }
 
 

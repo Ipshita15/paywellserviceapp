@@ -45,10 +45,10 @@
     <color name="slycalendar_defSelectedColor">#5aac40</color>
     <color name="slycalendar_defSelectedTextColor">#ffffff</color>
 
-    <color name="bus_ticket_status_color">#00a89b</color>
-    <color name="bus_ticket_toolbar_title_text_color">#268472</color>
-    <color name="bus_ticket_toolbar_backgroud_color">#a3d3c5</color>
-    <color name="color_tab_background_bus">#a3d3c5</color>
+    <color name="bus_ticket_status_color">#00001a</color>
+    <color name="bus_ticket_toolbar_title_text_color">#ffffff</color>
+    <color name="bus_ticket_toolbar_backgroud_color">#00203f</color>
+    <color name="color_tab_background_bus">#00203f</color>
     <color name="bus_button_color">#00a89b</color>
     <color name="bus_action_menu_text_color">#268472</color>
     <color name="button_color">#189d49</color>

@@ -6,18 +6,18 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:clickable="true"
+        android:id="@+id/cityNameTV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/cityNameTV"
-        android:textSize="17sp"
+        android:background="@drawable/border_available"
+        android:clickable="true"
+        android:gravity="center"
         android:hint="City Name"
         android:padding="5dp"
-        android:gravity="center"
         android:textColor="@color/black"
-        android:background="@drawable/border_available"
+        android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

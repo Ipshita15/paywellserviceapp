@@ -102,12 +102,19 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
         toOrFrom = getArguments().getString(BusCitySearchActivity.FullSCREEN_DIALOG_HEADER, "Search Transport");
         toolbar.setTitle(toOrFrom);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         cityRecyclerView.setLayoutManager(gridLayoutManager);
 
 
         actionSearch();
         initViewModel();
+
+        if (AppController.isBusTicket){
+            predefineDataTL.setVisibility(View.VISIBLE);
+        }else {
+            predefineDataTL.setVisibility(View.GONE);
+        }
+
 
 
         return view;
@@ -124,13 +131,19 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
                 if (charSequence.length() > 0) {
-                    predefineDataTL.setVisibility(View.INVISIBLE);
+                    predefineDataTL.setVisibility(View.GONE);
                     cityRecyclerView.setVisibility(View.VISIBLE);
-                    customAdapter.getFilter().filter(charSequence);
+
+                    if (customAdapter != null){
+                        customAdapter.getFilter().filter(charSequence);
+                    }
 
                 } else {
                     predefineDataTL.setVisibility(View.VISIBLE);
-                    cityRecyclerView.setVisibility(View.INVISIBLE);
+                    cityRecyclerView.setVisibility(View.VISIBLE);
+
+                    setAdapter(cityList);
+
                 }
             }
 
@@ -168,20 +181,24 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
         Log.e("", "");
 
         this.cityList = it;
+        setAdapter(it);
+    }
+
+    private void setAdapter(@Nullable List<CitiesListItem> it) {
         customAdapter = new CustomAdapter(getActivity(), it, onCitySet, toOrFrom, this);
         cityRecyclerView.setAdapter(customAdapter);
     }
 
     @Override
     public void showProgress() {
-        BusCitySearchActivity activity = (BusCitySearchActivity) getActivity();
-        activity.showProgress();
+//        BusCitySearchActivity activity = (BusCitySearchActivity) getActivity();
+//        activity.showProgress();
     }
 
     @Override
     public void hiddenProgress() {
-        BusCitySearchActivity activity = (BusCitySearchActivity) getActivity();
-        activity.dismissProgressDialog();
+//        BusCitySearchActivity activity = (BusCitySearchActivity) getActivity();
+//        activity.dismissProgressDialog();
 
     }
 
@@ -248,11 +265,22 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
     }
 
     private void setCityDataToSP(String toOrFrom, CitiesListItem city) {
-        if (toOrFrom.equals(BusCitySearchActivity.FROM_STRING)) {
-            AppStorageBox.put(getActivity(), AppStorageBox.Key.BUS_LEAVING_FROM_CITY, new Gson().toJson(city));
-        } else {
-            AppStorageBox.put(getActivity(), AppStorageBox.Key.BUS_GOING_TO_CITY, new Gson().toJson(city));
+        if (AppController.isBusTicket){
+            if (toOrFrom.equals(BusCitySearchActivity.FROM_STRING)) {
+                AppStorageBox.put(getActivity(), AppStorageBox.Key.BUS_LEAVING_FROM_CITY, new Gson().toJson(city));
+            } else {
+                AppStorageBox.put(getActivity(), AppStorageBox.Key.BUS_GOING_TO_CITY, new Gson().toJson(city));
+            }
+        }else {
+            if (toOrFrom.equals(BusCitySearchActivity.FROM_STRING)) {
+                AppStorageBox.put(getActivity(), AppStorageBox.Key.LAUNCH_LEAVING_FROM_CITY, new Gson().toJson(city));
+            } else {
+                AppStorageBox.put(getActivity(), AppStorageBox.Key.LAUNCH_GOING_TO_CITY, new Gson().toJson(city));
+            }
         }
+
+
+
     }
 
     public interface OnCitySet {

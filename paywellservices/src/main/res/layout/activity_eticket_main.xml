@@ -85,7 +85,8 @@
             <Button
                 android:id="@+id/et_launch"
                 style="@style/HomeButtonNew"
-                android:drawableTop="@drawable/ic_bus_ticket"
+                android:drawableTop="@drawable/launch_ticket"
+                android:drawablePadding="-2dp"
                 android:onClick="onButtonClicker"
                 android:text="@string/launch"
                 android:textAllCaps="false"

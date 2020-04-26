@@ -56,7 +56,13 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bus_tricket_menu)
 
-        setToolbar(getString(R.string.home_eticket_bus), resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
+        if (AppController.isBusTicket){
+            setToolbar(getString(R.string.home_eticket_bus), resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
+
+        }else{
+            setToolbar(getString(R.string.launch), resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
+
+        }
 
 
         btViewTricket.setOnClickListener(this)
