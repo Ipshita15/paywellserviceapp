@@ -683,6 +683,19 @@
     <string name="cancel_text">বাতিল</string>
     <string name="title_message_comming_soon">সার্ভিস সংক্রান্ত তথ্য</string>
     <string name="text_comming_soon">শিঘ্রয়ই আসছে সার্ভিসটি ....</string>
+    <string name="bongo_bd">বঙ্গ বিডি</string>
+    <string name="bongo_sub">সাবস্ক্রিপসন</string>
+    <string name="bongo_sub_count">সাবস্ক্রিপসন কাউন্ট</string>
+    <string name="bongo_trx">ট্রানজেকশন লগ</string>
+    <string name="bongo_select_package">প্যাকেজ সিলেক্ট করুন</string>
+    <string name="bongo_pay_text">পেমেন্ট পরিশোধ করুন</string>
+    <string name="bongo_des1">জনপ্রিয় নাটক, টিভি সিরিজ, মুভি এবং মিউজিক ভিডিও</string>
+    <string name="bongo_des2">কোন অতিরিক্ত বিজ্ঞাপন এবং অন্য ঝামেলা নেই</string>
+    <string name="bongo_des3">নিরবচ্ছিন্ন এবং সম্পুর্ণ অরিজিনাল ভিডিও</string>
+    <string name="password">পিন*</string>
+    <string name="subscription_success">সাবস্ক্রিপশন সফল ভাবে সম্পন্ন হয়েছে</string>
+    <string name="bongo_counter">"সাবস্ক্রিপসন সংখ্যা "</string>
+
 
 
 </resources>

@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.education.Bongo.model
+package com.cloudwell.paywell.services.activity.entertainment.Bongo.model
 
 import com.google.gson.annotations.SerializedName
 

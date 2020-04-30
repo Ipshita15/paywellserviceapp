@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.education.Bongo.model
+package com.cloudwell.paywell.services.activity.entertainment.Bongo.model
 
 import com.google.gson.annotations.SerializedName
 
@@ -8,7 +8,7 @@ data class BongoResponsePojo(
 	val message: String? = null,
 
 	@field:SerializedName("packages")
-	val packages: List<PackagesItem?>? = null,
+	val packages: ArrayList<PackagesItem?>? = null,
 
 	@field:SerializedName("status")
 	val status: Int? = null

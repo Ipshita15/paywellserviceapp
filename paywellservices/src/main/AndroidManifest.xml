@@ -77,6 +77,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
+        <activity android:name=".activity.entertainment.Bongo.BongoCounterActivity"></activity>
+        <activity android:name=".activity.entertainment.Bongo.PackegeSelectedActivity" />
+        <activity android:name=".activity.entertainment.Bongo.BongoSubscribActivity" />
+        <activity android:name=".activity.entertainment.EntertainmentMainActivity" />
         <activity
             android:name=".activity.education.BBC.BBCstatusCheckActivity"
             android:parentActivityName=".activity.education.BBC.BBC_Main_Activity"
@@ -108,10 +112,7 @@
             android:name=".activity.bank_info_update.BankINFO_MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activity.education.Bongo.BongoMainActivity"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".activity.education.EducationMainActivity"/>
+        <activity android:name=".activity.entertainment.Bongo.BongoMainActivity" />
         <activity
             android:name=".activity.home.HomeActivity"
             android:screenOrientation="portrait"
@@ -126,7 +127,7 @@
         <activity
             android:name=".activity.home.OtpActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/FullScreenv2" />
         <activity
             android:name=".activity.utility.electricity.desco.DescoMainActivity"
             android:parentActivityName=".activity.utility.UtilityMainActivity"
@@ -1112,7 +1113,6 @@
         <activity
             android:name=".activity.utility.electricity.desco.prepaid.DescoPrepaidMainActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.fee.FeeMainActivity"
             android:screenOrientation="portrait" />

@@ -45,6 +45,7 @@ import com.cloudwell.paywell.services.activity.about.AboutActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.chat.ChatActivity;
 import com.cloudwell.paywell.services.activity.education.EducationMainActivity;
+import com.cloudwell.paywell.services.activity.entertainment.EntertainmentMainActivity;
 import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity;
@@ -152,6 +153,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -261,7 +263,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     ObjectAnimator animation;
     private BottomSheetBehavior sheetBehavior;
     LinearLayout layoutBottomSheet;
-
 
     @SuppressWarnings("deprecation")
     @Override
@@ -1461,8 +1462,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             case R.id.homeBtnEntertainment:
 
-                CommingSoonDialog commingSoonDialog1 = new CommingSoonDialog();
-                commingSoonDialog1.show(getSupportFragmentManager(), "commingSoonDialog");
+                startActivity(new Intent(this, EntertainmentMainActivity.class));
 
                 break;
 

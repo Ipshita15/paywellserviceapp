@@ -318,7 +318,7 @@
 
     <string name="app_next_version_no">vten_seventeen</string>
 
-   <!-- privacy -->
+    <!-- privacy -->
 
 
     <!-- privacy -->
@@ -685,6 +685,18 @@
     <string name="cancel_text">Cancel</string>
     <string name="title_message_comming_soon">Service Information</string>
     <string name="text_comming_soon">Coming soon....</string>
+    <string name="bongo_bd">Bongo BD</string>
+    <string name="bongo_sub">Subscription</string>
+    <string name="bongo_sub_count">Subscription Count</string>
+    <string name="bongo_trx">Transaction Log</string>
+    <string name="bongo_select_package">Select the package</string>
+    <string name="bongo_pay_text">Make the payment</string>
+    <string name="bongo_des1">Popular dramas, TV series, movies and music videos</string>
+    <string name="bongo_des2">No extra advertising and no other hassle</string>
+    <string name="bongo_des3">Uninterrupted and complete original video</string>
+    <string name="password">Pin*</string>
+    <string name="subscription_success">Subscription successful</string>
+    <string name="bongo_counter">"Subscription Count "</string>
 
 
 </resources>

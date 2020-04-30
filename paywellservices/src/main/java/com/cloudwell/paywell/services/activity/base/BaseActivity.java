@@ -26,6 +26,8 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.RecentUsedStackSet;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.ErrorCallBackMsgDialog;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.ErrorMsgDialog;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.SuccessDialog;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.successInterface;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
@@ -128,6 +130,14 @@ public class BaseActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(title);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        }
+    }
+
+    public void hideToolbar() {
+        assert getSupportActionBar() != null;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
 
         }
     }
@@ -401,6 +411,15 @@ public class BaseActivity extends AppCompatActivity {
         errorMsgDialog.show(getSupportFragmentManager(), "oTPVerificationMsgDialog");
     }
 
+    public void showSuccessDialog(String title, String message){
+        SuccessDialog successDialog = new SuccessDialog(title, message, new successInterface() {
+            @Override
+            public void onclick() {
+                finish();
+            }
+        });
+    }
+
 
     public void addItemToRecentListInDB(RecentUsedMenu recentUsedMenu) {
         RecentUsedStackSet.getInstance().add(recentUsedMenu);
@@ -434,5 +453,6 @@ public class BaseActivity extends AppCompatActivity {
             }
         }.execute();
     }
+
 
 }

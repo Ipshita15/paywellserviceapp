@@ -13,11 +13,14 @@ import com.cloudwell.paywell.services.activity.bank_info_update.spineer.BankResp
 import com.cloudwell.paywell.services.activity.bank_info_update.spineer.GetBankPojo;
 import com.cloudwell.paywell.services.activity.education.BBC.model.StatusCheckResponsePojo;
 import com.cloudwell.paywell.services.activity.education.BBC.model.TransactionResponsePOjo;
-import com.cloudwell.paywell.services.activity.education.Bongo.model.BongoActivePkgPojo;
-import com.cloudwell.paywell.services.activity.education.Bongo.model.BongoEnquiryRqstPojo;
-import com.cloudwell.paywell.services.activity.education.Bongo.model.BongoPkgListReqPojo;
-import com.cloudwell.paywell.services.activity.education.Bongo.model.BongoResponsePojo;
-import com.cloudwell.paywell.services.activity.education.Bongo.model.BongoSubscriptionPojo;
+import com.cloudwell.paywell.services.activity.entertainment.Bongo.model.BongoActivePkgPojo;
+import com.cloudwell.paywell.services.activity.entertainment.Bongo.model.BongoActiveResponse;
+import com.cloudwell.paywell.services.activity.entertainment.Bongo.model.BongoBannerResponse;
+import com.cloudwell.paywell.services.activity.entertainment.Bongo.model.BongoEnquiryRqstPojo;
+import com.cloudwell.paywell.services.activity.entertainment.Bongo.model.BongoPkgListReqPojo;
+import com.cloudwell.paywell.services.activity.entertainment.Bongo.model.BongoResponsePojo;
+import com.cloudwell.paywell.services.activity.entertainment.Bongo.model.BongoSubscriptionPojo;
+import com.cloudwell.paywell.services.activity.entertainment.Bongo.model.CountResponse;
 import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.Nagadv2requestPojo;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.ReposeAirSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch;
@@ -695,15 +698,17 @@ public interface APIService {
     Call<ResponseBody> removeBankInfo(@Body RemoveReqPojo removeReqPojo);
 
     //Bongo
+    @POST("Utility/Bongo/getBannerList")
+    Call<BongoBannerResponse> getBannerList(@Body BongoPkgListReqPojo bongoPkgListReqPojo);
 
     @POST("Utility/Bongo/getPackageList")
     Call<BongoResponsePojo> getBongoPackgeList(@Body BongoPkgListReqPojo bongoPkgListReqPojo);
 
     @POST("Utility/Bongo/activatePackage")
-    Call<ResponseBody> getBongoActivePackgeList(@Body BongoActivePkgPojo bongoActivePkgPojo);
+    Call<BongoActiveResponse> getBongoActivePackgeList(@Body BongoActivePkgPojo bongoActivePkgPojo);
 
     @POST("Utility/Bongo/getSubscriptionCount")
-    Call<ResponseBody> getBongoSubscriptionCount(@Body BongoSubscriptionPojo bongoSubscriptionPojo);
+    Call<CountResponse> getBongoSubscriptionCount(@Body BongoSubscriptionPojo bongoSubscriptionPojo);
 
     @POST("Utility/Bongo/getEnquiryData")
     Call<ResponseBody> getBongoEnquiryData(@Body BongoEnquiryRqstPojo bongoEnquiryRqstPojo);

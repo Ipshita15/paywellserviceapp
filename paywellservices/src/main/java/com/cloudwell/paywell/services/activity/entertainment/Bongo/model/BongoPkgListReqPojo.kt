@@ -1,6 +1,5 @@
-package com.cloudwell.paywell.services.activity.education.Bongo.model
+package com.cloudwell.paywell.services.activity.entertainment.Bongo.model
 
-import com.cloudwell.paywell.services.activity.education.BBC.model.Data
 import com.google.gson.annotations.SerializedName
 
 /**
