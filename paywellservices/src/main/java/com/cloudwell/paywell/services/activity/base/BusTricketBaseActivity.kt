@@ -9,6 +9,7 @@ import android.text.style.ForegroundColorSpan
 import androidx.appcompat.app.ActionBar
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.newBase.MVVMBaseActivity
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.BusErrorMsgDialog
 import com.cloudwell.paywell.services.app.AppHandler
 import java.util.*
 
@@ -79,5 +80,14 @@ open class BusTricketBaseActivity : MVVMBaseActivity() {
 
     }
 
+
+
+   fun showBusTicketErrorDialog(message: String){
+
+       val errorMsgDialog =  BusErrorMsgDialog(message)
+       errorMsgDialog.show(supportFragmentManager, "oTPVerificationMsgDialog")
+
+
+   }
 
 }

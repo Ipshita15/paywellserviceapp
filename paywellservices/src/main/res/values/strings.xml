@@ -318,7 +318,7 @@
 
     <string name="app_next_version_no">vten_seventeen</string>
 
-   <!-- privacy -->
+    <!-- privacy -->
 
 
     <!-- privacy -->
@@ -683,6 +683,11 @@
     <string name="reg_dialog_msg">Registration Successfully Done </string>
     <string name="bongo">Bongo</string>
     <string name="launch">Launch Ticket</string>
+    <string name="text_bus_from_error">You must type the city from you want to travel</string>
+    <string name="text_bus_to_error">You must type the destination city you want to travel</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

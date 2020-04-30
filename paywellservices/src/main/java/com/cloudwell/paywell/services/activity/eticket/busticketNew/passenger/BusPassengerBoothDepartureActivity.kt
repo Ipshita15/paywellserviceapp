@@ -24,6 +24,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.Bus
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.MyClickListener
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.RequestScheduledata
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.constant.AllConstant
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
@@ -37,6 +38,15 @@ import org.json.JSONObject
 class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTransportListView {
     override fun setBoardingPoint(allBoothNameInfo: MutableSet<String>) {
 
+
+    }
+
+    override fun saveRequestScheduledata(p: RequestScheduledata) {
+
+
+    }
+
+    override fun saveExtraCharge(double: Double) {
 
     }
 
@@ -86,9 +96,7 @@ class BusPassengerBoothDepartureActivity : BusTricketBaseActivity(), IbusTranspo
 
     }
 
-    override fun setAdapter(it1: List<TripScheduleInfoAndBusSchedule>) {
 
-    }
 
     override fun showProgress() {
         showProgressDialog()

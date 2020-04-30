@@ -11,11 +11,15 @@ import android.widget.AdapterView.OnItemSelectedListener
 import androidx.lifecycle.ViewModelProviders
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.BusTransportListActivity
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.BusHosttActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.viewModel.BusTransportViewModel
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResPaymentBookingAPI
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatCheckBookAPI
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Transport
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.CitiesListItem
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.RequestScheduledata
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.search.FullScreenDialogBus.OnCitySet
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
@@ -26,6 +30,7 @@ import java.text.DateFormatSymbols
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransportListView, OnItemSelectedListener {
 
@@ -103,7 +108,7 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
         busFromCityTS.setOutAnimation(outAnim)
         busToCityTS.setInAnimation(inAnim)
         busToCityTS.setOutAnimation(outAnim)
-//
+
         textSwitchIV.setOnClickListener(View.OnClickListener {
 
               switchFromAndTo()
@@ -118,25 +123,13 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
 
 
 
-//        btn_search.setOnClickListener(View.OnClickListener {
-//            val from = (busFromCityTS.getCurrentView() as TextView).text.toString()
-//            val to = (busToCityTS.getCurrentView() as TextView).text.toString()
-//            if (!from.isEmpty() && from != FROM_STRING && !to.isEmpty() && to != TO_STRING) {
-//                if (from != TO_STRING && to != FROM_STRING) {
-//                    if (from == to) {
-//                        Toast.makeText(this@BusCitySearchActivity, applicationContext.resources.getString(R.string.bus_validation_message_location), Toast.LENGTH_SHORT).show()
-//                        return@OnClickListener
-//                    }
-//                    //                        if (boothList.getSelectedItem().toString().equals("All")) {
-////                            openTripListActivity(from, to, "All");
-////                        } else {
-////                            openTripListActivity(from, to, boothList.getSelectedItem().toString());
-////                        }
-//                }
-//            } else {
-//                Toast.makeText(this@BusCitySearchActivity, applicationContext.resources.getString(R.string.bus_validation_message), Toast.LENGTH_SHORT).show()
-//            }
-//        })
+        btn_search.setOnClickListener(View.OnClickListener {
+
+
+            if (HandleSearch()) return@OnClickListener
+
+
+        })
         fromLL.setOnClickListener(View.OnClickListener {
             val dialog = FullScreenDialogBus()
             val b = Bundle()
@@ -154,9 +147,7 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
             val ft = supportFragmentManager.beginTransaction()
             dialog.show(ft, FullScreenDialogBus.TAG)
         })
-//
-//        initViewModel()
-//
+
         radioGroupTripType.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.radioButtonOneWay -> {
@@ -214,7 +205,7 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
 
         llJourneyDate.setOnClickListener {
 
-            val datePickerDialog = DatePickerDialog(this@BusCitySearchActivity, R.style.DialogTheme, DatePickerDialog.OnDateSetListener { datePicker, i, i1, i2 ->
+            val datePickerDialog = DatePickerDialog(this@BusCitySearchActivity, R.style.DialogThemeBus, DatePickerDialog.OnDateSetListener { datePicker, i, i1, i2 ->
                 myCalender.set(i, i1, i2)
                 dateTV.setText(myCalender.get(Calendar.DAY_OF_MONTH).toString())
                 monthTV.setText(DateFormatSymbols().months[myCalender.get(Calendar.MONTH)])
@@ -225,12 +216,10 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
                     myCalender.get(Calendar.DAY_OF_MONTH))
             datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 10000
             try {
-                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                val validateDate = AppStorageBox.get(applicationContext, AppStorageBox.Key.BUS_VALIDATE_DATE) as String
-                var date: Date? = null
-                date = sdf.parse(validateDate)
-                val millis = date.time
-                datePickerDialog.datePicker.maxDate = millis
+                val  myCalender1 = Calendar.getInstance()
+                datePickerDialog.datePicker.minDate = myCalender.time.time
+                myCalender1.add(Calendar.DAY_OF_MONTH, 30);
+                datePickerDialog.datePicker.maxDate = myCalender1.time.time
             } catch (e: ParseException) {
                 e.printStackTrace()
             }
@@ -245,49 +234,138 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
                 dateTVRound.setText(myCalender.get(Calendar.DAY_OF_MONTH).toString())
                 monthTVRound.setText(DateFormatSymbols().months[myCalender.get(Calendar.MONTH)])
                 dayTVRound.setText(DateFormatSymbols().weekdays[myCalender.get(Calendar.DAY_OF_WEEK)])
-                AppStorageBox.put(this@BusCitySearchActivity, AppStorageBox.Key.BUS_JOURNEY_DATE, simpleDateFormat!!.format(myCalender.getTimeInMillis()))
+                AppStorageBox.put(this@BusCitySearchActivity, AppStorageBox.Key.BUS_RETURN_DATE, simpleDateFormat!!.format(myCalender.getTimeInMillis()))
             }, myCalender.get(Calendar.YEAR),
                     myCalender.get(Calendar.MONTH),
                     myCalender.get(Calendar.DAY_OF_MONTH))
             datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 10000
             try {
                 val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                val validateDate = AppStorageBox.get(applicationContext, AppStorageBox.Key.BUS_VALIDATE_DATE) as String
+                val validateDate = AppStorageBox.get(applicationContext, AppStorageBox.Key.BUS_JOURNEY_DATE) as String
                 var date: Date? = null
                 date = sdf.parse(validateDate)
-                val millis = date?.time
-                datePickerDialog.datePicker.maxDate = millis!!
+
+                val cal = Calendar.getInstance()
+                cal.setTime(date)
+                datePickerDialog.datePicker.minDate = cal.time.time
+                cal.add(Calendar.DAY_OF_MONTH, 30);
+                datePickerDialog.datePicker.maxDate =  cal.time.time
             } catch (e: ParseException) {
                 e.printStackTrace()
             }
             datePickerDialog.show()
         }
 
+
+        initViewModel();
+
     }
 
-    private fun switchLaunchTicketLication() {
-
-        busToCityTS.setText(fromString)
-        busFromCityTS.setText(toString)
-
-        fromCitiesListItem.let {
-            TO_STRING.let { it1 -> fromCitiesListItem?.let { it2 -> setCityDataToSP(it1, it2) } };
+    private fun HandleSearch(): Boolean {
+        if (fromCitiesListItem == null) {
+            Toast.makeText(applicationContext, getString(R.string.text_bus_from_error), Toast.LENGTH_LONG).show()
+            return true
         }
 
-        toCitiesListItem.let {
-            FROM_STRING.let { it1 -> toCitiesListItem?.let { it2 -> setCityDataToSP(it1, it2) } };
+        if (toCitiesListItem == null) {
+            Toast.makeText(applicationContext, getString(R.string.text_bus_to_error), Toast.LENGTH_LONG).show()
+            return true
         }
 
-        val from = toString
-        toString = fromString
-        fromString = from
+        val p = RequestScheduledata()
+        p.username = mAppHandler.userName
+        p.departure = "" + fromCitiesListItem?.citiesName
+        p.destination = "" + toCitiesListItem?.citiesName
+        p.deviceId = mAppHandler.androidID
 
 
-        val tempFromCitiesListItem = fromCitiesListItem
-        fromCitiesListItem = toCitiesListItem
+        val departingDate = AppStorageBox.get(applicationContext, AppStorageBox.Key.BUS_JOURNEY_DATE) as String
+        p.departingDate = departingDate
 
-        toCitiesListItem = tempFromCitiesListItem
+
+        if (AppController.isBusTicket) {
+            p.transportType = "1"
+        } else {
+            p.transportType = "0"
+        }
+
+
+        val isAdvanceSearchvisibility = advanceSearch.visibility
+
+        if (isAdvanceSearchvisibility == View.VISIBLE) {
+
+            val checkedRadioButtonId = radioGroupJounyType.getCheckedRadioButtonId();
+            val departingTime = when (checkedRadioButtonId) {
+                R.id.radioJourneyTimeAll -> "All"
+                R.id.radioJourneyTimeAllMorning -> "Morning"
+                R.id.radioJourneyTimeAllEvening -> "Evening"
+                R.id.radioJourneyTimeAllNight -> "Night"
+
+                else -> "All"
+            }
+            p.departingTime = departingTime
+
+
+            val id = radioGroupJounryType.getCheckedRadioButtonId();
+            val coachType = when (id) {
+                R.id.radioBtmAll -> "All"
+                R.id.radioBtmAC -> "AC"
+                R.id.radioBtmNonAC -> "NonAC"
+                else -> "All"
+            }
+            p.coachType = coachType
+
+
+        } else {
+            p.departingTime = "All"
+            p.coachType = "Any"
+
+        }
+
+
+        if (radioGroupJounyType.getCheckedRadioButtonId() == R.id.radioButtonButtonRoud) {
+
+
+            val checkedRadioButtonId = radioGroupRetrun.getCheckedRadioButtonId();
+            val returnTime = when (checkedRadioButtonId) {
+                R.id.radioJourneyTimeAll -> "All"
+                R.id.radioJourneyTimeAllMorning -> "Morning"
+                R.id.radioJourneyTimeAllEvening -> "Evening"
+                R.id.radioJourneyTimeAllNight -> "Night"
+
+                else -> "All"
+            }
+
+            p.returnTime = returnTime
+
+
+            val id = radioGroupRetunTime.getCheckedRadioButtonId();
+            val returnCoachType = when (id) {
+                R.id.radioBtmAllRetrun -> "All"
+                R.id.radioBtmACRetrun -> "AC"
+                R.id.radioBtmNonACRetrun -> "NonAC"
+                else -> "All"
+            }
+            p.returnCoachType = returnCoachType
+
+
+            val returnDate = AppStorageBox.get(applicationContext, AppStorageBox.Key.BUS_RETURN_DATE) as String
+            p.returnDate = returnDate
+            p.roundTrip = "1"
+        }
+
+
+        val toJson = Gson().toJson(p)
+
+        AppStorageBox.put(AppController.getContext(), AppStorageBox.Key.RequestScheduledata, toJson)
+        val intent = Intent(applicationContext, BusHosttActivity::class.java)
+        startActivity(intent)
+
+
+//        viewMode?.search(p)
+        return false
     }
+
 
     private fun switchFromAndTo() {
         busToCityTS.setText(fromString)
@@ -367,19 +445,32 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
 //    }
     private fun initViewModel() {
         viewMode = ViewModelProviders.of(this).get(BusTransportViewModel::class.java)
-        viewMode!!.setIbusTransportListView(this)
+        viewMode?.setIbusTransportListView(this)
+
+//        viewMode?.mutableBusLiveDataList?.observe(this, object : Observer<List<ScheduleDataItem>>{
+//            override fun onChanged(t: List<ScheduleDataItem>?) {
+//
+//                val toJson = Gson().toJson(t)
+//
+//                AppStorageBox.put(AppController.getContext(), AppStorageBox.Key.REQUEST_AIR_SERACH, toJson)
+//                val intent = Intent(applicationContext, BusTransportListActivity::class.java)
+//                startActivity(intent)
+//
+//            }
+//
+//        });
+
+
     }
 
     private fun openTripListActivity(from: String, to: String, boardingPoint: String) {
-        val date = AppStorageBox.get(applicationContext, AppStorageBox.Key.BUS_JOURNEY_DATE) as String
-        val requestBusSearch = RequestBusSearch()
-        requestBusSearch.from = from
-        requestBusSearch.to = to
-        requestBusSearch.date = date
-        requestBusSearch.boadingPoint = boardingPoint
-        AppStorageBox.put(AppController.getContext(), AppStorageBox.Key.REQUEST_AIR_SERACH, requestBusSearch)
-        val intent = Intent(applicationContext, BusTransportListActivity::class.java)
-        startActivity(intent)
+//        val date = AppStorageBox.get(applicationContext, AppStorageBox.Key.BUS_JOURNEY_DATE) as String
+//        val requestBusSearch = RequestBusSearch()
+//        requestBusSearch.from = from
+//        requestBusSearch.to = to
+//        requestBusSearch.date = date
+//        requestBusSearch.boadingPoint = boardingPoint
+
     }
 
     override fun setCityData(citiesListItem: CitiesListItem, toOrFrom: String) {
@@ -429,8 +520,10 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
 //        viewBoardingPoint.setVisibility(gone);
     }
 
-    override fun setAdapter(it1: List<TripScheduleInfoAndBusSchedule>) {}
-    override fun showErrorMessage(message: String) {}
+    override fun showErrorMessage(message: String) {
+        showBusTicketErrorDialog(message)
+
+    }
     override fun showSeatCheckAndBookingRepose(it: ResSeatCheckBookAPI) {}
     override fun showShowConfirmDialog(it: ResPaymentBookingAPI) {}
     override fun showProgress() {
@@ -456,6 +549,7 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
 
+
     private fun setCityDataToSP(toOrFrom: String, city: CitiesListItem) {
         if (AppController.isBusTicket){
             if (toOrFrom == FROM_STRING) {
@@ -474,6 +568,13 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
 
     }
 
+    override fun saveRequestScheduledata(p: RequestScheduledata) {
+       // AppStorageBox.put(this@BusCitySearchActivity, AppStorageBox.Key.RequestScheduledata,  Gson().toJson(p))
+    }
+
+    override fun saveExtraCharge(double: Double) {
+        AppStorageBox.put(this@BusCitySearchActivity, AppStorageBox.Key.ExtraCharge_bus,  double)
+    }
 
     companion object {
         const val FullSCREEN_DIALOG_HEADER = "header"

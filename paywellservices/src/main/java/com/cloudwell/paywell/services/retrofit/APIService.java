@@ -43,7 +43,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.CancelBookedTicketResponse;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.CancelTicketRequest;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ConfirmTicketRquestPojo;
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.GetScheduledata;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.RequestScheduledata;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.GetSeatStatusRequest;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.GetSeatViewRquestPojo;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.SeatBlockRequestPojo;
@@ -735,14 +735,14 @@ public interface APIService {
     Call<BusLunCityResponse> getbusAndLaunchCities(@Body BusLunCityRequest busLunCityRequest);
 
     @POST("Tickets/BusAndLaunchService/getScheduleData")
-    Call<ResponseBody> getScheduleData(@Body GetScheduledata getScheduledata);
+    Call<ResponseBody> getScheduleData(@Body RequestScheduledata requestScheduledata);
 
     @POST("Tickets/BusAndLaunchService/getSeatView")
     Call<SeatviewResponse> getSeatView(@Body GetSeatViewRquestPojo getSeatViewRquestPojo);
 
 
     @POST("Tickets/BusAndLaunchService/getSeatStatus")
-    Call<ResponseBody> getSeatStatus(@Body GetSeatStatusRequest getSeatStatusRequest);
+    Call<ResponseBody> getSeatStatus(@Body GetSeatViewRquestPojo GetSeatViewRquestPojo);
 
     @POST("Tickets/BusAndLaunchService/seatBlock")
     Call<SeatBookResponse> seatBlock(@Body SeatBlockRequestPojo seatBlockRequestPojo);

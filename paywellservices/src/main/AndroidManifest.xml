@@ -1004,7 +1004,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.eticket.busticketNew.busTransportList.BusTransportListActivity"
+            android:name=".activity.eticket.busticketNew.busTransportList.BusHosttActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -1068,10 +1068,6 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.eticket.busticketNew.menu.BusTicketMenuActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activity.eticket.busticketNew.seatLayout.SeatLayoutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

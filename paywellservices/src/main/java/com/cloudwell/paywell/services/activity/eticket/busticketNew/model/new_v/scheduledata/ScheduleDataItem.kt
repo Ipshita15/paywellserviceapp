@@ -1,5 +1,7 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.scheduledata
 
+import androidx.room.Ignore
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatInfo
 import com.google.gson.annotations.SerializedName
 
 data class ScheduleDataItem(
@@ -7,8 +9,8 @@ data class ScheduleDataItem(
 	@field:SerializedName("departure_id")
 	val departureId: Int? = null,
 
-	@field:SerializedName("seat_types")
-	val seatTypes: List<String?>? = null,
+	@field:SerializedName("seatTypes_fuck")
+	var seatTypes: String,
 
 	@field:SerializedName("route_name")
 	val routeName: String? = null,
@@ -22,8 +24,8 @@ data class ScheduleDataItem(
 	@field:SerializedName("coach_type")
 	val coachType: String? = null,
 
-	@field:SerializedName("fares")
-	val fares: Fares? = null,
+	@field:SerializedName("fares_fuck")
+	var fares: Double? =null,
 
 	@field:SerializedName("uid")
 	val uid: String? = null,
@@ -59,5 +61,13 @@ data class ScheduleDataItem(
 	val departureTime: String? = null,
 
 	@field:SerializedName("start_counter")
-	val startCounter: String? = null
+	val startCounter: String? = null,
+
+
+
+	@Ignore
+var resSeatInfo: ResSeatInfo? = null
+
+
+
 )

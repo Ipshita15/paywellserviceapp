@@ -1,7 +1,7 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v
 import com.google.gson.annotations.SerializedName
 
-class GetScheduledata(
+class RequestScheduledata(
 
 	@field:SerializedName("returnCoachType")
 	var returnCoachType: String = "",

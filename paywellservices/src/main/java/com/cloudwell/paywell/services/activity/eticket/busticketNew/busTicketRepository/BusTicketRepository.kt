@@ -1,13 +1,11 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew.busTicketRepository
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.newBase.SingleLiveEvent
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.*
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.scheduledata.ScheduleDataItem
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.seatview.SeatviewResponse
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ConfirmTicketResponse
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm_cancel.ConfirmTicketCancelResponse
@@ -18,7 +16,6 @@ import com.cloudwell.paywell.services.database.DatabaseClient
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.BusCalculationHelper
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
-import com.google.gson.Gson
 import com.orhanobut.logger.Logger
 import okhttp3.ResponseBody
 import org.jetbrains.anko.doAsync
@@ -281,63 +278,7 @@ class BusTicketRepository() {
 
     }
 
-    fun getSeatCheck(transport_id: String, route: String, bus_id: String, departure_id: String, departure_date: String, seat_ids: String): MutableLiveData<ResSeatInfo> {
 
-        mAppHandler = AppHandler.getmInstance(mContext)
-
-        val userName = mAppHandler!!.userName
-        val skey = ApiUtils.KEY_SKEY
-
-        val accessKey = AppStorageBox.get(mContext, AppStorageBox.Key.ACCESS_KEY) as String
-        val uniqueKey = UniqueKeyGenerator.getUniqueKey(mAppHandler!!.rid)
-
-        val data = MutableLiveData<ResSeatInfo>()
-
-        ApiUtils.getAPIServicePHP7().seatCheck(
-                userName,
-                skey,
-                accessKey,
-                transport_id,
-                route,
-                bus_id,
-                departure_id,
-                departure_date,
-                seat_ids,uniqueKey
-
-        ).enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if (response.isSuccessful) {
-
-
-                    val body = response.body()
-                    body.let {
-                        val allBusSeat = mutableListOf<BusSeat>()
-                        var tototalAvailableSeat = 0
-                        val jsonObject = JSONObject(it?.string())
-                        if (jsonObject.getInt("status") == 200) {
-                            val seatInfo = jsonObject.getJSONObject("seatInfo")
-                            val keys = seatInfo.keys()
-                            keys.forEach {
-                                val o = seatInfo.get(it) as JSONObject
-                                if (o.getString("status").equals("Available")) {
-                                    tototalAvailableSeat = tototalAvailableSeat + 1
-                                }
-                                allBusSeat.add(BusSeat(o.getInt("seat_id"), o.getString("seat_lbls"), o.getString("status"), o.getInt("value")))
-                            }
-                            data.value = ResSeatInfo(tototalAvailableSeat, allBusSeat)
-                        }
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                com.orhanobut.logger.Logger.e("" + t.message)
-            }
-        })
-        return data
-
-
-    }
 
     private fun handleResponseseatCheck(it1: String) {
         Logger.v("", "")
@@ -499,136 +440,137 @@ class BusTicketRepository() {
     }
 
 
-    fun getScheduleData(schedulePojo : GetScheduledata): String{
+    fun getScheduleData(schedulePojo : RequestScheduledata): MutableLiveData<String>{
 
         mAppHandler = AppHandler.getmInstance(mContext)
 
         val userName = mAppHandler!!.userName
-        val data = SingleLiveEvent<String>()
+        val data = MutableLiveData<String>()
 
         ApiUtils.getAPIServiceV2().getScheduleData(schedulePojo).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
+                    data.value =    response.body()?.string();
 
-//                    val sc : SchiduleResponse = response.body()!!
-//                    val d = sc.departureScheduleData
-//                    val s = d?.scheduleData
-//                    val o = s?.get(0)
-//                    Log.e("list" , o.toString())
+                }
+            }
 
-                    val jsonObject = JSONObject(response.body()!!.string())
-                    val status = jsonObject.getInt("status_code")
-                    val message = jsonObject.getString("message")
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                data.postValue(mContext?.getString(R.string.network_error))
 
-                    val scheduleDataItemHashMap = HashMap<String, ScheduleDataItem>()
-                    val returnscheduleDataItemHashMap = HashMap<String, ScheduleDataItem>()
+            }
+        })
+        return data
 
-                    if (status == 200){
+    }
 
-                        //departureScheduleData Data
-                        val departureScheduleData = jsonObject.getJSONObject("departureScheduleData")
-                            val array = departureScheduleData.getJSONArray("scheduleData")
-                            val s : String = departureScheduleData.getString("scheduleData")
+    fun getSeatView(schedulePojo : GetSeatViewRquestPojo): MutableLiveData<ResSeatInfo>{
 
-                        val a : ArrayList<String>? = null
-                        Log.e("check ", a.toString())
-                        Log.e("check ", array.toString())
+        mAppHandler = AppHandler.getmInstance(mContext)
 
-                            val scheduleData_array: JSONObject = array.optJSONObject(0)
-                            val keys: Iterator<*> = scheduleData_array.keys()
-//                            while (keys.hasNext()) {
-//                                val key = keys.next() as String
-//                                val itemString : String = scheduleData_array.get(key).toString()
-//                                val gson = Gson()
-//                                val item: ScheduleDataItem = gson.fromJson(itemString, ScheduleDataItem::class.java)
-//                                scheduleDataItemHashMap.put(key, item)
-//                                Log.e("Item: "+scheduleDataItemHashMap.keys , scheduleDataItemHashMap.get(key)?.routeName)
-//                            }
+        val userName = mAppHandler!!.userName
+        val data = MutableLiveData<ResSeatInfo>()
 
+        ApiUtils.getAPIServiceV2().getSeatView(schedulePojo).enqueue(object : Callback<SeatviewResponse> {
+            override fun onResponse(call: Call<SeatviewResponse>, response: Response<SeatviewResponse>) {
+                if (response.isSuccessful) {
+                    val setview : SeatviewResponse = response.body()!!
 
+                    var tototalAvailableSeat = 0
 
+                    if (setview.statusCode == 200) {
+                        val keys = setview.seatViewData?.seatstructureDetails
+                        keys?.forEach {
 
-                        //return ScheduleData data
-                        val returnScheduleData = jsonObject.getJSONObject("reternschedule")
-                        val returnarray = returnScheduleData.getJSONArray("scheduleData")
-                        val return_scheduleData_array: JSONObject = returnarray.optJSONObject(0)
-
-                        val return_keys: Iterator<*> = return_scheduleData_array.keys()
-                        while (return_keys.hasNext()) {
-                            val key = return_keys.next() as String
-                            val itemString : String = return_scheduleData_array.get(key).toString()
-                            val gson = Gson()
-                            val item: ScheduleDataItem = gson.fromJson(itemString, ScheduleDataItem::class.java)
-                            returnscheduleDataItemHashMap.put(key, item)
-                            Log.e("ReturnItem: "+returnscheduleDataItemHashMap.keys , returnscheduleDataItemHashMap.get(key)?.routeName)
+                            if (it?.status.equals("Available")) {
+                                tototalAvailableSeat = tototalAvailableSeat + 1
+                            }
 
                         }
-
-
-                        data.postValue(scheduleDataItemHashMap.toString())
-
-
-                    }else{
-
+                        data.value = ResSeatInfo(tototalAvailableSeat, setview)
                     }
 
 
                 }
             }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-
-                data.postValue(mContext?.getString(R.string.network_error))
-
-            }
-        })
-        return data.toString()
-
-    }
-
-    fun getSeatView(schedulePojo : GetSeatViewRquestPojo): String{
-
-        mAppHandler = AppHandler.getmInstance(mContext)
-
-        val userName = mAppHandler!!.userName
-        val data = SingleLiveEvent<String>()
-
-        ApiUtils.getAPIServiceV2().getSeatView(schedulePojo).enqueue(object : Callback<SeatviewResponse> {
-            override fun onResponse(call: Call<SeatviewResponse>, response: Response<SeatviewResponse>) {
-                if (response.isSuccessful) {
-                    val setview : SeatviewResponse = response.body()!!
-                    Log.e("seatview", setview.message)
-                    Log.e("seatview", setview.statusCode.toString())
-                    Log.e("seatview", setview.seatViewData.toString())
-//
-//                    val request_response = response.body()
-//
-//                    if (request_response?.statusCode == 200){
-//                        val citiesList: List<CitiesListItem?>? = request_response?.citiesList
-//                        data.postValue(citiesList.toString())
-//                    }
-
-                }
-            }
-
             override fun onFailure(call: Call<SeatviewResponse>, t: Throwable) {
 
-                data.postValue(mContext?.getString(R.string.network_error))
+                data.postValue(null)
 
             }
         })
-        return data.toString()
+        return data
 
     }
 
-    fun getSeatStatus(schedulePojo : GetSeatStatusRequest): String{
+//    fun getSeatCheck(transport_id: String, route: String, bus_id: String, departure_id: String, departure_date: String, seat_ids: String): MutableLiveData<ResSeatInfo> {
+//
+//        mAppHandler = AppHandler.getmInstance(mContext)
+//
+//        val userName = mAppHandler!!.userName
+//        val skey = ApiUtils.KEY_SKEY
+//
+//        val accessKey = AppStorageBox.get(mContext, AppStorageBox.Key.ACCESS_KEY) as String
+//        val uniqueKey = UniqueKeyGenerator.getUniqueKey(mAppHandler!!.rid)
+//
+//        val data = MutableLiveData<ResSeatInfo>()
+//
+//        ApiUtils.getAPIServicePHP7().seatCheck(
+//                userName,
+//                skey,
+//                accessKey,
+//                transport_id,
+//                route,
+//                bus_id,
+//                departure_id,
+//                departure_date,
+//                seat_ids,uniqueKey
+//
+//        ).enqueue(object : Callback<ResponseBody> {
+//            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+//                if (response.isSuccessful) {
+//
+//
+//                    val body = response.body()
+//                    body.let {
+//                        val allBusSeat = mutableListOf<BusSeat>()
+//                        var tototalAvailableSeat = 0
+//                        val jsonObject = JSONObject(it?.string())
+//                        if (jsonObject.getInt("status") == 200) {
+//                            val seatInfo = jsonObject.getJSONObject("seatInfo")
+//                            val keys = seatInfo.keys()
+//                            keys.forEach {
+//                                val o = seatInfo.get(it) as JSONObject
+//                                if (o.getString("status").equals("Available")) {
+//                                    tototalAvailableSeat = tototalAvailableSeat + 1
+//                                }
+//                                allBusSeat.add(BusSeat(o.getInt("seat_id"), o.getString("seat_lbls"), o.getString("status"), o.getInt("value")))
+//                            }
+//                            data.value = ResSeatInfo(tototalAvailableSeat, allBusSeat)
+//                        }
+//                    }
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+//                com.orhanobut.logger.Logger.e("" + t.message)
+//            }
+//        })
+//        return data
+//
+//
+//    }
+
+
+
+    fun getSeatStatus(getSeatViewRquestPojo : GetSeatViewRquestPojo):  MutableLiveData<ResSeatInfo>{
 
         mAppHandler = AppHandler.getmInstance(mContext)
 
-        val userName = mAppHandler!!.userName
-        val data = SingleLiveEvent<String>()
+        val data = MutableLiveData<ResSeatInfo>()
 
-        ApiUtils.getAPIServiceV2().getSeatStatus(schedulePojo).enqueue(object : Callback<ResponseBody> {
+        ApiUtils.getAPIServiceV2().getSeatStatus(getSeatViewRquestPojo).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
 //
@@ -644,11 +586,11 @@ class BusTicketRepository() {
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
 
-                data.postValue(mContext?.getString(R.string.network_error))
+                data.postValue(null)
 
             }
         })
-        return data.toString()
+        return data;
 
     }
 

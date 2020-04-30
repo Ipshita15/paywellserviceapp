@@ -1,5 +1,7 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew.model
 
-class ResSeatInfo(var tototalAvailableSeat: Int = 0, var allBusSeat: List<BusSeat>) {
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.seatview.SeatviewResponse
+
+class ResSeatInfo(var tototalAvailableSeat: Int = 0, var seatviewResponse : SeatviewResponse) {
 
 }
