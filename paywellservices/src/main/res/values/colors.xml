@@ -61,6 +61,8 @@
     <color name="bongo_pay_btn">#008352</color>
     <color name="bongo_indicator">#00203f</color>
     <color name="bongo_indicator1">#c3d0e0</color>
+    <color name="bbc_item_divider_clr">#109298</color>
+    <color name="bbc_item_bg">#f5f5f5</color>
 
 
 </resources>

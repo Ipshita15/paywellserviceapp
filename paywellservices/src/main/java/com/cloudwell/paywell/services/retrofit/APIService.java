@@ -20,6 +20,7 @@ import com.cloudwell.paywell.services.activity.entertainment.Bongo.model.BongoEn
 import com.cloudwell.paywell.services.activity.entertainment.Bongo.model.BongoPkgListReqPojo;
 import com.cloudwell.paywell.services.activity.entertainment.Bongo.model.BongoResponsePojo;
 import com.cloudwell.paywell.services.activity.entertainment.Bongo.model.BongoSubscriptionPojo;
+import com.cloudwell.paywell.services.activity.entertainment.Bongo.model.BongoTrxResponse;
 import com.cloudwell.paywell.services.activity.entertainment.Bongo.model.CountResponse;
 import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.Nagadv2requestPojo;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.ReposeAirSearch;
@@ -711,7 +712,7 @@ public interface APIService {
     Call<CountResponse> getBongoSubscriptionCount(@Body BongoSubscriptionPojo bongoSubscriptionPojo);
 
     @POST("Utility/Bongo/getEnquiryData")
-    Call<ResponseBody> getBongoEnquiryData(@Body BongoEnquiryRqstPojo bongoEnquiryRqstPojo);
+    Call<BongoTrxResponse> getBongoEnquiryData(@Body BongoEnquiryRqstPojo bongoEnquiryRqstPojo);
 
 //    @POST("Retailer/BankDepositSystem/removeBankAccount")
 //    Call<ResponseBody> removeBankInfo(@Body RemoveReqPojo removeReqPojo);

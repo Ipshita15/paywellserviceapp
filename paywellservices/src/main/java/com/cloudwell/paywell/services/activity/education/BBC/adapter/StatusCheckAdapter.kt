@@ -25,9 +25,9 @@ class StatusCheckAdapter(val mContext: Context, var courseList: List<StatusCheck
 
     override fun onBindViewHolder(holder: CourseListViewHolder, position: Int) {
 
-            holder.courseNo.setText("কোর্স - "+courseList?.get(position)?.courseNo)
-            holder.courseStartDate.setText("মেয়াদ শুরুর তারিখ - "+courseList?.get(position)?.addDatetime)
-            holder.courseEndDate.setText("মেয়াদ শেষের তারিখ - "+courseList?.get(position)?.expiryDatetime)
+            holder.courseNo.setText(mContext.getString(R.string.selectedCourse)+" - "+courseList?.get(position)?.courseNo)
+            holder.courseStartDate.setText(mContext.getString(R.string.bbc_expair)+courseList?.get(position)?.addDatetime)
+            holder.courseEndDate.setText(mContext.getString(R.string.bbc_expair_end)+courseList?.get(position)?.expiryDatetime)
 
     }
 

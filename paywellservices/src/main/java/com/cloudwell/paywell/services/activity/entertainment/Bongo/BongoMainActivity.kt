@@ -43,28 +43,12 @@ class BongoMainActivity : BaseActivity() {
             startActivity(Intent(this, BongoCounterActivity::class.java))
         })
 
-
-    }
-
-    private fun getBongoEnquiryData() {
-        showProgressDialog()
-
-        var pojo = BongoEnquiryRqstPojo()
-        pojo.limit = "5"
-        pojo.referenceIdOrMobile = "01612250477"
-        pojo.username = mAppHandler?.userName
-
-        ApiUtils.getAPIServiceV2().getBongoEnquiryData(pojo).enqueue(object : Callback<ResponseBody> {
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                dismissProgressDialog()
-            }
-
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                dismissProgressDialog()
-            }
-
+        bbcBtnTranscation.setOnClickListener(View.OnClickListener {
+            startActivity(Intent(this, BongoTrxActivity::class.java))
         })
+
     }
+
 
 
 

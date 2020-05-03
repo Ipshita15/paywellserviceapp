@@ -226,12 +226,13 @@ class BBC_Main_Activity : BaseActivity(), View.OnClickListener , CompoundButton.
 
         ApiUtils.getAPIServiceV2().getBBCTransactionLog(transcationLog).enqueue(object : Callback<TransactionResponsePOjo>{
             override fun onFailure(call: Call<TransactionResponsePOjo>, t: Throwable) {
+                dismissProgressDialog()
                 showErrorMessagev1(getString(R.string.try_again_msg))
             }
 
             override fun onResponse(call: Call<TransactionResponsePOjo>, response: Response<TransactionResponsePOjo>) {
+                dismissProgressDialog()
                if (response.isSuccessful){
-                  // val js =  JSONObject(response.body()?.string())
                    val trPojo : TransactionResponsePOjo = response.body()!!
                    val status :Int? =  trPojo.status //js.getInt("status")
                    val msg : String =   trPojo.message.toString() //js.getString("message")

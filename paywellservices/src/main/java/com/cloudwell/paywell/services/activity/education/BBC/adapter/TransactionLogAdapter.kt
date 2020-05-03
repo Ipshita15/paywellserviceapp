@@ -8,18 +8,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.education.BBC.model.CoursesItem
 import com.cloudwell.paywell.services.activity.education.BBC.model.ResponseDetailsItem
-import kotlinx.android.synthetic.main.bbc_course_item.view.*
-import net.cachapa.expandablelayout.ExpandableLayout
+import kotlinx.android.synthetic.main.bbc_trx_item.view.*
 
 
 class TransactionLogAdapter(val mContext: Context, var trList: List<ResponseDetailsItem?>?) : RecyclerView.Adapter<TransactionLogAdapter.CourseListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseListViewHolder {
         val v: View = LayoutInflater.from(parent?.context)
-                .inflate(R.layout.bbc_course_item,parent,false)
+                .inflate(R.layout.bbc_trx_item,parent,false)
 
-         //   extendedLayout = v.extended
-        // Return the view holder
         return CourseListViewHolder(v)
     }
 
@@ -29,23 +26,23 @@ class TransactionLogAdapter(val mContext: Context, var trList: List<ResponseDeta
 
     override fun onBindViewHolder(holder: CourseListViewHolder, position: Int) {
 
-//        holder.courseName.setText(trList.get(position).courseName)
-//        holder.courseDes.setText(trList.get(position).description)
-//        holder.courseAmount.setText(trList.get(position).amount)
-//
-//        holder.expandableLayout.setInterpolator(OvershootInterpolator())
+        holder.bbc_date.setText(trList?.get(position)?.addDatetime)
+        holder.subscriptionID.setText(mContext.getString(R.string.bbc_subscription)+trList?.get(position)?.subscriptionId)
+        holder.bbc_status.setText(trList?.get(position)?.statusName)
+        holder.bbc_number.setText(trList?.get(position)?.mobileNo)
+        holder.courseDes.setText(trList?.get(position)?.courseName)
+        holder.courseSubscriberName.setText(mContext.getString(R.string.name)+trList?.get(position)?.fullName)
 
     }
 
 
     class CourseListViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        val courseName = itemView.courseName
-        val courseDes = itemView.coursDescription
-        val courseAmount = itemView.courseAmount
-        val expended = itemView.expandable_layout
-
-        val expandableLayout : ExpandableLayout = itemView.findViewById(R.id.expandable_layout)
-
+        val courseSubscriberName = itemView.txr_name
+        val courseDes = itemView.bbc_course
+        val bbc_number = itemView.bbc_sub_number
+        val bbc_status = itemView.bbc_status
+        val bbc_date = itemView.bbc_trx_date
+        val subscriptionID = itemView.bbc_subscription_id
 
     }
 

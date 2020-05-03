@@ -697,6 +697,11 @@
     <string name="password">Pin*</string>
     <string name="subscription_success">Subscription successful</string>
     <string name="bongo_counter">"Subscription Count "</string>
+    <string name="bbc_trx_action_title">"Previous transaction"</string>
+    <string name="bbc_subscription">"Subscription ID: "</string>
+    <string name="bbc_expair">"Expiration Start date - "</string>
+    <string name="bbc_expair_end">"Expiration End date - "</string>
+    <string name="name">"Name: "</string>
 
 
 </resources>

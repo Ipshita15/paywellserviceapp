@@ -77,7 +77,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
-        <activity android:name=".activity.entertainment.Bongo.BongoCounterActivity"></activity>
+        <activity android:name=".activity.entertainment.Bongo.BongoTrxActivity"></activity>
+        <activity android:name=".activity.entertainment.Bongo.BongoCounterActivity" />
         <activity android:name=".activity.entertainment.Bongo.PackegeSelectedActivity" />
         <activity android:name=".activity.entertainment.Bongo.BongoSubscribActivity" />
         <activity android:name=".activity.entertainment.EntertainmentMainActivity" />
