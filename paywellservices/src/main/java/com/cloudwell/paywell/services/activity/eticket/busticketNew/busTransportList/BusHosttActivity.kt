@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.adapter.BusTripListAdapter
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.fragment.TransportListFragment
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.viewModel.BusTransportViewModel
@@ -19,13 +18,14 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSea
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Transport
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.RequestScheduledata
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.scheduledata.ScheduleDataItem
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.passenger.BusPassengerBoothDepartureActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.seatLayout.SeatLayoutFragment
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.google.gson.Gson
 
 
-class BusHosttActivity : BusTricketBaseActivity(), IbusTransportListView, TransportListFragment.OnFragmentInteractionListener {
+class BusHosttActivity : BusTricketBaseActivity(), IbusTransportListView, TransportListFragment.OnFragmentInteractionListener, SeatLayoutFragment.OnFragmentInteractionListener {
 
     override fun setBoardingPoint(allBoothNameInfo: MutableSet<String>) {
 
@@ -62,16 +62,27 @@ class BusHosttActivity : BusTricketBaseActivity(), IbusTransportListView, Transp
 
     }
 
+    override fun onItemNextButtonClick() {
+        if (viewMode.returnTripTransportListMutableLiveData.value == null){
+
+            addPassengerActivity()
+        }else{
+            addTransportListFragment(true)
+        }
+
+    }
+
+
+
     lateinit var requestScheduledata: RequestScheduledata
     lateinit var viewMode: BusTransportViewModel
-    lateinit var requestBusSearch: List<ScheduleDataItem>
     var isReSchuduler = false
 
     val KEY_TransportListFragment = TransportListFragment::class.java.name
     val KEY_SeatLayoutFragment = SeatLayoutFragment::class.java.name
+    val KEY_BusPassengerBoothDepartureActivity = BusPassengerBoothDepartureActivity::class.java.name
 
 
-    var busTripListAdapter: BusTripListAdapter? = null
     lateinit var transport: Transport
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,26 +97,35 @@ class BusHosttActivity : BusTricketBaseActivity(), IbusTransportListView, Transp
 
 
         if (savedInstanceState == null) {
-            addTransportListFragment()
+            addTransportListFragment(false)
         }
 
 
     }
 
-    private fun addTransportListFragment() {
-        val newFragment = TransportListFragment(requestScheduledata)
+    private fun addTransportListFragment(isRetrunTriple: Boolean) {
+        val newFragment = TransportListFragment(requestScheduledata,isRetrunTriple)
         val transaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.fragment_container, newFragment)
         transaction.addToBackStack(KEY_TransportListFragment)
         transaction.commit()
     }
 
-    private fun addSeatLayoutFragment(): Int {
-        val newFragment = SeatLayoutFragment(requestScheduledata)
+    private fun addSeatLayoutFragment(model: ScheduleDataItem, isRetrunTriple: Boolean): Int {
+        val newFragment = SeatLayoutFragment(model, isRetrunTriple)
         val transaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.fragment_container, newFragment)
         transaction.addToBackStack(KEY_SeatLayoutFragment)
         return transaction.commit()
+    }
+
+
+    private fun addPassengerActivity() {
+        val newFragment = BusPassengerBoothDepartureActivity();
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.add(R.id.fragment_container, newFragment)
+        transaction.addToBackStack(KEY_BusPassengerBoothDepartureActivity)
+        transaction.commit()
     }
 
     private fun initViewModel() {
@@ -170,14 +190,15 @@ class BusHosttActivity : BusTricketBaseActivity(), IbusTransportListView, Transp
 
     override fun onItemCLick(position: Int) {
 
-        val model = viewMode.mutableBusLiveDataList.value?.get(position)
+        val model = viewMode.singleTripTranportListMutableLiveData.value?.get(position)
         model.let {
             if (it?.resSeatInfo == null) {
                 Toast.makeText(applicationContext, "PLease wait..", Toast.LENGTH_LONG).show()
+                model?.let { it1 -> addSeatLayoutFragment(it1, false) }
             } else if (model?.resSeatInfo?.tototalAvailableSeat == 0) {
                 showDialogMessage("seat not available")
             } else {
-                addSeatLayoutFragment()
+                model?.let { it1 -> addSeatLayoutFragment(it1, false) }
             }
             // AppStorageBox.put(applicationContext, AppStorageBox.Key.SERACH_ID, mSearchId)
         }
@@ -193,9 +214,7 @@ class BusHosttActivity : BusTricketBaseActivity(), IbusTransportListView, Transp
             finish()
         }
 
-
     }
-
 
 
 

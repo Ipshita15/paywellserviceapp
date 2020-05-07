@@ -7,9 +7,9 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew.model
 
 class BoothInfo(
 
-        var boothID: String = "",
-        var boothName: String = "",
-        var boothDepartureTime: String = ""
+        var counter_name: String = "",
+        var reporting_branch_id: Int = 0,
+        var schedule_time: String = ""
 
 
 )

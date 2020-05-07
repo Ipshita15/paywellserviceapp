@@ -22,7 +22,9 @@ import java.util.*
 class BusTransportViewModel : BusTicketBaseViewMode() {
 
     var extraCharge  = MutableLiveData<Double>()
-    val mutableBusLiveDataList: MutableLiveData<ArrayList<ScheduleDataItem>> = MutableLiveData<ArrayList<ScheduleDataItem>>()
+    val singleTripTranportListMutableLiveData: MutableLiveData<ArrayList<ScheduleDataItem>> = MutableLiveData<ArrayList<ScheduleDataItem>>()
+    val returnTripTransportListMutableLiveData: MutableLiveData<ArrayList<ScheduleDataItem>> = MutableLiveData<ArrayList<ScheduleDataItem>>()
+
 
     private val allBoothInfo = mutableSetOf<BoothInfo>()
     private val allBoothNameInfo = mutableSetOf<String>()
@@ -32,6 +34,7 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
 //    var mistOfSchedule = mutableListOf<TripScheduleInfoAndBusSchedule>()
     lateinit var mRequestBusSearch: RequestBusSearch
     lateinit var mTransport: Transport
+
 
 
     val departureScheduleData = mutableListOf<ScheduleDataItem>();
@@ -106,36 +109,36 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
 //    }
 
     fun getBoardingPoint(requestBusSearch: RequestBusSearch, transport: Transport) {
-        view?.showProgress()
-        BusTicketRepository().searchTransport(requestBusSearch).observeForever {
-            it?.let { it1 ->
-                if (it1.size == 0) {
-                    view?.showNoTripFoundUI()
-                } else {
-                    com.orhanobut.logger.Logger.json("" + Gson().toJson(it1))
-
-                    allBoothInfo.clear()
-                    allBoothNameInfo.clear()
-                    allBoothNameInfo.add("All")
-                    it1.forEach {
-
-
-                        val jsonObject = JSONObject(it.busSchedule?.booth_departure_info)
-                        jsonObject.keys().forEach {
-                            val model = jsonObject.get(it) as JSONObject
-                            val boothName = model.getString("booth_name")
-                            val boothDepartureTime = model.getString("booth_departure_time")
-                            allBoothInfo.add(BoothInfo(it, boothName, boothDepartureTime))
-                            allBoothNameInfo.add(boothName)
-                        }
-                    }
-
-                    view?.setBoardingPoint(allBoothNameInfo)
-                }
-                view?.hiddenProgress()
-            }
-
-        }
+//        view?.showProgress()
+//        BusTicketRepository().searchTransport(requestBusSearch).observeForever {
+//            it?.let { it1 ->
+//                if (it1.size == 0) {
+//                    view?.showNoTripFoundUI()
+//                } else {
+//                    com.orhanobut.logger.Logger.json("" + Gson().toJson(it1))
+//
+//                    allBoothInfo.clear()
+//                    allBoothNameInfo.clear()
+//                    allBoothNameInfo.add("All")
+//                    it1.forEach {
+//
+//
+//                        val jsonObject = JSONObject(it.busSchedule?.booth_departure_info)
+//                        jsonObject.keys().forEach {
+//                            val model = jsonObject.get(it) as JSONObject
+//                            val boothName = model.getString("booth_name")
+//                            val boothDepartureTime = model.getString("booth_departure_time")
+//                            allBoothInfo.add(BoothInfo(it, boothName, boothDepartureTime))
+//                            allBoothNameInfo.add(boothName)
+//                        }
+//                    }
+//
+//                    view?.setBoardingPoint(allBoothNameInfo)
+//                }
+//                view?.hiddenProgress()
+//            }
+//
+//        }
 
     }
 
@@ -334,7 +337,8 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
                          it.fares
                     }
 
-                    mutableBusLiveDataList.value = ArrayList(sortedByLowPricesList)
+                    extraCharge.value = jsonObject.getDouble("extraCharge")
+                    singleTripTranportListMutableLiveData.value = ArrayList(sortedByLowPricesList)
 
 
                     //return ScheduleData data
@@ -357,7 +361,7 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
                     }
                 }
 
-                extraCharge.value = jsonObject.getDouble("extraCharge")
+
 
 
             } else {

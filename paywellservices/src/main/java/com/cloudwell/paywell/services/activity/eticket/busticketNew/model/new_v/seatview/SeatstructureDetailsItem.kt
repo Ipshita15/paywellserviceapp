@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class SeatstructureDetailsItem(
 
 	@field:SerializedName("fare")
-	val fare: Int? = null,
+	val fare: Double = 0.0,
 
 	@field:SerializedName("y_axis")
 	val yAxis: Int? = null,
@@ -21,4 +21,6 @@ data class SeatstructureDetailsItem(
 
 	@field:SerializedName("status")
 	val status: String? = null
-)
+) {
+	var isUserSeleted: Boolean = false
+}

@@ -6,6 +6,7 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.newBase.SingleLiveEvent
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.*
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.scheduledata.ScheduleDataItem
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.seatview.SeatviewResponse
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ConfirmTicketResponse
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm_cancel.ConfirmTicketCancelResponse
@@ -24,6 +25,7 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.HashMap
 
 
 /**
@@ -309,38 +311,38 @@ class BusTicketRepository() {
         val transport = AppStorageBox.get(mContext, AppStorageBox.Key.SELETED_BUS_INFO) as Transport
         val data = MutableLiveData<ResSeatCheckBookAPI>()
 
-        ApiUtils.getAPIServicePHP7().seatCheckAndBlock(
-                userName,
-                skey,
-                accessKey,
-                (AppStorageBox.get(mContext, AppStorageBox.Key.SELETED_BUS_INFO) as Transport).busid,
-                (AppStorageBox.get(mContext, AppStorageBox.Key.SELETED_BUS_INFO) as Transport).busname,
-                requestBusSearch.from + "-" + requestBusSearch.to,
-                model.busLocalDB?.busID,
-                model.busLocalDB?.name,
-                model.busSchedule?.coachNo,
-                model.busSchedule?.schedule_time_id,
-                requestBusSearch.date,
-                boothInfo.boothDepartureTime,
-                boothInfo.boothID,
-                boothInfo.boothName,
-                seatId,
-                seatLevel,
-                model.busLocalDB?.busIsAc,
-                transport.extraCharge,
-                BusCalculationHelper.getPricesWithExtraAmount(model.busSchedule?.ticketPrice, requestBusSearch.date, transport = transport, isExtraAmount = false),
-                totalAPIValuePrices,uniqueKey)
-                .enqueue(object : Callback<ResSeatCheckBookAPI> {
-                    override fun onFailure(call: Call<ResSeatCheckBookAPI>, t: Throwable) {
-                        data.value = null
-                    }
-
-                    override fun onResponse(call: Call<ResSeatCheckBookAPI>, response: Response<ResSeatCheckBookAPI>) {
-                        if (response.isSuccessful) {
-                            data.value = response.body()
-                        }
-                    }
-                })
+//        ApiUtils.getAPIServicePHP7().seatCheckAndBlock(
+//                userName,
+//                skey,
+//                accessKey,
+//                (AppStorageBox.get(mContext, AppStorageBox.Key.SELETED_BUS_INFO) as Transport).busid,
+//                (AppStorageBox.get(mContext, AppStorageBox.Key.SELETED_BUS_INFO) as Transport).busname,
+//                requestBusSearch.from + "-" + requestBusSearch.to,
+//                model.busLocalDB?.busID,
+//                model.busLocalDB?.name,
+//                model.busSchedule?.coachNo,
+//                model.busSchedule?.schedule_time_id,
+//                requestBusSearch.date,
+//                boothInfo.boothDepartureTime,
+//                boothInfo.boothID,
+//                boothInfo.boothName,
+//                seatId,
+//                seatLevel,
+//                model.busLocalDB?.busIsAc,
+//                transport.extraCharge,
+//                BusCalculationHelper.getPricesWithExtraAmount(model.busSchedule?.ticketPrice, requestBusSearch.date, transport = transport, isExtraAmount = false),
+//                totalAPIValuePrices,uniqueKey)
+//                .enqueue(object : Callback<ResSeatCheckBookAPI> {
+//                    override fun onFailure(call: Call<ResSeatCheckBookAPI>, t: Throwable) {
+//                        data.value = null
+//                    }
+//
+//                    override fun onResponse(call: Call<ResSeatCheckBookAPI>, response: Response<ResSeatCheckBookAPI>) {
+//                        if (response.isSuccessful) {
+//                            data.value = response.body()
+//                        }
+//                    }
+//                })
 
 
         return data
@@ -487,6 +489,24 @@ class BusTicketRepository() {
                             }
 
                         }
+
+
+                        val  boothInfoHashMap = HashMap<String, BoothInfo>()
+
+
+                        val bordingPoints =  setview.seatViewData?.bordingPoints
+                        bordingPoints?.keys()?.forEach {
+                            val model = bordingPoints.get(it) as JSONObject
+                            val counter_name = model.getString("counter_name")
+                            val reporting_branch_id = model.getInt("reporting_branch_id")
+                            val schedule_time = model.getString("schedule_time")
+
+                            boothInfoHashMap.put(it, BoothInfo(counter_name, reporting_branch_id, schedule_time))
+
+                        }
+
+                        setview.boothInfoHashMap = boothInfoHashMap
+
                         data.value = ResSeatInfo(tototalAvailableSeat, setview)
                     }
 

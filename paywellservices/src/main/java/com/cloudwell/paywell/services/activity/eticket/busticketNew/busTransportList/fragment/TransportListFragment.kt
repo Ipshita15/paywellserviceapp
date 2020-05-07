@@ -29,8 +29,8 @@ import kotlinx.android.synthetic.main.fragment_transport_list.*
  * Activities that contain this fragment must implement the
  * [TransportListFragment.OnFragmentInteractionListener] interface
  * to handle interaction events.
- */
-class TransportListFragment(val requestScheduledata: RequestScheduledata) : Fragment(), IbusTransportListView {
+ */  
+class TransportListFragment(val requestScheduledata: RequestScheduledata, retrunTriple: Boolean) : Fragment(), IbusTransportListView {
     private lateinit var busTripListAdapter: BusTripListAdapter
     private lateinit var viewMode: BusTransportViewModel
     private var listener: OnFragmentInteractionListener? = null
@@ -127,11 +127,11 @@ class TransportListFragment(val requestScheduledata: RequestScheduledata) : Frag
              busTripListAdapter = BusTripListAdapter(data, activity!!.applicationContext, requestScheduledata, viewMode.extraCharge.value?:0.0, object : OnClickListener {
                 override fun onUpdateData(position: Int, resSeatInfo: ResSeatInfo) {
 
-                    val m = viewMode.mutableBusLiveDataList.value?.get(position)
+                    val m = viewMode.singleTripTranportListMutableLiveData.value?.get(position)
                     m?.resSeatInfo = resSeatInfo
                     m?.let {
-                        viewMode.mutableBusLiveDataList.value?.set(position, it)
-                        busTripListAdapter.notifyItemRangeChanged(position, viewMode.mutableBusLiveDataList.value!!.size);
+                        viewMode.singleTripTranportListMutableLiveData.value?.set(position, it)
+                        busTripListAdapter.notifyItemRangeChanged(position, viewMode.singleTripTranportListMutableLiveData.value!!.size);
                         busTripListAdapter.notifyDataSetChanged()
 
                     }
@@ -171,7 +171,7 @@ class TransportListFragment(val requestScheduledata: RequestScheduledata) : Frag
         viewMode = ViewModelProviders.of(activity!!).get(BusTransportViewModel::class.java)
         viewMode.setIbusTransportListView(this)
         viewMode.search(requestScheduledata)
-        viewMode.mutableBusLiveDataList.observe(this, object : Observer<List<ScheduleDataItem>> {
+        viewMode.singleTripTranportListMutableLiveData.observe(this, object : Observer<List<ScheduleDataItem>> {
             override fun onChanged(t: List<ScheduleDataItem>?) {
 
                 t?.let { setAdapter(it) };
