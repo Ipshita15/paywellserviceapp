@@ -156,6 +156,7 @@ public class AnalyticsParameters {
     public static final String KEY_SETTINGS_RESET_PIN_MENU = "SettingsResetPinMenu";
     public static final String KEY_SETTINGS_CHANGE_LANGUAGE_MENU = "SettingsChangeLanguageMenu";
     public static final String KEY_SETTINGS_HELP_MENU = "SettingsHelpMenu";
+    public static final String KEY_SETTINGS_BANK_MENU = "AccountInformation";
     static final String KEY_ACTION = "Action";
     static final String KEY_LABEL = "Label";
 

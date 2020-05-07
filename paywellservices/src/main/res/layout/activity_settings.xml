@@ -107,31 +107,7 @@
                     android:layout_weight="1" />
             </LinearLayout>
 
-            <LinearLayout
-                android:visibility="invisible"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:orientation="horizontal">
 
-
-
-                <Button
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:id="@+id/bank_btn"
-                    style="@style/HomeButtonNew"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_bank_deposit"
-                    android:onClick="onSettingsButtonClicker"
-                    android:paddingTop="10dp"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-
-
-
-            </LinearLayout>
 
         </LinearLayout>
 

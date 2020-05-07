@@ -400,7 +400,7 @@
     <string name="book">বুকিং স্ট্যাটাস</string>
     <string name="title_activity_baggage_and_policies_actiivty">Air Rules &amp; Fare</string>
     <string name="passenger_deleted_message">Passenger info cannot be recovered once deleted. Are you sure you want to delete?sdf.,wPassenger info cannot be recovered once deleted. Are you sure you want to delete?skdf</string>
-    <string name="ok">OK</string>
+    <string name="ok">ঠিক আছে</string>
     <string name="cancel_booking">Cancel Booking</string>
     <string name="title_all_summary">All Summary</string>
     <string name="lbl_take_camera_picture">Camara</string>
@@ -700,6 +700,17 @@
     <string name="bbc_expair">"মেয়াদ শুরুর তারিখ - "</string>
     <string name="bbc_expair_end">"মেয়াদ শেষের তারিখ - "</string>
     <string name="name">"নাম: "</string>
+    <string name="bank_btn">"ব্যাংক একাউন্ট তথ্য"</string>
+    <string name="aclink_btn_txt">"ব্যাংক একাউন্ট লিংক"</string>
+    <string name="aclist_btn_txt">"লিংক একাউন্ট লিস্ট"</string>
+    <string name="checkbook_txt">চেক-এর ছবি তুলুন</string>
+    <string name="bank">ব্যাংক</string>
+    <string name="district">জেলা</string>
+    <string name="branch">শাখা</string>
+    <string name="bank_list">লিংক একাউন্ট লিস্ট</string>
+    <string name="ac_no">হিসাব নংঃ </string>
+    <string name="bank_added">তথ্য দেওয়ার জন্য আপনাকে ধন্যবাদ 24 ঘন্টার মধ্যে পেওয়েল আইডির সাথে ব্যাংক একাউন্টটি লিংক হয়ে যাবে</string>
+    <string name="bank_delate">আপনার এই লিংক একাউন্টটি মুছে ফেলতে চান?</string>
 
 
 

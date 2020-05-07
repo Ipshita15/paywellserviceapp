@@ -702,6 +702,16 @@
     <string name="bbc_expair">"Expiration Start date - "</string>
     <string name="bbc_expair_end">"Expiration End date - "</string>
     <string name="name">"Name: "</string>
-
+    <string name="bank_btn">"Bank Account Information"</string>
+    <string name="aclink_btn_txt">"Bank Account Link"</string>
+    <string name="aclist_btn_txt">"Bank Account List"</string>
+    <string name="checkbook_txt">Take Check Book Picture</string>
+    <string name="bank">Bank</string>
+    <string name="district">District</string>
+    <string name="branch">Branch</string>
+    <string name="bank_list">Link account list</string>
+    <string name="ac_no">হিসাব নংঃ </string>
+    <string name="bank_added">Thank you for your information. The bank account will be linked to Powell ID within 24 hours.</string>
+    <string name="bank_delate">Are you want to delate your thia account?</string>
 
 </resources>

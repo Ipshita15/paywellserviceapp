@@ -1,6 +1,7 @@
 package com.cloudwell.paywell.services.retrofit;
 
 
+import com.cloudwell.paywell.services.activity.bank_info_update.BankLinkedListResponsePojo;
 import com.cloudwell.paywell.services.activity.bank_info_update.model.BankListRequestPojo;
 import com.cloudwell.paywell.services.activity.bank_info_update.model.BankPojo;
 import com.cloudwell.paywell.services.activity.bank_info_update.model.RemoveReqPojo;
@@ -693,7 +694,7 @@ public interface APIService {
     Call<ResponseBody> uploadBankInfo(@Body BankPojo bankPojo);
 
     @POST("Retailer/BankDepositSystem/getRtlrBankAccList")
-    Call<ResponseBody> getRetailerBankList(@Body BankListRequestPojo bankListRequestPojo);
+    Call<BankLinkedListResponsePojo> getRetailerBankList(@Body BankListRequestPojo bankListRequestPojo);
 
     @POST("Retailer/BankDepositSystem/removeBankAccount")
     Call<ResponseBody> removeBankInfo(@Body RemoveReqPojo removeReqPojo);

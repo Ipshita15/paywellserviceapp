@@ -77,7 +77,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
-        <activity android:name=".activity.entertainment.Bongo.BongoTrxActivity"></activity>
+        <activity android:name=".activity.bank_info_update.BankListActivity"></activity>
+        <activity
+            android:name=".activity.bank_info_update.BankSelectionActivity"
+            android:parentActivityName=".activity.settings.SettingsActivity" />
+        <activity android:name=".activity.entertainment.Bongo.BongoTrxActivity" />
         <activity android:name=".activity.entertainment.Bongo.BongoCounterActivity" />
         <activity android:name=".activity.entertainment.Bongo.PackegeSelectedActivity" />
         <activity android:name=".activity.entertainment.Bongo.BongoSubscribActivity" />
@@ -111,6 +115,7 @@
             tools:ignore="InnerclassSeparator" />
         <activity
             android:name=".activity.bank_info_update.BankINFO_MainActivity"
+            android:parentActivityName=".activity.bank_info_update.BankSelectionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.entertainment.Bongo.BongoMainActivity" />
