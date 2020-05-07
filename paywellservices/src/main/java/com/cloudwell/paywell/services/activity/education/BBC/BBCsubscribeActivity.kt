@@ -44,11 +44,7 @@ class BBCsubscribeActivity : BaseActivity() {
 
         val course : String = intent.getStringExtra(getString(R.string.selectedCourse))
         mCourse = Gson().fromJson(course, CoursesItem::class.java)
-        Log.e("Amoun ", mCourse?.amount.toString())
-        Log.e("Amoun ", mCourse?.courseName.toString())
-        Log.e("Amoun ", mCourse?.courseNo.toString())
-//
-//
+
         subscribeBtn.setOnClickListener(View.OnClickListener {
             getUserData()
         })
@@ -80,6 +76,7 @@ class BBCsubscribeActivity : BaseActivity() {
 
         val askingPinDialog = PaywellPinDialog(message, object : PaywellPinDialog.IonClickInterface {
             override fun onclick(pin: String) {
+
                 letsSubscribe(pin, username, mobile)
             }
         })
@@ -116,7 +113,8 @@ class BBCsubscribeActivity : BaseActivity() {
                         showDialog()
 
                     }else{
-                        showErrorCallBackMessagev1(msg)
+
+                        showErrorMessagev1(msg)
                     }
 
                 }else{

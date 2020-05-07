@@ -26,6 +26,7 @@ class PaywellPinDialog (val message: String, val onclick : IonClickInterface): B
             if(onclick != null){
                 var pin : String = paywell_pin.text.toString()
                 onclick.onclick(pin)
+                dismiss()
             }
 
 

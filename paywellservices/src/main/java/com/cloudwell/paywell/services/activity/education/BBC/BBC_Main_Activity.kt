@@ -216,7 +216,6 @@ class BBC_Main_Activity : BaseActivity(), View.OnClickListener , CompoundButton.
 
     private fun getTransactionLog(limit: Int) {
         showProgressDialog()
-        Toast.makeText(applicationContext, "ok", Toast.LENGTH_LONG).show()
         val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).rid)
 
         val transcationLog = BbcTranscationLog()

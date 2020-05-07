@@ -2,36 +2,30 @@ package com.cloudwell.paywell.services.activity.bank_info_update
 
 import android.Manifest
 import android.app.AlertDialog
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.InputType
-import android.text.method.PasswordTransformationMethod
 import android.util.Base64
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.bank_info_update.model.BankDialogPojo
-import com.cloudwell.paywell.services.activity.bank_info_update.model.BankListRequestPojo
 import com.cloudwell.paywell.services.activity.bank_info_update.model.BankPojo
-import com.cloudwell.paywell.services.activity.bank_info_update.model.RemoveReqPojo
 import com.cloudwell.paywell.services.activity.bank_info_update.spineer.*
 import com.cloudwell.paywell.services.activity.base.BaseActivity
-import com.cloudwell.paywell.services.activity.home.dialog.CommonMessageDialog
 import com.cloudwell.paywell.services.activity.refill.banktransfer.model.Branch
 import com.cloudwell.paywell.services.activity.refill.banktransfer.model.DistrictData
 import com.cloudwell.paywell.services.activity.refill.banktransfer.model.ReposeDistrictListerBankDeposit
@@ -42,16 +36,23 @@ import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.A
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.SuccessDialog
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.successInterface
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.libaray.imagePickerAndCrop.ImagePickerActivity
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.ImageUtility.getResizedBitmap
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import com.imagepicker.FilePickUtils.OnFileChoose
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import kotlinx.android.synthetic.main.activity_bank_info_main.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
+import java.io.File
 
 class BankINFO_MainActivity : BaseActivity() {
 
@@ -99,6 +100,26 @@ class BankINFO_MainActivity : BaseActivity() {
 
     }
 
+
+    private fun takeCameraImage() {
+        Dexter.withActivity(this)
+                .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .withListener(object : MultiplePermissionsListener {
+                    override fun onPermissionsChecked(report: MultiplePermissionsReport) {
+                        if (report.areAllPermissionsGranted()) {
+                            Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+                                takePictureIntent.resolveActivity(packageManager)?.also {
+                                    startActivityForResult(takePictureIntent, addNoFlag-1)
+                                }
+                            }
+                        }
+                    }
+
+                    override fun onPermissionRationaleShouldBeShown(permissions: List<PermissionRequest>, token: PermissionToken) {
+                        token.continuePermissionRequest()
+                    }
+                }).check()
+    }
     private fun addAnotherBank() {
         ++addNoFlag
         Log.e("Flag", addNoFlag.toString())
@@ -121,12 +142,7 @@ class BankINFO_MainActivity : BaseActivity() {
             addAnotherBank()
         })
         check_book_btn.setOnClickListener(View.OnClickListener {
-            //asked(getString(R.string.checkbook_txt), "5")
-            Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-                takePictureIntent.resolveActivity(packageManager)?.also {
-                    startActivityForResult(takePictureIntent, addNoFlag-1)
-                }
-            }
+            takeCameraImage()
         })
         if (addNoFlag == 1) {
             removeBtn.setVisibility(View.GONE)

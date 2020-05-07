@@ -93,9 +93,11 @@ class BankListActivity : BaseActivity() {
                         bank_list_recycler.adapter = adapter
 
                     }else{
-                        showErrorCallBackMessagev1(getString(R.string.try_again_msg))
+                        showErrorCallBackMessagev1(listresponse.message)
                     }
 
+                }else{
+                    showErrorCallBackMessagev1(getString(R.string.try_again_msg))
                 }
             }
 

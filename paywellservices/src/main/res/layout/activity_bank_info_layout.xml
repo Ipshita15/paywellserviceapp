@@ -16,6 +16,7 @@
         android:layout_height="match_parent">
 
       <TextView
+          android:visibility="gone"
           android:id="@+id/counter"
           android:layout_marginLeft="@dimen/activity_horizontal_margin_half"
           tools:text="1"
@@ -209,13 +210,15 @@
                     android:layout_height="wrap_content"/>
 
                 <ImageView
-                    android:id="@+id/check_check"
                     android:visibility="gone"
+                    android:id="@+id/check_check"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/check_ic"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    tools:ignore="VectorDrawableCompat" />
+                    tools:ignore="VectorDrawableCompat"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp" />
 
                 <ImageView
                     android:id="@+id/check_book"
