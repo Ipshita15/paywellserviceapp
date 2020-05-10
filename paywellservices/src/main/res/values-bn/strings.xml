@@ -711,7 +711,7 @@
     <string name="ac_no">হিসাব নংঃ </string>
     <string name="bank_added">তথ্য দেওয়ার জন্য আপনাকে ধন্যবাদ 24 ঘন্টার মধ্যে পেওয়েল আইডির সাথে ব্যাংক একাউন্টটি লিংক হয়ে যাবে</string>
     <string name="bank_delate">আপনার এই লিংক একাউন্টটি মুছে ফেলতে চান?</string>
-
+    <string name="most_used_services">বেশী ব্যবহৃত সার্ভিস সমুহ-</string>
 
 
 </resources>

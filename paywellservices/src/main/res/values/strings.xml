@@ -713,5 +713,6 @@
     <string name="ac_no">হিসাব নংঃ </string>
     <string name="bank_added">Thank you for your information. The bank account will be linked to Powell ID within 24 hours.</string>
     <string name="bank_delate">Are you want to delate your thia account?</string>
+    <string name="most_used_services">Most used services-</string>
 
 </resources>

@@ -309,7 +309,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="16dp"
-                                    android:text="বেশী ব্যবহৃত সার্ভিস সমুহ-"
+                                    android:text="@string/most_used_services"
                                     android:textColor="#59595c"
                                     android:textSize="16sp" />
 
