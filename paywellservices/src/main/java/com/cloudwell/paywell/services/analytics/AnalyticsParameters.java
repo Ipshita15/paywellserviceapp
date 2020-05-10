@@ -126,6 +126,7 @@ public class AnalyticsParameters {
     public static final String KEY_UTILITY_KARNAPHULI_MENU = "UtilityKarnaphuliMenu";
     public static final String KEY_BALANCE_REFILL_CARD = "BalanceRefillCard";
     public static final String KEY_BALANCE_REFILL_NAGAD = "BalanceRefillNagad";
+
     public static final String KEY_ETICKET_BUS = "E_TICKET_BUS";
     public static final String KEY_MFS_MYCASH_MENU = "MfsMycashMenu";
     public static final String KEY_PRODUCT_AJKER_DEAL_MENU = "ProductAjkerDealMenu";
@@ -186,6 +187,9 @@ public class AnalyticsParameters {
     public static final String KEY_BUS_TICKET = "BusTicket";
     public static final String KEY_AIR_TICKET = "AirTicket";
 
+
+    public static final String KEY_BBC = "BBC";
+    public static final String KEY_Bongo = "Bongo";
 
 
 }

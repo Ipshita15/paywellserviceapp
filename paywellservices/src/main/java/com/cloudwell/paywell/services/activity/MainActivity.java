@@ -44,7 +44,9 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.about.AboutActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.chat.ChatActivity;
+import com.cloudwell.paywell.services.activity.education.BBC.BBC_Main_Activity;
 import com.cloudwell.paywell.services.activity.education.EducationMainActivity;
+import com.cloudwell.paywell.services.activity.entertainment.Bongo.BongoMainActivity;
 import com.cloudwell.paywell.services.activity.entertainment.EntertainmentMainActivity;
 import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity;
@@ -153,7 +155,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -2236,6 +2237,26 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivityWithFlag(intent);
 
                 break;
+
+            case R.string.bbc_janala:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_BBC);
+
+                intent = new Intent(getApplicationContext(), BBC_Main_Activity.class);
+                startActivityWithFlag(intent);
+
+                break;
+
+
+            case R.string.bongo:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_Bongo);
+
+                intent = new Intent(getApplicationContext(), BongoMainActivity.class);
+                startActivityWithFlag(intent);
+
+                break;
+
+
+
 
         }
     }
