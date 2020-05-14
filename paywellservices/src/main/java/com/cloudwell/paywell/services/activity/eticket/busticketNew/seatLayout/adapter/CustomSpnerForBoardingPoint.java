@@ -57,7 +57,7 @@ public class CustomSpnerForBoardingPoint extends BaseAdapter {
 
         BordingPoint m = BoothInfo.get(position);
 
-        TextView textView = (TextView) convertView.findViewById(R.id.spinnerTextView);
+        TextView textView = convertView.findViewById(R.id.spinnerTextView);
         textView.setText(m.getCounterName() + ": " + m.getScheduleTime());
 
 

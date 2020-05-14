@@ -33,7 +33,7 @@ import java.util.*
 
 class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
-    val KEY_TAG = BusTicketMenuActivity::class.java.getName()
+    val KEY_TAG = BusTicketMenuActivity::class.java.name
     val BOOKING_TAG = "BOOKING"
     val TRX_TAG = "TRX_LOG"
 
@@ -298,58 +298,58 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
         if (isChecked) {
             if (buttonView.id == R.id.radio_five) {
                 selectedLimit = 5
-                radioButton_ten?.setChecked(false)
-                radioButton_twenty?.setChecked(false)
-                radioButton_fifty?.setChecked(false)
-                radioButton_hundred?.setChecked(false)
-                radioButton_twoHundred?.setChecked(false)
+                radioButton_ten?.isChecked = false
+                radioButton_twenty?.isChecked = false
+                radioButton_fifty?.isChecked = false
+                radioButton_hundred?.isChecked = false
+                radioButton_twoHundred?.isChecked = false
             }
             if (buttonView.id == R.id.radio_ten) {
                 selectedLimit = 10
-                radioButton_five?.setChecked(false)
-                radioButton_twenty?.setChecked(false)
-                radioButton_fifty?.setChecked(false)
-                radioButton_hundred?.setChecked(false)
-                radioButton_twoHundred?.setChecked(false)
+                radioButton_five?.isChecked = false
+                radioButton_twenty?.isChecked = false
+                radioButton_fifty?.isChecked = false
+                radioButton_hundred?.isChecked = false
+                radioButton_twoHundred?.isChecked = false
             }
             if (buttonView.id == R.id.radio_twenty) {
                 selectedLimit = 20
-                radioButton_five?.setChecked(false)
-                radioButton_ten?.setChecked(false)
-                radioButton_fifty?.setChecked(false)
-                radioButton_hundred?.setChecked(false)
-                radioButton_twoHundred?.setChecked(false)
+                radioButton_five?.isChecked = false
+                radioButton_ten?.isChecked = false
+                radioButton_fifty?.isChecked = false
+                radioButton_hundred?.isChecked = false
+                radioButton_twoHundred?.isChecked = false
             }
             if (buttonView.id == R.id.radio_fifty) {
                 selectedLimit = 50
-                radioButton_five?.setChecked(false)
-                radioButton_ten?.setChecked(false)
-                radioButton_twenty?.setChecked(false)
-                radioButton_hundred?.setChecked(false)
-                radioButton_twoHundred?.setChecked(false)
+                radioButton_five?.isChecked = false
+                radioButton_ten?.isChecked = false
+                radioButton_twenty?.isChecked = false
+                radioButton_hundred?.isChecked = false
+                radioButton_twoHundred?.isChecked = false
             }
             if (buttonView.id == R.id.radio_hundred) {
                 selectedLimit = 100
-                radioButton_five?.setChecked(false)
-                radioButton_ten?.setChecked(false)
-                radioButton_twenty?.setChecked(false)
-                radioButton_fifty?.setChecked(false)
-                radioButton_twoHundred?.setChecked(false)
+                radioButton_five?.isChecked = false
+                radioButton_ten?.isChecked = false
+                radioButton_twenty?.isChecked = false
+                radioButton_fifty?.isChecked = false
+                radioButton_twoHundred?.isChecked = false
             }
             if (buttonView.id == R.id.radio_twoHundred) {
                 selectedLimit = 200
-                radioButton_five?.setChecked(false)
-                radioButton_ten?.setChecked(false)
-                radioButton_twenty?.setChecked(false)
-                radioButton_fifty?.setChecked(false)
-                radioButton_hundred?.setChecked(false)
+                radioButton_five?.isChecked = false
+                radioButton_ten?.isChecked = false
+                radioButton_twenty?.isChecked = false
+                radioButton_fifty?.isChecked = false
+                radioButton_hundred?.isChecked = false
             }
         }
     }
 
     override fun onBackPressed() {
 
-        val isEnglish = mAppHandler?.getAppLanguage().equals("en", ignoreCase = true)
+        val isEnglish = mAppHandler.appLanguage.equals("en", ignoreCase = true)
         if (isEnglish) {
             switchToCzLocale(Locale(KEY_ENGLISH, ""))
         } else {

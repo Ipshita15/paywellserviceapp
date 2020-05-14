@@ -19,6 +19,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSea
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Transport
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.CitiesListItem
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.RequestScheduledata
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.scheduledata.ScheduleDataItem
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ResposeTicketConfirm
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.search.FullScreenDialogBus.OnCitySet
 import com.cloudwell.paywell.services.app.AppController
@@ -62,17 +63,17 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
 
 
         simpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-        AppStorageBox.put(this, AppStorageBox.Key.BUS_JOURNEY_DATE, simpleDateFormat!!.format(myCalender.getTimeInMillis()))
-        dateTV.setText(myCalender.get(Calendar.DAY_OF_MONTH).toString())
-        monthTV.setText(DateFormatSymbols().months[myCalender.get(Calendar.MONTH)])
-        dayTV.setText(DateFormatSymbols().weekdays[myCalender.get(Calendar.DAY_OF_WEEK)])
+        AppStorageBox.put(this, AppStorageBox.Key.BUS_JOURNEY_DATE, simpleDateFormat!!.format(myCalender.timeInMillis))
+        dateTV.text = myCalender.get(Calendar.DAY_OF_MONTH).toString()
+        monthTV.text = DateFormatSymbols().months[myCalender.get(Calendar.MONTH)]
+        dayTV.text = DateFormatSymbols().weekdays[myCalender.get(Calendar.DAY_OF_WEEK)]
 
 
         myCalenderRetrun.add(Calendar.DATE, 1)
 
-        dateTVRound.setText(myCalenderRetrun.get(Calendar.DAY_OF_MONTH).toString())
-        monthTVRound.setText(DateFormatSymbols().months[myCalenderRetrun.get(Calendar.MONTH)])
-        dayTVRound.setText(DateFormatSymbols().weekdays[myCalenderRetrun.get(Calendar.DAY_OF_WEEK)])
+        dateTVRound.text = myCalenderRetrun.get(Calendar.DAY_OF_MONTH).toString()
+        monthTVRound.text = DateFormatSymbols().months[myCalenderRetrun.get(Calendar.MONTH)]
+        dayTVRound.text = DateFormatSymbols().weekdays[myCalenderRetrun.get(Calendar.DAY_OF_WEEK)]
 
 
 
@@ -104,10 +105,10 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
                 android.R.anim.fade_out)
         inAnim.duration = 200
         outAnim.duration = 200
-        busFromCityTS.setInAnimation(inAnim)
-        busFromCityTS.setOutAnimation(outAnim)
-        busToCityTS.setInAnimation(inAnim)
-        busToCityTS.setOutAnimation(outAnim)
+        busFromCityTS.inAnimation = inAnim
+        busFromCityTS.outAnimation = outAnim
+        busToCityTS.inAnimation = inAnim
+        busToCityTS.outAnimation = outAnim
 
         textSwitchIV.setOnClickListener(View.OnClickListener {
 
@@ -153,7 +154,7 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
             when (checkedId) {
                 R.id.radioButtonOneWay -> {
                     var i = 0
-                    while (i < llRetrunDate.getChildCount()) {
+                    while (i < llRetrunDate.childCount) {
                         val view = llRetrunDate.getChildAt(i)
                         view.isEnabled = false // Or whatever you want to do with the view.
                         view.visibility = View.INVISIBLE
@@ -169,7 +170,7 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
                 }
                 R.id.radioButtonButtonRoud -> {
                     var i = 0
-                    while (i < llRetrunDate.getChildCount()) {
+                    while (i < llRetrunDate.childCount) {
                         val view = llRetrunDate.getChildAt(i)
                         view.isEnabled = true // Or whatever you want to do with the view.
                         view.visibility = View.VISIBLE
@@ -202,10 +203,10 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
 
             val datePickerDialog = DatePickerDialog(this@BusCitySearchActivity, R.style.DialogThemeBus, DatePickerDialog.OnDateSetListener { datePicker, i, i1, i2 ->
                 myCalender.set(i, i1, i2)
-                dateTV.setText(myCalender.get(Calendar.DAY_OF_MONTH).toString())
-                monthTV.setText(DateFormatSymbols().months[myCalender.get(Calendar.MONTH)])
-                dayTV.setText(DateFormatSymbols().weekdays[myCalender.get(Calendar.DAY_OF_WEEK)])
-                AppStorageBox.put(this@BusCitySearchActivity, AppStorageBox.Key.BUS_JOURNEY_DATE, simpleDateFormat!!.format(myCalender.getTimeInMillis()))
+                dateTV.text = myCalender.get(Calendar.DAY_OF_MONTH).toString()
+                monthTV.text = DateFormatSymbols().months[myCalender.get(Calendar.MONTH)]
+                dayTV.text = DateFormatSymbols().weekdays[myCalender.get(Calendar.DAY_OF_WEEK)]
+                AppStorageBox.put(this@BusCitySearchActivity, AppStorageBox.Key.BUS_JOURNEY_DATE, simpleDateFormat!!.format(myCalender.timeInMillis))
             }, myCalender.get(Calendar.YEAR),
                     myCalender.get(Calendar.MONTH),
                     myCalender.get(Calendar.DAY_OF_MONTH))
@@ -213,7 +214,7 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
             try {
                 val  myCalender1 = Calendar.getInstance()
                 datePickerDialog.datePicker.minDate = myCalender.time.time
-                myCalender1.add(Calendar.DAY_OF_MONTH, 30);
+                myCalender1.add(Calendar.DAY_OF_MONTH, 30)
                 datePickerDialog.datePicker.maxDate = myCalender1.time.time
             } catch (e: ParseException) {
                 e.printStackTrace()
@@ -226,10 +227,10 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
 
             val datePickerDialog = DatePickerDialog(this@BusCitySearchActivity, R.style.DialogTheme, DatePickerDialog.OnDateSetListener { datePicker, i, i1, i2 ->
                 myCalender.set(i, i1, i2)
-                dateTVRound.setText(myCalender.get(Calendar.DAY_OF_MONTH).toString())
-                monthTVRound.setText(DateFormatSymbols().months[myCalender.get(Calendar.MONTH)])
-                dayTVRound.setText(DateFormatSymbols().weekdays[myCalender.get(Calendar.DAY_OF_WEEK)])
-                AppStorageBox.put(this@BusCitySearchActivity, AppStorageBox.Key.BUS_RETURN_DATE, simpleDateFormat!!.format(myCalender.getTimeInMillis()))
+                dateTVRound.text = myCalender.get(Calendar.DAY_OF_MONTH).toString()
+                monthTVRound.text = DateFormatSymbols().months[myCalender.get(Calendar.MONTH)]
+                dayTVRound.text = DateFormatSymbols().weekdays[myCalender.get(Calendar.DAY_OF_WEEK)]
+                AppStorageBox.put(this@BusCitySearchActivity, AppStorageBox.Key.BUS_RETURN_DATE, simpleDateFormat!!.format(myCalender.timeInMillis))
             }, myCalender.get(Calendar.YEAR),
                     myCalender.get(Calendar.MONTH),
                     myCalender.get(Calendar.DAY_OF_MONTH))
@@ -241,9 +242,9 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
                 date = sdf.parse(validateDate)
 
                 val cal = Calendar.getInstance()
-                cal.setTime(date)
+                cal.time = date
                 datePickerDialog.datePicker.minDate = cal.time.time
-                cal.add(Calendar.DAY_OF_MONTH, 30);
+                cal.add(Calendar.DAY_OF_MONTH, 30)
                 datePickerDialog.datePicker.maxDate =  cal.time.time
             } catch (e: ParseException) {
                 e.printStackTrace()
@@ -252,7 +253,7 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
         }
 
 
-        initViewModel();
+        initViewModel()
 
     }
 
@@ -290,7 +291,7 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
 
         if (isAdvanceSearchvisibility == View.VISIBLE) {
 
-            val checkedRadioButtonId = radioGroupJounyType.getCheckedRadioButtonId();
+            val checkedRadioButtonId = radioGroupJounyType.checkedRadioButtonId
             val departingTime = when (checkedRadioButtonId) {
                 R.id.radioJourneyTimeAll -> "All"
                 R.id.radioJourneyTimeAllMorning -> "Morning"
@@ -302,7 +303,7 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
             p.departingTime = departingTime
 
 
-            val id = radioGroupJounryType.getCheckedRadioButtonId();
+            val id = radioGroupJounryType.checkedRadioButtonId
             val coachType = when (id) {
                 R.id.radioBtmAll -> "All"
                 R.id.radioBtmAC -> "AC"
@@ -319,10 +320,10 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
         }
 
 
-        if (radioGroupTripType.getCheckedRadioButtonId() == R.id.radioButtonButtonRoud) {
+        if (radioGroupTripType.checkedRadioButtonId == R.id.radioButtonButtonRoud) {
 
 
-            val checkedRadioButtonId = radioGroupRetrun.getCheckedRadioButtonId();
+            val checkedRadioButtonId = radioGroupRetrun.checkedRadioButtonId
             val returnTime = when (checkedRadioButtonId) {
                 R.id.radioJourneyTimeAll -> "All"
                 R.id.radioJourneyTimeAllMorning -> "Morning"
@@ -335,7 +336,7 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
             p.returnTime = returnTime
 
 
-            val id = radioGroupRetunTime.getCheckedRadioButtonId();
+            val id = radioGroupRetunTime.checkedRadioButtonId
             val returnCoachType = when (id) {
                 R.id.radioBtmAllRetrun -> "All"
                 R.id.radioBtmACRetrun -> "AC"
@@ -368,11 +369,11 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
         busFromCityTS.setText(toString)
 
         fromCitiesListItem.let {
-            TO_STRING.let { it1 -> fromCitiesListItem?.let { it2 -> setCityDataToSP(it1, it2) } };
+            TO_STRING.let { it1 -> fromCitiesListItem?.let { it2 -> setCityDataToSP(it1, it2) } }
         }
 
         toCitiesListItem.let {
-            FROM_STRING.let { it1 -> toCitiesListItem?.let { it2 -> setCityDataToSP(it1, it2) } };
+            FROM_STRING.let { it1 -> toCitiesListItem?.let { it2 -> setCityDataToSP(it1, it2) } }
         }
 
         val from = toString
@@ -524,6 +525,10 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
 
     override fun saveExtraCharge(double: Double) {
         AppStorageBox.put(this@BusCitySearchActivity, AppStorageBox.Key.ExtraCharge_bus,  double)
+    }
+
+    override fun showFilterList(filterTypeDepartingTime: List<ScheduleDataItem>) {
+
     }
 
     companion object {

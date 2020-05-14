@@ -1,6 +1,6 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.model
 
-class SearchFilter() {
+class SearchFilter {
 
     var sortBy: String = ""
     var departingTime: String = ""

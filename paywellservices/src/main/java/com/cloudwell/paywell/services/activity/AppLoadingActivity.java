@@ -31,7 +31,6 @@ import com.cloudwell.paywell.services.utils.AppsStatusConstant;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
-import com.orhanobut.logger.Logger;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -496,7 +495,6 @@ public class AppLoadingActivity extends BaseActivity {
 
             @Override
             public void onFailure(Call<ReposeUserProfile> call, Throwable t) {
-                Logger.e(t.getMessage());
                 dismissProgressDialog();
                 mConErrorMsg.setText(R.string.try_again_msg);
                 mConErrorMsg.setVisibility(View.VISIBLE);

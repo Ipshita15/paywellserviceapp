@@ -109,16 +109,19 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
         cityRecyclerView.setLayoutManager(gridLayoutManager);
 
 
-        actionSearch();
-        initViewModel();
-
         isBusTicket = (Boolean) AppStorageBox.get(requireNonNull(getContext()).getApplicationContext(), AppStorageBox.Key.IS_BUS_Ticket_USER_FLOW);
 
         if (isBusTicket) {
             predefineDataTL.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             predefineDataTL.setVisibility(View.GONE);
         }
+
+
+
+        actionSearch();
+        initViewModel();
+
 
 
 
@@ -159,7 +162,7 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
     }
 
     private void initViewModel() {
-         viewMode = ViewModelProviders.of(this).get(CitySearchViewModel.class);
+        viewMode = ViewModelProviders.of(this).get(CitySearchViewModel.class);
         viewMode.setIbusTransportListView(this);
 
         AppHandler mAppHandler =  AppHandler.getmInstance(getContext().getApplicationContext());
@@ -346,7 +349,7 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
 
             public MyViewHolder(View itemView) {
                 super(itemView);
-                textView = (TextView) itemView.findViewById(R.id.cityNameTV);
+                textView = itemView.findViewById(R.id.cityNameTV);
             }
         }
 

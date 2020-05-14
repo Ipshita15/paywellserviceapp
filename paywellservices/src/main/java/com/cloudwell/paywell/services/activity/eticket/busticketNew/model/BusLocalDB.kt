@@ -60,7 +60,4 @@ class BusLocalDB(
 
         @ColumnInfo(name = "total_seats")
         @SerializedName("total_seats")
-        var totalSeats: String = "") {
-
-
-}
+        var totalSeats: String = "")

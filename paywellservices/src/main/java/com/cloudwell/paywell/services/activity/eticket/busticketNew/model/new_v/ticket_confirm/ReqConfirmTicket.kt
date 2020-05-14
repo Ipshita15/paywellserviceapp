@@ -15,4 +15,7 @@ class ReqConfirmTicket {
     @SerializedName("username")
     var username: String? = null
 
+    @field:SerializedName("transportType")
+    var transportType: String = ""
+
 }

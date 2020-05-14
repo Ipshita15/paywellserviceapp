@@ -40,6 +40,11 @@ class BusHosttActivity : BusTricketBaseActivity(), IbusTransportListView, Transp
 
     }
 
+    override fun showFilterList(filterTypeDepartingTime: List<ScheduleDataItem>) {
+
+
+    }
+
     override fun showProgress() {
     }
 
@@ -125,17 +130,12 @@ class BusHosttActivity : BusTricketBaseActivity(), IbusTransportListView, Transp
 
 
     private fun addPassengerActivity(retrunTriple: Boolean, key: String) {
-        val newFragment = BusPassengerBoothDepartureActivity(retrunTriple);
+        val newFragment = BusPassengerBoothDepartureActivity(retrunTriple)
         val transaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.fragment_container, newFragment)
         transaction.addToBackStack(key)
 //        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
         transaction.commit()
-    }
-
-    override fun onAttachFragment(fragment: Fragment?) {
-        super.onAttachFragment(fragment)
-
     }
 
     private fun initViewModel() {
@@ -147,7 +147,7 @@ class BusHosttActivity : BusTricketBaseActivity(), IbusTransportListView, Transp
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.getItemId()) {
+        when (item.itemId) {
             R.id.sort -> {
                 val busTicketStatusFragment = SortFragmentDialog()
                 busTicketStatusFragment.setOnClickListener(object : SortFragmentDialog.OnSortClickListener {

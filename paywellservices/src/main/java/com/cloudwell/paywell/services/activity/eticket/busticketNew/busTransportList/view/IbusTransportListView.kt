@@ -3,6 +3,7 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew.busTranspor
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.base.BaseView
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatCheckBookAPI
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.RequestScheduledata
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.scheduledata.ScheduleDataItem
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ResposeTicketConfirm
 
 /**
@@ -16,4 +17,5 @@ interface IbusTransportListView : BaseView {
     fun setBoardingPoint(allBoothNameInfo: MutableSet<String>)
     fun saveRequestScheduledata(p: RequestScheduledata)
     fun saveExtraCharge(double: Double)
+    fun showFilterList(filterTypeDepartingTime: List<ScheduleDataItem>)
 }

@@ -60,8 +60,8 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
     var lastSeatBusSeat = mutableListOf<SeatstructureDetailsItem>()
 
 
-    internal lateinit var model: TripScheduleInfoAndBusSchedule;
-    internal lateinit var requestBusSearch: RequestBusSearch;
+    internal lateinit var model: TripScheduleInfoAndBusSchedule
+    internal lateinit var requestBusSearch: RequestBusSearch
 
     var bus = Transport()
 
@@ -104,7 +104,7 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
 
 
         busListAdapter = CustomSpnerForBoardingPoint(requireContext().applicationContext, valueList)
-        boothList.setAdapter(busListAdapter as CustomSpnerForBoardingPoint)
+        boothList.adapter = busListAdapter as CustomSpnerForBoardingPoint
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -238,7 +238,7 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
 
                 seatBlockRequestPojo?.optionInfo?.add(opif)
 
-                viewMode.seatBlockRequestPojo.value = seatBlockRequestPojo;
+                viewMode.seatBlockRequestPojo.value = seatBlockRequestPojo
 
                 viewMode.retrunBordingPoint.value = selectedItem
                 viewMode.retrunScheduleDataItem.value = scheduleDataItem
@@ -281,13 +281,13 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
     }
 
     private fun hiddenButtonSheet() {
-        bottomSheetBehavior.setHideable(true);//Important to add
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        bottomSheetBehavior.isHideable = true//Important to add
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
     }
 
     private fun showButtonSheet() {
-        bottomSheetBehavior.setHideable(false);//Important to add
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        bottomSheetBehavior.isHideable = false//Important to add
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
     private fun displaySeatPatten() {
@@ -323,14 +323,14 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
                 view.setBackgroundResource(R.drawable.ic_seat_booked)
                 view.setTextColor(Color.WHITE)
                 view.tag = count
-                view.setText(model.seatNo)
+                view.text = model.seatNo
                 view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 9f)
                 layout!!.addView(view)
                 seatViewList.add(view)
                 count++
                 view.setOnClickListener(this)
             } else if (seatsPattenStr.get(index) == 'A') {
-                val model = allBusSeat?.get(count)
+                val model = allBusSeat.get(count)
                 val view = TextView(activity?.applicationContext)
                 val layoutParams = LinearLayout.LayoutParams(seatSize, seatSize)
                 layoutParams.setMargins(seatGaping, seatGaping, seatGaping, seatGaping)
@@ -339,7 +339,7 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
                 view.id = count
                 view.gravity = Gravity.CENTER
                 view.setBackgroundResource(R.drawable.ic_seat_avaliable)
-                view.setText(model.seatNo)
+                view.text = model.seatNo
                 view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 9f)
                 view.setTextColor(Color.BLACK)
                 view.tag = count
@@ -348,7 +348,7 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
                 view.setOnClickListener(this)
                 count++
             } else if (seatsPattenStr.get(index) == 'R') {
-                val model = allBusSeat?.get(count)
+                val model = allBusSeat.get(count)
                 val view = TextView(requireActivity())
                 val layoutParams = LinearLayout.LayoutParams(seatSize, seatSize)
                 layoutParams.setMargins(seatGaping, seatGaping, seatGaping, seatGaping)
@@ -357,7 +357,7 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
                 view.id = count
                 view.gravity = Gravity.CENTER
                 view.setBackgroundResource(R.drawable.ic_seat_booked)
-                view.setText(model.seatNo)
+                view.text = model.seatNo
                 view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 9f)
                 view.setTextColor(Color.WHITE)
                 view.tag = count
@@ -467,6 +467,11 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
     }
 
     override fun saveExtraCharge(double: Double) {
+
+    }
+
+    override fun showFilterList(filterTypeDepartingTime: List<ScheduleDataItem>) {
+
 
     }
 

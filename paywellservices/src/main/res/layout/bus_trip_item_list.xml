@@ -114,13 +114,27 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
         android:text="@string/available_seat"
+        android:textColor="#707070"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+    <TextView
+        android:id="@+id/textView68"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:text="Ticket Cancelable"
         android:textColor="#707070"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView25"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView26"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/tvAvailableSeat"
@@ -138,11 +152,24 @@
         android:id="@+id/tvDepartureTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=": 9:12 AM"
-        android:textStyle="bold"
+        android:text=": 9:12 AM(Morning)"
         android:textColor="@color/color_tangaroa"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/textView25"
-        app:layout_constraintStart_toStartOf="@+id/tvCoachNo"/>
+        app:layout_constraintStart_toStartOf="@+id/tvCoachNo" />
+
+    <TextView
+        android:id="@+id/tvTicketCancelable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text=": YES "
+        android:textColor="@color/color_tangaroa"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textView68"
+        app:layout_constraintStart_toEndOf="@+id/textView68"
+        app:layout_constraintTop_toTopOf="@+id/textView68" />
 
     <TextView
         android:id="@+id/tvCoachNo"

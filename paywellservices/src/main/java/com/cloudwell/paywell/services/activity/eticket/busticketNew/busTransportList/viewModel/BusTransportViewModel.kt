@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTicketRepository.BusTicketRepository
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.model.SearchFilter
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BoothInfo
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.Passenger
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.RequestScheduledata
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.SeatBlockRequestPojo
@@ -15,6 +15,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.viewMode.Bus
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.google.gson.Gson
 import org.json.JSONObject
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -51,7 +52,7 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
     var view: IbusTransportListView? = null
 
 
-    val departureScheduleData = mutableListOf<ScheduleDataItem>();
+    val departureScheduleData = mutableListOf<ScheduleDataItem>()
 
 
     fun setIbusTransportListView(ibusTransportListView: IbusTransportListView) {
@@ -68,44 +69,99 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
     }
 
 
-    fun onSort(filterPara: SearchFilter, list: ArrayList<ScheduleDataItem>?) {
+    fun onSort(filterPara: SearchFilter, retrunTriple: Boolean) {
         view?.showProgress()
 
-        val filterType = list?.filter {
-            if (filterPara.coachType.equals("AC")) {
+        var list = ArrayList<ScheduleDataItem>()
+        if (retrunTriple == true) {
+            list = returnTripTransportListMutableLiveData.value!!
+        } else {
+            list = singleTripTranportListMutableLiveData.value!!
+        }
+
+        val filterType = list.filter {
+            if (filterPara.coachType.equals("Ac")) {
                 it.coachType.equals("Ac")
-            } else if (filterPara.coachType.equals("Non AC")) {
-                it.coachType.equals("Non AC")
+            } else if (filterPara.coachType.equals("NonAc")) {
+                it.coachType.equals("NonAc")
+            } else if (filterPara.coachType.equals("All")) {
+                it.coachType.equals("Ac") || it.coachType.equals("NonAc")
             } else {
                 it.coachType.equals("")
             }
         }
 
-        val filterTime = list?.filter {
-            if (filterPara.coachType.equals("AC")) {
-                it.coachType.equals("Ac")
-            } else if (filterPara.coachType.equals("Non AC")) {
-                it.coachType.equals("Non AC")
+
+        val filterTypeDepartingTime = filterType.filter {
+            if (filterPara.departingTime.equals("Morning")) {
+                it.departingTime.equals("Morning")
+            } else if (filterPara.departingTime.equals("AfterNoon")) {
+                it.departingTime.equals("AfterNoon")
+            } else if (filterPara.departingTime.equals("Evening")) {
+                it.departingTime.equals("Evening")
+            } else if (filterPara.departingTime.equals("Night")) {
+                it.departingTime.equals("Night")
+            } else if (filterPara.departingTime.equals("Any")) {
+                it.departingTime.equals("Morning") || it.departingTime.equals("AfterNoon") || it.departingTime.equals("Evening") || it.departingTime.equals("Night")
             } else {
                 it.coachType.equals("")
             }
         }
 
-
-        Collections.sort(filterTime) { item1: ScheduleDataItem, item2: ScheduleDataItem ->
+        Collections.sort(filterTypeDepartingTime) { item1: ScheduleDataItem, item2: ScheduleDataItem ->
             val a = item1.fares
             val b = item2.fares
 
-            if (a > b) {
-                -1
-            } else if (a < b) {
-                1
+            if (filterPara.coachType.equals("Low Price")) {
+                if (a > b) {
+                    -1
+                } else if (a < b) {
+                    1
+                } else {
+                    0
+                }
             } else {
-                0
+                if (a > b) {
+                    1
+                } else if (a < b) {
+                    -1
+                } else {
+                    0
+                }
             }
+
         }
 
         view?.hiddenProgress()
+
+        view?.showFilterList(filterTypeDepartingTime)
+
+
+    }
+
+    private fun getTime(departingTime: String): String {
+
+
+        val sdf = SimpleDateFormat("yyyy-dd-MM strtotime")
+        val date: Date = sdf.parse(departingTime)
+        val cal = Calendar.getInstance()
+        cal.time = date
+
+
+        val c = Calendar.getInstance()
+        val timeOfDay = c[Calendar.HOUR_OF_DAY]
+
+        if (timeOfDay >= 4 && timeOfDay < 12) {
+            return "Morning"
+        } else if (timeOfDay >= 12 && timeOfDay < 6) {
+            return "After Noon"
+        } else if (timeOfDay >= 6 && timeOfDay < 8) {
+            return "Evening"
+        } else if (timeOfDay >= 8 && timeOfDay < 4) {
+            return "Night"
+        } else {
+            return "All"
+        }
 
     }
 
@@ -218,9 +274,11 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
     }
 
     fun callSeatBookAndConfirmAPI(pinNo: String, passenger: Passenger) {
+
         val m = seatBlockRequestPojo.value
-        m?.password = pinNo ?: ""
+        m?.password = pinNo
         m?.passenger = passenger
+        m?.transportType = requestScheduledata.value?.transportType ?: "0"
 
         view?.showProgress()
         BusTicketRepository().getseatBlock(m!!).observeForever {

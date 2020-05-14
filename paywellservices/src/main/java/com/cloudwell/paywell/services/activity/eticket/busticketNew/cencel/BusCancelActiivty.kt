@@ -53,7 +53,7 @@ class BusCancelActiivty : BusTricketBaseActivity() {
 
         // etTicketId.setText(bookingCancelId)
         btSumbit.setOnClickListener {
-            askForPin(etTicketId.getText().toString());
+            askForPin(etTicketId.text.toString())
         }
     }
 
@@ -78,7 +78,7 @@ class BusCancelActiivty : BusTricketBaseActivity() {
                 dialogInterface.dismiss()
                 PIN_NO = pinNoET.text.toString()
                 if (cd!!.isConnectingToInternet) {
-                    val userName = mAppHandler!!.userName
+                    val userName = mAppHandler.userName
                     //submitCancelRequest(userName, PIN_NO, bookingId, cancelReason, "json")
                 } else {
                     val snackbar = Snackbar.make(cancelMainLayout!!, R.string.connection_error_msg, Snackbar.LENGTH_LONG)

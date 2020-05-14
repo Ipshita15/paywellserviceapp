@@ -30,7 +30,7 @@ import retrofit2.Response
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 19/2/19.
  */
-class BusTicketRepository() {
+class BusTicketRepository {
 
     private var mAppHandler: AppHandler? = null
     private var mContext: Context? = null
@@ -85,7 +85,7 @@ class BusTicketRepository() {
     }
 
 
-    public fun getBusScheduleDate(transport_id: String, uniqueKey: String): MutableLiveData<String> {
+    fun getBusScheduleDate(transport_id: String, uniqueKey: String): MutableLiveData<String> {
         mAppHandler = AppHandler.getmInstance(mContext)
 
         val userName = mAppHandler!!.userName
@@ -227,7 +227,7 @@ class BusTicketRepository() {
 
 
                     val priceObject = model.getJSONObject("ticket_price")
-                    val ticket_price = priceObject.toString();
+                    val ticket_price = priceObject.toString()
 
 
                     var allowedSeatStoreString = ""
@@ -434,7 +434,7 @@ class BusTicketRepository() {
 
             override fun onFailure(call: Call<BusLunCityResponse>, t: Throwable) {
 
-                data.postValue(null);
+                data.postValue(null)
 
             }
         })
@@ -453,7 +453,7 @@ class BusTicketRepository() {
         ApiUtils.getAPIServiceV2().getScheduleData(schedulePojo).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-                    data.value =    response.body()?.string();
+                    data.value = response.body()?.string()
 
                 }
             }
@@ -595,7 +595,7 @@ class BusTicketRepository() {
 
             }
         })
-        return data;
+        return data
 
     }
 
@@ -631,6 +631,7 @@ class BusTicketRepository() {
         m.deviceId = schedulePojo.deviceId
         m.trxId = trxId
         m.username = schedulePojo.username
+        m.transportType = schedulePojo.transportType
 
         val data = MutableLiveData<ResposeTicketConfirm>()
 

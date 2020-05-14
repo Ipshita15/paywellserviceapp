@@ -23,6 +23,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTick
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.Passenger
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.RequestScheduledata
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.scheduledata.ScheduleDataItem
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ResposeTicketConfirm
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.BusSucessMsgWithFinlishDialog
 import com.cloudwell.paywell.services.constant.AllConstant
@@ -46,13 +47,17 @@ class BusPassengerBoothDepartureActivity(var isRetrunTriple: Boolean) : BaseFrag
 
     }
 
+    override fun showFilterList(filterTypeDepartingTime: List<ScheduleDataItem>) {
+
+    }
+
     override fun showShowConfirmDialog(it: ResposeTicketConfirm) {
         val t = BusSucessMsgWithFinlishDialog(it, isRetrunTriple)
         t.show(fragmentManager, "dialog")
         t.setOnClickListener(object : BusSucessMsgWithFinlishDialog.MyClickListener {
             override fun onClick() {
                 val intent = Intent(activity, BusTicketMenuActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(intent)
 
             }
@@ -116,7 +121,7 @@ class BusPassengerBoothDepartureActivity(var isRetrunTriple: Boolean) : BaseFrag
     internal var totalAPIValuePrices: String = ""
     var seatLevel = ""
     var seatId = ""
-    var password = "";
+    var password = ""
 
     lateinit var busHosttActivity: BusHosttActivity
 
@@ -200,7 +205,7 @@ class BusPassengerBoothDepartureActivity(var isRetrunTriple: Boolean) : BaseFrag
         }
 
 
-        return  view;
+        return view
 
 
     }
@@ -303,7 +308,7 @@ class BusPassengerBoothDepartureActivity(var isRetrunTriple: Boolean) : BaseFrag
             }
         }
 
-        val id = radioGroup.getCheckedRadioButtonId();
+        val id = radioGroup.checkedRadioButtonId
         val gender = when (id) {
             R.id.maleRB -> "male"
             R.id.femaleRB -> "female"
@@ -321,7 +326,7 @@ class BusPassengerBoothDepartureActivity(var isRetrunTriple: Boolean) : BaseFrag
         //val boothInfo = allBoothInfo.get(boothList.selectedItemPosition)
 
 
-        askForPin(busHosttActivity.isInternetConnection(), passenger)
+        askForPin(busHosttActivity.isInternetConnection, passenger)
 
         // val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).rid)
 
@@ -351,10 +356,10 @@ class BusPassengerBoothDepartureActivity(var isRetrunTriple: Boolean) : BaseFrag
                 if (internetConnection) {
                     viewMode.callSeatBookAndConfirmAPI(PIN_NO, passenger)
                 } else {
-                    busHosttActivity.showBusTicketErrorDialog(getString(R.string.connection_error_msg));
+                    busHosttActivity.showBusTicketErrorDialog(getString(R.string.connection_error_msg))
                 }
             } else {
-                busHosttActivity.showBusTicketErrorDialog(getString(R.string.pin_no_error_msg));
+                busHosttActivity.showBusTicketErrorDialog(getString(R.string.pin_no_error_msg))
 
             }
         }

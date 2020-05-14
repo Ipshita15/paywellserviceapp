@@ -4,27 +4,30 @@ import com.google.gson.annotations.SerializedName
 
 data class SeatBlockRequestPojo(
 
-	@field:SerializedName("roundTrip")
-	var roundTrip: String = "",
+		@field:SerializedName("roundTrip")
+		var roundTrip: String = "",
 
-	@field:SerializedName("password")
-	var password: String = "",
+		@field:SerializedName("password")
+		var password: String = "",
 
-	@field:SerializedName("passenger")
-	var passenger: Passenger? = null,
+		@field:SerializedName("passenger")
+		var passenger: Passenger? = null,
 
-	@field:SerializedName("toCity")
-	var toCity: String = "",
+		@field:SerializedName("toCity")
+		var toCity: String = "",
 
-	@field:SerializedName("optionInfo")
-	var optionInfo: ArrayList<OptionInfoItem> = ArrayList(),
+		@field:SerializedName("optionInfo")
+		var optionInfo: ArrayList<OptionInfoItem> = ArrayList(),
 
-	@field:SerializedName("fromCity")
-	var fromCity: String = "",
+		@field:SerializedName("fromCity")
+		var fromCity: String = "",
 
-	@field:SerializedName("deviceId")
-	var deviceId: String = "",
+		@field:SerializedName("deviceId")
+		var deviceId: String = "",
 
-	@field:SerializedName("username")
-	var username: String = ""
+		@field:SerializedName("username")
+		var username: String = "",
+
+		@field:SerializedName("transportType")
+		var transportType: String = ""
 )

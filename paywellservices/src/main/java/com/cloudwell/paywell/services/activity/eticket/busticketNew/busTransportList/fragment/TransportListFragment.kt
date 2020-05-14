@@ -68,36 +68,37 @@ class TransportListFragment(val requestScheduledata: RequestScheduledata, val is
 
             val m = SearchFilter()
 
-            val checkedRadioButtonId = view.radioGroupJounyTime.getCheckedRadioButtonId();
+            val checkedRadioButtonId = view.radioGroupJounyTime.checkedRadioButtonId
             val departingTime = when (checkedRadioButtonId) {
-                R.id.radioJourneyTimeAll -> "All"
+                R.id.radioJourneyTimeAll -> "Any"
                 R.id.radioJourneyTimeAllMorning -> "Morning"
                 R.id.radioJourneyTimeAllEvening -> "Evening"
+                R.id.radioJourneyTimeAfterNoon -> "AfterNoon"
                 R.id.radioJourneyTimeAllNight -> "Night"
 
-                else -> "All"
+                else -> "Any"
             }
             m.departingTime = departingTime
 
 
-            val id = view.radioGroupJounryType.getCheckedRadioButtonId();
+            val id = view.radioGroupJounryType.checkedRadioButtonId
             val coachType = when (id) {
                 R.id.radioBtmAll -> "All"
-                R.id.radioBtmAC -> "AC"
-                R.id.radioBtmNonAC -> "NonAC"
+                R.id.radioBtmAC -> "Ac"
+                R.id.radioBtmNonAC -> "NonAc"
                 else -> "All"
             }
             m.coachType = coachType
 
 
-            val radioGroupSortByid = view.radioGroupSortBy.getCheckedRadioButtonId();
+            val radioGroupSortByid = view.radioGroupSortBy.checkedRadioButtonId
             val sortBy = when (radioGroupSortByid) {
                 R.id.radioLowPrice -> "Low Price"
                 R.id.radioHighPrice -> "HighPrice"
                 else -> "Low Price"
             }
             m.sortBy = sortBy
-            viewMode.onSort(m, viewMode.singleTripTranportListMutableLiveData.value)
+            viewMode.onSort(m, isRetrunTriple)
 
 
         }
@@ -210,12 +211,13 @@ class TransportListFragment(val requestScheduledata: RequestScheduledata, val is
 
     }
 
+    override fun showFilterList(filterTypeDepartingTime: List<ScheduleDataItem>) {
+        setAdapter(filterTypeDepartingTime)
+
+    }
+
     fun setAdapter(data: List<ScheduleDataItem>) {
         layoutNoSerachFound.visibility = View.INVISIBLE
-       // viewMode.cancelAllRequest()
-
-       // Fresco.initialize(applicationContext);
-
 
         shimmer_recycler_view.visibility = View.VISIBLE
         layoutManager = CustomGridLayoutManager(activity, true)
@@ -231,7 +233,7 @@ class TransportListFragment(val requestScheduledata: RequestScheduledata, val is
                         m?.resSeatInfo = resSeatInfo
                         m?.let {
                             viewMode.singleTripTranportListMutableLiveData.value?.set(position, it)
-                            busTripListAdapter.notifyItemRangeChanged(position, viewMode.singleTripTranportListMutableLiveData.value!!.size);
+                            busTripListAdapter.notifyItemRangeChanged(position, viewMode.singleTripTranportListMutableLiveData.value!!.size)
                             busTripListAdapter.notifyDataSetChanged()
                         }
 
@@ -240,7 +242,7 @@ class TransportListFragment(val requestScheduledata: RequestScheduledata, val is
                         m?.resSeatInfo = resSeatInfo
                         m?.let {
                             viewMode.singleTripTranportListMutableLiveData.value?.set(position, it)
-                            busTripListAdapter.notifyItemRangeChanged(position, viewMode.returnTripTransportListMutableLiveData.value!!.size);
+                            busTripListAdapter.notifyItemRangeChanged(position, viewMode.returnTripTransportListMutableLiveData.value!!.size)
                             busTripListAdapter.notifyDataSetChanged()
                         }
 

@@ -29,9 +29,15 @@ class BusTripListAdapter(val items: List<ScheduleDataItem>, val context: Context
 
         holder.tvTransportNameAndType.text = (model.companyName?.toUpperCase() ?: "") + ", " + isAc
         holder.tvCoachNo.text = ": " + model.coachNo
-        holder.tvDepartureTime.text = ": " + (model.departureTime)
+        holder.tvDepartureTime.text = ": " + model.departureTime + " (" + model.departingTime + ")"
 
-        val prices = model.fares?.plus(extraCharge)
+        if (model.isTicketCancelable == 1) {
+            holder.tvTicketCancelable.text = ": Yes"
+        } else {
+            holder.tvTicketCancelable.text = ": No"
+        }
+
+        val prices = model.fares.plus(extraCharge)
 
         holder.tvPrices.text = DecimalFormat("#").format(prices)
 
@@ -41,11 +47,12 @@ class BusTripListAdapter(val items: List<ScheduleDataItem>, val context: Context
             val userName = AppHandler.getmInstance(AppController.getContext()).userName
 
             val po = GetSeatViewRquestPojo()
-            po.departureDate = requestScheduledata.departingDate
+            po.departureDate = requestScheduledata.departingDate + "(" + requestScheduledata.departingTime + ")"
             po.fromCity = requestScheduledata.departure
             po.toCity = requestScheduledata.destination
             po.optionId = model.busServiceType+"_"+model.departureId
             po.username = userName
+            po.transportType = requestScheduledata.transportType
 
             holder.progressBar.visibility = View.VISIBLE
             BusTicketRepository().getSeatView(po).observeForever {
@@ -102,5 +109,6 @@ class ViewHolderNew(view: View) : RecyclerView.ViewHolder(view) {
     val tvAvailableSeat = view.tvAvailableSeat
     val ivSelect = view.ivSelect
     val tvPrices = view.TransporttvPrices
+    val tvTicketCancelable = view.tvTicketCancelable
     val progressBar = view.progressBar
 }

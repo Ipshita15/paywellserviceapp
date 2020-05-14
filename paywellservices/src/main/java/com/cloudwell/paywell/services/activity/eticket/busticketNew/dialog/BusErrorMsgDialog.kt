@@ -29,7 +29,7 @@ class BusErrorMsgDialog(val message: String): BaseDialogFragment() {
         if (dialog != null) {
             val width = ViewGroup.LayoutParams.MATCH_PARENT
             val height = ViewGroup.LayoutParams.WRAP_CONTENT
-            dialog.getWindow().setLayout(width, height)
+            dialog.window.setLayout(width, height)
         }
     }
 

@@ -58,7 +58,10 @@ data class ScheduleDataItem(
 	val isTicketCancelable: Int? = null,
 
         @field:SerializedName("departure_time")
-	val departureTime: String? = null,
+        val departureTime: String? = null,
+
+        @field:SerializedName("departingTime")
+        val departingTime: String? = null,
 
         @field:SerializedName("start_counter")
 	val startCounter: String? = null,
