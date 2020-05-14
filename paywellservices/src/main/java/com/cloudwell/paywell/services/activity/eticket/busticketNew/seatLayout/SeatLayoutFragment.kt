@@ -9,26 +9,34 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.LinearLayout
+import android.widget.Spinner
+import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.activity.base.newBase.BaseFragment
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.BusHosttActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.viewModel.BusTransportViewModel
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.OptionInfoItem
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.RequestScheduledata
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.SeatBlockRequestPojo
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.scheduledata.ScheduleDataItem
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.seatview.BordingPoint
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.seatview.SeatstructureDetailsItem
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ResposeTicketConfirm
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.seatLayout.adapter.CustomSpnerForBoardingPoint
+import com.cloudwell.paywell.services.app.AppHandler
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.bottom_seat_layout.*
 import kotlinx.android.synthetic.main.bottom_seat_layout.view.*
 import org.json.JSONObject
 import java.text.DecimalFormat
-import kotlin.collections.ArrayList
 
-class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, retrunTriple: Boolean) : Fragment() , View.OnClickListener, IbusTransportListView {
+class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTriple: Boolean) : BaseFragment(), View.OnClickListener, IbusTransportListView {
 
     private var listener: SeatLayoutFragment.OnFragmentInteractionListener? = null
     private lateinit var viewMode: BusTransportViewModel
@@ -64,34 +72,19 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, retrunTriple: B
     var totalPrices = 0.0
     private lateinit var seatLayoutBottonSheet: ConstraintLayout
     private lateinit var busListAdapter: Any
-    private lateinit var boothList:Spinner
+    private lateinit var boothList: Spinner
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-
         val view = inflater.inflate(R.layout.fragment_seat_layout, container, false)
 
-        //        val stringExtra = intent.getStringExtra("jsonData")
-//        model = Gson().fromJson(stringExtra, TripScheduleInfoAndBusSchedule::class.java)
-//
-//        val stringExtra2 = intent.getStringExtra("requestBusSearch")
-//        requestBusSearch = Gson().fromJson(stringExtra2, RequestBusSearch::class.java)
-//
-//        bus = AppStorageBox.get(applicationContext, AppStorageBox.Key.SELETED_BUS_INFO) as Transport
-//
-//        val title = bus.busname + " " + BusCalculationHelper.getACType(model) + "/" + (model.busSchedule?.scheduleTime
-//                ?: "")
-//        setToolbar(title, resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
-//
-//
         seatLayoutBottonSheet = view.seatLayoutBottonSheet
-        initilizationReviewBottomSheet(seatLayoutBottonSheet)
-//
         rootSeatLayout = view.findViewById<ViewGroup>(R.id.layoutSeat)
         boothList = view.findViewById(R.id.boothList)
 
+        initilizationReviewBottomSheet(seatLayoutBottonSheet)
         displaySeatLayoutv2()
         displaySeatPatten()
         setupBoardingpont()
@@ -103,14 +96,15 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, retrunTriple: B
 
 
 
+
     private fun setupBoardingpont() {
 
-        val values = scheduleDataItem.resSeatInfo?.seatviewResponse?.boothInfoHashMap?.values
+        val values = scheduleDataItem.resSeatInfo?.seatviewResponse?.seatViewData?.bordingPoints
         val valueList = ArrayList(values)
 
 
-        busListAdapter = CustomSpnerForBoardingPoint(requireContext().applicationContext,valueList)
-        boothList.setAdapter(busListAdapter as ArrayAdapter<String>)
+        busListAdapter = CustomSpnerForBoardingPoint(requireContext().applicationContext, valueList)
+        boothList.setAdapter(busListAdapter as CustomSpnerForBoardingPoint)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -150,55 +144,52 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, retrunTriple: B
             var row: Int
             var coloum: Int
 
-                row = 0
-                while (row < totalRowsInt) {
-                    coloum = 0
+            row = 0
+            while (row < totalRowsInt) {
+                coloum = 0
 
-                    seatsPattenStr = seatsPattenStr + "/"
+                seatsPattenStr = seatsPattenStr + "/"
 
 
-                    while (coloum < indexTotalColumes) {
-                        val indexI = row + 1
-                        val indexJ = coloum + 1
+                while (coloum < indexTotalColumes) {
+                    val indexI = row + 1
+                    val indexJ = coloum + 1
 
-                        val xy = "$indexI$indexJ"
+                    val xy = "$indexI$indexJ"
 
-                        val item = allBusSeat.get(indexCounter)
+                    val item = allBusSeat.get(indexCounter)
 
-                        if (xy.equals("${item.xAxis}${item.yAxis}")){
-                            Log.e("L:",""+item.seatNo)
+                    if (xy.equals("${item.xAxis}${item.yAxis}")) {
+                        Log.e("L:", "" + item.seatNo)
 
-                            seatsPattenStr = seatsPattenStr +getSeatSymbolWithSymbol(item)
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithSymbol(item)
 
-                            indexCounter++
-                        }else{
-                            seatsPattenStr = seatsPattenStr + "_"
-                        }
-                        coloum++
+                        indexCounter++
+                    } else {
+                        seatsPattenStr = seatsPattenStr + "_"
                     }
-                    seatsPattenStr = seatsPattenStr + "/"
-                    row++
+                    coloum++
                 }
+                seatsPattenStr = seatsPattenStr + "/"
+                row++
+            }
 
-        }catch (e: Exception){
-            Log.e("", ""+e)
+        } catch (e: Exception) {
+            Log.e("", "" + e)
         }
-
 
 
     }
 
     private fun getSeatSymbolWithSymbol(item: SeatstructureDetailsItem): String {
-        var data =""
-        if (item.status.equals("Available")){
+        var data = ""
+        if (item.status.equals("Available")) {
             data = "A"
-        }else {
+        } else {
             data = "U"
         }
         return data
     }
-
-
 
 
     private fun initilizationReviewBottomSheet(seatLayoutBottonSheet: ConstraintLayout) {
@@ -227,42 +218,62 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, retrunTriple: B
             }
         })
 
-        seatLayoutBottonSheet.btNext.setOnClickListener{
+        seatLayoutBottonSheet.ivSelect.setOnClickListener {
+
+            val appHandler = AppHandler.getmInstance(requireContext())
 
 
-            Log.e("", "")
+            if (isRetrunTriple) {
+                val value = viewMode.requestScheduledata.value
+                val selectedItem = boothList.selectedItem as BordingPoint
 
-            listener?.onItemNextButtonClick()
+                val seatBlockRequestPojo = viewMode.seatBlockRequestPojo.value
+                seatBlockRequestPojo?.roundTrip = "2"
+                val opif = OptionInfoItem()
+                opif.boardingPointId = "" + selectedItem.reportingBranchId
+                opif.departureDate = value?.returnDate.toString()
+                opif.optionId = scheduleDataItem.busServiceType + "_" + scheduleDataItem.busId.toString()
+                opif.seat = seatIds
+                opif.seatLevel = seatLevel
+
+                seatBlockRequestPojo?.optionInfo?.add(opif)
+
+                viewMode.seatBlockRequestPojo.value = seatBlockRequestPojo;
+
+                viewMode.retrunBordingPoint.value = selectedItem
+                viewMode.retrunScheduleDataItem.value = scheduleDataItem
+                viewMode.retrunTotalAmount.value = totalPrices
+
+            } else {
+                val value = viewMode.requestScheduledata.value
+                val selectedItem = boothList.selectedItem as BordingPoint
+
+                val m = SeatBlockRequestPojo()
+                m.deviceId = appHandler.androidID
+                m.fromCity = value?.departure.toString()
+                m.password = ""
+                m.roundTrip = "1"
+                m.toCity = value?.destination.toString()
+                m.username = appHandler.userName
+                val opif = OptionInfoItem()
+                opif.boardingPointId = "" + selectedItem.reportingBranchId
+                opif.departureDate = value?.departingDate.toString()
+                opif.optionId = scheduleDataItem.busServiceType + "_" + scheduleDataItem.busId.toString()
+                opif.seat = seatIds
+                opif.seatLevel = seatLevel
+                m.optionInfo.add(opif)
+                viewMode.seatBlockRequestPojo.value = m
+
+                viewMode.singleBordingPoint.value = selectedItem
+                viewMode.singleScheduleDataItem.value = scheduleDataItem
+                viewMode.singleTotalAmount.value = totalPrices
 
 
-//            val toJson = Gson().toJson(model)
-//            val requestBusSearchJson = Gson().toJson(requestBusSearch)
-//
-//            var counter = 0;
-//
-//            allBusSeat.forEach {
-//                if (it.isUserSeleted) {
-//                    counter++;
-//                }
-//            }
-//
-//            val transport = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.SELETED_BUS_INFO) as Transport
-//
-//
-//            val busBaseTicketPrices = BusCalculationHelper.getPricesWithExtraAmount(model.busSchedule?.ticketPrice, requestBusSearch.date, transport = transport, isExtraAmount = false).toDouble()
-//            val totalAPIValuePrices = busBaseTicketPrices.times(counter)
-//
-//
-//            val intent = Intent(this, BusPassengerBoothDepartureActivity::class.java)
-//            intent.putExtra("requestBusSearch", requestBusSearchJson)
-//            intent.putExtra("jsonData", toJson)
-//            intent.putExtra("seatLevel", seatLevel)
-//            intent.putExtra("seatId", seatIds)
-//            intent.putExtra("totalPrices", "" + totalPrices)
-//            intent.putExtra("totalAPIValuePrices", "" + totalAPIValuePrices)
-//            startActivity(intent)
+            }
+
+            listener?.onItemNextButtonClick(isRetrunTriple)
+
         }
-
 
         hiddenButtonSheet()
 
@@ -390,7 +401,6 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, retrunTriple: B
     }
 
     private fun updateSeatLayuout() {
-        //displaySeatLayout()
         updatePriceLayuout()
 
     }
@@ -405,7 +415,7 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, retrunTriple: B
                 seatLevel = seatLevel + it.seatNo + ","
                 seatIds = seatIds + it.seatid + ","
 
-                totalPrices = totalPrices + it.fare+ viewMode.extraCharge.value!!
+                totalPrices = totalPrices + it.fare + viewMode.extraCharge.value!!
 
             }
         }
@@ -444,7 +454,7 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, retrunTriple: B
 
     }
 
-    override fun showShowConfirmDialog(it: ResPaymentBookingAPI) {
+    override fun showShowConfirmDialog(it: ResposeTicketConfirm) {
 
     }
 
@@ -472,9 +482,22 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, retrunTriple: B
 
     }
 
-
     interface OnFragmentInteractionListener {
-        fun onItemNextButtonClick()
+        fun onItemNextButtonClick(retrunTriple: Boolean)
     }
+
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        val busHosttActivity = activity as BusHosttActivity
+        if (!isRetrunTriple) {
+            busHosttActivity.setToolbar("Departure Ticket", resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
+        } else {
+            busHosttActivity.setToolbar("Return Ticket", resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
+        }
+
+    }
+
 
 }

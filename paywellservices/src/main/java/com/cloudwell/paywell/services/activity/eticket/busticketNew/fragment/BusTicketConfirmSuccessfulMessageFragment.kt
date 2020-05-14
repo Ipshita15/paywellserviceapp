@@ -44,6 +44,7 @@ class BusTicketConfirmSuccessfulMessageFragment : DialogFragment() {
         v.tvBookingId.text = model.ticketInfo?.bookingInfoId
 
 
+
         v.tvOk.setOnClickListener {
             onClicklistener?.onClick()
         }

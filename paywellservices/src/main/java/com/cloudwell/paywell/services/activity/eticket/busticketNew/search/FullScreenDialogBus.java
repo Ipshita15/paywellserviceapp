@@ -21,7 +21,6 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.CitiesListItem;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.search.view.ICitySerach;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.search.viewModel.CitySearchViewModel;
-import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.app.storage.AppStorageBox;
 import com.google.gson.Gson;
@@ -37,6 +36,8 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Created by YASIN on 24,June,2019
@@ -58,6 +59,8 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
 
     CitySearchViewModel viewMode;
     List<CitiesListItem> cityList;
+
+    Boolean isBusTicket = false;
 
 
     @Override
@@ -109,7 +112,9 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
         actionSearch();
         initViewModel();
 
-        if (AppController.isBusTicket){
+        isBusTicket = (Boolean) AppStorageBox.get(requireNonNull(getContext()).getApplicationContext(), AppStorageBox.Key.IS_BUS_Ticket_USER_FLOW);
+
+        if (isBusTicket) {
             predefineDataTL.setVisibility(View.VISIBLE);
         }else {
             predefineDataTL.setVisibility(View.GONE);
@@ -163,7 +168,7 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
         pojo.setDeviceId(mAppHandler.getAndroidID());
         pojo.setUsername(mAppHandler.getUserName());
 
-        if (AppController.isBusTicket){
+        if (isBusTicket) {
             pojo.setTransportType("1");
         }else {
             pojo.setTransportType("0");
@@ -265,7 +270,7 @@ public class FullScreenDialogBus extends DialogFragment implements View.OnClickL
     }
 
     private void setCityDataToSP(String toOrFrom, CitiesListItem city) {
-        if (AppController.isBusTicket){
+        if (isBusTicket) {
             if (toOrFrom.equals(BusCitySearchActivity.FROM_STRING)) {
                 AppStorageBox.put(getActivity(), AppStorageBox.Key.BUS_LEAVING_FROM_CITY, new Gson().toJson(city));
             } else {

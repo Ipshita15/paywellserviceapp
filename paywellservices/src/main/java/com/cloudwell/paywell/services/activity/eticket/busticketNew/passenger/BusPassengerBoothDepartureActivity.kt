@@ -3,11 +3,8 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew.passenger
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.text.Editable
 import android.text.InputType
-import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -16,30 +13,25 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
+import com.cloudwell.paywell.services.activity.base.newBase.BaseFragment
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.BusHosttActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.viewModel.BusTransportViewModel
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.BusTicketConfirmFragment
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.BusTicketConfirmSuccessfulMessageFragment
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.BusTicketStatusFragment
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.fragment.MyClickListener
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.Passenger
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.RequestScheduledata
-import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ResposeTicketConfirm
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.BusSucessMsgWithFinlishDialog
 import com.cloudwell.paywell.services.constant.AllConstant
-import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
-import com.google.android.material.snackbar.Snackbar
-import com.google.gson.Gson
-import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_bus_booth_departure.*
-import org.json.JSONObject
+import kotlinx.android.synthetic.main.activity_bus_booth_departure.view.*
+import java.text.DecimalFormat
 
 
-class BusPassengerBoothDepartureActivity : Fragment(), IbusTransportListView {
+class BusPassengerBoothDepartureActivity(var isRetrunTriple: Boolean) : BaseFragment(), IbusTransportListView {
     override fun setBoardingPoint(allBoothNameInfo: MutableSet<String>) {
 
 
@@ -54,18 +46,17 @@ class BusPassengerBoothDepartureActivity : Fragment(), IbusTransportListView {
 
     }
 
-    override fun showShowConfirmDialog(it: ResPaymentBookingAPI) {
-//        val t = BusTicketConfirmSuccessfulMessageFragment()
-//        BusTicketConfirmSuccessfulMessageFragment.model = it
-//        t.show(supportFragmentManager, "dialog")
-//        t.setOnClickListener(object : BusTicketConfirmSuccessfulMessageFragment.MyClickListener {
-//            override fun onClick() {
-//                val intent = Intent(applicationContext, BusTicketMenuActivity::class.java)
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                startActivity(intent)
-//
-//            }
-//        })
+    override fun showShowConfirmDialog(it: ResposeTicketConfirm) {
+        val t = BusSucessMsgWithFinlishDialog(it, isRetrunTriple)
+        t.show(fragmentManager, "dialog")
+        t.setOnClickListener(object : BusSucessMsgWithFinlishDialog.MyClickListener {
+            override fun onClick() {
+                val intent = Intent(activity, BusTicketMenuActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent)
+
+            }
+        })
 
     }
 
@@ -88,9 +79,8 @@ class BusPassengerBoothDepartureActivity : Fragment(), IbusTransportListView {
 
     override fun showErrorMessage(message: String) {
 
-//        val t = BusTicketStatusFragment()
-//        BusTicketStatusFragment.message = message
-//        t.show(supportFragmentManager, "dialog")
+        val busHosttActivity1 = activity as BusHosttActivity
+        busHosttActivity1.showBusTicketErrorDialog(message)
 
     }
 
@@ -127,6 +117,8 @@ class BusPassengerBoothDepartureActivity : Fragment(), IbusTransportListView {
     var seatLevel = ""
     var seatId = ""
     var password = "";
+
+    lateinit var busHosttActivity: BusHosttActivity
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -201,10 +193,11 @@ class BusPassengerBoothDepartureActivity : Fragment(), IbusTransportListView {
 //        })
 //
 //
-//        btn_search.setOnClickListener {
-//            handleBookingContinueBooking()
-//        }
 
+
+        view.btn_search.setOnClickListener {
+            handleBookingContinueBooking()
+        }
 
 
         return  view;
@@ -212,9 +205,50 @@ class BusPassengerBoothDepartureActivity : Fragment(), IbusTransportListView {
 
     }
 
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+        val busHosttActivity = activity as BusHosttActivity
+        busHosttActivity.setToolbar("Passenger information", resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
+
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initViewModel()
+
+        busHosttActivity = activity as BusHosttActivity
+
+        if (!isRetrunTriple) {
+            view?.ConstLayoutRetrun?.visibility = View.GONE
+        } else {
+
+            val retrunScheduleDataItem = viewMode.retrunScheduleDataItem.value
+            val retrunBordingPoint = viewMode.retrunBordingPoint.value
+            val sbr = viewMode.seatBlockRequestPojo.value
+            val optionInfo = sbr?.optionInfo?.get(1)
+
+            view?.tvAddressRetrun?.text = "${sbr?.fromCity}-${sbr?.toCity}"
+            view?.tvBusNameRetrun?.text = retrunScheduleDataItem?.companyName + " " + retrunScheduleDataItem?.busServiceType
+            view?.tvSeatNumberRetrun?.text = "" + optionInfo?.seatLevel
+            view?.tvboadingPointRount?.text = "Boarding point at " + retrunBordingPoint?.counterName + " " + retrunBordingPoint?.scheduleTime
+        }
+
+        val singleScheduleDataItem = viewMode.singleScheduleDataItem.value
+        val singleBordingPoint = viewMode.singleBordingPoint.value
+        val sbr = viewMode.seatBlockRequestPojo.value
+        val get = sbr?.optionInfo?.get(0)
+
+        view?.tvAddressOneWay?.text = "${sbr?.toCity}-${sbr?.fromCity}"
+        view?.tvBusNameOneWay?.text = singleScheduleDataItem?.companyName + " " + singleScheduleDataItem?.busServiceType
+        view?.tvSeatNumberOneWay?.text = "" + get?.seatLevel
+        view?.tvBoardingPoint?.text = "Boarding point at " + singleBordingPoint?.counterName + " " + singleBordingPoint?.scheduleTime
+
+
+        val totalPrices = (viewMode.singleTotalAmount.value
+                ?: 0.0) + (viewMode.retrunTotalAmount.value ?: 0.0)
+        view?.tvTotalAAmont?.text = "Total amount: " + DecimalFormat("#").format(totalPrices)
+
     }
 
     private fun initViewModel() {
@@ -224,116 +258,121 @@ class BusPassengerBoothDepartureActivity : Fragment(), IbusTransportListView {
 
     }
 
-//    private fun handleBookingContinueBooking() {
-//        val fullName = fullNameTV.text.toString().trim()
-//        val mobileNumber = mobileNumberTV.text.toString().trim()
-//        val age = ageTV.text.toString().trim()
-//        val address = etAddress.text.toString().trim()
-//        val email = etEmail.text.toString().trim()
-//
-//        if (fullName.equals("")) {
-//            textInputLayoutFirstName.error = getString(R.string.invalid_full_name)
-//            return
-//        } else {
-//            textInputLayoutFirstName.error = null
-//        }
-//        if (mobileNumber.equals("")) {
-//            textInputLayoutmobileNumber.error = getString(R.string.Invalid_mobile_number)
-//            return
-//        } else {
-//            textInputLayoutmobileNumber.error = null
-//        }
-//
-//        if (age.equals("")) {
-//            textInputLayoutAge.error = getString(R.string.invalid_age)
-//            return
-//        } else {
-//            textInputLayoutAge.error = null
-//        }
-//
-//        if (address.equals("")) {
-//            textInputLayoutAddress.error = getString(R.string.invalid_address)
-//            return
-//        } else {
-//            textInputLayoutAddress.error = null
-//        }
-//
-//
-//        if (!email.equals("")) {
-//            if (email.matches(AllConstant.emailPattern.toRegex()) && email.length > 0) {
-//                textInputLayoutmobilEmail.error = ""
-//
-//            } else {
-//                textInputLayoutmobilEmail.error = getString(R.string.invalid_email)
-//                return
-//            }
-//        }
-//
-//        val boothInfo = allBoothInfo.get(boothList.selectedItemPosition)
-//
-//        val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).rid)
-//
-//        viewMode.bookingAPI(isInternetConnection, model, requestBusSearch, boothInfo, seatLevel, seatId, totalAPIValuePrices, uniqueKey)
-//
-//    }
-//
-//    private fun askForPin(it: ResSeatCheckBookAPI) {
-//        val builder = AlertDialog.Builder(this)
-//        builder.setTitle(R.string.pin_no_title_msg)
-//
-//        val pinNoET = EditText(this)
-//        val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
-//        pinNoET.gravity = Gravity.CENTER_HORIZONTAL
-//        pinNoET.layoutParams = lp
-//        pinNoET.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_TEXT_VARIATION_PASSWORD
-//        pinNoET.transformationMethod = PasswordTransformationMethod.getInstance()
-//        builder.setView(pinNoET)
-//
-//        builder.setPositiveButton(R.string.okay_btn) { dialogInterface, id ->
-//            val inMethMan = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//            inMethMan.hideSoftInputFromWindow(pinNoET.windowToken, 0)
-//
-//            if (pinNoET.text.toString().length != 0) {
-//                dialogInterface.dismiss()
-//                val PIN_NO = pinNoET.text.toString()
-//                if (isInternetConnection) {
-//
-//
-//                    // get selected radio button from radioGroup
-//                    val selectedId = radioGroup.getCheckedRadioButtonId()
-//
-//                    // find the radiobutton by returned id
-//                    val radioButton = findViewById<RadioButton>(selectedId) as RadioButton
-//
-//                    viewMode.callConfirmPayment(isInternetConnection,
-//                            it.transId,
-//                            fullNameTV.text.toString(),
-//                            mobileNumberTV.getText().toString(),
-//                            etAddress.text.toString(),
-//                            etEmail.text.toString(),
-//                            ageTV.text.toString(),
-//                            radioButton.text.toString(),
-//                            PIN_NO
-//                    )
-//
-//
-//                } else {
-//                    val snackbar = Snackbar.make(rootLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG)
-//                    snackbar.setActionTextColor(Color.parseColor("#ffffff"))
-//                    val snackBarView = snackbar.view
-//                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))
-//                    snackbar.show()
-//                }
-//            } else {
-//                val snackbar = Snackbar.make(rootLayout, R.string.pin_no_error_msg, Snackbar.LENGTH_LONG)
-//                snackbar.setActionTextColor(Color.parseColor("#ffffff"))
-//                val snackBarView = snackbar.view
-//                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))
-//                snackbar.show()
-//            }
-//        }
-//        builder.setNegativeButton(R.string.cancel_btn) { dialogInterface, i -> dialogInterface.dismiss() }
-//        val alert = builder.create()
-//        alert.show()
-//    }
+    private fun handleBookingContinueBooking() {
+        val fullName = fullNameTV.text.toString().trim()
+        val mobileNumber = mobileNumberTV.text.toString().trim()
+        val age = ageTV.text.toString().trim()
+        val address = etAddress.text.toString().trim()
+        val email = etEmail.text.toString().trim()
+
+        if (fullName.equals("")) {
+            textInputLayoutFirstName.error = getString(R.string.invalid_full_name)
+            return
+        } else {
+            textInputLayoutFirstName.error = null
+        }
+        if (mobileNumber.equals("")) {
+            textInputLayoutmobileNumber.error = getString(R.string.Invalid_mobile_number)
+            return
+        } else {
+            textInputLayoutmobileNumber.error = null
+        }
+
+        if (age.equals("")) {
+            textInputLayoutAge.error = getString(R.string.invalid_age)
+            return
+        } else {
+            textInputLayoutAge.error = null
+        }
+
+        if (address.equals("")) {
+            textInputLayoutAddress.error = getString(R.string.invalid_address)
+            return
+        } else {
+            textInputLayoutAddress.error = null
+        }
+
+
+        if (!email.equals("")) {
+            if (email.matches(AllConstant.emailPattern.toRegex()) && email.length > 0) {
+                textInputLayoutmobilEmail.error = ""
+
+            } else {
+                textInputLayoutmobilEmail.error = getString(R.string.invalid_email)
+                return
+            }
+        }
+
+        val id = radioGroup.getCheckedRadioButtonId();
+        val gender = when (id) {
+            R.id.maleRB -> "male"
+            R.id.femaleRB -> "female"
+            else -> "male"
+        }
+        val passenger = Passenger()
+        passenger.passengerAddress = address
+        passenger.passengerAge = age
+        passenger.passengerEmail = email
+        passenger.passengerGender = gender
+        passenger.passengerMobile = mobileNumber
+        passenger.passengerName = fullName
+
+
+        //val boothInfo = allBoothInfo.get(boothList.selectedItemPosition)
+
+
+        askForPin(busHosttActivity.isInternetConnection(), passenger)
+
+        // val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).rid)
+
+        /// viewMode.bookingAPI(isInternetConnection, model, requestBusSearch, boothInfo, seatLevel, seatId, totalAPIValuePrices, uniqueKey)
+
+    }
+
+    private fun askForPin(internetConnection: Boolean, passenger: Passenger) {
+        val builder = AlertDialog.Builder(requireActivity())
+        builder.setTitle(R.string.pin_no_title_msg)
+
+        val pinNoET = EditText(requireContext())
+        val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
+        pinNoET.gravity = Gravity.CENTER_HORIZONTAL
+        pinNoET.layoutParams = lp
+        pinNoET.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_TEXT_VARIATION_PASSWORD
+        pinNoET.transformationMethod = PasswordTransformationMethod.getInstance()
+        builder.setView(pinNoET)
+
+        builder.setPositiveButton(R.string.okay_btn) { dialogInterface, id ->
+            val inMethMan = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inMethMan.hideSoftInputFromWindow(pinNoET.windowToken, 0)
+
+            if (pinNoET.text.toString().length != 0) {
+                dialogInterface.dismiss()
+                val PIN_NO = pinNoET.text.toString()
+                if (internetConnection) {
+                    viewMode.callSeatBookAndConfirmAPI(PIN_NO, passenger)
+                } else {
+                    busHosttActivity.showBusTicketErrorDialog(getString(R.string.connection_error_msg));
+                }
+            } else {
+                busHosttActivity.showBusTicketErrorDialog(getString(R.string.pin_no_error_msg));
+
+            }
+        }
+        builder.setNegativeButton(R.string.cancel_btn) { dialogInterface, i -> dialogInterface.dismiss() }
+        val alert = builder.create()
+        alert.show()
+    }
+
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        val busHosttActivity = activity as BusHosttActivity
+        if (!isRetrunTriple) {
+            busHosttActivity.setToolbar("Departure Ticket", resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
+        } else {
+            busHosttActivity.setToolbar("Return Ticket", resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
+        }
+
+    }
 }

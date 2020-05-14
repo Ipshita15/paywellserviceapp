@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp"
     android:id="@+id/advanceSearch"
     android:visibility="gone"
+    android:layout_marginBottom="16dp"
     tools:visibility="visible"
     >
 
@@ -32,12 +30,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="Return type"
         android:textColor="#00203f"
         android:textStyle="bold"
         fancy:layout_constraintStart_toStartOf="parent"
-        fancy:layout_constraintTop_toBottomOf="@+id/radioGroupJounyType" />
+        fancy:layout_constraintTop_toBottomOf="@+id/viewLineRetrun" />
 
     <TextView
         android:id="@+id/textView62"
@@ -123,18 +121,6 @@
     </RadioGroup>
 
 
-    <View
-        android:id="@+id/viewLineRetrun"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="#c0c0c0"
-        fancy:layout_constraintBottom_toTopOf="@+id/tvLevelReturnType"
-        fancy:layout_constraintEnd_toEndOf="parent"
-        fancy:layout_constraintStart_toStartOf="parent"
-        fancy:layout_constraintTop_toBottomOf="@+id/radioGroupJounyType" />
-
     <RadioGroup
         android:id="@+id/radioGroupRetrun"
         android:layout_width="0dp"
@@ -200,10 +186,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="50dp"
         android:checked="true"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:weightSum="4"
+        fancy:layout_constraintBottom_toTopOf="@+id/viewLineRetrun"
         fancy:layout_constraintEnd_toEndOf="parent"
         fancy:layout_constraintStart_toStartOf="parent"
         fancy:layout_constraintTop_toBottomOf="@+id/textView62">
@@ -259,17 +247,29 @@
 
     </RadioGroup>
 
+    <View
+        android:id="@+id/viewLineRetrun"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="#31476a"
+        fancy:layout_constraintEnd_toEndOf="parent"
+        fancy:layout_constraintStart_toStartOf="parent"
+        fancy:layout_constraintTop_toBottomOf="@+id/radioGroupJounyType" />
+
     <RadioGroup
         android:id="@+id/radioGroupRetunTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
         android:layout_weight="1"
         android:checked="true"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:weightSum="4"
+        fancy:layout_constraintBottom_toBottomOf="parent"
         fancy:layout_constraintEnd_toEndOf="parent"
         fancy:layout_constraintStart_toStartOf="parent"
         fancy:layout_constraintTop_toBottomOf="@+id/tvLevelRetrunTime">

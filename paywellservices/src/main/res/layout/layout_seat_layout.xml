@@ -19,6 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:layout_margin="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -28,7 +29,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#ffffff">
-
 
                 <Spinner
                     android:id="@+id/boothList"
@@ -72,7 +72,7 @@
                     android:layout_height="10dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:background="#39b54a"
                     app:layout_constraintEnd_toStartOf="@+id/tvSelect"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -85,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:text="@string/select"
                     android:textColor="#4ca896"
                     android:textSize="12sp"
@@ -99,7 +99,7 @@
                     android:layout_height="10dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:background="#f15a24"
                     app:layout_constraintEnd_toStartOf="@+id/tvBooked"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -113,7 +113,7 @@
                     android:layout_height="10dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:background="@drawable/border_available"
                     app:layout_constraintEnd_toStartOf="@+id/tvAvailable"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -126,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:text="Booked"
                     android:textColor="#4ca896"
                     android:textSize="12sp"
@@ -142,7 +142,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
 
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
 
                     android:text="Available"
                     android:textColor="#4ca896"
@@ -167,8 +167,7 @@
 
             <HorizontalScrollView
                 android:id="@+id/layoutSeat"
-                android:layout_width="fill_parent"
-                android:layout_gravity="center"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingBottom="16dp"
                 android:background="#ffffff">
@@ -179,23 +178,26 @@
                 android:id="@+id/linearLayout27"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:paddingBottom="16dp"
                 android:background="@color/white">
 
                 <View
                     android:id="@+id/view19"
                     android:layout_width="0dp"
-                    android:layout_height="80dp"
+                    android:layout_height="0dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
-                    android:layout_marginBottom="8dp"
                     android:background="@drawable/dotted"
                     app:layout_constraintBottom_toBottomOf="@+id/textView65"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView65" />
 
                 <TextView
+                    android:padding="8dp"
                     android:id="@+id/textView65"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -205,10 +207,13 @@
                     android:layout_marginRight="16dp"
                     android:text="Any kind of ticket cancellation might not be allowed during
 Public Holidays journey as per bus company decision."
-                    android:textAlignment="center"
+                    android:gravity="center"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+
+
+                    />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>

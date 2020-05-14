@@ -8,35 +8,27 @@
     android:background="#31476a">
 
 
-    <ProgressBar
-        android:id="@+id/progressBar2"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_weight="1"
-        android:indeterminate="true"
-        android:indeterminateTint="#31476a"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.cooltechworks.views.shimmer.ShimmerRecyclerView
         android:id="@+id/shimmer_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="40dp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar2"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintTop_toTopOf="parent"
         app:shimmer_demo_angle="30"
         app:shimmer_demo_child_count="10"
         app:shimmer_demo_layout_manager_type="linear_vertical"
-        tools:listitem="@layout/bus_trip_item_list"/>
+        tools:listitem="@layout/bus_trip_item_list" />
+
+    <include
+        layout="@layout/layout_filter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/layoutNoSerachFound"

@@ -14,6 +14,4 @@ data class SeatviewResponse(
 
 	@field:SerializedName("seatViewData")
 	val seatViewData: SeatViewData? = null
-) {
-	lateinit var boothInfoHashMap: HashMap<String, BoothInfo>
-}
+)

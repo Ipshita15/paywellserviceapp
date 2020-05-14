@@ -13,9 +13,11 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.airticket.booking.model.BookingList
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransactionLog.BusTransactionLogActivity
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.cencel.BusCancelActiivty
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.search.BusCitySearchActivity
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.constant.IconConstant
 import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu
 import com.cloudwell.paywell.services.utils.ConnectionDetector
@@ -23,6 +25,9 @@ import com.cloudwell.paywell.services.utils.LanuageConstant.KEY_BANGLA
 import com.cloudwell.paywell.services.utils.LanuageConstant.KEY_ENGLISH
 import com.cloudwell.paywell.services.utils.StringConstant
 import kotlinx.android.synthetic.main.activity_air_ticket_main_contain.*
+import kotlinx.android.synthetic.main.activity_air_ticket_main_contain.btTransationLog
+import kotlinx.android.synthetic.main.activity_air_ticket_main_contain.btViewTricket
+import kotlinx.android.synthetic.main.activity_bus_tricket_menu.*
 import java.util.*
 
 
@@ -54,7 +59,11 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bus_tricket_menu)
 
-        if (AppController.isBusTicket){
+
+        val isBusTicket = AppStorageBox.get(applicationContext, AppStorageBox.Key.IS_BUS_Ticket_USER_FLOW) as Boolean
+
+
+        if (isBusTicket) {
             setToolbar(getString(R.string.home_eticket_bus), resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
 
         }else{
@@ -65,6 +74,7 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
 
         btViewTricket.setOnClickListener(this)
         btTransationLog.setOnClickListener(this)
+        btCancel.setOnClickListener(this)
 
 
 
@@ -216,7 +226,9 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
 
                 showLimitPrompt(BOOKING_TAG)
 
-
+            }
+            R.id.btCancel -> {
+                startActivity(Intent(applicationContext, BusCancelActiivty::class.java))
             }
         }
     }

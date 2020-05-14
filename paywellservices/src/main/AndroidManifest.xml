@@ -1008,6 +1008,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".activity.eticket.busticketNew.cencel.BusCancelActiivty"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".activity.eticket.busticketNew.passenger.BusPassengerBoothDepartureActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />

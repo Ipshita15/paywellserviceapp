@@ -15,11 +15,11 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransport
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.viewModel.BusTransportViewModel
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResPaymentBookingAPI
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatCheckBookAPI
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Transport
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.CitiesListItem
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.RequestScheduledata
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ResposeTicketConfirm
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.search.FullScreenDialogBus.OnCitySet
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
@@ -115,12 +115,13 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
 
         })
 
-        if (AppController.isBusTicket){
+        val isBusTicket = AppStorageBox.get(applicationContext, AppStorageBox.Key.IS_BUS_Ticket_USER_FLOW) as Boolean
+
+        if (isBusTicket) {
             setOldDataForBus()
         } else{
             setOldDataForLaunch()
         }
-
 
 
         btn_search.setOnClickListener(View.OnClickListener {
@@ -164,7 +165,6 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
                     radioGroupRetrun.visibility = View.GONE
                     tvLevelRetrunTime.visibility = View.GONE
                     radioGroupRetunTime.visibility = View.GONE
-                    ivUpDown.setBackgroundResource(R.drawable.icon_down)
 
                 }
                 R.id.radioButtonButtonRoud -> {
@@ -175,13 +175,11 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
                         view.visibility = View.VISIBLE
                         i++
                     }
-
                     viewLineRetrun.visibility = View.VISIBLE
                     tvLevelReturnType.visibility = View.VISIBLE
                     radioGroupRetrun.visibility = View.VISIBLE
                     tvLevelRetrunTime.visibility = View.VISIBLE
                     radioGroupRetunTime.visibility = View.VISIBLE
-                    ivUpDown.setBackgroundResource(R.drawable.ic_up)
 
                 }
             }
@@ -189,17 +187,14 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
 
 
 
-
         linearLayoutForAdvanceSearch.setOnClickListener {
-
             if (advanceSearch.visibility == View.VISIBLE) {
                 advanceSearch.visibility = View.GONE
-
+                ivUpDown.setBackgroundResource(R.drawable.icon_down)
             } else {
                 advanceSearch.visibility = View.VISIBLE
+                ivUpDown.setBackgroundResource(R.drawable.ic_up)
             }
-
-
         }
 
 
@@ -283,7 +278,8 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
         p.departingDate = departingDate
 
 
-        if (AppController.isBusTicket) {
+        val isBusTicket = AppStorageBox.get(applicationContext, AppStorageBox.Key.IS_BUS_Ticket_USER_FLOW) as Boolean
+        if (isBusTicket) {
             p.transportType = "1"
         } else {
             p.transportType = "0"
@@ -323,7 +319,7 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
         }
 
 
-        if (radioGroupJounyType.getCheckedRadioButtonId() == R.id.radioButtonButtonRoud) {
+        if (radioGroupTripType.getCheckedRadioButtonId() == R.id.radioButtonButtonRoud) {
 
 
             val checkedRadioButtonId = radioGroupRetrun.getCheckedRadioButtonId();
@@ -437,39 +433,16 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
         }
     }
 
-    //    private void tryToOldBoardingPointSeletion() {
-//        Integer o = (Integer) AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.BOARDING_POGISTION);
-//        if (o != null) {
-//            boothList.setSelection(o);
-//        }
-//    }
+
     private fun initViewModel() {
         viewMode = ViewModelProviders.of(this).get(BusTransportViewModel::class.java)
         viewMode?.setIbusTransportListView(this)
-
-//        viewMode?.mutableBusLiveDataList?.observe(this, object : Observer<List<ScheduleDataItem>>{
-//            override fun onChanged(t: List<ScheduleDataItem>?) {
-//
-//                val toJson = Gson().toJson(t)
-//
-//                AppStorageBox.put(AppController.getContext(), AppStorageBox.Key.REQUEST_AIR_SERACH, toJson)
-//                val intent = Intent(applicationContext, BusTransportListActivity::class.java)
-//                startActivity(intent)
-//
-//            }
-//
-//        });
 
 
     }
 
     private fun openTripListActivity(from: String, to: String, boardingPoint: String) {
-//        val date = AppStorageBox.get(applicationContext, AppStorageBox.Key.BUS_JOURNEY_DATE) as String
-//        val requestBusSearch = RequestBusSearch()
-//        requestBusSearch.from = from
-//        requestBusSearch.to = to
-//        requestBusSearch.date = date
-//        requestBusSearch.boadingPoint = boardingPoint
+
 
     }
 
@@ -488,27 +461,6 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
         //getBoardingPoint();
     }
 
-    private val boardingPoint: Unit
-        private get() {
-            val from = (busFromCityTS!!.currentView as TextView).text.toString()
-            val to = (busToCityTS!!.currentView as TextView).text.toString()
-            if (!from.isEmpty() && from != FROM_STRING && !to.isEmpty() && to != TO_STRING) {
-                if (from != TO_STRING && to != FROM_STRING) {
-                    val date = AppStorageBox.get(applicationContext, AppStorageBox.Key.BUS_JOURNEY_DATE) as String
-                    val transport = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.SELETED_BUS_INFO) as Transport
-                    val requestBusSearch = RequestBusSearch()
-                    requestBusSearch.from = from
-                    requestBusSearch.to = to
-                    requestBusSearch.date = date
-                    viewMode!!.getBoardingPoint(requestBusSearch, transport)
-                } else {
-                    boardingViewStatusChange(View.GONE)
-                }
-            } else {
-                boardingViewStatusChange(View.GONE)
-                Toast.makeText(this@BusCitySearchActivity, applicationContext.resources.getString(R.string.bus_validation_message), Toast.LENGTH_SHORT).show()
-            }
-        }
 
     override fun showNoTripFoundUI() {
         Toast.makeText(applicationContext, applicationContext.resources.getString(R.string.no_boarding_point_found), Toast.LENGTH_LONG).show()
@@ -525,7 +477,7 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
 
     }
     override fun showSeatCheckAndBookingRepose(it: ResSeatCheckBookAPI) {}
-    override fun showShowConfirmDialog(it: ResPaymentBookingAPI) {}
+    override fun showShowConfirmDialog(it: ResposeTicketConfirm) {}
     override fun showProgress() {
         showProgressDialog()
     }
@@ -535,12 +487,7 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
     }
 
     override fun setBoardingPoint(allBoothNameInfo: MutableSet<String>) { //        String[] strings = allBoothNameInfo.toArray(new String[allBoothNameInfo.size()]);
-//
-//
-//        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.bus_spinner_back, strings);
-//        boothList.setAdapter(stringArrayAdapter);
-//        boardingViewStatusChange(View.VISIBLE);
-//        tryToOldBoardingPointSeletion();
+
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) { //        AppStorageBox.put(AppController.getContext(), AppStorageBox.Key.BOARDING_POGISTION, position);
@@ -551,7 +498,10 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
 
 
     private fun setCityDataToSP(toOrFrom: String, city: CitiesListItem) {
-        if (AppController.isBusTicket){
+
+        val isBusTicket = AppStorageBox.get(applicationContext, AppStorageBox.Key.IS_BUS_Ticket_USER_FLOW) as Boolean
+
+        if (isBusTicket) {
             if (toOrFrom == FROM_STRING) {
                 AppStorageBox.put(applicationContext, AppStorageBox.Key.BUS_LEAVING_FROM_CITY, Gson().toJson(city))
             } else {

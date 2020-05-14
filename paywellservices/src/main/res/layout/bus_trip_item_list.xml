@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
         android:layout_marginRight="4dp"
-        android:background="@drawable/tk_bus_ticket_prices"
+        android:background="@drawable/ic_tk_bus"
         app:layout_constraintBottom_toBottomOf="@+id/TransporttvPrices"
         app:layout_constraintEnd_toStartOf="@+id/TransporttvPrices"
         app:layout_constraintTop_toTopOf="@+id/TransporttvPrices"/>
@@ -128,7 +128,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
-        android:textColor="#707070"
+        android:textColor="#00203f"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/textView26"
         app:layout_constraintStart_toEndOf="@+id/textView26"
         tools:text=":"/>
@@ -138,17 +139,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=": 9:12 AM"
+        android:textStyle="bold"
         android:textColor="@color/color_tangaroa"
         app:layout_constraintBottom_toBottomOf="@+id/textView25"
         app:layout_constraintStart_toStartOf="@+id/tvCoachNo"/>
 
     <TextView
         android:id="@+id/tvCoachNo"
-
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:textStyle="bold"
         android:text="304-SP/KB-UPPer DEck  304-SP/KB-UPPer DEck"
         android:textColor="@color/color_tangaroa"
         app:layout_constraintEnd_toStartOf="@+id/imageView30"

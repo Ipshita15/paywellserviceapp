@@ -4,13 +4,13 @@ package com.cloudwell.paywell.services.retrofit;
 import com.cloudwell.paywell.services.activity.bank_info_update.model.BankListRequestPojo;
 import com.cloudwell.paywell.services.activity.bank_info_update.model.BankPojo;
 import com.cloudwell.paywell.services.activity.bank_info_update.model.RemoveReqPojo;
+import com.cloudwell.paywell.services.activity.bank_info_update.spineer.BankResponse;
+import com.cloudwell.paywell.services.activity.bank_info_update.spineer.GetBankPojo;
 import com.cloudwell.paywell.services.activity.education.BBC.model.BbcSubscriptionPojo;
 import com.cloudwell.paywell.services.activity.education.BBC.model.BbcTranscationLog;
 import com.cloudwell.paywell.services.activity.education.BBC.model.CourseListRresponsePojo;
 import com.cloudwell.paywell.services.activity.education.BBC.model.CourseLlistRequestPojo;
 import com.cloudwell.paywell.services.activity.education.BBC.model.RegistationInfo;
-import com.cloudwell.paywell.services.activity.bank_info_update.spineer.BankResponse;
-import com.cloudwell.paywell.services.activity.bank_info_update.spineer.GetBankPojo;
 import com.cloudwell.paywell.services.activity.education.BBC.model.StatusCheckResponsePojo;
 import com.cloudwell.paywell.services.activity.education.BBC.model.TransactionResponsePOjo;
 import com.cloudwell.paywell.services.activity.education.Bongo.model.BongoActivePkgPojo;
@@ -18,7 +18,6 @@ import com.cloudwell.paywell.services.activity.education.Bongo.model.BongoEnquir
 import com.cloudwell.paywell.services.activity.education.Bongo.model.BongoPkgListReqPojo;
 import com.cloudwell.paywell.services.activity.education.Bongo.model.BongoResponsePojo;
 import com.cloudwell.paywell.services.activity.education.Bongo.model.BongoSubscriptionPojo;
-import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.Nagadv2requestPojo;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.ReposeAirSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.ResGetAirports;
@@ -42,15 +41,14 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.CancelBookedTicketReques;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.CancelBookedTicketResponse;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.CancelTicketRequest;
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ConfirmTicketRquestPojo;
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.RequestScheduledata;
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.GetSeatStatusRequest;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.GetSeatViewRquestPojo;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.RequestScheduledata;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.SeatBlockRequestPojo;
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.SeatBookResponse;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.TicketInformationForCancelRequest;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.seatview.SeatviewResponse;
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ConfirmTicketResponse;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ReqConfirmTicket;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ResBookAPI;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ResposeTicketConfirm;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm_cancel.ConfirmTicketCancelResponse;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.transactionLog.TransactionLogDetailsModel;
 import com.cloudwell.paywell.services.activity.home.model.ReposeGenerateOTP;
@@ -100,6 +98,7 @@ import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.Bal
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLog;
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLogRequestModel;
 import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.NagadWebResponse;
+import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.Nagadv2requestPojo;
 import com.cloudwell.paywell.services.activity.reg.model.AuthRequestModel;
 import com.cloudwell.paywell.services.activity.reg.model.RegistrationModel;
 import com.cloudwell.paywell.services.activity.reg.model.RequestDistrictList;
@@ -745,13 +744,13 @@ public interface APIService {
     Call<ResponseBody> getSeatStatus(@Body GetSeatViewRquestPojo GetSeatViewRquestPojo);
 
     @POST("Tickets/BusAndLaunchService/seatBlock")
-    Call<SeatBookResponse> seatBlock(@Body SeatBlockRequestPojo seatBlockRequestPojo);
+    Call<ResBookAPI> seatBlock(@Body SeatBlockRequestPojo seatBlockRequestPojo);
 
     @POST("Tickets/BusAndLaunchService/cancelBookedTicket")
     Call<CancelBookedTicketResponse> cancelBookedTicket(@Body CancelBookedTicketReques cancelBookedTicketReques);
 
     @POST("Tickets/BusAndLaunchService/confirmTicket")
-    Call<ConfirmTicketResponse> confirmTicket(@Body ConfirmTicketRquestPojo confirmTicketRquestPojo);
+    Call<ResposeTicketConfirm> confirmTicket(@Body ReqConfirmTicket reqConfirmTicket);
 
     @POST("Tickets/BusAndLaunchService/ticketInformationForCancel")
     Call<ConfirmTicketCancelResponse> ticketInformationForCancel(@Body TicketInformationForCancelRequest ticketInformationForCancelRequest);
