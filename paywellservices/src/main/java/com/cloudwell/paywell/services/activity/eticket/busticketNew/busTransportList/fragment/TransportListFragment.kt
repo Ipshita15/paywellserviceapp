@@ -104,21 +104,29 @@ class TransportListFragment(val requestScheduledata: RequestScheduledata, val is
     }
 
     private fun hiddenAndShowFilter(view: View) {
-        if (view.llAdvaceSerach.visibility == View.VISIBLE) {
-            view.llAdvaceSerach.visibility = View.GONE
-//            shimmer_recycler_view.layoutManager = CustomGridLayoutManager(activity, true)
-            layoutManager.isScrollEnabled = true
-            view.ivFilterUpDown.setImageResource(0)
-            view.ivFilterUpDown.setImageResource(R.drawable.icon_down)
+
+        var size = 0
+        if (!isRetrunTriple) {
+            size = viewMode.singleTripTranportListMutableLiveData.value?.size ?: 0
         } else {
-            view.llAdvaceSerach.visibility = View.VISIBLE
-//            shimmer_recycler_view.layoutManager = CustomGridLayoutManager(activity, false)
-            layoutManager.isScrollEnabled = false
-
-            view.ivFilterUpDown.setImageResource(0)
-            view.ivFilterUpDown.setImageResource(R.drawable.ic_up)
-
+            size = viewMode.returnTripTransportListMutableLiveData.value?.size ?: 0
         }
+        if (size > 0) {
+
+            if (view.llAdvaceSerach.visibility == View.VISIBLE) {
+                view.llAdvaceSerach.visibility = View.GONE
+                layoutManager.isScrollEnabled = true
+                view.ivFilterUpDown.setImageResource(0)
+                view.ivFilterUpDown.setImageResource(R.drawable.icon_down)
+            } else {
+                view.llAdvaceSerach.visibility = View.VISIBLE
+                layoutManager.isScrollEnabled = false
+                view.ivFilterUpDown.setImageResource(0)
+                view.ivFilterUpDown.setImageResource(R.drawable.ic_up)
+            }
+        }
+
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
