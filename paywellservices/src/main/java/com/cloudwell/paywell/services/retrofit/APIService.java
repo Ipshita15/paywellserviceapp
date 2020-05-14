@@ -33,6 +33,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.model.ResCommistionMaping;
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketCencel.model.ResSingleBooking;
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.model.ResInvoideEmailAPI;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransactionLog.RequestBusTranstionLog;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResGetBusListData;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResPaymentBookingAPI;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatCheckBookAPI;
@@ -403,9 +404,9 @@ public interface APIService {
                                  @Field("seat_ids") String seat_ids,
                                  @Field(ParameterUtility.KEY_REF_ID) String refId);
 
-    @FormUrlEncoded
-    @POST("PaywellParibahanService/getEnquiryData")
-    Call<TransactionLogDetailsModel> getBusTransactionLogFromServer(@Field("username") String username, @Field("skey") String skey, @Field("limit") String limit, @Field(ParameterUtility.KEY_REF_ID) String refId);
+
+    @POST("Tickets/BusAndLaunchService/getTransactionData")
+    Call<TransactionLogDetailsModel> getBusTransactionLogFromServer(@Body RequestBusTranstionLog requestBusTranstionLog);
 
     @POST
     @FormUrlEncoded

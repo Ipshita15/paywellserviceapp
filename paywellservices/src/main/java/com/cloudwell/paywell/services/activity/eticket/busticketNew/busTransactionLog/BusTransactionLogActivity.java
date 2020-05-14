@@ -15,6 +15,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BusTra
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.transactionLog.Datum;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.transactionLog.TransactionLogDetailsModel;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.app.storage.AppStorageBox;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 
@@ -62,10 +63,24 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
 
     void getTransactionLog(String userName, String skey, String limit) {
 
+
         showProgressDialog();
         String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
 
-        ApiUtils.getAPIServicePHP7().getBusTransactionLogFromServer(userName, skey, limit, uniqueKey).enqueue(new Callback<TransactionLogDetailsModel>() {
+        boolean isBusTicket = (Boolean) AppStorageBox.get(getApplicationContext(), AppStorageBox.Key.IS_BUS_Ticket_USER_FLOW);
+
+
+        RequestBusTranstionLog m = new RequestBusTranstionLog();
+        m.setLimit(limit);
+        m.setUsername(userName);
+        if (isBusTicket) {
+            m.setTransportType("1");
+        } else {
+            m.setTransportType("1");
+        }
+
+
+        ApiUtils.getAPIServiceV2().getBusTransactionLogFromServer(m).enqueue(new Callback<TransactionLogDetailsModel>() {
             @Override
             public void onResponse(Call<TransactionLogDetailsModel> call, Response<TransactionLogDetailsModel> response) {
                 if (response.isSuccessful()) {

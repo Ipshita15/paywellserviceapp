@@ -10,7 +10,7 @@ public class TransactionLogDetailsModel {
 
     @SerializedName("message")
     private String message;
-    @SerializedName("status")
+    @SerializedName("status_code")
     private Long status;
     @SerializedName("data")
     private List<Datum> data;
