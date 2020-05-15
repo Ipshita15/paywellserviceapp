@@ -18,4 +18,5 @@ interface IbusTransportListView : BaseView {
     fun saveRequestScheduledata(p: RequestScheduledata)
     fun saveExtraCharge(double: Double)
     fun showFilterList(filterTypeDepartingTime: List<ScheduleDataItem>)
+    fun updateListData(position: Int, itemCount: Int)
 }

@@ -29,22 +29,22 @@ open class BusTricketBaseActivity : MVVMBaseActivity() {
         assert(supportActionBar != null)
 
         if (supportActionBar != null) {
-            supportActionBar!!.setBackgroundDrawable(ColorDrawable(getResources().getColor(R.color.bus_ticket_toolbar_backgroud_color)))
-            setActionbarTextColor(supportActionBar!!, getResources().getColor(R.color.bus_ticket_toolbar_title_text_color))
+            supportActionBar!!.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.bus_ticket_toolbar_backgroud_color)))
+            setActionbarTextColor(supportActionBar!!, resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                getWindow().setStatusBarColor(getResources().getColor(R.color.bus_ticket_status_color, this.getTheme()));
+                window.statusBarColor = resources.getColor(R.color.bus_ticket_status_color, this.theme)
             } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                getWindow().setStatusBarColor(getResources().getColor(R.color.bus_ticket_status_color));
+                window.statusBarColor = resources.getColor(R.color.bus_ticket_status_color)
             }
         }
     }
 
-    public fun setActionbarTextColor(actBar: ActionBar, color: Int) {
-        val title = actBar.getTitle().toString()
+    fun setActionbarTextColor(actBar: ActionBar, color: Int) {
+        val title = actBar.title.toString()
         val spannablerTitle = SpannableString(title)
         spannablerTitle.setSpan(ForegroundColorSpan(color), 0, spannablerTitle.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        actBar.setTitle(spannablerTitle)
+        actBar.title = spannablerTitle
 
     }
 
@@ -74,15 +74,7 @@ open class BusTricketBaseActivity : MVVMBaseActivity() {
     }
 
 
-    override fun onPause() {
-        super.onPause()
-
-
-    }
-
-
-
-   fun showBusTicketErrorDialog(message: String){
+    fun showBusTicketErrorDialog(message: String) {
 
        val errorMsgDialog =  BusErrorMsgDialog(message)
        errorMsgDialog.show(supportFragmentManager, "oTPVerificationMsgDialog")

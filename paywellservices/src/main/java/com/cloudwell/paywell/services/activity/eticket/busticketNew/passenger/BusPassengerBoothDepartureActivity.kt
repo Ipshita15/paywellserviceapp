@@ -13,8 +13,10 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.activity.base.newBase.BaseFragment
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.BusHosttActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
@@ -27,6 +29,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ResposeTicketConfirm
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.BusSucessMsgWithFinlishDialog
 import com.cloudwell.paywell.services.constant.AllConstant
+import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_bus_booth_departure.*
 import kotlinx.android.synthetic.main.activity_bus_booth_departure.view.*
 import java.text.DecimalFormat
@@ -48,6 +51,11 @@ class BusPassengerBoothDepartureActivity(var isRetrunTriple: Boolean) : BaseFrag
     }
 
     override fun showFilterList(filterTypeDepartingTime: List<ScheduleDataItem>) {
+
+    }
+
+    override fun updateListData(position: Int, itemCount: Int) {
+
 
     }
 
@@ -95,12 +103,17 @@ class BusPassengerBoothDepartureActivity(var isRetrunTriple: Boolean) : BaseFrag
     }
 
     override fun showProgress() {
-       // showProgressDialog()
+        com.orhanobut.logger.Logger.v("showProgress")
+        val busHosttActivity1 = activity as BusHosttActivity
+        busHosttActivity1.showProgressDialog()
 
     }
 
     override fun hiddenProgress() {
-       // dismissProgressDialog()
+        com.orhanobut.logger.Logger.v("hiddenProgress")
+        val busHosttActivity1 = activity as BusHosttActivity
+        busHosttActivity1.dismissProgressDialog()
+
     }
 
     override fun showNoInternetConnectionFound() {
@@ -130,75 +143,6 @@ class BusPassengerBoothDepartureActivity(var isRetrunTriple: Boolean) : BaseFrag
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.activity_bus_booth_departure, container, false)
 
-       // setToolbar(getString(R.string.title_bus_passenger_booth), resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
-
-
-//        val stringExtra = intent.getStringExtra("jsonData")
-//        val requestBusSearchJson = intent.getStringExtra("requestBusSearch")
-//        seatLevel = intent.getStringExtra("seatLevel")
-//        seatId = intent.getStringExtra("seatId")
-//        val totalPrices = intent.getStringExtra("totalPrices")
-//        totalAPIValuePrices = intent.getStringExtra("totalAPIValuePrices")
-//
-//
-//
-//        requestBusSearch = Gson().fromJson(requestBusSearchJson, RequestBusSearch::class.java)
-//        model = Gson().fromJson(stringExtra, TripScheduleInfoAndBusSchedule::class.java)
-//
-//        val boothDepartureInfo = model.busSchedule?.booth_departure_info
-//
-//
-//        busSeatsTV.text = seatLevel
-//        tvTotalPrice.text = "TK." + totalPrices
-//
-////
-////        val jsonObject = JSONObject(boothDepartureInfo)
-////        jsonObject.keys().forEach {
-////            val model = jsonObject.get(it) as JSONObject
-////            val boothName = model.getString("booth_name")
-////            val boothDepartureTime = model.getString("booth_departure_time")
-////            allBoothInfo.add(BoothInfo(it, boothName, boothDepartureTime))
-////            allBoothNameInfo.add(boothName)
-////        }
-////
-////
-////        boothList = findViewById<Spinner>(R.id.boothList)
-////        busListAdapter = ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, allBoothNameInfo)
-////        this.boothList.setAdapter(busListAdapter as ArrayAdapter<String>)
-//
-//
-//       // hiddenSoftKeyboard()
-//
-//        initViewModel()
-//
-//
-//        etEmail.addTextChangedListener(object : TextWatcher {
-//            override fun afterTextChanged(s: Editable) {
-//                if (!s.toString().equals("")) {
-//                    if (s.matches(AllConstant.emailPattern.toRegex()) && s.length > 0) {
-//                        textInputLayoutmobilEmail.error = ""
-//
-//                    } else {
-//                        textInputLayoutmobilEmail.error = getString(R.string.invalid_email)
-//                    }
-//                } else {
-//                    textInputLayoutmobilEmail.error = ""
-//                }
-//
-//
-//            }
-//
-//            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-//                // other stuffs
-//            }
-//
-//            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-//                // other stuffs
-//            }
-//        })
-//
-//
-
 
         view.btn_search.setOnClickListener {
             handleBookingContinueBooking()
@@ -210,18 +154,51 @@ class BusPassengerBoothDepartureActivity(var isRetrunTriple: Boolean) : BaseFrag
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        Logger.v("onDestroy")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Logger.v("onDestroyView")
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Logger.v("onStop")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Logger.v("onResume")
+    }
+
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-
+        Logger.v("onAttach")
         val busHosttActivity = activity as BusHosttActivity
         busHosttActivity.setToolbar("Passenger information", resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
 
     }
 
+    override fun onAttachFragment(childFragment: Fragment?) {
+        super.onAttachFragment(childFragment)
+        Logger.v("onAttachFragment")
+
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Logger.v("onDetach")
+        viewMode.view = null
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        Logger.v("onActivityCreated")
         initViewModel()
-
         busHosttActivity = activity as BusHosttActivity
 
         if (!isRetrunTriple) {
@@ -323,14 +300,8 @@ class BusPassengerBoothDepartureActivity(var isRetrunTriple: Boolean) : BaseFrag
         passenger.passengerName = fullName
 
 
-        //val boothInfo = allBoothInfo.get(boothList.selectedItemPosition)
-
-
         askForPin(busHosttActivity.isInternetConnection, passenger)
 
-        // val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).rid)
-
-        /// viewMode.bookingAPI(isInternetConnection, model, requestBusSearch, boothInfo, seatLevel, seatId, totalAPIValuePrices, uniqueKey)
 
     }
 

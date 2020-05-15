@@ -14,6 +14,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.newBase.BaseFragment
@@ -31,6 +32,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.seatLayout.adapter.CustomSpnerForBoardingPoint
 import com.cloudwell.paywell.services.app.AppHandler
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.bottom_seat_layout.*
 import kotlinx.android.synthetic.main.bottom_seat_layout.view.*
 import org.json.JSONObject
@@ -475,6 +477,11 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
 
     }
 
+    override fun updateListData(position: Int, itemCount: Int) {
+
+
+    }
+
     override fun showProgress() {
 
     }
@@ -502,6 +509,32 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
             busHosttActivity.setToolbar("Return Ticket", resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
         }
 
+    }
+
+    override fun onAttachFragment(childFragment: Fragment?) {
+        super.onAttachFragment(childFragment)
+        Logger.v("onAttachFragment")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Logger.v("onDestroy")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Logger.v("onDestroyView")
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Logger.v("onStop")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Logger.v("onResume")
     }
 
 

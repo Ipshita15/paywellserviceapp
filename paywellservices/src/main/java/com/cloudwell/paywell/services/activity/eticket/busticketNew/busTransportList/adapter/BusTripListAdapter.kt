@@ -6,13 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTicketRepository.BusTicketRepository
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatInfo
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.GetSeatViewRquestPojo
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.RequestScheduledata
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.scheduledata.ScheduleDataItem
-import com.cloudwell.paywell.services.app.AppController
-import com.cloudwell.paywell.services.app.AppHandler
 import kotlinx.android.synthetic.main.bus_trip_item_list.view.*
 import java.text.DecimalFormat
 
@@ -20,7 +15,7 @@ import java.text.DecimalFormat
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 19/2/19.
  */
-class BusTripListAdapter(val items: List<ScheduleDataItem>, val context: Context, val requestScheduledata : RequestScheduledata, val extraCharge:Double ,val onClickListener: OnClickListener) : RecyclerView.Adapter<ViewHolderNew>() {
+class BusTripListAdapter(val items: List<ScheduleDataItem>, val context: Context, val extraCharge: Double, val onClickListener: OnClickListener) : RecyclerView.Adapter<ViewHolderNew>() {
 
     override fun onBindViewHolder(holder: ViewHolderNew, position: Int) {
         val model = items.get(position)
@@ -41,31 +36,11 @@ class BusTripListAdapter(val items: List<ScheduleDataItem>, val context: Context
 
         holder.tvPrices.text = DecimalFormat("#").format(prices)
 
+
         if (model.resSeatInfo == null) {
             holder.tvAvailableSeat.text = ":"
-
-            val userName = AppHandler.getmInstance(AppController.getContext()).userName
-
-            val po = GetSeatViewRquestPojo()
-            po.departureDate = requestScheduledata.departingDate + "(" + requestScheduledata.departingTime + ")"
-            po.fromCity = requestScheduledata.departure
-            po.toCity = requestScheduledata.destination
-            po.optionId = model.busServiceType+"_"+model.departureId
-            po.username = userName
-            po.transportType = requestScheduledata.transportType
-
             holder.progressBar.visibility = View.VISIBLE
-            BusTicketRepository().getSeatView(po).observeForever {
-                holder.progressBar.visibility = View.INVISIBLE
-                val tototalAvailableSeat = it?.tototalAvailableSeat ?: 0
-                holder.tvAvailableSeat.text = ": " + tototalAvailableSeat
-
-                if (it != null) {
-                    onClickListener.onUpdateData(position, it)
-                }
-
-
-            }
+            onClickListener.needUpdateData(position, model)
 
         } else {
             holder.progressBar.visibility = View.INVISIBLE
@@ -98,6 +73,7 @@ interface OnClickListener {
 
     fun onClick(position: Int)
     fun onUpdateData(position: Int, resSeatInfo: ResSeatInfo)
+    fun needUpdateData(position: Int, model: ScheduleDataItem)
 }
 
 

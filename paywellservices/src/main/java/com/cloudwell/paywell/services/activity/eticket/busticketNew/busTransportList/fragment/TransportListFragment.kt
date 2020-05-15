@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cloudwell.paywell.services.R
@@ -216,6 +215,12 @@ class TransportListFragment(val requestScheduledata: RequestScheduledata, val is
 
     }
 
+    override fun updateListData(position: Int, itemCount: Int) {
+        adapter.notifyItemChanged(position)
+        adapter.notifyItemRangeChanged(position, itemCount)
+
+    }
+
     fun setAdapter(data: List<ScheduleDataItem>) {
         layoutNoSerachFound.visibility = View.INVISIBLE
 
@@ -224,32 +229,17 @@ class TransportListFragment(val requestScheduledata: RequestScheduledata, val is
         shimmer_recycler_view.layoutManager = layoutManager
         shimmer_recycler_view.adapter = data.let { it1 ->
 
-            adapter = BusTripListAdapter(data, activity!!.applicationContext, requestScheduledata, viewMode.extraCharge.value
+            adapter = BusTripListAdapter(data, activity!!.applicationContext, viewMode.extraCharge.value
                     ?: 0.0, object : OnClickListener {
                 override fun onUpdateData(position: Int, resSeatInfo: ResSeatInfo) {
 
-                    if (!isRetrunTriple) {
 
-                        val m = viewMode.singleTripTranportListMutableLiveData.value?.get(position)
-                        m?.resSeatInfo = resSeatInfo
-                        m?.let {
-                            viewMode.singleTripTranportListMutableLiveData.value?.set(position, it)
-                            adapter.notifyItemChanged(position)
-                            adapter.notifyItemRangeChanged(position, viewMode.singleTripTranportListMutableLiveData.value!!.size)
-                        }
-
-                    } else {
-                        val m = viewMode.returnTripTransportListMutableLiveData.value?.get(position)
-                        m?.resSeatInfo = resSeatInfo
-                        m?.let {
-                            viewMode.returnTripTransportListMutableLiveData.value?.set(position, it)
-                            adapter.notifyItemChanged(position)
-                            adapter.notifyItemRangeChanged(position, viewMode.returnTripTransportListMutableLiveData.value!!.size)
-
-                        }
-
-                    }
                 }
+
+                override fun needUpdateData(position: Int, model: ScheduleDataItem) {
+                    viewMode.needToUpdateData(position, model, isRetrunTriple)
+                }
+
                 override fun onClick(position: Int) {
                     // do whatever
                     listener?.onItemCLick(position, isRetrunTriple)

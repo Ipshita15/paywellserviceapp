@@ -2,17 +2,19 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew.busTranspor
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTicketRepository.BusTicketRepository
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.model.SearchFilter
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BoothInfo
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.GetSeatViewRquestPojo
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.Passenger
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.RequestScheduledata
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.SeatBlockRequestPojo
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.scheduledata.ScheduleDataItem
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.seatview.BordingPoint
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.viewMode.BusTicketBaseViewMode
+import com.cloudwell.paywell.services.app.AppController
+import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.google.gson.Gson
 import org.json.JSONObject
@@ -310,6 +312,49 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
                     it?.let { it1 -> view?.showFilterList(it1) }
                 }
             }
+        }
+
+    }
+
+    fun needToUpdateData(position: Int, model: ScheduleDataItem, retrunTriple: Boolean) {
+
+        val userName = AppHandler.getmInstance(AppController.getContext()).userName
+
+        val po = GetSeatViewRquestPojo()
+        po.departureDate = requestScheduledata.value?.departingDate + "(" + requestScheduledata.value?.departingTime + ")"
+        po.fromCity = requestScheduledata.value?.departure ?: ""
+        po.toCity = requestScheduledata.value?.destination ?: ""
+        po.optionId = model.busServiceType + "_" + model.departureId
+        po.username = userName
+        po.transportType = requestScheduledata.value?.transportType ?: ""
+
+
+        BusTicketRepository().getSeatView(po).observeForever {
+
+            if (it != null) {
+                var itemCount = 0
+                if (!retrunTriple) {
+                    val m = singleTripTranportListMutableLiveData.value?.get(position)
+                    m?.resSeatInfo = it
+                    m?.let {
+                        singleTripTranportListMutableLiveData.value?.set(position, it)
+                        itemCount = singleTripTranportListMutableLiveData.value?.size ?: 0
+                    }
+                } else {
+                    val m = returnTripTransportListMutableLiveData.value?.get(position)
+                    m?.resSeatInfo = it
+                    m?.let {
+                        returnTripTransportListMutableLiveData.value?.set(position, it)
+                        itemCount = returnTripTransportListMutableLiveData.value?.size ?: 0
+
+                    }
+
+
+                }
+                view?.updateListData(position, itemCount)
+            }
+
+
         }
 
     }

@@ -531,6 +531,11 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
 
     }
 
+    override fun updateListData(position: Int, itemCount: Int) {
+
+
+    }
+
     companion object {
         const val FullSCREEN_DIALOG_HEADER = "header"
         const val TO_STRING = "Going To"
