@@ -35,7 +35,7 @@ import kotlinx.android.synthetic.main.layout_filter.view.*
  * to handle interaction events.
  */
 class TransportListFragment(val requestScheduledata: RequestScheduledata, val isRetrunTriple: Boolean) : Fragment(), IbusTransportListView {
-    private lateinit var busTripListAdapter: BusTripListAdapter
+    private lateinit var adapter: BusTripListAdapter
     private lateinit var viewMode: BusTransportViewModel
     private var listener: OnFragmentInteractionListener? = null
     lateinit var layoutManager: CustomGridLayoutManager
@@ -224,7 +224,8 @@ class TransportListFragment(val requestScheduledata: RequestScheduledata, val is
         shimmer_recycler_view.layoutManager = layoutManager
         shimmer_recycler_view.adapter = data.let { it1 ->
 
-             busTripListAdapter = BusTripListAdapter(data, activity!!.applicationContext, requestScheduledata, viewMode.extraCharge.value?:0.0, object : OnClickListener {
+            adapter = BusTripListAdapter(data, activity!!.applicationContext, requestScheduledata, viewMode.extraCharge.value
+                    ?: 0.0, object : OnClickListener {
                 override fun onUpdateData(position: Int, resSeatInfo: ResSeatInfo) {
 
                     if (!isRetrunTriple) {
@@ -233,31 +234,30 @@ class TransportListFragment(val requestScheduledata: RequestScheduledata, val is
                         m?.resSeatInfo = resSeatInfo
                         m?.let {
                             viewMode.singleTripTranportListMutableLiveData.value?.set(position, it)
-                            busTripListAdapter.notifyItemRangeChanged(position, viewMode.singleTripTranportListMutableLiveData.value!!.size)
-                            busTripListAdapter.notifyDataSetChanged()
+                            adapter.notifyItemChanged(position)
+                            adapter.notifyItemRangeChanged(position, viewMode.singleTripTranportListMutableLiveData.value!!.size)
                         }
 
                     } else {
                         val m = viewMode.returnTripTransportListMutableLiveData.value?.get(position)
                         m?.resSeatInfo = resSeatInfo
                         m?.let {
-                            viewMode.singleTripTranportListMutableLiveData.value?.set(position, it)
-                            busTripListAdapter.notifyItemRangeChanged(position, viewMode.returnTripTransportListMutableLiveData.value!!.size)
-                            busTripListAdapter.notifyDataSetChanged()
+                            viewMode.returnTripTransportListMutableLiveData.value?.set(position, it)
+                            adapter.notifyItemChanged(position)
+                            adapter.notifyItemRangeChanged(position, viewMode.returnTripTransportListMutableLiveData.value!!.size)
+
                         }
 
                     }
                 }
-
                 override fun onClick(position: Int) {
                     // do whatever
                     listener?.onItemCLick(position, isRetrunTriple)
 
                 }
             })
-            busTripListAdapter
+            adapter
         }
-
 
     }
 
@@ -272,7 +272,7 @@ class TransportListFragment(val requestScheduledata: RequestScheduledata, val is
     }
 
     override fun showNoInternetConnectionFound() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
 
@@ -280,23 +280,7 @@ class TransportListFragment(val requestScheduledata: RequestScheduledata, val is
 
         viewMode = ViewModelProviders.of(activity!!).get(BusTransportViewModel::class.java)
         viewMode.setIbusTransportListView(this)
-        viewMode.search(requestScheduledata, isRetrunTriple)
-
-        if (!isRetrunTriple) {
-            viewMode.singleTripTranportListMutableLiveData.observe(this, object : Observer<List<ScheduleDataItem>> {
-                override fun onChanged(t: List<ScheduleDataItem>?) {
-
-                    t?.let {
-                        setAdapter(it)
-                    }
-                }
-
-            })
-        } else {
-            viewMode.returnTripTransportListMutableLiveData.value?.let {
-                setAdapter(it)
-            }
-        }
+        viewMode.init(requestScheduledata, isRetrunTriple)
 
 
     }

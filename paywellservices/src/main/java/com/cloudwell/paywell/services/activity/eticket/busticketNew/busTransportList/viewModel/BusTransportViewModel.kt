@@ -2,6 +2,7 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew.busTranspor
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTicketRepository.BusTicketRepository
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.model.SearchFilter
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
@@ -215,16 +216,9 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
 
                     extraCharge.value = jsonObject.getDouble("extraCharge")
                     singleTripTranportListMutableLiveData.value = ArrayList(sortedByLowPricesList)
-
-
-//                        val get = sortedByLowPricesList.get(sortedByLowPricesList.size - 1)
-//                        val tempdata  = mutableListOf<ScheduleDataItem>()
-//                        tempdata.add(get)
-//
-//                        //returnTripTransportListMutableLiveData.value = ArrayList(tempdata)
-
-
-                    //return ScheduleData data
+                    singleTripTranportListMutableLiveData.value.let {
+                        it?.let { it1 -> view?.showFilterList(it1) }
+                    }
 
                     val departureScheduleData = jsonObject.getJSONObject("reternschedule")
                     if (departureScheduleData.getInt("status") == 1) {
@@ -257,7 +251,6 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
                             it.fares
                         }
 
-                        //extraCharge.value = jsonObject.getDouble("extraCharge")
                         returnTripTransportListMutableLiveData.value = ArrayList(sortedByLowPricesList)
 
                     }
@@ -296,6 +289,28 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
             }
         }
 
+
+    }
+
+    fun init(requestScheduledata: RequestScheduledata, isRetrunTriple: Boolean) {
+        if (!isRetrunTriple) {
+            if (singleTripTranportListMutableLiveData.value == null) {
+                search(requestScheduledata, isRetrunTriple)
+            } else {
+                singleTripTranportListMutableLiveData.value.let {
+                    it?.let { it1 -> view?.showFilterList(it1) }
+                }
+            }
+
+        } else {
+            if (returnTripTransportListMutableLiveData.value == null) {
+                search(requestScheduledata, isRetrunTriple)
+            } else {
+                returnTripTransportListMutableLiveData.value.let {
+                    it?.let { it1 -> view?.showFilterList(it1) }
+                }
+            }
+        }
 
     }
 }
