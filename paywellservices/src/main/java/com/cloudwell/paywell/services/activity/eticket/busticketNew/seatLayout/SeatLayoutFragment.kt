@@ -238,7 +238,13 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
                 opif.seat = seatIds
                 opif.seatLevel = seatLevel
 
-                seatBlockRequestPojo?.optionInfo?.add(opif)
+
+                val oldSingleOptionInfo = seatBlockRequestPojo?.optionInfo?.get(0)
+                seatBlockRequestPojo?.optionInfo?.clear()
+                oldSingleOptionInfo?.let { it1 ->
+                    seatBlockRequestPojo.optionInfo.add(it1)
+                    seatBlockRequestPojo.optionInfo.add(opif)
+                }
 
                 viewMode.seatBlockRequestPojo.value = seatBlockRequestPojo
 
