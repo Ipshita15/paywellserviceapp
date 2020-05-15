@@ -1,8 +1,6 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransactionLog;
 
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,12 +38,8 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_transaction_log);
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(Html.fromHtml("<font color='#268472'>Booking Log</font>"));
-            getSupportActionBar().setElevation(0f);
-            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.color_tab_background_bus)));
-        }
+
+        setToolbar("Booking Log", getResources().getColor(R.color.bus_ticket_toolbar_title_text_color));
 
         limit = getIntent().getIntExtra(BusTicketMenuActivity.Companion.getKEY_LIMIT(), -1);
         busTransactionRV = findViewById(R.id.busTransactionLogRV);
@@ -100,29 +94,38 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
                                 date = transactionDate;
                                 allDataArrayList.add(date);
                             }
-                            BusTransactionModel busTransactionModel = new BusTransactionModel(
-                                    transactionDate,
-                                    datum.getTrxId(),
-                                    datum.getTicketInfo().getBookingInfoId(),
-                                    datum.getStatusMessage(),
-                                    datum.getTicketInfo().getWebBookingInfoId(),
-                                    datum.getTicketInfo().getTotalAmount(),
-                                    datum.getCustomerInfo().getCustomerName(),
-                                    datum.getCustomerInfo().getCusTomerGenger(),
-                                    datum.getCustomerInfo().getCustomerPhone(),
-                                    datum.getCustomerInfo().getCustomerAddress(),
-                                    datum.getCustomerInfo().getCustomerEmail(),
-                                    datum.getTicketInfo().getTicketNo(),
-                                    datum.getTicketInfo().getBoardingPointName(),
-                                    datum.getTicketInfo().getDepartureDate(),
-                                    datum.getTicketInfo().getDepartureTime(),
-                                    datum.getTicketInfo().getSeatLbls(),
-                                    datum.getBusInfo().getCoachNo(),
-                                    datum.getBusInfo().getBusName(),
-                                    datum.getTicketInfo().getJourneyRoute().split("-")[0],
-                                    datum.getTicketInfo().getJourneyRoute().split("-")[1]);
-                            allDataArrayList.add(busTransactionModel);
-                            adapter.notifyDataSetChanged();
+
+
+                            try {
+                                BusTransactionModel busTransactionModel = new BusTransactionModel(
+                                        transactionDate,
+                                        datum.getTrxId(),
+                                        datum.getTicketInfo().getBookingInfoId(),
+                                        datum.getStatusMessage(),
+                                        datum.getTicketInfo().getWebBookingInfoId(),
+                                        datum.getTicketInfo().getTotalAmount(),
+                                        datum.getCustomerInfo().getCustomerName(),
+                                        datum.getCustomerInfo().getCusTomerGenger(),
+                                        datum.getCustomerInfo().getCustomerPhone(),
+                                        datum.getCustomerInfo().getCustomerAddress(),
+                                        datum.getCustomerInfo().getCustomerEmail(),
+                                        datum.getTicketInfo().getTicketNo(),
+                                        datum.getTicketInfo().getBoardingPointName(),
+                                        datum.getTicketInfo().getDepartureDate(),
+                                        datum.getTicketInfo().getDepartureTime(),
+                                        datum.getTicketInfo().getSeatLbls(),
+                                        datum.getBusInfo().getCoachNo(),
+                                        datum.getBusInfo().getBusName(),
+                                        datum.getTicketInfo().getJourneyRoute().split("-")[0],
+                                        datum.getTicketInfo().getJourneyRoute().split("-")[1]);
+                                allDataArrayList.add(busTransactionModel);
+                                adapter.notifyDataSetChanged();
+
+                            } catch (Exception e) {
+
+                            }
+
+
                         }
                     } else {
                         ImageView imageView = findViewById(R.id.ivForNodataFoundBusTrans);

@@ -90,7 +90,7 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
                     tvbookingIdStringTV.setVisibility(View.GONE);
                 }
 
-                if (!model.getWebBookingId().equals("")) {
+                if (model.getWebBookingId() != null) {
                     tvWebBookingId.setVisibility(View.VISIBLE);
                     tvWebBookingIDTV.setVisibility(View.VISIBLE);
 

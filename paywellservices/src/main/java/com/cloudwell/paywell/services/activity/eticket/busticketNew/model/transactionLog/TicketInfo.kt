@@ -14,7 +14,7 @@ class TicketInfo {
     @SerializedName("departureTime")
     var departureTime: String = ""
     @SerializedName("journeyRoute")
-    var journeyRoute: String = ""
+    var journeyRoute: String? = "Bogachari-Chittagong"
     @SerializedName("noOfSeat")
     var noOfSeat: String = ""
     @SerializedName("seatLbls")
