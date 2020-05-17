@@ -6,11 +6,9 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.Window
-import androidx.core.content.ContextCompat
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BaseActivity
-import com.cloudwell.paywell.services.activity.entertainment.Bongo.BongoMainActivity
+import com.cloudwell.paywell.services.activity.entertainment.bongo.BongoMainActivity
 import com.cloudwell.paywell.services.app.AppHandler
 import kotlinx.android.synthetic.main.activity_entertainment_main.*
 

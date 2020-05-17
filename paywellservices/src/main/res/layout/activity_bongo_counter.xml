@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cloudwell.paywell.services.activity.entertainment.Bongo.BongoCounterActivity">
+    tools:context="com.cloudwell.paywell.services.activity.entertainment.bongo.BongoCounterActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:background="#2d2e31"
