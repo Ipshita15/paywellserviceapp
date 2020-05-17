@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_background_card"
-    tools:context=".activity.education.BBC.CourseListActivity">
+    tools:context=".activity.education.bbc.CourseListActivity">
 
 
     <androidx.cardview.widget.CardView

@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".activity.education.BBC.BBC_Main_Activity">
+    tools:context=".activity.education.bbc.BBC_Main_Activity">
 
     <androidx.appcompat.widget.Toolbar
         android:background="#2d2e31"

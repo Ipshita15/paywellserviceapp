@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bongo_bg_clr"
-    tools:context="com.cloudwell.paywell.services.activity.entertainment.Bongo.PackegeSelectedActivity">
+    tools:context="com.cloudwell.paywell.services.activity.entertainment.bongo.PackegeSelectedActivity">
 
 
     <androidx.appcompat.widget.Toolbar

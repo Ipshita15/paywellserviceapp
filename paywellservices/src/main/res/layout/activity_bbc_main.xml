@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_background_card"
-    tools:context=".activity.education.BBC.BBC_Main_Activity">
+    tools:context=".activity.education.bbc.BBC_Main_Activity">
 
     <LinearLayout
         android:layout_width="match_parent"
