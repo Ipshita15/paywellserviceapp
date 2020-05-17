@@ -208,7 +208,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     DotProgressBar pb_dot;
     private ConnectionDetector mCd;
     public int mNumOfNotification;
-    private TextView mNotification = null;
     private Toolbar mToolbar;
     private boolean mIsNotificationShown;
     private final String TAG_RESPONSE_STATUS = "status";
@@ -265,6 +264,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private BottomSheetBehavior sheetBehavior;
     LinearLayout layoutBottomSheet;
 
+    private ImageView notif_bell;
+
     @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -306,6 +307,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         cal.set(Calendar.HOUR_OF_DAY, end);
         endHourMilli = cal.getTimeInMillis() / 1000;
+
+        notif_bell = findViewById(R.id.notif_bell);
+
 
         InitializeData();
 
@@ -812,14 +816,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
         }
 
+
         MenuItem menuNotification = _menu.findItem(R.id.menu_notification);
         View notificationView = MenuItemCompat.getActionView(menuNotification);
+        notif_bell = notificationView.findViewById(R.id.notif_bell);
 
         //Scanner
         MenuItem menuScan = _menu.findItem(R.id.menu_scanner);
 
-        mNotification = notificationView.findViewById(R.id.tvNotification);
-        mNotification.setVisibility(View.INVISIBLE);
         if (!mIsNotificationShown) {
             if (!mCd.isConnectingToInternet())
                 AppHandler.showDialog(getSupportFragmentManager());
@@ -866,17 +870,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void run() {
                 if (newNotification == 0) {
-                    if (mNotification != null) {
-                        mNotification.setVisibility(View.INVISIBLE);
-                    }
-
+                    notif_bell.setImageDrawable(getResources().getDrawable(R.drawable.ic_bell));
                 } else {
-                    if (mNotification != null) {
-                        String notification = Integer.toString(newNotification);
-                        mNotification.setVisibility(View.VISIBLE);
-                        mNotification.setText(notification);
-                    }
-
+                    notif_bell.setImageDrawable(getResources().getDrawable(R.drawable.group_180));
                 }
             }
         });
