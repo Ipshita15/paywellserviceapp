@@ -124,6 +124,19 @@
     </style>
 
 
+    <style name="HomeButtonNewV1">
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">@dimen/text_size_button</item>
+        <item name="android:lineSpacingExtra">-3dp</item>
+        <item name="android:background">@null</item>
+        <item name="android:drawablePadding">8dp</item>
+    </style>
+
+
     <!--<style name="datepicker" parent="Theme.AppCompat.Light.Dialog">-->
     <!--<item name="colorPrimary">@color/mti_default_primary</item>-->
     <!--<item name="colorPrimaryDark">@color/mti_default_primary</item>-->
