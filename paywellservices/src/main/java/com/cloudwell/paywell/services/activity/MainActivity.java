@@ -44,7 +44,10 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.about.AboutActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.chat.ChatActivity;
+import com.cloudwell.paywell.services.activity.education.BBC.BBC_Main_Activity;
 import com.cloudwell.paywell.services.activity.education.EducationMainActivity;
+import com.cloudwell.paywell.services.activity.entertainment.Bongo.BongoMainActivity;
+import com.cloudwell.paywell.services.activity.entertainment.EntertainmentMainActivity;
 import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity;
@@ -205,7 +208,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     DotProgressBar pb_dot;
     private ConnectionDetector mCd;
     public int mNumOfNotification;
-    private TextView mNotification = null;
     private Toolbar mToolbar;
     private boolean mIsNotificationShown;
     private final String TAG_RESPONSE_STATUS = "status";
@@ -262,6 +264,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private BottomSheetBehavior sheetBehavior;
     LinearLayout layoutBottomSheet;
 
+    private ImageView notif_bell;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -304,6 +307,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         cal.set(Calendar.HOUR_OF_DAY, end);
         endHourMilli = cal.getTimeInMillis() / 1000;
+
+        notif_bell = findViewById(R.id.notif_bell);
+
 
         InitializeData();
 
@@ -527,7 +533,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void setupRightNagivationView() {
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_right);
+        NavigationView navigationView = findViewById(R.id.nav_view_right);
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -645,6 +651,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.syncState();
         drawer.setDrawerListener(toggle);
+        mToolbar.setNavigationIcon(R.drawable.ic_nav_back);
+
 
         navigationView = findViewById(R.id.nav_view);
         navigationView.setItemIconTintList(null);
@@ -808,14 +816,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
         }
 
+
         MenuItem menuNotification = _menu.findItem(R.id.menu_notification);
         View notificationView = MenuItemCompat.getActionView(menuNotification);
+        notif_bell = notificationView.findViewById(R.id.notif_bell);
 
         //Scanner
         MenuItem menuScan = _menu.findItem(R.id.menu_scanner);
 
-        mNotification = notificationView.findViewById(R.id.tvNotification);
-        mNotification.setVisibility(View.INVISIBLE);
         if (!mIsNotificationShown) {
             if (!mCd.isConnectingToInternet())
                 AppHandler.showDialog(getSupportFragmentManager());
@@ -862,17 +870,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void run() {
                 if (newNotification == 0) {
-                    if (mNotification != null) {
-                        mNotification.setVisibility(View.INVISIBLE);
-                    }
-
+                    notif_bell.setImageDrawable(getResources().getDrawable(R.drawable.ic_bell));
                 } else {
-                    if (mNotification != null) {
-                        String notification = Integer.toString(newNotification);
-                        mNotification.setVisibility(View.VISIBLE);
-                        mNotification.setText(notification);
-                    }
-
+                    notif_bell.setImageDrawable(getResources().getDrawable(R.drawable.group_180));
                 }
             }
         });
@@ -1211,7 +1211,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[],
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
         switch (requestCode) {
             case PERMISSIONS_REQUEST_FOR_WRITE_EXTERNAL_STORAGE: {
@@ -1461,8 +1461,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             case R.id.homeBtnEntertainment:
 
-                CommingSoonDialog commingSoonDialog1 = new CommingSoonDialog();
-                commingSoonDialog1.show(getSupportFragmentManager(), "commingSoonDialog");
+                startActivity(new Intent(this, EntertainmentMainActivity.class));
 
                 break;
 
@@ -1635,11 +1634,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 gmail = account.name;
             }
         }
-        if (gmail.length() > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return gmail.length() > 0;
     }
 
 
@@ -2236,6 +2231,26 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivityWithFlag(intent);
 
                 break;
+
+            case R.string.bbc_janala:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_BBC);
+
+                intent = new Intent(getApplicationContext(), BBC_Main_Activity.class);
+                startActivityWithFlag(intent);
+
+                break;
+
+
+            case R.string.bongo:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_Bongo);
+
+                intent = new Intent(getApplicationContext(), BongoMainActivity.class);
+                startActivityWithFlag(intent);
+
+                break;
+
+
+
 
         }
     }

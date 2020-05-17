@@ -25,7 +25,7 @@ class TranscationListActivity : AppCompatActivity() {
         assert(supportActionBar != null)
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-            supportActionBar!!.setTitle(getString(R.string.home_statement_transaction))
+            supportActionBar!!.setTitle(getString(R.string.bbc_trx_action_title))
             supportActionBar!!.elevation = 0f
             supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#5aac40")));
         }
@@ -35,11 +35,7 @@ class TranscationListActivity : AppCompatActivity() {
         responseDetails = response.responseDetails
 
 
-        bbc_transaction_log
         val linearLayoutManager : LinearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
-        val dividerItemDecoration = DividerItemDecoration(bbc_status_list.getContext(),
-                linearLayoutManager.getOrientation())
-        bbc_transaction_log.addItemDecoration(dividerItemDecoration)
         bbc_transaction_log.layoutManager = linearLayoutManager
 
         val adapter = TransactionLogAdapter(applicationContext, responseDetails)

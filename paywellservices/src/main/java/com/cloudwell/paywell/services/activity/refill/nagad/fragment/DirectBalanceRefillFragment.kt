@@ -7,14 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.app.AppHandler
 import kotlinx.android.synthetic.main.balance_refill_fragment.view.*
+import kotlinx.android.synthetic.main.balance_refill_fragment.view.tvLine1
+import kotlinx.android.synthetic.main.balance_refill_fragment.view.tvLine2
+import kotlinx.android.synthetic.main.balance_refill_fragment.view.tvLine3
+import kotlinx.android.synthetic.main.balance_refill_fragment.view.tvLine4
+import kotlinx.android.synthetic.main.balance_refill_fragment.view.tvLine6
+import kotlinx.android.synthetic.main.balance_refill_fragment.view.tvLine7
+import kotlinx.android.synthetic.main.balance_refill_ussd_fragment.view.*
 
 class DirectBalanceRefillFragment : Fragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -27,7 +31,7 @@ class DirectBalanceRefillFragment : Fragment() {
 
 
         val rid = AppHandler.getmInstance(activity?.applicationContext).rid.toString()
-        val ridLast5Digit = rid.substring(rid.lastIndex - 4);
+        val ridLast5Digit = rid.substring(rid.lastIndex - 4)
         val next2 = "টাকার পরিমাণ লিখে \"Confirm\" করুন।"
         view.tvLine2.text = Html.fromHtml(next2)
 
@@ -49,6 +53,11 @@ class DirectBalanceRefillFragment : Fragment() {
         view.tvLine7.text = Html.fromHtml(next7)
         val next8 ="কোন কারণে ব্যালেন্স অ্যাড না হলে পেওয়েল হেল্প ডেস্ক-এ "+getFontStyle("কল")+" করুন।"
         view.tvLine8.text = Html.fromHtml(next8)
+
+        view.tvLine8.setOnClickListener {
+            val baseActivity = requireActivity() as BaseActivity
+            baseActivity.callPreview(false, "")
+        }
 
 
 

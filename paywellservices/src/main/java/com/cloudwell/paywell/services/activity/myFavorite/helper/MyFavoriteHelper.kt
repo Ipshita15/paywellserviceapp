@@ -95,6 +95,11 @@ class MyFavoriteHelper {
 
             listOfData.add(FavoriteMenu(StringConstant.KEY_home_product_ekshop, StringConstant.KEY_home_product_catalog, IconConstant.KEY_ic_ekshop, MenuStatus.UnFavorite.text, 0, 45))
 
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_product_ekshop, StringConstant.KEY_home_product_catalog, IconConstant.KEY_ic_ekshop, MenuStatus.UnFavorite.text, 0, 45))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_bbc_janala, StringConstant.KEY_home_education, IconConstant.KEY_bbc_icon, MenuStatus.UnFavorite.text,0, 51))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_bongo, StringConstant.KEY_home_entertainment, IconConstant.KEY_bongo_icon,MenuStatus.UnFavorite.text, 0, 52))
+
+
             AsyncTask.execute {
                 DatabaseClient.getInstance(context).getAppDatabase()
                         .mFavoriteMenuDab()
@@ -114,6 +119,9 @@ class MyFavoriteHelper {
             listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_desco_prepaid_string, StringConstant.KEY_home_utility, IconConstant.KEY_ic_desco_prepaid, MenuStatus.UnFavorite.text, 0, 48))
             listOfData.add(FavoriteMenu(StringConstant.KEY_home_utility_desco_prepaid_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, MenuStatus.UnFavorite.text, 0, 49))
             listOfData.add(FavoriteMenu(StringConstant.KEY_home_nagad_refill_msg, StringConstant.KEY_home_refill_balance, IconConstant.KEY_ic_nagad_main, MenuStatus.UnFavorite.text, 0, 50))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_home_product_ekshop, StringConstant.KEY_home_product_catalog, IconConstant.KEY_ic_ekshop, MenuStatus.UnFavorite.text, 0, 45))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_bbc_janala, StringConstant.KEY_home_education, IconConstant.KEY_bbc_icon, MenuStatus.UnFavorite.text,0, 51))
+            listOfData.add(FavoriteMenu(StringConstant.KEY_bongo, StringConstant.KEY_home_entertainment, IconConstant.KEY_bongo_icon,MenuStatus.UnFavorite.text, 0, 52))
 
 
             AsyncTask.execute {

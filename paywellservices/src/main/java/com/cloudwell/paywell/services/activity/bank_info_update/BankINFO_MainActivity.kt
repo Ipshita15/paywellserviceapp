@@ -2,32 +2,28 @@ package com.cloudwell.paywell.services.activity.bank_info_update
 
 import android.Manifest
 import android.app.AlertDialog
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.InputType
-import android.text.method.PasswordTransformationMethod
 import android.util.Base64
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.bank_info_update.model.BankListRequestPojo
+import com.cloudwell.paywell.services.activity.bank_info_update.model.BankDialogPojo
 import com.cloudwell.paywell.services.activity.bank_info_update.model.BankPojo
-import com.cloudwell.paywell.services.activity.bank_info_update.model.RemoveReqPojo
 import com.cloudwell.paywell.services.activity.bank_info_update.spineer.*
 import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.activity.refill.banktransfer.model.Branch
@@ -36,19 +32,27 @@ import com.cloudwell.paywell.services.activity.refill.banktransfer.model.ReposeD
 import com.cloudwell.paywell.services.activity.refill.model.BranchData
 import com.cloudwell.paywell.services.activity.refill.model.RequestBranch
 import com.cloudwell.paywell.services.activity.refill.model.RequestDistrict
-import com.cloudwell.paywell.services.activity.topup.TopupMainActivity
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.AskPinDialog
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.SuccessDialog
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.successInterface
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.libaray.imagePickerAndCrop.ImagePickerActivity
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.ImageUtility.getResizedBitmap
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
-import com.google.android.material.snackbar.Snackbar
 import com.imagepicker.FilePickUtils.OnFileChoose
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import kotlinx.android.synthetic.main.activity_bank_info_main.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
+import java.io.File
 
 class BankINFO_MainActivity : BaseActivity() {
 
@@ -65,10 +69,17 @@ class BankINFO_MainActivity : BaseActivity() {
 
     private var mAppHandler: AppHandler? = null
     var bankAdd : ImageView? = null
+    var bankcheck : ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bank_info_main)
+        assert(supportActionBar != null)
+        if (supportActionBar != null) {
+            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+            supportActionBar!!.setTitle(R.string.bank_btn)
+        }
+        
         bankAddLayout = findViewById(R.id.bankAddLayout)
         inflater = layoutInflater
         mAppHandler = AppHandler.getmInstance(applicationContext)
@@ -79,9 +90,9 @@ class BankINFO_MainActivity : BaseActivity() {
             showCurrentBankinfo()
 
         })
-        add_btn.setOnClickListener(View.OnClickListener {
-            addAnotherBank()
-        })
+//        add_btn.setOnClickListener(View.OnClickListener {
+//            addAnotherBank()
+//        })
 
         addAnotherBank()
 
@@ -89,11 +100,30 @@ class BankINFO_MainActivity : BaseActivity() {
 
     }
 
+
+    private fun takeCameraImage() {
+        Dexter.withActivity(this)
+                .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .withListener(object : MultiplePermissionsListener {
+                    override fun onPermissionsChecked(report: MultiplePermissionsReport) {
+                        if (report.areAllPermissionsGranted()) {
+                            Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+                                takePictureIntent.resolveActivity(packageManager)?.also {
+                                    startActivityForResult(takePictureIntent, addNoFlag-1)
+                                }
+                            }
+                        }
+                    }
+
+                    override fun onPermissionRationaleShouldBeShown(permissions: List<PermissionRequest>, token: PermissionToken) {
+                        token.continuePermissionRequest()
+                    }
+                }).check()
+    }
     private fun addAnotherBank() {
         ++addNoFlag
+        Log.e("Flag", addNoFlag.toString())
         var bankId : String? = null
-        var branchId : String? = null
-        var districtId : String? = null
         var district_array: List<DistrictData>? = null
         var branch_array: List<Branch>? = null
         var bank_array :  List<BankDataItem>? = null
@@ -103,9 +133,16 @@ class BankINFO_MainActivity : BaseActivity() {
         val branch_spinner : Spinner = topUpView.findViewById(R.id.spinner_branch)
         val removeBtn : Button = topUpView.findViewById(R.id.removeBankBtn)
         val check_book_btn : Button = topUpView.findViewById(R.id.check_book_btn)
+        val add_view_btn : TextView = topUpView.findViewById(R.id.add_another_btn)
+        val bankCounter : TextView = topUpView.findViewById(R.id.counter)
+        bankcheck = topUpView.findViewById(R.id.check_check)
+        bankCounter.text = addNoFlag.toString()
         bankAdd = topUpView.findViewById(R.id.iamge)
+        add_view_btn.setOnClickListener(View.OnClickListener {
+            addAnotherBank()
+        })
         check_book_btn.setOnClickListener(View.OnClickListener {
-            asked("ট্রেড লাইসেন্সের ছবি", "5")
+            takeCameraImage()
         })
         if (addNoFlag == 1) {
             removeBtn.setVisibility(View.GONE)
@@ -302,14 +339,17 @@ class BankINFO_MainActivity : BaseActivity() {
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == 1 && resultCode == RESULT_OK) {
+        if ( resultCode == RESULT_OK) {
             val imageBitmap = data?.extras?.get("data") as Bitmap
-            bankAdd?.setImageBitmap(imageBitmap)
-            encodeTobase64(imageBitmap)
-            if (imageBitmap!=null){
-                Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show()
+            bankcheck?.visibility = View.VISIBLE
+            val stringImage : String = encodeTobase64(imageBitmap)
+            Log.e("imageString", ""+stringImage)
+            Log.e("requestCode", ""+requestCode)
 
-            }
+            val singleTopUpView: View = bankAddLayout!!.getChildAt(requestCode)
+            val image : ImageView = singleTopUpView.findViewById(R.id.check_book)
+            image.setImageBitmap(imageBitmap)
+
         }
     }
 
@@ -358,11 +398,11 @@ class BankINFO_MainActivity : BaseActivity() {
 
     private val onFileChoose = OnFileChoose { fileUri, requestCode, size -> // here you will get captured or selected image<br>
         val selectedImage = BitmapFactory.decodeFile(fileUri)
-        encodeTobase64(selectedImage)
-        Log.e("", "")
+        val imageString: String = encodeTobase64(selectedImage)
+        Log.e("imageString", ""+imageString)
     }
 
-    fun encodeTobase64(image: Bitmap?) {
+    fun encodeTobase64(image: Bitmap?) :String {
         val baos = ByteArrayOutputStream()
         val myBm: Bitmap = getResizedBitmap(image, 1000, 700)
         myBm.compress(Bitmap.CompressFormat.JPEG, 50, baos)
@@ -371,11 +411,82 @@ class BankINFO_MainActivity : BaseActivity() {
         val strBuild = "xxCloud" + imageEncoded + "xxCloud"
         val img = resources.getDrawable(R.drawable.icon_seleted)
 
+        return  strBuild
     }
 
     private fun showCurrentBankinfo() {
-        if (bankAddLayout?.getChildCount()!! > 0) {
+        var bankList : ArrayList<BankPojo> = ArrayList()
+        var dialogList : ArrayList<BankDialogPojo> = ArrayList()
+        if (bankAddLayout?.getChildCount()!! == 1) {
+                val singleTopUpView: View = bankAddLayout!!.getChildAt(0)
+                if (singleTopUpView != null) {
+                    val bank_sp = singleTopUpView.findViewById<Spinner>(R.id.spinner_Bank)
+                    val distrrict_sp = singleTopUpView.findViewById<Spinner>(R.id.spinner_district)
+                    val branch_sp = singleTopUpView.findViewById<Spinner>(R.id.spinner_branch)
+                    val account_et = singleTopUpView.findViewById<EditText>(R.id.acNumber)
+                    val prePostSelector = singleTopUpView.findViewById<RadioGroup>(R.id.prePostRadioGroup)
+                    val accountNumberStr = account_et.text.toString()
+                    val bank : BankDataItem  = bank_sp.selectedItem as BankDataItem
+                    val bankName : String = bank.name.toString()
+                    val district : DistrictData = distrrict_sp.selectedItem as DistrictData
+                    val districtName : String = district.district_name
+                    val branch : Branch = branch_sp.selectedItem as Branch
+                    val branchname : String = branch.name.toString()
+                    val checkView : ImageView = singleTopUpView.findViewById(R.id.check_book)
+                    var imageBitmap : Bitmap? = null
+                    if (checkView.getDrawable() != null){
+                         imageBitmap  = (checkView.getDrawable() as BitmapDrawable).getBitmap()
+                    }
+
+                    val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(applicationContext)!!.rid)
+                    val stringpojo  = BankDialogPojo()
+                    stringpojo.account = accountNumberStr
+                    stringpojo.bank = bankName
+                    stringpojo.branch = branchname
+                    stringpojo.district = districtName
+                    dialogList.add(stringpojo)
+
+                    if(accountNumberStr.length > 8 ){
+
+                        val d = BankInfoDialog(applicationContext,dialogList, object : OKInterface{
+                            override fun onclick() {
+                                //askForPin()
+                                val pinDialog = AskPinDialog(object : AskPinDialog.getPinInterface{
+                                    override fun onclick(pinNumber: String) {
+                                        val bankPojo = BankPojo()
+                                        bankPojo.accountNo  = accountNumberStr
+                                        bankPojo.bankId = bank.id
+                                        bankPojo.branchId = branch.id
+                                        bankPojo.districtId = district.id
+                                        bankPojo.refId = uniqueKey
+                                        bankPojo.checkBookSlip = encodeTobase64(imageBitmap)
+                                        bankPojo.password = pinNumber
+                                        bankPojo.username = mAppHandler?.userName
+                                        uploadBankInfo(bankPojo)//for single
+
+                                    }
+
+                                })
+                                pinDialog.show(supportFragmentManager, "PIN")
+                            }
+                        })
+                        d.show(supportFragmentManager, "BANKINFO")
+
+                    }else{
+                        showDialogMessage(getString(R.string.input_error_msg))
+                    }
+
+
+
+
+                }
+        }else if (bankAddLayout?.getChildCount()!! > 1){        // Multiple Bank Info
+
+
+
             val reqStrBuilder = StringBuilder()
+            var bankList : ArrayList<BankPojo> = ArrayList()
+            var dialogList : ArrayList<BankDialogPojo> = ArrayList()
             for (i in 0 until bankAddLayout!!.getChildCount()) {
                 val singleTopUpView: View = bankAddLayout!!.getChildAt(i)
                 if (singleTopUpView != null) {
@@ -389,6 +500,7 @@ class BankINFO_MainActivity : BaseActivity() {
                     val bank : BankDataItem  = bank_sp.selectedItem as BankDataItem
                     val bankName : String = bank.name.toString()
                     val district : DistrictData = distrrict_sp.selectedItem as DistrictData
+                    val districtName : String = district.district_name
                     val branch : Branch = branch_sp.selectedItem as Branch
                     val branchname : String = branch.name.toString()
 
@@ -403,34 +515,36 @@ class BankINFO_MainActivity : BaseActivity() {
                     bankPojo.checkBookSlip = "as"
                     bankPojo.password = "12345"
                     bankPojo.username = mAppHandler?.userName
+                    bankList.add(bankPojo)
 
-                    uploadBankInfo(bankPojo   )
+                    //uploadBankInfo(bankPojo)//for single
 
-                    reqStrBuilder.append("""${i + 1}. ${"Bank"} $bankName
-                        ${"branch"} $branchname${getString(R.string.tk)}
-                        ${"AC"} : ${accountNumberStr}""")
+                    val stringpojo  = BankDialogPojo()
+                    stringpojo.account = accountNumberStr
+                    stringpojo.bank = bankName
+                    stringpojo.branch = branchname
+                    stringpojo.district = districtName
+                    dialogList.add(stringpojo)
 
                 }
             }
-            val builder = androidx.appcompat.app.AlertDialog.Builder(this)
-            builder.setTitle("Bank Info Update")
-            builder.setMessage(reqStrBuilder)
-            builder.setPositiveButton(R.string.okay_btn) { dialogInterface, id ->
-                dialogInterface.dismiss()
 
-                var pojo = BankListRequestPojo()
-                val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(applicationContext).rid)
-                pojo.refId = uniqueKey
-                pojo.username = mAppHandler?.userName
-                getBankInfoList(pojo)
-
-                // askForPin()
-            }
-            val alert = builder.create()
-            alert.show()
+            val d = BankInfoDialog(applicationContext,dialogList, object : OKInterface{
+                override fun onclick() {
+                    //askForPin()
+                    val pinDialog = AskPinDialog(object : AskPinDialog.getPinInterface{
+                        override fun onclick(pinNumber: String) {
 
 
-        } else {
+                        }
+
+                    })
+                    pinDialog.show(supportFragmentManager, "PIN")
+                }
+            })
+            d.show(supportFragmentManager, "BANKINFO")
+
+        }else {
            showErrorMessagev1("try again")
         }
     }
@@ -445,11 +559,17 @@ class BankINFO_MainActivity : BaseActivity() {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 dismissProgressDialog()
               if (  response.isSuccessful){
+                  if(response.code() == 200){
+                      val successdialog : SuccessDialog = SuccessDialog(getString(R.string.bank_btn), getString(R.string.bank_added), object : successInterface{
+                          override fun onclick() {
+                              finish()
+                          }
+                      })
+                      successdialog.show(supportFragmentManager, "BAnkAddedsuccess")
 
+                  }else{
 
-
-
-
+                  }
 
               }else{
                   showErrorMessagev1(getString(R.string.try_again_msg))
@@ -460,71 +580,6 @@ class BankINFO_MainActivity : BaseActivity() {
 
     }
 
-    private fun getBankInfoList(pojo : BankListRequestPojo){
-        showProgressDialog()
-
-        ApiUtils.getAPIServiceV2().getRetailerBankList(pojo).enqueue(object : Callback<ResponseBody>{
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                dismissProgressDialog()
-            }
-
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-               dismissProgressDialog()
-            }
-
-        })
-
-    }
-
-    private fun removeBnkInfo(pojo : RemoveReqPojo){
-        showProgressDialog()
-
-        ApiUtils.getAPIServiceV2().removeBankInfo(pojo).enqueue(object : Callback<ResponseBody>{
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                dismissProgressDialog()
-            }
-
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                dismissProgressDialog()
-            }
-
-        })
-    }
-
-    private fun askForPin() {
-        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
-        builder.setTitle(R.string.pin_no_title_msg)
-        val pinNoET = EditText(this)
-        val lp = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT)
-        pinNoET.gravity = Gravity.CENTER_HORIZONTAL
-        pinNoET.layoutParams = lp
-        pinNoET.inputType = InputType.TYPE_CLASS_NUMBER or
-                InputType.TYPE_TEXT_VARIATION_PASSWORD
-        pinNoET.transformationMethod = PasswordTransformationMethod.getInstance()
-        builder.setView(pinNoET)
-        builder.setPositiveButton(R.string.okay_btn) { dialogInterface, id ->
-            val inMethMan = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inMethMan.hideSoftInputFromWindow(pinNoET.windowToken, 0)
-            if (pinNoET.text.toString().length != 0) {
-                dialogInterface.dismiss()
-                val pin = pinNoET.text.toString()
-                if (isInternetConnection) {
-
-                    //uploadBankInfo()
-
-                } else {
-                    showErrorMessagev1(getString(R.string.connection_error_msg))
-                }
-            } else {
-                showErrorMessagev1(getString(R.string.pin_no_error_msg))
-//                snackbar.show()
-            }
-        }
-        val alert = builder.create()
-        alert.show()
-    }
 
 
     private interface DistrictCallBack{
@@ -541,7 +596,7 @@ class BankINFO_MainActivity : BaseActivity() {
 
 
     private interface CameraCallBack{
-        fun onBranchRecive(image: Bitmap)
+        fun onImageRecive(image: Bitmap)
     }
 }
 

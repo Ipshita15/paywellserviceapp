@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
 import android.text.InputType
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.*
@@ -18,16 +17,19 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.R.layout.dialog_trx_limit
 import com.cloudwell.paywell.services.R.string.log_limit_title_msg
 import com.cloudwell.paywell.services.activity.base.BaseActivity
-import com.cloudwell.paywell.services.activity.education.BBC.model.*
-import com.cloudwell.paywell.services.activity.refill.nagad.NagadRefillLogInquiryActivity
+import com.cloudwell.paywell.services.activity.education.BBC.model.BbcTranscationLog
+import com.cloudwell.paywell.services.activity.education.BBC.model.RegistationInfo
+import com.cloudwell.paywell.services.activity.education.BBC.model.StatusCheckResponsePojo
+import com.cloudwell.paywell.services.activity.education.BBC.model.TransactionResponsePOjo
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.constant.IconConstant
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu
 import com.cloudwell.paywell.services.retrofit.ApiUtils
+import com.cloudwell.paywell.services.utils.StringConstant
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_bbc_main.*
-import okhttp3.ResponseBody
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -63,6 +65,10 @@ class BBC_Main_Activity : BaseActivity(), View.OnClickListener , CompoundButton.
         bbcBtnstatus.setOnClickListener(this)
         bbcBtnTranscation.setOnClickListener(this)
 
+
+        addRecentUsedList()
+
+
     }
 
     private fun initilize() {
@@ -77,6 +83,12 @@ class BBC_Main_Activity : BaseActivity(), View.OnClickListener , CompoundButton.
             bbcBtnTranscation.setTypeface(AppController.getInstance().aponaLohitFont)
 
         }
+    }
+
+
+    private fun addRecentUsedList() {
+        val recentUsedMenu = RecentUsedMenu(StringConstant.KEY_bbc_janala, StringConstant.KEY_home_education, IconConstant.KEY_bbc_icon, 0, 51)
+        addItemToRecentListInDB(recentUsedMenu)
     }
 
     override fun onClick(v: View?) {
@@ -216,7 +228,6 @@ class BBC_Main_Activity : BaseActivity(), View.OnClickListener , CompoundButton.
 
     private fun getTransactionLog(limit: Int) {
         showProgressDialog()
-        Toast.makeText(applicationContext, "ok", Toast.LENGTH_LONG).show()
         val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).rid)
 
         val transcationLog = BbcTranscationLog()
@@ -226,12 +237,13 @@ class BBC_Main_Activity : BaseActivity(), View.OnClickListener , CompoundButton.
 
         ApiUtils.getAPIServiceV2().getBBCTransactionLog(transcationLog).enqueue(object : Callback<TransactionResponsePOjo>{
             override fun onFailure(call: Call<TransactionResponsePOjo>, t: Throwable) {
+                dismissProgressDialog()
                 showErrorMessagev1(getString(R.string.try_again_msg))
             }
 
             override fun onResponse(call: Call<TransactionResponsePOjo>, response: Response<TransactionResponsePOjo>) {
+                dismissProgressDialog()
                if (response.isSuccessful){
-                  // val js =  JSONObject(response.body()?.string())
                    val trPojo : TransactionResponsePOjo = response.body()!!
                    val status :Int? =  trPojo.status //js.getInt("status")
                    val msg : String =   trPojo.message.toString() //js.getString("message")

@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
+import com.cloudwell.paywell.services.activity.bank_info_update.BankSelectionActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.refill.banktransfer.BankTransferMainActivity;
 import com.cloudwell.paywell.services.activity.refill.card.CardTransferMainActivity;
@@ -112,6 +113,10 @@ public class RefillBalanceMainActivity extends BaseActivity {
             case R.id.homeNagad:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_BALANCE_REFILL_MENU, AnalyticsParameters.KEY_BALANCE_REFILL_NAGAD_MENU);
                 startActivity(new Intent(this, NagadMainActivity.class));
+                break;
+
+            case R.id.bank_btn:
+                startActivity(new Intent(this, BankSelectionActivity.class));
                 break;
 
             default:

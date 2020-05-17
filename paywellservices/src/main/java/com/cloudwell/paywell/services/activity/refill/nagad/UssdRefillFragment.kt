@@ -7,8 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.app.AppHandler
+import kotlinx.android.synthetic.main.balance_refill_fragment.view.*
 import kotlinx.android.synthetic.main.balance_refill_ussd_fragment.view.*
+import kotlinx.android.synthetic.main.balance_refill_ussd_fragment.view.tvLine1
+import kotlinx.android.synthetic.main.balance_refill_ussd_fragment.view.tvLine2
+import kotlinx.android.synthetic.main.balance_refill_ussd_fragment.view.tvLine3
+import kotlinx.android.synthetic.main.balance_refill_ussd_fragment.view.tvLine4
+import kotlinx.android.synthetic.main.balance_refill_ussd_fragment.view.tvLine6
+import kotlinx.android.synthetic.main.balance_refill_ussd_fragment.view.tvLine7
 
 class UssdRefillFragment : Fragment(){
 
@@ -28,7 +36,7 @@ class UssdRefillFragment : Fragment(){
 
 
         val rid = AppHandler.getmInstance(activity?.applicationContext).rid.toString()
-        val ridLast5Digit = rid.substring(rid.lastIndex - 4);
+        val ridLast5Digit = rid.substring(rid.lastIndex - 4)
 
 
         val next4 = "Reference Number -এ আপনার RID এর শেষ ৫ ডিজিট " + getFontStyle("$ridLast5Digit") + " লিখে Send করুন।\n" + "\nপ্রদত্ত তথ্যগুলো ঠিক থাকলে নগদ PIN এর দিয়ে পেমেন্ট প্রক্রিয়া শেষ করুন।"
@@ -45,6 +53,10 @@ class UssdRefillFragment : Fragment(){
         view.tvLine7.text = Html.fromHtml(next7)
 
 
+        view.tvLine7.setOnClickListener {
+            val baseActivity = requireActivity() as BaseActivity
+            baseActivity.callPreview(false, "")
+        }
         return view
     }
 

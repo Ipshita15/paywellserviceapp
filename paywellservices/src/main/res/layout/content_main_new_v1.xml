@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_marginTop="-10dp"
     android:layout_marginBottom="40dp"
     android:background="@drawable/round_white_layout_bg_v1"
     android:layout_height="match_parent"
@@ -10,9 +9,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
-
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
@@ -45,24 +43,20 @@
                         android:layout_height="wrap_content">
 
                         <LinearLayout
-
-
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:weightSum="4">
+                            android:orientation="vertical">
 
                             <LinearLayout
-
                                 android:layout_width="match_parent"
-                                android:layout_height="0dp"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:orientation="horizontal"
-                                android:weightSum="5">
+                                android:weightSum="3">
 
                                 <Button
                                     android:id="@+id/homeBtnTopup"
-                                    style="@style/HomeButtonNew"
+                                    style="@style/HomeButtonNewV1"
                                     android:layout_weight="1"
                                     android:drawableTop="@drawable/ic_topup_v1"
                                     android:onClick="onButtonClicker"
@@ -70,35 +64,20 @@
                                     android:textAllCaps="false"
                                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:gravity="center" />
-
                                 <Button
                                     android:id="@+id/homeBtnUtility"
-                                    style="@style/HomeButtonNew"
+                                    style="@style/HomeButtonNewV1"
                                     android:layout_weight="1"
                                     android:drawableTop="@drawable/ic_utility"
-
                                     android:drawablePadding="0dp"
                                     android:onClick="onButtonClicker"
                                     android:text="@string/home_utility"
                                     android:textAllCaps="false"
                                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:gravity="center" />
-
                                 <Button
                                     android:id="@+id/homeBtnEticket"
-                                    style="@style/HomeButtonNew"
+                                    style="@style/HomeButtonNewV1"
                                     android:layout_weight="1"
                                     android:drawableTop="@drawable/ic_ticket_v1"
                                     android:onClick="onButtonClicker"
@@ -109,34 +88,25 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_marginTop="16dp"
-                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
                                 android:orientation="horizontal"
-                                android:weightSum="5">
+                                android:weightSum="3">
 
 
                                 <Button
                                     android:id="@+id/homeBtnMFS"
-                                    style="@style/HomeButtonNew"
+                                    style="@style/HomeButtonNewV1"
                                     android:layout_weight="1"
-                                    android:drawableTop="@drawable/ic_mobile_banking_v1"
+                                    android:drawableTop="@drawable/ic_topup_v1"
                                     android:onClick="onButtonClicker"
-
                                     android:text="@string/home_mfs"
                                     android:textAllCaps="false"
                                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:gravity="center" />
-
                                 <Button
                                     android:id="@+id/homeBtnProductCategory"
-                                    style="@style/HomeButtonNew"
+                                    style="@style/HomeButtonNewV1"
                                     android:layout_weight="1"
                                     android:drawableTop="@drawable/ic_product_v1"
                                     android:onClick="onButtonClicker"
@@ -144,17 +114,10 @@
                                     android:textAllCaps="false"
                                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:gravity="center" />
-
 
                                 <Button
                                     android:id="@+id/homeBtnFee"
-                                    style="@style/HomeButtonNew"
+                                    style="@style/HomeButtonNewV1"
                                     android:layout_weight="1"
                                     android:drawableTop="@drawable/ic_fee"
                                     android:onClick="onButtonClicker"
@@ -168,16 +131,15 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_marginTop="16dp"
-                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
                                 android:orientation="horizontal"
-                                android:weightSum="5">
+                                android:weightSum="3">
 
 
                                 <Button
                                     android:id="@+id/homeBtnEduction"
-                                    style="@style/HomeButtonNew"
+                                    style="@style/HomeButtonNewV1"
                                     android:layout_weight="1"
                                     android:drawableTop="@drawable/ic_education"
                                     android:onClick="onButtonClicker"
@@ -185,16 +147,9 @@
                                     android:textAllCaps="false"
                                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:gravity="center" />
-
                                 <Button
                                     android:id="@+id/homeBtnEntertainment"
-                                    style="@style/HomeButtonNew"
+                                    style="@style/HomeButtonNewV1"
                                     android:layout_weight="1"
                                     android:drawableTop="@drawable/ic_entertainment_v1"
                                     android:onClick="onButtonClicker"
@@ -202,17 +157,10 @@
                                     android:textAllCaps="false"
                                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:gravity="center" />
-
 
                                 <Button
                                     android:id="@+id/homeBtnInsurance"
-                                    style="@style/HomeButtonNew"
+                                    style="@style/HomeButtonNewV1"
                                     android:layout_weight="1"
                                     android:drawableTop="@drawable/ic_insurance_v1"
                                     android:onClick="onButtonClicker"
@@ -226,17 +174,17 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_marginTop="16dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
                                 android:layout_weight="1"
                                 android:gravity="center_horizontal"
                                 android:orientation="horizontal"
-                                android:weightSum="5">
+                                android:weightSum="3">
 
 
                                 <Button
                                     android:id="@+id/homeBtnRefillBalance"
-                                    style="@style/HomeButtonNew"
+                                    style="@style/HomeButtonNewV1"
                                     android:layout_weight="1"
                                     android:drawableTop="@drawable/ic_refile_v1"
                                     android:onClick="onButtonClicker"
@@ -245,17 +193,9 @@
                                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:gravity="center" />
-
-
                                 <Button
                                     android:id="@+id/homeBtnMiniStatement"
-                                    style="@style/HomeButtonNew"
+                                    style="@style/HomeButtonNewV1"
                                     android:layout_weight="1"
                                     android:drawableTop="@drawable/ic_statment_v1"
                                     android:onClick="onButtonClicker"
@@ -264,16 +204,9 @@
                                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:gravity="center" />
-
                                 <Button
                                     android:id="@+id/homeBtnSettings"
-                                    style="@style/HomeButtonNew"
+                                    style="@style/HomeButtonNewV1"
                                     android:layout_weight="1"
                                     android:drawableTop="@drawable/ic_settings_v1"
                                     android:onClick="onButtonClicker"
@@ -282,12 +215,6 @@
                                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:gravity="center" />
                             </LinearLayout>
 
 
@@ -309,7 +236,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="16dp"
-                                    android:text="বেশী ব্যবহৃত সার্ভিস সমুহ-"
+                                    android:text="@string/most_used_services"
                                     android:textColor="#59595c"
                                     android:textSize="16sp" />
 
