@@ -529,7 +529,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void setupRightNagivationView() {
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_right);
+        NavigationView navigationView = findViewById(R.id.nav_view_right);
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -647,6 +647,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.syncState();
         drawer.setDrawerListener(toggle);
+        mToolbar.setNavigationIcon(R.drawable.ic_nav_back);
+
 
         navigationView = findViewById(R.id.nav_view);
         navigationView.setItemIconTintList(null);
@@ -1213,7 +1215,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[],
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
         switch (requestCode) {
             case PERMISSIONS_REQUEST_FOR_WRITE_EXTERNAL_STORAGE: {
@@ -1636,11 +1638,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 gmail = account.name;
             }
         }
-        if (gmail.length() > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return gmail.length() > 0;
     }
 
 
