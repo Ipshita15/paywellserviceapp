@@ -7,14 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.cloudwell.paywell.services.R
+import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.app.AppHandler
 import kotlinx.android.synthetic.main.balance_refill_fragment.view.*
 
 class BalanceRefillFragment : Fragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -26,7 +23,7 @@ class BalanceRefillFragment : Fragment() {
 
 
         val rid = AppHandler.getmInstance(activity?.applicationContext).rid.toString()
-        val ridLast5Digit = rid.substring(rid.lastIndex - 4);
+        val ridLast5Digit = rid.substring(rid.lastIndex - 4)
         val next2 = "রেফারেন্স নম্বরে আপনার পেওয়েল RID এর শেষ পাঁচটি ডিজিট " + getFontStyle("$ridLast5Digit") + " লিখে নগদ এর PIN নম্বর দিয়ে পেমেন্ট সম্পন্ন করুন।"
         view.tvLine2.text = Html.fromHtml(next2)
 
@@ -37,6 +34,12 @@ class BalanceRefillFragment : Fragment() {
         val next4 = "৫ মিনিটের মধ্যে ব্যালেন্স অ্যাড না হলে "+getFontStyle("কল")+" করুন।"
         view.tvLine4.text = Html.fromHtml(next4)
 
+
+        view.tvLine4.setOnClickListener {
+            val baseActivity = requireActivity() as BaseActivity
+            baseActivity.callPreview(false, "")
+
+        }
 
         return view
     }
