@@ -9,10 +9,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.util.Base64;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,6 +26,11 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
@@ -44,30 +51,33 @@ import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.imagepicker.FilePickUtils;
-import com.imagepicker.LifeCycleCallBackManager;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regModel;
-import static com.imagepicker.FilePickUtils.CAMERA_PERMISSION;
 
 public class MissingMainActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
 
@@ -90,8 +100,6 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
     private static final int PERMISSION_FOR_GALLERY = 321;
 
 
-    FilePickUtils filePickUtils;
-    LifeCycleCallBackManager lifeCycleCallBackManager;
     boolean isNID;
 
     private Button btPicOutlet, btOwnerImg, btTradeImg, btpassportImg, btBirthImg, btDriveImg, btCardImg, btNid, btSmart;
@@ -99,6 +107,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
     ArrayAdapter<CharSequence> arrayAdapter_business_type_spinner;
 
     boolean isMissingFlowGorble = false;
+    private String currentPhotoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,9 +149,6 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
             snackbar.show();
         }
 
-
-        filePickUtils = new FilePickUtils(this, onFileChoose);
-        lifeCycleCallBackManager = filePickUtils.getCallBackManager();
 
 
     }
@@ -948,9 +954,6 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 }
             } else {
 
-                if (lifeCycleCallBackManager != null) {
-                    lifeCycleCallBackManager.onActivityResult(requestCode, resultCode, data);
-                }
 
             }
         }
@@ -1014,7 +1017,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case PERMISSION_FOR_GALLERY: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -1035,10 +1038,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
     public void submitMissingOnClick(View view) {
         if (mCd.isConnectingToInternet()) {
 
-
             String mDistrict = "", mThanaName = "", mPostcodeId = "";
-
-
 
             try {
                 mDistrict = regModel.getDistrict();
@@ -1504,6 +1504,29 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
 
     public void asked(String title, String number) {
 
+        Dexter.withActivity(this)
+                .withPermissions(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ).withListener(new MultiplePermissionsListener() {
+            @Override
+            public void onPermissionsChecked(MultiplePermissionsReport report) {
+
+                askedDialog(title, number);
+
+
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+
+            }
+        }).check();
+
+
+    }
+
+    private void askedDialog(String title, String number) {
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
         builder.setMessage(title)
                 .setCancelable(true)
@@ -1512,8 +1535,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                         dialog.dismiss();
                         str_which_btn_selected = number;
 
-                        filePickUtils.requestImageCamera(CAMERA_PERMISSION, false, true); // pass false if you dont want to allow image crope
-
+                        getCamaraIntent();
 
                     }
                 })
@@ -1533,21 +1555,8 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 });
         android.app.AlertDialog alert = builder.create();
         alert.show();
-
     }
 
-    private FilePickUtils.OnFileChoose onFileChoose = new FilePickUtils.OnFileChoose() {
-        @Override
-        public void onFileChoose(String fileUri, int requestCode, int size) {
-            // here you will get captured or selected image<br>
-
-            Bitmap selectedImage = BitmapFactory.decodeFile(fileUri);
-            encodeTobase64(selectedImage);
-
-
-            Log.e("", "");
-        }
-    };
 
     private void getDistrictList() {
         showProgressDialog();
@@ -1709,5 +1718,41 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                 showErrorMessagev1(getString(R.string.try_again_msg));
             }
         });
+    }
+
+    private void getCamaraIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this, "" + getApplication().getPackageName(), photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, 2);
+            }
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
     }
 }

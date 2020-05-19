@@ -9,9 +9,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Base64;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +22,10 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.reg.nidOCR.NidInputActivity;
@@ -27,17 +33,22 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
-import com.imagepicker.FilePickUtils;
-import com.imagepicker.LifeCycleCallBackManager;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
-
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import static com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regModel;
-import static com.imagepicker.FilePickUtils.CAMERA_PERMISSION;
 
 public class EntryThirdActivity extends BaseActivity {
     private EditText et_salesCode, et_collectionCode;
@@ -46,23 +57,9 @@ public class EntryThirdActivity extends BaseActivity {
     private AppHandler mAppHandler;
     private Button btPicOutlet, btNID, btSmart, btPicOwner, btPicTrade, btPicPassport, btPicBirth, btPicDrive, bTPicVisit;
 
-
-    FilePickUtils filePickUtils;
-    LifeCycleCallBackManager lifeCycleCallBackManager;
     boolean isNID;
+    private String currentPhotoPath;
 
-    private FilePickUtils.OnFileChoose onFileChoose = new FilePickUtils.OnFileChoose() {
-        @Override
-        public void onFileChoose(String fileUri, int requestCode, int size) {
-            // here you will get captured or selected image<br>
-
-            Bitmap selectedImage = BitmapFactory.decodeFile(fileUri);
-            encodeTobase64(selectedImage);
-
-
-            Log.e("", "");
-        }
-    };
 
 
     @Override
@@ -170,8 +167,6 @@ public class EntryThirdActivity extends BaseActivity {
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_REGISTRATION_THIRD_PAGE);
 
 
-        filePickUtils = new FilePickUtils(this, onFileChoose);
-        lifeCycleCallBackManager = filePickUtils.getCallBackManager();
 
     }
 
@@ -200,7 +195,7 @@ public class EntryThirdActivity extends BaseActivity {
         regModel.setSalesCode(et_salesCode.getText().toString().trim());
         regModel.setCollectionCode(et_collectionCode.getText().toString().trim());
 
-        mAppHandler.REG_FLAG_THREE = true;
+        AppHandler.REG_FLAG_THREE = true;
 
         AnalyticsManager.sendEvent(AnalyticsParameters.KEY_REGISTRATION_MENU, AnalyticsParameters.KEY_REGISTRATION_THIRD_PORTION_SUBMIT_REQUEST);
         Intent intent = new Intent(EntryThirdActivity.this, EntryForthActivity.class);
@@ -209,7 +204,9 @@ public class EntryThirdActivity extends BaseActivity {
     }
 
     public void outletImgOnClick(View v) {
+
         asked("দোকানের ছবি", "1");
+
     }
 
 
@@ -228,7 +225,6 @@ public class EntryThirdActivity extends BaseActivity {
         intent.putExtra("isNID", isNID);
         intent.putExtra("isMissingPage", false);
         startActivity(intent);
-
 
     }
 
@@ -284,9 +280,8 @@ public class EntryThirdActivity extends BaseActivity {
                 }
             } else {
 
-                if (lifeCycleCallBackManager != null) {
-                    lifeCycleCallBackManager.onActivityResult(requestCode, resultCode, data);
-                }
+                Bitmap selectedImage = BitmapFactory.decodeFile(currentPhotoPath);
+                encodeTobase64(selectedImage);
 
             }
         }
@@ -376,7 +371,7 @@ public class EntryThirdActivity extends BaseActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case PERMISSION_FOR_GALLERY: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -406,6 +401,29 @@ public class EntryThirdActivity extends BaseActivity {
 
     public void asked(String title, String number) {
 
+        Dexter.withActivity(this)
+                .withPermissions(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ).withListener(new MultiplePermissionsListener() {
+            @Override
+            public void onPermissionsChecked(MultiplePermissionsReport report) {
+
+                askedDialog(title, number);
+
+
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+
+            }
+        }).check();
+
+
+    }
+
+    private void askedDialog(String title, String number) {
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
         builder.setMessage(title)
                 .setCancelable(true)
@@ -414,7 +432,8 @@ public class EntryThirdActivity extends BaseActivity {
                         dialog.dismiss();
                         str_which_btn_selected = number;
 
-                        filePickUtils.requestImageCamera(CAMERA_PERMISSION, false, true); // pass false if you dont want to allow image crope
+                        getCamaraIntent();
+                        // filePickUtils.requestImageCamera(CAMERA_PERMISSION, false, true); // pass false if you dont want to allow image crope
 
 
                     }
@@ -437,7 +456,42 @@ public class EntryThirdActivity extends BaseActivity {
                 });
         android.app.AlertDialog alert = builder.create();
         alert.show();
+    }
 
+    private void getCamaraIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this, "" + getApplication().getPackageName(), photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, 2);
+            }
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
     }
 
 

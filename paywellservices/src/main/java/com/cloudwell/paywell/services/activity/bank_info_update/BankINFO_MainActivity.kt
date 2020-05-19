@@ -40,7 +40,6 @@ import com.cloudwell.paywell.services.libaray.imagePickerAndCrop.ImagePickerActi
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.ImageUtility.getResizedBitmap
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
-import com.imagepicker.FilePickUtils.OnFileChoose
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -145,7 +144,7 @@ class BankINFO_MainActivity : BaseActivity() {
             takeCameraImage()
         })
         if (addNoFlag == 1) {
-            removeBtn.setVisibility(View.GONE)
+            removeBtn.visibility = View.GONE
         }
         if (isInternetConnection){
             getBank(object : BankCallBack {
@@ -172,7 +171,7 @@ class BankINFO_MainActivity : BaseActivity() {
             topUpView.startAnimation(slideOutAnim)
         })
 
-        bank_spinner.setOnItemSelectedListener(object : OnItemSelectedListener{
+        bank_spinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
@@ -194,10 +193,10 @@ class BankINFO_MainActivity : BaseActivity() {
 
             }
 
-        })
+        }
 
 
-        district_spinner.setOnItemSelectedListener(object : OnItemSelectedListener{
+        district_spinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -209,7 +208,7 @@ class BankINFO_MainActivity : BaseActivity() {
                 if (isInternetConnection){
 
                 }else{
-                 showErrorMessagev1(getString(R.string.connection_error_msg))
+                    showErrorMessagev1(getString(R.string.connection_error_msg))
 
                 }
                 getBranch(dis_Id, bankId, object : BranchCallBack {
@@ -220,21 +219,21 @@ class BankINFO_MainActivity : BaseActivity() {
                 })
             }
 
-        })
+        }
 
-        branch_spinner.setOnItemSelectedListener(object : OnItemSelectedListener{
-          override fun onNothingSelected(parent: AdapterView<*>?) {
+        branch_spinner.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
 
-          }
+            }
 
-          override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
-             val branchName : String = branch_array?.get(position)?.name.toString()
-              val branchId : String =branch_array?.get(position)?.id.toString()
-              Log.e(branchName, branchId)
-          }
+                val branchName: String = branch_array?.get(position)?.name.toString()
+                val branchId: String = branch_array?.get(position)?.id.toString()
+                Log.e(branchName, branchId)
+            }
 
-      })
+        }
 
 
     bankAddLayout?.addView(topUpView)
@@ -281,7 +280,7 @@ class BankINFO_MainActivity : BaseActivity() {
         showProgressDialog()
         val requestBranch = RequestBranch()
         var responseBranchData: BranchData? = null
-        requestBranch.setmUsername("" + mAppHandler?.getUserName())
+        requestBranch.setmUsername("" + mAppHandler?.userName)
         requestBranch.setmBankId("" + bankId)
         requestBranch.setmDistrictId("" + disId)
 
@@ -295,7 +294,7 @@ class BankINFO_MainActivity : BaseActivity() {
                 dismissProgressDialog()
                 if (response.code() == 200){
                     responseBranchData = response.body()
-                    if (responseBranchData?.getStatus() == 200L) {
+                    if (responseBranchData?.status == 200L) {
                         val list : List<Branch> = responseBranchData!!.branch
                         callback.onBranchRecive(list)
 
@@ -396,12 +395,6 @@ class BankINFO_MainActivity : BaseActivity() {
 
     }
 
-    private val onFileChoose = OnFileChoose { fileUri, requestCode, size -> // here you will get captured or selected image<br>
-        val selectedImage = BitmapFactory.decodeFile(fileUri)
-        val imageString: String = encodeTobase64(selectedImage)
-        Log.e("imageString", ""+imageString)
-    }
-
     fun encodeTobase64(image: Bitmap?) :String {
         val baos = ByteArrayOutputStream()
         val myBm: Bitmap = getResizedBitmap(image, 1000, 700)
@@ -417,7 +410,7 @@ class BankINFO_MainActivity : BaseActivity() {
     private fun showCurrentBankinfo() {
         var bankList : ArrayList<BankPojo> = ArrayList()
         var dialogList : ArrayList<BankDialogPojo> = ArrayList()
-        if (bankAddLayout?.getChildCount()!! == 1) {
+        if (bankAddLayout?.childCount!! == 1) {
                 val singleTopUpView: View = bankAddLayout!!.getChildAt(0)
                 if (singleTopUpView != null) {
                     val bank_sp = singleTopUpView.findViewById<Spinner>(R.id.spinner_Bank)
@@ -434,8 +427,8 @@ class BankINFO_MainActivity : BaseActivity() {
                     val branchname : String = branch.name.toString()
                     val checkView : ImageView = singleTopUpView.findViewById(R.id.check_book)
                     var imageBitmap : Bitmap? = null
-                    if (checkView.getDrawable() != null){
-                         imageBitmap  = (checkView.getDrawable() as BitmapDrawable).getBitmap()
+                    if (checkView.drawable != null) {
+                        imageBitmap = (checkView.drawable as BitmapDrawable).bitmap
                     }
 
                     val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(applicationContext)!!.rid)
@@ -480,14 +473,14 @@ class BankINFO_MainActivity : BaseActivity() {
 
 
                 }
-        }else if (bankAddLayout?.getChildCount()!! > 1){        // Multiple Bank Info
+        } else if (bankAddLayout?.childCount!! > 1) {        // Multiple Bank Info
 
 
 
             val reqStrBuilder = StringBuilder()
             var bankList : ArrayList<BankPojo> = ArrayList()
             var dialogList : ArrayList<BankDialogPojo> = ArrayList()
-            for (i in 0 until bankAddLayout!!.getChildCount()) {
+            for (i in 0 until bankAddLayout!!.childCount) {
                 val singleTopUpView: View = bankAddLayout!!.getChildAt(i)
                 if (singleTopUpView != null) {
                     val bank_sp = singleTopUpView.findViewById<Spinner>(R.id.spinner_Bank)
