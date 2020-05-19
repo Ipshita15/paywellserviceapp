@@ -1,9 +1,29 @@
 package com.cloudwell.paywell.services.retrofit;
 
 
+import com.cloudwell.paywell.services.activity.bank_info_update.BankLinkedListResponsePojo;
 import com.cloudwell.paywell.services.activity.bank_info_update.model.BankListRequestPojo;
 import com.cloudwell.paywell.services.activity.bank_info_update.model.BankPojo;
 import com.cloudwell.paywell.services.activity.bank_info_update.model.RemoveReqPojo;
+import com.cloudwell.paywell.services.activity.education.bbc.model.BbcSubscriptionPojo;
+import com.cloudwell.paywell.services.activity.education.bbc.model.BbcTranscationLog;
+import com.cloudwell.paywell.services.activity.education.bbc.model.CourseListRresponsePojo;
+import com.cloudwell.paywell.services.activity.education.bbc.model.CourseLlistRequestPojo;
+import com.cloudwell.paywell.services.activity.education.bbc.model.RegistationInfo;
+import com.cloudwell.paywell.services.activity.bank_info_update.spineer.BankResponse;
+import com.cloudwell.paywell.services.activity.bank_info_update.spineer.GetBankPojo;
+import com.cloudwell.paywell.services.activity.education.bbc.model.StatusCheckResponsePojo;
+import com.cloudwell.paywell.services.activity.education.bbc.model.TransactionResponsePOjo;
+import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoActivePkgPojo;
+import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoActiveResponse;
+import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoBannerResponse;
+import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoEnquiryRqstPojo;
+import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoPkgListReqPojo;
+import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoResponsePojo;
+import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoSubscriptionPojo;
+import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoTrxResponse;
+import com.cloudwell.paywell.services.activity.entertainment.bongo.model.CountResponse;
+import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.Nagadv2requestPojo;
 import com.cloudwell.paywell.services.activity.bank_info_update.spineer.BankResponse;
 import com.cloudwell.paywell.services.activity.bank_info_update.spineer.GetBankPojo;
 import com.cloudwell.paywell.services.activity.education.BBC.model.BbcSubscriptionPojo;
@@ -704,24 +724,26 @@ public interface APIService {
     Call<ResponseBody> uploadBankInfo(@Body BankPojo bankPojo);
 
     @POST("Retailer/BankDepositSystem/getRtlrBankAccList")
-    Call<ResponseBody> getRetailerBankList(@Body BankListRequestPojo bankListRequestPojo);
+    Call<BankLinkedListResponsePojo> getRetailerBankList(@Body BankListRequestPojo bankListRequestPojo);
 
     @POST("Retailer/BankDepositSystem/removeBankAccount")
     Call<ResponseBody> removeBankInfo(@Body RemoveReqPojo removeReqPojo);
 
     //Bongo
+    @POST("Utility/Bongo/getBannerList")
+    Call<BongoBannerResponse> getBannerList(@Body BongoPkgListReqPojo bongoPkgListReqPojo);
 
     @POST("Utility/Bongo/getPackageList")
     Call<BongoResponsePojo> getBongoPackgeList(@Body BongoPkgListReqPojo bongoPkgListReqPojo);
 
     @POST("Utility/Bongo/activatePackage")
-    Call<ResponseBody> getBongoActivePackgeList(@Body BongoActivePkgPojo bongoActivePkgPojo);
+    Call<BongoActiveResponse> getBongoActivePackgeList(@Body BongoActivePkgPojo bongoActivePkgPojo);
 
     @POST("Utility/Bongo/getSubscriptionCount")
-    Call<ResponseBody> getBongoSubscriptionCount(@Body BongoSubscriptionPojo bongoSubscriptionPojo);
+    Call<CountResponse> getBongoSubscriptionCount(@Body BongoSubscriptionPojo bongoSubscriptionPojo);
 
     @POST("Utility/Bongo/getEnquiryData")
-    Call<ResponseBody> getBongoEnquiryData(@Body BongoEnquiryRqstPojo bongoEnquiryRqstPojo);
+    Call<BongoTrxResponse> getBongoEnquiryData(@Body BongoEnquiryRqstPojo bongoEnquiryRqstPojo);
 
 //    @POST("Retailer/BankDepositSystem/removeBankAccount")
 //    Call<ResponseBody> removeBankInfo(@Body RemoveReqPojo removeReqPojo);

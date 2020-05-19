@@ -126,6 +126,7 @@ public class AnalyticsParameters {
     public static final String KEY_UTILITY_KARNAPHULI_MENU = "UtilityKarnaphuliMenu";
     public static final String KEY_BALANCE_REFILL_CARD = "BalanceRefillCard";
     public static final String KEY_BALANCE_REFILL_NAGAD = "BalanceRefillNagad";
+
     public static final String KEY_ETICKET_BUS = "E_TICKET_BUS";
     public static final String KEY_MFS_MYCASH_MENU = "MfsMycashMenu";
     public static final String KEY_PRODUCT_AJKER_DEAL_MENU = "ProductAjkerDealMenu";
@@ -156,6 +157,7 @@ public class AnalyticsParameters {
     public static final String KEY_SETTINGS_RESET_PIN_MENU = "SettingsResetPinMenu";
     public static final String KEY_SETTINGS_CHANGE_LANGUAGE_MENU = "SettingsChangeLanguageMenu";
     public static final String KEY_SETTINGS_HELP_MENU = "SettingsHelpMenu";
+    public static final String KEY_SETTINGS_BANK_MENU = "AccountInformation";
     static final String KEY_ACTION = "Action";
     static final String KEY_LABEL = "Label";
 
@@ -186,6 +188,9 @@ public class AnalyticsParameters {
     public static final String KEY_AIR_TICKET = "AirTicket";
     public static final String KEY_Launch = "Launch";
 
+
+    public static final String KEY_BBC = "BBC";
+    public static final String KEY_Bongo = "Bongo";
 
 
 }

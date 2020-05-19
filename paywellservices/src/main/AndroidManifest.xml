@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.cloudwell.paywell.services">
+        xmlns:tools="http://schemas.android.com/tools"
+        package="com.cloudwell.paywell.services">
 
     <supports-screens
         android:anyDensity="true"
@@ -1004,11 +1004,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.eticket.busticketNew.busTransportList.BusHosttActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activity.eticket.busticketNew.cencel.BusCancelActiivty"
+            android:name=".activity.eticket.busticketNew.busTransportList.BusTransportListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -1116,6 +1112,11 @@
         <activity
             android:name=".activity.fee.FeeMainActivity"
             android:screenOrientation="portrait" />
+
+
+        <activity
+                android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+                android:screenOrientation="portrait"></activity>
 
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"

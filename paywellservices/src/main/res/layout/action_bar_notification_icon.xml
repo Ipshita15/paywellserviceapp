@@ -20,22 +20,5 @@
         android:padding="7dp"
         android:src="@drawable/ic_bell" />
 
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/tvNotification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/notif_bell"
-        android:layout_alignEnd="@+id/notif_bell"
-        android:layout_alignTop="@id/notif_bell"
-        android:layout_marginRight="0dp"
-        android:layout_marginEnd="0dp"
-        android:background="@drawable/circle_bubble"
-        android:gravity="center"
-        android:minWidth="17sp"
-        android:paddingBottom="1dp"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
-        android:text="@null"
-        android:textColor="#ffffffff"
-        android:textSize="12sp" />
+
 </RelativeLayout>

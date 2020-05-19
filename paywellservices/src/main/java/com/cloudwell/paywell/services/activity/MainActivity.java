@@ -44,7 +44,10 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.about.AboutActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.chat.ChatActivity;
+import com.cloudwell.paywell.services.activity.education.bbc.BBC_Main_Activity;
 import com.cloudwell.paywell.services.activity.education.EducationMainActivity;
+import com.cloudwell.paywell.services.activity.entertainment.bongo.BongoMainActivity;
+import com.cloudwell.paywell.services.activity.entertainment.EntertainmentMainActivity;
 import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity;
@@ -94,6 +97,8 @@ import com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliBill
 import com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliMainActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBBillPayNewActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.BannerDetailsDialog;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.CommingSoonDialog;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus.PBBillStatusActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.MobileNumberChangeActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.registion.PBRegistrationActivity;
@@ -203,7 +208,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     DotProgressBar pb_dot;
     private ConnectionDetector mCd;
     public int mNumOfNotification;
-    private TextView mNotification = null;
     private Toolbar mToolbar;
     private boolean mIsNotificationShown;
     private final String TAG_RESPONSE_STATUS = "status";
@@ -260,6 +264,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private BottomSheetBehavior sheetBehavior;
     LinearLayout layoutBottomSheet;
 
+    private ImageView notif_bell;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -303,6 +308,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         cal.set(Calendar.HOUR_OF_DAY, end);
         endHourMilli = cal.getTimeInMillis() / 1000;
 
+        notif_bell = findViewById(R.id.notif_bell);
+
+
         InitializeData();
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_DASHBOARD);
@@ -315,6 +323,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
         setUpBottomSheet();
+
+
+
 
 
     }
@@ -522,7 +533,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void setupRightNagivationView() {
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_right);
+        NavigationView navigationView = findViewById(R.id.nav_view_right);
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -640,6 +651,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.syncState();
         drawer.setDrawerListener(toggle);
+        mToolbar.setNavigationIcon(R.drawable.ic_nav_back);
+
 
         navigationView = findViewById(R.id.nav_view);
         navigationView.setItemIconTintList(null);
@@ -803,14 +816,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
         }
 
+
         MenuItem menuNotification = _menu.findItem(R.id.menu_notification);
         View notificationView = MenuItemCompat.getActionView(menuNotification);
+        notif_bell = notificationView.findViewById(R.id.notif_bell);
 
         //Scanner
         MenuItem menuScan = _menu.findItem(R.id.menu_scanner);
 
-        mNotification = notificationView.findViewById(R.id.tvNotification);
-        mNotification.setVisibility(View.INVISIBLE);
         if (!mIsNotificationShown) {
             if (!mCd.isConnectingToInternet())
                 AppHandler.showDialog(getSupportFragmentManager());
@@ -857,17 +870,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void run() {
                 if (newNotification == 0) {
-                    if (mNotification != null) {
-                        mNotification.setVisibility(View.INVISIBLE);
-                    }
-
+                    notif_bell.setImageDrawable(getResources().getDrawable(R.drawable.ic_bell));
                 } else {
-                    if (mNotification != null) {
-                        String notification = Integer.toString(newNotification);
-                        mNotification.setVisibility(View.VISIBLE);
-                        mNotification.setText(notification);
-                    }
-
+                    notif_bell.setImageDrawable(getResources().getDrawable(R.drawable.group_180));
                 }
             }
         });
@@ -1057,6 +1062,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         viewPager.hideIndicators();
         viewPager.setLoopSlides(true);
 
+
+        String[] bannerDetails = new Gson().fromJson(mAppHandler.getBannerDetails(), String[].class);
+
         viewPager.setOnSlideClickListener(new OnSlideClickListener() {
 
             @Override
@@ -1094,11 +1102,27 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         WebViewActivity.TAG_LINK = link;
                         startActivity(new Intent(MainActivity.this, WebViewActivity.class));
                     }
+
+                    String bannerDetail = bannerDetails[position];
+                    String image = imageUrl[position];
+
+                    if (!bannerDetail.equals("")){
+                        showBannerDetails(image, bannerDetail);
+                    }
+
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
+    }
+
+    private void showBannerDetails(String image, String bannerDetail) {
+
+        BannerDetailsDialog bannerDetailsDialog = new BannerDetailsDialog(image, bannerDetail);
+        bannerDetailsDialog.show(getSupportFragmentManager(), "bannerDetailsDialog");
+
     }
 
     private void checkPayWellBalance() {
@@ -1187,7 +1211,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[],
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
         switch (requestCode) {
             case PERMISSIONS_REQUEST_FOR_WRITE_EXTERNAL_STORAGE: {
@@ -1427,6 +1451,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 break;
 
+
+            case R.id.homeBtnInsurance:
+
+                CommingSoonDialog commingSoonDialog = new CommingSoonDialog();
+                commingSoonDialog.show(getSupportFragmentManager(), "commingSoonDialog");
+
+                break;
+
+            case R.id.homeBtnEntertainment:
+
+                startActivity(new Intent(this, EntertainmentMainActivity.class));
+
+                break;
+
             default:
                 break;
         }
@@ -1596,11 +1634,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 gmail = account.name;
             }
         }
-        if (gmail.length() > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return gmail.length() > 0;
     }
 
 
@@ -2197,6 +2231,26 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivityWithFlag(intent);
 
                 break;
+
+            case R.string.bbc_janala:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_BBC);
+
+                intent = new Intent(getApplicationContext(), BBC_Main_Activity.class);
+                startActivityWithFlag(intent);
+
+                break;
+
+
+            case R.string.bongo:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_Bongo);
+
+                intent = new Intent(getApplicationContext(), BongoMainActivity.class);
+                startActivityWithFlag(intent);
+
+                break;
+
+
+
 
         }
     }
