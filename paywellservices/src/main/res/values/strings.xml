@@ -618,9 +618,9 @@
     <string name="no_bill_number_found_message">No bill number found, please try again</string>
 
 
-    <string name="m_first_ni_error">Sorry, can\'t process first page of your input NID</string>
-    <string name="m_second_ni_error">Sorry, can\'t process second page of your input NID</string>
-    <string name="m_please_input_both_nid_page">Please input both NID page</string>
+    <string name="m_first_ni_error" translatable="false">Sorry, can\'t process first page of your input NID</string>
+    <string name="m_second_ni_error" translatable="false">Sorry, can\'t process second page of your input NID</string>
+    <string name="m_please_input_both_nid_page" translatable="false">Please input both NID page</string>
 
 
     <string name="finished">সম্পূর্ণ</string>
@@ -714,5 +714,6 @@
     <string name="bank_added">Thank you for your information. The bank account will be linked to Powell ID within 24 hours.</string>
     <string name="bank_delate">Are you want to delate your thia account?</string>
     <string name="most_used_services">Most used services-</string>
+    <string name="bongo_trx_tag" translatable="false">bongoTrx</string>
 
 </resources>

@@ -81,28 +81,27 @@
         app:layout_constraintTop_toBottomOf="@+id/txr_name" />
 
 
-
     <TextView
-        android:textColor="@color/tab_background"
         android:id="@+id/bongo_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:text="Successful"
+        android:textColor="@color/tab_background"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txr_name" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
-    <TextView
-        android:textColor="@color/bongo_item_bg"
-        android:id="@+id/amount_bongo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:text="Tk 10.47"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txr_name" />
+<!--    <TextView-->
+<!--        android:textColor="@color/bongo_item_bg"-->
+<!--        android:id="@+id/amount_bongo"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="32dp"-->
+<!--        android:layout_marginRight="32dp"-->
+<!--        android:text="Tk 10.47"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/txr_name" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
