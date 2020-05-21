@@ -1,5 +1,6 @@
 package com.cloudwell.paywell.services.activity.entertainment.bongo.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -26,11 +27,13 @@ class BongoTrxLogAdapter(val mContext: Context, var trList: ArrayList<ResponseDe
        return trList!!.size
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: CourseListViewHolder, position: Int) {
 
         holder.bongo_date.setText(trList?.get(position)?.addDatetime)
         holder.bongo_customerNumber.setText(trList?.get(position)?.customerMobileNo)
         holder.courseSubscriberName.setText(trList?.get(position)?.title)
+        holder.amount_bongo.setText(trList?.get(position)?.totalAmount+ " Tk")
         val status = trList?.get(position)?.statusName
         if (status.equals("Successful")){
             holder.bongo_status.setText(status)
@@ -49,6 +52,7 @@ class BongoTrxLogAdapter(val mContext: Context, var trList: ArrayList<ResponseDe
         val bongo_customerNumber = itemView.bongo_number
         val bongo_status = itemView.bongo_status
         val bongo_date = itemView.bongo_trx_date
+        val amount_bongo = itemView.amount_bongo
 
     }
 

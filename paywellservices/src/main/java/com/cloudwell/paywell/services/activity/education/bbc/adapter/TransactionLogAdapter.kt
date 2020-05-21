@@ -1,6 +1,7 @@
 package com.cloudwell.paywell.services.activity.education.bbc.adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,10 +29,17 @@ class TransactionLogAdapter(val mContext: Context, var trList: List<ResponseDeta
 
         holder.bbc_date.setText(trList?.get(position)?.addDatetime)
         holder.subscriptionID.setText(mContext.getString(R.string.bbc_subscription)+trList?.get(position)?.subscriptionId)
-        holder.bbc_status.setText(trList?.get(position)?.statusName)
         holder.bbc_number.setText(trList?.get(position)?.mobileNo)
         holder.courseDes.setText(trList?.get(position)?.courseName)
         holder.courseSubscriberName.setText(mContext.getString(R.string.name)+trList?.get(position)?.fullName)
+        val status = trList?.get(position)?.statusName
+        if (status.equals("Successful")){
+            holder.bbc_status.setText(status)
+            holder.bbc_status.setTextColor(mContext.resources.getColor(R.color.tab_background))
+        }else{
+            holder.bbc_status.setText(status)
+            holder.bbc_status.setTextColor(Color.RED)
+        }
 
     }
 
