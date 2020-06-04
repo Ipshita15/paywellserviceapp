@@ -7,6 +7,8 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import androidx.multidex.MultiDex;
+
 import com.cloudwell.paywell.services.BuildConfig;
 import com.cloudwell.paywell.services.activity.RecentUsedStackSet;
 import com.cloudwell.paywell.services.activity.home.AppSignatureHelper;
@@ -19,9 +21,9 @@ import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 import com.cloudwell.paywell.services.utils.AppVersionUtility;
 import com.cloudwell.paywell.services.utils.MyHttpClient;
 import com.cloudwell.paywell.services.utils.StringConstant;
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
@@ -35,11 +37,10 @@ import org.apache.http.params.HttpParams;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.multidex.MultiDex;
-import io.fabric.sdk.android.Fabric;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by Android on 12/1/2015.
@@ -58,6 +59,8 @@ public class AppController extends Application {
     AppHandler mAppHandler;
 
     private RefWatcher refWatcher;
+
+    private FirebaseAnalytics mFirebaseAnalytics;
 
 
     public static synchronized AppController getInstance() {
@@ -122,7 +125,7 @@ public class AppController extends Application {
 
         for (int i = 0; i < all.size(); i++) {
             RecentUsedMenu recentUsedMenu1 = all.get(i);
-            recentUsedMenu1.setId(+i+1);
+            recentUsedMenu1.setId(+i + 1);
             update.add(recentUsedMenu1);
         }
 
@@ -170,7 +173,7 @@ public class AppController extends Application {
                 AppStorageBox.put(getApplicationContext(), AppStorageBox.Key.USER_USED_NOTIFICAITON_FLOW, false);
                 MyFavoriteHelper.Companion.updateData(getApplicationContext());
 
-               // setDefaultRecentList();
+                // setDefaultRecentList();
 
                 break;
         }
@@ -188,7 +191,7 @@ public class AppController extends Application {
 
                         if (favoriteMenus.size() == 0) {
                             addDefaultRecentList();
-                        }else {
+                        } else {
                             List<RecentUsedMenu> favoriteMenus1 = favoriteMenus;
 
                             RecentUsedStackSet.getInstance().addAll(favoriteMenus);
@@ -242,10 +245,17 @@ public class AppController extends Application {
     }
 
     private void configureCrashReporting() {
-        CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder()
-                .disabled(BuildConfig.DEBUG)
-                .build();
-        Fabric.with(this, new Crashlytics.Builder().core(crashlyticsCore).build(), new Crashlytics());
+//        CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder()
+//                .disabled(BuildConfig.DEBUG)
+//                .build();
+//        Fabric.with(this, new Crashlytics.Builder().core(crashlyticsCore).build(), new Crashlytics());
+//
+//         FirebaseAnalytics mFirebaseAnalytics;
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);
+
+
     }
 
 
@@ -304,10 +314,8 @@ public class AppController extends Application {
                 String rid = mAppHandler.getRID();
                 String userName = mAppHandler.getUserName();
                 String mobileNumber = mAppHandler.getMobileNumber();
-                Crashlytics.setUserIdentifier(rid);
-                Crashlytics.setUserName("UserName: " + userName + " Mobile number: " + mobileNumber);
+                mFirebaseAnalytics.getInstance(this).setUserId("UserName: " + userName + " Mobile number: " + mobileNumber);
                 Logger.v("UserName: " + userName + " Mobile number: " + mobileNumber);
-
 
             }
         } catch (Exception e) {

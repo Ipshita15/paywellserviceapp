@@ -1023,11 +1023,6 @@
                 android:name="com.yalantis.ucrop.UCropActivity"
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity
-                android:name=".activity.eticket.busticketNew.passenger.BusPassengerBoothDepartureActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" />
         <activity
                 android:name=".activity.eticket.busticketNew.busTransactionLog.BusTransactionLogActivity"
                 android:screenOrientation="portrait"
@@ -1146,9 +1141,7 @@
         <meta-data
                 android:name="com.google.android.gms.vision.DEPENDENCIES"
                 android:value="barcode" />
-        <meta-data
-                android:name="io.fabric.ApiKey"
-                android:value="8fbad4b3a6a78a5e18c5f18b833263a48b46e3d0" />
+
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_icon"
                 android:resource="@drawable/pw_notification_bar" />

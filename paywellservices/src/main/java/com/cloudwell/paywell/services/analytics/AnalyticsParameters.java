@@ -193,4 +193,6 @@ public class AnalyticsParameters {
     public static final String KEY_Bongo = "Bongo";
 
 
+    public static final String KEY_Screen = "Screen";
+
 }
