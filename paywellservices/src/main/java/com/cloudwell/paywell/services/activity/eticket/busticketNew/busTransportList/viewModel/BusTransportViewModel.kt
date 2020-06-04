@@ -65,7 +65,7 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
 
     fun cancelAllRequest() {
         if (ApiUtils.getClient() != null) {
-            ApiUtils.getClient().dispatcher().cancelAll()
+            ApiUtils.getClient().dispatcher.cancelAll()
         }
 
 

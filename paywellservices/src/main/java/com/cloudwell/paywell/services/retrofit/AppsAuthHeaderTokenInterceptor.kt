@@ -15,6 +15,7 @@ import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import com.google.gson.Gson
 import okhttp3.Interceptor
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okio.Buffer
 import org.json.JSONException
@@ -33,18 +34,18 @@ class AppsAuthHeaderTokenInterceptor(val mContext: AppController?) : Interceptor
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
 
-        var requestBody = chain.request().body()
-        val toString = chain.request().url().toString()
+        var requestBody = chain.request().body
+        val toString = chain.request().url.toString()
 
         if (toString.equals(AllUrl.gettoken) ||
                 toString.equals(AllUrl.ProfilingReg) ||
                 toString.equals(AllUrl.resetPassword) ||
                 toString.equals(AllUrl.refreshToken)
         ) {
-            val newRequest = chain.request().newBuilder().build();
+            val newRequest = chain.request().newBuilder().build()
             return chain.proceed(newRequest)
         } else {
-            val subtype: String = requestBody?.contentType()?.subtype() ?: ""
+            val subtype: String = requestBody?.contentType()?.subtype ?: ""
             if (subtype.contains("json")) {
                 //modify every json request body
                 val newProcessApplicationJsonRequestBody = processApplicationJsonRequestBody(requestBody!!)
@@ -53,11 +54,11 @@ class AppsAuthHeaderTokenInterceptor(val mContext: AppController?) : Interceptor
 
             val newRequest = chain.request().newBuilder()
                     .addHeader("Authorization", authHeader)
-                    .post(requestBody)
+                    .post(requestBody!!)
                     .build()
 
             val response = chain.proceed(newRequest)
-            val code = response.code()
+            val code = response.code
             if (code == 401) {
 
 
@@ -79,15 +80,18 @@ class AppsAuthHeaderTokenInterceptor(val mContext: AppController?) : Interceptor
                         val m = response1.body()
                         if (response1.code() == 200) {
                             val token = m!!.token.securityToken
-                            AppHandler.getmInstance(AppController.getContext()).setAppsSecurityToken(token);
+                            AppHandler.getmInstance(AppController.getContext()).appsSecurityToken = token
 
                             // generate new Authorization token and post original request body
-                            val newProcessApplicationJsonRequestBody = processApplicationJsonRequestBody(requestBody!!)
-                            val newRequest = chain.request().newBuilder()
-                                    .addHeader("Authorization", authHeader)
-                                    .post(newProcessApplicationJsonRequestBody)
-                                    .build()
-                            return chain.proceed(newRequest)
+                            val newProcessApplicationJsonRequestBody = processApplicationJsonRequestBody(requestBody)
+                            val newRequest = newProcessApplicationJsonRequestBody?.let {
+                                chain.request().newBuilder()
+                                        .addHeader("Authorization", authHeader)
+                                        .post(it)
+                                        .build()
+                                return chain.proceed(newRequest)
+
+                            }
                         }else{
                             AppHandler.getmInstance(AppController.getContext()).appStatus = AppsStatusConstant.KEY_logout
                             val intent = Intent(AppController.getContext(), HomeActivity::class.java)
@@ -107,7 +111,7 @@ class AppsAuthHeaderTokenInterceptor(val mContext: AppController?) : Interceptor
             }
 
             // otherwise just pass the original response on
-            return  response!!
+            return response
 
 
 
@@ -138,7 +142,7 @@ private fun processApplicationJsonRequestBody(requestBody: RequestBody): Request
 
         authHeader = getTokenBaseOnRSAlgorithm(obj)
 
-        return RequestBody.create(requestBody.contentType(), obj.toString())
+        return obj.toString().toRequestBody(requestBody.contentType())
     } catch (e: JSONException) {
         e.printStackTrace()
     }
