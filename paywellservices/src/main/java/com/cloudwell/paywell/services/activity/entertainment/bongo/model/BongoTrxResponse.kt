@@ -1,42 +1,16 @@
 package com.cloudwell.paywell.services.activity.entertainment.bongo.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-data class BongoTrxResponse(
+data class BongoTRXresponse(
 
-	@field:SerializedName("data")
-	val data: ArrayList<DataItem?>? = null,
+	@field:SerializedName("Status")
+	val status: Int? = null,
 
-	@field:SerializedName("message")
+	@field:SerializedName("Message")
 	val message: String? = null,
 
-	@field:SerializedName("status")
-	val status: Int? = null
-)
-
-data class DataItem(
-
-	@field:SerializedName("code")
-	val code: String? = null,
-
-	@field:SerializedName("customer_mobile_no")
-	val customerMobileNo: String? = null,
-
-	@field:SerializedName("reference_id")
-	val referenceId: String? = null,
-
-	@field:SerializedName("total_amount")
-	val totalAmount: String? = null,
-
-	@field:SerializedName("status_name")
-	val statusName: String? = null,
-
-	@field:SerializedName("title")
-	val title: String? = null,
-
-	@field:SerializedName("expiry_datetime")
-	val expirytime: String? = null,
-
-	@field:SerializedName("add_datetime")
-	val addtime: String? = null
+	@field:SerializedName("ResponseDetails")
+	val responseDetails: ArrayList<ResponseDetailsItem?>? = null
 )
