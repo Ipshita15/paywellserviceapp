@@ -186,10 +186,13 @@ public class AnalyticsParameters {
 
     public static final String KEY_BUS_TICKET = "BusTicket";
     public static final String KEY_AIR_TICKET = "AirTicket";
+    public static final String KEY_Launch = "Launch";
 
 
     public static final String KEY_BBC = "BBC";
     public static final String KEY_Bongo = "Bongo";
 
+
+    public static final String KEY_Screen = "Screen";
 
 }

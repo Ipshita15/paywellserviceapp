@@ -79,8 +79,7 @@
             tools:replace="allowBackup">
         <activity
                 android:name=".activity.bank_info_update.BankListActivity"
-                android:screenOrientation="portrait">
-        </activity>
+                android:screenOrientation="portrait"></activity>
         <activity
                 android:name=".activity.bank_info_update.BankSelectionActivity"
                 android:parentActivityName=".activity.settings.SettingsActivity"
@@ -1025,17 +1024,15 @@
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme.NoActionBar" />
         <activity
-                android:name=".activity.eticket.busticketNew.busTransportList.BusTransportListActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-                android:name=".activity.eticket.busticketNew.passenger.BusPassengerBoothDepartureActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" />
-        <activity
                 android:name=".activity.eticket.busticketNew.busTransactionLog.BusTransactionLogActivity"
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+                android:name=".activity.eticket.busticketNew.cancelList.CancelListActivity"
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme.NoActionBar" />
+
+
         <activity
                 android:name=".activity.eticket.airticket.airportSearch.search.AirportsSearchActivity"
                 android:screenOrientation="portrait"
@@ -1092,9 +1089,14 @@
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme.NoActionBar" />
         <activity
-                android:name=".activity.eticket.busticketNew.seatLayout.SeatLayoutActivity"
+                android:name=".activity.eticket.busticketNew.busTransportList.BusHosttActivity"
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+                android:name=".activity.eticket.busticketNew.cencel.BusCancelActiivty"
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
                 android:name=".activity.refill.nagad.NagadBalanceClaimActivity"
                 android:screenOrientation="portrait" />
@@ -1145,9 +1147,7 @@
         <meta-data
                 android:name="com.google.android.gms.vision.DEPENDENCIES"
                 android:value="barcode" />
-        <meta-data
-                android:name="io.fabric.ApiKey"
-                android:value="8fbad4b3a6a78a5e18c5f18b833263a48b46e3d0" />
+
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_icon"
                 android:resource="@drawable/pw_notification_bar" />

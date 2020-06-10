@@ -715,5 +715,15 @@
     <string name="bank_delate">Are you want to delate your thia account?</string>
     <string name="most_used_services">Most used services-</string>
     <string name="bongo_trx_tag" translatable="false">bongoTrx</string>
+    <string name="launch">Launch Ticket</string>
+    <string name="text_bus_from_error">You must type the city from you want to travel</string>
+    <string name="text_bus_to_error">You must type the destination city you want to travel</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="bus_transction_log">Transaction Log</string>
+    <string name="cancel_ticket_list">Cancel Ticket</string>
+    <string name="title_ticket_cancel_list">Ticket cancel list</string>
+
 
 </resources>

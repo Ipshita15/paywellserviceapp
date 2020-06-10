@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EFEFEF"
-    tools:context=".activity.eticket.busticketNew.seatLayout.SeatLayoutActivity">
+    android:background="#31476a"
+    tools:context=".activity.eticket.busticketNew.seatLayout.SeatLayoutFragment">
 
 
     <ScrollView
@@ -19,6 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:layout_margin="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -29,6 +30,18 @@
                 android:layout_height="match_parent"
                 android:background="#ffffff">
 
+                <Spinner
+                    android:id="@+id/boothList"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:dropDownSelector="@drawable/bus_down_drop_icon"
+                    android:padding="5dp"
+                    android:spinnerMode="dialog"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <TextView
                     android:id="@+id/textView8"
                     android:layout_width="0dp"
@@ -38,22 +51,20 @@
                     android:text="@string/select_your_seat"
                     android:textColor="#268472"
                     android:textSize="14sp"
-                    app:layout_constraintBottom_toTopOf="@+id/view15"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvSelect" />
 
                 <View
                     android:id="@+id/view15"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
-                    android:layout_marginTop="4dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginRight="16dp"
-                    android:background="#a3d3c5"
+                    android:background="#31476a"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/textView8"
-                    app:layout_constraintTop_toBottomOf="@+id/textView8" />
+                    app:layout_constraintTop_toBottomOf="@+id/boothList" />
 
                 <View
                     android:id="@+id/viewGreen"
@@ -61,10 +72,8 @@
                     android:layout_height="10dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginTop="16dp"
                     android:background="#39b54a"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/tvSelect"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -76,12 +85,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
+                    android:layout_marginTop="16dp"
                     android:text="@string/select"
                     android:textColor="#4ca896"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@+id/viewGreen"
                     app:layout_constraintStart_toEndOf="@+id/viewGreen"
-                    app:layout_constraintTop_toTopOf="@+id/viewGreen" />
+                    app:layout_constraintTop_toBottomOf="@+id/boothList" />
 
                 <View
                     android:id="@+id/viewBookedColor"
@@ -89,15 +99,12 @@
                     android:layout_height="10dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginTop="16dp"
                     android:background="#f15a24"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/tvBooked"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/tvSelect"
-                    app:layout_constraintTop_toBottomOf="@+id/view15"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintTop_toBottomOf="@+id/view15" />
 
                 <View
 
@@ -106,15 +113,12 @@
                     android:layout_height="10dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginTop="16dp"
                     android:background="@drawable/border_available"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/tvAvailable"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/tvBooked"
-                    app:layout_constraintTop_toBottomOf="@+id/view15"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintTop_toBottomOf="@+id/view15" />
 
                 <TextView
                     android:id="@+id/tvBooked"
@@ -122,12 +126,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
+                    android:layout_marginTop="16dp"
                     android:text="Booked"
                     android:textColor="#4ca896"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@+id/viewGreen"
                     app:layout_constraintStart_toEndOf="@+id/viewBookedColor"
-                    app:layout_constraintTop_toTopOf="@+id/viewGreen"
+                    app:layout_constraintTop_toBottomOf="@+id/boothList"
                     app:layout_constraintVertical_bias="0.6" />
 
                 <TextView
@@ -136,26 +141,81 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
+
+                    android:layout_marginTop="16dp"
+
                     android:text="Available"
-
                     android:textColor="#4ca896"
-
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@+id/viewBookedColor2"
                     app:layout_constraintStart_toEndOf="@+id/viewBookedColor2"
-                    app:layout_constraintTop_toTopOf="@+id/viewBookedColor2" />
+                    app:layout_constraintTop_toBottomOf="@+id/boothList" />
+
+                <ImageView
+                    android:id="@+id/imageView29"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginRight="32dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/ic_bus_driver"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvAvailable" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <HorizontalScrollView
                 android:id="@+id/layoutSeat"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="16dp"
+                android:paddingBottom="16dp"
                 android:background="#ffffff">
 
-
             </HorizontalScrollView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linearLayout27"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:paddingBottom="16dp"
+                android:background="@color/white">
+
+                <View
+                    android:id="@+id/view19"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/dotted"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView65"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView65" />
+
+                <TextView
+                    android:padding="8dp"
+                    android:id="@+id/textView65"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:text="Any kind of ticket cancellation might not be allowed during
+Public Holidays journey as per bus company decision."
+                    android:gravity="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+
+
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
 

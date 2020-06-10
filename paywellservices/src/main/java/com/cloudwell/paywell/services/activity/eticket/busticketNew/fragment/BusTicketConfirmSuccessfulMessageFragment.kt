@@ -21,7 +21,7 @@ class BusTicketConfirmSuccessfulMessageFragment : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_TITLE, 0);
+        setStyle(STYLE_NO_TITLE, 0)
 
 
     }
@@ -42,6 +42,7 @@ class BusTicketConfirmSuccessfulMessageFragment : DialogFragment() {
         v.tvTotalAmount.text = model.ticketInfo?.totalAmount
         v.tvWebBookingId.text = model.ticketInfo?.webBookingInfoId
         v.tvBookingId.text = model.ticketInfo?.bookingInfoId
+
 
 
         v.tvOk.setOnClickListener {

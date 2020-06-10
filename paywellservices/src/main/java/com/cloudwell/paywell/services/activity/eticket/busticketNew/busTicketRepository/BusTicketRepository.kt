@@ -5,12 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.newBase.SingleLiveEvent
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.*
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.seatview.SeatviewResponse
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ReqConfirmTicket
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ResBookAPI
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ResposeTicketConfirm
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm_cancel.ConfirmTicketCancelResponse
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.cloudwell.paywell.services.database.DatabaseClient
 import com.cloudwell.paywell.services.retrofit.ApiUtils
-import com.cloudwell.paywell.services.utils.BusCalculationHelper
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import com.orhanobut.logger.Logger
 import okhttp3.ResponseBody
@@ -25,7 +30,7 @@ import retrofit2.Response
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 19/2/19.
  */
-class BusTicketRepository() {
+class BusTicketRepository {
 
     private var mAppHandler: AppHandler? = null
     private var mContext: Context? = null
@@ -36,6 +41,9 @@ class BusTicketRepository() {
     }
 
     val statusOfDateInserted = SingleLiveEvent<String>()
+
+
+    var resposeTicketConfirm = MutableLiveData<ResposeTicketConfirm>()
 
 
     fun getBusList(uniqueKey: String): MutableLiveData<List<Transport>> {
@@ -77,7 +85,7 @@ class BusTicketRepository() {
     }
 
 
-    public fun getBusScheduleDate(transport_id: String, uniqueKey: String): MutableLiveData<String> {
+    fun getBusScheduleDate(transport_id: String, uniqueKey: String): MutableLiveData<String> {
         mAppHandler = AppHandler.getmInstance(mContext)
 
         val userName = mAppHandler!!.userName
@@ -219,7 +227,7 @@ class BusTicketRepository() {
 
 
                     val priceObject = model.getJSONObject("ticket_price")
-                    val ticket_price = priceObject.toString();
+                    val ticket_price = priceObject.toString()
 
 
                     var allowedSeatStoreString = ""
@@ -273,63 +281,7 @@ class BusTicketRepository() {
 
     }
 
-    fun getSeatCheck(transport_id: String, route: String, bus_id: String, departure_id: String, departure_date: String, seat_ids: String): MutableLiveData<ResSeatInfo> {
 
-        mAppHandler = AppHandler.getmInstance(mContext)
-
-        val userName = mAppHandler!!.userName
-        val skey = ApiUtils.KEY_SKEY
-
-        val accessKey = AppStorageBox.get(mContext, AppStorageBox.Key.ACCESS_KEY) as String
-        val uniqueKey = UniqueKeyGenerator.getUniqueKey(mAppHandler!!.rid)
-
-        val data = MutableLiveData<ResSeatInfo>()
-
-        ApiUtils.getAPIServicePHP7().seatCheck(
-                userName,
-                skey,
-                accessKey,
-                transport_id,
-                route,
-                bus_id,
-                departure_id,
-                departure_date,
-                seat_ids,uniqueKey
-
-        ).enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if (response.isSuccessful) {
-
-
-                    val body = response.body()
-                    body.let {
-                        val allBusSeat = mutableListOf<BusSeat>()
-                        var tototalAvailableSeat = 0
-                        val jsonObject = JSONObject(it?.string())
-                        if (jsonObject.getInt("status") == 200) {
-                            val seatInfo = jsonObject.getJSONObject("seatInfo")
-                            val keys = seatInfo.keys()
-                            keys.forEach {
-                                val o = seatInfo.get(it) as JSONObject
-                                if (o.getString("status").equals("Available")) {
-                                    tototalAvailableSeat = tototalAvailableSeat + 1
-                                }
-                                allBusSeat.add(BusSeat(o.getInt("seat_id"), o.getString("seat_lbls"), o.getString("status"), o.getInt("value")))
-                            }
-                            data.value = ResSeatInfo(tototalAvailableSeat, allBusSeat)
-                        }
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                com.orhanobut.logger.Logger.e("" + t.message)
-            }
-        })
-        return data
-
-
-    }
 
     private fun handleResponseseatCheck(it1: String) {
         Logger.v("", "")
@@ -360,38 +312,38 @@ class BusTicketRepository() {
         val transport = AppStorageBox.get(mContext, AppStorageBox.Key.SELETED_BUS_INFO) as Transport
         val data = MutableLiveData<ResSeatCheckBookAPI>()
 
-        ApiUtils.getAPIServicePHP7().seatCheckAndBlock(
-                userName,
-                skey,
-                accessKey,
-                (AppStorageBox.get(mContext, AppStorageBox.Key.SELETED_BUS_INFO) as Transport).busid,
-                (AppStorageBox.get(mContext, AppStorageBox.Key.SELETED_BUS_INFO) as Transport).busname,
-                requestBusSearch.from + "-" + requestBusSearch.to,
-                model.busLocalDB?.busID,
-                model.busLocalDB?.name,
-                model.busSchedule?.coachNo,
-                model.busSchedule?.schedule_time_id,
-                requestBusSearch.date,
-                boothInfo.boothDepartureTime,
-                boothInfo.boothID,
-                boothInfo.boothName,
-                seatId,
-                seatLevel,
-                model.busLocalDB?.busIsAc,
-                transport.extraCharge,
-                BusCalculationHelper.getPricesWithExtraAmount(model.busSchedule?.ticketPrice, requestBusSearch.date, transport = transport, isExtraAmount = false),
-                totalAPIValuePrices,uniqueKey)
-                .enqueue(object : Callback<ResSeatCheckBookAPI> {
-                    override fun onFailure(call: Call<ResSeatCheckBookAPI>, t: Throwable) {
-                        data.value = null
-                    }
-
-                    override fun onResponse(call: Call<ResSeatCheckBookAPI>, response: Response<ResSeatCheckBookAPI>) {
-                        if (response.isSuccessful) {
-                            data.value = response.body()
-                        }
-                    }
-                })
+//        ApiUtils.getAPIServicePHP7().seatCheckAndBlock(
+//                userName,
+//                skey,
+//                accessKey,
+//                (AppStorageBox.get(mContext, AppStorageBox.Key.SELETED_BUS_INFO) as Transport).busid,
+//                (AppStorageBox.get(mContext, AppStorageBox.Key.SELETED_BUS_INFO) as Transport).busname,
+//                requestBusSearch.from + "-" + requestBusSearch.to,
+//                model.busLocalDB?.busID,
+//                model.busLocalDB?.name,
+//                model.busSchedule?.coachNo,
+//                model.busSchedule?.schedule_time_id,
+//                requestBusSearch.date,
+//                boothInfo.boothDepartureTime,
+//                boothInfo.boothID,
+//                boothInfo.boothName,
+//                seatId,
+//                seatLevel,
+//                model.busLocalDB?.busIsAc,
+//                transport.extraCharge,
+//                BusCalculationHelper.getPricesWithExtraAmount(model.busSchedule?.ticketPrice, requestBusSearch.date, transport = transport, isExtraAmount = false),
+//                totalAPIValuePrices,uniqueKey)
+//                .enqueue(object : Callback<ResSeatCheckBookAPI> {
+//                    override fun onFailure(call: Call<ResSeatCheckBookAPI>, t: Throwable) {
+//                        data.value = null
+//                    }
+//
+//                    override fun onResponse(call: Call<ResSeatCheckBookAPI>, response: Response<ResSeatCheckBookAPI>) {
+//                        if (response.isSuccessful) {
+//                            data.value = response.body()
+//                        }
+//                    }
+//                })
 
 
         return data
@@ -455,6 +407,315 @@ class BusTicketRepository() {
 
 
         return data
+    }
+
+
+    //New Version Api call
+
+    fun getbusAndLaunchCities(busLunCityPojo : BusLunCityRequest): SingleLiveEvent<List<CitiesListItem>> {
+
+        mAppHandler = AppHandler.getmInstance(mContext)
+
+        val data = SingleLiveEvent<List<CitiesListItem>>()
+
+        ApiUtils.getAPIServiceV2().getbusAndLaunchCities(busLunCityPojo).enqueue(object : Callback<BusLunCityResponse> {
+            override fun onResponse(call: Call<BusLunCityResponse>, response: Response<BusLunCityResponse>) {
+                if (response.isSuccessful) {
+
+                    val request_response = response.body()
+
+                    if (request_response?.statusCode == 200){
+                        val citiesList: List<CitiesListItem>? = request_response.citiesList
+                        data.postValue(citiesList!!)
+                    }
+
+                }
+            }
+
+            override fun onFailure(call: Call<BusLunCityResponse>, t: Throwable) {
+
+                data.postValue(null)
+
+            }
+        })
+        return data
+
+    }
+
+
+    fun getScheduleData(schedulePojo : RequestScheduledata): MutableLiveData<String>{
+
+        mAppHandler = AppHandler.getmInstance(mContext)
+
+        val userName = mAppHandler!!.userName
+        val data = MutableLiveData<String>()
+
+        ApiUtils.getAPIServiceV2().getScheduleData(schedulePojo).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    data.value = response.body()?.string()
+
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                data.postValue(mContext?.getString(R.string.network_error))
+
+            }
+        })
+        return data
+
+    }
+
+    fun getSeatView(schedulePojo : GetSeatViewRquestPojo): MutableLiveData<ResSeatInfo>{
+
+        mAppHandler = AppHandler.getmInstance(mContext)
+
+        val userName = mAppHandler!!.userName
+        val data = MutableLiveData<ResSeatInfo>()
+
+        ApiUtils.getAPIServiceV2().getSeatView(schedulePojo).enqueue(object : Callback<SeatviewResponse> {
+            override fun onResponse(call: Call<SeatviewResponse>, response: Response<SeatviewResponse>) {
+                if (response.isSuccessful) {
+                    val setview : SeatviewResponse = response.body()!!
+
+                    var tototalAvailableSeat = 0
+
+                    if (setview.statusCode == 200) {
+                        val keys = setview.seatViewData?.seatstructureDetails
+                        keys?.forEach {
+
+                            if (it?.status.equals("Available")) {
+                                tototalAvailableSeat = tototalAvailableSeat + 1
+                            }
+
+                        }
+
+
+                        data.value = ResSeatInfo(tototalAvailableSeat, setview)
+                    }
+
+
+                }
+            }
+
+            override fun onFailure(call: Call<SeatviewResponse>, t: Throwable) {
+
+                data.postValue(null)
+
+            }
+        })
+        return data
+
+    }
+
+//    fun getSeatCheck(transport_id: String, route: String, bus_id: String, departure_id: String, departure_date: String, seat_ids: String): MutableLiveData<ResSeatInfo> {
+//
+//        mAppHandler = AppHandler.getmInstance(mContext)
+//
+//        val userName = mAppHandler!!.userName
+//        val skey = ApiUtils.KEY_SKEY
+//
+//        val accessKey = AppStorageBox.get(mContext, AppStorageBox.Key.ACCESS_KEY) as String
+//        val uniqueKey = UniqueKeyGenerator.getUniqueKey(mAppHandler!!.rid)
+//
+//        val data = MutableLiveData<ResSeatInfo>()
+//
+//        ApiUtils.getAPIServicePHP7().seatCheck(
+//                userName,
+//                skey,
+//                accessKey,
+//                transport_id,
+//                route,
+//                bus_id,
+//                departure_id,
+//                departure_date,
+//                seat_ids,uniqueKey
+//
+//        ).enqueue(object : Callback<ResponseBody> {
+//            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+//                if (response.isSuccessful) {
+//
+//
+//                    val body = response.body()
+//                    body.let {
+//                        val allBusSeat = mutableListOf<BusSeat>()
+//                        var tototalAvailableSeat = 0
+//                        val jsonObject = JSONObject(it?.string())
+//                        if (jsonObject.getInt("status") == 200) {
+//                            val seatInfo = jsonObject.getJSONObject("seatInfo")
+//                            val keys = seatInfo.keys()
+//                            keys.forEach {
+//                                val o = seatInfo.get(it) as JSONObject
+//                                if (o.getString("status").equals("Available")) {
+//                                    tototalAvailableSeat = tototalAvailableSeat + 1
+//                                }
+//                                allBusSeat.add(BusSeat(o.getInt("seat_id"), o.getString("seat_lbls"), o.getString("status"), o.getInt("value")))
+//                            }
+//                            data.value = ResSeatInfo(tototalAvailableSeat, allBusSeat)
+//                        }
+//                    }
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+//                com.orhanobut.logger.Logger.e("" + t.message)
+//            }
+//        })
+//        return data
+//
+//
+//    }
+
+
+
+    fun getSeatStatus(getSeatViewRquestPojo : GetSeatViewRquestPojo):  MutableLiveData<ResSeatInfo>{
+
+        mAppHandler = AppHandler.getmInstance(mContext)
+
+        val data = MutableLiveData<ResSeatInfo>()
+
+        ApiUtils.getAPIServiceV2().getSeatStatus(getSeatViewRquestPojo).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+//
+//                    val request_response = response.body()
+//
+//                    if (request_response?.statusCode == 200){
+//                        val citiesList: List<CitiesListItem?>? = request_response?.citiesList
+//                        data.postValue(citiesList.toString())
+//                    }
+
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                data.postValue(null)
+
+            }
+        })
+        return data
+
+    }
+
+    fun getseatBlock(schedulePojo: SeatBlockRequestPojo): MutableLiveData<ResposeTicketConfirm> {
+
+        ApiUtils.getAPIServiceV2().seatBlock(schedulePojo).enqueue(object : Callback<ResBookAPI> {
+            override fun onResponse(call: Call<ResBookAPI>, response: Response<ResBookAPI>) {
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    if (body?.statusCode.equals("100")) {
+                        confirmTicket(body?.trxId, schedulePojo)
+                    } else {
+                        val resposeTicketConfirm1 = ResposeTicketConfirm()
+                        resposeTicketConfirm1.message = body?.message
+                        resposeTicketConfirm1.statusCode = body?.statusCode?.toLong()
+                        resposeTicketConfirm.value = resposeTicketConfirm1
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResBookAPI>, t: Throwable) {
+                resposeTicketConfirm.postValue(null)
+
+            }
+        })
+        return resposeTicketConfirm
+
+    }
+
+    private fun confirmTicket(trxId: String?, schedulePojo: SeatBlockRequestPojo) {
+        val m = ReqConfirmTicket()
+        m.password = schedulePojo.password
+        m.deviceId = schedulePojo.deviceId
+        m.trxId = trxId
+        m.username = schedulePojo.username
+        m.transportType = schedulePojo.transportType
+
+        val data = MutableLiveData<ResposeTicketConfirm>()
+
+        ApiUtils.getAPIServiceV2().confirmTicket(m).enqueue(object : Callback<ResposeTicketConfirm> {
+            override fun onResponse(call: Call<ResposeTicketConfirm>, response: Response<ResposeTicketConfirm>) {
+
+                resposeTicketConfirm.value = response.body()
+
+            }
+
+            override fun onFailure(call: Call<ResposeTicketConfirm>, t: Throwable) {
+                data.postValue(null)
+
+            }
+        })
+
+
+    }
+
+    fun getcancelBookedTicket(schedulePojo : CancelBookedTicketReques): String{
+
+        mAppHandler = AppHandler.getmInstance(mContext)
+
+        val userName = mAppHandler!!.userName
+        val data = SingleLiveEvent<String>()
+
+        ApiUtils.getAPIServiceV2().cancelBookedTicket(schedulePojo).enqueue(object : Callback<CancelBookedTicketResponse> {
+            override fun onResponse(call: Call<CancelBookedTicketResponse>, response: Response<CancelBookedTicketResponse>) {
+                if (response.isSuccessful) {
+//
+                    val cancelResponse : CancelBookedTicketResponse = response.body()!!
+                    val msg : String? = cancelResponse.message
+                    //show this msg
+//
+//                    if (request_response?.statusCode == 200){
+//                        val citiesList: List<CitiesListItem?>? = request_response?.citiesList
+//                        data.postValue(citiesList.toString())
+//                    }
+
+                }
+            }
+
+            override fun onFailure(call: Call<CancelBookedTicketResponse>, t: Throwable) {
+
+                data.postValue(mContext?.getString(R.string.network_error))
+
+            }
+        })
+        return data.toString()
+
+    }
+
+
+    fun getticketInformationForCancel(schedulePojo : TicketInformationForCancelRequest): String{
+
+        mAppHandler = AppHandler.getmInstance(mContext)
+
+        val userName = mAppHandler!!.userName
+        val data = SingleLiveEvent<String>()
+
+        ApiUtils.getAPIServiceV2().ticketInformationForCancel(schedulePojo).enqueue(object : Callback<ConfirmTicketCancelResponse> {
+            override fun onResponse(call: Call<ConfirmTicketCancelResponse>, response: Response<ConfirmTicketCancelResponse>) {
+                if (response.isSuccessful) {
+
+                    val ticketCancel = response.body()
+
+//                    val request_response = response.body()
+//
+//                    if (request_response?.statusCode == 200){
+//                        val citiesList: List<CitiesListItem?>? = request_response?.citiesList
+//                        data.postValue(citiesList.toString())
+//                    }
+
+                }
+            }
+
+            override fun onFailure(call: Call<ConfirmTicketCancelResponse>, t: Throwable) {
+
+                data.postValue(mContext?.getString(R.string.network_error))
+
+            }
+        })
+        return data.toString()
+
     }
 
 }

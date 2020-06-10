@@ -21,7 +21,7 @@ class BusTicketStatusFragment : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_TITLE, 0);
+        setStyle(STYLE_NO_TITLE, 0)
 
 
     }
@@ -53,6 +53,6 @@ class BusTicketStatusFragment : DialogFragment() {
 
 }
 
-public interface OnClickListener {
+interface OnClickListener {
     fun onClick()
 }

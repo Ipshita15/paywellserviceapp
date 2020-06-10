@@ -22,7 +22,7 @@ class TokenAuthenticator : Authenticator {
 
 
         Log.e("authenticate", "authenticate")
-        if (response.code() == 401) {
+        if (response.code == 401) {
             val userName = "paywell"
             val password = "PayWell@321"
             val base = "$userName:$password"
@@ -46,13 +46,13 @@ class TokenAuthenticator : Authenticator {
             if (apiResposeGenerateToken!!.status == 200) {
 
                 val securityToken = apiResposeGenerateToken.token!!.securityToken
-                AppHandler.getmInstance(AppController.getContext()).setToken(securityToken)
+                AppHandler.getmInstance(AppController.getContext()).token = securityToken
 
 
 
 
 
-                return response.request().newBuilder()
+                return response.request.newBuilder()
                         .header("Authorization", "Bearer $securityToken")
                         .build()
 

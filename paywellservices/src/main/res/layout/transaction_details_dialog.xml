@@ -1,519 +1,513 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="#d1e5e1"
-              android:orientation="vertical">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#31476a"
+        android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></androidx.appcompat.widget.Toolbar>
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:padding="5dp">
-
-            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:src="@drawable/bus_trnasaction_list_header"/>
-
-                <TextView
-                    android:id="@+id/travelDateTV"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="2019-06-11"
-                    android:padding="5dp"
-                    android:textColor="#4ca896"
-                    android:textSize="22dp"/>
-
-            </LinearLayout>
+                android:layout_margin="10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="5dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/linearLayout19"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/bookingIdStringTV"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/linearLayout29"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:text="Booking ID:"
-                    android:textColor="@color/balck666666"
-                    android:textSize="15sp"
-                    app:layout_constraintStart_toStartOf="@+id/webBookingIdStringTV"
-                    app:layout_constraintTop_toTopOf="parent"/>
-
-                <TextView
-                    android:id="@+id/bookingIdTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:hint="Id number"
-                    android:padding="5dp"
-                    android:textColor="@color/balck666666"
-                    android:textSize="15sp"
-                    app:layout_constraintEnd_toStartOf="@+id/textView35"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/bookingIdStringTV"
-                    app:layout_constraintTop_toTopOf="parent"/>
-
-
-                <TextView
-                    android:id="@+id/webBookingIdStringTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:padding="5dp"
-                    android:text="Web Booking ID:"
-                    android:textColor="@color/balck666666"
-                    android:textSize="15sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/bookingIdTV"/>
-
-                <TextView
-                    android:id="@+id/webBookingIdStringTV2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:text="Transaction ID: "
-                    android:textColor="@color/balck666666"
-                    android:textSize="15sp"
-                    app:layout_constraintStart_toStartOf="@+id/webBookingIdStringTV"
-                    app:layout_constraintTop_toBottomOf="@+id/webBookingIdTV"/>
-
-                <TextView
-                    android:id="@+id/webBookingIdTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:hint="Id number"
-                    android:padding="5dp"
-                    android:textColor="@color/balck666666"
-                    android:textSize="15sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/webBookingIdStringTV"
-                    app:layout_constraintTop_toTopOf="@+id/webBookingIdStringTV"/>
-
-
-                <TextView
-                    android:id="@+id/busTrasLogId"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:hint="Id number"
-                    android:padding="5dp"
-                    android:textColor="@color/balck666666"
-                    android:textSize="15sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/webBookingIdStringTV2"
-                    app:layout_constraintTop_toTopOf="@+id/webBookingIdStringTV2"
-                    tools:text="hjhjhjhjkhkjhjkhjkhjkhjkhkjhjkhjkhkjhkjhjkhjkhjkhjkhjkhjkhjkhjkhjkhjkhkjhkjhkjhkjhkjhkjhjkhkjhj"/>
-
-                <TextView
-                    android:id="@+id/textView35"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="9dp"
-                    android:layout_marginRight="9dp"
-                    android:padding="5dp"
-                    android:text="BDT:"
-                    android:textColor="#ff7178"
-                    android:textSize="15sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/priceTV"
-                    app:layout_constraintEnd_toStartOf="@+id/priceTV"
-                    app:layout_constraintTop_toTopOf="@+id/priceTV"/>
+                    android:gravity="center">
 
                 <ImageView
-                    android:id="@+id/imageView31"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/taka_icon"
-                    app:layout_constraintBottom_toBottomOf="@+id/priceTV"
-                    app:layout_constraintStart_toEndOf="@+id/textView35"
-                    app:layout_constraintTop_toTopOf="@+id/priceTV"/>
+                        android:id="@+id/imageView44"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:padding="5dp"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_bus_header_calcander" />
 
                 <TextView
-                    android:id="@+id/priceTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:hint="Amount"
-                    android:padding="5dp"
-                    android:textColor="#ff7178"
-                    android:textSize="17sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                        android:id="@+id/travelDateTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="2019-06-11"
+                        android:padding="5dp"
+                        android:textColor="#00203f"
+                        android:textSize="22sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imageView44"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                        android:id="@+id/imageView31"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="@+id/priceTV"
+                        app:layout_constraintEnd_toStartOf="@+id/priceTV"
+                        app:layout_constraintTop_toTopOf="@+id/priceTV"
+                        app:srcCompat="@drawable/ic_bus_transtion_log" />
+
+                <TextView
+                        android:id="@+id/priceTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Amount"
+                        android:textColor="#ff7178"
+                        android:textSize="17sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="5dp">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text="Name"
-                        android:textColor="@color/balck666666"/>
+                            android:id="@+id/webBookingIdStringTV2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text="Transaction ID: "
+                            android:textColor="@color/balck666666"
+                            android:textSize="15sp" />
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text="Gender"
-                        android:textColor="@color/balck666666"/>
+                            android:id="@+id/bookingIdStringTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text="Booking ID:"
+                            android:textColor="@color/balck666666"
+                            android:textSize="15sp" />
+
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text="Mobile"
-                        android:textColor="@color/balck666666"/>
+                            android:id="@+id/webBookingIdStringTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text="Web Booking ID:"
+                            android:textColor="@color/balck666666"
+                            android:textSize="15sp" />
+
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text="Address"
-                        android:textColor="@color/balck666666"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text="Name"
+                            android:textColor="@color/balck666666" />
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text="Email"
-                        android:textColor="@color/balck666666"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text="Gender"
+                            android:textColor="@color/balck666666" />
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text="Ticket No."
-                        android:textColor="@color/balck666666"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text="Mobile"
+                            android:textColor="@color/balck666666" />
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text="Boarding Point"
-                        android:textColor="@color/balck666666"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text="Address"
+                            android:textColor="@color/balck666666" />
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text="Departure Date"
-                        android:textColor="@color/balck666666"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text="Email"
+                            android:textColor="@color/balck666666" />
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text="Departure Time"
-                        android:textColor="@color/balck666666"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text="Ticket No."
+                            android:textColor="@color/balck666666" />
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text="Seat No."
-                        android:textColor="@color/balck666666"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text="Boarding Point"
+                            android:textColor="@color/balck666666" />
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text="Coach No."
-                        android:textColor="@color/balck666666"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text="Departure Date"
+                            android:textColor="@color/balck666666" />
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text="Transport Name"
-                        android:textColor="@color/balck666666"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text="Departure Time"
+                            android:textColor="@color/balck666666" />
+
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text="Seat No."
+                            android:textColor="@color/balck666666" />
+
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text="Coach No."
+                            android:textColor="@color/balck666666" />
+
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text="Transport Name"
+                            android:textColor="@color/balck666666" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text=":"
-                        android:textColor="@color/balck666666"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text=":"
+                            android:textColor="@color/balck666666" />
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text=":"
-                        android:textColor="@color/balck666666"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text=":"
+                            android:textColor="@color/balck666666" />
+
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text=":"
-                        android:textColor="@color/balck666666"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text=":"
+                            android:textColor="@color/balck666666" />
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text=":"
-                        android:textColor="@color/balck666666"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text=":"
+                            android:textColor="@color/balck666666" />
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text=":"
-                        android:textColor="@color/balck666666"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text=":"
+                            android:textColor="@color/balck666666" />
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text=":"
-                        android:textColor="@color/balck666666"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text=":"
+                            android:textColor="@color/balck666666" />
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text=":"
-                        android:textColor="@color/balck666666"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text=":"
+                            android:textColor="@color/balck666666" />
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text=":"
-                        android:textColor="@color/balck666666"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text=":"
+                            android:textColor="@color/balck666666" />
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text=":"
-                        android:textColor="@color/balck666666"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text=":"
+                            android:textColor="@color/balck666666" />
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text=":"
-                        android:textColor="@color/balck666666"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text=":"
+                            android:textColor="@color/balck666666" />
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text=":"
-                        android:textColor="@color/balck666666"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text=":"
+                            android:textColor="@color/balck666666" />
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text=":"
-                        android:textColor="@color/balck666666"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text=":"
+                            android:textColor="@color/balck666666" />
+
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text=":"
+                            android:textColor="@color/balck666666" />
+
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text=":"
+                            android:textColor="@color/balck666666" />
+
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text=":"
+                            android:textColor="@color/balck666666" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/customerNameTV"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="Name"
-                        android:padding="5dp"
-                        android:textColor="#268472"/>
-
-                    <TextView
-                        android:id="@+id/customerGenderTV"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Gender"
-                        android:padding="5dp"
-                        android:textColor="#268472"/>
+                        android:orientation="vertical">
 
 
                     <TextView
-                        android:id="@+id/mobileNumTV"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Mobile Num"
-                        android:padding="5dp"
-                        android:textColor="#268472"/>
+                            android:id="@+id/busTrasLogId"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:hint="Id number"
+                            android:lines="1"
+                            android:padding="5dp"
+                            android:textColor="@color/balck666666"
+                            android:textSize="15sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toEndOf="@+id/webBookingIdStringTV2"
+                            app:layout_constraintTop_toTopOf="@+id/webBookingIdStringTV2"
+                            tools:text="" />
 
                     <TextView
-                        android:id="@+id/addressTv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Addresss"
-                        android:padding="5dp"
-                        android:textColor="#268472"/>
+                            android:id="@+id/bookingIdTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:hint="Id number"
+                            android:padding="5dp"
+                            android:textColor="@color/balck666666"
+                            android:textSize="15sp" />
+
 
                     <TextView
-                        android:id="@+id/emailTv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Email"
-                        android:padding="5dp"
-                        android:textColor="#268472"/>
+                            android:id="@+id/webBookingIdTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:hint="Id number"
+                            android:padding="5dp"
+                            android:textColor="@color/balck666666"
+                            android:textSize="15sp" />
+
 
                     <TextView
-                        android:id="@+id/ticketNumTV"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Ticket Num"
-                        android:padding="5dp"
-                        android:textColor="#268472"/>
+                            android:id="@+id/customerNameTV"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Name"
+                            android:padding="5dp"
+                            android:textColor="#00203f" />
 
                     <TextView
-                        android:id="@+id/boardingPointTV"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Boarding Point"
-                        android:padding="5dp"
-                        android:textColor="#268472"/>
+                            android:id="@+id/customerGenderTV"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Gender"
+                            android:padding="5dp"
+                            android:textColor="#00203f" />
+
 
                     <TextView
-                        android:id="@+id/departureDateTV"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Departure Date"
-                        android:padding="5dp"
-                        android:textColor="#ff7178"/>
+                            android:id="@+id/mobileNumTV"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Mobile Num"
+                            android:padding="5dp"
+                            android:textColor="#00203f" />
 
                     <TextView
-                        android:id="@+id/departureTimeTV"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Departure Time"
-                        android:padding="5dp"
-                        android:textColor="#ff7178"/>
+                            android:id="@+id/addressTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Addresss"
+                            android:padding="5dp"
+                            android:textColor="#00203f" />
 
                     <TextView
-                        android:id="@+id/seatNumTV"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Seat No."
-                        android:padding="5dp"
-                        android:textColor="#268472"/>
+                            android:id="@+id/emailTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Email"
+                            android:padding="5dp"
+                            android:textColor="#00203f" />
 
                     <TextView
-                        android:id="@+id/coachNumTV"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Coach No."
-                        android:padding="5dp"
-                        android:textColor="#268472"/>
+                            android:id="@+id/ticketNumTV"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Ticket Num"
+                            android:padding="5dp"
+                            android:textColor="#00203f" />
 
                     <TextView
-                        android:id="@+id/transportNameTV"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Transport Name"
-                        android:padding="5dp"
-                        android:textColor="#268472"/>
+                            android:id="@+id/boardingPointTV"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Boarding Point"
+                            android:padding="5dp"
+                            android:textColor="#00203f" />
+
+                    <TextView
+                            android:id="@+id/departureDateTV"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Departure Date"
+                            android:padding="5dp"
+                            android:textColor="#f15a24" />
+
+                    <TextView
+                            android:id="@+id/departureTimeTV"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Departure Time"
+                            android:padding="5dp"
+                            android:textColor="#f15a24" />
+
+                    <TextView
+                            android:id="@+id/seatNumTV"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Seat No."
+                            android:padding="5dp"
+                            android:textColor="#00203f" />
+
+                    <TextView
+                            android:id="@+id/coachNumTV"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Coach No."
+                            android:padding="5dp"
+                            android:textColor="#00203f" />
+
+                    <TextView
+                            android:id="@+id/transportNameTV"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Transport Name"
+                            android:padding="5dp"
+                            android:textColor="#00203f" />
                 </LinearLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:orientation="horizontal">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text="Journey:"
-                        android:textColor="@color/balck666666"
-                        android:textSize="18sp"/>
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text="Journey:"
+                            android:textColor="@color/balck666666"
+                            android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/journeyFromTV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:textColor="#268472"
-                        android:textSize="18sp"/>
+                            android:id="@+id/journeyFromTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:textColor="#00203f"
+                            android:textSize="18sp" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text="To"
-                        android:textColor="#ff7178"
-                        android:textSize="16sp"/>
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text="To"
+                            android:textColor="#f15a24"
+                            android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/journeyToTV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:textColor="#268472"
-                        android:textSize="18sp"/>
+                            android:id="@+id/journeyToTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:textColor="#00203f"
+                            android:textSize="18sp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

@@ -1,12 +1,14 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransactionLog;
 
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity;
@@ -15,19 +17,19 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BusTra
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.transactionLog.Datum;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.transactionLog.TransactionLogDetailsModel;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.app.storage.AppStorageBox;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 
 import java.util.ArrayList;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BusTransactionLogActivity extends BusTricketBaseActivity {
 
+    private static final String TAG = BusTransactionLogActivity.class.getName();
     RecyclerView busTransactionRV;
     ArrayList allDataArrayList = new ArrayList();
     BusTransactionLogAdapter adapter;
@@ -39,12 +41,8 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_transaction_log);
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(Html.fromHtml("<font color='#268472'>Booking Log</font>"));
-            getSupportActionBar().setElevation(0f);
-            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.color_tab_background_bus)));
-        }
+
+        setToolbar(getString(R.string.bus_transction_log), getResources().getColor(R.color.bus_ticket_toolbar_title_text_color));
 
         limit = getIntent().getIntExtra(BusTicketMenuActivity.Companion.getKEY_LIMIT(), -1);
         busTransactionRV = findViewById(R.id.busTransactionLogRV);
@@ -62,10 +60,24 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
 
     void getTransactionLog(String userName, String skey, String limit) {
 
+
         showProgressDialog();
         String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(getApplicationContext()).getRID());
 
-        ApiUtils.getAPIServicePHP7().getBusTransactionLogFromServer(userName, skey, limit, uniqueKey).enqueue(new Callback<TransactionLogDetailsModel>() {
+        boolean isBusTicket = (Boolean) AppStorageBox.get(getApplicationContext(), AppStorageBox.Key.IS_BUS_Ticket_USER_FLOW);
+
+
+        RequestBusTranstionLog m = new RequestBusTranstionLog();
+        m.setLimit(limit);
+        m.setUsername(userName);
+        if (isBusTicket) {
+            m.setTransportType("1");
+        } else {
+            m.setTransportType("1");
+        }
+
+
+        ApiUtils.getAPIServiceV2().getBusTransactionLogFromServer(m).enqueue(new Callback<TransactionLogDetailsModel>() {
             @Override
             public void onResponse(Call<TransactionLogDetailsModel> call, Response<TransactionLogDetailsModel> response) {
                 if (response.isSuccessful()) {
@@ -85,37 +97,44 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
                                 date = transactionDate;
                                 allDataArrayList.add(date);
                             }
-                            BusTransactionModel busTransactionModel = new BusTransactionModel(
-                                    transactionDate,
-                                    datum.getTrxId(),
-                                    datum.getTicketInfo().getBookingInfoId(),
-                                    datum.getStatusMessage(),
-                                    datum.getTicketInfo().getWebBookingInfoId(),
-                                    datum.getTicketInfo().getTotalAmount(),
-                                    datum.getCustomerInfo().getCustomerName(),
-                                    datum.getCustomerInfo().getCusTomerGenger(),
-                                    datum.getCustomerInfo().getCustomerPhone(),
-                                    datum.getCustomerInfo().getCustomerAddress(),
-                                    datum.getCustomerInfo().getCustomerEmail(),
-                                    datum.getTicketInfo().getTicketNo(),
-                                    datum.getTicketInfo().getBoardingPointName(),
-                                    datum.getTicketInfo().getDepartureDate(),
-                                    datum.getTicketInfo().getDepartureTime(),
-                                    datum.getTicketInfo().getSeatLbls(),
-                                    datum.getBusInfo().getCoachNo(),
-                                    datum.getBusInfo().getBusName(),
-                                    datum.getTicketInfo().getJourneyRoute().split("-")[0],
-                                    datum.getTicketInfo().getJourneyRoute().split("-")[1]);
-                            allDataArrayList.add(busTransactionModel);
-                            adapter.notifyDataSetChanged();
+
+
+                            try {
+                                BusTransactionModel busTransactionModel = new BusTransactionModel(
+                                        transactionDate,
+                                        datum.getTrxId(),
+                                        datum.getTicketInfo().getBookingInfoId(),
+                                        datum.getStatusMessage(),
+                                        datum.getTicketInfo().getWebBookingInfoId(),
+                                        datum.getTicketInfo().getTotalAmount(),
+                                        datum.getCustomerInfo().getCustomerName(),
+                                        datum.getCustomerInfo().getCusTomerGenger(),
+                                        datum.getCustomerInfo().getCustomerPhone(),
+                                        datum.getCustomerInfo().getCustomerAddress(),
+                                        datum.getCustomerInfo().getCustomerEmail(),
+                                        datum.getTicketInfo().getTicketNo(),
+                                        datum.getTicketInfo().getBoardingPointName(),
+                                        datum.getTicketInfo().getDepartureDate(),
+                                        datum.getTicketInfo().getDepartureTime(),
+                                        datum.getTicketInfo().getSeatLbls(),
+                                        datum.getBusInfo().getCoachNo(),
+                                        datum.getBusInfo().getBusName(),
+                                        datum.getTicketInfo().getJourneyRoute().split("-")[0],
+                                        datum.getTicketInfo().getJourneyRoute().split("-")[1]);
+                                allDataArrayList.add(busTransactionModel);
+                                adapter.notifyDataSetChanged();
+
+                            } catch (Exception e) {
+                                Log.d(TAG, "onResponse:");
+                            }
+
+
                         }
                     } else {
-                        ImageView imageView = findViewById(R.id.ivForNodataFoundBusTrans);
-                        imageView.setVisibility(View.VISIBLE);
-                        TextView textView = findViewById(R.id.tvNoDataFoundBusTrans);
-                        textView.setVisibility(View.VISIBLE);
-                        Toast.makeText(BusTransactionLogActivity.this, R.string.no_data_found, Toast.LENGTH_SHORT).show();
+                        showNoDataFound();
                     }
+                } else {
+                    showNoDataFound();
                 }
                 dismissProgressDialog();
             }
@@ -127,5 +146,13 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
             }
         });
 
+    }
+
+    private void showNoDataFound() {
+        ImageView imageView = findViewById(R.id.ivForNodataFoundBusTrans);
+        imageView.setVisibility(View.VISIBLE);
+        TextView textView = findViewById(R.id.tvNoDataFoundBusTrans);
+        textView.setVisibility(View.VISIBLE);
+        Toast.makeText(BusTransactionLogActivity.this, R.string.no_data_found, Toast.LENGTH_SHORT).show();
     }
 }

@@ -15,6 +15,7 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.app.storage.AppStorageBox;
 import com.cloudwell.paywell.services.constant.AllConstant;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -89,13 +90,22 @@ public class ETicketMainActivity extends AppCompatActivity {
 
         switch (v.getId()) {
             case R.id.et_shop_visit:
+                AppStorageBox.put(getApplicationContext(), AppStorageBox.Key.IS_BUS_Ticket_USER_FLOW, true);
                 AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_BUS_TICKET);
                 startActivity(new Intent(this, BusTicketMenuActivity.class));
                 break;
             case R.id.et_ek_shop_report:
+
                 AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_AIR_TICKET);
                 startActivity(new Intent(this, AirTicketMenuActivity.class));
                 break;
+
+            case R.id.et_launch:
+                AppStorageBox.put(getApplicationContext(), AppStorageBox.Key.IS_BUS_Ticket_USER_FLOW, false);
+                AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_Launch);
+                startActivity(new Intent(this, BusTicketMenuActivity.class));
+                break;
+
             default:
                 break;
         }

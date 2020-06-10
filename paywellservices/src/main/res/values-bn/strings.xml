@@ -713,5 +713,11 @@
     <string name="bank_delate">আপনার এই লিংক একাউন্টটি মুছে ফেলতে চান?</string>
     <string name="most_used_services">বেশী ব্যবহৃত সার্ভিস সমুহ-</string>
 
+    <string name="launch">লঞ্চ টিকেট</string>
+    <string name="text_bus_from_error">You must type the city from you want to travel</string>
+    <string name="text_bus_to_error">You must type the destination city you want to travel</string>
+    <string name="bus_transction_log">লেনদেন</string>
+    <string name="cancel_ticket_list">টিকিট বাতিল</string>
+    <string name="title_ticket_cancel_list">Ticket cancel list</string>
 
 </resources>

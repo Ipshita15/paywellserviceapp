@@ -1,13 +1,21 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransactionLog;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.app.FragmentTransaction;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Parcel;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BusTransactionModel;
@@ -15,11 +23,6 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.search.FullS
 import com.cloudwell.paywell.services.utils.FullScreenDialogPayWell;
 
 import java.util.ArrayList;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by YASIN on 03,July,2019
@@ -30,13 +33,14 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
 
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_SEPARATOR = 1;
-    private final Activity context;
+    private final AppCompatActivity context;
     private ArrayList busTransactionModelArrayList;
 
-    public BusTransactionLogAdapter(ArrayList busTransactionModelArrayList, Activity context) {
+    public BusTransactionLogAdapter(ArrayList busTransactionModelArrayList, AppCompatActivity context) {
         this.busTransactionModelArrayList = busTransactionModelArrayList;
         this.context = context;
     }
+
 
     @NonNull
     @Override
@@ -90,7 +94,7 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
                     tvbookingIdStringTV.setVisibility(View.GONE);
                 }
 
-                if (!model.getWebBookingId().equals("")) {
+                if (model.getWebBookingId() != null) {
                     tvWebBookingId.setVisibility(View.VISIBLE);
                     tvWebBookingIDTV.setVisibility(View.VISIBLE);
 
@@ -99,6 +103,7 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
                     tvWebBookingId.setVisibility(View.GONE);
                     tvWebBookingIDTV.setVisibility(View.GONE);
                 }
+
 
                 ConstraintLayout linearLayout = holder.itemView.findViewById(R.id.mainClickLL);
                 linearLayout.setOnClickListener(new View.OnClickListener() {
@@ -193,7 +198,7 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
                                         boardingPoint.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getBoardingPoint());
                                         departureDateTV.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getDepartureDate());
 
-                                        toolbar.setNavigationIcon(R.drawable.close);
+                                        toolbar.setNavigationIcon(R.drawable.ic_back_button_white);
                                         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View view) {
@@ -214,13 +219,35 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
                                     public void writeToParcel(Parcel parcel, int i) {
                                     }
                                 });
-                        FragmentTransaction ft = context.getFragmentManager().beginTransaction();
+
+
+                        FragmentTransaction ft = context.getSupportFragmentManager().beginTransaction();
                         fullScreenDialogPayWell.show(ft, FullScreenDialogBus.TAG);
                     }
                 });
+
+                linearLayout.setOnLongClickListener((View.OnLongClickListener) v -> {
+
+                    String transactioID = model.getTransactioID();
+                    copy(transactioID);
+
+                    return true;
+
+                });
+
+
                 break;
         }
+
+
     }
+
+    public void copy(String data) {
+        ClipboardManager systemService = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        systemService.setText(data);
+        Toast.makeText(context, "Transaction ID to clip", Toast.LENGTH_LONG).show();
+    }
+
 
     @Override
     public int getItemViewType(int position) {

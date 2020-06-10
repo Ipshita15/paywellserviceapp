@@ -119,4 +119,48 @@ public class TestExam {
     }
 
 
+    @Test
+    public void test(){
+
+
+        // create a 2d array
+        int[][] a = {
+                {1, 2, 3},
+                {4, 5, 6},
+                {7, 8, 9},
+        };
+
+        // first for...each loop access the individual array
+        // inside the 2d array
+//        for (int[] innerArray: a) {
+//            // second for...each loop access each element inside the row
+//            for(int data: innerArray) {
+//                print(data);
+//            }
+//            System.out.println("");
+//
+//        }
+
+        int row;
+        int coloum;
+        for(row = 0; row < 3; row++)
+        {
+
+            for(coloum = 0; coloum < 3; coloum++)
+            {
+
+                int indexI =row +1;
+                int indexJ =coloum +1;
+
+                System.out.print(indexI+""+indexJ+" ");
+
+            }
+            System.out.println(" ");
+        }
+
+
+
+    }
+
+
 }

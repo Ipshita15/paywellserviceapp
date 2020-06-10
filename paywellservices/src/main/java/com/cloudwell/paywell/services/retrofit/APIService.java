@@ -5,13 +5,13 @@ import com.cloudwell.paywell.services.activity.bank_info_update.BankLinkedListRe
 import com.cloudwell.paywell.services.activity.bank_info_update.model.BankListRequestPojo;
 import com.cloudwell.paywell.services.activity.bank_info_update.model.BankPojo;
 import com.cloudwell.paywell.services.activity.bank_info_update.model.RemoveReqPojo;
+import com.cloudwell.paywell.services.activity.bank_info_update.spineer.BankResponse;
+import com.cloudwell.paywell.services.activity.bank_info_update.spineer.GetBankPojo;
 import com.cloudwell.paywell.services.activity.education.bbc.model.BbcSubscriptionPojo;
 import com.cloudwell.paywell.services.activity.education.bbc.model.BbcTranscationLog;
 import com.cloudwell.paywell.services.activity.education.bbc.model.CourseListRresponsePojo;
 import com.cloudwell.paywell.services.activity.education.bbc.model.CourseLlistRequestPojo;
 import com.cloudwell.paywell.services.activity.education.bbc.model.RegistationInfo;
-import com.cloudwell.paywell.services.activity.bank_info_update.spineer.BankResponse;
-import com.cloudwell.paywell.services.activity.bank_info_update.spineer.GetBankPojo;
 import com.cloudwell.paywell.services.activity.education.bbc.model.StatusCheckResponsePojo;
 import com.cloudwell.paywell.services.activity.education.bbc.model.TransactionResponsePOjo;
 import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoActivePkgPojo;
@@ -24,7 +24,6 @@ import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoSu
 import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoTRXrequestModel;
 import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoTRXresponse;
 import com.cloudwell.paywell.services.activity.entertainment.bongo.model.CountResponse;
-import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.Nagadv2requestPojo;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.ReposeAirSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.model.RequestAirSearch;
 import com.cloudwell.paywell.services.activity.eticket.airticket.airportSearch.search.model.ResGetAirports;
@@ -40,9 +39,25 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.
 import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.model.ResCommistionMaping;
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketCencel.model.ResSingleBooking;
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.model.ResInvoideEmailAPI;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransactionLog.RequestBusTranstionLog;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.cencel.model.RequestTicketInformationForCancel;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.cencel.model.ResponseTicketInformationCancel;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResGetBusListData;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResPaymentBookingAPI;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatCheckBookAPI;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.BusLunCityRequest;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.BusLunCityResponse;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.CancelBookedTicketReques;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.CancelBookedTicketResponse;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.GetSeatViewRquestPojo;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.RequestScheduledata;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.SeatBlockRequestPojo;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.TicketInformationForCancelRequest;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.seatview.SeatviewResponse;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ReqConfirmTicket;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ResBookAPI;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ResposeTicketConfirm;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm_cancel.ConfirmTicketCancelResponse;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.transactionLog.TransactionLogDetailsModel;
 import com.cloudwell.paywell.services.activity.home.model.ReposeGenerateOTP;
 import com.cloudwell.paywell.services.activity.home.model.ReposeUserProfile;
@@ -91,6 +106,7 @@ import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.Bal
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLog;
 import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.RefillLogRequestModel;
 import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.NagadWebResponse;
+import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.Nagadv2requestPojo;
 import com.cloudwell.paywell.services.activity.reg.model.AuthRequestModel;
 import com.cloudwell.paywell.services.activity.reg.model.RegistrationModel;
 import com.cloudwell.paywell.services.activity.reg.model.RequestDistrictList;
@@ -395,9 +411,9 @@ public interface APIService {
                                  @Field("seat_ids") String seat_ids,
                                  @Field(ParameterUtility.KEY_REF_ID) String refId);
 
-    @FormUrlEncoded
-    @POST("PaywellParibahanService/getEnquiryData")
-    Call<TransactionLogDetailsModel> getBusTransactionLogFromServer(@Field("username") String username, @Field("skey") String skey, @Field("limit") String limit, @Field(ParameterUtility.KEY_REF_ID) String refId);
+
+    @POST("Tickets/BusAndLaunchService/getTransactionData")
+    Call<TransactionLogDetailsModel> getBusTransactionLogFromServer(@Body RequestBusTranstionLog requestBusTranstionLog);
 
     @POST
     @FormUrlEncoded
@@ -720,6 +736,42 @@ public interface APIService {
 //    Call<ResponseBody> removeBankInfo(@Body RemoveReqPojo removeReqPojo);
 
 
+
+
+    //Bus lunch ticket new version
+
+    @POST("Tickets/BusAndLaunchService/busAndLaunchCities")
+    Call<BusLunCityResponse> getbusAndLaunchCities(@Body BusLunCityRequest busLunCityRequest);
+
+    @POST("Tickets/BusAndLaunchService/getScheduleData")
+    Call<ResponseBody> getScheduleData(@Body RequestScheduledata requestScheduledata);
+
+    @POST("Tickets/BusAndLaunchService/getSeatView")
+    Call<SeatviewResponse> getSeatView(@Body GetSeatViewRquestPojo getSeatViewRquestPojo);
+
+
+    @POST("Tickets/BusAndLaunchService/getSeatStatus")
+    Call<ResponseBody> getSeatStatus(@Body GetSeatViewRquestPojo GetSeatViewRquestPojo);
+
+    @POST("Tickets/BusAndLaunchService/seatBlock")
+    Call<ResBookAPI> seatBlock(@Body SeatBlockRequestPojo seatBlockRequestPojo);
+
+    @POST("Tickets/BusAndLaunchService/cancelBookedTicket")
+    Call<CancelBookedTicketResponse> cancelBookedTicket(@Body CancelBookedTicketReques cancelBookedTicketReques);
+
+    @POST("Tickets/BusAndLaunchService/confirmTicket")
+    Call<ResposeTicketConfirm> confirmTicket(@Body ReqConfirmTicket reqConfirmTicket);
+
+    @POST("Tickets/BusAndLaunchService/ticketInformationForCancel")
+    Call<ConfirmTicketCancelResponse> ticketInformationForCancel(@Body TicketInformationForCancelRequest ticketInformationForCancelRequest);
+
+
+    @POST("Tickets/BusAndLaunchService/ticketInformationForCancel")
+    Call<ResponseTicketInformationCancel> ticketInformationForCancel(@Body RequestTicketInformationForCancel RequestTicketInformationForCancel);
+
+
+    @POST("Tickets/BusAndLaunchService/cancelTicket")
+    Call<ResponseTicketInformationCancel> cancelTicket(@Body RequestTicketInformationForCancel RequestTicketInformationForCancel);
 
 
 }
