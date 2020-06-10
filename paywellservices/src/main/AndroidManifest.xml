@@ -1028,6 +1028,12 @@
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme.NoActionBar" />
         <activity
+                android:name=".activity.eticket.busticketNew.cancelList.CancelListActivity"
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme.NoActionBar" />
+
+
+        <activity
                 android:name=".activity.eticket.airticket.airportSearch.search.AirportsSearchActivity"
                 android:screenOrientation="portrait"
                 android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />

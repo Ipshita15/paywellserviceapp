@@ -1,31 +1,29 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew.cencel
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
 import android.view.Gravity
-import android.view.MenuItem
-import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.EditText
+import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat.getSystemService
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.base.AirTricketBaseActivity
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
-import com.cloudwell.paywell.services.activity.eticket.airticket.bookingCencel.fragment.CancellationStatusMessageFragment
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.cancelList.CancelListActivity
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.cencel.model.RequestTicketInformationForCancel
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.cencel.model.ResponseTicketInformationCancel
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.ConnectionDetector
-import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import com.google.android.material.snackbar.Snackbar
-import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_cencel_booking_bus.*
-
-import mehdi.sakout.fancybuttons.FancyButton
+import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -51,9 +49,15 @@ class BusCancelActiivty : BusTricketBaseActivity() {
         cd = ConnectionDetector(applicationContext)
         mAppHandler = AppHandler.getmInstance(applicationContext)
 
-        // etTicketId.setText(bookingCancelId)
         btSumbit.setOnClickListener {
-            askForPin(etTicketId.text.toString())
+            val transstionId = etTicketId.text.toString().trim()
+            if (transstionId.equals("")) {
+                toast("Please input a valid transition ID")
+            } else {
+                askForPin(etTicketId.text.toString())
+            }
+
+
         }
     }
 
@@ -79,7 +83,7 @@ class BusCancelActiivty : BusTricketBaseActivity() {
                 PIN_NO = pinNoET.text.toString()
                 if (cd!!.isConnectingToInternet) {
                     val userName = mAppHandler.userName
-                    //submitCancelRequest(userName, PIN_NO, bookingId, cancelReason, "json")
+                    callToBookingListAPI(PIN_NO, bookingId, userName)
                 } else {
                     val snackbar = Snackbar.make(cancelMainLayout!!, R.string.connection_error_msg, Snackbar.LENGTH_LONG)
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"))
@@ -100,5 +104,52 @@ class BusCancelActiivty : BusTricketBaseActivity() {
         alert.show()
     }
 
+
+    fun callToBookingListAPI(password: String, trxId: String, userName: String) {
+
+        showProgressDialog()
+
+        val m = RequestTicketInformationForCancel()
+        m.password = password
+        m.trxId = trxId
+        m.username = userName
+
+        ApiUtils.getAPIServiceV2().ticketInformationForCancel(m).enqueue(object : Callback<ResponseTicketInformationCancel?> {
+            override fun onResponse(call: Call<ResponseTicketInformationCancel?>, response: Response<ResponseTicketInformationCancel?>) {
+
+                dismissProgressDialog()
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    if (body?.statusCode == 200) {
+
+
+                        startActivity(Intent(this@BusCancelActiivty, CancelListActivity::class.java).also {
+                            it.putExtra("model", body)
+                            it.putExtra("password", password)
+                        })
+
+
+                    } else {
+                        body?.message?.let { showBusTicketErrorDialog(it) }
+                    }
+                } else {
+                    showBusTicketErrorDialog(getString(R.string.network_error))
+                }
+                dismissProgressDialog()
+            }
+
+            override fun onFailure(call: Call<ResponseTicketInformationCancel?>, t: Throwable) {
+                toast(getString(R.string.network_error))
+                dismissProgressDialog()
+
+            }
+        })
+
+    }
+
+    private fun showNoDataFound() {
+
+
+    }
 
 }

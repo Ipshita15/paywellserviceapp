@@ -76,10 +76,16 @@ open class BusTricketBaseActivity : MVVMBaseActivity() {
 
     fun showBusTicketErrorDialog(message: String) {
 
-       val errorMsgDialog =  BusErrorMsgDialog(message)
-       errorMsgDialog.show(supportFragmentManager, "oTPVerificationMsgDialog")
+        val errorMsgDialog = BusErrorMsgDialog(message)
+        errorMsgDialog.show(supportFragmentManager, "oTPVerificationMsgDialog")
 
+    }
 
-   }
+    fun showBusTicketSuccessDialog(message: String) {
+
+        val errorMsgDialog = BusErrorMsgDialog(message)
+        errorMsgDialog.show(supportFragmentManager, "oTPVerificationMsgDialog")
+
+    }
 
 }

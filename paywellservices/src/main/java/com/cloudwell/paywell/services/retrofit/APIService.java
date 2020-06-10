@@ -39,6 +39,8 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.flightSearch.mo
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketCencel.model.ResSingleBooking;
 import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.model.ResInvoideEmailAPI;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransactionLog.RequestBusTranstionLog;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.cencel.model.RequestTicketInformationForCancel;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.cencel.model.ResponseTicketInformationCancel;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResGetBusListData;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResPaymentBookingAPI;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatCheckBookAPI;
@@ -46,7 +48,6 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.BusLunCityResponse;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.CancelBookedTicketReques;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.CancelBookedTicketResponse;
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.CancelTicketRequest;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.GetSeatViewRquestPojo;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.RequestScheduledata;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.SeatBlockRequestPojo;
@@ -763,6 +764,13 @@ public interface APIService {
     @POST("Tickets/BusAndLaunchService/ticketInformationForCancel")
     Call<ConfirmTicketCancelResponse> ticketInformationForCancel(@Body TicketInformationForCancelRequest ticketInformationForCancelRequest);
 
+
+    @POST("Tickets/BusAndLaunchService/ticketInformationForCancel")
+    Call<ResponseTicketInformationCancel> ticketInformationForCancel(@Body RequestTicketInformationForCancel RequestTicketInformationForCancel);
+
+
     @POST("Tickets/BusAndLaunchService/cancelTicket")
-    Call<ResponseBody> cancelTicket(@Body CancelTicketRequest getScheduledata);
+    Call<ResponseTicketInformationCancel> cancelTicket(@Body RequestTicketInformationForCancel RequestTicketInformationForCancel);
+
+
 }

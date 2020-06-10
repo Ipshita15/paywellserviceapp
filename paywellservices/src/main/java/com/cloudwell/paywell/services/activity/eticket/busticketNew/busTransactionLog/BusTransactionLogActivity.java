@@ -1,10 +1,14 @@
 package com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransactionLog;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity;
@@ -19,14 +23,13 @@ import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 
 import java.util.ArrayList;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BusTransactionLogActivity extends BusTricketBaseActivity {
 
+    private static final String TAG = BusTransactionLogActivity.class.getName();
     RecyclerView busTransactionRV;
     ArrayList allDataArrayList = new ArrayList();
     BusTransactionLogAdapter adapter;
@@ -39,7 +42,7 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
         setContentView(R.layout.activity_bus_transaction_log);
 
 
-        setToolbar("Booking Log", getResources().getColor(R.color.bus_ticket_toolbar_title_text_color));
+        setToolbar(getString(R.string.bus_transction_log), getResources().getColor(R.color.bus_ticket_toolbar_title_text_color));
 
         limit = getIntent().getIntExtra(BusTicketMenuActivity.Companion.getKEY_LIMIT(), -1);
         busTransactionRV = findViewById(R.id.busTransactionLogRV);
@@ -122,18 +125,16 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
                                 adapter.notifyDataSetChanged();
 
                             } catch (Exception e) {
-
+                                Log.d(TAG, "onResponse:");
                             }
 
 
                         }
                     } else {
-                        ImageView imageView = findViewById(R.id.ivForNodataFoundBusTrans);
-                        imageView.setVisibility(View.VISIBLE);
-                        TextView textView = findViewById(R.id.tvNoDataFoundBusTrans);
-                        textView.setVisibility(View.VISIBLE);
-                        Toast.makeText(BusTransactionLogActivity.this, R.string.no_data_found, Toast.LENGTH_SHORT).show();
+                        showNoDataFound();
                     }
+                } else {
+                    showNoDataFound();
                 }
                 dismissProgressDialog();
             }
@@ -145,5 +146,13 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
             }
         });
 
+    }
+
+    private void showNoDataFound() {
+        ImageView imageView = findViewById(R.id.ivForNodataFoundBusTrans);
+        imageView.setVisibility(View.VISIBLE);
+        TextView textView = findViewById(R.id.tvNoDataFoundBusTrans);
+        textView.setVisibility(View.VISIBLE);
+        Toast.makeText(BusTransactionLogActivity.this, R.string.no_data_found, Toast.LENGTH_SHORT).show();
     }
 }

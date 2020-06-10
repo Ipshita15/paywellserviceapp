@@ -697,7 +697,7 @@ class BusTicketRepository {
                 if (response.isSuccessful) {
 
                     val ticketCancel = response.body()
-//
+
 //                    val request_response = response.body()
 //
 //                    if (request_response?.statusCode == 200){
@@ -717,37 +717,5 @@ class BusTicketRepository {
         return data.toString()
 
     }
-
-    fun getcancelTicket(schedulePojo : CancelTicketRequest): String{
-
-        mAppHandler = AppHandler.getmInstance(mContext)
-
-        val userName = mAppHandler!!.userName
-        val data = SingleLiveEvent<String>()
-
-        ApiUtils.getAPIServiceV2().cancelTicket(schedulePojo).enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if (response.isSuccessful) {
-//
-//                    val request_response = response.body()
-//
-//                    if (request_response?.statusCode == 200){
-//                        val citiesList: List<CitiesListItem?>? = request_response?.citiesList
-//                        data.postValue(citiesList.toString())
-//                    }
-
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-
-                data.postValue(mContext?.getString(R.string.network_error))
-
-            }
-        })
-        return data.toString()
-
-    }
-
 
 }
