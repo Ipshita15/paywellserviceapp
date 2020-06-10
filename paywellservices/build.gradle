@@ -246,7 +246,7 @@ dependencies {
     implementation 'com.dt:timerbutton:0.1'
 
     // Add the Firebase Crashlytics SDK.
-    implementation 'com.google.firebase:firebase-crashlytics:17.0.0'
+    implementation 'com.google.firebase:firebase-crashlytics:17.0.1'
 
 
 }
