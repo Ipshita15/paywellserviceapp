@@ -8,11 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.activity.entertainment.bongo.adapter.BongoTrxLogAdapter
-import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoEnquiryRqstPojo
-import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoTrxResponse
-import com.cloudwell.paywell.services.activity.entertainment.bongo.model.DataItem
+import com.cloudwell.paywell.services.activity.entertainment.bongo.model.*
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_bongo_trx.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -21,6 +20,7 @@ import retrofit2.Response
 class BongoTrxActivity : BaseActivity() {
 
     private var mAppHandler: AppHandler? = null
+    var responseDetails: ArrayList<ResponseDetailsItem?>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,62 +31,21 @@ class BongoTrxActivity : BaseActivity() {
             getWindow().setStatusBarColor(Color.parseColor("#b31f2b"))
         };
 
+        val data = intent.getStringExtra(getString(R.string.bongo_trx_tag))
+        val response = Gson().fromJson(data, BongoTRXresponse::class.java)
+        responseDetails = response.responseDetails
 
-        mAppHandler = AppHandler.getmInstance(applicationContext)
+        val linearLayoutManager : LinearLayoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL,false)
+        bongo_transaction_log.layoutManager = linearLayoutManager
 
-        if (isInternetConnection){
-
-            getBongoEnquiryData()
-        }else{
-            showErrorCallBackMessagev1(getString(R.string.internet_connection_error_msg))
-        }
+        val adapter = BongoTrxLogAdapter(applicationContext, responseDetails)
+        bongo_transaction_log.adapter = adapter
 
         bongo_trx_back.setOnClickListener(View.OnClickListener {
             finish()
         })
 
     }
-
-    private fun getBongoEnquiryData() {
-        showProgressDialog()
-
-        var pojo = BongoEnquiryRqstPojo()
-        pojo.limit = "5"
-        pojo.referenceIdOrMobile = "01612250477"
-        pojo.username = mAppHandler?.userName
-
-        ApiUtils.getAPIServiceV2().getBongoEnquiryData(pojo).enqueue(object : Callback<BongoTrxResponse> {
-            override fun onFailure(call: Call<BongoTrxResponse>, t: Throwable) {
-                dismissProgressDialog()
-            }
-
-            override fun onResponse(call: Call<BongoTrxResponse>, response: Response<BongoTrxResponse>) {
-                dismissProgressDialog()
-                if (response.isSuccessful){
-                    val trxtResponse : BongoTrxResponse =response.body()!!
-                    if (trxtResponse.status == 200){
-
-                        val data: ArrayList<DataItem?>? = trxtResponse.data
-                        val linearLayoutManager : LinearLayoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL,false)
-                        bongo_transaction_log.layoutManager = linearLayoutManager
-
-                        val adapter = BongoTrxLogAdapter(applicationContext, data)
-                        bongo_transaction_log.adapter = adapter
-
-
-                    }else{
-
-                        showErrorCallBackMessagev1(trxtResponse.message)
-                    }
-
-                }else{
-                    showErrorCallBackMessagev1(getString(R.string.try_again_msg))
-                }
-            }
-
-        })
-    }
-
 
 
 }

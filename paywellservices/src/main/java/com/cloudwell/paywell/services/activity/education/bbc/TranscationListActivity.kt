@@ -28,7 +28,7 @@ class TranscationListActivity : AppCompatActivity() {
             supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#5aac40")));
         }
 
-        val data = intent.getStringExtra("data")
+        val data = intent.getStringExtra(getString(R.string.bongo_trx_tag))
         val response = Gson().fromJson(data, TransactionResponsePOjo::class.java)
         responseDetails = response.responseDetails
 

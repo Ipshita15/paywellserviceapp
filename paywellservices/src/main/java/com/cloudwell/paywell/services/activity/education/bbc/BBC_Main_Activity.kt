@@ -251,7 +251,7 @@ class BBC_Main_Activity : BaseActivity(), View.OnClickListener , CompoundButton.
 
                        val toJson = Gson().toJson(trPojo)
                        val intent = Intent(applicationContext, TranscationListActivity::class.java)
-                       intent.putExtra("data", toJson)
+                       intent.putExtra(getString(R.string.bongo_trx_tag), toJson)
                        startActivity(intent)
 
                    }else{
@@ -273,7 +273,6 @@ class BBC_Main_Activity : BaseActivity(), View.OnClickListener , CompoundButton.
         if (isChecked) {
             if (buttonView?.id == R.id.radio_five) {
                 selectedLimit = "5"
-
                 radioButton_ten?.setChecked(false)
                 radioButton_twenty?.setChecked(false)
                 radioButton_fifty?.setChecked(false)
