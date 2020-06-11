@@ -40,6 +40,16 @@ data class TicketInfo(
         var transportName: String? = null,
 
         @SerializedName("trx_id")
-        var trxId: String? = null
+        var trxId: String? = null,
+
+
+        @SerializedName("journey_type")
+        var journey_type: String? = null,
+
+        @SerializedName("seat")
+        var seat: String? = null,
+
+        @SerializedName("boardingPoint")
+        var boardingPoint: String? = null
 
 ) : Parcelable

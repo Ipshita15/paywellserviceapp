@@ -14,9 +14,7 @@ import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.BusHosttActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.viewModel.BusTransportViewModel
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatCheckBookAPI
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Transport
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.CitiesListItem
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.RequestScheduledata
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.scheduledata.ScheduleDataItem
@@ -70,12 +68,10 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
 
 
         myCalenderRetrun.add(Calendar.DATE, 1)
-
         dateTVRound.text = myCalenderRetrun.get(Calendar.DAY_OF_MONTH).toString()
         monthTVRound.text = DateFormatSymbols().months[myCalenderRetrun.get(Calendar.MONTH)]
         dayTVRound.text = DateFormatSymbols().weekdays[myCalenderRetrun.get(Calendar.DAY_OF_WEEK)]
-
-
+        AppStorageBox.put(this@BusCitySearchActivity, AppStorageBox.Key.BUS_RETURN_DATE, simpleDateFormat!!.format(myCalenderRetrun.timeInMillis))
 
 
         busFromCityTS.setFactory(ViewSwitcher.ViewFactory {
