@@ -248,6 +248,8 @@ dependencies {
     // Add the Firebase Crashlytics SDK.
     implementation 'com.google.firebase:firebase-crashlytics:17.0.1'
 
+    debugImplementation 'com.readystatesoftware.chuck:library:1.1.0'
+
 
 }
 // Add to the bottom of the file

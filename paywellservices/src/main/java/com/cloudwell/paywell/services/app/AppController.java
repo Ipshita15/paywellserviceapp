@@ -81,23 +81,9 @@ public class AppController extends Application {
             FirebaseApp.initializeApp(this);
             String id = FirebaseInstanceId.getInstance().getToken();
             Log.e("device_token", "" + id);
-
-
             Logger.i("SMS HashKey: " + new AppSignatureHelper(getApplicationContext()).getAppSignatures().get(0));
-            // Logger.v(DebugDB.getAddressLog());
 
-
-//            if (LeakCanary.isInAnalyzerProcess(this)) {
-//                // This process is dedicated to LeakCanary for heap analysis.
-//                // You should not init your app in this process.
-//                return;
-//            }
-//            refWatcher = LeakCanary.install(this);
-
-
-//            Stetho.initializeWithDefaults(this);
-//
-
+            
         }
 
         configureCrashReporting();
