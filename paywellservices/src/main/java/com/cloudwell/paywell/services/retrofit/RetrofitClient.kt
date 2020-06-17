@@ -4,6 +4,7 @@ package com.cloudwell.paywell.services.retrofit
 import com.cloudwell.paywell.services.BuildConfig
 import com.cloudwell.paywell.services.app.AppController
 import com.itkacher.okhttpprofiler.OkHttpProfilerInterceptor
+import com.readystatesoftware.chuck.ChuckInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -67,8 +68,9 @@ object RetrofitClient {
                 val logging = HttpLoggingInterceptor()
                 logging.setLevel(HttpLoggingInterceptor.Level.BODY)
                 httpClient.addInterceptor(logging)
-//                httpClient.addNetworkInterceptor(StethoInterceptor())
                 httpClient.addInterceptor(OkHttpProfilerInterceptor())
+                httpClient.addInterceptor(ChuckInterceptor(AppController.getContext()))
+
             }
             httpClient.authenticator(TokenAuthenticator())
 
@@ -95,6 +97,8 @@ object RetrofitClient {
                 logging.setLevel(HttpLoggingInterceptor.Level.BODY)
                 httpClient.addInterceptor(logging)
                 httpClient.addInterceptor(OkHttpProfilerInterceptor())
+                httpClient.addInterceptor(ChuckInterceptor(AppController.getContext()))
+
             }
 
             okHttpClient = httpClient.build()

@@ -20,12 +20,16 @@ class CancelListAdapter(private val list: List<TicketInfo>, val onClick: OnClick
 
     override fun onBindViewHolder(holder: TransactionLogViewHolder, position: Int) {
         val ticketInfo = list[position]
-        holder.tvJounryType.text = ""
+        holder.tvJounryType.text = "" + ticketInfo.journey_type
         holder.tvFromAndTo.text = "" + ticketInfo.journeyRoute
         holder.tvBusName.text = "" + ticketInfo.transportName
         holder.tvDate.text = "" + ticketInfo.departureDateTime + ""
-        holder.tvSeatNo.text = ""
-        holder.tvCounterAndTime.text = ""
+        holder.tvSeatNo.text = "" + ticketInfo.seat
+        holder.tvCounterAndTime.text = "Boarding at" + ticketInfo.boardingPoint
+        holder.tvTotalPrices.text = "Total Amount: " + ticketInfo.totalAmount
+        holder.tvCanceltionFee.text = "Cancellation Fee: " + ticketInfo.cancellationFee
+
+
         holder.btCancel.setOnClickListener {
             onClick.onClick(ticketInfo)
         }
@@ -51,6 +55,8 @@ class CancelListAdapter(private val list: List<TicketInfo>, val onClick: OnClick
         var tvSeatNo: TextView
         var tvCounterAndTime: TextView
         var btCancel: Button
+        var tvTotalPrices: TextView
+        var tvCanceltionFee: TextView
 
         init {
             tvJounryType = itemView.findViewById(R.id.tvJounryType)
@@ -60,6 +66,8 @@ class CancelListAdapter(private val list: List<TicketInfo>, val onClick: OnClick
             tvSeatNo = itemView.findViewById(R.id.tvSeatNo)
             tvCounterAndTime = itemView.findViewById(R.id.tvCounterAndTime)
             btCancel = itemView.findViewById(R.id.btCancel)
+            tvTotalPrices = itemView.findViewById(R.id.tvTotalPrices)
+            tvCanceltionFee = itemView.findViewById(R.id.tvCancelationFee)
         }
     }
 
