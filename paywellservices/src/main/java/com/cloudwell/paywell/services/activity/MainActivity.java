@@ -54,7 +54,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cloudwell.paywell.services.BuildConfig;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.about.AboutActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
@@ -798,9 +797,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         try {
             String rid = getString(R.string.rid) + mAppHandler.getRID();
-            if (BuildConfig.DEBUG) {
+//            if (BuildConfig.DEBUG) {
                 rid = rid + "(" + AppTestVersionUtility.testVersion + ")";
-            }
+//            }
             _pwId.setText(rid);
             if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
                 _pwId.setTypeface(AppController.getInstance().getOxygenLightFont());
