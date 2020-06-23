@@ -262,6 +262,8 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
                     view?.showErrorMessage(message)
 
                 }
+            } else {
+                view?.showErrorMessage(message)
             }
         }
 

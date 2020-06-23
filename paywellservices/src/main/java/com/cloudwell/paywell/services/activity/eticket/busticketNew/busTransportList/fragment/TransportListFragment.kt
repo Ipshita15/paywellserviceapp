@@ -22,7 +22,6 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.scheduledata.ScheduleDataItem
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ResposeTicketConfirm
 import kotlinx.android.synthetic.main.bus_advance_filter.view.*
-import kotlinx.android.synthetic.main.bus_advance_filter.view.radioGroupJounryType
 import kotlinx.android.synthetic.main.fragment_transport_list.*
 import kotlinx.android.synthetic.main.layout_filter.view.*
 
@@ -164,25 +163,12 @@ class TransportListFragment(val requestScheduledata: RequestScheduledata, val is
         listener = null
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
-
         fun onItemCLick(position: Int, retrunTriple: Boolean)
+        fun showErrorMessageAndFinsehdFragment(message: String)
     }
-
-
 
 
     override fun showNoTripFoundUI() {
@@ -191,7 +177,7 @@ class TransportListFragment(val requestScheduledata: RequestScheduledata, val is
     }
 
     override fun showErrorMessage(message: String) {
-
+        listener?.showErrorMessageAndFinsehdFragment(message)
     }
 
     override fun showSeatCheckAndBookingRepose(it: ResSeatCheckBookAPI) {

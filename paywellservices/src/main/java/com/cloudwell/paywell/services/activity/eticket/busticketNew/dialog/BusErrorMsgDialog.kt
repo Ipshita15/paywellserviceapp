@@ -10,7 +10,7 @@ import com.cloudwell.paywell.services.activity.base.BaseDialogFragment
 import kotlinx.android.synthetic.main.otp_error_msg_dialog.view.*
 
 
-class BusErrorMsgDialog(val message: String): BaseDialogFragment() {
+class BusErrorMsgDialog(val message: String, val needFinishedActivity: Boolean = false) : BaseDialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = layoutInflater.inflate(R.layout.bus_ticket_error_msg_dialog, null)
@@ -18,7 +18,12 @@ class BusErrorMsgDialog(val message: String): BaseDialogFragment() {
         view.otpErrorMsgTV.text = message
         view.btnOtpErrorCall.setOnClickListener {
             dismiss()
+            if (needFinishedActivity) {
+                activity!!.finish()
+            }
         }
+
+        isCancelable = false
         return view
 
     }

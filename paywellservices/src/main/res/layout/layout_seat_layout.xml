@@ -166,11 +166,11 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <HorizontalScrollView
-                android:id="@+id/layoutSeat"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingBottom="16dp"
-                android:background="#ffffff">
+                    android:id="@+id/layoutSeat"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="16dp"
+                    android:background="#FFFFFF">
 
             </HorizontalScrollView>
 

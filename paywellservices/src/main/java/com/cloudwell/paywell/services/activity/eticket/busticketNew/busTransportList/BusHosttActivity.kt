@@ -24,7 +24,6 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.seatLayout.S
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.google.gson.Gson
-import java.util.logging.Logger
 
 
 class BusHosttActivity : BusTricketBaseActivity(), IbusTransportListView, TransportListFragment.OnFragmentInteractionListener, SeatLayoutFragment.OnFragmentInteractionListener {
@@ -221,6 +220,10 @@ class BusHosttActivity : BusTricketBaseActivity(), IbusTransportListView, Transp
             }
         }
 
+    }
+
+    override fun showErrorMessageAndFinsehdFragment(message: String) {
+        showBusTicketErrorDialog(message, true)
     }
 
 
