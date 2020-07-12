@@ -14,6 +14,10 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.home.HomeActivity;
@@ -36,9 +40,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -62,6 +63,8 @@ public class AppLoadingActivity extends BaseActivity {
     private static final int MY_PERMISSIONS_REQUEST_ACCOUNTS = 123;
     private RegistrationModel regModel;
 
+    String pin = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +80,16 @@ public class AppLoadingActivity extends BaseActivity {
         mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mCd = new ConnectionDetector(AppController.getContext());
 
+        pin = getIntent().getStringExtra("pin");
+
 
         if (Build.VERSION.SDK_INT < 23) {
             //Do not need to check the permission
 
-            if (mAppHandler.getUserNeedToChnagePassword()){
+            if (mAppHandler.getUserNeedToChnagePassword()) {
                 Intent i = new Intent(this, ChangePinActivity.class);
                 i.putExtra("isFirstTime", true);
+                i.putExtra("pin", pin);
                 startActivity(i);
                 finish();
 
@@ -94,6 +100,7 @@ public class AppLoadingActivity extends BaseActivity {
                 Runnable myRunnable = new Runnable() {
                     public void run() {
                         Intent i = new Intent(AppLoadingActivity.this, MainActivity.class);
+                        i.putExtra("pin", pin);
                         startActivity(i);
                         finish();
                     }
@@ -106,6 +113,7 @@ public class AppLoadingActivity extends BaseActivity {
             if (mAppHandler.getUserNeedToChnagePassword()){
                 Intent i = new Intent(this, ChangePinActivity.class);
                 i.putExtra("isFirstTime", true);
+                i.putExtra("pin", pin);
                 startActivity(i);
                 finish();
 
@@ -138,7 +146,9 @@ public class AppLoadingActivity extends BaseActivity {
         mBtnRetry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AppLoadingActivity.this, AppLoadingActivity.class));
+                Intent intent = new Intent(AppLoadingActivity.this, AppLoadingActivity.class);
+                intent.putExtra("pin", pin);
+                startActivity(intent);
                 finish();
             }
         });

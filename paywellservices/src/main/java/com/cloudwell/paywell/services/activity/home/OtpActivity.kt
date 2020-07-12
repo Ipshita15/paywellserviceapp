@@ -36,16 +36,18 @@ class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleA
 
     var userNeedToChangePassword = false;
     var OTPMessaage = ""
+    var pin = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.otp_dialog)
 
         setToolbar("OTP Verification")
 
-         userNeedToChangePassword = intent.getBooleanExtra("userNeedToChangePassword", false)
-         OTPMessaage = intent.getStringExtra("OTPMessaage")
+        userNeedToChangePassword = intent.getBooleanExtra("userNeedToChangePassword", false)
+        OTPMessaage = intent.getStringExtra("OTPMessaage")
+        pin = intent.getStringExtra("pin")
 
-         tvOtpMessage.text = OTPMessaage
+        tvOtpMessage.text = OTPMessaage
 
 
         btNextOtp.setOnClickListener {
@@ -255,34 +257,36 @@ class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleA
                 response.body().let {
                     if (it?.apiStatus ?: 0 == 200) {
 
-                       if (it?.responseDetails?.status == 200) {
+                        if (it?.responseDetails?.status == 200) {
 
 
-                           val oTPVerificationMsgDialog = OTPVerificationMsgDialog(object : OTPVerificationMsgDialog.OnClickHandler {
-                               override fun onSubmit() {
+                            val oTPVerificationMsgDialog = OTPVerificationMsgDialog(object : OTPVerificationMsgDialog.OnClickHandler {
+                                override fun onSubmit() {
 
 
-                                   if (userNeedToChangePassword){
-                                       val i = Intent(this@OtpActivity, ChangePinActivity::class.java)
-                                       i.putExtra("isFirstTime", true);
-                                       startActivity(i)
-                                       finish()
+                                    if (userNeedToChangePassword) {
+                                        val i = Intent(this@OtpActivity, ChangePinActivity::class.java)
+                                        i.putExtra("isFirstTime", true);
+                                        i.putExtra("pin", pin)
+                                        startActivity(i)
+                                        finish()
 
-                                   }else{
-                                       AppHandler.getmInstance(applicationContext).appStatus= AppsStatusConstant.KEY_login
-                                       val i = Intent(this@OtpActivity, AppLoadingActivity::class.java)
-                                       startActivity(i)
-                                       finish()
-                                   }
+                                    } else {
+                                        AppHandler.getmInstance(applicationContext).appStatus = AppsStatusConstant.KEY_login
+                                        val i = Intent(this@OtpActivity, AppLoadingActivity::class.java)
+                                        i.putExtra("pin", pin)
+                                        startActivity(i)
+                                        finish()
+                                    }
 
 
-                               }
+                                }
 
-                           }, it?.responseDetails!!.statusName)
-                           oTPVerificationMsgDialog.show(supportFragmentManager, "oTPVerificationMsgDialog");
-                       }else{
-                          showErrorMessagev1(it?.responseDetails?.statusName)
-                       }
+                            }, it?.responseDetails!!.statusName)
+                            oTPVerificationMsgDialog.show(supportFragmentManager, "oTPVerificationMsgDialog");
+                        } else {
+                            showErrorMessagev1(it?.responseDetails?.statusName)
+                        }
 
                     } else {
                         val errorMsgDialog = it?.apiStatusName?.let { it1 ->

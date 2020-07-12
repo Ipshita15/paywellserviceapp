@@ -22,6 +22,7 @@ import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.AppsStatusConstant
 import com.cloudwell.paywell.services.utils.ConnectionDetector
 import com.cloudwell.paywell.services.utils.DateUtils
+import kotlinx.android.synthetic.main.activity_change_pin.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,6 +35,7 @@ class ChangePinActivity : BaseActivity() {
     var newPinAgain: EditText? = null
     private var mLinearLayout: LinearLayout? = null
     var isFirstTime = false
+    var pin = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_change_pin)
@@ -43,6 +45,12 @@ class ChangePinActivity : BaseActivity() {
             supportActionBar!!.setTitle(R.string.home_settings_change_pin)
         }
         isFirstTime = intent.getBooleanExtra("isFirstTime", false)
+        if (isFirstTime) {
+            tvOldPInSymbol.visibility = View.GONE
+            tvOldPin.visibility = View.GONE
+            oldPin.visibility = View.GONE
+            pin = intent.getStringExtra("pin")
+        }
         mCd = ConnectionDetector(AppController.getContext())
         mAppHandler = AppHandler.getmInstance(applicationContext)
         initView()
@@ -57,12 +65,17 @@ class ChangePinActivity : BaseActivity() {
     }
 
     fun resetPin(v: View?) {
-        val _oldPin = mOldPin!!.text.toString()
+        var _oldPin = mOldPin!!.text.toString()
         val _newPin = mNewPin!!.text.toString()
         val _newPinAgain = newPinAgain!!.text.toString()
-        if (_oldPin.length == 0) {
-            mOldPin!!.error = Html.fromHtml("<font color='red'>" + getString(R.string.old_pin_error_msg) + "</font>")
-            return
+
+        if (!isFirstTime) {
+            if (_oldPin.length == 0) {
+                mOldPin!!.error = Html.fromHtml("<font color='red'>" + getString(R.string.old_pin_error_msg) + "</font>")
+                return
+            }
+        } else {
+            _oldPin = pin
         }
         if (_newPin.length == 0 || _oldPin.equals(_newPin, ignoreCase = true)) {
             mNewPin!!.error = Html.fromHtml("<font color='red'>" + getString(R.string.new_pin_error_msg) + "</font>")
@@ -75,7 +88,7 @@ class ChangePinActivity : BaseActivity() {
         }
         if (!mCd!!.isConnectingToInternet) {
             AppHandler.showDialog(supportFragmentManager)
-        } else { //            new ChangePinAsync().execute(getString(R.string.pin), _oldPin, _newPin);
+        } else {
 
             changePassword(_oldPin, _newPin)
 

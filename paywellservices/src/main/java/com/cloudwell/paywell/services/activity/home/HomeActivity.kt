@@ -37,6 +37,7 @@ import retrofit2.Response
 class HomeActivity : BaseActivity() {
 
      var userNeedToChangePassword: Boolean = false
+    var userPin: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +71,7 @@ class HomeActivity : BaseActivity() {
         }
         else if (appStatus.equals(AppsStatusConstant.KEY_pending) || appStatus.equals(AppsStatusConstant.KEY_pinNotSetUser) || appStatus.equals(AppsStatusConstant.KEY_registered)) {
             val i = Intent(this@HomeActivity, AppLoadingActivity::class.java)
+            i.putExtra("pin", userPin)
             startActivity(i)
             finish()
         }
@@ -188,6 +190,7 @@ class HomeActivity : BaseActivity() {
 
     private fun routToApploadingActivity() {
         val i = Intent(this@HomeActivity, AppLoadingActivity::class.java)
+        i.putExtra("pin", userPin)
         startActivity(i)
         finish()
 
@@ -197,6 +200,7 @@ class HomeActivity : BaseActivity() {
         if (androidId.equals("")) {
             callPreview(false, getString(R.string.device_not_support))
         } else if (isInternetConnection) {
+            userPin = pin
             callGetTokenAPI(userName, pin, androidId, firebaseId);
         } else {
             val noInternetConnectionMsgDialog = NoInternetConnectionMsgDialog(object : NoInternetConnectionMsgDialog.OnClickHandler {
@@ -332,12 +336,14 @@ class HomeActivity : BaseActivity() {
                             val intent = Intent(this@HomeActivity, OtpActivity::class.java)
                             intent.putExtra("OTPMessaage", m?.OTPMessaage)
                             intent.putExtra("userNeedToChangePassword", userNeedToChangePassword)
+                            intent.putExtra("pin", password)
                             startActivity(intent)
 
                         } else {
 
                             val intent = Intent(this@HomeActivity, AppLoadingActivity::class.java)
                             intent.putExtra("userNeedToChangePassword", userNeedToChangePassword)
+                            intent.putExtra("pin", password)
                             startActivity(intent)
                             finish()
 
