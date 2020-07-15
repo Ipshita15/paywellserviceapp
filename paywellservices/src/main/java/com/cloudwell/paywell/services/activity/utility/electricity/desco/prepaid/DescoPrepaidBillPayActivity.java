@@ -1,6 +1,8 @@
 package com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid;
 
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
@@ -12,6 +14,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
@@ -26,6 +32,7 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.IconConstant;
 import com.cloudwell.paywell.services.database.DatabaseClient;
+import com.cloudwell.paywell.services.ocr.OCRActivity;
 import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -37,14 +44,12 @@ import com.github.chrisbanes.photoview.PhotoView;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DescoPrepaidBillPayActivity extends BaseActivity implements View.OnClickListener {
-
+    private static final int REQUEST_CODE_OCR = 1001;
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
     private LinearLayout mLinearLayout;
@@ -57,6 +62,7 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
     private String mPin;
     private String mTrxId;
     private String mAmount;
+    private ImageView ivOcrScanner;
 
 
     private static final String TAG_STATUS = "status";
@@ -105,6 +111,10 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
         etAmount = findViewById(R.id.amountDescoET);
         imageView = findViewById(R.id.imageView_info);
         btnConfirm = findViewById(R.id.mycash_confirm);
+        ivOcrScanner = findViewById(R.id.ivOcrScanner);
+
+        ivOcrScanner.setOnClickListener(this);
+
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             _mPin.setTypeface(AppController.getInstance().getOxygenLightFont());
@@ -221,6 +231,20 @@ public class DescoPrepaidBillPayActivity extends BaseActivity implements View.On
             }
         } else if (v == imageView) {
             showBillImage();
+        } else if (v.getId() == R.id.ivOcrScanner) {
+            Intent intent = new Intent(getApplicationContext(), OCRActivity.class);
+            intent.putExtra(OCRActivity.REQUEST_FROM, OCRActivity.KEY_DESCO_PREPAID);
+            startActivityForResult(intent, REQUEST_CODE_OCR);
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_OCR) {
+            String data1 = data.getExtras().getString("data", "");
+            etBill.setText("" + data1);
+
         }
     }
 

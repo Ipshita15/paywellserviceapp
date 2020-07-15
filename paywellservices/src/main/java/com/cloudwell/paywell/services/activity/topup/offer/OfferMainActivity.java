@@ -15,6 +15,8 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
@@ -24,8 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
-import androidx.appcompat.app.AppCompatActivity;
+import java.util.Vector;
 
 
 public class OfferMainActivity extends AppCompatActivity {
@@ -311,6 +312,10 @@ public class OfferMainActivity extends AppCompatActivity {
         private class ViewHolder {
             TextView textViewHeader, textViewDescription;
             RadioButton radioButton;
+
+            Vector va = new Vector();
+
+
         }
     }
 }

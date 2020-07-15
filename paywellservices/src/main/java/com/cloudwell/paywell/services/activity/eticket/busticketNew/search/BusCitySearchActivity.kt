@@ -197,19 +197,23 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
 
         llJourneyDate.setOnClickListener {
 
+            var tempCalender = Calendar.getInstance()
+
+
             val datePickerDialog = DatePickerDialog(this@BusCitySearchActivity, R.style.DialogThemeBus, DatePickerDialog.OnDateSetListener { datePicker, i, i1, i2 ->
                 myCalender.set(i, i1, i2)
                 dateTV.text = myCalender.get(Calendar.DAY_OF_MONTH).toString()
                 monthTV.text = DateFormatSymbols().months[myCalender.get(Calendar.MONTH)]
                 dayTV.text = DateFormatSymbols().weekdays[myCalender.get(Calendar.DAY_OF_WEEK)]
                 AppStorageBox.put(this@BusCitySearchActivity, AppStorageBox.Key.BUS_JOURNEY_DATE, simpleDateFormat!!.format(myCalender.timeInMillis))
-            }, myCalender.get(Calendar.YEAR),
-                    myCalender.get(Calendar.MONTH),
-                    myCalender.get(Calendar.DAY_OF_MONTH))
+            },
+                    tempCalender.get(Calendar.YEAR),
+                    tempCalender.get(Calendar.MONTH),
+                    tempCalender.get(Calendar.DAY_OF_MONTH))
             datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 10000
             try {
                 val  myCalender1 = Calendar.getInstance()
-                datePickerDialog.datePicker.minDate = myCalender.time.time
+                datePickerDialog.datePicker.minDate = tempCalender.time.time
                 myCalender1.add(Calendar.DAY_OF_MONTH, 30)
                 datePickerDialog.datePicker.maxDate = myCalender1.time.time
             } catch (e: ParseException) {

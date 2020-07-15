@@ -37,6 +37,7 @@ class OCRActivity : LanguagesBaseActivity() {
         const val REQUEST_CODE_OCR = "REQUEST_CODE_OCR"
         const val REQUEST_FROM = "REQUEST_FROM"
         const val KEY_DESCO = "DESCO"
+        const val KEY_DESCO_PREPAID = "DESCO_PREPAID"
         const val KEY_DPDC = "DPDC"
         const val KEY_WASA = "WASA"
     }
@@ -185,8 +186,15 @@ class OCRActivity : LanguagesBaseActivity() {
                                                 btReTake.visibility = View.VISIBLE
                                                 btOk.visibility = View.VISIBLE
                                             }
-                                        }else if (requestForm.equals(KEY_WASA)){
+                                        }else if (requestForm.equals(KEY_WASA)) {
                                             if (line.value.length == 12) {
+                                                mTextView!!.text = line.value
+                                                mTextView!!.visibility = View.VISIBLE
+                                                btReTake.visibility = View.VISIBLE
+                                                btOk.visibility = View.VISIBLE
+                                            }
+                                        } else if (requestForm.equals(KEY_DESCO_PREPAID)) {
+                                            if (line.value.length == 13) {
                                                 mTextView!!.text = line.value
                                                 mTextView!!.visibility = View.VISIBLE
                                                 btReTake.visibility = View.VISIBLE

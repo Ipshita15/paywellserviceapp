@@ -21,6 +21,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSea
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.RequestScheduledata
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.scheduledata.ScheduleDataItem
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ResposeTicketConfirm
+import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.bus_advance_filter.view.*
 import kotlinx.android.synthetic.main.fragment_transport_list.*
 import kotlinx.android.synthetic.main.layout_filter.view.*
@@ -47,6 +48,66 @@ class TransportListFragment(val requestScheduledata: RequestScheduledata, val is
         initilization(view)
 
         return view
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        initViewModel()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val busHosttActivity = activity as BusHosttActivity
+        if (!isRetrunTriple) {
+            busHosttActivity.setToolbar("Departure Ticket", resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
+        } else {
+            busHosttActivity.setToolbar("Return Ticket", resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
+        }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnFragmentInteractionListener) {
+            listener = context
+        } else {
+            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
+    }
+
+    override fun onStop() {
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
+    override fun onPause() {
+        super.onPause()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onDestroyView() {
+        Logger.v("onDestroyView");
+        super.onDestroyView()
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (hidden) {
+            //do when hidden
+        } else {
+            //do when show
+        }
     }
 
     private fun initilization(view: View) {
@@ -128,40 +189,11 @@ class TransportListFragment(val requestScheduledata: RequestScheduledata, val is
 
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        initViewModel()
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        val busHosttActivity = activity as BusHosttActivity
-        if (!isRetrunTriple) {
-            busHosttActivity.setToolbar("Departure Ticket", resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
-        } else {
-            busHosttActivity.setToolbar("Return Ticket", resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
-        }
-    }
-
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
 
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
@@ -169,7 +201,6 @@ class TransportListFragment(val requestScheduledata: RequestScheduledata, val is
         fun onItemCLick(position: Int, retrunTriple: Boolean)
         fun showErrorMessageAndFinsehdFragment(message: String)
     }
-
 
     override fun showNoTripFoundUI() {
         shimmer_recycler_view.visibility = View.INVISIBLE

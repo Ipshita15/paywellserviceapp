@@ -92,10 +92,10 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
         boothList = view.findViewById(R.id.boothList)
 
         initilizationReviewBottomSheet(seatLayoutBottonSheet)
-        displaySeatLayout()
+        displaySeatLayoutv1()
         //displaySeatLayoutv2()
 //        displaySeatLayoutv3()
-        displaySeatPattenv2()
+        // displaySeatPattenv2()
 //        displaySeatPattenv3()
         setupBoardingpont()
 
@@ -105,6 +105,7 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
 
 
     private fun setupBoardingpont() {
+
 
         val values = scheduleDataItem.resSeatInfo?.seatviewResponse?.seatViewData?.bordingPoints
         val valueList = ArrayList(values)
@@ -291,17 +292,17 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
 
             val appHandler = AppHandler.getmInstance(requireContext())
 
-
+            val selectedItem = boothList.selectedItem as BordingPoint
             if (isRetrunTriple) {
                 val value = viewMode.requestScheduledata.value
-                val selectedItem = boothList.selectedItem as BordingPoint
+
 
                 val seatBlockRequestPojo = viewMode.seatBlockRequestPojo.value
                 seatBlockRequestPojo?.roundTrip = "2"
                 val opif = OptionInfoItem()
                 opif.boardingPointId = "" + selectedItem.reportingBranchId
                 opif.departureDate = value?.returnDate.toString()
-                opif.optionId = scheduleDataItem.busServiceType + "_" + scheduleDataItem.busId.toString()
+                opif.optionId = scheduleDataItem.busServiceType + "_" + scheduleDataItem.departureId.toString()
                 opif.seat = seatIds
                 opif.seatLevel = seatLevel
 
@@ -321,7 +322,6 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
 
             } else {
                 val value = viewMode.requestScheduledata.value
-                val selectedItem = boothList.selectedItem as BordingPoint
 
                 val m = SeatBlockRequestPojo()
                 m.deviceId = appHandler.androidID
@@ -333,7 +333,7 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
                 val opif = OptionInfoItem()
                 opif.boardingPointId = "" + selectedItem.reportingBranchId
                 opif.departureDate = value?.departingDate.toString()
-                opif.optionId = scheduleDataItem.busServiceType + "_" + scheduleDataItem.busId.toString()
+                opif.optionId = scheduleDataItem.busServiceType + "_" + scheduleDataItem.departureId.toString()
                 opif.seat = seatIds
                 opif.seatLevel = seatLevel
                 m.optionInfo.add(opif)
@@ -698,16 +698,7 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
     }
 
 
-    private fun displaySeatLayout() {
-//        val busLocalDB = model.busLocalDB
-//        val busSchedule = model.busSchedule
-//
-//        val indexTotalColumes = Integer.parseInt(busLocalDB?.totalColumns)
-//        val totalRowsInt = Integer.parseInt(busLocalDB?.totalRows)
-//        val totalMatrix = totalRowsInt * indexTotalColumes
-//        val columnsInRightInt = Integer.parseInt(busLocalDB?.columnsInRight)
-//
-//        allBusSeat = model.resSeatInfo?.allBusSeat!! as MutableList<BusSeat>
+    private fun displaySeatLayoutv1() {
 
         val seatViewData = scheduleDataItem.resSeatInfo?.seatviewResponse?.seatViewData
 
@@ -716,6 +707,12 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
         val totalMatrix = totalRowsInt * indexTotalColumes
         allBusSeat = seatViewData.seatstructureDetails as ArrayList<SeatstructureDetailsItem>
 
+        var columnsInRightInt = 0;
+        if (indexTotalColumes == 3) {
+            columnsInRightInt = 2
+        } else if (indexTotalColumes == 4) {
+            columnsInRightInt = 2
+        }
 
         var indexCounter = 0
         try {
@@ -772,41 +769,23 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
                 }
             }
             run {
-                displaySeatPatten()
+                displaySeatPattenv2()
             }
         } catch (e: Exception) {
             Logger.v("" + e.message)
         }
     }
 
-    private fun getSeatSymbolWithoutSpaceForLastLayout(i: Int): Any? {
-        var data = "";
-        if (lastSeatBusSeat.get(i).value == 0) {
-            // available seats
-            data = "A"
-        } else if (lastSeatBusSeat.get(i).value == 1) {
-            //Temp booked
-            data = "R"
-        } else if (lastSeatBusSeat.get(i).value == 2) {
-            //Temp booked
-            data = "U"
-        } else {
-            data = "U"
-        }
-        return data
-    }
+
 
     private fun getSeatSymbolWithSpace(i: Int): String {
         var data = "";
-        if (allBusSeat.get(seatCounter).value == 0) {
+        if (allBusSeat.get(seatCounter).status.equals("Available")) {
             // available seats
             data = "A_"
-        } else if (allBusSeat.get(seatCounter).value == 1) {
+        } else if (allBusSeat.get(seatCounter).status.equals("Booked")) {
             //Temp booked
             data = "R_"
-        } else if (allBusSeat.get(seatCounter).value == 2) {
-            //Temp booked
-            data = "U_"
         } else {
             //Temp booked
             data = "U_"
@@ -820,15 +799,12 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
     private fun getSeatSymbolWithoutSpace(i: Int): String {
         Logger.v("ICounter" + i)
         var data = "";
-        if (allBusSeat.get(seatCounter).value == 0) {
+        if (allBusSeat.get(seatCounter).status.equals("Available")) {
             // available seats
             data = "A"
-        } else if (allBusSeat.get(seatCounter).value == 1) {
+        } else if (allBusSeat.get(seatCounter).status.equals("Booked")) {
             //Temp booked
             data = "R"
-        } else if (allBusSeat.get(seatCounter).value == 2) {
-            //Temp booked
-            data = "U"
         } else {
             data = "U"
         }
@@ -841,15 +817,12 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
 
     private fun getSeatSymbolWithoutSpaceForLastLayout(i: Int): Any? {
         var data = "";
-        if (lastSeatBusSeat.get(i).value == 0) {
+        if (lastSeatBusSeat.get(i).status.equals("Available")) {
             // available seats
             data = "A"
-        } else if (lastSeatBusSeat.get(i).value == 1) {
+        } else if (lastSeatBusSeat.get(i).status.equals("Booked")) {
             //Temp booked
             data = "R"
-        } else if (lastSeatBusSeat.get(i).value == 2) {
-            //Temp booked
-            data = "U"
         } else {
             data = "U"
         }

@@ -68,7 +68,6 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
             ApiUtils.getClient().dispatcher.cancelAll()
         }
 
-
     }
 
 
@@ -222,10 +221,10 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
                         it?.let { it1 -> view?.showFilterList(it1) }
                     }
 
-                    val departureScheduleData = jsonObject.getJSONObject("reternschedule")
-                    if (departureScheduleData.getInt("status") == 1) {
-                        val array = departureScheduleData.getJSONArray("scheduleData")
-                        departureScheduleData.getString("scheduleData")
+                    val reternScheduleData = jsonObject.getJSONObject("reternschedule")
+                    if (reternScheduleData.getInt("status") == 1) {
+                        val array = reternScheduleData.getJSONArray("scheduleData")
+                        reternScheduleData.getString("scheduleData")
 
                         val scheduleData_array: JSONObject = array.optJSONObject(0)
                         val keys: Iterator<*> = scheduleData_array.keys()
@@ -243,17 +242,17 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
 
                             }
 
-                            scheduleDataItemHashMap.put(key, item)
-                            Log.e("Item: " + scheduleDataItemHashMap.keys, scheduleDataItemHashMap.get(key)?.routeName)
+                            returnscheduleDataItemHashMap.put(key, item)
+                            Log.e("Item: " + returnscheduleDataItemHashMap.keys, returnscheduleDataItemHashMap.get(key)?.routeName)
                         }
 
                         //
 
-                        val sortedByLowPricesList = scheduleDataItemHashMap.values.sortedBy {
+                        val retrunSortedByLowPricesList = returnscheduleDataItemHashMap.values.sortedBy {
                             it.fares
                         }
 
-                        returnTripTransportListMutableLiveData.value = ArrayList(sortedByLowPricesList)
+                        returnTripTransportListMutableLiveData.value = ArrayList(retrunSortedByLowPricesList)
 
                     }
 
@@ -324,8 +323,15 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
 
         val po = GetSeatViewRquestPojo()
         po.departureDate = requestScheduledata.value?.departingDate + "(" + requestScheduledata.value?.departingTime + ")"
-        po.fromCity = requestScheduledata.value?.departure ?: ""
-        po.toCity = requestScheduledata.value?.destination ?: ""
+
+        if (!retrunTriple) {
+            po.fromCity = requestScheduledata.value?.departure ?: ""
+            po.toCity = requestScheduledata.value?.destination ?: ""
+        } else {
+            po.fromCity = requestScheduledata.value?.destination ?: ""
+            po.toCity = requestScheduledata.value?.departure ?: ""
+        }
+
         po.optionId = model.busServiceType + "_" + model.departureId
         po.username = userName
         po.transportType = requestScheduledata.value?.transportType ?: ""

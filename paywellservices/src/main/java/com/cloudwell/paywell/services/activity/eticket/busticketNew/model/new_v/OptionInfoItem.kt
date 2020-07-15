@@ -5,16 +5,16 @@ import com.google.gson.annotations.SerializedName
 data class OptionInfoItem(
 
         @field:SerializedName("seat")
-	var seat: String = "",
+        var seat: String = "",
 
         var seatLevel: String = "",
 
         @field:SerializedName("boardingPointId")
-	var boardingPointId: String = "",
+        var boardingPointId: String = "",
 
         @field:SerializedName("optionId")
-	var optionId: String = "",
+        var optionId: String = "",
 
         @field:SerializedName("departureDate")
-	var departureDate: String = ""
+        var departureDate: String = ""
 )

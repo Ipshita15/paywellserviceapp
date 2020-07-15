@@ -11,18 +11,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.*
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.Spinner
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.activity.base.newBase.BaseFragment
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.BusHosttActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.view.IbusTransportListView
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransportList.viewModel.BusTransportViewModel
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BoothInfo
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestBusSearch
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatCheckBookAPI
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.TripScheduleInfoAndBusSchedule
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.Passenger
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.RequestScheduledata
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.scheduledata.ScheduleDataItem
@@ -35,7 +39,7 @@ import kotlinx.android.synthetic.main.activity_bus_booth_departure.view.*
 import java.text.DecimalFormat
 
 
-class BusPassengerBoothDepartureActivity(var isRetrunTriple: Boolean) : BaseFragment(), IbusTransportListView {
+class BusPassengerBoothDepartureFragment(var isRetrunTriple: Boolean) : BaseFragment(), IbusTransportListView {
     override fun setBoardingPoint(allBoothNameInfo: MutableSet<String>) {
 
 
@@ -76,16 +80,6 @@ class BusPassengerBoothDepartureActivity(var isRetrunTriple: Boolean) : BaseFrag
 
     override fun showSeatCheckAndBookingRepose(it: ResSeatCheckBookAPI) {
 
-//        Logger.v("", "")
-//        val t = BusTicketConfirmFragment()
-//        it.ticketInfoSeatBookAndCheck?.seats = seatLevel
-//        BusTicketConfirmFragment.ticketInfo = it.ticketInfoSeatBookAndCheck!!
-//        t.show(supportFragmentManager, "dialog")
-//        t.setOnClickListener(object : MyClickListener {
-//            override fun onClick() {
-//                askForPin(it)
-//            }
-//        })
 
 
     }
@@ -210,7 +204,7 @@ class BusPassengerBoothDepartureActivity(var isRetrunTriple: Boolean) : BaseFrag
             val sbr = viewMode.seatBlockRequestPojo.value
             val optionInfo = sbr?.optionInfo?.get(1)
 
-            view?.tvAddressRetrun?.text = "${sbr?.fromCity}-${sbr?.toCity}"
+            view?.tvAddressRetrun?.text = "${sbr?.toCity}-${sbr?.fromCity}"
             view?.tvBusNameRetrun?.text = retrunScheduleDataItem?.companyName + " " + retrunScheduleDataItem?.busServiceType
             view?.tvSeatNumberRetrun?.text = "" + optionInfo?.seatLevel
             view?.tvboadingPointRount?.text = "Boarding point at " + retrunBordingPoint?.counterName + " " + retrunBordingPoint?.scheduleTime
@@ -221,7 +215,7 @@ class BusPassengerBoothDepartureActivity(var isRetrunTriple: Boolean) : BaseFrag
         val sbr = viewMode.seatBlockRequestPojo.value
         val get = sbr?.optionInfo?.get(0)
 
-        view?.tvAddressOneWay?.text = "${sbr?.toCity}-${sbr?.fromCity}"
+        view?.tvAddressOneWay?.text = "${sbr?.fromCity}-${sbr?.toCity}"
         view?.tvBusNameOneWay?.text = singleScheduleDataItem?.companyName + " " + singleScheduleDataItem?.busServiceType
         view?.tvSeatNumberOneWay?.text = "" + get?.seatLevel
         view?.tvBoardingPoint?.text = "Boarding point at " + singleBordingPoint?.counterName + " " + singleBordingPoint?.scheduleTime

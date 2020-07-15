@@ -19,7 +19,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.Transp
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.RequestScheduledata
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.scheduledata.ScheduleDataItem
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ResposeTicketConfirm
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.passenger.BusPassengerBoothDepartureActivity
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.passenger.BusPassengerBoothDepartureFragment
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.seatLayout.SeatLayoutFragment
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.storage.AppStorageBox
@@ -95,7 +95,7 @@ class BusHosttActivity : BusTricketBaseActivity(), IbusTransportListView, Transp
 
     val KEY_TransportListFragment = TransportListFragment::class.java.name
     val KEY_SeatLayoutFragment = SeatLayoutFragment::class.java.name
-    val KEY_BusPassengerBoothDepartureActivity = BusPassengerBoothDepartureActivity::class.java.name
+    val KEY_BusPassengerBoothDepartureActivity = BusPassengerBoothDepartureFragment::class.java.name
 
 
     lateinit var transport: Transport
@@ -139,7 +139,7 @@ class BusHosttActivity : BusTricketBaseActivity(), IbusTransportListView, Transp
 
 
     private fun addPassengerActivity(retrunTriple: Boolean, key: String) {
-        val newFragment = BusPassengerBoothDepartureActivity(retrunTriple)
+        val newFragment = BusPassengerBoothDepartureFragment(retrunTriple)
         val transaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.fragment_container, newFragment)
         transaction.addToBackStack(key)
@@ -216,6 +216,7 @@ class BusHosttActivity : BusTricketBaseActivity(), IbusTransportListView, Transp
             } else if (model?.resSeatInfo?.tototalAvailableSeat == 0) {
                 showDialogMessage("seat not available")
             } else {
+                viewMode.cancelAllRequest()
                 model?.let { it1 -> addSeatLayoutFragment(it1, retrunTriple) }
             }
         }

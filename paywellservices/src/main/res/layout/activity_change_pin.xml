@@ -29,10 +29,11 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/star_sign"
-                    android:textColor="#FF4719"/>
+                        android:id="@+id/tvOldPInSymbol"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/star_sign"
+                        android:textColor="#FF4719" />
 
                 <TextView
                     android:id="@+id/tvOldPin"
