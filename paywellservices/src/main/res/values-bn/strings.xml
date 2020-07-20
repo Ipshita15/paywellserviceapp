@@ -719,5 +719,10 @@
     <string name="bus_transction_log">লেনদেন</string>
     <string name="cancel_ticket_list">টিকিট বাতিল</string>
     <string name="title_ticket_cancel_list">Ticket cancel list</string>
+    <string name="paywell_account_user_login">PayWell account user login</string>
+    <string name="enter_pin">Enter PIN</string>
+    <string name="account_id">Account ID</string>
+    <string name="forgot_pin_new">Forgot PIN?</string>
+    <string name="sign_in">Sign in</string>
 
 </resources>
