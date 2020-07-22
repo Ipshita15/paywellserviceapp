@@ -724,5 +724,6 @@
     <string name="account_id">Account ID</string>
     <string name="forgot_pin_new">Forgot PIN?</string>
     <string name="sign_in">Sign in</string>
+    <string name="title_login">Sing In</string>
 
 </resources>

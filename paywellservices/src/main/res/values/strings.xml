@@ -633,8 +633,8 @@
     <string name="desco_postpaid_string">Desco Postpaid</string>
     <string name="desco_postpaid_inquiry">Desco Postpaid Inquiry</string>
     <string name="meter_number">Meter number</string>
-    <string name="txt_login">Login</string>
-    <string name="txt_signup">Signup</string>
+    <string name="txt_login">Sign in</string>
+    <string name="txt_signup">Create an account</string>
     <string name="rid_mobile_number">Mobile Number</string>
     <string name="pin_number">Pin Number</string>
     <string name="submit">Login</string>
@@ -649,7 +649,7 @@
     <string name="didn_t_you_received_any_code">Didn\'t you received any code?</string>
     <string name="request_format_pin">Request forgot pin</string>
     <string name="last_4_digit_mobile_number">Mobile number</string>
-    <string name="please_enter_the_last_4_digits_of_your_phone_number">Please enter your phone number</string>
+    <string name="please_enter_the_last_4_digits_of_your_phone_number">Please enter your registered  number</string>
     <string name="forgot_pin">Forgot Pin</string>
     <string name="device_not_support">Your device not support, Please contact our call center</string>
     <string name="device_not_support_root">For Security Purpose rooted device not use this App, Please contact our call center</string>
@@ -729,6 +729,7 @@
     <string name="account_id">Account ID</string>
     <string name="forgot_pin_new">Forgot PIN?</string>
     <string name="sign_in">Sign in</string>
+    <string name="title_login">Sing In</string>
 
 
 </resources>
