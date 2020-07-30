@@ -96,7 +96,7 @@ public class SettingsActivity extends BaseActivity {
 
     private void startHelpMenu() {
         startActivity(new Intent(SettingsActivity.this, HelpMainActivity.class));
-        finish();
+
     }
 
     private void checkForUpgrade() {

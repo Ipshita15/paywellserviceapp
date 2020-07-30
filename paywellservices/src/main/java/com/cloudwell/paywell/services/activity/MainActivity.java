@@ -72,6 +72,11 @@ import com.cloudwell.paywell.services.activity.mfs.MFSMainActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.MyFavoriteMenuActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
+import com.cloudwell.paywell.services.activity.navigationdrawer.Constant;
+import com.cloudwell.paywell.services.activity.navigationdrawer.NavMenuAdapter;
+import com.cloudwell.paywell.services.activity.navigationdrawer.NavMenuModel;
+import com.cloudwell.paywell.services.activity.navigationdrawer.SubTitle;
+import com.cloudwell.paywell.services.activity.navigationdrawer.TitleMenu;
 import com.cloudwell.paywell.services.activity.notification.allNotificaiton.NotificationAllActivity;
 import com.cloudwell.paywell.services.activity.product.ProductMenuActivity;
 import com.cloudwell.paywell.services.activity.product.ekShop.EKShopActivity;
@@ -80,6 +85,8 @@ import com.cloudwell.paywell.services.activity.refill.banktransfer.BankTransferM
 import com.cloudwell.paywell.services.activity.refill.card.CardTransferMainActivity;
 import com.cloudwell.paywell.services.activity.refill.nagad.NagadMainActivity;
 import com.cloudwell.paywell.services.activity.scan.DisplayQRCodeActivity;
+import com.cloudwell.paywell.services.activity.settings.ChangePinActivity;
+import com.cloudwell.paywell.services.activity.settings.HelpMainActivity;
 import com.cloudwell.paywell.services.activity.settings.SettingsActivity;
 import com.cloudwell.paywell.services.activity.statements.StatementMainActivity;
 import com.cloudwell.paywell.services.activity.statements.ViewStatementActivity;
@@ -192,7 +199,7 @@ import ss.com.bannerslider.event.OnSlideClickListener;
 import static com.cloudwell.paywell.services.utils.LanuageConstant.KEY_BANGLA;
 import static com.cloudwell.paywell.services.utils.LanuageConstant.KEY_ENGLISH;
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener, View.OnClickListener {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener, View.OnClickListener, NavMenuAdapter.MenuItemClickListener {
 
     public static String KEY_COMMING_NEW_NOTIFICATION = "COMMING_NEW_NOTIFICATION";
     private static final long KEY_BALANCE_CHECK_INTERVAL = 5000;
@@ -266,6 +273,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private ImageView notif_bell;
 
+
+    ArrayList<NavMenuModel> menu;
+
     @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -318,16 +328,38 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         checkBalance();
         getAllFavoriteDate();
         setupRightNagivationView();
-
         setScreenStateReciver();
-
-
         setUpBottomSheet();
+        setNavigationDrawerMenu();
+        setUserRID();
 
 
+    }
+
+    private void setUserRID() {
+        TextView _pwId = findViewById(R.id.pwId);
+        assert _pwId != null;
+
+        try {
+            String rid = getString(R.string.rid) + mAppHandler.getRID();
+//            if (BuildConfig.DEBUG) {
+            rid = rid + "(" + AppTestVersionUtility.testVersion + ")";
+//            }
+            _pwId.setText(rid);
+            if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                _pwId.setTypeface(AppController.getInstance().getOxygenLightFont());
+            } else {
+                _pwId.setTypeface(AppController.getInstance().getAponaLohitFont());
+            }
 
 
-
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+            View snackBarView = snackbar.getView();
+            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+        }
     }
 
     private void setRecentList() {
@@ -773,17 +805,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         home_Eduction.setText(R.string.home_education);
 
 
-
-        navigationView.getMenu().findItem(R.id.nav_topup).setTitle(R.string.home_topup);
-        navigationView.getMenu().findItem(R.id.nav_utility).setTitle(R.string.home_utility);
-        navigationView.getMenu().findItem(R.id.nav_eticket).setTitle(R.string.home_eticket);
-        navigationView.getMenu().findItem(R.id.nav_mfs).setTitle(R.string.nav_mfs);
-        navigationView.getMenu().findItem(R.id.nav_product).setTitle(R.string.nav_product_catalog);
-        navigationView.getMenu().findItem(R.id.nav_more).setTitle(R.string.nav_more_title);
-        navigationView.getMenu().findItem(R.id.nav_check_balance).setTitle(R.string.nav_check_balance);
-        navigationView.getMenu().findItem(R.id.nav_terms).setTitle(R.string.nav_terms_and_conditions);
-        navigationView.getMenu().findItem(R.id.nav_policy).setTitle(R.string.nav_policy_statement);
-        navigationView.getMenu().findItem(R.id.nav_about).setTitle(R.string.nav_about);
+//        navigationView.getMenu().findItem(R.id.nav_topup).setTitle(R.string.home_topup);
+//        navigationView.getMenu().findItem(R.id.nav_utility).setTitle(R.string.home_utility);
+//        navigationView.getMenu().findItem(R.id.nav_eticket).setTitle(R.string.home_eticket);
+//        navigationView.getMenu().findItem(R.id.nav_mfs).setTitle(R.string.nav_mfs);
+//        navigationView.getMenu().findItem(R.id.nav_product).setTitle(R.string.nav_product_catalog);
+//        navigationView.getMenu().findItem(R.id.nav_more).setTitle(R.string.nav_more_title);
+//        navigationView.getMenu().findItem(R.id.nav_check_balance).setTitle(R.string.nav_check_balance);
+//        navigationView.getMenu().findItem(R.id.nav_terms).setTitle(R.string.nav_terms_and_conditions);
+//        navigationView.getMenu().findItem(R.id.nav_policy).setTitle(R.string.nav_policy_statement);
+//        navigationView.getMenu().findItem(R.id.nav_about).setTitle(R.string.nav_about);
     }
 
     @Override
@@ -792,29 +823,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mToolbar.inflateMenu(R.menu.main);
         Menu _menu = mToolbar.getMenu();
 
-        TextView _pwId = findViewById(R.id.pwId);
-        assert _pwId != null;
-
-        try {
-            String rid = getString(R.string.rid) + mAppHandler.getRID();
-//            if (BuildConfig.DEBUG) {
-                rid = rid + "(" + AppTestVersionUtility.testVersion + ")";
-//            }
-            _pwId.setText(rid);
-            if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-                _pwId.setTypeface(AppController.getInstance().getOxygenLightFont());
-            } else {
-                _pwId.setTypeface(AppController.getInstance().getAponaLohitFont());
-            }
-
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-            View snackBarView = snackbar.getView();
-            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-        }
 
 
         MenuItem menuNotification = _menu.findItem(R.id.menu_notification);
@@ -2162,50 +2170,24 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.string.home_statement_mini:
 
 
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_MINI_MENU);
-
-
-                intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
-                intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "mini");
-
-
-                startActivityWithFlag(intent);
+                openMiniStatment();
 
                 break;
             case R.string.home_statement_balance:
 
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_BALANCE_MENU);
-
-                intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
-
-                intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "balance");
-
-
-                startActivityWithFlag(intent);
+                openBalanceStatment();
 
                 break;
 
 
             case R.string.home_statement_sales:
 
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_SALES_MENU);
-
-                intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
-
-                intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "sales");
-
-
-                startActivityWithFlag(intent);
+                openSalesStatement();
 
                 break;
             case R.string.home_statement_transaction:
 
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_TRX_MENU);
-
-                intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
-                intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "trx");
-
-                startActivityWithFlag(intent);
+                openTransactionStatement();
 
                 break;
 
@@ -2250,9 +2232,49 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
 
 
-
-
         }
+    }
+
+    private void openTransactionStatement() {
+        Intent intent;
+        AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_TRX_MENU);
+
+        intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
+        intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "trx");
+
+        startActivityWithFlag(intent);
+    }
+
+    private void openSalesStatement() {
+        Intent intent;
+        AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_SALES_MENU);
+
+        intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
+
+        intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "sales");
+
+
+        startActivityWithFlag(intent);
+    }
+
+    private void openBalanceStatment() {
+        Intent intent;
+        AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_BALANCE_MENU);
+
+        intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
+
+        intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "balance");
+
+
+        startActivityWithFlag(intent);
+    }
+
+    private void openMiniStatment() {
+        Intent intent;
+        AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_MINI_MENU);
+        intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
+        intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "mini");
+        startActivityWithFlag(intent);
     }
 
     private void startActivityWithFlag(Intent intent) {
@@ -2284,6 +2306,112 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             } else if (Intent.ACTION_SCREEN_OFF.equals(action)) {
                 //code
                 Logger.v("off");
+            }
+        }
+    }
+
+    private void setNavigationDrawerMenu() {
+        NavMenuAdapter adapter = new NavMenuAdapter(this, getMenuList(), this);
+        RecyclerView navMenuDrawer = (RecyclerView) findViewById(R.id.main_nav_menu_recyclerview);
+        navMenuDrawer.setAdapter(adapter);
+        navMenuDrawer.setLayoutManager(new LinearLayoutManager(this));
+        navMenuDrawer.setAdapter(adapter);
+//
+////        INITIATE SELECT MENU
+//        adapter.selectedItemParent = menu.get(0).menuTitle;
+//        onMenuItemClick(adapter.selectedItemParent);
+//        adapter.notifyDataSetChanged();
+    }
+
+    private List<TitleMenu> getMenuList() {
+        List<TitleMenu> list = new ArrayList<>();
+
+        menu = Constant.getMenuNavigasi(getApplicationContext());
+        for (int i = 0; i < menu.size(); i++) {
+            ArrayList<SubTitle> subMenu = new ArrayList<>();
+            if (menu.get(i).subMenu.size() > 0) {
+                for (int j = 0; j < menu.get(i).subMenu.size(); j++) {
+                    subMenu.add(new SubTitle(menu.get(i).subMenu.get(j).subMenuTitle));
+                }
+            }
+
+            list.add(new TitleMenu(menu.get(i).menuTitle, subMenu, menu.get(i).menuIconDrawable));
+        }
+
+        return list;
+    }
+
+
+    @Override
+    public void onMenuItemClick(String itemString) {
+        for (int i = 0; i < menu.size(); i++) {
+            if (itemString.equals(menu.get(i).menuTitle)) {
+
+                handleNavMemuClick(itemString);
+
+                break;
+            } else {
+                for (int j = 0; j < menu.get(i).subMenu.size(); j++) {
+                    if (itemString.equals(menu.get(i).subMenu.get(j).subMenuTitle)) {
+
+                        Log.e("", "");
+
+                        if (itemString.equals(Constant.KEY_home_statement_mini)) {
+                            openMiniStatment();
+                        } else if (itemString.equals(Constant.KEY_home_statement_balance)) {
+                            openBalanceStatment();
+                        } else if (itemString.equals(Constant.KEY_home_statement_sales)) {
+                            openSalesStatement();
+                        } else if (itemString.equals(Constant.KEY_home_statement_transaction)) {
+                            openTransactionStatement();
+                        } else if (itemString.equals(Constant.KEY_home_settings_change_pin)) {
+                            openChangePinNumber();
+                        } else if (itemString.equals(Constant.KEY_home_settings_help)) {
+                            startActivity(new Intent(getApplicationContext(), HelpMainActivity.class));
+                        }
+
+
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (drawer != null) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+    }
+
+    private void openChangePinNumber() {
+        AnalyticsManager.sendEvent(AnalyticsParameters.KEY_SETTINGS_MENU, AnalyticsParameters.KEY_SETTINGS_CHANGE_PIN_MENU);
+        startActivity(new Intent(this, ChangePinActivity.class));
+    }
+
+    private void handleNavMemuClick(String menuName) {
+        if (menuName.equals(Constant.KEY_logout_text)) {
+            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_LOGOUT);
+            logout();
+        } else if (menuName.equals(Constant.KEY_about)) {
+            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_ABOUT_MENU);
+            if (!mCd.isConnectingToInternet()) {
+                AppHandler.showDialog(getSupportFragmentManager());
+            } else {
+                startActivity(new Intent(MainActivity.this, AboutActivity.class));
+            }
+        } else if (menuName.equals(Constant.KEY_nav_terms_and_conditions)) {
+            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_TERMS_MENU);
+            if (!mCd.isConnectingToInternet()) {
+                AppHandler.showDialog(getSupportFragmentManager());
+            } else {
+                startActivity(new Intent(MainActivity.this, TermsActivity.class));
+            }
+        } else if (menuName.equals(Constant.KEY_nav_policy_statement)) {
+            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_PRIVACY_MENU);
+            if (!mCd.isConnectingToInternet()) {
+                AppHandler.showDialog(getSupportFragmentManager());
+            } else {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(AllUrl.privacy));
+                startActivity(browserIntent);
             }
         }
     }

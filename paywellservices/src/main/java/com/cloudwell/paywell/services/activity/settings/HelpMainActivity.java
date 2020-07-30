@@ -7,6 +7,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.WebViewActivity;
 import com.cloudwell.paywell.services.activity.utility.AllUrl;
@@ -15,8 +17,6 @@ import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class HelpMainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -180,13 +180,6 @@ public class HelpMainActivity extends AppCompatActivity implements View.OnClickL
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(HelpMainActivity.this, SettingsActivity.class);
-        startActivity(intent);
-        finish();
     }
 
     protected boolean isAppInstalled(String packageName) {
