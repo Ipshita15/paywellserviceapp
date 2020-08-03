@@ -191,8 +191,8 @@
     <string name="services_off_msg">আপনার জন্য সার্ভিসটি বন্ধ আছে</string>
     <string name="phone_no_msg">ফোন নম্বর</string>
     <string name="amount_msg">টাকার পরিমান</string>
-    <string name="prepaid_msg">প্রি পেইড</string>
-    <string name="postpaid_msg">পোস্ট পেইড</string>
+    <string name="prepaid_msg">প্রি-পেইড</string>
+    <string name="postpaid_msg">পোস্ট-পেইড</string>
     <string name="conf_topup_title_msg">অনুরোধ বিস্তারিত</string>
     <string name="confirm_title_msg">নিশ্চিতকরণ</string>
     <string name="alert_confirm_msg">আপনি কি ক্যাশ টাকা হাতে পেয়েছেন?</string>
