@@ -741,5 +741,6 @@
     <string name="forgot_pin_new">Forgot PIN?</string>
     <string name="sign_in">Sign in</string>
     <string name="title_login">Sing In</string>
+    <string name="bill_number_ocr_hit_text">দয়া করে বিল নম্বরটির উপরে স্ক্যানারটি ধরে রাখুন, একবার বিল নম্বর ক্যাপচার হয়ে নিচে দেখানো হলে OK করুন</string>
 
 </resources>
