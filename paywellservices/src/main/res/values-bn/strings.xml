@@ -293,20 +293,36 @@
 
 
     <!--paywell string arrays-->
+    <!--    <string-array name="month_array">-->
+    <!--        <item>Select Month</item>-->
+    <!--        <item>January</item>-->
+    <!--        <item>February</item>-->
+    <!--        <item>March</item>-->
+    <!--        <item>April</item>-->
+    <!--        <item>May</item>-->
+    <!--        <item>June</item>-->
+    <!--        <item>July</item>-->
+    <!--        <item>August</item>-->
+    <!--        <item>September</item>-->
+    <!--        <item>October</item>-->
+    <!--        <item>November</item>-->
+    <!--        <item>December</item>-->
+    <!--    </string-array>-->
+
     <string-array name="month_array">
-        <item>Select Month</item>
-        <item>January</item>
-        <item>February</item>
-        <item>March</item>
-        <item>April</item>
-        <item>May</item>
-        <item>June</item>
-        <item>July</item>
-        <item>August</item>
-        <item>September</item>
-        <item>October</item>
-        <item>November</item>
-        <item>December</item>
+        <item>মাস নির্বাচন করুন</item>
+        <item>জানুয়ারী</item>
+        <item>ফেব্রুয়ারি</item>
+        <item>মার্চ</item>
+        <item>এপ্রিল</item>
+        <item>মে</item>
+        <item>জুন</item>
+        <item>জুলাই</item>
+        <item>অগাস্ট</item>
+        <item>সেপ্টেম্বর</item>
+        <item>অক্টোবর</item>
+        <item>নভেম্বর</item>
+        <item>ডিসেম্বর</item>
     </string-array>
 
     <string-array name="sampleStrings" formatted="false">
