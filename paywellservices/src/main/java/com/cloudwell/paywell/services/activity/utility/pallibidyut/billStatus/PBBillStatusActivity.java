@@ -13,7 +13,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
@@ -35,7 +36,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
-import androidx.appcompat.app.AlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -129,20 +129,6 @@ public class PBBillStatusActivity extends BaseActivity implements View.OnClickLi
             }
         });
         spnr_year.setSelection(1);
-
-        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-            ((TextView) mLinearLayout.findViewById(R.id.tvPBPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
-            etPin.setTypeface(AppController.getInstance().getOxygenLightFont());
-            ((TextView) mLinearLayout.findViewById(R.id.tvPBAccount)).setTypeface(AppController.getInstance().getOxygenLightFont());
-            etAcc.setTypeface(AppController.getInstance().getOxygenLightFont());
-            btnConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
-        } else {
-            ((TextView) mLinearLayout.findViewById(R.id.tvPBPin)).setTypeface(AppController.getInstance().getAponaLohitFont());
-            etPin.setTypeface(AppController.getInstance().getAponaLohitFont());
-            ((TextView) mLinearLayout.findViewById(R.id.tvPBAccount)).setTypeface(AppController.getInstance().getOxygenLightFont());
-            etAcc.setTypeface(AppController.getInstance().getOxygenLightFont());
-            btnConfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
-        }
         btnConfirm.setOnClickListener(this);
     }
 
