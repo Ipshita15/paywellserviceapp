@@ -162,7 +162,7 @@
     <string name="try_again_correct_msg">সঠিকভাবে পুনরায় চেষ্টা করুন</string>
     <string name="topup_limit_msg">সর্বোচ্চ ৫ টপআপ একসাথে</string>
     <string name="connection_error_msg">ইন্টারনেট সংযোগ করতে পারিনি, পুনরায় চেষ্টা করুন</string>
-    <string name="phone_no_title_msg">ফোন নম্বর</string>
+    <string name="phone_no_title_msg">ফোন নম্বর:</string>
     <string name="phone_no_error_msg">সঠিক ফোন নম্বর দিন</string>
     <string name="amount_error_msg">সর্বনিম্ন ১ ডিজিট দিন</string>
     <string name="pin_no_error_msg">পিন নম্বর দিন</string>
@@ -667,7 +667,7 @@
     <string name="forgot_pin">পিন অনুরোধ</string>
     <string name="device_not_support">আপনার ডিভাইস সমর্থন করে না, দয়া করে আমাদের কল সেন্টারে যোগাযোগ করুন</string>
     <string name="device_not_support_root">সুরক্ষা উদ্দেশ্যে রুটযুক্ত ডিভাইসটির জন্য এই অ্যাপটি ব্যবহার করে না, দয়া করে আমাদের কল সেন্টারে যোগাযোগ করুন</string>
-    <string name="retype_pin_number">পিন নম্বর পুনরায় টাইপ করুন</string>
+    <string name="retype_pin_number">পিন নম্বর পুনরায় টাইপ করুন:</string>
     <string name="title_error_message">বার্তা</string>
     <string name="no_internet_connection">কোনও ইন্টারনেট সংযোগ নেই</string>
     <string name="no_internet_connection_please_check_your_internet_connection">কোনও ইন্টারনেট সংযোগ নেই আপনার ইন্টারনেট সংযোগ পরীক্ষা করুন</string>

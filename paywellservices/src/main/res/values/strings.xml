@@ -157,7 +157,7 @@
     <string name="try_again_msg">Please try again!</string>
     <string name="try_again_correct_msg">Please try again correctly!</string>
     <string name="connection_error_msg">Unable to connect to the Internet, please try again</string>
-    <string name="phone_no_title_msg">Phone Number</string>
+    <string name="phone_no_title_msg">Phone Number:</string>
     <string name="phone_no_error_msg">Enter valid phone number</string>
     <string name="amount_error_msg">Enter at least 1 digit</string>
     <string name="pin_no_error_msg">Enter PIN number</string>
@@ -653,7 +653,7 @@
     <string name="forgot_pin">Forgot Pin</string>
     <string name="device_not_support">Your device not support, Please contact our call center</string>
     <string name="device_not_support_root">For Security Purpose rooted device not use this App, Please contact our call center</string>
-    <string name="retype_pin_number">Retype PIN Number</string>
+    <string name="retype_pin_number">Retype PIN Number:</string>
     <string name="message">Message</string>
     <string name="title_error_message">Message</string>
     <string name="no_internet_connection">No internet connection</string>
