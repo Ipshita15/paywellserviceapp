@@ -686,7 +686,7 @@
     <string name="bbc_janala">বিবিসি জানালা</string>
     <string name="subscription">সাবস্ক্রিপশন</string>
     <string name="bbc_course">বিবিসি জানালা কোর্স সমুহ</string>
-    <string name="courses">কোর্স সমুহ</string>
+    <string name="courses">কোর্স সমূহ</string>
     <string name="check_status">স্ট্যাটাস চেক</string>
     <string name="start_course">কোর্স শুরু করুন</string>
     <string name="bbc_registation_actionbar">কোর্স রেজিস্ট্রেশন</string>
@@ -728,7 +728,7 @@
     <string name="ac_no">হিসাব নংঃ </string>
     <string name="bank_added">তথ্য দেওয়ার জন্য আপনাকে ধন্যবাদ 24 ঘন্টার মধ্যে পেওয়েল আইডির সাথে ব্যাংক একাউন্টটি লিংক হয়ে যাবে</string>
     <string name="bank_delate">আপনার এই লিংক একাউন্টটি মুছে ফেলতে চান?</string>
-    <string name="most_used_services">বেশী ব্যবহৃত সার্ভিস সমুহ-</string>
+    <string name="most_used_services">বেশী ব্যবহৃত সার্ভিস সমূহ-</string>
 
     <string name="launch">লঞ্চ টিকেট</string>
     <string name="text_bus_from_error">You must type the city from you want to travel</string>
