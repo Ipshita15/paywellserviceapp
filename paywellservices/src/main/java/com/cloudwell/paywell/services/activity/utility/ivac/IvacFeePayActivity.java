@@ -442,11 +442,16 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
                 str_centerId = "";
                 str_centerId = center_id_array.get(position);
                 str_amount = center_amount_array.get(position);
-                String amountText = getString(R.string.tk_des) + " " + str_amount;
 
+                if (position != 0) {
+                    String amountText = getString(R.string.tk_des) + " " + str_amount;
+                    textViewAmount.setText(amountText);
+                } else {
+                    textViewAmount.setText("");
+                }
                 // store selected position
                 mAppHandler.setCenterDropDownPogistion(position);
-                textViewAmount.setText(amountText);
+
             } catch (Exception ex) {
                 ex.printStackTrace();
                 Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
