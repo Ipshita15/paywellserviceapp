@@ -49,9 +49,12 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bus_city_search_new)
 
-
-        setToolbar(getString(R.string.search_transport_ticket), applicationContext.resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
-
+        val isBusTicket = AppStorageBox.get(applicationContext, AppStorageBox.Key.IS_BUS_Ticket_USER_FLOW) as Boolean
+        if (isBusTicket) {
+            setToolbar(getString(R.string.search_transport_ticket), applicationContext.resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
+        } else {
+            setToolbar(getString(R.string.search_transport_ticket_lunch), applicationContext.resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
+        }
 
         myCalender = Calendar.getInstance()
         myCalenderRetrun = Calendar.getInstance()
@@ -112,7 +115,6 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
 
         })
 
-        val isBusTicket = AppStorageBox.get(applicationContext, AppStorageBox.Key.IS_BUS_Ticket_USER_FLOW) as Boolean
 
         if (isBusTicket) {
             setOldDataForBus()

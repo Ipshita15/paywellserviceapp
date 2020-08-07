@@ -24,7 +24,6 @@ import com.cloudwell.paywell.services.utils.ConnectionDetector
 import com.cloudwell.paywell.services.utils.LanuageConstant.KEY_BANGLA
 import com.cloudwell.paywell.services.utils.LanuageConstant.KEY_ENGLISH
 import com.cloudwell.paywell.services.utils.StringConstant
-import kotlinx.android.synthetic.main.activity_air_ticket_main_contain.*
 import kotlinx.android.synthetic.main.activity_air_ticket_main_contain.btTransationLog
 import kotlinx.android.synthetic.main.activity_air_ticket_main_contain.btViewTricket
 import kotlinx.android.synthetic.main.activity_bus_tricket_menu.*
@@ -61,14 +60,10 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
 
 
         val isBusTicket = AppStorageBox.get(applicationContext, AppStorageBox.Key.IS_BUS_Ticket_USER_FLOW) as Boolean
-
-
         if (isBusTicket) {
             setToolbar(getString(R.string.home_eticket_bus), resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
-
         }else{
             setToolbar(getString(R.string.launch), resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
-
         }
 
 

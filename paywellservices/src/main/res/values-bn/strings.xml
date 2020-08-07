@@ -70,8 +70,8 @@
     <string name="home_bkash_bank_trns_req_title">ব্যাংক ট্রান্সফার</string>
     <string name="home_bkash_cash_req">ক্যাশের জন্য\nঅনুরোধ</string>
     <string name="home_bkash_cash_req_title">ক্যাশের জন্য অনুরোধ</string>
-    <string name="home_eticket_bus">বাস টিকিট</string>
-    <string name="home_eticket_air">বিমান টিকিট</string>
+    <string name="home_eticket_bus">বাস টিকেট</string>
+    <string name="home_eticket_air">বিমান টিকেট</string>
     <string name="home_product_ajker_deal">আজকের ডিল</string>
     <string name="home_product_ekshop">এক-শপ</string>
     <string name="home_product_pw_wholesale">পেওয়েল\nহোলসেল</string>
@@ -597,7 +597,8 @@
     <string name="network_error">Network error!</string>
     <string name="popular_city">Popular City</string>
     <string name="transport">Transport</string>
-    <string name="search_transport_ticket">Search Transport Ticket</string>
+    <string name="search_transport_ticket">Search Bus Ticket</string>
+    <string name="search_transport_ticket_lunch">Search Launch Ticket</string>
     <string name="bus_validation_message">Please enter all the data first</string>
     <string name="bus_validation_message_location">Please seleted correct location</string>
     <string name="no_boarding_point_found">No boarding point found!!!</string>
@@ -733,7 +734,7 @@
     <string name="text_bus_from_error">You must type the city from you want to travel</string>
     <string name="text_bus_to_error">You must type the destination city you want to travel</string>
     <string name="bus_transction_log">লেনদেন</string>
-    <string name="cancel_ticket_list">টিকিট বাতিল</string>
+    <string name="cancel_ticket_list">টিকেট বাতিল</string>
     <string name="title_ticket_cancel_list">Ticket cancel list</string>
     <string name="paywell_account_user_login">PayWell account user login</string>
     <string name="enter_pin">Enter PIN</string>

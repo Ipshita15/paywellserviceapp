@@ -390,6 +390,7 @@
     <string name="email">Email *</string>
     <string name="please_ensure_the_id_is_valid_for_at_least_6_months_after_the_date_of_departure">Please ensure the ID is valid for at least 6 months after the date of departure.</string>
     <string name="hit_passport_number">Passport Number</string>
+    <string name="hit_web_file_number">Web File Number</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="other">Other</string>
@@ -577,7 +578,8 @@
     <string name="network_error">Network error!</string>
     <string name="popular_city">Popular City</string>
     <string name="transport">Transport</string>
-    <string name="search_transport_ticket">Search Transport Ticket</string>
+    <string name="search_transport_ticket">Search Bus Ticket</string>
+    <string name="search_transport_ticket_lunch">Search Launch Ticket</string>
     <string name="bus_validation_message">Please enter all the data first</string>
     <string name="bus_validation_message_location">Please seleted correct location</string>
     <string name="no_boarding_point_found">No boarding point found!!!</string>
