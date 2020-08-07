@@ -175,7 +175,7 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
                     ActivityCompat.requestPermissions(IvacFeePayActivity.this, new String[]{Manifest.permission.CAMERA}, PERMISSION_OPEN_CAMERA);
                 } else {
                     //initiate scan with our custom scan activity
-                    new IntentIntegrator(IvacFeePayActivity.this).setCaptureActivity(ScannerActivity.class).initiateScan();
+                    new IntentIntegrator(IvacFeePayActivity.this).setCaptureActivity(ScannerActivity.class).addExtra("type", getString(R.string.hit_web_file_number_ivac)).initiateScan();
                 }
                 return true;
             }
@@ -190,7 +190,9 @@ public class IvacFeePayActivity extends BaseActivity implements AdapterView.OnIt
                     // permission has not been granted.
                     ActivityCompat.requestPermissions(IvacFeePayActivity.this, new String[]{Manifest.permission.CAMERA}, PERMISSION_OPEN_CAMERA);
                 } else {
-                    new IntentIntegrator(IvacFeePayActivity.this).setCaptureActivity(ScannerActivity.class).initiateScan();
+
+
+                    new IntentIntegrator(IvacFeePayActivity.this).setCaptureActivity(ScannerActivity.class).addExtra("type", getString(R.string.hit_passport_number_ivac)).initiateScan();
                 }
                 return true;
             }

@@ -4,14 +4,13 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-public class ScannerActivity extends AppCompatActivity {
+public class ScannerActivity extends BaseActivity {
 
     private CaptureManager capture;
     private DecoratedBarcodeView barcodeScannerView;
@@ -20,6 +19,9 @@ public class ScannerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanner);
+
+        setToolbar(getIntent().getExtras().getString("type", ""));
+
 
         //Initialize barcode scanner view
         barcodeScannerView = findViewById(R.id.zxing_barcode_scanner);

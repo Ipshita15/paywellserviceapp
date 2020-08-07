@@ -95,7 +95,7 @@ public class IvacFeeInquiryMainActivity extends BaseActivity implements View.OnC
                     ActivityCompat.requestPermissions(IvacFeeInquiryMainActivity.this, new String[]{Manifest.permission.CAMERA}, PERMISSION_OPEN_CAMERA);
                 } else {
                     //initiate scan with our custom scan activity
-                    new IntentIntegrator(IvacFeeInquiryMainActivity.this).setCaptureActivity(ScannerActivity.class).initiateScan();
+                    new IntentIntegrator(IvacFeeInquiryMainActivity.this).setCaptureActivity(ScannerActivity.class).addExtra("type", getString(R.string.hit_web_file_number_ivac)).initiateScan();
                 }
                 return true;
             }
@@ -151,7 +151,7 @@ public class IvacFeeInquiryMainActivity extends BaseActivity implements View.OnC
                 // Check if the only required permission has been granted
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Phone permission has been granted
-                    new IntentIntegrator(IvacFeeInquiryMainActivity.this).setCaptureActivity(ScannerActivity.class).initiateScan();
+                    new IntentIntegrator(IvacFeeInquiryMainActivity.this).setCaptureActivity(ScannerActivity.class).addExtra("type", getString(R.string.hit_web_file_number_ivac)).initiateScan();
                 } else {
                     Snackbar snackbar = Snackbar.make(mConstraintLayout, R.string.access_denied_msg, Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
