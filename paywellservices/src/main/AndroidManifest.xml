@@ -177,6 +177,10 @@
         <activity
                 android:name=".activity.PendingActivity"
                 android:screenOrientation="portrait" />
+
+        <activity
+                android:name=".activity.reg.regOtp.RegistionOtpActivity"
+                android:screenOrientation="portrait" />
         <activity
                 android:name=".activity.utility.UtilityMainActivity"
                 android:parentActivityName=".activity.MainActivity"
@@ -974,7 +978,7 @@
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme.NoActionBar" />
         <activity
-                android:name=".activity.refill.nagad.nagad_v2.webView.NagadBalanceClaimActivityv2"
+                android:name=".activity.refill.nagad.nagad_v2.webView.DirectBalaceRefil"
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme.NoActionBar" />
         <activity

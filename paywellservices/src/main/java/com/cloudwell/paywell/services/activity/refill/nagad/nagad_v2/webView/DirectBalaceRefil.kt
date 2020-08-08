@@ -12,20 +12,13 @@ import android.view.Gravity
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.UtilityBaseActivity
 import com.cloudwell.paywell.services.activity.refill.nagad.model.ResTranstionINquiry
-import com.cloudwell.paywell.services.activity.refill.nagad.model.refill_log.BalanceClaimModel
-import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.NagadWebResponse
-import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.Nagadv2requestPojo
-import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.WebViewActivity
-import com.cloudwell.paywell.services.activity.utility.AllUrl
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.ConnectionDetector
-import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import kotlinx.android.synthetic.main.activity_nagad_balance_claim.*
 import kotlinx.android.synthetic.main.nagad_balance_claim_response_dialog.view.*
 import kotlinx.android.synthetic.main.pallibidyut_billpay_response_dialog.view.billViewLL
@@ -33,14 +26,14 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class NagadBalanceClaimActivityv2 : UtilityBaseActivity() {
+class DirectBalaceRefil : UtilityBaseActivity() {
     private var mAppHandler: AppHandler? = null
-     val INTENT_REQUEST = 1
+    val INTENT_REQUEST = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nagad_balance_claim2)
-        setToolbar(getString(R.string.home_title_nagad_balance_claim))
+        setToolbar(getString(R.string.direct_refil_title))
         mAppHandler = AppHandler.getmInstance(applicationContext)
 
         submitButton.setOnClickListener {

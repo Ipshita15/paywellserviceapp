@@ -670,6 +670,7 @@
     <string name="selectedCourse">course</string>
     <string name="account_number">Account Number</string>
     <string name="direct_refil">Direct Balance\nRefill</string>
+    <string name="direct_refil_title">Direct Balance Refill</string>
     <string name="bbc_janala">BBC Janala</string>
     <string name="subscription">Subscription</string>
     <string name="bbc_course">BBC Janala Course List</string>

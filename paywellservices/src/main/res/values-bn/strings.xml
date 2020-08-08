@@ -81,7 +81,7 @@
     <string name="home_refill_sda_info">ডিলার সংক্রান্ত\nতথ্য</string>
     <string name="home_refill_bank">ব্যাংক ডিপোজিট</string>
     <string name="home_refill_card">কার্ড</string>
-    <string name="home_bank_brac">ব্রাক ব্যাংক</string>
+    <string name="home_bank_brac">ব্র্যাক ব্যাংক</string>
     <string name="home_bank_dbbl">ডাচ্‌ বাংলা\nব্যাংক</string>
     <string name="home_bank_ibbl">ইসলামী ব্যাংক\nবাংলাদেশ লিঃ</string>
     <string name="home_bank_pbl">পূবালী ব্যাংক\nলিমিটেড</string>
@@ -683,6 +683,7 @@
     <string name="selectedCourse">কোর্স</string>
     <string name="account_number">Account Number</string>
     <string name="direct_refil">ডিরেক্ট ব্যালেন্স\nরিফিল</string>
+    <string name="direct_refil_title">ডিরেক্ট ব্যালেন্স রিফিল</string>
     <string name="bbc_janala">বিবিসি জানালা</string>
     <string name="subscription">সাবস্ক্রিপশন</string>
     <string name="bbc_course">বিবিসি জানালা কোর্স সমুহ</string>
