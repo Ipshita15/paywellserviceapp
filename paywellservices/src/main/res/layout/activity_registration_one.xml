@@ -150,8 +150,8 @@
             android:layout_below="@+id/editText_ownerName"
             android:layout_marginLeft="56dp"
             android:layout_marginStart="56dp"
-            android:layout_marginTop="5dp"
-            android:layout_toEndOf="@+id/textView_merchantType"
+                android:layout_marginTop="8dp"
+                android:layout_toEndOf="@+id/textView_merchantType"
             android:layout_toRightOf="@+id/textView_merchantType"
             android:spinnerMode="dropdown" />
 
@@ -185,61 +185,22 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/spinner_merchantType"
             android:layout_marginLeft="56dp"
-            android:layout_marginStart="56dp"
-            android:layout_marginTop="5dp"
-            android:layout_toEndOf="@+id/textView_businessType"
+                android:layout_marginStart="56dp"
+                android:layout_marginTop="8dp"
+                android:layout_toEndOf="@+id/textView_businessType"
             android:layout_toRightOf="@+id/textView_businessType"
             android:spinnerMode="dropdown" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textView_businessType"
-            android:layout_marginLeft="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="45dp"
-            android:text="@string/star_sign"
-            android:textColor="#FF4719" />
-
-        <TextView
-            android:id="@+id/textView_mobileNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView_businessType"
-            android:layout_alignStart="@+id/textView_businessType"
-            android:layout_below="@+id/textView_businessType"
-            android:layout_marginTop="45dp"
-            android:text="ফোন নম্বর"
-            android:textColor="#41882b"
-            android:textSize="18sp"
-            android:textStyle="normal|bold" />
-
-        <EditText
-            android:id="@+id/editText_mobileNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView_mobileNumber"
-            android:layout_alignStart="@+id/textView_mobileNumber"
-            android:layout_below="@+id/textView_mobileNumber"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="5dp"
-            android:hint="Please type in English"
-            android:inputType="number"
-            android:digits="0123456789"
-            android:maxLength="11"
-            android:selectAllOnFocus="false" />
-
-        <TextView
-            android:id="@+id/textView_emailAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/editText_mobileNumber"
-            android:layout_alignStart="@+id/editText_mobileNumber"
-            android:layout_below="@+id/editText_mobileNumber"
-            android:layout_marginTop="15dp"
-            android:textSize="18sp"
-            android:textStyle="normal|bold" />
+                android:id="@+id/textView_emailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView_businessType"
+                android:layout_alignStart="@+id/textView_businessType"
+                android:layout_alignLeft="@+id/textView_businessType"
+                android:layout_marginTop="15dp"
+                android:textSize="18sp"
+                android:textStyle="normal|bold" />
 
         <EditText
             android:id="@+id/editText_emailAddress"

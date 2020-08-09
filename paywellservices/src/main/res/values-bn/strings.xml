@@ -748,4 +748,6 @@
 
     <string name="hit_passport_number_ivac">পাসপোর্ট নম্বর</string>
     <string name="hit_web_file_number_ivac">ওয়েব ফাইল নম্বর</string>
+    <string name="title_otp_verfication">OTP Verification</string>
+    <string name="next">Next</string>
 </resources>

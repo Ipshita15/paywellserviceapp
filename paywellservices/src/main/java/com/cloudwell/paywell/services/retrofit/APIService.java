@@ -17,7 +17,6 @@ import com.cloudwell.paywell.services.activity.education.bbc.model.TransactionRe
 import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoActivePkgPojo;
 import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoActiveResponse;
 import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoBannerResponse;
-import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoEnquiryRqstPojo;
 import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoPkgListReqPojo;
 import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoResponsePojo;
 import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoSubscriptionPojo;
@@ -60,9 +59,11 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm_cancel.ConfirmTicketCancelResponse;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.transactionLog.TransactionLogDetailsModel;
 import com.cloudwell.paywell.services.activity.home.model.ReposeGenerateOTP;
+import com.cloudwell.paywell.services.activity.home.model.ReposeGenerateOTPReg;
 import com.cloudwell.paywell.services.activity.home.model.ReposeUserProfile;
 import com.cloudwell.paywell.services.activity.home.model.RequestAppsAuth;
 import com.cloudwell.paywell.services.activity.home.model.RequestGenerateOTP;
+import com.cloudwell.paywell.services.activity.home.model.RequestGenerateOTPReg;
 import com.cloudwell.paywell.services.activity.home.model.RequestOtpCheck;
 import com.cloudwell.paywell.services.activity.home.model.ResposeAppsAuth;
 import com.cloudwell.paywell.services.activity.home.model.ResposeOptCheck;
@@ -109,7 +110,10 @@ import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.Nag
 import com.cloudwell.paywell.services.activity.refill.nagad.nagad_v2.webView.Nagadv2requestPojo;
 import com.cloudwell.paywell.services.activity.reg.model.AuthRequestModel;
 import com.cloudwell.paywell.services.activity.reg.model.RegistrationModel;
+import com.cloudwell.paywell.services.activity.reg.model.ReposeVerifyPhoneNumberForRegistration;
+import com.cloudwell.paywell.services.activity.reg.model.RequestCheckRetailerPhoneNumber;
 import com.cloudwell.paywell.services.activity.reg.model.RequestDistrictList;
+import com.cloudwell.paywell.services.activity.reg.model.RequestRegOTPCheck;
 import com.cloudwell.paywell.services.activity.reg.model.RespsoeGetDistrictList;
 import com.cloudwell.paywell.services.activity.reg.model.postCode.RequestPostCodeList;
 import com.cloudwell.paywell.services.activity.reg.model.thana.RequestThanaAPI;
@@ -772,6 +776,16 @@ public interface APIService {
 
     @POST("Tickets/BusAndLaunchService/cancelTicket")
     Call<ResponseTicketInformationCancel> cancelTicket(@Body RequestTicketInformationForCancel RequestTicketInformationForCancel);
+
+
+    @POST("Registration/UserRegistration/verifyUserPhoneNumberForRegistration")
+    Call<ReposeVerifyPhoneNumberForRegistration> checkRetailerPhoneNumber(@Body RequestCheckRetailerPhoneNumber requestCheckRetailerPhoneNumber);
+
+    @POST("Registration/UserRegistration/verifyOTPForRegistration")
+    Call<ReposeVerifyPhoneNumberForRegistration> verifyOTPForRegistration(@Body RequestRegOTPCheck RequestRegOTPCheck);
+
+    @POST("Registration/UserRegistration/regenerateOTPForRegistration")
+    Call<ReposeGenerateOTPReg> generateOTPReg(@Body RequestGenerateOTPReg body);
 
 
 }

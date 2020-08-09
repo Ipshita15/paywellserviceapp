@@ -55,7 +55,7 @@ public class EntryFirstActivity extends BaseActivity {
 
     private ScrollView mScrollView;
     private TextView textView_email;
-    private EditText et_outletName, et_address, et_ownerName, et_phnNo, et_email;
+    private EditText et_outletName, et_address, et_ownerName, et_email;
     private Spinner spnr_merchatnType, spnr_businessType;
     private static String str_businessId = "";
     private static String str_businessType = "";
@@ -87,7 +87,6 @@ public class EntryFirstActivity extends BaseActivity {
         et_outletName = findViewById(R.id.editText_outletName);
         et_address = findViewById(R.id.editText_address);
         et_ownerName = findViewById(R.id.editText_ownerName);
-        et_phnNo = findViewById(R.id.editText_mobileNumber);
         et_email = findViewById(R.id.editText_emailAddress);
         spnr_merchatnType = findViewById(R.id.spinner_merchantType);
         spnr_businessType = findViewById(R.id.spinner_businessType);
@@ -97,7 +96,6 @@ public class EntryFirstActivity extends BaseActivity {
             et_outletName.setText(regModel.getOutletName());
             et_address.setText(regModel.getOutletAddress());
             et_ownerName.setText(regModel.getOwnerName());
-            et_phnNo.setText(regModel.getPhnNumber());
             et_email.setText(regModel.getEmailAddress());
         }
 
@@ -334,8 +332,6 @@ public class EntryFirstActivity extends BaseActivity {
         et_ownerName.setTypeface(AppController.getInstance().getAponaLohitFont());
         ((TextView) mScrollView.findViewById(R.id.textView_merchantType)).setTypeface(AppController.getInstance().getAponaLohitFont());
         ((TextView) mScrollView.findViewById(R.id.textView_businessType)).setTypeface(AppController.getInstance().getAponaLohitFont());
-        ((TextView) mScrollView.findViewById(R.id.textView_mobileNumber)).setTypeface(AppController.getInstance().getAponaLohitFont());
-        et_phnNo.setTypeface(AppController.getInstance().getAponaLohitFont());
         ((TextView) mScrollView.findViewById(R.id.textView_emailAddress)).setTypeface(AppController.getInstance().getAponaLohitFont());
         textView_email.setTypeface(AppController.getInstance().getAponaLohitFont());
     }
@@ -347,8 +343,6 @@ public class EntryFirstActivity extends BaseActivity {
             Toast.makeText(EntryFirstActivity.this, "ঠিকানা দিন", Toast.LENGTH_LONG).show();
         } else if (et_ownerName.getText().toString().trim().isEmpty()) {
             Toast.makeText(EntryFirstActivity.this, "মালিকের নাম দিন", Toast.LENGTH_LONG).show();
-        } else if (et_phnNo.getText().toString().trim().isEmpty() || et_phnNo.getText().toString().trim().length() != 11) {
-            Toast.makeText(EntryFirstActivity.this, "ফোন নম্বর দিন", Toast.LENGTH_LONG).show();
         } else if (spnr_merchatnType.getSelectedItem().toString().trim().equals("Select One")) {
             Toast.makeText(EntryFirstActivity.this, "মার্চেন্টের ধরন সিলেক্ট করুন", Toast.LENGTH_LONG).show();
         } else if (spnr_businessType.getSelectedItem().toString().trim().equals("Select One")) {
@@ -360,7 +354,6 @@ public class EntryFirstActivity extends BaseActivity {
                 regModel.setOwnerName(et_ownerName.getText().toString().trim());
                 regModel.setBusinessId(str_businessId);
                 regModel.setBusinessType(str_businessType);
-                regModel.setPhnNumber(et_phnNo.getText().toString().trim());
                 regModel.setEmailAddress(et_email.getText().toString().trim());
 
                 mAppHandler.REG_FLAG_ONE = true;

@@ -46,7 +46,7 @@ class BongoCounterActivity : BaseActivity() {
         showProgressDialog()
 
         var pojo = BongoSubscriptionPojo()
-        pojo.pin_no = "12345"
+        pojo.pin_no = "1234"
         pojo.username = mAppHandler?.userName
 
         ApiUtils.getAPIServiceV2().getBongoSubscriptionCount(pojo).enqueue(object : Callback<CountResponse> {

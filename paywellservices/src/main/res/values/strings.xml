@@ -738,5 +738,7 @@
 
     <string name="hit_passport_number_ivac">Passport Number</string>
     <string name="hit_web_file_number_ivac">Web File Number</string>
+    <string name="title_otp_verfication">OTP Verification</string>
+    <string name="next">Next</string>
 
 </resources>
