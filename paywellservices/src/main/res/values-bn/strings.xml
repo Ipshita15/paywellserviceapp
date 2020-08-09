@@ -15,7 +15,7 @@
     <string name="home_mfs">মোবাইল ব্যাংকিং</string>
     <string name="home_mfs_fav">মোবাইল ব্যাংকিং</string>
     <string name="nav_mfs">মোবাইল ব্যাংকিং</string>
-    <string name="home_product_catalog">প্রোডাক্ট\nক্যাটালগ</string>
+    <string name="home_product_catalog">প্রোডাক্ট ক্যাটালগ</string>
     <string name="nav_product_catalog">প্রোডাক্ট ক্যাটালগ</string>
     <string name="nav_check_balance">ব্যালেন্স চেক</string>
     <string name="nav_terms_and_conditions">চুক্তি ও শর্তাবলী</string>
@@ -648,8 +648,8 @@
     <string name="desco_prepaid_string">ডেসকো প্রিপেইড</string>
     <string name="desco_postpaid_string">ডেসকো পোস্টপেইড</string>
     <string name="meter_number">মিটার নম্বর</string>
-    <string name="txt_login">লগ ইন</string>
-    <string name="txt_signup">রেজিস্ট্রেশন</string>
+    <string name="txt_login">সাইন ইন</string>
+    <string name="txt_signup">নিবন্ধন করুন</string>
     <string name="rid_mobile_number">মোবাইল নম্বর</string>
     <string name="pin_number">পিন নাম্বার</string>
     <string name="submit">লগ ইন</string>
@@ -662,13 +662,13 @@
     <string name="verify_your_phone_number">আপনার ফোন নম্বর যাচাই করুন</string>
     <string name="we_have_send_you_an_sms_with_a_code_to_your_number">আমরা আপনার নম্বরটিতে একটি কোড সহ আপনাকে একটি এসএমএস পাঠিয়েছি</string>
     <string name="didn_t_you_received_any_code">আপনি কোনও কোড পান নি?</string>
-    <string name="request_format_pin">পিন ভুলে অনুরোধ</string>
+    <string name="request_format_pin">অনুরোধ পিন ভুলে গেছেন?</string>
     <string name="last_4_digit_mobile_number">মোবাইল নম্বর</string>
-    <string name="please_enter_the_last_4_digits_of_your_phone_number">অনুগ্রহ করে আপনার ফোন নাম্বারটি প্রদান করুন</string>
+    <string name="please_enter_the_last_4_digits_of_your_phone_number">আপনার নিবন্ধিত নম্বরটি লিখুন</string>
     <string name="forgot_pin">পিন অনুরোধ</string>
-    <string name="device_not_support">আপনার ডিভাইস সমর্থন করে না, দয়া করে আমাদের কল সেন্টারে যোগাযোগ করুন</string>
+    <string name="device_not_support">সুরক্ষা জন্য রুটযুক্ত ডিভাইস এই অ্যাপে ব্যবহার করা যায় না, দয়া করে আমাদের কল সেন্টারে যোগাযোগ করুন।</string>
     <string name="device_not_support_root">সুরক্ষা উদ্দেশ্যে রুটযুক্ত ডিভাইসটির জন্য এই অ্যাপটি ব্যবহার করে না, দয়া করে আমাদের কল সেন্টারে যোগাযোগ করুন</string>
-    <string name="retype_pin_number">পিন নম্বর পুনরায় টাইপ করুন:</string>
+    <string name="retype_pin_number">পিপুনরায় পিন নম্বর দিন:</string>
     <string name="title_error_message">বার্তা</string>
     <string name="no_internet_connection">কোনও ইন্টারনেট সংযোগ নেই</string>
     <string name="no_internet_connection_please_check_your_internet_connection">কোনও ইন্টারনেট সংযোগ নেই আপনার ইন্টারনেট সংযোগ পরীক্ষা করুন</string>
@@ -737,12 +737,12 @@
     <string name="bus_transction_log">লেনদেন</string>
     <string name="cancel_ticket_list">টিকেট বাতিল</string>
     <string name="title_ticket_cancel_list">Ticket cancel list</string>
-    <string name="paywell_account_user_login">PayWell account user login</string>
-    <string name="enter_pin">Enter PIN</string>
-    <string name="account_id">Account ID</string>
-    <string name="forgot_pin_new">Forgot PIN?</string>
-    <string name="sign_in">Sign in</string>
-    <string name="title_login">Sing In</string>
+    <string name="paywell_account_user_login">পেওয়েল একাউন্ট ব্যবহারকারী লগইন করুন</string>
+    <string name="enter_pin">পিন নম্বর দিন </string>
+    <string name="account_id">একাউন্ট আইডি</string>
+    <string name="forgot_pin_new">পিন ভুলে গেছেন?</string>
+    <string name="sign_in">সাইন ইন</string>
+    <string name="title_login">সাইন ইন</string>
     <string name="bill_number_ocr_hit_text">দয়া করে বিল নম্বরটির উপরে স্ক্যানারটি ধরে রাখুন, একবার বিল নম্বর ক্যাপচার হয়ে নিচে দেখানো হলে OK করুন</string>
 
 

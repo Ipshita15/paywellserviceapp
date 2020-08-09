@@ -48,9 +48,9 @@
                             android:orientation="vertical">
 
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_margin="4dp"
+                                    android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
                                 android:orientation="horizontal"
                                 android:weightSum="3">
 
@@ -87,21 +87,21 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:orientation="horizontal"
-                                android:weightSum="3">
+                                    android:layout_margin="4dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:weightSum="3">
 
 
                                 <Button
-                                    android:id="@+id/homeBtnMFS"
-                                    style="@style/HomeButtonNewV1"
-                                    android:layout_weight="1"
-                                    android:drawableTop="@drawable/ic_topup_v1"
-                                    android:onClick="onButtonClicker"
-                                    android:text="@string/home_mfs"
-                                    android:textAllCaps="false"
+                                        android:id="@+id/homeBtnMFS"
+                                        style="@style/HomeButtonNewV1"
+                                        android:layout_weight="1"
+                                        android:drawableTop="@drawable/mobile_banking_v1"
+                                        android:onClick="onButtonClicker"
+                                        android:text="@string/home_mfs"
+                                        android:textAllCaps="false"
                                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                                 <Button
@@ -130,21 +130,22 @@
 
 
                             <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:orientation="horizontal"
-                                android:weightSum="3">
+
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="4dp"
+                                    android:orientation="horizontal"
+                                    android:weightSum="3">
 
 
                                 <Button
-                                    android:id="@+id/homeBtnEduction"
-                                    style="@style/HomeButtonNewV1"
-                                    android:layout_weight="1"
-                                    android:drawableTop="@drawable/ic_education"
-                                    android:onClick="onButtonClicker"
-                                    android:text="@string/home_education"
-                                    android:textAllCaps="false"
+                                        android:id="@+id/homeBtnEduction"
+                                        style="@style/HomeButtonNewV1"
+                                        android:layout_weight="1"
+                                        android:drawableTop="@drawable/ic_education"
+                                        android:onClick="onButtonClicker"
+                                        android:text="@string/home_education"
+                                        android:textAllCaps="false"
                                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                                 <Button
@@ -174,10 +175,9 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:layout_weight="1"
-                                android:gravity="center_horizontal"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="4dp"
+                                    android:gravity="center_horizontal"
                                 android:orientation="horizontal"
                                 android:weightSum="3">
 
@@ -219,9 +219,6 @@
 
 
 
-<!--                            <androidx.core.widget.NestedScrollView-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="wrap_content">-->
 
                             <LinearLayout
                                 android:id="@+id/linearLayoutRecentUsedList"

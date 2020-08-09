@@ -95,7 +95,6 @@ class MyFavoriteHelper {
 
             listOfData.add(FavoriteMenu(StringConstant.KEY_home_product_ekshop, StringConstant.KEY_home_product_catalog, IconConstant.KEY_ic_ekshop, MenuStatus.UnFavorite.text, 0, 45))
 
-            listOfData.add(FavoriteMenu(StringConstant.KEY_home_product_ekshop, StringConstant.KEY_home_product_catalog, IconConstant.KEY_ic_ekshop, MenuStatus.UnFavorite.text, 0, 45))
             listOfData.add(FavoriteMenu(StringConstant.KEY_bbc_janala, StringConstant.KEY_home_education, IconConstant.KEY_bbc_icon, MenuStatus.UnFavorite.text,0, 51))
             listOfData.add(FavoriteMenu(StringConstant.KEY_bongo, StringConstant.KEY_home_entertainment, IconConstant.KEY_bongo_icon,MenuStatus.UnFavorite.text, 0, 52))
 
