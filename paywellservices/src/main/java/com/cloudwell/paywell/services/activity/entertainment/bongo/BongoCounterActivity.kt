@@ -8,6 +8,7 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoSubscriptionPojo
 import com.cloudwell.paywell.services.activity.entertainment.bongo.model.CountResponse
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.AskPinDialog
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import kotlinx.android.synthetic.main.activity_bongo_counter.*
@@ -34,19 +35,38 @@ class BongoCounterActivity : BaseActivity() {
             finish()
         })
 
-        if (isInternetConnection){
-            getBongoSubscriptionCount()
-        }else{
-            showErrorCallBackMessagev1(getString(R.string.no_internet_connection_please_check_your_internet_connection))
-        }
+
+        askPinDialog()
+
 
     }
 
-    private fun getBongoSubscriptionCount() {
+    fun askPinDialog() {
+
+        val pinDialog = AskPinDialog(object : AskPinDialog.getPinInterface {
+            override fun onclick(pinNumber: String) {
+                if (isInternetConnection) {
+                    getBongoSubscriptionCount(pinNumber)
+                } else {
+                    showErrorCallBackMessagev1(getString(R.string.no_internet_connection_please_check_your_internet_connection))
+                }
+            }
+        }, object : AskPinDialog.GetFinisedInterface {
+            override fun onclick() {
+                finish()
+
+            }
+
+        })
+
+        pinDialog.show(supportFragmentManager, "askMobileNumberDialog")
+    }
+
+    private fun getBongoSubscriptionCount(pinNumber: String) {
         showProgressDialog()
 
         var pojo = BongoSubscriptionPojo()
-        pojo.pin_no = "1234"
+        pojo.pin_no = pinNumber
         pojo.username = mAppHandler?.userName
 
         ApiUtils.getAPIServiceV2().getBongoSubscriptionCount(pojo).enqueue(object : Callback<CountResponse> {

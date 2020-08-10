@@ -73,15 +73,19 @@ class PackegeSelectedActivity : BaseActivity() {
 
     fun askPinDialog(packagesItem: PackagesItem, mobile: String) {
 
-        val pinDialog = AskPinDialog(object : AskPinDialog.getPinInterface{
+        val pinDialog = AskPinDialog(object : AskPinDialog.getPinInterface {
             override fun onclick(pinNumber: String) {
-                if(isInternetConnection){
+                if (isInternetConnection) {
                     activeBongoPackge(packagesItem, mobile, pinNumber)
-
-                }else{
+                } else {
                     showErrorCallBackMessagev1(getString(R.string.no_internet_connection_please_check_your_internet_connection))
                 }
             }
+        }, object : AskPinDialog.GetFinisedInterface {
+            override fun onclick() {
+                finish()
+            }
+
         })
 
         pinDialog.show(supportFragmentManager, "askMobileNumberDialog")

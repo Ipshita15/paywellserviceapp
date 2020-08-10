@@ -5,9 +5,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Base64
@@ -20,7 +18,6 @@ import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.bank_info_update.model.BankDialogPojo
 import com.cloudwell.paywell.services.activity.bank_info_update.model.BankPojo
@@ -36,7 +33,6 @@ import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.A
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.SuccessDialog
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.successInterface
 import com.cloudwell.paywell.services.app.AppHandler
-import com.cloudwell.paywell.services.libaray.imagePickerAndCrop.ImagePickerActivity
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.ImageUtility.getResizedBitmap
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
@@ -51,7 +47,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
-import java.io.File
 
 class BankINFO_MainActivity : BaseActivity() {
 
@@ -459,6 +454,12 @@ class BankINFO_MainActivity : BaseActivity() {
 
                                     }
 
+                                }, object : AskPinDialog.GetFinisedInterface {
+                                    override fun onclick() {
+
+
+                                    }
+
                                 })
                                 pinDialog.show(supportFragmentManager, "PIN")
                             }
@@ -525,9 +526,13 @@ class BankINFO_MainActivity : BaseActivity() {
             val d = BankInfoDialog(applicationContext,dialogList, object : OKInterface{
                 override fun onclick() {
                     //askForPin()
-                    val pinDialog = AskPinDialog(object : AskPinDialog.getPinInterface{
+                    val pinDialog = AskPinDialog(object : AskPinDialog.getPinInterface {
                         override fun onclick(pinNumber: String) {
 
+                        }
+
+                    }, object : AskPinDialog.GetFinisedInterface {
+                        override fun onclick() {
 
                         }
 
