@@ -62,8 +62,10 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
         val isBusTicket = AppStorageBox.get(applicationContext, AppStorageBox.Key.IS_BUS_Ticket_USER_FLOW) as Boolean
         if (isBusTicket) {
             setToolbar(getString(R.string.home_eticket_bus), resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
+            constraintLayoutBookingList.setBackgroundResource(R.drawable.bus_menu_bg)
         }else{
             setToolbar(getString(R.string.launch), resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
+            constraintLayoutBookingList.setBackgroundResource(R.drawable.backgourd_lunch_menu)
         }
 
 
