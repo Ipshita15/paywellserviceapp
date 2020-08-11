@@ -5,6 +5,7 @@ import com.cloudwell.paywell.services.activity.bank_info_update.BankLinkedListRe
 import com.cloudwell.paywell.services.activity.bank_info_update.model.BankListRequestPojo;
 import com.cloudwell.paywell.services.activity.bank_info_update.model.BankPojo;
 import com.cloudwell.paywell.services.activity.bank_info_update.model.RemoveReqPojo;
+import com.cloudwell.paywell.services.activity.bank_info_update.model.ResposeAddLinkBankAccount;
 import com.cloudwell.paywell.services.activity.bank_info_update.spineer.BankResponse;
 import com.cloudwell.paywell.services.activity.bank_info_update.spineer.GetBankPojo;
 import com.cloudwell.paywell.services.activity.education.bbc.model.BbcSubscriptionPojo;
@@ -712,7 +713,7 @@ public interface APIService {
 
     //Bank info
     @POST("Retailer/BankDepositSystem/addRtlrBankInfo")
-    Call<ResponseBody> uploadBankInfo(@Body BankPojo bankPojo);
+    Call<ResposeAddLinkBankAccount> uploadBankInfo(@Body BankPojo bankPojo);
 
     @POST("Retailer/BankDepositSystem/getRtlrBankAccList")
     Call<BankLinkedListResponsePojo> getRetailerBankList(@Body BankListRequestPojo bankListRequestPojo);

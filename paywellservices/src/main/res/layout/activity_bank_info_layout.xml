@@ -155,35 +155,80 @@
                     android:spinnerMode="dropdown"/>
                 <ImageView
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:background="@color/black"
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    tools:ignore="ContentDescription" />
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:background="@color/black"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        tools:ignore="ContentDescription" />
 
             </LinearLayout>
 
 
+            <LinearLayout
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin_half"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/acNumber"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:layout_marginBottom="@dimen/activity_horizontal_margin_half"
-                android:hint="@string/account_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:text="@string/acccount_name_link_bank"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
+                <EditText
+                        android:id="@+id/acName"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin_half"
+                        android:hint="@string/acccount_name_link_bank"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin_half"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:text="@string/account_number_link_bank"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
+                <EditText
+                        android:id="@+id/acNumber"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin_half"
+                        android:hint="@string/account_number_link_bank"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+
+            </LinearLayout>
+
 
             <TextView
-                android:visibility="invisible"
-                android:textAllCaps="false"
-                android:id="@+id/add_another_btn"
-                android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                android:layout_gravity="right"
-                android:background="@drawable/roundbg"
-                android:text="+"
-                android:textColor="@color/white"
+                    android:visibility="invisible"
+                    android:textAllCaps="false"
+                    android:id="@+id/add_another_btn"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:layout_gravity="right"
+                    android:background="@drawable/roundbg"
+                    android:text="+"
+                    android:textColor="@color/white"
                 android:gravity="center"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:textSize="18sp"

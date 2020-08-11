@@ -14,8 +14,7 @@ import kotlinx.android.synthetic.main.bank_dialog_item.view.*
 class BankDialogAdapter(val mContext: Context, var bList: List<BankDialogPojo?>?) : RecyclerView.Adapter<BankDialogAdapter.CourseListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseListViewHolder {
-        val v: View = LayoutInflater.from(parent?.context)
-                .inflate(R.layout.bank_dialog_item,parent,false)
+        val v: View = LayoutInflater.from(parent?.context).inflate(R.layout.bank_dialog_item, parent, false)
 
         return CourseListViewHolder(v)
     }
@@ -29,8 +28,9 @@ class BankDialogAdapter(val mContext: Context, var bList: List<BankDialogPojo?>?
         holder.bank.text = bList?.get(position)?.bank
         holder.b_district.text = mContext.getString(R.string.district)+": "+bList?.get(position)?.district
         holder.b_branch.text =mContext.getString(R.string.branch)+": "+bList?.get(position)?.branch
-        holder.ac.text =mContext.getString(R.string.ac_no)+": "+ bList?.get(position)?.account
-        holder.b_counter.text = (position+1).toString()
+        holder.ac.text = mContext.getString(R.string.ac_no) + ": " + bList?.get(position)?.account
+        holder.tvAccountName.text = mContext.getString(R.string.ac_name) + ": " + bList?.get(position)?.accountName
+        holder.b_counter.text = (position + 1).toString()
 
 
     }
@@ -40,6 +40,7 @@ class BankDialogAdapter(val mContext: Context, var bList: List<BankDialogPojo?>?
         val bank = itemView.bank
         val b_district = itemView.district
         val b_branch = itemView.branch
+        val tvAccountName = itemView.tvAccountName
         val ac = itemView.ac
         val b_counter = itemView.counter
 

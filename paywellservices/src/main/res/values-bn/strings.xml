@@ -210,6 +210,8 @@
     <string name="business_type_error_msg">ব্যবসার ধরন সিলেক্ট করুন</string>
     <string name="center_error_msg">কেন্দ্র সিলেক্ট করুন</string>
     <string name="input_error_msg">সঠিকভাবে ইনপুট দিন</string>
+    <string name="input_error_msg_account_name">অ্যাকাউন্টের নামটি সঠিকভাবে ইনপুট দিন</string>
+    <string name="input_error_msg_account_number">অ্যাকাউন্ট নম্বরটি সঠিকভাবে ইনপুট দিন</string>
     <string name="please_type_in_english">Please type in English</string>
     <string name="info_collect_title">জরুরী তথ্য সংগ্রহ</string>
     <string name="allow_error_msg">অনুমতি নেই। প্রথমে পিন পরিবর্তন করুন</string>
@@ -718,7 +720,7 @@
     <string name="bbc_expair">"মেয়াদ শুরুর তারিখ - "</string>
     <string name="bbc_expair_end">"মেয়াদ শেষের তারিখ - "</string>
     <string name="name">"নাম: "</string>
-    <string name="bank_btn">"ব্যাংক একাউন্ট তথ্য"</string>
+    <string name="bank_btn">লিংক ব্যাংক একাউন্ট</string>
     <string name="aclink_btn_txt">"ব্যাংক একাউন্ট লিংক"</string>
     <string name="aclist_btn_txt">"লিংক একাউন্ট লিস্ট"</string>
     <string name="checkbook_txt">চেক-এর ছবি তুলুন</string>
@@ -727,6 +729,7 @@
     <string name="branch">শাখা</string>
     <string name="bank_list">লিংক একাউন্ট লিস্ট</string>
     <string name="ac_no">হিসাব নংঃ </string>
+    <string name="ac_name">হিসাবের নামঃ </string>
     <string name="bank_added">তথ্য দেওয়ার জন্য আপনাকে ধন্যবাদ 24 ঘন্টার মধ্যে পেওয়েল আইডির সাথে ব্যাংক একাউন্টটি লিংক হয়ে যাবে</string>
     <string name="bank_delate">আপনার এই লিংক একাউন্টটি মুছে ফেলতে চান?</string>
     <string name="most_used_services">বেশী ব্যবহৃত সার্ভিস সমূহ-</string>
@@ -750,4 +753,6 @@
     <string name="hit_web_file_number_ivac">ওয়েব ফাইল নম্বর</string>
     <string name="title_otp_verfication">OTP Verification</string>
     <string name="next">Next</string>
+    <string name="acccount_name_link_bank">হিসাবের নাম</string>
+    <string name="account_number_link_bank">হিসাব নং</string>
 </resources>

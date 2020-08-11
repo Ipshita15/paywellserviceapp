@@ -104,35 +104,31 @@
 
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:orientation="horizontal">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:orientation="horizontal"
+                    android:weightSum="5">
 
+                <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
 
-
-                <!--                <Button-->
-                <!--                    android:layout_gravity="center_horizontal"-->
-                <!--                    android:gravity="center_horizontal"-->
-                <!--                    android:id="@+id/bank_btn"-->
-                <!--                    style="@style/HomeButtonNew"-->
-                <!--                    android:layout_weight="1"-->
-                <!--                    android:drawableTop="@drawable/bankac"-->
-                <!--                    android:onClick="onSettingsButtonClicker"-->
-                <!--                    android:paddingTop="10dp"-->
-                <!--                    android:textAllCaps="false"-->
-                <!--                    android:textAppearance="?android:attr/textAppearanceSmall" />-->
-
+                <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
 
                 <Button
-                    android:id="@+id/bank_btn"
-                    style="@style/HomeButtonNew"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/bankac"
-                    android:text="@string/bank_btn"
-                    android:onClick="onButtonClicker"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                        android:id="@+id/bank_btn"
+                        style="@style/HomeButtonNew"
+                        android:layout_weight="1"
+                        android:drawableTop="@drawable/bankac"
+                        android:onClick="onButtonClicker"
+                        android:text="@string/bank_btn"
+                        android:textAllCaps="false"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
 
             </LinearLayout>
 

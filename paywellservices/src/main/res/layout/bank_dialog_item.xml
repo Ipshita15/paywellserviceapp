@@ -46,32 +46,42 @@
 
     <TextView
         android:id="@+id/branch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        tools:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/counter"
-        app:layout_constraintTop_toBottomOf="@+id/district" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            tools:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/counter"
+            app:layout_constraintTop_toBottomOf="@+id/district" />
 
     <TextView
-        android:id="@+id/ac"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        tools:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/counter"
-        app:layout_constraintTop_toBottomOf="@+id/branch" />
+            android:id="@+id/ac"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@+id/counter"
+            app:layout_constraintTop_toBottomOf="@+id/tvAccountName"
+            tools:text="TextView" />
 
+
+    <TextView
+            android:id="@+id/tvAccountName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="TextView"
+            app:layout_constraintStart_toStartOf="@+id/branch"
+            app:layout_constraintTop_toBottomOf="@+id/branch" />
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/new_text_clr"
-        app:layout_constraintTop_toBottomOf="@+id/ac"
-        tools:ignore="MissingConstraints" />
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/new_text_clr"
+            app:layout_constraintTop_toBottomOf="@+id/ac"
+            tools:ignore="MissingConstraints" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
