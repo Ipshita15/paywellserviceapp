@@ -195,6 +195,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import ss.com.bannerslider.Slider;
 import ss.com.bannerslider.event.OnSlideClickListener;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
 
 import static com.cloudwell.paywell.services.utils.LanuageConstant.KEY_BANGLA;
 import static com.cloudwell.paywell.services.utils.LanuageConstant.KEY_ENGLISH;
@@ -332,6 +334,35 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         setUpBottomSheet();
         setNavigationDrawerMenu();
         setUserRID();
+
+        // newVersionShowcase();
+
+
+    }
+
+    private void newVersionShowcase() {
+//        new MaterialShowcaseView.Builder(this)
+//                .setTarget(home_Eduction)
+//                .setDismissText("GOT IT")
+//                .setContentText("This is some amazing feature you should know about")
+//                .show();
+
+        // sequence example
+        ShowcaseConfig config = new ShowcaseConfig();
+        config.setDelay(500); // half second between each showcase view
+
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(this, "" + home_Eduction.getId());
+
+        sequence.setConfig(config);
+
+        sequence.addSequenceItem(home_Eduction,
+                "This is button one", "GOT IT");
+
+        sequence.addSequenceItem(home_settings,
+                "This is button two", "GOT IT");
+
+
+        sequence.start();
 
 
     }
