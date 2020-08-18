@@ -322,14 +322,16 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
         val userName = AppHandler.getmInstance(AppController.getContext()).userName
 
         val po = GetSeatViewRquestPojo()
-        po.departureDate = requestScheduledata.value?.departingDate + "(" + requestScheduledata.value?.departingTime + ")"
 
         if (!retrunTriple) {
             po.fromCity = requestScheduledata.value?.departure ?: ""
             po.toCity = requestScheduledata.value?.destination ?: ""
+            po.departureDate = "" + requestScheduledata.value?.departingDate
+
         } else {
             po.fromCity = requestScheduledata.value?.destination ?: ""
             po.toCity = requestScheduledata.value?.departure ?: ""
+            po.departureDate = "" + requestScheduledata.value?.returnDate
         }
 
         po.optionId = model.busServiceType + "_" + model.departureId

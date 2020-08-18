@@ -13,8 +13,10 @@ class Datum {
     var statusCode: String? = null
     @SerializedName("status_message")
     var statusMessage: String = ""
+
     @SerializedName("statusMessageForConfirm")
-    var statusMessageForConfirm: Any? = null
+    var statusMessageForConfirm: String? = null
+
     @SerializedName("ticketInfo")
     var ticketInfo: TicketInfo? = null
     @SerializedName("transactionDateTime")

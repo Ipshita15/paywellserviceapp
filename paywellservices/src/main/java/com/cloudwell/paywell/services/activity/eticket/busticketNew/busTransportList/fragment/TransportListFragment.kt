@@ -247,17 +247,18 @@ class TransportListFragment(val requestScheduledata: RequestScheduledata, val is
         shimmer_recycler_view.adapter = data.let { it1 ->
 
             adapter = BusTripListAdapter(data, activity!!.applicationContext, viewMode.extraCharge.value
-                    ?: 0.0, object : OnClickListener {
-                override fun onUpdateData(position: Int, resSeatInfo: ResSeatInfo) {
+                    ?: 0.0, isRetrunTriple,
+                    object : OnClickListener {
+                        override fun onUpdateData(position: Int, resSeatInfo: ResSeatInfo) {
 
 
-                }
+                        }
 
-                override fun needUpdateData(position: Int, model: ScheduleDataItem) {
-                    viewMode.needToUpdateData(position, model, isRetrunTriple)
-                }
+                        override fun needUpdateData(position: Int, model: ScheduleDataItem) {
+                            viewMode.needToUpdateData(position, model, isRetrunTriple)
+                        }
 
-                override fun onClick(position: Int) {
+                        override fun onClick(position: Int) {
                     // do whatever
                     listener?.onItemCLick(position, isRetrunTriple)
 

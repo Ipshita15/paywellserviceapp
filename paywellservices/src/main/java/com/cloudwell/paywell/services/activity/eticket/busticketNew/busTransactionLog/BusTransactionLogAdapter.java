@@ -76,11 +76,13 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
                 TextView tvWebBookingIDTV = holder.itemView.findViewById(R.id.WebBookingIDTV);
                 TextView amount = holder.itemView.findViewById(R.id.priceTV);
                 TextView status = holder.itemView.findViewById(R.id.statusTV);
+                TextView tvConfirmationMessage = holder.itemView.findViewById(R.id.tvConfirmationMessage);
 
 
                 BusTransactionModel model = (BusTransactionModel) busTransactionModelArrayList.get(position);
 
                 status.setText(model.getBookingStatus());
+                tvConfirmationMessage.setText(model.getStatusMessageForConfirm());
                 tvTransactionId.setText(model.getTransactioID());
                 amount.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getTicketPrice());
 

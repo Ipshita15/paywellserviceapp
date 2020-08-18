@@ -105,6 +105,7 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
                                         datum.getTrxId(),
                                         datum.getTicketInfo().getBookingInfoId(),
                                         datum.getStatusMessage(),
+                                        datum.getStatusMessageForConfirm(),
                                         datum.getTicketInfo().getWebBookingInfoId(),
                                         datum.getTicketInfo().getTotalAmount(),
                                         datum.getCustomerInfo().getCustomerName(),

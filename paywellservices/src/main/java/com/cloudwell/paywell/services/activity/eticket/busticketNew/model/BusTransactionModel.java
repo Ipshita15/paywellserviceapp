@@ -8,6 +8,7 @@ public class BusTransactionModel {
     private String transactionDate;
     private String bookingId;
     private String bookingStatus;
+    private String statusMessageForConfirm;
     private String webBookingId;
     private String ticketPrice;
     private String customerName;
@@ -29,11 +30,12 @@ public class BusTransactionModel {
     public BusTransactionModel() {
     }
 
-    public BusTransactionModel(String transactionDate, String transactioID, String bookingId, String bookingStatus, String webBookingId, String ticketPrice, String customerName, String customerGender, String customerPhone, String customerAddress, String customerEmail, String ticketNum, String boardingPoint, String departureDate, String departureTime, String seatNum, String coachNum, String busName, String travellingTo, String travellingFrom) {
+    public BusTransactionModel(String transactionDate, String transactioID, String bookingId, String bookingStatus, String statusMessageForConfirm, String webBookingId, String ticketPrice, String customerName, String customerGender, String customerPhone, String customerAddress, String customerEmail, String ticketNum, String boardingPoint, String departureDate, String departureTime, String seatNum, String coachNum, String busName, String travellingTo, String travellingFrom) {
         this.transactionDate = transactionDate;
         this.transactioID = transactioID;
         this.bookingId = bookingId;
         this.bookingStatus = bookingStatus;
+        this.statusMessageForConfirm = statusMessageForConfirm;
         this.webBookingId = webBookingId;
         this.ticketPrice = ticketPrice;
         this.customerName = customerName;
@@ -210,5 +212,13 @@ public class BusTransactionModel {
 
     public void setTransactioID(String transactioID) {
         this.transactioID = transactioID;
+    }
+
+    public String getStatusMessageForConfirm() {
+        return statusMessageForConfirm;
+    }
+
+    public void setStatusMessageForConfirm(String statusMessageForConfirm) {
+        this.statusMessageForConfirm = statusMessageForConfirm;
     }
 }

@@ -15,7 +15,7 @@ import java.text.DecimalFormat
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 19/2/19.
  */
-class BusTripListAdapter(val items: List<ScheduleDataItem>, val context: Context, val extraCharge: Double, val onClickListener: OnClickListener) : RecyclerView.Adapter<ViewHolderNew>() {
+class BusTripListAdapter(val items: List<ScheduleDataItem>, val context: Context, val extraCharge: Double, val isRetrunTriple: Boolean, val onClickListener: OnClickListener) : RecyclerView.Adapter<ViewHolderNew>() {
 
     override fun onBindViewHolder(holder: ViewHolderNew, position: Int) {
         val model = items.get(position)
