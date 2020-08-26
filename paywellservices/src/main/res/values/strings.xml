@@ -569,7 +569,7 @@
     <string name="mobile_number">Mobile Number *</string>
     <string name="age">Age *</string>
     <string name="bus_info_gender">Gender</string>
-    <string name="et_email">Email (Optional)</string>
+    <string name="et_email">Email</string>
     <string name="bus_address">Address *</string>
     <string name="not_available">Not available</string>
     <string name="invalid_full_name">Invalid full name</string>

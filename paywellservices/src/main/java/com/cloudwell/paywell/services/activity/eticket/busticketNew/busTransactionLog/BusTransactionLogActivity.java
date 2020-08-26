@@ -73,7 +73,7 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
         if (isBusTicket) {
             m.setTransportType("1");
         } else {
-            m.setTransportType("1");
+            m.setTransportType("0");
         }
 
 

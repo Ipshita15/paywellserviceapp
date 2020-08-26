@@ -81,7 +81,6 @@ class BusPassengerBoothDepartureFragment(var isRetrunTriple: Boolean) : BaseFrag
     override fun showSeatCheckAndBookingRepose(it: ResSeatCheckBookAPI) {
 
 
-
     }
 
     override fun showErrorMessage(message: String) {
@@ -269,10 +268,12 @@ class BusPassengerBoothDepartureFragment(var isRetrunTriple: Boolean) : BaseFrag
         }
 
 
-        if (!email.equals("")) {
+        if (email.equals("")) {
+            textInputLayoutmobilEmail.error = getString(R.string.invalid_email)
+            return
+        } else {
             if (email.matches(AllConstant.emailPattern.toRegex()) && email.length > 0) {
                 textInputLayoutmobilEmail.error = ""
-
             } else {
                 textInputLayoutmobilEmail.error = getString(R.string.invalid_email)
                 return
