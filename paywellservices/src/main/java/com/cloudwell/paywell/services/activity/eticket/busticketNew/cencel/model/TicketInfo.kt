@@ -50,6 +50,10 @@ data class TicketInfo(
         var seat: String? = null,
 
         @SerializedName("boardingPoint")
-        var boardingPoint: String? = null
+        var boardingPoint: String? = null,
+
+        @SerializedName("otp")
+        var otp: String? = null
+
 
 ) : Parcelable

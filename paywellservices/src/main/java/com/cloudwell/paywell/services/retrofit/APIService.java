@@ -42,6 +42,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.ticketViewer.mo
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransactionLog.RequestBusTranstionLog;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.cencel.model.RequestTicketInformationForCancel;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.cencel.model.ResponseTicketInformationCancel;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.RequestRenerateOtpForCancelTicket;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResGetBusListData;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResPaymentBookingAPI;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatCheckBookAPI;
@@ -777,6 +778,10 @@ public interface APIService {
 
     @POST("Tickets/BusAndLaunchService/cancelTicket")
     Call<ResponseTicketInformationCancel> cancelTicket(@Body RequestTicketInformationForCancel RequestTicketInformationForCancel);
+
+
+    @POST("Tickets/BusAndLaunchService/generateOtpForCancelTicket")
+    Call<ResponseTicketInformationCancel> generateOtpForCancelTicket(@Body RequestRenerateOtpForCancelTicket requestRenerateOtpForCancelTicket);
 
 
     @POST("Registration/UserRegistration/verifyUserPhoneNumberForRegistration")

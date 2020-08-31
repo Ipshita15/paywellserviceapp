@@ -2,17 +2,14 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew.cencel
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
 import android.view.Gravity
 import android.view.inputmethod.InputMethodManager
-import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BusTricketBaseActivity
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.cancelList.CancelListActivity
@@ -21,24 +18,17 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.cencel.model
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.ConnectionDetector
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_cencel_booking_bus.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 
 class BusCancelActiivty : BusTricketBaseActivity() {
-    private var bookingCancelAdapter: ArrayAdapter<*>? = null
-    private val cancelReasonList = ArrayList<String>()
-
 
     private var cd: ConnectionDetector? = null
     private var PIN_NO = "unknown"
-    private var cancelMainLayout: ConstraintLayout? = null
 
-    private var bookingCancelId = String()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cencel_booking_bus)
@@ -56,7 +46,6 @@ class BusCancelActiivty : BusTricketBaseActivity() {
             } else {
                 askForPin(etTicketId.text.toString())
             }
-
 
         }
     }
@@ -85,18 +74,14 @@ class BusCancelActiivty : BusTricketBaseActivity() {
                     val userName = mAppHandler.userName
                     callToBookingListAPI(PIN_NO, bookingId, userName)
                 } else {
-                    val snackbar = Snackbar.make(cancelMainLayout!!, R.string.connection_error_msg, Snackbar.LENGTH_LONG)
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"))
-                    val snackBarView = snackbar.view
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))
-                    snackbar.show()
+                    showBusTicketErrorDialog(getString(R.string.connection_error_msg), false)
+
                 }
             } else {
-                val snackbar = Snackbar.make(cancelMainLayout!!, R.string.pin_no_error_msg, Snackbar.LENGTH_LONG)
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"))
-                val snackBarView = snackbar.view
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"))
-                snackbar.show()
+
+                showBusTicketErrorDialog(getString(R.string.pin_no_error_msg), false)
+
+
             }
         }
         builder.setNegativeButton(R.string.cancel_btn) { dialogInterface, i -> dialogInterface.dismiss() }
@@ -126,6 +111,7 @@ class BusCancelActiivty : BusTricketBaseActivity() {
                         startActivity(Intent(this@BusCancelActiivty, CancelListActivity::class.java).also {
                             it.putExtra("model", body)
                             it.putExtra("password", password)
+                            it.putExtra("RequestTicketInformationForCancel", m)
                         })
 
 
