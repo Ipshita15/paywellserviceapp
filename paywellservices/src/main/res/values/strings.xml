@@ -313,7 +313,9 @@
 
 
     <string-array name="sampleStrings" formatted="false">
-        <item>"PayWell is an organized retail approach by CloudWell Limited, focusing on providing convenient payments and value added services to major consumer service organizations in the utility, telecoms, healthcare, financial services, transport, retail, e-commerce, gaming and public sectors in Bangladesh.\nPayWell intends to deliver payments and services through a uniquely strong combination of local shops, internet and mobile distribution channels. The company follows standard distribution architecture, where layers of channel partners are involved i.e distributor &amp; retailers in its value chain.\n\nWe are located in:\nSkill House (L-7), KA-53/2, Shahajadpur, Gulshan, Dhaka-1212.\nPhone: 09666773333\nemail: contact@cloudwell.co"</item>
+        <item>PayWell is a digital service platform that provides a variety of payment services, including mobile recharge, utility bills, visa fees, bus tickets, air tickets, education and entertainment content subscription fees. PayWell follows standard distribution architecture, where layers of channel partners like distributors  and retailers are involved in its value chain. \n\nWe are located at:
+\nSkill House(L-7)\nKA-53/2, Shahjadpur, \nGulshan, Dhaka-1212.
+\nPhone: 096663333, 09610116566, 09638016566\nEmail: contact@cloudwell.co\nWebsite: https://www.paywellonline.com/</item>
     </string-array>
 
     <!-- paywell apis -->

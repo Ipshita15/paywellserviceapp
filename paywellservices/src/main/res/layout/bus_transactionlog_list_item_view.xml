@@ -41,12 +41,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
             android:hint="Id number"
             android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/textView34"
             app:layout_constraintTop_toTopOf="@+id/textView34"
             tools:text="sdfsdfhsjkhdfkjhsfjkhsdjfkhjksdfh" />
@@ -96,7 +92,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.59000003" />
+            app:layout_constraintVertical_bias="0.59000003"
+            android:layout_marginRight="8dp" />
 
 
     <TextView
@@ -159,6 +156,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView73"
             app:layout_constraintTop_toTopOf="@+id/textView73" />
+
+    <ImageView
+            android:id="@+id/ivCopy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/tvTransactionId"
+            app:layout_constraintStart_toEndOf="@+id/tvTransactionId"
+            app:layout_constraintTop_toTopOf="@+id/tvTransactionId"
+            app:srcCompat="@drawable/copy_icon" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
