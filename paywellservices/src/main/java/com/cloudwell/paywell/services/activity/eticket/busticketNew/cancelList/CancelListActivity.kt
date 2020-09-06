@@ -53,7 +53,6 @@ class CancelListActivity : BusTricketBaseActivity() {
 
         ApiUtils.getAPIServiceV2().ticketInformationForCancel(requestTicketInformationForCancel).enqueue(object : Callback<ResponseTicketInformationCancel?> {
             override fun onResponse(call: Call<ResponseTicketInformationCancel?>, response: Response<ResponseTicketInformationCancel?>) {
-
                 dismissProgressDialog()
                 if (response.isSuccessful) {
                     val body = response.body()
@@ -62,12 +61,12 @@ class CancelListActivity : BusTricketBaseActivity() {
                         setupAdapter(body)
 
                     } else {
-                        body?.message?.let { showBusTicketErrorDialog(it) }
+                        // body?.message?.let { showBusTicketErrorDialog(it) }
+                        finish()
                     }
                 } else {
-                    showBusTicketErrorDialog(getString(R.string.network_error))
+                    showBusTicketErrorDialog(getString(R.string.network_error), true)
                 }
-                dismissProgressDialog()
             }
 
             override fun onFailure(call: Call<ResponseTicketInformationCancel?>, t: Throwable) {
@@ -80,17 +79,22 @@ class CancelListActivity : BusTricketBaseActivity() {
     }
 
     private fun setupAdapter(body: ResponseTicketInformationCancel) {
-        busTransactionLogRV.setLayoutManager(LinearLayoutManager(applicationContext))
-        adapter = body.ticketInfo?.let {
-            CancelListAdapter(it, object : OnClick {
-                override fun onClick(ticketInfo: TicketInfo) {
-                    //callCancelAPI(ticketInfo, password)
+        if (body.ticketInfo?.size ?: 0 == 0) {
+            finish()
+        } else {
+            busTransactionLogRV.setLayoutManager(LinearLayoutManager(applicationContext))
+            adapter = body.ticketInfo?.let {
+                CancelListAdapter(it, object : OnClick {
+                    override fun onClick(ticketInfo: TicketInfo) {
+                        //callCancelAPI(ticketInfo, password)
 
-                    generateOtpForCancelTicket(ticketInfo, password)
-                }
-            })
+                        generateOtpForCancelTicket(ticketInfo, password)
+                    }
+                })
+            }
+            busTransactionLogRV.setAdapter(adapter)
         }
-        busTransactionLogRV.setAdapter(adapter)
+
     }
 
 
