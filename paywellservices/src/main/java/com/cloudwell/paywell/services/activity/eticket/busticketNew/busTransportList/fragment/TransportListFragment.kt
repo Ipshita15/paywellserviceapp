@@ -271,12 +271,12 @@ class TransportListFragment(val requestScheduledata: RequestScheduledata, val is
 
 
     override fun showProgress() {
-        shimmer_recycler_view.showShimmerAdapter()
+        shimmer_recycler_view?.showShimmerAdapter()
 
     }
 
     override fun hiddenProgress() {
-        shimmer_recycler_view.hideShimmerAdapter()
+        shimmer_recycler_view?.hideShimmerAdapter()
     }
 
     override fun showNoInternetConnectionFound() {
