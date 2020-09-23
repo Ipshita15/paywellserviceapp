@@ -30,6 +30,7 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.SeatBlockRequestPojo
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.scheduledata.ScheduleDataItem
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.seatview.BordingPoint
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.seatview.SeatViewData
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.seatview.SeatstructureDetailsItem
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ResposeTicketConfirm
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.seatLayout.adapter.CustomSpnerForBoardingPoint
@@ -92,15 +93,139 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
         boothList = view.findViewById(R.id.boothList)
 
         initilizationReviewBottomSheet(seatLayoutBottonSheet)
-        displaySeatLayoutv1()
+        //displaySeatLayoutv1()
         //displaySeatLayoutv2()
 //        displaySeatLayoutv3()
         // displaySeatPattenv2()
 //        displaySeatPattenv3()
+
+        displaySeatLayoutv6()
+
+
         setupBoardingpont()
 
         return view
 
+    }
+
+    private fun displaySeatLayoutv6() {
+
+        val seatViewData = scheduleDataItem.resSeatInfo?.seatviewResponse?.seatViewData
+
+        var indexTotalColumes = seatViewData?.columnNo?.toInt() as Int
+        val totalRowsInt = seatViewData.rowNo?.toInt() as Int
+        val totalMatrix = totalRowsInt * indexTotalColumes
+        allBusSeat = seatViewData.seatstructureDetails as ArrayList<SeatstructureDetailsItem>
+
+        // check miss match Colum
+        if (indexTotalColumes == 5) {
+            desingFor5Columes(indexTotalColumes, totalRowsInt, seatViewData)
+        } else {
+            //  match Colum like green line
+            var columnsInRightInt = 0;
+            if (indexTotalColumes == 3) {
+                columnsInRightInt = 2
+            } else if (indexTotalColumes == 4) {
+                columnsInRightInt = 2
+            } else if (indexTotalColumes == 5) {
+                columnsInRightInt = 2
+            }
+            var indexCounter = 0
+            try {
+                var i = 0
+                while (i < allBusSeat.size) {
+
+                    seatsPattenStr = seatsPattenStr + "/"
+
+
+                    for (j in 0 until indexTotalColumes) {
+
+                        if (allBusSeat.size != totalMatrix) {
+                            if (indexCounter >= allBusSeat!!.size - 1) {
+                                break
+                            }
+                        }
+
+                        indexCounter = indexCounter + j
+
+                        if (indexTotalColumes == 1) {
+                            seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(seatCounter)
+                        } else if (indexTotalColumes == 3 && j == 0 && columnsInRightInt == 2) {
+                            seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(seatCounter)
+                            // for right columns 4  ## ##
+                            //                      ## ##
+                        } else if (indexTotalColumes == 4 && j == 1 && columnsInRightInt == 2) {
+                            seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(seatCounter)
+                        } else if (indexTotalColumes == 9 && j == 0 && columnsInRightInt == 4) {
+                            seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(seatCounter)
+                        } else if (indexTotalColumes == 9 && j == 4 && columnsInRightInt == 4) {
+                            seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(seatCounter)
+                        } else if (indexTotalColumes == 9 && j == 8 && columnsInRightInt == 4) {
+                            seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(seatCounter)
+                        } else {
+                            seatsPattenStr = seatsPattenStr + getSeatSymbolWithoutSpace(seatCounter)
+                        }
+
+
+                    }
+                    i = i + indexTotalColumes
+
+                }
+
+                //        //miss mass matrix than remove last row and add row seat with extra set...
+                if (totalMatrix != allBusSeat.size) {
+                    val removeCharaterNumber = indexTotalColumes + 1
+                    seatsPattenStr = seatsPattenStr.substring(0, seatsPattenStr.length - removeCharaterNumber)
+
+                    lastSeatBusSeat = allBusSeat.subList((allBusSeat.size - removeCharaterNumber), (allBusSeat.size - 1))
+
+
+                    for (i in 0 until lastSeatBusSeat.size) {
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithoutSpaceForLastLayout(i)
+                    }
+                }
+                run {
+                    displaySeatPattenv2()
+                }
+            } catch (e: Exception) {
+                Logger.v("" + e.message)
+
+            }
+
+        }
+
+
+    }
+
+    private fun desingFor5Columes(indexTotalColumes: Int, totalRowsInt: Int, allBusSeat: SeatViewData) {
+        for (i in 1..totalRowsInt) {
+
+            seatsPattenStr = seatsPattenStr + "/"
+
+            if (indexTotalColumes == 5) {
+                allBusSeat.seatstructureDetails?.forEach {
+                    if (it?.xAxis == i && it.yAxis == 1) {
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithoutSpace(seatCounter)
+                    }
+                    if (it?.xAxis == i && it?.yAxis == 2) {
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithSpace(seatCounter)
+                    }
+                    if (it?.xAxis == i && it?.yAxis == 4) {
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithoutSpace(seatCounter)
+                    }
+                    if (it?.xAxis == i && it?.yAxis == 5) {
+                        seatsPattenStr = seatsPattenStr + getSeatSymbolWithoutSpace(seatCounter)
+                    }
+                }
+
+            }
+        }
+
+
+        Log.e("", "");
+        run {
+            displaySeatPattenv2()
+        }
     }
 
 
@@ -775,7 +900,6 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
             Logger.v("" + e.message)
         }
     }
-
 
 
     private fun getSeatSymbolWithSpace(i: Int): String {
