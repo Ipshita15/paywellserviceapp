@@ -307,17 +307,17 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
 
             val id = radioGroupJounryType.checkedRadioButtonId
             val coachType = when (id) {
-                R.id.radioBtmAll -> "All"
-                R.id.radioBtmAC -> "AC"
-                R.id.radioBtmNonAC -> "NonAC"
-                else -> "All"
+                R.id.radioBtmAll -> "all"
+                R.id.radioBtmAC -> "ac"
+                R.id.radioBtmNonAC -> "non-ac"
+                else -> "all"
             }
             p.coachType = coachType
 
 
         } else {
-            p.departingTime = "All"
-            p.coachType = "Any"
+            p.departingTime = "all"
+            p.coachType = "all"
 
         }
 
@@ -340,10 +340,11 @@ class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransport
 
             val id = radioGroupRetunTime.checkedRadioButtonId
             val returnCoachType = when (id) {
-                R.id.radioBtmAllRetrun -> "All"
-                R.id.radioBtmACRetrun -> "AC"
-                R.id.radioBtmNonACRetrun -> "NonAC"
-                else -> "All"
+                R.id.radioBtmAllRetrun -> "all"
+                R.id.radioBtmACRetrun -> "ac"
+                R.id.radioBtmNonACRetrun -> "non-ac"
+                else -> "all"
+
             }
             p.returnCoachType = returnCoachType
 

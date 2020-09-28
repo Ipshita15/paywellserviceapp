@@ -104,8 +104,6 @@ class BusHosttActivity : BusTricketBaseActivity(), IbusTransportListView, Transp
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bus_transport_list)
 
-        // setToolbar(getString(R.string.title_bus_transtport_list), resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
-
         val data = AppStorageBox.get(AppController.getContext(), AppStorageBox.Key.RequestScheduledata) as String
         requestScheduledata = Gson().fromJson(data, RequestScheduledata::class.java)
 

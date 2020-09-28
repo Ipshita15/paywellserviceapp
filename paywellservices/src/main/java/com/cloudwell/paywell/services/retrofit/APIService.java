@@ -54,7 +54,6 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.RequestScheduledata;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.SeatBlockRequestPojo;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.TicketInformationForCancelRequest;
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.seatview.SeatviewResponse;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ReqConfirmTicket;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ResBookAPI;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ResposeTicketConfirm;
@@ -753,7 +752,7 @@ public interface APIService {
     Call<ResponseBody> getScheduleData(@Body RequestScheduledata requestScheduledata);
 
     @POST("Tickets/BusAndLaunchService/getSeatView")
-    Call<SeatviewResponse> getSeatView(@Body GetSeatViewRquestPojo getSeatViewRquestPojo);
+    Call<ResponseBody> getSeatView(@Body GetSeatViewRquestPojo getSeatViewRquestPojo);
 
 
     @POST("Tickets/BusAndLaunchService/getSeatStatus")

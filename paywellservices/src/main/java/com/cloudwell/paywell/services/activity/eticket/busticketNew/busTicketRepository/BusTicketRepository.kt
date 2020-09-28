@@ -6,7 +6,8 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.newBase.SingleLiveEvent
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.*
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.*
-import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.seatview.SeatviewResponse
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.seatview.BordingPoint
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.seatview.SeatstructureDetailsItem
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ReqConfirmTicket
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ResBookAPI
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ResposeTicketConfirm
@@ -53,7 +54,7 @@ class BusTicketRepository {
 
         val data = MutableLiveData<List<Transport>>()
 
-        ApiUtils.getAPIServicePHP7().getBusListData(userName, skey,uniqueKey).enqueue(object : Callback<ResGetBusListData> {
+        ApiUtils.getAPIServicePHP7().getBusListData(userName, skey, uniqueKey).enqueue(object : Callback<ResGetBusListData> {
             override fun onResponse(call: Call<ResGetBusListData>, response: Response<ResGetBusListData>) {
                 if (response.isSuccessful) {
                     val body = response.body()
@@ -282,7 +283,6 @@ class BusTicketRepository {
     }
 
 
-
     private fun handleResponseseatCheck(it1: String) {
         Logger.v("", "")
 
@@ -369,7 +369,7 @@ class BusTicketRepository {
                 etEmail,
                 age,
                 gender,
-                password,uniqueKey).enqueue(object : Callback<ResPaymentBookingAPI> {
+                password, uniqueKey).enqueue(object : Callback<ResPaymentBookingAPI> {
             override fun onFailure(call: Call<ResPaymentBookingAPI>, t: Throwable) {
                 data.value = null
             }
@@ -412,7 +412,7 @@ class BusTicketRepository {
 
     //New Version Api call
 
-    fun getbusAndLaunchCities(busLunCityPojo : BusLunCityRequest): SingleLiveEvent<List<CitiesListItem>> {
+    fun getbusAndLaunchCities(busLunCityPojo: BusLunCityRequest): SingleLiveEvent<List<CitiesListItem>> {
 
         mAppHandler = AppHandler.getmInstance(mContext)
 
@@ -424,7 +424,7 @@ class BusTicketRepository {
 
                     val request_response = response.body()
 
-                    if (request_response?.statusCode == 200){
+                    if (request_response?.statusCode == 200) {
                         val citiesList: List<CitiesListItem>? = request_response.citiesList
                         data.postValue(citiesList!!)
                     }
@@ -443,7 +443,7 @@ class BusTicketRepository {
     }
 
 
-    fun getScheduleData(schedulePojo : RequestScheduledata): MutableLiveData<String>{
+    fun getScheduleData(schedulePojo: RequestScheduledata): MutableLiveData<String> {
 
         mAppHandler = AppHandler.getmInstance(mContext)
 
@@ -467,39 +467,82 @@ class BusTicketRepository {
 
     }
 
-    fun getSeatView(schedulePojo : GetSeatViewRquestPojo): MutableLiveData<ResSeatInfo>{
+    fun getSeatView(schedulePojo: GetSeatViewRquestPojo): MutableLiveData<ResSeatInfo> {
 
         mAppHandler = AppHandler.getmInstance(mContext)
 
         val userName = mAppHandler!!.userName
         val data = MutableLiveData<ResSeatInfo>()
 
-        ApiUtils.getAPIServiceV2().getSeatView(schedulePojo).enqueue(object : Callback<SeatviewResponse> {
-            override fun onResponse(call: Call<SeatviewResponse>, response: Response<SeatviewResponse>) {
+        ApiUtils.getAPIServiceV2().getSeatView(schedulePojo).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-                    val setview : SeatviewResponse = response.body()!!
-
+                    val rootObject: JSONObject = JSONObject(response.body()?.string())
                     var tototalAvailableSeat = 0
 
-                    if (setview.statusCode == 200) {
-                        val keys = setview.seatViewData?.seatstructureDetails
-                        keys?.forEach {
+                    if (rootObject.getInt("status_code") == 200) {
+                        val seatViewDataObject = rootObject.getJSONObject("seatViewData")
 
-                            if (it?.status.equals("Available")) {
-                                tototalAvailableSeat = tototalAvailableSeat + 1
-                            }
-
+                        // parse BordingPoint
+                        var bordingPoints = ArrayList<BordingPoint>()
+                        val jsonArray = seatViewDataObject.getJSONArray("bording_points")
+                        for (i in 0 until jsonArray.length()) {
+                            val jsonObject = jsonArray.getJSONObject(i)
+                            var m = BordingPoint()
+                            m.counterName = jsonObject.getString("counter_name")
+                            m.reportingBranchId = jsonObject.getInt("reporting_branch_id")
+                            m.scheduleTime = jsonObject.getString("schedule_time")
+                            bordingPoints.add(m)
                         }
 
 
-                        data.value = ResSeatInfo(tototalAvailableSeat, setview)
+                        // parse SeatstructureDetails
+                        var allBusSeat = ArrayList<SeatstructureDetailsItem>()
+                        var seatsPattenStr = ""
+                        seatsPattenStr = seatsPattenStr + "/"
+
+
+                        val detailsJsonObj = seatViewDataObject.getJSONObject("seatstructure_details") as JSONObject
+                        detailsJsonObj.keys().forEach {
+                            val columeObject = detailsJsonObj.getJSONObject(it)
+                            columeObject.keys().forEach {
+                                val seatObject = columeObject.getJSONObject(it)
+                                val m = SeatstructureDetailsItem()
+                                m.fare = seatObject.getDouble("fare") ?: 0.0
+                                m.yAxis = seatObject.getInt("y_axis")
+                                m.xAxis = seatObject.getInt("x_axis")
+                                m.seatNo = seatObject.getString("seat_no")
+                                m.status = seatObject.getString("status")
+                                m.seatid = seatObject.getInt("seatid")
+
+                                val status = seatObject.getString("status")
+
+                                if (status.equals("Available")) {
+                                    tototalAvailableSeat = tototalAvailableSeat + 1
+                                    seatsPattenStr = seatsPattenStr + "A"
+                                    allBusSeat.add(m)
+
+                                } else if (status.equals("Booked")) {
+                                    seatsPattenStr = seatsPattenStr + "R"
+                                    allBusSeat.add(m)
+                                } else if (status.equals("Passage")) {
+                                    seatsPattenStr = seatsPattenStr + "_"
+                                } else {
+                                    seatsPattenStr = seatsPattenStr + "U"
+                                    allBusSeat.add(m)
+                                }
+                            }
+
+                            seatsPattenStr = seatsPattenStr + "/"
+                        }
+                        data.value = ResSeatInfo(tototalAvailableSeat, seatsPattenStr, allBusSeat, bordingPoints)
                     }
 
 
                 }
             }
 
-            override fun onFailure(call: Call<SeatviewResponse>, t: Throwable) {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
 
                 data.postValue(null)
 
@@ -568,8 +611,7 @@ class BusTicketRepository {
 //    }
 
 
-
-    fun getSeatStatus(getSeatViewRquestPojo : GetSeatViewRquestPojo):  MutableLiveData<ResSeatInfo>{
+    fun getSeatStatus(getSeatViewRquestPojo: GetSeatViewRquestPojo): MutableLiveData<ResSeatInfo> {
 
         mAppHandler = AppHandler.getmInstance(mContext)
 
@@ -651,7 +693,7 @@ class BusTicketRepository {
 
     }
 
-    fun getcancelBookedTicket(schedulePojo : CancelBookedTicketReques): String{
+    fun getcancelBookedTicket(schedulePojo: CancelBookedTicketReques): String {
 
         mAppHandler = AppHandler.getmInstance(mContext)
 
@@ -662,8 +704,8 @@ class BusTicketRepository {
             override fun onResponse(call: Call<CancelBookedTicketResponse>, response: Response<CancelBookedTicketResponse>) {
                 if (response.isSuccessful) {
 //
-                    val cancelResponse : CancelBookedTicketResponse = response.body()!!
-                    val msg : String? = cancelResponse.message
+                    val cancelResponse: CancelBookedTicketResponse = response.body()!!
+                    val msg: String? = cancelResponse.message
                     //show this msg
 //
 //                    if (request_response?.statusCode == 200){
@@ -685,7 +727,7 @@ class BusTicketRepository {
     }
 
 
-    fun getticketInformationForCancel(schedulePojo : TicketInformationForCancelRequest): String{
+    fun getticketInformationForCancel(schedulePojo: TicketInformationForCancelRequest): String {
 
         mAppHandler = AppHandler.getmInstance(mContext)
 
@@ -717,5 +759,6 @@ class BusTicketRepository {
         return data.toString()
 
     }
+
 
 }
