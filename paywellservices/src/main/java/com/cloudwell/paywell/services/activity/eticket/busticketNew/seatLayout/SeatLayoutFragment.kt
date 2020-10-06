@@ -37,6 +37,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.bottom_seat_layout.*
 import kotlinx.android.synthetic.main.bottom_seat_layout.view.*
+import kotlinx.android.synthetic.main.layout_seat_layout.view.*
 import org.json.JSONObject
 import java.text.DecimalFormat
 
@@ -89,6 +90,12 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
         seatLayoutBottonSheet = view.seatLayoutBottonSheet
         rootSeatLayout = view.findViewById<ViewGroup>(R.id.layoutSeat)
         boothList = view.findViewById(R.id.boothList)
+
+        if (scheduleDataItem.isTicketCancelable == 1) {
+            view.llLayoutTicketCanceableInfo.visibility = View.GONE
+        } else {
+            view.llLayoutTicketCanceableInfo.visibility = View.VISIBLE
+        }
 
         initilizationReviewBottomSheet(seatLayoutBottonSheet)
 
