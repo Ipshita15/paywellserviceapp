@@ -29,8 +29,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:text="Sort by"
-        android:textColor="#FFFFFF"
+            android:text="Sort by price"
+            android:textColor="#FFFFFF"
         android:textStyle="bold"
         fancy:layout_constraintStart_toStartOf="parent"
         fancy:layout_constraintTop_toBottomOf="@+id/HorizontalScrollView" />
@@ -234,9 +234,9 @@
             android:layout_weight="1"
             android:button="@null"
             android:checked="true"
-            android:drawablePadding="4dp"
-            android:text="Low Price"
-            android:textColor="@drawable/bus_radio_button_text_color_filter" />
+                android:drawablePadding="4dp"
+                android:text="Low to high"
+                android:textColor="@drawable/bus_radio_button_text_color_filter" />
 
         <RadioButton
             android:id="@+id/radioHighPrice"
@@ -244,9 +244,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
-            android:drawablePadding="4dp"
-            android:text="High Price"
-            android:textColor="@drawable/bus_radio_button_text_color_filter" />
+                android:drawablePadding="4dp"
+                android:text="High to low"
+                android:textColor="@drawable/bus_radio_button_text_color_filter" />
 
 
     </RadioGroup>

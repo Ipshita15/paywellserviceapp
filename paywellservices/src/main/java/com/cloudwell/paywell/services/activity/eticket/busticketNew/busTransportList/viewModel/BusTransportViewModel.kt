@@ -114,19 +114,19 @@ class BusTransportViewModel : BusTicketBaseViewMode() {
             val a = item1.fares
             val b = item2.fares
 
-            if (filterPara.coachType.equals("Low Price")) {
+            if (filterPara.sortBy.equals("Low Price")) {
                 if (a > b) {
-                    -1
-                } else if (a < b) {
                     1
+                } else if (a < b) {
+                    -1
                 } else {
                     0
                 }
             } else {
                 if (a > b) {
-                    1
-                } else if (a < b) {
                     -1
+                } else if (a < b) {
+                    1
                 } else {
                     0
                 }
