@@ -22,6 +22,7 @@ class BusTicketSuccess(val message: String, val onclick: OnClick) : BaseDialogFr
             dismiss()
             onclick.onClick()
         }
+        isCancelable = false
         return view
 
     }

@@ -27,6 +27,8 @@ public class BusTransactionModel {
     private String customerEmail;
     private String transactioID;
 
+    private String message;
+
     public BusTransactionModel() {
     }
 
@@ -221,4 +223,14 @@ public class BusTransactionModel {
     public void setStatusMessageForConfirm(String statusMessageForConfirm) {
         this.statusMessageForConfirm = statusMessageForConfirm;
     }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+
 }

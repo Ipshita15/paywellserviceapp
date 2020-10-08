@@ -122,6 +122,10 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
                                         datum.getBusInfo().getBusName(),
                                         datum.getTicketInfo().getJourneyRoute().split("-")[0],
                                         datum.getTicketInfo().getJourneyRoute().split("-")[1]);
+
+                                busTransactionModel.setMessage(datum.getMessage());
+                                busTransactionModel.setBookingStatus(datum.getStatusCode());
+
                                 allDataArrayList.add(busTransactionModel);
                                 adapter.notifyDataSetChanged();
 

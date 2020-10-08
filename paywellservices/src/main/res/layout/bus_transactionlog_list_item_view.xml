@@ -51,11 +51,10 @@
             android:id="@+id/WebBookingIDTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:text="Web Booking ID:"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@+id/statusStringTV"
-            app:layout_constraintTop_toBottomOf="@+id/tvConfirmationMessage" />
+            app:layout_constraintTop_toBottomOf="@+id/statusTV" />
 
     <TextView
             android:id="@+id/webBookingId"
@@ -103,7 +102,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:text="Booking Message:"
+            android:text="Status Message:"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -134,28 +133,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/bookingIdStringTV"
             app:layout_constraintTop_toBottomOf="@+id/bookingIdTV" />
-
-    <TextView
-            android:id="@+id/textView73"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Confirm Message :"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/statusTV" />
-
-    <TextView
-            android:id="@+id/tvConfirmationMessage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:text="TextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView73"
-            app:layout_constraintTop_toTopOf="@+id/textView73" />
 
     <ImageView
             android:id="@+id/ivCopy"

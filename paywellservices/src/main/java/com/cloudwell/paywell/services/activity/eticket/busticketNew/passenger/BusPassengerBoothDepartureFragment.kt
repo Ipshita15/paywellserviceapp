@@ -85,6 +85,7 @@ class BusPassengerBoothDepartureFragment(var isRetrunTriple: Boolean) : BaseFrag
 
     override fun showErrorMessage(message: String) {
 
+
         val busHosttActivity1 = activity as BusHosttActivity
         busHosttActivity1.showBusTicketErrorDialog(message)
 
@@ -222,7 +223,7 @@ class BusPassengerBoothDepartureFragment(var isRetrunTriple: Boolean) : BaseFrag
 
         val totalPrices = (viewMode.singleTotalAmount.value
                 ?: 0.0) + (viewMode.retrunTotalAmount.value ?: 0.0)
-        view?.tvTotalAAmont?.text = "Total amount: " + DecimalFormat("#").format(totalPrices)
+        view?.tvTotalAAmont?.text = "Total amount: " + DecimalFormat("#").format(totalPrices) + " (include charges)";
 
     }
 

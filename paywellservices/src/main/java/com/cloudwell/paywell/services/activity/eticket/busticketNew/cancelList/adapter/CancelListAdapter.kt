@@ -28,6 +28,8 @@ class CancelListAdapter(private val list: List<TicketInfo>, val onClick: OnClick
         holder.tvCounterAndTime.text = "Boarding at" + ticketInfo.boardingPoint
         holder.tvTotalPrices.text = "Total Amount: " + ticketInfo.totalAmount
         holder.tvCanceltionFee.text = "Cancellation Fee: " + ticketInfo.cancellationFee
+        holder.tvBaseFare.text = "Base Fare: " + ticketInfo.basePrice
+        holder.tvRetrunAmount.text = "Return Amount: " + ticketInfo.returnAmount
 
 
         holder.btCancel.setOnClickListener {
@@ -57,6 +59,8 @@ class CancelListAdapter(private val list: List<TicketInfo>, val onClick: OnClick
         var btCancel: Button
         var tvTotalPrices: TextView
         var tvCanceltionFee: TextView
+        var tvBaseFare: TextView
+        var tvRetrunAmount: TextView
 
         init {
             tvJounryType = itemView.findViewById(R.id.tvJounryType)
@@ -68,6 +72,8 @@ class CancelListAdapter(private val list: List<TicketInfo>, val onClick: OnClick
             btCancel = itemView.findViewById(R.id.btCancel)
             tvTotalPrices = itemView.findViewById(R.id.tvTotalPrices)
             tvCanceltionFee = itemView.findViewById(R.id.tvCancelationFee)
+            tvBaseFare = itemView.findViewById(R.id.tvBaseFare)
+            tvRetrunAmount = itemView.findViewById(R.id.tvRetrunAmount)
         }
     }
 

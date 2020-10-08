@@ -9,7 +9,6 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BaseDialogFragment
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ResposeTicketConfirm
 import kotlinx.android.synthetic.main.bus_ticket_success_msg_dialog.view.*
-import java.text.DecimalFormat
 
 
 class BusSucessMsgWithFinlishDialog(val it: ResposeTicketConfirm, val isRetrunTriple: Boolean) : BaseDialogFragment() {
@@ -52,6 +51,7 @@ class BusSucessMsgWithFinlishDialog(val it: ResposeTicketConfirm, val isRetrunTr
             myClickListener.onClick()
         }
 
+        view?.tvMessage?.text = "${it.message}"
 
         return view
 

@@ -19,9 +19,13 @@ class Datum {
 
     @SerializedName("ticketInfo")
     var ticketInfo: TicketInfo? = null
+
     @SerializedName("transactionDateTime")
     var transactionDateTime: String = ""
 
     @SerializedName("trxId")
     var trxId: String = ""
+
+    @SerializedName("message")
+    var message: String = ""
 }
