@@ -3,10 +3,12 @@ package com.cloudwell.paywell.services.activity.eticket.busticketNew.busTransact
 import android.app.Dialog;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Parcel;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,8 +20,11 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.cancelList.CancelListActivity;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.cencel.model.RequestTicketInformationForCancel;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.BusTransactionModel;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.search.FullScreenDialogBus;
+import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.FullScreenDialogPayWell;
 
 import java.util.ArrayList;
@@ -76,13 +81,11 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
                 TextView tvWebBookingIDTV = holder.itemView.findViewById(R.id.WebBookingIDTV);
                 TextView amount = holder.itemView.findViewById(R.id.priceTV);
                 TextView status = holder.itemView.findViewById(R.id.statusTV);
-                TextView tvConfirmationMessage = holder.itemView.findViewById(R.id.tvConfirmationMessage);
 
 
                 BusTransactionModel model = (BusTransactionModel) busTransactionModelArrayList.get(position);
 
-                status.setText(model.getBookingStatus());
-                tvConfirmationMessage.setText(model.getStatusMessageForConfirm());
+                status.setText(model.getMessage());
                 tvTransactionId.setText(model.getTransactioID());
                 amount.setText(((BusTransactionModel) busTransactionModelArrayList.get(position)).getTicketPrice());
 
@@ -209,8 +212,32 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
                                         });
                                         toolbar.setBackgroundColor(context.getResources().getColor(R.color.color_tab_background_bus));
                                         toolbar.setTitle("Transaction Details");
+
+
+                                        view1.findViewById(R.id.btBack).setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+
+                                        Button btCancelButton = view1.findViewById(R.id.btCancel);
+                                        btCancelButton.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                startCancelListActivity(model);
+                                            }
+                                        });
+
+                                        if (model.getBookingStatus().equals("200")){
+                                            btCancelButton.setVisibility(View.VISIBLE);
+                                        }else {
+                                            btCancelButton.setVisibility(View.GONE);
+                                        }
+
                                         return view1;
                                     }
+
 
                                     @Override
                                     public int describeContents() {
@@ -243,6 +270,20 @@ public class BusTransactionLogAdapter extends RecyclerView.Adapter<BusTransactio
 
 
     }
+
+    private void startCancelListActivity(BusTransactionModel model) {
+        AppHandler mAppHandler = AppHandler.getmInstance(context.getApplicationContext());
+
+        RequestTicketInformationForCancel m = new RequestTicketInformationForCancel();
+        m.setTrxId(model.getTransactioID());
+        m.setTicketNo(model.getTicketNum());
+        m.setUsername(mAppHandler.getUserName());
+
+        Intent i = new Intent(context, CancelListActivity.class);
+        i.putExtra("RequestTicketInformationForCancel", m);
+        context.startActivity(i);
+    }
+
 
     public void copy(String data) {
         ClipboardManager systemService = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);

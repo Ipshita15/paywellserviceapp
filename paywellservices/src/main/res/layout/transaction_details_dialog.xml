@@ -510,6 +510,31 @@
                             android:textSize="18sp" />
                 </LinearLayout>
             </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                <Button
+                        android:background="@color/bus_button_color"
+                        android:id="@+id/btBack"
+                        android:textColor="@color/white"
+                        android:layout_margin="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Back " />
+
+                <Button
+                        android:background="@color/bus_button_color"
+                        android:id="@+id/btCancel"
+                        android:textColor="@color/white"
+                        android:layout_margin="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cancel " />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
