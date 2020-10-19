@@ -47,33 +47,33 @@
 
 
                     <EditText
-                        android:id="@+id/brilliantPhoneNo"
-                        android:layout_width="165dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="2.7"
-                        android:digits="0123456789"
-                        android:drawableRight="@drawable/ic_phone_book"
-                        android:hint="@string/phone_no_msg"
-                        android:imeOptions="actionNext"
-                        android:inputType="phone"
-                        android:maxLength="15"
-                        android:textColor="@color/blackShade"
-                        android:textColorHint="@color/blackShade_trans70"/>
+                            android:id="@+id/brilliantPhoneNo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_weight="2.7"
+                            android:digits="0123456789"
+                            android:drawableRight="@drawable/ic_phone_book"
+                            android:hint="@string/phone_no_msg"
+                            android:imeOptions="actionNext"
+                            android:inputType="phone"
+                            android:maxLength="15"
+                            android:textColor="@color/blackShade"
+                            android:textColorHint="@color/blackShade_trans70" />
 
                     <EditText
-                        android:id="@+id/brilliantAmount"
-                        android:layout_width="100dp"
-                        android:layout_height="50dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="1"
-                        android:digits="0123456789"
-                        android:hint="@string/amount_msg"
-                        android:inputType="number"
-                        android:maxLength="5"
-                        android:singleLine="true"
-                        android:textColor="@color/blackShade"
-                        android:textColorHint="@color/blackShade_trans70"/>
+                            android:id="@+id/brilliantAmount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="1"
+                            android:digits="0123456789"
+                            android:hint="@string/amount_msg"
+                            android:inputType="number"
+                            android:maxLength="5"
+                            android:singleLine="true"
+                            android:textColor="@color/blackShade"
+                            android:textColorHint="@color/blackShade_trans70" />
 
                 </LinearLayout>
 
