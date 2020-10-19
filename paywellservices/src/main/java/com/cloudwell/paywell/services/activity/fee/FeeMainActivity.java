@@ -22,7 +22,7 @@ public class FeeMainActivity extends BaseActivity {
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_utility);
+            getSupportActionBar().setTitle(R.string.fee);
         }
         AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
