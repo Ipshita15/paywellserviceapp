@@ -35,7 +35,6 @@ import androidx.core.content.FileProvider;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.modelPojo.UserSubBusinessTypeModel;
-import com.cloudwell.paywell.services.activity.reg.EntryMainActivity;
 import com.cloudwell.paywell.services.activity.reg.model.RegistrationModel;
 import com.cloudwell.paywell.services.activity.reg.model.RequestDistrictList;
 import com.cloudwell.paywell.services.activity.reg.model.RespsoeGetDistrictList;
@@ -77,7 +76,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regModel;
 
 public class MissingMainActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
 
@@ -109,6 +107,8 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
     boolean isMissingFlowGorble = false;
     private String currentPhotoPath;
 
+    public RegistrationModel regModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,6 +118,11 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(R.string.paywell_reg_missing);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        if (regModel == null) {
+
+            regModel = new RegistrationModel();
         }
 
         isMissingFlowGorble = getIntent().getBooleanExtra("isMissingFlow", false);
@@ -287,7 +292,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
             layoutBusinessType.setVisibility(View.VISIBLE);
             layoutMerchantType.setVisibility(View.VISIBLE);
 
-            if (EntryMainActivity.regModel != null) {
+            if (regModel != null) {
 
                 if (regModel.getBusinessaTypeAPIRespose() != null) {
 
@@ -300,7 +305,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
         if (layoutNames.contains("mobile_number")) {
             layoutPhnNumber.setVisibility(View.VISIBLE);
 
-            if (EntryMainActivity.regModel != null) {
+            if (regModel != null) {
                 if (regModel != null) {
                     editText_phnNo.setText(regModel.getPhnNumber());
                 }
@@ -950,10 +955,12 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
                     encodeTobase64(selectedImage);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(MissingMainActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.try_again_msg, Toast.LENGTH_SHORT).show();
                 }
             } else {
 
+                Bitmap selectedImage = BitmapFactory.decodeFile(currentPhotoPath);
+                encodeTobase64(selectedImage);
 
             }
         }

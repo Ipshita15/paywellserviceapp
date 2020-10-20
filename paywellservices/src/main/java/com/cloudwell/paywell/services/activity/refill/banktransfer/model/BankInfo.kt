@@ -7,9 +7,9 @@ data class BankInfo(
         val accountNumber: String,
         @SerializedName("name")
         val name: String,
-        @SerializedName("accountName")
+        @SerializedName("AccountName")
         val accountName: String,
-        @SerializedName("branch")
+        @SerializedName("branchName")
         val branch: String
 
 )
