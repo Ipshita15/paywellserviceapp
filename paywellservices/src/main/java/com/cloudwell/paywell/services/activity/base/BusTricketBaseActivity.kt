@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.view.Menu
 import androidx.appcompat.app.ActionBar
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.newBase.MVVMBaseActivity
@@ -86,6 +87,12 @@ open class BusTricketBaseActivity : MVVMBaseActivity() {
         val errorMsgDialog = BusErrorMsgDialog(message, needFinishedActivity)
         errorMsgDialog.show(supportFragmentManager, "oTPVerificationMsgDialog")
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_main_air_ticket, menu)
+        return true
     }
 
 }
