@@ -558,7 +558,7 @@
     <string name="update_request">Update Request</string>
 
     <string name="title_bus_transtport_list">Search transport</string>
-    <string name="coach_no">Coach no</string>
+    <string name="coach_no">কোচ নং</string>
     <string name="departure">Departure</string>
     <string name="available_seat">Available Seat</string>
     <string name="please_select_a_transport">Please select a transport</string>
@@ -591,7 +591,7 @@
     <string name="selected_seat">Selected seat:</string>
     <string name="boarding_point_optional">Boarding Point (Optional)</string>
     <string name="select_your_seat">Select your seat</string>
-    <string name="select">Select</string>
+    <string name="select">Selected</string>
     <string name="do_you_want_to_buy_this_ticket">Do you want to buy this ticket?</string>
     <string name="buy">Buy</string>
     <string name="clear_all">Clear all</string>
@@ -755,5 +755,21 @@
     <string name="journey_time">Journey time</string>
     <string name="return_type">Return type</string>
     <string name="return_time">Return time</string>
+    <string name="title_passgender_inf">Passenger Information</string>
+    <string name="total_amount_bus">Total amount:</string>
+    <string name="departure_ticket">Departure</string>
+    <string name="totat_amont_bus">Total amount </string>
+    <string name="round_bus">Return Ticket</string>
+    <string name="ticket_cancelable">Ticket Cancelable</string>
+    <string name="this_ticket_can_t_be_cancelable">This ticket can’t be cancelable</string>
+    <string name="any_kind_of_ticket_cancellation_might_not_be_allowed_during_public_holidays_journey_as_per_bus_company_decision">Any kind of ticket cancellation might not be allowed during Public Holidays journey as per bus company decision.</string>
+    <string name="custom_filter">Custom filter</string>
+    <string name="time">Time</string>
+    <string name="sort_by_price">Sort by price</string>
+    <string name="include_prices">(include charges)</string>
+    <string name="search_text_bus">Search</string>
+    <string name="booked">Booked</string>
+    <string name="available">Available</string>
+
 
 </resources>

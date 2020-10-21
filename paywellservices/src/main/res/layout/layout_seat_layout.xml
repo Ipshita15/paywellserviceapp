@@ -128,8 +128,8 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="16dp"
-                    android:text="Booked"
-                    android:textColor="#4ca896"
+                        android:text="@string/booked"
+                        android:textColor="#4ca896"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@+id/viewGreen"
                     app:layout_constraintStart_toEndOf="@+id/viewBookedColor"
@@ -145,8 +145,8 @@
 
                     android:layout_marginTop="16dp"
 
-                    android:text="Available"
-                    android:textColor="#4ca896"
+                        android:text="@string/available"
+                        android:textColor="#4ca896"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@+id/viewBookedColor2"
                     app:layout_constraintStart_toEndOf="@+id/viewBookedColor2"
@@ -189,7 +189,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="This ticket can’t be cancelable"
+                        android:text="@string/this_ticket_can_t_be_cancelable"
                         android:textColor="@color/color_red"
                         android:textSize="18sp" />
             </LinearLayout>
@@ -225,10 +225,9 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
-                    android:text="Any kind of ticket cancellation might not be allowed during
-Public Holidays journey as per bus company decision."
-                    android:gravity="center"
+                        android:layout_marginRight="16dp"
+                        android:text="@string/any_kind_of_ticket_cancellation_might_not_be_allowed_during_public_holidays_journey_as_per_bus_company_decision"
+                        android:gravity="center"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

@@ -60,9 +60,9 @@ class TransportListFragment(val requestScheduledata: RequestScheduledata, val is
 
         val busHosttActivity = activity as BusHosttActivity
         if (!isRetrunTriple) {
-            busHosttActivity.setToolbar("Departure Ticket", resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
+            busHosttActivity.setToolbar(getString(R.string.departure_ticket), resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
         } else {
-            busHosttActivity.setToolbar("Return Ticket", resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
+            busHosttActivity.setToolbar(getString(R.string.round_bus), resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
         }
     }
 

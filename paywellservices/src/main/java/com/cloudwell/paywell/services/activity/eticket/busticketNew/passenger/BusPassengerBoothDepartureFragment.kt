@@ -137,11 +137,9 @@ class BusPassengerBoothDepartureFragment(var isRetrunTriple: Boolean) : BaseFrag
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.activity_bus_booth_departure, container, false)
 
-
         view.btn_search.setOnClickListener {
             handleBookingContinueBooking()
         }
-
 
         return view
 
@@ -173,7 +171,7 @@ class BusPassengerBoothDepartureFragment(var isRetrunTriple: Boolean) : BaseFrag
         super.onAttach(context)
         Logger.v("onAttach")
         val busHosttActivity = activity as BusHosttActivity
-        busHosttActivity.setToolbar("Passenger information", resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
+        busHosttActivity.setToolbar(getString(R.string.title_passgender_inf), resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
 
     }
 
@@ -223,7 +221,7 @@ class BusPassengerBoothDepartureFragment(var isRetrunTriple: Boolean) : BaseFrag
 
         val totalPrices = (viewMode.singleTotalAmount.value
                 ?: 0.0) + (viewMode.retrunTotalAmount.value ?: 0.0)
-        view?.tvTotalAAmont?.text = "Total amount: " + DecimalFormat("#").format(totalPrices) + " (include charges)";
+        view?.tvTotalAAmont?.text = getString(R.string.totat_amont_bus) + DecimalFormat("#").format(totalPrices) + " " + getString(R.string.include_prices);
 
     }
 

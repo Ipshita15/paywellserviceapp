@@ -462,7 +462,7 @@
                     fancy:fb_fontIconResource="&#xf002;"
                     fancy:fb_iconPosition="left"
                     fancy:fb_radius="5dp"
-                    fancy:fb_text="@string/search_text"
+                    fancy:fb_text="@string/search_text_bus"
                     fancy:fb_textColor="#FFFFFF" />
 
 

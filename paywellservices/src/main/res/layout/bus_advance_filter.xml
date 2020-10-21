@@ -15,25 +15,25 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:text="Journey type"
-        android:textColor="#FFFFFF"
+            android:text="@string/journey_type"
+            android:textColor="#FFFFFF"
         android:textStyle="bold"
         fancy:layout_constraintStart_toStartOf="parent"
         fancy:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
-        android:id="@+id/tvLevelReturnType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-            android:text="Sort by price"
+            android:id="@+id/tvLevelReturnType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/sort_by_price"
             android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        fancy:layout_constraintStart_toStartOf="parent"
-        fancy:layout_constraintTop_toBottomOf="@+id/HorizontalScrollView" />
+            android:textStyle="bold"
+            fancy:layout_constraintStart_toStartOf="parent"
+            fancy:layout_constraintTop_toBottomOf="@+id/HorizontalScrollView" />
 
     <TextView
         android:id="@+id/textView62"
@@ -41,9 +41,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Time"
-        android:textColor="#FFFFFF"
+            android:layout_marginTop="16dp"
+            android:text="@string/time"
+            android:textColor="#FFFFFF"
         android:textStyle="bold"
         fancy:layout_constraintStart_toStartOf="parent"
         fancy:layout_constraintTop_toBottomOf="@+id/radioGroupJounryType" />

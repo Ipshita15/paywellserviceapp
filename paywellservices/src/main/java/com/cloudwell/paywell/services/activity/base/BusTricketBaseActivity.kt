@@ -22,7 +22,7 @@ open class BusTricketBaseActivity : MVVMBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        switchToCzLocale(Locale.ENGLISH)
+        //switchToCzLocale(Locale.ENGLISH)
         mAppHandler = AppHandler.getmInstance(applicationContext)
 
         changeAppTheme()
