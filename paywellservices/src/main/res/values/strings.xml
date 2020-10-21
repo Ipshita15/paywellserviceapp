@@ -470,7 +470,7 @@
     <string name="total_fare_text">Total Fare</string>
     <string name="depart_time_">Departure Time: </string>
     <string name="one_way_menu_title">One-way</string>
-    <string name="round_trip_menu_title">Round-trip</string>
+    <string name="round_trip_menu_title">Round-Trip</string>
     <string name="multi_city_menu_title">Multi-City</string>
     <string name="search_flights">Search Flights</string>
     <string name="bbc">BBC</string>
