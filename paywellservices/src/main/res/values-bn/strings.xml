@@ -667,7 +667,7 @@
     <string name="forgot_pin">পিন অনুরোধ</string>
     <string name="device_not_support">সুরক্ষা জন্য রুটযুক্ত ডিভাইস এই অ্যাপে ব্যবহার করা যায় না, দয়া করে আমাদের কল সেন্টারে যোগাযোগ করুন।</string>
     <string name="device_not_support_root">সুরক্ষা উদ্দেশ্যে রুটযুক্ত ডিভাইসটির জন্য এই অ্যাপটি ব্যবহার করে না, দয়া করে আমাদের কল সেন্টারে যোগাযোগ করুন</string>
-    <string name="retype_pin_number">পিন নম্বর পুনরায় টাইপ করুন</string>
+    <string name="retype_pin_number">পিন নম্বর পুনরায় টাইপ করুনঃ</string>
     <string name="title_error_message">বার্তা</string>
     <string name="no_internet_connection">কোনও ইন্টারনেট সংযোগ নেই</string>
     <string name="no_internet_connection_please_check_your_internet_connection">কোনও ইন্টারনেট সংযোগ নেই আপনার ইন্টারনেট সংযোগ পরীক্ষা করুন</string>

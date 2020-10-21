@@ -10,13 +10,6 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.app.AppHandler
 import kotlinx.android.synthetic.main.balance_refill_fragment.view.*
-import kotlinx.android.synthetic.main.balance_refill_fragment.view.tvLine1
-import kotlinx.android.synthetic.main.balance_refill_fragment.view.tvLine2
-import kotlinx.android.synthetic.main.balance_refill_fragment.view.tvLine3
-import kotlinx.android.synthetic.main.balance_refill_fragment.view.tvLine4
-import kotlinx.android.synthetic.main.balance_refill_fragment.view.tvLine6
-import kotlinx.android.synthetic.main.balance_refill_fragment.view.tvLine7
-import kotlinx.android.synthetic.main.balance_refill_ussd_fragment.view.*
 
 class DirectBalanceRefillFragment : Fragment() {
 
@@ -35,18 +28,18 @@ class DirectBalanceRefillFragment : Fragment() {
         val next2 = "টাকার পরিমাণ লিখে \"Confirm\" করুন।"
         view.tvLine2.text = Html.fromHtml(next2)
 
-        val next3 = "পেওয়েল পিন নাম্বার দিন।"
+        val next3 = "পেওয়েল পিন নম্বর দিন।"
         view.tvLine3.text = Html.fromHtml(next3)
 
 
-        val next4 = "আপনার নগদ একাউন্ট নাম্বার দিয়ে \"I agree to the terms and conditions\" সিলেক্ট করে \"Proceed\" করুন।"
+        val next4 = "আপনার নগদ একাউন্ট নম্বর দিয়ে \"I agree to the terms and conditions\" সিলেক্ট করে \"Proceed\" করুন।"
         view.tvLine4.text = Html.fromHtml(next4)
 
         val next6 ="আপনার মোবাইলে নগদ থেকে এসএমএস এর মাধ্যমে প্রেরিত \"OTP\" নাম্বারটি দিয়ে \"Proceed\" করুন।"
         view.tvLine6.text = Html.fromHtml(next6)
 
 
-        val next17 ="নগদের পিন নাম্বার দিন।"
+        val next17 = "নগদের পিন নম্বর দিন।"
         view.textView17.text = Html.fromHtml(next17)
 
         val next7 ="সাথে সাথে পেওয়েল ব্যালেন্স অ্যাড হয়ে যাবে। (১.২ % সার্ভিস চার্জ প্রযোজ্য)"

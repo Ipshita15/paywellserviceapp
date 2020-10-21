@@ -18,13 +18,13 @@ class BalanceRefillFragment : Fragment() {
         val view = inflater.inflate(R.layout.balance_nagad_refill_fragment, container, false)
 
 
-        val line1 = "নগদ অ্যাপ-এর মার্চেন্ট পে মেনুতে গিয়ে " + getFontStyle("QR") + " কোড স্ক্যান করুন বা ১১ ডিজিটের মোবাইল নাম্বারে " + getFontStyle("<u>01787679661</u>") + "  লিখে বাটনটি ট্যাপ করুন। টাকার পরিমাণ লিখে পরবর্তী ধাপে যান।"
+        val line1 = "নগদ অ্যাপ-এর মার্চেন্ট পে মেনুতে গিয়ে " + getFontStyle("QR") + " কোড স্ক্যান করুন বা ১১ ডিজিটের মোবাইল নম্বর " + getFontStyle("<u>01787679661</u>") + "  লিখে বাটনটি ট্যাপ করুন। টাকার পরিমাণ লিখে পরবর্তী ধাপে যান।"
         view.tvLine1.text = Html.fromHtml(line1)
 
 
         val rid = AppHandler.getmInstance(activity?.applicationContext).rid.toString()
         val ridLast5Digit = rid.substring(rid.lastIndex - 4)
-        val next2 = "রেফারেন্স নম্বরে আপনার পেওয়েল RID এর শেষ পাঁচটি ডিজিট " + getFontStyle("$ridLast5Digit") + " লিখে নগদ এর PIN নম্বর দিয়ে পেমেন্ট সম্পন্ন করুন।"
+        val next2 = "রেফারেন্স নম্বর আপনার পেওয়েল RID এর শেষ পাঁচটি ডিজিট " + getFontStyle("$ridLast5Digit") + " লিখে নগদ এর PIN নম্বর দিয়ে পেমেন্ট সম্পন্ন করুন।"
         view.tvLine2.text = Html.fromHtml(next2)
 
         val next3 = "ব্যালেন্স <রিফিলের> জন্য পেওয়েল অ্যাপ এর ব্যালেন্স ক্লেইম অপশন এ গিয়ে আপনার নগদ একাউন্ট নম্বর/ট্রানজেকশন আইডি ও টাকার পরিমাণ দিয়ে ক্লেইম প্রক্রিয়া সম্পন্ন করুন। (১.২% সার্ভিস চার্জ প্রযোজ্য)।"
