@@ -31,7 +31,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransportListView, OnItemSelectedListener {
+class
+BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransportListView, OnItemSelectedListener {
 
     private var fromCitiesListItem: CitiesListItem? = null
     private var toCitiesListItem: CitiesListItem? = null

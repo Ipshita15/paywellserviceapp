@@ -747,5 +747,13 @@
     <string name="next">Next</string>
     <string name="acccount_name_link_bank">Account Name</string>
     <string name="account_number_link_bank">Account Number</string>
+    <string name="one_way">One way</string>
+    <string name="round_trip">Round trip</string>
+    <string name="advance_search">Advance search</string>
+    <string name="journey_date">Journey Date</string>
+    <string name="journey_type">Journey type</string>
+    <string name="journey_time">Journey time</string>
+    <string name="return_type">Return type</string>
+    <string name="return_time">Return time</string>
 
 </resources>

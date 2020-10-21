@@ -161,7 +161,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:buttonTint="#00203f"
-                                    android:text="One way" />
+                                    android:text="@string/one_way" />
 
                             <androidx.appcompat.widget.AppCompatRadioButton
                                     android:id="@+id/radioButtonButtonRoud"
@@ -170,7 +170,7 @@
                                     android:layout_weight="1"
                                     android:buttonTint="#00203f"
                                     android:checked="true"
-                                    android:text="Round trip" />
+                                    android:text="@string/round_trip" />
                         </RadioGroup>
 
 
@@ -230,7 +230,7 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
                                     android:padding="10dp"
-                                    android:text="Journey Date"
+                                    android:text="@string/journey_date"
                                     android:textColor="@color/color_tab_background_bus"
                                     android:textSize="12sp" />
 
@@ -322,7 +322,7 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
                                     android:padding="10dp"
-                                    android:text="Journey Date"
+                                    android:text="@string/journey_date"
                                     android:textColor="@color/color_tab_background_bus"
                                     android:textSize="12sp" />
 
@@ -428,7 +428,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_marginLeft="8dp"
-                            android:text="Advance search"
+                            android:text="@string/advance_search"
                             android:textColor="@color/white"
                             fancy:layout_constraintBottom_toBottomOf="parent"
                             fancy:layout_constraintStart_toEndOf="@+id/imageView32"

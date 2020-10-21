@@ -423,8 +423,8 @@
     <string name="lbl_set_profile_photo" />
     <string name="tile_cencel_booking">Cancel Booking</string>
     <string name="airport_search_hit">Airport name or code or country name </string>
-    <string name="from">From</string>
-    <string name="to">To</string>
+    <string name="from">থেকে</string>
+    <string name="to">দিকে</string>
     <string name="mr">Mr</string>
     <string name="ms">Ms</string>
     <string name="mrs">Mrs</string>
@@ -646,7 +646,7 @@
 
     <string name="desco_prepaid_string">ডেসকো প্রিপেইড</string>
     <string name="desco_postpaid_string">ডেসকো পোস্টপেইড</string>
-    <string name="meter_number">মিটার নম্বর</string>
+    <string name="meter_number">মিটার নম্বরঃ</string>
     <string name="txt_login">সাইন ইন</string>
     <string name="txt_signup">নিবন্ধন করুন</string>
     <string name="rid_mobile_number">মোবাইল নম্বর</string>
@@ -752,4 +752,12 @@
     <string name="next">Next</string>
     <string name="acccount_name_link_bank">হিসাবের নাম</string>
     <string name="account_number_link_bank">হিসাব নং</string>
+    <string name="one_way">একমুখী</string>
+    <string name="round_trip">রাউন্ড ট্রিপ</string>
+    <string name="advance_search">অগ্রিম অনুসন্ধান</string>
+    <string name="journey_date">যাত্রার তারিখ</string>
+    <string name="journey_type">যাত্রার ধরণ</string>
+    <string name="journey_time">যাত্রার সময়</string>
+    <string name="return_type">ফেরার ধরণ</string>
+    <string name="return_time">ফেরার সময়</string>
 </resources>
