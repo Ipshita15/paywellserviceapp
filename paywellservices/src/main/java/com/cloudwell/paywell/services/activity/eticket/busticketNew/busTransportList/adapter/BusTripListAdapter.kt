@@ -9,6 +9,7 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.ResSeatInfo
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.scheduledata.ScheduleDataItem
 import kotlinx.android.synthetic.main.bus_trip_item_list.view.*
+import java.text.DecimalFormat
 
 
 /**
@@ -19,33 +20,33 @@ class BusTripListAdapter(val items: List<ScheduleDataItem>, val context: Context
     override fun onBindViewHolder(holder: ViewHolderNew, position: Int) {
         val model = items.get(position)
 
-//        val isAc = model.coachType
-//
-//        holder.tvTransportNameAndType.text = (model.companyName?.toUpperCase() ?: "") + ", " + isAc
-//        holder.tvCoachNo.text = ": " + model.coachNo
-//        holder.tvDepartureTime.text = ": " + model.departureTime + " (" + model.departingTime + ")"
-//
-//        if (model.isTicketCancelable == 1) {
-//            holder.tvTicketCancelable.text = ": Yes"
-//        } else {
-//            holder.tvTicketCancelable.text = ": No"
-//        }
-//
-//        val prices = model.fares.plus(extraCharge)
-//        holder.tvPrices.text = DecimalFormat("#").format(prices)
-//
-//        if (model.resSeatInfo == null) {
-//            holder.tvAvailableSeat.text = ":"
-//            holder.progressBar.visibility = View.VISIBLE
-//            onClickListener.needUpdateData(position, model)
-//        } else {
-//            holder.progressBar.visibility = View.INVISIBLE
-//            holder.tvAvailableSeat.text = ": " + model.resSeatInfo?.tototalAvailableSeat
-//        }
-//
-//        holder.ivSelect.setOnClickListener {
-//            onClickListener.onClick(position)
-//        }
+        val isAc = model.coachType
+
+        holder.tvTransportNameAndType.text = (model.companyName?.toUpperCase() ?: "") + ", " + isAc
+        holder.tvCoachNo.text = ": " + model.coachNo
+        holder.tvDepartureTime.text = ": " + model.departureTime + " (" + model.departingTime + ")"
+
+        if (model.isTicketCancelable == 1) {
+            holder.tvTicketCancelable.text = ": Yes"
+        } else {
+            holder.tvTicketCancelable.text = ": No"
+        }
+
+        val prices = model.fares.plus(extraCharge)
+        holder.tvPrices.text = DecimalFormat("#").format(prices)
+
+        if (model.resSeatInfo == null) {
+            holder.tvAvailableSeat.text = ":"
+            holder.progressBar.visibility = View.VISIBLE
+            onClickListener.needUpdateData(position, model)
+        } else {
+            holder.progressBar.visibility = View.INVISIBLE
+            holder.tvAvailableSeat.text = ": " + model.resSeatInfo?.tototalAvailableSeat
+        }
+
+        holder.ivSelect.setOnClickListener {
+            onClickListener.onClick(position)
+        }
 
     }
 

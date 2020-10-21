@@ -594,7 +594,7 @@
     <string name="invalid_address">Invalid address</string>
     <string name="no_data_found">No data found.</string>
     <string name="network_error">Network error!</string>
-    <string name="popular_city">Popular City</string>
+    <string name="popular_city">জনপ্রিয় শহর</string>
     <string name="transport">Transport</string>
     <string name="search_transport_ticket">Search Bus Ticket</string>
     <string name="search_transport_ticket_lunch">Search Launch Ticket</string>
@@ -775,5 +775,10 @@
     <string name="search_text_bus">অনুসন্ধান</string>
     <string name="booked">বুক</string>
     <string name="available">খালি</string>
+    <string name="place_a_barcode_inside_the_rectangle_to_scan_it">দয়া করে আয়তক্ষেত্র বক্স এর অভ্যন্তরে বারকোডটি স্ক্যান করুন</string>
+    <string name="all_city">সমস্ত শহর</string>
+    <string name="search_city">শহর অনুসন্ধান করুন</string>
+    <string name="going_to">Going To</string>
+    <string name="leaving_from">Leaving From</string>
 
 </resources>

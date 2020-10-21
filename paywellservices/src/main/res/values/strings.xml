@@ -558,7 +558,7 @@
     <string name="update_request">Update Request</string>
 
     <string name="title_bus_transtport_list">Search transport</string>
-    <string name="coach_no">কোচ নং</string>
+    <string name="coach_no">Coach no</string>
     <string name="departure">Departure</string>
     <string name="available_seat">Available Seat</string>
     <string name="please_select_a_transport">Please select a transport</string>
@@ -770,6 +770,11 @@
     <string name="search_text_bus">Search</string>
     <string name="booked">Booked</string>
     <string name="available">Available</string>
+    <string name="place_a_barcode_inside_the_rectangle_to_scan_it">Place a Barcode inside the rectangle to scan it</string>
+    <string name="all_city">All City</string>
+    <string name="search_city">Search City</string>
+    <string name="going_to">Going To</string>
+    <string name="leaving_from">Leaving From</string>
 
 
 </resources>
