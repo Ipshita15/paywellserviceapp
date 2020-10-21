@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity;
@@ -19,13 +21,11 @@ import com.cloudwell.paywell.services.app.storage.AppStorageBox;
 import com.cloudwell.paywell.services.constant.AllConstant;
 import com.google.android.material.snackbar.Snackbar;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 public class ETicketMainActivity extends AppCompatActivity {
 
     private AppHandler mAppHandler;
     private RelativeLayout relativeLayout;
-    private Button home_bus, home_train;
+    private Button home_bus, home_train, home_lucnch;
 
     @SuppressWarnings("ConstantConditions")
     @Override
@@ -44,13 +44,16 @@ public class ETicketMainActivity extends AppCompatActivity {
 
         home_bus = findViewById(R.id.et_shop_visit);
         home_train = findViewById(R.id.et_ek_shop_report);
+        home_lucnch = findViewById(R.id.et_launch);
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             home_bus.setTypeface(AppController.getInstance().getOxygenLightFont());
             home_train.setTypeface(AppController.getInstance().getOxygenLightFont());
+            home_lucnch.setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
             home_bus.setTypeface(AppController.getInstance().getAponaLohitFont());
             home_train.setTypeface(AppController.getInstance().getAponaLohitFont());
+            home_lucnch.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
 
         checkIsComeFromFav(getIntent());
