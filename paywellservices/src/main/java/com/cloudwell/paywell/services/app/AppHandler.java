@@ -9,6 +9,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.utils.AppHelper;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -20,11 +25,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 public class AppHandler {
 
@@ -180,7 +180,8 @@ public class AppHandler {
     public static final String KEY_setUserNeedToChangePassword= "KEY_setUserNeedToChangePassword";
     public static final String KEY_savePreviousRequestObject= "savePreviousRequestObject";
     public static final String KEY_ImageAddressArrayJson= "KEY_ImageAddressArrayJson";
-    public static final String KEY_BannerDetails= "BannerDetails";
+    public static final String KEY_BannerDetails = "BannerDetails";
+    public static final String KEY_isVideoPreviewShow = "isVideoPreviewShow";
 
 
     public AppHandler() {
@@ -862,8 +863,16 @@ public class AppHandler {
     }
 
 
-  public String getBannerDetails() {
+    public String getBannerDetails() {
         return mPref.getString(KEY_BannerDetails, "");
+    }
+
+    public boolean isVideoPreviewShow() {
+        return mPref.getBoolean(KEY_isVideoPreviewShow, false);
+    }
+
+    public void setVideoPreviewShow(boolean b) {
+        editor.putBoolean(KEY_isVideoPreviewShow, b);
     }
 
     public static class MyDialogFragment extends DialogFragment {

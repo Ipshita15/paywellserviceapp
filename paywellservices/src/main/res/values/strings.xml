@@ -394,7 +394,7 @@
     <string name="email">Email *</string>
     <string name="please_ensure_the_id_is_valid_for_at_least_6_months_after_the_date_of_departure">Please ensure the ID is valid for at least 6 months after the date of departure.</string>
     <string name="hit_passport_number">Passport Number</string>
-    <string name="hit_web_file_number">Web File Number</string>
+    <string name="hit_web_file_number" translatable="false">Web File Number</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="other">Other</string>
@@ -408,8 +408,8 @@
     <string name="lbl_set_profile_photo" />
     <string name="tile_cencel_booking">Cancel Booking</string>
     <string name="airport_search_hit">Airport name or code or country name </string>
-    <string name="from">From</string>
-    <string name="to">To</string>
+    <string name="from" translatable="false">From</string>
+    <string name="to" translatable="false">To</string>
     <string name="mr">Mr</string>
     <string name="ms">Ms</string>
     <string name="mrs">Mrs</string>
@@ -558,21 +558,21 @@
     <string name="update_request">Update Request</string>
 
     <string name="title_bus_transtport_list">Search transport</string>
-    <string name="coach_no">Coach no</string>
-    <string name="departure">Departure</string>
-    <string name="available_seat">Available Seat</string>
+    <string name="coach_no" translatable="false">Coach no</string>
+    <string name="departure" translatable="false">Departure</string>
+    <string name="available_seat" translatable="false">Available Seat</string>
     <string name="please_select_a_transport">Please select a transport</string>
-    <string name="continue_booking">Continue Booking</string>
+    <string name="continue_booking" translatable="false">Continue Booking</string>
     <string name="title_bus_passenger_booth"><![CDATA[Passenger information & boarding point]]></string>
     <string name="boarding_point">Boarding Point</string>
-    <string name="full_name">Full Name *</string>
+    <string name="full_name" translatable="false">Full Name *</string>
     <string name="your_seats">Your seats:</string>
     <string name="total_price">Total price:</string>
-    <string name="mobile_number">Mobile Number *</string>
-    <string name="age">Age *</string>
-    <string name="bus_info_gender">Gender</string>
-    <string name="et_email">Email</string>
-    <string name="bus_address">Address *</string>
+    <string name="mobile_number" translatable="false">Mobile Number *</string>
+    <string name="age" translatable="false">Age *</string>
+    <string name="bus_info_gender" translatable="false">Gender</string>
+    <string name="et_email" translatable="false">Email</string>
+    <string name="bus_address" translatable="false">Address *</string>
     <string name="not_available">Not available</string>
     <string name="invalid_full_name">Invalid full name</string>
     <string name="Invalid_mobile_number">Invalid mobile number</string>
@@ -580,7 +580,7 @@
     <string name="invalid_address">Invalid address</string>
     <string name="no_data_found">No data found.</string>
     <string name="network_error">Network error!</string>
-    <string name="popular_city">Popular City</string>
+    <string name="popular_city" translatable="false">Popular City</string>
     <string name="transport">Transport</string>
     <string name="search_transport_ticket">Search Bus Ticket</string>
     <string name="search_transport_ticket_lunch">Search Launch Ticket</string>
@@ -588,10 +588,10 @@
     <string name="bus_validation_message_location">Please seleted correct location</string>
     <string name="no_boarding_point_found">No boarding point found!!!</string>
     <string name="sort">Sort</string>
-    <string name="selected_seat">Selected seat:</string>
+    <string name="selected_seat" translatable="false">Selected seat:</string>
     <string name="boarding_point_optional">Boarding Point (Optional)</string>
     <string name="select_your_seat">Select your seat</string>
-    <string name="select">Selected</string>
+    <string name="select" translatable="false">Select</string>
     <string name="do_you_want_to_buy_this_ticket">Do you want to buy this ticket?</string>
     <string name="buy">Buy</string>
     <string name="clear_all">Clear all</string>
@@ -650,8 +650,8 @@
     <string name="otp_verification">OTP Verification</string>
     <string name="ok_text">OK</string>
     <string name="resend_otp">Resend OTP</string>
-    <string name="verify_your_phone_number">Verify phone number</string>
-    <string name="we_have_send_you_an_sms_with_a_code_to_your_number">We have send you an SMS with a code to your number</string>
+    <string name="verify_your_phone_number" translatable="false">Verify phone number</string>
+    <string name="we_have_send_you_an_sms_with_a_code_to_your_number" translatable="false">We have send you an SMS with a code to your number</string>
     <string name="didn_t_you_received_any_code">Didn\'t you received any code?</string>
     <string name="request_format_pin">Request forgot pin</string>
     <string name="last_4_digit_mobile_number">Mobile number</string>
@@ -747,34 +747,39 @@
     <string name="next">Next</string>
     <string name="acccount_name_link_bank">Account Name</string>
     <string name="account_number_link_bank">Account Number</string>
-    <string name="one_way">One way</string>
-    <string name="round_trip">Round trip</string>
-    <string name="advance_search">Advance search</string>
-    <string name="journey_date">Journey Date</string>
-    <string name="journey_type">Journey type</string>
-    <string name="journey_time">Journey time</string>
-    <string name="return_type">Return type</string>
-    <string name="return_time">Return time</string>
-    <string name="title_passgender_inf">Passenger Information</string>
-    <string name="total_amount_bus">Total amount:</string>
-    <string name="departure_ticket">Departure</string>
-    <string name="totat_amont_bus">Total amount </string>
-    <string name="round_bus">Return Ticket</string>
-    <string name="ticket_cancelable">Ticket Cancelable</string>
-    <string name="this_ticket_can_t_be_cancelable">This ticket can’t be cancelable</string>
-    <string name="any_kind_of_ticket_cancellation_might_not_be_allowed_during_public_holidays_journey_as_per_bus_company_decision">Any kind of ticket cancellation might not be allowed during Public Holidays journey as per bus company decision.</string>
-    <string name="custom_filter">Custom filter</string>
-    <string name="time">Time</string>
-    <string name="sort_by_price">Sort by price</string>
-    <string name="include_prices">(include charges)</string>
-    <string name="search_text_bus">Search</string>
-    <string name="booked">Booked</string>
-    <string name="available">Available</string>
-    <string name="place_a_barcode_inside_the_rectangle_to_scan_it">Place a Barcode inside the rectangle to scan it</string>
-    <string name="all_city">All City</string>
-    <string name="search_city">Search City</string>
-    <string name="going_to">Going To</string>
-    <string name="leaving_from">Leaving From</string>
+    <string name="one_way" translatable="false">One way</string>
+    <string name="round_trip" translatable="false">Round trip</string>
+    <string name="advance_search" translatable="false">Advance search</string>
+    <string name="journey_date" translatable="false">Journey Date</string>
+    <string name="journey_type" translatable="false">Journey type</string>
+    <string name="journey_time" translatable="false">Journey time</string>
+    <string name="return_type" translatable="false">Return type</string>
+    <string name="return_time" translatable="false">Return time</string>
+    <string name="title_passgender_inf" translatable="false">Passenger Information</string>
+    <string name="total_amount_bus" translatable="false">Total amount:</string>
+    <string name="departure_ticket" translatable="false">Departure</string>
+    <string name="totat_amont_bus" translatable="false">Total amount </string>
+    <string name="round_bus" translatable="false">Return Ticket</string>
+    <string name="ticket_cancelable" translatable="false">Ticket Cancelable</string>
+    <string name="this_ticket_can_t_be_cancelable" translatable="false">This ticket can’t be cancelable</string>
+    <string name="any_kind_of_ticket_cancellation_might_not_be_allowed_during_public_holidays_journey_as_per_bus_company_decision" translatable="false">Any kind of ticket cancellation might not be allowed during Public Holidays journey as per bus company decision.</string>
+    <string name="custom_filter" translatable="false">Custom filter</string>
+    <string name="time" translatable="false">Time</string>
+    <string name="sort_by_price" translatable="false">Sort by price</string>
+    <string name="include_prices" translatable="false">(include charges)</string>
+    <string name="search_text_bus" translatable="false">Search</string>
+    <string name="booked" translatable="false">Booked</string>
+    <string name="available" translatable="false">Available</string>
+    <string name="place_a_barcode_inside_the_rectangle_to_scan_it" translatable="false">Place a Barcode inside the rectangle to scan it</string>
+    <string name="all_city" translatable="false">All City</string>
+    <string name="search_city" translatable="false">Search City</string>
+    <string name="going_to" translatable="false">Going To</string>
+    <string name="leaving_from" translatable="false">Leaving From</string>
+    <string name="bus_transction_log_title">Transaction Log</string>
+    <string name="cancel_ticket_list_button">Cancel Ticket</string>
+    <string name="what_new_in_new_apps">What\'s new in this version</string>
+    <string name="play_video">Play Video</string>
+    <string name="skip">Skip</string>How to login to the new app>/string>
 
 
 </resources>

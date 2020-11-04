@@ -50,6 +50,7 @@ BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransportListVi
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bus_city_search_new)
 
+
         val isBusTicket = AppStorageBox.get(applicationContext, AppStorageBox.Key.IS_BUS_Ticket_USER_FLOW) as Boolean
         if (isBusTicket) {
             setToolbar(getString(R.string.search_transport_ticket), applicationContext.resources.getColor(R.color.bus_ticket_toolbar_title_text_color))
@@ -67,14 +68,17 @@ BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransportListVi
         simpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
         AppStorageBox.put(this, AppStorageBox.Key.BUS_JOURNEY_DATE, simpleDateFormat!!.format(myCalender.timeInMillis))
         dateTV.text = myCalender.get(Calendar.DAY_OF_MONTH).toString()
-        monthTV.text = DateFormatSymbols().months[myCalender.get(Calendar.MONTH)]
-        dayTV.text = DateFormatSymbols().weekdays[myCalender.get(Calendar.DAY_OF_WEEK)]
+        monthTV.text = DateFormatSymbols.getInstance(Locale.ENGLISH).months[myCalender.get(Calendar.MONTH)]
+        dayTV.text = DateFormatSymbols.getInstance(Locale.ENGLISH).weekdays[myCalender.get(Calendar.DAY_OF_WEEK)]
+
+
+
 
 
         myCalenderRetrun.add(Calendar.DATE, 1)
         dateTVRound.text = myCalenderRetrun.get(Calendar.DAY_OF_MONTH).toString()
-        monthTVRound.text = DateFormatSymbols().months[myCalenderRetrun.get(Calendar.MONTH)]
-        dayTVRound.text = DateFormatSymbols().weekdays[myCalenderRetrun.get(Calendar.DAY_OF_WEEK)]
+        monthTVRound.text = DateFormatSymbols.getInstance(Locale.ENGLISH).months[myCalenderRetrun.get(Calendar.MONTH)]
+        dayTVRound.text = DateFormatSymbols.getInstance(Locale.ENGLISH).weekdays[myCalenderRetrun.get(Calendar.DAY_OF_WEEK)]
         AppStorageBox.put(this@BusCitySearchActivity, AppStorageBox.Key.BUS_RETURN_DATE, simpleDateFormat!!.format(myCalenderRetrun.timeInMillis))
 
 
@@ -202,12 +206,11 @@ BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransportListVi
 
             var tempCalender = Calendar.getInstance()
 
-
             val datePickerDialog = DatePickerDialog(this@BusCitySearchActivity, R.style.DialogThemeBus, DatePickerDialog.OnDateSetListener { datePicker, i, i1, i2 ->
                 myCalender.set(i, i1, i2)
                 dateTV.text = myCalender.get(Calendar.DAY_OF_MONTH).toString()
-                monthTV.text = DateFormatSymbols().months[myCalender.get(Calendar.MONTH)]
-                dayTV.text = DateFormatSymbols().weekdays[myCalender.get(Calendar.DAY_OF_WEEK)]
+                monthTV.text = DateFormatSymbols.getInstance(Locale.ENGLISH).months[myCalender.get(Calendar.MONTH)]
+                dayTV.text = DateFormatSymbols.getInstance(Locale.ENGLISH).weekdays[myCalender.get(Calendar.DAY_OF_WEEK)]
                 AppStorageBox.put(this@BusCitySearchActivity, AppStorageBox.Key.BUS_JOURNEY_DATE, simpleDateFormat!!.format(myCalender.timeInMillis))
             },
                     tempCalender.get(Calendar.YEAR),
@@ -231,8 +234,8 @@ BusCitySearchActivity : BusTricketBaseActivity(), OnCitySet, IbusTransportListVi
             val datePickerDialog = DatePickerDialog(this@BusCitySearchActivity, R.style.DialogTheme, DatePickerDialog.OnDateSetListener { datePicker, i, i1, i2 ->
                 myCalender.set(i, i1, i2)
                 dateTVRound.text = myCalender.get(Calendar.DAY_OF_MONTH).toString()
-                monthTVRound.text = DateFormatSymbols().months[myCalender.get(Calendar.MONTH)]
-                dayTVRound.text = DateFormatSymbols().weekdays[myCalender.get(Calendar.DAY_OF_WEEK)]
+                monthTVRound.text = DateFormatSymbols.getInstance(Locale.ENGLISH).months[myCalender.get(Calendar.MONTH)]
+                dayTVRound.text = DateFormatSymbols.getInstance(Locale.ENGLISH).weekdays[myCalender.get(Calendar.DAY_OF_WEEK)]
                 AppStorageBox.put(this@BusCitySearchActivity, AppStorageBox.Key.BUS_RETURN_DATE, simpleDateFormat!!.format(myCalender.timeInMillis))
             }, myCalender.get(Calendar.YEAR),
                     myCalender.get(Calendar.MONTH),

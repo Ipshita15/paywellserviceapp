@@ -42,7 +42,7 @@ public class BusTransactionLogActivity extends BusTricketBaseActivity {
         setContentView(R.layout.activity_bus_transaction_log);
 
 
-        setToolbar(getString(R.string.bus_transction_log), getResources().getColor(R.color.bus_ticket_toolbar_title_text_color));
+        setToolbar(getString(R.string.bus_transction_log_title), getResources().getColor(R.color.bus_ticket_toolbar_title_text_color));
 
         limit = getIntent().getIntExtra(BusTicketMenuActivity.Companion.getKEY_LIMIT(), -1);
         busTransactionRV = findViewById(R.id.busTransactionLogRV);

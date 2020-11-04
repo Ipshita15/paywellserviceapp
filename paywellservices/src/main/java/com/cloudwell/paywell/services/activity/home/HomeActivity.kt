@@ -8,6 +8,7 @@ import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.activity.home.login.LoginActivity
 import com.cloudwell.paywell.services.activity.home.model.refreshToken.RequestRefreshToken
 import com.cloudwell.paywell.services.activity.reg.EntryMainActivity
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.NewAppsVideoPreviewDialog
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.NoInternetConnectionMsgDialog
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
@@ -56,6 +57,7 @@ class HomeActivity : BaseActivity() {
             i.putExtra("pin", userPin)
             startActivity(i)
             finish()
+
         } else if (appStatus.equals(AppsStatusConstant.KEY_pending) || appStatus.equals(AppsStatusConstant.KEY_pinNotSetUser) || appStatus.equals(AppsStatusConstant.KEY_registered)) {
             val i = Intent(this@HomeActivity, AppLoadingActivity::class.java)
             i.putExtra("pin", userPin)
@@ -110,6 +112,15 @@ class HomeActivity : BaseActivity() {
 
         ivGetHelpCallCenter.setOnClickListener {
             callPreviewAirticket(false)
+        }
+
+
+        if (appStatus.equals(AppsStatusConstant.KEY_unregistered)) {
+            if (!AppHandler.getmInstance(getApplicationContext()).isVideoPreviewShow()) {
+                AppHandler.getmInstance(getApplicationContext()).setVideoPreviewShow(true)
+                val newAppsVideoPreviewDialog = NewAppsVideoPreviewDialog()
+                newAppsVideoPreviewDialog.show(supportFragmentManager, "newAppsVideoPreviewDialog")
+            }
         }
 
     }
