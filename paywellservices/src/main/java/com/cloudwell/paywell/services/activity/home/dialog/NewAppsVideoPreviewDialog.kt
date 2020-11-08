@@ -1,15 +1,16 @@
 package com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog
 
 import android.app.Dialog
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.WebViewActivity
 import com.cloudwell.paywell.services.activity.base.BaseDialogFragment
+import com.cloudwell.paywell.services.activity.home.youtube.MainFragment
+import com.cloudwell.paywell.services.activity.utility.model.Video
+import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus
 import kotlinx.android.synthetic.main.new_apps_video_preview.view.*
 
 
@@ -24,13 +25,15 @@ class NewAppsVideoPreviewDialog() : BaseDialogFragment() {
             dismiss()
         }
 
-        view.errorIV.setOnClickListener {
-            openLink()
-        }
+//        view.errorIV.setOnClickListener {
+//            openLink()
+//        }
 
         view.tvPlayVideo.setOnClickListener {
-            openLink()
+            GlobalApplicationBus.getBus().post(Video(true))
         }
+
+        showDialog()
 
         return view
     }
@@ -38,18 +41,28 @@ class NewAppsVideoPreviewDialog() : BaseDialogFragment() {
     private fun openLink() {
         dismiss()
 
-        val link = "https://www.youtube.com/watch?v=vx0mhpuN2K4&feature=youtu.be"
-        val mIntent: Intent = activity!!.getPackageManager().getLaunchIntentForPackage("com.google.android.youtube")
-        if (mIntent != null) {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            intent.setPackage("com.google.android.youtube")
-            startActivity(intent)
-        } else {
-            WebViewActivity.TAG_LINK = link
-            startActivity(Intent(activity, WebViewActivity::class.java))
-        }
+//        val link = "https://www.youtube.com/watch?v=vx0mhpuN2K4&feature=youtu.be"
+//        val mIntent: Intent = activity!!.getPackageManager().getLaunchIntentForPackage("com.google.android.youtube")
+//        if (mIntent != null) {
+//            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//            intent.setPackage("com.google.android.youtube")
+//            startActivity(intent)
+//        } else {
+//            WebViewActivity.TAG_LINK = link
+//            startActivity(Intent(activity, WebViewActivity::class.java))
+//        }
+
+
     }
+
+
+    fun showDialog() {
+        val nextFrag = MainFragment()
+        val fragmentManager: FragmentManager = childFragmentManager
+        fragmentManager.beginTransaction().replace(R.id.main_layout, nextFrag).commit()
+    }
+
 
     override fun onStart() {
         super.onStart()

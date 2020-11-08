@@ -30,7 +30,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LoginActivity : BaseActivity() {
+public class LoginActivity : BaseActivity() {
     var userPin: String = ""
     var userNeedToChangePassword: Boolean = false
 
