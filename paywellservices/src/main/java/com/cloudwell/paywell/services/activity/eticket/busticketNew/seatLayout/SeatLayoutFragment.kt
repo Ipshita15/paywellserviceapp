@@ -38,7 +38,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.bottom_seat_layout.*
 import kotlinx.android.synthetic.main.bottom_seat_layout.view.*
-import kotlinx.android.synthetic.main.layout_seat_layout.*
 import kotlinx.android.synthetic.main.layout_seat_layout.view.*
 import org.json.JSONObject
 import java.text.DecimalFormat
@@ -119,9 +118,9 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
 
         val isBusTicket = AppStorageBox.get(context, AppStorageBox.Key.IS_BUS_Ticket_USER_FLOW) as Boolean
         if (isBusTicket) {
-            tvUserHitmessage.setText(getString(R.string.any_kind_of_ticket_cancellation_bus))
+            view.tvUserHitmessage.setText(getString(R.string.any_kind_of_ticket_cancellation_bus))
         } else {
-            tvUserHitmessage.setText(getString(R.string.any_kind_of_ticket_cancellation_lunch))
+            view.tvUserHitmessage.setText(getString(R.string.any_kind_of_ticket_cancellation_lunch))
         }
 
         return view
