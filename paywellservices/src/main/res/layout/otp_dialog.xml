@@ -1,34 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/billViewLL"
+                android:id="@+id/billViewLL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp">
 
-            <com.cloudwell.paywell.services.activity.home.customView.PinEntryEditText
-                android:id="@+id/etMobileOrRID"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginRight="24dp"
-                android:background="@drawable/rect_text_edit"
-                android:cursorVisible="false"
+            <com.cloudwell.paywell.services.customView.customView.PinEntryEditText
+                    android:id="@+id/etMobileOrRID"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginRight="24dp"
+                    android:background="@drawable/rect_text_edit"
+                    android:cursorVisible="false"
                 android:digits="1234567890"
                 android:inputType="number"
                 android:maxLength="4"

@@ -1,4 +1,4 @@
-package com.cloudwell.paywell.services.activity.home.customView;
+package com.cloudwell.paywell.services.customView.customView;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -13,9 +13,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.cloudwell.paywell.services.R;
-
 import androidx.appcompat.widget.AppCompatEditText;
+
+import com.cloudwell.paywell.services.R;
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 2019-11-19.
