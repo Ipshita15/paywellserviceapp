@@ -33,10 +33,12 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ResposeTicketConfirm
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.seatLayout.adapter.CustomSpnerForBoardingPoint
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.app.storage.AppStorageBox
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.bottom_seat_layout.*
 import kotlinx.android.synthetic.main.bottom_seat_layout.view.*
+import kotlinx.android.synthetic.main.layout_seat_layout.*
 import kotlinx.android.synthetic.main.layout_seat_layout.view.*
 import org.json.JSONObject
 import java.text.DecimalFormat
@@ -114,6 +116,13 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
         seatsPattenStr = scheduleDataItem.resSeatInfo?.seatsPattenStr.toString()
         allBusSeat = scheduleDataItem.resSeatInfo?.allBusSeat!!
         displaySeatPattenv2()
+
+        val isBusTicket = AppStorageBox.get(context, AppStorageBox.Key.IS_BUS_Ticket_USER_FLOW) as Boolean
+        if (isBusTicket) {
+            tvUserHitmessage.setText(getString(R.string.any_kind_of_ticket_cancellation_bus))
+        } else {
+            tvUserHitmessage.setText(getString(R.string.any_kind_of_ticket_cancellation_lunch))
+        }
 
         return view
 

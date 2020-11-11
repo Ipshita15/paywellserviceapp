@@ -762,7 +762,9 @@
     <string name="round_bus" translatable="false">Return Ticket</string>
     <string name="ticket_cancelable" translatable="false">Ticket Cancelable</string>
     <string name="this_ticket_can_t_be_cancelable" translatable="false">This ticket can’t be cancelable</string>
-    <string name="any_kind_of_ticket_cancellation_might_not_be_allowed_during_public_holidays_journey_as_per_bus_company_decision" translatable="false">Any kind of ticket cancellation might not be allowed during Public Holidays journey as per bus company decision.</string>
+    <string name="any_kind_of_ticket_cancellation_bus" translatable="false">Any kind of ticket cancellation might not be allowed during Public Holidays journey as per bus company decision.</string>
+    <string name="any_kind_of_ticket_cancellation_lunch" translatable="false">Any kind of ticket cancellation might not be allowed during public holidays journey as per launch company decision.​</string>
+
     <string name="custom_filter" translatable="false">Custom filter</string>
     <string name="time" translatable="false">Time</string>
     <string name="sort_by_price" translatable="false">Sort by price</string>

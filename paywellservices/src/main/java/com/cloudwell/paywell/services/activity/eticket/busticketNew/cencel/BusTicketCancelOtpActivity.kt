@@ -13,8 +13,6 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.cencel.model
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.dialog.BusTicketSuccess
 import com.cloudwell.paywell.services.activity.home.OtpReceivedInterface
 import com.cloudwell.paywell.services.activity.home.SmsBroadcastReceiver
-import com.cloudwell.paywell.services.activity.home.model.ReposeGenerateOTP
-import com.cloudwell.paywell.services.activity.home.model.RequestGenerateOTP
 import com.cloudwell.paywell.services.activity.home.model.RequestOtpCheck
 import com.cloudwell.paywell.services.activity.home.model.ResposeOptCheck
 import com.cloudwell.paywell.services.activity.settings.ChangePinActivity
@@ -27,7 +25,7 @@ import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
-import kotlinx.android.synthetic.main.otp_dialog.*
+import kotlinx.android.synthetic.main.otp_dialog_bus_cancel.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
@@ -73,42 +71,7 @@ class BusTicketCancelOtpActivity : BusTricketBaseActivity(), GoogleApiClient.Con
 
     }
 
-    private fun calledResendOtp() {
-        showProgressDialog()
 
-        val m = RequestGenerateOTP()
-        m.username = AppHandler.getmInstance(applicationContext).userName
-
-        ApiUtils.getAPIServiceV2().generateOTP(m).enqueue(object : Callback<ReposeGenerateOTP> {
-            override fun onResponse(call: Call<ReposeGenerateOTP>, response: Response<ReposeGenerateOTP>) {
-                dismissProgressDialog()
-                if (response.isSuccessful) {
-
-                    response.body().let {
-                        if (it?.apiStatus ?: 0 == 200) {
-                            if (it?.responseDetails!!.status == 200) {
-                                Toast.makeText(applicationContext, it.responseDetails?.statusName, Toast.LENGTH_LONG).show()
-                            } else {
-                                Toast.makeText(applicationContext, it.responseDetails?.statusName, Toast.LENGTH_LONG).show()
-                                timer_button.reset()
-                            }
-                        } else {
-                            val errorMsgDialog = it?.apiStatusName?.let { it1 -> ErrorMsgDialog(it1) }
-                            errorMsgDialog?.show(supportFragmentManager, "oTPVerificationMsgDialog")
-                        }
-                    }
-
-                }
-            }
-
-            override fun onFailure(call: Call<ReposeGenerateOTP>, t: Throwable) {
-                dismissProgressDialog()
-                showTryAgainDialog()
-            }
-        })
-
-
-    }
 
     private var mGoogleApiClient: GoogleApiClient? = null
     private lateinit var mSmsBroadcastReceiver: SmsBroadcastReceiver
