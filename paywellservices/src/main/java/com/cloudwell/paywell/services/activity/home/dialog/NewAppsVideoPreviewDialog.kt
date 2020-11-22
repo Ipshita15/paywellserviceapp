@@ -1,6 +1,7 @@
 package com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BaseDialogFragment
+import com.cloudwell.paywell.services.activity.faq.FAQActivity
 import com.cloudwell.paywell.services.activity.home.youtube.MainFragment
 import com.cloudwell.paywell.services.activity.utility.model.Video
 import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus
@@ -31,6 +33,13 @@ class NewAppsVideoPreviewDialog() : BaseDialogFragment() {
 
         view.tvPlayVideo.setOnClickListener {
             GlobalApplicationBus.getBus().post(Video(true))
+        }
+
+        view.tvFAQ.setOnClickListener {
+
+            val i = Intent(context, FAQActivity::class.java)
+            startActivity(i)
+
         }
 
         showDialog()

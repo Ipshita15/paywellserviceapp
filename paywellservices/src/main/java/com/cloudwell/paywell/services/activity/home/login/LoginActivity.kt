@@ -11,6 +11,7 @@ import com.cloudwell.paywell.services.BuildConfig
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.AppLoadingActivity
 import com.cloudwell.paywell.services.activity.base.BaseActivity
+import com.cloudwell.paywell.services.activity.faq.FAQActivity
 import com.cloudwell.paywell.services.activity.home.OtpActivity
 import com.cloudwell.paywell.services.activity.home.model.RequestAppsAuth
 import com.cloudwell.paywell.services.activity.home.model.ResposeAppsAuth
@@ -100,6 +101,11 @@ public class LoginActivity : BaseActivity() {
                 etAccountID.setInputType(InputType.TYPE_NULL)
                 etPinNumber.requestFocus()
             }
+        }
+
+        imagCallButton.setOnClickListener {
+            val i = Intent(applicationContext, FAQActivity::class.java)
+            startActivity(i)
         }
 
     }

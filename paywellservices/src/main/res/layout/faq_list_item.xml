@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/linearLayout32"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#eafff4">
+
+    <TextView
+            android:id="@+id/lblListItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="testssss"
+            android:textColor="#59595c"
+            android:textSize="17dip"
+            app:layout_constraintBottom_toTopOf="@+id/imageView48"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+    <ImageView
+            android:id="@+id/imageView48"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/lblListItem"
+            app:layout_constraintTop_toBottomOf="@+id/lblListItem"
+            app:srcCompat="@drawable/faq_up_arrow" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -781,7 +781,26 @@
     <string name="cancel_ticket_list_button">Cancel Ticket</string>
     <string name="what_new_in_new_apps">What\'s new in this version</string>
     <string name="play_video">Play Video</string>
-    <string name="skip">Skip</string>How to login to the new app>/string>
+    <string name="skip">Skip</string>
+    <string name="faq">Help</string>
+    <string name="title_activity_f_a_q">FAQActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="call_center">Our call center</string>How to login to
+    the new app>/string>
+
+    <array name="faq_header">
+        <item>পেওয়েল একাউন্ট খুলতে কি আমি অন্য কারও ট্রেড লাইসেন্স ব্যবহার করতে পারি?</item>
+    </array>
+
+    <array name="faq_child">
+        <item>আমরা আপনাকে আপনার নিজস্ব ট্রেড লাইসেন্স ব্যাবহার করতে পরামর্শ দিব</item>
+    </array>
 
 
 </resources>

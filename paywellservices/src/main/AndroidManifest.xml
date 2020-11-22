@@ -81,11 +81,11 @@
         <activity
                 android:name=".activity.home.login.LoginActivity"
                 android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar"></activity>
+                android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
                 android:name=".activity.bank_info_update.BankListActivity"
-                android:screenOrientation="portrait"></activity>
+                android:screenOrientation="portrait" />
         <activity
                 android:name=".activity.bank_info_update.BankSelectionActivity"
                 android:parentActivityName=".activity.settings.SettingsActivity"
@@ -1150,7 +1150,12 @@
 
         <activity
                 android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-                android:screenOrientation="portrait"></activity>
+                android:screenOrientation="portrait" />
+
+
+        <activity
+                android:name=".activity.faq.FAQActivity"
+                android:label="@string/title_activity_f_a_q" />
 
         <meta-data
                 android:name="com.google.android.gms.vision.DEPENDENCIES"

@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.AppLoadingActivity
 import com.cloudwell.paywell.services.activity.base.BaseActivity
+import com.cloudwell.paywell.services.activity.faq.FAQActivity
 import com.cloudwell.paywell.services.activity.home.login.LoginActivity
 import com.cloudwell.paywell.services.activity.home.model.refreshToken.RequestRefreshToken
 import com.cloudwell.paywell.services.activity.reg.EntryMainActivity
@@ -111,17 +112,20 @@ class HomeActivity : BaseActivity() {
         }
 
         ivGetHelpCallCenter.setOnClickListener {
-            callPreviewAirticket(false)
+//            callPreviewAirticket(false)
+
+            val i = Intent(applicationContext, FAQActivity::class.java)
+            startActivity(i)
         }
 
 
-        if (appStatus.equals(AppsStatusConstant.KEY_unregistered)) {
-            if (!AppHandler.getmInstance(getApplicationContext()).isVideoPreviewShow()) {
-                AppHandler.getmInstance(getApplicationContext()).setVideoPreviewShow(true)
-                val newAppsVideoPreviewDialog = NewAppsVideoPreviewDialog()
-                newAppsVideoPreviewDialog.show(supportFragmentManager, "newAppsVideoPreviewDialog")
-            }
-        }
+//        if (appStatus.equals(AppsStatusConstant.KEY_unregistered)) {
+//            if (!AppHandler.getmInstance(getApplicationContext()).isVideoPreviewShow()) {
+        AppHandler.getmInstance(getApplicationContext()).setVideoPreviewShow(true)
+        val newAppsVideoPreviewDialog = NewAppsVideoPreviewDialog()
+        newAppsVideoPreviewDialog.show(supportFragmentManager, "newAppsVideoPreviewDialog")
+//            }
+//        }
 
     }
 

@@ -133,5 +133,25 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvForgotPIn" />
 
+        <ImageView
+                android:id="@+id/imageView49"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btSingIn"
+                app:srcCompat="@drawable/line_3" />
+
+        <ImageView
+                android:id="@+id/imagCallButton"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView49"
+                app:srcCompat="@drawable/call_center_logo_big" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
