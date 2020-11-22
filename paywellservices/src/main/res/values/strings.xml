@@ -794,6 +794,8 @@
     <string name="call_center">Our call center</string>How to login to
     the new app>/string>
 
+    <string name="home_tutorial">Tutorial</string>
+
     <array name="faq_header">
         <item>পেওয়েল একাউন্ট খুলতে কি আমি অন্য কারও ট্রেড লাইসেন্স ব্যবহার করতে পারি?</item>
     </array>

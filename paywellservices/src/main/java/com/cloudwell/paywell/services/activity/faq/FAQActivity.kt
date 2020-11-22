@@ -17,7 +17,9 @@ class FAQActivity : BaseActivity() {
         setContentView(R.layout.activity_f_a_q)
         setToolbar(getString(R.string.faq))
 
-        prepareListData()
+        val isAfterLogin = intent.getBooleanExtra("isAfterLogin", false)
+
+        prepareListData(isAfterLogin)
 
         listAdapter = ExpandableListAdapter(this, listDataHeader, listDataChild)
 
@@ -27,7 +29,7 @@ class FAQActivity : BaseActivity() {
         expListView.setAdapter(listAdapter)
     }
 
-    private fun prepareListData() {
+    private fun prepareListData(isAfterLogin: Boolean) {
         listDataHeader = ArrayList()
         listDataChild = HashMap()
         listDataHeader = getResources().getStringArray(R.array.faq_header).toList()

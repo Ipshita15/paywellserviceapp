@@ -297,7 +297,7 @@ public class SettingsActivity extends BaseActivity {
         home_change_pin.setText(R.string.home_settings_change_pin);
         home_upgrade.setText(R.string.home_settings_upgrade);
         home_change_language.setText(R.string.home_settings_change_language);
-        home_help.setText(R.string.home_settings_help);
+        home_help.setText(R.string.home_tutorial);
 
 //        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
 ////            home_change_pin.setTypeface(AppController.getInstance().getOxygenLightFont());

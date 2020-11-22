@@ -38,7 +38,7 @@ public class HelpMainActivity extends AppCompatActivity implements View.OnClickL
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_settings_help);
+            getSupportActionBar().setTitle(R.string.home_tutorial);
         }
 
         mAppHandler = AppHandler.getmInstance(getApplicationContext());

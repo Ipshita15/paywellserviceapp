@@ -65,6 +65,7 @@ import com.cloudwell.paywell.services.activity.entertainment.bongo.BongoMainActi
 import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity;
+import com.cloudwell.paywell.services.activity.faq.FAQActivity;
 import com.cloudwell.paywell.services.activity.fee.FeeMainActivity;
 import com.cloudwell.paywell.services.activity.home.HomeActivity;
 import com.cloudwell.paywell.services.activity.location.model.CurrentLocationModel;
@@ -1504,6 +1505,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 break;
 
+            case R.id.homeBtnFaq:
+
+                startFAQActiivty();
+
+                break;
+
             default:
                 break;
         }
@@ -2397,7 +2404,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                             openTransactionStatement();
                         } else if (itemString.equals(Constant.KEY_home_settings_change_pin)) {
                             openChangePinNumber();
-                        } else if (itemString.equals(Constant.KEY_home_settings_help)) {
+                        } else if (itemString.equals(Constant.KEY_home_tutorial)) {
                             startActivity(new Intent(getApplicationContext(), HelpMainActivity.class));
                         }
 
@@ -2444,7 +2451,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(AllUrl.privacy));
                 startActivity(browserIntent);
             }
+        } else if (menuName.equals(Constant.KEY_faq_text)) {
+            startFAQActiivty();
+
+        } else if (menuName.equals(Constant.KEY_home_tutorial)) {
+
+            startActivity(new Intent(getApplicationContext(), HelpMainActivity.class));
+
         }
+    }
+
+    private void startFAQActiivty() {
+        Intent intent = new Intent(this, FAQActivity.class);
+        intent.putExtra("isAfterLogin", false);
+        startActivity(intent);
     }
 
 
