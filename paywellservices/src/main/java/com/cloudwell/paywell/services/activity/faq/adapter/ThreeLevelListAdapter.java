@@ -2,6 +2,7 @@ package com.cloudwell.paywell.services.activity.faq.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,6 +99,7 @@ public class ThreeLevelListAdapter extends BaseExpandableListAdapter {
         convertView = inflater.inflate(R.layout.row_first, null);
         TextView text = (TextView) convertView.findViewById(R.id.rowParentText);
         text.setText(this.parentHeaders[groupPosition]);
+        text.setTypeface(null, Typeface.BOLD);
 
 
         ImageView viewById = (ImageView) convertView.findViewById(R.id.ivIndicator);
@@ -125,12 +127,8 @@ public class ThreeLevelListAdapter extends BaseExpandableListAdapter {
         LinkedHashMap<String, ArrayList<String>> secondLevelData = data.get(groupPosition);
 
         for (String key : secondLevelData.keySet()) {
-
-
             childData.add(secondLevelData.get(key));
-
         }
-
 
         secondLevelELV.setAdapter(new SecondLevelAdapter(context, headers, childData));
 
