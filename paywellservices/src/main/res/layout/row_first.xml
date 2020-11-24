@@ -20,6 +20,7 @@
             android:paddingStart="?android:attr/expandableListPreferredItemPaddingLeft"
             android:textColor="#00844a"
             android:textSize="14sp"
+            android:autoLink="all"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/ivIndicator"
             app:layout_constraintStart_toStartOf="parent"

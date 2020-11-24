@@ -728,7 +728,7 @@
     <string name="text_bus_to_error">You must type the destination city you want to travel</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="bus_transction_log">Transaction Log</string>
     <string name="cancel_ticket_list">Cancel Ticket</string>
     <string name="title_ticket_cancel_list">Ticket cancel list</string>
@@ -783,14 +783,14 @@
     <string name="play_video">Play Video</string>
     <string name="skip">Skip</string>
     <string name="faq">Help</string>
-    <string name="title_activity_f_a_q">FAQActivity</string>
+    <string name="title_activity_f_a_q" translatable="false">FAQActivity</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="previous">Previous</string>
+    <string name="first_fragment_label" translatable="false">First Fragment</string>
+    <string name="second_fragment_label" translatable="false">Second Fragment</string>
+    <string name="previous" translatable="false">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="hello_first_fragment" translatable="false">Hello first fragment</string>
+    <string name="hello_second_fragment" translatable="false">Hello second fragment. Arg: %1$s</string>
     <string name="call_center">Our call center</string>How to login to
     the new app>/string>
 
@@ -824,321 +824,316 @@
     </array>
 
     <array name="parent">
-        <item>নিবন্ধন সংক্রান্ত জিজ্ঞাসা?</item>
-        <item>পেওয়েল ব্যালেন্স রিফিল প্রক্রিয়া সংক্রান্ত জিজ্ঞাসা?</item>
-        <item>মোবাইল টপআপ সংক্রান্ত জিজ্ঞাসা?</item>
-        <item>পল্লী বিদ্যুৎ বিল প্রদান সংক্রান্ত জিজ্ঞাসা?</item>
-        <item>ডেসকো, ডিপিডিসি এবং ওয়াসা বিল প্রদান সংক্রান্ত জিজ্ঞাসা?</item>
-        <item>মাইক্যাশ সংক্রান্ত জিজ্ঞাসা?</item>
-        <item>বিমান, বাস এবং লঞ্চ টিকেট সংক্রান্ত জিজ্ঞাসা?</item>
+        <item>Registration?</item>
+        <item>Query about PayWell Balance Refill Process?</item>
+        <item>Mobile topup?</item>
+        <item>Palli Bidyut bill payment?</item>
+        <item>DESCO, DPDC And WASA?</item>
+        <item>MyCash?</item>
+        <item>Air, Bus and Launch Ticket?</item>
     </array>
 
     <array name="q1">
-        <item>১. পেওয়েল কি?</item>
-        <item>২. পেওয়েল সেবা কি কি উপায়ে ব্যবহার করা যাবে?</item>
-        <item>৩. কীভাবে আমি খুচরা বিক্রেতা হিসাবে পেওয়েল সার্ভিসে নিবন্ধন করতে পারি?</item>
-        <item>৪. বৈধ ট্রেড লাইসেন্স ছাড়া কিভাবে আমি পেওয়েল একাউন্ট খুলতে পারব?</item>
-        <item>৫. পেওয়েল একাউন্ট খুলতে কি আমি অন্য কারও ট্রেড লাইসেন্স ব্যবহার করতে পারি?</item>
-        <item>৬. পেওয়েল একাউন্ট মালিকানা স্থানান্তর সম্ভব?</item>
-        <item>৭. পেওয়েল রেজিস্ট্রেশন এর জন্য কোন চার্জ আছে কি?</item>
-        <item>৮. পেওয়েল সার্ভিস কম্পিউটারে ব্যবহার করতে হলে কি করতে হবে?</item>
-        <item>৯. রেজিস্ট্রেশনের পর "Pending" লেখা দেখাচ্ছে, এখন কি করতে হবে?</item>
-        <item>১০. কীভাবে রেজিস্ট্রেশন বাতিল করব?</item>
-        <item>১১. মোবাইল পরিবর্তন করতে হলে কি করতে হবে?</item>
+        <item>1. What is PayWell?</item>
+        <item>2. How can I use PayWell service?</item>
+        <item>3. How can I register with PayWell as a retailer?</item>
+        <item>4. Can I open a PayWell account without a valid trade license?</item>
+        <item>5. Can I use someone else\'s trade license to open a PayWell account?</item>
+        <item>6. How do I transfer my PayWell account to another person?</item>
+        <item>7. Is there any charge for PayWell registration?</item>
+        <item>8. If I want to use PayWell service on web version?</item>
+        <item>9. What can I do now after registration, it\'s showing your request is "Pending"?
+        </item>
+        <item>10. How do I cancel the registration?</item>
+        <item>11. What to do to change the mobile?</item>
     </array>
     <array name="a1">
-        <item>পেওয়েল বৃহৎ তম রিটেল নেটওয়ার্কের মাধ্যমে সকল পেমেন্ট পরিসেবা প্রদানের এক সহজ, নিরাপদ
-            ও দ্রুততম মাধ্যম। একজন গ্রাহক অতি সহজেই সারদেশে পেওয়েল এর বিস্তৃত রিটেল আউটলেট থেকে সকল
-            মোবাইল অপারেটর এবং ব্রিলিয়ান্ট নাম্বার রিচার্জ, পল্লী বিদ্যুৎ, DESO, DPDC, Dhaka WASA,
-            কর্ণফুলী গ্যাস বিল, ইন্টারনেট বিল প্রদান বাস, লঞ্চ ও বিমান টিকেট ক্রয়, বিবিসি জানালা ও
-            বঙ্গ প্যাকেজ ক্রয়, ইন্ডিয়ান ভিসা ফি প্রদান সহ বিভিন্ন পরিসেবা গ্রহন করতে পারবেন।
+        <item>PayWell acts as a one-stop solution for various payments through a large network of
+            outlets, providing users the most convenient, fastest secured platform. Customers can
+            easily recharge all mobile operators and brilliant numbers, can pay Palli Bidyut, DESO,
+            DPDC, Dhaka WASA, Karnafuli Gas , Internet Bill can purchase Bus, Launch and Air Ticket
+            , BBC Windows and Bongo Pakage, payment of Indian visa fee and difference services as
+            well.
         </item>
-        <item>POS machine, Android app &amp; Web portal</item>
-        <item>আপনি Google Play Store হতে PayWell services App টি ডাউনলোড করে App এর প্রদত্ত
-            নির্দেশনা অনুযায়ী সকল তথ্য পূরন করে ব্যাবসা শুরু করতে পারবেন। আপনার ১ কপি পাসপোর্ট
-            সাইজের ছবি, NID ছবি (উভয় দিকের), ট্রেড লাইসেন্সের ছবি এবং আপনার আউটলেটের বাহির থেকে
-            সাইনবোর্ড/ব্যানার সহ পরিস্কার ছবিসহ অন্যান্য তথ্য প্রদান করতে হবে। এজেন্টের সকল তথ্য
-            পেওয়েল হেড অফিস থেকে যাচাই হবার পর, এজেন্টের ফোন নাম্বার এ নিবন্ধনটি সম্পূর্ণ হবার মেসেজ
-            যাবে। সেই মেসেজ এ এজেন্ট পেওয়েল অ্যাকাউন্ট এর পিন নাম্বার ও এজেন্ট RID টি পাবে।
+        <item>Android app, Web portal &amp; POS machine.</item>
+        <item>Retailers must have physical outlet/valid trade license, National ID Card and basic
+            understanding of app/device usage. Business types include but are not limited to
+            convenience stores, pharmacies, super-stores, grocery stores, telecom servicing centers,
+            bookshops, photocopy stations, electronic stores and cyber cafés. If want to be an agent
+            of PayWell, you can download PayWell Services app from Google Play Store in your android
+            device and fill up registration form and upload required documents. Upon approval by our
+            verification team, you will get PIN number and can access to PayWell services. If you
+            want to use other means i.e. POS terminal, computer or web panel, please contact our
+            helpdesk 096667773333, 09638016566 for know about manual registration process.
         </item>
-        <item>যদি আপনার কোন ট্রেড লাইসেন্স না থাকে তাহলে আপনি PayWell service App মাধ্যমে ব্যাবসা
-            শুরু করতে পারবেন না।
+        <item>No, If you do not have a trade license, you will not be able to open any account to
+            start any business with PayWell.
         </item>
-        <item>আমরা আপনার নিজস্ব ট্রেড লাইসেন্স ব্যাবহার করতে পরামর্শ দিব।</item>
-        <item>POS মেশিনের ক্ষেত্রে নতুন এজেন্ট এর ১ কপি পাসপোর্ট সাইজের ছবি, NID ছবি, ট্রেড
-            লাইসেন্সর ছবি, এবং আউটলেটের বাহির থেকে সাইনবোর্ড/ব্যানার সহ পরিস্কার ছবি নিয়ে আপনার
-            নিকটতম ডিলার/কালেশন অফিসারের সাথে যোগাযোগ করুন। Mobile App এবং Web Portal এর ক্ষেত্রে
-            আমরা নতুন একাউন্ট খুলতে পরামর্শ দিয়ে থাকি।
+        <item>We recommend using your own trade license.</item>
+        <item>For the POS machine, contact your nearest dealer/collection officer with 1 copy
+            passport size photo of the new agent, NID photo, photo of trade licensee, and clear
+            photo with signboard/banner from outside the outlet. In the case of the Mobile App and
+            Web Portal, we recommend to open a new account.
         </item>
-        <item>পেওয়েল এ রেজিস্ট্রেশন জন্য কোন প্রকার চার্জ নেই।</item>
-        <item>পেওয়েল সার্ভিস কম্পিউটারে মাধ্যমে ব্যবহার করার জন্য আপনার ১ কপি পাসপোর্ট সাইজের ছবি,
-            NID ছবি (উভয় দিক), ট্রেড লাইসেন্সের ছবি এবং আপনার আউটলেটের বাহিরের সাইনবোর্ড/ব্যানার সহ
-            পরিস্কার ছবি, আপনার বিস্তারিত তথ্য আমাদের ইমেইল করুন। আমাদের ইমেইল ঠিকানা
-            salesops@cloudwell.co অথবা helpdesk@cloudwell.co
+        <item>There is no charge for registration at PayWell.</item>
+        <item>You need to email us your details information. salesops@cloudwell.co or
+            helpdesk@cloudwell.co, including 1 copy of your passport size photo, NID photo (both
+            directions), photo of the trade license and outlet image, to open a PayWell webportal
+            access for your computer.
         </item>
-        <item>এজেন্টের সকল তথ্য পেওয়েল হেড অফিস থেকে যাচাই করা হয় তাই "Pending" লেখাটি দেখাচ্ছে। ১
-            ঘণ্টার পর যদি "Pending" লেখাটি তাহলে আমাদের সাথে যোগাযোগ করুন ০৯৬১০১-১৬৫৬৬,
-            ০৯৬৩৮০-১৬৫৬৬, ১৬৫৬৬ হেল্প লাইন
+        <item>All the information of the agent will verifying from the PayWell head office so your
+            request is showing "Pending". After 1 hour if the text "Pending" then contacts us
+            096101-16566, 096380-16566, 16566 helpline.
         </item>
-        <item>রেজিস্ট্রেশন বাতিল করতে আমাদের সাথে যোগাযোগ করুন ০৯৬১০১-১৬৫৬৬, ০৯৬৩৮০-১৬৫৬৬, ১৬৫৬৬
-            হেল্প লাইন।
+        <item>To cancel the registration, contact us on 096101-16566, 096380-16566, 16566
+            helpline.
         </item>
-        <item>স্যার নতুন মোবাইলে পেওয়েল অ্যাপ চালু করতে আমাদের সাথে যোগাযোগ করুন ০৯৬১০১-১৬৫৬৬,
-            ০৯৬৩৮০-১৬৫৬৬, ১৬৫৬৬ হেল্প লাইন।
-        </item>
+        <item>Sir, contact us to relaunch the PayWell app on the new mobile.</item>
     </array>
     <array name="q2">
-        <item>১. কীভাবে আমি টাকা এলকেশন করতে পারি/ পেওয়েল ব্যাল্যান্স পেতে পারি?</item>
-        <item>২. আমার কি প্রতিটি সার্ভিস এর জন্য আলাদা ব্যালেন্স নিতে হবে?</item>
-        <item>৩. কোন কোন ব্যাংক থেকে পেওয়েল এ ব্যালেন্স রিফিল করতে পারব?</item>
-        <item>৪. বিকাশ থেকে পেওয়েল এ ব্যালেন্স রিফিল করতে পারব?</item>
-        <item>৫. কীভাবে নগদ থেকে পেওয়েল এ ব্যালেন্স রিফিল করব?</item>
-        <item>৬. নগদ থেকে পেওয়েল এ ব্যালেন্স রিফিল কীভাবে ক্লেইম করব?</item>
-        <item>৭. নগদ থেকে ব্যালেন্স রিফিল এর চার্জ কত?</item>
-        <item>৮. ব্যালেন্স শুন্য (০) দেখাচ্ছে। এতে করণীয় কি?</item>
-        <item>৯. অনেক সময় আমার Account এ যত টাকা থাকার কথা তার চেয়ে কম/বেশি দেখতে পাচ্ছি। এর করণীয়
-            কি?
-        </item>
-        <item>১০. আমি আমার সারা মাসের Transaction Report (Statement) দেখতে চাচ্ছি। এর করণীয় কি?
-        </item>
+        <item>1. How can I get balance to sell PayWell services?</item>
+        <item>2. Do I need to have separate balance for each service?</item>
+        <item>3. From which banks can I refill the balance at PayWell?</item>
+        <item>4 Can I refill the PayWell balance from bKash?</item>
+        <item>5. How do I refill the PayWell balance from Nagad?</item>
+        <item>6. How do I claim the balance from Nagad to PayWell?</item>
+        <item>7. What is the charge of balance refill from Nagad?</item>
+        <item>8. Balance showing zero (0). What to do about it?</item>
+        <item>9. PayWell balance mismatch what can I do now?</item>
+        <item>10. What do I do to get my monthly transaction report?</item>
     </array>
     <array name="a2">
-        <item>আপনার এলাকার যে নিবন্ধিত কালেকশন অফিসার থাকে তার মাধ্যমে আপনি আপনার পেওয়েল ব্যাল্যান্স
-            নিতে পারবেন। যদি কোন কালেকশন অফিসার না থাকে তাহলে ব্যাংক ডিপোজিটের মাধ্যমে অথবা নগদ
-            পেমেন্টের মাধ্যমে ব্যাল্যান্স রিফিল করতে পারবেন।
+        <item>You can easily refill PayWell balance in 3 ways lift from our local distributor,
+            deposit to any of our designated banks and can also refill balance through Nagad
+            payments.
         </item>
-        <item>না, আপনি পেওয়েল ব্যালেন্স থেকে যে কোনও সার্ভিস বিক্রয় করতে পারবেন।</item>
-        <item>ব্র্যাক ব্যাংক, ডাচ বাংলা ব্যাংক, ইসলামী ব্যাংক বাংলাদেশ লিমিটেড, পূবালী ব্যাংক,
-            স্ট্যান্ডার্ড চার্টার্ড ব্যাংক এবং সিটি ব্যাংক থেকে পেওয়েল এ ব্যালেন্স রিফিল করতে
-            পারবেন।
+        <item>No. You can sell any services from single PayWell balance.</item>
+        <item>You can refill the balance at PayWell from BRAC Bank, Dutch Bangla Bank, Islamic Bank
+            Bangladesh Limited, Pubali Bank, Standard Chartered Bank and The City Bank.
         </item>
-        <item>বিকাশ থেকে পেওয়েল এ ব্যালেন্স রিফিল সার্ভিসটি চালু হলে জানানো হবে।</item>
-        <item>ডিরেক্ট ব্যালেন্স রিফিল অপশনটি সিলেক্ট করুন। \n টাকার পরিমাণ লিখে “Confirm” করুন।
-            পেওয়েল পিন নাম্বার দিন। আপনার নগদ একাউন্ট নাম্বার দিয়ে “ I agree to the terms and
-            conditions” সিলেক্ট করে “Proceed” করুন। আপনার মোবাইলে নগদ থেকে এসএমএস এর মাধ্যমে প্রেরিত
-            “OTP” নাম্বারটি দিয়ে “Proceed” করুন। নগদের পিন নাম্বার দিন। সাথে সাথে পেওয়েল ব্যালেন্স
-            যোগ হয়ে যাবে।
+        <item>Currently this service is not available.</item>
+        <item>Select the Direct Balance Refill option. Enter the amount of money and "Confirm". Give
+            the PayWell PIN number. Select “I agree to the terms and conditions” with your Nagad
+            account number and proceed. “Proceed” with the “OTP” number sent via SMS from Nagad to
+            your mobile. Give the Nagad PIN number. PayWell balance will be added immediately.
         </item>
-        <item>ব্যালেন্স এর জন্য পেওয়েল অ্যাপ এর ব্যালেন্স ক্লেইম অপশন এ গিয়ে আপনার নগদ একাউন্ট
-            নম্বর/ট্রানজেকশন আইডি ও টাকার পরিমাণ দিয়ে ক্লেইম প্রক্রিয়া সম্পন্ন করুন। (১.২% সার্ভিস
-            চার্জ প্রযোজ্য)। ৫ মিনিটের মধ্যে ব্যালেন্স অ্যাড না হলে পেওয়েল হেল্প ডেস্ক-এ কল করুন। \n
-            <b>বিশেষ দ্রষ্টব্য: ১১ ডিজিটের মোবাইল নম্বর বা RID আইডি ভুলের কারণে ব্যালেন্স অ্যাড না
-                হলে তার জন্য দায় দায়িত্ব পেওয়েল কর্তৃপক্ষ বহন করে না। তাই পেমেন্ট করার সময়
-                সর্তকতা অবলম্বন করুন।
+        <item>For balance, go to the balance claim option of PayWell app and complete the claim
+            process with your cash account number / transaction ID and amount of money. (1.2%
+            service charge applicable). If the balance is not added within 5 minutes, call the
+            PayWell Help Desk. \n<b>Note: The PayWell Authority does not bear the responsibility if
+                the balance is not added due to error of 11 digit mobile number or RID. Please be
+                careful when making any payments.
             </b>
         </item>
-        <item>১.২% সার্ভিস চার্জ প্রযোজ্য।</item>
-        <item>আপনার POS কে PayWell যথাযথ ভাবে চিনতে না পারলে আপনার ব্যালেন্স শুন্য দেখাতে পারে।
-            আপনার POS টির রেজিস্ট্রেশন এ কোন সমস্যা হলে এধরনের সমস্যা হতে পারে। সেক্ষেত্রে কিছুক্ষণ
-            অপেক্ষা করে আবার চেষ্টা করুন। \n যদি ওয়েব পোর্টালে ব্যালেন্স শুন্য দেখায় তাহলে কম্পিউটার
-            এর ব্রাউজার সম্পূর্ণ কেটে দিয়ে, ব্রাউজার History পরিস্কার করুন এবং নতুন করে ওয়েব পোর্টাল
-            পেজটি চালু করুন। মোবাইল অ্যাপ এর ক্ষেত্রে পূনরায় লগ ইন করুন
+        <item>1.2 service charge is applicable.</item>
+        <item>If PayWell does not recognize your POS properly, your balance may show zero. If there
+            is a problem in the registration of your POS, such a problem may occur. In that case,
+            wait a while and try again. For “web portal” close your computer\\\'s browser
+            completely, clear the browser history and start a new web portal page. In the case of a
+            mobile app, login again.
         </item>
-        <item>আমাদের সাথে যোগাযোগ করুন ০৯৬১০১-১৬৫৬৬, ০৯৬৩৮০-১৬৫৬৬, ১৬৫৬৬ হেল্প লাইন। ২৪ থেকে ৪৮
-            ঘণ্টার মধ্যে আপনার নির্দিষ্ট সময়সীমার বিস্তারিত বিবরণী (statement) দিয়ে দেয়া হবে।
+        <item>Please contact us at 096101-16566, 096380-16566, 16566 helpline. In 24 to 48 hours you
+            will be given a detailed statement of the specified time period.
         </item>
-        <item>আমাদের সাথে যোগাযোগ করুন ০৯৬১০১-১৬৫৬৬, ০৯৬৩৮০-১৬৫৬৬, ১৬৫৬৬ হেল্প লাইন।</item>
+        <item>Please contact us on 096101-16566, 096380-16566, 16566 helpline.</item>
     </array>
 
     <array name="q3">
-        <item>১. মোবাইল টপআপ করার সময় “Internet Connection Error” এই Message টা দেখতে পাচ্ছি। এর
-            কারণ কি?
+        <item>1. What to do if I get the message "Internet Connection Error" when trying to top
+            up?
         </item>
-        <item>২. একটি নম্বর এ টপআপ করতে গিয়ে “Time Limit Error” দেখতে পাচ্ছি। এর করণীয় কি?</item>
-        <item>৩. টপআপ করার পর Status দেখতে পাচ্ছি “Invalid Topup Value”, এর করণীয় কি?</item>
-        <item>৪. মোবাইল টপআপ করার সময় “Authentication Error” এই Message টা দেখাচ্ছে। এর করণীয় কি?
-        </item>
-        <item>৫. কোন Number এ টপআপ করার সময় “Technical Error” দেখালে কি করতে হবে?</item>
-        <item>৬. মোবাইল টপআপ করার সময় বারবার “Can Not Be Processed” দেখাচ্ছে?</item>
-        <item>৭. মোবাইল টপআপ করার সময় নম্বর দেয়ার পর Sending Receiving এ গিয়ে অনেক সময় নিচ্ছে, পরে
-            Hang হয়ে যাচ্ছে এবং কোন error message দেখাচ্ছে না। এতে করণীয় কি?
-        </item>
-        <item>৮. কোন Number এ মোবাইল টপআপ করার পর Retailer “Successful” দেখতে পাচ্ছে কিন্তু Customer
-            Complain করছে তিনি তার Account এ টাকা পাননি। এর করণীয় কি হবে? আমি কি আবার রিচার্জটি করার
-            জন্য অনুরোধ পাঠাবো?
+        <item>2. What do I do if I see “Time limit Error” when topup a number?</item>
+        <item>3. What do I do if I get the status “Invalid Topup Value”?</item>
+        <item>4. What do I do if I get “Authentication Error” when topup?</item>
+        <item>5. What do I do if it shows “Technical Error” when topup?</item>
+        <item>6. Repeatedly showing “Can Not Be Processed” when topup?</item>
+        <item>7. What do I do if topup shows an error message?</item>
+        <item>8. What to do if topup shows "Successful" response but customer did not get the
+            balance?
         </item>
     </array>
 
 
     <array name="a3">
-        <item>POS এ ইন্টারনেট পেতে সমস্যা হলে এই message টি দেখায়। “Internet Connection Error”
-            message দিলে পরবর্তী transaction করার আগে 45 সেকেন্ড এর জন্য অপেক্ষা করুন। তারপরও
-            সমস্যার সমাধান না হলে POS Machine টির Battery খুলে Sim card টা খুলে আবার ঠিক মতো লাগিয়ে
-            দেখবেন, কারণ Sim card displace হয়ে গেলে POS ইন্টারনেট সংযোগ পাবেনা। 
+        <item>This message shows if you have trouble getting internet in POS. If you get “Internet
+            Connection Error” message, wait for 45 seconds before making the next transaction. Even
+            then, if the problem is not solved, open the battery of the POS machine, open the SIM
+            card and try to put it again, because if the SIM card is displaced, the POS will not get
+            internet connection.
         </item>
-        <item>যেকোনো গ্রামীনফোন, স্কিট, বাংলালিঙ্ক, টেলিটক, এয়ারটেল অথবা রবি নম্বর এ একবার সফল ভাবে
-            Topup করার পর পরবর্তী ০৫ মিনিটের মধ্যে পুনরায় একই নাম্বারে সমপরিমান টাকা Topup করা যাবে
-            না।
+        <item>Once you have successfully topped any Grameenphone, Skitt, Banglalink, Teletalk,
+            Airtel or Robi number, you will not be able to topup the same amount within next 5
+            minutes for the next 05 minutes.
         </item>
-        <item>“Prepaid” Number এর জন্য সর্বনিম্ন ১০ টাকা এবং “Postpaid” Number এর জন্য সর্বনিম্ন ৫০
-            টাকা Topup করা যাবে। যেকোন নাম্বার এ একবার এ সর্বোচ্চ ১০০০ টাকার অধিক Topup করা যাবেনা।
-            এর বাইরে কোন অ্যামাউন্ট দিলে এই Status দেখাবে।
+        <item>Minimum 10 taka for “Prepaid” Number and minimum 50 taka for “Postpaid” Number can be
+            topup. You can\'t topup any number above 1000 taka at once. If you give any amount
+            outside this, this status will show.
         </item>
-        <item>সাধারনত ভুল PIN নাম্বার দিলে এই Error টি দেখায়।</item>
-        <item>এই Status টা দুটি কারণে হতে পারে- যে Number এ Topup করতে চাচ্ছেন ঐ অপারেটর থেকে এই
-            error পেলে অথবা Transaction হওয়ার সময় POS এর ইন্টারনেট সংযোগ বিচ্ছিন্ন হয়ে গেলে। উভয়
-            ক্ষেত্রেই আপনাকে “Inquire Topup” এ গিয়ে Transaction status check করে দেখতে হবে। \n প্রথম
-            কারণটির ক্ষেত্রে অনুসন্ধান এর উত্তরে Transaction Status এ আপনি “Technical Error” দেখতে
-            পাবেন, এটি অপারেটর থেকে পাওয়া একটি টেকনিক্যাল সমস্যা। এর জন্য আপনার ব্যালেন্স কাটার কোন
-            সম্ভাবনা নেই।
-            দ্বিতীয় কারণটির ক্ষেত্রে কখনো কখনো Transaction টি সফল হয়ে যায়। এর কারন, Transaction টি
-            হওয়ার সময় POS থেকে আপনার অনুরোধটি আমাদের Server এ এসে পৌছালেও এর উত্তর পাবার আগেই POS এর
-            ইন্টারনেট সংযোগ বিচ্ছিন্ন হয়ে যায়, যার ফলে Error টি দেখায়। এক্ষেত্রে Topup টি পুনরায়
-            করার প্রয়োজন নেই।
+        <item>This error is usually shown by giving wrong PIN number.</item>
+        <item>This status can be due to two reasons - the number you want to topup if you get this
+            error from the operator or the Internet connection of the POS is disconnected during the
+            transaction. In both cases you have to go to "Inquire Topup" and check the transaction.
+            \n In the case of the first reason, you will see "Technical Error" in the Status of the
+            transaction in response to the search, this is a technical problem received from the
+            operator. There is no possibility of cutting your balance for this.
+            In the case of the second reason, sometimes the transaction is successful. This is
+            because, even though your request from POS reaches our server during the transaction,
+            the POS internet connection is disconnected before it can be answered, which shows the
+            error. In this case, there is no need to repeat Topup.
         </item>
-        <item>এই Status টি Operator (যেমনঃ Grameenphone, Banglalink, Robi, Airtel, Teletalk) থেকে
-            দিয়ে থাকে। এক্ষেত্রে কিছুক্ষন অপেক্ষা করে পুনরায় ঐ নম্বর এ Topup এর অনুরোধ করা যাবে।
+        <item>This status is given by the operator (eg: Grameenphone, Banglalink, Robi, Airtel,
+            Teletalk). In this case, after waiting for a while, you can request Topup again at
+            number.
         </item>
-        <item>সাধারনত Sending, Receiving ও Connecting এর মাধ্যমে আপনার অনুরোধের উত্তর ৪৫ সেকেন্ড এর
-            মধ্যে চলে আসে। ৪৫ সেকেন্ড পরেও কোন response না এলে প্রথমত আপনার ইন্টারনেট সংযোগটি যাচাই
-            করুন, যদি ইন্টারনেট সংযোগ ঠিক থাকে তবে ৩-৫ মিনিট অপেক্ষা করে Customer Care এ Call করে
-            আপনার সমস্যাটি জানান। কোন Error না দিয়ে বের হয়ে মেনুতে চলে এলে “Inquire Topup” এ গিয়ে
-            Topup টি অনুসন্ধান করে দেখতে হবে Topup টি হয়েছে কিনা।
+        <item>Usually, the answer to your request comes within 45 seconds through Sending, Receiving
+            and Connecting. If there is no response after 45 seconds, first check your internet
+            connection, if the internet connection is OK, then wait 3-5 minutes and call Customer
+            Care to report your problem. If you exit the menu without any error, go to "Inquire
+            Topup" and search for the topup to see if the topup is done.
         </item>
-        <item>PayWell থেকে সংশ্লিষ্ট অপারেটর এর সাথে যোগাযোগ করে পাওয়া উপযুক্ত প্রমাণাদির সাপেক্ষে
-            ২৪ থেকে ৪৮ ঘণ্টার মধ্যে আপনাকে Topup এর বিস্তারিত বিবরন জানানো হবে। সেক্ষেত্রে Topup টি
-            হয়ে থাকলে Customer এর অভিযোগ গ্রহণযোগ্য হবে না এবং রিটেইলার কোন টাকা ফেরত পাবেন না।
-            যেকোন ধরনের সমস্যার কারনে যদি Topup টি Failed হয়ে থাকে তাহলে রিটেইলার ব্যালেন্স এ Topup
-            এর সমপরিমান টাকা ফেরত দিয়ে দেয়া হবে। শুধুমাত্র “Inquire Topup” এ গিয়ে Topup টি অনুসন্ধান
-            করে “fail” দেখালে রিচার্জটি পাঠানোর জন্য আবার অনুরোধ করা যেতে পারে।
+        <item>You will be informed of the details of Topup within 24 to 48 hours subject to the
+            appropriate evidence obtained by contacting the concerned operator from PayWell. In that
+            case, if the topup is done, the customer\'s complaint will not be accepted and the
+            retailer will not get any refund. If Topup has failed due to any kind of problem then
+            the same amount of Topup will be refunded in the retailer balance. Just go to “Inquire
+            Topup” and search for Topup and if you show “fail” then you can request to send the
+            recharge again
         </item>
     </array>
 
     <array name="q4">
-        <item>১. কীভাবে পল্লী বিদ্যুৎ সার্ভিস পেতে পারি?</item>
-        <item>২. চুক্তি পত্রের স্ট্যাম্প কপি আমি কীভাবে পেতে পারি ?</item>
-        <item>৩. বাংলাদেশের যেকোনো স্থান হতে পল্লী বিদ্যুৎ বিল পরিশোধ করা যায় ?</item>
-        <item>৪. পল্লী বিদ্যুৎ বিল প্রদান করার ক্ষেত্রে “to be processed” দেখায় সেক্ষেত্রে আমার কি
-            করণীয়?
+        <item>1. How can I get Palli Bidyut bill payment service?</item>
+        <item>2. How do I get a stamped copy of the contract?</item>
+        <item>3. Is it possible to pay Palli Bidyut bill from anywhere in Bangladesh?</item>
+        <item>4. What do I do if shows "to be processed" when I trying to pay the Palli Bidyut bill
+            payment?
         </item>
-        <item>৫. পল্লী বিদ্যুৎ বিল প্রদান করার ক্ষেত্রে “Canceled due to duplicate request” দেখায়
-            সেক্ষেত্রে আমার কি করণীয় ?
+        <item>5. What do I do if it shows "Canceled due to duplicate" request when I trying to pay
+            the Palli Bidyut bill payment?
         </item>
-        <item>৬. পল্লী বিদ্যুৎ বিল প্রদান করার ক্ষেত্রে “bill not processed” দেখায় সেক্ষেত্রে আমার
-            কি করণীয় ?
+        <item>6. What do I do when I trying to pay the Palli Bidyut bill payment, the bill shows not
+            processed?
         </item>
-        <item>৭. পল্লী বিদ্যুৎ বিল প্রদান করার ক্ষেত্রে “wrong bill number” দেখায় সেক্ষেত্রে আমার কি
-            করণীয় ?
+        <item>7. What do I do if I see the wrong bill number when I go to pay the Palli Bidyut
+            bill?
         </item>
-        <item>৮. পল্লী বিদ্যুৎ বিল প্রদান করার পর Inquiry তে Check করলে দেখাচ্ছে- TBPS Response
-            Error, সেক্ষেত্রে আমার কি করণীয়?
+        <item>8. I paid the Palli Bidyut bill, after checking the Inquiry check - TBPS Response
+            Error, what should I do?
         </item>
-        <item>৯. পল্লী বিদ্যুৎ বিল প্রদান করার পর “Payment Successful” দেখাচ্ছে কিন্তু পল্লী বিদ্যুৎ
-            এ বিল পরিশোধ হয়নি। সেক্ষেত্রে আমার কি করণীয় ?
+        <item>9. What do I do if Palli Bidyut bill not paid (Update)?</item>
+        <item>10. Which number should I use when paying Palli Bidyut bill, SMS bill number or SMS
+            account number?
         </item>
-        <item>১০. পল্লী বিদ্যুৎ বিল প্রদানের সময় কোন নাম্বারটি ব্যবহার করব এসএমএস বিল নাম্বার অথবা
-            এসএমএস অ্যাকাউন্ট নাম্বার?
-        </item>
-        <item>১১. পল্লী বিদ্যুৎ বিল প্রদানের সময় " Invalid Bill Number" দেখাচ্ছে, সেক্ষেত্রে আমার
-            কি করণীয়?
-        </item>
-        <item>১২. পল্লী বিদ্যুৎ বিল আপলোডের জন্য কি করতে হবে?</item>
-        <item>১৩. পল্লী বিদ্যুৎ বিল প্রদানের সময় "Service not rendered" দেখাচ্ছে সেক্ষেত্রে আমার কি
-            করণীয়?
-        </item>
-        <item>১৪. পল্লী বিদ্যুৎ এর প্রি-পেইড বিল দেয়া যায় কি?</item>
+        <item>11. Showing "Invalid Bill Number" while paying Palli Bidyut bill?</item>
+        <item>12. What to do to upload Palli Bidyut bill?</item>
+        <item>13. Showing "Service not rendered" while paying Palli Bidyut bill?</item>
+        <item>14. Is it possible to pay Palli Bidyut pre-paid bill?</item>
     </array>
 
     <array name="a4">
-        <item>আমাদের সাথে চুক্তি পত্র স্বাক্ষরের মাধ্যমে আপনি পল্লী বিদ্যুৎ সার্ভিস পেতে পারেন।
-            চুক্তিপত্র আমাদের কাছে পৌছানোর পর আপনার অ্যাপ এ পল্লী বিদ্যুৎ সার্ভিস চালু হয়ে যাবে।
+        <item>You can get Palli Bidyut bill payment service by signing a contract with us. After the
+            contract reaches us, the Palli Bidyut service will be active in your app.
         </item>
-        <item>ট্যাম্প এর কপি আপনাকে ইমেইল করা হলে আপনি তা স্বাক্ষরসহ পূরন করে স্ট্যাম্প এর স্ক্যান
-            কপি আমাদের ইমেইল করলে আমরা পল্লি বিদ্যুৎ সার্ভিসটি চালু করে দিব। স্ট্যাম্প এর মূল কপিটি
-            আমাদের ঠিখানায় কুরিয়ার করে দিতে হবে।
+        <item>If a copy of the stamp is emailed to you, you will fill it with your signature and if
+            you email us a scanned copy of the stamp, we will start the rural electricity service.
+            The original copy of the stamp has to be couriered to our place.
         </item>
-        <item>হ্যাঁ। আপনি বাংলাদেশের যেকোনো স্থান হতে পল্লী বিদ্যুৎ বিল পরিশোধ করতে পারবেন।</item>
-        <item>কিছুক্ষন সময় অপেক্ষা করে আবার চেষ্টা করুন। আপনার বিল দেয়ার প্রথম চেষ্ঠা সফল বা বিফল
-            হওয়ার আগেই বা প্রক্রিয়াধীন থাকা কালিন আপনি আবার বিলটি দেয়ার চেষ্ঠা করেছেন । সেহ্মেত্রে
-            ৩-৫ মিনিট অপেহ্মা করে আবার বিল পরিশিধের চেষ্ঠা করুন।
+        <item>Yes. You can pay Palli Bidyut bill from anywhere in Bangladesh.</item>
+        <item>Wait a while and try again. You tried to pay the bill again before your first attempt
+            to pay the bill was successful or unsuccessful, or while it was in the process. In that
+            case, wait for 3-5 minutes and try to clear the bill again.
         </item>
-        <item>আপনি একই বিল বার বার দেওয়ার চেষ্টা করছেন। অথবা আপনার বিলটি পল্লী বিদ্যুৎ অফিসে আপডেট
-            করা নেই। বিলটি আপডেট না করা থাকলে সেহ্মেত্রে আমাদের কল সেন্টারে যোগাযোগ করুন। আমারা
-            আপনার বিলটি আপডেট করার জন্য পদহ্মেপ গ্রহন করব।
+        <item>You are trying to pay the same bill again and again. Or your bill has not been updated
+            at the Palli Bidyut office. If the bill has not been updated, please contact our call
+            center. We will take steps to update your bill.
         </item>
-        <item>কিছুক্ষনপর আবার চেষ্টা করুণ।</item>
-        <item>আপনি ভুল বিল নম্বর প্রদান করছেন। সঠিক বিল নাম্বার দিয়ে আবার চেষ্টা করুন।</item>
-        <item>কিছুক্ষন পর আবার চেষ্টা করুন।</item>
-        <item>আপনার বিল নম্বরটি আমাদের দিন আমরা পল্লী বিদ্যুৎ এর সাথে যোগাযোগ করে আপনার বিষয়টি
-            সমাধান করার চেষ্টা করছি।
+        <item>Please try again later.</item>
+        <item>You are giving the wrong bill number.</item>
+        <item>Try again after a while.</item>
+        <item>Give us your bill number. We are trying to resolve your issue by contacting Palli
+            Bidyut.
         </item>
-        <item>প্রিয় এজেন্ট, আপনাদের অবগতির জন্য জানানো যাচ্ছে যে ঢাকা-১/৩/৪, গাজীপুর-১,
-            নারায়ণগঞ্জ-১, যশোর-১, ভোলা, সুনামগঞ্জ, টাঙ্গাইল, ময়মনসিংহ-১, বরিশাল-২, সিলেট-১,
-            ঝিনাইদহ, ফরিদপুর, ব্রাহ্মণবাড়িয়া এবং কক্সবাজার- পল্লী বিদ্যুৎ সমিতির বিল প্রদানের
-            ক্ষেত্রে এসএমএস বিল নম্বর এর ঘরে এসএমএস একাউন্ট নম্বর দিয়ে বিল পরিশোধ করতে হবে। \n
-            <b>বি:দ্র: উল্লেখিত পল্লী বিদ্যুৎ সমিতি ছাড়া অন্যান্য বিলের ক্ষেত্রে এসএমএস বিল নম্বর
-                দিয়ে বিল পরিশোধ করতে হবে।
+        <item>Dear Agent, for your information, Dhaka-1/3/4, Gazipur-1, Narayanganj-1, Jessore-1,
+            Bhola, Sunamganj, Tangail, Mymensingh-1, Barisal-2, Sylhet-1, Jhenaidah , Faridpur,
+            Brahmanbaria and Cox\'s Bazar-Palli biddut Samiti bill have to be paid with SMS account
+            number.\n
+            <b>Note: In case of bills other than the mentioned Palli biddut Samiti, the bill has to
+                be paid with SMS bill number.
             </b>
         </item>
-        <item>পল্লী বিদ্যুৎ বিল প্রদানের সময় " Invalid Bill Number" দেখালে আমাদের সাথে যোগাযোগ করুন
-            ০৯৬১০১-১৬৫৬৬, ০৯৬৩৮০-১৬৫৬৬, ১৬৫৬৬ হেল্প লাইন।
+        <item>If you show "Invalid Bill Number" while paying Palli Bidyut bill, please contact us on
+            096101-16566, 096380-16566, 16566 helpline.
         </item>
-        <item>পল্লী বিদ্যুৎ বিল আপলোডের জন্য আমাদের সাথে যোগাযোগ করুন ০৯৬১০১-১৬৫৬৬, ০৯৬৩৮০-১৬৫৬৬,
-            ১৬৫৬৬ হেল্প লাইন।
+        <item>For uploading Palli Bidyut bill, contact us on 096101-16566, 096380-16566, 16566
+            helpline.
         </item>
-        <item>পল্লী বিদ্যুৎ বিল প্রদানের সময় "Service not rendered" দেখালে তাঁর মানে আপনার পল্লী
-            বিদ্যুৎ সার্ভিসটি চালু নেই। পল্লী বিদ্যুৎ সার্ভিসটি চালু করতে আমাদের সাথে যোগাযোগ করুন
-            ০৯৬১০১-১৬৫৬৬, ০৯৬৩৮০-১৬৫৬৬, ১৬৫৬৬ হেল্প লাইন।
+        <item>If you show "Service not rendered" while paying the rural electricity bill, it means
+            that your rural electricity service is not running. Contact us 096101-16566,
+            096380-16566, 16566 helpline to start the rural electricity service.
         </item>
-        <item>পল্লী বিদ্যুৎ এর প্রি-পেইড বিল পেমেন্ট সার্ভিসটি চালু হলে জানানো হবে।</item>
+        <item>Currently this service in not available.</item>
     </array>
 
 
     <array name="q5">
-        <item>১. ডেসকো প্রি-পেইড বিল দেয়া যায় কি?</item>
-        <item>২. ডেসকো বকেয়া বিল দেয়া যায় কি?</item>
-        <item>৩. ডিপিডিসি বিল প্রদানের সময় Account No. হিসেবে আমি কি দিবো?</item>
-        <item>৪. ওয়াসা বিল প্রদানের সময় কোন নম্বর ব্যবহার করবো?</item>
+        <item>1. Is it possible to pay DESCO pre-paid bill?</item>
+        <item>2. Is it possible to pay DESCO due bill?</item>
+        <item>3. Which number should I give while paying DPDC bill?</item>
+        <item>4. Which number should I give while paying WASA bill?</item>
     </array>
 
     <array name="a5">
-        <item>হ্যাঁ। ডেসকো প্রি-পেইড বিল দেয়া যায়।</item>
-        <item>হ্যাঁ। ডেসকো বকেয়া বিল দেয়া যায়।</item>
-        <item>বিলের কপির কাস্টমার নং প্রদান করবেন।</item>
-        <item>বিলের কপির বিল নং প্রদান করবেন।</item>
+        <item>Yes, You can payment DESCO pre-paid bill.</item>
+        <item>Yes.</item>
+        <item>Use the bill copy <b>“Customer No”.</b>
+        </item>
+        <item>Use the bill copy
+            <b>“Bill No”.</b>
+        </item>
     </array>
 
 
     <array name="q6">
-        <item>১. আমি কীভাবে মাইক্যাশ সার্ভিস রেজিস্ট্রাশন করবো?</item>
-        <item>২. আমি ঢাকার বাইরে থাকি। কিভাবে ঢাকার বাইরে থেকে মাইক্যাশ রেজিস্ট্রাশন করবো?</item>
-        <item>৩. মাইক্যাশ সার্ভিসের সুবিধা কি কি?</item>
-        <item>৪. মিনি স্টেটমেন্ট হতে আমি কতগুলো ট্রানজেকশন দেখতে পাবো?</item>
-        <item>৫. OTP কি?</item>
-        <item>৬. OTP এর মেয়াদ কতদিন?</item>
-        <item>৭. OTP এর মেয়াদ শেষ হয়ে গেলে আমি কি করবো?</item>
-    </array>
-    <array name="a6">
-        <item>মাইক্যাশ রেজিস্ট্রাশন করতে এজেন্ট এর ২কপি পাসপোর্ট সাইজের ছবি (ল্যাব প্রিন্ট), ট্রেড
-            লাইসেন্সের ফটোকপি, NID এর কপি এবং নমিনির ১ কপি ছবি (ল্যাব প্রিন্ট) ও NID সহ মাইক্যাশ
-            ফর্ম পুরন করে জমা দিলে। আপনার সকল তথ্য যাচাই করার পর MyCash এর এজেন্ট হবেন। রেজিস্ট্রাশন
-            ফরম এর জন্য আমাদের সাথে যোগাযোগ করুন ০৯৬১০১-১৬৫৬৬, ০৯৬৩৮০-১৬৫৬৬, ১৬৫৬৬ হেল্প লাইন। \n
-            <b>বি:দ্র: মাইক্যাশে রেজিস্ট্রাশন এর সময় গ্রামীণফোন এবং টেলিটক মোবাইল নম্বর ব্যবহার করা
-                যাবে না।
-            </b>
-        </item>
-        <item>রেজিস্ট্রাশন এর জন্য আমাদের সাথে যোগাযোগ করুন ০৯৬১০১-১৬৫৬৬, ০৯৬৩৮০-১৬৫৬৬, ১৬৫৬৬ হেল্প
-            লাইন।
-        </item>
-        <item>মাইক্যাশ –এর মাধ্যমে আপনি ক্যাশ ইন/আউট করতে পারবেন।</item>
-        <item>সর্বশেষ ৫ টি</item>
-        <item>OTP হল ৬ ডিজিট এর একটি সিকিউরিটি কোড। এই কোডটি প্রতিটি পেমেন্ট এর ক্ষেত্রে প্রয়োজন
-            হবে।
-        </item>
-        <item>৭ দিন।</item>
-        <item>নতুন করে আবার OTP সেট করবেন।</item>
+        <item>1. How do I register for MyCash service?</item>
+        <item>2.I live outside Dhaka. How do I register My Cash from outside Dhaka?</item>
+        <item>3. What are the benefits of MyCash service?</item>
+        <item>4. How many transactions can I see from the mini statement?</item>
+        <item>5. What is OTP?</item>
+        <item>6. OTP validity period?</item>
+        <item>7. What do I do when the OTP expires?</item>
     </array>
 
+    <array name="a6">
+        <item>To register MyCash, you will become an agent of MyCash by submitting 2 copies of
+            passport size photo (lab print) of the agent, photocopy of trade license, copy of NID
+            and 1 copy photo of the nominee (lab print) and NID. Become an agent of MyCash after
+            verifying all your information. Contact us for registration form 096101-16566,
+            096380-16566, 16566 helpline. \n
+            <b>Note: Grameenphone and Teletalk mobile numbers cannot be used during registration in
+                Mycash.
+            </b>
+        </item>
+        <item>Contact us for registration 096101-1858, 097360-1656, 1858 Help Line.</item>
+        <item>You can cash in / out through MyCash</item>
+        <item>The last 5.</item>
+        <item>OTP (one time password) is a 6 digit security code. This code will be required for
+            each payment.
+        </item>
+        <item>7 days</item>
+        <item>Set the OTP again</item>
+    </array>
+
+
     <array name="q7">
-        <item>১. বাস এবং লঞ্চ টিকেট ক্রয় / বাতিল ফি এবং কমিশন কত?</item>
-        <item>২. বিমান টিকেট এর কমিশন কত?</item>
+        <item>1.What are the bus and launch ticket cancellation fees?</item>
+        <item>2.How much is the air ticket commission?</item>
     </array>
 
     <array name="a7">
-        <item>প্রতিটি টিকেট এর জন্য গ্রাহকে ২০(বিশ) টাকা চার্জ দিতে হবে। আর রিটেইলার প্রতিটি টিকেট
-            এর জন্য ১০(দশ) টাকা কমিশন পাবে।
+        <item>The customer has to pay 20 (twenty) taka charge for each ticket.The retailer will get
+            10 (ten) taka commission for each ticket.
         </item>
-        <item>বিমান টিকেট এর কমিশন বেস ফেয়ার এর ৫%।</item>
+        <item>The commission on air tickets is 5% of base fare.</item>
     </array>
 
 
