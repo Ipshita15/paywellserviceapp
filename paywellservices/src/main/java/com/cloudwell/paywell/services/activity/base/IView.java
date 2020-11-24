@@ -5,7 +5,12 @@ package com.cloudwell.paywell.services.activity.base;
  */
 public interface IView {
     void noInternetConnectionFound();
+
     void showProgress();
+
     void hiddenProgress();
+
     void onFailure(String message);
+
+    void openPreviousActivity();
 }

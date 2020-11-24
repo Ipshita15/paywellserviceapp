@@ -1,7 +1,9 @@
 package com.cloudwell.paywell.services.activity.reg.nidOCR
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Base64
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -15,10 +17,12 @@ import com.cloudwell.paywell.services.activity.reg.nidOCR.view.IInputNidListener
 import com.cloudwell.paywell.services.activity.reg.nidOCR.viewModel.InputNidModelFactory
 import com.cloudwell.paywell.services.activity.reg.nidOCR.viewModel.NidInputViewModel
 import com.cloudwell.paywell.services.databinding.ActivityNidInfoBinding
+import com.cloudwell.paywell.services.utils.ImageUtility
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.content_nid_info.*
 import kotlinx.android.synthetic.main.content_nid_input.*
 import org.jetbrains.anko.toast
+import java.io.ByteArrayOutputStream
 
 
 class InputNidInfoActivity: LanguagesBaseActivity(), IInputNidListener {
@@ -125,14 +129,29 @@ class InputNidInfoActivity: LanguagesBaseActivity(), IInputNidListener {
         toast(message)
     }
 
+    override fun openPreviousActivity() {
+
+    }
+
     override fun noInternetConnectionFound() {
         toast("No internet connection found!!!")
     }
+
     override fun setDefaultNIDImagInFirstNIDView() {
 
     }
 
     override fun setDefaultNIDImagInSecondNIDView() {
 
+    }
+
+    fun encodeTobase64(image: Bitmap?): String {
+        val baos = ByteArrayOutputStream()
+        val myBm: Bitmap = ImageUtility.getResizedBitmap(image, 1000, 700)
+        myBm.compress(Bitmap.CompressFormat.JPEG, 50, baos)
+        val b = baos.toByteArray()
+        val imageEncoded = Base64.encodeToString(b, Base64.DEFAULT).replace("[\n\r]".toRegex(), "")
+        val strBuild = "xxCloud" + imageEncoded + "xxCloud"
+        return strBuild
     }
 }

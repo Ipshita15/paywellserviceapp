@@ -14,6 +14,8 @@ import com.cloudwell.paywell.consumer.ui.nidRegistion.model.User
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.LanguagesBaseActivity
 import com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regModel
+import com.cloudwell.paywell.services.activity.reg.EntryThirdActivity
+import com.cloudwell.paywell.services.activity.reg.missing.MissingMainActivity
 import com.cloudwell.paywell.services.activity.reg.nidOCR.view.IInputNidListener
 import com.cloudwell.paywell.services.activity.reg.nidOCR.viewModel.InputNidModelFactory
 import com.cloudwell.paywell.services.activity.reg.nidOCR.viewModel.NidInputViewModel
@@ -143,9 +145,45 @@ class NidInputActivity: LanguagesBaseActivity(), IInputNidListener {
     }
 
 
-
     override fun onFailure(message: String) {
         toast(message)
+    }
+
+    override fun openPreviousActivity() {
+        if (isNID) {
+
+            // here you will get captured or selected image<br>
+            val nidFirst = BitmapFactory.decodeFile(inputViewModel.firstPageUri.path)
+            regModel.nidFront = encodeTobase64(nidFirst)
+
+            val nidSecound = BitmapFactory.decodeFile(inputViewModel.secoundPageUri.path)
+            regModel.nidBack = encodeTobase64(nidSecound)
+
+        } else {
+            val nidFirst = BitmapFactory.decodeFile(inputViewModel.firstPageUri.path)
+            regModel.smartCardFront = encodeTobase64(nidFirst)
+
+            val nidSecound = BitmapFactory.decodeFile(inputViewModel.secoundPageUri.path)
+            regModel.smartCardBack = encodeTobase64(nidSecound)
+        }
+
+
+        if (isMissingPage) {
+
+            val intent = Intent(applicationContext, MissingMainActivity::class.java);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            intent.putExtra("isMissingFlow", true)
+            startActivity(intent)
+
+            finish()
+        } else {
+            val intent = Intent(applicationContext, EntryThirdActivity::class.java);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
+
+            finish()
+        }
+
     }
 
     override fun noInternetConnectionFound() {
@@ -154,7 +192,7 @@ class NidInputActivity: LanguagesBaseActivity(), IInputNidListener {
 
     override fun openNextActivity(user: User) {
 
-        if (isNID){
+        if (isNID) {
 
             // here you will get captured or selected image<br>
             val nidFirst = BitmapFactory.decodeFile(inputViewModel.firstPageUri.path)

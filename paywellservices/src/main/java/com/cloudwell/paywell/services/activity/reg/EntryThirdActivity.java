@@ -120,10 +120,10 @@ public class EntryThirdActivity extends BaseActivity {
                 btPicOwner.setCompoundDrawablePadding(100);
 
             }
-            if (!regModel.getTradeLicense().equals("")) {
-                btPicTrade.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
-                btPicTrade.setCompoundDrawablePadding(100);
-            }
+        if (!regModel.getTradeLicense().equals("")) {
+            btPicTrade.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+            btPicTrade.setCompoundDrawablePadding(100);
+        }
 
             if (!regModel.getPassport().equals("")) {
                 btPicPassport.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);

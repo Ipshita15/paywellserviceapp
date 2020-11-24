@@ -114,18 +114,33 @@ class NidInputViewModel() : BaseViewModel() {
 
     fun onNextClick(context: Context, newNID: Boolean) {
         isNID = newNID
+//        if (::firstPageUri.isInitialized && ::secoundPageUri.isInitialized) {
+//            doOCFirstPage(context, firstPageUri)
+//        } else {
+//            iView?.onFailure(context.getString(R.string.m_please_input_both_nid_page))
+//        }
+
         if (::firstPageUri.isInitialized && ::secoundPageUri.isInitialized) {
-            doOCFirstPage(context, firstPageUri)
+            submitImageDataPage(context)
         } else {
             iView?.onFailure(context.getString(R.string.m_please_input_both_nid_page))
         }
+
+
+    }
+
+    private fun submitImageDataPage(context: Context) {
+
+
+        iView?.openPreviousActivity()
+
     }
 
 
     private fun findHusbandName(lineText: String): Boolean {
         if (lineText.matches("(.*)স্বামী:(.*)".toRegex())) {
             val name =
-                lineText.split("স্বামী:".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                    lineText.split("স্বামী:".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             userFather = name[1]
             Logger.v("")
             return true

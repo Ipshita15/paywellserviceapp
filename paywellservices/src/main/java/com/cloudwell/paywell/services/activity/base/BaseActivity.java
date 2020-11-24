@@ -24,8 +24,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.RecentUsedStackSet;
-import com.cloudwell.paywell.services.activity.home.dialog.CommonDialogBtnInterface;
-import com.cloudwell.paywell.services.activity.home.dialog.CommonMessageDialog;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.ErrorCallBackMsgDialog;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.ErrorMsgDialog;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.SuccessDialog;
