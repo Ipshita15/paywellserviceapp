@@ -7,7 +7,7 @@ import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.activity.faq.adapter.ExpandableListAdapter
 import kotlinx.android.synthetic.main.content_f_a_q.*
 
-class FAQActivity : BaseActivity() {
+class PreLoginFAQActivity : BaseActivity() {
 
     var listAdapter: ExpandableListAdapter? = null
     var listDataHeader: List<String>? = null

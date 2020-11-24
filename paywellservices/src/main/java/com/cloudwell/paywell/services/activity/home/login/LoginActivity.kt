@@ -11,7 +11,7 @@ import com.cloudwell.paywell.services.BuildConfig
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.AppLoadingActivity
 import com.cloudwell.paywell.services.activity.base.BaseActivity
-import com.cloudwell.paywell.services.activity.faq.FAQActivity
+import com.cloudwell.paywell.services.activity.faq.PreLoginFAQActivity
 import com.cloudwell.paywell.services.activity.home.OtpActivity
 import com.cloudwell.paywell.services.activity.home.model.RequestAppsAuth
 import com.cloudwell.paywell.services.activity.home.model.ResposeAppsAuth
@@ -104,7 +104,7 @@ public class LoginActivity : BaseActivity() {
         }
 
         imagCallButton.setOnClickListener {
-            val i = Intent(applicationContext, FAQActivity::class.java)
+            val i = Intent(applicationContext, PreLoginFAQActivity::class.java)
             startActivity(i)
         }
 

@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BaseDialogFragment
-import com.cloudwell.paywell.services.activity.faq.FAQActivity
+import com.cloudwell.paywell.services.activity.faq.PreLoginFAQActivity
 import com.cloudwell.paywell.services.activity.home.youtube.MainFragment
 import com.cloudwell.paywell.services.activity.utility.model.Video
 import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus
@@ -37,7 +37,7 @@ class NewAppsVideoPreviewDialog() : BaseDialogFragment() {
 
         view.tvFAQ.setOnClickListener {
 
-            val i = Intent(context, FAQActivity::class.java)
+            val i = Intent(context, PreLoginFAQActivity::class.java)
             startActivity(i)
 
         }

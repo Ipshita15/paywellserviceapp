@@ -5,7 +5,7 @@ import android.os.Bundle
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.AppLoadingActivity
 import com.cloudwell.paywell.services.activity.base.BaseActivity
-import com.cloudwell.paywell.services.activity.faq.FAQActivity
+import com.cloudwell.paywell.services.activity.faq.PreLoginFAQActivity
 import com.cloudwell.paywell.services.activity.home.login.LoginActivity
 import com.cloudwell.paywell.services.activity.home.model.refreshToken.RequestRefreshToken
 import com.cloudwell.paywell.services.activity.reg.EntryMainActivity
@@ -114,7 +114,7 @@ class HomeActivity : BaseActivity() {
         ivGetHelpCallCenter.setOnClickListener {
 //            callPreviewAirticket(false)
 
-            val i = Intent(applicationContext, FAQActivity::class.java)
+            val i = Intent(applicationContext, PreLoginFAQActivity::class.java)
             startActivity(i)
         }
 

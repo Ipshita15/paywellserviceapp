@@ -5,7 +5,7 @@
         android:layout_height="match_parent"
         tools:context=".activity.faq.PreLoginFAQActivity">
 
-    <include layout="@layout/content_f_a_q" />
+    <include layout="@layout/content_f_a_q_post" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

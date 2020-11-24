@@ -65,7 +65,7 @@ import com.cloudwell.paywell.services.activity.entertainment.bongo.BongoMainActi
 import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
 import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity;
-import com.cloudwell.paywell.services.activity.faq.FAQActivity;
+import com.cloudwell.paywell.services.activity.faq.PostLoginFAQActivity;
 import com.cloudwell.paywell.services.activity.fee.FeeMainActivity;
 import com.cloudwell.paywell.services.activity.home.HomeActivity;
 import com.cloudwell.paywell.services.activity.location.model.CurrentLocationModel;
@@ -2462,7 +2462,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void startFAQActiivty() {
-        Intent intent = new Intent(this, FAQActivity.class);
+        Intent intent = new Intent(this, PostLoginFAQActivity.class);
         intent.putExtra("isAfterLogin", false);
         startActivity(intent);
     }
