@@ -797,11 +797,30 @@
     <string name="home_tutorial">Tutorial</string>
 
     <array name="faq_header">
-        <item>পেওয়েল একাউন্ট খুলতে কি আমি অন্য কারও ট্রেড লাইসেন্স ব্যবহার করতে পারি?</item>
+        <item>How do I login to the new app version for the first time?</item>
+        <item>What is a registered mobile number?</item>
+        <item>What is OTP?</item>
+        <item>If I do not get the OTP number?</item>
+        <item>How do I login next time to the new app version of PayWell?</item>
+        <item>What is PayWell email address?</item>
     </array>
 
     <array name="faq_child">
-        <item>আমরা আপনাকে আপনার নিজস্ব ট্রেড লাইসেন্স ব্যাবহার করতে পরামর্শ দিব</item>
+        <item>Click the login option to log in. Then enter your mobile number used in PayWell and
+            enter your PIN number and click on the login option. 4 digit OTP number will be sent to
+            your registered mobile number. Enter the OTP number in the right place and click on the <b>
+                “Next”
+            </b> option. When the OTP verification is complete, click on the <b>“OK”</b> option.
+        </item>
+        <item>The mobile number used while registering at PayWell is your registered mobile
+            number.
+        </item>
+        <item>When you login for the first time, A 4 digit OTP (One Time Password) number will be
+            sent to your registered mobile number.
+        </item>
+        <item>If you do not get the OTP number, click the Resend OTP option.</item>
+        <item>Login with registered mobile number and PIN number.</item>
+        <item>helpdesk@cloudwell.co or salesops@cloudwell.co</item>
     </array>
 
 

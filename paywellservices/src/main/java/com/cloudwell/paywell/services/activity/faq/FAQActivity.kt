@@ -1,6 +1,7 @@
 package com.cloudwell.paywell.services.activity.faq
 
 import android.os.Bundle
+import android.util.Log
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.activity.faq.adapter.ExpandableListAdapter
@@ -39,10 +40,11 @@ class FAQActivity : BaseActivity() {
 
         (listDataHeader as List<String>).forEachIndexed { index, element ->
             val key = listDataHeader!!.get(index);
-            val arrayList = ArrayList(listChild)
-            listDataChild!!.put(key, arrayList.toList())
+            val subData = mutableListOf<String>(listChild.get(index))
+            listDataChild!!.put(key, subData.toList())
 
         }
+        Log.e("", "")
 
 
 //        // Adding child data

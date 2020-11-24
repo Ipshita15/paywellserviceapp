@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/linearLayout32"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -8,27 +7,16 @@
 
     <TextView
             android:id="@+id/lblListItem"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:text="testssss"
+            android:autoLink="all"
+            android:paddingTop="8dp"
+            android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
+            android:paddingStart="?android:attr/expandableListPreferredItemPaddingLeft"
+            android:paddingBottom="8dp"
+            android:layout_marginRight="8dp"
+            android:text="লগইন করার জন্য লগইন অপশনটি ক্লিক করুন। তারপর পেওয়েলে এ ব্যবহৃত আপনার মোবাইল নম্বরটি এবং আপনার পিন নম্বরটি লিখে লগইন অপশনটি ক্লিক করুন। আপনার রেজিস্টার্ড মোবাইল নম্বরে “৪” ডিজিটের একটি OTP নাম্বার পাঠানো হবে। OTP নাম্বারটি সঠিক স্থানে বসিয়ে “Next” অপশনটি ক্লিক করুন। OTP যাচাইকরণ সম্পন্ন হলে “ঠিক আছে” অপশনে ক্লিক করুন।"
             android:textColor="#59595c"
-            android:textSize="17dip"
-            app:layout_constraintBottom_toTopOf="@+id/imageView48"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
+            android:textSize="16sp" />
 
-    <ImageView
-            android:id="@+id/imageView48"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/lblListItem"
-            app:layout_constraintTop_toBottomOf="@+id/lblListItem"
-            app:srcCompat="@drawable/faq_up_arrow" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

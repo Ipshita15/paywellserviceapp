@@ -17,6 +17,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
+            android:paddingStart="?android:attr/expandableListPreferredItemPaddingLeft"
             android:textColor="#00844a"
             android:textSize="14dp"
             app:layout_constraintBottom_toBottomOf="parent"
