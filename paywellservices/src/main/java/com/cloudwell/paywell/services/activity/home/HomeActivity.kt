@@ -119,13 +119,13 @@ class HomeActivity : BaseActivity() {
         }
 
 
-//        if (appStatus.equals(AppsStatusConstant.KEY_unregistered)) {
-//            if (!AppHandler.getmInstance(getApplicationContext()).isVideoPreviewShow()) {
-        AppHandler.getmInstance(getApplicationContext()).setVideoPreviewShow(true)
-        val newAppsVideoPreviewDialog = NewAppsVideoPreviewDialog()
-        newAppsVideoPreviewDialog.show(supportFragmentManager, "newAppsVideoPreviewDialog")
-//            }
-//        }
+        if (appStatus.equals(AppsStatusConstant.KEY_unregistered)) {
+            if (!AppHandler.getmInstance(getApplicationContext()).isVideoPreviewShow()) {
+                AppHandler.getmInstance(getApplicationContext()).setVideoPreviewShow(true)
+                val newAppsVideoPreviewDialog = NewAppsVideoPreviewDialog()
+                newAppsVideoPreviewDialog.show(supportFragmentManager, "newAppsVideoPreviewDialog")
+            }
+        }
 
     }
 
