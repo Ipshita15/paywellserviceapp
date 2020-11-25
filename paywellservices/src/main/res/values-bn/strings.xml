@@ -802,6 +802,8 @@
     <string name="faq">হেল্প</string>
     <string name="call_center">কল সেন্টার নাম্বার</string>
     <string name="get_help_home_page">হেল্প</string>
+    <string name="chat">চ্যাট</string>
+    <string name="call">কল</string>
 
     <array name="faq_header">
         <item>পেওয়েল নতুন অ্যাপ ভার্সনে প্রথমবার কীভাবে লগইন করব?</item>

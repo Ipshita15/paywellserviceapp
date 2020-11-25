@@ -1473,10 +1473,21 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.homeBtnMessage:
                 startActivity(new Intent(MainActivity.this, ChatActivity.class));
                 break;
+
+            case R.id.llChat:
+                startActivity(new Intent(MainActivity.this, ChatActivity.class));
+                break;
+
             case R.id.homeBtnCall:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CALL_MENU);
                 callPreview(false, "");
                 break;
+
+            case R.id.LLCall:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CALL_MENU);
+                callPreview(false, "");
+                break;
+
 
             case R.id.homeBtnEduction:
 
