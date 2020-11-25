@@ -34,20 +34,20 @@ import org.jetbrains.anko.toast
 import java.io.ByteArrayOutputStream
 
 
-class NidInputActivity: LanguagesBaseActivity(), IInputNidListener {
+class NidInputActivity : LanguagesBaseActivity(), IInputNidListener {
 
     private var isNID = false;
     private var isMissingPage = false;
     private val authViewModelFactory: InputNidModelFactory? = null
 
 
-    lateinit var  inputViewModel: NidInputViewModel
+    lateinit var inputViewModel: NidInputViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val binding: ActivityOldNidPageBinding = DataBindingUtil.setContentView(
-            this, R.layout.activity_old_nid_page
+                this, R.layout.activity_old_nid_page
         )
 
         inputViewModel = ViewModelProviders.of(this, authViewModelFactory).get(NidInputViewModel::class.java)
@@ -55,14 +55,14 @@ class NidInputActivity: LanguagesBaseActivity(), IInputNidListener {
         inputViewModel.iView = this
 
 
-        isNID =  intent.getBooleanExtra("isNID", false);
-        if (isNID){
+        isNID = intent.getBooleanExtra("isNID", false);
+        if (isNID) {
             setToolbar(getString(R.string.title_nid))
-        }else{
+        } else {
             setToolbar(getString(R.string.title_smart))
         }
 
-        isMissingPage =  intent.getBooleanExtra("isMissingPage", false);
+        isMissingPage = intent.getBooleanExtra("isMissingPage", false);
 
         ivNidFirst.setOnClickListener {
             inputViewModel.isFirstPage = true
@@ -83,48 +83,48 @@ class NidInputActivity: LanguagesBaseActivity(), IInputNidListener {
 
     private fun openCropActivity() {
         Dexter.withActivity(this)
-            .withPermissions(
-                Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
-            .withListener(object : MultiplePermissionsListener {
-                override fun onPermissionsChecked(report: MultiplePermissionsReport) {
+                .withPermissions(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+                .withListener(object : MultiplePermissionsListener {
+                    override fun onPermissionsChecked(report: MultiplePermissionsReport) {
 
-                    if (report.areAllPermissionsGranted()) {
-                        CropImage.activity(inputViewModel.photoURI1)
-                            .setGuidelines(CropImageView.Guidelines.ON)
-                            .start(this@NidInputActivity)
-                    } else {
+                        if (report.areAllPermissionsGranted()) {
+                            CropImage.activity(inputViewModel.photoURI1)
+                                    .setGuidelines(CropImageView.Guidelines.ON)
+                                    .start(this@NidInputActivity)
+                        } else {
 
+                        }
                     }
-                }
 
-                override fun onPermissionRationaleShouldBeShown(
-                    permissions: List<PermissionRequest>,
-                    token: PermissionToken
-                ) {
-                }
-            }).check()
+                    override fun onPermissionRationaleShouldBeShown(
+                            permissions: List<PermissionRequest>,
+                            token: PermissionToken
+                    ) {
+                    }
+                }).check()
     }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
             if (resultCode == Activity.RESULT_OK) {
 
                 val resultUri = result.uri
-                if ( inputViewModel.isFirstPage){
+                if (inputViewModel.isFirstPage) {
 
                     inputViewModel.firstPageUri = resultUri
                     ivNidFirst.setImageURI(resultUri)
                     ivForntSeleted.visibility = View.VISIBLE
-                }else{
+                } else {
                     inputViewModel.secoundPageUri = resultUri
                     ivNidSecound.setImageURI(resultUri)
                     ivBackSeleted.visibility = View.VISIBLE
                 }
-
 
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
@@ -133,7 +133,6 @@ class NidInputActivity: LanguagesBaseActivity(), IInputNidListener {
         }
 
     }
-
 
 
     override fun showProgress() {
@@ -150,33 +149,50 @@ class NidInputActivity: LanguagesBaseActivity(), IInputNidListener {
     }
 
     override fun openPreviousActivity() {
-        if (isNID) {
-
-            // here you will get captured or selected image<br>
-            val nidFirst = BitmapFactory.decodeFile(inputViewModel.firstPageUri.path)
-            regModel.nidFront = encodeTobase64(nidFirst)
-
-            val nidSecound = BitmapFactory.decodeFile(inputViewModel.secoundPageUri.path)
-            regModel.nidBack = encodeTobase64(nidSecound)
-
-        } else {
-            val nidFirst = BitmapFactory.decodeFile(inputViewModel.firstPageUri.path)
-            regModel.smartCardFront = encodeTobase64(nidFirst)
-
-            val nidSecound = BitmapFactory.decodeFile(inputViewModel.secoundPageUri.path)
-            regModel.smartCardBack = encodeTobase64(nidSecound)
-        }
-
 
         if (isMissingPage) {
+
+
+            if (isNID) {
+                // here you will get captured or selected image<br>
+                val nidFirst = BitmapFactory.decodeFile(inputViewModel.firstPageUri.path)
+                MissingMainActivity.regModel.nidFront = encodeTobase64(nidFirst)
+
+                val nidSecound = BitmapFactory.decodeFile(inputViewModel.secoundPageUri.path)
+                MissingMainActivity.regModel.nidBack = encodeTobase64(nidSecound)
+
+            } else {
+                val nidFirst = BitmapFactory.decodeFile(inputViewModel.firstPageUri.path)
+                MissingMainActivity.regModel.smartCardFront = encodeTobase64(nidFirst)
+
+                val nidSecound = BitmapFactory.decodeFile(inputViewModel.secoundPageUri.path)
+                MissingMainActivity.regModel.smartCardBack = encodeTobase64(nidSecound)
+            }
 
             val intent = Intent(applicationContext, MissingMainActivity::class.java);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             intent.putExtra("isMissingFlow", true)
             startActivity(intent)
-
             finish()
+
         } else {
+
+            if (isNID) {
+                // here you will get captured or selected image<br>
+                val nidFirst = BitmapFactory.decodeFile(inputViewModel.firstPageUri.path)
+                regModel.nidFront = encodeTobase64(nidFirst)
+
+                val nidSecound = BitmapFactory.decodeFile(inputViewModel.secoundPageUri.path)
+                regModel.nidBack = encodeTobase64(nidSecound)
+
+            } else {
+                val nidFirst = BitmapFactory.decodeFile(inputViewModel.firstPageUri.path)
+                regModel.smartCardFront = encodeTobase64(nidFirst)
+
+                val nidSecound = BitmapFactory.decodeFile(inputViewModel.secoundPageUri.path)
+                regModel.smartCardBack = encodeTobase64(nidSecound)
+            }
+
             val intent = Intent(applicationContext, EntryThirdActivity::class.java);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
@@ -196,20 +212,18 @@ class NidInputActivity: LanguagesBaseActivity(), IInputNidListener {
 
             // here you will get captured or selected image<br>
             val nidFirst = BitmapFactory.decodeFile(inputViewModel.firstPageUri.path)
-            regModel.nidFront =  encodeTobase64(nidFirst)
+            regModel.nidFront = encodeTobase64(nidFirst)
 
             val nidSecound = BitmapFactory.decodeFile(inputViewModel.secoundPageUri.path)
-            regModel.nidBack =  encodeTobase64(nidSecound)
+            regModel.nidBack = encodeTobase64(nidSecound)
 
-        }else{
+        } else {
             val nidFirst = BitmapFactory.decodeFile(inputViewModel.firstPageUri.path)
-            regModel.smartCardFront =  encodeTobase64(nidFirst)
+            regModel.smartCardFront = encodeTobase64(nidFirst)
 
             val nidSecound = BitmapFactory.decodeFile(inputViewModel.secoundPageUri.path)
-            regModel.smartCardBack =  encodeTobase64(nidSecound)
+            regModel.smartCardBack = encodeTobase64(nidSecound)
         }
-
-
 
 
         val intent = Intent(applicationContext, InputNidInfoActivity::class.java)
@@ -243,8 +257,6 @@ class NidInputActivity: LanguagesBaseActivity(), IInputNidListener {
         val strBuild = "xxCloud" + imageEncoded + "xxCloud"
         return strBuild
     }
-
-
 
 
 }

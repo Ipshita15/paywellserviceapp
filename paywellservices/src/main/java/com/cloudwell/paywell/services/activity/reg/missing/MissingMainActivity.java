@@ -107,7 +107,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
     boolean isMissingFlowGorble = false;
     private String currentPhotoPath;
 
-    public RegistrationModel regModel;
+    public static RegistrationModel regModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -374,7 +374,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
         if (regModel != null) {
 
             Drawable img = getResources().getDrawable(R.drawable.icon_seleted);
-            if (!regModel.getOutletName().equals("")) {
+            if (!regModel.getOutletImage().equals("")) {
                 btPicOutlet.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 btPicOutlet.setCompoundDrawablePadding(100);
             }
@@ -946,6 +946,7 @@ public class MissingMainActivity extends BaseActivity implements AdapterView.OnI
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == 1) {
                 InputStream imageStream;
