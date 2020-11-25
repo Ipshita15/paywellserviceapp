@@ -108,6 +108,10 @@ public class LoginActivity : BaseActivity() {
             startActivity(i)
         }
 
+        tvGetHelpLoginButton.setOnClickListener {
+            val i = Intent(applicationContext, PreLoginFAQActivity::class.java)
+            startActivity(i)
+        }
     }
 
     private fun changeButtonColorStatus() {

@@ -117,6 +117,10 @@ class HomeActivity : BaseActivity() {
             val i = Intent(applicationContext, PreLoginFAQActivity::class.java)
             startActivity(i)
         }
+        tvGetHelp.setOnClickListener {
+            val i = Intent(applicationContext, PreLoginFAQActivity::class.java)
+            startActivity(i)
+        }
 
 
         if (appStatus.equals(AppsStatusConstant.KEY_unregistered)) {

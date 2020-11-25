@@ -728,7 +728,7 @@
     <string name="paywell_account_user_login">পেওয়েল একাউন্ট ব্যবহারকারী লগইন করুন</string>
     <string name="enter_pin">পিন নম্বর দিন </string>
     <string name="account_id">একাউন্ট আইডি</string>
-    <string name="forgot_pin_new">পিন ভুলে গেছেন?</string>
+    <string name="forgot_pin_new">পিন ভুলে গিয়েছেন?</string>
     <string name="sign_in">সাইন ইন</string>
     <string name="title_login">সাইন ইন</string>
     <string name="bill_number_ocr_hit_text">দয়া করে বিল নম্বরটির উপরে স্ক্যানারটি ধরে রাখুন, একবার বিল নম্বর ক্যাপচার হয়ে নিচে দেখানো হলে OK করুন</string>
@@ -801,6 +801,7 @@
     <string name="skip">এড়িয়ে যান</string>
     <string name="faq">হেল্প</string>
     <string name="call_center">কল সেন্টার নাম্বার</string>
+    <string name="get_help_home_page">হেল্প</string>
 
     <array name="faq_header">
         <item>পেওয়েল নতুন অ্যাপ ভার্সনে প্রথমবার কীভাবে লগইন করব?</item>

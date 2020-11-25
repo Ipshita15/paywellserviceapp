@@ -795,6 +795,7 @@
     the new app>/string>
 
     <string name="home_tutorial">Tutorial</string>
+    <string name="get_help_home_page">Get help?</string>
 
     <array name="faq_header">
         <item>How do I login to the new app version for the first time?</item>

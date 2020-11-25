@@ -141,17 +141,32 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btSingIn"
-                app:srcCompat="@drawable/line_3" />
+                app:srcCompat="@drawable/line_3_login" />
 
         <ImageView
                 android:id="@+id/imagCallButton"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="24dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="60dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="36dp"
+                app:layout_constraintStart_toStartOf="@+id/btSingIn"
                 app:layout_constraintTop_toBottomOf="@+id/imageView49"
                 app:srcCompat="@drawable/call_center_logo_big" />
+
+        <TextView
+                android:id="@+id/tvGetHelpLoginButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:text="@string/get_help_home_page"
+                android:textColor="#189d49"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imagCallButton"
+                app:layout_constraintTop_toTopOf="@+id/imagCallButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
