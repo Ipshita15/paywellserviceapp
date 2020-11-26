@@ -98,7 +98,7 @@ class PackegeSelectedActivity : BaseActivity() {
         var bongoActivePkgPojo = BongoActivePkgPojo()
         bongoActivePkgPojo.code = packagesItem.code.toString()
         bongoActivePkgPojo.locale = mAppHandler?.appLanguage
-        bongoActivePkgPojo.mobile = mAppHandler?.mobileNumber
+        bongoActivePkgPojo.mobile = mobile
         bongoActivePkgPojo.pin_no = pin
         bongoActivePkgPojo.username = mAppHandler?.userName
 
