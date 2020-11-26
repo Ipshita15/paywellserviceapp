@@ -18,7 +18,7 @@ class SuccessDialog(val title: String,val message: String, val onclick : success
         view.title_txt.text = title
         view.message.text = message
         view.submit_button.setOnClickListener(View.OnClickListener {
-            dialog.dismiss()
+            dialog?.dismiss()
             onclick.onclick()
         })
 

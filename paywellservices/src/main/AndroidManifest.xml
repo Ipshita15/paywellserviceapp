@@ -1155,12 +1155,13 @@
 
         <activity
                 android:name=".activity.faq.PreLoginFAQActivity"
-                android:label="@string/title_activity_f_a_q" />
+                android:label="@string/title_activity_f_a_q"
+                android:screenOrientation="portrait" />
 
         <activity
                 android:name=".activity.faq.PostLoginFAQActivity"
-                android:label="@string/title_activity_f_a_q" />
-
+                android:label="@string/title_activity_f_a_q"
+                android:screenOrientation="portrait" />
 
         <meta-data
                 android:name="com.google.android.gms.vision.DEPENDENCIES"
