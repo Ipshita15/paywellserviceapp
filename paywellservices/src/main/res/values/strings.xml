@@ -1128,15 +1128,18 @@
 
 
     <array name="q7">
-        <item>1.What are the bus and launch ticket cancellation fees?</item>
-        <item>2.How much is the air ticket commission?</item>
+        <item>1.What are the bus and launch ticket service charges and commissions?</item>
+        <item>2. What are the bus and launch ticket cancellation service charges and commissions?
+        </item>
     </array>
 
     <array name="a7">
-        <item>The customer has to pay 20 (twenty) taka charge for each ticket.The retailer will get
-            10 (ten) taka commission for each ticket.
+        <item>The customer has to pay 20 (twenty) taka service charge for each ticket. The retailer
+            will get 10 (ten) taka commission for each ticket.
         </item>
-        <item>The commission on air tickets is 5% of base fare.</item>
+        <item>The customer has to pay 20 (twenty) taka service charge for each ticket cancellation.
+            The retailer will get 10 (ten) taka commission for each ticket.
+        </item>
     </array>
 
 
