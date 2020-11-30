@@ -1,17 +1,15 @@
 package com.cloudwell.paywell.services.activity.reg;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.webkit.WebView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 
 import java.io.InputStream;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-public class TermsAndConditionsActivity extends AppCompatActivity {
+public class TermsAndConditionsActivity extends BaseActivity {
 
     private WebView mWebView;
 
@@ -56,8 +54,7 @@ public class TermsAndConditionsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(TermsAndConditionsActivity.this, EntryMainActivity.class);
-        startActivity(intent);
+       
         finish();
     }
 }

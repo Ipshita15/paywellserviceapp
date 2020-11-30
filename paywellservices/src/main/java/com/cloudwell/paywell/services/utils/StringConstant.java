@@ -52,7 +52,7 @@ public class StringConstant {
     public static String KEY_bbc_janala = "bbc_janala";
 
     public static String KEY_home_entertainment = "home_entertainment";
-    public static String KEY_bongo = "bongo";
+    public static String KEY_bongo = "bongo_bd";
 
 
     public static String KEY_home_ticket = "home_eticket";
