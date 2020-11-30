@@ -36,6 +36,6 @@ public class IconConstant {
     public static final String KEY_ic_ticket = "ic_eticket";
     public static final String KEY_air_ticket = "air_ticket";
     public static final String KEY_bbc_icon = "bbc_icon";
-    public static final String KEY_bongo_icon = "bongo";
+    public static final String KEY_bongo_icon = "bongo_ac_icon_useed";
 
 }
