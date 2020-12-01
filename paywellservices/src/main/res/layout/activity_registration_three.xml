@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/scrollView_third">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView_third">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:descendantFocusability="beforeDescendants"
-        android:focusableInTouchMode="true">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="beforeDescendants"
+            android:focusableInTouchMode="true">
 
         <TextView
-            android:visibility="gone"
-            android:id="@+id/textView_salesCode"
+                android:visibility="gone"
+                android:id="@+id/textView_salesCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -101,9 +100,9 @@
                 android:shadowColor="#000000"
                 android:shadowDx="1"
                 android:shadowDy="1"
-                android:shadowRadius="2"
-                android:text="দোকানের ছবি"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:shadowRadius="2"
+                    android:text="@string/outlet_image"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff" />
 
 
@@ -192,13 +191,10 @@
                 android:shadowColor="#000000"
                 android:shadowDx="1"
                 android:shadowDy="1"
-                android:shadowRadius="2"
-                android:text="মালিকের ছবি"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:shadowRadius="2"
+                    android:text="@string/owner_photo"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff" />
-
-
-
         </LinearLayout>
 
         <LinearLayout
@@ -223,9 +219,9 @@
                 android:shadowColor="#000000"
                 android:shadowDx="1"
                 android:shadowDy="1"
-                android:shadowRadius="2"
-                android:text="ট্রেড লাইসেন্সের ছবি"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:shadowRadius="2"
+                    android:text="@string/trade_license"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff" />
 
         </LinearLayout>
@@ -252,9 +248,9 @@
                 android:shadowColor="#000000"
                 android:shadowDx="1"
                 android:shadowDy="1"
-                android:shadowRadius="2"
-                android:text="পাসপোর্টের ছবি"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:shadowRadius="2"
+                    android:text="@string/passport_reg"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff" />
 
         </LinearLayout>
@@ -281,9 +277,9 @@
                 android:shadowColor="#000000"
                 android:shadowDx="1"
                 android:shadowDy="1"
-                android:shadowRadius="2"
-                android:text="বার্থ সার্টিফিকেটের ছবি"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:shadowRadius="2"
+                    android:text="@string/birth_certificate"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff" />
 
         </LinearLayout>
@@ -310,9 +306,9 @@
                 android:shadowColor="#000000"
                 android:shadowDx="1"
                 android:shadowDy="1"
-                android:shadowRadius="2"
-                android:text="ড্রাইভিং লাইসেন্সের ছবি"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:shadowRadius="2"
+                    android:text="@string/driving_license"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff" />
 
         </LinearLayout>
@@ -339,9 +335,9 @@
                 android:shadowColor="#000000"
                 android:shadowDx="1"
                 android:shadowDy="1"
-                android:shadowRadius="2"
-                android:text="ভিজিটিং কার্ডের ছবি"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:shadowRadius="2"
+                    android:text="@string/visiting_card"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff" />
 
         </LinearLayout>
@@ -365,9 +361,9 @@
                 android:shadowColor="#000000"
                 android:shadowDx="1"
                 android:shadowDy="1"
-                android:shadowRadius="2"
-                android:text="পূর্ববর্তী ধাপ"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:shadowRadius="2"
+                    android:text="@string/back"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff" />
 
             <Button
@@ -381,9 +377,9 @@
                 android:shadowColor="#000000"
                 android:shadowDx="1"
                 android:shadowDy="1"
-                android:shadowRadius="2"
-                android:text="পরবর্তী ধাপ"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:shadowRadius="2"
+                    android:text="@string/next"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff" />
         </LinearLayout>
     </RelativeLayout>

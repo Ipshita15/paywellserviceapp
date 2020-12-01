@@ -1,186 +1,222 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/scrollView_second">
+        android:id="@+id/scrollView_second"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:descendantFocusability="beforeDescendants"
-        android:focusableInTouchMode="true">
-
-        <LinearLayout
-            android:id="@+id/layout_district"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="30dp">
+            android:descendantFocusability="beforeDescendants"
+            android:focusableInTouchMode="true">
+
+        <LinearLayout
+                android:id="@+id/layout_district"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="5dp"
-                android:text="@string/star_sign"
-                android:textColor="#FF4719" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="5dp"
+                    android:text="@string/star_sign"
+                    android:textColor="#FF4719" />
 
             <TextView
-                android:id="@+id/textView_district"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                    android:id="@+id/textView_district"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/district_reg"
                     android:textColor="#41882b"
-                android:textSize="18sp"
-                android:textStyle="normal|bold" />
+                    android:textSize="18sp"
+                    android:textStyle="normal|bold" />
 
             <Spinner
-                android:id="@+id/spinner_district"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1" />
+                    android:id="@+id/spinner_district"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1" />
 
         </LinearLayout>
 
 
         <LinearLayout
-            android:id="@+id/layout_thana"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/layout_district"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="30dp">
+                android:id="@+id/layout_thana"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout_district"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="5dp"
-                android:text="@string/star_sign"
-                android:textColor="#FF4719" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="5dp"
+                    android:text="@string/star_sign"
+                    android:textColor="#FF4719" />
 
             <TextView
-                android:id="@+id/textView_thana"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                    android:id="@+id/textView_thana"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/thana_reg"
                     android:textColor="#41882b"
-                android:textSize="18sp"
-                android:textStyle="normal|bold" />
+                    android:textSize="18sp"
+                    android:textStyle="normal|bold" />
 
             <Spinner
-                android:id="@+id/spinner_thana"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1" />
+                    android:id="@+id/spinner_thana"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layout_post"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/layout_thana"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="30dp">
+                android:id="@+id/layout_post"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout_thana"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="5dp"
-                android:text="@string/star_sign"
-                android:textColor="#FF4719" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="5dp"
+                    android:text="@string/star_sign"
+                    android:textColor="#FF4719" />
 
             <TextView
-                android:id="@+id/textView_postcode"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                    android:id="@+id/textView_postcode"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/post_code_reg"
                     android:textColor="#41882b"
-                android:textSize="18sp"
-                android:textStyle="normal|bold" />
+                    android:textSize="18sp"
+                    android:textStyle="normal|bold" />
 
             <Spinner
-                android:id="@+id/spinner_postcode"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1" />
+                    android:id="@+id/spinner_postcode"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1" />
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView_landmark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/layout_post"
-            android:layout_marginLeft="32dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="30dp"
-            android:textColor="#41882b"
-            android:textSize="18sp"
-            android:textStyle="normal|bold" />
+                android:id="@+id/textView_landmark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout_post"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="30dp"
+                android:textColor="#41882b"
+                android:textSize="18sp"
+                android:textStyle="normal|bold" />
 
         <EditText
-            android:id="@+id/editText_landmark"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView_landmark"
-            android:layout_alignStart="@+id/textView_landmark"
-            android:layout_below="@+id/textView_landmark"
-            android:layout_marginRight="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="5dp"
-            android:ems="10"
-            android:hint="Please type in English"
-            android:inputType="text"
-            android:selectAllOnFocus="false" />
+                android:id="@+id/editText_landmark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView_landmark"
+                android:layout_alignStart="@+id/textView_landmark"
+                android:layout_alignLeft="@+id/textView_landmark"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:ems="10"
+                android:hint="Please type in English"
+                android:inputType="text"
+                android:selectAllOnFocus="false" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/editText_landmark"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="40dp"
-            android:weightSum="2">
+                android:id="@+id/llref"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/editText_landmark"
+                android:layout_alignStart="@+id/editText_landmark"
+                android:layout_alignLeft="@+id/editText_landmark"
+                android:orientation="vertical">
+
+
+            <TextView
+                    android:id="@+id/ref"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/layout_post"
+                    android:layout_marginTop="30dp"
+                    android:text="@string/refcode"
+                    android:textColor="#41882b"
+                    android:textSize="18sp"
+                    android:textStyle="normal|bold" />
+
+            <EditText
+                    android:id="@+id/editText_refcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textSize="18sp"
+                    android:hint="Please type in English"
+                    android:inputType="textPersonName"
+                    android:text="" />
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llref"
+                android:layout_alignStart="@+id/llref"
+                android:layout_alignLeft="@+id/llref"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="5dp"
+                android:weightSum="2">
 
             <Button
-                android:id="@+id/btn_preStep"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/button_green"
-                android:onClick="previousOnClick"
-                android:shadowColor="#000000"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="2"
-                android:text="পূর্ববর্তী ধাপ"
-                android:textAllCaps="false"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#ffffff" />
+                    android:id="@+id/btn_preStep"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_green"
+                    android:onClick="previousOnClick"
+                    android:shadowColor="#000000"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="2"
+                    android:text="@string/back"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#ffffff" />
 
             <Button
-                android:id="@+id/btn_nextStep"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/button_green"
-                android:onClick="nextOnClick"
-                android:shadowColor="#000000"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="2"
-                android:text="পরবর্তী ধাপ"
-                android:textAllCaps="false"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#ffffff" />
+                    android:id="@+id/btn_nextStep"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_green"
+                    android:onClick="nextOnClick"
+                    android:shadowColor="#000000"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="2"
+                    android:text="@string/next"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#ffffff" />
         </LinearLayout>
 
     </RelativeLayout>

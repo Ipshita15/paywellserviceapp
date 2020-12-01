@@ -94,8 +94,11 @@ public class RegistrationModel {
     @SerializedName("smartCardAddress")
     public String smartCardAddress;
 
+    @SerializedName("reference_code")
+    private String referenceCode;
 
-
+    @SerializedName("lan")
+    private String lan;
 
     private String mBusinessaTypeAPIRespose;
     private int mBusinesstypeAdapterPosition = 0;
@@ -109,6 +112,7 @@ public class RegistrationModel {
     private String mDistrict;
     private String salesCode;
     private String collectionCode;
+
 
     public RegistrationModel() {
     }
@@ -568,5 +572,21 @@ public class RegistrationModel {
 
     public void setNidNameEngish(String nidNameEngish) {
         this.nidNameEngish = nidNameEngish;
+    }
+
+    public void setReferenceCode(String referenceCode) {
+        this.referenceCode = referenceCode;
+    }
+
+    public String getReferenceCode() {
+        return referenceCode;
+    }
+
+    public void setLan(String lan) {
+        this.lan = lan;
+    }
+
+    public int getmBusinesstypeAdapterPosition() {
+        return mBusinesstypeAdapterPosition;
     }
 }

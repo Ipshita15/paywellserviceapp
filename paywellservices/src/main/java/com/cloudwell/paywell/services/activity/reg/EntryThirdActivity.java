@@ -68,7 +68,7 @@ public class EntryThirdActivity extends BaseActivity {
         setContentView(R.layout.activity_registration_three);
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("৩য় ধাপ");
+            getSupportActionBar().setTitle(R.string.step_3);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         mAppHandler = AppHandler.getmInstance(getApplicationContext());

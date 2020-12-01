@@ -633,7 +633,7 @@
     <string name="next_text">পরবর্তী</string>
     <string name="title_nid">এন.আই.ডি-এর তথ্য</string>
     <string name="title_smart">স্মার্ট আইডি কার্ড-এর তথ্য</string>
-    <string name="text_nid">এন.আই.ডি</string>
+    <string name="text_nid">জাতীয় পরিচয় পত্র</string>
     <string name="text_smart_card">স্মার্ট কার্ড</string>
 
     <string name="desco_prepaid_string">ডেসকো প্রিপেইড</string>
@@ -819,6 +819,38 @@
     <string name="district_reg">জেলাঃ</string>
     <string name="thana_reg">থানাঃ</string>
     <string name="post_code_reg">পোস্টকোডঃ</string>
+    <string name="back">পূর্ববর্তী ধাপ</string>
+    <string name="refcode">রেফারেন্স কোড (ঐচ্ছিক)</string>
+    <string name="step_3">৩য় ধাপ</string>
+    <string name="landmark"><![CDATA[<font color=#41882b>ল্যান্ডমার্কঃ </font> <font color=#b3b3b3>(ঐচ্ছিক)</font>]]></string>
+    <string name="pleaes_fill_up_correctly">সঠিকভাবে পূরণ করুন</string>
+    <string name="step2">২য় ধাপ</string>
+    <string name="outlet_image">দোকানের ছবি</string>
+    <string name="owner_photo">মালিকের ছবি</string>
+    <string name="trade_license">ট্রেড লাইসেন্সের ছবি</string>
+    <string name="passport_reg">পাসপোর্টের ছবি</string>
+    <string name="birth_certificate">জন্ম সনদ</string>
+    <string name="driving_license">ড্রাইভিং লাইসেন্স</string>
+    <string name="visiting_card">ভিজিটিং কার্ড</string>
+    <string name="step4">৪র্থ</string>
+    <string name="retiler_q1">আপনি কি বর্তমানে মোবাইল রিচার্জ এর ব্যবসা করেন?</string>
+    <string name="retailer_q2">আপনি কি কোন মোবাইল ব্যাংকিং এজেন্ট?</string>
+    <string name="retailer_q3">আপনি কি প্লে স্টোর থেকে অ্যাপটি নিয়েছেন?</string>
+    <string name="grameenphone">গ্রামীনফোন</string>
+    <string name="banglalink">বাংলালিংক</string>
+    <string name="robi">রবি</string>
+    <string name="airtel">এয়ারটেল</string>
+    <string name="teletalk">টেলিটক</string>
+    <string name="service">সার্ভিস</string>
+    <string name="bkash">বিকাশ</string>
+    <string name="rocket">রকেট</string>
+    <string name="mcash">এমক্যাশ</string>
+    <string name="mobile_money">মোবাইল মানি</string>
+    <string name="mycash">মাইক্যাশ</string>
+    <string name="first_page_nid">আপনার জাতীয় পরিচয় পত্রের সামনের অংশটি ক্যামেরার সাহায্যে ছবি তুলুন</string>
+    <string name="nid_second_page">আপনার জাতীয় পরিচয় পত্রের পিছনের অংশটি ক্যামেরার সাহায্যে ছবি তুলুন</string>
+    <string name="national_id_card">জাতীয় পরিচয়পত্র</string>
+
 
     <array name="faq_header">
         <item>পেওয়েল নতুন অ্যাপ ভার্সনে প্রথমবার কীভাবে লগইন করব?</item>

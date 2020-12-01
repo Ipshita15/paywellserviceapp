@@ -52,7 +52,7 @@ public class EntryForthActivity extends BaseActivity {
         setContentView(R.layout.activity_entry_forth);
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("৪র্থ");
+            getSupportActionBar().setTitle(R.string.step4);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
@@ -332,8 +332,7 @@ public class EntryForthActivity extends BaseActivity {
         regModel.setVisitingCard(visiting_card_img);
         regModel.setOutletImage(outlet_img);
         regModel.setOwnerImage(owner_img);
-
-
+        regModel.setLan(AppHandler.getmInstance(getApplicationContext()).getAppLanguage());
 
 
         ApiUtils.getAPIServicePHP7().userInformationForRegistration(regModel).enqueue(new Callback<ResponseBody>() {

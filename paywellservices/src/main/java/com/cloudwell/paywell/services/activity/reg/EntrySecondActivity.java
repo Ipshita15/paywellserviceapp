@@ -39,7 +39,7 @@ import static com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regM
 
 public class EntrySecondActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
 
-    private EditText et_landmark;
+    private EditText et_landmark, et_reference_code;
     private Spinner spnr_district, spnr_thana, spnr_postcode;
     private String str_districtId = "", str_thanaId = "", str_postcodeId = "", str_postcode = "";
     private String[] district_array_id, thana_array_id, post_array_id, post_array_name;
@@ -56,17 +56,18 @@ public class EntrySecondActivity extends BaseActivity implements AdapterView.OnI
         mAppHandler = AppHandler.getmInstance(getApplicationContext());
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("২য় ধাপ");
+            getSupportActionBar().setTitle(R.string.step2);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         ScrollView mScrollView = findViewById(R.id.scrollView_second);
         TextView tv_landmark = findViewById(R.id.textView_landmark);
-        String custom_text = "<font color=#41882b>ল্যান্ডমার্কঃ </font> <font color=#b3b3b3>(ঐচ্ছিক)</font>";
+        String custom_text = getString(R.string.landmark);
         tv_landmark.setText(Html.fromHtml(custom_text));
 
         spnr_district = findViewById(R.id.spinner_district);
         et_landmark = findViewById(R.id.editText_landmark);
+        et_reference_code = findViewById(R.id.editText_refcode);
         spnr_thana = findViewById(R.id.spinner_thana);
         spnr_postcode = findViewById(R.id.spinner_postcode);
 
@@ -231,6 +232,7 @@ public class EntrySecondActivity extends BaseActivity implements AdapterView.OnI
             regModel.setPostcodeId(str_postcodeId);
             regModel.setPostcodeName(str_postcode);
             regModel.setLandmark(et_landmark.getText().toString().trim());
+            regModel.setReferenceCode(et_reference_code.getText().toString().trim());
 
             mAppHandler.REG_FLAG_TWO = true;
 
@@ -239,7 +241,7 @@ public class EntrySecondActivity extends BaseActivity implements AdapterView.OnI
             startActivity(intent);
             finish();
         } else {
-            Toast.makeText(this, "সঠিকভাবে পূরণ করুন", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.pleaes_fill_up_correctly), Toast.LENGTH_SHORT).show();
         }
     }
 

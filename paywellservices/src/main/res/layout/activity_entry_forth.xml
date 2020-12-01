@@ -20,8 +20,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="23dp"
-            android:text="আপনি কি বর্তমানে রিচার্জের ব্যবসা করছেন?"
-            android:textColor="#41882b"
+                android:text="@string/retiler_q1"
+                android:textColor="#41882b"
             android:textSize="18sp"
             android:textStyle="normal|bold" />
 
@@ -36,18 +36,18 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/rechargeYes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="হাঁ" />
+                    android:id="@+id/rechargeYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/yes" />
 
             <RadioButton
-                android:id="@+id/rechargeNo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:text="না" />
+                    android:id="@+id/rechargeNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/no" />
         </RadioGroup>
 
         <LinearLayout
@@ -64,9 +64,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="23dp"
-                android:text="অপারেটর"
-                android:textColor="#41882b"
+                    android:layout_marginTop="23dp"
+                    android:text="@string/operator"
+                    android:textColor="#41882b"
                 android:textSize="18sp"
                 android:textStyle="normal|bold" />
 
@@ -76,28 +76,28 @@
                 android:orientation="horizontal">
 
                 <CheckBox
-                    android:id="@+id/item_check_gp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_weight="1"
-                    android:checked="false"
-                    android:onClick="itemClickedOne"
-                    android:text="গ্রামীনফোন" />
+                        android:id="@+id/item_check_gp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:onClick="itemClickedOne"
+                        android:text="@string/grameenphone" />
 
                 <CheckBox
-                    android:id="@+id/item_check_bl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_weight="1"
-                    android:checked="false"
-                    android:onClick="itemClickedTwo"
-                    android:text="বাংলালিংক" />
+                        android:id="@+id/item_check_bl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:onClick="itemClickedTwo"
+                        android:text="@string/banglalink" />
             </LinearLayout>
 
             <LinearLayout
@@ -106,28 +106,28 @@
                 android:orientation="horizontal">
 
                 <CheckBox
-                    android:id="@+id/item_check_rb"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_weight="1"
-                    android:checked="false"
-                    android:onClick="itemClickedThree"
-                    android:text="রবি" />
+                        android:id="@+id/item_check_rb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:onClick="itemClickedThree"
+                        android:text="@string/robi" />
 
                 <CheckBox
-                    android:id="@+id/item_check_at"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_weight="1"
-                    android:checked="false"
-                    android:onClick="itemClickedFour"
-                    android:text="এয়ারটেল" />
+                        android:id="@+id/item_check_at"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginStart="50dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:onClick="itemClickedFour"
+                        android:text="@string/airtel" />
             </LinearLayout>
 
             <LinearLayout
@@ -136,16 +136,16 @@
                 android:orientation="horizontal">
 
                 <CheckBox
-                    android:id="@+id/item_check_tt"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_weight="1"
-                    android:checked="false"
-                    android:onClick="itemClickedFive"
-                    android:text="টেলিটক" />
+                        android:id="@+id/item_check_tt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:onClick="itemClickedFive"
+                        android:text="@string/teletalk" />
             </LinearLayout>
         </LinearLayout>
 
@@ -156,9 +156,9 @@
             android:layout_below="@+id/linearLayoutOne"
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="23dp"
-            android:text="আপনি কি কোন মোবাইল ব্যাংকিং এজেন্ট?"
-            android:textColor="#41882b"
+                android:layout_marginTop="23dp"
+                android:text="@string/retailer_q2"
+                android:textColor="#41882b"
             android:textSize="18sp"
             android:textStyle="normal|bold" />
 
@@ -173,37 +173,37 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/agentYes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="হাঁ" />
+                    android:id="@+id/agentYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/yes" />
 
             <RadioButton
-                android:id="@+id/agentNo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:text="না" />
+                    android:id="@+id/agentNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/no" />
         </RadioGroup>
 
         <LinearLayout
-            android:id="@+id/linearLayoutTwo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/radioGroup_two"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <TextView
-                android:id="@+id/textView_service"
+                android:id="@+id/linearLayoutTwo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="23dp"
-                android:text="সার্ভিস"
-                android:textColor="#41882b"
+                android:layout_below="@+id/radioGroup_two"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+            <TextView
+                    android:id="@+id/textView_service"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="23dp"
+                    android:text="@string/service"
+                    android:textColor="#41882b"
                 android:textSize="18sp"
                 android:textStyle="normal|bold" />
 
@@ -213,28 +213,28 @@
                 android:orientation="horizontal">
 
                 <CheckBox
-                    android:id="@+id/item_check_bkash"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_weight="1"
-                    android:checked="false"
-                    android:onClick="itemClickedSix"
-                    android:text="বিকাশ" />
+                        android:id="@+id/item_check_bkash"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:onClick="itemClickedSix"
+                        android:text="@string/bkash" />
 
                 <CheckBox
-                    android:id="@+id/item_check_rocket"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_weight="1"
-                    android:checked="false"
-                    android:onClick="itemClickedSeven"
-                    android:text="রকেট" />
+                        android:id="@+id/item_check_rocket"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:onClick="itemClickedSeven"
+                        android:text="@string/rocket" />
             </LinearLayout>
 
             <LinearLayout
@@ -243,28 +243,28 @@
                 android:orientation="horizontal">
 
                 <CheckBox
-                    android:id="@+id/item_check_mcash"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_weight="1"
-                    android:checked="false"
-                    android:onClick="itemClickedEight"
-                    android:text="এমক্যাশ" />
+                        android:id="@+id/item_check_mcash"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:onClick="itemClickedEight"
+                        android:text="@string/mcash" />
 
                 <CheckBox
-                    android:id="@+id/item_check_mobile_money"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_weight="1"
-                    android:checked="false"
-                    android:onClick="itemClickedNine"
-                    android:text="মোবাইল মানি" />
+                        android:id="@+id/item_check_mobile_money"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:onClick="itemClickedNine"
+                        android:text="@string/mobile_money" />
             </LinearLayout>
 
             <LinearLayout
@@ -273,16 +273,16 @@
                 android:orientation="horizontal">
 
                 <CheckBox
-                    android:id="@+id/item_check_mycash"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_weight="1"
-                    android:checked="false"
-                    android:onClick="itemClickedTen"
-                    android:text="মাইক্যাশ" />
+                        android:id="@+id/item_check_mycash"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:onClick="itemClickedTen"
+                        android:text="@string/mycash" />
             </LinearLayout>
         </LinearLayout>
 
@@ -293,9 +293,9 @@
             android:layout_below="@+id/linearLayoutTwo"
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="23dp"
-            android:text="আপনি কি প্লে স্টোর থেকে অ্যাপটি নিয়েছেন?"
-            android:textColor="#41882b"
+                android:layout_marginTop="23dp"
+                android:text="@string/retailer_q3"
+                android:textColor="#41882b"
             android:textSize="18sp"
             android:textStyle="normal|bold" />
 
@@ -310,18 +310,18 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/downloadYes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="হাঁ" />
+                    android:id="@+id/downloadYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/yes" />
 
             <RadioButton
-                android:id="@+id/downloadNo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:text="না" />
+                    android:id="@+id/downloadNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/no" />
         </RadioGroup>
 
         <LinearLayout
@@ -343,9 +343,9 @@
                 android:shadowColor="#000000"
                 android:shadowDx="1"
                 android:shadowDy="1"
-                android:shadowRadius="2"
-                android:text="পূর্ববর্তী"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:shadowRadius="2"
+                    android:text="@string/back"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff" />
 
             <Button
@@ -359,9 +359,9 @@
                 android:shadowColor="#000000"
                 android:shadowDx="1"
                 android:shadowDy="1"
-                android:shadowRadius="2"
-                android:text="পরবর্তী"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:shadowRadius="2"
+                    android:text="@string/next"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#ffffff" />
         </LinearLayout>
     </RelativeLayout>

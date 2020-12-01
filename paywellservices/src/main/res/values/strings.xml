@@ -631,10 +631,10 @@
 
     <string name="finished">সম্পূর্ণ</string>
     <string name="next_text">পরবর্তী</string>
-    <string name="title_nid">এন.আই.ডি-এর তথ্য</string>
-    <string name="title_smart">এন.আই.ডি-এর তথ্য</string>
-    <string name="text_nid">এন.আই.ডি</string>
-    <string name="text_smart_card">স্মার্ট কার্ড</string>
+    <string name="title_nid">National ID Card information</string>
+    <string name="title_smart">Smart card information</string>
+    <string name="text_nid">NID</string>
+    <string name="text_smart_card">Smart card</string>
     <string name="desco_prepaid_string">Desco Prepaid</string>
     <string name="desco_postpaid_string">Desco Postpaid</string>
     <string name="desco_postpaid_inquiry">Desco Postpaid Inquiry</string>
@@ -812,6 +812,37 @@
     <string name="district_reg">District:</string>
     <string name="thana_reg">Thana:</string>
     <string name="post_code_reg">Post code:</string>
+    <string name="back">Back</string>
+    <string name="refcode">Reference code (Optional)</string>
+    <string name="step_3">Step 3</string>
+    <string name="landmark"><![CDATA[<font color=#41882b>Landmark </font> <font color=#b3b3b3>(Optional)</font>]]></string>
+    <string name="pleaes_fill_up_correctly">Please fill up in correctly</string>
+    <string name="step2">Step 2</string>
+    <string name="outlet_image">Outlet image</string>
+    <string name="owner_photo">Owner\'s Photo</string>
+    <string name="trade_license">Trade license </string>
+    <string name="passport_reg">Passport</string>
+    <string name="birth_certificate">Birth certificate</string>
+    <string name="driving_license">Driving license</string>
+    <string name="visiting_card">Visiting card</string>
+    <string name="step4">Step 4</string>
+    <string name="retiler_q1">Are you currently  doing  mobile recharge business?</string>
+    <string name="retailer_q2">Are you a mobile banking agent?</string>
+    <string name="retailer_q3">Did you get the app from the Play Store?</string>
+    <string name="grameenphone">Grameenphone</string>
+    <string name="banglalink">Banglalink</string>
+    <string name="robi">Robi</string>
+    <string name="airtel">Airtel</string>
+    <string name="teletalk">Teletalk</string>
+    <string name="service">Service</string>
+    <string name="bkash">Bkash</string>
+    <string name="rocket">Rocket</string>
+    <string name="mcash">Mcash</string>
+    <string name="mobile_money">Mobile money</string>
+    <string name="mycash">Mycash</string>
+    <string name="first_page_nid">Take a picture with the camera on the front of your national identity card</string>
+    <string name="nid_second_page">Take pictures with the camera on the back of your national identity card</string>
+    <string name="national_id_card">National ID Card</string>
 
     <array name="faq_header">
         <item>How do I login to the new app version for the first time?</item>
