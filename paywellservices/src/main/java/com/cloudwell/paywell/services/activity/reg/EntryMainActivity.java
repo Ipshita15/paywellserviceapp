@@ -23,13 +23,9 @@ import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.Locale;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.cloudwell.paywell.services.utils.LanuageConstant.KEY_BANGLA;
 
 public class EntryMainActivity extends BaseActivity {
 
@@ -57,9 +53,6 @@ public class EntryMainActivity extends BaseActivity {
             regModel = new RegistrationModel();
         }
 
-        AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
-        mAppHandler.setAppLanguage("bn");
-        switchToCzLocale(new Locale(KEY_BANGLA, ""));
 
         mLinearLayout = findViewById(R.id.layout);
         checkBox = findViewById(R.id.item_check);
@@ -67,17 +60,15 @@ public class EntryMainActivity extends BaseActivity {
         TextView textViewTerms = findViewById(R.id.textViewTerms);
 
         ((TextView) mLinearLayout.findViewById(R.id.textView_welcome)).setTypeface(AppController.getInstance().getAponaLohitFont());
-        ((TextView) mLinearLayout.findViewById(R.id.textView_me)).setTypeface(AppController.getInstance().getAponaLohitFont());
         textViewTerms.setTypeface(AppController.getInstance().getAponaLohitFont());
-        ((TextView) mLinearLayout.findViewById(R.id.textView_confirmText)).setTypeface(AppController.getInstance().getAponaLohitFont());
         ((Button) mLinearLayout.findViewById(R.id.btn_nextStep)).setTypeface(AppController.getInstance().getAponaLohitFont());
 
         textViewTerms.setPaintFlags(textViewTerms.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         textViewTerms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(EntryMainActivity.this, TermsAndConditionsActivity.class));
-                finish();
+                startActivity(new Intent(getApplicationContext(), TermsAndConditionsActivity.class));
+
             }
         });
     }
@@ -86,7 +77,7 @@ public class EntryMainActivity extends BaseActivity {
 
 
         if (editTextPhone.getText().toString().equals("")) {
-            Snackbar snackbar = Snackbar.make(mLinearLayout, "মোবাইল নাম্বারটি টাইপ করুন", Snackbar.LENGTH_LONG);
+            Snackbar snackbar = Snackbar.make(mLinearLayout, getString(R.string.enter_your_mobile_number), Snackbar.LENGTH_LONG);
             snackbar.setActionTextColor(Color.parseColor("#ffffff"));
             View snackBarView = snackbar.getView();
             snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
@@ -102,7 +93,7 @@ public class EntryMainActivity extends BaseActivity {
             }
 
         } else {
-            Snackbar snackbar = Snackbar.make(mLinearLayout, "চুক্তি ও শর্তাদি দয়া করে চেক করুন", Snackbar.LENGTH_LONG);
+            Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.check_roles_, Snackbar.LENGTH_LONG);
             snackbar.setActionTextColor(Color.parseColor("#ffffff"));
             View snackBarView = snackbar.getView();
             snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));

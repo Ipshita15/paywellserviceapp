@@ -29,8 +29,8 @@
             android:layout_marginLeft="26dp"
             android:layout_marginStart="26dp"
             android:layout_marginTop="23dp"
-            android:text="দোকানের নাম"
-            android:textColor="#41882b"
+                android:text="@string/outlet_name"
+                android:textColor="#41882b"
             android:textSize="18sp"
             android:textStyle="normal|bold" />
 
@@ -64,9 +64,9 @@
             android:layout_alignLeft="@+id/editText_outletName"
             android:layout_alignStart="@+id/editText_outletName"
             android:layout_below="@+id/editText_outletName"
-            android:layout_marginTop="15dp"
-            android:text="ঠিকানা"
-            android:textColor="#41882b"
+                android:layout_marginTop="15dp"
+                android:text="@string/address"
+                android:textColor="#41882b"
             android:textSize="18sp"
             android:textStyle="normal|bold" />
 
@@ -100,9 +100,9 @@
             android:layout_alignLeft="@+id/editText_address"
             android:layout_alignStart="@+id/editText_address"
             android:layout_below="@+id/editText_address"
-            android:layout_marginTop="15dp"
-            android:text="মালিকের নাম"
-            android:textColor="#41882b"
+                android:layout_marginTop="15dp"
+                android:text="@string/owner_name"
+                android:textColor="#41882b"
             android:textSize="18sp"
             android:textStyle="normal|bold" />
 
@@ -137,9 +137,9 @@
             android:layout_alignLeft="@+id/editText_ownerName"
             android:layout_alignStart="@+id/editText_ownerName"
             android:layout_below="@+id/editText_ownerName"
-            android:layout_marginTop="15dp"
-            android:text="মার্চেন্টের ধরন"
-            android:textColor="#41882b"
+                android:layout_marginTop="15dp"
+                android:text="@string/merchant_type"
+                android:textColor="#41882b"
             android:textSize="18sp"
             android:textStyle="normal|bold" />
 
@@ -173,9 +173,9 @@
             android:layout_alignLeft="@+id/editText_ownerName"
             android:layout_alignStart="@+id/editText_ownerName"
             android:layout_below="@+id/textView_merchantType"
-            android:layout_marginTop="15dp"
-            android:text="ব্যবসার ধরন"
-            android:textColor="#41882b"
+                android:layout_marginTop="15dp"
+                android:text="@string/business_type"
+                android:textColor="#41882b"
             android:textSize="18sp"
             android:textStyle="normal|bold" />
 
@@ -232,9 +232,9 @@
             android:shadowColor="#000000"
             android:shadowDx="1"
             android:shadowDy="1"
-            android:shadowRadius="2"
-            android:text="পরবর্তী ধাপ"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+                android:shadowRadius="2"
+                android:text="@string/next"
+                android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#ffffff" />
 
     </RelativeLayout>

@@ -30,8 +30,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="জেলাঃ"
-                android:textColor="#41882b"
+                    android:text="@string/district_reg"
+                    android:textColor="#41882b"
                 android:textSize="18sp"
                 android:textStyle="normal|bold" />
 
@@ -65,9 +65,9 @@
                 android:id="@+id/textView_thana"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="থানাঃ"
-                android:textColor="#41882b"
+                    android:layout_weight="1"
+                    android:text="@string/thana_reg"
+                    android:textColor="#41882b"
                 android:textSize="18sp"
                 android:textStyle="normal|bold" />
 
@@ -99,9 +99,9 @@
                 android:id="@+id/textView_postcode"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="পোস্টকোডঃ"
-                android:textColor="#41882b"
+                    android:layout_weight="1"
+                    android:text="@string/post_code_reg"
+                    android:textColor="#41882b"
                 android:textSize="18sp"
                 android:textStyle="normal|bold" />
 

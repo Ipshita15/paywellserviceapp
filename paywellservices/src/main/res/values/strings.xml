@@ -640,19 +640,19 @@
     <string name="desco_postpaid_inquiry">Desco Postpaid Inquiry</string>
     <string name="meter_number">Meter number</string>
     <string name="txt_login">Sign in</string>
-    <string name="txt_signup">Create an account</string>
+    <string name="txt_signup">Create an new account</string>
     <string name="rid_mobile_number">Mobile Number</string>
     <string name="pin_number">Pin Number</string>
     <string name="submit">Login</string>
     <string name="forget_pin">Forget Pin?</string>
     <string name="member_login">User Login</string>
-    <string name="txt_user_registration">খুচরা বিক্রেতা নিবন্ধকরণ</string>
+    <string name="txt_user_registration">New Agent Registration</string>
     <string name="otp_verification">OTP Verification</string>
     <string name="ok_text">OK</string>
     <string name="resend_otp">Resend OTP</string>
     <string name="verify_your_phone_number" translatable="false">Verify phone number</string>
-    <string name="we_have_send_you_an_sms_with_a_code_to_your_number" translatable="false">We have send you an SMS with a code to your number</string>
-    <string name="didn_t_you_received_any_code">Didn\'t you received any code?</string>
+    <string name="we_have_send_you_an_sms_with_a_code_to_your_number">Verify  mobile number by entering  four digit OTP sent to your mobile number</string>
+    <string name="didn_t_you_received_any_code">(If OTP is not received)</string>
     <string name="request_format_pin">Request forgot pin</string>
     <string name="last_4_digit_mobile_number">Mobile number</string>
     <string name="please_enter_the_last_4_digits_of_your_phone_number">Please enter your registered  number</string>
@@ -732,7 +732,7 @@
     <string name="bus_transction_log">Transaction Log</string>
     <string name="cancel_ticket_list">Cancel Ticket</string>
     <string name="title_ticket_cancel_list">Ticket cancel list</string>
-    <string name="paywell_account_user_login">PayWell account user login</string>
+    <string name="paywell_account_user_login">Log in to PayWell</string>
     <string name="enter_pin">Enter PIN</string>
     <string name="account_id">Account ID</string>
     <string name="forgot_pin_new">Forgot PIN?</string>
@@ -743,7 +743,7 @@
 
     <string name="hit_passport_number_ivac">Passport Number</string>
     <string name="hit_web_file_number_ivac">Web File Number</string>
-    <string name="title_otp_verfication">OTP Verification</string>
+    <string name="title_otp_verfication">Mobile number verification</string>
     <string name="next">Next</string>
     <string name="acccount_name_link_bank">Account Name</string>
     <string name="account_number_link_bank">Account Number</string>
@@ -798,6 +798,20 @@
     <string name="get_help_home_page">Get help?</string>
     <string name="chat">Chat</string>
     <string name="call">Call</string>
+    <string name="wellcome_text">Welcome to PayWell Agent Registration. Complete the registration process by providing correct information.</string>
+    <string name="enter_your_mobile_number">Enter your mobile number</string>
+    <string name="i_agree_with_rules">I agree to the <font fgcolor="#5aac40"> terms and conditions</font></string>
+    <string name="check_roles_">Please check the terms and conditions</string>
+    <string name="outlet_name">Outlet name</string>
+    <string name="address">Address</string>
+    <string name="owner_name">Owner name</string>
+    <string name="merchant_type">Merchant type</string>
+    <string name="business_type">Business type</string>
+    <string name="email_hit"><![CDATA[<font color=#41882b> Email </font> <font color=#b3b3b3> (Optional)</font>]]></string>
+    <string name="first_step">Step 1</string>
+    <string name="district_reg">District:</string>
+    <string name="thana_reg">Thana:</string>
+    <string name="post_code_reg">Post code:</string>
 
     <array name="faq_header">
         <item>How do I login to the new app version for the first time?</item>
@@ -1131,6 +1145,7 @@
         <item>1.What are the bus and launch ticket service charges and commissions?</item>
         <item>2. What are the bus and launch ticket cancellation service charges and commissions?
         </item>
+        <item>3. How much is the air ticket commission?</item>
     </array>
 
     <array name="a7">
@@ -1140,6 +1155,7 @@
         <item>The customer has to pay 20 (twenty) taka service charge for each ticket cancellation.
             The retailer will get 10 (ten) taka commission for each ticket.
         </item>
+        <item>The commission on air tickets is 5% of base fare.</item>
     </array>
 
 

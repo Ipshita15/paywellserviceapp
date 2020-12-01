@@ -185,19 +185,19 @@
     <string name="log_limit_title_msg">পূর্ববর্তী লেনদেনের সংখ্যা</string>
     <string name="reg_log_limit_title_msg">পূর্ববর্তী রেজিস্ট্রেশন সংখ্যা</string>
     <string name="activity_log_limit_title_msg">আক্টিভিটি লগের সংখ্যা</string>
-    <string name="add_number_amount_msg">ফোন নম্বর অথবা টাকার পরিমান দিন</string>
+    <string name="add_number_amount_msg">ফোন নম্বর অথবা টাকার পরিমাণ দিন</string>
     <string name="pin_no_title_msg">পিন নম্বর</string>
     <string name="services_alert_msg">দুঃখিত আপনি অনুমোদিত নন</string>
     <string name="services_off_msg">আপনার জন্য সার্ভিসটি বন্ধ আছে</string>
     <string name="phone_no_msg">ফোন নম্বর</string>
-    <string name="amount_msg">টাকার পরিমান</string>
+    <string name="amount_msg">টাকার পরিমাণ</string>
     <string name="prepaid_msg">প্রি-পেইড</string>
     <string name="postpaid_msg">পোস্ট-পেইড</string>
     <string name="conf_topup_title_msg">অনুরোধ বিস্তারিত</string>
     <string name="confirm_title_msg">নিশ্চিতকরণ</string>
     <string name="alert_confirm_msg">আপনি কি ক্যাশ টাকা হাতে পেয়েছেন?</string>
     <string name="change_pin_status_msg">আপনার পিন সফলভাবে পরিবর্তন করা হয়েছে</string>
-    <string name="bank_transfer_header_msg">নীচের যেকোন ব্যাংকের লোগো সিলেক্ট করে, ব্যাংকের তথ্য জেনে নিন এবং ডিপোজিট স্লিপ আপলোড করুন</string>
+    <string name="bank_transfer_header_msg">নিচের যেকোন ব্যাংকের লোগো সিলেক্ট করে, ব্যাংকের তথ্য জেনে নিন এবং ডিপোজিট স্লিপ আপলোড করুন</string>
     <string name="language_title_msg">ভাষা নির্বাচন</string>
     <string name="wait_msg">একটু অপেক্ষা করুন</string>
     <string name="bell_msg">bell</string>
@@ -609,7 +609,7 @@
     <string name="bill_limit_msg">বর্তমানে, একসাথে সর্বোচ্চ ৫ বিল প্রদান সম্ভব</string>
     <string name="conf_bill_title_msg">অনুরোধ বিস্তারিত</string>
     <string name="bill_status">বিল স্ট্যাটাস</string>
-    <string name="amount_limit_error_msg">টাকার পরিমান ১ টাকার বেশি হতে হবে</string>
+    <string name="amount_limit_error_msg">টাকার পরিমাণ ১ টাকার বেশি হতে হবে</string>
 
     <string name="nagad_refill_msg">নগদ</string>
     <string name="nagad_balance_refill_msg">ব্যালেন্স রিফিল\nপ্রক্রিয়া</string>
@@ -640,17 +640,17 @@
     <string name="desco_postpaid_string">ডেসকো পোস্টপেইড</string>
     <string name="meter_number">মিটার নম্বরঃ</string>
     <string name="txt_login">সাইন ইন</string>
-    <string name="txt_signup">নিবন্ধন করুন</string>
+    <string name="txt_signup">রেজিস্ট্রেশন করুন</string>
     <string name="rid_mobile_number">মোবাইল নম্বর</string>
     <string name="pin_number">পিন নাম্বার</string>
     <string name="submit">লগ ইন</string>
     <string name="forget_pin">পিন ভুলে গেছেন?</string>
     <string name="member_login">ব্যবহারকারী লগ ইন</string>
-    <string name="txt_user_registration">খুচরা বিক্রেতা নিবন্ধকরণ</string>
+    <string name="txt_user_registration">নতুন এজেন্ট রেজিস্ট্রেশন</string>
     <string name="otp_verification">ওটিপি যাচাইকরণ</string>
     <string name="ok_text">ঠিক আছে</string>
     <string name="resend_otp">ওটিপি পুনরায় পাঠান</string>
-    <string name="didn_t_you_received_any_code">আপনি কোনও কোড পান নি?</string>
+    <string name="didn_t_you_received_any_code">(যদি ওটিপি না পেয়ে থাকেন)</string>
     <string name="request_format_pin">অনুরোধ পিন ভুলে গেছেন?</string>
     <string name="last_4_digit_mobile_number">মোবাইল নম্বর</string>
     <string name="please_enter_the_last_4_digits_of_your_phone_number">আপনার নিবন্ধিত নম্বরটি লিখুন</string>
@@ -725,7 +725,7 @@
     <string name="text_bus_from_error">You must type the city from you want to travel</string>
     <string name="text_bus_to_error">You must type the destination city you want to travel</string>
     <string name="title_ticket_cancel_list">Ticket cancel list</string>
-    <string name="paywell_account_user_login">পেওয়েল একাউন্ট ব্যবহারকারী লগইন করুন</string>
+    <string name="paywell_account_user_login">পেওয়েল – এ লগ ইন করুন</string>
     <string name="enter_pin">পিন নম্বর দিন </string>
     <string name="account_id">একাউন্ট আইডি</string>
     <string name="forgot_pin_new">পিন ভুলে গিয়েছেন?</string>
@@ -736,8 +736,9 @@
 
     <string name="hit_passport_number_ivac">পাসপোর্ট নম্বর</string>
     <string name="hit_web_file_number_ivac">ওয়েব ফাইল নম্বর</string>
-    <string name="title_otp_verfication">OTP Verification</string>
-    <string name="next">Next</string>
+    <string name="title_otp_verfication">মোবাইল নাম্বার ভেরিফিকেশন</string>
+    <string name="we_have_send_you_an_sms_with_a_code_to_your_number">আপনার মোবাইল নাম্বার-এ প্রেরিত চার ডিজিটের ওটিপি টাইপ করে মোবাইল নাম্বারটি ভেরিফাই করুন</string>
+    <string name="next">পরবর্তী ধাপ</string>
     <string name="acccount_name_link_bank">হিসাবের নাম</string>
     <string name="account_number_link_bank">হিসাব নং</string>
     <string name="home_tutorial">টিউটোরিয়াল</string>
@@ -804,6 +805,20 @@
     <string name="get_help_home_page">হেল্প</string>
     <string name="chat">চ্যাট</string>
     <string name="call">কল</string>
+    <string name="wellcome_text">পেওয়েল এজেন্ট রেজিস্ট্রেশনে আপনাকে  স্বাগতম। প্রয়োজনীয় তথ্যগুলো সঠিকভাবে প্রদান করে রেজিস্ট্রেশন প্রক্রিয়া সম্পন্ন করুন। </string>
+    <string name="enter_your_mobile_number">মোবাইল নাম্বারটি টাইপ করুন</string>
+    <string name="i_agree_with_rules">আমি <font fgcolor="#5aac40">শর্তাবলীগুলোর</font> সাথে সম্মতি প্রদান করছি।</string>
+    <string name="check_roles_">চুক্তি ও শর্তাদি দয়া করে চেক করুন</string>
+    <string name="outlet_name">দোকানের নাম</string>
+    <string name="address">ঠিকানা</string>
+    <string name="owner_name">মালিকের নাম</string>
+    <string name="merchant_type">মার্চেন্টের ধরন</string>
+    <string name="business_type">ব্যবসার ধরন</string>
+    <string name="email_hit"><![CDATA[<font color=#41882b> ইমেইল </font> <font color=#b3b3b3> (ঐচ্ছিক)</font>]]></string>
+    <string name="first_step">১ম ধাপ</string>
+    <string name="district_reg">জেলাঃ</string>
+    <string name="thana_reg">থানাঃ</string>
+    <string name="post_code_reg">পোস্টকোডঃ</string>
 
     <array name="faq_header">
         <item>পেওয়েল নতুন অ্যাপ ভার্সনে প্রথমবার কীভাবে লগইন করব?</item>
@@ -1146,6 +1161,7 @@
     <array name="q7">
         <item>১. বাস এবং লঞ্চ টিকেট সার্ভিস চার্জ এবং কমিশন কত?</item>
         <item>২. বাস এবং লঞ্চ টিকেট বাতিল এর সার্ভিস চার্জ এবং কমিশন কত?</item>
+        <item>৩. বিমান টিকেট এর কমিশন কত?</item>
     </array>
 
     <array name="a7">
@@ -1155,6 +1171,7 @@
         <item>প্রতিটি টিকেট বাতিল এর জন্য গ্রাহকে ২০(বিশ) টাকা সার্ভিস চার্জ দিতে হবে। রিটেইলার
             প্রতিটি টিকেট এর জন্য ১০(দশ) টাকা কমিশন পাবে।
         </item>
+        <item>বিমান টিকেট এর কমিশন বেস ফেয়ার এর ৫%।</item>
     </array>
 
 

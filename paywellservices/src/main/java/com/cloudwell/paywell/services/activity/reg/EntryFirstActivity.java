@@ -74,7 +74,7 @@ public class EntryFirstActivity extends BaseActivity {
 
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("১ম ধাপ");
+            getSupportActionBar().setTitle(R.string.first_step);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
@@ -296,7 +296,7 @@ public class EntryFirstActivity extends BaseActivity {
     }
 
     public void initializationOther() {
-        String custom_text = "<font color=#41882b> ইমেইল </font> <font color=#b3b3b3> (ঐচ্ছিক)</font>";
+        String custom_text = getString(R.string.email_hit);
         textView_email.setText(Html.fromHtml(custom_text));
 
         /****Merchant Type ***/

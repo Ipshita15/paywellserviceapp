@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.reg;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.webkit.WebView;
 
 import com.cloudwell.paywell.services.R;
@@ -43,18 +42,14 @@ public class TermsAndConditionsActivity extends BaseActivity {
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            this.onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        if (item.getItemId() == android.R.id.home) {
+//            this.onBackPressed();
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
-    @Override
-    public void onBackPressed() {
-       
-        finish();
-    }
+
 }

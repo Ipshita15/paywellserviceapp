@@ -43,9 +43,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="পেওয়েল অ্যাপ ডাউনলোড করার জন্য আপনাকে ধন্যবাদ। অনুগ্রহপূর্বক রেজিস্ট্রেশন করে পেওয়েল সার্ভিসগুলোর বিক্রি শুরু করুন।"
+                                android:text="@string/wellcome_text"
                                 android:textAlignment="center"
-                                android:textSize="20sp" />
+                                android:textSize="20sp"
+                                android:gravity="center_horizontal" />
                     </LinearLayout>
 
                     <EditText
@@ -55,7 +56,7 @@
                             android:ems="10"
                             android:maxLength="11"
                             android:layout_margin="8dp"
-                            android:hint="মোবাইল নাম্বারটি টাইপ করুন"
+                            android:hint="@string/enter_your_mobile_number"
                             android:inputType="phone" />
 
                     <LinearLayout
@@ -73,25 +74,10 @@
                             android:onClick="itemClicked" />
 
                         <TextView
-                            android:id="@+id/textView_me"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="আমি" />
-
-                        <TextView
-                            android:id="@+id/textViewTerms"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:text=" শর্তাবলীগুলোর"
-                            android:textAllCaps="false"
-                            android:textColor="#5aac40" />
-
-                        <TextView
-                            android:id="@+id/textView_confirmText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=" সাথে সম্মতি প্রদান করছি।" />
+                                android:id="@+id/textViewTerms"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/i_agree_with_rules" />
                     </LinearLayout>
                 </LinearLayout>
 

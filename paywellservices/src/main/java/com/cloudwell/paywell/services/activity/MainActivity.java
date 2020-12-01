@@ -2273,7 +2273,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
 
 
-            case R.string.bongo:
+            case R.string.bongo_bd:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_Bongo);
 
                 intent = new Intent(getApplicationContext(), BongoMainActivity.class);

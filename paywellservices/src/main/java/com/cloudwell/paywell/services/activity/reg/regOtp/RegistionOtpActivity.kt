@@ -44,7 +44,7 @@ class RegistionOtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks
 
         phoneNumber = intent.getStringExtra("phone_number")
 
-        tvOtpMessage.text = OTPMessaage
+//        tvOtpMessage.text = OTPMessaage
 
         btNextOtp.setOnClickListener {
 
