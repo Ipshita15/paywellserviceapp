@@ -800,7 +800,7 @@
     <string name="call">Call</string>
     <string name="wellcome_text">Welcome to PayWell Agent Registration. Complete the registration process by providing correct information.</string>
     <string name="enter_your_mobile_number">Enter your mobile number</string>
-    <string name="i_agree_with_rules">I agree to the <font fgcolor="#5aac40"> terms and conditions</font></string>
+    <string name="i_agree_with_rules">I agree to the <font color="#5aac40"> terms and conditions</font></string>
     <string name="check_roles_">Please check the terms and conditions</string>
     <string name="outlet_name">Outlet name</string>
     <string name="address">Address</string>
@@ -813,7 +813,7 @@
     <string name="thana_reg">Thana:</string>
     <string name="post_code_reg">Post code:</string>
     <string name="back">Back</string>
-    <string name="refcode">Reference code (Optional)</string>
+    <string name="refcode"><font color="#41882b">Reference code: </font> <font color="#b3b3b3">(Optional)</font></string>
     <string name="step_3">Step 3</string>
     <string name="landmark"><![CDATA[<font color=#41882b>Landmark </font> <font color=#b3b3b3>(Optional)</font>]]></string>
     <string name="pleaes_fill_up_correctly">Please fill up in correctly</string>

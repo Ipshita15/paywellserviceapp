@@ -205,7 +205,7 @@ public class EntryThirdActivity extends BaseActivity {
 
     public void outletImgOnClick(View v) {
 
-        asked("দোকানের ছবি", "1");
+        asked(getString(R.string.outlet_image), "1");
 
     }
 
@@ -228,33 +228,29 @@ public class EntryThirdActivity extends BaseActivity {
 
     }
 
-    public void nidBackImgOnClick(View v) {
-        asked("ন্যাশনাল আইডি পেছনের পৃষ্ঠার ছবি", "3");
-    }
-
     public void ownerImgOnClick(View v) {
-        asked("মালিকের ছবি", "4");
+        asked(getString(R.string.owner_photo), "4");
     }
 
 
     public void tradeLicenseImgOnClick(View v) {
-        asked("ট্রেড লাইসেন্সের ছবি", "5");
+        asked(getString(R.string.trade_license), "5");
     }
 
     public void passportImgOnClick(View v) {
-        asked("বার্থ সার্টিফিকেটের ছবি", "6");
+        asked(getString(R.string.passport_reg), "6");
     }
 
     public void birthImgOnClick(View v) {
-        asked("পাসপোর্টের ছবি", "7");
+        asked(getString(R.string.birth_certificate), "7");
     }
 
     public void drivingImgOnClick(View v) {
-        asked("ড্রাইভিং লাইসেন্সের ছবি", "8");
+        asked(getString(R.string.driving_license), "8");
     }
 
     public void visitingImgOnClick(View v) {
-        asked("ভিজিটিং কার্ডের ছবি", "9");
+        asked(getString(R.string.visiting_card), "9");
 
     }
 

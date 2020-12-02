@@ -807,7 +807,7 @@
     <string name="call">কল</string>
     <string name="wellcome_text">পেওয়েল এজেন্ট রেজিস্ট্রেশনে আপনাকে  স্বাগতম। প্রয়োজনীয় তথ্যগুলো সঠিকভাবে প্রদান করে রেজিস্ট্রেশন প্রক্রিয়া সম্পন্ন করুন। </string>
     <string name="enter_your_mobile_number">মোবাইল নাম্বারটি টাইপ করুন</string>
-    <string name="i_agree_with_rules">আমি <font fgcolor="#5aac40">শর্তাবলীগুলোর</font> সাথে সম্মতি প্রদান করছি।</string>
+    <string name="i_agree_with_rules">আমি <font color="#5aac40">শর্তাবলীগুলোর</font> সাথে সম্মতি প্রদান করছি।</string>
     <string name="check_roles_">চুক্তি ও শর্তাদি দয়া করে চেক করুন</string>
     <string name="outlet_name">দোকানের নাম</string>
     <string name="address">ঠিকানা</string>
@@ -820,15 +820,15 @@
     <string name="thana_reg">থানাঃ</string>
     <string name="post_code_reg">পোস্টকোডঃ</string>
     <string name="back">পূর্ববর্তী ধাপ</string>
-    <string name="refcode">রেফারেন্স কোড (ঐচ্ছিক)</string>
+    <string name="refcode"><font color="#41882b">রেফারেন্স কোড: </font> <font color="#b3b3b3">(ঐচ্ছিক)</font></string>
     <string name="step_3">৩য় ধাপ</string>
     <string name="landmark"><![CDATA[<font color=#41882b>ল্যান্ডমার্কঃ </font> <font color=#b3b3b3>(ঐচ্ছিক)</font>]]></string>
     <string name="pleaes_fill_up_correctly">সঠিকভাবে পূরণ করুন</string>
     <string name="step2">২য় ধাপ</string>
     <string name="outlet_image">দোকানের ছবি</string>
     <string name="owner_photo">মালিকের ছবি</string>
-    <string name="trade_license">ট্রেড লাইসেন্সের ছবি</string>
-    <string name="passport_reg">পাসপোর্টের ছবি</string>
+    <string name="trade_license">ট্রেড লাইসেন্স</string>
+    <string name="passport_reg">পাসপোর্ট</string>
     <string name="birth_certificate">জন্ম সনদ</string>
     <string name="driving_license">ড্রাইভিং লাইসেন্স</string>
     <string name="visiting_card">ভিজিটিং কার্ড</string>

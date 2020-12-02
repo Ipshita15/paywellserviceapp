@@ -100,8 +100,8 @@
                 android:shadowDx="1"
                 android:shadowDy="1"
                 android:shadowRadius="2"
-                android:text="পরবর্তী ধাপ"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/next"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorText" />
         </LinearLayout>
     </ScrollView>
