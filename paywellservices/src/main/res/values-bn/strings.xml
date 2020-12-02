@@ -242,7 +242,7 @@
     <string name="pin_no_des">পিন নম্বরঃ</string>
     <string name="pw_pin_no_des">পেওয়েল পিন নম্বরঃ</string>
     <string name="phone_no_des">ফোন নম্বরঃ</string>
-    <string name="amount_des">টাকার পরিমানঃ</string>
+    <string name="amount_des">টাকার পরিমাণঃ</string>
     <string name="trx_id_des">লেনদেনের আইডিঃ</string>
     <string name="status_des">স্ট্যাটাসঃ</string>
     <string name="sms">বার্তাঃ</string>
