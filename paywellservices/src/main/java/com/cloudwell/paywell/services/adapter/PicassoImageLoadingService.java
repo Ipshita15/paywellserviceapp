@@ -3,8 +3,6 @@ package com.cloudwell.paywell.services.adapter;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.signature.ObjectKey;
 import com.cloudwell.paywell.services.app.AppController;
 
@@ -31,7 +29,7 @@ public class PicassoImageLoadingService implements ImageLoadingService {
         Glide.with(AppController.getContext())
                 .load(url)
                 .signature(new ObjectKey(mImageUpdateVersionString))
-                .transform(new CenterCrop(), new RoundedCorners(roundEadius))
+//                .transform(new CenterCrop(), new RoundedCorners(roundEadius))
                 .into(imageView);
 
     }
@@ -41,7 +39,7 @@ public class PicassoImageLoadingService implements ImageLoadingService {
         Glide.with(AppController.getContext())
                 .load(url)
                 .signature(new StringSignature(mImageUpdateVersionString))
-                .transform(new CenterCrop(), new RoundedCorners(roundEadius))
+//                .transform(new CenterCrop(), new RoundedCorners(roundEadius))
                 .into(imageView);
     }
 
@@ -52,7 +50,7 @@ public class PicassoImageLoadingService implements ImageLoadingService {
         Glide.with(AppController.getContext())
                 .load(url)
                 .signature(new StringSignature(mImageUpdateVersionString))
-                .transform(new CenterCrop(), new RoundedCorners(roundEadius))
+//                .transform(new CenterCrop(), new RoundedCorners(roundEadius))
                 .into(imageView);
 
     }
