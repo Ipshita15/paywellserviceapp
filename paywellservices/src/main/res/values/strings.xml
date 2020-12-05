@@ -650,7 +650,7 @@
     <string name="otp_verification">OTP Verification</string>
     <string name="ok_text">OK</string>
     <string name="resend_otp">Resend OTP</string>
-    <string name="verify_your_phone_number" translatable="false">Verify phone number</string>
+    <string name="verify_your_phone_number">Verify phone number</string>
     <string name="we_have_send_you_an_sms_with_a_code_to_your_number">Verify  mobile number by entering  four digit OTP sent to your mobile number</string>
     <string name="didn_t_you_received_any_code">(If OTP is not received)</string>
     <string name="request_format_pin">Request forgot pin</string>

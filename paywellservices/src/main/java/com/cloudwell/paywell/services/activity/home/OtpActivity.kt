@@ -41,7 +41,7 @@ class OtpActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleA
         super.onCreate(savedInstanceState)
         setContentView(R.layout.otp_dialog)
 
-        setToolbar("OTP Verification")
+        setToolbar(getString(R.string.title_otp_verfication));
 
         userNeedToChangePassword = intent.getBooleanExtra("userNeedToChangePassword", false)
         OTPMessaage = intent.getStringExtra("OTPMessaage")

@@ -650,6 +650,7 @@
     <string name="otp_verification">ওটিপি যাচাইকরণ</string>
     <string name="ok_text">ঠিক আছে</string>
     <string name="resend_otp">ওটিপি পুনরায় পাঠান</string>
+    <string name="verify_your_phone_number">Verify phone number</string>
     <string name="didn_t_you_received_any_code">(যদি ওটিপি না পেয়ে থাকেন)</string>
     <string name="request_format_pin">অনুরোধ পিন ভুলে গেছেন?</string>
     <string name="last_4_digit_mobile_number">মোবাইল নম্বর</string>
