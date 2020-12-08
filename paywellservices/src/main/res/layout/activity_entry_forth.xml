@@ -193,7 +193,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/radioGroup_two"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
             <TextView
                     android:id="@+id/textView_service"
