@@ -329,7 +329,7 @@
     <string name="privacy" translatable="false">https://www.paywellonline.com/Privacy.php</string>
 
 
-    <string name="operator"> অপারেটর</string>
+    <string name="operator">Operator</string>
     <string name="mobileOperator">Mobile Operators</string>
     <string name="brilliant">Brilliant</string>
     <string name="brilliant_topup">Brilliant Topup</string>
