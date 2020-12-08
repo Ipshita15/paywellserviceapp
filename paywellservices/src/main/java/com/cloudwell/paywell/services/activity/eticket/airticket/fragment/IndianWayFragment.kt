@@ -330,9 +330,11 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
 
 
             R.id.llDatePicker -> {
-                DatePickerDialog(context, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show()
+                context?.let {
+                    DatePickerDialog(it, date, myCalendar
+                            .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                            myCalendar.get(Calendar.DAY_OF_MONTH)).show()
+                }
             }
 
         }
@@ -472,43 +474,45 @@ class IndianWayFragment : Fragment(), View.OnClickListener, FullScreenDialogFrag
         }
 
 
-        val datePickerDialog = DatePickerDialog(context,
-                DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
+        val datePickerDialog = context?.let {
+            DatePickerDialog(it,
+                    DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
 
-                    val calendar = Calendar.getInstance()
-                    calendar.set(Calendar.YEAR, year)
-                    calendar.set(Calendar.MONTH, month)
-                    calendar.set(Calendar.DAY_OF_MONTH, day)
-                    val date = calendar.getTime()
+                        val calendar = Calendar.getInstance()
+                        calendar.set(Calendar.YEAR, year)
+                        calendar.set(Calendar.MONTH, month)
+                        calendar.set(Calendar.DAY_OF_MONTH, day)
+                        val date = calendar.getTime()
 
-                    val nameOfDayOfWeek = SimpleDateFormat("EEE").format(date)
-                    val nameOfMonth = SimpleDateFormat("MMM").format(calendar.getTime())
+                        val nameOfDayOfWeek = SimpleDateFormat("EEE").format(date)
+                        val nameOfMonth = SimpleDateFormat("MMM").format(calendar.getTime())
 
-                    tvDepartDate.text = "$nameOfDayOfWeek, $day $nameOfMonth"
-                    tvDepartDate.setTextColor(Color.BLACK);
+                        tvDepartDate.text = "$nameOfDayOfWeek, $day $nameOfMonth"
+                        tvDepartDate.setTextColor(Color.BLACK);
 
-                    AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_INDIA, "" + "$nameOfDayOfWeek, $day $nameOfMonth")
-
-
-                    val mMonth = month + 1;
-
-                    val androidSystemdate = "${year}-${mMonth}-${day}"
-
-                    val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(androidSystemdate) as Date
-                    val humanReadAbleDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).format(fdepTimeFormatDate)
+                        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_INDIA, "" + "$nameOfDayOfWeek, $day $nameOfMonth")
 
 
-                    searchRoundTripModel.departDate = humanReadAbleDate
+                        val mMonth = month + 1;
 
-                    AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_API_formate_INDIA, "" + humanReadAbleDate)
+                        val androidSystemdate = "${year}-${mMonth}-${day}"
+
+                        val fdepTimeFormatDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(androidSystemdate) as Date
+                        val humanReadAbleDate = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).format(fdepTimeFormatDate)
 
 
-                }, year, thismonth, dayOfMonth)
+                        searchRoundTripModel.departDate = humanReadAbleDate
+
+                        AppStorageBox.put(activity?.applicationContext, AppStorageBox.Key.DEPART_DATE_API_formate_INDIA, "" + humanReadAbleDate)
+
+
+                    }, year, thismonth, dayOfMonth)
+        }
 
         val calendarMin = Calendar.getInstance()
-        datePickerDialog.datePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
-        datePickerDialog.datePicker.minDate = (calendarMin.timeInMillis - 10000)
-        datePickerDialog.show()
+        datePickerDialog?.datePicker?.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
+        datePickerDialog?.datePicker?.minDate = (calendarMin.timeInMillis - 10000)
+        datePickerDialog?.show()
 
     }
 

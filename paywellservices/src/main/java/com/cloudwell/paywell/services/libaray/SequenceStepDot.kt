@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.sequence_dot.view.*
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 3/3/19.
  */
 internal class SequenceStepDot(context: Context?, attrs: AttributeSet?, defStyleAttr: Int)
-    : FrameLayout(context, attrs, defStyleAttr) {
+    : FrameLayout(context!!, attrs, defStyleAttr) {
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)

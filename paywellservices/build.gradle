@@ -4,14 +4,14 @@ apply plugin: 'org.jetbrains.kotlin.android.extensions'
 apply plugin: 'com.google.firebase.crashlytics'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion '28.0.3'
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.cloudwell.paywell.services"
         minSdkVersion 16
-        versionCode 55
-        targetSdkVersion 28
+        versionCode 56
+        targetSdkVersion 29
         versionName '10.19.0'
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true

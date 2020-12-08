@@ -86,7 +86,7 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
 
         var fcmNotificationDetails = ""
         try {
-            fcmNotificationDetails = intent.extras.getString("Notification_Details", "") as String
+            fcmNotificationDetails = intent.extras?.getString("Notification_Details", "") as String
         } catch (e: Exception) {
             fcmNotificationDetails = ""
         }
@@ -350,7 +350,7 @@ class NotificationFullViewActivity : MVVMBaseActivity() {
 
             try {
                 //automatic call to API
-                val action = intent.extras.getString("action", "")
+                val action = intent.extras?.getString("action", "")
                 if (!action.equals("")) {
                     if (action.equals("Accept")) {
                         callAccept(id)

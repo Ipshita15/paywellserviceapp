@@ -21,7 +21,7 @@ class ClassBottomSheetDialog : BottomSheetDialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val className: String = arguments!!.getString("myClassName")
+        val className: String? = arguments!!.getString("myClassName")
         val view = inflater.inflate(R.layout.class_item_list_dialog, container, false)
 
         val listView = view.findViewById<ListView>(R.id.listViewAirTicketClass)
@@ -33,7 +33,7 @@ class ClassBottomSheetDialog : BottomSheetDialogFragment() {
         classes.add(ClassModel("Premium Business", "PremiumBusiness", false))
         classes.add(ClassModel("First", "First", false))
 
-        classes.get(getClassNamePosition(className)).setClassSelectedStatus(true)
+        classes.get(getClassNamePosition(className!!)).setClassSelectedStatus(true)
 
         val customAdapter = CustomAdapter(context, classes)
         listView.adapter = customAdapter

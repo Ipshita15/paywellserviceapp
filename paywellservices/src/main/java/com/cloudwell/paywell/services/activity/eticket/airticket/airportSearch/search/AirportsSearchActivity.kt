@@ -60,7 +60,7 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
 
         getSupportActionBar()?.hide();
 
-        isTo = intent.extras.getBoolean(IS_TO, false)
+        isTo = intent.extras?.getBoolean(IS_TO, false) ?: false
         if (!isTo) {
             tvToOrFrom.text = getString(R.string.from)
         } else {
@@ -68,10 +68,10 @@ class AirportsSearchActivity : AirTricketBaseActivity() {
         }
 
 
-        isIndian = intent.extras.getBoolean("indian", false)
+        isIndian = intent.extras?.getBoolean("indian", false) ?: false
 
 
-        fromValue = intent.extras.getString(VALUE_FROM, "")
+        fromValue = intent.extras?.getString(VALUE_FROM, "") ?: ""
 
         initViewInitialization()
         initViewModel()

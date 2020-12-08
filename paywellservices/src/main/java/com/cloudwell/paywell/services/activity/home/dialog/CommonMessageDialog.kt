@@ -1,16 +1,13 @@
 package com.cloudwell.paywell.services.activity.home.dialog
 
 import android.app.Dialog
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BaseDialogFragment
-import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.successInterface
 import kotlinx.android.synthetic.main.common_dialog.view.*
-import kotlinx.android.synthetic.main.success_dialog.view.*
 import kotlinx.android.synthetic.main.success_dialog.view.message
 import kotlinx.android.synthetic.main.success_dialog.view.submit_button
 import kotlinx.android.synthetic.main.success_dialog.view.title_txt
@@ -50,7 +47,7 @@ class CommonMessageDialog(val title: String,val message: String,val msg_clr : In
         if (dialog != null) {
             val width = ViewGroup.LayoutParams.MATCH_PARENT
             val height = ViewGroup.LayoutParams.WRAP_CONTENT
-            dialog.getWindow().setLayout(width, height)
+            dialog.getWindow()?.setLayout(width, height)
         }
     }
 

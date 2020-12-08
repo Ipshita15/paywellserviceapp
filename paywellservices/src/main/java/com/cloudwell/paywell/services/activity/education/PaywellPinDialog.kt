@@ -7,10 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BaseDialogFragment
-import kotlinx.android.synthetic.main.otp_error_msg_dialog.view.*
 import kotlinx.android.synthetic.main.paywell_pin_dialog.*
 import kotlinx.android.synthetic.main.paywell_pin_dialog.view.*
-import kotlinx.android.synthetic.main.paywell_pin_dialog.view.paywell_pin
 
 /**
  * Created by Sepon on 3/24/2020.
@@ -42,7 +40,7 @@ class PaywellPinDialog (val message: String, val onclick : IonClickInterface): B
         if (dialog != null) {
             val width = ViewGroup.LayoutParams.MATCH_PARENT
             val height = ViewGroup.LayoutParams.WRAP_CONTENT
-            dialog.getWindow().setLayout(width, height)
+            dialog.getWindow()?.setLayout(width, height)
         }
     }
 

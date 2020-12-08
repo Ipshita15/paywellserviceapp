@@ -252,7 +252,7 @@ class SeatLayoutFragment(val scheduleDataItem: ScheduleDataItem, val isRetrunTri
 
 
         val values = scheduleDataItem.resSeatInfo?.bordingPoints
-        val valueList = ArrayList(values)
+        val valueList = values?.let { ArrayList(it) }
 
 
         busListAdapter = CustomSpnerForBoardingPoint(requireContext().applicationContext, valueList)

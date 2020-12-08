@@ -1,8 +1,6 @@
 package com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog
 
-import android.app.Activity
 import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -37,7 +35,7 @@ class ErrorCallBackMsgDialog(val message: String, val onclick : IonClickInterfac
         if (dialog != null) {
             val width = ViewGroup.LayoutParams.MATCH_PARENT
             val height = ViewGroup.LayoutParams.WRAP_CONTENT
-            dialog.getWindow().setLayout(width, height)
+            dialog.getWindow()?.setLayout(width, height)
         }
     }
 

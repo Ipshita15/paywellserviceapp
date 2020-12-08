@@ -14,7 +14,6 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketM
 import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.adapter.TransitionRVSectionAdapter
 import com.cloudwell.paywell.services.activity.eticket.airticket.transationLog.viewBookingInfo.ViewBookingInfoActivity
 import com.cloudwell.paywell.services.app.AppHandler
-import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_transtionlog.*
 
@@ -31,7 +30,7 @@ open class AirThicketTranslationLogActivity : TransitionLogBaseActivity() {
 
 
         val bundle = intent.extras
-        limit = bundle.getInt(AirTicketMenuActivity.KEY_LIMIT)
+        limit = bundle?.getInt(AirTicketMenuActivity.KEY_LIMIT) ?: 0
 
         //initViewModel(limit)
 

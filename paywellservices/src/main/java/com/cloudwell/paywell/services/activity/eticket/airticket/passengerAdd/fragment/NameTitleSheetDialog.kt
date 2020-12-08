@@ -22,7 +22,7 @@ class NameTitleSheetDialog : BottomSheetDialogFragment() {
     lateinit var data: ArrayList<Gender>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val className: String = arguments!!.getString("title")
+        val className: String? = arguments!!.getString("title")
         val view = inflater.inflate(R.layout.class_item_list_dialog, container, false)
         view.tvCatagory.text = getString(R.string.name_title)
 
@@ -36,7 +36,7 @@ class NameTitleSheetDialog : BottomSheetDialogFragment() {
         data.add(Gender(getString(R.string.miss), false))
 
 
-        data.get(getClassNamePosition(className)).setClassSelectedStatus(true)
+        data.get(getClassNamePosition(className.toString())).setClassSelectedStatus(true)
 
         val customAdapter = CustomAdapter(context, data)
         listView.adapter = customAdapter

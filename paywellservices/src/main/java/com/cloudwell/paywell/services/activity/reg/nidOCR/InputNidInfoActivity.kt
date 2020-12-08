@@ -45,7 +45,7 @@ class InputNidInfoActivity: LanguagesBaseActivity(), IInputNidListener {
         super.onCreate(savedInstanceState)
 
         val binding: ActivityNidInfoBinding = DataBindingUtil.setContentView(
-            this, R.layout.activity_nid_info
+                this, R.layout.activity_nid_info
         )
 
         setToolbar("Test");
@@ -55,9 +55,9 @@ class InputNidInfoActivity: LanguagesBaseActivity(), IInputNidListener {
         inputViewModel.iView = this
 
 
-        val string = intent.extras.getString("data")
-        isNID = intent.extras.getBoolean("isNID", false)
-        isMissingPage = intent.extras.getBoolean("isMissingPage", false)
+        val string = intent.extras?.getString("data")
+        isNID = intent.extras?.getBoolean("isNID", false) ?: false
+        isMissingPage = intent.extras?.getBoolean("isMissingPage", false) ?: false
 
         val user = Gson().fromJson(string, User::class.java);
         etNid.setText(user.nid)
@@ -67,7 +67,7 @@ class InputNidInfoActivity: LanguagesBaseActivity(), IInputNidListener {
         etUserUserBirthday.setText(user.birthday)
         etUserAddress.setText(user.address)
 
-        if (isNID){
+        if (isNID) {
             textInputLayoutUserNameEnglish.visibility = View.VISIBLE
             etUserNameEnglish.visibility = View.VISIBLE
             etUserNameEnglish.setText(user.nameEnglish)

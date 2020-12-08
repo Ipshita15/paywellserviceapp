@@ -86,7 +86,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
         setToolbar(getString(R.string.title_add_passenger))
 
-        isValidation = intent.extras.getBoolean("isValidation", false)
+        isValidation = intent.extras?.getBoolean("isValidation", false) ?: false
         initializationView()
 
 
@@ -150,7 +150,7 @@ class AddPassengerActivity : AirTricketBaseActivity() {
 
 
         try {
-            isEditFlag = intent.extras.getBoolean("isEditFlag", false)
+            isEditFlag = intent.extras?.getBoolean("isEditFlag", false) ?: false
 
             if (isEditFlag) {
                 oldPassenger = AppStorageBox.get(applicationContext, AppStorageBox.Key.AIRTRICKET_EDIT_PASSENGER) as Passenger
@@ -746,11 +746,11 @@ class AddPassengerActivity : AirTricketBaseActivity() {
                     // You can update this bitmap to your server
                     var bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
                     if (isPassortClick) {
-                        passportImagePath = uri.path
+                        passportImagePath = uri.path.toString()
                         // loading profile image from local cache
                         ivPassportPageUpload.setImageResource(R.drawable.ic_passport_seleted)
                     } else {
-                        visaImagePath = uri.path
+                        visaImagePath = uri.path.toString()
                         ivVisaPageUpload.setImageResource(R.drawable.visa_eanble)
                     }
 

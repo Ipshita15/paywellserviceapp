@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BaseDialogFragment
 import kotlinx.android.synthetic.main.ask_mobile_number_dialog.view.*
-import kotlinx.android.synthetic.main.otp_error_msg_dialog.view.*
 
 
 class AskMobileNumberDialog(val onclick : getNumberClickInterface): BaseDialogFragment() {
@@ -54,7 +53,7 @@ class AskMobileNumberDialog(val onclick : getNumberClickInterface): BaseDialogFr
         if (dialog != null) {
             val width = ViewGroup.LayoutParams.MATCH_PARENT
             val height = ViewGroup.LayoutParams.WRAP_CONTENT
-            dialog.getWindow().setLayout(width, height)
+            dialog.getWindow()?.setLayout(width, height)
         }
     }
 

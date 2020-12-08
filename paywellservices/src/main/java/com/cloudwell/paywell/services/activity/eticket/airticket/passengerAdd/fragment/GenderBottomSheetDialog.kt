@@ -22,7 +22,7 @@ class GenderBottomSheetDialog : BottomSheetDialogFragment() {
     lateinit var data: ArrayList<Gender>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val className: String = arguments!!.getString("myGenderName")
+        val className: String = arguments!!.getString("myGenderName").toString()
         val view = inflater.inflate(R.layout.class_item_list_dialog, container, false)
         view.tvCatagory.text = getString(R.string.gender)
 

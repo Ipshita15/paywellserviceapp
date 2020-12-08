@@ -101,7 +101,7 @@ class NotificationCheckerService : Service() {
                     Logger.v("" + response.toString())
                     isAPICalledRunning = false;
                     val unread = response.body()?.unread;
-                    val parseInt = Integer.parseInt(unread);
+                    val parseInt = Integer.parseInt(unread.toString());
                     GlobalApplicationBus.getBus().post(EventNewNotificaiton(parseInt))
 
                     val detail_message = response.body()?.detail_message;

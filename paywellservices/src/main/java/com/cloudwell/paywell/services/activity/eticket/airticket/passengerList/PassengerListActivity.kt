@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -36,7 +35,7 @@ class PassengerListActivity : AirTricketBaseActivity() {
 
         setToolbar(getString(com.cloudwell.paywell.services.R.string.title_passenger_list))
 
-        isValidation = intent.extras.getBoolean("isValidation", false)
+        isValidation = intent.extras?.getBoolean("isValidation", false) ?: false
 
         initializationView()
 

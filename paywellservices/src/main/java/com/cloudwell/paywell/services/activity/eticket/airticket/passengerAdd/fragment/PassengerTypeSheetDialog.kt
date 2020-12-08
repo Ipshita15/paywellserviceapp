@@ -22,7 +22,7 @@ class PassengerTypeSheetDialog : BottomSheetDialogFragment() {
     lateinit var data: ArrayList<Gender>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val className: String = arguments!!.getString("passengerType")
+        val className: String? = arguments!!.getString("passengerType")
         val view = inflater.inflate(R.layout.passenger_type_item_list_dialog, container, false)
         view.tvCatagory.text = getString(R.string.passenger_type)
 
@@ -33,7 +33,7 @@ class PassengerTypeSheetDialog : BottomSheetDialogFragment() {
         data.add(Gender(getString(R.string.child), false))
         data.add(Gender(getString(R.string.infant), false))
 
-        data.get(getClassNamePosition(className)).setClassSelectedStatus(true)
+        data.get(getClassNamePosition(className.toString())).setClassSelectedStatus(true)
 
         val customAdapter = CustomAdapter(context, data)
         listView.adapter = customAdapter

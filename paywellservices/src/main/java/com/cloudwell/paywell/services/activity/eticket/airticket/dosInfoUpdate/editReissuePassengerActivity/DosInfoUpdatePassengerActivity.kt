@@ -78,7 +78,7 @@ class DosInfoUpdatePassengerActivity : AirTricketBaseActivity() {
 
         setToolbar(getString(R.string.title_edit_passenger))
 
-        id = intent.extras.getInt("id", 0)
+        id = intent.extras?.getInt("id", 0) ?: 0
         val get = UpdateDocOrInfomationRequestActivity.passengers.get(id)
 
         if (UpdateDocOrInfomationRequestActivity.item.trip_type.equals("Local")) {
@@ -645,11 +645,11 @@ class DosInfoUpdatePassengerActivity : AirTricketBaseActivity() {
                     // You can update this bitmap to your server
                     var bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
                     if (isPassortClick) {
-                        passportImagePath = uri.path
+                        passportImagePath = uri.path.toString()
                         // loading profile image from local cache
                         ivPassportPageUpload.setImageResource(R.drawable.ic_passport_seleted)
                     } else {
-                        visaImagePath = uri.path
+                        visaImagePath = uri.path.toString()
                         ivVisaPageUpload.setImageResource(R.drawable.visa_eanble)
                     }
 

@@ -65,8 +65,8 @@ class FlightDetails1Activity : AirTricketBaseActivity() {
 
         })
 
-        val mSearchId = intent.extras.getString("mSearchId", "")
-        val resultID = intent.extras.getString("resultID", "")
+        val mSearchId = intent.extras?.getString("mSearchId", "")
+        val resultID = intent.extras?.getString("resultID", "")
 
         val requestAirPriceSearch = RequestAirPriceSearch()
         requestAirPriceSearch.searchId = mSearchId

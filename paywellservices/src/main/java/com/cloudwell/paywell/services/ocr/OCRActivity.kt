@@ -55,7 +55,7 @@ class OCRActivity : LanguagesBaseActivity() {
         setContentView(R.layout.activity_ocr)
         setToolbar(getString(R.string.scanner))
 
-        requestForm =  intent.extras.getString(REQUEST_FROM)
+        requestForm = intent.extras?.getString(REQUEST_FROM).toString()
 
 
         mCameraView = findViewById(R.id.surfaceView)
