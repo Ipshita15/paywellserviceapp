@@ -134,6 +134,7 @@ import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.app.model.APIResBalanceCheck;
 import com.cloudwell.paywell.services.app.model.RequestBalanceCheck;
+import com.cloudwell.paywell.services.app.storage.AppStorageBox;
 import com.cloudwell.paywell.services.constant.AllConstant;
 import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.database.FavoriteMenuDab;
@@ -2187,6 +2188,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
 
             case R.string.home_eticket_bus:
+
+                AppStorageBox.put(getApplicationContext(), AppStorageBox.Key.IS_BUS_Ticket_USER_FLOW, true);
+
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_ETICKET_BUS);
 
 
@@ -2194,6 +2198,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_BUS, true);
                 startActivityWithFlag(intent);
                 break;
+
+            case R.string.launch:
+                AppStorageBox.put(getApplicationContext(), AppStorageBox.Key.IS_BUS_Ticket_USER_FLOW, false);
+
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_ETICKET_LUUNCH);
+
+                intent = new Intent(getApplicationContext(), BusTicketMenuActivity.class);
+                intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_BUS, true);
+                startActivityWithFlag(intent);
+                break;
+
 
             case R.string.home_eticket_air:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_ETICKET_AIR);

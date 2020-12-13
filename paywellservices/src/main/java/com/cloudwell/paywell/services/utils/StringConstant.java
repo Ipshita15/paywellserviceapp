@@ -57,6 +57,7 @@ public class StringConstant {
 
     public static String KEY_home_ticket = "home_eticket";
     public static String KEY_home_bus = "home_eticket_bus";
+    public static String KEY_launch = "launch";
     public static String home_eticket_air = "home_eticket_air";
 
 

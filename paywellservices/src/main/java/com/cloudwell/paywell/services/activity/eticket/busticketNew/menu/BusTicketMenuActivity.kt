@@ -83,14 +83,20 @@ class BusTicketMenuActivity : BusTricketBaseActivity(), View.OnClickListener, Co
         mAppHandler = AppHandler.getmInstance(applicationContext)
 
 
-        addRecentUsedList()
+        addRecentUsedList(isBusTicket)
 
 
     }
 
-    private fun addRecentUsedList() {
-        val recentUsedMenu = RecentUsedMenu(StringConstant.KEY_home_bus, StringConstant.KEY_home_ticket, IconConstant.KEY_ic_ticket, 0, 34)
-        addItemToRecentListInDB(recentUsedMenu)
+    private fun addRecentUsedList(isBusTicket: Boolean) {
+        if (isBusTicket) {
+            val recentUsedMenu = RecentUsedMenu(StringConstant.KEY_home_bus, StringConstant.KEY_home_ticket, IconConstant.KEY_ic_ticket, 0, 34)
+            addItemToRecentListInDB(recentUsedMenu)
+        } else {
+            val recentUsedMenu = RecentUsedMenu(StringConstant.KEY_launch, StringConstant.KEY_launch, IconConstant.KEY_ic_launch_ticket, 0, 35)
+            addItemToRecentListInDB(recentUsedMenu)
+
+        }
     }
 
 

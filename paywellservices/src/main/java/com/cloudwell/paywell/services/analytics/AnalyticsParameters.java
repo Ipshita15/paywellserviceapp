@@ -128,6 +128,7 @@ public class AnalyticsParameters {
     public static final String KEY_BALANCE_REFILL_NAGAD = "BalanceRefillNagad";
 
     public static final String KEY_ETICKET_BUS = "E_TICKET_BUS";
+    public static final String KEY_ETICKET_LUUNCH = "KEY_ETICKET_LUUNCH";
     public static final String KEY_MFS_MYCASH_MENU = "MfsMycashMenu";
     public static final String KEY_PRODUCT_AJKER_DEAL_MENU = "ProductAjkerDealMenu";
     public static final String KEY_PRODUCT_AJKER_DEAL_PAGE = "ProductAjkerDealPage";

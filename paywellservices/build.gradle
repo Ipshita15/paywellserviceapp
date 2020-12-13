@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId "com.cloudwell.paywell.services"
         minSdkVersion 16
-        versionCode 56
+        versionCode 57
         targetSdkVersion 29
         versionName '10.19.0'
         multiDexEnabled true
