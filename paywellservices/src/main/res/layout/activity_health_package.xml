@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.cloudwell.paywell.services.activity.entertainment.bongo.BongoSubscribActivity">
+
+
+    <ss.com.bannerslider.Slider
+            android:id="@+id/bongoo_sllider"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            app:slider_animateIndicators="true"
+            app:slider_indicatorSize="10dp"
+            app:slider_interval="0"
+            app:slider_loopSlides="true"
+            app:slider_selectedSlideIndicator="@drawable/bongo_slider_indicator"
+            app:slider_unselectedSlideIndicator="@drawable/bongo_slider_indicator1" />
+
+
+    <TextView
+            android:layout_marginTop="20dp"
+            android:textColor="@color/new_text_clr"
+            android:textSize="18sp"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/bongo_select_package"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/bongo_packege_recyclerview"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+</LinearLayout>

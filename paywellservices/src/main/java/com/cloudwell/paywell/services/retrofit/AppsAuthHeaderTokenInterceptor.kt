@@ -133,10 +133,13 @@ private fun processApplicationJsonRequestBody(requestBody: RequestBody): Request
 
         val obj = JSONObject(customReq)
         obj.put("deviceId", mAppHandler.androidID)
-        obj.put("timestamp",""+ DateUtils.getCurrentTimestamp())
+        obj.put("timestamp", "" + DateUtils.getCurrentTimestamp())
         obj.put("format", "json")
         obj.put("channel", "android")
         obj.put("ref_id", uniqueKey)
+        obj.put("username", AppHandler.getmInstance(AppController.getContext()).userName)
+
+
 
 
 

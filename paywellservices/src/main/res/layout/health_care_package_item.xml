@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_margin="8dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        app:cardCornerRadius="5dp"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_height="wrap_content">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="320dp"
+            android:background="@color/white">
+
+        <ImageView
+                android:id="@+id/imageView41"
+                android:layout_width="80dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="150dp"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/insurage_amount"
+                tools:ignore="MissingConstraints" />
+
+
+        <TextView
+                android:id="@+id/tvPageAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="10000"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/imageView51"
+                app:layout_constraintStart_toStartOf="@+id/imageView51"
+                app:layout_constraintTop_toBottomOf="@+id/imageView51"
+                tools:ignore="MissingConstraints" />
+
+        <ImageView
+                android:id="@+id/tvAmountLogo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView41"
+                app:layout_constraintStart_toStartOf="@+id/imageView41"
+                app:layout_constraintTop_toTopOf="@+id/imageView41" />
+
+        <ImageView
+                android:id="@+id/imageView51"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="@+id/tvAmountLogo"
+                app:layout_constraintStart_toStartOf="@+id/tvAmountLogo"
+                app:layout_constraintTop_toBottomOf="@+id/tvAmountLogo"
+                app:srcCompat="@drawable/insurance_amount_symbol" />
+
+        <TextView
+                android:id="@+id/tvPackageActive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:text="এ্যাক্টিভেট করুন"
+                android:textColor="#3d6fc4"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView52"
+                app:layout_constraintEnd_toStartOf="@+id/imageView52"
+                app:layout_constraintTop_toTopOf="@+id/imageView52" />
+
+        <ImageView
+                android:id="@+id/imageView52"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginBottom="32dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/insurance_next_arrow" />
+
+        <ImageView
+                android:id="@+id/ivBannerSmallHI"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/small_banner" />
+
+        <TextView
+                android:id="@+id/tvPackageName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+
+                android:layout_marginRight="8dp"
+                android:text="আমরা সুরক্ষিত"
+                android:textColor="#2b2b2e"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/imageView41"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/ivBannerSmallHI"
+                app:layout_constraintTop_toTopOf="@+id/ivBannerSmallHI" />
+
+        <TextView
+                android:id="@+id/tvPackageCashback"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:text="৳১০০,০০০"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/imageView41"
+                app:layout_constraintStart_toEndOf="@+id/imageView54"
+                app:layout_constraintTop_toTopOf="@+id/imageView54" />
+
+        <TextView
+                android:id="@+id/tvPackageMember"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:text="০৪"
+                android:textColor="#3d6fc4"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/imageView41"
+                app:layout_constraintStart_toEndOf="@+id/imageView54"
+                app:layout_constraintTop_toTopOf="@+id/imageView55" />
+
+        <TextView
+                android:id="@+id/tvPackageValidity"
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:text="৩ মাসের মেয়াদ"
+                android:textColor="#33a544"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/imageView41"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/tvPackageName"
+                app:layout_constraintTop_toBottomOf="@+id/tvPackageName" />
+
+        <View
+                android:id="@+id/view20"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:background="#dddddd"
+                app:layout_constraintEnd_toStartOf="@+id/imageView41"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivBannerSmallHI" />
+
+        <ImageView
+                android:id="@+id/imageView54"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:adjustViewBounds="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view20"
+                app:srcCompat="@drawable/limit_amount" />
+
+        <ImageView
+                android:id="@+id/imageView55"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPackageCashback"
+                app:srcCompat="@drawable/insurange_member" />
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvDoctorConsultation"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tvPackageActive"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView55" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

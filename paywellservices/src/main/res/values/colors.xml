@@ -67,4 +67,13 @@
 
     <color name="color_tangaroa">#00203f</color>
 
+
+    <!--    HealthInsurance-->
+
+    <color name="color_text">#59595C</color>
+    <color name="colorPrimary_health">#2791A1</color>
+    <color name="toolbar_background_color_health">#2791a1</color>
+    <color name="statubar_color_health">#237d89</color>
+    <color name="toolbar_font_color_health">#FFFFFF</color>
+
 </resources>

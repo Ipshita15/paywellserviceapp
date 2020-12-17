@@ -68,6 +68,7 @@ import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketM
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity;
 import com.cloudwell.paywell.services.activity.faq.PostLoginFAQActivity;
 import com.cloudwell.paywell.services.activity.fee.FeeMainActivity;
+import com.cloudwell.paywell.services.activity.healthInsurance.HealthInsuranceMainActivity;
 import com.cloudwell.paywell.services.activity.home.HomeActivity;
 import com.cloudwell.paywell.services.activity.location.model.CurrentLocationModel;
 import com.cloudwell.paywell.services.activity.mfs.MFSMainActivity;
@@ -121,7 +122,6 @@ import com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliMain
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBBillPayNewActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.BannerDetailsDialog;
-import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.CommingSoonDialog;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus.PBBillStatusActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.MobileNumberChangeActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.registion.PBRegistrationActivity;
@@ -1507,8 +1507,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             case R.id.homeBtnInsurance:
 
-                CommingSoonDialog commingSoonDialog = new CommingSoonDialog();
-                commingSoonDialog.show(getSupportFragmentManager(), "commingSoonDialog");
+//                CommingSoonDialog commingSoonDialog = new CommingSoonDialog();
+//                commingSoonDialog.show(getSupportFragmentManager(), "commingSoonDialog");
+                startActivity(new Intent(getApplicationContext(), HealthInsuranceMainActivity.class));
+
 
                 break;
 

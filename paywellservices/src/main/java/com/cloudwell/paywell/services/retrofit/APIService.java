@@ -59,6 +59,8 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm.ResposeTicketConfirm;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.ticket_confirm_cancel.ConfirmTicketCancelResponse;
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.transactionLog.TransactionLogDetailsModel;
+import com.cloudwell.paywell.services.activity.healthInsurance.model.RequestMembershipPackages;
+import com.cloudwell.paywell.services.activity.healthInsurance.model.RespseMemberShipPackage;
 import com.cloudwell.paywell.services.activity.home.model.ReposeGenerateOTP;
 import com.cloudwell.paywell.services.activity.home.model.ReposeGenerateOTPReg;
 import com.cloudwell.paywell.services.activity.home.model.ReposeUserProfile;
@@ -791,6 +793,10 @@ public interface APIService {
 
     @POST("Registration/UserRegistration/regenerateOTPForRegistration")
     Call<ReposeGenerateOTPReg> generateOTPReg(@Body RequestGenerateOTPReg body);
+
+
+    @POST("Insurance/HealthMartService/getMembershipPackages")
+    Call<RespseMemberShipPackage> getMembershipPackages(@Body RequestMembershipPackages requestMembershipPackages);
 
 
 }
