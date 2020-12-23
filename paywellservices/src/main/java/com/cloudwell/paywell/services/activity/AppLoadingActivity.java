@@ -39,6 +39,7 @@ import com.google.gson.Gson;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -290,9 +291,25 @@ public class AppLoadingActivity extends BaseActivity {
 
 
     public void authAsync() {
+
+        String osVersion = android.os.Build.VERSION.RELEASE;
+        String osVersionName = "UNKNOWN";
+        Field[] fields = Build.VERSION_CODES.class.getFields();
+        for (Field field : fields) {
+            try {
+                if (Build.VERSION.SDK_INT == field.getInt(Build.VERSION_CODES.class)) {
+                    osVersionName = field.getName();
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
         AuthRequestModel m = new AuthRequestModel();
         m.setAppVersionName(androidVersionName);
         m.setAppVersionNo(getVersionNo());
+        m.setOsName(osVersionName);
+        m.setOsVersion(osVersion);
 
 
         APIService aPIService = ApiUtils.getAPIServiceV2();
@@ -510,6 +527,7 @@ public class AppLoadingActivity extends BaseActivity {
             @Override
             public void onFailure(Call<ReposeUserProfile> call, Throwable t) {
                 dismissProgressDialog();
+                Log.e(AppLoadingActivity.class.getName(), Objects.requireNonNull(t.getMessage()));
                 mConErrorMsg.setText(R.string.try_again_msg);
                 mConErrorMsg.setVisibility(View.VISIBLE);
                 mBtnRetry.setVisibility(View.VISIBLE);

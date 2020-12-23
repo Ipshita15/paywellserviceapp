@@ -22,7 +22,7 @@ class TokenAuthenticator : Authenticator {
 
 
         Log.e("authenticate", "authenticate")
-        if (response.code == 401) {
+        if (response.code() == 401) {
             val userName = "paywell"
             val password = "PayWell@321"
             val base = "$userName:$password"
@@ -52,7 +52,7 @@ class TokenAuthenticator : Authenticator {
 
 
 
-                return response.request.newBuilder()
+                return response.request().newBuilder()
                         .header("Authorization", "Bearer $securityToken")
                         .build()
 

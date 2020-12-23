@@ -793,4 +793,6 @@ public interface APIService {
     Call<ReposeGenerateOTPReg> generateOTPReg(@Body RequestGenerateOTPReg body);
 
 
+    @POST("/")
+    Call<RequestBody> test(@Body RequestGenerateOTPReg body);
 }

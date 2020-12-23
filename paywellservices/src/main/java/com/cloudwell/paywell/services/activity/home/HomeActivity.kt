@@ -2,22 +2,29 @@ package com.cloudwell.paywell.services.activity.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.AppLoadingActivity
 import com.cloudwell.paywell.services.activity.base.BaseActivity
 import com.cloudwell.paywell.services.activity.faq.PreLoginFAQActivity
 import com.cloudwell.paywell.services.activity.home.login.LoginActivity
+import com.cloudwell.paywell.services.activity.home.model.RequestGenerateOTPReg
 import com.cloudwell.paywell.services.activity.home.model.refreshToken.RequestRefreshToken
 import com.cloudwell.paywell.services.activity.reg.EntryMainActivity
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.NewAppsVideoPreviewDialog
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.NoInternetConnectionMsgDialog
 import com.cloudwell.paywell.services.app.AppController
 import com.cloudwell.paywell.services.app.AppHandler
+import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.AndroidIDUtility
 import com.cloudwell.paywell.services.utils.AppsStatusConstant
 import com.cloudwell.paywell.services.utils.RootUtil
 import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_home.*
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class HomeActivity : BaseActivity() {
@@ -41,6 +48,25 @@ class HomeActivity : BaseActivity() {
 
         initilizationView(intent)
 
+//        test()
+
+
+    }
+
+    private fun test() {
+        val r = RequestGenerateOTPReg()
+        r.phoneNUmber = "0284"
+
+        ApiUtils.getAPITest("https://6e92857bbdcec6faa3fac6198f4cf1c4.m.pipedream.net").test(r).enqueue(object : Callback<RequestBody> {
+            override fun onResponse(call: Call<RequestBody>, response: Response<RequestBody>) {
+
+                Log.e("", "")
+            }
+
+            override fun onFailure(call: Call<RequestBody>, t: Throwable) {
+                Log.e("", "")
+            }
+        })
 
     }
 

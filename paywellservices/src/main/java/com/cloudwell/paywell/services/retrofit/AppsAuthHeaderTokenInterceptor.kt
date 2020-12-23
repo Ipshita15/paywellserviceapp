@@ -15,7 +15,6 @@ import com.cloudwell.paywell.services.utils.UniqueKeyGenerator
 import com.google.gson.Gson
 import okhttp3.Interceptor
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okio.Buffer
 import org.json.JSONException
@@ -34,8 +33,8 @@ class AppsAuthHeaderTokenInterceptor(val mContext: AppController?) : Interceptor
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
 
-        var requestBody = chain.request().body
-        val toString = chain.request().url.toString()
+        var requestBody = chain.request().body()
+        val toString = chain.request().url().toString()
 
         if (toString.equals(AllUrl.gettoken) ||
                 toString.equals(AllUrl.ProfilingReg) ||
@@ -45,7 +44,7 @@ class AppsAuthHeaderTokenInterceptor(val mContext: AppController?) : Interceptor
             val newRequest = chain.request().newBuilder().build()
             return chain.proceed(newRequest)
         } else {
-            val subtype: String = requestBody?.contentType()?.subtype ?: ""
+            val subtype: String = requestBody?.contentType()?.subtype() ?: ""
             if (subtype.contains("json")) {
                 //modify every json request body
                 val newProcessApplicationJsonRequestBody = processApplicationJsonRequestBody(requestBody!!)
@@ -58,7 +57,7 @@ class AppsAuthHeaderTokenInterceptor(val mContext: AppController?) : Interceptor
                     .build()
 
             val response = chain.proceed(newRequest)
-            val code = response.code
+            val code = response.code()
             if (code == 401) {
 
 
@@ -133,7 +132,7 @@ private fun processApplicationJsonRequestBody(requestBody: RequestBody): Request
 
         val obj = JSONObject(customReq)
         obj.put("deviceId", mAppHandler.androidID)
-        obj.put("timestamp",""+ DateUtils.getCurrentTimestamp())
+        obj.put("timestamp", "" + DateUtils.getCurrentTimestamp())
         obj.put("format", "json")
         obj.put("channel", "android")
         obj.put("ref_id", uniqueKey)
@@ -142,7 +141,10 @@ private fun processApplicationJsonRequestBody(requestBody: RequestBody): Request
 
         authHeader = getTokenBaseOnRSAlgorithm(obj)
 
-        return obj.toString().toRequestBody(requestBody.contentType())
+        val create = RequestBody.create(requestBody.contentType(), obj.toString());
+
+        return create;
+//        return obj.toString().toRequestBody(requestBody.contentType())
     } catch (e: JSONException) {
         e.printStackTrace()
     }
