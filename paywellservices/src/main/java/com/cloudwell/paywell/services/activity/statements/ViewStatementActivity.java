@@ -240,36 +240,35 @@ public class ViewStatementActivity extends BaseActivity {
                                       }
 
 
-                                      public void onPageFinished(WebView view, String url) {
+            public void onPageFinished(WebView view, String url) {
 
-                                          dismissProgressDialog();
+                dismissProgressDialog();
 
-                                      }
+            }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
 
 
-                                      @Override
-                                      public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                                          view.loadUrl(url);
-                                          return true;
-                                      }
-
-
-                                      @Override
-                                      public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                                          return super.shouldOverrideUrlLoading(view, request);
-                                      }
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                return super.shouldOverrideUrlLoading(view, request);
+            }
 
                                   }
         );
 
         String encodedHtml = Base64.encodeToString(data.getBytes(), Base64.NO_PADDING);
 
-//        mWebView.loadDataWithBaseURL(null, data, "text/html", "base64", null);
-
-//        mWebView.loadUrl("https://agentapi.paywellonline.com/test.php");
-
-
-        mWebView.loadData(data, null, null);
+        mWebView.loadDataWithBaseURL(null, data, "text/html", "UTF-8", null);
 
 
     }

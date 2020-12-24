@@ -10,9 +10,9 @@ android {
     defaultConfig {
         applicationId "com.cloudwell.paywell.services"
         minSdkVersion 16
-        versionCode 58
+        versionCode 59
         targetSdkVersion 29
-        versionName '10.19.1'
+        versionName '10.19.2'
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
 
