@@ -263,7 +263,7 @@ public class ViewStatementActivity extends BaseActivity {
                 return super.shouldOverrideUrlLoading(view, request);
             }
 
-                                  }
+        }
         );
 
         String encodedHtml = Base64.encodeToString(data.getBytes(), Base64.NO_PADDING);
