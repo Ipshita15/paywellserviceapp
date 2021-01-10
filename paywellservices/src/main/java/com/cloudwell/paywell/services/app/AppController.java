@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.multidex.MultiDex;
@@ -21,6 +22,9 @@ import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 import com.cloudwell.paywell.services.utils.AppVersionUtility;
 import com.cloudwell.paywell.services.utils.MyHttpClient;
 import com.cloudwell.paywell.services.utils.StringConstant;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.security.ProviderInstaller;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
@@ -34,8 +38,12 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.net.ssl.SSLContext;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -83,7 +91,7 @@ public class AppController extends Application {
             Log.e("device_token", "" + id);
             Logger.i("SMS HashKey: " + new AppSignatureHelper(getApplicationContext()).getAppSignatures().get(0));
 
-            
+
         }
 
         configureCrashReporting();
@@ -94,6 +102,24 @@ public class AppController extends Application {
         new AppSignatureHelper(getApplicationContext()).getAppSignatures();
 
 
+        setDefaultTSLVersionForBelowAndroid5Device();
+
+    }
+
+    private void setDefaultTSLVersionForBelowAndroid5Device() {
+        int sdk = Build.VERSION.SDK_INT;
+        if (sdk < Build.VERSION_CODES.LOLLIPOP) {
+            try {
+                ProviderInstaller.installIfNeeded(getApplicationContext());
+                SSLContext sslContext;
+                sslContext = SSLContext.getInstance("TLSv1.2");
+                sslContext.init(null, null, null);
+                sslContext.createSSLEngine();
+            } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException
+                    | NoSuchAlgorithmException | KeyManagementException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void addDefaultRecentList() {

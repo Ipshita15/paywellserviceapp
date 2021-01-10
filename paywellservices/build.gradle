@@ -10,9 +10,9 @@ android {
     defaultConfig {
         applicationId "com.cloudwell.paywell.services"
         minSdkVersion 16
-        versionCode 57
+        versionCode 59
         targetSdkVersion 29
-        versionName '10.19.0'
+        versionName '10.19.2'
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
 
@@ -79,7 +79,8 @@ ext {
 
     lifecycle_version = "1.1.1"
 
-    okhttpVersion = '3.8.1'
+//    okhttpVersion = '3.8.1'//
+    okhttpVersion = '3.11.0'
     timberVersion = '4.6.0'
     retrofitVersion = '2.5.0'
     rxJava = '2.1.6'
@@ -119,9 +120,7 @@ dependencies {
     implementation "com.google.android.gms:play-services-analytics:$firebaseVersion"
     implementation "com.google.firebase:firebase-messaging:$firebaseMessaging"
     implementation "com.google.firebase:firebase-ml-vision:$firebaseML"
-    implementation('com.crashlytics.sdk.android:crashlytics:2.9.7@aar') {
-        transitive = true
-    }
+
 
     /*Add QR Zxing Library Here */
     implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
@@ -155,8 +154,14 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-scalars:$retrofitVersion"
 
     //okhttp
-    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
-    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+//    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
+//    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+
+    //OkHttp
+    implementation ("com.squareup.okhttp3:okhttp:3.12.12"){
+        force = true //API 19 support
+    }
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.12'
     implementation 'com.itkacher.okhttpprofiler:okhttpprofiler:1.0.7'
 
 
