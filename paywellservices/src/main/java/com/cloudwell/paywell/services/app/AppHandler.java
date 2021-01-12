@@ -852,6 +852,7 @@ public class AppHandler {
 
     public void setImageAddress(String json) {
         editor.putString(KEY_ImageAddressArrayJson, json);
+        editor.commit();
     }
 
     public String getImageAddress() {
@@ -860,6 +861,7 @@ public class AppHandler {
 
     public void setBannerDetails(String json) {
         editor.putString(KEY_BannerDetails, json);
+        editor.commit();
     }
 
 
@@ -873,6 +875,7 @@ public class AppHandler {
 
     public void setVideoPreviewShow(boolean b) {
         editor.putBoolean(KEY_isVideoPreviewShow, b);
+        editor.commit();
     }
 
     public static class MyDialogFragment extends DialogFragment {
