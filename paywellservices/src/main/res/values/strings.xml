@@ -737,7 +737,7 @@
     <string name="account_id">Account ID</string>
     <string name="forgot_pin_new">Forgot PIN?</string>
     <string name="sign_in">Sign in</string>
-    <string name="title_login">Sing In</string>
+    <string name="title_login">Sign In</string>
     <string name="bill_number_ocr_hit_text">Please hold the scanner on customer number and select OK if scanned number shown below is correct if not , please Retake for new scan.</string>
 
 
