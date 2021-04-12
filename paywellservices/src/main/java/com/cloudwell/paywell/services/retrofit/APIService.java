@@ -793,6 +793,10 @@ public interface APIService {
     Call<ReposeGenerateOTPReg> generateOTPReg(@Body RequestGenerateOTPReg body);
 
 
+    @POST("Insurance/HealthMartService/getMembershipPackages")
+    Call<RespseMemberShipPackage> getMembershipPackages(@Body RequestMembershipPackages requestMembershipPackages);
+
+
     @POST("/")
     Call<RequestBody> test(@Body RequestGenerateOTPReg body);
 }

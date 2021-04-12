@@ -851,6 +851,9 @@
     <string name="first_page_nid">আপনার জাতীয় পরিচয় পত্রের সামনের অংশটি ক্যামেরার সাহায্যে ছবি তুলুন</string>
     <string name="nid_second_page">আপনার জাতীয় পরিচয় পত্রের পিছনের অংশটি ক্যামেরার সাহায্যে ছবি তুলুন</string>
     <string name="national_id_card">জাতীয় পরিচয়পত্র</string>
+    <string name="didital_hospital">ডিজিটাল হসপিটাল</string>
+    <string name="package_list_digital_health">প্যাকেজ সমূহ</string>
+    <string name="insurance_claim">ইন্স্যুরেন্স ক্লেইম</string>
 
 
     <array name="faq_header">

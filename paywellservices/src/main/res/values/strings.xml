@@ -844,6 +844,10 @@
     <string name="nid_second_page">Take pictures with the camera on the back of your national identity card</string>
     <string name="national_id_card">National ID Card</string>
 
+    <string name="didital_hospital">Digital Hospital</string>
+    <string name="package_list_digital_health">All Package List</string>
+    <string name="insurance_claim">Insurance Claim</string>
+
     <array name="faq_header">
         <item>How do I login to the new app version for the first time?</item>
         <item>What is a registered mobile number?</item>

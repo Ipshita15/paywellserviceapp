@@ -136,6 +136,9 @@ private fun processApplicationJsonRequestBody(requestBody: RequestBody): Request
         obj.put("format", "json")
         obj.put("channel", "android")
         obj.put("ref_id", uniqueKey)
+        obj.put("username", AppHandler.getmInstance(AppController.getContext()).userName)
+
+
 
 
 

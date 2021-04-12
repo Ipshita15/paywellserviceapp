@@ -1158,6 +1158,21 @@
                 android:label="@string/title_activity_f_a_q"
                 android:screenOrientation="portrait" />
 
+
+        <activity
+                android:name=".activity.healthInsurance.HealthInsuranceMainActivity"
+                android:screenOrientation="portrait" />
+
+        <activity
+                android:name=".activity.healthInsurance.MenuActivity"
+                android:screenOrientation="portrait" />
+
+
+        <activity
+                android:name=".activity.healthInsurance.PackageListActivity"
+                android:screenOrientation="portrait" />
+
+
         <meta-data
                 android:name="com.google.android.gms.vision.DEPENDENCIES"
                 android:value="barcode" />
