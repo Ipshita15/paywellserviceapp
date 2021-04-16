@@ -847,6 +847,20 @@
     <string name="didital_hospital">Digital Hospital</string>
     <string name="package_list_digital_health">All Package List</string>
     <string name="insurance_claim">Insurance Claim</string>
+    <string name="selected_healthmart_package">healthmart_package</string>
+    <string name="active_btn">Active</string>
+    <string name="amount_title">Total Amount</string>
+    <string name="validity"> Month valid</string>
+    <string name="contact_eith_doctor">ডাক্তারের সঙ্গে পরামর্শ</string>
+    <string name="in_pack">প্যাক-এ থাকছে</string>
+    <string name="call_doctor">ডক্টর কল</string>
+    <string name="doctor_vedio_call">ডক্টর ভিডিও কল</string>
+    <string name="call_limit">আনলিমিটেড</string>
+    <string name="doctor_chat">ডক্টর চ্যাট</string>
+    <string name="degital_prescription">ডিজিটাল প্রেসক্রিপশন</string>
+    <string name="free_prescription">ফ্রি</string>
+    <string name="helth_cashback">হেলথ ক্যাশব্যাক</string>
+    <string name="in_package">প্যাক-এ থাকছে</string>
 
     <array name="faq_header">
         <item>How do I login to the new app version for the first time?</item>

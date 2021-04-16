@@ -1163,6 +1163,9 @@
                 android:name=".activity.healthInsurance.HealthInsuranceMainActivity"
                 android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.healthInsurance.PackageDetailsActivity"
+            android:screenOrientation="portrait"/>
+
         <activity
                 android:name=".activity.healthInsurance.MenuActivity"
                 android:screenOrientation="portrait" />

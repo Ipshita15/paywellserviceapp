@@ -855,6 +855,10 @@
     <string name="package_list_digital_health">প্যাকেজ সমূহ</string>
     <string name="insurance_claim">ইন্স্যুরেন্স ক্লেইম</string>
 
+    <string name="active_btn">এ্যাক্টিভেট করুন</string>
+    <string name="amount_title">সর্বমোট প্রদেয়:</string>
+    <string name="validity"> মাসের মেয়াদ</string>
+
 
     <array name="faq_header">
         <item>পেওয়েল নতুন অ্যাপ ভার্সনে প্রথমবার কীভাবে লগইন করব?</item>

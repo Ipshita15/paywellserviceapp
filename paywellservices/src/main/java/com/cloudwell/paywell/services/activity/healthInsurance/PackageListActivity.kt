@@ -1,5 +1,6 @@
 package com.cloudwell.paywell.services.activity.healthInsurance
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +17,7 @@ import com.cloudwell.paywell.services.adapter.MainSliderAdapter
 import com.cloudwell.paywell.services.adapter.PicassoImageLoadingWithoutRound
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_bongo_subscrib.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -150,6 +152,12 @@ class PackageListActivity : HealthInsuranceBaseActivity() {
         var adapter: PackegeAdapter = PackegeAdapter(applicationContext, packages, object : PackegeAdapter.OnclickInterface {
             override fun onclick(m: MembershipPackagesItem) {
 
+                val gson = Gson()
+                val packageJson = gson.toJson(m)
+                Intent(this@PackageListActivity, PackageDetailsActivity::class.java).also {
+                    it.putExtra(getString(R.string.selected_healthmart_package), packageJson)
+                    startActivity(it)
+                }
 
             }
         })
